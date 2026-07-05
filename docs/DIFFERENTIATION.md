@@ -37,3 +37,11 @@ different share psychology ("I cracked it in 4" vs "my team went
 78-4"), zero substitution pressure — and our authenticity claim
 (recomputable, method-stated, era-honest) is the one thing a
 simulation game structurally cannot copy.
+
+## Amendment (Operator-directed): measured counterfactuals
+
+"The Pivot" explores what-if role changes via OBSERVED historical
+pivot outcomes (real players who made each archetype transition, with
+n and selection-effect caveats shown). This stays inside the doctrine:
+sensitivity reports grounded in precedent — still no simulated
+win-loss records, series outcomes, or strength-rating season sims.
