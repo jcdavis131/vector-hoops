@@ -14,19 +14,26 @@
   <div class="vh-header__brand">
     <span class="vh-logo">VECTOR<span class="vh-logo__accent">HOOPS</span></span>
   </div>
-  <nav class="vh-tabs" role="tablist" aria-label="Game mode">
-    <button class="vh-tab" id="tab-chimera" role="tab" aria-selected="true" aria-controls="panel-chimera">The Chimera</button>
-    <button class="vh-tab" id="tab-trade" role="tab" aria-selected="false" aria-controls="panel-trade">Trade Machine</button>
-  </nav>
-  <div class="vh-streak" id="streak-box" title="Current streak">
-    <span class="vh-streak__num" id="streak-num">0</span>
-    <span class="vh-streak__label">streak</span>
+  <div class="vh-stats" id="header-stats">
+    <div class="vh-stat">
+      <span class="vh-stat__num" id="puzzle-day">—</span>
+      <span class="vh-stat__label">day</span>
+    </div>
+    <div class="vh-stat">
+      <span class="vh-stat__num" id="streak-num">0</span>
+      <span class="vh-stat__label">streak</span>
+    </div>
+    <div class="vh-stat">
+      <span class="vh-stat__num" id="guesses-left-num">6</span>
+      <span class="vh-stat__label">left</span>
+    </div>
   </div>
+  <button class="vh-help-btn" id="help-btn" type="button" aria-haspopup="dialog" aria-controls="help-modal" title="How to play">?</button>
 </header>
 
 <main id="app">
 
-  <section id="panel-chimera" class="vh-panel" role="tabpanel" aria-labelledby="tab-chimera">
+  <section id="panel-chimera" class="vh-panel">
 
     <div class="vh-card vh-prompt" id="prompt-card">
       <div class="vh-prompt__eyebrow" id="puzzle-number">Vector Hoops #—</div>
@@ -49,63 +56,54 @@
         <ul class="vh-suggestions" id="chimera-suggestions" role="listbox" hidden></ul>
       </div>
       <button class="vh-btn vh-btn--primary" id="chimera-submit" disabled>Guess</button>
-      <div class="vh-guess-counter" id="guess-counter">0 / 6</div>
     </div>
 
-    <div class="vh-card vh-scoreboard" id="scoreboard" hidden>
-      <div class="vh-scoreboard__pct" id="scoreboard-pct">0%</div>
-      <div class="vh-scoreboard__sub">match on last guess</div>
-    </div>
+    <div class="vh-card vh-result" id="result-card" hidden>
+      <div class="vh-scoreboard" id="scoreboard">
+        <div class="vh-scoreboard__pct" id="scoreboard-pct">0%</div>
+        <div class="vh-scoreboard__sub">match on last guess</div>
+      </div>
 
-    <div class="vh-layout">
-      <div class="vh-col">
-        <ol class="vh-guesslist" id="guess-list" aria-live="polite"></ol>
-
-        <div class="vh-card vh-reveal" id="reveal-card" hidden>
-          <h2 class="vh-reveal__title" id="reveal-title">Revealed</h2>
-          <div class="vh-reveal__body" id="reveal-body"></div>
-          <button class="vh-btn vh-btn--accent" id="share-btn">Share result</button>
-          <div class="vh-reveal__copied" id="share-copied" hidden>Copied to clipboard.</div>
+      <div class="vh-courts" id="courts-row">
+        <div class="vh-court-block">
+          <div class="vh-court-block__label">The Chimera</div>
+          <canvas class="vh-court" id="court-target" width="300" height="282" aria-label="Half-court diagram of the Chimera's offensive and defensive zone presence"></canvas>
+        </div>
+        <div class="vh-court-block">
+          <div class="vh-court-block__label" id="court-guess-label">Your guess</div>
+          <canvas class="vh-court" id="court-guess" width="300" height="282" aria-label="Half-court diagram of your guess's offensive and defensive zone presence"></canvas>
         </div>
       </div>
+      <div class="vh-court-legend">
+        <span><span class="vh-legend-swatch vh-legend-swatch--amber"></span>offense</span>
+        <span><span class="vh-legend-swatch vh-legend-swatch--blue"></span>defense</span>
+      </div>
 
-      <div class="vh-col vh-col--map">
-        <div class="vh-card vh-mapcard">
-          <div class="vh-mapcard__label">League map</div>
-          <canvas id="hoops-map" class="vh-map" width="600" height="600" aria-label="Scatter map of all player-seasons colored by archetype, with your guesses pinned"></canvas>
-          <div class="vh-mapcard__legend" id="map-legend"></div>
+      <p class="vh-story" id="story-caption"></p>
+      <p class="vh-guess__line" id="cluster-line"></p>
+      <p class="vh-guess__line" id="coaching-line"></p>
+    </div>
+
+    <div class="vh-card vh-reveal" id="reveal-card" hidden>
+      <h2 class="vh-reveal__title" id="reveal-title">Revealed</h2>
+      <div class="vh-reveal__body" id="reveal-body"></div>
+      <button class="vh-btn vh-btn--accent" id="share-btn">Share result</button>
+      <div class="vh-reveal__copied" id="share-copied" hidden>Copied to clipboard.</div>
+    </div>
+
+    <details class="vh-card vh-mapcard" id="map-details" open>
+      <summary class="vh-mapcard__label">3D league map <span class="vh-mapcard__hint">(drag to rotate · wheel/pinch to zoom)</span></summary>
+      <div class="vh-mapcard__body">
+        <div class="vh-map-wrap">
+          <canvas id="hoops-map" class="vh-map" width="600" height="600" aria-label="3D starfield of all player-seasons colored by archetype, with your guesses pinned"></canvas>
+          <button class="vh-map-pause" id="map-pause-btn" type="button" title="Pause rotation">Pause</button>
+          <div class="vh-map-axes">PC1 / PC2 / PC3 of the era-normalized stat space</div>
         </div>
+        <div class="vh-mapcard__legend" id="map-legend"></div>
       </div>
-    </div>
+    </details>
 
-  </section>
-
-  <section id="panel-trade" class="vh-panel" role="tabpanel" aria-labelledby="tab-trade" hidden>
-
-    <div class="vh-card vh-prompt">
-      <p class="vh-prompt__text">Pick any player-season. See its 8 nearest neighbors across every era, by full statistical-profile similarity. No daily limit &mdash; just the engine, as a toy.</p>
-    </div>
-
-    <div class="vh-card vh-guessbar">
-      <div class="vh-autocomplete" id="trade-autocomplete">
-        <input
-          type="text"
-          id="trade-input"
-          class="vh-input"
-          placeholder="Type a player-season, e.g. Nikola Jokic (2021-22)"
-          autocomplete="off"
-          aria-autocomplete="list"
-          aria-controls="trade-suggestions"
-          aria-expanded="false"
-          disabled
-        >
-        <ul class="vh-suggestions" id="trade-suggestions" role="listbox" hidden></ul>
-      </div>
-    </div>
-
-    <div class="vh-card vh-trade-anchor" id="trade-anchor" hidden></div>
-
-    <div class="vh-trade-results" id="trade-results"></div>
+    <ol class="vh-guesslist" id="guess-list" aria-live="polite"></ol>
 
   </section>
 
@@ -113,6 +111,18 @@
   <div class="vh-error" id="error-banner" hidden></div>
 
 </main>
+
+<div class="vh-modal-backdrop" id="help-backdrop" hidden>
+  <div class="vh-modal" id="help-modal" role="dialog" aria-modal="true" aria-labelledby="help-title">
+    <h2 id="help-title">How to play</h2>
+    <ol class="vh-modal__list">
+      <li>Each day two real player-seasons are fused: one lends the counting-stat profile, the other the shooting/impact profile.</li>
+      <li>Guess any player-season; you get a % match, a court comparison, and directional coaching in sigmas.</li>
+      <li>92%+ match &mdash; or naming either component &mdash; wins. 6 guesses. New chimera at midnight UTC.</li>
+    </ol>
+    <button class="vh-btn vh-btn--primary" id="help-close" type="button">Got it</button>
+  </div>
+</div>
 
 <footer class="vh-footer" id="footer">
   Vectors: per-100-possession stats, z-scored within each season (era-honest) &middot; &mdash; &middot; built &mdash; &middot; no tracking

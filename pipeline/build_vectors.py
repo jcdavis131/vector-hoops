@@ -9,7 +9,7 @@ Design (deliberate, documented):
   share one honest space.
 - The vector IS the normalized feature profile (transparent, 14 dims).
   A learned embedding is v2; we don't call this one a neural net.
-- PCA(2) for the map (same honest projection as the knowledge map);
+- PCA(3) for the 3D map (same honest projection as the knowledge map);
   k-means archetypes named from their centroids' dominant features.
 
 Run:  python pipeline/build_vectors.py   (venv with nba_api numpy)
@@ -84,7 +84,7 @@ def main() -> None:
     # PCA(2) map
     C = Z - Z.mean(0)
     U, S, _ = np.linalg.svd(C, full_matrices=False)
-    P = U[:, :2] * S[:2]
+    P = U[:, :3] * S[:3]
     P = (P - P.min(0)) / (P.max(0) - P.min(0)).max()
 
     # k-means archetypes (numpy, seeded)
@@ -114,6 +114,7 @@ def main() -> None:
             "name": r["name"], "season": r["season"],
             "v": [round(float(z), 3) for z in Z[i]],
             "x": round(float(P[i, 0]), 4), "y": round(float(P[i, 1]), 4),
+            "z": round(float(P[i, 2]), 4),
             "c": int(lab[i]),
         })
 

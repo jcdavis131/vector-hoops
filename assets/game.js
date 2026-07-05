@@ -1,12 +1,13 @@
 /* Vector Hoops — game.js
- * Zero deps, zero build. Loads assets/vectors.json and runs two modes:
- *   1. "The Chimera" — daily fused player-season, 6 guesses, cosine-similarity feedback.
- *   2. "Trade Machine" — free nearest-neighbor sandbox over the same vectors.
+ * Zero deps, zero build. Loads assets/vectors.json and runs "The Chimera":
+ * a daily fused player-season, 6 guesses, cosine-similarity feedback,
+ * a half-court zone-presence story, and a 3D league starfield map.
  *
  * Data contract (assets/vectors.json), produced by pipeline/build_vectors.py:
  *   { built, seasons:[first,last], normalization, features:[14],
  *     featureLabels:{feature->label}, clusters:[8 names],
- *     players:[{id,name,season,v:[14 z-scores],x,y,c}, ...] }
+ *     players:[{id,name,season,v:[14 z-scores],x,y,z,c}, ...] }
+ * x,y,z are PCA(3) map coordinates in [0,1].
  */
 (function () {
   'use strict';
@@ -15,8 +16,14 @@
   var EPOCH_DATE = '2026-07-01'; // puzzle #1
   var MAX_GUESSES = 6;
   var WIN_SIMILARITY = 0.92;
-  var LS_KEY = 'vectorHoops.v1';
+  var LS_KEY = 'vectorHoops.v2';
   var A_COUNT = 7; // first 7 dims come from player A, last 7 from player B
+
+  // Feature indices (fixed by pipeline/build_vectors.py FEATURES order)
+  var IDX = {
+    PTS: 0, AST: 1, OREB: 2, DREB: 3, STL: 4, BLK: 5, TOV: 6,
+    FG3A: 7, FGA: 8, FTA: 9, FG3_PCT: 10, FG_PCT: 11, FT_PCT: 12, PLUS_MINUS: 13
+  };
 
   // ---------------------------------------------------------------------
   // Deterministic PRNG: xmur3 string hash -> mulberry32 generator
@@ -97,7 +104,7 @@
 
   var DATA = null;         // parsed vectors.json
   var CENTROIDS = null;    // [k][14] mean vector per cluster
-  var CLUSTER_XY = null;   // [k]{x,y,n} mean map position per cluster
+  var CLUSTER_XYZ = null;  // [k]{x,y,z,n} mean map position per cluster
   var TARGET = null;       // { a, b, vector, clusterIdx }
   var STATE = null;        // persisted localStorage state
   var TODAY = utcDateString();
@@ -129,18 +136,18 @@
     return sums;
   }
 
-  function computeClusterXY(players, k) {
+  function computeClusterXYZ(players, k) {
     var sums = [];
-    for (var c = 0; c < k; c++) sums.push({ x: 0, y: 0, n: 0 });
+    for (var c = 0; c < k; c++) sums.push({ x: 0, y: 0, z: 0, n: 0 });
     for (var i = 0; i < players.length; i++) {
       var p = players[i];
       var s = sums[p.c];
       if (!s) continue;
-      s.x += p.x; s.y += p.y; s.n++;
+      s.x += p.x; s.y += p.y; s.z += p.z; s.n++;
     }
     for (c = 0; c < k; c++) {
-      if (sums[c].n > 0) { sums[c].x /= sums[c].n; sums[c].y /= sums[c].n; }
-      else { sums[c].x = 0.5; sums[c].y = 0.5; }
+      if (sums[c].n > 0) { sums[c].x /= sums[c].n; sums[c].y /= sums[c].n; sums[c].z /= sums[c].n; }
+      else { sums[c].x = 0.5; sums[c].y = 0.5; sums[c].z = 0.5; }
     }
     return sums;
   }
@@ -215,6 +222,7 @@
     var bPhrase = joinOxford(traitList(bIdx));
 
     els.puzzleNumber.textContent = 'Vector Hoops #' + puzzleNumber(TODAY);
+    els.puzzleDay.textContent = String(puzzleNumber(TODAY));
     els.promptText.innerHTML =
       "Today's Chimera: the <b>" + aPhrase + '</b> profile of one legend fused with the <b>' +
       bPhrase + '</b> profile of another. Same season halves, two different careers &mdash; find both.';
@@ -276,7 +284,7 @@
   }
 
   // ---------------------------------------------------------------------
-  // Autocomplete (shared by both modes)
+  // Autocomplete
   // ---------------------------------------------------------------------
 
   function createAutocomplete(inputEl, listEl, players, onSelect) {
@@ -370,6 +378,228 @@
   }
 
   // ---------------------------------------------------------------------
+  // Zone math: z-scored features -> court zone intensities
+  // ---------------------------------------------------------------------
+  //
+  // Zone-mapping table (raw sigma -> [0, 0.85] opacity, floored at 0):
+  //
+  //   OFFENSE (amber)
+  //     rim/paint   = avg( FTA[9], max(0, FGA[8]-FG3A[7]) )   rim pressure + inside volume
+  //     midrange    = FGA[8]                                   overall shot volume proxy
+  //     arc         = FG3A[7]                                  three-point volume
+  //     oreb marker = OREB[2]                                  offensive-glass presence
+  //     playmaking  = AST[1]                                   passing arcs from the key
+  //   DEFENSE (blue)
+  //     paint       = BLK[5]                                   rim protection
+  //     perimeter   = STL[4]                                   perimeter pressure
+  //     glass       = DREB[3]                                  defensive-glass presence
+  //
+  //   zoneOpacity(z) = clamp(z / 3, 0, 1) * 0.85
+  //     z <= 0   -> 0.00   (floor)
+  //     z = 1.5  -> 0.425
+  //     z = 3    -> 0.85   (ceiling)
+  //     z > 3    -> 0.85   (clamped)
+
+  var ZONE_Z_MAX = 3; // sigma value that saturates a zone's glow
+  var ZONE_OPACITY_MAX = 0.85;
+
+  function zoneOpacity(z) {
+    var t = z / ZONE_Z_MAX;
+    if (t < 0) t = 0;
+    if (t > 1) t = 1;
+    return t * ZONE_OPACITY_MAX;
+  }
+
+  function zoneRaw(v) {
+    return {
+      rim: (v[IDX.FTA] + Math.max(0, v[IDX.FGA] - v[IDX.FG3A])) / 2,
+      mid: v[IDX.FGA],
+      arc: v[IDX.FG3A],
+      oreb: v[IDX.OREB],
+      ast: v[IDX.AST],
+      paintD: v[IDX.BLK],
+      perimeterD: v[IDX.STL],
+      glassD: v[IDX.DREB]
+    };
+  }
+
+  var OFFENSE_KEYS = ['rim', 'mid', 'arc', 'oreb', 'ast'];
+  var DEFENSE_KEYS = ['paintD', 'perimeterD', 'glassD'];
+  var AREA_MATCH = { rim: 'paintD', arc: 'perimeterD', oreb: 'glassD' };
+  var AREA_LABEL = { rim: 'the rim', arc: 'the arc', oreb: 'the glass' };
+  var OFFENSE_PHRASE = {
+    rim: 'shoots at the rim', mid: 'lives in the midrange', arc: 'shoots from the arc',
+    oreb: 'crashes the glass', ast: 'runs it from the top of the key'
+  };
+  var DEFENSE_PHRASE = {
+    paintD: 'protects the paint', perimeterD: 'defends the perimeter', glassD: 'owns the defensive glass'
+  };
+
+  function dominantKey(zones, keys) {
+    var bestK = keys[0], bestV = -Infinity;
+    keys.forEach(function (k) {
+      if (zones[k] > bestV) { bestV = zones[k]; bestK = k; }
+    });
+    return bestK;
+  }
+
+  function entityPhrase(zones) {
+    var topOff = dominantKey(zones, OFFENSE_KEYS);
+    var topDef = dominantKey(zones, DEFENSE_KEYS);
+    if (AREA_MATCH[topOff] === topDef) {
+      return 'lives at ' + AREA_LABEL[topOff] + ' on both ends';
+    }
+    return DEFENSE_PHRASE[topDef] + ' and ' + OFFENSE_PHRASE[topOff];
+  }
+
+  function storyCaption(targetZones, guessZones) {
+    return 'The Chimera ' + entityPhrase(targetZones) + ' — your guess ' + entityPhrase(guessZones) + '.';
+  }
+
+  // ---------------------------------------------------------------------
+  // Half-court diagram (canvas, drawn in code — no assets)
+  // ---------------------------------------------------------------------
+
+  function courtGeometry(w, h) {
+    var s = w / 50; // px per foot; canvas aspect fixed at 50:47
+    var cx = w / 2;
+    var rimY = h - 5.25 * s;
+    var keyW = 16 * s, keyH = 19 * s;
+    var keyX = cx - keyW / 2, keyY = h - keyH;
+    var ftR = 6 * s;
+    var r3 = 23.75 * s;
+    var cornerOffset = 22 * s;
+    var dy = Math.sqrt(Math.max(0, r3 * r3 - cornerOffset * cornerOffset));
+    var cornerY = rimY - dy;
+    var leftAngle = Math.atan2(cornerY - rimY, -cornerOffset);
+    var rightAngle = Math.atan2(cornerY - rimY, cornerOffset);
+    return {
+      s: s, w: w, h: h, cx: cx, rimY: rimY,
+      keyX: keyX, keyY: keyY, keyW: keyW, keyH: keyH,
+      ftR: ftR, r3: r3, cornerOffset: cornerOffset, cornerY: cornerY,
+      leftAngle: leftAngle, rightAngle: rightAngle
+    };
+  }
+
+  function drawCourtLines(ctx, g) {
+    ctx.save();
+    ctx.strokeStyle = 'rgba(184,191,204,0.55)';
+    ctx.lineWidth = Math.max(1, g.s * 0.06);
+
+    // boundary
+    ctx.strokeRect(0.5, 0.5, g.w - 1, g.h - 1);
+
+    // key / paint
+    ctx.strokeRect(g.keyX, g.keyY, g.keyW, g.keyH);
+
+    // free-throw circle
+    ctx.beginPath();
+    ctx.arc(g.cx, g.keyY, g.ftR, 0, Math.PI * 2);
+    ctx.stroke();
+
+    // backboard
+    ctx.beginPath();
+    ctx.moveTo(g.cx - 3 * g.s, g.h - 4 * g.s);
+    ctx.lineTo(g.cx + 3 * g.s, g.h - 4 * g.s);
+    ctx.stroke();
+
+    // rim
+    ctx.beginPath();
+    ctx.arc(g.cx, g.rimY, 0.75 * g.s, 0, Math.PI * 2);
+    ctx.stroke();
+
+    // 3pt corners (straight) + arc
+    ctx.beginPath();
+    ctx.moveTo(g.cx - g.cornerOffset, g.h);
+    ctx.lineTo(g.cx - g.cornerOffset, g.cornerY);
+    ctx.moveTo(g.cx + g.cornerOffset, g.h);
+    ctx.lineTo(g.cx + g.cornerOffset, g.cornerY);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.arc(g.cx, g.rimY, g.r3, g.leftAngle, g.rightAngle, false);
+    ctx.stroke();
+
+    // half-court line (top edge doubles as this on a half-court canvas)
+    ctx.restore();
+  }
+
+  function radialGlow(ctx, x, y, r, rgb, opacity) {
+    if (opacity <= 0.01 || r <= 0) return;
+    var grad = ctx.createRadialGradient(x, y, 0, x, y, r);
+    grad.addColorStop(0, 'rgba(' + rgb + ',' + opacity.toFixed(3) + ')');
+    grad.addColorStop(1, 'rgba(' + rgb + ',0)');
+    ctx.fillStyle = grad;
+    ctx.beginPath();
+    ctx.arc(x, y, r, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  var AMBER_RGB = '232,163,61';
+  var BLUE_RGB = '77,143,232';
+
+  function drawZones(ctx, g, offense, defense) {
+    // ---- defense (blue), drawn first ----
+    radialGlow(ctx, g.cx, g.keyY + g.keyH * 0.5, g.keyH * 0.9, BLUE_RGB, zoneOpacity(defense.paintD));
+    radialGlow(ctx, g.cx, g.rimY, g.r3 * 1.02, BLUE_RGB, zoneOpacity(defense.perimeterD) * 0.5);
+    if (zoneOpacity(defense.perimeterD) > 0.02) {
+      ctx.save();
+      ctx.strokeStyle = 'rgba(' + BLUE_RGB + ',' + zoneOpacity(defense.perimeterD).toFixed(3) + ')';
+      ctx.lineWidth = Math.max(2, g.s * 0.5);
+      ctx.beginPath();
+      ctx.arc(g.cx, g.rimY, g.r3, g.leftAngle, g.rightAngle, false);
+      ctx.stroke();
+      ctx.restore();
+    }
+    radialGlow(ctx, g.cx + g.keyW * 0.55, g.h - 2 * g.s, 3.2 * g.s, BLUE_RGB, zoneOpacity(defense.glassD));
+
+    // ---- offense (amber), drawn on top, translucent ----
+    radialGlow(ctx, g.cx, g.rimY, 5.5 * g.s, AMBER_RGB, zoneOpacity(offense.rim));
+    radialGlow(ctx, g.cx, g.keyY - 6 * g.s, 11 * g.s, AMBER_RGB, zoneOpacity(offense.mid) * 0.7);
+    if (zoneOpacity(offense.arc) > 0.02) {
+      ctx.save();
+      ctx.strokeStyle = 'rgba(' + AMBER_RGB + ',' + zoneOpacity(offense.arc).toFixed(3) + ')';
+      ctx.lineWidth = Math.max(2, g.s * 0.4);
+      ctx.beginPath();
+      ctx.arc(g.cx, g.rimY, g.r3, g.leftAngle, g.rightAngle, false);
+      ctx.stroke();
+      ctx.restore();
+    }
+    radialGlow(ctx, g.cx - g.keyW * 0.55, g.h - 2 * g.s, 3.2 * g.s, AMBER_RGB, zoneOpacity(offense.oreb));
+
+    var astOp = zoneOpacity(offense.ast);
+    if (astOp > 0.02) {
+      ctx.save();
+      ctx.strokeStyle = 'rgba(' + AMBER_RGB + ',' + Math.min(1, astOp + 0.15).toFixed(3) + ')';
+      ctx.lineWidth = Math.max(1, g.s * 0.14);
+      var origin = { x: g.cx, y: g.keyY };
+      var targets = [
+        { x: g.cx - g.cornerOffset * 0.7, y: g.cornerY + 4 * g.s },
+        { x: g.cx + g.cornerOffset * 0.7, y: g.cornerY + 4 * g.s },
+        { x: g.cx, y: g.rimY + 3 * g.s }
+      ];
+      targets.forEach(function (t) {
+        ctx.beginPath();
+        ctx.moveTo(origin.x, origin.y);
+        ctx.quadraticCurveTo((origin.x + t.x) / 2, Math.min(origin.y, t.y) - 6 * g.s, t.x, t.y);
+        ctx.stroke();
+      });
+      ctx.restore();
+    }
+  }
+
+  function renderCourt(canvas, vector) {
+    var ctx = canvas.getContext('2d');
+    var w = canvas.width, h = canvas.height;
+    ctx.clearRect(0, 0, w, h);
+    var g = courtGeometry(w, h);
+    var zones = zoneRaw(vector);
+    drawZones(ctx, g, zones, zones);
+    drawCourtLines(ctx, g);
+    return zones;
+  }
+
+  // ---------------------------------------------------------------------
   // Chimera mode: guessing + feedback
   // ---------------------------------------------------------------------
 
@@ -422,9 +652,7 @@
         '<span class="vh-guess__num">' + (idx + 1) + '</span>' +
         '<span class="vh-guess__name">' + entry.name + '</span>' +
         '<span class="vh-guess__pct ' + pctClass + '">' + pct + '%</span>' +
-      '</div>' +
-      '<div class="vh-guess__line">' + entry.cluster + '</div>' +
-      '<div class="vh-guess__line">' + entry.coaching + '</div>';
+      '</div>';
     return li;
   }
 
@@ -434,12 +662,21 @@
     rec.guesses.forEach(function (entry, idx) {
       els.guessList.appendChild(renderGuessRow(entry, idx));
     });
-    els.guessCounter.textContent = rec.guesses.length + ' / ' + MAX_GUESSES;
+    var left = Math.max(0, MAX_GUESSES - rec.guesses.length);
+    els.guessesLeftNum.textContent = String(left);
 
     if (rec.guesses.length > 0) {
       var last = rec.guesses[rec.guesses.length - 1];
-      els.scoreboard.hidden = false;
+      var lastPlayer = DATA.players[last.id];
+      els.resultCard.hidden = false;
       els.scoreboardPct.textContent = Math.round(last.sim * 100) + '%';
+
+      var targetZones = renderCourt(els.courtTarget, TARGET.vector);
+      var guessZones = renderCourt(els.courtGuess, lastPlayer.v);
+      els.courtGuessLabel.textContent = 'Your guess: ' + last.name;
+      els.storyCaption.textContent = storyCaption(targetZones, guessZones);
+      els.clusterLine.innerHTML = clusterLine(lastPlayer);
+      els.coachingLine.textContent = coachingLine(TARGET.vector, lastPlayer.v);
     }
 
     if (rec.done) {
@@ -470,8 +707,8 @@
     els.revealCard.hidden = false;
     els.revealTitle.textContent = rec.won ? 'Solved' : 'The Chimera';
     els.revealBody.innerHTML =
-      'Fused from <b>' + playerKey(TARGET.a) + '</b> (' + traitList([0,1,2,3,4,5,6]).join(', ') + ') and <b>' +
-      playerKey(TARGET.b) + '</b> (' + traitList([7,8,9,10,11,12,13]).join(', ') + ').';
+      'Fused from <b>' + playerKey(TARGET.a) + '</b> (' + traitList([0, 1, 2, 3, 4, 5, 6]).join(', ') + ') and <b>' +
+      playerKey(TARGET.b) + '</b> (' + traitList([7, 8, 9, 10, 11, 12, 13]).join(', ') + ').';
     els.shareCopied.hidden = true;
   }
 
@@ -485,9 +722,7 @@
     var entry = {
       id: p.id,
       name: playerKey(p),
-      sim: sim,
-      cluster: clusterLine(p),
-      coaching: coachingLine(TARGET.vector, p.v)
+      sim: sim
     };
     rec.guesses.push(entry);
 
@@ -502,85 +737,144 @@
     els.chimeraInput.value = '';
     els.chimeraSubmit.disabled = true;
     renderGuesses();
-    renderMap();
+    renderMapOnce();
   }
 
   var pendingChimeraSelection = null;
 
   // ---------------------------------------------------------------------
-  // Map canvas
+  // 3D starfield map: manual perspective projection, no libraries
   // ---------------------------------------------------------------------
 
   var PALETTE = ['#e8a33d', '#3fbf7f', '#4d8fe8', '#d9564a', '#c060e0',
                  '#3ddede', '#e0d23d', '#8a8f9c'];
 
-  function resizeCanvas(canvas) {
+  var PREFERS_REDUCED_MOTION = false;
+  try {
+    PREFERS_REDUCED_MOTION = window.matchMedia &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  } catch (e) { PREFERS_REDUCED_MOTION = false; }
+
+  var mapCam = {
+    yaw: 0.6,
+    pitch: 0.28,
+    zoom: 1,
+    focal: 2.6,
+    autoRotate: !PREFERS_REDUCED_MOTION,
+    dragging: false,
+    lastX: 0,
+    lastY: 0,
+    pinchDist: null,
+    rafId: null
+  };
+
+  function resizeSquareCanvas(canvas) {
     var rect = canvas.getBoundingClientRect();
     var dpr = window.devicePixelRatio || 1;
     var w = Math.max(rect.width, 240);
     canvas.width = Math.round(w * dpr);
-    canvas.height = Math.round(w * dpr); // square aspect
+    canvas.height = Math.round(w * dpr);
     var ctx = canvas.getContext('2d');
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     return { ctx: ctx, size: w };
   }
 
+  function project3D(x, y, z, size, cam) {
+    // center to [-1, 1]-ish cube
+    var px = (x - 0.5) * 2;
+    var py = (y - 0.5) * 2;
+    var pz = (z - 0.5) * 2;
+
+    // rotate around Y (yaw)
+    var cosY = Math.cos(cam.yaw), sinY = Math.sin(cam.yaw);
+    var x1 = px * cosY + pz * sinY;
+    var z1 = -px * sinY + pz * cosY;
+
+    // rotate around X (pitch)
+    var cosX = Math.cos(cam.pitch), sinX = Math.sin(cam.pitch);
+    var y2 = py * cosX - z1 * sinX;
+    var z2 = py * sinX + z1 * cosX;
+
+    var focal = cam.focal / cam.zoom;
+    var zc = z2 + focal;
+    if (zc < 0.2) zc = 0.2;
+    var scale = focal / zc;
+
+    var half = size / 2;
+    return {
+      sx: half + x1 * scale * half * 0.85,
+      sy: half - y2 * scale * half * 0.85,
+      scale: scale,
+      depth: zc
+    };
+  }
+
   function renderMap() {
     if (!DATA) return;
     var canvas = els.map;
-    var r = resizeCanvas(canvas);
-    var ctx = r.ctx, size = r.size, pad = size * 0.05;
-    var plotSize = size - pad * 2;
+    var r = resizeSquareCanvas(canvas);
+    var ctx = r.ctx, size = r.size;
 
     ctx.clearRect(0, 0, size, size);
 
-    function toXY(x, y) {
-      return [pad + x * plotSize, pad + (1 - y) * plotSize];
-    }
-
-    // hint glow on target's cluster region
-    var glowPos = CLUSTER_XY[TARGET.clusterIdx];
-    var g = toXY(glowPos.x, glowPos.y);
-    var glowRadius = plotSize * 0.22;
-    var grad = ctx.createRadialGradient(g[0], g[1], 0, g[0], g[1], glowRadius);
-    grad.addColorStop(0, 'rgba(232,163,61,0.28)');
-    grad.addColorStop(1, 'rgba(232,163,61,0)');
-    ctx.fillStyle = grad;
-    ctx.beginPath();
-    ctx.arc(g[0], g[1], glowRadius, 0, Math.PI * 2);
-    ctx.fill();
-
-    // faint dots for every player, colored by cluster
     var players = DATA.players;
+    var projected = new Array(players.length);
     for (var i = 0; i < players.length; i++) {
       var p = players[i];
-      var xy = toXY(p.x, p.y);
-      ctx.fillStyle = PALETTE[p.c % PALETTE.length];
-      ctx.globalAlpha = 0.28;
+      var proj = project3D(p.x, p.y, p.z, size, mapCam);
+      projected[i] = proj;
+    }
+
+    // painter's algorithm: farthest first
+    var order = players.map(function (_, i) { return i; });
+    order.sort(function (a, b) { return projected[b].depth - projected[a].depth; });
+
+    var maxDepth = mapCam.focal * 2.2;
+    for (var oi = 0; oi < order.length; oi++) {
+      var idx = order[oi];
+      var pl = players[idx];
+      var pr = projected[idx];
+      var depthT = Math.max(0, Math.min(1, pr.depth / maxDepth));
+      var alpha = 0.55 * (1 - depthT) + 0.05;
+      var radius = Math.max(0.6, 2.4 * pr.scale);
+      ctx.globalAlpha = alpha;
+      ctx.fillStyle = PALETTE[pl.c % PALETTE.length];
       ctx.beginPath();
-      ctx.arc(xy[0], xy[1], 2.1, 0, Math.PI * 2);
+      ctx.arc(pr.sx, pr.sy, radius, 0, Math.PI * 2);
       ctx.fill();
     }
     ctx.globalAlpha = 1;
 
-    // numbered guess pins
+    // target's home-cluster centroid: soft glowing beacon
+    var centroid = CLUSTER_XYZ[TARGET.clusterIdx];
+    var cproj = project3D(centroid.x, centroid.y, centroid.z, size, mapCam);
+    var beaconR = 26 * cproj.scale;
+    var grad = ctx.createRadialGradient(cproj.sx, cproj.sy, 0, cproj.sx, cproj.sy, beaconR);
+    grad.addColorStop(0, 'rgba(232,163,61,0.55)');
+    grad.addColorStop(1, 'rgba(232,163,61,0)');
+    ctx.fillStyle = grad;
+    ctx.beginPath();
+    ctx.arc(cproj.sx, cproj.sy, beaconR, 0, Math.PI * 2);
+    ctx.fill();
+
+    // numbered guess pins, always on top
     var rec = todayRecord();
-    rec.guesses.forEach(function (entry, idx) {
-      var p = players[entry.id];
-      if (!p) return;
-      var xy = toXY(p.x, p.y);
+    rec.guesses.forEach(function (entry, gi) {
+      var pl = players[entry.id];
+      if (!pl) return;
+      var pr = project3D(pl.x, pl.y, pl.z, size, mapCam);
       ctx.fillStyle = '#0e1420';
       ctx.strokeStyle = '#e8a33d';
       ctx.lineWidth = 2;
       ctx.beginPath();
-      ctx.arc(xy[0], xy[1], 9, 0, Math.PI * 2);
+      ctx.arc(pr.sx, pr.sy, 9, 0, Math.PI * 2);
       ctx.fill();
       ctx.stroke();
       ctx.fillStyle = '#f5f3ee';
       ctx.font = 'bold 10px ' + getComputedStyle(document.body).fontFamily;
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
-      ctx.fillText(String(idx + 1), xy[0], xy[1] + 1);
+      ctx.fillText(String(gi + 1), pr.sx, pr.sy + 1);
     });
   }
 
@@ -589,6 +883,106 @@
       var color = PALETTE[idx % PALETTE.length];
       return '<span><span class="vh-legend-dot" style="background:' + color + '"></span>' + name + '</span>';
     }).join('');
+  }
+
+  function mapLoop() {
+    if (!mapCam.autoRotate || mapCam.dragging) {
+      mapCam.rafId = null;
+      return;
+    }
+    mapCam.yaw += 0.0028;
+    renderMap();
+    mapCam.rafId = requestAnimationFrame(mapLoop);
+  }
+
+  function startMapLoopIfNeeded() {
+    if (mapCam.rafId != null) return;
+    if (mapCam.autoRotate && !mapCam.dragging) {
+      mapCam.rafId = requestAnimationFrame(mapLoop);
+    }
+  }
+
+  function renderMapOnce() {
+    renderMap();
+  }
+
+  function setupMapInteraction() {
+    var canvas = els.map;
+
+    canvas.addEventListener('pointerdown', function (ev) {
+      mapCam.dragging = true;
+      mapCam.lastX = ev.clientX;
+      mapCam.lastY = ev.clientY;
+      try { canvas.setPointerCapture(ev.pointerId); } catch (e) { /* noop */ }
+    });
+
+    canvas.addEventListener('pointermove', function (ev) {
+      if (!mapCam.dragging) return;
+      var dx = ev.clientX - mapCam.lastX;
+      var dy = ev.clientY - mapCam.lastY;
+      mapCam.lastX = ev.clientX;
+      mapCam.lastY = ev.clientY;
+      mapCam.yaw += dx * 0.008;
+      mapCam.pitch += dy * 0.008;
+      mapCam.pitch = Math.max(-1.2, Math.min(1.2, mapCam.pitch));
+      renderMap();
+    });
+
+    function endDrag() {
+      if (!mapCam.dragging) return;
+      mapCam.dragging = false;
+      startMapLoopIfNeeded();
+    }
+    canvas.addEventListener('pointerup', endDrag);
+    canvas.addEventListener('pointercancel', endDrag);
+    canvas.addEventListener('pointerleave', function () {
+      if (mapCam.dragging) endDrag();
+    });
+
+    canvas.addEventListener('wheel', function (ev) {
+      ev.preventDefault();
+      var factor = Math.exp(-ev.deltaY * 0.001);
+      mapCam.zoom = Math.max(0.5, Math.min(3.5, mapCam.zoom * factor));
+      renderMap();
+    }, { passive: false });
+
+    // two-finger pinch to zoom
+    canvas.addEventListener('touchmove', function (ev) {
+      if (ev.touches.length !== 2) return;
+      ev.preventDefault();
+      var t0 = ev.touches[0], t1 = ev.touches[1];
+      var d = Math.hypot(t1.clientX - t0.clientX, t1.clientY - t0.clientY);
+      if (mapCam.pinchDist != null) {
+        var factor = d / mapCam.pinchDist;
+        mapCam.zoom = Math.max(0.5, Math.min(3.5, mapCam.zoom * factor));
+        renderMap();
+      }
+      mapCam.pinchDist = d;
+    }, { passive: false });
+    canvas.addEventListener('touchend', function (ev) {
+      if (ev.touches.length < 2) mapCam.pinchDist = null;
+    });
+
+    els.mapPauseBtn.addEventListener('click', function () {
+      mapCam.autoRotate = !mapCam.autoRotate;
+      els.mapPauseBtn.textContent = mapCam.autoRotate ? 'Pause' : 'Resume';
+      if (mapCam.autoRotate) startMapLoopIfNeeded();
+    });
+    els.mapPauseBtn.textContent = mapCam.autoRotate ? 'Pause' : 'Resume';
+
+    window.addEventListener('resize', function () {
+      renderMap();
+    });
+
+    els.mapDetails.addEventListener('toggle', function () {
+      if (els.mapDetails.open) {
+        renderMap();
+        startMapLoopIfNeeded();
+      } else if (mapCam.rafId != null) {
+        cancelAnimationFrame(mapCam.rafId);
+        mapCam.rafId = null;
+      }
+    });
   }
 
   // ---------------------------------------------------------------------
@@ -615,65 +1009,25 @@
   }
 
   // ---------------------------------------------------------------------
-  // Trade Machine mode
+  // How-to-play modal
   // ---------------------------------------------------------------------
 
-  function sharedStrengthLabels(a, b) {
-    var products = [];
-    for (var i = 0; i < a.v.length; i++) {
-      products.push({ i: i, p: a.v[i] * b.v[i] });
-    }
-    products.sort(function (x, y) { return y.p - x.p; });
-    return products.slice(0, 2).map(function (entry) {
-      return DATA.featureLabels[DATA.features[entry.i]];
-    });
+  function openHelp() {
+    els.helpBackdrop.hidden = false;
+  }
+  function closeHelp() {
+    els.helpBackdrop.hidden = true;
   }
 
-  function runTradeMachine(anchor) {
-    els.tradeAnchor.hidden = false;
-    els.tradeAnchor.innerHTML = 'Comparing against <b>' + playerKey(anchor) + '</b>.';
-
-    var players = DATA.players;
-    var scored = [];
-    for (var i = 0; i < players.length; i++) {
-      var p = players[i];
-      if (p.id === anchor.id) continue;
-      scored.push({ p: p, sim: cosineSim(anchor.v, p.v) });
-    }
-    scored.sort(function (x, y) { return y.sim - x.sim; });
-    var top = scored.slice(0, 8);
-
-    els.tradeResults.innerHTML = '';
-    top.forEach(function (entry) {
-      var dup = entry.p.name === anchor.name;
-      var labels = sharedStrengthLabels(anchor, entry.p);
-      var card = document.createElement('div');
-      card.className = 'vh-trade-card' + (dup ? ' vh-dup' : '');
-      card.innerHTML =
-        '<div class="vh-trade-card__head">' +
-          '<span class="vh-trade-card__name">' + playerKey(entry.p) + '</span>' +
-          '<span class="vh-trade-card__pct">' + Math.round(entry.sim * 100) + '%</span>' +
-        '</div>' +
-        '<div class="vh-trade-card__labels">Shared strength: ' + labels.join(', ') + '</div>';
-      els.tradeResults.appendChild(card);
+  function setupHelp() {
+    els.helpBtn.addEventListener('click', openHelp);
+    els.helpClose.addEventListener('click', closeHelp);
+    els.helpBackdrop.addEventListener('click', function (ev) {
+      if (ev.target === els.helpBackdrop) closeHelp();
     });
-  }
-
-  // ---------------------------------------------------------------------
-  // Tabs
-  // ---------------------------------------------------------------------
-
-  function setupTabs() {
-    function activate(which) {
-      var chimera = which === 'chimera';
-      els.tabChimera.setAttribute('aria-selected', String(chimera));
-      els.tabTrade.setAttribute('aria-selected', String(!chimera));
-      els.panelChimera.hidden = !chimera;
-      els.panelTrade.hidden = chimera;
-      if (chimera) renderMap();
-    }
-    els.tabChimera.addEventListener('click', function () { activate('chimera'); });
-    els.tabTrade.addEventListener('click', function () { activate('trade'); });
+    document.addEventListener('keydown', function (ev) {
+      if (ev.key === 'Escape' && !els.helpBackdrop.hidden) closeHelp();
+    });
   }
 
   // ---------------------------------------------------------------------
@@ -693,13 +1047,20 @@
 
   function initDom() {
     els.puzzleNumber = document.getElementById('puzzle-number');
+    els.puzzleDay = document.getElementById('puzzle-day');
     els.promptText = document.getElementById('prompt-text');
     els.chimeraInput = document.getElementById('chimera-input');
     els.chimeraSuggestions = document.getElementById('chimera-suggestions');
     els.chimeraSubmit = document.getElementById('chimera-submit');
-    els.guessCounter = document.getElementById('guess-counter');
-    els.scoreboard = document.getElementById('scoreboard');
+    els.guessesLeftNum = document.getElementById('guesses-left-num');
+    els.resultCard = document.getElementById('result-card');
     els.scoreboardPct = document.getElementById('scoreboard-pct');
+    els.courtTarget = document.getElementById('court-target');
+    els.courtGuess = document.getElementById('court-guess');
+    els.courtGuessLabel = document.getElementById('court-guess-label');
+    els.storyCaption = document.getElementById('story-caption');
+    els.clusterLine = document.getElementById('cluster-line');
+    els.coachingLine = document.getElementById('coaching-line');
     els.guessList = document.getElementById('guess-list');
     els.revealCard = document.getElementById('reveal-card');
     els.revealTitle = document.getElementById('reveal-title');
@@ -708,15 +1069,12 @@
     els.shareCopied = document.getElementById('share-copied');
     els.map = document.getElementById('hoops-map');
     els.mapLegend = document.getElementById('map-legend');
+    els.mapPauseBtn = document.getElementById('map-pause-btn');
+    els.mapDetails = document.getElementById('map-details');
     els.streakNum = document.getElementById('streak-num');
-    els.tabChimera = document.getElementById('tab-chimera');
-    els.tabTrade = document.getElementById('tab-trade');
-    els.panelChimera = document.getElementById('panel-chimera');
-    els.panelTrade = document.getElementById('panel-trade');
-    els.tradeInput = document.getElementById('trade-input');
-    els.tradeSuggestions = document.getElementById('trade-suggestions');
-    els.tradeAnchor = document.getElementById('trade-anchor');
-    els.tradeResults = document.getElementById('trade-results');
+    els.helpBtn = document.getElementById('help-btn');
+    els.helpBackdrop = document.getElementById('help-backdrop');
+    els.helpClose = document.getElementById('help-close');
     els.loadingBanner = document.getElementById('loading-banner');
     els.errorBanner = document.getElementById('error-banner');
     els.footer = document.getElementById('footer');
@@ -735,21 +1093,10 @@
     els.chimeraInput.disabled = false;
   }
 
-  function setupTradeInputs() {
-    createAutocomplete(els.tradeInput, els.tradeSuggestions, DATA.players, function (p) {
-      runTradeMachine(p);
-    });
-    els.tradeInput.disabled = false;
-  }
-
   function resumeChimeraIfDone() {
     var rec = todayRecord();
     if (rec.done) lockInput();
   }
-
-  window.addEventListener('resize', function () {
-    if (!els.panelChimera.hidden) renderMap();
-  });
 
   // ---------------------------------------------------------------------
   // Init
@@ -757,6 +1104,7 @@
 
   function init() {
     initDom();
+    setupHelp();
     fetch(DATA_URL)
       .then(function (res) {
         if (!res.ok) throw new Error('HTTP ' + res.status);
@@ -767,7 +1115,7 @@
         var k = DATA.clusters.length;
         var dims = DATA.features.length;
         CENTROIDS = computeCentroids(DATA.players, k, dims);
-        CLUSTER_XY = computeClusterXY(DATA.players, k);
+        CLUSTER_XYZ = computeClusterXYZ(DATA.players, k);
         TARGET = buildDailyTarget();
         STATE = loadState();
 
@@ -776,13 +1124,17 @@
         renderFooter();
         renderStreak();
         renderMapLegend();
-        setupTabs();
         setupChimeraInputs();
-        setupTradeInputs();
         setupShare();
+        setupMapInteraction();
         renderGuesses();
         resumeChimeraIfDone();
         renderMap();
+        startMapLoopIfNeeded();
+
+        if (todayRecord().guesses.length === 0 && !todayRecord().done) {
+          openHelp();
+        }
       })
       .catch(function (err) {
         els.loadingBanner.hidden = true;
