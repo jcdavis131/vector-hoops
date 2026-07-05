@@ -754,6 +754,18 @@ main{
   box-shadow: 3px 3px 0 var(--identified);
   background: var(--identified-bg);
 }
+/* Mashup "close enough" (>=92%, not exact) lock — silver overrides gold,
+   still a WON row, never a lesser/red one. */
+.vh-guess.is-identified.is-silver{
+  border-color: var(--silver);
+  box-shadow: 3px 3px 0 var(--silver);
+  background: var(--silver-bg);
+}
+.vh-guess.is-identified.is-silver .vh-guess__badge{
+  color: var(--ink-soft);
+  background: var(--silver-bg);
+  border-color: var(--silver);
+}
 
 .vh-guess__badge{
   font-family: var(--mono);
@@ -807,6 +819,10 @@ main{
   padding: 1px 6px;
   flex: 0 0 auto;
 }
+/* Unified guess-history list, tagged per slot (v4 THREE-PART ANSWERS) —
+   same three colors used for the warmth bars/equation kicker. */
+.vh-guess__phase--archetype{ color: var(--data-purple); border-color: var(--data-purple); }
+.vh-guess__phase--mashup{ color: var(--data-orange); border-color: var(--data-orange); }
 
 .vh-guess__name{
   font-weight: 700;
@@ -987,6 +1003,11 @@ main{
   border: 1px solid var(--ink);
 }
 
+/* Progressive triangulation: a donor anchor's legend row before its slot
+   locks — dimmed, not a color the map otherwise uses, so "still hidden"
+   reads as its own state rather than a data value. */
+.vh-legend-pending{ opacity: 0.55; font-style: italic; }
+
 /* ---------- how-to-play modal ---------- */
 
 .vh-modal-backdrop{
@@ -1159,7 +1180,12 @@ main{
   background: var(--ink);
   border-radius: 2px 2px 0 0;
 }
-.vh-warmth__bar.is-best{ background: var(--data-orange); }
+/* v4 THREE-PART ANSWERS: unified turn history, colored per slot glyph. */
+.vh-warmth__bar--stats{ background: var(--ink-soft); }
+.vh-warmth__bar--archetype{ background: var(--data-purple); }
+.vh-warmth__bar--mashup{ background: var(--data-orange); }
+.vh-warmth__bar.is-best{ background: var(--identified); }
+.vh-warmth__bar.is-best.is-silver{ background: var(--silver); }
 
 .vh-warmth__closest{
   font-family: var(--mono);

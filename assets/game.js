@@ -2064,6 +2064,7 @@
       var pct = Math.max(0, Math.round(g.sim * 100));
       bar.style.height = Math.max(3, Math.round(pct * 0.4)) + 'px';
       if (g.locked) bar.classList.add('is-best');
+      if (g.silver) bar.classList.add('is-silver');
       bar.title = slotLabel(g.slot) + ' — ' + g.name + ': ' + pct + '%';
       els.warmthBars.appendChild(bar);
     });
@@ -5592,6 +5593,12 @@
   }
 
   function refreshChimeraView() {
+    if (activeChimeraMode === 'practice' && PRACTICE_STAGE === 'pick'
+        && !PRACTICE_TARGET) {
+      // Build-a-Chimera entry: the player picks both donors first.
+      showPickerStage();
+      return;
+    }
     if (activeChimeraMode === 'practice') ensurePracticeTarget();
     showPlayingStage();
     TARGET = activeChimeraMode === 'practice' ? PRACTICE_TARGET : DAILY_TARGET;
@@ -5715,8 +5722,11 @@
     // "Change donors" (visible once a Build-a-Chimera round is underway):
     // back to the picker, discarding the current blend.
     els.chimeraNewBtn.addEventListener('click', function () {
-      PRACTICE_TARGET = buildPracticeTarget();
-      PRACTICE_REC = freshDayRecord();
+      PRACTICE_TARGET = null;
+      PRACTICE_REC = null;
+      PRACTICE_STAGE = 'pick';
+      donorPick.stats = null;
+      donorPick.shooting = null;
       equationForceExpand = false;
       refreshChimeraView();
       track('vh-start', { mode: 'free' });
