@@ -14,11 +14,40 @@
   'use strict';
 
   var DATA_URL = 'assets/vectors.json';
+  var DEADLINE_URL = 'assets/deadline.json';
   var EPOCH_DATE = '2026-07-01'; // puzzle #1
   var MAX_GUESSES = 6;
   var WIN_SIMILARITY = 0.92;
   var LS_KEY = 'vectorHoops.v2';
+  var LS_KEY_USER_REF = 'vectorHoops.userRef';
+  var LS_KEY_DEADLINE_COUNTER = 'vectorHoops.deadline.counter';
+  var SS_KEY_FULLREPORT = 'vectorHoops.fullReportOpen';
+  var DEADLINE_ROUNDS_PER_RUN = 5;
   var A_COUNT = 7; // first 7 dims come from player A, last 7 from player B
+
+  // ---------------------------------------------------------------------
+  // Telemetry: fire-and-forget, never blocks gameplay
+  // ---------------------------------------------------------------------
+
+  function getUserRef() {
+    var ref = null;
+    try { ref = localStorage.getItem(LS_KEY_USER_REF); } catch (e) { ref = null; }
+    if (!ref) {
+      ref = 'u_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2);
+      try { localStorage.setItem(LS_KEY_USER_REF, ref); } catch (e) { /* storage unavailable */ }
+    }
+    return ref;
+  }
+
+  function track(event, detail) {
+    try {
+      fetch('/api/telemetry', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ event: event, userRef: getUserRef(), detail: detail })
+      }).catch(function () { /* fire-and-forget */ });
+    } catch (e) { /* never block gameplay */ }
+  }
 
   // Feature indices (fixed by pipeline/build_vectors.py FEATURES order)
   var IDX = {
@@ -170,6 +199,13 @@
     return p.name + ' (' + p.season + ')';
   }
 
+  // Slug rules shared with pipeline/build_wiki.py (OKF page filenames):
+  // accent-fold, lowercase, non-alphanumerics collapse to single hyphens.
+  function playerSlug(name) {
+    return name.normalize('NFD').replace(/[̀-ͯ]/g, '')
+      .toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+  }
+
   // ---------------------------------------------------------------------
   // Daily Chimera target selection
   // ---------------------------------------------------------------------
@@ -209,6 +245,40 @@
     });
   }
 
+  // Deterministic trait phrasing for the scouting-report opener: top-2
+  // positive sigmas become "an elite {noun} and {noun}", the single most
+  // negative sigma becomes the "who {verb phrase}" clause.
+  var TRAIT_POS_NOUN = {
+    PTS: 'scorer', AST: 'playmaker', OREB: 'offensive rebounder', DREB: 'defensive rebounder',
+    STL: 'perimeter disruptor', BLK: 'rim-protector', TOV: 'high-usage ball-handler',
+    FG3A: 'three-point shooter', FGA: 'shot creator', FTA: 'rim-pressure threat',
+    FG3_PCT: 'knockdown shooter', FG_PCT: 'finisher', FT_PCT: 'free-throw threat',
+    PLUS_MINUS: 'winning presence'
+  };
+  var TRAIT_NEG_VERB = {
+    PTS: 'rarely looks for his own shot', AST: "isn't the one setting up teammates",
+    OREB: 'stays off the offensive glass', DREB: 'rarely finishes plays with a defensive board',
+    STL: "doesn't generate takeaways", BLK: 'gives you nothing at the rim',
+    TOV: 'protects the ball at a premium rate', FG3A: 'almost never shoots threes',
+    FGA: 'barely creates his own offense', FTA: 'rarely draws contact',
+    FG3_PCT: "can't hit from three", FG_PCT: 'struggles to finish around the rim',
+    FT_PCT: 'is shaky at the line', PLUS_MINUS: 'has been a net negative on the floor'
+  };
+
+  function buildScoutingLine(vector, clusterIdx) {
+    var entries = DATA.features.map(function (key, i) {
+      return { key: key, v: vector[i] };
+    });
+    var byDesc = entries.slice().sort(function (a, b) { return b.v - a.v; });
+    var byAsc = entries.slice().sort(function (a, b) { return a.v - b.v; });
+    var noun1 = TRAIT_POS_NOUN[byDesc[0].key];
+    var noun2 = TRAIT_POS_NOUN[byDesc[1].key];
+    var negPhrase = TRAIT_NEG_VERB[byAsc[0].key];
+    var archetype = DATA.clusters[clusterIdx];
+    return "Today's Chimera: an elite " + noun1 + ' and ' + noun2 + ' who ' +
+      negPhrase + '. Archetype: ' + archetype + '.';
+  }
+
   function joinOxford(list) {
     if (list.length === 0) return '';
     if (list.length === 1) return list[0];
@@ -227,6 +297,10 @@
     els.promptText.innerHTML =
       "Today's Chimera: the <b>" + aPhrase + '</b> profile of one legend fused with the <b>' +
       bPhrase + '</b> profile of another. Same season halves, two different careers &mdash; find both.';
+  }
+
+  function renderScoutingLine() {
+    els.scoutingLine.textContent = buildScoutingLine(TARGET.vector, TARGET.clusterIdx);
   }
 
   // ---------------------------------------------------------------------
@@ -273,8 +347,10 @@
       var yesterday = utcDateString(new Date(Date.now() - 86400000));
       STATE.streak = (STATE.lastWinDate === yesterday) ? STATE.streak + 1 : 1;
       STATE.lastWinDate = TODAY;
+      track('vh-win', rec.guesses.length);
     } else {
       STATE.streak = 0;
+      track('vh-loss');
     }
     saveState();
     renderStreak();
@@ -382,38 +458,46 @@
   // Zone math: z-scored features -> court zone intensities
   // ---------------------------------------------------------------------
   //
-  // Zone-mapping table (raw sigma -> [0, 0.85] opacity, floored at 0):
+  // The half court is partitioned into the real shooting regions of the
+  // NBA floor (all dimensions in feet, to rule):
   //
-  //   OFFENSE (amber)
-  //     rim/paint   = avg( FTA[9], max(0, FGA[8]-FG3A[7]) )   rim pressure + inside volume
-  //     midrange    = FGA[8]                                   overall shot volume proxy
-  //     arc         = FG3A[7]                                  three-point volume
-  //     oreb marker = OREB[2]                                  offensive-glass presence
-  //     playmaking  = AST[1]                                   passing arcs from the key
-  //   DEFENSE (blue)
-  //     paint       = BLK[5]                                   rim protection
-  //     perimeter   = STL[4]                                   perimeter pressure
-  //     glass       = DREB[3]                                  defensive-glass presence
+  //   restricted area   r = 4' semicircle at the rim (rim center 5.25' out)
+  //   paint (non-RA)    16' x 19' lane minus the restricted area
+  //   midrange          inside the 3PT boundary, outside the lane
+  //   beyond the arc    r = 23.75' arc + 22' corner lines to the baseline
   //
-  //   zoneOpacity(z) = clamp(z / 3, 0, 1) * 0.85
-  //     z <= 0   -> 0.00   (floor)
-  //     z = 1.5  -> 0.425
-  //     z = 3    -> 0.85   (ceiling)
-  //     z > 3    -> 0.85   (clamped)
+  // Region fill opacity (offense, orange) and hatch opacity (defense,
+  // blue) are both linear in sigma: clamp(z / 3, 0, 1) * MAX. Every
+  // offensive region carries its numeric sigma label — the court reads
+  // as a labeled diagram, not a heat blur.
+  //
+  //   OFFENSE (orange fills)
+  //     restricted   = avg( FTA[9], max(0, FGA[8]-FG3A[7]) )  rim pressure
+  //     paint (FT)   = FTA[9]                                 fouls drawn / line trips
+  //     midrange     = FGA[8]                                 overall shot volume
+  //     beyond arc   = FG3A[7]                                three-point volume
+  //     oreb square  = OREB[2]                                offensive-glass block
+  //     ast vectors  = AST[1]                                 passing vectors from the key
+  //   DEFENSE (blue 45-degree hatching)
+  //     lane hatch   = BLK[5]                                 rim protection
+  //     arc band     = STL[4]                                 perimeter pressure
+  //     dreb square  = DREB[3]                                defensive-glass block
 
-  var ZONE_Z_MAX = 3; // sigma value that saturates a zone's glow
-  var ZONE_OPACITY_MAX = 0.85;
+  var ZONE_Z_MAX = 3;         // sigma value that saturates a zone
+  var ZONE_FILL_MAX = 0.60;   // fills stay translucent so labels read
+  var ZONE_HATCH_MAX = 0.90;
 
-  function zoneOpacity(z) {
+  function zoneT(z) {
     var t = z / ZONE_Z_MAX;
     if (t < 0) t = 0;
     if (t > 1) t = 1;
-    return t * ZONE_OPACITY_MAX;
+    return t;
   }
 
   function zoneRaw(v) {
     return {
       rim: (v[IDX.FTA] + Math.max(0, v[IDX.FGA] - v[IDX.FG3A])) / 2,
+      paintFT: v[IDX.FTA],
       mid: v[IDX.FGA],
       arc: v[IDX.FG3A],
       oreb: v[IDX.OREB],
@@ -461,79 +545,81 @@
   // Half-court diagram (canvas, drawn in code — no assets)
   // ---------------------------------------------------------------------
 
+  // Court geometry, all in feet. X() and Y() convert court feet to canvas
+  // px, with y measured up from the baseline (canvas bottom edge).
   function courtGeometry(w, h) {
     var s = w / 50; // px per foot; canvas aspect fixed at 50:47
-    var cx = w / 2;
-    var rimY = h - 5.25 * s;
-    var keyW = 16 * s, keyH = 19 * s;
-    var keyX = cx - keyW / 2, keyY = h - keyH;
-    var ftR = 6 * s;
-    var r3 = 23.75 * s;
-    var cornerOffset = 22 * s;
-    var dy = Math.sqrt(Math.max(0, r3 * r3 - cornerOffset * cornerOffset));
-    var cornerY = rimY - dy;
-    var leftAngle = Math.atan2(cornerY - rimY, -cornerOffset);
-    var rightAngle = Math.atan2(cornerY - rimY, cornerOffset);
-    return {
-      s: s, w: w, h: h, cx: cx, rimY: rimY,
-      keyX: keyX, keyY: keyY, keyW: keyW, keyH: keyH,
-      ftR: ftR, r3: r3, cornerOffset: cornerOffset, cornerY: cornerY,
-      leftAngle: leftAngle, rightAngle: rightAngle
+    var g = {
+      s: s, w: w, h: h,
+      RIM: { x: 25, y: 5.25 },
+      RA: 4, R3: 23.75, CORNER: 22,
+      KEY_W: 16, KEY_H: 19, FT_R: 6
     };
+    g.X = function (ft) { return ft * s; };
+    g.Y = function (ft) { return h - ft * s; };
+    g.breakY = g.RIM.y + Math.sqrt(g.R3 * g.R3 - g.CORNER * g.CORNER); // 14.19'
+    // canvas-space arc angles at the two corner break points (y-down space)
+    g.leftAngle = Math.atan2(g.Y(g.breakY) - g.Y(g.RIM.y), g.X(25 - g.CORNER) - g.X(25));
+    g.rightAngle = Math.atan2(g.Y(g.breakY) - g.Y(g.RIM.y), g.X(25 + g.CORNER) - g.X(25));
+    return g;
   }
 
-  function drawCourtLines(ctx, g) {
+  // -- region path builders (each appends to the current path) --
+
+  function pathRA(ctx, g) {
+    ctx.arc(g.X(g.RIM.x), g.Y(g.RIM.y), g.RA * g.s, 0, Math.PI * 2);
+  }
+
+  function pathKey(ctx, g) {
+    ctx.rect(g.X(25 - g.KEY_W / 2), g.Y(g.KEY_H), g.KEY_W * g.s, g.KEY_H * g.s);
+  }
+
+  // everything inside the 3PT boundary (corner lines + arc), down to baseline
+  function pathInside3(ctx, g) {
+    ctx.moveTo(g.X(25 - g.CORNER), g.Y(0));
+    ctx.lineTo(g.X(25 - g.CORNER), g.Y(g.breakY));
+    ctx.arc(g.X(g.RIM.x), g.Y(g.RIM.y), g.R3 * g.s, g.leftAngle, g.rightAngle, false);
+    ctx.lineTo(g.X(25 + g.CORNER), g.Y(0));
+    ctx.closePath();
+  }
+
+  function pathCourt(ctx, g) {
+    ctx.rect(0, 0, g.w, g.h);
+  }
+
+  function fillRegion(ctx, g, builders, rgb, t) {
+    if (t <= 0.02) return;
     ctx.save();
-    ctx.strokeStyle = 'rgba(17,17,17,0.65)';
-    ctx.lineWidth = Math.max(1, g.s * 0.08);
-
-    // boundary
-    ctx.strokeRect(0.5, 0.5, g.w - 1, g.h - 1);
-
-    // key / paint
-    ctx.strokeRect(g.keyX, g.keyY, g.keyW, g.keyH);
-
-    // free-throw circle
     ctx.beginPath();
-    ctx.arc(g.cx, g.keyY, g.ftR, 0, Math.PI * 2);
-    ctx.stroke();
-
-    // backboard
-    ctx.beginPath();
-    ctx.moveTo(g.cx - 3 * g.s, g.h - 4 * g.s);
-    ctx.lineTo(g.cx + 3 * g.s, g.h - 4 * g.s);
-    ctx.stroke();
-
-    // rim
-    ctx.beginPath();
-    ctx.arc(g.cx, g.rimY, 0.75 * g.s, 0, Math.PI * 2);
-    ctx.stroke();
-
-    // 3pt corners (straight) + arc
-    ctx.beginPath();
-    ctx.moveTo(g.cx - g.cornerOffset, g.h);
-    ctx.lineTo(g.cx - g.cornerOffset, g.cornerY);
-    ctx.moveTo(g.cx + g.cornerOffset, g.h);
-    ctx.lineTo(g.cx + g.cornerOffset, g.cornerY);
-    ctx.stroke();
-
-    ctx.beginPath();
-    ctx.arc(g.cx, g.rimY, g.r3, g.leftAngle, g.rightAngle, false);
-    ctx.stroke();
-
-    // half-court line (top edge doubles as this on a half-court canvas)
+    builders.forEach(function (b) { b(ctx, g); });
+    ctx.fillStyle = 'rgba(' + rgb + ',' + (t * ZONE_FILL_MAX).toFixed(3) + ')';
+    ctx.fill('evenodd');
     ctx.restore();
   }
 
-  function radialGlow(ctx, x, y, r, rgb, opacity) {
-    if (opacity <= 0.01 || r <= 0) return;
-    var grad = ctx.createRadialGradient(x, y, 0, x, y, r);
-    grad.addColorStop(0, 'rgba(' + rgb + ',' + opacity.toFixed(3) + ')');
-    grad.addColorStop(1, 'rgba(' + rgb + ',0)');
-    ctx.fillStyle = grad;
+  // 45-degree engineering hatch clipped to a region — the defense layer.
+  function hatchRegion(ctx, g, builders, rgb, t, mirror) {
+    if (t <= 0.02) return;
+    ctx.save();
     ctx.beginPath();
-    ctx.arc(x, y, r, 0, Math.PI * 2);
-    ctx.fill();
+    builders.forEach(function (b) { b(ctx, g); });
+    ctx.clip('evenodd');
+    ctx.strokeStyle = 'rgba(' + rgb + ',' + (t * ZONE_HATCH_MAX).toFixed(3) + ')';
+    ctx.lineWidth = Math.max(1, g.s * 0.14);
+    var step = 2.5 * g.s;
+    var span = g.w + g.h;
+    ctx.beginPath();
+    for (var d = -span; d <= span; d += step) {
+      if (mirror) { // 135 degrees
+        ctx.moveTo(d, 0);
+        ctx.lineTo(d - span, span);
+      } else {      // 45 degrees
+        ctx.moveTo(d, 0);
+        ctx.lineTo(d + span, span);
+      }
+    }
+    ctx.stroke();
+    ctx.restore();
   }
 
   // Data accents (validated against both the paper and dark surfaces):
@@ -542,65 +628,213 @@
   var BLUE_HEX = '#2a78d6';
   var AMBER_RGB = '235,104,52';   // offense layer (orange)
   var BLUE_RGB = '42,120,214';    // defense layer (blue)
+  var INK = '#111111';
+  var MUTED = '#898781';
+
+  function drawCourtLines(ctx, g) {
+    ctx.save();
+    ctx.strokeStyle = 'rgba(17,17,17,0.75)';
+    ctx.lineWidth = Math.max(1, g.s * 0.09);
+
+    // boundary + 5' survey ticks along baseline and sidelines
+    ctx.strokeRect(0.5, 0.5, g.w - 1, g.h - 1);
+    ctx.save();
+    ctx.strokeStyle = 'rgba(17,17,17,0.45)';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    for (var ft = 5; ft < 50; ft += 5) {
+      ctx.moveTo(g.X(ft), g.Y(0));
+      ctx.lineTo(g.X(ft), g.Y(1));
+    }
+    for (ft = 5; ft < 47; ft += 5) {
+      ctx.moveTo(g.X(0), g.Y(ft));
+      ctx.lineTo(g.X(1), g.Y(ft));
+      ctx.moveTo(g.X(50), g.Y(ft));
+      ctx.lineTo(g.X(49), g.Y(ft));
+    }
+    ctx.stroke();
+    ctx.restore();
+
+    // lane
+    ctx.strokeRect(g.X(25 - g.KEY_W / 2), g.Y(g.KEY_H), g.KEY_W * g.s, g.KEY_H * g.s);
+
+    // free-throw circle: solid top half, dashed bottom half (to rule)
+    ctx.beginPath();
+    ctx.arc(g.X(25), g.Y(g.KEY_H), g.FT_R * g.s, Math.PI, 0, false);
+    ctx.stroke();
+    ctx.save();
+    ctx.setLineDash([3, 3]);
+    ctx.beginPath();
+    ctx.arc(g.X(25), g.Y(g.KEY_H), g.FT_R * g.s, 0, Math.PI, false);
+    ctx.stroke();
+    ctx.restore();
+
+    // restricted-area arc
+    ctx.beginPath();
+    pathRA(ctx, g);
+    ctx.stroke();
+
+    // backboard (6' wide, 4' from baseline) + rim (9" radius)
+    ctx.beginPath();
+    ctx.moveTo(g.X(22), g.Y(4));
+    ctx.lineTo(g.X(28), g.Y(4));
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(g.X(g.RIM.x), g.Y(g.RIM.y), 0.75 * g.s, 0, Math.PI * 2);
+    ctx.stroke();
+
+    // 3PT boundary: corner lines + arc
+    ctx.beginPath();
+    ctx.moveTo(g.X(25 - g.CORNER), g.Y(0));
+    ctx.lineTo(g.X(25 - g.CORNER), g.Y(g.breakY));
+    ctx.moveTo(g.X(25 + g.CORNER), g.Y(0));
+    ctx.lineTo(g.X(25 + g.CORNER), g.Y(g.breakY));
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(g.X(g.RIM.x), g.Y(g.RIM.y), g.R3 * g.s, g.leftAngle, g.rightAngle, false);
+    ctx.stroke();
+
+    ctx.restore();
+  }
+
+  // Dimension callouts — the survey layer that makes it read as a diagram.
+  function drawCourtDimensions(ctx, g) {
+    ctx.save();
+    ctx.strokeStyle = 'rgba(137,135,129,0.8)';
+    ctx.fillStyle = MUTED;
+    ctx.lineWidth = 1;
+    ctx.font = '600 ' + Math.max(7, 1.45 * g.s) + 'px ui-monospace, SFMono-Regular, Menlo, monospace';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+
+    // R = 23.75' radius from the rim, drawn up-left at 128 degrees
+    var a = Math.PI * 128 / 180;
+    var fx = g.RIM.x + g.R3 * Math.cos(a), fy = g.RIM.y + g.R3 * Math.sin(a);
+    ctx.save();
+    ctx.setLineDash([2, 3]);
+    ctx.beginPath();
+    ctx.moveTo(g.X(g.RIM.x), g.Y(g.RIM.y));
+    ctx.lineTo(g.X(fx), g.Y(fy));
+    ctx.stroke();
+    ctx.restore();
+    ctx.fillText("R 23'9″", g.X((g.RIM.x + fx) / 2 - 4.4), g.Y((g.RIM.y + fy) / 2));
+
+    // corner distance and restricted-area radius
+    ctx.fillText("22'", g.X(25 - g.CORNER + 2.2), g.Y(g.breakY - 2.6));
+    ctx.fillText("RA 4'", g.X(g.RIM.x + 7.6), g.Y(g.RIM.y + 4.6));
+    ctx.restore();
+  }
+
+  function zoneSigmaLabel(ctx, g, ftx, fty, name, z, rgbHex, minAbs) {
+    if (typeof minAbs === 'number' && Math.abs(z) < minAbs) return;
+    var px = g.X(ftx), py = g.Y(fty);
+    ctx.save();
+    ctx.textAlign = 'center';
+    ctx.font = '600 ' + Math.max(6.5, 1.3 * g.s) + 'px ui-monospace, SFMono-Regular, Menlo, monospace';
+    ctx.fillStyle = MUTED;
+    ctx.textBaseline = 'bottom';
+    ctx.fillText(name, px, py - 1);
+    ctx.font = '700 ' + Math.max(8, 1.7 * g.s) + 'px ui-monospace, SFMono-Regular, Menlo, monospace';
+    ctx.fillStyle = rgbHex || INK;
+    ctx.textBaseline = 'top';
+    ctx.fillText((z >= 0 ? '+' : '−') + Math.abs(z).toFixed(1) + 'σ', px, py + 1);
+    ctx.restore();
+  }
 
   function drawZones(ctx, g, offense, defense) {
-    // ---- defense (blue), drawn first ----
-    radialGlow(ctx, g.cx, g.keyY + g.keyH * 0.5, g.keyH * 0.9, BLUE_RGB, zoneOpacity(defense.paintD));
-    radialGlow(ctx, g.cx, g.rimY, g.r3 * 1.02, BLUE_RGB, zoneOpacity(defense.perimeterD) * 0.5);
-    if (zoneOpacity(defense.perimeterD) > 0.02) {
-      ctx.save();
-      ctx.strokeStyle = 'rgba(' + BLUE_RGB + ',' + zoneOpacity(defense.perimeterD).toFixed(3) + ')';
-      ctx.lineWidth = Math.max(2, g.s * 0.5);
-      ctx.beginPath();
-      ctx.arc(g.cx, g.rimY, g.r3, g.leftAngle, g.rightAngle, false);
-      ctx.stroke();
-      ctx.restore();
-    }
-    radialGlow(ctx, g.cx + g.keyW * 0.55, g.h - 2 * g.s, 3.2 * g.s, BLUE_RGB, zoneOpacity(defense.glassD));
+    // ---- offense: region fills with hard boundaries ----
+    fillRegion(ctx, g, [pathRA], AMBER_RGB, zoneT(offense.rim));
+    fillRegion(ctx, g, [pathKey, pathRA], AMBER_RGB, zoneT(offense.paintFT));
+    fillRegion(ctx, g, [pathInside3, pathKey], AMBER_RGB, zoneT(offense.mid));
+    fillRegion(ctx, g, [pathCourt, pathInside3], AMBER_RGB, zoneT(offense.arc));
 
-    // ---- offense (amber), drawn on top, translucent ----
-    radialGlow(ctx, g.cx, g.rimY, 5.5 * g.s, AMBER_RGB, zoneOpacity(offense.rim));
-    radialGlow(ctx, g.cx, g.keyY - 6 * g.s, 11 * g.s, AMBER_RGB, zoneOpacity(offense.mid) * 0.7);
-    if (zoneOpacity(offense.arc) > 0.02) {
-      ctx.save();
-      ctx.strokeStyle = 'rgba(' + AMBER_RGB + ',' + zoneOpacity(offense.arc).toFixed(3) + ')';
-      ctx.lineWidth = Math.max(2, g.s * 0.4);
-      ctx.beginPath();
-      ctx.arc(g.cx, g.rimY, g.r3, g.leftAngle, g.rightAngle, false);
-      ctx.stroke();
-      ctx.restore();
-    }
-    radialGlow(ctx, g.cx - g.keyW * 0.55, g.h - 2 * g.s, 3.2 * g.s, AMBER_RGB, zoneOpacity(offense.oreb));
+    // ---- defense: 45-degree hatch layers ----
+    hatchRegion(ctx, g, [pathKey], BLUE_RGB, zoneT(defense.paintD), false);
+    hatchRegion(ctx, g, [pathCourt, pathInside3], BLUE_RGB, zoneT(defense.perimeterD) * 0.65, true);
 
-    var astOp = zoneOpacity(offense.ast);
-    if (astOp > 0.02) {
+    // ---- the glass: mirrored blocks flanking the rim ----
+    var BOX = 3; // ft
+    ctx.save();
+    ctx.lineWidth = 1;
+    // offensive glass, left block
+    ctx.beginPath();
+    ctx.rect(g.X(14.6), g.Y(2.4 + BOX), BOX * g.s, BOX * g.s);
+    ctx.fillStyle = 'rgba(' + AMBER_RGB + ',' + (zoneT(offense.oreb) * ZONE_FILL_MAX + 0.04).toFixed(3) + ')';
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(' + AMBER_RGB + ',0.9)';
+    ctx.stroke();
+    // defensive glass, right block (mirror)
+    ctx.beginPath();
+    ctx.rect(g.X(50 - 14.6 - BOX), g.Y(2.4 + BOX), BOX * g.s, BOX * g.s);
+    ctx.fillStyle = 'rgba(' + BLUE_RGB + ',' + (zoneT(defense.glassD) * ZONE_FILL_MAX + 0.04).toFixed(3) + ')';
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(' + BLUE_RGB + ',0.9)';
+    ctx.stroke();
+    ctx.restore();
+
+    // ---- playmaking: straight passing vectors with arrowheads ----
+    var astT = zoneT(offense.ast);
+    if (astT > 0.05) {
       ctx.save();
-      ctx.strokeStyle = 'rgba(' + AMBER_RGB + ',' + Math.min(1, astOp + 0.15).toFixed(3) + ')';
-      ctx.lineWidth = Math.max(1, g.s * 0.14);
-      var origin = { x: g.cx, y: g.keyY };
-      var targets = [
-        { x: g.cx - g.cornerOffset * 0.7, y: g.cornerY + 4 * g.s },
-        { x: g.cx + g.cornerOffset * 0.7, y: g.cornerY + 4 * g.s },
-        { x: g.cx, y: g.rimY + 3 * g.s }
-      ];
-      targets.forEach(function (t) {
+      ctx.strokeStyle = 'rgba(' + AMBER_RGB + ',' + Math.min(1, astT + 0.2).toFixed(3) + ')';
+      ctx.fillStyle = ctx.strokeStyle;
+      ctx.lineWidth = Math.max(1, g.s * 0.16);
+      ctx.setLineDash([4, 3]);
+      var o = { x: 25, y: g.KEY_H + 4.5 }; // just above the FT line
+      [{ x: 9, y: 18 }, { x: 41, y: 18 }, { x: 25, y: 7.2 }].forEach(function (t) {
+        var dx = g.X(t.x) - g.X(o.x), dy = g.Y(t.y) - g.Y(o.y);
+        var len = Math.hypot(dx, dy), ux = dx / len, uy = dy / len;
+        var hx = g.X(t.x) - ux * 4, hy = g.Y(t.y) - uy * 4;
         ctx.beginPath();
-        ctx.moveTo(origin.x, origin.y);
-        ctx.quadraticCurveTo((origin.x + t.x) / 2, Math.min(origin.y, t.y) - 6 * g.s, t.x, t.y);
+        ctx.moveTo(g.X(o.x), g.Y(o.y));
+        ctx.lineTo(hx, hy);
         ctx.stroke();
+        // arrowhead
+        ctx.save();
+        ctx.setLineDash([]);
+        ctx.beginPath();
+        ctx.moveTo(g.X(t.x), g.Y(t.y));
+        ctx.lineTo(hx - uy * 2.4, hy + ux * 2.4);
+        ctx.lineTo(hx + uy * 2.4, hy - ux * 2.4);
+        ctx.closePath();
+        ctx.fill();
+        ctx.restore();
       });
       ctx.restore();
     }
   }
 
+  function drawZoneLabels(ctx, g, offense, defense) {
+    // offense: every shooting region carries its sigma, always
+    zoneSigmaLabel(ctx, g, 25, 8.4, 'RIM', offense.rim, INK);
+    zoneSigmaLabel(ctx, g, 25, 16.6, 'FTA', offense.paintFT, INK);
+    zoneSigmaLabel(ctx, g, 10.2, 11.4, 'MID', offense.mid, INK);
+    zoneSigmaLabel(ctx, g, 25, 33.5, '3PT', offense.arc, INK);
+    // defense: labeled when the hatch is visible
+    zoneSigmaLabel(ctx, g, 31.2, 12.6, 'BLK', defense.paintD, BLUE_HEX, 0.35);
+    zoneSigmaLabel(ctx, g, 43.6, 27.5, 'STL', defense.perimeterD, BLUE_HEX, 0.35);
+    // the glass blocks
+    zoneSigmaLabel(ctx, g, 10.5, 3.2, 'OREB', offense.oreb, INK, 0.35);
+    zoneSigmaLabel(ctx, g, 39.5, 3.2, 'DREB', defense.glassD, BLUE_HEX, 0.35);
+  }
+
   function renderCourt(canvas, vector) {
     var ctx = canvas.getContext('2d');
-    var w = canvas.width, h = canvas.height;
-    ctx.clearRect(0, 0, w, h);
-    var g = courtGeometry(w, h);
+    // crisp text on high-dpi screens
+    var dpr = window.devicePixelRatio || 1;
+    var wCss = 300, hCss = 282;
+    if (canvas.width !== Math.round(wCss * dpr)) {
+      canvas.width = Math.round(wCss * dpr);
+      canvas.height = Math.round(hCss * dpr);
+    }
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, wCss, hCss);
+    var g = courtGeometry(wCss, hCss);
     var zones = zoneRaw(vector);
     drawZones(ctx, g, zones, zones);
     drawCourtLines(ctx, g);
+    drawCourtDimensions(ctx, g);
+    drawZoneLabels(ctx, g, zones, zones);
     return zones;
   }
 
@@ -765,6 +999,20 @@
     return 'You need ' + parts.join(', ') + '.';
   }
 
+  function coachingLineTop1(targetVector, guessVector) {
+    var diffs = [];
+    for (var i = 0; i < targetVector.length; i++) {
+      diffs.push({ i: i, d: targetVector[i] - guessVector[i] });
+    }
+    diffs.sort(function (a, b) { return Math.abs(b.d) - Math.abs(a.d); });
+    var top = diffs[0];
+    var label = DATA.featureLabels[DATA.features[top.i]];
+    var mag = Math.abs(top.d).toFixed(1);
+    return 'Biggest gap: ' + (top.d > 0
+      ? 'more ' + label + ' (+' + mag + 'σ).'
+      : 'less ' + label + ' (−' + mag + 'σ).');
+  }
+
   function clusterLine(guessPlayer) {
     var guessCluster = DATA.clusters[guessPlayer.c];
     var targetCluster = DATA.clusters[TARGET.clusterIdx];
@@ -795,6 +1043,36 @@
     return li;
   }
 
+  function renderWarmth(rec) {
+    if (rec.guesses.length === 0) {
+      els.warmthCard.hidden = true;
+      return;
+    }
+    els.warmthCard.hidden = false;
+
+    var bestIdx = 0, bestSim = -Infinity;
+    rec.guesses.forEach(function (g, i) {
+      if (g.sim > bestSim) { bestSim = g.sim; bestIdx = i; }
+    });
+    var lastIdx = rec.guesses.length - 1;
+    var lastIsNewBest = lastIdx === bestIdx;
+
+    els.warmthBars.innerHTML = '';
+    rec.guesses.forEach(function (g, i) {
+      var bar = document.createElement('div');
+      bar.className = 'vh-warmth__bar';
+      var pct = Math.max(0, Math.round(g.sim * 100));
+      bar.style.height = Math.max(3, Math.round(pct * 0.4)) + 'px';
+      if (i === lastIdx && lastIsNewBest) bar.classList.add('is-best');
+      bar.title = g.name + ': ' + pct + '%';
+      els.warmthBars.appendChild(bar);
+    });
+
+    var bestEntry = rec.guesses[bestIdx];
+    els.warmthClosest.textContent = 'Closest: ' + bestEntry.name + ' — ' +
+      Math.round(bestEntry.sim * 100) + '%';
+  }
+
   function renderGuesses() {
     var rec = todayRecord();
     els.guessList.innerHTML = '';
@@ -803,6 +1081,8 @@
     });
     var left = Math.max(0, MAX_GUESSES - rec.guesses.length);
     els.guessesLeftNum.textContent = String(left);
+
+    renderWarmth(rec);
 
     if (rec.guesses.length > 0) {
       var last = rec.guesses[rec.guesses.length - 1];
@@ -814,6 +1094,7 @@
       var guessZones = renderCourt(els.courtGuess, lastPlayer.v);
       els.courtGuessLabel.textContent = 'Your guess: ' + last.name;
       els.storyCaption.textContent = storyCaption(targetZones, guessZones);
+      els.quickCoachingLine.textContent = coachingLineTop1(TARGET.vector, lastPlayer.v);
       renderBreakdown(TARGET.vector, lastPlayer.v, last.name);
       els.clusterLine.innerHTML = clusterLine(lastPlayer);
       var coaching = coachingLine(TARGET.vector, lastPlayer.v);
@@ -855,7 +1136,10 @@
     els.revealTitle.textContent = rec.won ? 'Solved' : 'The Chimera';
     els.revealBody.innerHTML =
       'Fused from <b>' + playerKey(TARGET.a) + '</b> (' + traitList([0, 1, 2, 3, 4, 5, 6]).join(', ') + ') and <b>' +
-      playerKey(TARGET.b) + '</b> (' + traitList([7, 8, 9, 10, 11, 12, 13]).join(', ') + ').';
+      playerKey(TARGET.b) + '</b> (' + traitList([7, 8, 9, 10, 11, 12, 13]).join(', ') + ').' +
+      '<div class="vh-reveal__okf">OKF dossiers: ' +
+      '<a href="knowledge/players/' + playerSlug(TARGET.a.name) + '.md">' + TARGET.a.name + '</a> · ' +
+      '<a href="knowledge/players/' + playerSlug(TARGET.b.name) + '.md">' + TARGET.b.name + '</a></div>';
     els.shareCopied.hidden = true;
   }
 
@@ -872,6 +1156,7 @@
       sim: sim
     };
     rec.guesses.push(entry);
+    track('vh-guess', rec.guesses.length);
 
     var won = isWinningGuess(p, sim);
     if (won || rec.guesses.length >= MAX_GUESSES) {
@@ -897,6 +1182,35 @@
   // (CVD-checked; identity is backed by the labeled legend + numbered pins).
   var PALETTE = ['#3987e5', '#199e70', '#c98500', '#008300', '#9085e9',
                  '#e66767', '#d55181', '#d95926'];
+
+  // 5 position hues (PG SG SF PF C), validated on the dark map surface —
+  // worst adjacent CVD deltaE 41.3, all >= 3:1 contrast. Gray = unknown.
+  var POS_PALETTE = ['#3987e5', '#c98500', '#199e70', '#9085e9', '#e66767'];
+  var POS_UNKNOWN = '#6f6e69';
+  var mapColorMode = 'pos'; // 'pos' | 'cluster'; falls back if no position data
+
+  function playerColor(p) {
+    if (mapColorMode === 'pos' && typeof p.p === 'number' && p.p >= 0) {
+      return POS_PALETTE[p.p % POS_PALETTE.length];
+    }
+    if (mapColorMode === 'pos') return POS_UNKNOWN;
+    return PALETTE[p.c % PALETTE.length];
+  }
+
+  // Project any 14-dim vector into map space via the affine PCA map the
+  // pipeline embeds (proj.W 14x3, proj.b 3). Exact — not an approximation.
+  function projectVector(v) {
+    if (!DATA.proj) return null;
+    var W = DATA.proj.W, b = DATA.proj.b;
+    var out = [b[0], b[1], b[2]];
+    for (var i = 0; i < 14; i++) {
+      out[0] += v[i] * W[i][0];
+      out[1] += v[i] * W[i][1];
+      out[2] += v[i] * W[i][2];
+    }
+    for (var d = 0; d < 3; d++) out[d] = Math.max(0, Math.min(1, out[d]));
+    return { x: out[0], y: out[1], z: out[2] };
+  }
 
   var PREFERS_REDUCED_MOTION = false;
   try {
@@ -993,18 +1307,65 @@
         ctx.stroke();
       }
     });
-    // axis labels just past the +1 corner of each axis
-    ctx.fillStyle = 'rgba(195,194,183,0.85)';
-    ctx.font = '700 11px ' + getComputedStyle(document.body).fontFamily;
+    // axis labels just past the +1 corner of each axis: PC number on the
+    // first line, its basketball meaning on the second
+    ctx.fillStyle = 'rgba(195,194,183,0.9)';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    var lab1 = project3D(1.08, 0, 0, size, mapCam);
-    var lab2 = project3D(0, 1.08, 0, size, mapCam);
-    var lab3 = project3D(0, 0, 1.08, size, mapCam);
-    ctx.fillText('PC1', lab1.sx, lab1.sy);
-    ctx.fillText('PC2', lab2.sx, lab2.sy);
-    ctx.fillText('PC3', lab3.sx, lab3.sy);
+    var ends = [
+      project3D(1.1, 0, 0, size, mapCam),
+      project3D(0, 1.12, 0, size, mapCam),
+      project3D(0, 0, 1.1, size, mapCam)
+    ];
+    var fam = getComputedStyle(document.body).fontFamily;
+    for (var ai = 0; ai < 3; ai++) {
+      var axis = (DATA && DATA.axes && DATA.axes[ai]) || null;
+      ctx.font = '700 11px ' + fam;
+      ctx.fillText('PC' + (ai + 1), ends[ai].sx, ends[ai].sy - 6);
+      if (axis && axis.name) {
+        ctx.font = '600 9px ' + fam;
+        ctx.fillText(axis.name.toUpperCase(), ends[ai].sx, ends[ai].sy + 6);
+      }
+    }
     ctx.restore();
+  }
+
+  // Distinct target marker: an orange diamond crosshair at the Chimera's
+  // exact projected position — this is the point you are guessing toward.
+  function drawTargetMarker(ctx, size, xyz, label) {
+    var pr = project3D(xyz.x, xyz.y, xyz.z, size, mapCam);
+    var r = Math.max(7, 10 * pr.scale);
+    ctx.save();
+    ctx.strokeStyle = ORANGE_HEX;
+    ctx.fillStyle = ORANGE_HEX;
+    ctx.lineWidth = 2;
+    // diamond
+    ctx.beginPath();
+    ctx.moveTo(pr.sx, pr.sy - r);
+    ctx.lineTo(pr.sx + r, pr.sy);
+    ctx.lineTo(pr.sx, pr.sy + r);
+    ctx.lineTo(pr.sx - r, pr.sy);
+    ctx.closePath();
+    ctx.stroke();
+    // crosshair ticks
+    ctx.beginPath();
+    ctx.moveTo(pr.sx - r - 6, pr.sy); ctx.lineTo(pr.sx - r - 1, pr.sy);
+    ctx.moveTo(pr.sx + r + 1, pr.sy); ctx.lineTo(pr.sx + r + 6, pr.sy);
+    ctx.moveTo(pr.sx, pr.sy - r - 6); ctx.lineTo(pr.sx, pr.sy - r - 1);
+    ctx.moveTo(pr.sx, pr.sy + r + 1); ctx.lineTo(pr.sx, pr.sy + r + 6);
+    ctx.stroke();
+    // center dot
+    ctx.beginPath();
+    ctx.arc(pr.sx, pr.sy, 2.2, 0, Math.PI * 2);
+    ctx.fill();
+    if (label) {
+      ctx.font = '700 10px ' + getComputedStyle(document.body).fontFamily;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'bottom';
+      ctx.fillText(label, pr.sx, pr.sy - r - 8);
+    }
+    ctx.restore();
+    return pr;
   }
 
   function renderMap() {
@@ -1037,27 +1398,41 @@
       var alpha = 0.55 * (1 - depthT) + 0.05;
       var radius = Math.max(0.6, 2.4 * pr.scale);
       ctx.globalAlpha = alpha;
-      ctx.fillStyle = PALETTE[pl.c % PALETTE.length];
+      ctx.fillStyle = playerColor(pl);
       ctx.beginPath();
       ctx.arc(pr.sx, pr.sy, radius, 0, Math.PI * 2);
       ctx.fill();
     }
     ctx.globalAlpha = 1;
 
-    // target's home-cluster centroid: soft glowing beacon
-    var centroid = CLUSTER_XYZ[TARGET.clusterIdx];
-    var cproj = project3D(centroid.x, centroid.y, centroid.z, size, mapCam);
-    var beaconR = 26 * cproj.scale;
-    var grad = ctx.createRadialGradient(cproj.sx, cproj.sy, 0, cproj.sx, cproj.sy, beaconR);
-    grad.addColorStop(0, 'rgba(' + AMBER_RGB + ',0.55)');
-    grad.addColorStop(1, 'rgba(' + AMBER_RGB + ',0)');
-    ctx.fillStyle = grad;
-    ctx.beginPath();
-    ctx.arc(cproj.sx, cproj.sy, beaconR, 0, Math.PI * 2);
-    ctx.fill();
+    var rec = todayRecord();
+
+    // the Chimera itself: exact projection of the fused vector — the point
+    // you are guessing toward. Falls back to the home-cluster centroid on
+    // datasets without the embedded projection.
+    var chimeraXYZ = projectVector(TARGET.vector) || CLUSTER_XYZ[TARGET.clusterIdx];
+    drawTargetMarker(ctx, size, chimeraXYZ, 'CHIMERA');
+
+    // once the round is over, pin the two real component seasons
+    if (rec.done) {
+      [TARGET.a, TARGET.b].forEach(function (pl, ci) {
+        var pr = project3D(pl.x, pl.y, pl.z, size, mapCam);
+        ctx.fillStyle = '#131312';
+        ctx.strokeStyle = ORANGE_HEX;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.arc(pr.sx, pr.sy, 8, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+        ctx.fillStyle = ORANGE_HEX;
+        ctx.font = 'bold 10px ' + getComputedStyle(document.body).fontFamily;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(ci === 0 ? 'A' : 'B', pr.sx, pr.sy + 1);
+      });
+    }
 
     // numbered guess pins, always on top
-    var rec = todayRecord();
     rec.guesses.forEach(function (entry, gi) {
       var pl = players[entry.id];
       if (!pl) return;
@@ -1077,10 +1452,37 @@
     });
   }
 
+  var POS_LABEL = { PG: 'Point guard', SG: 'Shooting guard', SF: 'Small forward', PF: 'Power forward', C: 'Center' };
+
   function renderMapLegend() {
-    els.mapLegend.innerHTML = DATA.clusters.map(function (name, idx) {
-      var color = PALETTE[idx % PALETTE.length];
-      return '<span><span class="vh-legend-dot" style="background:' + color + '"></span>' + name + '</span>';
+    var entries;
+    if (mapColorMode === 'pos' && DATA.positions) {
+      entries = DATA.positions.map(function (pos, idx) {
+        return { color: POS_PALETTE[idx % POS_PALETTE.length], name: pos + ' · ' + (POS_LABEL[pos] || pos) };
+      });
+      var hasUnknown = DATA.players.some(function (p) { return !(typeof p.p === 'number' && p.p >= 0); });
+      if (hasUnknown) entries.push({ color: POS_UNKNOWN, name: 'unlisted' });
+    } else {
+      entries = DATA.clusters.map(function (name, idx) {
+        return { color: PALETTE[idx % PALETTE.length], name: name };
+      });
+    }
+    els.mapLegend.innerHTML = entries.map(function (e) {
+      return '<span><span class="vh-legend-dot" style="background:' + e.color + '"></span>' + e.name + '</span>';
+    }).join('');
+  }
+
+  // The three PCA dimensions, spelled out for a basketball fan:
+  // "PC1 — On-ball load: low end -> high end".
+  function renderMapAxesInfo() {
+    if (!els.mapAxes) return;
+    if (!DATA.axes) {
+      els.mapAxes.textContent = 'PC1 / PC2 / PC3 of the era-normalized stat space';
+      return;
+    }
+    els.mapAxes.innerHTML = DATA.axes.map(function (ax, i) {
+      return '<div class="vh-map-axis-def"><b>PC' + (i + 1) + ' · ' + ax.name + '</b> — ' +
+        ax.lo + ' &rarr; ' + ax.hi + '</div>';
     }).join('');
   }
 
@@ -1169,6 +1571,20 @@
     });
     els.mapPauseBtn.textContent = mapCam.autoRotate ? 'Pause' : 'Resume';
 
+    if (els.mapColorBtn) {
+      if (!DATA.positions) {
+        mapColorMode = 'cluster';
+        els.mapColorBtn.hidden = true;
+      }
+      els.mapColorBtn.addEventListener('click', function () {
+        mapColorMode = mapColorMode === 'pos' ? 'cluster' : 'pos';
+        els.mapColorBtn.textContent = mapColorMode === 'pos' ? 'Color: position' : 'Color: archetype';
+        renderMapLegend();
+        renderMap();
+      });
+      els.mapColorBtn.textContent = mapColorMode === 'pos' ? 'Color: position' : 'Color: archetype';
+    }
+
     window.addEventListener('resize', function () {
       renderMap();
     });
@@ -1204,7 +1620,174 @@
       } else if (!shared) {
         els.shareCopied.hidden = false;
       }
+      track('vh-share');
     });
+  }
+
+  // ---------------------------------------------------------------------
+  // Full scouting report expander: persisted open/closed per browser session
+  // ---------------------------------------------------------------------
+
+  function setupFullReportPersistence() {
+    var open = false;
+    try { open = sessionStorage.getItem(SS_KEY_FULLREPORT) === '1'; } catch (e) { open = false; }
+    els.fullReport.open = open;
+    els.fullReport.addEventListener('toggle', function () {
+      try {
+        sessionStorage.setItem(SS_KEY_FULLREPORT, els.fullReport.open ? '1' : '0');
+      } catch (e) { /* storage unavailable */ }
+    });
+  }
+
+  // ---------------------------------------------------------------------
+  // THE DEADLINE: quiz mode on midseason movers, unlimited, seeded by
+  // round count (not date) so it never repeats on the daily Chimera's clock.
+  // ---------------------------------------------------------------------
+
+  var DEADLINE = null;      // parsed deadline.json
+  var DEADLINE_POOL = null; // thrives + craters, tagged with type
+  var deadlineRun = null;   // { rounds:[{mover, answered, correct}], idx, score }
+
+  function loadDeadlineCounter() {
+    var n = 0;
+    try {
+      var raw = localStorage.getItem(LS_KEY_DEADLINE_COUNTER);
+      n = raw ? (parseInt(raw, 10) || 0) : 0;
+    } catch (e) { n = 0; }
+    return n;
+  }
+
+  function saveDeadlineCounter(n) {
+    try { localStorage.setItem(LS_KEY_DEADLINE_COUNTER, String(n)); } catch (e) { /* storage unavailable */ }
+  }
+
+  function buildDeadlinePool() {
+    var thrives = (DEADLINE.thrives || []).map(function (m) {
+      return {
+        name: m.name, season: m.season, from: m.from, to: m.to,
+        gBefore: m.gBefore, gAfter: m.gAfter, dP36: m.dP36, dPM: m.dPM,
+        dEff: m.dEff, type: 'thrive'
+      };
+    });
+    var craters = (DEADLINE.craters || []).map(function (m) {
+      return {
+        name: m.name, season: m.season, from: m.from, to: m.to,
+        gBefore: m.gBefore, gAfter: m.gAfter, dP36: m.dP36, dPM: m.dPM,
+        dEff: m.dEff, type: 'crater'
+      };
+    });
+    return thrives.concat(craters);
+  }
+
+  function drawDeadlineMover(counter) {
+    var rng = seededRng('vector-hoops:deadline:' + counter);
+    var idx = Math.floor(rng() * DEADLINE_POOL.length);
+    return DEADLINE_POOL[idx];
+  }
+
+  function startDeadlineRun() {
+    var counter = loadDeadlineCounter();
+    var rounds = [];
+    for (var i = 0; i < DEADLINE_ROUNDS_PER_RUN; i++) {
+      rounds.push({ mover: drawDeadlineMover(counter), answered: false, correct: null });
+      counter++;
+    }
+    saveDeadlineCounter(counter);
+    deadlineRun = { rounds: rounds, idx: 0, score: 0 };
+    els.deadlineButtons.hidden = false;
+    els.deadlineFinal.hidden = true;
+    renderDeadlineRound();
+  }
+
+  function renderDeadlineRound() {
+    var round = deadlineRun.rounds[deadlineRun.idx];
+    var m = round.mover;
+    els.deadlineRoundNum.textContent = String(deadlineRun.idx + 1);
+    els.deadlineScoreNum.textContent = String(deadlineRun.score);
+    els.deadlinePrompt.textContent = m.name + ' moved ' + m.from + ' → ' + m.to +
+      ' mid ' + m.season + ' (' + m.gBefore + ' games before, ' + m.gAfter + ' after).';
+    els.deadlineReveal.hidden = true;
+    els.deadlineThrivedBtn.disabled = false;
+    els.deadlineCraterBtn.disabled = false;
+    track('vh-deadline-round', deadlineRun.idx + 1);
+  }
+
+  function deadlineOneLiner(m, correct) {
+    var direction = m.type === 'thrive' ? 'thrived' : 'cratered';
+    return correct
+      ? 'Correct — ' + m.name + ' ' + direction + ' after the move.'
+      : 'Missed it — ' + m.name + ' actually ' + direction + ' after the move.';
+  }
+
+  function answerDeadlineRound(guessType) {
+    var round = deadlineRun.rounds[deadlineRun.idx];
+    if (round.answered) return;
+    round.answered = true;
+    var correct = guessType === round.mover.type;
+    round.correct = correct;
+    if (correct) deadlineRun.score++;
+
+    els.deadlineThrivedBtn.disabled = true;
+    els.deadlineCraterBtn.disabled = true;
+    els.deadlineReveal.hidden = false;
+    els.deadlineVerdict.textContent = deadlineOneLiner(round.mover, correct);
+
+    var m = round.mover;
+    var p36 = (m.dP36 >= 0 ? '+' : '') + m.dP36.toFixed(1);
+    var pm = (m.dPM >= 0 ? '+' : '') + m.dPM.toFixed(1);
+    els.deadlineNumbers.textContent = 'Δ pts/36: ' + p36 + '  ·  adj plus-minus: ' + pm;
+    els.deadlineScoreNum.textContent = String(deadlineRun.score);
+    els.deadlineNextBtn.textContent = (deadlineRun.idx + 1 >= DEADLINE_ROUNDS_PER_RUN)
+      ? 'See results' : 'Next round';
+  }
+
+  function showDeadlineFinal() {
+    els.deadlineButtons.hidden = true;
+    els.deadlineReveal.hidden = true;
+    els.deadlineFinal.hidden = false;
+    els.deadlineFinalScore.textContent = 'You scored ' + deadlineRun.score + '/' +
+      DEADLINE_ROUNDS_PER_RUN + '.';
+    track('vh-deadline-done', deadlineRun.score);
+  }
+
+  function nextDeadlineRound() {
+    var round = deadlineRun.rounds[deadlineRun.idx];
+    if (!round.answered) return;
+    deadlineRun.idx++;
+    if (deadlineRun.idx >= DEADLINE_ROUNDS_PER_RUN) {
+      showDeadlineFinal();
+    } else {
+      renderDeadlineRound();
+    }
+  }
+
+  function setupDeadline() {
+    els.deadlineThrivedBtn.addEventListener('click', function () { answerDeadlineRound('thrive'); });
+    els.deadlineCraterBtn.addEventListener('click', function () { answerDeadlineRound('crater'); });
+    els.deadlineNextBtn.addEventListener('click', nextDeadlineRound);
+    els.deadlineAgainBtn.addEventListener('click', function () { startDeadlineRun(); });
+    els.deadlineMethodLine.textContent = 'How we measure: ' + (DEADLINE.method || '');
+  }
+
+  var deadlineInitialized = false;
+
+  function switchMode(mode) {
+    var toDeadline = mode === 'deadline';
+    els.panelChimera.hidden = toDeadline;
+    els.panelDeadline.hidden = !toDeadline;
+    els.tabChimera.classList.toggle('is-active', !toDeadline);
+    els.tabDeadline.classList.toggle('is-active', toDeadline);
+    els.tabChimera.setAttribute('aria-selected', String(!toDeadline));
+    els.tabDeadline.setAttribute('aria-selected', String(toDeadline));
+    if (toDeadline && !deadlineInitialized && DEADLINE_POOL) {
+      deadlineInitialized = true;
+      startDeadlineRun();
+    }
+  }
+
+  function setupModeTabs() {
+    els.tabChimera.addEventListener('click', function () { switchMode('chimera'); });
+    els.tabDeadline.addEventListener('click', function () { switchMode('deadline'); });
   }
 
   // ---------------------------------------------------------------------
@@ -1270,6 +1853,8 @@
     els.map = document.getElementById('hoops-map');
     els.mapLegend = document.getElementById('map-legend');
     els.mapPauseBtn = document.getElementById('map-pause-btn');
+    els.mapColorBtn = document.getElementById('map-color-btn');
+    els.mapAxes = document.getElementById('map-axes');
     els.mapDetails = document.getElementById('map-details');
     els.streakNum = document.getElementById('streak-num');
     els.helpBtn = document.getElementById('help-btn');
@@ -1278,6 +1863,32 @@
     els.loadingBanner = document.getElementById('loading-banner');
     els.errorBanner = document.getElementById('error-banner');
     els.footer = document.getElementById('footer');
+
+    els.scoutingLine = document.getElementById('scouting-line');
+    els.warmthCard = document.getElementById('warmth-card');
+    els.warmthBars = document.getElementById('warmth-bars');
+    els.warmthClosest = document.getElementById('warmth-closest');
+    els.quickCoachingLine = document.getElementById('quick-coaching-line');
+    els.fullReport = document.getElementById('full-report');
+
+    els.tabChimera = document.getElementById('tab-chimera');
+    els.tabDeadline = document.getElementById('tab-deadline');
+    els.panelChimera = document.getElementById('panel-chimera');
+    els.panelDeadline = document.getElementById('panel-deadline');
+    els.deadlineRoundNum = document.getElementById('deadline-round-num');
+    els.deadlineScoreNum = document.getElementById('deadline-score-num');
+    els.deadlinePrompt = document.getElementById('deadline-prompt');
+    els.deadlineButtons = document.getElementById('deadline-buttons');
+    els.deadlineThrivedBtn = document.getElementById('deadline-thrived-btn');
+    els.deadlineCraterBtn = document.getElementById('deadline-crater-btn');
+    els.deadlineReveal = document.getElementById('deadline-reveal');
+    els.deadlineVerdict = document.getElementById('deadline-verdict');
+    els.deadlineNumbers = document.getElementById('deadline-numbers');
+    els.deadlineNextBtn = document.getElementById('deadline-next-btn');
+    els.deadlineFinal = document.getElementById('deadline-final');
+    els.deadlineFinalScore = document.getElementById('deadline-final-score');
+    els.deadlineAgainBtn = document.getElementById('deadline-again-btn');
+    els.deadlineMethodLine = document.getElementById('deadline-method-line');
   }
 
   function setupChimeraInputs() {
@@ -1320,20 +1931,40 @@
         STATE = loadState();
 
         els.loadingBanner.hidden = true;
+        if (!DATA.positions) mapColorMode = 'cluster';
         renderPrompt();
+        renderScoutingLine();
         renderFooter();
         renderStreak();
         renderMapLegend();
+        renderMapAxesInfo();
         setupChimeraInputs();
         setupShare();
         setupMapInteraction();
+        setupFullReportPersistence();
+        setupModeTabs();
         renderGuesses();
         resumeChimeraIfDone();
         renderMap();
         startMapLoopIfNeeded();
 
+        fetch(DEADLINE_URL)
+          .then(function (res) {
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+            return res.json();
+          })
+          .then(function (dj) {
+            DEADLINE = dj;
+            DEADLINE_POOL = buildDeadlinePool();
+            setupDeadline();
+          })
+          .catch(function () {
+            els.tabDeadline.disabled = true;
+          });
+
         if (todayRecord().guesses.length === 0 && !todayRecord().done) {
           openHelp();
+          track('vh-start');
         }
       })
       .catch(function (err) {
