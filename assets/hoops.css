@@ -318,8 +318,19 @@ main{
   gap: 10px;
   align-items: stretch;
 }
+
+/* v5 clue cards: the guessbar card also holds the clue zone + warmth +
+   result sections above/below the input row, so only the input row itself
+   (typeahead + submit + kbd caption + duplicate warning) flips to a row at
+   >=480px — the card as a whole always stacks its sections vertically. */
+.vh-guessbar__inputrow{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: stretch;
+}
 @media (min-width: 480px){
-  .vh-guessbar{ flex-direction: row; flex-wrap: wrap; }
+  .vh-guessbar__inputrow{ flex-direction: row; flex-wrap: wrap; }
 }
 
 .vh-autocomplete{
@@ -533,13 +544,135 @@ main{
   border-color: var(--silver);
 }
 
-/* v4: Mashup slot's title/badge row lives inside .vh-guessbar (a row-flex
-   container at >=480px) — force it to its own full-width line. */
+/* Mashup slot's title/badge row always gets its own full-width line above
+   the clue zone + input row. */
 .vh-guessbar__head{ flex: 1 1 100%; }
 
 /* Compact feedback line under the two Daily donor-slot inputs — same
    typography as .vh-guess__line, just tighter above a small card. */
 .vh-guess-slot__feedback{ margin-top: 4px; min-height: 1.4em; }
+
+/* ---------- v5 clue cards ----------
+   Each answer slot (Stats / Archetype / Mashup) is one self-contained
+   .vh-card: a numbered head, its own evidence "clue zone" (mini sigma bars
+   + a phrasing-bank sentence + 2-3 extreme-sigma chips, all derived from
+   the exact same TARGET.vector halves the game scores against — see
+   STATS_DIMS/SHOOTING_DIMS in game.js), then its own typeahead/submit/lock
+   state directly below. The clue zone is a <button> so tapping it toggles
+   between full evidence and a collapsed chips+sentence view — same
+   collapse-after-first-submission / tap-to-reexpand pattern as the
+   equation chip (see .vh-equation-chip). */
+
+.vh-clue-cards{
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.vh-clue-card__head{ margin-bottom: 8px; }
+
+/* groups the number badge + title as one flex item so the head's existing
+   title/badge space-between layout (.vh-slot-card__head, shared with every
+   other slot-card in the game) still sees exactly two children. */
+.vh-clue-card__numtitle{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.vh-clue-card__num{
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--paper);
+  background: var(--ink);
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.vh-clue-card__caption{
+  margin: 0 0 10px;
+  font-size: 12px;
+  font-style: italic;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+.vh-clue-zone{
+  appearance: none;
+  display: block;
+  width: 100%;
+  text-align: left;
+  font-family: inherit;
+  background: var(--paper);
+  border: 1px solid var(--hairline);
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin: 0 0 12px;
+  cursor: pointer;
+}
+.vh-clue-zone:hover{ border-color: var(--ink-muted); }
+.vh-clue-zone:focus-visible{ outline: 2px solid var(--data-blue); outline-offset: 1px; }
+
+.vh-clue-zone__bars{ width: 100%; margin-bottom: 8px; }
+.vh-clue-zone__bars svg{ width: 100%; height: auto; display: block; }
+.vh-clue-zone.is-collapsed .vh-clue-zone__bars{ display: none; }
+
+.vh-clue-zone__sentence{
+  margin: 0 0 8px;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+.vh-clue-zone__chips{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.vh-clue-zone__framing{
+  margin: 8px 0 0;
+  font-size: 11px;
+  font-style: italic;
+  color: var(--ink-muted);
+}
+
+.vh-clue-zone__hint{
+  display: block;
+  margin-top: 8px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-muted);
+}
+
+/* warmth/result sections nested inside the Mashup clue card — a hairline
+   divider instead of a second nested .vh-card box (one unified card). */
+.vh-clue-card__section{
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--hairline);
+}
+
+.vh-clue-card__tool{
+  display: inline-block;
+  margin-top: 8px;
+}
+@media (min-width: 1000px){
+  /* report/map sheets are already pinned open as a static right column at
+     this width (see the two-column desktop rule below) — the per-card
+     shortcut is redundant there. */
+  .vh-clue-card__tool{ display: none; }
+}
 
 .vh-picker-error{
   margin: 0;
@@ -1147,18 +1280,6 @@ main{
 .vh-tab:disabled{
   opacity: 0.4;
   cursor: not-allowed;
-}
-
-/* ---------- scouting line ---------- */
-
-.vh-prompt__scouting{
-  margin: 10px 0 0;
-  padding-top: 10px;
-  border-top: 1px solid var(--hairline);
-  font-size: 13px;
-  font-weight: 700;
-  line-height: 1.5;
-  color: var(--ink-soft);
 }
 
 /* ---------- warmth tracker ---------- */

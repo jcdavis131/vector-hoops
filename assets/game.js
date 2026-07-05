@@ -813,18 +813,55 @@
     FT_PCT: 'is shaky at the line', PLUS_MINUS: 'has been a net negative on the floor'
   };
 
-  function buildScoutingLine(vector, clusterIdx) {
-    var entries = DATA.features.map(function (key, i) {
-      return { key: key, v: vector[i] };
+  var ALL_DIMS = STATS_DIMS.concat(SHOOTING_DIMS);
+
+  // Shared phrasing-bank sentence builder over an arbitrary subset of
+  // dimensions — top-2 positive sigmas become "an elite {noun} and {noun}",
+  // the single most negative sigma becomes the "who {verb phrase}" clause.
+  // Both the full scouting line (ALL_DIMS) and each clue card's half
+  // sentence (STATS_DIMS / SHOOTING_DIMS) go through this one function, so
+  // there's exactly one phrasing source and it always reads off whatever
+  // vector/dims the caller is scoring against — never a separately
+  // invented adjective.
+  function buildHalfScoutingSentence(prefix, vector, dims) {
+    var entries = dims.map(function (i) {
+      return { key: DATA.features[i], v: vector[i] };
     });
     var byDesc = entries.slice().sort(function (a, b) { return b.v - a.v; });
     var byAsc = entries.slice().sort(function (a, b) { return a.v - b.v; });
     var noun1 = TRAIT_POS_NOUN[byDesc[0].key];
     var noun2 = TRAIT_POS_NOUN[byDesc[1].key];
     var negPhrase = TRAIT_NEG_VERB[byAsc[0].key];
+    return prefix + ': an elite ' + noun1 + ' and ' + noun2 + ' who ' + negPhrase + '.';
+  }
+
+  function buildScoutingLine(vector, clusterIdx) {
     var archetype = DATA.clusters[clusterIdx];
-    return 'Reads like: an elite ' + noun1 + ' and ' + noun2 + ' who ' +
-      negPhrase + '. Archetype: ' + archetype + '.';
+    return buildHalfScoutingSentence('Reads like', vector, ALL_DIMS) + ' Archetype: ' + archetype + '.';
+  }
+
+  // Short labels for the clue cards' extreme-sigma chip row — same 14 keys
+  // as featureLabels, just terser for a pill ("Scoring +2.9σ" rather than
+  // "scoring volume +2.9σ").
+  var CHIP_LABEL = {
+    PTS: 'Scoring', AST: 'Assists', OREB: 'Off. Rebounds', DREB: 'Def. Rebounds',
+    STL: 'Steals', BLK: 'Blocks', TOV: 'Turnovers',
+    FG3A: '3PT Volume', FGA: 'Shot Volume', FTA: 'FT Rate',
+    FG3_PCT: '3PT Accuracy', FG_PCT: 'FG Accuracy', FT_PCT: 'FT Touch', PLUS_MINUS: 'Plus-Minus'
+  };
+
+  // The 2-3 most extreme |sigma| dims within a dim subset — same
+  // TARGET.vector halves (STATS_DIMS/SHOOTING_DIMS) everything else here
+  // scores against, so a clue card's chips can never mismatch its bars or
+  // its sentence.
+  function buildClueChips(vector, dims, count) {
+    var entries = dims.map(function (i) {
+      return { key: DATA.features[i], v: vector[i] };
+    });
+    entries.sort(function (a, b) { return Math.abs(b.v) - Math.abs(a.v); });
+    return entries.slice(0, count || 3).map(function (e) {
+      return CHIP_LABEL[e.key] + ' ' + fmtSigma(e.v);
+    });
   }
 
   function renderPrompt() {
@@ -898,6 +935,113 @@
   function renderScoutingLine() {
     els.scoutingLine.hidden = false;
     els.scoutingLine.textContent = buildScoutingLine(TARGET.vector, TARGET.clusterIdx);
+  }
+
+  // ---------------------------------------------------------------------
+  // v5 clue cards: each answer slot's own evidence zone (mini sigma bars +
+  // phrasing-bank sentence + extreme-sigma chips), collapsing to
+  // chips+sentence after that slot's first submission — tap to re-expand,
+  // same pattern as the equation chip (renderEquationCollapse). Reset
+  // alongside equationForceExpand at every place that flag is reset.
+  // ---------------------------------------------------------------------
+
+  var clueForceExpand = { stats: false, archetype: false, mashup: false };
+
+  function resetClueForceExpand() {
+    clueForceExpand.stats = false;
+    clueForceExpand.archetype = false;
+    clueForceExpand.mashup = false;
+  }
+
+  var CLUE_ZONE_CONF = {
+    stats: {
+      dims: STATS_DIMS, prefix: 'Hunts like',
+      zone: 'statsClueZone', bars: 'statsClueBars', sentence: 'statsClueSentence',
+      chips: 'statsClueChips', sr: 'statsClueSr', hint: 'statsClueHint'
+    },
+    archetype: {
+      dims: SHOOTING_DIMS, prefix: 'Shoots like',
+      zone: 'archetypeClueZone', bars: 'archetypeClueBars', sentence: 'archetypeClueSentence',
+      chips: 'archetypeClueChips', sr: 'archetypeClueSr', hint: 'archetypeClueHint'
+    }
+  };
+
+  // Collapse rule shared by all three clue zones: once that slot carries at
+  // least one submission, hide the bars (sentence/chips stay visible) until
+  // force-expanded by a tap.
+  function applyClueCollapse(key, zoneKey, hintKey) {
+    var zoneEl = els[zoneKey];
+    if (!zoneEl) return;
+    var rec = todayRecord();
+    var attempts = (rec.slots[key] && rec.slots[key].attempts) || 0;
+    var collapsed = attempts > 0 && !clueForceExpand[key];
+    zoneEl.classList.toggle('is-collapsed', collapsed);
+    zoneEl.setAttribute('aria-expanded', String(!collapsed));
+    if (els[hintKey]) els[hintKey].textContent = collapsed ? 'tap to expand' : 'tap to collapse';
+  }
+
+  // Stats/Archetype donor cards: bars + sentence + chips over that donor's
+  // own half of TARGET.vector — the exact STATS_DIMS/SHOOTING_DIMS split
+  // halfSims() already scores guesses against, so the clue can never
+  // mismatch the scoring.
+  function renderDonorClueZone(key) {
+    var conf = CLUE_ZONE_CONF[key];
+    if (!conf || !els[conf.zone]) return;
+    var vector = TARGET.vector;
+    renderMiniSigmaBars(els[conf.bars], vector, conf.dims);
+    els[conf.sentence].textContent = buildHalfScoutingSentence(conf.prefix, vector, conf.dims);
+    var chips = buildClueChips(vector, conf.dims, 3);
+    els[conf.chips].innerHTML = chips.map(function (c) {
+      return '<span class="vh-hint-chip">' + escapeHtml(c) + '</span>';
+    }).join('');
+    if (els[conf.sr]) els[conf.sr].textContent = miniSigmaSummaryText(vector, conf.dims);
+    applyClueCollapse(key, conf.zone, conf.hint);
+  }
+
+  // Mashup card: the full 14-dim profile — its sentence is the existing
+  // #scouting-line (renderScoutingLine), unchanged; this just adds the
+  // bars + collapse behavior around it.
+  function renderMashupClueZone() {
+    if (!els.mashupClueZone) return;
+    renderMiniSigmaBars(els.mashupClueBars, TARGET.vector, ALL_DIMS);
+    if (els.mashupClueSr) els.mashupClueSr.textContent = miniSigmaSummaryText(TARGET.vector, ALL_DIMS);
+    applyClueCollapse('mashup', 'mashupClueZone', 'mashupClueHint');
+  }
+
+  function renderClueCards() {
+    if (activeChimeraMode !== 'practice') {
+      renderDonorClueZone('stats');
+      renderDonorClueZone('archetype');
+    }
+    renderMashupClueZone();
+  }
+
+  function setupClueZoneToggle(key, zoneKey, rerenderFn) {
+    var el = els[zoneKey];
+    if (!el) return;
+    el.addEventListener('click', function () {
+      clueForceExpand[key] = true;
+      rerenderFn();
+    });
+  }
+
+  function setupClueZones() {
+    setupClueZoneToggle('stats', 'statsClueZone', function () { renderDonorClueZone('stats'); });
+    setupClueZoneToggle('archetype', 'archetypeClueZone', function () { renderDonorClueZone('archetype'); });
+    setupClueZoneToggle('mashup', 'mashupClueZone', renderMashupClueZone);
+  }
+
+  // Small "Map →" affordance on every clue card — the courts/breakdown
+  // report sheet stays reachable from the Mashup card's own result section
+  // ("Full scouting report →", only meaningful once there's a guess to
+  // compare); the 3D map is always meaningful (the Chimera diamond is on it
+  // from turn 1, donor pins light up once their slot locks), so every card
+  // gets a direct shortcut to it.
+  function setupClueCardTools() {
+    [els.statsMapLink, els.archetypeMapLink, els.mashupMapLink].forEach(function (btn) {
+      if (!btn) return;
+      btn.addEventListener('click', function () { openMapSheet(btn); });
+    });
   }
 
   // ---------------------------------------------------------------------
@@ -1897,33 +2041,42 @@
 
   var MINIBAR_XMAX = 4;
 
-  function miniSigmaSummaryText(vector) {
-    var parts = DATA.features.map(function (key, i) {
-      return DATA.featureLabels[key] + ' ' + fmtSigma(vector[i]);
+  // dims optional: defaults to every dimension (0..vector.length-1), the
+  // original full-14 behavior every existing caller (Arc cards, Era Twin)
+  // still gets. Clue cards pass STATS_DIMS/SHOOTING_DIMS to summarize just
+  // their own half — same subset halfSims() already scores against.
+  function miniSigmaSummaryText(vector, dims) {
+    dims = dims || vector.map(function (_, i) { return i; });
+    var parts = dims.map(function (i) {
+      return DATA.featureLabels[DATA.features[i]] + ' ' + fmtSigma(vector[i]);
     });
-    return 'Sigma profile, 14 dimensions vs era: ' + parts.join(', ') + '.';
+    return 'Sigma profile, ' + dims.length + ' dimensions vs era: ' + parts.join(', ') + '.';
   }
 
-  function renderMiniSigmaBars(host, vector) {
+  // dims optional: same default/subset contract as miniSigmaSummaryText
+  // above — this is the "compact bar renderer" clue cards reuse for their
+  // per-half evidence zone.
+  function renderMiniSigmaBars(host, vector, dims) {
+    dims = dims || vector.map(function (_, i) { return i; });
     host.innerHTML = '';
     var W = 130, ROWH = 4.4, GAP = 1.2;
-    var H = vector.length * (ROWH + GAP);
+    var H = dims.length * (ROWH + GAP);
     var mid = W / 2, half = W / 2 - 3;
     var svg = svgEl('svg', { viewBox: '0 0 ' + W + ' ' + H }, host);
     svgEl('line', { x1: mid, y1: 0, x2: mid, y2: H, stroke: '#e1e0d9', 'stroke-width': 1 }, svg);
-    for (var i = 0; i < vector.length; i++) {
-      var v = Math.max(-MINIBAR_XMAX, Math.min(MINIBAR_XMAX, vector[i]));
+    dims.forEach(function (dimIdx, row) {
+      var v = Math.max(-MINIBAR_XMAX, Math.min(MINIBAR_XMAX, vector[dimIdx]));
       var w = Math.max(1, Math.abs(v) / MINIBAR_XMAX * half);
       var x = v >= 0 ? mid : mid - w;
-      var y = i * (ROWH + GAP);
+      var y = row * (ROWH + GAP);
       var rect = svgEl('rect', {
         x: x, y: y, width: w, height: ROWH, rx: 1,
         fill: v >= 0 ? ORANGE_HEX : BLUE_HEX
       }, svg);
       var title = document.createElementNS(SVG_NS, 'title');
-      title.textContent = DATA.featureLabels[DATA.features[i]] + ': ' + fmtSigma(vector[i]);
+      title.textContent = DATA.featureLabels[DATA.features[dimIdx]] + ': ' + fmtSigma(vector[dimIdx]);
       rect.appendChild(title);
-    }
+    });
   }
 
   // Arc line chart: PTS (index 0) sigma trajectory across every charted
@@ -2202,6 +2355,7 @@
     renderEquationTiles();
     renderChimeraStatusLine();
     renderEquationCollapse();
+    renderClueCards();
     if (els.donorSlotsRow) els.donorSlotsRow.hidden = isPractice;
     if (!isPractice) {
       renderSlotFeedback(rec, 'stats', els.chimeraStatsFeedback, els.chimeraStatsBadge);
@@ -6319,6 +6473,30 @@
     els.equationTileMashup = document.getElementById('equation-tile-mashup');
     els.equationNameMashup = document.getElementById('equation-name-mashup');
 
+    // v5 clue cards: each slot's own evidence zone (bars + sentence + chips)
+    // and its small "Map →" tool shortcut.
+    els.statsClueZone = document.getElementById('stats-clue-zone');
+    els.statsClueBars = document.getElementById('stats-clue-bars');
+    els.statsClueSentence = document.getElementById('stats-clue-sentence');
+    els.statsClueChips = document.getElementById('stats-clue-chips');
+    els.statsClueSr = document.getElementById('stats-clue-sr');
+    els.statsClueHint = document.getElementById('stats-clue-hint');
+    els.statsMapLink = document.getElementById('stats-map-link');
+
+    els.archetypeClueZone = document.getElementById('archetype-clue-zone');
+    els.archetypeClueBars = document.getElementById('archetype-clue-bars');
+    els.archetypeClueSentence = document.getElementById('archetype-clue-sentence');
+    els.archetypeClueChips = document.getElementById('archetype-clue-chips');
+    els.archetypeClueSr = document.getElementById('archetype-clue-sr');
+    els.archetypeClueHint = document.getElementById('archetype-clue-hint');
+    els.archetypeMapLink = document.getElementById('archetype-map-link');
+
+    els.mashupClueZone = document.getElementById('mashup-clue-zone');
+    els.mashupClueBars = document.getElementById('mashup-clue-bars');
+    els.mashupClueSr = document.getElementById('mashup-clue-sr');
+    els.mashupClueHint = document.getElementById('mashup-clue-hint');
+    els.mashupMapLink = document.getElementById('mashup-map-link');
+
     els.guessesLeftNum = document.getElementById('guesses-left-num');
     els.guessesLeftLabel = document.getElementById('guesses-left-label');
     els.resultCard = document.getElementById('result-card');
@@ -6723,6 +6901,7 @@
     if (mode === activeChimeraMode) return;
     activeChimeraMode = mode;
     equationForceExpand = false;
+    resetClueForceExpand();
     if (mode === 'practice') ensurePracticeTarget();
     els.chimeraSubDaily.classList.toggle('is-active', mode === 'daily');
     els.chimeraSubPractice.classList.toggle('is-active', mode === 'practice');
@@ -6765,6 +6944,7 @@
     PRACTICE_REC = freshDayRecord();
     PRACTICE_STAGE = 'playing';
     equationForceExpand = false;
+    resetClueForceExpand();
     resetDonorPickerUI();
     refreshChimeraView();
     track('vh-start', { mode: 'free' });
@@ -6837,6 +7017,7 @@
       donorPick.stats = null;
       donorPick.shooting = null;
       equationForceExpand = false;
+      resetClueForceExpand();
       refreshChimeraView();
       track('vh-start', { mode: 'free' });
     });
@@ -6920,6 +7101,8 @@
     setupDossierModal();
     setupRollover();
     setupEquationChip();
+    setupClueZones();
+    setupClueCardTools();
     setupSheets();
     setupArc();
     fetch(DATA_URL)

@@ -211,148 +211,198 @@
           <span class="vh-equation-chip__hint">tap to expand</span>
         </button>
         <p class="vh-prompt__text vh-visually-hidden" id="prompt-text">Loading today's Chimera&hellip;</p>
-        <p class="vh-prompt__scouting" id="scouting-line"></p>
         <div class="vh-hints" id="hints-row" hidden></div>
       </div>
 
-      <!-- v4 THREE-PART ANSWERS: Daily-only Stats + Archetype donor guess
-           slots (Mashup's own slot lives in the guessbar-card below, shared
-           with Free Play). Hidden entirely in Free Play, where both donors
-           are already known — see JS renderGuesses()/showPlayingStage(). -->
-      <div class="vh-slots-row vh-donor-slots" id="donor-slots-row" hidden>
-        <div class="vh-card vh-slot-card vh-guess-slot" id="stats-slot-card" data-slot="stats">
-          <div class="vh-slot-card__head">
-            <span class="vh-slot-card__title">Stats Player</span>
-            <span class="vh-slot-card__badge" id="stats-slot-badge" hidden>Locked</span>
+      <!-- v5 CLUE CARDS: each of the three answer slots is a self-contained
+           card — its own evidence (mini sigma bars over its own half of the
+           blend + a phrasing-bank sentence + 2-3 extreme-sigma chips) sits
+           directly above its own typeahead/submit/lock state, so "what am I
+           hunting" always lives next to the box that answers it. The Stats
+           + Archetype cards are Daily-only (hidden entirely in Free Play,
+           where both donors are already known); the Mashup card is shared
+           with Free Play — see JS renderClueCards()/showPlayingStage(). -->
+      <div class="vh-clue-cards" id="clue-cards">
+
+        <div class="vh-slots-row vh-donor-slots" id="donor-slots-row" hidden>
+          <div class="vh-card vh-slot-card vh-guess-slot vh-clue-card" id="stats-slot-card" data-slot="stats">
+            <div class="vh-slot-card__head vh-clue-card__head">
+              <span class="vh-clue-card__numtitle">
+                <span class="vh-clue-card__num" aria-hidden="true">1</span>
+                <span class="vh-slot-card__title">Stats Player</span>
+              </span>
+              <span class="vh-slot-card__badge" id="stats-slot-badge" hidden>Locked</span>
+            </div>
+            <p class="vh-clue-card__caption" id="clue-cards-caption">Match each half to a real player-season; the Mashup is whoever's full season lands nearest the blend.</p>
+
+            <button type="button" class="vh-clue-zone" id="stats-clue-zone" aria-expanded="true">
+              <div class="vh-clue-zone__bars" id="stats-clue-bars" aria-hidden="true"></div>
+              <p class="vh-clue-zone__sentence" id="stats-clue-sentence"></p>
+              <div class="vh-clue-zone__chips" id="stats-clue-chips" aria-hidden="true"></div>
+              <span class="vh-clue-zone__hint" id="stats-clue-hint">tap to collapse</span>
+              <span class="vh-visually-hidden" id="stats-clue-sr"></span>
+            </button>
+
+            <div class="vh-autocomplete" id="chimera-stats-autocomplete">
+              <span class="vh-autocomplete__glyph" aria-hidden="true">&#128269;</span>
+              <input
+                type="text"
+                id="chimera-stats-input"
+                class="vh-input vh-input--search"
+                placeholder="Start typing any player&hellip;"
+                autocomplete="off"
+                autocorrect="off"
+                autocapitalize="off"
+                spellcheck="false"
+                aria-autocomplete="list"
+                aria-controls="chimera-stats-suggestions"
+                aria-expanded="false"
+                disabled
+              >
+              <span class="vh-autocomplete__chevron" aria-hidden="true">&#8964;</span>
+              <ul class="vh-suggestions" id="chimera-stats-suggestions" role="listbox" hidden></ul>
+              <p class="vh-autocomplete__hint" id="chimera-stats-focus-hint" hidden>e.g. Nikola Joki&#263; &mdash; then pick a season</p>
+            </div>
+            <button class="vh-btn vh-btn--primary" id="chimera-stats-submit" disabled>Guess</button>
+            <p class="vh-guess__line vh-guess-slot__feedback" id="stats-slot-feedback"></p>
+            <button type="button" class="vh-link-btn vh-clue-card__tool" id="stats-map-link">Map &rarr;</button>
           </div>
-          <div class="vh-autocomplete" id="chimera-stats-autocomplete">
-            <span class="vh-autocomplete__glyph" aria-hidden="true">&#128269;</span>
-            <input
-              type="text"
-              id="chimera-stats-input"
-              class="vh-input vh-input--search"
-              placeholder="Start typing any player&hellip;"
-              autocomplete="off"
-              autocorrect="off"
-              autocapitalize="off"
-              spellcheck="false"
-              aria-autocomplete="list"
-              aria-controls="chimera-stats-suggestions"
-              aria-expanded="false"
-              disabled
-            >
-            <span class="vh-autocomplete__chevron" aria-hidden="true">&#8964;</span>
-            <ul class="vh-suggestions" id="chimera-stats-suggestions" role="listbox" hidden></ul>
-            <p class="vh-autocomplete__hint" id="chimera-stats-focus-hint" hidden>e.g. Nikola Joki&#263; &mdash; then pick a season</p>
+
+          <div class="vh-card vh-slot-card vh-guess-slot vh-clue-card" id="archetype-slot-card" data-slot="archetype">
+            <div class="vh-slot-card__head vh-clue-card__head">
+              <span class="vh-clue-card__numtitle">
+                <span class="vh-clue-card__num" aria-hidden="true">2</span>
+                <span class="vh-slot-card__title">Archetype Player</span>
+              </span>
+              <span class="vh-slot-card__badge" id="archetype-slot-badge" hidden>Locked</span>
+            </div>
+
+            <button type="button" class="vh-clue-zone" id="archetype-clue-zone" aria-expanded="true">
+              <div class="vh-clue-zone__bars" id="archetype-clue-bars" aria-hidden="true"></div>
+              <p class="vh-clue-zone__sentence" id="archetype-clue-sentence"></p>
+              <div class="vh-clue-zone__chips" id="archetype-clue-chips" aria-hidden="true"></div>
+              <span class="vh-clue-zone__hint" id="archetype-clue-hint">tap to collapse</span>
+              <span class="vh-visually-hidden" id="archetype-clue-sr"></span>
+            </button>
+
+            <div class="vh-autocomplete" id="chimera-archetype-autocomplete">
+              <span class="vh-autocomplete__glyph" aria-hidden="true">&#128269;</span>
+              <input
+                type="text"
+                id="chimera-archetype-input"
+                class="vh-input vh-input--search"
+                placeholder="Start typing any player&hellip;"
+                autocomplete="off"
+                autocorrect="off"
+                autocapitalize="off"
+                spellcheck="false"
+                aria-autocomplete="list"
+                aria-controls="chimera-archetype-suggestions"
+                aria-expanded="false"
+                disabled
+              >
+              <span class="vh-autocomplete__chevron" aria-hidden="true">&#8964;</span>
+              <ul class="vh-suggestions" id="chimera-archetype-suggestions" role="listbox" hidden></ul>
+              <p class="vh-autocomplete__hint" id="chimera-archetype-focus-hint" hidden>e.g. Nikola Joki&#263; &mdash; then pick a season</p>
+            </div>
+            <button class="vh-btn vh-btn--primary" id="chimera-archetype-submit" disabled>Guess</button>
+            <p class="vh-guess__line vh-guess-slot__feedback" id="archetype-slot-feedback"></p>
+            <button type="button" class="vh-link-btn vh-clue-card__tool" id="archetype-map-link">Map &rarr;</button>
           </div>
-          <button class="vh-btn vh-btn--primary" id="chimera-stats-submit" disabled>Guess</button>
-          <p class="vh-guess__line vh-guess-slot__feedback" id="stats-slot-feedback"></p>
         </div>
 
-        <div class="vh-card vh-slot-card vh-guess-slot" id="archetype-slot-card" data-slot="archetype">
-          <div class="vh-slot-card__head">
-            <span class="vh-slot-card__title">Archetype Player</span>
-            <span class="vh-slot-card__badge" id="archetype-slot-badge" hidden>Locked</span>
-          </div>
-          <div class="vh-autocomplete" id="chimera-archetype-autocomplete">
-            <span class="vh-autocomplete__glyph" aria-hidden="true">&#128269;</span>
-            <input
-              type="text"
-              id="chimera-archetype-input"
-              class="vh-input vh-input--search"
-              placeholder="Start typing any player&hellip;"
-              autocomplete="off"
-              autocorrect="off"
-              autocapitalize="off"
-              spellcheck="false"
-              aria-autocomplete="list"
-              aria-controls="chimera-archetype-suggestions"
-              aria-expanded="false"
-              disabled
-            >
-            <span class="vh-autocomplete__chevron" aria-hidden="true">&#8964;</span>
-            <ul class="vh-suggestions" id="chimera-archetype-suggestions" role="listbox" hidden></ul>
-            <p class="vh-autocomplete__hint" id="chimera-archetype-focus-hint" hidden>e.g. Nikola Joki&#263; &mdash; then pick a season</p>
-          </div>
-          <button class="vh-btn vh-btn--primary" id="chimera-archetype-submit" disabled>Guess</button>
-          <p class="vh-guess__line vh-guess-slot__feedback" id="archetype-slot-feedback"></p>
-        </div>
-      </div>
-
-      <div class="vh-card vh-guessbar" id="guessbar-card" hidden>
-        <div class="vh-slot-card__head vh-guessbar__head">
-          <span class="vh-slot-card__title">Mashup Player</span>
-          <span class="vh-slot-card__badge" id="mashup-slot-badge" hidden>Locked</span>
-          <span class="vh-slot-card__badge vh-slot-card__badge--silver" id="mashup-slot-badge-silver" hidden>Close enough &mdash; locked</span>
-        </div>
-        <div class="vh-autocomplete" id="chimera-autocomplete">
-          <span class="vh-autocomplete__glyph" aria-hidden="true">&#128269;</span>
-          <input
-            type="text"
-            id="chimera-input"
-            class="vh-input vh-input--search"
-            placeholder="Start typing any player&hellip;"
-            autocomplete="off"
-            autocorrect="off"
-            autocapitalize="off"
-            spellcheck="false"
-            aria-autocomplete="list"
-            aria-controls="chimera-suggestions"
-            aria-expanded="false"
-            disabled
-          >
-          <span class="vh-autocomplete__chevron" aria-hidden="true">&#8964;</span>
-          <ul class="vh-suggestions" id="chimera-suggestions" role="listbox" hidden></ul>
-          <p class="vh-autocomplete__hint" id="chimera-focus-hint" hidden>e.g. Nikola Joki&#263; &mdash; then pick a season</p>
-        </div>
-        <button class="vh-btn vh-btn--primary" id="chimera-submit" disabled>Guess</button>
-        <p class="vh-autocomplete__kbd">&uarr;&darr; to browse &middot; Enter to pick</p>
-        <p class="vh-duplicate-warning" id="duplicate-warning" role="status" hidden></p>
-      </div>
-
-      <div class="vh-card vh-warmth" id="warmth-card" hidden>
-        <div class="vh-warmth__bars" id="warmth-bars" aria-hidden="true"></div>
-        <div class="vh-warmth__closest" id="warmth-closest">Closest: &mdash;</div>
-      </div>
-
-      <div class="vh-card vh-result" id="result-card" hidden>
-        <div class="vh-result__top">
-          <div class="vh-scoreboard" id="scoreboard">
-            <div class="vh-scoreboard__pct" id="scoreboard-pct">0%</div>
-            <div class="vh-scoreboard__sub">match on last guess</div>
+        <div class="vh-card vh-guessbar vh-clue-card" id="guessbar-card" hidden>
+          <div class="vh-slot-card__head vh-clue-card__head vh-guessbar__head">
+            <span class="vh-clue-card__numtitle">
+              <span class="vh-clue-card__num" aria-hidden="true">3</span>
+              <span class="vh-slot-card__title">Mashup Player</span>
+            </span>
+            <span class="vh-slot-card__badge" id="mashup-slot-badge" hidden>Locked</span>
+            <span class="vh-slot-card__badge vh-slot-card__badge--silver" id="mashup-slot-badge-silver" hidden>Close enough &mdash; locked</span>
           </div>
 
-          <button type="button" class="vh-map-thumb-btn" id="map-thumb-btn" title="Open the 3D triangulation map" hidden>
-            <canvas id="map-thumb" class="vh-map-thumb" width="120" height="120" aria-hidden="true"></canvas>
+          <button type="button" class="vh-clue-zone" id="mashup-clue-zone" aria-expanded="true">
+            <p class="vh-clue-zone__sentence" id="scouting-line"></p>
+            <div class="vh-clue-zone__bars" id="mashup-clue-bars" aria-hidden="true"></div>
+            <p class="vh-clue-zone__framing">The real player-season whose entire year plays closest to this full 14-dimension blend.</p>
+            <span class="vh-clue-zone__hint" id="mashup-clue-hint">tap to collapse</span>
+            <span class="vh-visually-hidden" id="mashup-clue-sr"></span>
           </button>
+
+          <div class="vh-guessbar__inputrow">
+            <div class="vh-autocomplete" id="chimera-autocomplete">
+              <span class="vh-autocomplete__glyph" aria-hidden="true">&#128269;</span>
+              <input
+                type="text"
+                id="chimera-input"
+                class="vh-input vh-input--search"
+                placeholder="Start typing any player&hellip;"
+                autocomplete="off"
+                autocorrect="off"
+                autocapitalize="off"
+                spellcheck="false"
+                aria-autocomplete="list"
+                aria-controls="chimera-suggestions"
+                aria-expanded="false"
+                disabled
+              >
+              <span class="vh-autocomplete__chevron" aria-hidden="true">&#8964;</span>
+              <ul class="vh-suggestions" id="chimera-suggestions" role="listbox" hidden></ul>
+              <p class="vh-autocomplete__hint" id="chimera-focus-hint" hidden>e.g. Nikola Joki&#263; &mdash; then pick a season</p>
+            </div>
+            <button class="vh-btn vh-btn--primary" id="chimera-submit" disabled>Guess</button>
+            <p class="vh-autocomplete__kbd">&uarr;&darr; to browse &middot; Enter to pick</p>
+            <p class="vh-duplicate-warning" id="duplicate-warning" role="status" hidden></p>
+          </div>
+
+          <div class="vh-warmth vh-clue-card__section" id="warmth-card" hidden>
+            <div class="vh-warmth__bars" id="warmth-bars" aria-hidden="true"></div>
+            <div class="vh-warmth__closest" id="warmth-closest">Closest: &mdash;</div>
+          </div>
+
+          <div class="vh-result vh-clue-card__section" id="result-card" hidden>
+            <div class="vh-result__top">
+              <div class="vh-scoreboard" id="scoreboard">
+                <div class="vh-scoreboard__pct" id="scoreboard-pct">0%</div>
+                <div class="vh-scoreboard__sub">match on last guess</div>
+              </div>
+
+              <button type="button" class="vh-map-thumb-btn" id="map-thumb-btn" title="Open the 3D triangulation map" hidden>
+                <canvas id="map-thumb" class="vh-map-thumb" width="120" height="120" aria-hidden="true"></canvas>
+              </button>
+            </div>
+
+            <div class="vh-triangulation" id="triangulation-block" hidden>
+              <div class="vh-triangulation__row">
+                <span class="vh-tri-icon vh-tri-icon--stats" aria-hidden="true"></span>
+                <span class="vh-triangulation__label">vs Stats Donor</span>
+                <span class="vh-triangulation__pct" id="tri-stats-pct">&mdash;</span>
+              </div>
+              <div class="vh-triangulation__row">
+                <span class="vh-tri-icon vh-tri-icon--shooting" aria-hidden="true"></span>
+                <span class="vh-triangulation__label">vs Archetype Donor</span>
+                <span class="vh-triangulation__pct" id="tri-shooting-pct">&mdash;</span>
+              </div>
+              <div class="vh-triangulation__row">
+                <span class="vh-tri-icon vh-tri-icon--blend" aria-hidden="true"></span>
+                <span class="vh-triangulation__label">vs The Mashup</span>
+                <span class="vh-triangulation__pct" id="tri-blend-pct">&mdash;</span>
+              </div>
+            </div>
+            <p class="vh-visually-hidden" id="triangulation-sr-summary"></p>
+
+            <p class="vh-story" id="story-caption"></p>
+            <p class="vh-guess__line vh-guess__line--quick" id="quick-coaching-line"></p>
+            <p class="vh-guess__line" id="cluster-line"></p>
+
+            <div class="vh-result__actions">
+              <button type="button" class="vh-link-btn" id="report-sheet-open-btn">Full scouting report &rarr;</button>
+            </div>
+          </div>
+
+          <button type="button" class="vh-link-btn vh-clue-card__tool" id="mashup-map-link">Map &rarr;</button>
         </div>
 
-        <div class="vh-triangulation" id="triangulation-block" hidden>
-          <div class="vh-triangulation__row">
-            <span class="vh-tri-icon vh-tri-icon--stats" aria-hidden="true"></span>
-            <span class="vh-triangulation__label">vs Stats Donor</span>
-            <span class="vh-triangulation__pct" id="tri-stats-pct">&mdash;</span>
-          </div>
-          <div class="vh-triangulation__row">
-            <span class="vh-tri-icon vh-tri-icon--shooting" aria-hidden="true"></span>
-            <span class="vh-triangulation__label">vs Archetype Donor</span>
-            <span class="vh-triangulation__pct" id="tri-shooting-pct">&mdash;</span>
-          </div>
-          <div class="vh-triangulation__row">
-            <span class="vh-tri-icon vh-tri-icon--blend" aria-hidden="true"></span>
-            <span class="vh-triangulation__label">vs The Mashup</span>
-            <span class="vh-triangulation__pct" id="tri-blend-pct">&mdash;</span>
-          </div>
-        </div>
-        <p class="vh-visually-hidden" id="triangulation-sr-summary"></p>
-
-        <p class="vh-story" id="story-caption"></p>
-        <p class="vh-guess__line vh-guess__line--quick" id="quick-coaching-line"></p>
-        <p class="vh-guess__line" id="cluster-line"></p>
-
-        <div class="vh-result__actions">
-          <button type="button" class="vh-link-btn" id="report-sheet-open-btn">Full scouting report &rarr;</button>
-        </div>
       </div>
 
       <div class="vh-card vh-reveal" id="reveal-card" hidden>
