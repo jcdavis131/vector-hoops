@@ -6,8 +6,9 @@
  * Data contract (assets/vectors.json), produced by pipeline/build_vectors.py:
  *   { built, seasons:[first,last], normalization, features:[14],
  *     featureLabels:{feature->label}, clusters:[8 names],
- *     players:[{id,name,season,v:[14 z-scores],x,y,z,c}, ...] }
- * x,y,z are PCA(3) map coordinates in [0,1].
+ *     players:[{id,name,season,v:[14 z-scores],x,y,z,c,sal?}, ...] }
+ * x,y,z are PCA(3) map coordinates in [0,1]; sal (optional) is the
+ * era-honest salary z-score when the dataset carries payroll coverage.
  */
 (function () {
   'use strict';
@@ -483,8 +484,8 @@
 
   function drawCourtLines(ctx, g) {
     ctx.save();
-    ctx.strokeStyle = 'rgba(184,191,204,0.55)';
-    ctx.lineWidth = Math.max(1, g.s * 0.06);
+    ctx.strokeStyle = 'rgba(17,17,17,0.65)';
+    ctx.lineWidth = Math.max(1, g.s * 0.08);
 
     // boundary
     ctx.strokeRect(0.5, 0.5, g.w - 1, g.h - 1);
@@ -535,8 +536,12 @@
     ctx.fill();
   }
 
-  var AMBER_RGB = '232,163,61';
-  var BLUE_RGB = '77,143,232';
+  // Data accents (validated against both the paper and dark surfaces):
+  // orange = the Chimera / offense, blue = your guess / defense.
+  var ORANGE_HEX = '#eb6834';
+  var BLUE_HEX = '#2a78d6';
+  var AMBER_RGB = '235,104,52';   // offense layer (orange)
+  var BLUE_RGB = '42,120,214';    // defense layer (blue)
 
   function drawZones(ctx, g, offense, defense) {
     // ---- defense (blue), drawn first ----
@@ -597,6 +602,140 @@
     drawZones(ctx, g, zones, zones);
     drawCourtLines(ctx, g);
     return zones;
+  }
+
+  // ---------------------------------------------------------------------
+  // Dimensional breakdown: diverging two-series bar chart (SVG)
+  // 14 labeled rows, x = sigmas vs era, zero baseline, hairline grid.
+  // ---------------------------------------------------------------------
+
+  var SVG_NS = 'http://www.w3.org/2000/svg';
+
+  function svgEl(tag, attrs, parent) {
+    var el = document.createElementNS(SVG_NS, tag);
+    for (var k in attrs) el.setAttribute(k, attrs[k]);
+    if (parent) parent.appendChild(el);
+    return el;
+  }
+
+  function renderBreakdown(targetVector, guessVector, guessName) {
+    var host = els.breakdownChart;
+    host.innerHTML = '';
+
+    var W = 640, LEFT = 150, RIGHT = 20, TOP = 22;
+    var ROW = 26, SEP = 18, BOT = 8;
+    var H = TOP + 14 * ROW + SEP + BOT;
+    var plotW = W - LEFT - RIGHT;
+    var XMIN = -4, XMAX = 4;
+
+    function xOf(v) {
+      if (v < XMIN) v = XMIN;
+      if (v > XMAX) v = XMAX;
+      return LEFT + (v - XMIN) / (XMAX - XMIN) * plotW;
+    }
+
+    var svg = svgEl('svg', {
+      viewBox: '0 0 ' + W + ' ' + H,
+      'font-family': getComputedStyle(document.body).fontFamily
+    }, host);
+
+    // find the biggest-gap dimensions for selective direct labels
+    var gaps = [];
+    for (var gi = 0; gi < 14; gi++) {
+      gaps.push({ i: gi, g: Math.abs(targetVector[gi] - guessVector[gi]) });
+    }
+    gaps.sort(function (a, b) { return b.g - a.g; });
+    var labelRows = {};
+    labelRows[gaps[0].i] = true;
+    labelRows[gaps[1].i] = true;
+    labelRows[gaps[2].i] = true;
+
+    function rowY(i) {
+      return TOP + i * ROW + (i >= 7 ? SEP : 0);
+    }
+
+    // gridlines each sigma; labels every 2
+    for (var t = XMIN; t <= XMAX; t++) {
+      var gx = xOf(t);
+      svgEl('line', {
+        x1: gx, y1: TOP - 4, x2: gx, y2: H - BOT,
+        stroke: t === 0 ? '#111111' : '#e1e0d9',
+        'stroke-width': t === 0 ? 1.5 : 1
+      }, svg);
+      if (t % 2 === 0) {
+        var tl = svgEl('text', {
+          x: gx, y: TOP - 9, 'text-anchor': 'middle',
+          'font-size': 10, fill: '#898781'
+        }, svg);
+        tl.textContent = (t > 0 ? '+' : '') + t + 'σ';
+      }
+    }
+
+    // half separator label between rows 6 and 7
+    var sepY = TOP + 7 * ROW + SEP / 2;
+    svgEl('line', {
+      x1: 8, y1: sepY, x2: W - 8, y2: sepY,
+      stroke: '#e1e0d9', 'stroke-width': 1, 'stroke-dasharray': '4 4'
+    }, svg);
+    var sepText = svgEl('text', {
+      x: LEFT, y: sepY - 4, 'font-size': 9, fill: '#898781',
+      'text-anchor': 'start', 'letter-spacing': '0.08em'
+    }, svg);
+    sepText.textContent = 'COUNTING-STAT HALF ABOVE · SHOOTING / IMPACT HALF BELOW';
+
+    var BAR_H = 6, BAR_GAP = 2;
+
+    function bar(y, v, color, title) {
+      var x0 = xOf(0), x1 = xOf(v);
+      var g = svgEl('g', {}, svg);
+      svgEl('rect', {
+        x: Math.min(x0, x1), y: y,
+        width: Math.max(1, Math.abs(x1 - x0)), height: BAR_H,
+        rx: 2, fill: color
+      }, g);
+      var titleEl = document.createElementNS(SVG_NS, 'title');
+      titleEl.textContent = title;
+      g.appendChild(titleEl);
+      // oversized invisible hit target for the hover
+      svgEl('rect', {
+        x: LEFT, y: y - 2, width: plotW, height: BAR_H + 4,
+        fill: 'transparent'
+      }, g);
+      return g;
+    }
+
+    for (var i = 0; i < 14; i++) {
+      var y = rowY(i);
+      var label = DATA.featureLabels[DATA.features[i]];
+      var tv = targetVector[i], gv = guessVector[i];
+
+      var lt = svgEl('text', {
+        x: LEFT - 8, y: y + BAR_H + BAR_GAP / 2 + 1,
+        'text-anchor': 'end', 'font-size': 11, fill: '#52514e'
+      }, svg);
+      lt.textContent = label;
+
+      bar(y, tv, ORANGE_HEX, 'Chimera · ' + label + ': ' +
+        (tv >= 0 ? '+' : '') + tv.toFixed(1) + 'σ');
+      bar(y + BAR_H + BAR_GAP, gv, BLUE_HEX, (guessName || 'Your guess') +
+        ' · ' + label + ': ' + (gv >= 0 ? '+' : '') + gv.toFixed(1) + 'σ');
+
+      // selective direct labels on the 3 biggest-gap dimensions
+      if (labelRows[i]) {
+        var vt = svgEl('text', {
+          x: xOf(tv) + (tv >= 0 ? 4 : -4), y: y + BAR_H - 1,
+          'text-anchor': tv >= 0 ? 'start' : 'end',
+          'font-size': 9, fill: '#111111', 'font-weight': 700
+        }, svg);
+        vt.textContent = (tv >= 0 ? '+' : '') + tv.toFixed(1);
+        var vg = svgEl('text', {
+          x: xOf(gv) + (gv >= 0 ? 4 : -4), y: y + 2 * BAR_H + BAR_GAP,
+          'text-anchor': gv >= 0 ? 'start' : 'end',
+          'font-size': 9, fill: '#111111', 'font-weight': 700
+        }, svg);
+        vg.textContent = (gv >= 0 ? '+' : '') + gv.toFixed(1);
+      }
+    }
   }
 
   // ---------------------------------------------------------------------
@@ -675,8 +814,16 @@
       var guessZones = renderCourt(els.courtGuess, lastPlayer.v);
       els.courtGuessLabel.textContent = 'Your guess: ' + last.name;
       els.storyCaption.textContent = storyCaption(targetZones, guessZones);
+      renderBreakdown(TARGET.vector, lastPlayer.v, last.name);
       els.clusterLine.innerHTML = clusterLine(lastPlayer);
-      els.coachingLine.textContent = coachingLine(TARGET.vector, lastPlayer.v);
+      var coaching = coachingLine(TARGET.vector, lastPlayer.v);
+      if (typeof lastPlayer.sal === 'number') {
+        // salary z (era-honest payroll percentile) when the dataset has it
+        var sSign = lastPlayer.sal >= 0 ? '+' : '−';
+        coaching += ' Market: this guess held a ' + sSign +
+          Math.abs(lastPlayer.sal).toFixed(1) + 'σ payroll slot for its season.';
+      }
+      els.coachingLine.textContent = coaching;
     }
 
     if (rec.done) {
@@ -746,8 +893,10 @@
   // 3D starfield map: manual perspective projection, no libraries
   // ---------------------------------------------------------------------
 
-  var PALETTE = ['#e8a33d', '#3fbf7f', '#4d8fe8', '#d9564a', '#c060e0',
-                 '#3ddede', '#e0d23d', '#8a8f9c'];
+  // 8 cluster hues, fixed order, validated for the dark map surface
+  // (CVD-checked; identity is backed by the labeled legend + numbered pins).
+  var PALETTE = ['#3987e5', '#199e70', '#c98500', '#008300', '#9085e9',
+                 '#e66767', '#d55181', '#d95926'];
 
   var PREFERS_REDUCED_MOTION = false;
   try {
@@ -809,6 +958,55 @@
     };
   }
 
+  // Wireframe axis cube: the unit PCA box, so the starfield reads as a
+  // graph with visible dimensions rather than a free-floating cloud.
+  var CUBE_CORNERS = [
+    [0, 0, 0], [1, 0, 0], [1, 1, 0], [0, 1, 0],
+    [0, 0, 1], [1, 0, 1], [1, 1, 1], [0, 1, 1]
+  ];
+  var CUBE_EDGES = [
+    [0, 1], [1, 2], [2, 3], [3, 0],
+    [4, 5], [5, 6], [6, 7], [7, 4],
+    [0, 4], [1, 5], [2, 6], [3, 7]
+  ];
+
+  function drawAxisCube(ctx, size) {
+    var pts = CUBE_CORNERS.map(function (c) {
+      return project3D(c[0], c[1], c[2], size, mapCam);
+    });
+    ctx.save();
+    ctx.strokeStyle = 'rgba(137,135,129,0.30)';
+    ctx.lineWidth = 1;
+    CUBE_EDGES.forEach(function (e) {
+      ctx.beginPath();
+      ctx.moveTo(pts[e[0]].sx, pts[e[0]].sy);
+      ctx.lineTo(pts[e[1]].sx, pts[e[1]].sy);
+      ctx.stroke();
+    });
+    // tick marks at quarters along the three labeled axes
+    ctx.strokeStyle = 'rgba(137,135,129,0.45)';
+    [[1, 0, 0], [0, 1, 0], [0, 0, 1]].forEach(function (axis) {
+      for (var t = 0.25; t < 1; t += 0.25) {
+        var p = project3D(axis[0] * t, axis[1] * t, axis[2] * t, size, mapCam);
+        ctx.beginPath();
+        ctx.arc(p.sx, p.sy, 1.5, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+    });
+    // axis labels just past the +1 corner of each axis
+    ctx.fillStyle = 'rgba(195,194,183,0.85)';
+    ctx.font = '700 11px ' + getComputedStyle(document.body).fontFamily;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    var lab1 = project3D(1.08, 0, 0, size, mapCam);
+    var lab2 = project3D(0, 1.08, 0, size, mapCam);
+    var lab3 = project3D(0, 0, 1.08, size, mapCam);
+    ctx.fillText('PC1', lab1.sx, lab1.sy);
+    ctx.fillText('PC2', lab2.sx, lab2.sy);
+    ctx.fillText('PC3', lab3.sx, lab3.sy);
+    ctx.restore();
+  }
+
   function renderMap() {
     if (!DATA) return;
     var canvas = els.map;
@@ -816,6 +1014,7 @@
     var ctx = r.ctx, size = r.size;
 
     ctx.clearRect(0, 0, size, size);
+    drawAxisCube(ctx, size);
 
     var players = DATA.players;
     var projected = new Array(players.length);
@@ -850,8 +1049,8 @@
     var cproj = project3D(centroid.x, centroid.y, centroid.z, size, mapCam);
     var beaconR = 26 * cproj.scale;
     var grad = ctx.createRadialGradient(cproj.sx, cproj.sy, 0, cproj.sx, cproj.sy, beaconR);
-    grad.addColorStop(0, 'rgba(232,163,61,0.55)');
-    grad.addColorStop(1, 'rgba(232,163,61,0)');
+    grad.addColorStop(0, 'rgba(' + AMBER_RGB + ',0.55)');
+    grad.addColorStop(1, 'rgba(' + AMBER_RGB + ',0)');
     ctx.fillStyle = grad;
     ctx.beginPath();
     ctx.arc(cproj.sx, cproj.sy, beaconR, 0, Math.PI * 2);
@@ -863,14 +1062,14 @@
       var pl = players[entry.id];
       if (!pl) return;
       var pr = project3D(pl.x, pl.y, pl.z, size, mapCam);
-      ctx.fillStyle = '#0e1420';
-      ctx.strokeStyle = '#e8a33d';
+      ctx.fillStyle = '#fafaf8';
+      ctx.strokeStyle = BLUE_HEX;
       ctx.lineWidth = 2;
       ctx.beginPath();
       ctx.arc(pr.sx, pr.sy, 9, 0, Math.PI * 2);
       ctx.fill();
       ctx.stroke();
-      ctx.fillStyle = '#f5f3ee';
+      ctx.fillStyle = '#111111';
       ctx.font = 'bold 10px ' + getComputedStyle(document.body).fontFamily;
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
@@ -1059,6 +1258,7 @@
     els.courtGuess = document.getElementById('court-guess');
     els.courtGuessLabel = document.getElementById('court-guess-label');
     els.storyCaption = document.getElementById('story-caption');
+    els.breakdownChart = document.getElementById('breakdown-chart');
     els.clusterLine = document.getElementById('cluster-line');
     els.coachingLine = document.getElementById('coaching-line');
     els.guessList = document.getElementById('guess-list');

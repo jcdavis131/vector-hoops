@@ -125,6 +125,11 @@ for f in ["DIST_MILES", "AVG_SPEED", "DRIVES", "DRIVE_PTS", "DRIVE_PASSES",
 for f in BIO_COLS:
     FAMILY_OF[f] = "bio"
 FAMILY_OF["SALARY_LOG"] = "market"
+# Form features derived from local per-game logs (pipeline/data/gamelogs_*.jsonl)
+FORM_FEATURES = ["FORM_VOL", "FORM_CEIL", "FORM_DD_RATE", "FORM_TD_RATE",
+                 "FORM_GP", "FORM_MIN_AVG"]
+for f in FORM_FEATURES:
+    FAMILY_OF[f] = "form"
 
 UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
       "(KHTML, like Gecko) Chrome/126.0 Safari/537.36")
@@ -268,6 +273,57 @@ def fetch_tracking(season: str, offline: bool):
 
 
 # ---------------------------------------------------------------------------
+# Form features from local per-game logs (offline, unique to this dataset):
+# game-to-game volatility, scoring ceiling, double/triple-double rates,
+# durability. pipeline/data/gamelogs_{season}.jsonl, one JSON row per
+# player-game with box stats.
+# ---------------------------------------------------------------------------
+
+def compute_form_features(season: str) -> dict[str, dict]:
+    p = DATA_DIR / f"gamelogs_{season}.jsonl"
+    if not p.exists():
+        return {}
+    games: dict[int, list[dict]] = {}
+    with p.open(encoding="utf-8") as f:
+        for line in f:
+            try:
+                g = json.loads(line)
+            except json.JSONDecodeError:
+                continue
+            if (g.get("MIN") or 0) <= 0:
+                continue
+            games.setdefault(int(g["PLAYER_ID"]), []).append(g)
+
+    out: dict[str, dict] = {}
+    for pid, rows in games.items():
+        if len(rows) < 10:  # too few games for stable form stats
+            continue
+        pts36 = [(r.get("PTS") or 0) * 36.0 / max(1.0, r["MIN"]) for r in rows]
+        mean36 = sum(pts36) / len(pts36)
+        var36 = sum((x - mean36) ** 2 for x in pts36) / len(pts36)
+        pts_sorted = sorted((r.get("PTS") or 0) for r in rows)
+        ceil = pts_sorted[max(0, math.ceil(0.95 * len(pts_sorted)) - 1)]
+        dd = td = 0
+        for r in rows:
+            cats = [(r.get("PTS") or 0),
+                    (r.get("AST") or 0),
+                    (r.get("OREB") or 0) + (r.get("DREB") or 0),
+                    (r.get("STL") or 0), (r.get("BLK") or 0)]
+            tens = sum(1 for c in cats if c >= 10)
+            dd += tens >= 2
+            td += tens >= 3
+        out[str(pid)] = {
+            "FORM_VOL": math.sqrt(var36) / max(1.0, mean36),  # CV of per-36 scoring
+            "FORM_CEIL": float(ceil),                          # 95th-pct game PTS
+            "FORM_DD_RATE": dd / len(rows),
+            "FORM_TD_RATE": td / len(rows),
+            "FORM_GP": float(len(rows)),                       # durability
+            "FORM_MIN_AVG": sum(r["MIN"] for r in rows) / len(rows),
+        }
+    return out
+
+
+# ---------------------------------------------------------------------------
 # Salary sources
 # ---------------------------------------------------------------------------
 
@@ -376,7 +432,8 @@ def main() -> None:
 
     all_rows: list[dict] = []
     extra_presence: dict[str, set] = {"advanced": set(), "scoring": set(),
-                                      "bio": set(), "tracking": set()}
+                                      "bio": set(), "tracking": set(),
+                                      "form": set()}
     fetched, missing = [], []
 
     for season in SEASONS:
@@ -391,6 +448,7 @@ def main() -> None:
         bio = {str(r["PLAYER_ID"]): r
                for r in (fetch_bio(season, args.offline) or [])}
         trk = fetch_tracking(season, args.offline) or {}
+        form = compute_form_features(season)
 
         n_kept = 0
         for r in base:
@@ -409,6 +467,9 @@ def main() -> None:
             for k, v in (trk.get(pid) or {}).items():
                 row[k] = v
                 extra_presence["tracking"].add(k)
+            for k, v in (form.get(pid) or {}).items():
+                row[k] = v
+                extra_presence["form"].add(k)
             # salary
             key = (norm_name(row["PLAYER_NAME"]), season)
             sal = salary_hist.get(key, salary_bbref.get(key))
@@ -436,7 +497,7 @@ def main() -> None:
 
     # ---- wide feature list: game contract first (frozen order) ----
     wide_features = list(GAME_FEATURES)
-    for name in ("advanced", "scoring", "bio", "tracking"):
+    for name in ("advanced", "scoring", "bio", "tracking", "form"):
         for c in sorted(extra_presence[name]):
             if c not in wide_features:
                 wide_features.append(c)
