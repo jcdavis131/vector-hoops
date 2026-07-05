@@ -31,21 +31,39 @@
 
 <main class="landing-main">
 
-  <section class="landing-hero">
-    <div class="landing-equation" aria-hidden="true">
-      <div class="landing-equation__tile">?</div>
-      <div class="landing-equation__op">+</div>
-      <div class="landing-equation__tile">?</div>
-      <div class="landing-equation__op">=</div>
-      <div class="landing-equation__tile landing-equation__tile--target">______</div>
+  <section class="landing-hero-band" aria-label="Today's puzzle">
+    <div class="landing-hero">
+      <div class="landing-hero__visual">
+        <p class="landing-hero__eyebrow">Daily NBA vector puzzle · free · no account</p>
+        <div class="landing-equation" aria-hidden="true">
+          <div class="landing-equation__tile landing-equation__tile--donor landing-equation__tile--a">?</div>
+          <div class="landing-equation__op">+</div>
+          <div class="landing-equation__tile landing-equation__tile--donor landing-equation__tile--b">?</div>
+          <div class="landing-equation__op">=</div>
+          <div class="landing-equation__tile landing-equation__tile--target">
+            <span class="landing-equation__target-line"></span>
+          </div>
+        </div>
+        <ul class="landing-hero__chips" aria-label="Quick facts">
+          <li>12,392 seasons</li>
+          <li>5 game modes</li>
+          <li>Era-honest σ stats</li>
+        </ul>
+      </div>
+      <div class="landing-hero__copy">
+        <h1 class="landing-hero__title">Mix two players.<br>Guess the <span class="landing-hero__title-accent">Chimera</span>.</h1>
+        <p class="landing-tagline">Two real player-seasons fuse into one stat line. Your job: name the closest match in vector space.</p>
+        <p class="landing-puzzle-line" id="puzzle-line">Today's puzzle #<b id="puzzle-num">—</b> · resets midnight UTC</p>
+        <div class="landing-hero__actions">
+          <a class="vh-btn vh-btn--primary landing-cta" href="/play">Play today's Chimera →</a>
+          <a class="vh-btn vh-btn--accent landing-cta-secondary" href="#modes">Browse all modes</a>
+        </div>
+      </div>
     </div>
-    <p class="landing-tagline">Whose season is the perfect combo of two other players?</p>
-    <p class="landing-puzzle-line" id="puzzle-line">Today's puzzle #<b id="puzzle-num">—</b> &middot; resets midnight UTC</p>
-    <a class="vh-btn vh-btn--primary landing-cta" href="/play">Play today's Chimera &rarr;</a>
   </section>
 
-  <section class="landing-section" aria-label="Game modes">
-    <span class="landing-section__label">Four ways to read the space</span>
+  <section class="landing-section" id="modes" aria-label="Game modes">
+    <span class="landing-section__label">Five ways to read the space</span>
     <div class="mode-grid">
 
       <a class="vh-card mode-card" href="/play">
@@ -60,7 +78,7 @@
         <p class="mode-card__pitch">Two real seasons fused into one stat line &mdash; name the blend.</p>
       </a>
 
-      <a class="vh-card mode-card" href="/play">
+      <a class="vh-card mode-card" href="/play?m=dl">
         <div class="mode-card__glyph" aria-hidden="true">
           <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M8 12 L20 12 L32 28" stroke="#111111" stroke-width="2.5" stroke-linecap="round" fill="none"/>
@@ -71,7 +89,7 @@
         <p class="mode-card__pitch">A real midseason mover's swing &mdash; call Thrived or Cratered.</p>
       </a>
 
-      <a class="vh-card mode-card" href="/play">
+      <a class="vh-card mode-card" href="/play?m=ff">
         <div class="mode-card__glyph" aria-hidden="true">
           <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M10 30 Q20 6 30 30" stroke="#eb6834" stroke-width="2.5" stroke-linecap="round" fill="none"/>
@@ -82,7 +100,7 @@
         <p class="mode-card__pitch">First-half rate shown &mdash; call whether the second half rose or fell.</p>
       </a>
 
-      <a class="vh-card mode-card" href="/play">
+      <a class="vh-card mode-card" href="/play?m=arc">
         <div class="mode-card__glyph" aria-hidden="true">
           <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M6 30 L14 22 L21 26 L34 8" stroke="#2a78d6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
@@ -94,6 +112,18 @@
         </div>
         <div class="mode-card__title">Career Arc</div>
         <p class="mode-card__pitch">Unlabeled season cards &mdash; order one player's career oldest to newest.</p>
+      </a>
+
+      <a class="vh-card mode-card" href="/play?m=cm">
+        <div class="mode-card__glyph" aria-hidden="true">
+          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="14" r="6" stroke="#2a78d6" stroke-width="2.5"/>
+            <circle cx="28" cy="14" r="6" stroke="#eb6834" stroke-width="2.5"/>
+            <path d="M12 20 Q20 32 28 20" stroke="#111111" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+          </svg>
+        </div>
+        <div class="mode-card__title">Best Teammate</div>
+        <p class="mode-card__pitch">Given one player-season, pick who complemented them best &mdash; four choices, five rounds.</p>
       </a>
 
     </div>
@@ -112,14 +142,16 @@
       </li>
       <li>
         <span class="how-steps__num">03</span>
-        <p class="how-steps__text">You navigate the space: guess the fusion, call the swing, order the arc &mdash; the game is the interface to the data.</p>
+        <p class="how-steps__text">You navigate the space: guess the fusion, call the swing, pick the teammate, order the arc — the game is the interface to the data.</p>
       </li>
     </ol>
   </section>
 
-  <section class="credibility-strip">
+  <section class="landing-section landing-section--strip" aria-label="Methods credibility">
+  <div class="credibility-strip">
     <p>Every number on this site is recomputable from source stats &mdash; an accuracy harness gates every deploy.</p>
     <a href="/methods">Read the methods &rarr;</a>
+  </div>
   </section>
 
 </main>

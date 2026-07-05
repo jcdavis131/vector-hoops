@@ -35,6 +35,10 @@
   </div>
 </nav>
 
+<div class="vh-challenge-banner" id="challenge-banner" hidden role="status">
+  <span id="challenge-banner-text"></span>
+</div>
+
 <header class="vh-header" id="app-header">
   <div class="vh-header__brand">
     <span class="vh-logo">VECTOR<span class="vh-logo__accent">HOOPS</span></span>
@@ -61,16 +65,22 @@
 
 <nav class="vh-tabs" id="mode-tabs" role="tablist" aria-label="Game mode">
   <button class="vh-tab is-active" id="tab-chimera" type="button" role="tab" aria-selected="true">
-    <span class="vh-tab__icon" aria-hidden="true">🧬</span><span class="vh-tab__label">Chimera</span>
+    <span class="vh-tab__icon" aria-hidden="true">🧬</span><span class="vh-tab__label"><span class="vh-tab__label-full">Chimera</span><span class="vh-tab__label-short">Chim</span></span>
   </button>
   <button class="vh-tab" id="tab-deadline" type="button" role="tab" aria-selected="false">
-    <span class="vh-tab__icon" aria-hidden="true">📉</span><span class="vh-tab__label">Deadline</span>
+    <span class="vh-tab__icon" aria-hidden="true">📉</span><span class="vh-tab__label"><span class="vh-tab__label-full">Deadline</span><span class="vh-tab__label-short">Dead</span></span>
   </button>
   <button class="vh-tab" id="tab-fader" type="button" role="tab" aria-selected="false">
-    <span class="vh-tab__icon" aria-hidden="true">🌡️</span><span class="vh-tab__label">Fader</span>
+    <span class="vh-tab__icon" aria-hidden="true">🌡️</span><span class="vh-tab__label"><span class="vh-tab__label-full">Fader</span><span class="vh-tab__label-short">Fade</span></span>
   </button>
   <button class="vh-tab" id="tab-arc" type="button" role="tab" aria-selected="false">
-    <span class="vh-tab__icon" aria-hidden="true">📈</span><span class="vh-tab__label">Arc</span>
+    <span class="vh-tab__icon" aria-hidden="true">📈</span><span class="vh-tab__label"><span class="vh-tab__label-full">Arc</span><span class="vh-tab__label-short">Arc</span></span>
+  </button>
+  <button class="vh-tab" id="tab-chem" type="button" role="tab" aria-selected="false">
+    <span class="vh-tab__icon" aria-hidden="true">🤝</span><span class="vh-tab__label"><span class="vh-tab__label-full">Best Teammate</span><span class="vh-tab__label-short">Mate</span></span>
+  </button>
+  <button class="vh-tab" id="tab-whatif" type="button" role="tab" aria-selected="false">
+    <span class="vh-tab__icon" aria-hidden="true">🧪</span><span class="vh-tab__label"><span class="vh-tab__label-full">What-If Lab</span><span class="vh-tab__label-short">Lab</span></span>
   </button>
 </nav>
 
@@ -268,8 +278,8 @@
       <div class="vh-card vh-reveal" id="reveal-card" hidden>
         <h2 class="vh-reveal__title" id="reveal-title">Revealed</h2>
         <div class="vh-reveal__body" id="reveal-body"></div>
-        <button class="vh-btn vh-btn--accent" id="share-btn">Share result</button>
-        <div class="vh-reveal__copied" id="share-copied" hidden>Copied to clipboard.</div>
+        <button class="vh-btn vh-btn--accent" id="share-btn" type="button" title="Text a challenge link — same puzzle, head-to-head">Text challenge</button>
+        <div class="vh-reveal__copied" id="share-copied" hidden>Opening Messages… link copied too.</div>
       </div>
 
       <div class="vh-utility-row" id="chimera-utility-row">
@@ -393,8 +403,8 @@
       <div class="vh-deadline__final" id="deadline-final" hidden>
         <p class="vh-deadline__final-score" id="deadline-final-score"></p>
         <p class="vh-deadline__comeback" id="deadline-comeback" hidden>Next Daily Set at UTC midnight.</p>
-        <button class="vh-btn vh-btn--accent" id="deadline-share-btn" type="button" hidden>Share result</button>
-        <div class="vh-reveal__copied" id="deadline-share-copied" hidden>Copied to clipboard.</div>
+        <button class="vh-btn vh-btn--accent" id="deadline-share-btn" type="button" hidden title="Text a challenge link — same puzzle, head-to-head">Text challenge</button>
+        <div class="vh-reveal__copied" id="deadline-share-copied" hidden>Opening Messages… link copied too.</div>
         <button class="vh-btn vh-btn--accent" id="deadline-again-btn" type="button">Run again</button>
       </div>
     </div>
@@ -446,8 +456,8 @@
       <div class="vh-deadline__final" id="fader-final" hidden>
         <p class="vh-deadline__final-score" id="fader-final-score"></p>
         <p class="vh-deadline__comeback" id="fader-comeback" hidden>Next Daily Set at UTC midnight.</p>
-        <button class="vh-btn vh-btn--accent" id="fader-share-btn" type="button" hidden>Share result</button>
-        <div class="vh-reveal__copied" id="fader-share-copied" hidden>Copied to clipboard.</div>
+        <button class="vh-btn vh-btn--accent" id="fader-share-btn" type="button" hidden title="Text a challenge link — same puzzle, head-to-head">Text challenge</button>
+        <div class="vh-reveal__copied" id="fader-share-copied" hidden>Opening Messages… link copied too.</div>
         <button class="vh-btn vh-btn--accent" id="fader-again-btn" type="button">Run again</button>
       </div>
     </div>
@@ -485,8 +495,8 @@
       <p class="vh-arc-result__score" id="arc-score-line"></p>
       <button type="button" class="vh-link-btn" id="arc-reveal-open-btn">See the true order &amp; arc &rarr;</button>
       <div class="vh-arc-result__actions" id="arc-result-actions">
-        <button class="vh-btn vh-btn--accent" id="arc-share-btn" type="button" hidden>Share result</button>
-        <div class="vh-reveal__copied" id="arc-share-copied" hidden>Copied to clipboard.</div>
+        <button class="vh-btn vh-btn--accent" id="arc-share-btn" type="button" hidden title="Text a challenge link — same puzzle, head-to-head">Text challenge</button>
+        <div class="vh-reveal__copied" id="arc-share-copied" hidden>Opening Messages… link copied too.</div>
         <p class="vh-deadline__comeback" id="arc-comeback" hidden>Next Career Arc at UTC midnight.</p>
       </div>
     </div>
@@ -505,6 +515,154 @@
           <p class="vh-visually-hidden" id="arc-linechart-sr-summary"></p>
         </div>
       </div>
+    </div>
+
+  </section>
+
+  <section id="panel-chem" class="vh-panel" hidden>
+
+    <div class="vh-subtabs" id="chem-subtabs" role="tablist" aria-label="Best Teammate play mode">
+      <button class="vh-subtab is-active" id="chem-sub-daily" type="button" role="tab" aria-selected="true">Daily Set</button>
+      <button class="vh-subtab" id="chem-sub-free" type="button" role="tab" aria-selected="false">Free Play</button>
+    </div>
+
+    <div class="vh-practice-banner" id="chem-practice-banner" hidden>
+      <span class="vh-practice-banner__text">PRACTICE &mdash; doesn't touch your Best Teammate streak</span>
+    </div>
+
+    <div class="vh-card vh-prompt">
+      <div class="vh-prompt__eyebrow" id="chem-eyebrow">Best Teammate &mdash; Daily Set</div>
+      <p class="vh-prompt__text">Round <span id="chem-round-num">1</span>/5 &middot; Score <span id="chem-score-num">0</span><span id="chem-streak-wrap"> &middot; Streak <span id="chem-streak-num">0</span></span></p>
+    </div>
+
+    <div class="vh-card vh-deadline-card">
+      <p class="vh-deadline__prompt" id="chem-prompt">Loading a pairing&hellip;</p>
+
+      <div class="vh-chem-options" id="chem-options"></div>
+
+      <div class="vh-deadline__reveal" id="chem-reveal" hidden>
+        <p class="vh-deadline__verdict" id="chem-verdict"></p>
+        <p class="vh-chem__numbers" id="chem-numbers"></p>
+        <p class="vh-chem__why" id="chem-why"></p>
+
+        <button class="vh-btn vh-btn--primary" id="chem-next-btn" type="button">Next round</button>
+      </div>
+
+      <div class="vh-deadline__final" id="chem-final" hidden>
+        <p class="vh-deadline__final-score" id="chem-final-score"></p>
+        <p class="vh-deadline__comeback" id="chem-comeback" hidden>Next Best Teammate set at UTC midnight.</p>
+        <button class="vh-btn vh-btn--accent" id="chem-share-btn" type="button" hidden title="Text a challenge link — same puzzle, head-to-head">Text challenge</button>
+        <div class="vh-reveal__copied" id="chem-share-copied" hidden>Opening Messages… link copied too.</div>
+        <button class="vh-btn vh-btn--accent" id="chem-again-btn" type="button">Run again</button>
+      </div>
+    </div>
+
+    <p class="vh-deadline__method"><button type="button" class="vh-link-btn" id="chem-method-btn">Method &amp; data sources &rarr;</button></p>
+
+  </section>
+
+  <section id="panel-whatif" class="vh-panel" hidden>
+
+    <div class="vh-card vh-picker-card">
+      <div class="vh-prompt__eyebrow">What-If Lab &mdash; pick any two player-seasons</div>
+      <p class="vh-prompt__text">Pair any two real player-seasons across eras and get a full partnership report:
+        complementarity, dimensional coverage, redundancy/weakness warnings, a combined court diagram, and the closest
+        real-world pair by measured complementarity. Pure vectors math &mdash; no daily puzzle, no streak, unlimited pairs.</p>
+
+      <div class="vh-slots-row">
+        <div class="vh-card vh-slot-card" id="whatif-card-a" data-slot="a">
+          <div class="vh-slot-card__head">
+            <span class="vh-slot-card__title">Player A</span>
+            <span class="vh-slot-card__badge" id="whatif-badge-a" hidden>Picked</span>
+          </div>
+          <div class="vh-autocomplete" id="whatif-a-autocomplete">
+            <span class="vh-autocomplete__glyph" aria-hidden="true">&#128269;</span>
+            <input
+              type="text"
+              id="whatif-a-input"
+              class="vh-input vh-input--search"
+              placeholder="Start typing any player&hellip;"
+              autocomplete="off"
+              autocorrect="off"
+              autocapitalize="off"
+              spellcheck="false"
+              aria-autocomplete="list"
+              aria-controls="whatif-a-suggestions"
+              aria-expanded="false"
+              disabled
+            >
+            <span class="vh-autocomplete__chevron" aria-hidden="true">&#8964;</span>
+            <ul class="vh-suggestions" id="whatif-a-suggestions" role="listbox" hidden></ul>
+            <p class="vh-autocomplete__hint" id="whatif-a-focus-hint" hidden>e.g. LeBron James &mdash; then pick a season</p>
+          </div>
+          <p class="vh-autocomplete__kbd">&uarr;&darr; to browse &middot; Enter to pick</p>
+        </div>
+
+        <div class="vh-card vh-slot-card" id="whatif-card-b" data-slot="b">
+          <div class="vh-slot-card__head">
+            <span class="vh-slot-card__title">Player B</span>
+            <span class="vh-slot-card__badge" id="whatif-badge-b" hidden>Picked</span>
+          </div>
+          <div class="vh-autocomplete" id="whatif-b-autocomplete">
+            <span class="vh-autocomplete__glyph" aria-hidden="true">&#128269;</span>
+            <input
+              type="text"
+              id="whatif-b-input"
+              class="vh-input vh-input--search"
+              placeholder="Start typing any player&hellip;"
+              autocomplete="off"
+              autocorrect="off"
+              autocapitalize="off"
+              spellcheck="false"
+              aria-autocomplete="list"
+              aria-controls="whatif-b-suggestions"
+              aria-expanded="false"
+              disabled
+            >
+            <span class="vh-autocomplete__chevron" aria-hidden="true">&#8964;</span>
+            <ul class="vh-suggestions" id="whatif-b-suggestions" role="listbox" hidden></ul>
+            <p class="vh-autocomplete__hint" id="whatif-b-focus-hint" hidden>e.g. Stephen Curry &mdash; then pick a season</p>
+          </div>
+          <p class="vh-autocomplete__kbd">&uarr;&darr; to browse &middot; Enter to pick</p>
+        </div>
+      </div>
+
+      <p class="vh-picker-error" id="whatif-error" role="status" hidden></p>
+
+      <button class="vh-btn vh-btn--accent" id="whatif-randomize-btn" type="button" disabled>Random pair</button>
+    </div>
+
+    <div class="vh-card vh-whatif-report" id="whatif-report" hidden>
+      <div class="vh-prompt__eyebrow" id="whatif-report-eyebrow">Partnership report</div>
+
+      <p class="vh-whatif-line vh-whatif-line--big" id="whatif-complementarity-line"></p>
+
+      <div class="vh-section-label">Dimensional coverage &mdash; who covers what, &sigma; vs era</div>
+      <p class="vh-whatif-line" id="whatif-coverage-summary"></p>
+      <div class="vh-breakdown" id="whatif-coverage-chart" role="img" aria-label="Two-color diverging bar chart comparing Player A and Player B across all 14 stat dimensions in sigmas"></div>
+      <p class="vh-visually-hidden" id="whatif-coverage-sr-summary"></p>
+      <div class="vh-court-legend">
+        <span><span class="vh-legend-swatch vh-legend-swatch--orange"></span><span id="whatif-legend-a">Player A</span></span>
+        <span><span class="vh-legend-swatch vh-legend-swatch--blue"></span><span id="whatif-legend-b">Player B</span></span>
+      </div>
+
+      <div class="vh-whatif-flags" id="whatif-flags"></div>
+
+      <div class="vh-section-label">Combined court &mdash; overlaid zone presence</div>
+      <div class="vh-court-block">
+        <canvas class="vh-court" id="whatif-court" width="300" height="282" aria-label="Half-court diagram overlaying both players' zone presence"></canvas>
+      </div>
+      <p class="vh-visually-hidden" id="whatif-court-sr-summary"></p>
+
+      <p class="vh-whatif-line" id="whatif-analog-line"></p>
+
+      <div class="vh-whatif-actions">
+        <button class="vh-btn vh-btn--accent" id="whatif-share-btn" type="button" title="Share this pairing's numbers">Share result</button>
+        <div class="vh-reveal__copied" id="whatif-share-copied" hidden>Copied to clipboard.</div>
+        <button class="vh-link-btn" id="whatif-change-btn" type="button">Change players &rarr;</button>
+      </div>
+
+      <p class="vh-deadline__method"><button type="button" class="vh-link-btn" id="whatif-method-btn">Method &amp; data sources &rarr;</button></p>
     </div>
 
   </section>
@@ -530,6 +688,8 @@
       <li><b>The Deadline:</b> a real midseason mover's per-36/plus-minus swing is shown; call Thrived or Cratered. 5 rounds a day.</li>
       <li><b>Fader or Finisher:</b> a real player-season's first-half per-36 rate is shown; call FINISHED STRONGER or FADED for the second half. 5 rounds a day.</li>
       <li><b>Career Arc:</b> one player's charted seasons appear as unlabeled sigma-bar cards, no years shown. Tap them in the order you think they happened, oldest to newest, then submit &mdash; score is how many landed in the right slot.</li>
+      <li><b>Chemistry:</b> a real teammate pair (measured, same team-season) sets the question &mdash; "Who complemented {player} best on the {season} {team}?" Pick the true partner from 4 options; the reveal shows the measured complementarity, joint plus-minus, and a chemistry percentile, plus a one-line why. 5 rounds a day; unranked v1, doesn't touch the public leaderboard.</li>
+      <li><b>What-If Lab:</b> pick any two player-seasons across any eras and get a full partnership report &mdash; complementarity, a dimensional coverage map, redundancy/shared-weakness warnings, a combined court diagram, and the closest real-world pair by measured complementarity. Pure sandbox: no daily puzzle, no streak.</li>
     </ol>
     <p class="vh-modal__telemetry" id="telemetry-note">Anonymous play events help tune the game &mdash; a random id, no account, no ads.</p>
     <button class="vh-btn vh-btn--primary" id="help-close" type="button">Got it</button>
@@ -570,6 +730,11 @@
     <div class="vh-stats-section">
       <div class="vh-stats-section__label">Career Arc &mdash; Daily</div>
       <div class="vh-stats-grid" id="stats-arc-grid"></div>
+    </div>
+
+    <div class="vh-stats-section">
+      <div class="vh-stats-section__label">Chemistry &mdash; Daily Set</div>
+      <div class="vh-stats-grid" id="stats-chem-grid"></div>
     </div>
 
     <div class="vh-stats-section vh-stats-section--practice">

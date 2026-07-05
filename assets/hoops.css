@@ -2039,3 +2039,87 @@ main{
 
 .vh-arc-linechart{ width: 100%; }
 .vh-arc-linechart svg{ width: 100%; height: auto; display: block; }
+
+/* ---------- Chemistry: 4-option quiz grid ---------- */
+
+.vh-chem-options{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  margin: 4px 0 0;
+}
+@media (min-width: 480px){
+  .vh-chem-options{ grid-template-columns: 1fr 1fr; }
+}
+.vh-chem-option{
+  appearance: none;
+  border: 2px solid var(--ink);
+  background: var(--surface);
+  color: var(--ink);
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-size: 13px;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+}
+.vh-chem-option:hover:not(:disabled){ transform: translate(-1px, -1px); box-shadow: 3px 3px 0 var(--ink); }
+.vh-chem-option:disabled{ cursor: default; }
+.vh-chem-option.is-correct{ border-color: var(--hot); background: #eefbe9; color: var(--hot); }
+.vh-chem-option.is-wrong{ border-color: var(--cold); background: #fdeeee; color: var(--cold); }
+
+.vh-chem__numbers{
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ink-soft);
+  margin: 8px 0 4px;
+}
+.vh-chem__why{
+  font-size: 13px;
+  font-style: italic;
+  color: var(--ink-soft);
+  margin: 0 0 12px;
+}
+
+/* ---------- What-If Lab ---------- */
+
+.vh-whatif-report{ display: flex; flex-direction: column; }
+.vh-whatif-line{
+  font-size: 13px;
+  color: var(--ink-soft);
+  margin: 4px 0 10px;
+  line-height: 1.5;
+}
+.vh-whatif-line--big{
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.vh-whatif-flags{
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 14px 0;
+}
+.vh-whatif-flag{
+  margin: 0;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  border: 1px solid var(--hairline);
+}
+.vh-whatif-flag--redundancy{ border-color: var(--warm); background: #fff8e0; color: #6b5200; }
+.vh-whatif-flag--weakness{ border-color: var(--cold); background: #fdeeee; color: var(--cold); }
+.vh-whatif-flag--none{ color: var(--ink-muted); font-weight: 600; border-style: dashed; }
+
+.vh-whatif-actions{
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+.vh-whatif-actions .vh-btn{ width: auto; }

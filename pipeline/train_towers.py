@@ -1,6 +1,9 @@
 """Vector Hoops embedding v2: multi-tower neural net over the wide,
 era-normalized player-season matrix built by build_vectors.py.
 
+See also: pipeline/train_mtnn.py (v3) — gated fusion, season context,
+archetype/position heads for Chimera + cross-era comparison games.
+
 Architecture (honest and simple):
   - One MLP tower per feature FAMILY (volume, playmaking, rebounding,
     defense, efficiency, shot-mix, tracking, bio, market). Each tower

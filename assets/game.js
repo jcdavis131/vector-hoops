@@ -16,6 +16,7 @@
   var DATA_URL = 'assets/vectors.json';
   var DEADLINE_URL = 'assets/deadline.json';
   var FADERFINISHER_URL = 'assets/faderfinisher.json';
+  var CHEMISTRY_URL = 'assets/chemistry.json';
   var EPOCH_DATE = '2026-07-01'; // puzzle #1
   var MAX_GUESSES = 6;
   var WIN_SIMILARITY = 0.92;
@@ -37,6 +38,9 @@
   var LS_KEY_FF_PRACTICE = 'vectorHoops.ff.practice';
   var LS_KEY_ARC_DAILY = 'vectorHoops.arc.daily.v1';
   var LS_KEY_ARC_PRACTICE = 'vectorHoops.arc.practice';
+  var LS_KEY_CHEM_COUNTER = 'vectorHoops.chem.counter';
+  var LS_KEY_CHEM_DAILY = 'vectorHoops.chem.daily.v1';
+  var LS_KEY_CHEM_PRACTICE = 'vectorHoops.chem.practice';
   var LS_KEY_SEEN_HELP = 'vectorHoops.seenHelp';
   var LS_KEY_LB_PREFIX = 'vectorHoops.lbSubmitted.'; // + game + '.' + day
   var LS_KEY_LB_LAST_GAME = 'vectorHoops.lastPlayedGame';
@@ -44,6 +48,7 @@
   var FF_ROUNDS_PER_RUN = 5;
   var ARC_CARD_COUNT = 5;
   var ARC_MIN_SEASONS = 5;
+  var CHEM_ROUNDS_PER_RUN = 5;
   var A_COUNT = 7; // first 7 dims come from player A, last 7 from player B
   // GitHub repo/branch + dossier markdown fetch/render now live in
   // assets/dossier.js (shared with wiki.html) — aliased below.
@@ -266,6 +271,222 @@
     return daysBetweenUTC(EPOCH_DATE, todayStr) + 1;
   }
 
+  function playDate() {
+    return CHALLENGE_PLAY_DATE || TODAY;
+  }
+
+  function chimeraActiveDate() {
+    return playDate();
+  }
+
+  function challengerName() {
+    return (window.VHIdentity && window.VHIdentity.sessionName()) || 'Someone';
+  }
+
+  function playPageUrl() {
+    var u = new URL(window.location.href);
+    u.search = '';
+    u.hash = '';
+    if (!/\/play\/?$/i.test(u.pathname)) {
+      var base = u.pathname.replace(/\/[^/]*$/, '');
+      u.pathname = (base === '' ? '' : base) + '/play';
+    }
+    return u.origin + u.pathname.replace(/\/$/, '');
+  }
+
+  function parseChallengeQuery() {
+    try {
+      var q = new URLSearchParams(window.location.search);
+      if (!q.has('m')) return null;
+      var ch = {
+        mode: q.get('m'),
+        date: q.get('d') || null,
+        score: q.get('s') || null,
+        challenger: q.get('u') || null,
+        donorA: q.has('a') ? parseInt(q.get('a'), 10) : null,
+        donorB: q.has('b') ? parseInt(q.get('b'), 10) : null
+      };
+      if (ch.donorA != null && isNaN(ch.donorA)) ch.donorA = null;
+      if (ch.donorB != null && isNaN(ch.donorB)) ch.donorB = null;
+      return ch;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function buildChallengeUrl(spec) {
+    var params = new URLSearchParams();
+    params.set('m', spec.mode);
+    if (spec.date) params.set('d', spec.date);
+    if (spec.score != null && spec.score !== '') params.set('s', String(spec.score));
+    if (spec.challenger) params.set('u', spec.challenger);
+    if (spec.donorA != null) params.set('a', String(spec.donorA));
+    if (spec.donorB != null) params.set('b', String(spec.donorB));
+    return playPageUrl() + '?' + params.toString();
+  }
+
+  function formatChallengeScoreLabel(spec) {
+    if (spec.scoreLabel) return spec.scoreLabel;
+    if (spec.score == null || spec.score === '') return 'a run';
+    return String(spec.score);
+  }
+
+  function buildChallengeSmsBody(resultText, url, spec) {
+    var who = spec.challenger || challengerName();
+    var scoreLine = formatChallengeScoreLabel(spec);
+    return resultText + '\n\n' +
+      who + ' scored ' + scoreLine + ' — beat them on the same puzzle!\n' +
+      url + '\n\n' +
+      'No login — tap the link, get a random session name, play head-to-head.';
+  }
+
+  function shareChallengeResult(resultText, spec, copiedEl, trackMode) {
+    var url = buildChallengeUrl(spec);
+    var body = buildChallengeSmsBody(resultText, url, spec);
+    var openedSms = false;
+    if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+      window.location.href = 'sms:?&body=' + encodeURIComponent(body);
+      openedSms = true;
+    } else if (navigator.share) {
+      navigator.share({ text: body, url: url }).catch(function () {});
+      openedSms = true;
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(body).then(function () {
+        if (copiedEl) {
+          copiedEl.textContent = openedSms
+            ? 'Opening Messages… link copied too.'
+            : 'Copied — paste into a text to challenge someone.';
+          copiedEl.hidden = false;
+        }
+      }).catch(function () {
+        if (copiedEl) {
+          copiedEl.textContent = openedSms ? 'Opening Messages…' : 'Share this result manually.';
+          copiedEl.hidden = false;
+        }
+      });
+    } else if (copiedEl) {
+      copiedEl.textContent = openedSms ? 'Opening Messages…' : 'Share this result manually.';
+      copiedEl.hidden = false;
+    }
+    track('vh-share', { mode: trackMode || 'challenge' });
+  }
+
+  function showChallengeBanner(ch) {
+    if (!els.challengeBanner || !els.challengeBannerText) return;
+    if (!ch || (!ch.challenger && !ch.score)) {
+      els.challengeBanner.hidden = true;
+      return;
+    }
+    var parts = [];
+    if (ch.challenger) parts.push('<b>' + escapeHtml(ch.challenger) + '</b>');
+    if (ch.score) {
+      parts.push('scored <b>' + escapeHtml(String(ch.score)) + '</b>');
+    }
+    var modeNames = { ch: 'Chimera', dl: 'Deadline', ff: 'Fader or Finisher', arc: 'Career Arc', cm: 'Best Teammate' };
+    var modeLabel = modeNames[ch.mode] || 'Vector Hoops';
+    els.challengeBannerText.innerHTML =
+      (parts.length ? parts.join(' ') + ' on ' : '') + escapeHtml(modeLabel) +
+      ' — same puzzle for you. Beat them!';
+    els.challengeBanner.hidden = false;
+  }
+
+  function applyChallengeFromUrl(ch) {
+    if (!ch || !DATA) return;
+    showChallengeBanner(ch);
+    if (ch.mode === 'ch') {
+      switchMode('chimera');
+      if (ch.donorA != null && ch.donorB != null) {
+        var pa = DATA.players[ch.donorA];
+        var pb = DATA.players[ch.donorB];
+        if (pa && pb) {
+          activeChimeraMode = 'practice';
+          PRACTICE_STAGE = 'playing';
+          PRACTICE_TARGET = buildTargetFromPlayers(pa, pb);
+          PRACTICE_REC = { guesses: [], done: false, won: false };
+          els.chimeraSubDaily.classList.toggle('is-active', false);
+          els.chimeraSubPractice.classList.toggle('is-active', true);
+          refreshChimeraView();
+          return;
+        }
+      }
+      if (ch.date && ch.date !== TODAY) {
+        CHALLENGE_PLAY_DATE = ch.date;
+        CHALLENGE_REC = freshDayRecord();
+        DAILY_TARGET = buildTargetFromRng(seededRng('vector-hoops:' + ch.date));
+      }
+      activeChimeraMode = 'daily';
+      TARGET = DAILY_TARGET;
+      els.chimeraSubDaily.classList.toggle('is-active', true);
+      els.chimeraSubPractice.classList.toggle('is-active', false);
+      refreshChimeraView();
+    } else if (ch.mode === 'dl' && DEADLINE_POOL) {
+      if (ch.date && ch.date !== TODAY) CHALLENGE_PLAY_DATE = ch.date;
+      switchMode('deadline');
+      deadlineRuns.daily = null;
+      switchDeadlineMode('daily');
+      startDeadlineRun('daily');
+    } else if (ch.mode === 'ff' && FF_POOL) {
+      if (ch.date && ch.date !== TODAY) CHALLENGE_PLAY_DATE = ch.date;
+      switchMode('fader');
+      faderRuns.daily = null;
+      switchFaderMode('daily');
+      startFaderRun('daily');
+    } else if (ch.mode === 'arc' && ARC_INDEX) {
+      if (ch.date && ch.date !== TODAY) CHALLENGE_PLAY_DATE = ch.date;
+      switchMode('arc');
+      arcInitialized = true;
+      switchArcSubMode('daily');
+    } else if (ch.mode === 'cm' && CHEM_POOL) {
+      if (ch.date && ch.date !== TODAY) CHALLENGE_PLAY_DATE = ch.date;
+      switchMode('chem');
+      chemRuns.daily = null;
+      switchChemMode('daily');
+    }
+  }
+
+  function applyDeepLinkMode(ch) {
+    var map = { dl: 'deadline', ff: 'fader', arc: 'arc', cm: 'chem', wi: 'whatif' };
+    var panel = map[ch.mode];
+    if (!panel) return;
+    switchMode(panel);
+    // What-If Lab has no daily puzzle/score to challenge — a bare "wi" deep
+    // link (from buildWhatifShareText) just restores the two shared donors.
+    if (ch.mode === 'wi' && ch.donorA != null && ch.donorB != null && DATA) {
+      var pa = DATA.players[ch.donorA];
+      var pb = DATA.players[ch.donorB];
+      if (pa && pb) {
+        whatifPick = { a: pa, b: pb };
+        if (els.whatifAInput) els.whatifAInput.value = playerKey(pa);
+        if (els.whatifBInput) els.whatifBInput.value = playerKey(pb);
+        if (els.whatifBadgeA) els.whatifBadgeA.hidden = false;
+        if (els.whatifBadgeB) els.whatifBadgeB.hidden = false;
+        buildWhatifReport();
+      }
+    }
+  }
+
+  function challengeModeReady(ch) {
+    if (ch.mode === 'ch') return !!DATA;
+    if (ch.mode === 'dl') return !!DEADLINE_POOL;
+    if (ch.mode === 'ff') return !!(FF_POOL && FF_POOL.length);
+    if (ch.mode === 'arc') return !!ARC_INDEX;
+    if (ch.mode === 'cm') return !!(CHEM_POOL && CHEM_POOL.length);
+    if (ch.mode === 'wi') return !!DATA;
+    return false;
+  }
+
+  function maybeApplyChallenge() {
+    if (!CHALLENGE || CHALLENGE_APPLIED) return;
+    if (!challengeModeReady(CHALLENGE)) return;
+    if (CHALLENGE.challenger || CHALLENGE.score) {
+      applyChallengeFromUrl(CHALLENGE);
+    } else if (CHALLENGE.mode !== 'ch') {
+      applyDeepLinkMode(CHALLENGE);
+    }
+    CHALLENGE_APPLIED = true;
+  }
+
   // ---------------------------------------------------------------------
   // App state
   // ---------------------------------------------------------------------
@@ -282,6 +503,14 @@
                               // see PRACTICE_STAGE/donorPick below.
   var STATE = null;        // persisted localStorage state (Daily Chimera only)
   var TODAY = utcDateString();
+  var CHALLENGE = parseChallengeQuery();
+  var CHALLENGE_PLAY_DATE = (CHALLENGE && CHALLENGE.date) ? CHALLENGE.date : null;
+  var CHALLENGE_REC = null; // in-memory round when replaying a friend's daily on another UTC day
+  var CHALLENGE_APPLIED = false;
+  // Chemistry + What-If Lab lookups, built once from DATA.players after load —
+  // vectors.json carries no team field, so these only index by season/name.
+  var PLAYERS_BY_SEASON = null;      // { season: [players] }
+  var PLAYERS_BY_NAME_SEASON = null; // { "name|season": player }
 
   // M0 state isolation: Free Play (Chimera) never touches STATE/LS_KEY above.
   // Its round record and casual counters live entirely separately.
@@ -413,7 +642,7 @@
   }
 
   function buildDailyTarget() {
-    return buildTargetFromRng(seededRng('vector-hoops:' + TODAY));
+    return buildTargetFromRng(seededRng('vector-hoops:' + playDate()));
   }
 
   function buildPracticeTarget() {
@@ -527,7 +756,7 @@
         'Guess the real player-season that plays closest to the blend. ' +
         "Doesn't affect your daily streak — unlimited attempts.";
     } else {
-      els.puzzleNumber.textContent = 'Vector Hoops #' + puzzleNumber(TODAY);
+      els.puzzleNumber.textContent = 'Vector Hoops #' + puzzleNumber(playDate());
       els.promptText.textContent =
         "Today's Chimera fuses " + aLabel + ' (counting-stat profile: scoring, boards, dimes, ' +
         'defense) and ' + bLabel + ' (shooting-and-impact profile). ' +
@@ -672,7 +901,12 @@
   // reads "the round in play," so Daily and Free Play share all the same
   // rendering code paths without ever touching each other's storage.
   function todayRecord() {
-    return activeChimeraMode === 'practice' ? PRACTICE_REC : STATE.days[TODAY];
+    if (activeChimeraMode === 'practice') return PRACTICE_REC;
+    if (CHALLENGE_PLAY_DATE && CHALLENGE_PLAY_DATE !== TODAY) {
+      if (!CHALLENGE_REC) CHALLENGE_REC = freshDayRecord();
+      return CHALLENGE_REC;
+    }
+    return STATE.days[playDate()];
   }
 
   function registerCompletion(won) {
@@ -1285,10 +1519,15 @@
       ', defensive glass ' + fmtSigma(zones.glassD) + '.';
   }
 
-  function breakdownSummaryText(targetVector, guessVector) {
+  // targetLabel/guessLabel default to the Chimera reveal's own wording so the
+  // one existing caller (renderGuesses) is unaffected; What-If Lab's coverage
+  // map passes its own two player names instead.
+  function breakdownSummaryText(targetVector, guessVector, targetLabel, guessLabel) {
+    targetLabel = targetLabel || 'Chimera';
+    guessLabel = guessLabel || 'your guess';
     var parts = DATA.features.map(function (key, i) {
       var label = DATA.featureLabels[key];
-      return label + ': Chimera ' + fmtSigma(targetVector[i]) + ', your guess ' + fmtSigma(guessVector[i]);
+      return label + ': ' + targetLabel + ' ' + fmtSigma(targetVector[i]) + ', ' + guessLabel + ' ' + fmtSigma(guessVector[i]);
     });
     return 'Dimensional breakdown, sigma vs era, all 14 dimensions. ' + parts.join('; ') + '.';
   }
@@ -1306,6 +1545,59 @@
     return zones;
   }
 
+  // What-If Lab: overlay both players' zone presence on one court instead of
+  // side-by-side courts. Each player's fills/hatches are drawn independently
+  // in their own translucent color (orange = Player A, blue = Player B, same
+  // hues the rest of the app already uses for "first pick"/"second pick") —
+  // overlapping zones blend naturally through ordinary canvas alpha
+  // compositing, no special blend mode required. Court lines/dimensions are
+  // drawn once, on top, so the survey layer never gets obscured by fills.
+  function drawZonesForPlayer(ctx, g, zones, rgb) {
+    fillRegion(ctx, g, [pathRA], rgb, zoneT(zones.rim));
+    fillRegion(ctx, g, [pathKey, pathRA], rgb, zoneT(zones.paintFT));
+    fillRegion(ctx, g, [pathInside3, pathKey], rgb, zoneT(zones.mid));
+    fillRegion(ctx, g, [pathCourt, pathInside3], rgb, zoneT(zones.arc));
+    hatchRegion(ctx, g, [pathKey], rgb, zoneT(zones.paintD) * 0.7, false);
+    hatchRegion(ctx, g, [pathCourt, pathInside3], rgb, zoneT(zones.perimeterD) * 0.55, true);
+  }
+
+  function drawGlassBlockPair(ctx, g, ftx, zA, zB, rgbA, rgbB) {
+    var BOX = 2.6;
+    ctx.save();
+    ctx.lineWidth = 1;
+    // Player A's block sits slightly left/above, Player B's slightly right/below —
+    // offset so both sigmas stay legible instead of one fully occluding the other.
+    ctx.beginPath();
+    ctx.rect(g.X(ftx - BOX - 0.6), g.Y(2.4 + BOX * 2 + 0.6), BOX * g.s, BOX * g.s);
+    ctx.fillStyle = 'rgba(' + rgbA + ',' + (zoneT(zA) * ZONE_FILL_MAX + 0.04).toFixed(3) + ')';
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(' + rgbA + ',0.9)';
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.rect(g.X(ftx + 0.6), g.Y(2.4 + BOX), BOX * g.s, BOX * g.s);
+    ctx.fillStyle = 'rgba(' + rgbB + ',' + (zoneT(zB) * ZONE_FILL_MAX + 0.04).toFixed(3) + ')';
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(' + rgbB + ',0.9)';
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  function renderCourtOverlay(canvas, vectorA, vectorB) {
+    var r = resizeCourtCanvas(canvas);
+    var ctx = r.ctx, wCss = r.wCss, hCss = r.hCss;
+    ctx.clearRect(0, 0, wCss, hCss);
+    var g = courtGeometry(wCss, hCss);
+    var zonesA = zoneRaw(vectorA);
+    var zonesB = zoneRaw(vectorB);
+    drawZonesForPlayer(ctx, g, zonesA, AMBER_RGB);
+    drawZonesForPlayer(ctx, g, zonesB, BLUE_RGB);
+    drawGlassBlockPair(ctx, g, 12.6, zonesA.oreb, zonesB.oreb, AMBER_RGB, BLUE_RGB);
+    drawGlassBlockPair(ctx, g, 50 - 12.6, zonesA.glassD, zonesB.glassD, AMBER_RGB, BLUE_RGB);
+    drawCourtLines(ctx, g);
+    drawCourtDimensions(ctx, g);
+    return { a: zonesA, b: zonesB };
+  }
+
   // ---------------------------------------------------------------------
   // Dimensional breakdown: diverging two-series bar chart (SVG)
   // 14 labeled rows, x = sigmas vs era, zero baseline, hairline grid.
@@ -1320,8 +1612,13 @@
     return el;
   }
 
-  function renderBreakdown(targetVector, guessVector, guessName) {
-    var host = els.breakdownChart;
+  // host/targetLabel/guessLabel all default to the Chimera reveal's own
+  // wiring so the existing call site below needs no changes; What-If Lab's
+  // coverage map passes its own host element + two player names instead.
+  function renderBreakdown(host, targetVector, guessVector, targetLabel, guessLabel) {
+    host = host || els.breakdownChart;
+    targetLabel = targetLabel || 'Chimera';
+    guessLabel = guessLabel || 'Your guess';
     host.innerHTML = '';
 
     var W = 640, LEFT = 150, RIGHT = 20, TOP = 22;
@@ -1417,9 +1714,9 @@
       }, svg);
       lt.textContent = label;
 
-      bar(y, tv, ORANGE_HEX, 'Chimera · ' + label + ': ' +
+      bar(y, tv, ORANGE_HEX, targetLabel + ' · ' + label + ': ' +
         (tv >= 0 ? '+' : '') + tv.toFixed(1) + 'σ');
-      bar(y + BAR_H + BAR_GAP, gv, BLUE_HEX, (guessName || 'Your guess') +
+      bar(y + BAR_H + BAR_GAP, gv, BLUE_HEX, guessLabel +
         ' · ' + label + ': ' + (gv >= 0 ? '+' : '') + gv.toFixed(1) + 'σ');
 
       // selective direct labels on the 3 biggest-gap dimensions
@@ -1721,7 +2018,7 @@
       els.courtGuessLabel.textContent = 'Your guess: ' + last.name;
       els.storyCaption.textContent = storyCaption(targetZones, guessZones);
       els.quickCoachingLine.textContent = coachingLineTop1(TARGET.vector, lastPlayer.v);
-      renderBreakdown(TARGET.vector, lastPlayer.v, last.name);
+      renderBreakdown(els.breakdownChart, TARGET.vector, lastPlayer.v, 'Chimera', last.name);
       if (els.courtsSrSummary) {
         els.courtsSrSummary.textContent = zonesSummaryText('Chimera', targetZones) + ' ' +
           zonesSummaryText('Your guess', guessZones);
@@ -1798,7 +2095,7 @@
       return 'Vector Hoops — Build-a-Chimera — ' + equation + ' ' + scorePart + '\n' + rows + '\n' + trail;
     }
     scorePart = rec.won ? rec.guesses.length + '/' + MAX_GUESSES : 'X/' + MAX_GUESSES;
-    var n = puzzleNumber(TODAY);
+    var n = puzzleNumber(playDate());
     return 'Vector Hoops #' + n + ' — ' + equation + ' ' + scorePart + '\n' + rows + '\n' + trail;
   }
 
@@ -2446,19 +2743,30 @@
     els.shareBtn.addEventListener('click', function () {
       var rec = todayRecord();
       var text = buildShareText(rec);
-      var shared = false;
-      if (navigator.share) {
-        navigator.share({ text: text }).catch(function () {});
-        shared = true;
+      var spec = {
+        mode: 'ch',
+        challenger: challengerName()
+      };
+      if (activeChimeraMode === 'practice') {
+        spec.donorA = TARGET.a.id;
+        spec.donorB = TARGET.b.id;
+        spec.scoreLabel = rec.won
+          ? ('solved in ' + rec.guesses.length)
+          : (rec.guesses.length + ' guesses');
+        if (rec.won) spec.score = String(rec.guesses.length);
+      } else {
+        spec.date = chimeraActiveDate();
+        spec.scoreLabel = rec.won
+          ? (rec.guesses.length + '/' + MAX_GUESSES)
+          : ('X/' + MAX_GUESSES);
+        if (rec.won) spec.score = rec.guesses.length + '/' + MAX_GUESSES;
       }
-      if (!shared && navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).then(function () {
-          els.shareCopied.hidden = false;
-        }).catch(function () {});
-      } else if (!shared) {
-        els.shareCopied.hidden = false;
-      }
-      track('vh-share', { mode: activeChimeraMode === 'practice' ? 'free' : 'daily' });
+      shareChallengeResult(
+        text,
+        spec,
+        els.shareCopied,
+        activeChimeraMode === 'practice' ? 'free-challenge' : 'daily-challenge'
+      );
     });
   }
 
@@ -2684,7 +2992,7 @@
   // the pool already mixes thrives+craters so a 5-draw sample reliably
   // covers both, matching the "at least 2 of each" spirit at pool scale).
   function buildDeadlineDailyRounds() {
-    var rng = seededRng('vector-hoops:deadline-daily:' + TODAY);
+    var rng = seededRng('vector-hoops:deadline-daily:' + playDate());
     var rounds = [];
     for (var i = 0; i < DEADLINE_ROUNDS_PER_RUN; i++) {
       var idx = Math.floor(rng() * DEADLINE_POOL.length);
@@ -2906,15 +3214,15 @@
     els.deadlineSubFree.addEventListener('click', function () { switchDeadlineMode('free'); });
     els.deadlineMethodBtn.addEventListener('click', function () { openMethods('deadline', els.deadlineMethodBtn); });
     els.deadlineShareBtn.addEventListener('click', function () {
+      var run = deadlineRuns.daily;
       var text = buildDeadlineShareText();
-      var shared = false;
-      if (navigator.share) { navigator.share({ text: text }).catch(function () {}); shared = true; }
-      if (!shared && navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).then(function () { els.deadlineShareCopied.hidden = false; }).catch(function () {});
-      } else if (!shared) {
-        els.deadlineShareCopied.hidden = false;
-      }
-      track('vh-share', { mode: 'deadline-daily' });
+      shareChallengeResult(text, {
+        mode: 'dl',
+        date: playDate(),
+        score: run.score + '/' + DEADLINE_ROUNDS_PER_RUN,
+        scoreLabel: run.score + '/' + DEADLINE_ROUNDS_PER_RUN,
+        challenger: challengerName()
+      }, els.deadlineShareCopied, 'deadline-daily-challenge');
     });
   }
 
@@ -2999,7 +3307,7 @@
   }
 
   function buildFaderDailyRounds() {
-    var rng = seededRng('vector-hoops:ff-daily:' + TODAY);
+    var rng = seededRng('vector-hoops:ff-daily:' + playDate());
     var rounds = [];
     for (var i = 0; i < FF_ROUNDS_PER_RUN; i++) {
       var idx = Math.floor(rng() * FF_POOL.length);
@@ -3203,19 +3511,415 @@
     els.faderSubFree.addEventListener('click', function () { switchFaderMode('free'); });
     els.faderMethodBtn.addEventListener('click', function () { openMethods('ff', els.faderMethodBtn); });
     els.faderShareBtn.addEventListener('click', function () {
+      var run = faderRuns.daily;
       var text = buildFaderShareText();
-      var shared = false;
-      if (navigator.share) { navigator.share({ text: text }).catch(function () {}); shared = true; }
-      if (!shared && navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).then(function () { els.faderShareCopied.hidden = false; }).catch(function () {});
-      } else if (!shared) {
-        els.faderShareCopied.hidden = false;
-      }
-      track('vh-share', { mode: 'ff-daily' });
+      shareChallengeResult(text, {
+        mode: 'ff',
+        date: playDate(),
+        score: run.score + '/' + FF_ROUNDS_PER_RUN,
+        scoreLabel: run.score + '/' + FF_ROUNDS_PER_RUN,
+        challenger: challengerName()
+      }, els.faderShareCopied, 'ff-daily-challenge');
     });
   }
 
   var faderInitialized = false;
+
+  // ---------------------------------------------------------------------
+  // CHEMISTRY: 4-option quiz on assets/chemistry.json's top-800 measured
+  // teammate pairs (same team-season, both >=1000 min, complementarity =
+  // 1-|cosine| of era-z profiles). Structurally the same 5-round Daily Set /
+  // Free Play shape as The Deadline and Fader or Finisher, with a 4-way pick
+  // instead of a binary call. Unranked v1: no leaderboard submission.
+  //
+  // Distractor rule (chemistry.json carries no team field, only name+season+
+  // team-on-the-pair-itself, so an exact "different team" filter isn't
+  // computable from vectors.json alone — stated honestly in the methods
+  // modal): distractors are seeded, same-season player-seasons that are
+  // NEITHER the anchor nor the true partner NOR any other player who is
+  // that anchor's partner elsewhere in the top-800 list for that season
+  // (so a distractor is never secretly "also correct"), preferring the same
+  // position as the true partner, then the same broad position group
+  // (guard/forward/center), then anyone left in the season pool.
+  // ---------------------------------------------------------------------
+
+  var CHEMISTRY = null;   // parsed chemistry.json
+  var CHEM_POOL = null;   // chemistry.json's pairs array (top 800)
+  var activeChemMode = 'daily'; // 'daily' | 'free'
+  var chemRuns = { daily: null, free: null }; // { rounds, idx, score }
+  var CHEM_STATE = null;           // persisted Daily Set streak/history — LS_KEY_CHEM_DAILY
+  var CHEM_PRACTICE_STATS = null;  // persisted Free Play casual stats — LS_KEY_CHEM_PRACTICE
+
+  // Broad position group per DATA.positions index (['PG','SG','SF','PF','C']) —
+  // used to relax the distractor search from "same position" to "same group"
+  // when there aren't enough same-position candidates left in a season.
+  var POSITION_GROUP = ['G', 'G', 'F', 'F', 'C'];
+
+  function ordinalSuffix(n) {
+    var mod100 = n % 100;
+    if (mod100 >= 11 && mod100 <= 13) return n + 'th';
+    switch (n % 10) {
+      case 1: return n + 'st';
+      case 2: return n + 'nd';
+      case 3: return n + 'rd';
+      default: return n + 'th';
+    }
+  }
+
+  // Built once from DATA.players after load (vectors.json carries no team
+  // field — only these two indices are derivable: by season, and by exact
+  // name+season for resolving chemistry.json's pair entries).
+  function buildPlayerLookups() {
+    var bySeason = {};
+    var byNameSeason = {};
+    for (var i = 0; i < DATA.players.length; i++) {
+      var p = DATA.players[i];
+      (bySeason[p.season] = bySeason[p.season] || []).push(p);
+      byNameSeason[p.name + '|' + p.season] = p;
+    }
+    PLAYERS_BY_SEASON = bySeason;
+    PLAYERS_BY_NAME_SEASON = byNameSeason;
+  }
+
+  function resolveChemPlayer(name, season) {
+    return PLAYERS_BY_NAME_SEASON[name + '|' + season] || null;
+  }
+
+  function loadChemCounter() {
+    var n = 0;
+    try {
+      var raw = localStorage.getItem(LS_KEY_CHEM_COUNTER);
+      n = raw ? (parseInt(raw, 10) || 0) : 0;
+    } catch (e) { n = 0; }
+    return n;
+  }
+
+  function saveChemCounter(n) {
+    try { localStorage.setItem(LS_KEY_CHEM_COUNTER, String(n)); } catch (e) { /* storage unavailable */ }
+  }
+
+  function loadChemDailyState() {
+    var raw = null;
+    try { raw = localStorage.getItem(LS_KEY_CHEM_DAILY); } catch (e) { raw = null; }
+    var s = { streak: 0, lastPlayDate: null, days: {}, totalSets: 0, totalScoreSum: 0 };
+    if (raw) {
+      try {
+        var parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === 'object') {
+          s.streak = parsed.streak || 0;
+          s.lastPlayDate = parsed.lastPlayDate || null;
+          s.days = parsed.days || {};
+          s.totalSets = parsed.totalSets || 0;
+          s.totalScoreSum = parsed.totalScoreSum || 0;
+        }
+      } catch (e) { /* corrupt, fall back to default */ }
+    }
+    if (!s.days[TODAY]) s.days[TODAY] = { done: false, score: null };
+    return s;
+  }
+
+  function saveChemDailyState() {
+    try { localStorage.setItem(LS_KEY_CHEM_DAILY, JSON.stringify(CHEM_STATE)); } catch (e) { /* storage unavailable */ }
+  }
+
+  function chemDailyToday() {
+    return CHEM_STATE.days[TODAY];
+  }
+
+  function computeChemDailyStats() {
+    return {
+      streak: CHEM_STATE.streak,
+      totalSets: CHEM_STATE.totalSets,
+      avgScore: CHEM_STATE.totalSets ? (CHEM_STATE.totalScoreSum / CHEM_STATE.totalSets) : 0
+    };
+  }
+
+  function loadChemPracticeStats() {
+    var raw = null;
+    try { raw = localStorage.getItem(LS_KEY_CHEM_PRACTICE); } catch (e) { raw = null; }
+    var s = { played: 0, totalScoreSum: 0 };
+    if (raw) {
+      try {
+        var parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === 'object') {
+          s.played = parsed.played || 0;
+          s.totalScoreSum = parsed.totalScoreSum || 0;
+        }
+      } catch (e) { /* corrupt, fall back to default */ }
+    }
+    return s;
+  }
+
+  function saveChemPracticeStats() {
+    try { localStorage.setItem(LS_KEY_CHEM_PRACTICE, JSON.stringify(CHEM_PRACTICE_STATS)); } catch (e) { /* storage unavailable */ }
+  }
+
+  // Every other top-800 partner of `anchorName` in `season`, resolved to
+  // player objects — a distractor must never be one of these, or picking it
+  // would secretly also be "correct" (a real measured high-chemistry pair).
+  function chemAnchorPartnerIds(anchorName, season, excludeIds) {
+    for (var i = 0; i < CHEM_POOL.length; i++) {
+      var entry = CHEM_POOL[i];
+      if (entry.season !== season) continue;
+      var otherName = null;
+      if (entry.a === anchorName) otherName = entry.b;
+      else if (entry.b === anchorName) otherName = entry.a;
+      if (!otherName) continue;
+      var other = resolveChemPlayer(otherName, season);
+      if (other) excludeIds[other.id] = true;
+    }
+  }
+
+  function pickChemDistractors(rng, pairEntry, aPlayer, bPlayer) {
+    var excludeIds = {};
+    excludeIds[aPlayer.id] = true;
+    excludeIds[bPlayer.id] = true;
+    chemAnchorPartnerIds(pairEntry.a, pairEntry.season, excludeIds);
+
+    var seasonPool = PLAYERS_BY_SEASON[pairEntry.season] || [];
+    var candidates = seasonPool.filter(function (p) { return !excludeIds[p.id]; });
+
+    var bPos = bPlayer.p;
+    var bGroup = (typeof bPos === 'number' && bPos >= 0) ? POSITION_GROUP[bPos] : null;
+    var tier1 = [], tier2 = [], tier3 = [];
+    candidates.forEach(function (p) {
+      if (typeof p.p === 'number' && p.p >= 0 && p.p === bPos) tier1.push(p);
+      else if (bGroup && typeof p.p === 'number' && p.p >= 0 && POSITION_GROUP[p.p] === bGroup) tier2.push(p);
+      else tier3.push(p);
+    });
+
+    var ordered = seededShuffle(rng, tier1).concat(seededShuffle(rng, tier2), seededShuffle(rng, tier3));
+    return ordered.slice(0, 3);
+  }
+
+  function buildChemRound(rng) {
+    var idx = Math.floor(rng() * CHEM_POOL.length);
+    var pairEntry = CHEM_POOL[idx];
+    var aPlayer = resolveChemPlayer(pairEntry.a, pairEntry.season);
+    var bPlayer = resolveChemPlayer(pairEntry.b, pairEntry.season);
+    var distractors = pickChemDistractors(rng, pairEntry, aPlayer, bPlayer);
+    var options = seededShuffle(rng, [bPlayer].concat(distractors));
+    return { pairEntry: pairEntry, aPlayer: aPlayer, bPlayer: bPlayer, options: options, answered: false, correct: null };
+  }
+
+  function buildChemDailyRounds() {
+    var rng = seededRng('vector-hoops:chem-daily:' + playDate());
+    var rounds = [];
+    for (var i = 0; i < CHEM_ROUNDS_PER_RUN; i++) rounds.push(buildChemRound(rng));
+    return rounds;
+  }
+
+  function buildChemFreeRounds() {
+    var counter = loadChemCounter();
+    var rounds = [];
+    for (var i = 0; i < CHEM_ROUNDS_PER_RUN; i++) {
+      rounds.push(buildChemRound(seededRng('vector-hoops:chem:' + counter)));
+      counter++;
+    }
+    saveChemCounter(counter);
+    return rounds;
+  }
+
+  function activeChemRun() {
+    return chemRuns[activeChemMode];
+  }
+
+  function startChemRun(mode) {
+    activeChemMode = mode;
+    if (mode === 'daily') {
+      chemRuns.daily = { rounds: buildChemDailyRounds(), idx: 0, score: 0 };
+    } else {
+      chemRuns.free = { rounds: buildChemFreeRounds(), idx: 0, score: 0 };
+    }
+    els.chemFinal.hidden = true;
+    renderChemRound();
+  }
+
+  function renderChemHeader() {
+    var isDaily = activeChemMode === 'daily';
+    els.chemEyebrow.textContent = isDaily
+      ? 'Best Teammate — Daily Set #' + puzzleNumber(TODAY)
+      : 'Best Teammate — Free Play (practice)';
+    els.chemStreakWrap.hidden = !isDaily;
+    if (isDaily) els.chemStreakNum.textContent = String(CHEM_STATE.streak);
+    els.chemPracticeBanner.hidden = isDaily;
+  }
+
+  function renderChemRound() {
+    var run = activeChemRun();
+    var round = run.rounds[run.idx];
+    els.chemRoundNum.textContent = String(run.idx + 1);
+    els.chemScoreNum.textContent = String(run.score);
+    els.chemPrompt.textContent = 'Who complemented ' + round.aPlayer.name + ' best on the ' +
+      round.pairEntry.season + ' ' + round.pairEntry.team + '?';
+    els.chemReveal.hidden = true;
+    els.chemOptions.innerHTML = '';
+    round.options.forEach(function (p, i) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'vh-chem-option';
+      btn.textContent = playerKey(p);
+      btn.addEventListener('click', function () { answerChemRound(i); });
+      els.chemOptions.appendChild(btn);
+    });
+    renderChemHeader();
+    track('vh-chem-round', { round: run.idx + 1, mode: activeChemMode });
+  }
+
+  // The two biggest-gap dimensions (A strongest relative to B, and vice
+  // versa) drive the one-line "why" — straight from the same 14-dim z
+  // vectors the complementarity score itself is computed from.
+  function chemWhyLine(aPlayer, bPlayer) {
+    var av = aPlayer.v, bv = bPlayer.v;
+    var diffs = [];
+    for (var i = 0; i < av.length; i++) diffs.push({ i: i, d: av[i] - bv[i] });
+    var byAStrong = diffs.slice().sort(function (x, y) { return y.d - x.d; });
+    var byBStrong = diffs.slice().sort(function (x, y) { return x.d - y.d; });
+    var topADim = byAStrong[0].i;
+    var topBDim = byBStrong[0].i === topADim && byBStrong.length > 1 ? byBStrong[1].i : byBStrong[0].i;
+    var aLabel = DATA.featureLabels[DATA.features[topADim]];
+    var bLabel = DATA.featureLabels[DATA.features[topBDim]];
+    return 'Orthogonal profiles: ' + aPlayer.name + '’s ' + aLabel + ' next to ' +
+      bPlayer.name + '’s ' + bLabel + '.';
+  }
+
+  function chemNumbersLine(pairEntry) {
+    var pctile = Math.round(pairEntry.chemistry * 100);
+    var comp = Math.round(pairEntry.complementarity * 100);
+    var jp = (pairEntry.jointPM >= 0 ? '+' : '') + pairEntry.jointPM.toFixed(1);
+    return 'Complementarity ' + comp + '% · joint plus-minus ' + jp + '/game · chemistry ' +
+      ordinalSuffix(pctile) + ' percentile of the top-800 measured pairs.';
+  }
+
+  function answerChemRound(optionIdx) {
+    var run = activeChemRun();
+    var round = run.rounds[run.idx];
+    if (round.answered) return;
+    round.answered = true;
+    var picked = round.options[optionIdx];
+    var correct = picked.id === round.bPlayer.id;
+    round.correct = correct;
+    if (correct) run.score++;
+
+    Array.prototype.forEach.call(els.chemOptions.children, function (btn, i) {
+      btn.disabled = true;
+      if (round.options[i].id === round.bPlayer.id) btn.classList.add('is-correct');
+      else if (i === optionIdx) btn.classList.add('is-wrong');
+    });
+
+    els.chemReveal.hidden = false;
+    els.chemVerdict.innerHTML = '';
+    els.chemVerdict.appendChild(document.createTextNode(correct ? 'Correct — ' : 'Missed it — '));
+    var nameSpan = document.createElement('span');
+    els.chemVerdict.appendChild(nameSpan);
+    els.chemVerdict.appendChild(document.createTextNode(' complemented ' + round.aPlayer.name +
+      ' best on the ' + round.pairEntry.season + ' ' + round.pairEntry.team + '.'));
+    tryLinkMoverName(nameSpan, round.bPlayer.name);
+    els.chemNumbers.textContent = chemNumbersLine(round.pairEntry);
+    els.chemWhy.textContent = chemWhyLine(round.aPlayer, round.bPlayer);
+
+    els.chemScoreNum.textContent = String(run.score);
+    els.chemNextBtn.textContent = (run.idx + 1 >= CHEM_ROUNDS_PER_RUN) ? 'See results' : 'Next round';
+  }
+
+  function buildChemShareText() {
+    var run = chemRuns.daily;
+    var rows = run.rounds.map(function (r) { return r.correct ? '✅' : '❌'; }).join('');
+    return 'Vector Hoops — Best Teammate #' + puzzleNumber(TODAY) + ' ' + run.score + '/' + CHEM_ROUNDS_PER_RUN +
+      '\n' + rows;
+  }
+
+  function showChemFinal() {
+    var run = activeChemRun();
+    els.chemFinal.hidden = false;
+    els.chemReveal.hidden = true;
+    els.chemFinalScore.textContent = 'You scored ' + run.score + '/' + CHEM_ROUNDS_PER_RUN + '.';
+
+    if (activeChemMode === 'daily') {
+      var rec = chemDailyToday();
+      if (!rec.done) {
+        rec.done = true;
+        rec.score = run.score;
+        var yesterday = utcDateString(new Date(Date.now() - 86400000));
+        CHEM_STATE.streak = (CHEM_STATE.lastPlayDate === yesterday) ? CHEM_STATE.streak + 1 : 1;
+        CHEM_STATE.lastPlayDate = TODAY;
+        CHEM_STATE.totalSets++;
+        CHEM_STATE.totalScoreSum += run.score;
+        saveChemDailyState();
+        track('vh-chem-done', { score: run.score, mode: 'daily' });
+      }
+      els.chemAgainBtn.hidden = true;
+      els.chemShareBtn.hidden = false;
+      els.chemComeback.hidden = false;
+      els.chemShareCopied.hidden = true;
+    } else {
+      CHEM_PRACTICE_STATS.played++;
+      CHEM_PRACTICE_STATS.totalScoreSum += run.score;
+      saveChemPracticeStats();
+      els.chemAgainBtn.hidden = false;
+      els.chemShareBtn.hidden = true;
+      els.chemComeback.hidden = true;
+      track('vh-chem-done', { score: run.score, mode: 'free' });
+    }
+    renderChemHeader();
+  }
+
+  function nextChemRound() {
+    var run = activeChemRun();
+    var round = run.rounds[run.idx];
+    if (!round.answered) return;
+    run.idx++;
+    if (run.idx >= CHEM_ROUNDS_PER_RUN) {
+      showChemFinal();
+    } else {
+      renderChemRound();
+    }
+  }
+
+  function switchChemMode(mode) {
+    activeChemMode = mode;
+    els.chemSubDaily.classList.toggle('is-active', mode === 'daily');
+    els.chemSubFree.classList.toggle('is-active', mode === 'free');
+    els.chemSubDaily.setAttribute('aria-selected', String(mode === 'daily'));
+    els.chemSubFree.setAttribute('aria-selected', String(mode === 'free'));
+
+    if (mode === 'daily' && chemDailyToday().done && !chemRuns.daily) {
+      var doneRec = chemDailyToday();
+      chemRuns.daily = { rounds: [], idx: CHEM_ROUNDS_PER_RUN, score: doneRec.score || 0 };
+    }
+
+    var run = chemRuns[mode];
+    if (!run) {
+      startChemRun(mode);
+    } else if (run.idx >= CHEM_ROUNDS_PER_RUN) {
+      showChemFinal();
+    } else {
+      els.chemFinal.hidden = true;
+      renderChemRound();
+    }
+    renderChemHeader();
+  }
+
+  function setupChem() {
+    els.chemNextBtn.addEventListener('click', nextChemRound);
+    els.chemAgainBtn.addEventListener('click', function () { startChemRun('free'); });
+    els.chemSubDaily.addEventListener('click', function () { switchChemMode('daily'); });
+    els.chemSubFree.addEventListener('click', function () { switchChemMode('free'); });
+    els.chemMethodBtn.addEventListener('click', function () { openMethods('chem', els.chemMethodBtn); });
+    els.chemShareBtn.addEventListener('click', function () {
+      var run = chemRuns.daily;
+      var text = buildChemShareText();
+      shareChallengeResult(text, {
+        mode: 'cm',
+        date: playDate(),
+        score: run.score + '/' + CHEM_ROUNDS_PER_RUN,
+        scoreLabel: run.score + '/' + CHEM_ROUNDS_PER_RUN,
+        challenger: challengerName()
+      }, els.chemShareCopied, 'chem-daily-challenge');
+    });
+  }
+
+  var chemInitialized = false;
 
   // ---------------------------------------------------------------------
   // CAREER ARC: order one player's charted seasons, oldest to newest, from
@@ -3279,7 +3983,7 @@
   }
 
   function buildArcDailyTarget() {
-    return buildArcRoundFromRng(seededRng('vector-hoops:arc-daily:' + TODAY));
+    return buildArcRoundFromRng(seededRng('vector-hoops:arc-daily:' + playDate()));
   }
 
   function buildArcPracticeTarget() {
@@ -3479,14 +4183,13 @@
     if (isDaily) {
       els.arcShareBtn.onclick = function () {
         var text = buildArcShareText(round, rec);
-        var shared = false;
-        if (navigator.share) { navigator.share({ text: text }).catch(function () {}); shared = true; }
-        if (!shared && navigator.clipboard && navigator.clipboard.writeText) {
-          navigator.clipboard.writeText(text).then(function () { els.arcShareCopied.hidden = false; }).catch(function () {});
-        } else if (!shared) {
-          els.arcShareCopied.hidden = false;
-        }
-        track('vh-share', { mode: 'arc-daily' });
+        shareChallengeResult(text, {
+          mode: 'arc',
+          date: playDate(),
+          score: rec.score + '/' + ARC_CARD_COUNT,
+          scoreLabel: rec.score + '/' + ARC_CARD_COUNT,
+          challenger: challengerName()
+        }, els.arcShareCopied, 'arc-daily-challenge');
       };
     }
   }
@@ -3596,9 +4299,258 @@
 
   var arcInitialized = false;
 
+  // ---------------------------------------------------------------------
+  // WHAT-IF LAB: pure sandbox, no daily puzzle, no streak. Pick any two
+  // player-seasons and get a full partnership report — complementarity
+  // (same 1-|cosine| formula chemistry.json uses), a dimensional coverage
+  // map (reuses the Chimera reveal's breakdown chart, relabeled), redundancy/
+  // shared-weakness warnings on the 14 dims, a combined court overlay
+  // (reuses the court geometry/zone math, drawn for both players at once),
+  // and the closest real measured pair from chemistry.json by complementarity.
+  // ---------------------------------------------------------------------
+
+  var whatifPick = { a: null, b: null };
+  var whatifLastReport = null; // { a, b, complementarity, compPct, pctileAmongPool } for the share button
+
+  // Usage/ball-in-hand dims where both players being strong is a redundancy
+  // risk (a "who's the point guard" problem), not a strength.
+  var BALL_DOMINANT_KEYS = ['FGA', 'FTA', 'AST'];
+  var REDUNDANCY_PHRASE = {
+    FGA: 'both need heavy shot volume to feel involved — a usage fight waiting to happen',
+    FTA: 'both live at the free-throw line — one ball problem',
+    AST: 'both want the ball in their hands to create'
+  };
+  // For every dim except TOV, the "weak" direction is a low z (below era
+  // average); TOV flips — a high z there is the bad/weak direction.
+  var WEAKNESS_HIGH_IS_BAD = { TOV: true };
+  var WEAKNESS_PHRASE = {
+    PTS: 'neither one scores much', AST: 'nobody creates for others',
+    OREB: 'no one crashes the offensive glass', DREB: 'nobody boards',
+    STL: 'no ball pressure from either', BLK: 'no rim protection from either',
+    TOV: 'both are turnover-prone', FG3A: 'neither one shoots threes',
+    FGA: 'neither one shoots much', FTA: 'neither one draws fouls',
+    FG3_PCT: 'neither one shoots it well from three', FG_PCT: 'neither one finishes efficiently',
+    FT_PCT: 'neither one is reliable at the line', PLUS_MINUS: 'neither one has moved the needle'
+  };
+
+  function computeWhatifCoverage(aPlayer, bPlayer) {
+    var covered = 0;
+    for (var i = 0; i < aPlayer.v.length; i++) {
+      if (aPlayer.v[i] > 0 || bPlayer.v[i] > 0) covered++;
+    }
+    return covered;
+  }
+
+  function computeWhatifFlags(aPlayer, bPlayer) {
+    var redundancy = [], weakness = [];
+    DATA.features.forEach(function (key, i) {
+      var za = aPlayer.v[i], zb = bPlayer.v[i];
+      if (BALL_DOMINANT_KEYS.indexOf(key) !== -1 && za > 1.5 && zb > 1.5) {
+        redundancy.push(REDUNDANCY_PHRASE[key]);
+      }
+      var bothWeak = WEAKNESS_HIGH_IS_BAD[key] ? (za > 1 && zb > 1) : (za < -1 && zb < -1);
+      if (bothWeak) weakness.push(WEAKNESS_PHRASE[key]);
+    });
+    return { redundancy: redundancy, weakness: weakness };
+  }
+
+  function renderWhatifFlags(flags) {
+    var html = '';
+    flags.redundancy.forEach(function (msg) {
+      html += '<p class="vh-whatif-flag vh-whatif-flag--redundancy">⚠ Redundancy: ' + escapeHtml(msg) + '</p>';
+    });
+    flags.weakness.forEach(function (msg) {
+      html += '<p class="vh-whatif-flag vh-whatif-flag--weakness">⚠ Shared weakness: ' + escapeHtml(msg) + '</p>';
+    });
+    if (!flags.redundancy.length && !flags.weakness.length) {
+      html = '<p class="vh-whatif-flag vh-whatif-flag--none">No redundancy or shared-weakness flags on this pair — coverage looks clean.</p>';
+    }
+    els.whatifFlags.innerHTML = html;
+  }
+
+  // Nearest analog + percentile both read chemistry.json's top-800 pairs,
+  // shared with the Chemistry mode's own CHEM_POOL/CHEMISTRY (one fetch,
+  // two features). Percentile is explicitly "of the 800 known pairs" (an
+  // elite, chemistry-selected subsample, not a claim about the whole league)
+  // — stated in the What-If Lab methods text, not just implied.
+  function findNearestChemAnalog(complementarity) {
+    if (!CHEM_POOL || !CHEM_POOL.length) return null;
+    var best = null, bestDiff = Infinity;
+    for (var i = 0; i < CHEM_POOL.length; i++) {
+      var diff = Math.abs(CHEM_POOL[i].complementarity - complementarity);
+      if (diff < bestDiff) { bestDiff = diff; best = CHEM_POOL[i]; }
+    }
+    return best;
+  }
+
+  function chemPercentileAmongPool(complementarity) {
+    if (!CHEM_POOL || !CHEM_POOL.length) return null;
+    var below = 0;
+    for (var i = 0; i < CHEM_POOL.length; i++) {
+      if (CHEM_POOL[i].complementarity <= complementarity) below++;
+    }
+    return Math.round(below / CHEM_POOL.length * 100);
+  }
+
+  function buildWhatifReport() {
+    var a = whatifPick.a, b = whatifPick.b;
+    var complementarity = 1 - Math.abs(cosineSim(a.v, b.v));
+    var compPct = Math.round(complementarity * 100);
+
+    els.whatifReportEyebrow.textContent = 'Partnership report — ' + playerKey(a) + ' + ' + playerKey(b);
+    els.whatifComplementarityLine.textContent =
+      'Complementarity ' + compPct + '% — 1 − |cosine| of era-z profiles, the same measure chemistry.json uses. ' +
+      'Higher means more orthogonal skill profiles; it is not a claim about on-court success.';
+
+    var coverage = computeWhatifCoverage(a, b);
+    els.whatifCoverageSummary.textContent = 'Together they cover ' + coverage + '/14 dimensions above era average.';
+    renderBreakdown(els.whatifCoverageChart, a.v, b.v, a.name, b.name);
+    if (els.whatifCoverageSrSummary) {
+      els.whatifCoverageSrSummary.textContent = breakdownSummaryText(a.v, b.v, a.name, b.name);
+    }
+    if (els.whatifLegendA) els.whatifLegendA.textContent = playerKey(a);
+    if (els.whatifLegendB) els.whatifLegendB.textContent = playerKey(b);
+
+    renderWhatifFlags(computeWhatifFlags(a, b));
+
+    var zones = renderCourtOverlay(els.whatifCourt, a.v, b.v);
+    if (els.whatifCourtSrSummary) {
+      els.whatifCourtSrSummary.textContent = zonesSummaryText(a.name, zones.a) + ' ' + zonesSummaryText(b.name, zones.b);
+    }
+
+    var analog = findNearestChemAnalog(complementarity);
+    var pctileAmongPool = chemPercentileAmongPool(complementarity);
+    if (analog) {
+      els.whatifAnalogLine.textContent = 'Closest real-world analog by measured complementarity: ' +
+        analog.a + ' + ' + analog.b + ' (' + analog.team + ' ' + analog.season + ', ' +
+        Math.round(analog.complementarity * 100) + '% complementarity).';
+    } else {
+      els.whatifAnalogLine.textContent = 'Closest real-world analog: still loading the measured-pairs dataset.';
+    }
+
+    els.whatifReport.hidden = false;
+    whatifLastReport = { a: a, b: b, complementarity: complementarity, compPct: compPct, pctileAmongPool: pctileAmongPool };
+    track('vh-whatif-report', { aId: a.id, bId: b.id });
+  }
+
+  function showWhatifError(msg) {
+    if (!els.whatifError) return;
+    els.whatifError.textContent = msg;
+    els.whatifError.hidden = false;
+  }
+
+  function hideWhatifError() {
+    if (!els.whatifError) return;
+    els.whatifError.hidden = true;
+    els.whatifError.textContent = '';
+  }
+
+  function maybeBuildWhatifReport() {
+    if (!whatifPick.a || !whatifPick.b) return;
+    if (whatifPick.a.id === whatifPick.b.id) {
+      showWhatifError('Pick two different player-seasons.');
+      return;
+    }
+    hideWhatifError();
+    buildWhatifReport();
+  }
+
+  function setWhatifPick(slot, player) {
+    whatifPick[slot] = player;
+    var badge = slot === 'a' ? els.whatifBadgeA : els.whatifBadgeB;
+    if (badge) badge.hidden = false;
+    maybeBuildWhatifReport();
+  }
+
+  function resetWhatifPicks() {
+    whatifPick = { a: null, b: null };
+    whatifLastReport = null;
+    if (els.whatifBadgeA) els.whatifBadgeA.hidden = true;
+    if (els.whatifBadgeB) els.whatifBadgeB.hidden = true;
+    if (els.whatifAInput) els.whatifAInput.value = '';
+    if (els.whatifBInput) els.whatifBInput.value = '';
+    hideWhatifError();
+    els.whatifReport.hidden = true;
+  }
+
+  // Any two distinct player-seasons — unlike Chimera's Randomize, the Lab
+  // has no low-similarity constraint; a redundant/overlapping pair is a
+  // valid (and informative) thing to sandbox.
+  function randomizeWhatifPicks() {
+    var rng = seededRng('vector-hoops:whatif:' + randomNonce());
+    var players = DATA.players;
+    var a, b;
+    do {
+      a = players[Math.floor(rng() * players.length)];
+      b = players[Math.floor(rng() * players.length)];
+    } while (a.id === b.id);
+    if (els.whatifAInput) els.whatifAInput.value = playerKey(a);
+    if (els.whatifBInput) els.whatifBInput.value = playerKey(b);
+    setWhatifPick('a', a);
+    setWhatifPick('b', b);
+  }
+
+  function buildWhatifShareText() {
+    var r = whatifLastReport;
+    if (!r) return '';
+    var scoreText = (r.pctileAmongPool != null)
+      ? ordinalSuffix(r.pctileAmongPool) + ' percentile of the top-800 measured pairs'
+      : (r.compPct + '% complementarity');
+    // Reuses the same deep-link URL builder the other daily modes use for
+    // their challenge links (mode/donorA/donorB params are already generic)
+    // so the link actually reopens this exact pairing in the Lab — no
+    // "beat this score" framing since the Lab has no score to beat.
+    var url = buildChallengeUrl({ mode: 'wi', donorA: r.a.id, donorB: r.b.id });
+    return 'Vector Hoops What-If Lab — I paired ' + r.a.name + ' (' + r.a.season + ') + ' +
+      r.b.name + ' (' + r.b.season + ') — complementarity ' + scoreText + '.\n' + url;
+  }
+
+  function setupWhatifInputs() {
+    createAutocomplete(els.whatifAInput, els.whatifASuggestions, DATA.players, function (p) {
+      setWhatifPick('a', p);
+    }, { hintEl: els.whatifAFocusHint });
+    createAutocomplete(els.whatifBInput, els.whatifBSuggestions, DATA.players, function (p) {
+      setWhatifPick('b', p);
+    }, { hintEl: els.whatifBFocusHint });
+    els.whatifAInput.disabled = false;
+    els.whatifBInput.disabled = false;
+    els.whatifRandomizeBtn.disabled = false;
+  }
+
+  function setupWhatif() {
+    setupWhatifInputs();
+    els.whatifRandomizeBtn.addEventListener('click', randomizeWhatifPicks);
+    els.whatifChangeBtn.addEventListener('click', resetWhatifPicks);
+    els.whatifMethodBtn.addEventListener('click', function () { openMethods('whatif', els.whatifMethodBtn); });
+    els.whatifShareBtn.addEventListener('click', function () {
+      var text = buildWhatifShareText();
+      if (!text) return;
+      var shared = false;
+      if (navigator.share) { navigator.share({ text: text }).catch(function () {}); shared = true; }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function () {
+          els.whatifShareCopied.hidden = false;
+        }).catch(function () {
+          if (!shared) els.whatifShareCopied.hidden = false;
+        });
+      } else if (!shared) {
+        els.whatifShareCopied.hidden = false;
+      }
+      track('vh-share', { mode: 'whatif' });
+    });
+  }
+
+  var whatifInitialized = false;
+
   function switchMode(mode) {
-    var panels = { chimera: els.panelChimera, deadline: els.panelDeadline, fader: els.panelFader, arc: els.panelArc };
-    var tabs = { chimera: els.tabChimera, deadline: els.tabDeadline, fader: els.tabFader, arc: els.tabArc };
+    var panels = {
+      chimera: els.panelChimera, deadline: els.panelDeadline, fader: els.panelFader, arc: els.panelArc,
+      chem: els.panelChem, whatif: els.panelWhatif
+    };
+    var tabs = {
+      chimera: els.tabChimera, deadline: els.tabDeadline, fader: els.tabFader, arc: els.tabArc,
+      chem: els.tabChem, whatif: els.tabWhatif
+    };
     Object.keys(panels).forEach(function (m) {
       panels[m].hidden = m !== mode;
       tabs[m].classList.toggle('is-active', m === mode);
@@ -3617,6 +4569,14 @@
       track('vh-arc-round', { mode: 'daily' });
       switchArcSubMode('daily');
     }
+    if (mode === 'chem' && !chemInitialized && CHEM_POOL) {
+      chemInitialized = true;
+      switchChemMode('daily');
+    }
+    if (mode === 'whatif' && !whatifInitialized) {
+      whatifInitialized = true;
+      setupWhatif();
+    }
     checkRollover();
   }
 
@@ -3625,6 +4585,8 @@
     els.tabDeadline.addEventListener('click', function () { switchMode('deadline'); });
     els.tabFader.addEventListener('click', function () { switchMode('fader'); });
     els.tabArc.addEventListener('click', function () { switchMode('arc'); });
+    els.tabChem.addEventListener('click', function () { switchMode('chem'); });
+    els.tabWhatif.addEventListener('click', function () { switchMode('whatif'); });
   }
 
   // ---------------------------------------------------------------------
@@ -3781,9 +4743,18 @@
     renderStatsTile(els.statsArcGrid, arc.avgScore.toFixed(1), 'Avg score');
     renderStatsTile(els.statsArcGrid, arc.streak, 'Streak');
 
+    if (els.statsChemGrid) {
+      var chem = computeChemDailyStats();
+      els.statsChemGrid.innerHTML = '';
+      renderStatsTile(els.statsChemGrid, chem.totalSets, 'Sets played');
+      renderStatsTile(els.statsChemGrid, chem.avgScore.toFixed(1), 'Avg score');
+      renderStatsTile(els.statsChemGrid, chem.streak, 'Streak');
+    }
+
     els.statsPracticeLine.textContent = 'Chimera: ' + PRACTICE_STATS.played + ' played, ' + PRACTICE_STATS.won + ' won. ' +
       'Fader or Finisher: ' + practiceSetSummary(FADER_PRACTICE_STATS) + '. ' +
       'Career Arc: ' + practiceSetSummary(ARC_PRACTICE_STATS) + '. ' +
+      'Chemistry: ' + practiceSetSummary(CHEM_PRACTICE_STATS) + '. ' +
       'Casual only — never counted toward your streaks or stats above.';
   }
 
@@ -3805,10 +4776,11 @@
   }
 
   function clearAllData() {
-    var ok = window.confirm('Clear all Vector Hoops data on this device? This removes every daily streak (Chimera, Deadline, Fader or Finisher, Career Arc) and all practice counters. This cannot be undone.');
+    var ok = window.confirm('Clear all Vector Hoops data on this device? This removes every daily streak (Chimera, Deadline, Fader or Finisher, Career Arc, Chemistry) and all practice counters. This cannot be undone.');
     if (!ok) return;
     [LS_KEY, LS_KEY_DEADLINE_DAILY, LS_KEY_PRACTICE_STATS, LS_KEY_DEADLINE_COUNTER,
-     LS_KEY_FF_DAILY, LS_KEY_FF_PRACTICE, LS_KEY_ARC_DAILY, LS_KEY_ARC_PRACTICE].forEach(function (key) {
+     LS_KEY_FF_DAILY, LS_KEY_FF_PRACTICE, LS_KEY_ARC_DAILY, LS_KEY_ARC_PRACTICE,
+     LS_KEY_CHEM_DAILY, LS_KEY_CHEM_PRACTICE, LS_KEY_CHEM_COUNTER].forEach(function (key) {
       try { localStorage.removeItem(key); } catch (e) { /* storage unavailable */ }
     });
     window.location.reload();
@@ -3839,6 +4811,35 @@
         '<div class="vh-dossier__bullet">Split at each player-season\'s own game-sequence midpoint, not the calendar All-Star break.</div>' +
         '<div class="vh-dossier__bullet">Minimum 25 games and 12 minutes per game on both sides of the split.</div>' +
         '<div class="vh-dossier__bullet">Quiz pool limited to unambiguous deltas (1.5&ndash;6.0 per-36) so ties aren\'t part of the puzzle.</div>';
+      return;
+    }
+    if (which === 'chem') {
+      els.methodsTitle.textContent = 'Chemistry — method & data sources';
+      els.methodsBody.innerHTML =
+        '<p class="vh-dossier__p">' + escapeHtml(CHEMISTRY && CHEMISTRY.method || '') + '</p>' +
+        '<h4 class="vh-dossier__h4">Data sources &amp; minimums</h4>' +
+        '<div class="vh-dossier__bullet">Real NBA teammate pairs, same team-season, each player &ge;1000 minutes, 2015&ndash;16 through 2025&ndash;26 seasons.</div>' +
+        '<div class="vh-dossier__bullet">Quiz pool is the top 800 pairs by chemistry score out of ' +
+          (CHEMISTRY && CHEMISTRY.totalPairsAnalyzed || 'all') + ' pairs analyzed — not a full-league sample.</div>' +
+        '<div class="vh-dossier__bullet">Distractors: vectors.json carries no team field, so an exact "different team" filter isn\'t computable. ' +
+          'Instead, distractors are seeded same-season player-seasons that are never the anchor, never the true partner, and never ' +
+          'another top-800 partner of the same anchor — preferring the true partner\'s position, then broad position group.</div>' +
+        '<div class="vh-dossier__bullet">Unranked v1: results never post to the public leaderboard.</div>';
+      return;
+    }
+    if (which === 'whatif') {
+      els.methodsTitle.textContent = 'What-If Lab — method & data sources';
+      els.methodsBody.innerHTML =
+        '<p class="vh-dossier__p">Complementarity = 1 &minus; |cosine| of the two player-seasons\' era-z profiles — the exact ' +
+          'formula chemistry.json uses. Higher means more orthogonal skill profiles; it is not a claim about on-court chemistry ' +
+          'or team success (no lineup on/off data is used here).</p>' +
+        '<h4 class="vh-dossier__h4">Data sources &amp; minimums</h4>' +
+        '<div class="vh-dossier__bullet">Vectors: per-100-possession stats, z-scored within each season, 14 dimensions, 1996&ndash;97 through 2025&ndash;26.</div>' +
+        '<div class="vh-dossier__bullet">Redundancy flags trigger when both players sit above +1.5&sigma; on a ball-dominant dimension (shot volume, free-throw ' +
+          'rate, or assists). Shared-weakness flags trigger when both sit below &minus;1&sigma; on the same dimension (above +1&sigma; for turnovers, where high is the weak direction).</div>' +
+        '<div class="vh-dossier__bullet">"Closest real-world analog" and the complementarity percentile are both computed against chemistry.json\'s top-800 ' +
+          'measured pairs only — an elite, chemistry-selected subsample, not the full league. The percentile answers "where does this pairing rank among the ' +
+          '800 best-measured pairs," not "among all possible pairs."</div>';
       return;
     }
     els.methodsTitle.textContent = 'Method & data sources';
@@ -3945,6 +4946,8 @@
   // ---------------------------------------------------------------------
 
   function initDom() {
+    els.challengeBanner = document.getElementById('challenge-banner');
+    els.challengeBannerText = document.getElementById('challenge-banner-text');
     els.puzzleNumber = document.getElementById('puzzle-number');
     els.puzzleDay = document.getElementById('puzzle-day');
     els.promptText = document.getElementById('prompt-text');
@@ -4027,10 +5030,14 @@
     els.tabDeadline = document.getElementById('tab-deadline');
     els.tabFader = document.getElementById('tab-fader');
     els.tabArc = document.getElementById('tab-arc');
+    els.tabChem = document.getElementById('tab-chem');
+    els.tabWhatif = document.getElementById('tab-whatif');
     els.panelChimera = document.getElementById('panel-chimera');
     els.panelDeadline = document.getElementById('panel-deadline');
     els.panelFader = document.getElementById('panel-fader');
     els.panelArc = document.getElementById('panel-arc');
+    els.panelChem = document.getElementById('panel-chem');
+    els.panelWhatif = document.getElementById('panel-whatif');
     els.deadlineRoundNum = document.getElementById('deadline-round-num');
     els.deadlineScoreNum = document.getElementById('deadline-score-num');
     els.deadlinePrompt = document.getElementById('deadline-prompt');
@@ -4167,6 +5174,61 @@
     els.arcRevealList = document.getElementById('arc-reveal-list');
     els.arcLinechart = document.getElementById('arc-linechart');
     els.arcLinechartSrSummary = document.getElementById('arc-linechart-sr-summary');
+
+    // Chemistry
+    els.chemSubDaily = document.getElementById('chem-sub-daily');
+    els.chemSubFree = document.getElementById('chem-sub-free');
+    els.chemPracticeBanner = document.getElementById('chem-practice-banner');
+    els.chemEyebrow = document.getElementById('chem-eyebrow');
+    els.chemRoundNum = document.getElementById('chem-round-num');
+    els.chemScoreNum = document.getElementById('chem-score-num');
+    els.chemStreakWrap = document.getElementById('chem-streak-wrap');
+    els.chemStreakNum = document.getElementById('chem-streak-num');
+    els.chemPrompt = document.getElementById('chem-prompt');
+    els.chemOptions = document.getElementById('chem-options');
+    els.chemReveal = document.getElementById('chem-reveal');
+    els.chemVerdict = document.getElementById('chem-verdict');
+    els.chemNumbers = document.getElementById('chem-numbers');
+    els.chemWhy = document.getElementById('chem-why');
+    els.chemNextBtn = document.getElementById('chem-next-btn');
+    els.chemFinal = document.getElementById('chem-final');
+    els.chemFinalScore = document.getElementById('chem-final-score');
+    els.chemComeback = document.getElementById('chem-comeback');
+    els.chemShareBtn = document.getElementById('chem-share-btn');
+    els.chemShareCopied = document.getElementById('chem-share-copied');
+    els.chemAgainBtn = document.getElementById('chem-again-btn');
+    els.chemMethodBtn = document.getElementById('chem-method-btn');
+
+    // What-If Lab
+    els.whatifBadgeA = document.getElementById('whatif-badge-a');
+    els.whatifBadgeB = document.getElementById('whatif-badge-b');
+    els.whatifAInput = document.getElementById('whatif-a-input');
+    els.whatifASuggestions = document.getElementById('whatif-a-suggestions');
+    els.whatifAFocusHint = document.getElementById('whatif-a-focus-hint');
+    els.whatifBInput = document.getElementById('whatif-b-input');
+    els.whatifBSuggestions = document.getElementById('whatif-b-suggestions');
+    els.whatifBFocusHint = document.getElementById('whatif-b-focus-hint');
+    els.whatifError = document.getElementById('whatif-error');
+    els.whatifRandomizeBtn = document.getElementById('whatif-randomize-btn');
+    els.whatifReport = document.getElementById('whatif-report');
+    els.whatifReportEyebrow = document.getElementById('whatif-report-eyebrow');
+    els.whatifComplementarityLine = document.getElementById('whatif-complementarity-line');
+    els.whatifCoverageSummary = document.getElementById('whatif-coverage-summary');
+    els.whatifCoverageChart = document.getElementById('whatif-coverage-chart');
+    els.whatifCoverageSrSummary = document.getElementById('whatif-coverage-sr-summary');
+    els.whatifLegendA = document.getElementById('whatif-legend-a');
+    els.whatifLegendB = document.getElementById('whatif-legend-b');
+    els.whatifFlags = document.getElementById('whatif-flags');
+    els.whatifCourt = document.getElementById('whatif-court');
+    els.whatifCourtSrSummary = document.getElementById('whatif-court-sr-summary');
+    els.whatifAnalogLine = document.getElementById('whatif-analog-line');
+    els.whatifShareBtn = document.getElementById('whatif-share-btn');
+    els.whatifShareCopied = document.getElementById('whatif-share-copied');
+    els.whatifChangeBtn = document.getElementById('whatif-change-btn');
+    els.whatifMethodBtn = document.getElementById('whatif-method-btn');
+
+    // Stats modal (Chemistry)
+    els.statsChemGrid = document.getElementById('stats-chem-grid');
   }
 
   // ---------------------------------------------------------------------
@@ -4430,6 +5492,9 @@
         ARC_STATE = loadArcDailyState();
         ARC_PRACTICE_STATS = loadArcPracticeStats();
         ARC_INDEX = buildArcIndex();
+        CHEM_STATE = loadChemDailyState();
+        CHEM_PRACTICE_STATS = loadChemPracticeStats();
+        buildPlayerLookups();
 
         els.loadingBanner.hidden = true;
         // First paint: reveal the real content only once data has actually
@@ -4454,6 +5519,7 @@
         setupModeTabs();
         renderGuesses();
         resumeChimeraIfDone();
+        maybeApplyChallenge();
 
         // Pin the report/map panels open on wide viewports (two-column
         // desktop layout); below that breakpoint they stay closed sheets
@@ -4476,6 +5542,7 @@
             DEADLINE_POOL = buildDeadlinePool();
             setupDeadline();
             renderDeadlineHeader();
+            maybeApplyChallenge();
           })
           .catch(function () {
             els.tabDeadline.disabled = true;
@@ -4491,10 +5558,27 @@
             FADERFINISHER = fj;
             FF_POOL = FADERFINISHER.questions || [];
             setupFader();
+            maybeApplyChallenge();
           })
           .catch(function () {
             els.tabFader.disabled = true;
             els.tabFader.setAttribute('aria-disabled', 'true');
+          });
+
+        fetch(CHEMISTRY_URL)
+          .then(function (res) {
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+            return res.json();
+          })
+          .then(function (cj) {
+            CHEMISTRY = cj;
+            CHEM_POOL = cj.pairs || [];
+            setupChem();
+            maybeApplyChallenge();
+          })
+          .catch(function () {
+            els.tabChem.disabled = true;
+            els.tabChem.setAttribute('aria-disabled', 'true');
           });
 
         if (todayRecord().guesses.length === 0 && !todayRecord().done) {

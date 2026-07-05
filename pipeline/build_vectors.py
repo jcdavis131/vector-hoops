@@ -20,10 +20,10 @@ Data sources (each cached under pipeline/cache/, resumable):
   3. stats.nba.com leaguedashptstats  (tracking: drives, touches,
      catch-and-shoot, pull-ups, speed/distance -- 2013-14 onward only;
      masked before that. Honest: no imputation of unmeasured eras.)
-  4. Salary:
+  4. Salary (pipeline/fetch_salaries.py + merge_salaries.py):
        a. pipeline/cache/salaries_history.csv drop-in (name,season,salary)
-          -- full-history file (e.g. a Kaggle/hoopshype export); joined
-          automatically when present.
+          -- full-history file (Kaggle/hoopshype export); validate/merge via
+          merge_salaries.py -> salaries_merged.json (preferred at join).
        b. basketball-reference.com/contracts/players.html -- current
           contracts, fills the most recent seasons when (a) is absent.
      Salary becomes log-salary z-scored within season + a mask column.
@@ -143,13 +143,22 @@ def cache_path(tag: str, season: str) -> Path:
     return CACHE / f"{tag}_{season}.json"
 
 
+# Older cache drops used short tags (e.g. base_1996-97.json); current code
+# writes dashbase_*.json. Accept both so offline rebuilds resume honestly.
+_CACHE_ALIASES = {"dashbase": "base", "dashadvanced": "advanced",
+                  "dashscoring": "scoring"}
+
+
 def load_cached(tag: str, season: str):
-    p = cache_path(tag, season)
-    if p.exists():
-        try:
-            return json.loads(p.read_text(encoding="utf-8"))
-        except Exception:
-            return None
+    for t in (tag, _CACHE_ALIASES.get(tag)):
+        if not t:
+            continue
+        p = cache_path(t, season)
+        if p.exists():
+            try:
+                return json.loads(p.read_text(encoding="utf-8"))
+            except Exception:
+                return None
     return None
 
 
@@ -335,10 +344,38 @@ def norm_name(name: str) -> str:
 
 
 def load_salary_history() -> dict[tuple[str, str], float]:
-    """Optional full-history drop-in: pipeline/cache/salaries_history.csv
-    with header name,season,salary (season as '2003-04')."""
+    """Full-history salaries: prefers merge_salaries output, else raw CSV.
+
+    Sources (in order):
+      1. pipeline/cache/salaries_merged.json  (run merge_salaries.py)
+      2. pipeline/cache/salaries_history.csv  (name,season,salary drop-in)
+    Season labels use '2003-04' format. Join key is norm_name(name) + season.
+    """
+    merged_p = CACHE / "salaries_merged.json"
+    if merged_p.exists():
+        try:
+            data = json.loads(merged_p.read_text(encoding="utf-8"))
+            salaries = data.get("salaries", data)
+            out: dict[tuple[str, str], float] = {}
+            for key, val in salaries.items():
+                if key.startswith("_"):
+                    continue
+                if isinstance(val, dict):
+                    nn = val.get("norm_name") or key.split("|", 1)[0]
+                    season = val.get("season") or key.split("|", 1)[-1]
+                    out[(nn, season)] = float(val["salary"])
+                else:
+                    parts = key.split("|", 1)
+                    if len(parts) == 2:
+                        out[(parts[0], parts[1])] = float(val)
+            print(f"salary merged JSON: {len(out)} rows")
+            return out
+        except Exception as e:
+            print(f"salary merged JSON unreadable ({type(e).__name__}) — "
+                  "falling back to CSV")
+
     p = CACHE / "salaries_history.csv"
-    out: dict[tuple[str, str], float] = {}
+    out = {}
     if not p.exists():
         return out
     with p.open(encoding="utf-8", newline="") as f:
