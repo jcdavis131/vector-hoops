@@ -4,8 +4,22 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Vector Hoops — the daily player-season Chimera</title>
-<meta name="description" content="Guess the fused player-season built from two eras of stats. Era-honest, zero tracking, one puzzle a day.">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>&#127936;</text></svg>">
+<meta name="description" content="Whose season is the perfect combo of two other players? Guess the fused player-season built from two eras of stats. Era-honest, one puzzle a day. Anonymous play events help tune the game — a random id, no account, no ads.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Ctext%20y%3D%22.9em%22%20font-size%3D%2290%22%3E%26%23127936%3B%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Vector Hoops — the daily NBA chimera">
+<meta property="og:description" content="Whose season is the perfect combo of two other players? Two real player-seasons fused into one. Era-honest, one puzzle a day.">
+<!-- No PNG rasterizer is available in this build environment (no ImageMagick/rsvg/canvas
+     lib) without adding a new dependency, so og:image points at the hand-authored SVG
+     card below. Some crawlers (notably Twitter/X) do not render SVG og:image previews —
+     if that matters, regenerate assets/og.png from assets/og.svg with an image toolchain
+     at deploy time and swap this path. Root-relative because no fixed production domain
+     is recorded in this repo; substitute an absolute URL if the crawler needs one. -->
+<meta property="og:image" content="/assets/og.svg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Vector Hoops — the daily NBA chimera">
+<meta name="twitter:description" content="Whose season is the perfect combo of two other players? Two real player-seasons fused into one. Era-honest, one puzzle a day.">
+<meta name="twitter:image" content="/assets/og.svg">
 <link rel="stylesheet" href="assets/hoops.css">
 </head>
 <body>
@@ -13,6 +27,7 @@
 <header class="vh-header">
   <div class="vh-header__brand">
     <span class="vh-logo">VECTOR<span class="vh-logo__accent">HOOPS</span></span>
+    <span class="vh-tagline">Whose season is the perfect combo of two other players?</span>
   </div>
   <div class="vh-tabs" id="mode-tabs" role="tablist" aria-label="Game mode">
     <button class="vh-tab is-active" id="tab-chimera" type="button" role="tab" aria-selected="true">Chimera</button>
@@ -39,13 +54,33 @@
 
   <section id="panel-chimera" class="vh-panel">
 
-    <div class="vh-card vh-prompt" id="prompt-card">
+    <div class="vh-card vh-skeleton" id="game-skeleton" aria-hidden="true">
+      <div class="vh-skeleton__bar vh-skeleton__bar--title"></div>
+      <div class="vh-skeleton__bar vh-skeleton__bar--text"></div>
+      <div class="vh-skeleton__bar vh-skeleton__bar--text vh-skeleton__bar--short"></div>
+      <p class="vh-skeleton__note">Loading 12,392 player-seasons&hellip;</p>
+    </div>
+
+    <div class="vh-card vh-prompt" id="prompt-card" hidden>
       <div class="vh-prompt__eyebrow" id="puzzle-number">Vector Hoops #—</div>
-      <p class="vh-prompt__text" id="prompt-text">Loading today's Chimera&hellip;</p>
+      <div class="vh-equation" id="equation-row">
+        <div class="vh-equation__tile">
+          <div class="vh-equation__tile-label">counting stats: scoring &middot; boards &middot; dimes &middot; defense</div>
+        </div>
+        <div class="vh-equation__op" aria-hidden="true">+</div>
+        <div class="vh-equation__tile">
+          <div class="vh-equation__tile-label">shooting &amp; impact</div>
+        </div>
+        <div class="vh-equation__op" aria-hidden="true">=</div>
+        <div class="vh-equation__tile vh-equation__tile--target">
+          <div class="vh-equation__tile-mark">?</div>
+        </div>
+      </div>
+      <p class="vh-prompt__text vh-visually-hidden" id="prompt-text">Loading today's Chimera&hellip;</p>
       <p class="vh-prompt__scouting" id="scouting-line"></p>
     </div>
 
-    <div class="vh-card vh-guessbar">
+    <div class="vh-card vh-guessbar" id="guessbar-card" hidden>
       <div class="vh-autocomplete" id="chimera-autocomplete">
         <input
           type="text"
@@ -53,6 +88,9 @@
           class="vh-input"
           placeholder="Type a player-season, e.g. Kobe Bryant (2005-06)"
           autocomplete="off"
+          autocorrect="off"
+          autocapitalize="off"
+          spellcheck="false"
           aria-autocomplete="list"
           aria-controls="chimera-suggestions"
           aria-expanded="false"
@@ -61,6 +99,7 @@
         <ul class="vh-suggestions" id="chimera-suggestions" role="listbox" hidden></ul>
       </div>
       <button class="vh-btn vh-btn--primary" id="chimera-submit" disabled>Guess</button>
+      <p class="vh-duplicate-warning" id="duplicate-warning" role="status" hidden></p>
     </div>
 
     <div class="vh-card vh-warmth" id="warmth-card" hidden>
@@ -96,9 +135,11 @@
             <span><span class="vh-legend-swatch vh-legend-swatch--orange"></span>offense &mdash; zone fills, &sigma;-labeled</span>
             <span><span class="vh-legend-swatch vh-legend-swatch--hatch"></span>defense &mdash; 45&deg; hatch</span>
           </div>
+          <p class="vh-visually-hidden" id="courts-sr-summary"></p>
 
           <div class="vh-section-label">Dimensional breakdown &mdash; &sigma; vs era, all 14 dimensions</div>
           <div class="vh-breakdown" id="breakdown-chart" role="img" aria-label="Diverging bar chart comparing the Chimera and your guess across all 14 stat dimensions in sigmas"></div>
+          <p class="vh-visually-hidden" id="breakdown-sr-summary"></p>
           <div class="vh-court-legend">
             <span><span class="vh-legend-swatch vh-legend-swatch--orange"></span>the Chimera</span>
             <span><span class="vh-legend-swatch vh-legend-swatch--blue"></span>your guess</span>
@@ -115,7 +156,7 @@
       <div class="vh-reveal__copied" id="share-copied" hidden>Copied to clipboard.</div>
     </div>
 
-    <details class="vh-card vh-mapcard" id="map-details" open>
+    <details class="vh-card vh-mapcard" id="map-details">
       <summary class="vh-mapcard__label">3D league map <span class="vh-mapcard__hint">(drag to rotate · wheel/pinch to zoom)</span></summary>
       <div class="vh-mapcard__body">
         <div class="vh-map-wrap">
@@ -168,21 +209,36 @@
 
 </main>
 
+<div class="vh-rollover-banner" id="rollover-banner" hidden role="status">
+  <button type="button" id="rollover-reload-btn" class="vh-rollover-banner__btn">A new Chimera is ready &rarr;</button>
+</div>
+
 <div class="vh-modal-backdrop" id="help-backdrop" hidden>
   <div class="vh-modal" id="help-modal" role="dialog" aria-modal="true" aria-labelledby="help-title">
     <h2 id="help-title">How to play</h2>
     <ol class="vh-modal__list">
-      <li>Each day two real player-seasons are fused: one lends the counting-stat profile, the other the shooting/impact profile.</li>
+      <li>Every day we fuse two real player-seasons: one donates the counting stats, the other the shooting &amp; impact profile. Name the real season that plays most like the blend.</li>
       <li>Guess any player-season; you get a % match, a court comparison, and directional coaching in sigmas.</li>
       <li>92%+ match &mdash; or naming either component &mdash; wins. 6 guesses. New chimera at midnight UTC.</li>
     </ol>
-    <p class="vh-modal__telemetry" id="telemetry-note">Anonymous play events (round counts only) help tune the game.</p>
+    <p class="vh-modal__telemetry" id="telemetry-note">Anonymous play events help tune the game &mdash; a random id, no account, no ads.</p>
     <button class="vh-btn vh-btn--primary" id="help-close" type="button">Got it</button>
   </div>
 </div>
 
+<div class="vh-modal-backdrop" id="dossier-backdrop" hidden>
+  <div class="vh-modal vh-modal--dossier" id="dossier-modal" role="dialog" aria-modal="true" aria-labelledby="dossier-title">
+    <h2 id="dossier-title">Dossier</h2>
+    <div class="vh-dossier__body" id="dossier-body">Loading&hellip;</div>
+    <div class="vh-dossier__actions">
+      <a class="vh-dossier__source" id="dossier-source-link" href="#" target="_blank" rel="noopener">View source on GitHub</a>
+      <button class="vh-btn vh-btn--primary" id="dossier-close" type="button">Close</button>
+    </div>
+  </div>
+</div>
+
 <footer class="vh-footer" id="footer">
-  Vectors: per-100-possession stats, z-scored within each season (era-honest) &middot; &mdash; &middot; built &mdash; &middot; no tracking
+  Vectors: per-100-possession stats, z-scored within each season (era-honest) &middot; &mdash; &middot; built &mdash; &middot; anonymous play events help tune the game &mdash; a random id, no account, no ads
 </footer>
 
 <script src="assets/game.js" defer></script>

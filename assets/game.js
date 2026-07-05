@@ -21,9 +21,12 @@
   var LS_KEY = 'vectorHoops.v2';
   var LS_KEY_USER_REF = 'vectorHoops.userRef';
   var LS_KEY_DEADLINE_COUNTER = 'vectorHoops.deadline.counter';
+  var LS_KEY_SEEN_HELP = 'vectorHoops.seenHelp';
   var SS_KEY_FULLREPORT = 'vectorHoops.fullReportOpen';
   var DEADLINE_ROUNDS_PER_RUN = 5;
   var A_COUNT = 7; // first 7 dims come from player A, last 7 from player B
+  var GITHUB_REPO = 'jcdavis131/vector-hoops';
+  var GITHUB_BRANCH = 'main';
 
   // ---------------------------------------------------------------------
   // Telemetry: fire-and-forget, never blocks gameplay
@@ -275,28 +278,20 @@
     var noun2 = TRAIT_POS_NOUN[byDesc[1].key];
     var negPhrase = TRAIT_NEG_VERB[byAsc[0].key];
     var archetype = DATA.clusters[clusterIdx];
-    return "Today's Chimera: an elite " + noun1 + ' and ' + noun2 + ' who ' +
+    return 'Reads like: an elite ' + noun1 + ' and ' + noun2 + ' who ' +
       negPhrase + '. Archetype: ' + archetype + '.';
   }
 
-  function joinOxford(list) {
-    if (list.length === 0) return '';
-    if (list.length === 1) return list[0];
-    if (list.length === 2) return list[0] + ' and ' + list[1];
-    return list.slice(0, -1).join(', ') + ', and ' + list[list.length - 1];
-  }
-
   function renderPrompt() {
-    var aIdx = [0, 1, 2, 3, 4, 5, 6];
-    var bIdx = [7, 8, 9, 10, 11, 12, 13];
-    var aPhrase = joinOxford(traitList(aIdx));
-    var bPhrase = joinOxford(traitList(bIdx));
-
     els.puzzleNumber.textContent = 'Vector Hoops #' + puzzleNumber(TODAY);
     els.puzzleDay.textContent = String(puzzleNumber(TODAY));
-    els.promptText.innerHTML =
-      "Today's Chimera: the <b>" + aPhrase + '</b> profile of one legend fused with the <b>' +
-      bPhrase + '</b> profile of another. Same season halves, two different careers &mdash; find both.';
+    // The equation tiles (counting stats + shooting/impact = ?) are the visual
+    // prompt; this is the screen-reader-only equivalent — deliberately does
+    // not name either donor, matching the "= ?" secrecy the win state relies on.
+    els.promptText.textContent =
+      "Today's Chimera fuses two secret real player-seasons: one donates its counting-stat " +
+      'profile (scoring, boards, dimes, defense), the other its shooting-and-impact profile. ' +
+      'Guess the season that plays like the blend, or name either real component, to win.';
   }
 
   function renderScoutingLine() {
@@ -376,11 +371,25 @@
       currentMatches = [];
     }
 
+    function openEmpty() {
+      currentMatches = [];
+      activeIdx = -1;
+      listEl.innerHTML = '';
+      var li = document.createElement('li');
+      li.className = 'vh-suggestions__empty';
+      li.setAttribute('role', 'option');
+      li.setAttribute('aria-disabled', 'true');
+      li.textContent = 'No matches — try a last name';
+      listEl.appendChild(li);
+      listEl.hidden = false;
+      inputEl.setAttribute('aria-expanded', 'true');
+    }
+
     function open(matches) {
+      if (matches.length === 0) { openEmpty(); return; }
       currentMatches = matches;
       activeIdx = -1;
       listEl.innerHTML = '';
-      if (matches.length === 0) { close(); return; }
       matches.forEach(function (p, idx) {
         var li = document.createElement('li');
         li.setAttribute('role', 'option');
@@ -824,16 +833,49 @@
     zoneSigmaLabel(ctx, g, 39.5, 3.2, 'DREB', defense.glassD, BLUE_HEX, 0.35);
   }
 
-  function renderCourt(canvas, vector) {
-    var ctx = canvas.getContext('2d');
-    // crisp text on high-dpi screens
+  // Measures the canvas's actual laid-out CSS width (like resizeSquareCanvas)
+  // rather than assuming a fixed 300px card width — crisp at any viewport,
+  // including narrow mobile widths where the card is smaller than 300px.
+  var COURT_ASPECT = 47 / 50; // h/w, matches the CSS aspect-ratio: 50/47
+
+  function resizeCourtCanvas(canvas) {
+    var rect = canvas.getBoundingClientRect();
     var dpr = window.devicePixelRatio || 1;
-    var wCss = 300, hCss = 282;
-    if (canvas.width !== Math.round(wCss * dpr)) {
-      canvas.width = Math.round(wCss * dpr);
-      canvas.height = Math.round(hCss * dpr);
-    }
+    var wCss = Math.max(rect.width || canvas.clientWidth, 160);
+    var hCss = wCss * COURT_ASPECT;
+    canvas.width = Math.round(wCss * dpr);
+    canvas.height = Math.round(hCss * dpr);
+    var ctx = canvas.getContext('2d');
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    return { ctx: ctx, wCss: wCss, hCss: hCss };
+  }
+
+  // Screen-reader text summaries generated from the same zone/vector data
+  // that drives the canvas court and the SVG breakdown chart, so anyone
+  // using assistive tech gets the same numbers sighted users see.
+  function fmtSigma(z) {
+    return (z >= 0 ? '+' : '−') + Math.abs(z).toFixed(1) + 'σ';
+  }
+
+  function zonesSummaryText(label, zones) {
+    return label + ' zones: rim ' + fmtSigma(zones.rim) + ', midrange ' + fmtSigma(zones.mid) +
+      ', arc ' + fmtSigma(zones.arc) + ', free-throw line ' + fmtSigma(zones.paintFT) +
+      ', offensive glass ' + fmtSigma(zones.oreb) + ', passing ' + fmtSigma(zones.ast) +
+      ', rim protection ' + fmtSigma(zones.paintD) + ', perimeter defense ' + fmtSigma(zones.perimeterD) +
+      ', defensive glass ' + fmtSigma(zones.glassD) + '.';
+  }
+
+  function breakdownSummaryText(targetVector, guessVector) {
+    var parts = DATA.features.map(function (key, i) {
+      var label = DATA.featureLabels[key];
+      return label + ': Chimera ' + fmtSigma(targetVector[i]) + ', your guess ' + fmtSigma(guessVector[i]);
+    });
+    return 'Dimensional breakdown, sigma vs era, all 14 dimensions. ' + parts.join('; ') + '.';
+  }
+
+  function renderCourt(canvas, vector) {
+    var r = resizeCourtCanvas(canvas);
+    var ctx = r.ctx, wCss = r.wCss, hCss = r.hCss;
     ctx.clearRect(0, 0, wCss, hCss);
     var g = courtGeometry(wCss, hCss);
     var zones = zoneRaw(vector);
@@ -1028,24 +1070,59 @@
     return "You're in <b>" + guessCluster + '</b>; the Chimera lives in <b>' + targetCluster + '</b>.';
   }
 
-  function isWinningGuess(guessPlayer, sim) {
-    if (sim >= WIN_SIMILARITY) return true;
+  // Exact name+season match against either fused component: the IDENTIFIED
+  // win state. Independent of raw cosine similarity — a correct identification
+  // always wins and always renders gold, never red, whatever the sim% reads.
+  function isIdentifiedGuess(guessPlayer) {
     if (guessPlayer.name === TARGET.a.name && guessPlayer.season === TARGET.a.season) return true;
     if (guessPlayer.name === TARGET.b.name && guessPlayer.season === TARGET.b.season) return true;
     return false;
   }
 
+  // Right player, wrong season: same name as a fused component but a
+  // different season. Not a win — surfaced as explicit coaching instead.
+  function wrongSeasonNote(guessPlayer) {
+    if (guessPlayer.name === TARGET.a.name && guessPlayer.season !== TARGET.a.season) {
+      return 'Right player, wrong season — this Chimera uses ' + guessPlayer.name +
+        ' (' + TARGET.a.season + ').';
+    }
+    if (guessPlayer.name === TARGET.b.name && guessPlayer.season !== TARGET.b.season) {
+      return 'Right player, wrong season — this Chimera uses ' + guessPlayer.name +
+        ' (' + TARGET.b.season + ').';
+    }
+    return null;
+  }
+
+  function isWinningGuess(guessPlayer, sim) {
+    if (isIdentifiedGuess(guessPlayer)) return true;
+    if (sim >= WIN_SIMILARITY) return true;
+    return false;
+  }
+
   function renderGuessRow(entry, idx) {
     var li = document.createElement('li');
-    li.className = 'vh-guess';
-    var pctClass = pctColorClass(entry.sim);
+    li.className = 'vh-guess' + (entry.identified ? ' is-identified' : '');
     var pct = Math.round(entry.sim * 100);
+    var pctHtml;
+    if (entry.identified) {
+      // IDENTIFIED win: gold styling always, sim% shown only as secondary info.
+      pctHtml = '<span class="vh-guess__badge">Identified</span>' +
+        '<span class="vh-guess__pct vh-guess__pct--identified">' + pct + '% match</span>';
+    } else {
+      pctHtml = '<span class="vh-guess__pct ' + pctColorClass(entry.sim) + '">' + pct + '%</span>';
+    }
     li.innerHTML =
       '<div class="vh-guess__head">' +
         '<span class="vh-guess__num">' + (idx + 1) + '</span>' +
         '<span class="vh-guess__name">' + entry.name + '</span>' +
-        '<span class="vh-guess__pct ' + pctClass + '">' + pct + '%</span>' +
+        pctHtml +
       '</div>';
+    if (entry.wrongSeasonNote) {
+      var note = document.createElement('p');
+      note.className = 'vh-guess__line vh-guess__line--season';
+      note.textContent = entry.wrongSeasonNote;
+      li.appendChild(note);
+    }
     return li;
   }
 
@@ -1079,6 +1156,18 @@
       Math.round(bestEntry.sim * 100) + '%';
   }
 
+  // Redraws both court canvases at their current laid-out width, e.g. after
+  // a viewport resize/rotation, using the last submitted guess if any.
+  function redrawCourtsIfVisible() {
+    var rec = todayRecord();
+    if (!rec || rec.guesses.length === 0) return;
+    var last = rec.guesses[rec.guesses.length - 1];
+    var lastPlayer = DATA.players[last.id];
+    if (!lastPlayer) return;
+    renderCourt(els.courtTarget, TARGET.vector);
+    renderCourt(els.courtGuess, lastPlayer.v);
+  }
+
   function renderGuesses() {
     var rec = todayRecord();
     els.guessList.innerHTML = '';
@@ -1102,6 +1191,13 @@
       els.storyCaption.textContent = storyCaption(targetZones, guessZones);
       els.quickCoachingLine.textContent = coachingLineTop1(TARGET.vector, lastPlayer.v);
       renderBreakdown(TARGET.vector, lastPlayer.v, last.name);
+      if (els.courtsSrSummary) {
+        els.courtsSrSummary.textContent = zonesSummaryText('Chimera', targetZones) + ' ' +
+          zonesSummaryText('Your guess', guessZones);
+      }
+      if (els.breakdownSrSummary) {
+        els.breakdownSrSummary.textContent = breakdownSummaryText(TARGET.vector, lastPlayer.v);
+      }
       els.clusterLine.innerHTML = clusterLine(lastPlayer);
       var coaching = coachingLine(TARGET.vector, lastPlayer.v);
       if (typeof lastPlayer.sal === 'number') {
@@ -1124,17 +1220,22 @@
     els.chimeraSubmit.disabled = true;
   }
 
-  function shareEmojiRow(sim) {
-    if (sim >= 0.85) return '🟩'; // green
-    if (sim >= 0.60) return '🟨'; // yellow
+  function shareEmojiRow(entry) {
+    if (entry.identified) return '🟩⭐'; // IDENTIFIED win — starred variant
+    if (entry.sim >= 0.85) return '🟩'; // green
+    if (entry.sim >= 0.60) return '🟨'; // yellow
     return '🟥'; // red
   }
 
+  // Only reachable once the round is over (the share button lives on the
+  // reveal card, which only renders when rec.done) — safe to name both
+  // real donors here since the puzzle is already solved or exhausted.
   function buildShareText(rec) {
     var n = puzzleNumber(TODAY);
-    var rows = rec.guesses.map(function (g) { return shareEmojiRow(g.sim); }).join('');
+    var rows = rec.guesses.map(shareEmojiRow).join('');
     var scoreLabel = rec.won ? String(rec.guesses.length) : 'X';
-    return 'Vector Hoops #' + n + ' ' + scoreLabel + '/' + MAX_GUESSES + '\n' + rows;
+    var equation = TARGET.a.name + ' + ' + TARGET.b.name + ' = ?';
+    return 'Vector Hoops #' + n + ' — ' + equation + ' ' + scoreLabel + '/' + MAX_GUESSES + '\n' + rows;
   }
 
   function showReveal(rec) {
@@ -1144,9 +1245,21 @@
       'Fused from <b>' + playerKey(TARGET.a) + '</b> (' + traitList([0, 1, 2, 3, 4, 5, 6]).join(', ') + ') and <b>' +
       playerKey(TARGET.b) + '</b> (' + traitList([7, 8, 9, 10, 11, 12, 13]).join(', ') + ').' +
       '<div class="vh-reveal__okf">OKF dossiers: ' +
-      '<a href="knowledge/players/' + playerSlug(TARGET.a.name) + '.md">' + TARGET.a.name + '</a> · ' +
-      '<a href="knowledge/players/' + playerSlug(TARGET.b.name) + '.md">' + TARGET.b.name + '</a></div>';
+      '<a href="#" class="vh-dossier-link" data-slug="' + playerSlug(TARGET.a.name) + '" data-name="' +
+        TARGET.a.name + '">' + TARGET.a.name + '</a> · ' +
+      '<a href="#" class="vh-dossier-link" data-slug="' + playerSlug(TARGET.b.name) + '" data-name="' +
+        TARGET.b.name + '">' + TARGET.b.name + '</a></div>';
     els.shareCopied.hidden = true;
+  }
+
+  function showDuplicateWarning(p) {
+    els.duplicateWarning.textContent = 'Already guessed ' + playerKey(p) + ' — try a different player-season.';
+    els.duplicateWarning.hidden = false;
+  }
+
+  function hideDuplicateWarning() {
+    els.duplicateWarning.hidden = true;
+    els.duplicateWarning.textContent = '';
   }
 
   function submitGuess() {
@@ -1155,11 +1268,22 @@
     var rec = todayRecord();
     if (rec.done || rec.guesses.length >= MAX_GUESSES) return;
 
+    // Duplicate guard: same player-season resubmitted doesn't consume a guess.
+    var isDuplicate = rec.guesses.some(function (g) { return g.id === p.id; });
+    if (isDuplicate) {
+      showDuplicateWarning(p);
+      return;
+    }
+    hideDuplicateWarning();
+
     var sim = cosineSim(TARGET.vector, p.v);
+    var identified = isIdentifiedGuess(p);
     var entry = {
       id: p.id,
       name: playerKey(p),
-      sim: sim
+      sim: sim,
+      identified: identified,
+      wrongSeasonNote: identified ? null : wrongSeasonNote(p)
     };
     rec.guesses.push(entry);
     track('vh-guess', rec.guesses.length);
@@ -1492,8 +1616,15 @@
     }).join('');
   }
 
+  // mapVisible combines two signals: the <details> is open AND the canvas is
+  // actually on-screen (IntersectionObserver). The rAF rotation loop is gated
+  // on both — no rendering work happens while the map is collapsed or
+  // scrolled out of the viewport.
+  var mapVisible = false;
+  var mapObserver = null;
+
   function mapLoop() {
-    if (!mapCam.autoRotate || mapCam.dragging) {
+    if (!mapVisible || !mapCam.autoRotate || mapCam.dragging) {
       mapCam.rafId = null;
       return;
     }
@@ -1504,13 +1635,43 @@
 
   function startMapLoopIfNeeded() {
     if (mapCam.rafId != null) return;
-    if (mapCam.autoRotate && !mapCam.dragging) {
+    if (mapVisible && mapCam.autoRotate && !mapCam.dragging) {
       mapCam.rafId = requestAnimationFrame(mapLoop);
     }
   }
 
+  function stopMapLoop() {
+    if (mapCam.rafId != null) {
+      cancelAnimationFrame(mapCam.rafId);
+      mapCam.rafId = null;
+    }
+  }
+
+  // Renders once — but only while the map is actually visible, so a guess
+  // submitted while the map panel is collapsed/off-screen doesn't pay for a
+  // wasted draw. The next open/scroll-into-view re-renders with fresh pins.
   function renderMapOnce() {
+    if (!mapVisible) return;
     renderMap();
+  }
+
+  function setupMapVisibilityObserver() {
+    if (typeof IntersectionObserver === 'undefined') {
+      mapVisible = els.mapDetails.open; // no IO support: details-open only
+      return;
+    }
+    mapObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        mapVisible = entry.isIntersecting && els.mapDetails.open;
+        if (mapVisible) {
+          renderMap();
+          startMapLoopIfNeeded();
+        } else {
+          stopMapLoop();
+        }
+      });
+    }, { threshold: 0.01 });
+    mapObserver.observe(els.map);
   }
 
   function setupMapInteraction() {
@@ -1592,18 +1753,24 @@
     }
 
     window.addEventListener('resize', function () {
-      renderMap();
+      if (mapVisible) renderMap();
+      redrawCourtsIfVisible();
     });
 
     els.mapDetails.addEventListener('toggle', function () {
       if (els.mapDetails.open) {
+        // Assume visible the instant it opens; the IntersectionObserver
+        // corrects this on its next callback if it's actually off-screen.
+        mapVisible = true;
         renderMap();
         startMapLoopIfNeeded();
-      } else if (mapCam.rafId != null) {
-        cancelAnimationFrame(mapCam.rafId);
-        mapCam.rafId = null;
+      } else {
+        mapVisible = false;
+        stopMapLoop();
       }
     });
+
+    setupMapVisibilityObserver();
   }
 
   // ---------------------------------------------------------------------
@@ -1797,14 +1964,49 @@
   }
 
   // ---------------------------------------------------------------------
+  // Modal a11y helpers (shared by the help modal and the dossier modal)
+  // ---------------------------------------------------------------------
+
+  var FOCUSABLE_SELECTOR =
+    'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])';
+
+  function getFocusableElements(container) {
+    return Array.prototype.slice.call(container.querySelectorAll(FOCUSABLE_SELECTOR));
+  }
+
+  function trapFocusIn(container, ev) {
+    if (ev.key !== 'Tab') return;
+    var focusables = getFocusableElements(container);
+    if (focusables.length === 0) return;
+    var first = focusables[0], last = focusables[focusables.length - 1];
+    if (ev.shiftKey && document.activeElement === first) {
+      ev.preventDefault();
+      last.focus();
+    } else if (!ev.shiftKey && document.activeElement === last) {
+      ev.preventDefault();
+      first.focus();
+    }
+  }
+
+  function hasSeenHelp() {
+    try { return localStorage.getItem(LS_KEY_SEEN_HELP) === '1'; } catch (e) { return false; }
+  }
+
+  function markSeenHelp() {
+    try { localStorage.setItem(LS_KEY_SEEN_HELP, '1'); } catch (e) { /* storage unavailable */ }
+  }
+
+  // ---------------------------------------------------------------------
   // How-to-play modal
   // ---------------------------------------------------------------------
 
   function openHelp() {
     els.helpBackdrop.hidden = false;
+    els.helpClose.focus();
   }
   function closeHelp() {
     els.helpBackdrop.hidden = true;
+    els.helpBtn.focus();
   }
 
   function setupHelp() {
@@ -1814,7 +2016,119 @@
       if (ev.target === els.helpBackdrop) closeHelp();
     });
     document.addEventListener('keydown', function (ev) {
-      if (ev.key === 'Escape' && !els.helpBackdrop.hidden) closeHelp();
+      if (ev.key === 'Escape') {
+        if (!els.helpBackdrop.hidden) closeHelp();
+        else if (!els.dossierBackdrop.hidden) closeDossier();
+      } else if (ev.key === 'Tab') {
+        if (!els.helpBackdrop.hidden) trapFocusIn(els.helpModal, ev);
+        else if (!els.dossierBackdrop.hidden) trapFocusIn(els.dossierModal, ev);
+      }
+    });
+  }
+
+  // ---------------------------------------------------------------------
+  // Dossier modal: reveal-card component links open an in-game modal that
+  // fetches the raw OKF markdown same-origin, strips frontmatter, renders a
+  // small readable subset (headings, bold, table rows, bullets), turns
+  // wikilinks into plain text, and links out to the GitHub source.
+  // ---------------------------------------------------------------------
+
+  var dossierTriggerEl = null;
+
+  function stripFrontmatter(md) {
+    if (md.slice(0, 3) === '---') {
+      var end = md.indexOf('\n---', 3);
+      if (end !== -1) return md.slice(end + 4).replace(/^\s+/, '');
+    }
+    return md;
+  }
+
+  // [[slug|Display]] -> Display ; [[slug]] -> "slug with spaces"
+  function wikilinksToPlainText(md) {
+    return md.replace(/\[\[([^\]|]+)\|([^\]]+)\]\]/g, '$2')
+             .replace(/\[\[([^\]]+)\]\]/g, function (m, slug) {
+               return slug.replace(/-/g, ' ');
+             });
+  }
+
+  function escapeHtml(s) {
+    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  function mdInline(s) {
+    return escapeHtml(s).replace(/\*\*(.+?)\*\*/g, '<b>$1</b>');
+  }
+
+  function mdToSimpleHtml(md) {
+    var lines = md.split('\n');
+    var html = '';
+    lines.forEach(function (raw) {
+      var line = raw.replace(/\r$/, '');
+      if (/^<!--/.test(line.trim())) return; // okf:auto marker comments
+      if (/^##\s+/.test(line)) {
+        html += '<h4 class="vh-dossier__h4">' + mdInline(line.replace(/^##\s+/, '')) + '</h4>';
+      } else if (/^#\s+/.test(line)) {
+        html += '<h3 class="vh-dossier__h">' + mdInline(line.replace(/^#\s+/, '')) + '</h3>';
+      } else if (/^\|\s*-+\s*\|/.test(line)) {
+        // markdown table separator row — skip
+      } else if (/^\|/.test(line)) {
+        var cells = line.split('|').slice(1, -1).map(function (c) { return mdInline(c.trim()); });
+        html += '<div class="vh-dossier__row">' + cells.join(' &middot; ') + '</div>';
+      } else if (/^-\s+/.test(line)) {
+        html += '<div class="vh-dossier__bullet">' + mdInline(line.replace(/^-\s+/, '')) + '</div>';
+      } else if (line.trim() === '') {
+        /* skip blank lines */
+      } else {
+        html += '<p class="vh-dossier__p">' + mdInline(line) + '</p>';
+      }
+    });
+    return html;
+  }
+
+  function renderDossierMarkdown(raw) {
+    return mdToSimpleHtml(wikilinksToPlainText(stripFrontmatter(raw)));
+  }
+
+  function openDossier(slug, name, triggerEl) {
+    dossierTriggerEl = triggerEl || null;
+    els.dossierTitle.textContent = name + ' — dossier';
+    els.dossierBody.innerHTML = '<p class="vh-dossier__p">Loading&hellip;</p>';
+    els.dossierSourceLink.href = 'https://github.com/' + GITHUB_REPO + '/blob/' +
+      GITHUB_BRANCH + '/knowledge/players/' + slug + '.md';
+    els.dossierBackdrop.hidden = false;
+    els.dossierClose.focus();
+
+    fetch('knowledge/players/' + slug + '.md')
+      .then(function (res) {
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        return res.text();
+      })
+      .then(function (md) {
+        els.dossierBody.innerHTML = renderDossierMarkdown(md);
+      })
+      .catch(function () {
+        els.dossierBody.innerHTML =
+          '<p class="vh-dossier__p">Could not load this dossier right now. Use "View source" below.</p>';
+      });
+  }
+
+  function closeDossier() {
+    els.dossierBackdrop.hidden = true;
+    var toFocus = dossierTriggerEl;
+    dossierTriggerEl = null;
+    if (toFocus && typeof toFocus.focus === 'function') toFocus.focus();
+  }
+
+  function setupDossierModal() {
+    document.addEventListener('click', function (ev) {
+      var link = ev.target.closest && ev.target.closest('.vh-dossier-link');
+      if (!link) return;
+      ev.preventDefault();
+      openDossier(link.getAttribute('data-slug'), link.getAttribute('data-name'), link);
+    });
+    els.dossierClose.addEventListener('click', closeDossier);
+    els.dossierBackdrop.addEventListener('click', function (ev) {
+      if (ev.target === els.dossierBackdrop) closeDossier();
     });
   }
 
@@ -1823,10 +2137,11 @@
   // ---------------------------------------------------------------------
 
   function renderFooter() {
-    var range = DATA.seasons[0] + '–' + DATA.seasons[DATA.seasons.length - 1];
+    var range = DATA.seasons[0] + ' through ' + DATA.seasons[DATA.seasons.length - 1];
     els.footer.textContent =
       'Vectors: per-100-possession stats, z-scored within each season (era-honest) · ' +
-      range + ' · built ' + DATA.built + ' · no tracking';
+      range + ' · built ' + DATA.built +
+      ' · anonymous play events help tune the game — a random id, no account, no ads';
   }
 
   // ---------------------------------------------------------------------
@@ -1865,10 +2180,28 @@
     els.streakNum = document.getElementById('streak-num');
     els.helpBtn = document.getElementById('help-btn');
     els.helpBackdrop = document.getElementById('help-backdrop');
+    els.helpModal = document.getElementById('help-modal');
     els.helpClose = document.getElementById('help-close');
     els.loadingBanner = document.getElementById('loading-banner');
     els.errorBanner = document.getElementById('error-banner');
     els.footer = document.getElementById('footer');
+
+    els.gameSkeleton = document.getElementById('game-skeleton');
+    els.promptCard = document.getElementById('prompt-card');
+    els.guessbarCard = document.getElementById('guessbar-card');
+    els.duplicateWarning = document.getElementById('duplicate-warning');
+    els.courtsSrSummary = document.getElementById('courts-sr-summary');
+    els.breakdownSrSummary = document.getElementById('breakdown-sr-summary');
+
+    els.dossierBackdrop = document.getElementById('dossier-backdrop');
+    els.dossierModal = document.getElementById('dossier-modal');
+    els.dossierTitle = document.getElementById('dossier-title');
+    els.dossierBody = document.getElementById('dossier-body');
+    els.dossierSourceLink = document.getElementById('dossier-source-link');
+    els.dossierClose = document.getElementById('dossier-close');
+
+    els.rolloverBanner = document.getElementById('rollover-banner');
+    els.rolloverReloadBtn = document.getElementById('rollover-reload-btn');
 
     els.scoutingLine = document.getElementById('scouting-line');
     els.warmthCard = document.getElementById('warmth-card');
@@ -1905,6 +2238,7 @@
     els.chimeraInput.addEventListener('input', function () {
       pendingChimeraSelection = null;
       els.chimeraSubmit.disabled = true;
+      hideDuplicateWarning();
     });
     els.chimeraSubmit.addEventListener('click', submitGuess);
     els.chimeraInput.disabled = false;
@@ -1919,9 +2253,34 @@
   // Init
   // ---------------------------------------------------------------------
 
+  // ---------------------------------------------------------------------
+  // Rollover: the day's puzzle is frozen at first load (TODAY is captured
+  // once, above, at script start). If the UTC date changes mid-session we
+  // never silently swap the target under the player — show a banner and
+  // let them choose when to reload.
+  // ---------------------------------------------------------------------
+
+  function checkRollover() {
+    if (utcDateString() !== TODAY) {
+      els.rolloverBanner.hidden = false;
+    }
+  }
+
+  function setupRollover() {
+    els.rolloverReloadBtn.addEventListener('click', function () {
+      window.location.reload();
+    });
+    setInterval(checkRollover, 60000);
+    document.addEventListener('visibilitychange', function () {
+      if (document.visibilityState === 'visible') checkRollover();
+    });
+  }
+
   function init() {
     initDom();
     setupHelp();
+    setupDossierModal();
+    setupRollover();
     fetch(DATA_URL)
       .then(function (res) {
         if (!res.ok) throw new Error('HTTP ' + res.status);
@@ -1937,6 +2296,12 @@
         STATE = loadState();
 
         els.loadingBanner.hidden = true;
+        // First paint: reveal the real content only once data has actually
+        // loaded, replacing the skeleton's placeholder dashes.
+        els.gameSkeleton.hidden = true;
+        els.promptCard.hidden = false;
+        els.guessbarCard.hidden = false;
+
         if (!DATA.positions) mapColorMode = 'cluster';
         renderPrompt();
         renderScoutingLine();
@@ -1946,13 +2311,21 @@
         renderMapAxesInfo();
         setupChimeraInputs();
         setupShare();
+
+        // The 3D map <details> defaults closed until data is ready; now that
+        // it is, open it BEFORE wiring the IntersectionObserver so its first
+        // callback reads accurate on-screen state (rather than "closed").
+        els.mapDetails.open = true;
         setupMapInteraction();
         setupFullReportPersistence();
         setupModeTabs();
         renderGuesses();
         resumeChimeraIfDone();
+
+        // One immediate paint so the map isn't blank for the frame or two
+        // before the IntersectionObserver's first callback lands and takes
+        // over deciding whether the rotation loop should run.
         renderMap();
-        startMapLoopIfNeeded();
 
         fetch(DEADLINE_URL)
           .then(function (res) {
@@ -1966,15 +2339,23 @@
           })
           .catch(function () {
             els.tabDeadline.disabled = true;
+            els.tabDeadline.setAttribute('aria-disabled', 'true');
           });
 
         if (todayRecord().guesses.length === 0 && !todayRecord().done) {
-          openHelp();
           track('vh-start');
+        }
+        // Auto-open the how-to-play modal only on a player's true first-ever
+        // visit (a dedicated flag, independent of daily guess state) — never
+        // on a daily cadence.
+        if (!hasSeenHelp()) {
+          openHelp();
+          markSeenHelp();
         }
       })
       .catch(function (err) {
         els.loadingBanner.hidden = true;
+        els.gameSkeleton.hidden = true;
         els.errorBanner.hidden = false;
         els.errorBanner.textContent = 'Could not load vectors.json (' + err.message + '). Is assets/vectors.json built yet?';
       });
