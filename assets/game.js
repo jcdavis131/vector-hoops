@@ -29,6 +29,8 @@
   var LS_KEY_ARC_DAILY = 'vectorHoops.arc.daily.v1';
   var LS_KEY_ARC_PRACTICE = 'vectorHoops.arc.practice';
   var LS_KEY_SEEN_HELP = 'vectorHoops.seenHelp';
+  var LS_KEY_LB_PREFIX = 'vectorHoops.lbSubmitted.'; // + game + '.' + day
+  var LS_KEY_LB_LAST_GAME = 'vectorHoops.lastPlayedGame';
   var DEADLINE_ROUNDS_PER_RUN = 5;
   var FF_ROUNDS_PER_RUN = 5;
   var ARC_CARD_COUNT = 5;
@@ -69,6 +71,48 @@
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ event: event, userRef: getUserRef(), detail: detail })
+      }).catch(function () { /* fire-and-forget */ });
+    } catch (e) { /* never block gameplay */ }
+  }
+
+  // ---------------------------------------------------------------------
+  // Public leaderboard: fire-and-forget submission on DAILY completion
+  // only (never practice/Free Play). One submission per game/day, guarded
+  // in localStorage independent of each mode's own "done" state so a
+  // re-render or state bug never double-posts. assets/leaderboard.js
+  // (loaded before this file) owns window.VHIdentity — the session ref +
+  // deterministic anonymous name. See api/leaderboard.js for the proxy.
+  // ---------------------------------------------------------------------
+
+  function lbGuardKey(game, day) {
+    return LS_KEY_LB_PREFIX + game + '.' + day;
+  }
+
+  function lbAlreadySubmitted(game, day) {
+    try { return localStorage.getItem(lbGuardKey(game, day)) === '1'; }
+    catch (e) { return false; }
+  }
+
+  function lbMarkSubmitted(game, day) {
+    try {
+      localStorage.setItem(lbGuardKey(game, day), '1');
+      localStorage.setItem(LS_KEY_LB_LAST_GAME, game);
+    } catch (e) { /* storage unavailable */ }
+  }
+
+  function submitLeaderboardScore(game, day, score) {
+    if (lbAlreadySubmitted(game, day)) return;
+    lbMarkSubmitted(game, day); // mark first: never retries the same game/day, even if this fails
+    if (!window.VHIdentity) return;
+    try {
+      fetch('/api/leaderboard', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          game: game, day: day, score: score,
+          ref: window.VHIdentity.getUserRef(),
+          name: window.VHIdentity.sessionName()
+        })
       }).catch(function () { /* fire-and-forget */ });
     } catch (e) { /* never block gameplay */ }
   }
@@ -498,6 +542,9 @@
       STATE.lastWinDate = TODAY;
       STATE.maxStreak = Math.max(STATE.maxStreak || 0, STATE.streak);
       track('vh-win', { guesses: rec.guesses.length, mode: modeDetail });
+      // Chimera board = finishers only: a win submits guesses used (1-6,
+      // lower better); a loss submits nothing (see leaderboard.html note).
+      submitLeaderboardScore('chimera', TODAY, rec.guesses.length);
     } else {
       STATE.streak = 0;
       track('vh-loss', { mode: modeDetail });
@@ -2465,6 +2512,7 @@
         DEADLINE_STATE.totalScoreSum += run.score;
         saveDeadlineDailyState();
         track('vh-deadline-done', { score: run.score, mode: 'daily' });
+        submitLeaderboardScore('deadline', TODAY, run.score);
       }
       els.deadlineAgainBtn.hidden = true;
       els.deadlineShareBtn.hidden = false;
@@ -2762,6 +2810,7 @@
         FADER_STATE.totalScoreSum += run.score;
         saveFaderDailyState();
         track('vh-ff-done', { score: run.score, mode: 'daily' });
+        submitLeaderboardScore('fader', TODAY, run.score);
       }
       els.faderAgainBtn.hidden = true;
       els.faderShareBtn.hidden = false;
@@ -3079,6 +3128,7 @@
         ARC_STATE.totalSets++;
         ARC_STATE.totalScoreSum += rec.score;
         saveArcDailyState();
+        submitLeaderboardScore('arc', TODAY, rec.score);
       }
     } else {
       ARC_PRACTICE_STATS.played++;

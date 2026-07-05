@@ -504,3 +504,206 @@
   border-radius: 4px;
 }
 .methods-limitations{ background: var(--identified-bg); border-color: var(--ink); }
+
+/* ---------- identity chip ("you play as {name}") ----------
+   Lives in play.html's .vh-header__brand (game page header) and inline in
+   leaderboard.html's intro line — both just need #identity-name filled in
+   by assets/leaderboard.js's window.VHIdentity.sessionName(). */
+
+.vh-identity-chip{
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ink-muted);
+  background: var(--paper);
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+  padding: 3px 9px;
+  width: fit-content;
+}
+.vh-identity-chip b{ color: var(--data-blue); font-weight: 800; }
+
+/* ---------- leaderboard page ---------- */
+
+.leaderboard-main{
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 20px 16px 48px;
+  max-width: 760px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.lb-head{ display: flex; flex-direction: column; gap: 8px; }
+.lb-head h1{
+  font-family: var(--mono);
+  font-size: 18px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin: 0;
+}
+.lb-head p{
+  margin: 0;
+  font-size: 13px;
+  color: var(--ink-soft);
+  line-height: 1.5;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.lb-controls{
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: var(--surface);
+  border: 2px solid var(--ink);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-block);
+  padding: 14px;
+}
+
+.lb-chips{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.lb-chip{
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 2px solid var(--ink);
+  background: var(--surface);
+  color: var(--ink-soft);
+  border-radius: 999px;
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  padding: 7px 14px;
+  cursor: pointer;
+  min-height: 36px;
+}
+.lb-chip:hover{ color: var(--ink); }
+.lb-chip.is-active{
+  background: var(--ink);
+  color: var(--paper);
+}
+.lb-chip__icon{ font-size: 13px; }
+
+.lb-date-row{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.lb-date-label{
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ink);
+}
+.lb-date-row .vh-link-btn:disabled{ opacity: 0.35; cursor: default; }
+
+.lb-board-card{
+  background: var(--surface);
+  border: 2px solid var(--ink);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-block);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.lb-board-meta{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  font-family: var(--mono);
+  font-size: 11px;
+}
+.lb-players{ color: var(--ink); font-weight: 700; }
+.lb-note{ color: var(--ink-muted); text-align: right; }
+
+.lb-chimera-note{
+  margin: 0;
+  font-size: 12px;
+  color: var(--ink-soft);
+  background: var(--paper);
+  border: 1px solid var(--hairline);
+  border-radius: 8px;
+  padding: 8px 10px;
+}
+
+.lb-table-wrap{ overflow-x: auto; }
+
+.lb-table{
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.lb-table th{
+  text-align: left;
+  font-family: var(--mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ink-muted);
+  border-bottom: 2px solid var(--ink);
+  padding: 6px 8px;
+}
+.lb-table td{
+  border-bottom: 1px solid var(--hairline);
+  padding: 8px;
+  color: var(--ink);
+}
+.lb-th-rank{ width: 56px; }
+.lb-td-rank{ font-family: var(--mono); font-weight: 700; color: var(--ink-muted); }
+.lb-td-score{ font-family: var(--mono); font-weight: 700; text-align: right; }
+.lb-table tbody tr:last-child td{ border-bottom: none; }
+
+.lb-row--you td{ background: var(--identified-bg); }
+.lb-row--you .lb-td-rank{ color: var(--data-blue); }
+.lb-you-badge{
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--paper);
+  background: var(--data-blue);
+  border-radius: 4px;
+  padding: 1px 5px;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
+.lb-empty{
+  padding: 28px 14px;
+  text-align: center;
+  color: var(--ink-muted);
+  font-size: 13px;
+}
+
+.lb-you-line{
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--data-blue);
+  font-weight: 700;
+}

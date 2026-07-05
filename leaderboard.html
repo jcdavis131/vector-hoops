@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Leaderboard — Vector Hoops</title>
+<meta name="description" content="Public daily leaderboards for Chimera, The Deadline, Fader or Finisher, and Career Arc. Anonymous session names, no accounts.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Ctext%20y%3D%22.9em%22%20font-size%3D%2290%22%3E%26%23127936%3B%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Leaderboard — Vector Hoops">
+<meta property="og:description" content="Public daily leaderboards for all four Vector Hoops modes. Anonymous session names, no accounts.">
+<meta property="og:image" content="/assets/og.svg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Leaderboard — Vector Hoops">
+<meta name="twitter:description" content="Public daily leaderboards for all four Vector Hoops modes.">
+<meta name="twitter:image" content="/assets/og.svg">
+<link rel="stylesheet" href="assets/hoops.css">
+<link rel="stylesheet" href="assets/shell.css">
+</head>
+<body>
+
+<nav class="site-nav" aria-label="Vector Hoops site">
+  <a class="site-nav__brand" href="/">VECTOR<span class="site-nav__accent">HOOPS</span></a>
+  <div class="site-nav__links">
+    <a class="site-nav__link" href="/play">Play</a>
+    <a class="site-nav__link" href="/wiki">Wiki</a>
+    <a class="site-nav__link" href="/methods">Methods</a>
+    <a class="site-nav__link is-active" href="/leaderboard" aria-current="page">Leaderboard</a>
+  </div>
+</nav>
+
+<main class="leaderboard-main">
+
+  <div class="lb-head">
+    <h1>Leaderboard</h1>
+    <p>Public daily boards for all four modes &mdash; anonymous session names, no accounts.
+      <span class="vh-identity-chip" id="identity-chip" title="your anonymous session name — no account, tracked only on this device + this board">You play as <b id="identity-name">&mdash;</b></span>
+    </p>
+  </div>
+
+  <div class="lb-controls">
+    <div class="lb-chips" id="lb-game-chips" role="tablist" aria-label="Game"></div>
+    <div class="lb-date-row">
+      <button type="button" class="vh-link-btn" id="lb-date-prev">&larr; Prev day</button>
+      <span class="lb-date-label" id="lb-date-label">Today</span>
+      <button type="button" class="vh-link-btn" id="lb-date-next">Next day &rarr;</button>
+    </div>
+  </div>
+
+  <div class="lb-board-card" id="lb-board">
+    <div class="lb-board-meta">
+      <span class="lb-players" id="lb-players"></span>
+      <span class="lb-note" id="lb-note"></span>
+    </div>
+    <p class="lb-chimera-note" id="lb-chimera-note" hidden>Chimera board: wins only &mdash; a loss doesn't submit a score.</p>
+
+    <div class="lb-table-wrap">
+      <table class="lb-table" id="lb-table" hidden>
+        <thead>
+          <tr><th class="lb-th-rank">Rank</th><th>Name</th><th id="lb-score-head">Score</th></tr>
+        </thead>
+        <tbody id="lb-tbody"></tbody>
+      </table>
+    </div>
+    <div class="lb-empty" id="lb-empty" hidden></div>
+    <p class="lb-you-line" id="lb-you-line" hidden></p>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="site-footer__links">
+    <a href="/play">Play</a>
+    <a href="/methods">Methods</a>
+    <a href="/wiki">Wiki</a>
+    <a href="https://github.com/jcdavis131/vector-hoops" target="_blank" rel="noopener">GitHub</a>
+  </div>
+  <div class="site-footer__attribution">Every number recomputable from stats.nba.com &amp; Basketball-Reference source data &middot; part of the <a href="https://jcamd.com/arcade" target="_blank" rel="noopener">jcamd arcade</a></div>
+</footer>
+
+<script src="assets/leaderboard.js" defer></script>
+</body>
+</html>
