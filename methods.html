@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Methods — Vector Hoops</title>
+<meta name="description" content="How Vector Hoops is built: the 14-feature vector space, era z-scoring, PCA map, k-means archetypes, The Deadline and Fader-or-Finisher methods, data sources, the accuracy harness, and honest limitations.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Ctext%20y%3D%22.9em%22%20font-size%3D%2290%22%3E%26%23127936%3B%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Methods — Vector Hoops">
+<meta property="og:description" content="Every number on Vector Hoops is recomputable from source. The vector space, the map, the archetypes, the modes, the data sources, and the accuracy harness that gates every deploy.">
+<meta property="og:image" content="/assets/og.svg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Methods — Vector Hoops">
+<meta name="twitter:description" content="Every number on Vector Hoops is recomputable from source. The methods, data sources, and accuracy harness, stated plainly.">
+<meta name="twitter:image" content="/assets/og.svg">
+<link rel="stylesheet" href="assets/hoops.css">
+<link rel="stylesheet" href="assets/shell.css">
+</head>
+<body>
+
+<nav class="site-nav" aria-label="Vector Hoops site">
+  <a class="site-nav__brand" href="/">VECTOR<span class="site-nav__accent">HOOPS</span></a>
+  <div class="site-nav__links">
+    <a class="site-nav__link" href="/play">Play</a>
+    <a class="site-nav__link" href="/wiki">Wiki</a>
+    <a class="site-nav__link is-active" href="/methods" aria-current="page">Methods</a>
+  </div>
+</nav>
+
+<main class="methods-main">
+  <h1>Method &amp; data sources</h1>
+  <p style="font-size:13px; color:var(--ink-soft); margin:0;">
+    Doctrine: every number a player sees must be recomputable from source data;
+    every mechanic states its rules; nothing shown is vibes.
+  </p>
+
+  <section class="methods-section" id="vector-space">
+    <h2>The vector space</h2>
+    <p>
+      12,392 player-seasons, 1996-97 through 2025-26, from stats.nba.com
+      per-100-possession splits (pace-adjusted at the door). Every season
+      requires <b>MIN &ge; 800</b> minutes played &mdash; a real rotation
+      season, not garbage-time noise.
+    </p>
+    <p>Each player-season is 14 features, z-scored within its own season (era-honest &mdash; a 1997 center and a 2026 guard share one honest space):</p>
+    <table>
+      <thead><tr><th>Feature</th><th>What it measures</th></tr></thead>
+      <tbody>
+        <tr><td><code>PTS</code></td><td>scoring volume</td></tr>
+        <tr><td><code>AST</code></td><td>playmaking</td></tr>
+        <tr><td><code>OREB</code></td><td>offensive glass</td></tr>
+        <tr><td><code>DREB</code></td><td>defensive glass</td></tr>
+        <tr><td><code>STL</code></td><td>steals</td></tr>
+        <tr><td><code>BLK</code></td><td>rim protection</td></tr>
+        <tr><td><code>TOV</code></td><td>turnovers</td></tr>
+        <tr><td><code>FG3A</code></td><td>three-point volume</td></tr>
+        <tr><td><code>FGA</code></td><td>shot volume</td></tr>
+        <tr><td><code>FTA</code></td><td>rim pressure (FTs)</td></tr>
+        <tr><td><code>FG3_PCT</code></td><td>three-point accuracy</td></tr>
+        <tr><td><code>FG_PCT</code></td><td>finishing</td></tr>
+        <tr><td><code>FT_PCT</code></td><td>free-throw touch</td></tr>
+        <tr><td><code>PLUS_MINUS</code></td><td>on-court impact</td></tr>
+      </tbody>
+    </table>
+    <p>Cleaning: dedupe on (player, season); missing values fall back to the season mean with a mask; attempt-weighted empirical-Bayes shrinkage on FG3%/FT%/FG%; z-scores clipped at &plusmn;4&sigma;.</p>
+  </section>
+
+  <section class="methods-section" id="the-map">
+    <h2>The map</h2>
+    <p>The 3D league map (in-game) projects the 14-dim vector down to 3 axes via PCA, minmax-scaled to [0,1] for rendering. The client's projection is an exact affine recovery of the build-time PCA + minmax map &mdash; not re-fit, so the on-screen position is the honest one. Axes are named from their feature correlations, not guessed:</p>
+    <ul>
+      <li><b>PC1 &mdash; Paint vs perimeter:</b> bigs (boards, blocks) &harr; shooters (3PA, 3P%)</li>
+      <li><b>PC2 &mdash; Scoring load:</b> high-usage scorers (PTS, FGA, FTA) &harr; low-usage role players</li>
+      <li><b>PC3 &mdash; Ball in hand:</b> off-ball, low-event &harr; handlers (AST, STL, TOV)</li>
+    </ul>
+  </section>
+
+  <section class="methods-section" id="archetypes">
+    <h2>Archetypes</h2>
+    <p>8 k-means clusters computed at build time on the same 14-dim era-normalized vectors, seeded for reproducibility. Names describe each centroid honestly (its strongest traits), not a scouting label:</p>
+    <ul>
+      <li>Three-Point Accuracy (Low Turnovers)</li>
+      <li>Scoring Volume + Shot Volume</li>
+      <li>Defensive Glass + Rim Pressure (FTs)</li>
+      <li>Three-Point Volume + Three-Point Accuracy</li>
+      <li>Offensive Glass (Low On-Court Impact)</li>
+      <li>Rim Protection + Offensive Glass</li>
+      <li>Offensive Glass + Defensive Glass</li>
+      <li>Playmaking + Steals</li>
+    </ul>
+    <p>The client never re-derives cluster membership independently &mdash; it uses the label the pipeline computed, verified identical for all 12,392 players by the accuracy harness (check V2, below).</p>
+  </section>
+
+  <section class="methods-section" id="the-deadline">
+    <h2>The Deadline</h2>
+    <p>
+      Midseason move = an in-season TEAM_ID change with &ge;15 games and &ge;12 minutes per game on both sides, from 2015-16 through 2025-26 game logs (nba_api <code>PlayerGameLogs</code>). Deltas shown: per-36 points, a context-adjusted plus-minus, and a points-per-shot-attempt proxy, before vs. after the move.
+    </p>
+    <p>
+      333 movers were analyzed to build the daily-set pool (25 who thrived, 25 who cratered after moving). The composite Thrived/Cratered score is a <b>stated blend, not a truth claim</b> &mdash; and "midseason move" is not the same claim as an officially reported trade (some are trades, some are waiver/free-agency moves mid-season); this project only has clean team-change dates, so it says exactly that and no more.
+    </p>
+  </section>
+
+  <section class="methods-section" id="fader-finisher">
+    <h2>Fader or Finisher</h2>
+    <p>
+      Each player-season is split at its own game-sequence midpoint (not the calendar All-Star break) with &ge;25 games and &ge;12 minutes per game required on both halves, per-36 rates, 2015-16 through 2025-26. The quiz pool (600 rounds) is limited to unambiguous deltas &mdash; a 1.5&ndash;6.0 per-36 swing &mdash; so ties and noise-level changes never appear as puzzles.
+    </p>
+  </section>
+
+  <section class="methods-section" id="data-sources">
+    <h2>Data sources</h2>
+    <ul>
+      <li><b>stats.nba.com</b> via <code>nba_api</code> &mdash; <code>leaguedashplayerstats</code> (Base/Advanced/Scoring), <code>leaguedashplayerbiostats</code>, <code>leaguedashptstats</code> (player tracking, 2013-14 onward only &mdash; masked before, never imputed), and <code>PlayerGameLogs</code> (2015-16 through 2025-26 for The Deadline and Fader-or-Finisher).</li>
+      <li><b>Basketball-Reference</b> &mdash; per-season positions (99.7% coverage; unmatched seasons render as &mdash;) and current player contracts where salary history is unavailable elsewhere.</li>
+      <li>Every season/endpoint response is cached locally; re-runs resume from cache. stats.nba.com throttles aggressively, so builds are deliberately incremental.</li>
+    </ul>
+  </section>
+
+  <section class="methods-section" id="accuracy-harness">
+    <h2>The accuracy harness</h2>
+    <p><code>pipeline/verify_accuracy.py</code> gates every deploy &mdash; a non-zero exit blocks shipping. It checks:</p>
+    <ul>
+      <li><b>V1</b> &mdash; <code>vectors.json</code> internal integrity: dimensions, ranges, no duplicate (name, season) rows, valid map coordinates.</li>
+      <li><b>V2</b> &mdash; cluster labels: recomputes nearest-centroid assignment from member means and confirms the client's centroid method reproduces the pipeline's labels for all 12,392 players.</li>
+      <li><b>V3</b> &mdash; <code>deadline.json</code>: recomputes <i>every</i> quiz mover's deltas directly from the raw game logs and requires an exact match (0.01 rounding tolerance) &mdash; 100% sample, not a spot-check.</li>
+      <li><b>V4</b> &mdash; Chimera determinism: the seeded daily target is checked across 30 sampled dates for stability and for always satisfying the low-similarity (cosine &lt; 0.3) constraint between its two donor seasons.</li>
+    </ul>
+  </section>
+
+  <section class="methods-section methods-limitations" id="limitations">
+    <h2>Attribution, license &amp; limitations</h2>
+    <p><b>Attribution:</b> statistics sourced from stats.nba.com and Basketball-Reference; all figures shown are derived, era-normalized aggregates, not raw scrapes republished verbatim.</p>
+    <p><b>License:</b> this repository does not yet publish a license file &mdash; treat the code as all-rights-reserved pending one. Source data remains subject to stats.nba.com's and Basketball-Reference's own terms.</p>
+    <p><b>Limitations, stated plainly:</b></p>
+    <ul>
+      <li>No lineup or on/off data is used anywhere on this site &mdash; nothing here claims to measure who a player shared the floor with.</li>
+      <li>"Midseason move" is a team-ID-change detection, not verified trade metadata &mdash; a move mid-season is not automatically an officially reported trade.</li>
+      <li>Player tracking features (drives, touches, speed/distance) only exist from 2013-14 onward; earlier seasons carry an explicit missing-data mask rather than an imputed guess.</li>
+      <li>Position coverage from Basketball-Reference is 99.7%, not 100% &mdash; a small number of season rows render without a position.</li>
+      <li>Archetype names describe statistical cluster centroids, not scouting judgment or team role.</li>
+    </ul>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="site-footer__links">
+    <a href="/wiki">Wiki</a>
+    <a href="/play">Play</a>
+    <a href="https://github.com/jcdavis131/vector-hoops" target="_blank" rel="noopener">GitHub</a>
+  </div>
+  <div class="site-footer__attribution">Every number recomputable from stats.nba.com &amp; Basketball-Reference source data &middot; part of the <a href="https://jcamd.com/arcade" target="_blank" rel="noopener">jcamd arcade</a></div>
+</footer>
+
+</body>
+</html>

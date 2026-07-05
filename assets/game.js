@@ -34,8 +34,10 @@
   var ARC_CARD_COUNT = 5;
   var ARC_MIN_SEASONS = 5;
   var A_COUNT = 7; // first 7 dims come from player A, last 7 from player B
-  var GITHUB_REPO = 'jcdavis131/vector-hoops';
-  var GITHUB_BRANCH = 'main';
+  // GitHub repo/branch + dossier markdown fetch/render now live in
+  // assets/dossier.js (shared with wiki.html) — aliased below.
+  var GITHUB_REPO = window.VHDossier.GITHUB_REPO;
+  var GITHUB_BRANCH = window.VHDossier.GITHUB_BRANCH;
   // M2 hint economy: Daily Chimera only. Free Play (practice) gets both
   // hints immediately since it never counts toward anything.
   var HINT_POSITION_AT_GUESS = 3;
@@ -267,12 +269,9 @@
     return p.name + ' (' + p.season + ')';
   }
 
-  // Slug rules shared with pipeline/build_wiki.py (OKF page filenames):
-  // accent-fold, lowercase, non-alphanumerics collapse to single hyphens.
-  function playerSlug(name) {
-    return name.normalize('NFD').replace(/[̀-ͯ]/g, '')
-      .toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
-  }
+  // Slug rules shared with pipeline/build_wiki.py (OKF page filenames) —
+  // extracted to assets/dossier.js so wiki.html builds identical links.
+  var playerSlug = window.VHDossier.playerSlug;
 
   // ---------------------------------------------------------------------
   // Daily Chimera target selection
@@ -3496,83 +3495,30 @@
   }
 
   // ---------------------------------------------------------------------
-  // Dossier modal: reveal-card component links open an in-game modal that
-  // fetches the raw OKF markdown same-origin, strips frontmatter, renders a
-  // small readable subset (headings, bold, table rows, bullets), turns
-  // wikilinks into plain text, and links out to the GitHub source.
+  // Dossier modal: reveal-card component links open an in-game modal.
+  // Markdown fetch/parse (stripFrontmatter / wikilinksToPlainText /
+  // mdToSimpleHtml / renderDossierMarkdown) now lives in assets/dossier.js,
+  // shared with wiki.html — aliased here so callers below are unchanged.
   // ---------------------------------------------------------------------
 
   var dossierTriggerEl = null;
-
-  function stripFrontmatter(md) {
-    if (md.slice(0, 3) === '---') {
-      var end = md.indexOf('\n---', 3);
-      if (end !== -1) return md.slice(end + 4).replace(/^\s+/, '');
-    }
-    return md;
-  }
-
-  // [[slug|Display]] -> Display ; [[slug]] -> "slug with spaces"
-  function wikilinksToPlainText(md) {
-    return md.replace(/\[\[([^\]|]+)\|([^\]]+)\]\]/g, '$2')
-             .replace(/\[\[([^\]]+)\]\]/g, function (m, slug) {
-               return slug.replace(/-/g, ' ');
-             });
-  }
-
-  function escapeHtml(s) {
-    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-  }
-
-  function mdInline(s) {
-    return escapeHtml(s).replace(/\*\*(.+?)\*\*/g, '<b>$1</b>');
-  }
-
-  function mdToSimpleHtml(md) {
-    var lines = md.split('\n');
-    var html = '';
-    lines.forEach(function (raw) {
-      var line = raw.replace(/\r$/, '');
-      if (/^<!--/.test(line.trim())) return; // okf:auto marker comments
-      if (/^##\s+/.test(line)) {
-        html += '<h4 class="vh-dossier__h4">' + mdInline(line.replace(/^##\s+/, '')) + '</h4>';
-      } else if (/^#\s+/.test(line)) {
-        html += '<h3 class="vh-dossier__h">' + mdInline(line.replace(/^#\s+/, '')) + '</h3>';
-      } else if (/^\|\s*-+\s*\|/.test(line)) {
-        // markdown table separator row — skip
-      } else if (/^\|/.test(line)) {
-        var cells = line.split('|').slice(1, -1).map(function (c) { return mdInline(c.trim()); });
-        html += '<div class="vh-dossier__row">' + cells.join(' &middot; ') + '</div>';
-      } else if (/^-\s+/.test(line)) {
-        html += '<div class="vh-dossier__bullet">' + mdInline(line.replace(/^-\s+/, '')) + '</div>';
-      } else if (line.trim() === '') {
-        /* skip blank lines */
-      } else {
-        html += '<p class="vh-dossier__p">' + mdInline(line) + '</p>';
-      }
-    });
-    return html;
-  }
-
-  function renderDossierMarkdown(raw) {
-    return mdToSimpleHtml(wikilinksToPlainText(stripFrontmatter(raw)));
-  }
+  var stripFrontmatter = window.VHDossier.stripFrontmatter;
+  var wikilinksToPlainText = window.VHDossier.wikilinksToPlainText;
+  var escapeHtml = window.VHDossier.escapeHtml;
+  var mdInline = window.VHDossier.mdInline;
+  var mdToSimpleHtml = window.VHDossier.mdToSimpleHtml;
+  var renderDossierMarkdown = window.VHDossier.renderDossierMarkdown;
 
   function openDossier(slug, name, triggerEl) {
     dossierTriggerEl = triggerEl || null;
     els.dossierTitle.textContent = name + ' — dossier';
     els.dossierBody.innerHTML = '<p class="vh-dossier__p">Loading&hellip;</p>';
-    els.dossierSourceLink.href = 'https://github.com/' + GITHUB_REPO + '/blob/' +
-      GITHUB_BRANCH + '/knowledge/players/' + slug + '.md';
+    els.dossierSourceLink.href = window.VHDossier.dossierGithubUrl(slug);
     els.dossierBackdrop.hidden = false;
     els.dossierClose.focus();
     pushModal(els.dossierModal, closeDossier);
 
-    fetch('knowledge/players/' + slug + '.md')
-      .then(function (res) {
-        if (!res.ok) throw new Error('HTTP ' + res.status);
-        return res.text();
-      })
+    window.VHDossier.fetchDossierMarkdown(slug)
       .then(function (md) {
         els.dossierBody.innerHTML = renderDossierMarkdown(md);
       })

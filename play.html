@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Play — Vector Hoops</title>
+<meta name="description" content="Whose season is the perfect combo of two other players? Guess the fused player-season built from two eras of stats. Era-honest, one puzzle a day. Anonymous play events help tune the game — a random id, no account, no ads.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Ctext%20y%3D%22.9em%22%20font-size%3D%2290%22%3E%26%23127936%3B%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Play — Vector Hoops">
+<meta property="og:description" content="Whose season is the perfect combo of two other players? Two real player-seasons fused into one. Era-honest, one puzzle a day.">
+<!-- No PNG rasterizer is available in this build environment (no ImageMagick/rsvg/canvas
+     lib) without adding a new dependency, so og:image points at the hand-authored SVG
+     card below. Some crawlers (notably Twitter/X) do not render SVG og:image previews —
+     if that matters, regenerate assets/og.png from assets/og.svg with an image toolchain
+     at deploy time and swap this path. Root-relative because no fixed production domain
+     is recorded in this repo; substitute an absolute URL if the crawler needs one. -->
+<meta property="og:image" content="/assets/og.svg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Play — Vector Hoops">
+<meta name="twitter:description" content="Whose season is the perfect combo of two other players? Two real player-seasons fused into one. Era-honest, one puzzle a day.">
+<meta name="twitter:image" content="/assets/og.svg">
+<link rel="stylesheet" href="assets/hoops.css">
+<link rel="stylesheet" href="assets/shell.css">
+</head>
+<body>
+
+<nav class="site-nav site-nav--static" aria-label="Vector Hoops site">
+  <a class="site-nav__brand" href="/">VECTOR<span class="site-nav__accent">HOOPS</span></a>
+  <div class="site-nav__links">
+    <a class="site-nav__link is-active" href="/play" aria-current="page">Play</a>
+    <a class="site-nav__link" href="/wiki">Wiki</a>
+    <a class="site-nav__link" href="/methods">Methods</a>
+  </div>
+</nav>
+
+<header class="vh-header" id="app-header">
+  <div class="vh-header__brand">
+    <span class="vh-logo">VECTOR<span class="vh-logo__accent">HOOPS</span></span>
+    <span class="vh-tagline" id="tagline">Whose season is the perfect combo of two other players?</span>
+  </div>
+  <div class="vh-stats" id="header-stats">
+    <div class="vh-stat">
+      <span class="vh-stat__num" id="puzzle-day">—</span>
+      <span class="vh-stat__label">day</span>
+    </div>
+    <div class="vh-stat">
+      <span class="vh-stat__num" id="streak-num">0</span>
+      <span class="vh-stat__label">streak</span>
+    </div>
+    <div class="vh-stat">
+      <span class="vh-stat__num" id="guesses-left-num">6</span>
+      <span class="vh-stat__label">left</span>
+    </div>
+  </div>
+  <button class="vh-help-btn" id="stats-btn" type="button" aria-haspopup="dialog" aria-controls="stats-modal" title="Stats">📊</button>
+  <button class="vh-help-btn" id="help-btn" type="button" aria-haspopup="dialog" aria-controls="help-modal" title="How to play">?</button>
+</header>
+
+<nav class="vh-tabs" id="mode-tabs" role="tablist" aria-label="Game mode">
+  <button class="vh-tab is-active" id="tab-chimera" type="button" role="tab" aria-selected="true">
+    <span class="vh-tab__icon" aria-hidden="true">🧬</span><span class="vh-tab__label">Chimera</span>
+  </button>
+  <button class="vh-tab" id="tab-deadline" type="button" role="tab" aria-selected="false">
+    <span class="vh-tab__icon" aria-hidden="true">📉</span><span class="vh-tab__label">Deadline</span>
+  </button>
+  <button class="vh-tab" id="tab-fader" type="button" role="tab" aria-selected="false">
+    <span class="vh-tab__icon" aria-hidden="true">🌡️</span><span class="vh-tab__label">Fader</span>
+  </button>
+  <button class="vh-tab" id="tab-arc" type="button" role="tab" aria-selected="false">
+    <span class="vh-tab__icon" aria-hidden="true">📈</span><span class="vh-tab__label">Arc</span>
+  </button>
+</nav>
+
+<main id="app">
+
+  <section id="panel-chimera" class="vh-panel">
+
+    <div class="vh-subtabs" id="chimera-subtabs" role="tablist" aria-label="Chimera play mode">
+      <button class="vh-subtab is-active" id="chimera-sub-daily" type="button" role="tab" aria-selected="true">Daily</button>
+      <button class="vh-subtab" id="chimera-sub-practice" type="button" role="tab" aria-selected="false">Free Play</button>
+    </div>
+
+    <div class="vh-practice-banner" id="chimera-practice-banner" hidden>
+      <span class="vh-practice-banner__text">PRACTICE &mdash; doesn't touch your daily streak</span>
+      <button class="vh-btn vh-btn--accent" id="chimera-new-btn" type="button">New chimera</button>
+    </div>
+
+    <div class="vh-play-col" id="chimera-play-col">
+
+      <div class="vh-card vh-skeleton" id="game-skeleton" aria-hidden="true">
+        <div class="vh-skeleton__bar vh-skeleton__bar--title"></div>
+        <div class="vh-skeleton__bar vh-skeleton__bar--text"></div>
+        <div class="vh-skeleton__bar vh-skeleton__bar--text vh-skeleton__bar--short"></div>
+        <p class="vh-skeleton__note">Loading the player universe&hellip;</p>
+      </div>
+
+      <div class="vh-card vh-prompt" id="prompt-card" hidden>
+        <div class="vh-prompt__eyebrow" id="puzzle-number">Vector Hoops #—</div>
+        <div class="vh-equation" id="equation-row">
+          <div class="vh-equation__tile">
+            <div class="vh-equation__tile-label">counting stats: scoring &middot; boards &middot; dimes &middot; defense</div>
+          </div>
+          <div class="vh-equation__op" aria-hidden="true">+</div>
+          <div class="vh-equation__tile">
+            <div class="vh-equation__tile-label">shooting &amp; impact</div>
+          </div>
+          <div class="vh-equation__op" aria-hidden="true">=</div>
+          <div class="vh-equation__tile vh-equation__tile--target">
+            <div class="vh-equation__tile-mark">?</div>
+          </div>
+        </div>
+        <button type="button" class="vh-equation-chip" id="equation-chip" hidden>
+          <span id="equation-chip-text">Counting + Shooting/Impact = ?</span>
+          <span class="vh-equation-chip__hint">tap to expand</span>
+        </button>
+        <p class="vh-prompt__text vh-visually-hidden" id="prompt-text">Loading today's Chimera&hellip;</p>
+        <p class="vh-prompt__scouting" id="scouting-line"></p>
+        <div class="vh-hints" id="hints-row" hidden></div>
+      </div>
+
+      <div class="vh-card vh-guessbar" id="guessbar-card" hidden>
+        <div class="vh-autocomplete" id="chimera-autocomplete">
+          <input
+            type="text"
+            id="chimera-input"
+            class="vh-input"
+            placeholder="Type a player-season, e.g. Kobe Bryant (2005-06)"
+            autocomplete="off"
+            autocorrect="off"
+            autocapitalize="off"
+            spellcheck="false"
+            aria-autocomplete="list"
+            aria-controls="chimera-suggestions"
+            aria-expanded="false"
+            disabled
+          >
+          <ul class="vh-suggestions" id="chimera-suggestions" role="listbox" hidden></ul>
+        </div>
+        <button class="vh-btn vh-btn--primary" id="chimera-submit" disabled>Guess</button>
+        <p class="vh-duplicate-warning" id="duplicate-warning" role="status" hidden></p>
+      </div>
+
+      <div class="vh-card vh-warmth" id="warmth-card" hidden>
+        <div class="vh-warmth__bars" id="warmth-bars" aria-hidden="true"></div>
+        <div class="vh-warmth__closest" id="warmth-closest">Closest: &mdash;</div>
+      </div>
+
+      <div class="vh-card vh-result" id="result-card" hidden>
+        <div class="vh-scoreboard" id="scoreboard">
+          <div class="vh-scoreboard__pct" id="scoreboard-pct">0%</div>
+          <div class="vh-scoreboard__sub">match on last guess</div>
+        </div>
+
+        <p class="vh-story" id="story-caption"></p>
+        <p class="vh-guess__line vh-guess__line--quick" id="quick-coaching-line"></p>
+        <p class="vh-guess__line" id="cluster-line"></p>
+
+        <div class="vh-result__actions">
+          <button type="button" class="vh-link-btn" id="report-sheet-open-btn">Full scouting report &rarr;</button>
+        </div>
+      </div>
+
+      <div class="vh-card vh-reveal" id="reveal-card" hidden>
+        <h2 class="vh-reveal__title" id="reveal-title">Revealed</h2>
+        <div class="vh-reveal__body" id="reveal-body"></div>
+        <button class="vh-btn vh-btn--accent" id="share-btn">Share result</button>
+        <div class="vh-reveal__copied" id="share-copied" hidden>Copied to clipboard.</div>
+      </div>
+
+      <div class="vh-utility-row" id="chimera-utility-row">
+        <button type="button" class="vh-link-btn" id="history-chip-btn">History (<span id="history-count">0</span>) &rarr;</button>
+        <button type="button" class="vh-link-btn" id="map-sheet-open-btn">3D league map &rarr;</button>
+      </div>
+
+    </div>
+
+    <div class="vh-sheet-backdrop" id="report-sheet-backdrop" hidden>
+      <div class="vh-sheet" id="report-sheet" role="dialog" aria-modal="true" aria-labelledby="report-sheet-title">
+        <div class="vh-sheet__handle" aria-hidden="true"></div>
+        <div class="vh-sheet__head">
+          <h2 id="report-sheet-title" class="vh-sheet__title">Full scouting report</h2>
+          <button class="vh-sheet__close" id="report-sheet-close-btn" type="button" aria-label="Close">&times;</button>
+        </div>
+        <div class="vh-sheet__body">
+          <div class="vh-section-label">The court &mdash; zone presence</div>
+          <div class="vh-courts" id="courts-row">
+            <div class="vh-court-block">
+              <div class="vh-court-block__label">The Chimera</div>
+              <canvas class="vh-court" id="court-target" width="300" height="282" aria-label="Half-court diagram of the Chimera's offensive and defensive zone presence"></canvas>
+            </div>
+            <div class="vh-court-block">
+              <div class="vh-court-block__label" id="court-guess-label">Your guess</div>
+              <canvas class="vh-court" id="court-guess" width="300" height="282" aria-label="Half-court diagram of your guess's offensive and defensive zone presence"></canvas>
+            </div>
+          </div>
+          <div class="vh-court-legend">
+            <span><span class="vh-legend-swatch vh-legend-swatch--orange"></span>offense &mdash; zone fills, &sigma;-labeled</span>
+            <span><span class="vh-legend-swatch vh-legend-swatch--hatch"></span>defense &mdash; 45&deg; hatch</span>
+          </div>
+          <p class="vh-visually-hidden" id="courts-sr-summary"></p>
+
+          <div class="vh-section-label">Dimensional breakdown &mdash; &sigma; vs era, all 14 dimensions</div>
+          <div class="vh-breakdown" id="breakdown-chart" role="img" aria-label="Diverging bar chart comparing the Chimera and your guess across all 14 stat dimensions in sigmas"></div>
+          <p class="vh-visually-hidden" id="breakdown-sr-summary"></p>
+          <div class="vh-court-legend">
+            <span><span class="vh-legend-swatch vh-legend-swatch--orange"></span>the Chimera</span>
+            <span><span class="vh-legend-swatch vh-legend-swatch--blue"></span>your guess</span>
+          </div>
+          <p class="vh-guess__line" id="coaching-line"></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="vh-sheet-backdrop" id="map-sheet-backdrop" hidden>
+      <div class="vh-sheet" id="map-sheet" role="dialog" aria-modal="true" aria-labelledby="map-sheet-title">
+        <div class="vh-sheet__handle" aria-hidden="true"></div>
+        <div class="vh-sheet__head">
+          <h2 id="map-sheet-title" class="vh-sheet__title">3D league map <span class="vh-mapcard__hint">(drag to rotate &middot; wheel/pinch to zoom)</span></h2>
+          <button class="vh-sheet__close" id="map-sheet-close-btn" type="button" aria-label="Close">&times;</button>
+        </div>
+        <div class="vh-sheet__body">
+          <div class="vh-map-wrap">
+            <canvas id="hoops-map" class="vh-map" width="600" height="600" aria-label="3D starfield of all player-seasons colored by position, with the Chimera target marker and your guesses pinned"></canvas>
+            <button class="vh-map-pause" id="map-pause-btn" type="button" title="Pause rotation">Pause</button>
+            <button class="vh-map-color" id="map-color-btn" type="button" title="Toggle dot coloring">Color: position</button>
+            <div class="vh-map-axes" id="map-axes">PC1 / PC2 / PC3 of the era-normalized stat space</div>
+          </div>
+          <div class="vh-mapcard__legend" id="map-legend"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="vh-sheet-backdrop" id="history-sheet-backdrop" hidden>
+      <div class="vh-sheet" id="history-sheet" role="dialog" aria-modal="true" aria-labelledby="history-sheet-title">
+        <div class="vh-sheet__handle" aria-hidden="true"></div>
+        <div class="vh-sheet__head">
+          <h2 id="history-sheet-title" class="vh-sheet__title">Guess history</h2>
+          <button class="vh-sheet__close" id="history-sheet-close-btn" type="button" aria-label="Close">&times;</button>
+        </div>
+        <div class="vh-sheet__body">
+          <ol class="vh-guesslist" id="guess-list" aria-live="polite"></ol>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <section id="panel-deadline" class="vh-panel" hidden>
+
+    <div class="vh-subtabs" id="deadline-subtabs" role="tablist" aria-label="Deadline play mode">
+      <button class="vh-subtab is-active" id="deadline-sub-daily" type="button" role="tab" aria-selected="true">Daily Set</button>
+      <button class="vh-subtab" id="deadline-sub-free" type="button" role="tab" aria-selected="false">Free Play</button>
+    </div>
+
+    <div class="vh-practice-banner" id="deadline-practice-banner" hidden>
+      <span class="vh-practice-banner__text">PRACTICE &mdash; doesn't touch your Deadline streak</span>
+    </div>
+
+    <div class="vh-card vh-prompt">
+      <div class="vh-prompt__eyebrow" id="deadline-eyebrow">The Deadline &mdash; Daily Set</div>
+      <p class="vh-prompt__text">Round <span id="deadline-round-num">1</span>/5 &middot; Score <span id="deadline-score-num">0</span><span id="deadline-streak-wrap"> &middot; Streak <span id="deadline-streak-num">0</span></span></p>
+    </div>
+
+    <div class="vh-card vh-deadline-card">
+      <p class="vh-deadline__prompt" id="deadline-prompt">Loading a move&hellip;</p>
+
+      <div class="vh-deadline__buttons" id="deadline-buttons">
+        <button class="vh-btn vh-btn--thrive" id="deadline-thrived-btn" type="button">Thrived</button>
+        <button class="vh-btn vh-btn--crater" id="deadline-crater-btn" type="button">Cratered</button>
+      </div>
+
+      <div class="vh-deadline__reveal" id="deadline-reveal" hidden>
+        <p class="vh-deadline__verdict" id="deadline-verdict"></p>
+
+        <div class="vh-deadline__detail" id="deadline-detail">
+          <div class="vh-deadline__stat-row">
+            <span class="vh-deadline__stat-label">&Delta; pts/36</span>
+            <span class="vh-deadline__stat-value" id="deadline-p36-value"></span>
+          </div>
+          <div class="vh-deadline__bar-pair" id="deadline-p36-bars"></div>
+          <p class="vh-deadline__samples" id="deadline-samples"></p>
+          <p class="vh-deadline__adjpm" id="deadline-adjpm"></p>
+        </div>
+
+        <button class="vh-btn vh-btn--primary" id="deadline-next-btn" type="button">Next round</button>
+      </div>
+
+      <div class="vh-deadline__final" id="deadline-final" hidden>
+        <p class="vh-deadline__final-score" id="deadline-final-score"></p>
+        <p class="vh-deadline__comeback" id="deadline-comeback" hidden>Next Daily Set at UTC midnight.</p>
+        <button class="vh-btn vh-btn--accent" id="deadline-share-btn" type="button" hidden>Share result</button>
+        <div class="vh-reveal__copied" id="deadline-share-copied" hidden>Copied to clipboard.</div>
+        <button class="vh-btn vh-btn--accent" id="deadline-again-btn" type="button">Run again</button>
+      </div>
+    </div>
+
+    <p class="vh-deadline__method"><button type="button" class="vh-link-btn" id="deadline-method-btn">Method &amp; data sources &rarr;</button></p>
+
+  </section>
+
+  <section id="panel-fader" class="vh-panel" hidden>
+
+    <div class="vh-subtabs" id="fader-subtabs" role="tablist" aria-label="Fader or Finisher play mode">
+      <button class="vh-subtab is-active" id="fader-sub-daily" type="button" role="tab" aria-selected="true">Daily Set</button>
+      <button class="vh-subtab" id="fader-sub-free" type="button" role="tab" aria-selected="false">Free Play</button>
+    </div>
+
+    <div class="vh-practice-banner" id="fader-practice-banner" hidden>
+      <span class="vh-practice-banner__text">PRACTICE &mdash; doesn't touch your Fader/Finisher streak</span>
+    </div>
+
+    <div class="vh-card vh-prompt">
+      <div class="vh-prompt__eyebrow" id="fader-eyebrow">Fader or Finisher &mdash; Daily Set</div>
+      <p class="vh-prompt__text">Round <span id="fader-round-num">1</span>/5 &middot; Score <span id="fader-score-num">0</span><span id="fader-streak-wrap"> &middot; Streak <span id="fader-streak-num">0</span></span></p>
+    </div>
+
+    <div class="vh-card vh-deadline-card">
+      <p class="vh-deadline__prompt" id="fader-prompt">Loading a split&hellip;</p>
+
+      <div class="vh-deadline__buttons" id="fader-buttons">
+        <button class="vh-btn vh-btn--finisher" id="fader-finish-btn" type="button">Finished stronger</button>
+        <button class="vh-btn vh-btn--fader" id="fader-fade-btn" type="button">Faded</button>
+      </div>
+
+      <div class="vh-deadline__reveal" id="fader-reveal" hidden>
+        <p class="vh-deadline__verdict" id="fader-verdict"></p>
+
+        <div class="vh-deadline__detail" id="fader-detail">
+          <div class="vh-deadline__stat-row">
+            <span class="vh-deadline__stat-label">2nd half</span>
+            <span class="vh-deadline__stat-value" id="fader-secondhalf-value"></span>
+          </div>
+          <div class="vh-deadline__bar-pair" id="fader-bars"></div>
+          <p class="vh-deadline__samples" id="fader-samples"></p>
+          <p class="vh-deadline__adjpm" id="fader-delta"></p>
+        </div>
+
+        <button class="vh-btn vh-btn--primary" id="fader-next-btn" type="button">Next round</button>
+      </div>
+
+      <div class="vh-deadline__final" id="fader-final" hidden>
+        <p class="vh-deadline__final-score" id="fader-final-score"></p>
+        <p class="vh-deadline__comeback" id="fader-comeback" hidden>Next Daily Set at UTC midnight.</p>
+        <button class="vh-btn vh-btn--accent" id="fader-share-btn" type="button" hidden>Share result</button>
+        <div class="vh-reveal__copied" id="fader-share-copied" hidden>Copied to clipboard.</div>
+        <button class="vh-btn vh-btn--accent" id="fader-again-btn" type="button">Run again</button>
+      </div>
+    </div>
+
+    <p class="vh-deadline__method"><button type="button" class="vh-link-btn" id="fader-method-btn">Method &amp; data sources &rarr;</button></p>
+
+  </section>
+
+  <section id="panel-arc" class="vh-panel" hidden>
+
+    <div class="vh-subtabs" id="arc-subtabs" role="tablist" aria-label="Career Arc play mode">
+      <button class="vh-subtab is-active" id="arc-sub-daily" type="button" role="tab" aria-selected="true">Daily</button>
+      <button class="vh-subtab" id="arc-sub-practice" type="button" role="tab" aria-selected="false">Free Play</button>
+    </div>
+
+    <div class="vh-practice-banner" id="arc-practice-banner" hidden>
+      <span class="vh-practice-banner__text">PRACTICE &mdash; doesn't touch your Arc streak</span>
+      <button class="vh-btn vh-btn--accent" id="arc-new-btn" type="button">New arc</button>
+    </div>
+
+    <div class="vh-card vh-prompt">
+      <div class="vh-prompt__eyebrow" id="arc-eyebrow">Career Arc &mdash; Daily</div>
+      <p class="vh-prompt__text" id="arc-instructions">Order these seasons oldest &rarr; newest.</p>
+    </div>
+
+    <div class="vh-card vh-arc-card-wrap">
+      <div class="vh-arc-grid" id="arc-cards"></div>
+      <div class="vh-arc-controls">
+        <button class="vh-link-btn" id="arc-clear-btn" type="button">Clear order</button>
+        <button class="vh-btn vh-btn--primary" id="arc-submit-btn" type="button" disabled>Submit order</button>
+      </div>
+    </div>
+
+    <div class="vh-card vh-arc-result" id="arc-result" hidden>
+      <p class="vh-arc-result__score" id="arc-score-line"></p>
+      <button type="button" class="vh-link-btn" id="arc-reveal-open-btn">See the true order &amp; arc &rarr;</button>
+      <div class="vh-arc-result__actions" id="arc-result-actions">
+        <button class="vh-btn vh-btn--accent" id="arc-share-btn" type="button" hidden>Share result</button>
+        <div class="vh-reveal__copied" id="arc-share-copied" hidden>Copied to clipboard.</div>
+        <p class="vh-deadline__comeback" id="arc-comeback" hidden>Next Career Arc at UTC midnight.</p>
+      </div>
+    </div>
+
+    <div class="vh-sheet-backdrop" id="arc-reveal-sheet-backdrop" hidden>
+      <div class="vh-sheet" id="arc-reveal-sheet" role="dialog" aria-modal="true" aria-labelledby="arc-reveal-sheet-title">
+        <div class="vh-sheet__handle" aria-hidden="true"></div>
+        <div class="vh-sheet__head">
+          <h2 id="arc-reveal-sheet-title" class="vh-sheet__title">True order</h2>
+          <button class="vh-sheet__close" id="arc-reveal-sheet-close-btn" type="button" aria-label="Close">&times;</button>
+        </div>
+        <div class="vh-sheet__body">
+          <ol class="vh-arc-reveal-list" id="arc-reveal-list"></ol>
+          <div class="vh-section-label">Career arc &mdash; scoring &sigma; vs era, by season</div>
+          <div class="vh-arc-linechart" id="arc-linechart" role="img" aria-label="Line chart of this player's scoring sigma across their charted seasons"></div>
+          <p class="vh-visually-hidden" id="arc-linechart-sr-summary"></p>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <div class="vh-loading" id="loading-banner">Loading vectors&hellip;</div>
+  <div class="vh-error" id="error-banner" hidden></div>
+
+</main>
+
+<div class="vh-rollover-banner" id="rollover-banner" hidden role="status">
+  <button type="button" id="rollover-reload-btn" class="vh-rollover-banner__btn">A new Chimera is ready &rarr;</button>
+</div>
+
+<div class="vh-modal-backdrop" id="help-backdrop" hidden>
+  <div class="vh-modal" id="help-modal" role="dialog" aria-modal="true" aria-labelledby="help-title">
+    <h2 id="help-title">How to play</h2>
+    <ol class="vh-modal__list">
+      <li>Every day we fuse two real player-seasons: one donates the counting stats, the other the shooting &amp; impact profile. Name the real season that plays most like the blend.</li>
+      <li>Guess any player-season; you get a % match, a court comparison, and directional coaching in sigmas.</li>
+      <li>92%+ match &mdash; or naming either component &mdash; wins. 6 guesses. New chimera at midnight UTC.</li>
+      <li>Hints arrive on guesses 3 and 5 (Daily): a position-group chip, then an archetype-name chip. Free Play reveals both immediately &mdash; it's practice.</li>
+      <li>Free Play (all four modes) is unlimited practice: it never touches your daily streaks or stats.</li>
+      <li><b>The Deadline:</b> a real midseason mover's per-36/plus-minus swing is shown; call Thrived or Cratered. 5 rounds a day.</li>
+      <li><b>Fader or Finisher:</b> a real player-season's first-half per-36 rate is shown; call FINISHED STRONGER or FADED for the second half. 5 rounds a day.</li>
+      <li><b>Career Arc:</b> one player's charted seasons appear as unlabeled sigma-bar cards, no years shown. Tap them in the order you think they happened, oldest to newest, then submit &mdash; score is how many landed in the right slot.</li>
+    </ol>
+    <p class="vh-modal__telemetry" id="telemetry-note">Anonymous play events help tune the game &mdash; a random id, no account, no ads.</p>
+    <button class="vh-btn vh-btn--primary" id="help-close" type="button">Got it</button>
+  </div>
+</div>
+
+<div class="vh-modal-backdrop" id="dossier-backdrop" hidden>
+  <div class="vh-modal vh-modal--dossier" id="dossier-modal" role="dialog" aria-modal="true" aria-labelledby="dossier-title">
+    <h2 id="dossier-title">Dossier</h2>
+    <div class="vh-dossier__body" id="dossier-body">Loading&hellip;</div>
+    <div class="vh-dossier__actions">
+      <a class="vh-dossier__source" id="dossier-source-link" href="#" target="_blank" rel="noopener">View source on GitHub</a>
+      <button class="vh-btn vh-btn--primary" id="dossier-close" type="button">Close</button>
+    </div>
+  </div>
+</div>
+
+<div class="vh-modal-backdrop" id="stats-backdrop" hidden>
+  <div class="vh-modal vh-modal--stats" id="stats-modal" role="dialog" aria-modal="true" aria-labelledby="stats-title">
+    <h2 id="stats-title">Stats</h2>
+
+    <div class="vh-stats-section">
+      <div class="vh-stats-section__label">Daily Chimera</div>
+      <div class="vh-stats-grid" id="stats-daily-grid"></div>
+      <div class="vh-histogram" id="stats-histogram" role="img" aria-label="Guess distribution, 1 through 6"></div>
+    </div>
+
+    <div class="vh-stats-section">
+      <div class="vh-stats-section__label">The Deadline &mdash; Daily Set</div>
+      <div class="vh-stats-grid" id="stats-deadline-grid"></div>
+    </div>
+
+    <div class="vh-stats-section">
+      <div class="vh-stats-section__label">Fader or Finisher &mdash; Daily Set</div>
+      <div class="vh-stats-grid" id="stats-fader-grid"></div>
+    </div>
+
+    <div class="vh-stats-section">
+      <div class="vh-stats-section__label">Career Arc &mdash; Daily</div>
+      <div class="vh-stats-grid" id="stats-arc-grid"></div>
+    </div>
+
+    <div class="vh-stats-section vh-stats-section--practice">
+      <div class="vh-stats-section__label">Practice (casual, doesn't count toward streaks)</div>
+      <p class="vh-stats-practice-line" id="stats-practice-line"></p>
+    </div>
+
+    <div class="vh-stats-actions">
+      <button class="vh-btn" id="stats-clear-btn" type="button">Clear my data</button>
+      <button class="vh-btn vh-btn--primary" id="stats-close" type="button">Close</button>
+    </div>
+  </div>
+</div>
+
+<div class="vh-modal-backdrop" id="methods-backdrop" hidden>
+  <div class="vh-modal" id="methods-modal" role="dialog" aria-modal="true" aria-labelledby="methods-title">
+    <h2 id="methods-title">Method &amp; data sources</h2>
+    <div class="vh-dossier__body" id="methods-body"></div>
+    <button class="vh-btn vh-btn--primary" id="methods-close" type="button">Close</button>
+  </div>
+</div>
+
+<footer class="vh-footer" id="footer">
+  Vectors: per-100-possession stats, z-scored within each season (era-honest) &middot; &mdash; &middot; built &mdash; &middot; anonymous play events help tune the game &mdash; a random id, no account, no ads
+</footer>
+
+<footer class="site-footer">
+  <div class="site-footer__links">
+    <a href="/methods">Methods</a>
+    <a href="/wiki">Wiki</a>
+    <a href="https://github.com/jcdavis131/vector-hoops" target="_blank" rel="noopener">GitHub</a>
+  </div>
+  <div class="site-footer__attribution">Every number recomputable from stats.nba.com &amp; Basketball-Reference source data &middot; part of the <a href="https://jcamd.com/arcade" target="_blank" rel="noopener">jcamd arcade</a></div>
+</footer>
+
+<script src="assets/dossier.js" defer></script>
+<script src="assets/game.js" defer></script>
+</body>
+</html>
