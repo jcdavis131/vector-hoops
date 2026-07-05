@@ -473,6 +473,11 @@ main{
   flex-direction: column;
   gap: 10px;
 }
+.vh-guesslist__empty{
+  color: var(--ink-muted);
+  font-size: 13px;
+  font-style: italic;
+}
 
 .vh-guess{
   background: var(--surface);
@@ -1378,3 +1383,387 @@ main{
   text-decoration: underline;
   cursor: pointer;
 }
+
+/* =======================================================================
+   Mobile-first restructure: bottom tab bar, compact header, collapsible
+   equation, bottom sheets (report/map/history/arc-reveal), two-column
+   desktop layout. Reuses the existing modal stack (focus trap + Escape)
+   for every sheet — a sheet IS a modal, just styled to dock at the
+   bottom on narrow viewports and behave like a normal modal from ~480px.
+   ======================================================================= */
+
+/* ---------- tab bar: bottom nav on phones, top tabs from 720px ---------- */
+
+#mode-tabs{
+  margin: 0 16px 14px;
+}
+@media (min-width: 720px){
+  #mode-tabs{
+    max-width: 688px; /* matches main's padded content width at max-width:720px */
+    margin: 0 auto 16px;
+  }
+}
+
+.vh-tab{
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  justify-content: center;
+}
+.vh-tab__icon{ display: none; font-size: 15px; line-height: 1; }
+.vh-tab__label{ white-space: nowrap; }
+
+@media (max-width: 719px){
+  #mode-tabs{
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 0;
+    width: 100%;
+    border-width: 2px 0 0 0;
+    border-radius: 0;
+    box-shadow: 0 -2px 0 var(--ink);
+    z-index: 60;
+    /* thumb-zone bottom nav: safe-area padding for notched phones */
+    padding-bottom: env(safe-area-inset-bottom, 0);
+  }
+  .vh-tab{
+    flex: 1 1 0;
+    flex-direction: column;
+    gap: 2px;
+    min-height: 52px;
+    padding: 7px 4px;
+    font-size: 9px;
+  }
+  .vh-tab__icon{ display: block; }
+  main#app{ padding-bottom: calc(64px + env(safe-area-inset-bottom, 0)); }
+}
+
+/* ---------- compact single-row header ---------- */
+/* Tagline hides on phones once the player has closed how-to-play at least
+   once ("no taglines on mobile after first visit") — desktop keeps it, it
+   has the room. */
+@media (max-width: 719px){
+  .vh-header--compact .vh-tagline{ display: none; }
+}
+
+@media (max-width: 479px){
+  .vh-header{ padding: 8px 10px; gap: 8px; }
+  .vh-header__brand{ gap: 0; }
+  .vh-tagline{ max-width: 150px; }
+}
+
+/* ---------- equation collapse-to-chip (after first guess) ---------- */
+
+.vh-equation-chip{
+  appearance: none;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 4px 0 12px;
+  padding: 10px 14px;
+  border: 2px solid var(--ink);
+  border-radius: 8px;
+  background: var(--paper);
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--ink);
+  cursor: pointer;
+  text-align: left;
+}
+.vh-equation-chip__hint{
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-muted);
+  white-space: nowrap;
+}
+
+/* ---------- utility row (history / 3D map triggers, always visible) ---------- */
+
+.vh-utility-row{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  padding: 2px 4px;
+}
+
+.vh-result__actions{
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid var(--hairline);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+/* ---------- bottom sheets: report / map / history / arc-reveal ---------- */
+
+.vh-sheet-backdrop{
+  position: fixed;
+  inset: 0;
+  background: rgba(17,17,17,0.55);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 110;
+}
+
+.vh-sheet{
+  background: var(--surface);
+  width: 100%;
+  max-width: 720px;
+  max-height: 88vh;
+  overflow-y: auto;
+  border: 2px solid var(--ink);
+  border-bottom: none;
+  border-radius: 16px 16px 0 0;
+  box-shadow: 0 -6px 0 var(--ink);
+  padding: 10px 16px 24px;
+  animation: vh-sheet-up 0.22s ease-out;
+}
+@keyframes vh-sheet-up{
+  from{ transform: translateY(100%); }
+  to{ transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce){
+  .vh-sheet{ animation: none; }
+}
+
+.vh-sheet__handle{
+  width: 36px;
+  height: 4px;
+  background: var(--hairline);
+  border-radius: 2px;
+  margin: 2px auto 12px;
+}
+.vh-sheet__head{
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.vh-sheet__title{
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 14px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink);
+  border-bottom: 2px solid var(--data-orange);
+  display: inline-block;
+  padding-bottom: 2px;
+}
+.vh-sheet__close{
+  flex: 0 0 auto;
+  appearance: none;
+  border: 2px solid var(--ink);
+  background: var(--surface);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: var(--shadow-block-sm);
+}
+.vh-sheet__close:hover{ transform: translate(-1px, -1px); box-shadow: 4px 4px 0 var(--ink); }
+.vh-sheet__close:active{ transform: translate(2px, 2px); box-shadow: none; }
+
+@media (min-width: 480px){
+  .vh-sheet-backdrop{ align-items: center; padding: 20px; }
+  .vh-sheet{
+    max-height: 80vh;
+    border-bottom: 2px solid var(--ink);
+    border-radius: var(--radius);
+    box-shadow: 6px 6px 0 var(--ink);
+    animation: vh-sheet-fade 0.16s ease-out;
+  }
+  @keyframes vh-sheet-fade{
+    from{ opacity: 0; transform: translateY(8px); }
+    to{ opacity: 1; transform: translateY(0); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .vh-sheet{ animation: none; }
+  }
+}
+
+/* ---------- two-column desktop: play column left, report/map right ---------- */
+
+@media (min-width: 1000px){
+  #panel-chimera{
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(300px, 400px);
+    gap: 20px;
+    align-items: start;
+  }
+  #chimera-subtabs, #chimera-practice-banner{ grid-column: 1 / -1; }
+  #chimera-play-col{
+    grid-column: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap);
+    min-width: 0;
+  }
+  #report-sheet-backdrop, #map-sheet-backdrop{
+    grid-column: 2;
+    position: static;
+    background: none;
+    display: block;
+    z-index: auto;
+    padding: 0;
+  }
+  /* pinned static panels override the page-wide [hidden]{display:none!important}
+     rule so they read as an always-visible right rail rather than a sheet —
+     the JS still flips their `hidden` attribute per-breakpoint on resize. */
+  #report-sheet-backdrop:not([hidden]), #map-sheet-backdrop:not([hidden]){
+    display: block;
+  }
+  #report-sheet, #map-sheet{
+    max-height: none;
+    max-width: none;
+    animation: none;
+    border-bottom: 2px solid var(--ink);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-block);
+    position: sticky;
+    top: 20px;
+  }
+  #report-sheet-open-btn, #map-sheet-open-btn{ display: none; }
+}
+
+/* ---------- Fader or Finisher: verdict styling (orange finish / blue fade) ---------- */
+
+.vh-btn--finisher{ background: var(--surface); border-color: var(--data-orange); color: var(--data-orange); }
+.vh-btn--fader{ background: var(--surface); border-color: var(--data-blue); color: var(--data-blue); }
+
+.vh-ff-verdict--finisher{ color: var(--data-orange); }
+.vh-ff-verdict--fader{ color: var(--data-blue); }
+
+/* ---------- Career Arc ---------- */
+
+.vh-arc-card-wrap{ display: flex; flex-direction: column; gap: 14px; }
+
+.vh-arc-grid{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+@media (min-width: 560px){
+  .vh-arc-grid{ grid-template-columns: repeat(5, 1fr); }
+}
+
+.vh-arc-card{
+  appearance: none;
+  border: 2px solid var(--ink);
+  background: var(--surface);
+  border-radius: 10px;
+  padding: 10px 8px;
+  box-shadow: var(--shadow-block-sm);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+}
+.vh-arc-card:hover:not(:disabled){ transform: translate(-1px, -1px); box-shadow: 4px 4px 0 var(--ink); }
+.vh-arc-card:active:not(:disabled){ transform: translate(2px, 2px); box-shadow: none; }
+.vh-arc-card:disabled{ cursor: default; opacity: 0.85; }
+.vh-arc-card.is-selected{ background: #fff8ee; border-color: var(--data-orange); }
+.vh-arc-card.is-correct{ border-color: var(--hot); background: #eefbe9; }
+.vh-arc-card.is-wrong{ border-color: var(--cold); background: #fdeeee; }
+
+.vh-arc-card__order{
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--paper);
+  background: var(--ink-muted);
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.vh-arc-card.is-selected .vh-arc-card__order{ background: var(--data-orange); }
+.vh-arc-card__order:empty{ visibility: hidden; }
+
+.vh-arc-card__minibars{ width: 100%; }
+.vh-arc-card__minibars svg{ width: 100%; height: auto; display: block; }
+
+.vh-arc-card__chips{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px;
+}
+.vh-arc-card__chips .vh-hint-chip{
+  padding: 2px 7px;
+  font-size: 9px;
+}
+
+.vh-arc-card__season{
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--ink-soft);
+}
+
+.vh-arc-controls{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.vh-arc-controls .vh-btn{ width: auto; }
+
+.vh-arc-result__score{
+  font-family: var(--mono);
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--ink);
+  margin: 0 0 8px;
+}
+.vh-arc-result__actions{ margin-top: 10px; }
+
+.vh-arc-reveal-list{
+  list-style: none;
+  margin: 0 0 16px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.vh-arc-reveal-row{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border: 1px solid var(--hairline);
+  border-radius: 8px;
+  font-size: 13px;
+}
+.vh-arc-reveal-row.is-correct{ border-color: var(--hot); background: #eefbe9; }
+.vh-arc-reveal-row.is-wrong{ border-color: var(--cold); background: #fdeeee; }
+.vh-arc-reveal-row__rank{
+  font-family: var(--mono);
+  font-weight: 800;
+  width: 18px;
+  flex: 0 0 auto;
+}
+.vh-arc-reveal-row__season{ font-family: var(--mono); font-weight: 700; }
+.vh-arc-reveal-row__mark{ margin-left: auto; font-weight: 800; }
+
+.vh-arc-linechart{ width: 100%; }
+.vh-arc-linechart svg{ width: 100%; height: auto; display: block; }

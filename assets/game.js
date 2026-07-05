@@ -15,6 +15,7 @@
 
   var DATA_URL = 'assets/vectors.json';
   var DEADLINE_URL = 'assets/deadline.json';
+  var FADERFINISHER_URL = 'assets/faderfinisher.json';
   var EPOCH_DATE = '2026-07-01'; // puzzle #1
   var MAX_GUESSES = 6;
   var WIN_SIMILARITY = 0.92;
@@ -23,9 +24,15 @@
   var LS_KEY_DEADLINE_COUNTER = 'vectorHoops.deadline.counter';
   var LS_KEY_DEADLINE_DAILY = 'vectorHoops.deadline.daily.v1';
   var LS_KEY_PRACTICE_STATS = 'vectorHoops.practice.chimera.stats';
+  var LS_KEY_FF_DAILY = 'vectorHoops.ff.daily.v1';
+  var LS_KEY_FF_PRACTICE = 'vectorHoops.ff.practice';
+  var LS_KEY_ARC_DAILY = 'vectorHoops.arc.daily.v1';
+  var LS_KEY_ARC_PRACTICE = 'vectorHoops.arc.practice';
   var LS_KEY_SEEN_HELP = 'vectorHoops.seenHelp';
-  var SS_KEY_FULLREPORT = 'vectorHoops.fullReportOpen';
   var DEADLINE_ROUNDS_PER_RUN = 5;
+  var FF_ROUNDS_PER_RUN = 5;
+  var ARC_CARD_COUNT = 5;
+  var ARC_MIN_SEASONS = 5;
   var A_COUNT = 7; // first 7 dims come from player A, last 7 from player B
   var GITHUB_REPO = 'jcdavis131/vector-hoops';
   var GITHUB_BRANCH = 'main';
@@ -33,6 +40,12 @@
   // hints immediately since it never counts toward anything.
   var HINT_POSITION_AT_GUESS = 3;
   var HINT_ARCHETYPE_AT_GUESS = 5;
+  var DESKTOP_QUERY = '(min-width: 1000px)';
+
+  function isDesktopWide() {
+    try { return window.matchMedia && window.matchMedia(DESKTOP_QUERY).matches; }
+    catch (e) { return false; }
+  }
 
   // ---------------------------------------------------------------------
   // Telemetry: fire-and-forget, never blocks gameplay
@@ -96,6 +109,42 @@
   function seededRng(str) {
     var seedFn = xmur3(str);
     return mulberry32(seedFn());
+  }
+
+  // crypto.getRandomValues-sourced nonce -> deterministic-from-nonce rng, used
+  // by every mode's Free Play so unlimited practice rounds never repeat and
+  // never touch the daily seed.
+  function randomNonce() {
+    var arr = new Uint32Array(2);
+    if (window.crypto && window.crypto.getRandomValues) {
+      window.crypto.getRandomValues(arr);
+    } else {
+      arr[0] = Math.floor(Math.random() * 4294967296);
+      arr[1] = Math.floor(Math.random() * 4294967296);
+    }
+    return arr[0].toString(36) + '-' + arr[1].toString(36) + '-' + Date.now().toString(36);
+  }
+
+  // Fisher-Yates partial shuffle: first k of a shuffled [0..n) index array —
+  // a seeded, distinct (no-replacement) sample.
+  function seededSampleIndices(rng, n, k) {
+    var arr = new Array(n);
+    for (var i = 0; i < n; i++) arr[i] = i;
+    var lim = Math.min(k, n);
+    for (i = 0; i < lim; i++) {
+      var j = i + Math.floor(rng() * (n - i));
+      var tmp = arr[i]; arr[i] = arr[j]; arr[j] = tmp;
+    }
+    return arr.slice(0, lim);
+  }
+
+  function seededShuffle(rng, arr) {
+    var a = arr.slice();
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(rng() * (i + 1));
+      var tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+    }
+    return a;
   }
 
   // ---------------------------------------------------------------------
@@ -258,19 +307,6 @@
 
   function buildDailyTarget() {
     return buildTargetFromRng(seededRng('vector-hoops:' + TODAY));
-  }
-
-  // crypto.getRandomValues-sourced nonce -> deterministic-from-nonce rng, so
-  // "New chimera" always produces a fresh, unlimited, non-repeating puzzle.
-  function randomNonce() {
-    var arr = new Uint32Array(2);
-    if (window.crypto && window.crypto.getRandomValues) {
-      window.crypto.getRandomValues(arr);
-    } else {
-      arr[0] = Math.floor(Math.random() * 4294967296);
-      arr[1] = Math.floor(Math.random() * 4294967296);
-    }
-    return arr[0].toString(36) + '-' + arr[1].toString(36) + '-' + Date.now().toString(36);
   }
 
   function buildPracticeTarget() {
@@ -1168,6 +1204,88 @@
   }
 
   // ---------------------------------------------------------------------
+  // Career Arc: compact single-series "mini sigma bars" card — same
+  // diverging-bar-vs-era visual language as the breakdown chart above
+  // (orange positive / blue negative, sigma-scaled), shrunk to a 14-row
+  // fingerprint with no numeric labels (the puzzle is unlabeled cards).
+  // Per-bar <title> + an aria-label summary keep it screen-reader honest.
+  // ---------------------------------------------------------------------
+
+  var MINIBAR_XMAX = 4;
+
+  function miniSigmaSummaryText(vector) {
+    var parts = DATA.features.map(function (key, i) {
+      return DATA.featureLabels[key] + ' ' + fmtSigma(vector[i]);
+    });
+    return 'Sigma profile, 14 dimensions vs era: ' + parts.join(', ') + '.';
+  }
+
+  function renderMiniSigmaBars(host, vector) {
+    host.innerHTML = '';
+    var W = 130, ROWH = 4.4, GAP = 1.2;
+    var H = vector.length * (ROWH + GAP);
+    var mid = W / 2, half = W / 2 - 3;
+    var svg = svgEl('svg', { viewBox: '0 0 ' + W + ' ' + H }, host);
+    svgEl('line', { x1: mid, y1: 0, x2: mid, y2: H, stroke: '#e1e0d9', 'stroke-width': 1 }, svg);
+    for (var i = 0; i < vector.length; i++) {
+      var v = Math.max(-MINIBAR_XMAX, Math.min(MINIBAR_XMAX, vector[i]));
+      var w = Math.max(1, Math.abs(v) / MINIBAR_XMAX * half);
+      var x = v >= 0 ? mid : mid - w;
+      var y = i * (ROWH + GAP);
+      var rect = svgEl('rect', {
+        x: x, y: y, width: w, height: ROWH, rx: 1,
+        fill: v >= 0 ? ORANGE_HEX : BLUE_HEX
+      }, svg);
+      var title = document.createElementNS(SVG_NS, 'title');
+      title.textContent = DATA.featureLabels[DATA.features[i]] + ': ' + fmtSigma(vector[i]);
+      rect.appendChild(title);
+    }
+  }
+
+  // Arc line chart: PTS (index 0) sigma trajectory across every charted
+  // season for the player, oldest to newest — straight from vectors.json,
+  // nothing derived beyond the existing z-scores.
+  function renderArcLineChart(host, seasonsAsc) {
+    host.innerHTML = '';
+    var W = 640, LEFT = 30, RIGHT = 14, TOP = 16, BOT = 26;
+    var H = 160;
+    var plotW = W - LEFT - RIGHT, plotH = H - TOP - BOT;
+    var XMIN = -4, XMAX = 4;
+    var n = seasonsAsc.length;
+
+    function xOf(i) { return n <= 1 ? LEFT + plotW / 2 : LEFT + (i / (n - 1)) * plotW; }
+    function yOf(v) {
+      var c = Math.max(XMIN, Math.min(XMAX, v));
+      return TOP + (1 - (c - XMIN) / (XMAX - XMIN)) * plotH;
+    }
+
+    var svg = svgEl('svg', {
+      viewBox: '0 0 ' + W + ' ' + H,
+      'font-family': getComputedStyle(document.body).fontFamily
+    }, host);
+
+    var zeroY = yOf(0);
+    svgEl('line', { x1: LEFT, y1: zeroY, x2: W - RIGHT, y2: zeroY, stroke: '#111111', 'stroke-width': 1 }, svg);
+    svgEl('text', { x: LEFT - 6, y: zeroY + 3, 'text-anchor': 'end', 'font-size': 9, fill: '#898781' }, svg).textContent = '0σ';
+
+    var points = seasonsAsc.map(function (p, i) { return xOf(i) + ',' + yOf(p.v[IDX.PTS]); }).join(' ');
+    svgEl('polyline', { points: points, fill: 'none', stroke: ORANGE_HEX, 'stroke-width': 2 }, svg);
+
+    seasonsAsc.forEach(function (p, i) {
+      var cx = xOf(i), cy = yOf(p.v[IDX.PTS]);
+      var dot = svgEl('circle', { cx: cx, cy: cy, r: 3.5, fill: ORANGE_HEX }, svg);
+      var title = document.createElementNS(SVG_NS, 'title');
+      title.textContent = p.season + ': ' + fmtSigma(p.v[IDX.PTS]) + ' scoring';
+      dot.appendChild(title);
+      if (n <= 16 || i % Math.ceil(n / 16) === 0 || i === n - 1) {
+        svgEl('text', {
+          x: cx, y: H - 8, 'text-anchor': 'middle', 'font-size': 8, fill: '#898781'
+        }, svg).textContent = p.season.slice(2, 4);
+      }
+    });
+  }
+
+  // ---------------------------------------------------------------------
   // Chimera mode: guessing + feedback
   // ---------------------------------------------------------------------
 
@@ -1318,10 +1436,12 @@
   function renderGuesses() {
     var rec = todayRecord();
     renderHints();
-    els.guessList.innerHTML = '';
+    renderEquationCollapse();
+    els.guessList.innerHTML = rec.guesses.length ? '' : '<li class="vh-guesslist__empty">No guesses yet.</li>';
     rec.guesses.forEach(function (entry, idx) {
       els.guessList.appendChild(renderGuessRow(entry, idx));
     });
+    if (els.historyCount) els.historyCount.textContent = String(rec.guesses.length);
     var left = Math.max(0, MAX_GUESSES - rec.guesses.length);
     els.guessesLeftNum.textContent = String(left);
 
@@ -1802,6 +1922,9 @@
   // scrolled out of the viewport.
   var mapVisible = false;
   var mapObserver = null;
+  // Replaces the old <details open> flag now that the map lives in a sheet:
+  // true while the map sheet is open (mobile: user-opened; desktop: pinned).
+  var mapSheetOpen = false;
 
   function mapLoop() {
     if (!mapVisible || !mapCam.autoRotate || mapCam.dragging) {
@@ -1837,12 +1960,12 @@
 
   function setupMapVisibilityObserver() {
     if (typeof IntersectionObserver === 'undefined') {
-      mapVisible = els.mapDetails.open; // no IO support: details-open only
+      mapVisible = mapSheetOpen; // no IO support: sheet-open only
       return;
     }
     mapObserver = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
-        mapVisible = entry.isIntersecting && els.mapDetails.open;
+        mapVisible = entry.isIntersecting && mapSheetOpen;
         if (mapVisible) {
           renderMap();
           startMapLoopIfNeeded();
@@ -1937,19 +2060,6 @@
       redrawCourtsIfVisible();
     });
 
-    els.mapDetails.addEventListener('toggle', function () {
-      if (els.mapDetails.open) {
-        // Assume visible the instant it opens; the IntersectionObserver
-        // corrects this on its next callback if it's actually off-screen.
-        mapVisible = true;
-        renderMap();
-        startMapLoopIfNeeded();
-      } else {
-        mapVisible = false;
-        stopMapLoop();
-      }
-    });
-
     setupMapVisibilityObserver();
   }
 
@@ -1978,18 +2088,116 @@
   }
 
   // ---------------------------------------------------------------------
-  // Full scouting report expander: persisted open/closed per browser session
+  // Bottom sheets: report / map / history / arc-reveal. Every sheet reuses
+  // the same modal stack (focus trap + Escape) as the help/stats/methods/
+  // dossier modals — a sheet IS a modal, just docked at the bottom below
+  // ~480px (see hoops.css). At >=1000px the report/map sheets are pinned
+  // open as a static right-column panel instead (see pinDesktopAuxPanels).
   // ---------------------------------------------------------------------
 
-  function setupFullReportPersistence() {
-    var open = false;
-    try { open = sessionStorage.getItem(SS_KEY_FULLREPORT) === '1'; } catch (e) { open = false; }
-    els.fullReport.open = open;
-    els.fullReport.addEventListener('toggle', function () {
-      try {
-        sessionStorage.setItem(SS_KEY_FULLREPORT, els.fullReport.open ? '1' : '0');
-      } catch (e) { /* storage unavailable */ }
+  var reportSheetTrigger = null;
+  var mapSheetTrigger = null;
+  var historySheetTrigger = null;
+
+  function openReportSheet(triggerEl) {
+    if (isDesktopWide()) return; // pinned open already; no overlay needed
+    reportSheetTrigger = triggerEl || document.activeElement;
+    els.reportSheetBackdrop.hidden = false;
+    els.reportSheetCloseBtn.focus();
+    pushModal(els.reportSheet, closeReportSheet);
+  }
+  function closeReportSheet() {
+    els.reportSheetBackdrop.hidden = true;
+    if (reportSheetTrigger && reportSheetTrigger.focus) reportSheetTrigger.focus();
+    popModal();
+  }
+
+  function openMapSheet(triggerEl) {
+    if (isDesktopWide()) return; // pinned open already
+    mapSheetTrigger = triggerEl || document.activeElement;
+    els.mapSheetBackdrop.hidden = false;
+    mapSheetOpen = true;
+    els.mapSheetCloseBtn.focus();
+    pushModal(els.mapSheet, closeMapSheet);
+    mapVisible = true; // optimistic; IntersectionObserver corrects next tick
+    renderMap();
+    startMapLoopIfNeeded();
+  }
+  function closeMapSheet() {
+    els.mapSheetBackdrop.hidden = true;
+    mapSheetOpen = false;
+    mapVisible = false;
+    stopMapLoop();
+    if (mapSheetTrigger && mapSheetTrigger.focus) mapSheetTrigger.focus();
+    popModal();
+  }
+
+  function openHistorySheet(triggerEl) {
+    historySheetTrigger = triggerEl || document.activeElement;
+    els.historySheetBackdrop.hidden = false;
+    els.historySheetCloseBtn.focus();
+    pushModal(els.historySheet, closeHistorySheet);
+  }
+  function closeHistorySheet() {
+    els.historySheetBackdrop.hidden = true;
+    if (historySheetTrigger && historySheetTrigger.focus) historySheetTrigger.focus();
+    popModal();
+  }
+
+  function setupSheets() {
+    els.reportSheetOpenBtn.addEventListener('click', function () { openReportSheet(els.reportSheetOpenBtn); });
+    els.reportSheetCloseBtn.addEventListener('click', closeReportSheet);
+    els.reportSheetBackdrop.addEventListener('click', function (ev) {
+      if (ev.target === els.reportSheetBackdrop) closeReportSheet();
     });
+
+    els.mapSheetOpenBtn.addEventListener('click', function () { openMapSheet(els.mapSheetOpenBtn); });
+    els.mapSheetCloseBtn.addEventListener('click', closeMapSheet);
+    els.mapSheetBackdrop.addEventListener('click', function (ev) {
+      if (ev.target === els.mapSheetBackdrop) closeMapSheet();
+    });
+
+    els.historyChipBtn.addEventListener('click', function () { openHistorySheet(els.historyChipBtn); });
+    els.historySheetCloseBtn.addEventListener('click', closeHistorySheet);
+    els.historySheetBackdrop.addEventListener('click', function (ev) {
+      if (ev.target === els.historySheetBackdrop) closeHistorySheet();
+    });
+  }
+
+  // ---------------------------------------------------------------------
+  // Two-column desktop (>=1000px): report + map sheets pin open as a
+  // static right-column panel instead of an overlay sheet. Below 1000px
+  // they revert to closed sheets. A matchMedia listener keeps this in
+  // sync across resizes (e.g. rotating a tablet).
+  // ---------------------------------------------------------------------
+
+  function pinDesktopAuxPanels() {
+    els.reportSheetBackdrop.hidden = false;
+    els.mapSheetBackdrop.hidden = false;
+    mapSheetOpen = true;
+    mapVisible = true;
+    renderMap();
+    startMapLoopIfNeeded();
+  }
+
+  function unpinDesktopAuxPanels() {
+    els.reportSheetBackdrop.hidden = true;
+    els.mapSheetBackdrop.hidden = true;
+    mapSheetOpen = false;
+    mapVisible = false;
+    stopMapLoop();
+  }
+
+  function setupDesktopPin() {
+    var mq = null;
+    try { mq = window.matchMedia(DESKTOP_QUERY); } catch (e) { mq = null; }
+    if (isDesktopWide()) pinDesktopAuxPanels();
+    if (!mq) return;
+    var handler = function (ev) {
+      if (ev.matches) pinDesktopAuxPanels(); else unpinDesktopAuxPanels();
+    };
+    if (mq.addEventListener) mq.addEventListener('change', handler);
+    else if (mq.addListener) mq.addListener(handler); // older Safari
   }
 
   // ---------------------------------------------------------------------
@@ -2310,7 +2518,7 @@
     els.deadlineAgainBtn.addEventListener('click', function () { startDeadlineRun('free'); });
     els.deadlineSubDaily.addEventListener('click', function () { switchDeadlineMode('daily'); });
     els.deadlineSubFree.addEventListener('click', function () { switchDeadlineMode('free'); });
-    els.deadlineMethodBtn.addEventListener('click', openMethods);
+    els.deadlineMethodBtn.addEventListener('click', function () { openMethods('deadline', els.deadlineMethodBtn); });
     els.deadlineShareBtn.addEventListener('click', function () {
       var text = buildDeadlineShareText();
       var shared = false;
@@ -2326,17 +2534,700 @@
 
   var deadlineInitialized = false;
 
+  // ---------------------------------------------------------------------
+  // FADER OR FINISHER: monthly-split scoring/rebounding quiz on real
+  // player-seasons, computed offline into assets/faderfinisher.json.
+  // Structurally a near-clone of The Deadline (5-round daily set vs
+  // unlimited practice) — same M0 isolation, same reveal shape — with a
+  // binary FINISHED STRONGER / FADED call in place of Thrived/Cratered.
+  // Free Play here is nonce-seeded (like Chimera Free Play), not a
+  // persisted counter, since it never needs to guarantee no-repeat across
+  // sessions the way Deadline's incrementing counter does.
+  // ---------------------------------------------------------------------
+
+  var FADERFINISHER = null;   // parsed faderfinisher.json
+  var FF_POOL = null;         // .questions, as-is
+  var activeFaderMode = 'daily'; // 'daily' | 'free'
+  var faderRuns = { daily: null, free: null };
+  var FADER_STATE = null;     // persisted LS_KEY_FF_DAILY
+  var FADER_PRACTICE_STATS = null; // persisted LS_KEY_FF_PRACTICE: { played, totalScoreSum }
+
+  function activeFaderRun() {
+    return faderRuns[activeFaderMode];
+  }
+
+  function loadFaderDailyState() {
+    var raw = null;
+    try { raw = localStorage.getItem(LS_KEY_FF_DAILY); } catch (e) { raw = null; }
+    var s = { streak: 0, lastPlayDate: null, days: {}, totalSets: 0, totalScoreSum: 0 };
+    if (raw) {
+      try {
+        var parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === 'object') {
+          s.streak = parsed.streak || 0;
+          s.lastPlayDate = parsed.lastPlayDate || null;
+          s.days = parsed.days || {};
+          s.totalSets = parsed.totalSets || 0;
+          s.totalScoreSum = parsed.totalScoreSum || 0;
+        }
+      } catch (e) { /* corrupt, fall back to default */ }
+    }
+    if (!s.days[TODAY]) s.days[TODAY] = { done: false, score: null };
+    return s;
+  }
+
+  function saveFaderDailyState() {
+    try { localStorage.setItem(LS_KEY_FF_DAILY, JSON.stringify(FADER_STATE)); } catch (e) { /* storage unavailable */ }
+  }
+
+  function faderDailyToday() {
+    return FADER_STATE.days[TODAY];
+  }
+
+  function computeFaderDailyStats() {
+    return {
+      streak: FADER_STATE.streak,
+      totalSets: FADER_STATE.totalSets,
+      avgScore: FADER_STATE.totalSets ? (FADER_STATE.totalScoreSum / FADER_STATE.totalSets) : 0
+    };
+  }
+
+  function loadFaderPracticeStats() {
+    var raw = null;
+    try { raw = localStorage.getItem(LS_KEY_FF_PRACTICE); } catch (e) { raw = null; }
+    var s = { played: 0, totalScoreSum: 0 };
+    if (raw) {
+      try {
+        var parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === 'object') {
+          s.played = parsed.played || 0;
+          s.totalScoreSum = parsed.totalScoreSum || 0;
+        }
+      } catch (e) { /* corrupt, fall back to default */ }
+    }
+    return s;
+  }
+
+  function saveFaderPracticeStats() {
+    try { localStorage.setItem(LS_KEY_FF_PRACTICE, JSON.stringify(FADER_PRACTICE_STATS)); } catch (e) { /* storage unavailable */ }
+  }
+
+  function buildFaderDailyRounds() {
+    var rng = seededRng('vector-hoops:ff-daily:' + TODAY);
+    var rounds = [];
+    for (var i = 0; i < FF_ROUNDS_PER_RUN; i++) {
+      var idx = Math.floor(rng() * FF_POOL.length);
+      rounds.push({ q: FF_POOL[idx], answered: false, correct: null });
+    }
+    return rounds;
+  }
+
+  // Nonce-seeded (crypto-sourced) — same mechanism as Chimera Free Play, so
+  // Free Play sets are unlimited and never repeat the daily set.
+  function buildFaderFreeRounds() {
+    var rng = seededRng('vector-hoops:ff-practice:' + randomNonce());
+    var rounds = [];
+    for (var i = 0; i < FF_ROUNDS_PER_RUN; i++) {
+      var idx = Math.floor(rng() * FF_POOL.length);
+      rounds.push({ q: FF_POOL[idx], answered: false, correct: null });
+    }
+    return rounds;
+  }
+
+  function startFaderRun(mode) {
+    activeFaderMode = mode;
+    if (mode === 'daily') {
+      faderRuns.daily = { rounds: buildFaderDailyRounds(), idx: 0, score: 0 };
+    } else {
+      faderRuns.free = { rounds: buildFaderFreeRounds(), idx: 0, score: 0 };
+    }
+    els.faderButtons.hidden = false;
+    els.faderFinal.hidden = true;
+    renderFaderRound();
+  }
+
+  function renderFaderHeader() {
+    var isDaily = activeFaderMode === 'daily';
+    els.faderEyebrow.textContent = isDaily
+      ? 'Fader or Finisher — Daily Set #' + puzzleNumber(TODAY)
+      : 'Fader or Finisher — Free Play (practice)';
+    els.faderStreakWrap.hidden = !isDaily;
+    if (isDaily) els.faderStreakNum.textContent = String(FADER_STATE.streak);
+    els.faderPracticeBanner.hidden = isDaily;
+  }
+
+  function renderFaderRound() {
+    var run = activeFaderRun();
+    var round = run.rounds[run.idx];
+    var q = round.q;
+    els.faderRoundNum.textContent = String(run.idx + 1);
+    els.faderScoreNum.textContent = String(run.score);
+    els.faderPrompt.textContent = q.name + ' (' + q.season + ') averaged ' + q.firstHalf +
+      ' per-36 ' + q.stat + ' in the first half of his games. Did he FINISH stronger or FADE?';
+    els.faderReveal.hidden = true;
+    els.faderFinishBtn.disabled = false;
+    els.faderFadeBtn.disabled = false;
+    renderFaderHeader();
+    track('vh-ff-round', { round: run.idx + 1, mode: activeFaderMode === 'daily' ? 'daily' : 'free' });
+  }
+
+  function faderOneLiner(q, correct) {
+    var verb = q.verdict === 'finisher' ? 'finished stronger' : 'faded';
+    return {
+      prefix: correct ? 'Correct — ' : 'Missed it — ',
+      suffix: ' ' + verb + ' in the second half.'
+    };
+  }
+
+  function renderFaderVerdict(q, correct) {
+    els.faderVerdict.className = 'vh-deadline__verdict ' +
+      (q.verdict === 'finisher' ? 'vh-ff-verdict--finisher' : 'vh-ff-verdict--fader');
+    var parts = faderOneLiner(q, correct);
+    els.faderVerdict.innerHTML = '';
+    els.faderVerdict.appendChild(document.createTextNode(parts.prefix));
+    var nameSpan = document.createElement('span');
+    els.faderVerdict.appendChild(nameSpan);
+    els.faderVerdict.appendChild(document.createTextNode(parts.suffix));
+    tryLinkMoverName(nameSpan, q.name);
+  }
+
+  function renderFaderDetail(q) {
+    var sign = q.delta >= 0 ? '+' : '';
+    els.faderSecondhalfValue.textContent = q.secondHalf + ' per-36 ' + q.stat;
+    els.faderDelta.textContent = 'Delta: ' + sign + q.delta.toFixed(1) + ' per-36 ' + q.stat +
+      ' (first half ' + q.firstHalf + ' → second half ' + q.secondHalf + ').';
+    els.faderSamples.textContent = q.g1 + 'g → ' + q.g2 + 'g (games logged first half → second half).';
+
+    var magPct = Math.max(2, Math.min(100, Math.round(Math.abs(q.delta) / 6 * 100)));
+    var sideClass = q.delta >= 0 ? 'pos' : 'neg';
+    els.faderBars.innerHTML =
+      '<div class="vh-deadline__bar-row"><span class="vh-deadline__bar-label">1st half</span>' +
+        '<div class="vh-deadline__bar-track"><div class="vh-deadline__bar vh-deadline__bar--before"></div></div></div>' +
+      '<div class="vh-deadline__bar-row"><span class="vh-deadline__bar-label">2nd half</span>' +
+        '<div class="vh-deadline__bar-track"><div class="vh-deadline__bar vh-deadline__bar--after vh-deadline__bar--' + sideClass +
+        '" style="width:' + magPct + '%"></div></div></div>';
+  }
+
+  function answerFaderRound(guessVerdict) {
+    var run = activeFaderRun();
+    var round = run.rounds[run.idx];
+    if (round.answered) return;
+    round.answered = true;
+    var correct = guessVerdict === round.q.verdict;
+    round.correct = correct;
+    if (correct) run.score++;
+
+    els.faderFinishBtn.disabled = true;
+    els.faderFadeBtn.disabled = true;
+    els.faderReveal.hidden = false;
+    renderFaderVerdict(round.q, correct);
+    renderFaderDetail(round.q);
+
+    els.faderScoreNum.textContent = String(run.score);
+    els.faderNextBtn.textContent = (run.idx + 1 >= FF_ROUNDS_PER_RUN) ? 'See results' : 'Next round';
+  }
+
+  function buildFaderShareText() {
+    var run = faderRuns.daily;
+    var rows = run.rounds.map(function (r) { return r.correct ? '✅' : '❌'; }).join('');
+    return 'Vector Hoops — Fader or Finisher #' + puzzleNumber(TODAY) + ' ' + run.score + '/' + FF_ROUNDS_PER_RUN +
+      '\n' + rows + '\nStreak: ' + FADER_STATE.streak;
+  }
+
+  function showFaderFinal() {
+    var run = activeFaderRun();
+    els.faderButtons.hidden = true;
+    els.faderReveal.hidden = true;
+    els.faderFinal.hidden = false;
+    els.faderFinalScore.textContent = 'You scored ' + run.score + '/' + FF_ROUNDS_PER_RUN + '.';
+
+    if (activeFaderMode === 'daily') {
+      var rec = faderDailyToday();
+      if (!rec.done) {
+        rec.done = true;
+        rec.score = run.score;
+        var yesterday = utcDateString(new Date(Date.now() - 86400000));
+        FADER_STATE.streak = (FADER_STATE.lastPlayDate === yesterday) ? FADER_STATE.streak + 1 : 1;
+        FADER_STATE.lastPlayDate = TODAY;
+        FADER_STATE.totalSets++;
+        FADER_STATE.totalScoreSum += run.score;
+        saveFaderDailyState();
+        track('vh-ff-done', { score: run.score, mode: 'daily' });
+      }
+      els.faderAgainBtn.hidden = true;
+      els.faderShareBtn.hidden = false;
+      els.faderComeback.hidden = false;
+      els.faderShareCopied.hidden = true;
+    } else {
+      FADER_PRACTICE_STATS.played++;
+      FADER_PRACTICE_STATS.totalScoreSum += run.score;
+      saveFaderPracticeStats();
+      els.faderAgainBtn.hidden = false;
+      els.faderShareBtn.hidden = true;
+      els.faderComeback.hidden = true;
+      track('vh-ff-done', { score: run.score, mode: 'free' });
+    }
+    renderFaderHeader();
+  }
+
+  function nextFaderRound() {
+    var run = activeFaderRun();
+    var round = run.rounds[run.idx];
+    if (!round.answered) return;
+    run.idx++;
+    if (run.idx >= FF_ROUNDS_PER_RUN) {
+      showFaderFinal();
+    } else {
+      renderFaderRound();
+    }
+  }
+
+  function switchFaderMode(mode) {
+    activeFaderMode = mode;
+    els.faderSubDaily.classList.toggle('is-active', mode === 'daily');
+    els.faderSubFree.classList.toggle('is-active', mode === 'free');
+    els.faderSubDaily.setAttribute('aria-selected', String(mode === 'daily'));
+    els.faderSubFree.setAttribute('aria-selected', String(mode === 'free'));
+
+    if (mode === 'daily' && faderDailyToday().done && !faderRuns.daily) {
+      var doneRec = faderDailyToday();
+      faderRuns.daily = { rounds: [], idx: FF_ROUNDS_PER_RUN, score: doneRec.score || 0 };
+    }
+
+    var run = faderRuns[mode];
+    if (!run) {
+      startFaderRun(mode);
+    } else if (run.idx >= FF_ROUNDS_PER_RUN) {
+      showFaderFinal();
+    } else {
+      els.faderButtons.hidden = false;
+      els.faderFinal.hidden = true;
+      renderFaderRound();
+    }
+    renderFaderHeader();
+  }
+
+  function setupFader() {
+    els.faderFinishBtn.addEventListener('click', function () { answerFaderRound('finisher'); });
+    els.faderFadeBtn.addEventListener('click', function () { answerFaderRound('fader'); });
+    els.faderNextBtn.addEventListener('click', nextFaderRound);
+    els.faderAgainBtn.addEventListener('click', function () { startFaderRun('free'); });
+    els.faderSubDaily.addEventListener('click', function () { switchFaderMode('daily'); });
+    els.faderSubFree.addEventListener('click', function () { switchFaderMode('free'); });
+    els.faderMethodBtn.addEventListener('click', function () { openMethods('ff', els.faderMethodBtn); });
+    els.faderShareBtn.addEventListener('click', function () {
+      var text = buildFaderShareText();
+      var shared = false;
+      if (navigator.share) { navigator.share({ text: text }).catch(function () {}); shared = true; }
+      if (!shared && navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function () { els.faderShareCopied.hidden = false; }).catch(function () {});
+      } else if (!shared) {
+        els.faderShareCopied.hidden = false;
+      }
+      track('vh-share', { mode: 'ff-daily' });
+    });
+  }
+
+  var faderInitialized = false;
+
+  // ---------------------------------------------------------------------
+  // CAREER ARC: order one player's charted seasons, oldest to newest, from
+  // unlabeled sigma-bar cards (no years shown). Single puzzle per Daily
+  // (like the Chimera), unlimited nonce-seeded Free Play via "New arc".
+  // Scoring is exact-position count against the true chronological order.
+  // ---------------------------------------------------------------------
+
+  var ARC_INDEX = null;             // { names:[qualifying names], byName:{name:[players asc by season]} }
+  var activeArcMode = 'daily';      // 'daily' | 'practice'
+  var ARC_DAILY_TARGET = null;      // { name, correct:[players asc], shuffled:[players, display order] }
+  var ARC_PRACTICE_TARGET = null;
+  var ARC_STATE = null;             // persisted LS_KEY_ARC_DAILY
+  var ARC_PRACTICE_STATS = null;    // persisted LS_KEY_ARC_PRACTICE: { played, totalScoreSum }
+  var ARC_DAILY_REC = { selection: [], done: false, score: null };
+  var ARC_PRACTICE_REC = { selection: [], done: false, score: null };
+
+  function buildArcIndex() {
+    var byName = {};
+    for (var i = 0; i < DATA.players.length; i++) {
+      var p = DATA.players[i];
+      (byName[p.name] = byName[p.name] || []).push(p);
+    }
+    var names = [];
+    Object.keys(byName).forEach(function (name) {
+      var arr = byName[name];
+      if (arr.length >= ARC_MIN_SEASONS) {
+        arr.sort(function (a, b) { return a.season < b.season ? -1 : (a.season > b.season ? 1 : 0); });
+        names.push(name);
+      }
+    });
+    names.sort(); // deterministic order for seeded index picks
+    return { names: names, byName: byName };
+  }
+
+  function arraysEqualByRef(a, b) {
+    if (a.length !== b.length) return false;
+    for (var i = 0; i < a.length; i++) if (a[i] !== b[i]) return false;
+    return true;
+  }
+
+  function buildArcRoundFromRng(rng) {
+    var idx = Math.floor(rng() * ARC_INDEX.names.length);
+    var name = ARC_INDEX.names[idx];
+    var allSeasons = ARC_INDEX.byName[name]; // sorted ascending already
+    var correct;
+    if (allSeasons.length === ARC_CARD_COUNT) {
+      correct = allSeasons.slice();
+    } else {
+      var picks = seededSampleIndices(rng, allSeasons.length, ARC_CARD_COUNT);
+      picks.sort(function (a, b) { return a - b; }); // preserve chronological order
+      correct = picks.map(function (i) { return allSeasons[i]; });
+    }
+    var shuffled = correct;
+    var tries = 0;
+    while (tries < 50 && arraysEqualByRef(shuffled, correct)) {
+      shuffled = seededShuffle(rng, correct);
+      tries++;
+    }
+    return { name: name, correct: correct, shuffled: shuffled, allSeasons: allSeasons };
+  }
+
+  function buildArcDailyTarget() {
+    return buildArcRoundFromRng(seededRng('vector-hoops:arc-daily:' + TODAY));
+  }
+
+  function buildArcPracticeTarget() {
+    return buildArcRoundFromRng(seededRng('vector-hoops:arc-practice:' + randomNonce()));
+  }
+
+  function activeArcRound() {
+    return activeArcMode === 'practice' ? ARC_PRACTICE_TARGET : ARC_DAILY_TARGET;
+  }
+
+  function activeArcRecord() {
+    return activeArcMode === 'practice' ? ARC_PRACTICE_REC : ARC_DAILY_REC;
+  }
+
+  function loadArcDailyState() {
+    var raw = null;
+    try { raw = localStorage.getItem(LS_KEY_ARC_DAILY); } catch (e) { raw = null; }
+    var s = { streak: 0, lastPlayDate: null, days: {}, totalSets: 0, totalScoreSum: 0 };
+    if (raw) {
+      try {
+        var parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === 'object') {
+          s.streak = parsed.streak || 0;
+          s.lastPlayDate = parsed.lastPlayDate || null;
+          s.days = parsed.days || {};
+          s.totalSets = parsed.totalSets || 0;
+          s.totalScoreSum = parsed.totalScoreSum || 0;
+        }
+      } catch (e) { /* corrupt, fall back to default */ }
+    }
+    if (!s.days[TODAY]) s.days[TODAY] = { done: false, score: null };
+    return s;
+  }
+
+  function saveArcDailyState() {
+    try { localStorage.setItem(LS_KEY_ARC_DAILY, JSON.stringify(ARC_STATE)); } catch (e) { /* storage unavailable */ }
+  }
+
+  function arcDailyToday() {
+    return ARC_STATE.days[TODAY];
+  }
+
+  function computeArcDailyStats() {
+    return {
+      streak: ARC_STATE.streak,
+      totalSets: ARC_STATE.totalSets,
+      avgScore: ARC_STATE.totalSets ? (ARC_STATE.totalScoreSum / ARC_STATE.totalSets) : 0
+    };
+  }
+
+  function loadArcPracticeStats() {
+    var raw = null;
+    try { raw = localStorage.getItem(LS_KEY_ARC_PRACTICE); } catch (e) { raw = null; }
+    var s = { played: 0, totalScoreSum: 0 };
+    if (raw) {
+      try {
+        var parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === 'object') {
+          s.played = parsed.played || 0;
+          s.totalScoreSum = parsed.totalScoreSum || 0;
+        }
+      } catch (e) { /* corrupt, fall back to default */ }
+    }
+    return s;
+  }
+
+  function saveArcPracticeStats() {
+    try { localStorage.setItem(LS_KEY_ARC_PRACTICE, JSON.stringify(ARC_PRACTICE_STATS)); } catch (e) { /* storage unavailable */ }
+  }
+
+  function renderArcHeader() {
+    var isDaily = activeArcMode === 'daily';
+    els.arcEyebrow.textContent = isDaily ? 'Career Arc — Daily #' + puzzleNumber(TODAY) : 'Career Arc — Free Play (practice)';
+    els.arcPracticeBanner.hidden = isDaily;
+    var round = activeArcRound();
+    els.arcInstructions.textContent = round
+      ? "Order " + round.name + "'s seasons oldest → newest. Tap the cards in order."
+      : 'Loading a career…';
+  }
+
+  function renderArcCards() {
+    var round = activeArcRound();
+    var rec = activeArcRecord();
+    els.arcCards.innerHTML = '';
+    round.shuffled.forEach(function (p, idx) {
+      var card = document.createElement('button');
+      card.type = 'button';
+      card.className = 'vh-arc-card';
+      card.setAttribute('data-idx', String(idx));
+      var order = document.createElement('div');
+      order.className = 'vh-arc-card__order';
+      var selIdx = rec.selection.indexOf(idx);
+      if (selIdx !== -1) {
+        order.textContent = String(selIdx + 1);
+        card.classList.add('is-selected');
+      }
+      card.appendChild(order);
+      var minibars = document.createElement('div');
+      minibars.className = 'vh-arc-card__minibars';
+      card.appendChild(minibars);
+      renderMiniSigmaBars(minibars, p.v);
+      var chips = document.createElement('div');
+      chips.className = 'vh-arc-card__chips';
+      var posLabel = (DATA.positions && typeof p.p === 'number' && p.p >= 0) ? DATA.positions[p.p] : null;
+      if (posLabel) chips.innerHTML += '<span class="vh-hint-chip">' + escapeHtml(posLabel) + '</span>';
+      chips.innerHTML += '<span class="vh-hint-chip">' + escapeHtml(DATA.clusters[p.c]) + '</span>';
+      card.appendChild(chips);
+      var sr = document.createElement('span');
+      sr.className = 'vh-visually-hidden';
+      sr.textContent = miniSigmaSummaryText(p.v);
+      card.appendChild(sr);
+      if (rec.done) card.disabled = true;
+      card.addEventListener('click', function () { onArcCardTap(idx); });
+      els.arcCards.appendChild(card);
+    });
+    updateArcSubmitEnabled();
+  }
+
+  function updateArcSubmitEnabled() {
+    var rec = activeArcRecord();
+    els.arcSubmitBtn.disabled = rec.done || rec.selection.length < ARC_CARD_COUNT;
+  }
+
+  function onArcCardTap(idx) {
+    var rec = activeArcRecord();
+    if (rec.done) return;
+    if (rec.selection.indexOf(idx) !== -1) return; // already tapped
+    if (rec.selection.length >= ARC_CARD_COUNT) return;
+    rec.selection.push(idx);
+    renderArcCards();
+  }
+
+  function clearArcSelection() {
+    var rec = activeArcRecord();
+    if (rec.done) return;
+    rec.selection = [];
+    renderArcCards();
+  }
+
+  function scoreArcRound(round, selection) {
+    var score = 0;
+    for (var k = 0; k < selection.length; k++) {
+      if (round.shuffled[selection[k]] === round.correct[k]) score++;
+    }
+    return score;
+  }
+
+  function buildArcShareText(round, rec) {
+    var equation = 'Order ' + round.name + "'s seasons";
+    if (activeArcMode === 'practice') {
+      return 'Vector Hoops — practice Career Arc — ' + equation + ' ' + rec.score + '/' + ARC_CARD_COUNT;
+    }
+    return 'Vector Hoops — Career Arc #' + puzzleNumber(TODAY) + ' — ' + rec.score + '/' + ARC_CARD_COUNT + ' in the right slot';
+  }
+
+  function submitArcRound() {
+    var round = activeArcRound();
+    var rec = activeArcRecord();
+    if (rec.done || rec.selection.length < ARC_CARD_COUNT) return;
+    rec.done = true;
+    rec.score = scoreArcRound(round, rec.selection);
+    renderArcCards();
+
+    var modeDetail = activeArcMode === 'practice' ? 'free' : 'daily';
+    track('vh-arc-done', { score: rec.score, mode: modeDetail });
+
+    if (activeArcMode === 'daily') {
+      var dayRec = arcDailyToday();
+      if (!dayRec.done) {
+        dayRec.done = true;
+        dayRec.score = rec.score;
+        var yesterday = utcDateString(new Date(Date.now() - 86400000));
+        ARC_STATE.streak = (ARC_STATE.lastPlayDate === yesterday) ? ARC_STATE.streak + 1 : 1;
+        ARC_STATE.lastPlayDate = TODAY;
+        ARC_STATE.totalSets++;
+        ARC_STATE.totalScoreSum += rec.score;
+        saveArcDailyState();
+      }
+    } else {
+      ARC_PRACTICE_STATS.played++;
+      ARC_PRACTICE_STATS.totalScoreSum += rec.score;
+      saveArcPracticeStats();
+    }
+    showArcResult();
+  }
+
+  function showArcResult() {
+    var round = activeArcRound();
+    var rec = activeArcRecord();
+    els.arcResult.hidden = false;
+    els.arcScoreLine.textContent = rec.score + '/' + ARC_CARD_COUNT + ' in the right slot.';
+    var isDaily = activeArcMode === 'daily';
+    els.arcShareBtn.hidden = !isDaily;
+    els.arcComeback.hidden = !isDaily;
+    els.arcShareCopied.hidden = true;
+    if (isDaily) {
+      els.arcShareBtn.onclick = function () {
+        var text = buildArcShareText(round, rec);
+        var shared = false;
+        if (navigator.share) { navigator.share({ text: text }).catch(function () {}); shared = true; }
+        if (!shared && navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(function () { els.arcShareCopied.hidden = false; }).catch(function () {});
+        } else if (!shared) {
+          els.arcShareCopied.hidden = false;
+        }
+        track('vh-share', { mode: 'arc-daily' });
+      };
+    }
+  }
+
+  function renderArcRevealSheetContent() {
+    var round = activeArcRound();
+    var rec = activeArcRecord();
+    els.arcRevealList.innerHTML = '';
+    if (rec.selection.length === ARC_CARD_COUNT) {
+      for (var k = 0; k < rec.selection.length; k++) {
+        var picked = round.shuffled[rec.selection[k]];
+        var correctPlayer = round.correct[k];
+        var isCorrect = picked === correctPlayer;
+        var li = document.createElement('li');
+        li.className = 'vh-arc-reveal-row ' + (isCorrect ? 'is-correct' : 'is-wrong');
+        li.innerHTML =
+          '<span class="vh-arc-reveal-row__rank">' + (k + 1) + '</span>' +
+          '<span class="vh-arc-reveal-row__season">' + escapeHtml(picked.season) + '</span>' +
+          '<span class="vh-arc-reveal-row__mark">' + (isCorrect ? '✓ right slot' : '✗ actually ' + escapeHtml(correctPlayer.season)) + '</span>';
+        els.arcRevealList.appendChild(li);
+      }
+    } else {
+      // Resumed a day already completed earlier (selection wasn't persisted,
+      // only the score) — show the true chronological order plainly instead
+      // of a right/wrong comparison we no longer have the picks for.
+      round.correct.forEach(function (p, k) {
+        var li = document.createElement('li');
+        li.className = 'vh-arc-reveal-row';
+        li.innerHTML =
+          '<span class="vh-arc-reveal-row__rank">' + (k + 1) + '</span>' +
+          '<span class="vh-arc-reveal-row__season">' + escapeHtml(p.season) + '</span>';
+        els.arcRevealList.appendChild(li);
+      });
+    }
+    renderArcLineChart(els.arcLinechart, round.allSeasons);
+    if (els.arcLinechartSrSummary) {
+      els.arcLinechartSrSummary.textContent = round.name + ' scoring sigma by season: ' +
+        round.allSeasons.map(function (p) { return p.season + ' ' + fmtSigma(p.v[IDX.PTS]); }).join(', ') + '.';
+    }
+  }
+
+  function switchArcSubMode(mode) {
+    if (mode === activeArcMode && (mode === 'daily' ? ARC_DAILY_TARGET : ARC_PRACTICE_TARGET)) {
+      renderArcHeader();
+      renderArcCards();
+      return;
+    }
+    activeArcMode = mode;
+    els.arcSubDaily.classList.toggle('is-active', mode === 'daily');
+    els.arcSubPractice.classList.toggle('is-active', mode === 'practice');
+    els.arcSubDaily.setAttribute('aria-selected', String(mode === 'daily'));
+    els.arcSubPractice.setAttribute('aria-selected', String(mode === 'practice'));
+    els.arcPracticeBanner.hidden = mode !== 'practice';
+
+    if (mode === 'daily' && !ARC_DAILY_TARGET) {
+      ARC_DAILY_TARGET = buildArcDailyTarget();
+      if (arcDailyToday().done) {
+        ARC_DAILY_REC.done = true;
+        ARC_DAILY_REC.score = arcDailyToday().score;
+      }
+    }
+    if (mode === 'practice' && !ARC_PRACTICE_TARGET) {
+      ARC_PRACTICE_TARGET = buildArcPracticeTarget();
+    }
+    els.arcResult.hidden = !activeArcRecord().done;
+    if (activeArcRecord().done) showArcResult();
+    renderArcHeader();
+    renderArcCards();
+  }
+
+  function startNewPracticeArc() {
+    ARC_PRACTICE_TARGET = buildArcPracticeTarget();
+    ARC_PRACTICE_REC = { selection: [], done: false, score: null };
+    els.arcResult.hidden = true;
+    renderArcHeader();
+    renderArcCards();
+    track('vh-arc-round', { mode: 'free' });
+  }
+
+  var arcRevealSheetTrigger = null;
+
+  function openArcRevealSheet(triggerEl) {
+    arcRevealSheetTrigger = triggerEl || document.activeElement;
+    renderArcRevealSheetContent();
+    els.arcRevealSheetBackdrop.hidden = false;
+    els.arcRevealSheetCloseBtn.focus();
+    pushModal(els.arcRevealSheet, closeArcRevealSheet);
+  }
+  function closeArcRevealSheet() {
+    els.arcRevealSheetBackdrop.hidden = true;
+    if (arcRevealSheetTrigger && arcRevealSheetTrigger.focus) arcRevealSheetTrigger.focus();
+    popModal();
+  }
+
+  function setupArc() {
+    els.arcSubDaily.addEventListener('click', function () { switchArcSubMode('daily'); });
+    els.arcSubPractice.addEventListener('click', function () { switchArcSubMode('practice'); });
+    els.arcNewBtn.addEventListener('click', startNewPracticeArc);
+    els.arcClearBtn.addEventListener('click', clearArcSelection);
+    els.arcSubmitBtn.addEventListener('click', submitArcRound);
+    els.arcRevealOpenBtn.addEventListener('click', function () { openArcRevealSheet(els.arcRevealOpenBtn); });
+    els.arcRevealSheetCloseBtn.addEventListener('click', closeArcRevealSheet);
+    els.arcRevealSheetBackdrop.addEventListener('click', function (ev) {
+      if (ev.target === els.arcRevealSheetBackdrop) closeArcRevealSheet();
+    });
+  }
+
+  var arcInitialized = false;
+
   function switchMode(mode) {
-    var toDeadline = mode === 'deadline';
-    els.panelChimera.hidden = toDeadline;
-    els.panelDeadline.hidden = !toDeadline;
-    els.tabChimera.classList.toggle('is-active', !toDeadline);
-    els.tabDeadline.classList.toggle('is-active', toDeadline);
-    els.tabChimera.setAttribute('aria-selected', String(!toDeadline));
-    els.tabDeadline.setAttribute('aria-selected', String(toDeadline));
-    if (toDeadline && !deadlineInitialized && DEADLINE_POOL) {
+    var panels = { chimera: els.panelChimera, deadline: els.panelDeadline, fader: els.panelFader, arc: els.panelArc };
+    var tabs = { chimera: els.tabChimera, deadline: els.tabDeadline, fader: els.tabFader, arc: els.tabArc };
+    Object.keys(panels).forEach(function (m) {
+      panels[m].hidden = m !== mode;
+      tabs[m].classList.toggle('is-active', m === mode);
+      tabs[m].setAttribute('aria-selected', String(m === mode));
+    });
+    if (mode === 'deadline' && !deadlineInitialized && DEADLINE_POOL) {
       deadlineInitialized = true;
       switchDeadlineMode('daily');
+    }
+    if (mode === 'fader' && !faderInitialized && FF_POOL) {
+      faderInitialized = true;
+      switchFaderMode('daily');
+    }
+    if (mode === 'arc' && !arcInitialized && ARC_INDEX) {
+      arcInitialized = true;
+      track('vh-arc-round', { mode: 'daily' });
+      switchArcSubMode('daily');
     }
     checkRollover();
   }
@@ -2344,6 +3235,8 @@
   function setupModeTabs() {
     els.tabChimera.addEventListener('click', function () { switchMode('chimera'); });
     els.tabDeadline.addEventListener('click', function () { switchMode('deadline'); });
+    els.tabFader.addEventListener('click', function () { switchMode('fader'); });
+    els.tabArc.addEventListener('click', function () { switchMode('arc'); });
   }
 
   // ---------------------------------------------------------------------
@@ -2419,6 +3312,9 @@
     els.helpBackdrop.hidden = true;
     els.helpBtn.focus();
     popModal();
+    // "No taglines on mobile after first visit": once the player has closed
+    // how-to-play at least once, the header goes compact for good.
+    if (els.appHeader) els.appHeader.classList.add('vh-header--compact');
   }
 
   function setupHelp() {
@@ -2469,8 +3365,27 @@
     renderStatsTile(els.statsDeadlineGrid, dl.avgScore.toFixed(1), 'Avg score');
     renderStatsTile(els.statsDeadlineGrid, dl.streak, 'Streak');
 
-    els.statsPracticeLine.textContent = 'Chimera Free Play: ' + PRACTICE_STATS.played + ' played, ' +
-      PRACTICE_STATS.won + ' won. Casual only — never counted toward your streaks or stats above.';
+    var ff = computeFaderDailyStats();
+    els.statsFaderGrid.innerHTML = '';
+    renderStatsTile(els.statsFaderGrid, ff.totalSets, 'Sets played');
+    renderStatsTile(els.statsFaderGrid, ff.avgScore.toFixed(1), 'Avg score');
+    renderStatsTile(els.statsFaderGrid, ff.streak, 'Streak');
+
+    var arc = computeArcDailyStats();
+    els.statsArcGrid.innerHTML = '';
+    renderStatsTile(els.statsArcGrid, arc.totalSets, 'Played');
+    renderStatsTile(els.statsArcGrid, arc.avgScore.toFixed(1), 'Avg score');
+    renderStatsTile(els.statsArcGrid, arc.streak, 'Streak');
+
+    els.statsPracticeLine.textContent = 'Chimera: ' + PRACTICE_STATS.played + ' played, ' + PRACTICE_STATS.won + ' won. ' +
+      'Fader or Finisher: ' + practiceSetSummary(FADER_PRACTICE_STATS) + '. ' +
+      'Career Arc: ' + practiceSetSummary(ARC_PRACTICE_STATS) + '. ' +
+      'Casual only — never counted toward your streaks or stats above.';
+  }
+
+  function practiceSetSummary(stats) {
+    if (!stats || !stats.played) return '0 played';
+    return stats.played + ' played, ' + (stats.totalScoreSum / stats.played).toFixed(1) + ' avg score';
   }
 
   function openStats() {
@@ -2486,9 +3401,10 @@
   }
 
   function clearAllData() {
-    var ok = window.confirm('Clear all Vector Hoops data on this device? This removes your Daily Chimera streak, Deadline Daily Set streak, and Practice counters. This cannot be undone.');
+    var ok = window.confirm('Clear all Vector Hoops data on this device? This removes every daily streak (Chimera, Deadline, Fader or Finisher, Career Arc) and all practice counters. This cannot be undone.');
     if (!ok) return;
-    [LS_KEY, LS_KEY_DEADLINE_DAILY, LS_KEY_PRACTICE_STATS, LS_KEY_DEADLINE_COUNTER].forEach(function (key) {
+    [LS_KEY, LS_KEY_DEADLINE_DAILY, LS_KEY_PRACTICE_STATS, LS_KEY_DEADLINE_COUNTER,
+     LS_KEY_FF_DAILY, LS_KEY_FF_PRACTICE, LS_KEY_ARC_DAILY, LS_KEY_ARC_PRACTICE].forEach(function (key) {
       try { localStorage.removeItem(key); } catch (e) { /* storage unavailable */ }
     });
     window.location.reload();
@@ -2509,7 +3425,19 @@
   // place (game logs, minimums, what "midseason move" does and doesn't mean).
   // ---------------------------------------------------------------------
 
-  function renderMethodsModal() {
+  function renderMethodsModal(which) {
+    if (which === 'ff') {
+      els.methodsTitle.textContent = 'Fader or Finisher — method & data sources';
+      els.methodsBody.innerHTML =
+        '<p class="vh-dossier__p">' + escapeHtml(FADERFINISHER && FADERFINISHER.method || '') + '</p>' +
+        '<h4 class="vh-dossier__h4">Data sources &amp; minimums</h4>' +
+        '<div class="vh-dossier__bullet">Real NBA game logs, 2015&ndash;16 through 2025&ndash;26 seasons.</div>' +
+        '<div class="vh-dossier__bullet">Split at each player-season\'s own game-sequence midpoint, not the calendar All-Star break.</div>' +
+        '<div class="vh-dossier__bullet">Minimum 25 games and 12 minutes per game on both sides of the split.</div>' +
+        '<div class="vh-dossier__bullet">Quiz pool limited to unambiguous deltas (1.5&ndash;6.0 per-36) so ties aren\'t part of the puzzle.</div>';
+      return;
+    }
+    els.methodsTitle.textContent = 'Method & data sources';
     els.methodsBody.innerHTML =
       '<p class="vh-dossier__p">' + escapeHtml(DEADLINE && DEADLINE.method || '') + '</p>' +
       '<h4 class="vh-dossier__h4">Data sources &amp; minimums</h4>' +
@@ -2519,15 +3447,18 @@
       '<div class="vh-dossier__bullet">Numbers are context-adjusted (teammates, opponents, pace) before comparing before/after, not raw box-score deltas.</div>';
   }
 
-  function openMethods() {
-    renderMethodsModal();
+  var methodsTriggerEl = null;
+
+  function openMethods(which, triggerEl) {
+    methodsTriggerEl = triggerEl || document.activeElement;
+    renderMethodsModal(which);
     els.methodsBackdrop.hidden = false;
     els.methodsClose.focus();
     pushModal(els.methodsModal, closeMethods);
   }
   function closeMethods() {
     els.methodsBackdrop.hidden = true;
-    els.deadlineMethodBtn.focus();
+    if (methodsTriggerEl && methodsTriggerEl.focus) methodsTriggerEl.focus();
     popModal();
   }
 
@@ -2690,7 +3621,6 @@
     els.mapPauseBtn = document.getElementById('map-pause-btn');
     els.mapColorBtn = document.getElementById('map-color-btn');
     els.mapAxes = document.getElementById('map-axes');
-    els.mapDetails = document.getElementById('map-details');
     els.streakNum = document.getElementById('streak-num');
     els.helpBtn = document.getElementById('help-btn');
     els.helpBackdrop = document.getElementById('help-backdrop');
@@ -2722,12 +3652,20 @@
     els.warmthBars = document.getElementById('warmth-bars');
     els.warmthClosest = document.getElementById('warmth-closest');
     els.quickCoachingLine = document.getElementById('quick-coaching-line');
-    els.fullReport = document.getElementById('full-report');
+
+    els.appHeader = document.getElementById('app-header');
+    els.tagline = document.getElementById('tagline');
+    els.equationRow = document.getElementById('equation-row');
+    els.equationChip = document.getElementById('equation-chip');
 
     els.tabChimera = document.getElementById('tab-chimera');
     els.tabDeadline = document.getElementById('tab-deadline');
+    els.tabFader = document.getElementById('tab-fader');
+    els.tabArc = document.getElementById('tab-arc');
     els.panelChimera = document.getElementById('panel-chimera');
     els.panelDeadline = document.getElementById('panel-deadline');
+    els.panelFader = document.getElementById('panel-fader');
+    els.panelArc = document.getElementById('panel-arc');
     els.deadlineRoundNum = document.getElementById('deadline-round-num');
     els.deadlineScoreNum = document.getElementById('deadline-score-num');
     els.deadlinePrompt = document.getElementById('deadline-prompt');
@@ -2775,13 +3713,82 @@
     els.statsDailyGrid = document.getElementById('stats-daily-grid');
     els.statsHistogram = document.getElementById('stats-histogram');
     els.statsDeadlineGrid = document.getElementById('stats-deadline-grid');
+    els.statsFaderGrid = document.getElementById('stats-fader-grid');
+    els.statsArcGrid = document.getElementById('stats-arc-grid');
     els.statsPracticeLine = document.getElementById('stats-practice-line');
 
     // M7: methods modal
     els.methodsBackdrop = document.getElementById('methods-backdrop');
     els.methodsModal = document.getElementById('methods-modal');
+    els.methodsTitle = document.getElementById('methods-title');
     els.methodsBody = document.getElementById('methods-body');
     els.methodsClose = document.getElementById('methods-close');
+
+    // Bottom sheets: report / map / history
+    els.reportSheetOpenBtn = document.getElementById('report-sheet-open-btn');
+    els.reportSheetBackdrop = document.getElementById('report-sheet-backdrop');
+    els.reportSheet = document.getElementById('report-sheet');
+    els.reportSheetCloseBtn = document.getElementById('report-sheet-close-btn');
+    els.mapSheetOpenBtn = document.getElementById('map-sheet-open-btn');
+    els.mapSheetBackdrop = document.getElementById('map-sheet-backdrop');
+    els.mapSheet = document.getElementById('map-sheet');
+    els.mapSheetCloseBtn = document.getElementById('map-sheet-close-btn');
+    els.historyChipBtn = document.getElementById('history-chip-btn');
+    els.historyCount = document.getElementById('history-count');
+    els.historySheetBackdrop = document.getElementById('history-sheet-backdrop');
+    els.historySheet = document.getElementById('history-sheet');
+    els.historySheetCloseBtn = document.getElementById('history-sheet-close-btn');
+
+    // Fader or Finisher
+    els.faderSubDaily = document.getElementById('fader-sub-daily');
+    els.faderSubFree = document.getElementById('fader-sub-free');
+    els.faderPracticeBanner = document.getElementById('fader-practice-banner');
+    els.faderEyebrow = document.getElementById('fader-eyebrow');
+    els.faderRoundNum = document.getElementById('fader-round-num');
+    els.faderScoreNum = document.getElementById('fader-score-num');
+    els.faderStreakWrap = document.getElementById('fader-streak-wrap');
+    els.faderStreakNum = document.getElementById('fader-streak-num');
+    els.faderPrompt = document.getElementById('fader-prompt');
+    els.faderButtons = document.getElementById('fader-buttons');
+    els.faderFinishBtn = document.getElementById('fader-finish-btn');
+    els.faderFadeBtn = document.getElementById('fader-fade-btn');
+    els.faderReveal = document.getElementById('fader-reveal');
+    els.faderVerdict = document.getElementById('fader-verdict');
+    els.faderSecondhalfValue = document.getElementById('fader-secondhalf-value');
+    els.faderBars = document.getElementById('fader-bars');
+    els.faderSamples = document.getElementById('fader-samples');
+    els.faderDelta = document.getElementById('fader-delta');
+    els.faderNextBtn = document.getElementById('fader-next-btn');
+    els.faderFinal = document.getElementById('fader-final');
+    els.faderFinalScore = document.getElementById('fader-final-score');
+    els.faderComeback = document.getElementById('fader-comeback');
+    els.faderShareBtn = document.getElementById('fader-share-btn');
+    els.faderShareCopied = document.getElementById('fader-share-copied');
+    els.faderAgainBtn = document.getElementById('fader-again-btn');
+    els.faderMethodBtn = document.getElementById('fader-method-btn');
+
+    // Career Arc
+    els.arcSubDaily = document.getElementById('arc-sub-daily');
+    els.arcSubPractice = document.getElementById('arc-sub-practice');
+    els.arcPracticeBanner = document.getElementById('arc-practice-banner');
+    els.arcNewBtn = document.getElementById('arc-new-btn');
+    els.arcEyebrow = document.getElementById('arc-eyebrow');
+    els.arcInstructions = document.getElementById('arc-instructions');
+    els.arcCards = document.getElementById('arc-cards');
+    els.arcClearBtn = document.getElementById('arc-clear-btn');
+    els.arcSubmitBtn = document.getElementById('arc-submit-btn');
+    els.arcResult = document.getElementById('arc-result');
+    els.arcScoreLine = document.getElementById('arc-score-line');
+    els.arcRevealOpenBtn = document.getElementById('arc-reveal-open-btn');
+    els.arcShareBtn = document.getElementById('arc-share-btn');
+    els.arcShareCopied = document.getElementById('arc-share-copied');
+    els.arcComeback = document.getElementById('arc-comeback');
+    els.arcRevealSheetBackdrop = document.getElementById('arc-reveal-sheet-backdrop');
+    els.arcRevealSheet = document.getElementById('arc-reveal-sheet');
+    els.arcRevealSheetCloseBtn = document.getElementById('arc-reveal-sheet-close-btn');
+    els.arcRevealList = document.getElementById('arc-reveal-list');
+    els.arcLinechart = document.getElementById('arc-linechart');
+    els.arcLinechartSrSummary = document.getElementById('arc-linechart-sr-summary');
   }
 
   // ---------------------------------------------------------------------
@@ -2803,6 +3810,7 @@
   function switchChimeraSubMode(mode) {
     if (mode === activeChimeraMode) return;
     activeChimeraMode = mode;
+    equationForceExpand = false;
     els.chimeraSubDaily.classList.toggle('is-active', mode === 'daily');
     els.chimeraSubPractice.classList.toggle('is-active', mode === 'practice');
     els.chimeraSubDaily.setAttribute('aria-selected', String(mode === 'daily'));
@@ -2814,8 +3822,32 @@
   function startNewPracticeChimera() {
     PRACTICE_TARGET = buildPracticeTarget();
     PRACTICE_REC = { guesses: [], done: false, won: false };
+    equationForceExpand = false;
     refreshChimeraView();
     track('vh-start', { mode: 'free' });
+  }
+
+  // ---------------------------------------------------------------------
+  // Equation collapse-to-chip (mobile-first: after the first guess the
+  // equation tiles give way to a one-line chip; tapping it re-expands until
+  // the next guess collapses it again). Desktop has room so this still
+  // applies there too — it's one less thing between guesses.
+  // ---------------------------------------------------------------------
+
+  var equationForceExpand = false;
+
+  function renderEquationCollapse() {
+    var rec = todayRecord();
+    var collapsed = rec.guesses.length > 0 && !equationForceExpand;
+    els.equationRow.hidden = collapsed;
+    els.equationChip.hidden = !collapsed;
+  }
+
+  function setupEquationChip() {
+    els.equationChip.addEventListener('click', function () {
+      equationForceExpand = true;
+      renderEquationCollapse();
+    });
   }
 
   function setupChimeraSubtabs() {
@@ -2876,11 +3908,15 @@
 
   function init() {
     initDom();
+    if (hasSeenHelp() && els.appHeader) els.appHeader.classList.add('vh-header--compact');
     setupHelp();
     setupStats();
     setupMethods();
     setupDossierModal();
     setupRollover();
+    setupEquationChip();
+    setupSheets();
+    setupArc();
     fetch(DATA_URL)
       .then(function (res) {
         if (!res.ok) throw new Error('HTTP ' + res.status);
@@ -2897,6 +3933,11 @@
         STATE = loadState();
         PRACTICE_STATS = loadPracticeStats();
         DEADLINE_STATE = loadDeadlineDailyState();
+        FADER_STATE = loadFaderDailyState();
+        FADER_PRACTICE_STATS = loadFaderPracticeStats();
+        ARC_STATE = loadArcDailyState();
+        ARC_PRACTICE_STATS = loadArcPracticeStats();
+        ARC_INDEX = buildArcIndex();
 
         els.loadingBanner.hidden = true;
         // First paint: reveal the real content only once data has actually
@@ -2916,20 +3957,21 @@
         setupChimeraSubtabs();
         setupShare();
 
-        // The 3D map <details> defaults closed until data is ready; now that
-        // it is, open it BEFORE wiring the IntersectionObserver so its first
-        // callback reads accurate on-screen state (rather than "closed").
-        els.mapDetails.open = true;
         setupMapInteraction();
-        setupFullReportPersistence();
         setupModeTabs();
         renderGuesses();
         resumeChimeraIfDone();
 
-        // One immediate paint so the map isn't blank for the frame or two
-        // before the IntersectionObserver's first callback lands and takes
-        // over deciding whether the rotation loop should run.
-        renderMap();
+        // Pin the report/map panels open on wide viewports (two-column
+        // desktop layout); below that breakpoint they stay closed sheets
+        // until the player opens them. Also wires the resize listener that
+        // keeps this correct if the viewport crosses 1000px later.
+        setupDesktopPin();
+
+        // One immediate paint so a pinned-open desktop map isn't blank for
+        // the frame or two before the IntersectionObserver's first callback
+        // lands and takes over deciding whether the rotation loop should run.
+        if (mapVisible) renderMap();
 
         fetch(DEADLINE_URL)
           .then(function (res) {
@@ -2945,6 +3987,21 @@
           .catch(function () {
             els.tabDeadline.disabled = true;
             els.tabDeadline.setAttribute('aria-disabled', 'true');
+          });
+
+        fetch(FADERFINISHER_URL)
+          .then(function (res) {
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+            return res.json();
+          })
+          .then(function (fj) {
+            FADERFINISHER = fj;
+            FF_POOL = FADERFINISHER.questions || [];
+            setupFader();
+          })
+          .catch(function () {
+            els.tabFader.disabled = true;
+            els.tabFader.setAttribute('aria-disabled', 'true');
           });
 
         if (todayRecord().guesses.length === 0 && !todayRecord().done) {
