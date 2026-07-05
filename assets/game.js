@@ -20,13 +20,11 @@
   var EPOCH_DATE = '2026-07-01'; // puzzle #1
   var MAX_GUESSES = 6;
   var WIN_SIMILARITY = 0.92;
-  // v3: donors are shown openly in the equation; the win condition became
-  // "guess the true nearest real match (excluding the two donors) OR >=92%
-  // full-blend cosine." That's a different enough contract from v2 (donor
-  // identification) that a v2 "win" isn't honestly the same achievement —
-  // hence the key bump. Migration below carries the streak/history forward
-  // and only resets TODAY's in-progress record (see loadState/freshDayRecord).
-  var LS_KEY = 'vectorHoops.v3';
+  // v4: three-step Chimera — guess the stats donor, then the style/archetype
+  // donor, then the real player-season closest to the mashup (or >=92%
+  // full-blend cosine). Donors stay hidden in the equation until identified.
+  var LS_KEY = 'vectorHoops.v4';
+  var LS_KEY_LEGACY_V3 = 'vectorHoops.v3';
   var LS_KEY_LEGACY_V2 = 'vectorHoops.v2';
   var LS_KEY_USER_REF = 'vectorHoops.userRef';
   var LS_KEY_DEADLINE_COUNTER = 'vectorHoops.deadline.counter';
@@ -403,7 +401,7 @@
           activeChimeraMode = 'practice';
           PRACTICE_STAGE = 'playing';
           PRACTICE_TARGET = buildTargetFromPlayers(pa, pb);
-          PRACTICE_REC = { guesses: [], done: false, won: false };
+          PRACTICE_REC = freshDayRecord();
           els.chimeraSubDaily.classList.toggle('is-active', false);
           els.chimeraSubPractice.classList.toggle('is-active', true);
           refreshChimeraView();
@@ -515,7 +513,7 @@
   // M0 state isolation: Free Play (Chimera) never touches STATE/LS_KEY above.
   // Its round record and casual counters live entirely separately.
   var activeChimeraMode = 'daily'; // 'daily' | 'practice'
-  var PRACTICE_REC = { guesses: [], done: false, won: false };
+  var PRACTICE_REC = freshDayRecord();
   var PRACTICE_STATS = null; // { played, won } — loaded from LS_KEY_PRACTICE_STATS
 
   var els = {}; // cached DOM refs, filled in initDom()
@@ -671,8 +669,10 @@
   }
 
   function hintUnlocked(kind) {
+    if (chimeraPhase(todayRecord()) !== 'mashup') return false;
     if (activeChimeraMode === 'practice') return true; // Free Play: hints from guess 1
-    var n = todayRecord().guesses.length;
+    var mashupGuesses = todayRecord().guesses.filter(function (g) { return g.phase === 'mashup'; });
+    var n = mashupGuesses.length;
     if (kind === 'position') return n >= HINT_POSITION_AT_GUESS;
     if (kind === 'archetype') return n >= HINT_ARCHETYPE_AT_GUESS;
     return false;
@@ -744,34 +744,64 @@
 
   function renderPrompt() {
     els.puzzleDay.textContent = String(puzzleNumber(TODAY)); // header "day" is always the daily count
-    var aLabel = playerKey(TARGET.a), bLabel = playerKey(TARGET.b);
     if (activeChimeraMode === 'practice') {
       els.puzzleNumber.textContent = 'Practice Chimera #' + (PRACTICE_STATS.played + 1);
-      // The equation tiles show both donors openly (you picked them yourself
-      // in Build-a-Chimera); this SR-only paragraph restates that plainly —
-      // the mystery is the closest real match, not the donors.
       els.promptText.textContent =
-        'Your Build-a-Chimera fuses ' + aLabel + " (counting-stat profile: scoring, boards, " +
-        'dimes, defense) and ' + bLabel + ' (shooting-and-impact profile). ' +
-        'Guess the real player-season that plays closest to the blend. ' +
-        "Doesn't affect your daily streak — unlimited attempts.";
+        'Three steps: name the counting-stats donor, then the style-and-impact donor, ' +
+        'then the real player-season closest to their mashup. Unlimited attempts — ' +
+        "doesn't affect your daily streak.";
     } else {
       els.puzzleNumber.textContent = 'Vector Hoops #' + puzzleNumber(playDate());
       els.promptText.textContent =
-        "Today's Chimera fuses " + aLabel + ' (counting-stat profile: scoring, boards, dimes, ' +
-        'defense) and ' + bLabel + ' (shooting-and-impact profile). ' +
-        'Guess the real player-season that plays closest to the blend — the closest match in the ' +
-        'whole player pool wins a PERFECT MATCH; 92%+ on any guess also wins.';
+        "Today's Chimera: guess who donates the counting stats, who donates the style " +
+        'profile, then who plays closest to the blend. The closest match in the whole ' +
+        'player pool is a PERFECT MATCH; 92%+ on the mashup also wins. 6 guesses total.';
     }
     renderEquationTiles();
+    renderPhaseUI();
   }
 
   function renderEquationTiles() {
-    els.equationNameA.textContent = playerKey(TARGET.a);
-    els.equationNameB.textContent = playerKey(TARGET.b);
+    var rec = todayRecord();
+    els.equationNameA.textContent = rec.statsIdentified ? playerKey(TARGET.a) : '?';
+    els.equationNameB.textContent = rec.shootingIdentified ? playerKey(TARGET.b) : '?';
+    if (els.equationNameA) {
+      els.equationNameA.classList.toggle('vh-equation__tile-mark', !rec.statsIdentified);
+    }
+    if (els.equationNameB) {
+      els.equationNameB.classList.toggle('vh-equation__tile-mark', !rec.shootingIdentified);
+    }
+  }
+
+  function renderPhaseUI() {
+    var rec = todayRecord();
+    var phase = chimeraPhase(rec);
+    if (els.chimeraPhaseLabel) {
+      var labels = {
+        stats: 'Step 1 of 3 — guess the counting-stats donor',
+        shooting: 'Step 2 of 3 — guess the style & impact donor',
+        mashup: 'Step 3 of 3 — guess the player closest to the mashup'
+      };
+      els.chimeraPhaseLabel.textContent = labels[phase] || '';
+    }
+    if (els.chimeraSubmit && !rec.done) {
+      var btnLabels = {
+        stats: 'Guess stats donor',
+        shooting: 'Guess style donor',
+        mashup: 'Guess mashup'
+      };
+      els.chimeraSubmit.textContent = btnLabels[phase] || 'Guess';
+    }
   }
 
   function renderScoutingLine() {
+    var rec = todayRecord();
+    if (chimeraPhase(rec) !== 'mashup' && !rec.done) {
+      els.scoutingLine.hidden = true;
+      els.scoutingLine.textContent = '';
+      return;
+    }
+    els.scoutingLine.hidden = false;
     els.scoutingLine.textContent = buildScoutingLine(TARGET.vector, TARGET.clusterIdx);
   }
 
@@ -783,18 +813,37 @@
     return { streak: 0, maxStreak: 0, lastWinDate: null, days: {} };
   }
 
-  // v3 day record carries a "v: 3" marker specifically so a v2-shaped record
-  // (no marker) is distinguishable from a v3 one even though the two shapes
-  // are otherwise structurally identical ({guesses,done,won}) — the win
-  // condition's MEANING changed (true-nearest vs. donor-identification), so
-  // an in-progress v2 record for TODAY can't be honestly replayed under v3
-  // rules; it gets reset instead (see loadState below).
+  // v4 day record: phase tracks the three-step flow (stats -> shooting ->
+  // mashup). statsIdentified/shootingIdentified drive equation reveals.
   function freshDayRecord() {
-    return { guesses: [], done: false, won: false, v: 3 };
+    return {
+      guesses: [], done: false, won: false, v: 4,
+      phase: 'stats', statsIdentified: false, shootingIdentified: false
+    };
   }
 
-  function isV3DayRecord(rec) {
-    return !!(rec && typeof rec === 'object' && rec.v === 3);
+  function isV4DayRecord(rec) {
+    return !!(rec && typeof rec === 'object' && rec.v === 4);
+  }
+
+  function chimeraPhase(rec) {
+    if (!rec || rec.done) return 'mashup';
+    return rec.phase || 'stats';
+  }
+
+  function isStatsDonorGuess(p) {
+    return p.id === TARGET.a.id;
+  }
+
+  function isShootingDonorGuess(p) {
+    return p.id === TARGET.b.id;
+  }
+
+  function donorWrongSeasonNote(guessPlayer, targetPlayer) {
+    if (guessPlayer.name === targetPlayer.name && guessPlayer.season !== targetPlayer.season) {
+      return 'Right player, wrong season — the donor is ' + playerKey(targetPlayer) + '.';
+    }
+    return null;
   }
 
   // Set true by loadState() when TODAY's record existed under the old key
@@ -815,15 +864,15 @@
           s.lastWinDate = parsed.lastWinDate || null;
           s.days = parsed.days || {};
         }
-      } catch (e) { /* corrupt v3 state, fall back to default */ }
+      } catch (e) { /* corrupt v4 state, fall back to default */ }
     } else {
-      // First run under v3: seed streak/history from the legacy v2 key so a
+      // First run under v4: seed streak/history from v3 (then v2) so a
       // returning player doesn't lose their streak over the schema bump.
-      // Historical days are only ever read via .guesses.length/.won/.done
-      // (see computeDailyChimeraStats) so their v2 shape is harmless there;
-      // TODAY's record is handled separately below regardless of this path.
       var legacyRaw = null;
-      try { legacyRaw = localStorage.getItem(LS_KEY_LEGACY_V2); } catch (e) { legacyRaw = null; }
+      try { legacyRaw = localStorage.getItem(LS_KEY_LEGACY_V3); } catch (e) { legacyRaw = null; }
+      if (!legacyRaw) {
+        try { legacyRaw = localStorage.getItem(LS_KEY_LEGACY_V2); } catch (e) { legacyRaw = null; }
+      }
       if (legacyRaw) {
         try {
           var legacy = JSON.parse(legacyRaw);
@@ -836,7 +885,7 @@
         } catch (e) { /* corrupt legacy state, ignore */ }
       }
     }
-    if (!isV3DayRecord(s.days[TODAY])) {
+    if (!isV4DayRecord(s.days[TODAY])) {
       if (s.days[TODAY] && s.days[TODAY].guesses && s.days[TODAY].guesses.length > 0) {
         dailyResetNoteNeeded = true;
       }
@@ -1900,24 +1949,35 @@
 
   function renderGuessRow(entry, idx) {
     var li = document.createElement('li');
-    li.className = 'vh-guess' + (entry.perfectMatch ? ' is-identified' : '');
+    var identified = entry.donorMatch || entry.perfectMatch;
+    li.className = 'vh-guess' + (identified ? ' is-identified' : '');
     var pct = Math.round(entry.sim * 100);
     var pctHtml;
-    if (entry.perfectMatch) {
-      // PERFECT MATCH win: gold styling always, sim% shown only as secondary info.
+    if (entry.donorMatch) {
+      var donorLabel = entry.phase === 'stats' ? 'Stats donor' : 'Style donor';
+      pctHtml = '<span class="vh-guess__badge">' + donorLabel + ' identified</span>' +
+        '<span class="vh-guess__pct vh-guess__pct--identified">' + pct + '% half</span>';
+    } else if (entry.perfectMatch) {
       pctHtml = '<span class="vh-guess__badge">Perfect match</span>' +
         '<span class="vh-guess__pct vh-guess__pct--identified">' + pct + '% match</span>';
     } else {
-      pctHtml = '<span class="vh-guess__pct ' + pctColorClass(entry.sim) + '">' + pct + '%</span>';
+      var pctLabel = entry.phase === 'mashup' ? '%' : '% half';
+      pctHtml = '<span class="vh-guess__pct ' + pctColorClass(entry.sim) + '">' + pct + pctLabel + '</span>';
     }
+    var phaseTag = entry.phase === 'mashup'
+      ? 'Mashup'
+      : (entry.phase === 'stats' ? 'Stats' : 'Style');
     li.innerHTML =
       '<div class="vh-guess__head">' +
         '<span class="vh-guess__num">' + (idx + 1) + '</span>' +
+        '<span class="vh-guess__phase">' + phaseTag + '</span>' +
         '<span class="vh-guess__name">' + entry.name + '</span>' +
         pctHtml +
-      '</div>' +
-      '<p class="vh-guess__row-halves">Stats half ' + Math.round(entry.halves.stats * 100) +
+      '</div>';
+    if (entry.phase === 'mashup' && entry.halves) {
+      li.innerHTML += '<p class="vh-guess__row-halves">Stats half ' + Math.round(entry.halves.stats * 100) +
         '% &middot; Shooting half ' + Math.round(entry.halves.shooting * 100) + '%</p>';
+    }
     if (entry.wrongSeasonNote) {
       var note = document.createElement('p');
       note.className = 'vh-guess__line vh-guess__line--season';
@@ -1928,21 +1988,22 @@
   }
 
   function renderWarmth(rec) {
-    if (rec.guesses.length === 0) {
+    var mashupGuesses = rec.guesses.filter(function (g) { return g.phase === 'mashup'; });
+    if (mashupGuesses.length === 0) {
       els.warmthCard.hidden = true;
       return;
     }
     els.warmthCard.hidden = false;
 
     var bestIdx = 0, bestSim = -Infinity;
-    rec.guesses.forEach(function (g, i) {
+    mashupGuesses.forEach(function (g, i) {
       if (g.sim > bestSim) { bestSim = g.sim; bestIdx = i; }
     });
-    var lastIdx = rec.guesses.length - 1;
+    var lastIdx = mashupGuesses.length - 1;
     var lastIsNewBest = lastIdx === bestIdx;
 
     els.warmthBars.innerHTML = '';
-    rec.guesses.forEach(function (g, i) {
+    mashupGuesses.forEach(function (g, i) {
       var bar = document.createElement('div');
       bar.className = 'vh-warmth__bar';
       var pct = Math.max(0, Math.round(g.sim * 100));
@@ -1952,8 +2013,8 @@
       els.warmthBars.appendChild(bar);
     });
 
-    var bestEntry = rec.guesses[bestIdx];
-    els.warmthClosest.textContent = 'Closest: ' + bestEntry.name + ' — ' +
+    var bestEntry = mashupGuesses[bestIdx];
+    els.warmthClosest.textContent = 'Closest mashup: ' + bestEntry.name + ' — ' +
       Math.round(bestEntry.sim * 100) + '%';
   }
 
@@ -1969,56 +2030,59 @@
     renderCourt(els.courtGuess, lastPlayer.v);
   }
 
+  function lastMashupGuess(rec) {
+    for (var i = rec.guesses.length - 1; i >= 0; i--) {
+      if (rec.guesses[i].phase === 'mashup') return rec.guesses[i];
+    }
+    return null;
+  }
+
   function renderGuesses() {
     var rec = todayRecord();
     renderHints();
+    renderEquationTiles();
+    renderPhaseUI();
     renderEquationCollapse();
     els.guessList.innerHTML = rec.guesses.length ? '' : '<li class="vh-guesslist__empty">No guesses yet.</li>';
     rec.guesses.forEach(function (entry, idx) {
       els.guessList.appendChild(renderGuessRow(entry, idx));
     });
     if (els.historyCount) els.historyCount.textContent = String(rec.guesses.length);
-    // Daily: guesses left (a fixed 6-guess budget). Free Play (Build-a-
-    // Chimera) is unlimited attempts, so the same header stat instead shows
-    // guesses used — the label swaps to match ("left" vs "used").
     if (els.guessesLeftLabel) els.guessesLeftLabel.textContent = activeChimeraMode === 'practice' ? 'used' : 'left';
     els.guessesLeftNum.textContent = activeChimeraMode === 'practice'
       ? String(rec.guesses.length)
       : String(Math.max(0, MAX_GUESSES - rec.guesses.length));
 
     renderWarmth(rec);
-    // Reset per-round cards before deciding what to show — necessary now
-    // that a fresh Free Play round (or a mode switch) can present a rec
-    // with zero guesses again after a completed one was on screen.
     els.resultCard.hidden = true;
     els.revealCard.hidden = true;
     if (els.triangulationBlock) els.triangulationBlock.hidden = true;
 
-    if (rec.guesses.length > 0) {
-      var last = rec.guesses[rec.guesses.length - 1];
-      var lastPlayer = DATA.players[last.id];
+    var lastMashup = lastMashupGuess(rec);
+    if (lastMashup) {
+      var lastPlayer = DATA.players[lastMashup.id];
       els.resultCard.hidden = false;
-      els.scoreboardPct.textContent = Math.round(last.sim * 100) + '%';
+      els.scoreboardPct.textContent = Math.round(lastMashup.sim * 100) + '%';
 
-      if (els.triangulationBlock && last.halves) {
+      if (els.triangulationBlock && lastMashup.halves) {
         els.triangulationBlock.hidden = false;
-        els.triStatsPct.textContent = Math.round(last.halves.stats * 100) + '%';
-        els.triShootingPct.textContent = Math.round(last.halves.shooting * 100) + '%';
-        els.triBlendPct.textContent = Math.round(last.sim * 100) + '%';
+        els.triStatsPct.textContent = Math.round(lastMashup.halves.stats * 100) + '%';
+        els.triShootingPct.textContent = Math.round(lastMashup.halves.shooting * 100) + '%';
+        els.triBlendPct.textContent = Math.round(lastMashup.sim * 100) + '%';
         if (els.triangulationSrSummary) {
-          els.triangulationSrSummary.textContent = 'Triangulation for your latest guess, ' + last.name + ': ' +
-            'vs Stats Donor ' + Math.round(last.halves.stats * 100) + '%, ' +
-            'vs Shooting Donor ' + Math.round(last.halves.shooting * 100) + '%, ' +
-            'vs the Chimera mashup ' + Math.round(last.sim * 100) + '%.';
+          els.triangulationSrSummary.textContent = 'Triangulation for your latest mashup guess, ' + lastMashup.name + ': ' +
+            'vs Stats Donor ' + Math.round(lastMashup.halves.stats * 100) + '%, ' +
+            'vs Shooting Donor ' + Math.round(lastMashup.halves.shooting * 100) + '%, ' +
+            'vs the Chimera mashup ' + Math.round(lastMashup.sim * 100) + '%.';
         }
       }
 
       var targetZones = renderCourt(els.courtTarget, TARGET.vector);
       var guessZones = renderCourt(els.courtGuess, lastPlayer.v);
-      els.courtGuessLabel.textContent = 'Your guess: ' + last.name;
+      els.courtGuessLabel.textContent = 'Your guess: ' + lastMashup.name;
       els.storyCaption.textContent = storyCaption(targetZones, guessZones);
       els.quickCoachingLine.textContent = coachingLineTop1(TARGET.vector, lastPlayer.v);
-      renderBreakdown(els.breakdownChart, TARGET.vector, lastPlayer.v, 'Chimera', last.name);
+      renderBreakdown(els.breakdownChart, TARGET.vector, lastPlayer.v, 'Chimera', lastMashup.name);
       if (els.courtsSrSummary) {
         els.courtsSrSummary.textContent = zonesSummaryText('Chimera', targetZones) + ' ' +
           zonesSummaryText('Your guess', guessZones);
@@ -2029,7 +2093,6 @@
       els.clusterLine.innerHTML = clusterLine(lastPlayer);
       var coaching = coachingLine(TARGET.vector, lastPlayer.v);
       if (typeof lastPlayer.sal === 'number') {
-        // salary z (era-honest payroll percentile) when the dataset has it
         var sSign = lastPlayer.sal >= 0 ? '+' : '−';
         coaching += ' Market: this guess held a ' + sSign +
           Math.abs(lastPlayer.sal).toFixed(1) + 'σ payroll slot for its season.';
@@ -2059,10 +2122,11 @@
   }
 
   function shareEmojiRow(entry) {
-    if (entry.perfectMatch) return '🟩⭐'; // PERFECT MATCH win — starred variant
-    if (entry.sim >= 0.85) return '🟩'; // green
-    if (entry.sim >= 0.60) return '🟨'; // yellow
-    return '🟥'; // red
+    if (entry.donorMatch) return '🟩✓';
+    if (entry.perfectMatch) return '🟩⭐';
+    if (entry.sim >= 0.85) return '🟩';
+    if (entry.sim >= 0.60) return '🟨';
+    return '🟥';
   }
 
   // M5 share v2: warmth trail — block glyphs from each guess's match %,
@@ -2092,7 +2156,7 @@
     if (activeChimeraMode === 'practice') {
       // unlimited attempts: no fixed denominator to compare against.
       scorePart = rec.won ? 'solved in ' + rec.guesses.length : 'not solved (' + rec.guesses.length + ' guesses)';
-      return 'Vector Hoops — Build-a-Chimera — ' + equation + ' ' + scorePart + '\n' + rows + '\n' + trail;
+      return 'Vector Hoops — Practice — ' + equation + ' ' + scorePart + '\n' + rows + '\n' + trail;
     }
     scorePart = rec.won ? rec.guesses.length + '/' + MAX_GUESSES : 'X/' + MAX_GUESSES;
     var n = puzzleNumber(playDate());
@@ -2141,11 +2205,8 @@
     if (!p) return;
     var rec = todayRecord();
     var isPractice = activeChimeraMode === 'practice';
-    // Daily: fixed 6-guess budget. Free Play (Build-a-Chimera): unlimited
-    // attempts — only a win ends the round, never running out of guesses.
     if (rec.done || (!isPractice && rec.guesses.length >= MAX_GUESSES)) return;
 
-    // Duplicate guard: same player-season resubmitted doesn't consume a guess.
     var isDuplicate = rec.guesses.some(function (g) { return g.id === p.id; });
     if (isDuplicate) {
       showDuplicateWarning(p);
@@ -2153,20 +2214,47 @@
     }
     hideDuplicateWarning();
 
-    var sim = cosineSim(TARGET.vector, p.v);
-    var perfectMatch = isPerfectMatchGuess(p);
+    var phase = chimeraPhase(rec);
+    var halves = halfSims(p.v);
     var entry = {
       id: p.id,
       name: playerKey(p),
-      sim: sim,
-      halves: halfSims(p.v), // secondary per-half read — same numbers the Triangulation card/map use
-      perfectMatch: perfectMatch,
-      wrongSeasonNote: perfectMatch ? null : nearestWrongSeasonNote(p)
+      phase: phase,
+      halves: halves,
+      donorMatch: false,
+      perfectMatch: false,
+      wrongSeasonNote: null,
+      sim: 0
     };
-    rec.guesses.push(entry);
-    track('vh-guess', { guesses: rec.guesses.length, mode: isPractice ? 'free' : 'daily' });
 
-    var won = isWinningGuess(p, sim);
+    if (phase === 'stats') {
+      entry.sim = halves.stats;
+      entry.donorMatch = isStatsDonorGuess(p);
+      entry.perfectMatch = entry.donorMatch;
+      entry.wrongSeasonNote = entry.donorMatch ? null : donorWrongSeasonNote(p, TARGET.a);
+      if (entry.donorMatch) {
+        rec.statsIdentified = true;
+        rec.phase = 'shooting';
+      }
+    } else if (phase === 'shooting') {
+      entry.sim = halves.shooting;
+      entry.donorMatch = isShootingDonorGuess(p);
+      entry.perfectMatch = entry.donorMatch;
+      entry.wrongSeasonNote = entry.donorMatch ? null : donorWrongSeasonNote(p, TARGET.b);
+      if (entry.donorMatch) {
+        rec.shootingIdentified = true;
+        rec.phase = 'mashup';
+      }
+    } else {
+      entry.sim = cosineSim(TARGET.vector, p.v);
+      entry.perfectMatch = isPerfectMatchGuess(p);
+      entry.wrongSeasonNote = entry.perfectMatch ? null : nearestWrongSeasonNote(p);
+    }
+
+    rec.guesses.push(entry);
+    track('vh-guess', { guesses: rec.guesses.length, phase: phase, mode: isPractice ? 'free' : 'daily' });
+
+    var won = phase === 'mashup' && isWinningGuess(p, entry.sim);
     if (won || (!isPractice && rec.guesses.length >= MAX_GUESSES)) {
       registerCompletion(won);
     } else if (!isPractice) {
@@ -5023,6 +5111,7 @@
     els.equationChipText = document.getElementById('equation-chip-text');
     els.equationNameA = document.getElementById('equation-name-a');
     els.equationNameB = document.getElementById('equation-name-b');
+    els.chimeraPhaseLabel = document.getElementById('chimera-phase-label');
     els.resetNote = document.getElementById('reset-note');
     els.chimeraUtilityRow = document.getElementById('chimera-utility-row');
 
@@ -5264,16 +5353,20 @@
     // warmth/result/reveal visibility is decided per-render by renderGuesses()
   }
 
-  function refreshChimeraView() {
-    if (activeChimeraMode === 'practice' && (PRACTICE_STAGE === 'pick' || !PRACTICE_TARGET)) {
-      showPickerStage();
-      return;
+  function ensurePracticeTarget() {
+    if (!PRACTICE_TARGET) {
+      PRACTICE_TARGET = buildPracticeTarget();
+      PRACTICE_REC = freshDayRecord();
     }
+  }
+
+  function refreshChimeraView() {
+    if (activeChimeraMode === 'practice') ensurePracticeTarget();
     showPlayingStage();
     TARGET = activeChimeraMode === 'practice' ? PRACTICE_TARGET : DAILY_TARGET;
     renderPrompt();
     renderScoutingLine();
-    renderGuesses(); // also (re)renders the map thumbnail
+    renderGuesses();
     if (todayRecord().done) lockInput(); else unlockInput();
     renderMapOnce();
     checkRollover();
@@ -5283,6 +5376,7 @@
     if (mode === activeChimeraMode) return;
     activeChimeraMode = mode;
     equationForceExpand = false;
+    if (mode === 'practice') ensurePracticeTarget();
     els.chimeraSubDaily.classList.toggle('is-active', mode === 'daily');
     els.chimeraSubPractice.classList.toggle('is-active', mode === 'practice');
     els.chimeraSubDaily.setAttribute('aria-selected', String(mode === 'daily'));
@@ -5321,7 +5415,7 @@
       return;
     }
     PRACTICE_TARGET = buildTargetFromPlayers(donorPick.stats, donorPick.shooting);
-    PRACTICE_REC = { guesses: [], done: false, won: false };
+    PRACTICE_REC = freshDayRecord();
     PRACTICE_STAGE = 'playing';
     equationForceExpand = false;
     resetDonorPickerUI();
@@ -5369,7 +5463,9 @@
     els.equationRow.hidden = collapsed;
     els.equationChip.hidden = !collapsed;
     if (collapsed && els.equationChipText) {
-      els.equationChipText.textContent = TARGET.a.name + ' + ' + TARGET.b.name + ' = ?';
+      var aLabel = rec.statsIdentified ? TARGET.a.name : '?';
+      var bLabel = rec.shootingIdentified ? TARGET.b.name : '?';
+      els.equationChipText.textContent = aLabel + ' + ' + bLabel + ' = ?';
     }
   }
 
@@ -5386,10 +5482,11 @@
     // "Change donors" (visible once a Build-a-Chimera round is underway):
     // back to the picker, discarding the current blend.
     els.chimeraNewBtn.addEventListener('click', function () {
-      PRACTICE_STAGE = 'pick';
-      PRACTICE_TARGET = null;
-      resetDonorPickerUI();
+      PRACTICE_TARGET = buildPracticeTarget();
+      PRACTICE_REC = freshDayRecord();
+      equationForceExpand = false;
       refreshChimeraView();
+      track('vh-start', { mode: 'free' });
     });
   }
 
@@ -5480,9 +5577,9 @@
         STATE = loadState();
         if (shouldShowDailyResetNote() && els.resetNote) {
           els.resetNote.hidden = false;
-          els.resetNote.textContent = 'Vector Hoops leveled up: the two donors are now shown up front in the ' +
-            'equation, and your job is to guess the closest real match to the blend. Today’s Chimera ' +
-            'restarted once under the new rules — your streak and history carried over.';
+          els.resetNote.textContent = 'Vector Hoops leveled up: Chimera is now three steps — ' +
+            'guess the stats donor, the style donor, then the closest mashup match. ' +
+            'Today\u2019s puzzle restarted once under the new rules — your streak and history carried over.';
           markDailyResetNoteSeen();
         }
         PRACTICE_STATS = loadPracticeStats();

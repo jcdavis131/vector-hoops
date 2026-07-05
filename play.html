@@ -95,12 +95,12 @@
 
     <div class="vh-practice-banner" id="chimera-practice-banner" hidden>
       <span class="vh-practice-banner__text">PRACTICE &mdash; doesn't touch your daily streak</span>
-      <button class="vh-btn vh-btn--accent" id="chimera-new-btn" type="button">Change donors</button>
+      <button class="vh-btn vh-btn--accent" id="chimera-new-btn" type="button">New chimera</button>
     </div>
 
     <p class="vh-reset-note" id="reset-note" hidden></p>
 
-    <div class="vh-card vh-picker-card" id="picker-card" hidden>
+    <div class="vh-card vh-picker-card" id="picker-card" hidden aria-hidden="true">
       <div class="vh-prompt__eyebrow">Build-a-Chimera &mdash; pick two donors</div>
       <p class="vh-prompt__text">Pick a Stats Player (counting stats: scoring &middot; boards &middot; dimes &middot; defense)
         and a Shooting Player (shooting &amp; impact). We'll fuse them into a blend, then you guess the real
@@ -180,14 +180,15 @@
 
       <div class="vh-card vh-prompt" id="prompt-card" hidden>
         <div class="vh-prompt__eyebrow" id="puzzle-number">Vector Hoops #—</div>
+        <p class="vh-chimera-phase" id="chimera-phase-label">Step 1 of 3 — guess the counting-stats donor</p>
         <div class="vh-equation" id="equation-row">
           <div class="vh-equation__tile" id="equation-tile-a">
-            <div class="vh-equation__tile-name" id="equation-name-a">&mdash;</div>
+            <div class="vh-equation__tile-name vh-equation__tile-mark" id="equation-name-a">?</div>
             <div class="vh-equation__tile-label">counting stats: scoring &middot; boards &middot; dimes &middot; defense</div>
           </div>
           <div class="vh-equation__op" aria-hidden="true">+</div>
           <div class="vh-equation__tile" id="equation-tile-b">
-            <div class="vh-equation__tile-name" id="equation-name-b">&mdash;</div>
+            <div class="vh-equation__tile-name vh-equation__tile-mark" id="equation-name-b">?</div>
             <div class="vh-equation__tile-label">shooting &amp; impact</div>
           </div>
           <div class="vh-equation__op" aria-hidden="true">=</div>
@@ -680,11 +681,11 @@
   <div class="vh-modal" id="help-modal" role="dialog" aria-modal="true" aria-labelledby="help-title">
     <h2 id="help-title">How to play</h2>
     <ol class="vh-modal__list">
-      <li>Every day we fuse two real player-seasons, shown right in the equation: one donates the counting stats, the other the shooting &amp; impact profile. Your job is to guess the real player-season that plays <i>closest</i> to that blend &mdash; the donors are given, the closest match is the mystery.</li>
-      <li>Guess any player-season; you get a % match, a court comparison, and directional coaching in sigmas (plus a secondary read on how you matched each half).</li>
-      <li>Guessing the single closest real match in the whole player pool (excluding the two donors) is a PERFECT MATCH. Any guess at 92%+ also wins &mdash; close enough to call. 6 guesses. New chimera at midnight UTC.</li>
-      <li>Hints arrive on guesses 3 and 5 (Daily): a position-group chip, then an archetype-name chip &mdash; both about the true closest match, not the donors (you already know those). Free Play reveals both immediately &mdash; it's practice.</li>
-      <li>Free Play (Chimera) is <b>Build-a-Chimera</b>: pick your own Stats Player and Shooting Player (or hit Randomize), then guess the closest real match with unlimited attempts. Other modes' Free Play is unlimited practice too &mdash; none of it touches your daily streaks or stats.</li>
+      <li>Every day we fuse two real player-seasons into one stat line. <b>Step 1:</b> guess who donates the counting stats (scoring, boards, dimes, defense). <b>Step 2:</b> guess who donates the style &amp; impact profile. <b>Step 3:</b> guess the real player-season that plays <i>closest</i> to the mashup.</li>
+      <li>Each guess counts against your 6-guess budget (Daily). Identify a donor correctly to reveal that slot in the equation and advance to the next step.</li>
+      <li>On the mashup step you get a % match, a court comparison, and directional coaching in sigmas. Guessing the single closest real match is a PERFECT MATCH; 92%+ also wins.</li>
+      <li>Hints arrive on mashup guesses 3 and 5 (Daily): a position-group chip, then an archetype-name chip — both about the true closest match.</li>
+      <li>Free Play uses the same three-step flow with random donors and unlimited attempts — none of it touches your daily streaks or stats.</li>
       <li><b>The Deadline:</b> a real midseason mover's per-36/plus-minus swing is shown; call Thrived or Cratered. 5 rounds a day.</li>
       <li><b>Fader or Finisher:</b> a real player-season's first-half per-36 rate is shown; call FINISHED STRONGER or FADED for the second half. 5 rounds a day.</li>
       <li><b>Career Arc:</b> one player's charted seasons appear as unlabeled sigma-bar cards, no years shown. Tap them in the order you think they happened, oldest to newest, then submit &mdash; score is how many landed in the right slot.</li>
