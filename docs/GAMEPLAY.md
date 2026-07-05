@@ -21,6 +21,13 @@ accuracy harness (pipeline/verify_accuracy.py) gates every deploy.
   banner offers "new chimera available" instead of silent swap.
 
 **Mechanics to complete:**
+- M0. **Daily Challenge vs Free Play (every mode)** — Operator directive:
+  Daily = the seeded shared puzzle (streaks, stats, share, comparable
+  across all players; one per UTC day). Free Play = unlimited random
+  puzzles (nonce-seeded, clearly labeled "practice", separate casual
+  counter, zero effect on daily streak/stats, "New chimera" button).
+  Mode switch prominent; daily state never contaminated by practice.
+  Deadline: Daily Set (5 fixed movers, shared) + Free Play (endless).
 - M1. Stats modal (Wordle-grade): played, win %, streak, max streak,
   guess distribution histogram — localStorage, exportable.
 - M2. Hint economy: guess 3 = position group; guess 5 = archetype name.
