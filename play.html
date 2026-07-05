@@ -55,8 +55,8 @@
       <span class="vh-stat__label">streak</span>
     </div>
     <div class="vh-stat">
-      <span class="vh-stat__num" id="guesses-left-num">6</span>
-      <span class="vh-stat__label" id="guesses-left-label">left</span>
+      <span class="vh-stat__num" id="guesses-left-num">9</span>
+      <span class="vh-stat__label" id="guesses-left-label">turns left</span>
     </div>
   </div>
   <button class="vh-help-btn" id="stats-btn" type="button" aria-haspopup="dialog" aria-controls="stats-modal" title="Stats">📊</button>
@@ -180,20 +180,23 @@
 
       <div class="vh-card vh-prompt" id="prompt-card" hidden>
         <div class="vh-prompt__eyebrow" id="puzzle-number">Vector Hoops #—</div>
-        <p class="vh-chimera-phase" id="chimera-phase-label">Step 1 of 3 — guess the counting-stats donor</p>
+        <p class="vh-chimera-phase" id="chimera-phase-label">Guess any slot, in any order.</p>
         <div class="vh-equation" id="equation-row">
           <div class="vh-equation__tile" id="equation-tile-a">
+            <div class="vh-equation__tile-kicker">Stats</div>
             <div class="vh-equation__tile-name vh-equation__tile-mark" id="equation-name-a">?</div>
-            <div class="vh-equation__tile-label">counting stats: scoring &middot; boards &middot; dimes &middot; defense</div>
+            <div class="vh-equation__tile-label">scoring &middot; boards &middot; dimes &middot; defense</div>
           </div>
           <div class="vh-equation__op" aria-hidden="true">+</div>
           <div class="vh-equation__tile" id="equation-tile-b">
+            <div class="vh-equation__tile-kicker">Archetype</div>
             <div class="vh-equation__tile-name vh-equation__tile-mark" id="equation-name-b">?</div>
             <div class="vh-equation__tile-label">shooting &amp; impact</div>
           </div>
           <div class="vh-equation__op" aria-hidden="true">=</div>
-          <div class="vh-equation__tile vh-equation__tile--target">
-            <div class="vh-equation__tile-mark">?</div>
+          <div class="vh-equation__tile vh-equation__tile--target" id="equation-tile-mashup">
+            <div class="vh-equation__tile-kicker">Mashup</div>
+            <div class="vh-equation__tile-mark" id="equation-name-mashup">?</div>
           </div>
         </div>
         <button type="button" class="vh-equation-chip" id="equation-chip" hidden>
@@ -205,7 +208,76 @@
         <div class="vh-hints" id="hints-row" hidden></div>
       </div>
 
+      <!-- v4 THREE-PART ANSWERS: Daily-only Stats + Archetype donor guess
+           slots (Mashup's own slot lives in the guessbar-card below, shared
+           with Free Play). Hidden entirely in Free Play, where both donors
+           are already known — see JS renderGuesses()/showPlayingStage(). -->
+      <div class="vh-slots-row vh-donor-slots" id="donor-slots-row" hidden>
+        <div class="vh-card vh-slot-card vh-guess-slot" id="stats-slot-card" data-slot="stats">
+          <div class="vh-slot-card__head">
+            <span class="vh-slot-card__title">Stats Player</span>
+            <span class="vh-slot-card__badge" id="stats-slot-badge" hidden>Locked</span>
+          </div>
+          <div class="vh-autocomplete" id="chimera-stats-autocomplete">
+            <span class="vh-autocomplete__glyph" aria-hidden="true">&#128269;</span>
+            <input
+              type="text"
+              id="chimera-stats-input"
+              class="vh-input vh-input--search"
+              placeholder="Start typing any player&hellip;"
+              autocomplete="off"
+              autocorrect="off"
+              autocapitalize="off"
+              spellcheck="false"
+              aria-autocomplete="list"
+              aria-controls="chimera-stats-suggestions"
+              aria-expanded="false"
+              disabled
+            >
+            <span class="vh-autocomplete__chevron" aria-hidden="true">&#8964;</span>
+            <ul class="vh-suggestions" id="chimera-stats-suggestions" role="listbox" hidden></ul>
+            <p class="vh-autocomplete__hint" id="chimera-stats-focus-hint" hidden>e.g. Nikola Joki&#263; &mdash; then pick a season</p>
+          </div>
+          <button class="vh-btn vh-btn--primary" id="chimera-stats-submit" disabled>Guess</button>
+          <p class="vh-guess__line vh-guess-slot__feedback" id="stats-slot-feedback"></p>
+        </div>
+
+        <div class="vh-card vh-slot-card vh-guess-slot" id="archetype-slot-card" data-slot="archetype">
+          <div class="vh-slot-card__head">
+            <span class="vh-slot-card__title">Archetype Player</span>
+            <span class="vh-slot-card__badge" id="archetype-slot-badge" hidden>Locked</span>
+          </div>
+          <div class="vh-autocomplete" id="chimera-archetype-autocomplete">
+            <span class="vh-autocomplete__glyph" aria-hidden="true">&#128269;</span>
+            <input
+              type="text"
+              id="chimera-archetype-input"
+              class="vh-input vh-input--search"
+              placeholder="Start typing any player&hellip;"
+              autocomplete="off"
+              autocorrect="off"
+              autocapitalize="off"
+              spellcheck="false"
+              aria-autocomplete="list"
+              aria-controls="chimera-archetype-suggestions"
+              aria-expanded="false"
+              disabled
+            >
+            <span class="vh-autocomplete__chevron" aria-hidden="true">&#8964;</span>
+            <ul class="vh-suggestions" id="chimera-archetype-suggestions" role="listbox" hidden></ul>
+            <p class="vh-autocomplete__hint" id="chimera-archetype-focus-hint" hidden>e.g. Nikola Joki&#263; &mdash; then pick a season</p>
+          </div>
+          <button class="vh-btn vh-btn--primary" id="chimera-archetype-submit" disabled>Guess</button>
+          <p class="vh-guess__line vh-guess-slot__feedback" id="archetype-slot-feedback"></p>
+        </div>
+      </div>
+
       <div class="vh-card vh-guessbar" id="guessbar-card" hidden>
+        <div class="vh-slot-card__head vh-guessbar__head">
+          <span class="vh-slot-card__title">Mashup Player</span>
+          <span class="vh-slot-card__badge" id="mashup-slot-badge" hidden>Locked</span>
+          <span class="vh-slot-card__badge vh-slot-card__badge--silver" id="mashup-slot-badge-silver" hidden>Close enough &mdash; locked</span>
+        </div>
         <div class="vh-autocomplete" id="chimera-autocomplete">
           <span class="vh-autocomplete__glyph" aria-hidden="true">&#128269;</span>
           <input
@@ -256,7 +328,7 @@
           </div>
           <div class="vh-triangulation__row">
             <span class="vh-tri-icon vh-tri-icon--shooting" aria-hidden="true"></span>
-            <span class="vh-triangulation__label">vs Shooting Donor</span>
+            <span class="vh-triangulation__label">vs Archetype Donor</span>
             <span class="vh-triangulation__pct" id="tri-shooting-pct">&mdash;</span>
           </div>
           <div class="vh-triangulation__row">
@@ -336,7 +408,7 @@
         </div>
         <div class="vh-sheet__body">
           <div class="vh-map-wrap">
-            <canvas id="hoops-map" class="vh-map" width="600" height="600" aria-label="3D starfield of all player-seasons colored by position, with the Stats Donor (solid square), Shooting Donor (hollow square), the Chimera blend (diamond), your guesses pinned, and triangulation lines from your latest guess to all three"></canvas>
+            <canvas id="hoops-map" class="vh-map" width="600" height="600" aria-label="3D starfield of all player-seasons colored by position, with the Chimera blend always shown as a diamond, the Stats Donor (solid square) and Archetype Donor (hollow square) hidden until their slot is solved, your guesses pinned, and triangulation lines from your latest guess to whichever anchors are currently visible"></canvas>
             <button class="vh-map-pause" id="map-pause-btn" type="button" title="Pause rotation">Pause</button>
             <button class="vh-map-color" id="map-color-btn" type="button" title="Toggle dot coloring">Color: position</button>
             <div class="vh-map-axes" id="map-axes">PC1 / PC2 / PC3 of the era-normalized stat space</div>
@@ -681,11 +753,11 @@
   <div class="vh-modal" id="help-modal" role="dialog" aria-modal="true" aria-labelledby="help-title">
     <h2 id="help-title">How to play</h2>
     <ol class="vh-modal__list">
-      <li>Every day we fuse two real player-seasons into one stat line. <b>Step 1:</b> guess who donates the counting stats (scoring, boards, dimes, defense). <b>Step 2:</b> guess who donates the style &amp; impact profile. <b>Step 3:</b> guess the real player-season that plays <i>closest</i> to the mashup.</li>
-      <li>Each guess counts against your 6-guess budget (Daily). Identify a donor correctly to reveal that slot in the equation and advance to the next step.</li>
-      <li>On the mashup step you get a % match, a court comparison, and directional coaching in sigmas. Guessing the single closest real match is a PERFECT MATCH; 92%+ also wins.</li>
-      <li>Hints arrive on mashup guesses 3 and 5 (Daily): a position-group chip, then an archetype-name chip — both about the true closest match.</li>
-      <li>Free Play uses the same three-step flow with random donors and unlimited attempts — none of it touches your daily streaks or stats.</li>
+      <li>Every day we fuse two real player-seasons into one stat line — the equation IS the puzzle: <b>Stats Player</b> + <b>Archetype Player</b> = <b>Mashup Player</b>. All three are guessable from turn 1, in any order, sharing one 9-turn budget (Daily) — one submission to any slot per turn.</li>
+      <li>Stats/Archetype slots lock on an exact player-season match. The Mashup slot locks on the single closest real match in the whole pool (PERFECT MATCH, gold) or any guess &ge;92% full-blend cosine ("close enough", silver). Right player, wrong season: a message, the turn is still spent, no lock.</li>
+      <li><b>Progressive triangulation:</b> the Chimera diamond is always on the 3D map; each donor's anchor stays hidden until its slot locks, then lights up — giving you a spatial read on whatever's still unsolved.</li>
+      <li>Hints (Daily): turn 4 reveals the position of one unsolved donor; turn 6 reveals the archetype of one unsolved slot's answer; turn 8 reveals its decade. Which slot is hinted is seeded, shared for everyone on that day's puzzle.</li>
+      <li>Win by locking all three within 9 turns. Free Play (Build-a-Chimera) is unchanged: you pick both donors yourself — the only hunt is finding the mashup's real match, unlimited attempts, none of it touches your daily streaks or stats.</li>
       <li><b>The Deadline:</b> a real midseason mover's per-36/plus-minus swing is shown; call Thrived or Cratered. 5 rounds a day.</li>
       <li><b>Fader or Finisher:</b> a real player-season's first-half per-36 rate is shown; call FINISHED STRONGER or FADED for the second half. 5 rounds a day.</li>
       <li><b>Career Arc:</b> one player's charted seasons appear as unlabeled sigma-bar cards, no years shown. Tap them in the order you think they happened, oldest to newest, then submit &mdash; score is how many landed in the right slot.</li>
@@ -715,7 +787,7 @@
     <div class="vh-stats-section">
       <div class="vh-stats-section__label">Daily Chimera</div>
       <div class="vh-stats-grid" id="stats-daily-grid"></div>
-      <div class="vh-histogram" id="stats-histogram" role="img" aria-label="Guess distribution, 1 through 6"></div>
+      <div class="vh-histogram" id="stats-histogram" role="img" aria-label="Turns-to-solve distribution, 1 through 9"></div>
     </div>
 
     <div class="vh-stats-section">

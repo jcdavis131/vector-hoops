@@ -20,6 +20,9 @@
   --cold: #d03b3b;
   --identified: #e8b500;      /* IDENTIFIED win state — gold, never red */
   --identified-bg: #fff8e0;
+  --silver: #8f96a3;          /* Mashup "close enough" (>=92%) win state — a second, distinct WON color, never red */
+  --silver-bg: #eef1f4;
+  --data-purple: #7d5cc9;     /* Archetype slot accent — a third color alongside orange/blue, not a status color */
 
   --shadow-block: 4px 4px 0 var(--ink);
   --shadow-block-sm: 3px 3px 0 var(--ink);
@@ -237,6 +240,33 @@ main{
   color: var(--ink-soft);
   line-height: 1.45;
 }
+
+/* v4 THREE-PART ANSWERS: each tile's own slot name — Stats / Archetype /
+   Mashup — the equation reads as the puzzle statement itself. */
+.vh-equation__tile-kicker{
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-muted);
+}
+.vh-equation__tile--target .vh-equation__tile-kicker{ color: var(--paper); opacity: 0.7; }
+
+/* locked tile states — gold (exact) never red; silver (Mashup >=92%) is a
+   second, distinct WON color, not a lesser one. */
+.vh-equation__tile--gold{
+  border-color: var(--identified);
+  background: var(--identified-bg);
+  box-shadow: 3px 3px 0 var(--identified);
+}
+.vh-equation__tile--gold .vh-equation__tile-kicker{ color: #6b5200; }
+.vh-equation__tile--silver{
+  border-color: var(--silver);
+  background: var(--silver-bg);
+  box-shadow: 3px 3px 0 var(--silver);
+}
+.vh-equation__tile--silver .vh-equation__tile-kicker{ color: var(--ink-soft); }
 
 .vh-equation__op{
   flex: 0 0 auto;
@@ -495,6 +525,21 @@ main{
   border-radius: 999px;
   padding: 2px 8px;
 }
+/* Mashup slot's "close enough" (>=92%, not exact) lock — silver, still a
+   WON state, never a lesser/red one. */
+.vh-slot-card__badge--silver{
+  color: var(--ink-soft);
+  background: var(--silver-bg);
+  border-color: var(--silver);
+}
+
+/* v4: Mashup slot's title/badge row lives inside .vh-guessbar (a row-flex
+   container at >=480px) — force it to its own full-width line. */
+.vh-guessbar__head{ flex: 1 1 100%; }
+
+/* Compact feedback line under the two Daily donor-slot inputs — same
+   typography as .vh-guess__line, just tighter above a small card. */
+.vh-guess-slot__feedback{ margin-top: 4px; min-height: 1.4em; }
 
 .vh-picker-error{
   margin: 0;
