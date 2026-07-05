@@ -109,7 +109,9 @@
     { id: 'chimera', label: 'Chimera', icon: '🧬', unit: 'guesses' },
     { id: 'deadline', label: 'Deadline', icon: '📉', unit: 'score' },
     { id: 'fader', label: 'Fader', icon: '🌡️', unit: 'score' },
-    { id: 'arc', label: 'Arc', icon: '📈', unit: 'score' }
+    { id: 'arc', label: 'Arc', icon: '📈', unit: 'score' },
+    { id: 'pivot', label: 'Pivot', icon: '🔀', unit: 'score' },
+    { id: 'eratwin', label: 'Twin', icon: '👥', unit: 'score' }
   ];
   var MAX_DAYS_BACK = 7;
   var LS_KEY_LAST_GAME = 'vectorHoops.lastPlayedGame';

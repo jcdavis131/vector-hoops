@@ -3903,7 +3903,7 @@
   // teammate pairs (same team-season, both >=1000 min, complementarity =
   // 1-|cosine| of era-z profiles). Structurally the same 5-round Daily Set /
   // Free Play shape as The Deadline and Fader or Finisher, with a 4-way pick
-  // instead of a binary call. Unranked v1: no leaderboard submission.
+  // instead of a binary call. Daily-set scores post to the public leaderboard.
   //
   // Distractor rule (chemistry.json carries no team field, only name+season+
   // team-on-the-pair-itself, so an exact "different team" filter isn't
@@ -4923,7 +4923,7 @@
   // `paths`, n>=8 shown), plus a name+seasons example ("the receipts").
   // Structurally the same 5-round Daily Set / Free Play shape as
   // Chemistry, but a ranked pick (2/1/0 pts against the full candidate
-  // order) instead of a 4-way multiple choice. Unranked v1: the
+  // order) instead of a 4-way multiple choice. Daily-set scores post to the public leaderboard.
   // leaderboard's game enum doesn't include "pivot" yet, so results never
   // post — same doctrine as Chemistry/What-If Lab at launch.
   //
@@ -5238,6 +5238,7 @@
       var rec = pivotDailyToday();
       if (!rec.done) {
         rec.done = true;
+        submitLeaderboardScore('pivot', TODAY, run.score);
         rec.score = run.score;
         var yesterday = utcDateString(new Date(Date.now() - 86400000));
         PIVOT_STATE.streak = (PIVOT_STATE.lastPlayDate === yesterday) ? PIVOT_STATE.streak + 1 : 1;
@@ -5332,7 +5333,7 @@
   // other wrong guess gets an honest lower bound off top5[4].sim ("not in
   // the top 5 — colder than 89%") rather than a fabricated number. Same
   // 5-round Daily Set / Free Play shape as Chemistry/The Pivot; 2/1/0 pts
-  // per round (first try / second try / miss), 0-10 total. Unranked v1 —
+  // per round (first try / second try / miss), 0-10 total. Daily-set scores post to the public leaderboard.
   // same doctrine as Chemistry/Pivot at launch, no leaderboard submission.
   // ---------------------------------------------------------------------
 
@@ -5653,6 +5654,7 @@
       var rec = twinDailyToday();
       if (!rec.done) {
         rec.done = true;
+        submitLeaderboardScore('eratwin', TODAY, run.score);
         rec.score = run.score;
         var yesterday = utcDateString(new Date(Date.now() - 86400000));
         TWIN_STATE.streak = (TWIN_STATE.lastPlayDate === yesterday) ? TWIN_STATE.streak + 1 : 1;
@@ -6066,7 +6068,7 @@
         '<div class="vh-dossier__bullet">Distractors: vectors.json carries no team field, so an exact "different team" filter isn\'t computable. ' +
           'Instead, distractors are seeded same-season player-seasons that are never the anchor, never the true partner, and never ' +
           'another top-800 partner of the same anchor — preferring the true partner\'s position, then broad position group.</div>' +
-        '<div class="vh-dossier__bullet">Unranked v1: results never post to the public leaderboard.</div>';
+        '<div class="vh-dossier__bullet">Daily-set scores post to the public leaderboard.';
       return;
     }
     if (which === 'whatif') {
@@ -6097,7 +6099,7 @@
         '<div class="vh-dossier__bullet">"Measured upside" is the historical mean PLUS_MINUS-z swing for the pool of players who made that team\'s ' +
           'candidate\'s exact current-archetype&rarr;adjacent-archetype pivot before &mdash; observed precedent WITH selection effects (players who ' +
           'pivoted are those whose games changed), not a prediction, projection, or simulation for this specific player.</div>' +
-        '<div class="vh-dossier__bullet">Unranked v1: the leaderboard\'s game enum doesn\'t include "pivot" yet, so results never post.</div>';
+        '<div class="vh-dossier__bullet">Daily-set scores post to the public leaderboard.'s game enum doesn\'t include "pivot" yet, so results never post.</div>';
       return;
     }
     if (which === 'twin') {
@@ -6111,7 +6113,7 @@
         '<div class="vh-dossier__bullet">Only the shipped top 5 candidates carry a real similarity number. A guess landing in that top 5 shows its exact ' +
           '% aligned; any other guess shows an honest lower bound off the 5th-place similarity rather than a fabricated number &mdash; warmth shows for ' +
           'near-misses, not for every possible guess.</div>' +
-        '<div class="vh-dossier__bullet">Unranked v1: the leaderboard\'s game enum doesn\'t include "twin" yet, so results never post.</div>';
+        '<div class="vh-dossier__bullet">Daily-set scores post to the public leaderboard.'s game enum doesn\'t include "twin" yet, so results never post.</div>';
       return;
     }
     els.methodsTitle.textContent = 'Method & data sources';
