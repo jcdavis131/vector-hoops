@@ -207,13 +207,15 @@ main{
   flex: 1 1 0;
   min-width: 0;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 4px;
   text-align: center;
   border: 2px solid var(--ink);
   border-radius: 8px;
   background: var(--paper);
-  padding: 14px 10px;
+  padding: 12px 10px;
 }
 
 .vh-equation__tile-label{
@@ -256,8 +258,9 @@ main{
   font-weight: 800;
   font-size: 14px;
   color: var(--ink);
-  margin-bottom: 4px;
   line-height: 1.3;
+  word-break: break-word;
+  hyphens: auto;
 }
 
 @media (max-width: 479px){
@@ -796,6 +799,16 @@ main{
   font-weight: 700;
   color: var(--hot);
 }
+.vh-challenge-banner{
+  background: var(--data-orange);
+  color: var(--paper);
+  padding: 10px 16px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.45;
+  border-bottom: 2px solid var(--ink);
+}
 
 /* ---------- 3D map (dark panel: the one black element) ---------- */
 
@@ -925,6 +938,13 @@ main{
   padding: 22px;
   max-width: 420px;
   width: 100%;
+}
+
+/* how-to-play lists every mode — scroll so "Got it" stays reachable on short viewports */
+#help-modal{
+  max-height: min(85vh, calc(100dvh - 40px));
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 .vh-modal h2{
   margin: 0 0 14px;
@@ -1648,8 +1668,11 @@ main{
 }
 .vh-tab__icon{ display: none; font-size: 15px; line-height: 1; }
 .vh-tab__label{ white-space: nowrap; }
+.vh-tab__label-short{ display: none; }
 
 @media (max-width: 719px){
+  .vh-tab__label-full{ display: none; }
+  .vh-tab__label-short{ display: inline; }
   #mode-tabs{
     position: fixed;
     left: 0;
@@ -1663,9 +1686,20 @@ main{
     z-index: 60;
     /* thumb-zone bottom nav: safe-area padding for notched phones */
     padding-bottom: env(safe-area-inset-bottom, 0);
+    /* 6 tabs no longer guarantee a comfortable fit on the narrowest phones —
+       scroll horizontally instead of squeezing labels unreadable, with a
+       soft edge-fade (mask, not extra DOM) hinting there's more off-screen. */
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -webkit-mask-image: linear-gradient(to right, transparent, black 14px, black calc(100% - 14px), transparent);
+    mask-image: linear-gradient(to right, transparent, black 14px, black calc(100% - 14px), transparent);
   }
+  #mode-tabs::-webkit-scrollbar{ display: none; }
   .vh-tab{
-    flex: 1 1 0;
+    flex: 1 1 auto;
+    min-width: 60px;
     flex-direction: column;
     gap: 2px;
     min-height: 52px;
@@ -1674,6 +1708,14 @@ main{
   }
   .vh-tab__icon{ display: block; }
   main#app{ padding-bottom: calc(64px + env(safe-area-inset-bottom, 0)); }
+  /* footers sit after main — clear the fixed mode tab bar when scrolled to the bottom */
+  .vh-footer,
+  .site-footer{
+    padding-bottom: calc(56px + env(safe-area-inset-bottom, 0));
+  }
+  /* site-nav already brands the page; drop the duplicate logo in the game header */
+  #app-header .vh-logo{ display: none; }
+  #app-header .vh-header__brand{ gap: 4px; }
 }
 
 /* ---------- compact single-row header ---------- */
