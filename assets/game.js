@@ -414,13 +414,19 @@
       onSelect(p);
     }
 
+    // accent-insensitive: "jokic" finds "Jokić", "doncic" finds "Dončić"
+    function foldTerm(s) {
+      return s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+    }
+
     function search(term) {
-      term = term.trim().toLowerCase();
+      term = foldTerm(term.trim());
       if (!term) { close(); return; }
       var matches = [];
       for (var i = 0; i < players.length && matches.length < 8; i++) {
         var p = players[i];
-        if (playerKey(p).toLowerCase().indexOf(term) !== -1) matches.push(p);
+        if (p._k === undefined) p._k = foldTerm(playerKey(p));
+        if (p._k.indexOf(term) !== -1) matches.push(p);
       }
       open(matches);
     }

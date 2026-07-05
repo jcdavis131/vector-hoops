@@ -4,6 +4,28 @@ Daily NBA chimera puzzle over an era-honest player embedding space.
 12,392 player-seasons (1996-2026), per-100-possession, z-scored within
 season; PCA(3) map; 8 auto-named archetypes. Static, zero backend, free.
 
+## OKF LLM-Wiki (`knowledge/`)
+
+One interlinked, machine-editable markdown page per charted player
+(2,293), plus archetype and position hubs. Two-layer contract: an AUTO
+block regenerated from the data, and a CURATED layer below the marker
+that humans/LLM agents extend and the generator never touches. Nearest-
+neighbor wikilinks make the graph walkable; the game's reveal card links
+each chimera component to its dossier. Contract: `knowledge/OKF.md`.
+
+- `python pipeline/build_wiki.py` — idempotent regeneration
+
+## Enrichment (`pipeline/enrich_vectors.py`)
+
+Adds to `assets/vectors.json` without touching the game contract:
+
+- `proj` — exact affine recovery of the build-time PCA+minmax map, so
+  the client projects the fused Chimera vector into the 3D map honestly
+- `axes` — PC1/PC2/PC3 interpretations verified against feature
+  correlations (paint vs perimeter / scoring load / ball in hand)
+- `p` + `positions` — per-season PG/SG/SF/PF/C from Basketball-Reference
+  (`pipeline/fetch_positions.py`, 99.7% coverage), coloring the 3D map
+
 ## Data pipeline (v2)
 
 `python pipeline/build_vectors.py` builds two artifacts:
