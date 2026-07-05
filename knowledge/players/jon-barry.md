@@ -69,7 +69,7 @@ Closest career shapes in the era-normalized vector space:
 - [[collin-gillespie|Collin Gillespie]] '24 (89% similar)
 - [[rudy-fernandez|Rudy Fernandez]] '11 (88% similar)
 
-**Career shape:** Charted 10 seasons (1996-97–2005-06). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 10 seasons (1996-97–2005-06). Consistent Playmaking + Steals profile across his career. Career trajectory: drifter (4 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[dan-dickau|Dan Dickau]] '06 (89% aligned similarity — cross-era via Procrustes chaining).
 

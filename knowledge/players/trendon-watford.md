@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[uros-slokar|Uros Slokar]] '07 (71% similar)
 - [[bryant-reeves|Bryant Reeves]] '98 (70% similar)
 
-**Career shape:** Charted 5 seasons (2021-22–2025-26). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+**Career shape:** Charted 5 seasons (2021-22–2025-26). Consistent Offensive Glass (Low On-Court Impact) profile across his career. Career trajectory: drifter (3 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[jordan-mickey|Jordan Mickey]] '17 (89% aligned similarity — cross-era via Procrustes chaining).
 

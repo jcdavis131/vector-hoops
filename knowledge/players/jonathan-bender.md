@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[gg-jackson|GG Jackson]] '24 (74% similar)
 - [[daron-holmes-ii|DaRon Holmes II]] '26 (69% similar)
 
-**Career shape:** Charted 6 seasons (1999-00–2009-10). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 6 seasons (1999-00–2009-10). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: migrator (5 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[zach-lavine|Zach LaVine]] '21 (81% aligned similarity — cross-era via Procrustes chaining).
 

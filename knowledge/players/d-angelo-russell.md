@@ -69,7 +69,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jordan-crawford|Jordan Crawford]] '11 (91% similar)
 - [[darius-garland|Darius Garland]] '22 (91% similar)
 
-**Career shape:** Charted 11 seasons (2015-16–2025-26). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 11 seasons (2015-16–2025-26). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: drifter (4 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[robert-pack|Robert Pack]] '97 (91% aligned similarity — cross-era via Procrustes chaining).
 

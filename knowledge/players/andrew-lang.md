@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[hot-rod-williams|Hot Rod Williams]] '99 (90% similar)
 - [[stephen-zimmerman|Stephen Zimmerman]] '17 (89% similar)
 
-**Career shape:** Charted 4 seasons (1996-97–1999-00). Consistent Offensive Glass + Defensive Glass profile across his career.
+**Career shape:** Charted 4 seasons (1996-97–1999-00). Consistent Offensive Glass + Defensive Glass profile across his career. Career trajectory: drifter (2 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[michael-doleac|Michael Doleac]] '08 (87% aligned similarity — cross-era via Procrustes chaining).
 

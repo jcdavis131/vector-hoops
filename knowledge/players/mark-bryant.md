@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[chris-richard|Chris Richard]] '10 (87% similar)
 - [[colin-castleton|Colin Castleton]] '25 (87% similar)
 
-**Career shape:** Charted 7 seasons (1996-97–2002-03). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+**Career shape:** Charted 7 seasons (1996-97–2002-03). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Offensive Glass (Low On-Court Impact) identity. Career trajectory: drifter (3 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[xavier-mcdaniel|Xavier McDaniel]] '98 (86% aligned similarity — cross-era via Procrustes chaining).
 

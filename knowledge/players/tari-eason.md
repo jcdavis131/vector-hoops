@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[renaldo-balkman|Renaldo Balkman]] '08 (70% similar)
 - [[thaddeus-young|Thaddeus Young]] '24 (70% similar)
 
-**Career shape:** Charted 4 seasons (2022-23–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+**Career shape:** Charted 4 seasons (2022-23–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity. Career trajectory: migrator (2 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[jan-vesely|Jan Vesely]] '14 (80% aligned similarity — cross-era via Procrustes chaining).
 

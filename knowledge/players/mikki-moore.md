@@ -69,7 +69,7 @@ Closest career shapes in the era-normalized vector space:
 - [[timofey-mozgov|Timofey Mozgov]] '13 (91% similar)
 - [[jake-tsakalidis|Jake Tsakalidis]] '06 (90% similar)
 
-**Career shape:** Charted 10 seasons (1999-00–2009-10). Consistent Rim Protection + Offensive Glass profile across his career.
+**Career shape:** Charted 10 seasons (1999-00–2009-10). Consistent Rim Protection + Offensive Glass profile across his career. Career trajectory: reinvention (5 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[andrew-bynum|Andrew Bynum]] '08 (88% aligned similarity — cross-era via Procrustes chaining).
 

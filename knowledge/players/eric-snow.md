@@ -70,7 +70,7 @@ Closest career shapes in the era-normalized vector space:
 - [[kevin-ollie|Kevin Ollie]] '10 (88% similar)
 - [[jordan-mclaughlin|Jordan McLaughlin]] '24 (87% similar)
 
-**Career shape:** Charted 12 seasons (1996-97–2007-08). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 12 seasons (1996-97–2007-08). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[ime-udoka|Ime Udoka]] '11 (86% aligned similarity — cross-era via Procrustes chaining).
 

@@ -68,7 +68,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jj-hickson|JJ Hickson]] '16 (87% similar)
 - [[david-lee|David Lee]] '17 (87% similar)
 
-**Career shape:** Charted 9 seasons (2010-11–2018-19). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+**Career shape:** Charted 9 seasons (2010-11–2018-19). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[david-vaughn|David Vaughn]] '97 (89% aligned similarity — cross-era via Procrustes chaining).
 

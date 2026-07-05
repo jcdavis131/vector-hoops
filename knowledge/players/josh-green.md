@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[luc-mbah-a-moute|Luc Mbah a Moute]] '16 (85% similar)
 - [[jared-dudley|Jared Dudley]] '20 (85% similar)
 
-**Career shape:** Charted 6 seasons (2020-21–2025-26). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 6 seasons (2020-21–2025-26). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[wesley-matthews|Wesley Matthews]] '20 (81% aligned similarity — cross-era via Procrustes chaining).
 

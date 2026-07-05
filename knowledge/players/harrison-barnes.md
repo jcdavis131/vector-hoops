@@ -71,7 +71,7 @@ Closest career shapes in the era-normalized vector space:
 - [[larry-johnson|Larry Johnson]] '98 (84% similar)
 - [[richard-jefferson|Richard Jefferson]] '18 (83% similar)
 
-**Career shape:** Charted 14 seasons (2012-13–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 14 seasons (2012-13–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: reinvention (4 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[matt-thomas|Matt Thomas]] '22 (83% aligned similarity — cross-era via Procrustes chaining).
 

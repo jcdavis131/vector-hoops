@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[carter-bryant|Carter Bryant]] '26 (78% similar)
 - [[p-j-washington|P.J. Washington]] '26 (74% similar)
 
-**Career shape:** Charted 4 seasons (2001-02–2005-06). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Offensive Glass + Defensive Glass identity.
+**Career shape:** Charted 4 seasons (2001-02–2005-06). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Offensive Glass + Defensive Glass identity. Career trajectory: migrator (3 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[mo-bamba|Mo Bamba]] '20 (81% aligned similarity — cross-era via Procrustes chaining).
 

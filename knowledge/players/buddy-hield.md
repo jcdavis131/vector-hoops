@@ -68,7 +68,7 @@ Closest career shapes in the era-normalized vector space:
 - [[gerald-green|Gerald Green]] '15 (93% similar)
 - [[eddie-house|Eddie House]] '06 (91% similar)
 
-**Career shape:** Charted 10 seasons (2016-17–2025-26). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 10 seasons (2016-17–2025-26). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[jordan-clarkson|Jordan Clarkson]] '21 (92% aligned similarity — cross-era via Procrustes chaining).
 

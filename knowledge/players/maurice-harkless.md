@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[caleb-martin|Caleb Martin]] '26 (86% similar)
 - [[haywood-highsmith|Haywood Highsmith]] '22 (85% similar)
 
-**Career shape:** Charted 10 seasons (2012-13–2021-22). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 10 seasons (2012-13–2021-22). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[cam-reddish|Cam Reddish]] '25 (90% aligned similarity — cross-era via Procrustes chaining).
 

@@ -68,7 +68,7 @@ Closest career shapes in the era-normalized vector space:
 - [[adem-bona|Adem Bona]] '25 (88% similar)
 - [[ibou-badji|Ibou Badji]] '24 (87% similar)
 
-**Career shape:** Charted 9 seasons (2000-01–2008-09). Consistent Offensive Glass + Defensive Glass profile across his career.
+**Career shape:** Charted 9 seasons (2000-01–2008-09). Consistent Offensive Glass + Defensive Glass profile across his career. Career trajectory: migrator (6 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[chris-wilcox|Chris Wilcox]] '13 (91% aligned similarity — cross-era via Procrustes chaining).
 

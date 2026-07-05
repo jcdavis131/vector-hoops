@@ -61,7 +61,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jared-rhoden|Jared Rhoden]] '24 (82% similar)
 - [[myles-turner|Myles Turner]] '19 (80% similar)
 
-**Career shape:** Charted 4 seasons (2022-23–2025-26). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+**Career shape:** Charted 4 seasons (2022-23–2025-26). Consistent Offensive Glass (Low On-Court Impact) profile across his career. Career trajectory: migrator (2 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[aj-hammons|AJ Hammons]] '17 (80% aligned similarity — cross-era via Procrustes chaining).
 

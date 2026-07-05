@@ -71,7 +71,7 @@ Closest career shapes in the era-normalized vector space:
 - [[rashad-mccants|Rashad McCants]] '08 (91% similar)
 - [[flip-murray|Flip Murray]] '08 (89% similar)
 
-**Career shape:** Charted 13 seasons (2000-01–2012-13). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 13 seasons (2000-01–2012-13). Consistent Playmaking + Steals profile across his career. Career trajectory: migrator (5 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[shabazz-napier|Shabazz Napier]] '17 (84% aligned similarity — cross-era via Procrustes chaining).
 

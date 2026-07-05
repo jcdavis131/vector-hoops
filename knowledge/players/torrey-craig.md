@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[ira-newble|Ira Newble]] '01 (84% similar)
 - [[kz-okpala|KZ Okpala]] '21 (83% similar)
 
-**Career shape:** Charted 8 seasons (2017-18–2024-25). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+**Career shape:** Charted 8 seasons (2017-18–2024-25). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Offensive Glass (Low On-Court Impact) identity. Career trajectory: drifter (4 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[ryan-dunn|Ryan Dunn]] '25 (89% aligned similarity — cross-era via Procrustes chaining).
 

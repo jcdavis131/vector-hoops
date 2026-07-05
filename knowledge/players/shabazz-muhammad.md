@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[derrick-williams|Derrick Williams]] '16 (76% similar)
 - [[chris-crawford|Chris Crawford]] '98 (74% similar)
 
-**Career shape:** Charted 5 seasons (2013-14–2017-18). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+**Career shape:** Charted 5 seasons (2013-14–2017-18). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity. Career trajectory: drifter (4 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[maurice-taylor|Maurice Taylor]] '99 (84% aligned similarity — cross-era via Procrustes chaining).
 

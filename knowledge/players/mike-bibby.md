@@ -73,7 +73,7 @@ Closest career shapes in the era-normalized vector space:
 - [[david-wesley|David Wesley]] '07 (94% similar)
 - [[jason-terry|Jason Terry]] '18 (93% similar)
 
-**Career shape:** Charted 14 seasons (1998-99–2011-12). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 14 seasons (1998-99–2011-12). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: migrator (6 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[gabe-pruitt|Gabe Pruitt]] '09 (86% aligned similarity — cross-era via Procrustes chaining).
 

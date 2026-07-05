@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[eric-washington|Eric Washington]] '98 (82% similar)
 - [[jarvis-hayes|Jarvis Hayes]] '10 (82% similar)
 
-**Career shape:** Charted 5 seasons (2006-07–2010-11). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+**Career shape:** Charted 5 seasons (2006-07–2010-11). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity. Career trajectory: drifter (2 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[mickael-pietrus|Mickael Pietrus]] '11 (88% aligned similarity — cross-era via Procrustes chaining).
 

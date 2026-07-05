@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[matt-carroll|Matt Carroll]] '10 (85% similar)
 - [[cam-reddish|Cam Reddish]] '25 (84% similar)
 
-**Career shape:** Charted 5 seasons (2021-22–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+**Career shape:** Charted 5 seasons (2021-22–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity. Career trajectory: drifter (2 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[kim-english|Kim English]] '13 (85% aligned similarity — cross-era via Procrustes chaining).
 

@@ -70,7 +70,7 @@ Closest career shapes in the era-normalized vector space:
 - [[trent-forrest|Trent Forrest]] '23 (82% similar)
 - [[tomas-satoransky|Tomas Satoransky]] '22 (82% similar)
 
-**Career shape:** Charted 12 seasons (1997-98–2009-10). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 12 seasons (1997-98–2009-10). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: migrator (7 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[landry-fields|Landry Fields]] '15 (89% aligned similarity — cross-era via Procrustes chaining).
 

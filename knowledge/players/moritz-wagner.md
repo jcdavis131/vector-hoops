@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[julius-randle|Julius Randle]] '24 (80% similar)
 - [[christian-wood|Christian Wood]] '19 (78% similar)
 
-**Career shape:** Charted 8 seasons (2018-19–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+**Career shape:** Charted 8 seasons (2018-19–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity. Career trajectory: stable (3 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[christian-wood|Christian Wood]] '19 (86% aligned similarity — cross-era via Procrustes chaining).
 

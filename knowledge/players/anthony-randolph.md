@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jusuf-nurkic|Jusuf Nurkić]] '16 (83% similar)
 - [[elton-brand|Elton Brand]] '07 (82% similar)
 
-**Career shape:** Charted 6 seasons (2008-09–2013-14). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+**Career shape:** Charted 6 seasons (2008-09–2013-14). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[bam-adebayo|Bam Adebayo]] '22 (84% aligned similarity — cross-era via Procrustes chaining).
 

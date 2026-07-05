@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[rusty-larue|Rusty LaRue]] '99 (82% similar)
 - [[carl-thomas|Carl Thomas]] '97 (80% similar)
 
-**Career shape:** Charted 4 seasons (2018-19–2022-23). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Playmaking + Steals identity.
+**Career shape:** Charted 4 seasons (2018-19–2022-23). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Playmaking + Steals identity. Career trajectory: migrator (2 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[vince-williams-jr|Vince Williams Jr.]] '26 (87% aligned similarity — cross-era via Procrustes chaining).
 

@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[moussa-cisse|Moussa Cisse]] '26 (92% similar)
 - [[dan-gadzuric|Dan Gadzuric]] '05 (92% similar)
 
-**Career shape:** Charted 8 seasons (2018-19–2025-26). Consistent Rim Protection + Offensive Glass profile across his career.
+**Career shape:** Charted 8 seasons (2018-19–2025-26). Consistent Rim Protection + Offensive Glass profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[tarik-black|Tarik Black]] '18 (95% aligned similarity — cross-era via Procrustes chaining).
 

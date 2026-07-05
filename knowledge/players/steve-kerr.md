@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[seth-curry|Seth Curry]] '21 (92% similar)
 - [[danny-ferry|Danny Ferry]] '01 (92% similar)
 
-**Career shape:** Charted 7 seasons (1996-97–2002-03). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 7 seasons (1996-97–2002-03). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: drifter (3 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[raja-bell|Raja Bell]] '07 (92% aligned similarity — cross-era via Procrustes chaining).
 

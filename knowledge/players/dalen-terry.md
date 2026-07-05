@@ -60,7 +60,7 @@ Closest career shapes in the era-normalized vector space:
 - [[ronnie-brewer|Ronnie Brewer]] '14 (87% similar)
 - [[dyson-daniels|Dyson Daniels]] '25 (85% similar)
 
-**Career shape:** Charted 4 seasons (2022-23–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 4 seasons (2022-23–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[jacob-evans|Jacob Evans]] '19 (85% aligned similarity — cross-era via Procrustes chaining).
 

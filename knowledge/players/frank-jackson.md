@@ -60,7 +60,7 @@ Closest career shapes in the era-normalized vector space:
 - [[alan-anderson|Alan Anderson]] '17 (89% similar)
 - [[jaylen-wells|Jaylen Wells]] '25 (88% similar)
 
-**Career shape:** Charted 4 seasons (2018-19–2021-22). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 4 seasons (2018-19–2021-22). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[isaiah-canaan|Isaiah Canaan]] '16 (90% aligned similarity — cross-era via Procrustes chaining).
 

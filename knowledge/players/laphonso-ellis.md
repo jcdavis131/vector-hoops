@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[miles-bridges|Miles Bridges]] '25 (79% similar)
 - [[andrea-bargnani|Andrea Bargnani]] '15 (79% similar)
 
-**Career shape:** Charted 7 seasons (1996-97–2002-03). Consistent Scoring Volume + Shot Volume profile across his career.
+**Career shape:** Charted 7 seasons (1996-97–2002-03). Consistent Scoring Volume + Shot Volume profile across his career. Career trajectory: migrator (6 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[jamal-mashburn|Jamal Mashburn]] '04 (88% aligned similarity — cross-era via Procrustes chaining).
 

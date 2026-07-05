@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[andre-roberson|Andre Roberson]] '18 (85% similar)
 - [[haywood-highsmith|Haywood Highsmith]] '22 (84% similar)
 
-**Career shape:** Charted 8 seasons (2018-19–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass + Defensive Glass identity.
+**Career shape:** Charted 8 seasons (2018-19–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass + Defensive Glass identity. Career trajectory: drifter (5 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[kz-okpala|KZ Okpala]] '21 (89% aligned similarity — cross-era via Procrustes chaining).
 

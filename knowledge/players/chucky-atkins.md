@@ -69,7 +69,7 @@ Closest career shapes in the era-normalized vector space:
 - [[randy-foye|Randy Foye]] '12 (92% similar)
 - [[aj-price|AJ Price]] '14 (92% similar)
 
-**Career shape:** Charted 11 seasons (1999-00–2009-10). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 11 seasons (1999-00–2009-10). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: late-bloom (3 archetype changes across his charted seasons) — one sustained archetype switch coming late in his career (after the 60% mark).
 
 **Era twin:** [[taelon-peter|Taelon Peter]] '26 (91% aligned similarity — cross-era via Procrustes chaining).
 

@@ -72,7 +72,7 @@ Closest career shapes in the era-normalized vector space:
 - [[andrew-nembhard|Andrew Nembhard]] '26 (90% similar)
 - [[howard-eisley|Howard Eisley]] '03 (89% similar)
 
-**Career shape:** Charted 14 seasons (2005-06–2018-19). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 14 seasons (2005-06–2018-19). Consistent Playmaking + Steals profile across his career. Career trajectory: stable (6 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[gary-grant|Gary Grant]] '98 (93% aligned similarity — cross-era via Procrustes chaining).
 

@@ -73,7 +73,7 @@ Closest career shapes in the era-normalized vector space:
 - [[willy-hernangomez|Willy Hernangomez]] '23 (88% similar)
 - [[derrick-favors|Derrick Favors]] '21 (88% similar)
 
-**Career shape:** Charted 14 seasons (2012-13–2025-26). Consistent Rim Protection + Offensive Glass profile across his career.
+**Career shape:** Charted 14 seasons (2012-13–2025-26). Consistent Rim Protection + Offensive Glass profile across his career. Career trajectory: drifter (5 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[alan-williams|Alan Williams]] '17 (94% aligned similarity — cross-era via Procrustes chaining).
 

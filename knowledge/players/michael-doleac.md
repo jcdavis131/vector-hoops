@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[mark-bradtke|Mark Bradtke]] '97 (86% similar)
 - [[lavoy-allen|Lavoy Allen]] '17 (86% similar)
 
-**Career shape:** Charted 10 seasons (1998-99–2007-08). Consistent Offensive Glass + Defensive Glass profile across his career.
+**Career shape:** Charted 10 seasons (1998-99–2007-08). Consistent Offensive Glass + Defensive Glass profile across his career. Career trajectory: migrator (6 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[carl-herrera|Carl Herrera]] '99 (91% aligned similarity — cross-era via Procrustes chaining).
 

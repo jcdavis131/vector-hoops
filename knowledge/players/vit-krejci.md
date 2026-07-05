@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[rodney-mcgruder|Rodney McGruder]] '18 (89% similar)
 - [[hollis-thompson|Hollis Thompson]] '17 (88% similar)
 
-**Career shape:** Charted 5 seasons (2021-22–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 5 seasons (2021-22–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[cartier-martin|Cartier Martin]] '15 (80% aligned similarity — cross-era via Procrustes chaining).
 

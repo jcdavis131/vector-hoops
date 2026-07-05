@@ -68,7 +68,7 @@ Closest career shapes in the era-normalized vector space:
 - [[collin-sexton|Collin Sexton]] '21 (85% similar)
 - [[emmanuel-mudiay|Emmanuel Mudiay]] '16 (84% similar)
 
-**Career shape:** Charted 11 seasons (1998-99–2009-10). Entered as a Playmaking + Steals profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+**Career shape:** Charted 11 seasons (1998-99–2009-10). Entered as a Playmaking + Steals profile, peaked as a Three-Point Volume + Three-Point Accuracy identity. Career trajectory: migrator (3 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[daniel-gibson|Daniel Gibson]] '13 (90% aligned similarity — cross-era via Procrustes chaining).
 

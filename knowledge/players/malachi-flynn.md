@@ -60,7 +60,7 @@ Closest career shapes in the era-normalized vector space:
 - [[charles-r-jones|Charles R. Jones]] '00 (89% similar)
 - [[khalid-el-amin|Khalid El-Amin]] '01 (88% similar)
 
-**Career shape:** Charted 4 seasons (2020-21–2023-24). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 4 seasons (2020-21–2023-24). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: drifter (2 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[alvin-williams|Alvin Williams]] '01 (75% aligned similarity — cross-era via Procrustes chaining).
 

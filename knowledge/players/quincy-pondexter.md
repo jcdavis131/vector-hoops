@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[amir-coffey|Amir Coffey]] '23 (92% similar)
 - [[semi-ojeleye|Semi Ojeleye]] '18 (92% similar)
 
-**Career shape:** Charted 6 seasons (2010-11–2018-19). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+**Career shape:** Charted 6 seasons (2010-11–2018-19). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[eldridge-recasner|Eldridge Recasner]] '01 (85% aligned similarity — cross-era via Procrustes chaining).
 

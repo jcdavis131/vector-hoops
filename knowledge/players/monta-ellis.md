@@ -71,7 +71,7 @@ Closest career shapes in the era-normalized vector space:
 - [[allen-iverson|Allen Iverson]] '02 (90% similar)
 - [[de-aaron-fox|De'Aaron Fox]] '21 (89% similar)
 
-**Career shape:** Charted 12 seasons (2005-06–2016-17). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 12 seasons (2005-06–2016-17). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: late-bloom (3 archetype changes across his charted seasons) — one sustained archetype switch coming late in his career (after the 60% mark).
 
 **Era twin:** [[tyrese-maxey|Tyrese Maxey]] '25 (95% aligned similarity — cross-era via Procrustes chaining).
 

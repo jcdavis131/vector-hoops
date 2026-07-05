@@ -75,7 +75,7 @@ Closest career shapes in the era-normalized vector space:
 - [[tim-hardaway|Tim Hardaway]] '97 (88% similar)
 - [[damian-lillard|Damian Lillard]] '23 (88% similar)
 
-**Career shape:** Charted 16 seasons (1997-98–2013-14). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 16 seasons (1997-98–2013-14). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: reinvention (4 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[kenny-anderson|Kenny Anderson]] '97 (89% aligned similarity — cross-era via Procrustes chaining).
 

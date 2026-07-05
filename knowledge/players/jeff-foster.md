@@ -70,7 +70,7 @@ Closest career shapes in the era-normalized vector space:
 - [[scot-pollard|Scot Pollard]] '03 (92% similar)
 - [[olumide-oyedeji|Olumide Oyedeji]] '03 (90% similar)
 
-**Career shape:** Charted 11 seasons (1999-00–2010-11). Consistent Rim Protection + Offensive Glass profile across his career.
+**Career shape:** Charted 11 seasons (1999-00–2010-11). Consistent Rim Protection + Offensive Glass profile across his career. Career trajectory: stable (3 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[reggie-slater|Reggie Slater]] '03 (81% aligned similarity — cross-era via Procrustes chaining).
 

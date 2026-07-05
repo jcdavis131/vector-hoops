@@ -69,7 +69,7 @@ Closest career shapes in the era-normalized vector space:
 - [[anthony-johnson|Anthony Johnson]] '02 (89% similar)
 - [[alvin-williams|Alvin Williams]] '01 (89% similar)
 
-**Career shape:** Charted 10 seasons (2007-08–2016-17). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Playmaking + Steals identity.
+**Career shape:** Charted 10 seasons (2007-08–2016-17). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Playmaking + Steals identity. Career trajectory: migrator (8 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[marko-jaric|Marko Jaric]] '03 (90% aligned similarity — cross-era via Procrustes chaining).
 

@@ -69,7 +69,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jordan-bell|Jordan Bell]] '18 (88% similar)
 - [[mason-plumlee|Mason Plumlee]] '26 (88% similar)
 
-**Career shape:** Charted 11 seasons (2007-08–2018-19). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
+**Career shape:** Charted 11 seasons (2007-08–2018-19). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity. Career trajectory: drifter (4 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[clifford-rozier|Clifford Rozier]] '97 (92% aligned similarity — cross-era via Procrustes chaining).
 

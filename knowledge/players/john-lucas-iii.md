@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[chucky-atkins|Chucky Atkins]] '08 (90% similar)
 - [[tony-delk|Tony Delk]] '05 (90% similar)
 
-**Career shape:** Charted 5 seasons (2006-07–2014-15). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 5 seasons (2006-07–2014-15). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: drifter (2 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[jameer-nelson|Jameer Nelson]] '09 (90% aligned similarity — cross-era via Procrustes chaining).
 

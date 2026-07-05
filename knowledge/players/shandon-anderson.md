@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[josh-green|Josh Green]] '26 (76% similar)
 - [[courtney-lee|Courtney Lee]] '20 (76% similar)
 
-**Career shape:** Charted 10 seasons (1996-97–2005-06). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 10 seasons (1996-97–2005-06). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: reinvention (5 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[alonzo-gee|Alonzo Gee]] '16 (82% aligned similarity — cross-era via Procrustes chaining).
 

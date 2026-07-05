@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[joe-smith|Joe Smith]] '00 (87% similar)
 - [[ante-zizic|Ante Zizic]] '18 (87% similar)
 
-**Career shape:** Charted 7 seasons (2004-05–2010-11). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+**Career shape:** Charted 7 seasons (2004-05–2010-11). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career. Career trajectory: reinvention (2 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[bryant-reeves|Bryant Reeves]] '98 (88% aligned similarity — cross-era via Procrustes chaining).
 

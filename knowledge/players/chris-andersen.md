@@ -72,7 +72,7 @@ Closest career shapes in the era-normalized vector space:
 - [[dikembe-mutombo|Dikembe Mutombo]] '00 (93% similar)
 - [[greg-ostertag|Greg Ostertag]] '99 (92% similar)
 
-**Career shape:** Charted 13 seasons (2001-02–2015-16). Consistent Rim Protection + Offensive Glass profile across his career.
+**Career shape:** Charted 13 seasons (2001-02–2015-16). Consistent Rim Protection + Offensive Glass profile across his career. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[dewayne-dedmon|Dewayne Dedmon]] '17 (89% aligned similarity — cross-era via Procrustes chaining).
 

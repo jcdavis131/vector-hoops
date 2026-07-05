@@ -68,7 +68,7 @@ Closest career shapes in the era-normalized vector space:
 - [[walter-mccarty|Walter McCarty]] '05 (87% similar)
 - [[antoine-wright|Antoine Wright]] '06 (86% similar)
 
-**Career shape:** Charted 10 seasons (2003-04–2012-13). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 10 seasons (2003-04–2012-13). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: reinvention (5 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[calbert-cheaney|Calbert Cheaney]] '00 (94% aligned similarity — cross-era via Procrustes chaining).
 

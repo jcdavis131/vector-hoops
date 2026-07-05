@@ -71,7 +71,7 @@ Closest career shapes in the era-normalized vector space:
 - [[chase-budinger|Chase Budinger]] '10 (90% similar)
 - [[wilson-chandler|Wilson Chandler]] '20 (89% similar)
 
-**Career shape:** Charted 13 seasons (2011-12–2023-24). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+**Career shape:** Charted 13 seasons (2011-12–2023-24). Consistent Offensive Glass (Low On-Court Impact) profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[kevin-knox-ii|Kevin Knox II]] '22 (90% aligned similarity — cross-era via Procrustes chaining).
 

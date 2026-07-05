@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[nic-claxton|Nic Claxton]] '23 (94% similar)
 - [[john-henson|John Henson]] '16 (94% similar)
 
-**Career shape:** Charted 7 seasons (2019-20–2025-26). Consistent Rim Protection + Offensive Glass profile across his career.
+**Career shape:** Charted 7 seasons (2019-20–2025-26). Consistent Rim Protection + Offensive Glass profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[john-henson|John Henson]] '16 (93% aligned similarity — cross-era via Procrustes chaining).
 

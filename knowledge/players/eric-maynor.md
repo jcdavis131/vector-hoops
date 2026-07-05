@@ -61,7 +61,7 @@ Closest career shapes in the era-normalized vector space:
 - [[marcelo-huertas|Marcelo Huertas]] '17 (91% similar)
 - [[shelvin-mack|Shelvin Mack]] '16 (91% similar)
 
-**Career shape:** Charted 4 seasons (2009-10–2013-14). Entered as a Playmaking + Steals profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+**Career shape:** Charted 4 seasons (2009-10–2013-14). Entered as a Playmaking + Steals profile, peaked as a Offensive Glass (Low On-Court Impact) identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[jason-hart|Jason Hart]] '09 (80% aligned similarity — cross-era via Procrustes chaining).
 

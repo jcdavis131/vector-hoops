@@ -70,7 +70,7 @@ Closest career shapes in the era-normalized vector space:
 - [[david-robinson|David Robinson]] '98 (85% similar)
 - [[vlade-divac|Vlade Divac]] '97 (85% similar)
 
-**Career shape:** Charted 13 seasons (2008-09–2020-21). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+**Career shape:** Charted 13 seasons (2008-09–2020-21). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career. Career trajectory: late-bloom (5 archetype changes across his charted seasons) — one sustained archetype switch coming late in his career (after the 60% mark).
 
 **Era twin:** [[victor-wembanyama|Victor Wembanyama]] '26 (67% aligned similarity — cross-era via Procrustes chaining).
 

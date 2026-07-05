@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[billy-thomas|Billy Thomas]] '06 (87% similar)
 - [[jae-crowder|Jae Crowder]] '22 (86% similar)
 
-**Career shape:** Charted 4 seasons (1996-97–1999-00). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 4 seasons (1996-97–1999-00). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[devean-george|Devean George]] '10 (82% aligned similarity — cross-era via Procrustes chaining).
 

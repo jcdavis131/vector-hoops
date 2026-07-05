@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[moses-brown|Moses Brown]] '23 (90% similar)
 - [[harry-giles-iii|Harry Giles III]] '24 (90% similar)
 
-**Career shape:** Charted 5 seasons (2012-13–2016-17). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
+**Career shape:** Charted 5 seasons (2012-13–2016-17). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[andre-drummond|Andre Drummond]] '24 (92% aligned similarity — cross-era via Procrustes chaining).
 

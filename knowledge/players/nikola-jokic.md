@@ -69,7 +69,7 @@ Closest career shapes in the era-normalized vector space:
 - [[domantas-sabonis|Domantas Sabonis]] '24 (82% similar)
 - [[chris-webber|Chris Webber]] '01 (82% similar)
 
-**Career shape:** Charted 11 seasons (2015-16–2025-26). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 11 seasons (2015-16–2025-26). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: reinvention (1 archetype change across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[giannis-antetokounmpo|Giannis Antetokounmpo]] '20 (92% aligned similarity — cross-era via Procrustes chaining).
 

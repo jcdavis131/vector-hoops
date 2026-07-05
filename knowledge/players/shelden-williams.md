@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[ed-davis|Ed Davis]] '22 (88% similar)
 - [[lonny-baxter|Lonny Baxter]] '06 (88% similar)
 
-**Career shape:** Charted 6 seasons (2006-07–2011-12). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Offensive Glass + Defensive Glass identity.
+**Career shape:** Charted 6 seasons (2006-07–2011-12). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Offensive Glass + Defensive Glass identity. Career trajectory: drifter (3 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[alton-lister|Alton Lister]] '97 (90% aligned similarity — cross-era via Procrustes chaining).
 

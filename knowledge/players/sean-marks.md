@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[ruben-boumtje-boumtje|Ruben Boumtje-Boumtje]] '02 (87% similar)
 - [[robert-swift|Robert Swift]] '05 (86% similar)
 
-**Career shape:** Charted 7 seasons (2001-02–2010-11). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+**Career shape:** Charted 7 seasons (2001-02–2010-11). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Offensive Glass (Low On-Court Impact) identity. Career trajectory: migrator (5 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[sean-may|Sean May]] '09 (72% aligned similarity — cross-era via Procrustes chaining).
 

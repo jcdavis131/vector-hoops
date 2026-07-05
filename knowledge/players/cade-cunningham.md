@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[russell-westbrook|Russell Westbrook]] '17 (93% similar)
 - [[tyreke-evans|Tyreke Evans]] '16 (92% similar)
 
-**Career shape:** Charted 4 seasons (2021-22–2025-26). Consistent Scoring Volume + Shot Volume profile across his career.
+**Career shape:** Charted 4 seasons (2021-22–2025-26). Consistent Scoring Volume + Shot Volume profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[russell-westbrook|Russell Westbrook]] '17 (96% aligned similarity — cross-era via Procrustes chaining).
 

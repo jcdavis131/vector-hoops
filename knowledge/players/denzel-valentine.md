@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jaren-jackson|Jaren Jackson]] '01 (84% similar)
 - [[chuck-person|Chuck Person]] '00 (83% similar)
 
-**Career shape:** Charted 5 seasons (2016-17–2021-22). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 5 seasons (2016-17–2021-22). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: drifter (2 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[steve-novak|Steve Novak]] '15 (84% aligned similarity — cross-era via Procrustes chaining).
 

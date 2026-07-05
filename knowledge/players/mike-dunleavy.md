@@ -73,7 +73,7 @@ Closest career shapes in the era-normalized vector space:
 - [[chase-budinger|Chase Budinger]] '10 (90% similar)
 - [[joe-dumars|Joe Dumars]] '98 (90% similar)
 
-**Career shape:** Charted 15 seasons (2002-03–2016-17). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 15 seasons (2002-03–2016-17). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[isaiah-rider|Isaiah Rider]] '00 (91% aligned similarity — cross-era via Procrustes chaining).
 

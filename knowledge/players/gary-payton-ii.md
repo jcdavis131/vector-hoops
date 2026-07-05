@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[renaldo-balkman|Renaldo Balkman]] '08 (85% similar)
 - [[jerome-kersey|Jerome Kersey]] '01 (80% similar)
 
-**Career shape:** Charted 7 seasons (2017-18–2025-26). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+**Career shape:** Charted 7 seasons (2017-18–2025-26). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Offensive Glass (Low On-Court Impact) identity. Career trajectory: migrator (3 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[dyson-daniels|Dyson Daniels]] '25 (81% aligned similarity — cross-era via Procrustes chaining).
 

@@ -61,7 +61,7 @@ Closest career shapes in the era-normalized vector space:
 - [[rashard-lewis|Rashard Lewis]] '99 (82% similar)
 - [[stephen-jackson|Stephen Jackson]] '02 (82% similar)
 
-**Career shape:** Charted 4 seasons (2019-20–2022-23). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 4 seasons (2019-20–2022-23). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[nate-robinson|Nate Robinson]] '10 (79% aligned similarity — cross-era via Procrustes chaining).
 

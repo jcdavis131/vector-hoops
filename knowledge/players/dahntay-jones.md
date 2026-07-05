@@ -68,7 +68,7 @@ Closest career shapes in the era-normalized vector space:
 - [[sam-young|Sam Young]] '13 (80% similar)
 - [[abdel-nader|Abdel Nader]] '18 (79% similar)
 
-**Career shape:** Charted 11 seasons (2003-04–2014-15). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+**Career shape:** Charted 11 seasons (2003-04–2014-15). Consistent Offensive Glass (Low On-Court Impact) profile across his career. Career trajectory: migrator (9 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[vlatko-cancar|Vlatko Čančar]] '21 (85% aligned similarity — cross-era via Procrustes chaining).
 

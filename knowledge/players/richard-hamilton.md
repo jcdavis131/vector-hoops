@@ -72,7 +72,7 @@ Closest career shapes in the era-normalized vector space:
 - [[franz-wagner|Franz Wagner]] '25 (91% similar)
 - [[devin-booker|Devin Booker]] '19 (91% similar)
 
-**Career shape:** Charted 14 seasons (1999-00–2012-13). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 14 seasons (1999-00–2012-13). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[carmelo-anthony|Carmelo Anthony]] '13 (91% aligned similarity — cross-era via Procrustes chaining).
 

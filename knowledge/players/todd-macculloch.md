@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[joan-beringer|Joan Beringer]] '26 (92% similar)
 - [[jarrett-allen|Jarrett Allen]] '25 (92% similar)
 
-**Career shape:** Charted 4 seasons (1999-00–2002-03). Consistent Rim Protection + Offensive Glass profile across his career.
+**Career shape:** Charted 4 seasons (1999-00–2002-03). Consistent Rim Protection + Offensive Glass profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[gheorghe-muresan|Gheorghe Muresan]] '97 (84% aligned similarity — cross-era via Procrustes chaining).
 

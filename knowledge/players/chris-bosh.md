@@ -71,7 +71,7 @@ Closest career shapes in the era-normalized vector space:
 - [[karl-anthony-towns|Karl-Anthony Towns]] '19 (88% similar)
 - [[joel-embiid|Joel Embiid]] '17 (88% similar)
 
-**Career shape:** Charted 13 seasons (2003-04–2015-16). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+**Career shape:** Charted 13 seasons (2003-04–2015-16). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[chris-gatling|Chris Gatling]] '97 (93% aligned similarity — cross-era via Procrustes chaining).
 

@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[john-wall|John Wall]] '17 (92% similar)
 - [[steve-francis|Steve Francis]] '05 (91% similar)
 
-**Career shape:** Charted 8 seasons (2010-11–2018-19). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 8 seasons (2010-11–2018-19). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: drifter (4 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[will-bynum|Will Bynum]] '09 (94% aligned similarity — cross-era via Procrustes chaining).
 

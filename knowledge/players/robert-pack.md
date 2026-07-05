@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[mike-taylor|Mike Taylor]] '09 (91% similar)
 - [[isaiah-collier|Isaiah Collier]] '26 (90% similar)
 
-**Career shape:** Charted 7 seasons (1996-97–2003-04). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 7 seasons (1996-97–2003-04). Consistent Playmaking + Steals profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[jrue-holiday|Jrue Holiday]] '16 (95% aligned similarity — cross-era via Procrustes chaining).
 

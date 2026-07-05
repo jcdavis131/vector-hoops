@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[anderson-varejao|Anderson Varejao]] '05 (91% similar)
 - [[jamaal-magloire|Jamaal Magloire]] '08 (90% similar)
 
-**Career shape:** Charted 7 seasons (1996-97–2002-03). Consistent Rim Protection + Offensive Glass profile across his career.
+**Career shape:** Charted 7 seasons (1996-97–2002-03). Consistent Rim Protection + Offensive Glass profile across his career. Career trajectory: drifter (3 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[felton-spencer|Felton Spencer]] '01 (83% aligned similarity — cross-era via Procrustes chaining).
 

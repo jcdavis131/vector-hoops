@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[tre-jones|Tre Jones]] '21 (87% similar)
 - [[andrew-nembhard|Andrew Nembhard]] '26 (86% similar)
 
-**Career shape:** Charted 6 seasons (2016-17–2021-22). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Playmaking + Steals identity.
+**Career shape:** Charted 6 seasons (2016-17–2021-22). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Playmaking + Steals identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[ky-bowman|Ky Bowman]] '20 (84% aligned similarity — cross-era via Procrustes chaining).
 

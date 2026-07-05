@@ -72,7 +72,7 @@ Closest career shapes in the era-normalized vector space:
 - [[michael-sweetney|Michael Sweetney]] '07 (77% similar)
 - [[nathan-knight|Nathan Knight]] '22 (75% similar)
 
-**Career shape:** Charted 13 seasons (1996-97–2008-09). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+**Career shape:** Charted 13 seasons (1996-97–2008-09). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity. Career trajectory: late-bloom (3 archetype changes across his charted seasons) — one sustained archetype switch coming late in his career (after the 60% mark).
 
 **Era twin:** [[bam-adebayo|Bam Adebayo]] '22 (84% aligned similarity — cross-era via Procrustes chaining).
 

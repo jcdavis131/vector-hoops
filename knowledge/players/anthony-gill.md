@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[tyler-cook|Tyler Cook]] '22 (80% similar)
 - [[josh-childress|Josh Childress]] '12 (80% similar)
 
-**Career shape:** Charted 6 seasons (2020-21–2025-26). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 6 seasons (2020-21–2025-26). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: migrator (4 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[quincy-acy|Quincy Acy]] '13 (72% aligned similarity — cross-era via Procrustes chaining).
 

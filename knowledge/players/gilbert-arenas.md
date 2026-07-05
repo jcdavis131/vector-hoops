@@ -68,7 +68,7 @@ Closest career shapes in the era-normalized vector space:
 - [[kemba-walker|Kemba Walker]] '19 (92% similar)
 - [[bones-hyland|Bones Hyland]] '25 (91% similar)
 
-**Career shape:** Charted 9 seasons (2001-02–2011-12). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 9 seasons (2001-02–2011-12). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: drifter (3 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[isaiah-thomas|Isaiah Thomas]] '17 (95% aligned similarity — cross-era via Procrustes chaining).
 

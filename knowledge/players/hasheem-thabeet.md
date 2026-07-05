@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[joel-przybilla|Joel Przybilla]] '01 (94% similar)
 - [[daniel-orton|Daniel Orton]] '12 (94% similar)
 
-**Career shape:** Charted 5 seasons (2009-10–2013-14). Consistent Rim Protection + Offensive Glass profile across his career.
+**Career shape:** Charted 5 seasons (2009-10–2013-14). Consistent Rim Protection + Offensive Glass profile across his career. Career trajectory: drifter (3 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[josh-powell|Josh Powell]] '07 (90% aligned similarity — cross-era via Procrustes chaining).
 

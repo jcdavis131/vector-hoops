@@ -78,7 +78,7 @@ Closest career shapes in the era-normalized vector space:
 - [[kyle-lowry|Kyle Lowry]] '16 (89% similar)
 - [[jrue-holiday|Jrue Holiday]] '16 (89% similar)
 
-**Career shape:** Charted 20 seasons (2005-06–2024-25). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 20 seasons (2005-06–2024-25). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: late-bloom (6 archetype changes across his charted seasons) — one sustained archetype switch coming late in his career (after the 60% mark).
 
 **Era twin:** [[jeff-teague|Jeff Teague]] '15 (89% aligned similarity — cross-era via Procrustes chaining).
 

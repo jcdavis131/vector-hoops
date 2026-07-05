@@ -61,7 +61,7 @@ Closest career shapes in the era-normalized vector space:
 - [[josh-green|Josh Green]] '26 (86% similar)
 - [[rodney-mcgruder|Rodney McGruder]] '18 (86% similar)
 
-**Career shape:** Charted 4 seasons (1996-97–2003-04). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 4 seasons (1996-97–2003-04). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[fred-jones|Fred Jones]] '03 (85% aligned similarity — cross-era via Procrustes chaining).
 

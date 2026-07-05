@@ -72,7 +72,7 @@ Closest career shapes in the era-normalized vector space:
 - [[lindy-waters-iii|Lindy Waters III]] '23 (93% similar)
 - [[rasual-butler|Rasual Butler]] '04 (93% similar)
 
-**Career shape:** Charted 13 seasons (2004-05–2016-17). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+**Career shape:** Charted 13 seasons (2004-05–2016-17). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity. Career trajectory: drifter (4 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[rasual-butler|Rasual Butler]] '04 (82% aligned similarity — cross-era via Procrustes chaining).
 

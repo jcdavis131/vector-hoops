@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[joe-johnson|Joe Johnson]] '07 (85% similar)
 - [[malik-monk|Malik Monk]] '18 (85% similar)
 
-**Career shape:** Charted 11 seasons (2012-13–2022-23). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+**Career shape:** Charted 11 seasons (2012-13–2022-23). Consistent Offensive Glass (Low On-Court Impact) profile across his career. Career trajectory: stable (3 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[theron-smith|Theron Smith]] '05 (80% aligned similarity — cross-era via Procrustes chaining).
 

@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[amir-johnson|Amir Johnson]] '08 (93% similar)
 - [[goga-bitadze|Goga Bitadze]] '25 (93% similar)
 
-**Career shape:** Charted 7 seasons (2018-19–2025-26). Consistent Rim Protection + Offensive Glass profile across his career.
+**Career shape:** Charted 7 seasons (2018-19–2025-26). Consistent Rim Protection + Offensive Glass profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[adonal-foyle|Adonal Foyle]] '07 (93% aligned similarity — cross-era via Procrustes chaining).
 

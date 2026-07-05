@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[devin-gray|Devin Gray]] '00 (86% similar)
 - [[glen-davis|Glen Davis]] '08 (86% similar)
 
-**Career shape:** Charted 7 seasons (2009-10–2015-16). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass + Defensive Glass identity.
+**Career shape:** Charted 7 seasons (2009-10–2015-16). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass + Defensive Glass identity. Career trajectory: reinvention (1 archetype change across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[tom-hammonds|Tom Hammonds]] '00 (75% aligned similarity — cross-era via Procrustes chaining).
 

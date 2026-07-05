@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[glen-rice|Glen Rice]] '97 (83% similar)
 - [[kyle-korver|Kyle Korver]] '04 (83% similar)
 
-**Career shape:** Charted 5 seasons (1996-97–2000-01). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 5 seasons (1996-97–2000-01). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[jason-terry|Jason Terry]] '18 (84% aligned similarity — cross-era via Procrustes chaining).
 

@@ -75,7 +75,7 @@ Closest career shapes in the era-normalized vector space:
 - [[richaun-holmes|Richaun Holmes]] '25 (92% similar)
 - [[adem-bona|Adem Bona]] '25 (91% similar)
 
-**Career shape:** Charted 16 seasons (2009-10–2024-25). Consistent Rim Protection + Offensive Glass profile across his career.
+**Career shape:** Charted 16 seasons (2009-10–2024-25). Consistent Rim Protection + Offensive Glass profile across his career. Career trajectory: migrator (9 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[lucas-nogueira|Lucas Nogueira]] '17 (90% aligned similarity — cross-era via Procrustes chaining).
 

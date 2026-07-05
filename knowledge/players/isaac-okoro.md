@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[derrick-walton-jr|Derrick Walton Jr.]] '20 (88% similar)
 - [[amir-coffey|Amir Coffey]] '23 (88% similar)
 
-**Career shape:** Charted 6 seasons (2020-21–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 6 seasons (2020-21–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[og-anunoby|OG Anunoby]] '18 (86% aligned similarity — cross-era via Procrustes chaining).
 

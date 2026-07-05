@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[blake-griffin|Blake Griffin]] '14 (86% similar)
 - [[pascal-siakam|Pascal Siakam]] '17 (85% similar)
 
-**Career shape:** Charted 6 seasons (2019-20–2025-26). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+**Career shape:** Charted 6 seasons (2019-20–2025-26). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career. Career trajectory: drifter (2 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[demarcus-cousins|DeMarcus Cousins]] '15 (83% aligned similarity — cross-era via Procrustes chaining).
 

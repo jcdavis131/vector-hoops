@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[yogi-ferrell|Yogi Ferrell]] '19 (88% similar)
 - [[sedale-threatt|Sedale Threatt]] '97 (88% similar)
 
-**Career shape:** Charted 7 seasons (2002-03–2008-09). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 7 seasons (2002-03–2008-09). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: migrator (4 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[keon-ellis|Keon Ellis]] '25 (88% aligned similarity — cross-era via Procrustes chaining).
 

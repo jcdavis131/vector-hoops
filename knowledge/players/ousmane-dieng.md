@@ -60,7 +60,7 @@ Closest career shapes in the era-normalized vector space:
 - [[lamar-patterson|Lamar Patterson]] '16 (82% similar)
 - [[brian-scalabrine|Brian Scalabrine]] '11 (80% similar)
 
-**Career shape:** Charted 4 seasons (2022-23–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 4 seasons (2022-23–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: migrator (3 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[matt-bonner|Matt Bonner]] '12 (84% aligned similarity — cross-era via Procrustes chaining).
 

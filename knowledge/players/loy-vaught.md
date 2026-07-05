@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[a-c-green|A.C. Green]] '00 (80% similar)
 - [[lorenzen-wright|Lorenzen Wright]] '08 (78% similar)
 
-**Career shape:** Charted 4 seasons (1996-97–2000-01). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass + Defensive Glass identity.
+**Career shape:** Charted 4 seasons (1996-97–2000-01). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass + Defensive Glass identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[chucky-brown|Chucky Brown]] '02 (81% aligned similarity — cross-era via Procrustes chaining).
 

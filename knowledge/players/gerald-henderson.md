@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[antonio-blakeney|Antonio Blakeney]] '19 (79% similar)
 - [[jordan-mcrae|Jordan McRae]] '16 (78% similar)
 
-**Career shape:** Charted 8 seasons (2009-10–2016-17). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+**Career shape:** Charted 8 seasons (2009-10–2016-17). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity. Career trajectory: reinvention (2 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[de-andre-hunter|De'Andre Hunter]] '25 (80% aligned similarity — cross-era via Procrustes chaining).
 

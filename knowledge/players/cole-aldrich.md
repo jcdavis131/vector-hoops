@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[nerlens-noel|Nerlens Noel]] '21 (91% similar)
 - [[oliver-miller|Oliver Miller]] '00 (91% similar)
 
-**Career shape:** Charted 8 seasons (2010-11–2017-18). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
+**Career shape:** Charted 8 seasons (2010-11–2017-18). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity. Career trajectory: late-bloom (2 archetype changes across his charted seasons) — one sustained archetype switch coming late in his career (after the 60% mark).
 
 **Era twin:** [[goga-bitadze|Goga Bitadze]] '25 (89% aligned similarity — cross-era via Procrustes chaining).
 

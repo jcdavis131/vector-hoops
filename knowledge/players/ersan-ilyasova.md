@@ -72,7 +72,7 @@ Closest career shapes in the era-normalized vector space:
 - [[bobby-portis|Bobby Portis]] '23 (76% similar)
 - [[scott-padgett|Scott Padgett]] '07 (76% similar)
 
-**Career shape:** Charted 13 seasons (2006-07–2020-21). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 13 seasons (2006-07–2020-21). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: drifter (8 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[billy-thomas|Billy Thomas]] '06 (80% aligned similarity — cross-era via Procrustes chaining).
 

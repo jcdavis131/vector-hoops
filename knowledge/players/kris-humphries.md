@@ -72,7 +72,7 @@ Closest career shapes in the era-normalized vector space:
 - [[moses-brown|Moses Brown]] '23 (92% similar)
 - [[emeka-okafor|Emeka Okafor]] '18 (91% similar)
 
-**Career shape:** Charted 13 seasons (2004-05–2016-17). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Rim Protection + Offensive Glass identity.
+**Career shape:** Charted 13 seasons (2004-05–2016-17). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Rim Protection + Offensive Glass identity. Career trajectory: migrator (8 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[charles-shackleford|Charles Shackleford]] '99 (94% aligned similarity — cross-era via Procrustes chaining).
 

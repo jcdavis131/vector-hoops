@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[terence-morris|Terence Morris]] '06 (82% similar)
 - [[joe-kleine|Joe Kleine]] '97 (82% similar)
 
-**Career shape:** Charted 9 seasons (2002-03–2010-11). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Offensive Glass + Defensive Glass identity.
+**Career shape:** Charted 9 seasons (2002-03–2010-11). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Offensive Glass + Defensive Glass identity. Career trajectory: migrator (4 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[michael-curry|Michael Curry]] '05 (88% aligned similarity — cross-era via Procrustes chaining).
 

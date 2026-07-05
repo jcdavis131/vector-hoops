@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[tyler-dorsey|Tyler Dorsey]] '18 (84% similar)
 - [[quentin-grimes|Quentin Grimes]] '24 (84% similar)
 
-**Career shape:** Charted 7 seasons (2017-18–2023-24). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+**Career shape:** Charted 7 seasons (2017-18–2023-24). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity. Career trajectory: migrator (3 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[kerry-kittles|Kerry Kittles]] '03 (83% aligned similarity — cross-era via Procrustes chaining).
 

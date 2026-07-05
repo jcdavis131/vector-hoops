@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jeremiah-robinson-earl|Jeremiah Robinson-Earl]] '26 (77% similar)
 - [[justin-champagnie|Justin Champagnie]] '22 (77% similar)
 
-**Career shape:** Charted 9 seasons (2009-10–2018-19). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 9 seasons (2009-10–2018-19). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: reinvention (1 archetype change across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[juancho-hernangomez|Juancho Hernangomez]] '23 (87% aligned similarity — cross-era via Procrustes chaining).
 

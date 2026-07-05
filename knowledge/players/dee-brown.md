@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[j-r-bremer|J.R. Bremer]] '04 (91% similar)
 - [[malachi-flynn|Malachi Flynn]] '22 (90% similar)
 
-**Career shape:** Charted 6 seasons (1996-97–2008-09). Entered as a Playmaking + Steals profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+**Career shape:** Charted 6 seasons (1996-97–2008-09). Entered as a Playmaking + Steals profile, peaked as a Three-Point Volume + Three-Point Accuracy identity. Career trajectory: late-bloom (2 archetype changes across his charted seasons) — one sustained archetype switch coming late in his career (after the 60% mark).
 
 **Era twin:** [[todd-day|Todd Day]] '01 (92% aligned similarity — cross-era via Procrustes chaining).
 

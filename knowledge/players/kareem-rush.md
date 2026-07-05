@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[svi-mykhailiuk|Svi Mykhailiuk]] '24 (91% similar)
 - [[nick-smith-jr|Nick Smith Jr.]] '25 (90% similar)
 
-**Career shape:** Charted 6 seasons (2002-03–2008-09). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+**Career shape:** Charted 6 seasons (2002-03–2008-09). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[ian-clark|Ian Clark]] '15 (92% aligned similarity — cross-era via Procrustes chaining).
 

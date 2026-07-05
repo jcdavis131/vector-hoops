@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[doug-overton|Doug Overton]] '02 (89% similar)
 - [[elie-okobo|Elie Okobo]] '19 (88% similar)
 
-**Career shape:** Charted 8 seasons (1996-97–2003-04). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+**Career shape:** Charted 8 seasons (1996-97–2003-04). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity. Career trajectory: migrator (4 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[doug-west|Doug West]] '98 (88% aligned similarity — cross-era via Procrustes chaining).
 

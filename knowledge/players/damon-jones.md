@@ -68,7 +68,7 @@ Closest career shapes in the era-normalized vector space:
 - [[kevin-huerter|Kevin Huerter]] '23 (90% similar)
 - [[chucky-atkins|Chucky Atkins]] '08 (90% similar)
 
-**Career shape:** Charted 11 seasons (1998-99–2008-09). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 11 seasons (1998-99–2008-09). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: drifter (5 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[jason-williams|Jason Williams]] '11 (87% aligned similarity — cross-era via Procrustes chaining).
 

@@ -70,7 +70,7 @@ Closest career shapes in the era-normalized vector space:
 - [[cody-martin|Cody Martin]] '21 (76% similar)
 - [[adrian-griffin|Adrian Griffin]] '04 (76% similar)
 
-**Career shape:** Charted 12 seasons (2014-15–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 12 seasons (2014-15–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: migrator (5 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[jamir-watkins|Jamir Watkins]] '26 (82% aligned similarity — cross-era via Procrustes chaining).
 

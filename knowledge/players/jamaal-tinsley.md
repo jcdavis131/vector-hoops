@@ -68,7 +68,7 @@ Closest career shapes in the era-normalized vector space:
 - [[rajon-rondo|Rajon Rondo]] '11 (91% similar)
 - [[rick-brunson|Rick Brunson]] '99 (91% similar)
 
-**Career shape:** Charted 10 seasons (2001-02–2012-13). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 10 seasons (2001-02–2012-13). Consistent Playmaking + Steals profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[willie-warren|Willie Warren]] '11 (90% aligned similarity — cross-era via Procrustes chaining).
 

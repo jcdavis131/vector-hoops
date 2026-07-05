@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[tom-hammonds|Tom Hammonds]] '00 (85% similar)
 - [[tyler-zeller|Tyler Zeller]] '17 (85% similar)
 
-**Career shape:** Charted 8 seasons (2001-02–2009-10). Consistent Offensive Glass + Defensive Glass profile across his career.
+**Career shape:** Charted 8 seasons (2001-02–2009-10). Consistent Offensive Glass + Defensive Glass profile across his career. Career trajectory: migrator (5 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[john-thomas|John Thomas]] '00 (85% aligned similarity — cross-era via Procrustes chaining).
 

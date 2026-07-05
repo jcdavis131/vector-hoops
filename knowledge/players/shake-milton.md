@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[doug-overton|Doug Overton]] '02 (85% similar)
 - [[aaron-holiday|Aaron Holiday]] '26 (84% similar)
 
-**Career shape:** Charted 7 seasons (2018-19–2024-25). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 7 seasons (2018-19–2024-25). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: migrator (5 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[justin-holiday|Justin Holiday]] '23 (88% aligned similarity — cross-era via Procrustes chaining).
 

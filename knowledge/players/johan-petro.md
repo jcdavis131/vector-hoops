@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[sean-marks|Sean Marks]] '11 (84% similar)
 - [[alton-lister|Alton Lister]] '97 (83% similar)
 
-**Career shape:** Charted 8 seasons (2005-06–2012-13). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 8 seasons (2005-06–2012-13). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: drifter (4 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[ike-austin|Ike Austin]] '02 (63% aligned similarity — cross-era via Procrustes chaining).
 

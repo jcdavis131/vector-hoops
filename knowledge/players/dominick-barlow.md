@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[deyonta-davis|Deyonta Davis]] '17 (89% similar)
 - [[yves-missi|Yves Missi]] '26 (89% similar)
 
-**Career shape:** Charted 4 seasons (2022-23–2025-26). Consistent Offensive Glass + Defensive Glass profile across his career.
+**Career shape:** Charted 4 seasons (2022-23–2025-26). Consistent Offensive Glass + Defensive Glass profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[lavoy-allen|Lavoy Allen]] '17 (83% aligned similarity — cross-era via Procrustes chaining).
 

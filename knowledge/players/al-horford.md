@@ -76,7 +76,7 @@ Closest career shapes in the era-normalized vector space:
 - [[arvydas-sabonis|Arvydas Sabonis]] '97 (68% similar)
 - [[shawn-marion|Shawn Marion]] '06 (67% similar)
 
-**Career shape:** Charted 18 seasons (2007-08–2025-26). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+**Career shape:** Charted 18 seasons (2007-08–2025-26). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity. Career trajectory: migrator (7 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[joe-smith|Joe Smith]] '00 (79% aligned similarity — cross-era via Procrustes chaining).
 

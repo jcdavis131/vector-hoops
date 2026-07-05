@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jason-terry|Jason Terry]] '18 (83% similar)
 - [[trajan-langdon|Trajan Langdon]] '02 (83% similar)
 
-**Career shape:** Charted 5 seasons (1996-97–2000-01). Entered as a Playmaking + Steals profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+**Career shape:** Charted 5 seasons (1996-97–2000-01). Entered as a Playmaking + Steals profile, peaked as a Three-Point Volume + Three-Point Accuracy identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[carlos-delfino|Carlos Delfino]] '13 (93% aligned similarity — cross-era via Procrustes chaining).
 

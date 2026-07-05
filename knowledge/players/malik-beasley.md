@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[dell-curry|Dell Curry]] '00 (92% similar)
 - [[rex-chapman|Rex Chapman]] '98 (92% similar)
 
-**Career shape:** Charted 9 seasons (2016-17–2024-25). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 9 seasons (2016-17–2024-25). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: stable (4 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[tony-delk|Tony Delk]] '05 (87% aligned similarity — cross-era via Procrustes chaining).
 

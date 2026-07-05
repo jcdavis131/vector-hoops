@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[evan-fournier|Evan Fournier]] '24 (92% similar)
 - [[joe-crispin|Joe Crispin]] '02 (92% similar)
 
-**Career shape:** Charted 6 seasons (1996-97–2001-02). Entered as a Scoring Volume + Shot Volume profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+**Career shape:** Charted 6 seasons (1996-97–2001-02). Entered as a Scoring Volume + Shot Volume profile, peaked as a Three-Point Volume + Three-Point Accuracy identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[joe-crispin|Joe Crispin]] '02 (92% aligned similarity — cross-era via Procrustes chaining).
 

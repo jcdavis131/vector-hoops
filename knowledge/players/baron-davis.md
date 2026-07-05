@@ -71,7 +71,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jared-butler|Jared Butler]] '24 (89% similar)
 - [[eric-bledsoe|Eric Bledsoe]] '17 (89% similar)
 
-**Career shape:** Charted 13 seasons (1999-00–2011-12). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 13 seasons (1999-00–2011-12). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: late-bloom (2 archetype changes across his charted seasons) — one sustained archetype switch coming late in his career (after the 60% mark).
 
 **Era twin:** [[clyde-drexler|Clyde Drexler]] '98 (94% aligned similarity — cross-era via Procrustes chaining).
 

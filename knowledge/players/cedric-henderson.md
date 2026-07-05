@@ -61,7 +61,7 @@ Closest career shapes in the era-normalized vector space:
 - [[cody-williams|Cody Williams]] '25 (76% similar)
 - [[sonny-weems|Sonny Weems]] '16 (73% similar)
 
-**Career shape:** Charted 4 seasons (1997-98–2000-01). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+**Career shape:** Charted 4 seasons (1997-98–2000-01). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[rafer-alston|Rafer Alston]] '00 (78% aligned similarity — cross-era via Procrustes chaining).
 

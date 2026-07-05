@@ -68,7 +68,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jaylen-clark|Jaylen Clark]] '25 (85% similar)
 - [[john-konchar|John Konchar]] '20 (85% similar)
 
-**Career shape:** Charted 9 seasons (1999-00–2008-09). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass + Defensive Glass identity.
+**Career shape:** Charted 9 seasons (1999-00–2008-09). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass + Defensive Glass identity. Career trajectory: drifter (5 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[stacey-augmon|Stacey Augmon]] '99 (89% aligned similarity — cross-era via Procrustes chaining).
 

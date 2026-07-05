@@ -71,7 +71,7 @@ Closest career shapes in the era-normalized vector space:
 - [[sam-cassell|Sam Cassell]] '04 (89% similar)
 - [[damian-lillard|Damian Lillard]] '23 (89% similar)
 
-**Career shape:** Charted 13 seasons (2010-11–2023-24). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 13 seasons (2010-11–2023-24). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: migrator (7 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[jalen-brunson|Jalen Brunson]] '24 (92% aligned similarity — cross-era via Procrustes chaining).
 

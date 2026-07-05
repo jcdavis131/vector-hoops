@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jordan-mclaughlin|Jordan McLaughlin]] '24 (87% similar)
 - [[jamie-watson|Jamie Watson]] '97 (87% similar)
 
-**Career shape:** Charted 8 seasons (2016-17–2025-26). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 8 seasons (2016-17–2025-26). Consistent Playmaking + Steals profile across his career. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[delon-wright|Delon Wright]] '23 (93% aligned similarity — cross-era via Procrustes chaining).
 

@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[kenneth-faried|Kenneth Faried]] '12 (86% similar)
 - [[enes-freedom|Enes Freedom]] '18 (85% similar)
 
-**Career shape:** Charted 5 seasons (2021-22–2025-26). Consistent Rim Protection + Offensive Glass profile across his career.
+**Career shape:** Charted 5 seasons (2021-22–2025-26). Consistent Rim Protection + Offensive Glass profile across his career. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[jordan-hill|Jordan Hill]] '13 (91% aligned similarity — cross-era via Procrustes chaining).
 

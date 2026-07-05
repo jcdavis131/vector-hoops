@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[kendrick-nunn|Kendrick Nunn]] '20 (93% similar)
 - [[malik-monk|Malik Monk]] '18 (93% similar)
 
-**Career shape:** Charted 4 seasons (2011-12–2014-15). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 4 seasons (2011-12–2014-15). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[mark-price|Mark Price]] '98 (82% aligned similarity — cross-era via Procrustes chaining).
 

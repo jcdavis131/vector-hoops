@@ -72,7 +72,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jalen-brunson|Jalen Brunson]] '24 (90% similar)
 - [[devin-booker|Devin Booker]] '19 (90% similar)
 
-**Career shape:** Charted 14 seasons (2008-09–2023-24). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 14 seasons (2008-09–2023-24). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: drifter (5 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[latrell-sprewell|Latrell Sprewell]] '97 (93% aligned similarity — cross-era via Procrustes chaining).
 

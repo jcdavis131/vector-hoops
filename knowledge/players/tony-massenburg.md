@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[mark-strickland|Mark Strickland]] '97 (91% similar)
 - [[samaki-walker|Samaki Walker]] '02 (90% similar)
 
-**Career shape:** Charted 8 seasons (1996-97–2004-05). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+**Career shape:** Charted 8 seasons (1996-97–2004-05). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Offensive Glass (Low On-Court Impact) identity. Career trajectory: migrator (4 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[ashraf-amaya|Ashraf Amaya]] '97 (76% aligned similarity — cross-era via Procrustes chaining).
 

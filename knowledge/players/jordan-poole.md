@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jordan-clarkson|Jordan Clarkson]] '21 (93% similar)
 - [[isaiah-thomas|Isaiah Thomas]] '17 (93% similar)
 
-**Career shape:** Charted 7 seasons (2019-20–2025-26). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 7 seasons (2019-20–2025-26). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: reinvention (2 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[jonathan-gibson|Jonathan Gibson]] '17 (90% aligned similarity — cross-era via Procrustes chaining).
 

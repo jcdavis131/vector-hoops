@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[willie-green|Willie Green]] '04 (90% similar)
 - [[allan-houston|Allan Houston]] '03 (90% similar)
 
-**Career shape:** Charted 6 seasons (2002-03–2007-08). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 6 seasons (2002-03–2007-08). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[ace-bailey|Ace Bailey]] '26 (82% aligned similarity — cross-era via Procrustes chaining).
 

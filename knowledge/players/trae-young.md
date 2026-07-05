@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[stephon-castle|Stephon Castle]] '26 (92% similar)
 - [[james-harden|James Harden]] '19 (92% similar)
 
-**Career shape:** Charted 7 seasons (2018-19–2024-25). Consistent Scoring Volume + Shot Volume profile across his career.
+**Career shape:** Charted 7 seasons (2018-19–2024-25). Consistent Scoring Volume + Shot Volume profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[steve-francis|Steve Francis]] '05 (93% aligned similarity — cross-era via Procrustes chaining).
 

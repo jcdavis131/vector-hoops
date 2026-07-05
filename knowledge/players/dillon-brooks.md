@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[evan-fournier|Evan Fournier]] '24 (85% similar)
 - [[willie-green|Willie Green]] '04 (85% similar)
 
-**Career shape:** Charted 9 seasons (2017-18–2025-26). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 9 seasons (2017-18–2025-26). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[gordon-hayward|Gordon Hayward]] '17 (85% aligned similarity — cross-era via Procrustes chaining).
 

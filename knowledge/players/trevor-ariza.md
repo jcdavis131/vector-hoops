@@ -75,7 +75,7 @@ Closest career shapes in the era-normalized vector space:
 - [[ime-udoka|Ime Udoka]] '11 (83% similar)
 - [[brian-cardinal|Brian Cardinal]] '12 (81% similar)
 
-**Career shape:** Charted 18 seasons (2004-05–2021-22). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 18 seasons (2004-05–2021-22). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: drifter (8 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[hollis-thompson|Hollis Thompson]] '17 (89% aligned similarity — cross-era via Procrustes chaining).
 

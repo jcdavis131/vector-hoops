@@ -61,7 +61,7 @@ Closest career shapes in the era-normalized vector space:
 - [[kevin-ollie|Kevin Ollie]] '10 (79% similar)
 - [[trent-forrest|Trent Forrest]] '23 (77% similar)
 
-**Career shape:** Charted 4 seasons (2001-02–2005-06). Entered as a Playmaking + Steals profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+**Career shape:** Charted 4 seasons (2001-02–2005-06). Entered as a Playmaking + Steals profile, peaked as a Offensive Glass (Low On-Court Impact) identity. Career trajectory: migrator (3 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[d-j-wilson|D.J. Wilson]] '18 (83% aligned similarity — cross-era via Procrustes chaining).
 

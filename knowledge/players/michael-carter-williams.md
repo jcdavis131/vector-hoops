@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[ricky-rubio|Ricky Rubio]] '13 (82% similar)
 - [[speedy-claxton|Speedy Claxton]] '07 (82% similar)
 
-**Career shape:** Charted 8 seasons (2013-14–2020-21). Consistent Scoring Volume + Shot Volume profile across his career.
+**Career shape:** Charted 8 seasons (2013-14–2020-21). Consistent Scoring Volume + Shot Volume profile across his career. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[markelle-fultz|Markelle Fultz]] '22 (92% aligned similarity — cross-era via Procrustes chaining).
 

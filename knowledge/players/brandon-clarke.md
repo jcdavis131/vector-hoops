@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[dereck-lively-ii|Dereck Lively II]] '25 (91% similar)
 - [[neemias-queta|Neemias Queta]] '24 (91% similar)
 
-**Career shape:** Charted 5 seasons (2019-20–2024-25). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Rim Protection + Offensive Glass identity.
+**Career shape:** Charted 5 seasons (2019-20–2024-25). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Rim Protection + Offensive Glass identity. Career trajectory: drifter (2 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[kenyon-martin|Kenyon Martin]] '13 (92% aligned similarity — cross-era via Procrustes chaining).
 

@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[ray-owes|Ray Owes]] '97 (82% similar)
 - [[lonny-baxter|Lonny Baxter]] '06 (81% similar)
 
-**Career shape:** Charted 4 seasons (2022-23–2025-26). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+**Career shape:** Charted 4 seasons (2022-23–2025-26). Consistent Offensive Glass (Low On-Court Impact) profile across his career. Career trajectory: reinvention (1 archetype change across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[todd-fuller|Todd Fuller]] '98 (90% aligned similarity — cross-era via Procrustes chaining).
 

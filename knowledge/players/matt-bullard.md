@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[max-strus|Max Strus]] '21 (95% similar)
 - [[richie-frahm|Richie Frahm]] '04 (95% similar)
 
-**Career shape:** Charted 6 seasons (1996-97–2001-02). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+**Career shape:** Charted 6 seasons (1996-97–2001-02). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity. Career trajectory: drifter (3 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[dale-ellis|Dale Ellis]] '00 (89% aligned similarity — cross-era via Procrustes chaining).
 

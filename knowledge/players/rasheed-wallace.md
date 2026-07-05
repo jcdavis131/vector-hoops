@@ -73,7 +73,7 @@ Closest career shapes in the era-normalized vector space:
 - [[dirk-nowitzki|Dirk Nowitzki]] '06 (74% similar)
 - [[kristaps-porzingis|Kristaps Porziņģis]] '18 (73% similar)
 
-**Career shape:** Charted 15 seasons (1996-97–2012-13). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+**Career shape:** Charted 15 seasons (1996-97–2012-13). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity. Career trajectory: reinvention (3 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[james-collins|James Collins]] '98 (74% aligned similarity — cross-era via Procrustes chaining).
 

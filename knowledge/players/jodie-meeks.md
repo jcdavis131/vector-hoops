@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[gary-trent-jr|Gary Trent Jr.]] '26 (92% similar)
 - [[marco-belinelli|Marco Belinelli]] '08 (92% similar)
 
-**Career shape:** Charted 8 seasons (2009-10–2017-18). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 8 seasons (2009-10–2017-18). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[matt-thomas|Matt Thomas]] '22 (97% aligned similarity — cross-era via Procrustes chaining).
 

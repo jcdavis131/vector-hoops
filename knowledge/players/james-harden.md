@@ -75,7 +75,7 @@ Closest career shapes in the era-normalized vector space:
 - [[damian-lillard|Damian Lillard]] '23 (91% similar)
 - [[lebron-james|LeBron James]] '10 (91% similar)
 
-**Career shape:** Charted 17 seasons (2009-10–2025-26). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 17 seasons (2009-10–2025-26). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[donovan-mitchell|Donovan Mitchell]] '21 (93% aligned similarity — cross-era via Procrustes chaining).
 

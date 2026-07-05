@@ -71,7 +71,7 @@ Closest career shapes in the era-normalized vector space:
 - [[mychal-mulder|Mychal Mulder]] '22 (91% similar)
 - [[lindy-waters-iii|Lindy Waters III]] '23 (91% similar)
 
-**Career shape:** Charted 13 seasons (2002-03–2015-16). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 13 seasons (2002-03–2015-16). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: late-bloom (5 archetype changes across his charted seasons) — one sustained archetype switch coming late in his career (after the 60% mark).
 
 **Era twin:** [[mirza-teletovic|Mirza Teletovic]] '17 (90% aligned similarity — cross-era via Procrustes chaining).
 

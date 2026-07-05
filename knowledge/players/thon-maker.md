@@ -61,7 +61,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jim-mcilvaine|Jim McIlvaine]] '00 (81% similar)
 - [[aj-hammons|AJ Hammons]] '17 (81% similar)
 
-**Career shape:** Charted 4 seasons (2016-17–2019-20). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+**Career shape:** Charted 4 seasons (2016-17–2019-20). Consistent Offensive Glass (Low On-Court Impact) profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[mouhamed-sene|Mouhamed Sene]] '07 (88% aligned similarity — cross-era via Procrustes chaining).
 

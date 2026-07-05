@@ -71,7 +71,7 @@ Closest career shapes in the era-normalized vector space:
 - [[patrick-patterson|Patrick Patterson]] '19 (88% similar)
 - [[ryan-broekhoff|Ryan Broekhoff]] '19 (87% similar)
 
-**Career shape:** Charted 12 seasons (2004-05–2015-16). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 12 seasons (2004-05–2015-16). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: stable (4 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[richie-frahm|Richie Frahm]] '04 (88% aligned similarity — cross-era via Procrustes chaining).
 

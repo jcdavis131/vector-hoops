@@ -74,7 +74,7 @@ Closest career shapes in the era-normalized vector space:
 - [[corey-brewer|Corey Brewer]] '19 (81% similar)
 - [[jose-alvarado|Jose Alvarado]] '22 (80% similar)
 
-**Career shape:** Charted 16 seasons (1999-00–2016-17). Entered as a Playmaking + Steals profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+**Career shape:** Charted 16 seasons (1999-00–2016-17). Entered as a Playmaking + Steals profile, peaked as a Offensive Glass (Low On-Court Impact) identity. Career trajectory: migrator (3 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[nate-hinton|Nate Hinton]] '21 (93% aligned similarity — cross-era via Procrustes chaining).
 

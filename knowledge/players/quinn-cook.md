@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[willie-green|Willie Green]] '04 (88% similar)
 - [[luke-kennard|Luke Kennard]] '23 (88% similar)
 
-**Career shape:** Charted 4 seasons (2017-18–2020-21). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 4 seasons (2017-18–2020-21). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[taurean-prince|Taurean Prince]] '26 (81% aligned similarity — cross-era via Procrustes chaining).
 

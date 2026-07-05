@@ -68,7 +68,7 @@ Closest career shapes in the era-normalized vector space:
 - [[carlos-boozer|Carlos Boozer]] '07 (85% similar)
 - [[nene|Nene]] '19 (85% similar)
 
-**Career shape:** Charted 9 seasons (2017-18–2025-26). Entered as a Rim Protection + Offensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+**Career shape:** Charted 9 seasons (2017-18–2025-26). Entered as a Rim Protection + Offensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[boban-marjanovic|Boban Marjanovic]] '18 (88% aligned similarity — cross-era via Procrustes chaining).
 

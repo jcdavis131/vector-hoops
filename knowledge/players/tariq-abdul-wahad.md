@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[tyshawn-taylor|Tyshawn Taylor]] '14 (70% similar)
 - [[brandon-davies|Brandon Davies]] '15 (70% similar)
 
-**Career shape:** Charted 5 seasons (1997-98–2001-02). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+**Career shape:** Charted 5 seasons (1997-98–2001-02). Consistent Offensive Glass (Low On-Court Impact) profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[j-r-henderson|J.R. Henderson]] '99 (75% aligned similarity — cross-era via Procrustes chaining).
 

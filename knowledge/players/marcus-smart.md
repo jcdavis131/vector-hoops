@@ -70,7 +70,7 @@ Closest career shapes in the era-normalized vector space:
 - [[marko-jaric|Marko Jaric]] '03 (90% similar)
 - [[darrell-armstrong|Darrell Armstrong]] '99 (89% similar)
 
-**Career shape:** Charted 12 seasons (2014-15–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Playmaking + Steals identity.
+**Career shape:** Charted 12 seasons (2014-15–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Playmaking + Steals identity. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[shabazz-napier|Shabazz Napier]] '17 (84% aligned similarity — cross-era via Procrustes chaining).
 

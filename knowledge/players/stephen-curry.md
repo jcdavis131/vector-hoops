@@ -74,7 +74,7 @@ Closest career shapes in the era-normalized vector space:
 - [[desmond-bane|Desmond Bane]] '24 (92% similar)
 - [[paul-george|Paul George]] '22 (91% similar)
 
-**Career shape:** Charted 16 seasons (2009-10–2025-26). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 16 seasons (2009-10–2025-26). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[caron-butler|Caron Butler]] '08 (92% aligned similarity — cross-era via Procrustes chaining).
 

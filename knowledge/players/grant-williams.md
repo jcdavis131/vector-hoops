@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[dorian-finney-smith|Dorian Finney-Smith]] '26 (85% similar)
 - [[danuel-house-jr|Danuel House Jr.]] '19 (83% similar)
 
-**Career shape:** Charted 6 seasons (2019-20–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 6 seasons (2019-20–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[jordan-walsh|Jordan Walsh]] '25 (86% aligned similarity — cross-era via Procrustes chaining).
 

@@ -74,7 +74,7 @@ Closest career shapes in the era-normalized vector space:
 - [[marco-belinelli|Marco Belinelli]] '08 (92% similar)
 - [[tim-hardaway-jr|Tim Hardaway Jr.]] '15 (92% similar)
 
-**Career shape:** Charted 15 seasons (2006-07–2020-21). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 15 seasons (2006-07–2020-21). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[peja-stojakovic|Peja Stojakovic]] '04 (86% aligned similarity — cross-era via Procrustes chaining).
 

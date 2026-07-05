@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[julian-phillips|Julian Phillips]] '26 (74% similar)
 - [[grant-williams|Grant Williams]] '20 (73% similar)
 
-**Career shape:** Charted 6 seasons (2020-21–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 6 seasons (2020-21–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[torrey-craig|Torrey Craig]] '20 (85% aligned similarity — cross-era via Procrustes chaining).
 

@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[kevin-love|Kevin Love]] '19 (84% similar)
 - [[patrick-ewing|Patrick Ewing]] '98 (84% similar)
 
-**Career shape:** Charted 8 seasons (1996-97–2003-04). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+**Career shape:** Charted 8 seasons (1996-97–2003-04). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career. Career trajectory: stable (3 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[pau-gasol|Pau Gasol]] '15 (83% aligned similarity — cross-era via Procrustes chaining).
 

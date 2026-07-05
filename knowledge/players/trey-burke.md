@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[joe-johnson|Joe Johnson]] '07 (91% similar)
 - [[john-lucas-iii|John Lucas III]] '12 (91% similar)
 
-**Career shape:** Charted 9 seasons (2013-14–2021-22). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 9 seasons (2013-14–2021-22). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: stable (3 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[earl-boykins|Earl Boykins]] '00 (86% aligned similarity — cross-era via Procrustes chaining).
 

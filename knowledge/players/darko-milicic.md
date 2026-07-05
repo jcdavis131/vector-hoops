@@ -68,7 +68,7 @@ Closest career shapes in the era-normalized vector space:
 - [[dj-mbenga|DJ Mbenga]] '06 (91% similar)
 - [[jerome-james|Jerome James]] '06 (89% similar)
 
-**Career shape:** Charted 9 seasons (2003-04–2011-12). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+**Career shape:** Charted 9 seasons (2003-04–2011-12). Consistent Offensive Glass (Low On-Court Impact) profile across his career. Career trajectory: migrator (6 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[acie-earl|Acie Earl]] '97 (80% aligned similarity — cross-era via Procrustes chaining).
 

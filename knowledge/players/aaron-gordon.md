@@ -70,7 +70,7 @@ Closest career shapes in the era-normalized vector space:
 - [[pau-gasol|Pau Gasol]] '15 (74% similar)
 - [[boban-marjanovic|Boban Marjanovic]] '18 (72% similar)
 
-**Career shape:** Charted 12 seasons (2014-15–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+**Career shape:** Charted 12 seasons (2014-15–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity. Career trajectory: migrator (7 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[shawn-long|Shawn Long]] '17 (77% aligned similarity — cross-era via Procrustes chaining).
 

@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[keith-van-horn|Keith Van Horn]] '99 (87% similar)
 - [[anthony-edwards|Anthony Edwards]] '25 (86% similar)
 
-**Career shape:** Charted 8 seasons (1996-97–2003-04). Consistent Scoring Volume + Shot Volume profile across his career.
+**Career shape:** Charted 8 seasons (1996-97–2003-04). Consistent Scoring Volume + Shot Volume profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[brandon-miller|Brandon Miller]] '26 (91% aligned similarity — cross-era via Procrustes chaining).
 

@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jayson-tatum|Jayson Tatum]] '23 (88% similar)
 - [[isaiah-rider|Isaiah Rider]] '00 (88% similar)
 
-**Career shape:** Charted 8 seasons (1996-97–2003-04). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 8 seasons (1996-97–2003-04). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: reinvention (4 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[laphonso-ellis|LaPhonso Ellis]] '97 (88% aligned similarity — cross-era via Procrustes chaining).
 

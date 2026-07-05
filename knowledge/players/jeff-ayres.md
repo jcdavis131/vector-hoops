@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[clar-weatherspoon|Clar. Weatherspoon]] '03 (88% similar)
 - [[cheick-diallo|Cheick Diallo]] '17 (88% similar)
 
-**Career shape:** Charted 6 seasons (2009-10–2015-16). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+**Career shape:** Charted 6 seasons (2009-10–2015-16). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass (Low On-Court Impact) identity. Career trajectory: migrator (4 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[tosan-evbuomwan|Tosan Evbuomwan]] '24 (78% aligned similarity — cross-era via Procrustes chaining).
 

@@ -70,7 +70,7 @@ Closest career shapes in the era-normalized vector space:
 - [[pat-spencer|Pat Spencer]] '25 (83% similar)
 - [[elliot-perry|Elliot Perry]] '99 (83% similar)
 
-**Career shape:** Charted 11 seasons (2015-16–2025-26). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 11 seasons (2015-16–2025-26). Consistent Playmaking + Steals profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[brevin-knight|Brevin Knight]] '03 (86% aligned similarity — cross-era via Procrustes chaining).
 

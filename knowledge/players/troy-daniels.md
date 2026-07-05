@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[dale-ellis|Dale Ellis]] '00 (91% similar)
 - [[daequan-cook|Daequan Cook]] '11 (91% similar)
 
-**Career shape:** Charted 6 seasons (2014-15–2019-20). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 6 seasons (2014-15–2019-20). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[juan-carlos-navarro|Juan Carlos Navarro]] '08 (92% aligned similarity — cross-era via Procrustes chaining).
 

@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[mickael-gelabale|Mickael Gelabale]] '13 (88% similar)
 - [[quinton-ross|Quinton Ross]] '11 (87% similar)
 
-**Career shape:** Charted 9 seasons (2001-02–2009-10). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 9 seasons (2001-02–2009-10). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[tayshaun-prince|Tayshaun Prince]] '16 (91% aligned similarity — cross-era via Procrustes chaining).
 

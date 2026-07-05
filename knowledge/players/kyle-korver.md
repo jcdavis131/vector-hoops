@@ -74,7 +74,7 @@ Closest career shapes in the era-normalized vector space:
 - [[isaiah-joe|Isaiah Joe]] '25 (92% similar)
 - [[luke-kennard|Luke Kennard]] '23 (91% similar)
 
-**Career shape:** Charted 17 seasons (2003-04–2019-20). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 17 seasons (2003-04–2019-20). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[pj-hairston|PJ Hairston]] '15 (91% aligned similarity — cross-era via Procrustes chaining).
 

@@ -71,7 +71,7 @@ Closest career shapes in the era-normalized vector space:
 - [[mitchell-robinson|Mitchell Robinson]] '26 (91% similar)
 - [[tarik-black|Tarik Black]] '18 (91% similar)
 
-**Career shape:** Charted 12 seasons (2013-14–2025-26). Consistent Rim Protection + Offensive Glass profile across his career.
+**Career shape:** Charted 12 seasons (2013-14–2025-26). Consistent Rim Protection + Offensive Glass profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[clifford-rozier|Clifford Rozier]] '97 (89% aligned similarity — cross-era via Procrustes chaining).
 

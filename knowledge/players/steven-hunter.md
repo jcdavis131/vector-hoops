@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[bismack-biyombo|Bismack Biyombo]] '23 (91% similar)
 - [[jakarr-sampson|JaKarr Sampson]] '18 (90% similar)
 
-**Career shape:** Charted 8 seasons (2001-02–2009-10). Consistent Rim Protection + Offensive Glass profile across his career.
+**Career shape:** Charted 8 seasons (2001-02–2009-10). Consistent Rim Protection + Offensive Glass profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[ronny-turiaf|Ronny Turiaf]] '14 (95% aligned similarity — cross-era via Procrustes chaining).
 

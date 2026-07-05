@@ -68,7 +68,7 @@ Closest career shapes in the era-normalized vector space:
 - [[george-lynch|George Lynch]] '03 (78% similar)
 - [[derrick-mckey|Derrick McKey]] '02 (78% similar)
 
-**Career shape:** Charted 11 seasons (2010-11–2020-21). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+**Career shape:** Charted 11 seasons (2010-11–2020-21). Consistent Offensive Glass (Low On-Court Impact) profile across his career. Career trajectory: migrator (3 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[george-lynch|George Lynch]] '03 (89% aligned similarity — cross-era via Procrustes chaining).
 

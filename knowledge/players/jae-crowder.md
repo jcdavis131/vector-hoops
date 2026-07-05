@@ -70,7 +70,7 @@ Closest career shapes in the era-normalized vector space:
 - [[devean-george|Devean George]] '10 (91% similar)
 - [[james-posey|James Posey]] '11 (90% similar)
 
-**Career shape:** Charted 12 seasons (2012-13–2023-24). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 12 seasons (2012-13–2023-24). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: stable (4 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[devean-george|Devean George]] '10 (88% aligned similarity — cross-era via Procrustes chaining).
 

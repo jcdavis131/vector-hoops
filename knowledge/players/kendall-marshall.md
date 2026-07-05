@@ -61,7 +61,7 @@ Closest career shapes in the era-normalized vector space:
 - [[bobby-hurley|Bobby Hurley]] '97 (93% similar)
 - [[tyler-ennis|Tyler Ennis]] '15 (93% similar)
 
-**Career shape:** Charted 4 seasons (2012-13–2015-16). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 4 seasons (2012-13–2015-16). Consistent Playmaking + Steals profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[gary-grant|Gary Grant]] '98 (86% aligned similarity — cross-era via Procrustes chaining).
 

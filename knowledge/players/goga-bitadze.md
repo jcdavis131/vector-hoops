@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[chris-andersen|Chris Andersen]] '10 (94% similar)
 - [[jeff-withey|Jeff Withey]] '17 (94% similar)
 
-**Career shape:** Charted 7 seasons (2019-20–2025-26). Consistent Rim Protection + Offensive Glass profile across his career.
+**Career shape:** Charted 7 seasons (2019-20–2025-26). Consistent Rim Protection + Offensive Glass profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[salah-mejri|Salah Mejri]] '18 (99% aligned similarity — cross-era via Procrustes chaining).
 

@@ -75,7 +75,7 @@ Closest career shapes in the era-normalized vector space:
 - [[trey-burke|Trey Burke]] '18 (91% similar)
 - [[gary-neal|Gary Neal]] '14 (91% similar)
 
-**Career shape:** Charted 17 seasons (2001-02–2017-18). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 17 seasons (2001-02–2017-18). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: migrator (4 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[duane-washington-jr|Duane Washington Jr.]] '23 (92% aligned similarity — cross-era via Procrustes chaining).
 

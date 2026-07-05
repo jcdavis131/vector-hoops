@@ -61,7 +61,7 @@ Closest career shapes in the era-normalized vector space:
 - [[dalton-knecht|Dalton Knecht]] '25 (90% similar)
 - [[matt-thomas|Matt Thomas]] '22 (90% similar)
 
-**Career shape:** Charted 5 seasons (2021-22–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+**Career shape:** Charted 5 seasons (2021-22–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[cam-reynolds|Cam Reynolds]] '19 (89% aligned similarity — cross-era via Procrustes chaining).
 

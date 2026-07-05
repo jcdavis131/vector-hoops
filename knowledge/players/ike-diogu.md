@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[marc-jackson|Marc Jackson]] '03 (87% similar)
 - [[gary-trent|Gary Trent]] '01 (86% similar)
 
-**Career shape:** Charted 5 seasons (2005-06–2010-11). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+**Career shape:** Charted 5 seasons (2005-06–2010-11). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[george-zidek|George Zidek]] '97 (81% aligned similarity — cross-era via Procrustes chaining).
 

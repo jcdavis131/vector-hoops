@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[sergio-rodriguez|Sergio Rodriguez]] '09 (92% similar)
 - [[earl-watson|Earl Watson]] '14 (92% similar)
 
-**Career shape:** Charted 4 seasons (2014-15–2017-18). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 4 seasons (2014-15–2017-18). Consistent Playmaking + Steals profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[mark-jackson|Mark Jackson]] '03 (91% aligned similarity — cross-era via Procrustes chaining).
 

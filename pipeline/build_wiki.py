@@ -30,6 +30,7 @@ ROOT = Path(__file__).resolve().parent.parent
 VECTORS = ROOT / "assets" / "vectors.json"
 DRIFT = ROOT / "assets" / "drift.json"
 ARCHETYPE_TIME = ROOT / "assets" / "archetypes_time.json"
+TRAJECTORIES = ROOT / "assets" / "trajectories.json"
 KNOW = ROOT / "knowledge"
 CACHE = ROOT / "pipeline" / "cache"
 
@@ -219,6 +220,32 @@ def career_shape_line(c, clusters) -> str:
     return f"Charted {n} {plural} ({span}). Consistent {first_arch} profile across his career."
 
 
+# Career-trajectory class glosses (pipeline/career_trajectories.py taxonomy,
+# assets/trajectories.json) -- kept in sync with that script's rule
+# definitions, stated honestly rather than as a data-derived superlative.
+TRAJECTORY_CLASS_GLOSS = {
+    "stable": "one archetype covered at least three-quarters of his seasons",
+    "reinvention": "one sustained archetype switch, each side holding at least two seasons",
+    "late-bloom": "one sustained archetype switch coming late in his career (after the 60% mark)",
+    "migrator": "three or more archetypes, none ever reaching 60% of his seasons",
+    "drifter": "moved between archetypes without any switch settling into a new majority",
+}
+
+
+def trajectory_gloss_line(entry: dict) -> str:
+    """The extra sentence appended to a dossier's Career shape line when the
+    player is in assets/trajectories.json's playerIndex. Fails soft (empty
+    string) for an unrecognized class rather than raising."""
+    klass = entry.get("class")
+    gloss = TRAJECTORY_CLASS_GLOSS.get(klass)
+    if gloss is None:
+        return ""
+    changes = entry.get("changes", 0)
+    plural = "" if changes == 1 else "s"
+    return (f" Career trajectory: {klass} ({changes} archetype change{plural} "
+            f"across his charted seasons) — {gloss}.")
+
+
 BASE_WANTED = ["PTS", "AST", "OREB", "DREB", "STL", "BLK", "TOV"]
 
 
@@ -307,6 +334,17 @@ def main() -> None:
         else:
             print("archetypes_time.json globalArchetypes order doesn't match "
                   "vectors.json clusters -- skipping prevalence context")
+
+    # ---- career trajectory classes (assets/trajectories.json), used to
+    #      extend the Career shape line -- fails soft on any missing/
+    #      unreadable file, never blocks the build ----
+    traj_index: dict[str, dict] = {}
+    if TRAJECTORIES.exists():
+        try:
+            traj_index = json.loads(TRAJECTORIES.read_text(encoding="utf-8")).get("playerIndex", {})
+        except Exception:
+            print("trajectories.json failed to parse -- skipping career trajectory gloss")
+            traj_index = {}
 
     # ---- group player-seasons by name (the dataset carries no person id;
     #      same-name players are flagged, see `ambiguous`) ----
@@ -504,7 +542,11 @@ def main() -> None:
             body.append(f"- {wl(careers[nb_name]['slug'], nb_name)} "
                         f"{season_abbrev(nb_season)} ({pct}% similar)")
         body.append("")
-        body.append(f"**Career shape:** {career_shape_line(c, clusters)}")
+        shape_line = career_shape_line(c, clusters)
+        traj_entry = traj_index.get(name)
+        if traj_entry:
+            shape_line += trajectory_gloss_line(traj_entry)
+        body.append(f"**Career shape:** {shape_line}")
         body.append("")
         twin = c.get("era_twin")
         if twin:

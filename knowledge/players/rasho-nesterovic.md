@@ -69,7 +69,7 @@ Closest career shapes in the era-normalized vector space:
 - [[tacko-fall|Tacko Fall]] '21 (87% similar)
 - [[georgios-papagiannis|Georgios Papagiannis]] '18 (86% similar)
 
-**Career shape:** Charted 11 seasons (1999-00–2009-10). Consistent Offensive Glass + Defensive Glass profile across his career.
+**Career shape:** Charted 11 seasons (1999-00–2009-10). Consistent Offensive Glass + Defensive Glass profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[georgios-papagiannis|Georgios Papagiannis]] '18 (82% aligned similarity — cross-era via Procrustes chaining).
 

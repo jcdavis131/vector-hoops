@@ -68,7 +68,7 @@ Closest career shapes in the era-normalized vector space:
 - [[greg-ostertag|Greg Ostertag]] '99 (94% similar)
 - [[dikembe-mutombo|Dikembe Mutombo]] '00 (93% similar)
 
-**Career shape:** Charted 10 seasons (1997-98–2006-07). Entered as a Rim Protection + Offensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+**Career shape:** Charted 10 seasons (1997-98–2006-07). Entered as a Rim Protection + Offensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity. Career trajectory: drifter (6 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[brian-skinner|Brian Skinner]] '08 (85% aligned similarity — cross-era via Procrustes chaining).
 

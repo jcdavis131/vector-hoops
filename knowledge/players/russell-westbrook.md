@@ -76,7 +76,7 @@ Closest career shapes in the era-normalized vector space:
 - [[cade-cunningham|Cade Cunningham]] '26 (93% similar)
 - [[stephon-castle|Stephon Castle]] '26 (92% similar)
 
-**Career shape:** Charted 18 seasons (2008-09–2025-26). Consistent Scoring Volume + Shot Volume profile across his career.
+**Career shape:** Charted 18 seasons (2008-09–2025-26). Consistent Scoring Volume + Shot Volume profile across his career. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[cade-cunningham|Cade Cunningham]] '26 (96% aligned similarity — cross-era via Procrustes chaining).
 

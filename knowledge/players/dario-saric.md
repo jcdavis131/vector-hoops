@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[kon-knueppel|Kon Knueppel]] '26 (71% similar)
 - [[markieff-morris|Markieff Morris]] '24 (71% similar)
 
-**Career shape:** Charted 7 seasons (2016-17–2023-24). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+**Career shape:** Charted 7 seasons (2016-17–2023-24). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity. Career trajectory: migrator (5 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[khris-middleton|Khris Middleton]] '20 (78% aligned similarity — cross-era via Procrustes chaining).
 

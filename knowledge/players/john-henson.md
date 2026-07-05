@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[isaiah-jackson|Isaiah Jackson]] '24 (94% similar)
 - [[daniel-gafford|Daniel Gafford]] '25 (94% similar)
 
-**Career shape:** Charted 7 seasons (2012-13–2019-20). Consistent Rim Protection + Offensive Glass profile across his career.
+**Career shape:** Charted 7 seasons (2012-13–2019-20). Consistent Rim Protection + Offensive Glass profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[daniel-gafford|Daniel Gafford]] '25 (93% aligned similarity — cross-era via Procrustes chaining).
 

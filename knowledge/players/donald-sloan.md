@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jeff-mcinnis|Jeff McInnis]] '08 (88% similar)
 - [[kevin-pangos|Kevin Pangos]] '22 (88% similar)
 
-**Career shape:** Charted 5 seasons (2011-12–2015-16). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+**Career shape:** Charted 5 seasons (2011-12–2015-16). Consistent Offensive Glass (Low On-Court Impact) profile across his career. Career trajectory: late-bloom (1 archetype change across his charted seasons) — one sustained archetype switch coming late in his career (after the 60% mark).
 
 **Era twin:** [[jeff-mcinnis|Jeff McInnis]] '08 (79% aligned similarity — cross-era via Procrustes chaining).
 

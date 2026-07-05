@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[matt-bullard|Matt Bullard]] '01 (95% similar)
 - [[duncan-robinson|Duncan Robinson]] '20 (94% similar)
 
-**Career shape:** Charted 9 seasons (1998-99–2007-08). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 9 seasons (1998-99–2007-08). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[daequan-cook|Daequan Cook]] '11 (95% aligned similarity — cross-era via Procrustes chaining).
 

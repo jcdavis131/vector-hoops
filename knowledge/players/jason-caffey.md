@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[anzejs-pasecniks|Anžejs Pasečņiks]] '20 (88% similar)
 - [[craig-smith|Craig Smith]] '09 (88% similar)
 
-**Career shape:** Charted 7 seasons (1996-97–2002-03). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+**Career shape:** Charted 7 seasons (1996-97–2002-03). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career. Career trajectory: migrator (2 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[dexter-pittman|Dexter Pittman]] '12 (81% aligned similarity — cross-era via Procrustes chaining).
 

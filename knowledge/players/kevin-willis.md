@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[mario-kasun|Mario Kasun]] '05 (88% similar)
 - [[joffrey-lauvergne|Joffrey Lauvergne]] '18 (87% similar)
 
-**Career shape:** Charted 9 seasons (1996-97–2004-05). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+**Career shape:** Charted 9 seasons (1996-97–2004-05). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career. Career trajectory: stable (3 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[todd-fuller|Todd Fuller]] '98 (83% aligned similarity — cross-era via Procrustes chaining).
 

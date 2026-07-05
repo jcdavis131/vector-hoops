@@ -75,7 +75,7 @@ Closest career shapes in the era-normalized vector space:
 - [[drew-gooden|Drew Gooden]] '16 (85% similar)
 - [[marreese-speights|Marreese Speights]] '18 (85% similar)
 
-**Career shape:** Charted 17 seasons (2001-02–2017-18). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+**Career shape:** Charted 17 seasons (2001-02–2017-18). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[keith-van-horn|Keith Van Horn]] '99 (93% aligned similarity — cross-era via Procrustes chaining).
 

@@ -75,7 +75,7 @@ Closest career shapes in the era-normalized vector space:
 - [[stanley-johnson|Stanley Johnson]] '20 (89% similar)
 - [[royal-ivey|Royal Ivey]] '12 (87% similar)
 
-**Career shape:** Charted 16 seasons (2009-10–2025-26). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 16 seasons (2009-10–2025-26). Consistent Playmaking + Steals profile across his career. Career trajectory: migrator (9 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[jerome-allen|Jerome Allen]] '97 (92% aligned similarity — cross-era via Procrustes chaining).
 

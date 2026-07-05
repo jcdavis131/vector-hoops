@@ -70,7 +70,7 @@ Closest career shapes in the era-normalized vector space:
 - [[rodrigue-beaubois|Rodrigue Beaubois]] '10 (88% similar)
 - [[clyde-drexler|Clyde Drexler]] '98 (88% similar)
 
-**Career shape:** Charted 12 seasons (1997-98–2008-09). Entered as a Playmaking + Steals profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+**Career shape:** Charted 12 seasons (1997-98–2008-09). Entered as a Playmaking + Steals profile, peaked as a Three-Point Volume + Three-Point Accuracy identity. Career trajectory: reinvention (1 archetype change across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[john-lucas-iii|John Lucas III]] '12 (89% aligned similarity — cross-era via Procrustes chaining).
 

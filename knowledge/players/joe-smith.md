@@ -72,7 +72,7 @@ Closest career shapes in the era-normalized vector space:
 - [[thomas-bryant|Thomas Bryant]] '23 (82% similar)
 - [[aron-baynes|Aron Baynes]] '17 (82% similar)
 
-**Career shape:** Charted 14 seasons (1996-97–2009-10). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+**Career shape:** Charted 14 seasons (1996-97–2009-10). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career. Career trajectory: late-bloom (5 archetype changes across his charted seasons) — one sustained archetype switch coming late in his career (after the 60% mark).
 
 **Era twin:** [[marc-jackson|Marc Jackson]] '03 (83% aligned similarity — cross-era via Procrustes chaining).
 

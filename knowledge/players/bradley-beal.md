@@ -71,7 +71,7 @@ Closest career shapes in the era-normalized vector space:
 - [[isaiah-thomas|Isaiah Thomas]] '17 (94% similar)
 - [[zach-lavine|Zach LaVine]] '21 (93% similar)
 
-**Career shape:** Charted 13 seasons (2012-13–2024-25). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 13 seasons (2012-13–2024-25). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: reinvention (2 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[damian-lillard|Damian Lillard]] '23 (94% aligned similarity — cross-era via Procrustes chaining).
 

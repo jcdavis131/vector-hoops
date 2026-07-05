@@ -68,7 +68,7 @@ Closest career shapes in the era-normalized vector space:
 - [[ryan-bowen|Ryan Bowen]] '09 (79% similar)
 - [[reggie-jordan|Reggie Jordan]] '97 (77% similar)
 
-**Career shape:** Charted 10 seasons (1996-97–2005-06). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 10 seasons (1996-97–2005-06). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: migrator (6 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[ryan-bowen|Ryan Bowen]] '09 (89% aligned similarity — cross-era via Procrustes chaining).
 

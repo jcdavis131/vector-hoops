@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[trent-forrest|Trent Forrest]] '23 (74% similar)
 - [[lance-stephenson|Lance Stephenson]] '12 (73% similar)
 
-**Career shape:** Charted 10 seasons (2010-11–2019-20). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+**Career shape:** Charted 10 seasons (2010-11–2019-20). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity. Career trajectory: migrator (7 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[elfrid-payton|Elfrid Payton]] '25 (85% aligned similarity — cross-era via Procrustes chaining).
 

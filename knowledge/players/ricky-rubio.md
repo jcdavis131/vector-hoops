@@ -71,7 +71,7 @@ Closest career shapes in the era-normalized vector space:
 - [[t-j-ford|T.J. Ford]] '07 (90% similar)
 - [[tyus-edney|Tyus Edney]] '01 (90% similar)
 
-**Career shape:** Charted 12 seasons (2011-12–2022-23). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 12 seasons (2011-12–2022-23). Consistent Playmaking + Steals profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[kenny-satterfield|Kenny Satterfield]] '02 (85% aligned similarity — cross-era via Procrustes chaining).
 

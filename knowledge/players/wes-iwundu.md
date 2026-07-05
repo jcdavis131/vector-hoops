@@ -61,7 +61,7 @@ Closest career shapes in the era-normalized vector space:
 - [[lance-thomas|Lance Thomas]] '13 (87% similar)
 - [[romeo-langford|Romeo Langford]] '20 (86% similar)
 
-**Career shape:** Charted 4 seasons (2017-18–2020-21). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+**Career shape:** Charted 4 seasons (2017-18–2020-21). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[kyle-singler|Kyle Singler]] '17 (85% aligned similarity — cross-era via Procrustes chaining).
 

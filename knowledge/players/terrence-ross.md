@@ -69,7 +69,7 @@ Closest career shapes in the era-normalized vector space:
 - [[cj-miles|CJ Miles]] '18 (94% similar)
 - [[malik-beasley|Malik Beasley]] '25 (93% similar)
 
-**Career shape:** Charted 11 seasons (2012-13–2022-23). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 11 seasons (2012-13–2022-23). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[cuttino-mobley|Cuttino Mobley]] '02 (91% aligned similarity — cross-era via Procrustes chaining).
 

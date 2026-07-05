@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jarnell-stokes|Jarnell Stokes]] '15 (87% similar)
 - [[garret-siler|Garret Siler]] '11 (87% similar)
 
-**Career shape:** Charted 5 seasons (1996-97–2002-03). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+**Career shape:** Charted 5 seasons (1996-97–2002-03). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career. Career trajectory: drifter (4 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[harold-ellis|Harold Ellis]] '98 (89% aligned similarity — cross-era via Procrustes chaining).
 

@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[ed-pinckney|Ed Pinckney]] '97 (90% similar)
 - [[shelden-williams|Shelden Williams]] '12 (90% similar)
 
-**Career shape:** Charted 9 seasons (2000-01–2008-09). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+**Career shape:** Charted 9 seasons (2000-01–2008-09). Consistent Offensive Glass (Low On-Court Impact) profile across his career. Career trajectory: migrator (5 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[lari-ketner|Lari Ketner]] '00 (92% aligned similarity — cross-era via Procrustes chaining).
 

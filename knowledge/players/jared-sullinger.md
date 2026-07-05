@@ -61,7 +61,7 @@ Closest career shapes in the era-normalized vector space:
 - [[enes-freedom|Enes Freedom]] '18 (81% similar)
 - [[jayson-williams|Jayson Williams]] '98 (78% similar)
 
-**Career shape:** Charted 4 seasons (2012-13–2015-16). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+**Career shape:** Charted 4 seasons (2012-13–2015-16). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[mario-bennett|Mario Bennett]] '98 (79% aligned similarity — cross-era via Procrustes chaining).
 

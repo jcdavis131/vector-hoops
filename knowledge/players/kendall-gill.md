@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[erick-barkley|Erick Barkley]] '02 (73% similar)
 - [[marquis-daniels|Marquis Daniels]] '04 (72% similar)
 
-**Career shape:** Charted 8 seasons (1996-97–2003-04). Entered as a Scoring Volume + Shot Volume profile, peaked as a Playmaking + Steals identity.
+**Career shape:** Charted 8 seasons (1996-97–2003-04). Entered as a Scoring Volume + Shot Volume profile, peaked as a Playmaking + Steals identity. Career trajectory: migrator (6 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[jose-alvarado|Jose Alvarado]] '22 (80% aligned similarity — cross-era via Procrustes chaining).
 

@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[dominic-mcguire|Dominic McGuire]] '10 (91% similar)
 - [[chris-dudley|Chris Dudley]] '00 (91% similar)
 
-**Career shape:** Charted 6 seasons (1996-97–2001-02). Consistent Offensive Glass + Defensive Glass profile across his career.
+**Career shape:** Charted 6 seasons (1996-97–2001-02). Consistent Offensive Glass + Defensive Glass profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[josh-boone|Josh Boone]] '10 (95% aligned similarity — cross-era via Procrustes chaining).
 

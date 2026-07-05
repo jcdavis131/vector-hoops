@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[nikola-pekovic|Nikola Pekovic]] '12 (72% similar)
 - [[carl-landry|Carl Landry]] '08 (72% similar)
 
-**Career shape:** Charted 6 seasons (2000-01–2005-06). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+**Career shape:** Charted 6 seasons (2000-01–2005-06). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity. Career trajectory: migrator (4 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[t-j-warren|T.J. Warren]] '18 (88% aligned similarity — cross-era via Procrustes chaining).
 

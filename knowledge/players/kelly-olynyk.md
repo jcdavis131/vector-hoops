@@ -70,7 +70,7 @@ Closest career shapes in the era-normalized vector space:
 - [[demarcus-cousins|DeMarcus Cousins]] '15 (66% similar)
 - [[arvydas-sabonis|Arvydas Sabonis]] '97 (65% similar)
 
-**Career shape:** Charted 13 seasons (2013-14–2025-26). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Playmaking + Steals identity.
+**Career shape:** Charted 13 seasons (2013-14–2025-26). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Playmaking + Steals identity. Career trajectory: migrator (6 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[dominique-jones|Dominique Jones]] '13 (73% aligned similarity — cross-era via Procrustes chaining).
 

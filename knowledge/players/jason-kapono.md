@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[allen-crabbe|Allen Crabbe]] '20 (94% similar)
 - [[bryn-forbes|Bryn Forbes]] '17 (94% similar)
 
-**Career shape:** Charted 9 seasons (2003-04–2011-12). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 9 seasons (2003-04–2011-12). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: reinvention (3 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[eric-piatkowski|Eric Piatkowski]] '06 (88% aligned similarity — cross-era via Procrustes chaining).
 

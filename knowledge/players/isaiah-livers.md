@@ -61,7 +61,7 @@ Closest career shapes in the era-normalized vector space:
 - [[anthony-brown|Anthony Brown]] '16 (91% similar)
 - [[ira-newble|Ira Newble]] '01 (90% similar)
 
-**Career shape:** Charted 4 seasons (2021-22–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+**Career shape:** Charted 4 seasons (2021-22–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[casey-jacobsen|Casey Jacobsen]] '08 (92% aligned similarity — cross-era via Procrustes chaining).
 

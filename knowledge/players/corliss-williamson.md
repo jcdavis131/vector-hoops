@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[nikola-pekovic|Nikola Pekovic]] '12 (78% similar)
 - [[vin-baker|Vin Baker]] '05 (78% similar)
 
-**Career shape:** Charted 11 seasons (1996-97–2006-07). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+**Career shape:** Charted 11 seasons (1996-97–2006-07). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity. Career trajectory: stable (4 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[joe-smith|Joe Smith]] '00 (73% aligned similarity — cross-era via Procrustes chaining).
 

@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[rodney-rogers|Rodney Rogers]] '00 (82% similar)
 - [[ed-gray|Ed Gray]] '99 (81% similar)
 
-**Career shape:** Charted 9 seasons (1996-97–2005-06). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+**Career shape:** Charted 9 seasons (1996-97–2005-06). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity. Career trajectory: drifter (3 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[jerald-honeycutt|Jerald Honeycutt]] '98 (80% aligned similarity — cross-era via Procrustes chaining).
 

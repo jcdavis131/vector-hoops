@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[dwight-howard|Dwight Howard]] '10 (80% similar)
 - [[tim-duncan|Tim Duncan]] '04 (80% similar)
 
-**Career shape:** Charted 8 seasons (1996-97–2003-04). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+**Career shape:** Charted 8 seasons (1996-97–2003-04). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[spencer-hawes|Spencer Hawes]] '12 (90% aligned similarity — cross-era via Procrustes chaining).
 

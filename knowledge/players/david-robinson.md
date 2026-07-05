@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[alonzo-mourning|Alonzo Mourning]] '00 (89% similar)
 - [[paul-millsap|Paul Millsap]] '07 (87% similar)
 
-**Career shape:** Charted 6 seasons (1997-98–2002-03). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+**Career shape:** Charted 6 seasons (1997-98–2002-03). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career. Career trajectory: late-bloom (1 archetype change across his charted seasons) — one sustained archetype switch coming late in his career (after the 60% mark).
 
 **Era twin:** [[tim-duncan|Tim Duncan]] '04 (96% aligned similarity — cross-era via Procrustes chaining).
 

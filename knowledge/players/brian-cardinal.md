@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[fred-hoiberg|Fred Hoiberg]] '05 (84% similar)
 - [[jon-barry|Jon Barry]] '98 (84% similar)
 
-**Career shape:** Charted 9 seasons (2003-04–2011-12). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 9 seasons (2003-04–2011-12). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: reinvention (2 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[dennis-scott|Dennis Scott]] '00 (86% aligned similarity — cross-era via Procrustes chaining).
 

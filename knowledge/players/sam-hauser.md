@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[sam-perkins|Sam Perkins]] '01 (90% similar)
 - [[richie-frahm|Richie Frahm]] '04 (89% similar)
 
-**Career shape:** Charted 5 seasons (2021-22–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 5 seasons (2021-22–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: drifter (2 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[steve-novak|Steve Novak]] '15 (80% aligned similarity — cross-era via Procrustes chaining).
 

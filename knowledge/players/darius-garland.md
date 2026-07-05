@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[reggie-jackson|Reggie Jackson]] '16 (94% similar)
 - [[sam-cassell|Sam Cassell]] '04 (93% similar)
 
-**Career shape:** Charted 7 seasons (2019-20–2025-26). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 7 seasons (2019-20–2025-26). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: reinvention (1 archetype change across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[dennis-schroder|Dennis Schröder]] '16 (95% aligned similarity — cross-era via Procrustes chaining).
 

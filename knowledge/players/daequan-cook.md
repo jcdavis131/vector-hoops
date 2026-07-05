@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[chuck-person|Chuck Person]] '00 (93% similar)
 - [[max-strus|Max Strus]] '21 (93% similar)
 
-**Career shape:** Charted 6 seasons (2007-08–2012-13). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 6 seasons (2007-08–2012-13). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[pat-garrity|Pat Garrity]] '02 (95% aligned similarity — cross-era via Procrustes chaining).
 

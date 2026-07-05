@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jake-tsakalidis|Jake Tsakalidis]] '06 (92% similar)
 - [[bruno-fernando|Bruno Fernando]] '22 (92% similar)
 
-**Career shape:** Charted 8 seasons (2010-11–2017-18). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
+**Career shape:** Charted 8 seasons (2010-11–2017-18). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity. Career trajectory: drifter (5 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[curtis-borchardt|Curtis Borchardt]] '05 (91% aligned similarity — cross-era via Procrustes chaining).
 

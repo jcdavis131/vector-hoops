@@ -74,7 +74,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jj-redick|JJ Redick]] '16 (74% similar)
 - [[wally-szczerbiak|Wally Szczerbiak]] '07 (73% similar)
 
-**Career shape:** Charted 17 seasons (2001-02–2017-18). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+**Career shape:** Charted 17 seasons (2001-02–2017-18). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass (Low On-Court Impact) identity. Career trajectory: migrator (8 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[johnny-davis|Johnny Davis]] '24 (87% aligned similarity — cross-era via Procrustes chaining).
 

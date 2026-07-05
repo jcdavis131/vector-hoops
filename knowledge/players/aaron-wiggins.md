@@ -61,7 +61,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jared-dudley|Jared Dudley]] '20 (78% similar)
 - [[seth-curry|Seth Curry]] '21 (75% similar)
 
-**Career shape:** Charted 5 seasons (2021-22–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+**Career shape:** Charted 5 seasons (2021-22–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity. Career trajectory: migrator (2 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[marquis-daniels|Marquis Daniels]] '04 (74% aligned similarity — cross-era via Procrustes chaining).
 

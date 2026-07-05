@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[chris-webber|Chris Webber]] '01 (81% similar)
 - [[demarcus-cousins|DeMarcus Cousins]] '15 (80% similar)
 
-**Career shape:** Charted 5 seasons (2021-22–2025-26). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 5 seasons (2021-22–2025-26). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[demarcus-cousins|DeMarcus Cousins]] '15 (87% aligned similarity — cross-era via Procrustes chaining).
 

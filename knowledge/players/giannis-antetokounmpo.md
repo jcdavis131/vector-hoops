@@ -72,7 +72,7 @@ Closest career shapes in the era-normalized vector space:
 - [[zion-williamson|Zion Williamson]] '25 (88% similar)
 - [[pascal-siakam|Pascal Siakam]] '17 (88% similar)
 
-**Career shape:** Charted 13 seasons (2013-14–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+**Career shape:** Charted 13 seasons (2013-14–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[nikola-jokic|Nikola Jokić]] '22 (92% aligned similarity — cross-era via Procrustes chaining).
 

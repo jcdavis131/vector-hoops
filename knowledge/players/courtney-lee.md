@@ -71,7 +71,7 @@ Closest career shapes in the era-normalized vector space:
 - [[anthony-parker|Anthony Parker]] '10 (89% similar)
 - [[tyler-johnson|Tyler Johnson]] '21 (88% similar)
 
-**Career shape:** Charted 12 seasons (2008-09–2019-20). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 12 seasons (2008-09–2019-20). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: reinvention (6 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[tyrone-corbin|Tyrone Corbin]] '00 (90% aligned similarity — cross-era via Procrustes chaining).
 

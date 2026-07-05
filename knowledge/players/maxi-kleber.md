@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jordan-walsh|Jordan Walsh]] '25 (85% similar)
 - [[hot-rod-williams|Hot Rod Williams]] '99 (83% similar)
 
-**Career shape:** Charted 9 seasons (2017-18–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass + Defensive Glass identity.
+**Career shape:** Charted 9 seasons (2017-18–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass + Defensive Glass identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[andre-roberson|Andre Roberson]] '18 (84% aligned similarity — cross-era via Procrustes chaining).
 

@@ -73,7 +73,7 @@ Closest career shapes in the era-normalized vector space:
 - [[lamarcus-aldridge|LaMarcus Aldridge]] '18 (84% similar)
 - [[nikola-vucevic|Nikola Vučević]] '19 (84% similar)
 
-**Career shape:** Charted 14 seasons (2004-05–2017-18). Entered as a Rim Protection + Offensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+**Career shape:** Charted 14 seasons (2004-05–2017-18). Entered as a Rim Protection + Offensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[nikola-vucevic|Nikola Vučević]] '19 (87% aligned similarity — cross-era via Procrustes chaining).
 

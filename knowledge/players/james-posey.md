@@ -70,7 +70,7 @@ Closest career shapes in the era-normalized vector space:
 - [[larry-robinson|Larry Robinson]] '01 (88% similar)
 - [[sasha-vujacic|Sasha Vujacic]] '05 (87% similar)
 
-**Career shape:** Charted 12 seasons (1999-00–2010-11). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 12 seasons (1999-00–2010-11). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: drifter (2 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[kyle-korver|Kyle Korver]] '04 (88% aligned similarity — cross-era via Procrustes chaining).
 

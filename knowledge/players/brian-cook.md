@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[david-benoit|David Benoit]] '98 (88% similar)
 - [[kelan-martin|Kelan Martin]] '21 (87% similar)
 
-**Career shape:** Charted 8 seasons (2003-04–2011-12). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+**Career shape:** Charted 8 seasons (2003-04–2011-12). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Three-Point Volume + Three-Point Accuracy identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[trey-thompkins|Trey Thompkins]] '12 (81% aligned similarity — cross-era via Procrustes chaining).
 

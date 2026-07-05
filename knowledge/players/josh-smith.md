@@ -71,7 +71,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jusuf-nurkic|Jusuf Nurkić]] '16 (79% similar)
 - [[anthony-davis|Anthony Davis]] '15 (78% similar)
 
-**Career shape:** Charted 12 seasons (2004-05–2015-16). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+**Career shape:** Charted 12 seasons (2004-05–2015-16). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[jusuf-nurkic|Jusuf Nurkić]] '16 (81% aligned similarity — cross-era via Procrustes chaining).
 

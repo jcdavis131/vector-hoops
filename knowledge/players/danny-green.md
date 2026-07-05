@@ -70,7 +70,7 @@ Closest career shapes in the era-normalized vector space:
 - [[devean-george|Devean George]] '10 (83% similar)
 - [[bryon-russell|Bryon Russell]] '97 (83% similar)
 
-**Career shape:** Charted 12 seasons (2009-10–2021-22). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 12 seasons (2009-10–2021-22). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: reinvention (2 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[julian-champagnie|Julian Champagnie]] '26 (87% aligned similarity — cross-era via Procrustes chaining).
 

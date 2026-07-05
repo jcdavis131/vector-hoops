@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jaden-hardy|Jaden Hardy]] '26 (77% similar)
 - [[andres-nocioni|Andres Nocioni]] '08 (77% similar)
 
-**Career shape:** Charted 9 seasons (2017-18–2025-26). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 9 seasons (2017-18–2025-26). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: migrator (3 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[isaiah-rider|Isaiah Rider]] '00 (81% aligned similarity — cross-era via Procrustes chaining).
 

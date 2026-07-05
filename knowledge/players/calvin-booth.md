@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[adonal-foyle|Adonal Foyle]] '07 (89% similar)
 - [[hot-rod-williams|Hot Rod Williams]] '99 (88% similar)
 
-**Career shape:** Charted 7 seasons (2000-01–2007-08). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass + Defensive Glass identity.
+**Career shape:** Charted 7 seasons (2000-01–2007-08). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass + Defensive Glass identity. Career trajectory: migrator (5 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[mark-west|Mark West]] '99 (81% aligned similarity — cross-era via Procrustes chaining).
 

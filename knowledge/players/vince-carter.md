@@ -80,7 +80,7 @@ Closest career shapes in the era-normalized vector space:
 - [[donovan-mitchell|Donovan Mitchell]] '21 (90% similar)
 - [[kemba-walker|Kemba Walker]] '19 (90% similar)
 
-**Career shape:** Charted 22 seasons (1998-99–2019-20). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 22 seasons (1998-99–2019-20). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: migrator (3 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[mitch-richmond|Mitch Richmond]] '97 (89% aligned similarity — cross-era via Procrustes chaining).
 

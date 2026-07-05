@@ -70,7 +70,7 @@ Closest career shapes in the era-normalized vector space:
 - [[julius-randle|Julius Randle]] '24 (85% similar)
 - [[chris-gatling|Chris Gatling]] '97 (85% similar)
 
-**Career shape:** Charted 11 seasons (2010-11–2021-22). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+**Career shape:** Charted 11 seasons (2010-11–2021-22). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career. Career trajectory: drifter (2 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[nikola-jokic|Nikola Jokić]] '22 (92% aligned similarity — cross-era via Procrustes chaining).
 

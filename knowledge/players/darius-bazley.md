@@ -60,7 +60,7 @@ Closest career shapes in the era-normalized vector space:
 - [[mouhamed-sene|Mouhamed Sene]] '07 (79% similar)
 - [[d-j-wilson|D.J. Wilson]] '18 (79% similar)
 
-**Career shape:** Charted 4 seasons (2019-20–2022-23). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Offensive Glass + Defensive Glass identity.
+**Career shape:** Charted 4 seasons (2019-20–2022-23). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Offensive Glass + Defensive Glass identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[william-cunningham|William Cunningham]] '99 (84% aligned similarity — cross-era via Procrustes chaining).
 

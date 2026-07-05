@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[allen-crabbe|Allen Crabbe]] '20 (92% similar)
 - [[cam-reynolds|Cam Reynolds]] '19 (92% similar)
 
-**Career shape:** Charted 8 seasons (1996-97–2003-04). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 8 seasons (1996-97–2003-04). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: reinvention (2 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[donald-royal|Donald Royal]] '98 (88% aligned similarity — cross-era via Procrustes chaining).
 

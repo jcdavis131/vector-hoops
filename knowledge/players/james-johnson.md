@@ -72,7 +72,7 @@ Closest career shapes in the era-normalized vector space:
 - [[stephane-lasme|Stephane Lasme]] '08 (68% similar)
 - [[deandre-bembry|DeAndre' Bembry]] '17 (68% similar)
 
-**Career shape:** Charted 14 seasons (2009-10–2022-23). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+**Career shape:** Charted 14 seasons (2009-10–2022-23). Consistent Offensive Glass (Low On-Court Impact) profile across his career. Career trajectory: migrator (7 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[lasalle-thompson|LaSalle Thompson]] '97 (84% aligned similarity — cross-era via Procrustes chaining).
 

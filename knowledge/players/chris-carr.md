@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[chris-copeland|Chris Copeland]] '16 (90% similar)
 - [[salim-stoudamire|Salim Stoudamire]] '08 (90% similar)
 
-**Career shape:** Charted 5 seasons (1996-97–2000-01). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 5 seasons (1996-97–2000-01). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[derrick-williams|Derrick Williams]] '16 (78% aligned similarity — cross-era via Procrustes chaining).
 

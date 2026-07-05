@@ -68,7 +68,7 @@ Closest career shapes in the era-normalized vector space:
 - [[langston-galloway|Langston Galloway]] '18 (92% similar)
 - [[dale-ellis|Dale Ellis]] '00 (91% similar)
 
-**Career shape:** Charted 9 seasons (2008-09–2016-17). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 9 seasons (2008-09–2016-17). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[chaz-lanier|Chaz Lanier]] '26 (89% aligned similarity — cross-era via Procrustes chaining).
 

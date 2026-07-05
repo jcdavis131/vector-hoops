@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[marvin-bagley-iii|Marvin Bagley III]] '26 (70% similar)
 - [[dominique-wilkins|Dominique Wilkins]] '97 (70% similar)
 
-**Career shape:** Charted 5 seasons (2021-22–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+**Career shape:** Charted 5 seasons (2021-22–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[shabazz-muhammad|Shabazz Muhammad]] '15 (83% aligned similarity — cross-era via Procrustes chaining).
 

@@ -70,7 +70,7 @@ Closest career shapes in the era-normalized vector space:
 - [[hasheem-thabeet|Hasheem Thabeet]] '12 (94% similar)
 - [[will-perdue|Will Perdue]] '99 (94% similar)
 
-**Career shape:** Charted 12 seasons (2000-01–2011-12). Consistent Offensive Glass + Defensive Glass profile across his career.
+**Career shape:** Charted 12 seasons (2000-01–2011-12). Consistent Offensive Glass + Defensive Glass profile across his career. Career trajectory: reinvention (4 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[yinka-dare|Yinka Dare]] '97 (93% aligned similarity — cross-era via Procrustes chaining).
 

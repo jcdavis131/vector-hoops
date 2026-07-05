@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[doron-lamb|Doron Lamb]] '14 (90% similar)
 - [[terrence-shannon-jr|Terrence Shannon Jr.]] '26 (90% similar)
 
-**Career shape:** Charted 7 seasons (2019-20–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+**Career shape:** Charted 7 seasons (2019-20–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity. Career trajectory: drifter (3 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[kyle-singler|Kyle Singler]] '17 (82% aligned similarity — cross-era via Procrustes chaining).
 

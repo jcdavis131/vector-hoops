@@ -60,7 +60,7 @@ Closest career shapes in the era-normalized vector space:
 - [[dalen-terry|Dalen Terry]] '26 (85% similar)
 - [[kris-dunn|Kris Dunn]] '20 (85% similar)
 
-**Career shape:** Charted 4 seasons (2022-23–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Playmaking + Steals identity.
+**Career shape:** Charted 4 seasons (2022-23–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Playmaking + Steals identity. Career trajectory: migrator (2 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[chris-garner|Chris Garner]] '98 (86% aligned similarity — cross-era via Procrustes chaining).
 

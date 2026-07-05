@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[mario-west|Mario West]] '09 (86% similar)
 - [[dyson-daniels|Dyson Daniels]] '25 (86% similar)
 
-**Career shape:** Charted 5 seasons (2019-20–2024-25). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass + Defensive Glass identity.
+**Career shape:** Charted 5 seasons (2019-20–2024-25). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass + Defensive Glass identity. Career trajectory: drifter (4 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[gerald-wallace|Gerald Wallace]] '15 (88% aligned similarity — cross-era via Procrustes chaining).
 

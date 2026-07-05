@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[fred-jones|Fred Jones]] '03 (92% similar)
 - [[yogi-ferrell|Yogi Ferrell]] '19 (92% similar)
 
-**Career shape:** Charted 7 seasons (2014-15–2020-21). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 7 seasons (2014-15–2020-21). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: reinvention (2 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[jodie-meeks|Jodie Meeks]] '12 (94% aligned similarity — cross-era via Procrustes chaining).
 

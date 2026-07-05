@@ -68,7 +68,7 @@ Closest career shapes in the era-normalized vector space:
 - [[yao-ming|Yao Ming]] '07 (89% similar)
 - [[kevin-durant|Kevin Durant]] '14 (89% similar)
 
-**Career shape:** Charted 10 seasons (2016-17–2025-26). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+**Career shape:** Charted 10 seasons (2016-17–2025-26). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career. Career trajectory: late-bloom (1 archetype change across his charted seasons) — one sustained archetype switch coming late in his career (after the 60% mark).
 
 **Era twin:** [[victor-wembanyama|Victor Wembanyama]] '26 (92% aligned similarity — cross-era via Procrustes chaining).
 

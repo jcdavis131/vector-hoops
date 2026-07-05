@@ -68,7 +68,7 @@ Closest career shapes in the era-normalized vector space:
 - [[charlie-bell|Charlie Bell]] '11 (86% similar)
 - [[sasha-pavlovic|Sasha Pavlovic]] '13 (86% similar)
 
-**Career shape:** Charted 11 seasons (2012-13–2022-23). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 11 seasons (2012-13–2022-23). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: migrator (4 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[joe-wieskamp|Joe Wieskamp]] '22 (86% aligned similarity — cross-era via Procrustes chaining).
 

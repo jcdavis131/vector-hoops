@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[alonzo-mourning|Alonzo Mourning]] '00 (88% similar)
 - [[hassan-whiteside|Hassan Whiteside]] '22 (88% similar)
 
-**Career shape:** Charted 9 seasons (2000-01–2008-09). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+**Career shape:** Charted 9 seasons (2000-01–2008-09). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Offensive Glass (Low On-Court Impact) identity. Career trajectory: migrator (3 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[derrick-brown|Derrick Brown]] '11 (70% aligned similarity — cross-era via Procrustes chaining).
 

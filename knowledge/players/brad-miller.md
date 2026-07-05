@@ -71,7 +71,7 @@ Closest career shapes in the era-normalized vector space:
 - [[marc-gasol|Marc Gasol]] '16 (77% similar)
 - [[domantas-sabonis|Domantas Sabonis]] '24 (76% similar)
 
-**Career shape:** Charted 13 seasons (1998-99–2010-11). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+**Career shape:** Charted 13 seasons (1998-99–2010-11). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career. Career trajectory: stable (4 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[tim-duncan|Tim Duncan]] '04 (74% aligned similarity — cross-era via Procrustes chaining).
 

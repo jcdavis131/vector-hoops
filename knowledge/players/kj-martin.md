@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[carlos-rogers|Carlos Rogers]] '01 (85% similar)
 - [[zeke-nnaji|Zeke Nnaji]] '24 (85% similar)
 
-**Career shape:** Charted 5 seasons (2020-21–2024-25). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Offensive Glass + Defensive Glass identity.
+**Career shape:** Charted 5 seasons (2020-21–2024-25). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Offensive Glass + Defensive Glass identity. Career trajectory: late-bloom (1 archetype change across his charted seasons) — one sustained archetype switch coming late in his career (after the 60% mark).
 
 **Era twin:** [[tayshaun-prince|Tayshaun Prince]] '16 (81% aligned similarity — cross-era via Procrustes chaining).
 

@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[ekpe-udoh|Ekpe Udoh]] '19 (91% similar)
 - [[christian-koloko|Christian Koloko]] '23 (90% similar)
 
-**Career shape:** Charted 5 seasons (1996-97–2000-01). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass + Defensive Glass identity.
+**Career shape:** Charted 5 seasons (1996-97–2000-01). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass + Defensive Glass identity. Career trajectory: reinvention (1 archetype change across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[adonal-foyle|Adonal Foyle]] '07 (93% aligned similarity — cross-era via Procrustes chaining).
 

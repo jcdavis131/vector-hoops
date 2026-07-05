@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[eddie-house|Eddie House]] '06 (86% similar)
 - [[morris-peterson|Morris Peterson]] '10 (84% similar)
 
-**Career shape:** Charted 7 seasons (1996-97–2003-04). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 7 seasons (1996-97–2003-04). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[miles-mcbride|Miles McBride]] '22 (91% aligned similarity — cross-era via Procrustes chaining).
 

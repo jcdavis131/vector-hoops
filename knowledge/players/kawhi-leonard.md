@@ -71,7 +71,7 @@ Closest career shapes in the era-normalized vector space:
 - [[josh-howard|Josh Howard]] '07 (82% similar)
 - [[rudy-gay|Rudy Gay]] '14 (82% similar)
 
-**Career shape:** Charted 13 seasons (2011-12–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 13 seasons (2011-12–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[shai-gilgeous-alexander|Shai Gilgeous-Alexander]] '25 (95% aligned similarity — cross-era via Procrustes chaining).
 

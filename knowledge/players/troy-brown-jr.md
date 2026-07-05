@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[robbie-hummel|Robbie Hummel]] '14 (87% similar)
 - [[anthony-brown|Anthony Brown]] '16 (86% similar)
 
-**Career shape:** Charted 6 seasons (2018-19–2023-24). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 6 seasons (2018-19–2023-24). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[jared-dudley|Jared Dudley]] '20 (91% aligned similarity — cross-era via Procrustes chaining).
 

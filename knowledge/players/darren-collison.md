@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[carlos-arroyo|Carlos Arroyo]] '03 (91% similar)
 - [[mike-conley|Mike Conley]] '13 (91% similar)
 
-**Career shape:** Charted 10 seasons (2009-10–2018-19). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 10 seasons (2009-10–2018-19). Consistent Playmaking + Steals profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[robert-pack|Robert Pack]] '97 (94% aligned similarity — cross-era via Procrustes chaining).
 

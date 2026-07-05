@@ -72,7 +72,7 @@ Closest career shapes in the era-normalized vector space:
 - [[steven-smith|Steven Smith]] '99 (84% similar)
 - [[danny-granger|Danny Granger]] '09 (83% similar)
 
-**Career shape:** Charted 14 seasons (2008-09–2023-24). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 14 seasons (2008-09–2023-24). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: stable (5 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[johnny-newman|Johnny Newman]] '98 (88% aligned similarity — cross-era via Procrustes chaining).
 

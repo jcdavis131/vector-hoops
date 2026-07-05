@@ -61,7 +61,7 @@ Closest career shapes in the era-normalized vector space:
 - [[samardo-samuels|Samardo Samuels]] '11 (87% similar)
 - [[nathan-knight|Nathan Knight]] '22 (87% similar)
 
-**Career shape:** Charted 4 seasons (1999-00–2004-05). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+**Career shape:** Charted 4 seasons (1999-00–2004-05). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career. Career trajectory: migrator (3 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[tim-young|Tim Young]] '00 (89% aligned similarity — cross-era via Procrustes chaining).
 

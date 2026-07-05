@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[david-andersen|David Andersen]] '11 (74% similar)
 - [[branden-carlson|Branden Carlson]] '25 (73% similar)
 
-**Career shape:** Charted 5 seasons (2021-22–2025-26). Consistent Offensive Glass + Defensive Glass profile across his career.
+**Career shape:** Charted 5 seasons (2021-22–2025-26). Consistent Offensive Glass + Defensive Glass profile across his career. Career trajectory: migrator (4 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[cory-jefferson|Cory Jefferson]] '15 (74% aligned similarity — cross-era via Procrustes chaining).
 

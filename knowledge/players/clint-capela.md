@@ -70,7 +70,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jakob-poeltl|Jakob Poeltl]] '22 (94% similar)
 - [[antonio-mcdyess|Antonio McDyess]] '01 (94% similar)
 
-**Career shape:** Charted 11 seasons (2015-16–2025-26). Consistent Rim Protection + Offensive Glass profile across his career.
+**Career shape:** Charted 11 seasons (2015-16–2025-26). Consistent Rim Protection + Offensive Glass profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[dan-gadzuric|Dan Gadzuric]] '05 (93% aligned similarity — cross-era via Procrustes chaining).
 

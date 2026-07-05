@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[paul-reed|Paul Reed]] '21 (87% similar)
 - [[mitchell-robinson|Mitchell Robinson]] '26 (87% similar)
 
-**Career shape:** Charted 8 seasons (2014-15–2021-22). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
+**Career shape:** Charted 8 seasons (2014-15–2021-22). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity. Career trajectory: migrator (5 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[jim-mcilvaine|Jim McIlvaine]] '00 (92% aligned similarity — cross-era via Procrustes chaining).
 

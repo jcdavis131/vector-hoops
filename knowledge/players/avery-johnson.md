@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[isaiah-taylor|Isaiah Taylor]] '18 (83% similar)
 - [[eric-snow|Eric Snow]] '08 (82% similar)
 
-**Career shape:** Charted 8 seasons (1996-97–2003-04). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 8 seasons (1996-97–2003-04). Consistent Playmaking + Steals profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[gal-mekel|Gal Mekel]] '14 (74% aligned similarity — cross-era via Procrustes chaining).
 

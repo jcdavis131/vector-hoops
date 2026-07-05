@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[bronny-james|Bronny James]] '25 (78% similar)
 - [[carl-thomas|Carl Thomas]] '97 (78% similar)
 
-**Career shape:** Charted 5 seasons (2015-16–2019-20). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+**Career shape:** Charted 5 seasons (2015-16–2019-20). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Offensive Glass (Low On-Court Impact) identity. Career trajectory: drifter (3 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[eldridge-recasner|Eldridge Recasner]] '01 (91% aligned similarity — cross-era via Procrustes chaining).
 

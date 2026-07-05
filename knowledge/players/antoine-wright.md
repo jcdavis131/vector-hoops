@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[hollis-thompson|Hollis Thompson]] '17 (91% similar)
 - [[doron-lamb|Doron Lamb]] '14 (91% similar)
 
-**Career shape:** Charted 5 seasons (2005-06–2009-10). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+**Career shape:** Charted 5 seasons (2005-06–2009-10). Consistent Offensive Glass (Low On-Court Impact) profile across his career. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[nick-johnson|Nick Johnson]] '15 (89% aligned similarity — cross-era via Procrustes chaining).
 

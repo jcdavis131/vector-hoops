@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[ricky-rubio|Ricky Rubio]] '13 (88% similar)
 - [[saben-lee|Saben Lee]] '24 (87% similar)
 
-**Career shape:** Charted 6 seasons (2001-02–2006-07). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 6 seasons (2001-02–2006-07). Consistent Playmaking + Steals profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[nick-calathes|Nick Calathes]] '15 (91% aligned similarity — cross-era via Procrustes chaining).
 

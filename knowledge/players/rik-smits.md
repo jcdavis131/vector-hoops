@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[patrick-ewing|Patrick Ewing]] '98 (83% similar)
 - [[tim-duncan|Tim Duncan]] '04 (82% similar)
 
-**Career shape:** Charted 4 seasons (1996-97–1999-00). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+**Career shape:** Charted 4 seasons (1996-97–1999-00). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[chris-webber|Chris Webber]] '01 (83% aligned similarity — cross-era via Procrustes chaining).
 

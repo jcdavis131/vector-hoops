@@ -61,7 +61,7 @@ Closest career shapes in the era-normalized vector space:
 - [[davion-mitchell|Davion Mitchell]] '26 (81% similar)
 - [[e-twaun-moore|E'Twaun Moore]] '12 (80% similar)
 
-**Career shape:** Charted 5 seasons (2021-22–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 5 seasons (2021-22–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: migrator (3 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[terance-mann|Terance Mann]] '20 (87% aligned similarity — cross-era via Procrustes chaining).
 

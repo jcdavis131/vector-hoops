@@ -69,7 +69,7 @@ Closest career shapes in the era-normalized vector space:
 - [[cory-joseph|Cory Joseph]] '24 (93% similar)
 - [[haywoode-workman|Haywoode Workman]] '00 (93% similar)
 
-**Career shape:** Charted 13 seasons (1997-98–2009-10). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Playmaking + Steals identity.
+**Career shape:** Charted 13 seasons (1997-98–2009-10). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Playmaking + Steals identity. Career trajectory: stable (5 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[jose-alvarado|Jose Alvarado]] '22 (91% aligned similarity — cross-era via Procrustes chaining).
 

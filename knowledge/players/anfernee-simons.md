@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[gary-neal|Gary Neal]] '14 (91% similar)
 - [[chris-carr|Chris Carr]] '01 (91% similar)
 
-**Career shape:** Charted 8 seasons (2018-19–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 8 seasons (2018-19–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: stable (3 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[isaiah-rider|Isaiah Rider]] '00 (89% aligned similarity — cross-era via Procrustes chaining).
 

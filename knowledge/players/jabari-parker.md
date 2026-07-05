@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[marcus-fizer|Marcus Fizer]] '03 (76% similar)
 - [[kenneth-lofton-jr|Kenneth Lofton Jr.]] '23 (72% similar)
 
-**Career shape:** Charted 6 seasons (2014-15–2019-20). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+**Career shape:** Charted 6 seasons (2014-15–2019-20). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity. Career trajectory: reinvention (3 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[brandon-ingram|Brandon Ingram]] '25 (82% aligned similarity — cross-era via Procrustes chaining).
 

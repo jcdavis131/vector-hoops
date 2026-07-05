@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[chris-mihm|Chris Mihm]] '09 (80% similar)
 - [[alex-len|Alex Len]] '24 (80% similar)
 
-**Career shape:** Charted 6 seasons (2017-18–2024-25). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+**Career shape:** Charted 6 seasons (2017-18–2024-25). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity. Career trajectory: drifter (2 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[hamed-haddadi|Hamed Haddadi]] '09 (86% aligned similarity — cross-era via Procrustes chaining).
 

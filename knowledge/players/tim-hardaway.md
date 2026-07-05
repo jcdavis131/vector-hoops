@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[nate-robinson|Nate Robinson]] '10 (91% similar)
 - [[nick-van-exel|Nick Van Exel]] '02 (91% similar)
 
-**Career shape:** Charted 6 seasons (1996-97–2001-02). Consistent Scoring Volume + Shot Volume profile across his career.
+**Career shape:** Charted 6 seasons (1996-97–2001-02). Consistent Scoring Volume + Shot Volume profile across his career. Career trajectory: drifter (3 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[baron-davis|Baron Davis]] '04 (89% aligned similarity — cross-era via Procrustes chaining).
 

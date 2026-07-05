@@ -68,7 +68,7 @@ Closest career shapes in the era-normalized vector space:
 - [[nemanja-bjelica|Nemanja Bjelica]] '22 (76% similar)
 - [[michael-cage|Michael Cage]] '00 (75% similar)
 
-**Career shape:** Charted 9 seasons (2008-09–2016-17). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Playmaking + Steals identity.
+**Career shape:** Charted 9 seasons (2008-09–2016-17). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Playmaking + Steals identity. Career trajectory: migrator (5 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[juan-toscano-anderson|Juan Toscano-Anderson]] '21 (81% aligned similarity — cross-era via Procrustes chaining).
 

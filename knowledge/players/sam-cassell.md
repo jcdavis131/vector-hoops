@@ -70,7 +70,7 @@ Closest career shapes in the era-normalized vector space:
 - [[darius-garland|Darius Garland]] '22 (93% similar)
 - [[jamal-murray|Jamal Murray]] '26 (92% similar)
 
-**Career shape:** Charted 11 seasons (1996-97–2007-08). Consistent Scoring Volume + Shot Volume profile across his career.
+**Career shape:** Charted 11 seasons (1996-97–2007-08). Consistent Scoring Volume + Shot Volume profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[malcolm-brogdon|Malcolm Brogdon]] '20 (89% aligned similarity — cross-era via Procrustes chaining).
 

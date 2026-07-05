@@ -70,7 +70,7 @@ Closest career shapes in the era-normalized vector space:
 - [[kenneth-faried|Kenneth Faried]] '12 (89% similar)
 - [[drew-gooden|Drew Gooden]] '16 (88% similar)
 
-**Career shape:** Charted 11 seasons (2011-12–2021-22). Consistent Rim Protection + Offensive Glass profile across his career.
+**Career shape:** Charted 11 seasons (2011-12–2021-22). Consistent Rim Protection + Offensive Glass profile across his career. Career trajectory: reinvention (4 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[ben-handlogten|Ben Handlogten]] '04 (88% aligned similarity — cross-era via Procrustes chaining).
 

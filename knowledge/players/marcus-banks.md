@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[mike-taylor|Mike Taylor]] '09 (88% similar)
 - [[cory-alexander|Cory Alexander]] '01 (87% similar)
 
-**Career shape:** Charted 7 seasons (2003-04–2009-10). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 7 seasons (2003-04–2009-10). Consistent Playmaking + Steals profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[chris-garner|Chris Garner]] '98 (89% aligned similarity — cross-era via Procrustes chaining).
 

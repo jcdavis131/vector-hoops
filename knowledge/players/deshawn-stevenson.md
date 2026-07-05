@@ -71,7 +71,7 @@ Closest career shapes in the era-normalized vector space:
 - [[damjan-rudez|Damjan Rudez]] '17 (90% similar)
 - [[reece-gaines|Reece Gaines]] '05 (90% similar)
 
-**Career shape:** Charted 13 seasons (2000-01–2012-13). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 13 seasons (2000-01–2012-13). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: migrator (5 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[yakhouba-diawara|Yakhouba Diawara]] '09 (90% aligned similarity — cross-era via Procrustes chaining).
 

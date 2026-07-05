@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[scott-burrell|Scott Burrell]] '00 (77% similar)
 - [[matt-barnes|Matt Barnes]] '04 (77% similar)
 
-**Career shape:** Charted 8 seasons (1999-00–2006-07). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 8 seasons (1999-00–2006-07). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: drifter (3 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[al-farouq-aminu|Al-Farouq Aminu]] '20 (85% aligned similarity — cross-era via Procrustes chaining).
 

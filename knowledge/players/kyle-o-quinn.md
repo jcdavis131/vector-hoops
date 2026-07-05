@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[bruno-fernando|Bruno Fernando]] '22 (87% similar)
 - [[eric-riley|Eric Riley]] '99 (87% similar)
 
-**Career shape:** Charted 8 seasons (2012-13–2019-20). Consistent Rim Protection + Offensive Glass profile across his career.
+**Career shape:** Charted 8 seasons (2012-13–2019-20). Consistent Rim Protection + Offensive Glass profile across his career. Career trajectory: stable (3 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[donovan-clingan|Donovan Clingan]] '25 (88% aligned similarity — cross-era via Procrustes chaining).
 

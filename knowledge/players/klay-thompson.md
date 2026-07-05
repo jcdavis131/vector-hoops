@@ -71,7 +71,7 @@ Closest career shapes in the era-normalized vector space:
 - [[michael-finley|Michael Finley]] '03 (91% similar)
 - [[ray-allen|Ray Allen]] '06 (90% similar)
 
-**Career shape:** Charted 13 seasons (2011-12–2025-26). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 13 seasons (2011-12–2025-26). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[kobe-bryant|Kobe Bryant]] '06 (87% aligned similarity — cross-era via Procrustes chaining).
 

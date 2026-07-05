@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[robert-williams-iii|Robert Williams III]] '19 (91% similar)
 - [[charles-bassey|Charles Bassey]] '24 (90% similar)
 
-**Career shape:** Charted 4 seasons (1996-97–2003-04). Consistent Rim Protection + Offensive Glass profile across his career.
+**Career shape:** Charted 4 seasons (1996-97–2003-04). Consistent Rim Protection + Offensive Glass profile across his career. Career trajectory: drifter (3 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[don-reid|Don Reid]] '01 (91% aligned similarity — cross-era via Procrustes chaining).
 

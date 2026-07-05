@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[keon-clark|Keon Clark]] '01 (95% similar)
 - [[chris-andersen|Chris Andersen]] '10 (95% similar)
 
-**Career shape:** Charted 4 seasons (2015-16–2018-19). Consistent Rim Protection + Offensive Glass profile across his career.
+**Career shape:** Charted 4 seasons (2015-16–2018-19). Consistent Rim Protection + Offensive Glass profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[goga-bitadze|Goga Bitadze]] '25 (99% aligned similarity — cross-era via Procrustes chaining).
 

@@ -69,7 +69,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jabari-smith-jr|Jabari Smith Jr.]] '23 (73% similar)
 - [[tidjane-salaun|Tidjane Salaün]] '25 (73% similar)
 
-**Career shape:** Charted 11 seasons (2001-02–2011-12). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+**Career shape:** Charted 11 seasons (2001-02–2011-12). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity. Career trajectory: migrator (7 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[meyers-leonard|Meyers Leonard]] '15 (84% aligned similarity — cross-era via Procrustes chaining).
 

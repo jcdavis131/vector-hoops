@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[david-benoit|David Benoit]] '98 (85% similar)
 - [[lj-cryer|LJ Cryer]] '26 (85% similar)
 
-**Career shape:** Charted 7 seasons (2005-06–2012-13). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+**Career shape:** Charted 7 seasons (2005-06–2012-13). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[jordan-hawkins|Jordan Hawkins]] '25 (89% aligned similarity — cross-era via Procrustes chaining).
 

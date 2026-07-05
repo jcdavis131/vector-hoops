@@ -70,7 +70,7 @@ Closest career shapes in the era-normalized vector space:
 - [[quentin-richardson|Quentin Richardson]] '05 (85% similar)
 - [[james-posey|James Posey]] '11 (85% similar)
 
-**Career shape:** Charted 12 seasons (2001-02–2012-13). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+**Career shape:** Charted 12 seasons (2001-02–2012-13). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity. Career trajectory: late-bloom (5 archetype changes across his charted seasons) — one sustained archetype switch coming late in his career (after the 60% mark).
 
 **Era twin:** [[lloyd-daniels|Lloyd Daniels]] '97 (82% aligned similarity — cross-era via Procrustes chaining).
 

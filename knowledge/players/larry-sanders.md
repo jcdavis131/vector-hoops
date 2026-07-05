@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[adonal-foyle|Adonal Foyle]] '07 (92% similar)
 - [[dan-gadzuric|Dan Gadzuric]] '05 (91% similar)
 
-**Career shape:** Charted 5 seasons (2010-11–2014-15). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
+**Career shape:** Charted 5 seasons (2010-11–2014-15). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[dj-mbenga|DJ Mbenga]] '06 (90% aligned similarity — cross-era via Procrustes chaining).
 

@@ -72,7 +72,7 @@ Closest career shapes in the era-normalized vector space:
 - [[vlade-divac|Vlade Divac]] '97 (74% similar)
 - [[charles-barkley|Charles Barkley]] '97 (74% similar)
 
-**Career shape:** Charted 14 seasons (1999-00–2012-13). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass + Defensive Glass identity.
+**Career shape:** Charted 14 seasons (1999-00–2012-13). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass + Defensive Glass identity. Career trajectory: drifter (6 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[george-lynch|George Lynch]] '03 (81% aligned similarity — cross-era via Procrustes chaining).
 

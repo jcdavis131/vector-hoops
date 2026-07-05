@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[sean-mcdermott|Sean McDermott]] '21 (87% similar)
 - [[quincy-pondexter|Quincy Pondexter]] '18 (87% similar)
 
-**Career shape:** Charted 7 seasons (2011-12–2018-19). Consistent Offensive Glass + Defensive Glass profile across his career.
+**Career shape:** Charted 7 seasons (2011-12–2018-19). Consistent Offensive Glass + Defensive Glass profile across his career. Career trajectory: migrator (4 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[jae-sean-tate|Jae'Sean Tate]] '26 (79% aligned similarity — cross-era via Procrustes chaining).
 

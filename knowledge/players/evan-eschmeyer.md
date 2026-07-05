@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[ervin-johnson|Ervin Johnson]] '05 (91% similar)
 - [[michael-ruffin|Michael Ruffin]] '07 (90% similar)
 
-**Career shape:** Charted 4 seasons (1999-00–2002-03). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass + Defensive Glass identity.
+**Career shape:** Charted 4 seasons (1999-00–2002-03). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass + Defensive Glass identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[rondae-hollis-jefferson|Rondae Hollis-Jefferson]] '16 (88% aligned similarity — cross-era via Procrustes chaining).
 

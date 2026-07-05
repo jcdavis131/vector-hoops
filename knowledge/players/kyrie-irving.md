@@ -72,7 +72,7 @@ Closest career shapes in the era-normalized vector space:
 - [[kobe-bryant|Kobe Bryant]] '06 (94% similar)
 - [[kemba-walker|Kemba Walker]] '19 (93% similar)
 
-**Career shape:** Charted 14 seasons (2011-12–2024-25). Consistent Scoring Volume + Shot Volume profile across his career.
+**Career shape:** Charted 14 seasons (2011-12–2024-25). Consistent Scoring Volume + Shot Volume profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[jalen-brunson|Jalen Brunson]] '24 (92% aligned similarity — cross-era via Procrustes chaining).
 

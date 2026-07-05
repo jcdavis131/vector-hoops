@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jonas-jerebko|Jonas Jerebko]] '17 (74% similar)
 - [[trey-lyles|Trey Lyles]] '21 (73% similar)
 
-**Career shape:** Charted 8 seasons (2012-13–2019-20). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+**Career shape:** Charted 8 seasons (2012-13–2019-20). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity. Career trajectory: migrator (5 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[troy-murphy|Troy Murphy]] '09 (84% aligned similarity — cross-era via Procrustes chaining).
 

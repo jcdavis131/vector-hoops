@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[mario-kasun|Mario Kasun]] '05 (87% similar)
 - [[boban-marjanovic|Boban Marjanovic]] '18 (84% similar)
 
-**Career shape:** Charted 8 seasons (1997-98–2005-06). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+**Career shape:** Charted 8 seasons (1997-98–2005-06). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career. Career trajectory: drifter (5 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[rony-seikaly|Rony Seikaly]] '97 (87% aligned similarity — cross-era via Procrustes chaining).
 

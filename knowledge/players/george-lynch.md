@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[eduardo-najera|Eduardo Najera]] '12 (83% similar)
 - [[noah-penda|Noah Penda]] '26 (83% similar)
 
-**Career shape:** Charted 9 seasons (1996-97–2004-05). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 9 seasons (1996-97–2004-05). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[al-farouq-aminu|Al-Farouq Aminu]] '20 (89% aligned similarity — cross-era via Procrustes chaining).
 

@@ -81,7 +81,7 @@ Closest career shapes in the era-normalized vector space:
 - [[james-harden|James Harden]] '19 (91% similar)
 - [[kobe-bryant|Kobe Bryant]] '06 (91% similar)
 
-**Career shape:** Charted 23 seasons (2003-04–2025-26). Consistent Scoring Volume + Shot Volume profile across his career.
+**Career shape:** Charted 23 seasons (2003-04–2025-26). Consistent Scoring Volume + Shot Volume profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[kevin-durant|Kevin Durant]] '14 (94% aligned similarity — cross-era via Procrustes chaining).
 

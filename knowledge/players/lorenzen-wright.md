@@ -71,7 +71,7 @@ Closest career shapes in the era-normalized vector space:
 - [[samaki-walker|Samaki Walker]] '02 (91% similar)
 - [[jason-thompson|Jason Thompson]] '15 (91% similar)
 
-**Career shape:** Charted 13 seasons (1996-97–2008-09). Consistent Offensive Glass + Defensive Glass profile across his career.
+**Career shape:** Charted 13 seasons (1996-97–2008-09). Consistent Offensive Glass + Defensive Glass profile across his career. Career trajectory: drifter (3 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[malik-allen|Malik Allen]] '11 (85% aligned similarity — cross-era via Procrustes chaining).
 

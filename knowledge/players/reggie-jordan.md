@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[dalen-terry|Dalen Terry]] '26 (83% similar)
 - [[isaac-bonga|Isaac Bonga]] '19 (82% similar)
 
-**Career shape:** Charted 4 seasons (1996-97–1999-00). Consistent Offensive Glass + Defensive Glass profile across his career.
+**Career shape:** Charted 4 seasons (1996-97–1999-00). Consistent Offensive Glass + Defensive Glass profile across his career. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[andrew-declercq|Andrew DeClercq]] '01 (83% aligned similarity — cross-era via Procrustes chaining).
 

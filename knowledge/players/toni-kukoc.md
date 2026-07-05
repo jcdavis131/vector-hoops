@@ -68,7 +68,7 @@ Closest career shapes in the era-normalized vector space:
 - [[scottie-pippen|Scottie Pippen]] '04 (88% similar)
 - [[gary-payton|Gary Payton]] '99 (87% similar)
 
-**Career shape:** Charted 10 seasons (1996-97–2005-06). Consistent Scoring Volume + Shot Volume profile across his career.
+**Career shape:** Charted 10 seasons (1996-97–2005-06). Consistent Scoring Volume + Shot Volume profile across his career. Career trajectory: late-bloom (4 archetype changes across his charted seasons) — one sustained archetype switch coming late in his career (after the 60% mark).
 
 **Era twin:** [[stephon-marbury|Stephon Marbury]] '01 (86% aligned similarity — cross-era via Procrustes chaining).
 

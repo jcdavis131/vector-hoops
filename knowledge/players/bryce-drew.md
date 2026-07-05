@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[yogi-ferrell|Yogi Ferrell]] '19 (92% similar)
 - [[chris-quinn|Chris Quinn]] '10 (91% similar)
 
-**Career shape:** Charted 4 seasons (1998-99–2001-02). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 4 seasons (1998-99–2001-02). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: migrator (2 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[roger-mason-jr|Roger Mason Jr.]] '03 (93% aligned similarity — cross-era via Procrustes chaining).
 

@@ -68,7 +68,7 @@ Closest career shapes in the era-normalized vector space:
 - [[bostjan-nachbar|Bostjan Nachbar]] '04 (76% similar)
 - [[larry-robinson|Larry Robinson]] '01 (76% similar)
 
-**Career shape:** Charted 9 seasons (2005-06–2014-15). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+**Career shape:** Charted 9 seasons (2005-06–2014-15). Consistent Offensive Glass (Low On-Court Impact) profile across his career. Career trajectory: migrator (2 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[michael-porter-jr|Michael Porter Jr.]] '26 (80% aligned similarity — cross-era via Procrustes chaining).
 

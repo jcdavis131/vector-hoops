@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[devin-harris|Devin Harris]] '09 (90% similar)
 - [[mike-conley|Mike Conley]] '13 (90% similar)
 
-**Career shape:** Charted 8 seasons (2009-10–2016-17). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 8 seasons (2009-10–2016-17). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[robert-pack|Robert Pack]] '97 (92% aligned similarity — cross-era via Procrustes chaining).
 

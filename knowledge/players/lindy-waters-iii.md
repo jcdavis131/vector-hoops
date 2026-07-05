@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[james-jones|James Jones]] '14 (93% similar)
 - [[davis-bertans|Davis Bertans]] '24 (93% similar)
 
-**Career shape:** Charted 5 seasons (2021-22–2025-26). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 5 seasons (2021-22–2025-26). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: late-bloom (1 archetype change across his charted seasons) — one sustained archetype switch coming late in his career (after the 60% mark).
 
 **Era twin:** [[danny-green|Danny Green]] '19 (86% aligned similarity — cross-era via Procrustes chaining).
 

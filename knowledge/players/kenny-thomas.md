@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[omer-asik|Omer Asik]] '18 (90% similar)
 - [[tristan-thompson|Tristan Thompson]] '25 (89% similar)
 
-**Career shape:** Charted 10 seasons (1999-00–2009-10). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Offensive Glass + Defensive Glass identity.
+**Career shape:** Charted 10 seasons (1999-00–2009-10). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Offensive Glass + Defensive Glass identity. Career trajectory: migrator (5 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[dejuan-blair|DeJuan Blair]] '16 (88% aligned similarity — cross-era via Procrustes chaining).
 

@@ -68,7 +68,7 @@ Closest career shapes in the era-normalized vector space:
 - [[tidjane-salaun|Tidjane Salaün]] '25 (82% similar)
 - [[santi-aldama|Santi Aldama]] '22 (79% similar)
 
-**Career shape:** Charted 10 seasons (2015-16–2024-25). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+**Career shape:** Charted 10 seasons (2015-16–2024-25). Consistent Offensive Glass (Low On-Court Impact) profile across his career. Career trajectory: migrator (8 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[chandler-hutchison|Chandler Hutchison]] '19 (80% aligned similarity — cross-era via Procrustes chaining).
 

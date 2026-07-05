@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jason-thompson|Jason Thompson]] '15 (92% similar)
 - [[jordan-hill|Jordan Hill]] '13 (91% similar)
 
-**Career shape:** Charted 6 seasons (2012-13–2017-18). Consistent Offensive Glass + Defensive Glass profile across his career.
+**Career shape:** Charted 6 seasons (2012-13–2017-18). Consistent Offensive Glass + Defensive Glass profile across his career. Career trajectory: migrator (3 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[trey-jemison-iii|Trey Jemison III]] '25 (91% aligned similarity — cross-era via Procrustes chaining).
 

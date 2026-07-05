@@ -68,7 +68,7 @@ Closest career shapes in the era-normalized vector space:
 - [[donovan-mitchell|Donovan Mitchell]] '21 (91% similar)
 - [[paul-pierce|Paul Pierce]] '03 (89% similar)
 
-**Career shape:** Charted 10 seasons (2016-17–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 10 seasons (2016-17–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: drifter (2 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[rudy-gay|Rudy Gay]] '14 (91% aligned similarity — cross-era via Procrustes chaining).
 

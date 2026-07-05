@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jrue-holiday|Jrue Holiday]] '16 (89% similar)
 - [[anfernee-hardaway|Anfernee Hardaway]] '08 (88% similar)
 
-**Career shape:** Charted 6 seasons (1996-97–2001-02). Entered as a Scoring Volume + Shot Volume profile, peaked as a Playmaking + Steals identity.
+**Career shape:** Charted 6 seasons (1996-97–2001-02). Entered as a Scoring Volume + Shot Volume profile, peaked as a Playmaking + Steals identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[beno-udrih|Beno Udrih]] '17 (91% aligned similarity — cross-era via Procrustes chaining).
 

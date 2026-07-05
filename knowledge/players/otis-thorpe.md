@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[ben-handlogten|Ben Handlogten]] '04 (87% similar)
 - [[jericho-sims|Jericho Sims]] '22 (87% similar)
 
-**Career shape:** Charted 5 seasons (1996-97–2000-01). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass + Defensive Glass identity.
+**Career shape:** Charted 5 seasons (1996-97–2000-01). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass + Defensive Glass identity. Career trajectory: drifter (2 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[rick-mahorn|Rick Mahorn]] '98 (87% aligned similarity — cross-era via Procrustes chaining).
 

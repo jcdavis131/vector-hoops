@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[tony-battie|Tony Battie]] '12 (86% similar)
 - [[udonis-haslem|Udonis Haslem]] '13 (86% similar)
 
-**Career shape:** Charted 7 seasons (1996-97–2003-04). Consistent Offensive Glass + Defensive Glass profile across his career.
+**Career shape:** Charted 7 seasons (1996-97–2003-04). Consistent Offensive Glass + Defensive Glass profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[adam-keefe|Adam Keefe]] '98 (91% aligned similarity — cross-era via Procrustes chaining).
 

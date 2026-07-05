@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[brevin-knight|Brevin Knight]] '03 (91% similar)
 - [[jamaal-tinsley|Jamaal Tinsley]] '04 (91% similar)
 
-**Career shape:** Charted 7 seasons (1999-00–2005-06). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 7 seasons (1999-00–2005-06). Consistent Playmaking + Steals profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[zabian-dowdell|Zabian Dowdell]] '11 (84% aligned similarity — cross-era via Procrustes chaining).
 

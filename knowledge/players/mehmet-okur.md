@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[keith-van-horn|Keith Van Horn]] '99 (81% similar)
 - [[marreese-speights|Marreese Speights]] '18 (80% similar)
 
-**Career shape:** Charted 9 seasons (2002-03–2011-12). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+**Career shape:** Charted 9 seasons (2002-03–2011-12). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass (Low On-Court Impact) identity. Career trajectory: drifter (3 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[tyrese-martin|Tyrese Martin]] '26 (82% aligned similarity — cross-era via Procrustes chaining).
 

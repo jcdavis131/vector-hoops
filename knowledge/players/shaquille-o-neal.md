@@ -74,7 +74,7 @@ Closest career shapes in the era-normalized vector space:
 - [[giannis-antetokounmpo|Giannis Antetokounmpo]] '20 (88% similar)
 - [[boban-marjanovic|Boban Marjanovic]] '18 (87% similar)
 
-**Career shape:** Charted 15 seasons (1996-97–2010-11). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+**Career shape:** Charted 15 seasons (1996-97–2010-11). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career. Career trajectory: stable (3 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[yao-ming|Yao Ming]] '07 (92% aligned similarity — cross-era via Procrustes chaining).
 

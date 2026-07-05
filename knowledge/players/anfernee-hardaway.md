@@ -68,7 +68,7 @@ Closest career shapes in the era-normalized vector space:
 - [[travis-best|Travis Best]] '04 (88% similar)
 - [[raymond-felton|Raymond Felton]] '11 (88% similar)
 
-**Career shape:** Charted 9 seasons (1996-97–2007-08). Entered as a Scoring Volume + Shot Volume profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 9 seasons (1996-97–2007-08). Entered as a Scoring Volume + Shot Volume profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: migrator (4 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[tyus-jones|Tyus Jones]] '18 (89% aligned similarity — cross-era via Procrustes chaining).
 

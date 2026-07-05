@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[mario-kasun|Mario Kasun]] '05 (88% similar)
 - [[kevin-seraphin|Kevin Seraphin]] '16 (88% similar)
 
-**Career shape:** Charted 8 seasons (2000-01–2008-09). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+**Career shape:** Charted 8 seasons (2000-01–2008-09). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass (Low On-Court Impact) identity. Career trajectory: migrator (5 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[derrick-caracter|Derrick Caracter]] '11 (86% aligned similarity — cross-era via Procrustes chaining).
 

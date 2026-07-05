@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[yi-jianlian|Yi Jianlian]] '12 (74% similar)
 - [[devin-green|Devin Green]] '06 (73% similar)
 
-**Career shape:** Charted 4 seasons (2013-14–2016-17). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+**Career shape:** Charted 4 seasons (2013-14–2016-17). Consistent Offensive Glass (Low On-Court Impact) profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[jumaine-jones|Jumaine Jones]] '07 (73% aligned similarity — cross-era via Procrustes chaining).
 

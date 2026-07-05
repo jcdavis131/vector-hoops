@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jaylin-williams|Jaylin Williams]] '25 (73% similar)
 - [[jonas-jerebko|Jonas Jerebko]] '17 (73% similar)
 
-**Career shape:** Charted 7 seasons (2015-16–2021-22). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Playmaking + Steals identity.
+**Career shape:** Charted 7 seasons (2015-16–2021-22). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Playmaking + Steals identity. Career trajectory: drifter (2 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[vlade-divac|Vlade Divac]] '97 (65% aligned similarity — cross-era via Procrustes chaining).
 

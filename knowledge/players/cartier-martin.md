@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[daequan-cook|Daequan Cook]] '11 (89% similar)
 - [[lindy-waters-iii|Lindy Waters III]] '23 (89% similar)
 
-**Career shape:** Charted 7 seasons (2008-09–2014-15). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 7 seasons (2008-09–2014-15). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: drifter (2 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[trevor-ariza|Trevor Ariza]] '22 (87% aligned similarity — cross-era via Procrustes chaining).
 

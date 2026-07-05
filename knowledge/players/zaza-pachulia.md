@@ -75,7 +75,7 @@ Closest career shapes in the era-normalized vector space:
 - [[cristiano-felicio|Cristiano Felicio]] '21 (84% similar)
 - [[jalen-duren|Jalen Duren]] '26 (84% similar)
 
-**Career shape:** Charted 16 seasons (2003-04–2018-19). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
+**Career shape:** Charted 16 seasons (2003-04–2018-19). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity. Career trajectory: migrator (8 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[scot-pollard|Scot Pollard]] '03 (88% aligned similarity — cross-era via Procrustes chaining).
 

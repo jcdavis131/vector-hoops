@@ -60,7 +60,7 @@ Closest career shapes in the era-normalized vector space:
 - [[matt-carroll|Matt Carroll]] '10 (83% similar)
 - [[larry-robinson|Larry Robinson]] '01 (82% similar)
 
-**Career shape:** Charted 4 seasons (1998-99–2001-02). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 4 seasons (1998-99–2001-02). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[tony-delk|Tony Delk]] '05 (84% aligned similarity — cross-era via Procrustes chaining).
 

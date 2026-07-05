@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[egor-demin|Egor Dëmin]] '26 (91% similar)
 - [[tyson-etienne|Tyson Etienne]] '26 (90% similar)
 
-**Career shape:** Charted 6 seasons (2013-14–2018-19). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 6 seasons (2013-14–2018-19). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: late-bloom (2 archetype changes across his charted seasons) — one sustained archetype switch coming late in his career (after the 60% mark).
 
 **Era twin:** [[ben-mclemore|Ben McLemore]] '22 (95% aligned similarity — cross-era via Procrustes chaining).
 

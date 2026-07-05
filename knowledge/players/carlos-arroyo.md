@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[ty-lawson|Ty Lawson]] '14 (89% similar)
 - [[luke-ridnour|Luke Ridnour]] '06 (88% similar)
 
-**Career shape:** Charted 9 seasons (2001-02–2010-11). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 9 seasons (2001-02–2010-11). Consistent Playmaking + Steals profile across his career. Career trajectory: late-bloom (3 archetype changes across his charted seasons) — one sustained archetype switch coming late in his career (after the 60% mark).
 
 **Era twin:** [[robert-pack|Robert Pack]] '97 (91% aligned similarity — cross-era via Procrustes chaining).
 

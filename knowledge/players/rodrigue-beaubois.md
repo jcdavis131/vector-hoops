@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[ryan-rollins|Ryan Rollins]] '26 (90% similar)
 - [[marcus-sasser|Marcus Sasser]] '26 (89% similar)
 
-**Career shape:** Charted 4 seasons (2009-10–2012-13). Consistent Scoring Volume + Shot Volume profile across his career.
+**Career shape:** Charted 4 seasons (2009-10–2012-13). Consistent Scoring Volume + Shot Volume profile across his career. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[kendrick-nunn|Kendrick Nunn]] '20 (86% aligned similarity — cross-era via Procrustes chaining).
 

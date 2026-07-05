@@ -61,7 +61,7 @@ Closest career shapes in the era-normalized vector space:
 - [[alonzo-gee|Alonzo Gee]] '16 (82% similar)
 - [[garrett-temple|Garrett Temple]] '11 (80% similar)
 
-**Career shape:** Charted 4 seasons (2022-23–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 4 seasons (2022-23–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[casey-jacobsen|Casey Jacobsen]] '08 (91% aligned similarity — cross-era via Procrustes chaining).
 

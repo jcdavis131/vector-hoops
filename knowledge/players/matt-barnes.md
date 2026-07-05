@@ -71,7 +71,7 @@ Closest career shapes in the era-normalized vector space:
 - [[drew-peterson|Drew Peterson]] '25 (82% similar)
 - [[dan-majerle|Dan Majerle]] '02 (81% similar)
 
-**Career shape:** Charted 14 seasons (2003-04–2016-17). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+**Career shape:** Charted 14 seasons (2003-04–2016-17). Consistent Offensive Glass (Low On-Court Impact) profile across his career. Career trajectory: migrator (11 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[lari-ketner|Lari Ketner]] '00 (90% aligned similarity — cross-era via Procrustes chaining).
 

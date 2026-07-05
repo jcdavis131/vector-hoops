@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[kenny-anderson|Kenny Anderson]] '97 (91% similar)
 - [[travis-best|Travis Best]] '04 (91% similar)
 
-**Career shape:** Charted 7 seasons (1997-98–2003-04). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Playmaking + Steals identity.
+**Career shape:** Charted 7 seasons (1997-98–2003-04). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Playmaking + Steals identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[monte-morris|Monte Morris]] '24 (83% aligned similarity — cross-era via Procrustes chaining).
 

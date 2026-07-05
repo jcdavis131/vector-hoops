@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[caleb-martin|Caleb Martin]] '26 (79% similar)
 - [[mario-west|Mario West]] '09 (78% similar)
 
-**Career shape:** Charted 8 seasons (2018-19–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 8 seasons (2018-19–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: migrator (6 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[mark-pope|Mark Pope]] '01 (90% aligned similarity — cross-era via Procrustes chaining).
 

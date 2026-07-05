@@ -75,7 +75,7 @@ Closest career shapes in the era-normalized vector space:
 - [[daniel-theis|Daniel Theis]] '20 (84% similar)
 - [[ervin-johnson|Ervin Johnson]] '05 (82% similar)
 
-**Career shape:** Charted 16 seasons (1996-97–2012-13). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 16 seasons (1996-97–2012-13). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: migrator (7 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[jaden-mcdaniels|Jaden McDaniels]] '21 (72% aligned similarity — cross-era via Procrustes chaining).
 

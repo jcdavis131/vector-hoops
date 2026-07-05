@@ -60,7 +60,7 @@ Closest career shapes in the era-normalized vector space:
 - [[bradley-beal|Bradley Beal]] '20 (85% similar)
 - [[zach-lavine|Zach LaVine]] '21 (84% similar)
 
-**Career shape:** Charted 4 seasons (2011-12–2018-19). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 4 seasons (2011-12–2018-19). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: migrator (3 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[larry-hughes|Larry Hughes]] '05 (82% aligned similarity — cross-era via Procrustes chaining).
 

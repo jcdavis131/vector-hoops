@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[liam-mcneeley|Liam McNeeley]] '26 (71% similar)
 - [[david-andersen|David Andersen]] '11 (71% similar)
 
-**Career shape:** Charted 7 seasons (2015-16–2022-23). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+**Career shape:** Charted 7 seasons (2015-16–2022-23). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity. Career trajectory: migrator (5 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[terrence-jones|Terrence Jones]] '15 (74% aligned similarity — cross-era via Procrustes chaining).
 

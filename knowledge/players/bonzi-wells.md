@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[russell-westbrook|Russell Westbrook]] '17 (77% similar)
 - [[allen-iverson|Allen Iverson]] '02 (75% similar)
 
-**Career shape:** Charted 9 seasons (1999-00–2007-08). Consistent Scoring Volume + Shot Volume profile across his career.
+**Career shape:** Charted 9 seasons (1999-00–2007-08). Consistent Scoring Volume + Shot Volume profile across his career. Career trajectory: reinvention (1 archetype change across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[stephen-curry|Stephen Curry]] '16 (80% aligned similarity — cross-era via Procrustes chaining).
 

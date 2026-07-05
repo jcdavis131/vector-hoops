@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[richie-frahm|Richie Frahm]] '04 (93% similar)
 - [[morris-peterson|Morris Peterson]] '10 (93% similar)
 
-**Career shape:** Charted 7 seasons (2009-10–2015-16). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 7 seasons (2009-10–2015-16). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: late-bloom (1 archetype change across his charted seasons) — one sustained archetype switch coming late in his career (after the 60% mark).
 
 **Era twin:** [[mirza-teletovic|Mirza Teletovic]] '17 (93% aligned similarity — cross-era via Procrustes chaining).
 

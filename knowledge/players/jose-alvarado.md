@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[mario-chalmers|Mario Chalmers]] '16 (91% similar)
 - [[collin-gillespie|Collin Gillespie]] '24 (91% similar)
 
-**Career shape:** Charted 5 seasons (2021-22–2025-26). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 5 seasons (2021-22–2025-26). Consistent Playmaking + Steals profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[nick-calathes|Nick Calathes]] '15 (94% aligned similarity — cross-era via Procrustes chaining).
 

@@ -61,7 +61,7 @@ Closest career shapes in the era-normalized vector space:
 - [[danny-wolf|Danny Wolf]] '26 (77% similar)
 - [[kyshawn-george|Kyshawn George]] '26 (77% similar)
 
-**Career shape:** Charted 4 seasons (2020-21–2023-24). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+**Career shape:** Charted 4 seasons (2020-21–2023-24). Consistent Offensive Glass (Low On-Court Impact) profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[luke-babbitt|Luke Babbitt]] '11 (81% aligned similarity — cross-era via Procrustes chaining).
 

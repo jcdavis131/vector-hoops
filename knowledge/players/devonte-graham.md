@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[chris-whitney|Chris Whitney]] '04 (90% similar)
 - [[dedric-willoughby|Dedric Willoughby]] '00 (90% similar)
 
-**Career shape:** Charted 6 seasons (2018-19–2023-24). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 6 seasons (2018-19–2023-24). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: drifter (2 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[damon-stoudamire|Damon Stoudamire]] '97 (96% aligned similarity — cross-era via Procrustes chaining).
 

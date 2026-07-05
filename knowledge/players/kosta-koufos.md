@@ -69,7 +69,7 @@ Closest career shapes in the era-normalized vector space:
 - [[emeka-okafor|Emeka Okafor]] '18 (93% similar)
 - [[miles-plumlee|Miles Plumlee]] '19 (93% similar)
 
-**Career shape:** Charted 11 seasons (2008-09–2018-19). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass + Defensive Glass identity.
+**Career shape:** Charted 11 seasons (2008-09–2018-19). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass + Defensive Glass identity. Career trajectory: late-bloom (3 archetype changes across his charted seasons) — one sustained archetype switch coming late in his career (after the 60% mark).
 
 **Era twin:** [[othello-hunter|Othello Hunter]] '09 (91% aligned similarity — cross-era via Procrustes chaining).
 

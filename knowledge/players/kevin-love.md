@@ -76,7 +76,7 @@ Closest career shapes in the era-normalized vector space:
 - [[karl-anthony-towns|Karl-Anthony Towns]] '19 (80% similar)
 - [[dario-saric|Dario Saric]] '21 (78% similar)
 
-**Career shape:** Charted 18 seasons (2008-09–2025-26). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+**Career shape:** Charted 18 seasons (2008-09–2025-26). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career. Career trajectory: late-bloom (5 archetype changes across his charted seasons) — one sustained archetype switch coming late in his career (after the 60% mark).
 
 **Era twin:** [[dominique-wilkins|Dominique Wilkins]] '97 (86% aligned similarity — cross-era via Procrustes chaining).
 

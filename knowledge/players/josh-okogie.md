@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[javonte-green|Javonte Green]] '26 (83% similar)
 - [[matisse-thybulle|Matisse Thybulle]] '21 (82% similar)
 
-**Career shape:** Charted 8 seasons (2018-19–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 8 seasons (2018-19–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[jamison-brewer|Jamison Brewer]] '05 (88% aligned similarity — cross-era via Procrustes chaining).
 

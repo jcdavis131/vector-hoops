@@ -73,7 +73,7 @@ Closest career shapes in the era-normalized vector space:
 - [[terry-porter|Terry Porter]] '02 (86% similar)
 - [[antonio-daniels|Antonio Daniels]] '04 (85% similar)
 
-**Career shape:** Charted 15 seasons (2008-09–2022-23). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 15 seasons (2008-09–2022-23). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: reinvention (6 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[hersey-hawkins|Hersey Hawkins]] '98 (89% aligned similarity — cross-era via Procrustes chaining).
 

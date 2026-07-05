@@ -72,7 +72,7 @@ Closest career shapes in the era-normalized vector space:
 - [[nick-fazekas|Nick Fazekas]] '08 (93% similar)
 - [[emeka-okafor|Emeka Okafor]] '18 (92% similar)
 
-**Career shape:** Charted 13 seasons (1996-97–2010-11). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+**Career shape:** Charted 13 seasons (1996-97–2010-11). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career. Career trajectory: reinvention (5 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[patrick-ewing|Patrick Ewing]] '98 (92% aligned similarity — cross-era via Procrustes chaining).
 

@@ -70,7 +70,7 @@ Closest career shapes in the era-normalized vector space:
 - [[michael-sweetney|Michael Sweetney]] '07 (86% similar)
 - [[willy-hernangomez|Willy Hernangomez]] '23 (84% similar)
 
-**Career shape:** Charted 11 seasons (2014-15–2025-26). Entered as a Rim Protection + Offensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+**Career shape:** Charted 11 seasons (2014-15–2025-26). Entered as a Rim Protection + Offensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity. Career trajectory: stable (3 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[sharone-wright|Sharone Wright]] '97 (84% aligned similarity — cross-era via Procrustes chaining).
 

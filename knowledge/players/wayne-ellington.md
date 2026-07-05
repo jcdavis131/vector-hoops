@@ -71,7 +71,7 @@ Closest career shapes in the era-normalized vector space:
 - [[rodney-hood|Rodney Hood]] '22 (95% similar)
 - [[eric-piatkowski|Eric Piatkowski]] '06 (94% similar)
 
-**Career shape:** Charted 13 seasons (2009-10–2021-22). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 13 seasons (2009-10–2021-22). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: stable (5 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[carsen-edwards|Carsen Edwards]] '21 (93% aligned similarity — cross-era via Procrustes chaining).
 

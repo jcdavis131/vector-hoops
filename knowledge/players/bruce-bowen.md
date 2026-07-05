@@ -69,7 +69,7 @@ Closest career shapes in the era-normalized vector space:
 - [[mitchell-butler|Mitchell Butler]] '98 (89% similar)
 - [[juaquin-hawkins|Juaquin Hawkins]] '03 (89% similar)
 
-**Career shape:** Charted 12 seasons (1997-98–2008-09). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 12 seasons (1997-98–2008-09). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[adrian-griffin|Adrian Griffin]] '04 (92% aligned similarity — cross-era via Procrustes chaining).
 

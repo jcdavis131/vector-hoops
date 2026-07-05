@@ -61,7 +61,7 @@ Closest career shapes in the era-normalized vector space:
 - [[maurice-evans|Maurice Evans]] '11 (89% similar)
 - [[jaylen-wells|Jaylen Wells]] '25 (88% similar)
 
-**Career shape:** Charted 5 seasons (2021-22–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 5 seasons (2021-22–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: reinvention (1 archetype change across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[john-jenkins|John Jenkins]] '19 (90% aligned similarity — cross-era via Procrustes chaining).
 

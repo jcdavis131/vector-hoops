@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[collin-gillespie|Collin Gillespie]] '24 (85% similar)
 - [[iman-shumpert|Iman Shumpert]] '12 (84% similar)
 
-**Career shape:** Charted 8 seasons (2018-19–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+**Career shape:** Charted 8 seasons (2018-19–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity. Career trajectory: migrator (3 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[nate-robinson|Nate Robinson]] '10 (85% aligned similarity — cross-era via Procrustes chaining).
 

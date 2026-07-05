@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[christian-eyenga|Christian Eyenga]] '11 (67% similar)
 - [[justin-hamilton|Justin Hamilton]] '15 (67% similar)
 
-**Career shape:** Charted 9 seasons (2008-09–2017-18). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Playmaking + Steals identity.
+**Career shape:** Charted 9 seasons (2008-09–2017-18). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Playmaking + Steals identity. Career trajectory: migrator (5 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[randolph-childress|Randolph Childress]] '97 (77% aligned similarity — cross-era via Procrustes chaining).
 

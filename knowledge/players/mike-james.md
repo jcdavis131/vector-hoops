@@ -68,7 +68,7 @@ Closest career shapes in the era-normalized vector space:
 - [[cameron-payne|Cameron Payne]] '26 (94% similar)
 - [[aaron-brooks|Aaron Brooks]] '11 (94% similar)
 
-**Career shape:** Charted 9 seasons (2002-03–2017-18). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 9 seasons (2002-03–2017-18). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: drifter (5 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[duane-washington-jr|Duane Washington Jr.]] '23 (91% aligned similarity — cross-era via Procrustes chaining).
 

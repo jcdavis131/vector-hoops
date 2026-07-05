@@ -60,7 +60,7 @@ Closest career shapes in the era-normalized vector space:
 - [[chris-crawford|Chris Crawford]] '98 (80% similar)
 - [[john-wallace|John Wallace]] '99 (77% similar)
 
-**Career shape:** Charted 4 seasons (2007-08–2010-11). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+**Career shape:** Charted 4 seasons (2007-08–2010-11). Consistent Offensive Glass (Low On-Court Impact) profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[maurice-taylor|Maurice Taylor]] '99 (85% aligned similarity — cross-era via Procrustes chaining).
 

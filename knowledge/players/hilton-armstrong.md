@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[brian-skinner|Brian Skinner]] '08 (91% similar)
 - [[bernard-james|Bernard James]] '13 (90% similar)
 
-**Career shape:** Charted 5 seasons (2006-07–2010-11). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass + Defensive Glass identity.
+**Career shape:** Charted 5 seasons (2006-07–2010-11). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass + Defensive Glass identity. Career trajectory: drifter (3 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[brian-skinner|Brian Skinner]] '08 (84% aligned similarity — cross-era via Procrustes chaining).
 

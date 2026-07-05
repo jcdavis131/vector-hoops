@@ -61,7 +61,7 @@ Closest career shapes in the era-normalized vector space:
 - [[semi-ojeleye|Semi Ojeleye]] '18 (85% similar)
 - [[chucky-brown|Chucky Brown]] '02 (84% similar)
 
-**Career shape:** Charted 5 seasons (2019-20–2023-24). Consistent Offensive Glass + Defensive Glass profile across his career.
+**Career shape:** Charted 5 seasons (2019-20–2023-24). Consistent Offensive Glass + Defensive Glass profile across his career. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[kz-okpala|KZ Okpala]] '21 (90% aligned similarity — cross-era via Procrustes chaining).
 

@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[isaac-okoro|Isaac Okoro]] '25 (89% similar)
 - [[terrance-ferguson|Terrance Ferguson]] '20 (88% similar)
 
-**Career shape:** Charted 7 seasons (2004-05–2010-11). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass + Defensive Glass identity.
+**Career shape:** Charted 7 seasons (2004-05–2010-11). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass + Defensive Glass identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[kz-okpala|KZ Okpala]] '21 (88% aligned similarity — cross-era via Procrustes chaining).
 

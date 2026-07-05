@@ -79,7 +79,7 @@ Closest career shapes in the era-normalized vector space:
 - [[chris-bosh|Chris Bosh]] '10 (83% similar)
 - [[michael-porter-jr|Michael Porter Jr.]] '26 (83% similar)
 
-**Career shape:** Charted 21 seasons (1998-99–2018-19). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 21 seasons (1998-99–2018-19). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: migrator (9 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[keith-van-horn|Keith Van Horn]] '99 (87% aligned similarity — cross-era via Procrustes chaining).
 

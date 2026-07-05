@@ -69,7 +69,7 @@ Closest career shapes in the era-normalized vector space:
 - [[shane-larkin|Shane Larkin]] '16 (92% similar)
 - [[marcus-smart|Marcus Smart]] '24 (92% similar)
 
-**Career shape:** Charted 11 seasons (2005-06–2015-16). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Playmaking + Steals identity.
+**Career shape:** Charted 11 seasons (2005-06–2015-16). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Playmaking + Steals identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[dru-smith|Dru Smith]] '26 (88% aligned similarity — cross-era via Procrustes chaining).
 

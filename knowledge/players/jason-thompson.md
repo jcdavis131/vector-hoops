@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jake-tsakalidis|Jake Tsakalidis]] '06 (94% similar)
 - [[donnell-harvey|Donnell Harvey]] '02 (93% similar)
 
-**Career shape:** Charted 8 seasons (2008-09–2015-16). Consistent Offensive Glass + Defensive Glass profile across his career.
+**Career shape:** Charted 8 seasons (2008-09–2015-16). Consistent Offensive Glass + Defensive Glass profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[james-thomas|James Thomas]] '06 (90% aligned similarity — cross-era via Procrustes chaining).
 

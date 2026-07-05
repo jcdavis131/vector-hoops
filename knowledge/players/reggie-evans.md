@@ -71,7 +71,7 @@ Closest career shapes in the era-normalized vector space:
 - [[shavlik-randolph|Shavlik Randolph]] '15 (87% similar)
 - [[michael-smith|Michael Smith]] '01 (87% similar)
 
-**Career shape:** Charted 13 seasons (2002-03–2014-15). Consistent Offensive Glass + Defensive Glass profile across his career.
+**Career shape:** Charted 13 seasons (2002-03–2014-15). Consistent Offensive Glass + Defensive Glass profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[michael-smith|Michael Smith]] '01 (83% aligned similarity — cross-era via Procrustes chaining).
 

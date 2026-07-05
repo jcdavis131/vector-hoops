@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[malcolm-lee|Malcolm Lee]] '12 (90% similar)
 - [[gerald-madkins|Gerald Madkins]] '98 (90% similar)
 
-**Career shape:** Charted 6 seasons (2017-18–2022-23). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 6 seasons (2017-18–2022-23). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: reinvention (1 archetype change across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[sasha-pavlovic|Sasha Pavlovic]] '13 (86% aligned similarity — cross-era via Procrustes chaining).
 

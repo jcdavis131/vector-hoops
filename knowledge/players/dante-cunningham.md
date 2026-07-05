@@ -68,7 +68,7 @@ Closest career shapes in the era-normalized vector space:
 - [[keita-bates-diop|Keita Bates-Diop]] '20 (85% similar)
 - [[eduardo-najera|Eduardo Najera]] '12 (85% similar)
 
-**Career shape:** Charted 10 seasons (2009-10–2018-19). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 10 seasons (2009-10–2018-19). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: reinvention (1 archetype change across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[harvey-grant|Harvey Grant]] '97 (86% aligned similarity — cross-era via Procrustes chaining).
 

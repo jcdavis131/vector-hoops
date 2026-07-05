@@ -68,7 +68,7 @@ Closest career shapes in the era-normalized vector space:
 - [[marcus-morris-sr|Marcus Morris Sr.]] '12 (89% similar)
 - [[steve-novak|Steve Novak]] '15 (89% similar)
 
-**Career shape:** Charted 11 seasons (2007-08–2019-20). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+**Career shape:** Charted 11 seasons (2007-08–2019-20). Consistent Offensive Glass (Low On-Court Impact) profile across his career. Career trajectory: drifter (3 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[markieff-morris|Markieff Morris]] '24 (91% aligned similarity — cross-era via Procrustes chaining).
 

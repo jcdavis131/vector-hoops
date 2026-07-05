@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jordan-poole|Jordan Poole]] '25 (92% similar)
 - [[brandon-miller|Brandon Miller]] '26 (91% similar)
 
-**Career shape:** Charted 5 seasons (2021-22–2025-26). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 5 seasons (2021-22–2025-26). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[joe-johnson|Joe Johnson]] '07 (87% aligned similarity — cross-era via Procrustes chaining).
 

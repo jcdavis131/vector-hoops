@@ -69,7 +69,7 @@ Closest career shapes in the era-normalized vector space:
 - [[channing-frye|Channing Frye]] '19 (79% similar)
 - [[ryan-anderson|Ryan Anderson]] '14 (78% similar)
 
-**Career shape:** Charted 11 seasons (1997-98–2007-08). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+**Career shape:** Charted 11 seasons (1997-98–2007-08). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity. Career trajectory: migrator (7 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[dorell-wright|Dorell Wright]] '06 (65% aligned similarity — cross-era via Procrustes chaining).
 

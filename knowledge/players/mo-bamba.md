@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[khaman-maluach|Khaman Maluach]] '26 (83% similar)
 - [[bol-bol|Bol Bol]] '21 (83% similar)
 
-**Career shape:** Charted 7 seasons (2018-19–2024-25). Consistent Rim Protection + Offensive Glass profile across his career.
+**Career shape:** Charted 7 seasons (2018-19–2024-25). Consistent Rim Protection + Offensive Glass profile across his career. Career trajectory: drifter (3 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[donovan-clingan|Donovan Clingan]] '25 (88% aligned similarity — cross-era via Procrustes chaining).
 

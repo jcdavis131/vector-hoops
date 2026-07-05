@@ -76,7 +76,7 @@ Closest career shapes in the era-normalized vector space:
 - [[nic-claxton|Nic Claxton]] '23 (93% similar)
 - [[jamal-sampson|Jamal Sampson]] '07 (93% similar)
 
-**Career shape:** Charted 17 seasons (2008-09–2024-25). Consistent Rim Protection + Offensive Glass profile across his career.
+**Career shape:** Charted 17 seasons (2008-09–2024-25). Consistent Rim Protection + Offensive Glass profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[rudy-gobert|Rudy Gobert]] '21 (94% aligned similarity — cross-era via Procrustes chaining).
 

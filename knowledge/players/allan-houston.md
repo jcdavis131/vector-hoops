@@ -68,7 +68,7 @@ Closest career shapes in the era-normalized vector space:
 - [[isaiah-rider|Isaiah Rider]] '00 (91% similar)
 - [[cuttino-mobley|Cuttino Mobley]] '02 (91% similar)
 
-**Career shape:** Charted 9 seasons (1996-97–2004-05). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 9 seasons (1996-97–2004-05). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[nick-young|Nick Young]] '15 (93% aligned similarity — cross-era via Procrustes chaining).
 

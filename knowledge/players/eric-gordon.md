@@ -75,7 +75,7 @@ Closest career shapes in the era-normalized vector space:
 - [[sasha-danilovic|Sasha Danilovic]] '97 (91% similar)
 - [[jared-mccain|Jared McCain]] '25 (89% similar)
 
-**Career shape:** Charted 16 seasons (2008-09–2024-25). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 16 seasons (2008-09–2024-25). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: stable (3 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[cam-thomas|Cam Thomas]] '25 (93% aligned similarity — cross-era via Procrustes chaining).
 

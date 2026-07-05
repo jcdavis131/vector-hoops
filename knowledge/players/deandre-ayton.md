@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[nick-fazekas|Nick Fazekas]] '08 (91% similar)
 - [[cheick-diallo|Cheick Diallo]] '17 (91% similar)
 
-**Career shape:** Charted 8 seasons (2018-19–2025-26). Consistent Rim Protection + Offensive Glass profile across his career.
+**Career shape:** Charted 8 seasons (2018-19–2025-26). Consistent Rim Protection + Offensive Glass profile across his career. Career trajectory: drifter (4 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[willie-reed|Willie Reed]] '16 (89% aligned similarity — cross-era via Procrustes chaining).
 

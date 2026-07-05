@@ -69,7 +69,7 @@ Closest career shapes in the era-normalized vector space:
 - [[brian-cook|Brian Cook]] '09 (80% similar)
 - [[miles-bridges|Miles Bridges]] '25 (80% similar)
 
-**Career shape:** Charted 10 seasons (2005-06–2015-16). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 10 seasons (2005-06–2015-16). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: stable (3 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[patrick-baldwin-jr|Patrick Baldwin Jr.]] '23 (90% aligned similarity — cross-era via Procrustes chaining).
 

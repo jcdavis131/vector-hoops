@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[isaiah-joe|Isaiah Joe]] '25 (89% similar)
 - [[richie-frahm|Richie Frahm]] '04 (88% similar)
 
-**Career shape:** Charted 5 seasons (1996-97–2000-01). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 5 seasons (1996-97–2000-01). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: drifter (3 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[troy-brown-jr|Troy Brown Jr.]] '23 (90% aligned similarity — cross-era via Procrustes chaining).
 

@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[patty-mills|Patty Mills]] '14 (93% similar)
 - [[jason-terry|Jason Terry]] '18 (93% similar)
 
-**Career shape:** Charted 9 seasons (2017-18–2025-26). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 9 seasons (2017-18–2025-26). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[terrence-ross|Terrence Ross]] '19 (86% aligned similarity — cross-era via Procrustes chaining).
 

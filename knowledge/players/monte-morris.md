@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[alvin-williams|Alvin Williams]] '01 (81% similar)
 - [[cam-spencer|Cam Spencer]] '26 (80% similar)
 
-**Career shape:** Charted 7 seasons (2018-19–2024-25). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 7 seasons (2018-19–2024-25). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: migrator (6 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[kerry-kittles|Kerry Kittles]] '03 (83% aligned similarity — cross-era via Procrustes chaining).
 

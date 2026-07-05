@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jahlil-okafor|Jahlil Okafor]] '18 (81% similar)
 - [[john-wallace|John Wallace]] '99 (80% similar)
 
-**Career shape:** Charted 7 seasons (2001-02–2007-08). Entered as a Rim Protection + Offensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+**Career shape:** Charted 7 seasons (2001-02–2007-08). Entered as a Rim Protection + Offensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[rj-barrett|RJ Barrett]] '25 (71% aligned similarity — cross-era via Procrustes chaining).
 

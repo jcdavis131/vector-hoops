@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[sean-marks|Sean Marks]] '11 (75% similar)
 - [[laphonso-ellis|LaPhonso Ellis]] '97 (75% similar)
 
-**Career shape:** Charted 5 seasons (2012-13–2016-17). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+**Career shape:** Charted 5 seasons (2012-13–2016-17). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass (Low On-Court Impact) identity. Career trajectory: drifter (3 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[vlatko-cancar|Vlatko Čančar]] '21 (83% aligned similarity — cross-era via Procrustes chaining).
 

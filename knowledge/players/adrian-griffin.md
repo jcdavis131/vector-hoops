@@ -68,7 +68,7 @@ Closest career shapes in the era-normalized vector space:
 - [[dyson-daniels|Dyson Daniels]] '25 (86% similar)
 - [[cody-martin|Cody Martin]] '21 (86% similar)
 
-**Career shape:** Charted 9 seasons (1999-00–2007-08). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 9 seasons (1999-00–2007-08). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[bruce-bowen|Bruce Bowen]] '99 (92% aligned similarity — cross-era via Procrustes chaining).
 

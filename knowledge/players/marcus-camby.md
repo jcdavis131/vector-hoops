@@ -76,7 +76,7 @@ Closest career shapes in the era-normalized vector space:
 - [[mo-bamba|Mo Bamba]] '20 (88% similar)
 - [[hassan-whiteside|Hassan Whiteside]] '22 (88% similar)
 
-**Career shape:** Charted 17 seasons (1996-97–2012-13). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass + Defensive Glass identity.
+**Career shape:** Charted 17 seasons (1996-97–2012-13). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass + Defensive Glass identity. Career trajectory: migrator (7 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[ben-wallace|Ben Wallace]] '03 (89% aligned similarity — cross-era via Procrustes chaining).
 

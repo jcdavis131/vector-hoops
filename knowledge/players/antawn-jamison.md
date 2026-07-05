@@ -74,7 +74,7 @@ Closest career shapes in the era-normalized vector space:
 - [[al-harrington|Al Harrington]] '99 (79% similar)
 - [[don-maclean|Don MacLean]] '99 (78% similar)
 
-**Career shape:** Charted 16 seasons (1998-99–2013-14). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+**Career shape:** Charted 16 seasons (1998-99–2013-14). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career. Career trajectory: migrator (6 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[dominique-wilkins|Dominique Wilkins]] '97 (95% aligned similarity — cross-era via Procrustes chaining).
 

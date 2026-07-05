@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[shane-larkin|Shane Larkin]] '16 (89% similar)
 - [[daniel-ewing|Daniel Ewing]] '07 (89% similar)
 
-**Career shape:** Charted 4 seasons (2012-13–2015-16). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 4 seasons (2012-13–2015-16). Consistent Playmaking + Steals profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[jacob-gilyard|Jacob Gilyard]] '24 (87% aligned similarity — cross-era via Procrustes chaining).
 

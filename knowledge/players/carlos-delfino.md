@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[vladimir-radmanovic|Vladimir Radmanovic]] '13 (89% similar)
 - [[scott-burrell|Scott Burrell]] '00 (88% similar)
 
-**Career shape:** Charted 8 seasons (2004-05–2012-13). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+**Career shape:** Charted 8 seasons (2004-05–2012-13). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity. Career trajectory: migrator (5 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[chris-mullin|Chris Mullin]] '00 (93% aligned similarity — cross-era via Procrustes chaining).
 

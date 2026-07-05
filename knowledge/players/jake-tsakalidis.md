@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[bismack-biyombo|Bismack Biyombo]] '23 (94% similar)
 - [[festus-ezeli|Festus Ezeli]] '16 (93% similar)
 
-**Career shape:** Charted 7 seasons (2000-01–2006-07). Consistent Rim Protection + Offensive Glass profile across his career.
+**Career shape:** Charted 7 seasons (2000-01–2006-07). Consistent Rim Protection + Offensive Glass profile across his career. Career trajectory: drifter (5 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[david-lee|David Lee]] '17 (95% aligned similarity — cross-era via Procrustes chaining).
 

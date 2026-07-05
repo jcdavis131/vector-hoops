@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[howard-eisley|Howard Eisley]] '03 (92% similar)
 - [[tierre-brown|Tierre Brown]] '02 (92% similar)
 
-**Career shape:** Charted 10 seasons (2004-05–2014-15). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 10 seasons (2004-05–2014-15). Consistent Playmaking + Steals profile across his career. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[jonny-flynn|Jonny Flynn]] '11 (92% aligned similarity — cross-era via Procrustes chaining).
 

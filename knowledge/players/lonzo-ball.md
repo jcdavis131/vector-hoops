@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[rafer-alston|Rafer Alston]] '00 (83% similar)
 - [[reggie-geary|Reggie Geary]] '97 (83% similar)
 
-**Career shape:** Charted 7 seasons (2017-18–2025-26). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 7 seasons (2017-18–2025-26). Consistent Playmaking + Steals profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[brian-shaw|Brian Shaw]] '02 (79% aligned similarity — cross-era via Procrustes chaining).
 

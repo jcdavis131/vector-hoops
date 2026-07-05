@@ -61,7 +61,7 @@ Closest career shapes in the era-normalized vector space:
 - [[junior-harrington|Junior Harrington]] '03 (89% similar)
 - [[orien-greene|Orien Greene]] '07 (89% similar)
 
-**Career shape:** Charted 4 seasons (1999-00–2005-06). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 4 seasons (1999-00–2005-06). Consistent Playmaking + Steals profile across his career. Career trajectory: reinvention (1 archetype change across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[garrett-temple|Garrett Temple]] '11 (84% aligned similarity — cross-era via Procrustes chaining).
 

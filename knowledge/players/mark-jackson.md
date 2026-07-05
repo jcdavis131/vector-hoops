@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[chris-chiozza|Chris Chiozza]] '22 (89% similar)
 - [[greivis-vasquez|Greivis Vasquez]] '13 (88% similar)
 
-**Career shape:** Charted 8 seasons (1996-97–2003-04). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 8 seasons (1996-97–2003-04). Consistent Playmaking + Steals profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[jonny-flynn|Jonny Flynn]] '11 (94% aligned similarity — cross-era via Procrustes chaining).
 

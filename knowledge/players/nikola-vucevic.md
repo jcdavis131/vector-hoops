@@ -73,7 +73,7 @@ Closest career shapes in the era-normalized vector space:
 - [[kevin-garnett|Kevin Garnett]] '04 (80% similar)
 - [[zach-randolph|Zach Randolph]] '07 (80% similar)
 
-**Career shape:** Charted 15 seasons (2011-12–2025-26). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+**Career shape:** Charted 15 seasons (2011-12–2025-26). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[al-jefferson|Al Jefferson]] '09 (87% aligned similarity — cross-era via Procrustes chaining).
 

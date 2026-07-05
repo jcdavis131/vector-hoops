@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[kris-humphries|Kris Humphries]] '11 (92% similar)
 - [[lonny-baxter|Lonny Baxter]] '06 (92% similar)
 
-**Career shape:** Charted 8 seasons (1996-97–2003-04). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Rim Protection + Offensive Glass identity.
+**Career shape:** Charted 8 seasons (1996-97–2003-04). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Rim Protection + Offensive Glass identity. Career trajectory: migrator (4 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[dewayne-dedmon|Dewayne Dedmon]] '17 (89% aligned similarity — cross-era via Procrustes chaining).
 

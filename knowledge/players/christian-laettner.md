@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jason-lawson|Jason Lawson]] '98 (70% similar)
 - [[arvydas-sabonis|Arvydas Sabonis]] '97 (69% similar)
 
-**Career shape:** Charted 9 seasons (1996-97–2004-05). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass + Defensive Glass identity.
+**Career shape:** Charted 9 seasons (1996-97–2004-05). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass + Defensive Glass identity. Career trajectory: migrator (6 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[eddie-robinson|Eddie Robinson]] '00 (87% aligned similarity — cross-era via Procrustes chaining).
 

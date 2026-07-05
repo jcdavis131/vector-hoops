@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[anthony-bowie|Anthony Bowie]] '98 (68% similar)
 - [[calbert-cheaney|Calbert Cheaney]] '00 (66% similar)
 
-**Career shape:** Charted 5 seasons (1999-00–2003-04). Consistent Offensive Glass + Defensive Glass profile across his career.
+**Career shape:** Charted 5 seasons (1999-00–2003-04). Consistent Offensive Glass + Defensive Glass profile across his career. Career trajectory: drifter (3 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[christian-laettner|Christian Laettner]] '05 (87% aligned similarity — cross-era via Procrustes chaining).
 

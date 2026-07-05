@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[nick-van-exel|Nick Van Exel]] '02 (88% similar)
 - [[j-r-bremer|J.R. Bremer]] '04 (88% similar)
 
-**Career shape:** Charted 6 seasons (2009-10–2014-15). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 6 seasons (2009-10–2014-15). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: drifter (2 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[kobe-bufkin|Kobe Bufkin]] '24 (82% aligned similarity — cross-era via Procrustes chaining).
 

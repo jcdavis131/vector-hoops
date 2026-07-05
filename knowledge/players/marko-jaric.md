@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[daniel-ewing|Daniel Ewing]] '07 (91% similar)
 - [[earl-watson|Earl Watson]] '14 (91% similar)
 
-**Career shape:** Charted 7 seasons (2002-03–2008-09). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 7 seasons (2002-03–2008-09). Consistent Playmaking + Steals profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[shabazz-napier|Shabazz Napier]] '17 (92% aligned similarity — cross-era via Procrustes chaining).
 

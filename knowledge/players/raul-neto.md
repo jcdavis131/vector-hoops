@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[kenny-anderson|Kenny Anderson]] '97 (84% similar)
 - [[anthony-johnson|Anthony Johnson]] '02 (84% similar)
 
-**Career shape:** Charted 8 seasons (2015-16–2022-23). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 8 seasons (2015-16–2022-23). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: stable (4 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[darius-miller|Darius Miller]] '21 (85% aligned similarity — cross-era via Procrustes chaining).
 

@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[hasheem-thabeet|Hasheem Thabeet]] '12 (91% similar)
 - [[robert-swift|Robert Swift]] '05 (90% similar)
 
-**Career shape:** Charted 5 seasons (1996-97–2000-01). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
+**Career shape:** Charted 5 seasons (1996-97–2000-01). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity. Career trajectory: drifter (2 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[jelani-mccoy|Jelani McCoy]] '02 (88% aligned similarity — cross-era via Procrustes chaining).
 

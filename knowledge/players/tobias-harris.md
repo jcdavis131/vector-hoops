@@ -73,7 +73,7 @@ Closest career shapes in the era-normalized vector space:
 - [[lauri-markkanen|Lauri Markkanen]] '23 (79% similar)
 - [[wally-szczerbiak|Wally Szczerbiak]] '07 (79% similar)
 
-**Career shape:** Charted 15 seasons (2011-12–2025-26). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+**Career shape:** Charted 15 seasons (2011-12–2025-26). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career. Career trajectory: reinvention (5 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[khris-middleton|Khris Middleton]] '20 (89% aligned similarity — cross-era via Procrustes chaining).
 

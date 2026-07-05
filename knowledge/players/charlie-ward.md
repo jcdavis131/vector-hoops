@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jason-kidd|Jason Kidd]] '03 (90% similar)
 - [[greg-anthony|Greg Anthony]] '99 (90% similar)
 
-**Career shape:** Charted 8 seasons (1996-97–2003-04). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 8 seasons (1996-97–2003-04). Consistent Playmaking + Steals profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[rumeal-robinson|Rumeal Robinson]] '97 (87% aligned similarity — cross-era via Procrustes chaining).
 

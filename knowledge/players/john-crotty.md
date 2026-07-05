@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[beno-udrih|Beno Udrih]] '17 (88% similar)
 - [[jacque-vaughn|Jacque Vaughn]] '99 (88% similar)
 
-**Career shape:** Charted 6 seasons (1996-97–2001-02). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 6 seasons (1996-97–2001-02). Consistent Playmaking + Steals profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[jonny-flynn|Jonny Flynn]] '11 (90% aligned similarity — cross-era via Procrustes chaining).
 

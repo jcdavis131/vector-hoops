@@ -74,7 +74,7 @@ Closest career shapes in the era-normalized vector space:
 - [[gilbert-arenas|Gilbert Arenas]] '06 (87% similar)
 - [[toni-kukoc|Toni Kukoc]] '99 (86% similar)
 
-**Career shape:** Charted 16 seasons (2002-03–2017-18). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 16 seasons (2002-03–2017-18). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[stephen-curry|Stephen Curry]] '16 (92% aligned similarity — cross-era via Procrustes chaining).
 

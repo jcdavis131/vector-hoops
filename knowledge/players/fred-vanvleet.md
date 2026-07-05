@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[mike-bibby|Mike Bibby]] '12 (86% similar)
 - [[rodrigue-beaubois|Rodrigue Beaubois]] '10 (86% similar)
 
-**Career shape:** Charted 9 seasons (2016-17–2024-25). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 9 seasons (2016-17–2024-25). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: drifter (2 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[kyle-lowry|Kyle Lowry]] '16 (89% aligned similarity — cross-era via Procrustes chaining).
 

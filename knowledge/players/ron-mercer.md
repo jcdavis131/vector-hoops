@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jaylen-nowell|Jaylen Nowell]] '22 (74% similar)
 - [[t-j-warren|T.J. Warren]] '18 (73% similar)
 
-**Career shape:** Charted 8 seasons (1997-98–2004-05). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+**Career shape:** Charted 8 seasons (1997-98–2004-05). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Offensive Glass (Low On-Court Impact) identity. Career trajectory: stable (3 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[doug-west|Doug West]] '98 (62% aligned similarity — cross-era via Procrustes chaining).
 

@@ -69,7 +69,7 @@ Closest career shapes in the era-normalized vector space:
 - [[bam-adebayo|Bam Adebayo]] '22 (81% similar)
 - [[julius-randle|Julius Randle]] '24 (80% similar)
 
-**Career shape:** Charted 10 seasons (2016-17–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+**Career shape:** Charted 10 seasons (2016-17–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[greg-monroe|Greg Monroe]] '18 (76% aligned similarity — cross-era via Procrustes chaining).
 

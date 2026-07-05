@@ -72,7 +72,7 @@ Closest career shapes in the era-normalized vector space:
 - [[dell-curry|Dell Curry]] '00 (91% similar)
 - [[klay-thompson|Klay Thompson]] '15 (91% similar)
 
-**Career shape:** Charted 14 seasons (1996-97–2009-10). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 14 seasons (1996-97–2009-10). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: stable (3 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[john-lucas-iii|John Lucas III]] '12 (89% aligned similarity — cross-era via Procrustes chaining).
 

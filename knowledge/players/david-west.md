@@ -74,7 +74,7 @@ Closest career shapes in the era-normalized vector space:
 - [[tim-duncan|Tim Duncan]] '04 (85% similar)
 - [[jonas-valanciunas|Jonas Valančiūnas]] '26 (84% similar)
 
-**Career shape:** Charted 15 seasons (2003-04–2017-18). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+**Career shape:** Charted 15 seasons (2003-04–2017-18). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[josh-smith|Josh Smith]] '10 (76% aligned similarity — cross-era via Procrustes chaining).
 

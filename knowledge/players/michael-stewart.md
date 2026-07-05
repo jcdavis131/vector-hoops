@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jt-thor|JT Thor]] '25 (91% similar)
 - [[andrew-lang|Andrew Lang]] '00 (91% similar)
 
-**Career shape:** Charted 6 seasons (1997-98–2003-04). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass + Defensive Glass identity.
+**Career shape:** Charted 6 seasons (1997-98–2003-04). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass + Defensive Glass identity. Career trajectory: drifter (3 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[mickell-gladness|Mickell Gladness]] '12 (84% aligned similarity — cross-era via Procrustes chaining).
 

@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[ed-davis|Ed Davis]] '22 (91% similar)
 - [[willie-cauley-stein|Willie Cauley-Stein]] '20 (90% similar)
 
-**Career shape:** Charted 8 seasons (2010-11–2017-18). Consistent Offensive Glass + Defensive Glass profile across his career.
+**Career shape:** Charted 8 seasons (2010-11–2017-18). Consistent Offensive Glass + Defensive Glass profile across his career. Career trajectory: stable (4 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[jon-brockman|Jon Brockman]] '10 (89% aligned similarity — cross-era via Procrustes chaining).
 

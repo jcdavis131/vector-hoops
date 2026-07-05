@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[michael-cage|Michael Cage]] '00 (89% similar)
 - [[jon-brockman|Jon Brockman]] '10 (87% similar)
 
-**Career shape:** Charted 5 seasons (1996-97–2000-01). Consistent Offensive Glass + Defensive Glass profile across his career.
+**Career shape:** Charted 5 seasons (1996-97–2000-01). Consistent Offensive Glass + Defensive Glass profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[p-j-tucker|P.J. Tucker]] '24 (85% aligned similarity — cross-era via Procrustes chaining).
 

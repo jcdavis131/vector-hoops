@@ -72,7 +72,7 @@ Closest career shapes in the era-normalized vector space:
 - [[derrick-favors|Derrick Favors]] '21 (93% similar)
 - [[ivica-zubac|Ivica Zubac]] '20 (93% similar)
 
-**Career shape:** Charted 13 seasons (2013-14–2025-26). Consistent Rim Protection + Offensive Glass profile across his career.
+**Career shape:** Charted 13 seasons (2013-14–2025-26). Consistent Rim Protection + Offensive Glass profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[deandre-jordan|DeAndre Jordan]] '16 (94% aligned similarity — cross-era via Procrustes chaining).
 

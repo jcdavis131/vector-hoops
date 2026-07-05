@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[robbie-hummel|Robbie Hummel]] '14 (88% similar)
 - [[reggie-bullock-jr|Reggie Bullock Jr.]] '24 (87% similar)
 
-**Career shape:** Charted 5 seasons (2017-18–2021-22). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 5 seasons (2017-18–2021-22). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[robbie-hummel|Robbie Hummel]] '14 (86% aligned similarity — cross-era via Procrustes chaining).
 

@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[maurice-harkless|Maurice Harkless]] '15 (83% similar)
 - [[thabo-sefolosha|Thabo Sefolosha]] '20 (83% similar)
 
-**Career shape:** Charted 6 seasons (2019-20–2025-26). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 6 seasons (2019-20–2025-26). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: drifter (3 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[corey-brewer|Corey Brewer]] '19 (87% aligned similarity — cross-era via Procrustes chaining).
 

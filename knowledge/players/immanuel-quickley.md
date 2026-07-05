@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[damian-lillard|Damian Lillard]] '23 (90% similar)
 - [[isaiah-thomas|Isaiah Thomas]] '17 (88% similar)
 
-**Career shape:** Charted 6 seasons (2020-21–2025-26). Consistent Scoring Volume + Shot Volume profile across his career.
+**Career shape:** Charted 6 seasons (2020-21–2025-26). Consistent Scoring Volume + Shot Volume profile across his career. Career trajectory: drifter (3 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[deron-williams|Deron Williams]] '12 (91% aligned similarity — cross-era via Procrustes chaining).
 

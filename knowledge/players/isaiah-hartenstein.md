@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[joakim-noah|Joakim Noah]] '17 (90% similar)
 - [[steven-adams|Steven Adams]] '23 (88% similar)
 
-**Career shape:** Charted 8 seasons (2018-19–2025-26). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
+**Career shape:** Charted 8 seasons (2018-19–2025-26). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity. Career trajectory: drifter (4 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[anderson-varejao|Anderson Varejao]] '05 (85% aligned similarity — cross-era via Procrustes chaining).
 

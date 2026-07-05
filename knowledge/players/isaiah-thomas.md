@@ -68,7 +68,7 @@ Closest career shapes in the era-normalized vector space:
 - [[kemba-walker|Kemba Walker]] '19 (94% similar)
 - [[bradley-beal|Bradley Beal]] '20 (94% similar)
 
-**Career shape:** Charted 9 seasons (2011-12–2021-22). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 9 seasons (2011-12–2021-22). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: late-bloom (2 archetype changes across his charted seasons) — one sustained archetype switch coming late in his career (after the 60% mark).
 
 **Era twin:** [[donovan-mitchell|Donovan Mitchell]] '21 (96% aligned similarity — cross-era via Procrustes chaining).
 

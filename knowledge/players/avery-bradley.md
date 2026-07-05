@@ -69,7 +69,7 @@ Closest career shapes in the era-normalized vector space:
 - [[gabe-vincent|Gabe Vincent]] '26 (84% similar)
 - [[justin-edwards|Justin Edwards]] '26 (83% similar)
 
-**Career shape:** Charted 12 seasons (2010-11–2021-22). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+**Career shape:** Charted 12 seasons (2010-11–2021-22). Consistent Offensive Glass (Low On-Court Impact) profile across his career. Career trajectory: migrator (3 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[eugene-omoruyi|Eugene Omoruyi]] '24 (90% aligned similarity — cross-era via Procrustes chaining).
 

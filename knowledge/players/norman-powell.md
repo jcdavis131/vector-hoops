@@ -69,7 +69,7 @@ Closest career shapes in the era-normalized vector space:
 - [[michael-redd|Michael Redd]] '07 (87% similar)
 - [[allan-houston|Allan Houston]] '03 (87% similar)
 
-**Career shape:** Charted 11 seasons (2015-16–2025-26). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 11 seasons (2015-16–2025-26). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: late-bloom (3 archetype changes across his charted seasons) — one sustained archetype switch coming late in his career (after the 60% mark).
 
 **Era twin:** [[johnny-newman|Johnny Newman]] '98 (87% aligned similarity — cross-era via Procrustes chaining).
 

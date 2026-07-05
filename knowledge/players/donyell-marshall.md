@@ -72,7 +72,7 @@ Closest career shapes in the era-normalized vector space:
 - [[naz-reid|Naz Reid]] '21 (78% similar)
 - [[nikola-mirotic|Nikola Mirotic]] '15 (77% similar)
 
-**Career shape:** Charted 13 seasons (1996-97–2008-09). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+**Career shape:** Charted 13 seasons (1996-97–2008-09). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity. Career trajectory: migrator (6 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[jordan-hamilton|Jordan Hamilton]] '12 (84% aligned similarity — cross-era via Procrustes chaining).
 

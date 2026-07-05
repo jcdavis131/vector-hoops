@@ -75,7 +75,7 @@ Closest career shapes in the era-normalized vector space:
 - [[clifford-rozier|Clifford Rozier]] '97 (88% similar)
 - [[usman-garuba|Usman Garuba]] '22 (87% similar)
 
-**Career shape:** Charted 16 seasons (1996-97–2011-12). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
+**Career shape:** Charted 16 seasons (1996-97–2011-12). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity. Career trajectory: drifter (4 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[dewayne-dedmon|Dewayne Dedmon]] '17 (89% aligned similarity — cross-era via Procrustes chaining).
 

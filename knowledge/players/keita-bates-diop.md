@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jt-thor|JT Thor]] '25 (83% similar)
 - [[chandler-hutchison|Chandler Hutchison]] '19 (82% similar)
 
-**Career shape:** Charted 6 seasons (2018-19–2023-24). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+**Career shape:** Charted 6 seasons (2018-19–2023-24). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity. Career trajectory: migrator (4 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[kevin-knox-ii|Kevin Knox II]] '22 (79% aligned similarity — cross-era via Procrustes chaining).
 

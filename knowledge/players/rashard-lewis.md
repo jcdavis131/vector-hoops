@@ -73,7 +73,7 @@ Closest career shapes in the era-normalized vector space:
 - [[trey-murphy-iii|Trey Murphy III]] '24 (87% similar)
 - [[jason-richardson|Jason Richardson]] '06 (87% similar)
 
-**Career shape:** Charted 16 seasons (1998-99–2013-14). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+**Career shape:** Charted 16 seasons (1998-99–2013-14). Consistent Offensive Glass (Low On-Court Impact) profile across his career. Career trajectory: stable (4 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[smush-parker|Smush Parker]] '05 (90% aligned similarity — cross-era via Procrustes chaining).
 

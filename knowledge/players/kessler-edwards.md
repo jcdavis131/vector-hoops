@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[pete-chilcutt|Pete Chilcutt]] '00 (88% similar)
 - [[harvey-grant|Harvey Grant]] '97 (88% similar)
 
-**Career shape:** Charted 4 seasons (2021-22–2024-25). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 4 seasons (2021-22–2024-25). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[harvey-grant|Harvey Grant]] '97 (79% aligned similarity — cross-era via Procrustes chaining).
 

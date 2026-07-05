@@ -68,7 +68,7 @@ Closest career shapes in the era-normalized vector space:
 - [[donovan-clingan|Donovan Clingan]] '25 (77% similar)
 - [[dylan-cardwell|Dylan Cardwell]] '26 (77% similar)
 
-**Career shape:** Charted 10 seasons (2013-14–2022-23). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+**Career shape:** Charted 10 seasons (2013-14–2022-23). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career. Career trajectory: migrator (6 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[jakob-poeltl|Jakob Poeltl]] '22 (81% aligned similarity — cross-era via Procrustes chaining).
 

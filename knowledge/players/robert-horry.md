@@ -71,7 +71,7 @@ Closest career shapes in the era-normalized vector space:
 - [[shane-battier|Shane Battier]] '13 (78% similar)
 - [[danny-green|Danny Green]] '19 (78% similar)
 
-**Career shape:** Charted 12 seasons (1996-97–2007-08). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 12 seasons (1996-97–2007-08). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[nicolas-batum|Nicolas Batum]] '20 (83% aligned similarity — cross-era via Procrustes chaining).
 

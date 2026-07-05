@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[terrance-ferguson|Terrance Ferguson]] '20 (87% similar)
 - [[reggie-bullock-jr|Reggie Bullock Jr.]] '24 (87% similar)
 
-**Career shape:** Charted 7 seasons (2017-18–2023-24). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 7 seasons (2017-18–2023-24). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[matt-thomas|Matt Thomas]] '22 (85% aligned similarity — cross-era via Procrustes chaining).
 

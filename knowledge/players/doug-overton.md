@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jeff-mcinnis|Jeff McInnis]] '08 (88% similar)
 - [[ray-mccallum|Ray McCallum]] '14 (88% similar)
 
-**Career shape:** Charted 7 seasons (1996-97–2003-04). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 7 seasons (1996-97–2003-04). Consistent Playmaking + Steals profile across his career. Career trajectory: drifter (2 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[shane-heal|Shane Heal]] '97 (92% aligned similarity — cross-era via Procrustes chaining).
 

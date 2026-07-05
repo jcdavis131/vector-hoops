@@ -69,7 +69,7 @@ Closest career shapes in the era-normalized vector space:
 - [[mike-james|Mike James]] '06 (94% similar)
 - [[jannero-pargo|Jannero Pargo]] '14 (93% similar)
 
-**Career shape:** Charted 10 seasons (2007-08–2017-18). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 10 seasons (2007-08–2017-18). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: migrator (5 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[damon-stoudamire|Damon Stoudamire]] '97 (93% aligned similarity — cross-era via Procrustes chaining).
 

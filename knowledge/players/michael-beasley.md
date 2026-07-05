@@ -70,7 +70,7 @@ Closest career shapes in the era-normalized vector space:
 - [[marcus-fizer|Marcus Fizer]] '03 (80% similar)
 - [[cooper-flagg|Cooper Flagg]] '26 (80% similar)
 
-**Career shape:** Charted 11 seasons (2008-09–2018-19). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+**Career shape:** Charted 11 seasons (2008-09–2018-19). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career. Career trajectory: drifter (6 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[zach-randolph|Zach Randolph]] '07 (83% aligned similarity — cross-era via Procrustes chaining).
 

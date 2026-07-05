@@ -76,7 +76,7 @@ Closest career shapes in the era-normalized vector space:
 - [[chris-paul|Chris Paul]] '09 (89% similar)
 - [[brandon-jennings|Brandon Jennings]] '15 (88% similar)
 
-**Career shape:** Charted 18 seasons (2007-08–2024-25). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 18 seasons (2007-08–2024-25). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: migrator (7 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[devin-harris|Devin Harris]] '09 (89% aligned similarity — cross-era via Procrustes chaining).
 

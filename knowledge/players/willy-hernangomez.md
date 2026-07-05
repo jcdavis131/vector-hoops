@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[michael-sweetney|Michael Sweetney]] '07 (90% similar)
 - [[wendell-carter-jr|Wendell Carter Jr.]] '19 (90% similar)
 
-**Career shape:** Charted 7 seasons (2016-17–2022-23). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+**Career shape:** Charted 7 seasons (2016-17–2022-23). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[boban-marjanovic|Boban Marjanovic]] '18 (92% aligned similarity — cross-era via Procrustes chaining).
 

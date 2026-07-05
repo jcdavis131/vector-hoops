@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[sterling-brown|Sterling Brown]] '22 (87% similar)
 - [[brian-scalabrine|Brian Scalabrine]] '11 (87% similar)
 
-**Career shape:** Charted 9 seasons (2017-18–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 9 seasons (2017-18–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[okaro-white|Okaro White]] '17 (82% aligned similarity — cross-era via Procrustes chaining).
 

@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[ibou-badji|Ibou Badji]] '24 (91% similar)
 - [[daniel-orton|Daniel Orton]] '12 (90% similar)
 
-**Career shape:** Charted 4 seasons (2011-12–2014-15). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass + Defensive Glass identity.
+**Career shape:** Charted 4 seasons (2011-12–2014-15). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass + Defensive Glass identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[lorenzo-williams|Lorenzo Williams]] '97 (84% aligned similarity — cross-era via Procrustes chaining).
 

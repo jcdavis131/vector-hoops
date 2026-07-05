@@ -72,7 +72,7 @@ Closest career shapes in the era-normalized vector space:
 - [[keith-askins|Keith Askins]] '99 (83% similar)
 - [[jae-crowder|Jae Crowder]] '22 (83% similar)
 
-**Career shape:** Charted 13 seasons (2001-02–2013-14). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 13 seasons (2001-02–2013-14). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[anthony-parker|Anthony Parker]] '10 (91% aligned similarity — cross-era via Procrustes chaining).
 

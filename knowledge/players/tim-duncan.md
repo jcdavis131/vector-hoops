@@ -78,7 +78,7 @@ Closest career shapes in the era-normalized vector space:
 - [[pau-gasol|Pau Gasol]] '15 (91% similar)
 - [[shaquille-o-neal|Shaquille O'Neal]] '98 (90% similar)
 
-**Career shape:** Charted 19 seasons (1997-98–2015-16). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+**Career shape:** Charted 19 seasons (1997-98–2015-16). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[david-robinson|David Robinson]] '98 (96% aligned similarity — cross-era via Procrustes chaining).
 

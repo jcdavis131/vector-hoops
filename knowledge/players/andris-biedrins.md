@@ -68,7 +68,7 @@ Closest career shapes in the era-normalized vector space:
 - [[willie-cauley-stein|Willie Cauley-Stein]] '20 (92% similar)
 - [[brian-skinner|Brian Skinner]] '08 (92% similar)
 
-**Career shape:** Charted 9 seasons (2004-05–2012-13). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass + Defensive Glass identity.
+**Career shape:** Charted 9 seasons (2004-05–2012-13). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass + Defensive Glass identity. Career trajectory: reinvention (1 archetype change across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[theo-ratliff|Theo Ratliff]] '09 (89% aligned similarity — cross-era via Procrustes chaining).
 

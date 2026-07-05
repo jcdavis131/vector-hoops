@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[dewayne-dedmon|Dewayne Dedmon]] '17 (78% similar)
 - [[wendell-carter-jr|Wendell Carter Jr.]] '19 (77% similar)
 
-**Career shape:** Charted 9 seasons (2014-15–2022-23). Consistent Rim Protection + Offensive Glass profile across his career.
+**Career shape:** Charted 9 seasons (2014-15–2022-23). Consistent Rim Protection + Offensive Glass profile across his career. Career trajectory: migrator (6 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[david-vaughn|David Vaughn]] '97 (80% aligned similarity — cross-era via Procrustes chaining).
 

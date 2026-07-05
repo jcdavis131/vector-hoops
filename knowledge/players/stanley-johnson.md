@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[chris-garner|Chris Garner]] '98 (86% similar)
 - [[orien-greene|Orien Greene]] '07 (86% similar)
 
-**Career shape:** Charted 8 seasons (2015-16–2022-23). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Playmaking + Steals identity.
+**Career shape:** Charted 8 seasons (2015-16–2022-23). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Playmaking + Steals identity. Career trajectory: migrator (5 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[qyntel-woods|Qyntel Woods]] '03 (71% aligned similarity — cross-era via Procrustes chaining).
 

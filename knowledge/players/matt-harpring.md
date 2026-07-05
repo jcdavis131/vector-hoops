@@ -68,7 +68,7 @@ Closest career shapes in the era-normalized vector space:
 - [[zach-randolph|Zach Randolph]] '07 (72% similar)
 - [[jonathan-kuminga|Jonathan Kuminga]] '25 (71% similar)
 
-**Career shape:** Charted 10 seasons (1998-99–2008-09). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+**Career shape:** Charted 10 seasons (1998-99–2008-09). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity. Career trajectory: reinvention (3 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[carmelo-anthony|Carmelo Anthony]] '13 (81% aligned similarity — cross-era via Procrustes chaining).
 

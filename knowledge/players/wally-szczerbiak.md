@@ -68,7 +68,7 @@ Closest career shapes in the era-normalized vector space:
 - [[steven-smith|Steven Smith]] '99 (86% similar)
 - [[reggie-miller|Reggie Miller]] '98 (85% similar)
 
-**Career shape:** Charted 10 seasons (1999-00–2008-09). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 10 seasons (1999-00–2008-09). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[nick-young|Nick Young]] '15 (95% aligned similarity — cross-era via Procrustes chaining).
 

@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[de-aaron-fox|De'Aaron Fox]] '21 (89% similar)
 - [[god-shammgod|God Shammgod]] '98 (89% similar)
 
-**Career shape:** Charted 5 seasons (2020-21–2024-25). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 5 seasons (2020-21–2024-25). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: drifter (3 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[dennis-schroder|Dennis Schröder]] '16 (91% aligned similarity — cross-era via Procrustes chaining).
 

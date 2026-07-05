@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[al-thornton|Al Thornton]] '09 (83% similar)
 - [[hanno-mottola|Hanno Mottola]] '01 (81% similar)
 
-**Career shape:** Charted 4 seasons (2000-01–2004-05). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+**Career shape:** Charted 4 seasons (2000-01–2004-05). Consistent Offensive Glass (Low On-Court Impact) profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[loren-meyer|Loren Meyer]] '97 (79% aligned similarity — cross-era via Procrustes chaining).
 

@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[michael-stewart|Michael Stewart]] '04 (83% similar)
 - [[erik-murphy|Erik Murphy]] '14 (83% similar)
 
-**Career shape:** Charted 5 seasons (2009-10–2013-14). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+**Career shape:** Charted 5 seasons (2009-10–2013-14). Consistent Offensive Glass (Low On-Court Impact) profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[trendon-watford|Trendon Watford]] '22 (83% aligned similarity — cross-era via Procrustes chaining).
 

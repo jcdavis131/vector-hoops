@@ -20,6 +20,7 @@
   var PIVOTS_URL = 'assets/pivots.json';
   var ERATWINS_URL = 'assets/eratwins.json';
   var ARCHETYPE_TIME_URL = 'assets/archetypes_time.json';
+  var TRAJECTORIES_URL = 'assets/trajectories.json';
   var EPOCH_DATE = '2026-07-01'; // puzzle #1
   // v4: THREE-PART ANSWERS. The equation itself is three simultaneous
   // guessable slots — Stats Player + Archetype Player = Mashup Player —
@@ -4567,6 +4568,64 @@
     }
   }
 
+  // Where a revealed season's archetype changed from its immediate
+  // predecessor in the TRUE chronological order (round.correct) — computed
+  // against the real career order regardless of which slot the player
+  // guessed it into. round.correct.length is always small (ARC_CARD_COUNT),
+  // so a plain indexOf is fine; no Map needed to match this file's style.
+  function arcTransitionFor(round, player) {
+    var idx = round.correct.indexOf(player);
+    if (idx <= 0) return null;
+    if (round.correct[idx].c === round.correct[idx - 1].c) return null;
+    return DATA.clusters[round.correct[idx].c];
+  }
+
+  function arcTransitionTagHtml(round, player) {
+    var arch = arcTransitionFor(round, player);
+    if (!arch) return '';
+    return '<div class="vh-arc-reveal-row__transition">&#8631; became ' + escapeHtml(arch) + '</div>';
+  }
+
+  // Lazy-fetched, cached, fail-soft: assets/trajectories.json only loads
+  // once the reveal sheet actually opens, and any fetch/parse failure just
+  // leaves the sheet without this bonus line — everything else already works.
+  var trajectoriesCache = null; // null = not yet tried; false = failed; object = loaded
+  function loadTrajectories(cb) {
+    if (trajectoriesCache) { cb(trajectoriesCache); return; }
+    if (trajectoriesCache === false) return;
+    fetch(TRAJECTORIES_URL).then(function (res) {
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      return res.json();
+    }).then(function (data) {
+      trajectoriesCache = data;
+      cb(data);
+    }).catch(function () {
+      trajectoriesCache = false;
+    });
+  }
+
+  // "A {class} career — {n} archetype changes." appended below the reveal
+  // list when the round's player is in trajectories.json's playerIndex;
+  // silently skipped otherwise.
+  function appendArcTrajectoryLine(playerName) {
+    if (!els.arcTrajectoryLine) return;
+    els.arcTrajectoryLine.hidden = true;
+    els.arcTrajectoryLine.textContent = '';
+    loadTrajectories(function (data) {
+      if (!data || !data.playerIndex) return;
+      var entry = data.playerIndex[playerName];
+      if (!entry) return;
+      // Stale-guard: the fetch is async and the player may have closed/
+      // reopened the sheet on a different round by the time this resolves.
+      var round = activeArcRound();
+      if (!round || round.name !== playerName) return;
+      var plural = entry.changes === 1 ? '' : 's';
+      els.arcTrajectoryLine.textContent = 'A ' + entry.class + ' career — ' +
+        entry.changes + ' archetype change' + plural + '.';
+      els.arcTrajectoryLine.hidden = false;
+    });
+  }
+
   function renderArcRevealSheetContent() {
     var round = activeArcRound();
     var rec = activeArcRecord();
@@ -4579,9 +4638,12 @@
         var li = document.createElement('li');
         li.className = 'vh-arc-reveal-row ' + (isCorrect ? 'is-correct' : 'is-wrong');
         li.innerHTML =
+          '<div class="vh-arc-reveal-row__top">' +
           '<span class="vh-arc-reveal-row__rank">' + (k + 1) + '</span>' +
           '<span class="vh-arc-reveal-row__season">' + escapeHtml(picked.season) + '</span>' +
-          '<span class="vh-arc-reveal-row__mark">' + (isCorrect ? '✓ right slot' : '✗ actually ' + escapeHtml(correctPlayer.season)) + '</span>';
+          '<span class="vh-arc-reveal-row__mark">' + (isCorrect ? '✓ right slot' : '✗ actually ' + escapeHtml(correctPlayer.season)) + '</span>' +
+          '</div>' +
+          arcTransitionTagHtml(round, picked);
         els.arcRevealList.appendChild(li);
       }
     } else {
@@ -4592,8 +4654,11 @@
         var li = document.createElement('li');
         li.className = 'vh-arc-reveal-row';
         li.innerHTML =
+          '<div class="vh-arc-reveal-row__top">' +
           '<span class="vh-arc-reveal-row__rank">' + (k + 1) + '</span>' +
-          '<span class="vh-arc-reveal-row__season">' + escapeHtml(p.season) + '</span>';
+          '<span class="vh-arc-reveal-row__season">' + escapeHtml(p.season) + '</span>' +
+          '</div>' +
+          arcTransitionTagHtml(round, p);
         els.arcRevealList.appendChild(li);
       });
     }
@@ -4602,6 +4667,7 @@
       els.arcLinechartSrSummary.textContent = round.name + ' scoring sigma by season: ' +
         round.allSeasons.map(function (p) { return p.season + ' ' + fmtSigma(p.v[IDX.PTS]); }).join(', ') + '.';
     }
+    appendArcTrajectoryLine(round.name);
   }
 
   function switchArcSubMode(mode) {
@@ -6475,6 +6541,7 @@
     els.arcRevealSheet = document.getElementById('arc-reveal-sheet');
     els.arcRevealSheetCloseBtn = document.getElementById('arc-reveal-sheet-close-btn');
     els.arcRevealList = document.getElementById('arc-reveal-list');
+    els.arcTrajectoryLine = document.getElementById('arc-trajectory-line');
     els.arcLinechart = document.getElementById('arc-linechart');
     els.arcLinechartSrSummary = document.getElementById('arc-linechart-sr-summary');
 

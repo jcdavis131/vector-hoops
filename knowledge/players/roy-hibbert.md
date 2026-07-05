@@ -68,7 +68,7 @@ Closest career shapes in the era-normalized vector space:
 - [[zydrunas-ilgauskas|Zydrunas Ilgauskas]] '02 (89% similar)
 - [[chris-mihm|Chris Mihm]] '09 (89% similar)
 
-**Career shape:** Charted 9 seasons (2008-09–2016-17). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+**Career shape:** Charted 9 seasons (2008-09–2016-17). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career. Career trajectory: migrator (5 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[khaman-maluach|Khaman Maluach]] '26 (89% aligned similarity — cross-era via Procrustes chaining).
 

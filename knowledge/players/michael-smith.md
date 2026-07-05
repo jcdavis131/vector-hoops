@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[corie-blount|Corie Blount]] '98 (89% similar)
 - [[kevon-looney|Kevon Looney]] '23 (89% similar)
 
-**Career shape:** Charted 5 seasons (1996-97–2000-01). Consistent Offensive Glass + Defensive Glass profile across his career.
+**Career shape:** Charted 5 seasons (1996-97–2000-01). Consistent Offensive Glass + Defensive Glass profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[greg-anderson|Greg Anderson]] '98 (89% aligned similarity — cross-era via Procrustes chaining).
 

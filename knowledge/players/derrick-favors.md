@@ -71,7 +71,7 @@ Closest career shapes in the era-normalized vector space:
 - [[kenneth-faried|Kenneth Faried]] '12 (95% similar)
 - [[jarrett-allen|Jarrett Allen]] '25 (94% similar)
 
-**Career shape:** Charted 12 seasons (2010-11–2021-22). Consistent Rim Protection + Offensive Glass profile across his career.
+**Career shape:** Charted 12 seasons (2010-11–2021-22). Consistent Rim Protection + Offensive Glass profile across his career. Career trajectory: drifter (3 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[khem-birch|Khem Birch]] '19 (94% aligned similarity — cross-era via Procrustes chaining).
 

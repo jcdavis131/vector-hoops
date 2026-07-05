@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[tristan-da-silva|Tristan da Silva]] '25 (92% similar)
 - [[jason-kapono|Jason Kapono]] '11 (91% similar)
 
-**Career shape:** Charted 4 seasons (2022-23–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+**Career shape:** Charted 4 seasons (2022-23–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[duncan-robinson|Duncan Robinson]] '20 (81% aligned similarity — cross-era via Procrustes chaining).
 

@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[richaun-holmes|Richaun Holmes]] '25 (92% similar)
 - [[jeremy-evans|Jeremy Evans]] '12 (91% similar)
 
-**Career shape:** Charted 6 seasons (2018-19–2023-24). Consistent Rim Protection + Offensive Glass profile across his career.
+**Career shape:** Charted 6 seasons (2018-19–2023-24). Consistent Rim Protection + Offensive Glass profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[ryan-kalkbrenner|Ryan Kalkbrenner]] '26 (92% aligned similarity — cross-era via Procrustes chaining).
 

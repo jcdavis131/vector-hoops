@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[egor-demin|Egor Dëmin]] '26 (86% similar)
 - [[terry-dehere|Terry Dehere]] '97 (86% similar)
 
-**Career shape:** Charted 5 seasons (1996-97–2001-02). Entered as a Playmaking + Steals profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+**Career shape:** Charted 5 seasons (1996-97–2001-02). Entered as a Playmaking + Steals profile, peaked as a Offensive Glass (Low On-Court Impact) identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[archie-goodwin|Archie Goodwin]] '15 (82% aligned similarity — cross-era via Procrustes chaining).
 

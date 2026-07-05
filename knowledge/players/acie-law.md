@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[moochie-norris|Moochie Norris]] '05 (88% similar)
 - [[andrew-nembhard|Andrew Nembhard]] '26 (87% similar)
 
-**Career shape:** Charted 4 seasons (2007-08–2010-11). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 4 seasons (2007-08–2010-11). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[mike-conley|Mike Conley]] '13 (82% aligned similarity — cross-era via Procrustes chaining).
 

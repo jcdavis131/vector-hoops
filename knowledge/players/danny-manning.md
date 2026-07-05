@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[antonio-mcdyess|Antonio McDyess]] '01 (73% similar)
 - [[kevin-garnett|Kevin Garnett]] '04 (72% similar)
 
-**Career shape:** Charted 6 seasons (1996-97–2001-02). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+**Career shape:** Charted 6 seasons (1996-97–2001-02). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career. Career trajectory: drifter (3 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[luol-deng|Luol Deng]] '07 (88% aligned similarity — cross-era via Procrustes chaining).
 

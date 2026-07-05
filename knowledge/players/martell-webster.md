@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[alan-anderson|Alan Anderson]] '17 (89% similar)
 - [[garrison-mathews|Garrison Mathews]] '21 (89% similar)
 
-**Career shape:** Charted 9 seasons (2005-06–2014-15). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+**Career shape:** Charted 9 seasons (2005-06–2014-15). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Offensive Glass (Low On-Court Impact) identity. Career trajectory: stable (3 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[tracy-moore|Tracy Moore]] '97 (79% aligned similarity — cross-era via Procrustes chaining).
 

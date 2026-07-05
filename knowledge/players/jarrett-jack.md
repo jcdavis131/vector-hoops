@@ -70,7 +70,7 @@ Closest career shapes in the era-normalized vector space:
 - [[greivis-vasquez|Greivis Vasquez]] '13 (89% similar)
 - [[dennis-schroder|Dennis Schröder]] '16 (88% similar)
 
-**Career shape:** Charted 12 seasons (2005-06–2017-18). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 12 seasons (2005-06–2017-18). Consistent Playmaking + Steals profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[andrew-nembhard|Andrew Nembhard]] '26 (95% aligned similarity — cross-era via Procrustes chaining).
 

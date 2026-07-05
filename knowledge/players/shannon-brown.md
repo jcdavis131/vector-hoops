@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[dajuan-wagner|Dajuan Wagner]] '03 (86% similar)
 - [[tre-mann|Tre Mann]] '26 (86% similar)
 
-**Career shape:** Charted 8 seasons (2006-07–2013-14). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 8 seasons (2006-07–2013-14). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: migrator (4 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[tyrese-maxey|Tyrese Maxey]] '25 (87% aligned similarity — cross-era via Procrustes chaining).
 

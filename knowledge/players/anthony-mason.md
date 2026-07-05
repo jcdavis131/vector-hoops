@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[james-thomas|James Thomas]] '06 (66% similar)
 - [[tyler-cook|Tyler Cook]] '22 (65% similar)
 
-**Career shape:** Charted 6 seasons (1996-97–2002-03). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 6 seasons (1996-97–2002-03). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: migrator (4 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[jamie-feick|Jamie Feick]] '00 (71% aligned similarity — cross-era via Procrustes chaining).
 

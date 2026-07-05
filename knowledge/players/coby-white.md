@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[joe-johnson|Joe Johnson]] '07 (91% similar)
 - [[ben-gordon|Ben Gordon]] '05 (91% similar)
 
-**Career shape:** Charted 7 seasons (2019-20–2025-26). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 7 seasons (2019-20–2025-26). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: late-bloom (1 archetype change across his charted seasons) — one sustained archetype switch coming late in his career (after the 60% mark).
 
 **Era twin:** [[latrell-sprewell|Latrell Sprewell]] '97 (91% aligned similarity — cross-era via Procrustes chaining).
 

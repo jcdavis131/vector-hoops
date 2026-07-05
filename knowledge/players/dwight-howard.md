@@ -76,7 +76,7 @@ Closest career shapes in the era-normalized vector space:
 - [[willy-hernangomez|Willy Hernangomez]] '23 (87% similar)
 - [[jusuf-nurkic|Jusuf Nurkić]] '16 (87% similar)
 
-**Career shape:** Charted 17 seasons (2004-05–2021-22). Consistent Rim Protection + Offensive Glass profile across his career.
+**Career shape:** Charted 17 seasons (2004-05–2021-22). Consistent Rim Protection + Offensive Glass profile across his career. Career trajectory: late-bloom (6 archetype changes across his charted seasons) — one sustained archetype switch coming late in his career (after the 60% mark).
 
 **Era twin:** [[boban-marjanovic|Boban Marjanovic]] '18 (89% aligned similarity — cross-era via Procrustes chaining).
 

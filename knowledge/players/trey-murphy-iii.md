@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[cj-miles|CJ Miles]] '18 (88% similar)
 - [[reggie-miller|Reggie Miller]] '98 (88% similar)
 
-**Career shape:** Charted 5 seasons (2021-22–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+**Career shape:** Charted 5 seasons (2021-22–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[malik-sealy|Malik Sealy]] '97 (86% aligned similarity — cross-era via Procrustes chaining).
 

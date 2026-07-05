@@ -76,7 +76,7 @@ Closest career shapes in the era-normalized vector space:
 - [[raul-lopez|Raul Lopez]] '05 (87% similar)
 - [[j-j-barea|J.J. Barea]] '19 (87% similar)
 
-**Career shape:** Charted 17 seasons (1996-97–2012-13). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 17 seasons (1996-97–2012-13). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: migrator (8 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[darrell-armstrong|Darrell Armstrong]] '99 (89% aligned similarity — cross-era via Procrustes chaining).
 

@@ -75,7 +75,7 @@ Closest career shapes in the era-normalized vector space:
 - [[alonzo-mourning|Alonzo Mourning]] '00 (83% similar)
 - [[kristaps-porzingis|Kristaps Porziņģis]] '18 (82% similar)
 
-**Career shape:** Charted 16 seasons (2008-09–2025-26). Entered as a Rim Protection + Offensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+**Career shape:** Charted 16 seasons (2008-09–2025-26). Entered as a Rim Protection + Offensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity. Career trajectory: migrator (5 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[zydrunas-ilgauskas|Zydrunas Ilgauskas]] '02 (94% aligned similarity — cross-era via Procrustes chaining).
 

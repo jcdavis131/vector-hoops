@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[gary-harris|Gary Harris]] '25 (89% similar)
 - [[wesley-johnson|Wesley Johnson]] '17 (89% similar)
 
-**Career shape:** Charted 10 seasons (2014-15–2023-24). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 10 seasons (2014-15–2023-24). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: drifter (4 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[francisco-garcia|Francisco Garcia]] '14 (95% aligned similarity — cross-era via Procrustes chaining).
 

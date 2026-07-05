@@ -68,7 +68,7 @@ Closest career shapes in the era-normalized vector space:
 - [[mike-wilks|Mike Wilks]] '04 (82% similar)
 - [[carlos-arroyo|Carlos Arroyo]] '03 (82% similar)
 
-**Career shape:** Charted 12 seasons (1997-98–2008-09). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 12 seasons (1997-98–2008-09). Consistent Playmaking + Steals profile across his career. Career trajectory: migrator (5 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[gary-grant|Gary Grant]] '98 (76% aligned similarity — cross-era via Procrustes chaining).
 

@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[donte-divincenzo|Donte DiVincenzo]] '24 (88% similar)
 - [[eddie-jones|Eddie Jones]] '00 (88% similar)
 
-**Career shape:** Charted 4 seasons (2008-09–2011-12). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 4 seasons (2008-09–2011-12). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[jon-barry|Jon Barry]] '98 (87% aligned similarity — cross-era via Procrustes chaining).
 

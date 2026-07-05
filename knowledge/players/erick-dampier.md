@@ -74,7 +74,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jake-tsakalidis|Jake Tsakalidis]] '06 (94% similar)
 - [[jahidi-white|Jahidi White]] '05 (94% similar)
 
-**Career shape:** Charted 15 seasons (1996-97–2010-11). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+**Career shape:** Charted 15 seasons (1996-97–2010-11). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career. Career trajectory: drifter (4 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[robert-traylor|Robert Traylor]] '02 (74% aligned similarity — cross-era via Procrustes chaining).
 

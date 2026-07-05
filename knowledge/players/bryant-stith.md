@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jodie-meeks|Jodie Meeks]] '12 (87% similar)
 - [[tyler-johnson|Tyler Johnson]] '21 (87% similar)
 
-**Career shape:** Charted 6 seasons (1996-97–2001-02). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+**Career shape:** Charted 6 seasons (1996-97–2001-02). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Offensive Glass (Low On-Court Impact) identity. Career trajectory: migrator (4 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[manny-harris|Manny Harris]] '11 (80% aligned similarity — cross-era via Procrustes chaining).
 

@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[dennis-rodman|Dennis Rodman]] '97 (71% similar)
 - [[myron-gardner|Myron Gardner]] '26 (70% similar)
 
-**Career shape:** Charted 9 seasons (2017-18–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 9 seasons (2017-18–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: late-bloom (3 archetype changes across his charted seasons) — one sustained archetype switch coming late in his career (after the 60% mark).
 
 **Era twin:** [[clar-weatherspoon|Clar. Weatherspoon]] '03 (73% aligned similarity — cross-era via Procrustes chaining).
 

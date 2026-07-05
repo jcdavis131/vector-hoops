@@ -68,7 +68,7 @@ Closest career shapes in the era-normalized vector space:
 - [[zach-randolph|Zach Randolph]] '07 (85% similar)
 - [[john-collins|John Collins]] '19 (84% similar)
 
-**Career shape:** Charted 10 seasons (2008-09–2017-18). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+**Career shape:** Charted 10 seasons (2008-09–2017-18). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[ray-allen|Ray Allen]] '06 (87% aligned similarity — cross-era via Procrustes chaining).
 

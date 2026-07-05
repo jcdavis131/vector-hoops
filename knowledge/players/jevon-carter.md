@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[gabe-vincent|Gabe Vincent]] '26 (90% similar)
 - [[lindsey-hunter|Lindsey Hunter]] '09 (90% similar)
 
-**Career shape:** Charted 8 seasons (2018-19–2025-26). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 8 seasons (2018-19–2025-26). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: stable (3 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[bobby-phills|Bobby Phills]] '00 (82% aligned similarity — cross-era via Procrustes chaining).
 

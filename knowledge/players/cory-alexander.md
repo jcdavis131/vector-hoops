@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[peyton-siva|Peyton Siva]] '14 (90% similar)
 - [[diante-garrett|Diante Garrett]] '13 (90% similar)
 
-**Career shape:** Charted 5 seasons (1996-97–2000-01). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 5 seasons (1996-97–2000-01). Consistent Playmaking + Steals profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[eric-murdock|Eric Murdock]] '00 (87% aligned similarity — cross-era via Procrustes chaining).
 

@@ -72,7 +72,7 @@ Closest career shapes in the era-normalized vector space:
 - [[toney-douglas|Toney Douglas]] '12 (92% similar)
 - [[reed-sheppard|Reed Sheppard]] '26 (91% similar)
 
-**Career shape:** Charted 13 seasons (1996-97–2008-09). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Playmaking + Steals identity.
+**Career shape:** Charted 13 seasons (1996-97–2008-09). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Playmaking + Steals identity. Career trajectory: reinvention (6 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[haywoode-workman|Haywoode Workman]] '00 (89% aligned similarity — cross-era via Procrustes chaining).
 

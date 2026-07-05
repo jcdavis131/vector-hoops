@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[shammond-williams|Shammond Williams]] '04 (90% similar)
 - [[tyrese-proctor|Tyrese Proctor]] '26 (88% similar)
 
-**Career shape:** Charted 7 seasons (2009-10–2016-17). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Playmaking + Steals identity.
+**Career shape:** Charted 7 seasons (2009-10–2016-17). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Playmaking + Steals identity. Career trajectory: reinvention (3 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[keyon-dooling|Keyon Dooling]] '10 (81% aligned similarity — cross-era via Procrustes chaining).
 

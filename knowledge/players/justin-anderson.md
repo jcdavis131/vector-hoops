@@ -61,7 +61,7 @@ Closest career shapes in the era-normalized vector space:
 - [[tyrone-nesby|Tyrone Nesby]] '00 (79% similar)
 - [[taylor-hendricks|Taylor Hendricks]] '24 (79% similar)
 
-**Career shape:** Charted 4 seasons (2015-16–2018-19). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+**Career shape:** Charted 4 seasons (2015-16–2018-19). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity. Career trajectory: migrator (3 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[kevin-knox-ii|Kevin Knox II]] '22 (86% aligned similarity — cross-era via Procrustes chaining).
 

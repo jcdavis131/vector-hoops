@@ -71,7 +71,7 @@ Closest career shapes in the era-normalized vector space:
 - [[trevor-ariza|Trevor Ariza]] '22 (86% similar)
 - [[matisse-thybulle|Matisse Thybulle]] '21 (85% similar)
 
-**Career shape:** Charted 14 seasons (2006-07–2019-20). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass + Defensive Glass identity.
+**Career shape:** Charted 14 seasons (2006-07–2019-20). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass + Defensive Glass identity. Career trajectory: stable (3 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[matisse-thybulle|Matisse Thybulle]] '21 (87% aligned similarity — cross-era via Procrustes chaining).
 

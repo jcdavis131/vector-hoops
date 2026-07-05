@@ -61,7 +61,7 @@ Closest career shapes in the era-normalized vector space:
 - [[rawle-marshall|Rawle Marshall]] '07 (76% similar)
 - [[tarence-kinsey|Tarence Kinsey]] '09 (76% similar)
 
-**Career shape:** Charted 4 seasons (2018-19–2022-23). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+**Career shape:** Charted 4 seasons (2018-19–2022-23). Consistent Offensive Glass (Low On-Court Impact) profile across his career. Career trajectory: migrator (3 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[brodric-thomas|Brodric Thomas]] '21 (84% aligned similarity — cross-era via Procrustes chaining).
 

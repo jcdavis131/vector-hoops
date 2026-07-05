@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jae-crowder|Jae Crowder]] '22 (83% similar)
 - [[bryon-russell|Bryon Russell]] '97 (81% similar)
 
-**Career shape:** Charted 8 seasons (1996-97–2004-05). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 8 seasons (1996-97–2004-05). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: stable (3 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[wesley-matthews|Wesley Matthews]] '20 (84% aligned similarity — cross-era via Procrustes chaining).
 

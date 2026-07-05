@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[maurice-harkless|Maurice Harkless]] '15 (88% similar)
 - [[johnny-furphy|Johnny Furphy]] '26 (85% similar)
 
-**Career shape:** Charted 5 seasons (2013-14–2017-18). Consistent Offensive Glass + Defensive Glass profile across his career.
+**Career shape:** Charted 5 seasons (2013-14–2017-18). Consistent Offensive Glass + Defensive Glass profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[hugo-gonzalez|Hugo González]] '26 (85% aligned similarity — cross-era via Procrustes chaining).
 

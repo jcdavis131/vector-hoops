@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[gary-trent|Gary Trent]] '01 (85% similar)
 - [[reggie-slater|Reggie Slater]] '03 (85% similar)
 
-**Career shape:** Charted 9 seasons (1996-97–2004-05). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+**Career shape:** Charted 9 seasons (1996-97–2004-05). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass (Low On-Court Impact) identity. Career trajectory: stable (3 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[ognjen-kuzmic|Ognjen Kuzmic]] '14 (91% aligned similarity — cross-era via Procrustes chaining).
 

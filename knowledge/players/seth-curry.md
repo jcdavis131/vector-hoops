@@ -68,7 +68,7 @@ Closest career shapes in the era-normalized vector space:
 - [[anthony-morrow|Anthony Morrow]] '17 (91% similar)
 - [[grayson-allen|Grayson Allen]] '19 (91% similar)
 
-**Career shape:** Charted 9 seasons (2015-16–2024-25). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 9 seasons (2015-16–2024-25). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[jeff-hornacek|Jeff Hornacek]] '97 (83% aligned similarity — cross-era via Procrustes chaining).
 

@@ -77,7 +77,7 @@ Closest career shapes in the era-normalized vector space:
 - [[miles-mcbride|Miles McBride]] '22 (88% similar)
 - [[willie-warren|Willie Warren]] '11 (88% similar)
 
-**Career shape:** Charted 18 seasons (1996-97–2013-14). Entered as a Playmaking + Steals profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+**Career shape:** Charted 18 seasons (1996-97–2013-14). Entered as a Playmaking + Steals profile, peaked as a Three-Point Volume + Three-Point Accuracy identity. Career trajectory: migrator (10 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[ethan-thompson|Ethan Thompson]] '26 (93% aligned similarity — cross-era via Procrustes chaining).
 

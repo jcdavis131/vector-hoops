@@ -75,7 +75,7 @@ Closest career shapes in the era-normalized vector space:
 - [[matt-barnes|Matt Barnes]] '04 (83% similar)
 - [[baylor-scheierman|Baylor Scheierman]] '26 (83% similar)
 
-**Career shape:** Charted 18 seasons (2008-09–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 18 seasons (2008-09–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: migrator (6 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[leandro-bolmaro|Leandro Bolmaro]] '22 (85% aligned similarity — cross-era via Procrustes chaining).
 

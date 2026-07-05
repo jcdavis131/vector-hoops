@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[daequan-cook|Daequan Cook]] '11 (89% similar)
 - [[walt-williams|Walt Williams]] '03 (88% similar)
 
-**Career shape:** Charted 5 seasons (2012-13–2016-17). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 5 seasons (2012-13–2016-17). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[chase-budinger|Chase Budinger]] '10 (93% aligned similarity — cross-era via Procrustes chaining).
 

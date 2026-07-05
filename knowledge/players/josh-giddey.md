@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[nikola-jokic|Nikola Jokić]] '22 (74% similar)
 - [[john-wall|John Wall]] '17 (72% similar)
 
-**Career shape:** Charted 5 seasons (2021-22–2025-26). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 5 seasons (2021-22–2025-26). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: migrator (3 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[tyreke-evans|Tyreke Evans]] '16 (81% aligned similarity — cross-era via Procrustes chaining).
 

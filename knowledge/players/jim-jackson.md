@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[will-barton|Will Barton]] '13 (84% similar)
 - [[juan-carlos-navarro|Juan Carlos Navarro]] '08 (84% similar)
 
-**Career shape:** Charted 10 seasons (1996-97–2005-06). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 10 seasons (1996-97–2005-06). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: drifter (5 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[c-j-wilcox|C.J. Wilcox]] '17 (82% aligned similarity — cross-era via Procrustes chaining).
 

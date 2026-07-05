@@ -70,7 +70,7 @@ Closest career shapes in the era-normalized vector space:
 - [[mike-muscala|Mike Muscala]] '14 (86% similar)
 - [[quinten-post|Quinten Post]] '25 (85% similar)
 
-**Career shape:** Charted 13 seasons (2005-06–2018-19). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+**Career shape:** Charted 13 seasons (2005-06–2018-19). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass (Low On-Court Impact) identity. Career trajectory: migrator (8 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[cassius-winston|Cassius Winston]] '21 (86% aligned similarity — cross-era via Procrustes chaining).
 

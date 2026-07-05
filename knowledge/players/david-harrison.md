@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[ha-ha|Ha Ha]] '06 (85% similar)
 - [[norvel-pelle|Norvel Pelle]] '20 (84% similar)
 
-**Career shape:** Charted 4 seasons (2004-05–2007-08). Consistent Rim Protection + Offensive Glass profile across his career.
+**Career shape:** Charted 4 seasons (2004-05–2007-08). Consistent Rim Protection + Offensive Glass profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[anthony-randolph|Anthony Randolph]] '13 (83% aligned similarity — cross-era via Procrustes chaining).
 

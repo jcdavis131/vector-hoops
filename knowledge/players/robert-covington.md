@@ -69,7 +69,7 @@ Closest career shapes in the era-normalized vector space:
 - [[keon-ellis|Keon Ellis]] '25 (76% similar)
 - [[josh-minott|Josh Minott]] '24 (76% similar)
 
-**Career shape:** Charted 10 seasons (2014-15–2023-24). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 10 seasons (2014-15–2023-24). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[tony-allen|Tony Allen]] '15 (90% aligned similarity — cross-era via Procrustes chaining).
 

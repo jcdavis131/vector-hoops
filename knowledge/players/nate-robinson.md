@@ -68,7 +68,7 @@ Closest career shapes in the era-normalized vector space:
 - [[o-j-mayo|O.J. Mayo]] '14 (91% similar)
 - [[joe-crispin|Joe Crispin]] '02 (91% similar)
 
-**Career shape:** Charted 10 seasons (2005-06–2014-15). Entered as a Playmaking + Steals profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+**Career shape:** Charted 10 seasons (2005-06–2014-15). Entered as a Playmaking + Steals profile, peaked as a Three-Point Volume + Three-Point Accuracy identity. Career trajectory: migrator (6 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[jannero-pargo|Jannero Pargo]] '14 (91% aligned similarity — cross-era via Procrustes chaining).
 

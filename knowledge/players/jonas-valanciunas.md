@@ -73,7 +73,7 @@ Closest career shapes in the era-normalized vector space:
 - [[john-collins|John Collins]] '19 (89% similar)
 - [[deandre-ayton|Deandre Ayton]] '26 (89% similar)
 
-**Career shape:** Charted 14 seasons (2012-13–2025-26). Entered as a Rim Protection + Offensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+**Career shape:** Charted 14 seasons (2012-13–2025-26). Entered as a Rim Protection + Offensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity. Career trajectory: reinvention (1 archetype change across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[chris-kaman|Chris Kaman]] '08 (93% aligned similarity — cross-era via Procrustes chaining).
 

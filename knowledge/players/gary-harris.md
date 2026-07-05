@@ -69,7 +69,7 @@ Closest career shapes in the era-normalized vector space:
 - [[tyler-johnson|Tyler Johnson]] '21 (90% similar)
 - [[lucious-harris|Lucious Harris]] '98 (90% similar)
 
-**Career shape:** Charted 12 seasons (2014-15–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 12 seasons (2014-15–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: drifter (4 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[og-anunoby|OG Anunoby]] '18 (86% aligned similarity — cross-era via Procrustes chaining).
 

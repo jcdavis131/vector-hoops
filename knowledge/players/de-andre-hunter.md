@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[nick-young|Nick Young]] '15 (84% similar)
 - [[tim-hardaway-jr|Tim Hardaway Jr.]] '15 (83% similar)
 
-**Career shape:** Charted 7 seasons (2019-20–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+**Career shape:** Charted 7 seasons (2019-20–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[johnny-newman|Johnny Newman]] '98 (86% aligned similarity — cross-era via Procrustes chaining).
 

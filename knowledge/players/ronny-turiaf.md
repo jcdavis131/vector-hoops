@@ -68,7 +68,7 @@ Closest career shapes in the era-normalized vector space:
 - [[adem-bona|Adem Bona]] '25 (92% similar)
 - [[jordan-bell|Jordan Bell]] '18 (91% similar)
 
-**Career shape:** Charted 9 seasons (2005-06–2013-14). Consistent Rim Protection + Offensive Glass profile across his career.
+**Career shape:** Charted 9 seasons (2005-06–2013-14). Consistent Rim Protection + Offensive Glass profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[adonal-foyle|Adonal Foyle]] '07 (97% aligned similarity — cross-era via Procrustes chaining).
 

@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[sam-merrill|Sam Merrill]] '24 (84% similar)
 - [[georges-niang|Georges Niang]] '17 (83% similar)
 
-**Career shape:** Charted 6 seasons (2018-19–2024-25). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 6 seasons (2018-19–2024-25). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: migrator (3 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[kevin-martin|Kevin Martin]] '11 (81% aligned similarity — cross-era via Procrustes chaining).
 

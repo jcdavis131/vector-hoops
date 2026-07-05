@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[chris-andersen|Chris Andersen]] '10 (84% similar)
 - [[donovan-clingan|Donovan Clingan]] '25 (82% similar)
 
-**Career shape:** Charted 5 seasons (2012-13–2016-17). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
+**Career shape:** Charted 5 seasons (2012-13–2016-17). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity. Career trajectory: migrator (4 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[keon-clark|Keon Clark]] '01 (87% aligned similarity — cross-era via Procrustes chaining).
 

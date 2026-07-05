@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[langston-galloway|Langston Galloway]] '18 (95% similar)
 - [[richie-frahm|Richie Frahm]] '04 (95% similar)
 
-**Career shape:** Charted 4 seasons (1996-97–1999-00). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 4 seasons (1996-97–1999-00). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[mike-penberthy|Mike Penberthy]] '01 (91% aligned similarity — cross-era via Procrustes chaining).
 

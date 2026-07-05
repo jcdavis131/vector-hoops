@@ -74,7 +74,7 @@ Closest career shapes in the era-normalized vector space:
 - [[brian-skinner|Brian Skinner]] '08 (95% similar)
 - [[hasheem-thabeet|Hasheem Thabeet]] '12 (95% similar)
 
-**Career shape:** Charted 15 seasons (2011-12–2025-26). Consistent Rim Protection + Offensive Glass profile across his career.
+**Career shape:** Charted 15 seasons (2011-12–2025-26). Consistent Rim Protection + Offensive Glass profile across his career. Career trajectory: stable (3 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[kyrylo-fesenko|Kyrylo Fesenko]] '09 (92% aligned similarity — cross-era via Procrustes chaining).
 

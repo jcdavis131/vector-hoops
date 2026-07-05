@@ -69,7 +69,7 @@ Closest career shapes in the era-normalized vector space:
 - [[steve-francis|Steve Francis]] '05 (92% similar)
 - [[de-aaron-fox|De'Aaron Fox]] '21 (92% similar)
 
-**Career shape:** Charted 11 seasons (2010-11–2022-23). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 11 seasons (2010-11–2022-23). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[cade-cunningham|Cade Cunningham]] '26 (95% aligned similarity — cross-era via Procrustes chaining).
 

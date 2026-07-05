@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[pat-garrity|Pat Garrity]] '02 (93% similar)
 - [[aj-green|AJ Green]] '23 (93% similar)
 
-**Career shape:** Charted 5 seasons (2020-21–2024-25). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 5 seasons (2020-21–2024-25). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[jalen-rose|Jalen Rose]] '07 (88% aligned similarity — cross-era via Procrustes chaining).
 

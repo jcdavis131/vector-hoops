@@ -74,7 +74,7 @@ Closest career shapes in the era-normalized vector space:
 - [[bam-adebayo|Bam Adebayo]] '22 (80% similar)
 - [[tim-duncan|Tim Duncan]] '04 (79% similar)
 
-**Career shape:** Charted 16 seasons (2006-07–2021-22). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+**Career shape:** Charted 16 seasons (2006-07–2021-22). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career. Career trajectory: stable (3 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[isaiah-hartenstein|Isaiah Hartenstein]] '26 (76% aligned similarity — cross-era via Procrustes chaining).
 

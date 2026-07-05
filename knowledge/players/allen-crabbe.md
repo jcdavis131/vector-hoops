@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[wayne-ellington|Wayne Ellington]] '17 (94% similar)
 - [[aj-green|AJ Green]] '23 (93% similar)
 
-**Career shape:** Charted 6 seasons (2014-15–2019-20). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+**Career shape:** Charted 6 seasons (2014-15–2019-20). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity. Career trajectory: migrator (4 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[isaiah-livers|Isaiah Livers]] '24 (92% aligned similarity — cross-era via Procrustes chaining).
 

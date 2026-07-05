@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[gilbert-arenas|Gilbert Arenas]] '06 (91% similar)
 - [[brandon-jennings|Brandon Jennings]] '15 (90% similar)
 
-**Career shape:** Charted 5 seasons (2021-22–2025-26). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 5 seasons (2021-22–2025-26). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: migrator (4 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[shannon-brown|Shannon Brown]] '08 (84% aligned similarity — cross-era via Procrustes chaining).
 

@@ -71,7 +71,7 @@ Closest career shapes in the era-normalized vector space:
 - [[joel-freeland|Joel Freeland]] '15 (89% similar)
 - [[olumide-oyedeji|Olumide Oyedeji]] '03 (89% similar)
 
-**Career shape:** Charted 12 seasons (2003-04–2015-16). Consistent Offensive Glass + Defensive Glass profile across his career.
+**Career shape:** Charted 12 seasons (2003-04–2015-16). Consistent Offensive Glass + Defensive Glass profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[james-thomas|James Thomas]] '06 (86% aligned similarity — cross-era via Procrustes chaining).
 

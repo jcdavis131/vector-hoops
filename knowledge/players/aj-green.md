@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jason-kapono|Jason Kapono]] '11 (95% similar)
 - [[duncan-robinson|Duncan Robinson]] '20 (94% similar)
 
-**Career shape:** Charted 4 seasons (2022-23–2025-26). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 4 seasons (2022-23–2025-26). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[cam-reynolds|Cam Reynolds]] '19 (90% aligned similarity — cross-era via Procrustes chaining).
 

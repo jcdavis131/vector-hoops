@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[johnny-taylor|Johnny Taylor]] '99 (83% similar)
 - [[luke-harangody|Luke Harangody]] '12 (82% similar)
 
-**Career shape:** Charted 4 seasons (1996-97–1999-00). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 4 seasons (1996-97–1999-00). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[mickael-gelabale|Mickael Gelabale]] '13 (85% aligned similarity — cross-era via Procrustes chaining).
 

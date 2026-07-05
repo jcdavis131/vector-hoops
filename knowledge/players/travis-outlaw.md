@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[rodney-buford|Rodney Buford]] '04 (69% similar)
 - [[kelly-oubre-jr|Kelly Oubre Jr.]] '23 (69% similar)
 
-**Career shape:** Charted 10 seasons (2004-05–2013-14). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+**Career shape:** Charted 10 seasons (2004-05–2013-14). Consistent Offensive Glass (Low On-Court Impact) profile across his career. Career trajectory: migrator (5 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[dequan-jones|DeQuan Jones]] '13 (80% aligned similarity — cross-era via Procrustes chaining).
 

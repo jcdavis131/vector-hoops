@@ -70,7 +70,7 @@ Closest career shapes in the era-normalized vector space:
 - [[ricky-rubio|Ricky Rubio]] '13 (90% similar)
 - [[t-j-mcconnell|T.J. McConnell]] '21 (89% similar)
 
-**Career shape:** Charted 12 seasons (1997-98–2008-09). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 12 seasons (1997-98–2008-09). Consistent Playmaking + Steals profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[nick-calathes|Nick Calathes]] '15 (90% aligned similarity — cross-era via Procrustes chaining).
 

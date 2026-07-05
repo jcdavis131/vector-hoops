@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jason-caffey|Jason Caffey]] '97 (88% similar)
 - [[ante-zizic|Ante Zizic]] '18 (88% similar)
 
-**Career shape:** Charted 6 seasons (2006-07–2011-12). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+**Career shape:** Charted 6 seasons (2006-07–2011-12). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity. Career trajectory: drifter (2 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[priest-lauderdale|Priest Lauderdale]] '97 (83% aligned similarity — cross-era via Procrustes chaining).
 

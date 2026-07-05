@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[corey-benjamin|Corey Benjamin]] '00 (80% similar)
 - [[jeremiah-fears|Jeremiah Fears]] '26 (79% similar)
 
-**Career shape:** Charted 5 seasons (2017-18–2021-22). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+**Career shape:** Charted 5 seasons (2017-18–2021-22). Consistent Offensive Glass (Low On-Court Impact) profile across his career. Career trajectory: drifter (3 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[smush-parker|Smush Parker]] '05 (83% aligned similarity — cross-era via Procrustes chaining).
 

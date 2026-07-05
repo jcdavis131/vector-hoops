@@ -74,7 +74,7 @@ Closest career shapes in the era-normalized vector space:
 - [[terry-mills|Terry Mills]] '97 (80% similar)
 - [[max-strus|Max Strus]] '21 (80% similar)
 
-**Career shape:** Charted 17 seasons (2000-01–2016-17). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 17 seasons (2000-01–2016-17). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: reinvention (5 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[calbert-cheaney|Calbert Cheaney]] '00 (88% aligned similarity — cross-era via Procrustes chaining).
 

@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[anthony-johnson|Anthony Johnson]] '02 (87% similar)
 - [[cory-joseph|Cory Joseph]] '24 (87% similar)
 
-**Career shape:** Charted 4 seasons (1996-97–1999-00). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 4 seasons (1996-97–1999-00). Consistent Playmaking + Steals profile across his career. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[steve-blake|Steve Blake]] '16 (92% aligned similarity — cross-era via Procrustes chaining).
 

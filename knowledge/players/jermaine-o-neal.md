@@ -77,7 +77,7 @@ Closest career shapes in the era-normalized vector space:
 - [[patrick-ewing|Patrick Ewing]] '98 (92% similar)
 - [[zydrunas-ilgauskas|Zydrunas Ilgauskas]] '02 (92% similar)
 
-**Career shape:** Charted 18 seasons (1996-97–2013-14). Entered as a Rim Protection + Offensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+**Career shape:** Charted 18 seasons (1996-97–2013-14). Entered as a Rim Protection + Offensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity. Career trajectory: reinvention (7 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[david-robinson|David Robinson]] '98 (90% aligned similarity — cross-era via Procrustes chaining).
 

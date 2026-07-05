@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[sean-rooks|Sean Rooks]] '98 (82% similar)
 - [[tony-massenburg|Tony Massenburg]] '02 (82% similar)
 
-**Career shape:** Charted 4 seasons (2015-16–2018-19). Consistent Offensive Glass + Defensive Glass profile across his career.
+**Career shape:** Charted 4 seasons (2015-16–2018-19). Consistent Offensive Glass + Defensive Glass profile across his career. Career trajectory: migrator (2 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[glen-davis|Glen Davis]] '08 (83% aligned similarity — cross-era via Procrustes chaining).
 

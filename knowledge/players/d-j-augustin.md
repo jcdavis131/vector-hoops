@@ -72,7 +72,7 @@ Closest career shapes in the era-normalized vector space:
 - [[troy-hudson|Troy Hudson]] '06 (92% similar)
 - [[earl-boykins|Earl Boykins]] '00 (90% similar)
 
-**Career shape:** Charted 14 seasons (2008-09–2021-22). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Playmaking + Steals identity.
+**Career shape:** Charted 14 seasons (2008-09–2021-22). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Playmaking + Steals identity. Career trajectory: drifter (7 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[sarunas-jasikevicius|Sarunas Jasikevicius]] '07 (87% aligned similarity — cross-era via Procrustes chaining).
 

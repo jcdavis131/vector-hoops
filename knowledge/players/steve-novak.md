@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[aj-green|AJ Green]] '23 (94% similar)
 - [[wesley-person|Wesley Person]] '05 (94% similar)
 
-**Career shape:** Charted 9 seasons (2006-07–2014-15). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 9 seasons (2006-07–2014-15). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: drifter (4 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[deividas-sirvydis|Deividas Sirvydis]] '21 (87% aligned similarity — cross-era via Procrustes chaining).
 

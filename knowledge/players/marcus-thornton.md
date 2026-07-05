@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[voshon-lenard|Voshon Lenard]] '97 (89% similar)
 - [[dell-curry|Dell Curry]] '00 (89% similar)
 
-**Career shape:** Charted 8 seasons (2009-10–2016-17). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 8 seasons (2009-10–2016-17). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[sam-merrill|Sam Merrill]] '24 (86% aligned similarity — cross-era via Procrustes chaining).
 

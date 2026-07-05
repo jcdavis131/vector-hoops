@@ -73,7 +73,7 @@ Closest career shapes in the era-normalized vector space:
 - [[kawhi-leonard|Kawhi Leonard]] '20 (74% similar)
 - [[grant-hill|Grant Hill]] '97 (74% similar)
 
-**Career shape:** Charted 15 seasons (2011-12–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 15 seasons (2011-12–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[mario-chalmers|Mario Chalmers]] '16 (83% aligned similarity — cross-era via Procrustes chaining).
 

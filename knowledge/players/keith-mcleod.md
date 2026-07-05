@@ -61,7 +61,7 @@ Closest career shapes in the era-normalized vector space:
 - [[kadeem-allen|Kadeem Allen]] '18 (90% similar)
 - [[jerian-grant|Jerian Grant]] '19 (90% similar)
 
-**Career shape:** Charted 4 seasons (2003-04–2006-07). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 4 seasons (2003-04–2006-07). Consistent Playmaking + Steals profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[litterial-green|Litterial Green]] '98 (87% aligned similarity — cross-era via Procrustes chaining).
 

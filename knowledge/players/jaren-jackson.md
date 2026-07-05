@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[lindy-waters-iii|Lindy Waters III]] '23 (89% similar)
 - [[svi-mykhailiuk|Svi Mykhailiuk]] '24 (89% similar)
 
-**Career shape:** Charted 5 seasons (1996-97–2000-01). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 5 seasons (1996-97–2000-01). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: drifter (2 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[jud-buechler|Jud Buechler]] '00 (83% aligned similarity — cross-era via Procrustes chaining).
 

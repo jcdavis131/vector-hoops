@@ -61,7 +61,7 @@ Closest career shapes in the era-normalized vector space:
 - [[kiwane-garris|Kiwane Garris]] '98 (84% similar)
 - [[markel-brown|Markel Brown]] '15 (83% similar)
 
-**Career shape:** Charted 4 seasons (2002-03–2005-06). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 4 seasons (2002-03–2005-06). Consistent Playmaking + Steals profile across his career. Career trajectory: migrator (3 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[litterial-green|Litterial Green]] '98 (79% aligned similarity — cross-era via Procrustes chaining).
 

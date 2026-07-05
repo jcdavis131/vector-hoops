@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[devean-george|Devean George]] '10 (85% similar)
 - [[jorge-garbajosa|Jorge Garbajosa]] '07 (85% similar)
 
-**Career shape:** Charted 5 seasons (2006-07–2010-11). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 5 seasons (2006-07–2010-11). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[eric-snow|Eric Snow]] '08 (86% aligned similarity — cross-era via Procrustes chaining).
 

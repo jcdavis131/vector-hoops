@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[russell-westbrook|Russell Westbrook]] '17 (94% similar)
 - [[steve-francis|Steve Francis]] '05 (93% similar)
 
-**Career shape:** Charted 6 seasons (2019-20–2025-26). Consistent Scoring Volume + Shot Volume profile across his career.
+**Career shape:** Charted 6 seasons (2019-20–2025-26). Consistent Scoring Volume + Shot Volume profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[russell-westbrook|Russell Westbrook]] '17 (95% aligned similarity — cross-era via Procrustes chaining).
 

@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[bradley-beal|Bradley Beal]] '20 (92% similar)
 - [[gordon-hayward|Gordon Hayward]] '17 (90% similar)
 
-**Career shape:** Charted 5 seasons (2006-07–2010-11). Consistent Scoring Volume + Shot Volume profile across his career.
+**Career shape:** Charted 5 seasons (2006-07–2010-11). Consistent Scoring Volume + Shot Volume profile across his career. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[derrick-rose|Derrick Rose]] '11 (90% aligned similarity — cross-era via Procrustes chaining).
 

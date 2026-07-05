@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[corliss-williamson|Corliss Williamson]] '06 (71% similar)
 - [[hakim-warrick|Hakim Warrick]] '13 (70% similar)
 
-**Career shape:** Charted 9 seasons (2000-01–2008-09). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass + Defensive Glass identity.
+**Career shape:** Charted 9 seasons (2000-01–2008-09). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass + Defensive Glass identity. Career trajectory: migrator (4 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[steve-hamer|Steve Hamer]] '97 (91% aligned similarity — cross-era via Procrustes chaining).
 

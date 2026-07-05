@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[malik-beasley|Malik Beasley]] '25 (88% similar)
 - [[dell-curry|Dell Curry]] '00 (87% similar)
 
-**Career shape:** Charted 8 seasons (2011-12–2018-19). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+**Career shape:** Charted 8 seasons (2011-12–2018-19). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity. Career trajectory: stable (3 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[luther-head|Luther Head]] '07 (86% aligned similarity — cross-era via Procrustes chaining).
 

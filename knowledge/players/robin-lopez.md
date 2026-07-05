@@ -74,7 +74,7 @@ Closest career shapes in the era-normalized vector space:
 - [[joan-beringer|Joan Beringer]] '26 (89% similar)
 - [[mikki-moore|Mikki Moore]] '00 (88% similar)
 
-**Career shape:** Charted 15 seasons (2008-09–2022-23). Consistent Rim Protection + Offensive Glass profile across his career.
+**Career shape:** Charted 15 seasons (2008-09–2022-23). Consistent Rim Protection + Offensive Glass profile across his career. Career trajectory: drifter (6 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[colin-castleton|Colin Castleton]] '25 (87% aligned similarity — cross-era via Procrustes chaining).
 

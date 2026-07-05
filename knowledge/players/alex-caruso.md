@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jordan-mclaughlin|Jordan McLaughlin]] '24 (86% similar)
 - [[aaron-mckie|Aaron McKie]] '05 (86% similar)
 
-**Career shape:** Charted 9 seasons (2017-18–2025-26). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 9 seasons (2017-18–2025-26). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: reinvention (5 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[tony-allen|Tony Allen]] '15 (89% aligned similarity — cross-era via Procrustes chaining).
 

@@ -68,7 +68,7 @@ Closest career shapes in the era-normalized vector space:
 - [[michael-kidd-gilchrist|Michael Kidd-Gilchrist]] '20 (89% similar)
 - [[jason-thompson|Jason Thompson]] '15 (88% similar)
 
-**Career shape:** Charted 9 seasons (1996-97–2004-05). Consistent Offensive Glass + Defensive Glass profile across his career.
+**Career shape:** Charted 9 seasons (1996-97–2004-05). Consistent Offensive Glass + Defensive Glass profile across his career. Career trajectory: drifter (3 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[michael-cage|Michael Cage]] '00 (86% aligned similarity — cross-era via Procrustes chaining).
 

@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[eric-paschall|Eric Paschall]] '20 (75% similar)
 - [[antonio-blakeney|Antonio Blakeney]] '19 (69% similar)
 
-**Career shape:** Charted 6 seasons (2011-12–2016-17). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+**Career shape:** Charted 6 seasons (2011-12–2016-17). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity. Career trajectory: drifter (4 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[bennedict-mathurin|Bennedict Mathurin]] '26 (84% aligned similarity — cross-era via Procrustes chaining).
 

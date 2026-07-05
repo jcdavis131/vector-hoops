@@ -70,7 +70,7 @@ Closest career shapes in the era-normalized vector space:
 - [[bernard-james|Bernard James]] '13 (95% similar)
 - [[jake-tsakalidis|Jake Tsakalidis]] '06 (95% similar)
 
-**Career shape:** Charted 12 seasons (2001-02–2014-15). Consistent Rim Protection + Offensive Glass profile across his career.
+**Career shape:** Charted 12 seasons (2001-02–2014-15). Consistent Rim Protection + Offensive Glass profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[ruben-boumtje-boumtje|Ruben Boumtje-Boumtje]] '02 (86% aligned similarity — cross-era via Procrustes chaining).
 

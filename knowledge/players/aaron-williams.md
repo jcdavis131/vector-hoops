@@ -69,7 +69,7 @@ Closest career shapes in the era-normalized vector space:
 - [[mikki-moore|Mikki Moore]] '00 (92% similar)
 - [[nick-richards|Nick Richards]] '23 (92% similar)
 
-**Career shape:** Charted 12 seasons (1996-97–2007-08). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+**Career shape:** Charted 12 seasons (1996-97–2007-08). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass (Low On-Court Impact) identity. Career trajectory: migrator (6 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[lari-ketner|Lari Ketner]] '00 (88% aligned similarity — cross-era via Procrustes chaining).
 

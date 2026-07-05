@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[grant-long|Grant Long]] '03 (85% similar)
 - [[p-j-tucker|P.J. Tucker]] '24 (85% similar)
 
-**Career shape:** Charted 5 seasons (2010-11–2014-15). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 5 seasons (2010-11–2014-15). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: drifter (2 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[kevin-ollie|Kevin Ollie]] '10 (89% aligned similarity — cross-era via Procrustes chaining).
 

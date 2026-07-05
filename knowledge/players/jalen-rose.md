@@ -70,7 +70,7 @@ Closest career shapes in the era-normalized vector space:
 - [[bradley-beal|Bradley Beal]] '20 (92% similar)
 - [[isaiah-thomas|Isaiah Thomas]] '17 (91% similar)
 
-**Career shape:** Charted 11 seasons (1996-97–2006-07). Entered as a Playmaking + Steals profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+**Career shape:** Charted 11 seasons (1996-97–2006-07). Entered as a Playmaking + Steals profile, peaked as a Three-Point Volume + Three-Point Accuracy identity. Career trajectory: migrator (6 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[ben-mclemore|Ben McLemore]] '22 (90% aligned similarity — cross-era via Procrustes chaining).
 

@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[lucious-harris|Lucious Harris]] '98 (93% similar)
 - [[jarvis-hayes|Jarvis Hayes]] '10 (93% similar)
 
-**Career shape:** Charted 7 seasons (2014-15–2020-21). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 7 seasons (2014-15–2020-21). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[chaz-lanier|Chaz Lanier]] '26 (90% aligned similarity — cross-era via Procrustes chaining).
 

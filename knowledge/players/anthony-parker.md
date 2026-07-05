@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[keith-bogans|Keith Bogans]] '13 (91% similar)
 - [[matt-maloney|Matt Maloney]] '00 (90% similar)
 
-**Career shape:** Charted 7 seasons (1997-98–2011-12). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 7 seasons (1997-98–2011-12). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: drifter (2 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[steve-kerr|Steve Kerr]] '97 (91% aligned similarity — cross-era via Procrustes chaining).
 

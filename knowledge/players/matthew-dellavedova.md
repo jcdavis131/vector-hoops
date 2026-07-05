@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[michael-hawkins|Michael Hawkins]] '99 (91% similar)
 - [[eric-maynor|Eric Maynor]] '14 (90% similar)
 
-**Career shape:** Charted 8 seasons (2013-14–2022-23). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Playmaking + Steals identity.
+**Career shape:** Charted 8 seasons (2013-14–2022-23). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Playmaking + Steals identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[semaj-christon|Semaj Christon]] '17 (90% aligned similarity — cross-era via Procrustes chaining).
 

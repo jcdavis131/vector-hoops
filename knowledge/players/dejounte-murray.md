@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[kevin-porter-jr|Kevin Porter Jr.]] '21 (84% similar)
 - [[t-j-ford|T.J. Ford]] '07 (83% similar)
 
-**Career shape:** Charted 8 seasons (2016-17–2024-25). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 8 seasons (2016-17–2024-25). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: reinvention (5 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[tyreke-evans|Tyreke Evans]] '16 (89% aligned similarity — cross-era via Procrustes chaining).
 

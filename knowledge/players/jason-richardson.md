@@ -71,7 +71,7 @@ Closest career shapes in the era-normalized vector space:
 - [[cj-mccollum|CJ McCollum]] '21 (88% similar)
 - [[marcus-thornton|Marcus Thornton]] '13 (87% similar)
 
-**Career shape:** Charted 13 seasons (2001-02–2014-15). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 13 seasons (2001-02–2014-15). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: drifter (4 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[marreese-speights|Marreese Speights]] '18 (85% aligned similarity — cross-era via Procrustes chaining).
 

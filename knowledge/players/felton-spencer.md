@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[ian-mahinmi|Ian Mahinmi]] '10 (90% similar)
 - [[jeff-adrien|Jeff Adrien]] '15 (90% similar)
 
-**Career shape:** Charted 6 seasons (1996-97–2001-02). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
+**Career shape:** Charted 6 seasons (1996-97–2001-02). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity. Career trajectory: reinvention (2 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[tiago-splitter|Tiago Splitter]] '12 (88% aligned similarity — cross-era via Procrustes chaining).
 

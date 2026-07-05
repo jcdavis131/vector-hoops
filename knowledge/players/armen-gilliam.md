@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jj-hickson|JJ Hickson]] '16 (83% similar)
 - [[juwan-howard|Juwan Howard]] '12 (83% similar)
 
-**Career shape:** Charted 4 seasons (1996-97–1999-00). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+**Career shape:** Charted 4 seasons (1996-97–1999-00). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[john-collins|John Collins]] '19 (87% aligned similarity — cross-era via Procrustes chaining).
 

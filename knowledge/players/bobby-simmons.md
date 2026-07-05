@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[ben-sheppard|Ben Sheppard]] '24 (86% similar)
 - [[alex-ducas|Alex Ducas]] '25 (86% similar)
 
-**Career shape:** Charted 9 seasons (2001-02–2011-12). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 9 seasons (2001-02–2011-12). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: migrator (3 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[yakhouba-diawara|Yakhouba Diawara]] '09 (89% aligned similarity — cross-era via Procrustes chaining).
 

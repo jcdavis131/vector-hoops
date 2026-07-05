@@ -72,7 +72,7 @@ Closest career shapes in the era-normalized vector space:
 - [[craig-porter-jr|Craig Porter Jr.]] '26 (70% similar)
 - [[kyle-anderson|Kyle Anderson]] '15 (69% similar)
 
-**Career shape:** Charted 14 seasons (2012-13–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Playmaking + Steals identity.
+**Career shape:** Charted 14 seasons (2012-13–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Playmaking + Steals identity. Career trajectory: reinvention (2 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[rajon-rondo|Rajon Rondo]] '11 (79% aligned similarity — cross-era via Procrustes chaining).
 

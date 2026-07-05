@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[tyson-chandler|Tyson Chandler]] '20 (93% similar)
 - [[ed-davis|Ed Davis]] '22 (93% similar)
 
-**Career shape:** Charted 8 seasons (2010-11–2017-18). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass + Defensive Glass identity.
+**Career shape:** Charted 8 seasons (2010-11–2017-18). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass + Defensive Glass identity. Career trajectory: reinvention (1 archetype change across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[jarron-collins|Jarron Collins]] '10 (88% aligned similarity — cross-era via Procrustes chaining).
 

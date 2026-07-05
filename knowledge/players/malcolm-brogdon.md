@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[reggie-jackson|Reggie Jackson]] '16 (90% similar)
 - [[gordon-hayward|Gordon Hayward]] '17 (88% similar)
 
-**Career shape:** Charted 9 seasons (2016-17–2024-25). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 9 seasons (2016-17–2024-25). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: migrator (4 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[tony-parker|Tony Parker]] '09 (89% aligned similarity — cross-era via Procrustes chaining).
 

@@ -72,7 +72,7 @@ Closest career shapes in the era-normalized vector space:
 - [[boban-marjanovic|Boban Marjanovic]] '18 (86% similar)
 - [[bison-dele|Bison Dele]] '99 (86% similar)
 
-**Career shape:** Charted 13 seasons (2002-03–2014-15). Entered as a Rim Protection + Offensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+**Career shape:** Charted 13 seasons (2002-03–2014-15). Entered as a Rim Protection + Offensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[luis-scola|Luis Scola]] '11 (92% aligned similarity — cross-era via Procrustes chaining).
 

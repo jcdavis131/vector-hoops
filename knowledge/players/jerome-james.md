@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[sean-williams|Sean Williams]] '10 (88% similar)
 - [[michael-olowokandi|Michael Olowokandi]] '04 (88% similar)
 
-**Career shape:** Charted 6 seasons (2001-02–2006-07). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+**Career shape:** Charted 6 seasons (2001-02–2006-07). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass (Low On-Court Impact) identity. Career trajectory: late-bloom (1 archetype change across his charted seasons) — one sustained archetype switch coming late in his career (after the 60% mark).
 
 **Era twin:** [[derrick-caracter|Derrick Caracter]] '11 (87% aligned similarity — cross-era via Procrustes chaining).
 

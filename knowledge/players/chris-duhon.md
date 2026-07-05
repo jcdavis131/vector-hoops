@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jalen-pickett|Jalen Pickett]] '25 (94% similar)
 - [[chris-childs|Chris Childs]] '02 (93% similar)
 
-**Career shape:** Charted 9 seasons (2004-05–2012-13). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 9 seasons (2004-05–2012-13). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[matthew-dellavedova|Matthew Dellavedova]] '23 (88% aligned similarity — cross-era via Procrustes chaining).
 

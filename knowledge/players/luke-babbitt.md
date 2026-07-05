@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[chuck-person|Chuck Person]] '00 (90% similar)
 - [[daequan-cook|Daequan Cook]] '11 (90% similar)
 
-**Career shape:** Charted 8 seasons (2010-11–2017-18). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+**Career shape:** Charted 8 seasons (2010-11–2017-18). Consistent Offensive Glass (Low On-Court Impact) profile across his career. Career trajectory: drifter (5 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[erik-daniels|Erik Daniels]] '05 (83% aligned similarity — cross-era via Procrustes chaining).
 

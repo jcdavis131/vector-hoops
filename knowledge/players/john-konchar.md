@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[adrian-griffin|Adrian Griffin]] '04 (87% similar)
 - [[ryan-bowen|Ryan Bowen]] '09 (85% similar)
 
-**Career shape:** Charted 7 seasons (2019-20–2025-26). Consistent Offensive Glass + Defensive Glass profile across his career.
+**Career shape:** Charted 7 seasons (2019-20–2025-26). Consistent Offensive Glass + Defensive Glass profile across his career. Career trajectory: drifter (4 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[ryan-bowen|Ryan Bowen]] '09 (74% aligned similarity — cross-era via Procrustes chaining).
 

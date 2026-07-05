@@ -61,7 +61,7 @@ Closest career shapes in the era-normalized vector space:
 - [[justin-jackson|Justin Jackson]] '23 (90% similar)
 - [[deshawn-stevenson|DeShawn Stevenson]] '12 (89% similar)
 
-**Career shape:** Charted 4 seasons (2017-18–2020-21). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+**Career shape:** Charted 4 seasons (2017-18–2020-21). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[allen-crabbe|Allen Crabbe]] '20 (89% aligned similarity — cross-era via Procrustes chaining).
 

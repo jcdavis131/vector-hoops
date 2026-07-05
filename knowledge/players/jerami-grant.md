@@ -70,7 +70,7 @@ Closest career shapes in the era-normalized vector space:
 - [[andrew-wiggins|Andrew Wiggins]] '17 (67% similar)
 - [[jaren-jackson-jr|Jaren Jackson Jr.]] '23 (65% similar)
 
-**Career shape:** Charted 12 seasons (2014-15–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 12 seasons (2014-15–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: migrator (8 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[jerry-stackhouse|Jerry Stackhouse]] '01 (91% aligned similarity — cross-era via Procrustes chaining).
 

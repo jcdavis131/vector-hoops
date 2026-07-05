@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[kasparas-jakucionis|Kasparas Jakučionis]] '26 (86% similar)
 - [[derek-fisher|Derek Fisher]] '02 (86% similar)
 
-**Career shape:** Charted 5 seasons (1996-97–2000-01). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 5 seasons (1996-97–2000-01). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: drifter (3 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[will-richard|Will Richard]] '26 (89% aligned similarity — cross-era via Procrustes chaining).
 

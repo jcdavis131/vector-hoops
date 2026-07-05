@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jalen-suggs|Jalen Suggs]] '25 (81% similar)
 - [[dennis-smith-jr|Dennis Smith Jr.]] '20 (81% similar)
 
-**Career shape:** Charted 4 seasons (2021-22–2024-25). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 4 seasons (2021-22–2024-25). Consistent Playmaking + Steals profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[chris-robinson|Chris Robinson]] '98 (85% aligned similarity — cross-era via Procrustes chaining).
 

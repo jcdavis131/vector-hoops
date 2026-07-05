@@ -68,7 +68,7 @@ Closest career shapes in the era-normalized vector space:
 - [[kosta-koufos|Kosta Koufos]] '19 (94% similar)
 - [[josh-boone|Josh Boone]] '10 (94% similar)
 
-**Career shape:** Charted 9 seasons (2002-03–2010-11). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
+**Career shape:** Charted 9 seasons (2002-03–2010-11). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity. Career trajectory: reinvention (2 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[omer-yurtseven|Omer Yurtseven]] '22 (96% aligned similarity — cross-era via Procrustes chaining).
 

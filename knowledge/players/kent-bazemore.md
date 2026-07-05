@@ -68,7 +68,7 @@ Closest career shapes in the era-normalized vector space:
 - [[cory-alexander|Cory Alexander]] '01 (80% similar)
 - [[ronnie-price|Ronnie Price]] '14 (78% similar)
 
-**Career shape:** Charted 10 seasons (2012-13–2021-22). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 10 seasons (2012-13–2021-22). Consistent Playmaking + Steals profile across his career. Career trajectory: migrator (4 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[shannon-brown|Shannon Brown]] '08 (84% aligned similarity — cross-era via Procrustes chaining).
 

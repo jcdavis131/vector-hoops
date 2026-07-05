@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[alan-anderson|Alan Anderson]] '17 (92% similar)
 - [[rodney-hood|Rodney Hood]] '22 (92% similar)
 
-**Career shape:** Charted 8 seasons (2018-19–2025-26). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 8 seasons (2018-19–2025-26). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[salim-stoudamire|Salim Stoudamire]] '08 (81% aligned similarity — cross-era via Procrustes chaining).
 

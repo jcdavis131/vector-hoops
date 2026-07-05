@@ -69,7 +69,7 @@ Closest career shapes in the era-normalized vector space:
 - [[joel-anthony|Joel Anthony]] '16 (80% similar)
 - [[dominick-barlow|Dominick Barlow]] '23 (80% similar)
 
-**Career shape:** Charted 10 seasons (2016-17–2025-26). Consistent Offensive Glass + Defensive Glass profile across his career.
+**Career shape:** Charted 10 seasons (2016-17–2025-26). Consistent Offensive Glass + Defensive Glass profile across his career. Career trajectory: reinvention (3 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[zeke-nnaji|Zeke Nnaji]] '24 (84% aligned similarity — cross-era via Procrustes chaining).
 

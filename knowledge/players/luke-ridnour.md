@@ -70,7 +70,7 @@ Closest career shapes in the era-normalized vector space:
 - [[travis-best|Travis Best]] '04 (93% similar)
 - [[beno-udrih|Beno Udrih]] '17 (93% similar)
 
-**Career shape:** Charted 12 seasons (2003-04–2014-15). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 12 seasons (2003-04–2014-15). Consistent Playmaking + Steals profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[tyrese-haliburton|Tyrese Haliburton]] '23 (84% aligned similarity — cross-era via Procrustes chaining).
 

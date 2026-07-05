@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[ronnie-brewer|Ronnie Brewer]] '14 (75% similar)
 - [[antonio-burks|Antonio Burks]] '06 (75% similar)
 
-**Career shape:** Charted 10 seasons (2003-04–2012-13). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 10 seasons (2003-04–2012-13). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: migrator (7 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[svi-mykhailiuk|Svi Mykhailiuk]] '24 (77% aligned similarity — cross-era via Procrustes chaining).
 

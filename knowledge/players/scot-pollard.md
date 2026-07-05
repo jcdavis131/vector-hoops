@@ -69,7 +69,7 @@ Closest career shapes in the era-normalized vector space:
 - [[anderson-varejao|Anderson Varejao]] '05 (92% similar)
 - [[khem-birch|Khem Birch]] '19 (91% similar)
 
-**Career shape:** Charted 10 seasons (1997-98–2007-08). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
+**Career shape:** Charted 10 seasons (1997-98–2007-08). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity. Career trajectory: reinvention (2 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[david-lee|David Lee]] '17 (90% aligned similarity — cross-era via Procrustes chaining).
 

@@ -72,7 +72,7 @@ Closest career shapes in the era-normalized vector space:
 - [[darius-garland|Darius Garland]] '22 (92% similar)
 - [[d-angelo-russell|D'Angelo Russell]] '19 (92% similar)
 
-**Career shape:** Charted 13 seasons (1996-97–2008-09). Consistent Scoring Volume + Shot Volume profile across his career.
+**Career shape:** Charted 13 seasons (1996-97–2008-09). Consistent Scoring Volume + Shot Volume profile across his career. Career trajectory: late-bloom (3 archetype changes across his charted seasons) — one sustained archetype switch coming late in his career (after the 60% mark).
 
 **Era twin:** [[damon-stoudamire|Damon Stoudamire]] '97 (92% aligned similarity — cross-era via Procrustes chaining).
 

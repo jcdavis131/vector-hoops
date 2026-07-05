@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[wayne-ellington|Wayne Ellington]] '17 (94% similar)
 - [[matt-ryan|Matt Ryan]] '25 (94% similar)
 
-**Career shape:** Charted 7 seasons (2016-17–2022-23). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 7 seasons (2016-17–2022-23). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[simone-fontecchio|Simone Fontecchio]] '23 (92% aligned similarity — cross-era via Procrustes chaining).
 

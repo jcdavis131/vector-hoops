@@ -70,7 +70,7 @@ Closest career shapes in the era-normalized vector space:
 - [[david-benoit|David Benoit]] '98 (81% similar)
 - [[eddie-johnson|Eddie Johnson]] '98 (81% similar)
 
-**Career shape:** Charted 11 seasons (2008-09–2018-19). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 11 seasons (2008-09–2018-19). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[cedric-ceballos|Cedric Ceballos]] '00 (82% aligned similarity — cross-era via Procrustes chaining).
 

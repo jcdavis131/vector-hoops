@@ -73,7 +73,7 @@ Closest career shapes in the era-normalized vector space:
 - [[montrezl-harrell|Montrezl Harrell]] '20 (86% similar)
 - [[bam-adebayo|Bam Adebayo]] '22 (85% similar)
 
-**Career shape:** Charted 15 seasons (2002-03–2018-19). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass + Defensive Glass identity.
+**Career shape:** Charted 15 seasons (2002-03–2018-19). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass + Defensive Glass identity. Career trajectory: stable (4 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[jericho-sims|Jericho Sims]] '22 (86% aligned similarity — cross-era via Procrustes chaining).
 

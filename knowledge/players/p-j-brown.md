@@ -70,7 +70,7 @@ Closest career shapes in the era-normalized vector space:
 - [[lavoy-allen|Lavoy Allen]] '17 (89% similar)
 - [[udonis-haslem|Udonis Haslem]] '13 (88% similar)
 
-**Career shape:** Charted 12 seasons (1996-97–2007-08). Consistent Offensive Glass + Defensive Glass profile across his career.
+**Career shape:** Charted 12 seasons (1996-97–2007-08). Consistent Offensive Glass + Defensive Glass profile across his career. Career trajectory: stable (4 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[shelden-williams|Shelden Williams]] '12 (86% aligned similarity — cross-era via Procrustes chaining).
 

@@ -72,7 +72,7 @@ Closest career shapes in the era-normalized vector space:
 - [[cam-reynolds|Cam Reynolds]] '19 (80% similar)
 - [[mike-muscala|Mike Muscala]] '14 (79% similar)
 
-**Career shape:** Charted 15 seasons (2005-06–2019-20). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+**Career shape:** Charted 15 seasons (2005-06–2019-20). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity. Career trajectory: migrator (7 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[carter-bryant|Carter Bryant]] '26 (91% aligned similarity — cross-era via Procrustes chaining).
 

@@ -70,7 +70,7 @@ Closest career shapes in the era-normalized vector space:
 - [[kyle-kuzma|Kyle Kuzma]] '24 (75% similar)
 - [[rodney-white|Rodney White]] '03 (74% similar)
 
-**Career shape:** Charted 12 seasons (1996-97–2007-08). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 12 seasons (1996-97–2007-08). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: migrator (5 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[jerald-honeycutt|Jerald Honeycutt]] '98 (85% aligned similarity — cross-era via Procrustes chaining).
 

@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[rudy-gobert|Rudy Gobert]] '21 (89% similar)
 - [[jalen-duren|Jalen Duren]] '26 (87% similar)
 
-**Career shape:** Charted 6 seasons (2010-11–2015-16). Entered as a Rim Protection + Offensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+**Career shape:** Charted 6 seasons (2010-11–2015-16). Entered as a Rim Protection + Offensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity. Career trajectory: migrator (3 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[jackie-butler|Jackie Butler]] '06 (91% aligned similarity — cross-era via Procrustes chaining).
 

@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[isaiah-jackson|Isaiah Jackson]] '24 (79% similar)
 - [[josh-smith|Josh Smith]] '10 (78% similar)
 
-**Career shape:** Charted 7 seasons (2006-07–2012-13). Consistent Rim Protection + Offensive Glass profile across his career.
+**Career shape:** Charted 7 seasons (2006-07–2012-13). Consistent Rim Protection + Offensive Glass profile across his career. Career trajectory: late-bloom (2 archetype changes across his charted seasons) — one sustained archetype switch coming late in his career (after the 60% mark).
 
 **Era twin:** [[rudy-gobert|Rudy Gobert]] '21 (84% aligned similarity — cross-era via Procrustes chaining).
 

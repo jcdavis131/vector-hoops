@@ -68,7 +68,7 @@ Closest career shapes in the era-normalized vector space:
 - [[dean-wade|Dean Wade]] '25 (85% similar)
 - [[robbie-hummel|Robbie Hummel]] '14 (84% similar)
 
-**Career shape:** Charted 11 seasons (2010-11–2020-21). Entered as a Rim Protection + Offensive Glass profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 11 seasons (2010-11–2020-21). Entered as a Rim Protection + Offensive Glass profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[chuma-okeke|Chuma Okeke]] '24 (92% aligned similarity — cross-era via Procrustes chaining).
 

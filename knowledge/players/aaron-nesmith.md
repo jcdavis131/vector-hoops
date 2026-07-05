@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[aj-green|AJ Green]] '23 (90% similar)
 - [[moses-moody|Moses Moody]] '22 (90% similar)
 
-**Career shape:** Charted 6 seasons (2020-21–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+**Career shape:** Charted 6 seasons (2020-21–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity. Career trajectory: late-bloom (1 archetype change across his charted seasons) — one sustained archetype switch coming late in his career (after the 60% mark).
 
 **Era twin:** [[otto-porter-jr|Otto Porter Jr.]] '17 (78% aligned similarity — cross-era via Procrustes chaining).
 

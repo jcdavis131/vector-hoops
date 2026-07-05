@@ -61,7 +61,7 @@ Closest career shapes in the era-normalized vector space:
 - [[chris-hunter|Chris Hunter]] '10 (81% similar)
 - [[kevin-seraphin|Kevin Seraphin]] '16 (79% similar)
 
-**Career shape:** Charted 4 seasons (1996-97–1999-00). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+**Career shape:** Charted 4 seasons (1996-97–1999-00). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass (Low On-Court Impact) identity. Career trajectory: migrator (2 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[aaron-williams|Aaron Williams]] '05 (87% aligned similarity — cross-era via Procrustes chaining).
 

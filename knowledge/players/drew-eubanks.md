@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[damian-jones|Damian Jones]] '19 (85% similar)
 - [[tony-bradley|Tony Bradley]] '20 (85% similar)
 
-**Career shape:** Charted 8 seasons (2018-19–2025-26). Entered as a Rim Protection + Offensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+**Career shape:** Charted 8 seasons (2018-19–2025-26). Entered as a Rim Protection + Offensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity. Career trajectory: drifter (4 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[nick-richards|Nick Richards]] '23 (83% aligned similarity — cross-era via Procrustes chaining).
 

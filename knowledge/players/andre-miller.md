@@ -74,7 +74,7 @@ Closest career shapes in the era-normalized vector space:
 - [[john-stockton|John Stockton]] '01 (89% similar)
 - [[carlos-arroyo|Carlos Arroyo]] '03 (86% similar)
 
-**Career shape:** Charted 17 seasons (1999-00–2015-16). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 17 seasons (1999-00–2015-16). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: stable (4 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[robert-pack|Robert Pack]] '97 (89% aligned similarity — cross-era via Procrustes chaining).
 

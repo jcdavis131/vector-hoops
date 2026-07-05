@@ -69,7 +69,7 @@ Closest career shapes in the era-normalized vector space:
 - [[bradley-beal|Bradley Beal]] '20 (92% similar)
 - [[tyrese-maxey|Tyrese Maxey]] '25 (92% similar)
 
-**Career shape:** Charted 11 seasons (2011-12–2021-22). Consistent Scoring Volume + Shot Volume profile across his career.
+**Career shape:** Charted 11 seasons (2011-12–2021-22). Consistent Scoring Volume + Shot Volume profile across his career. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[donovan-mitchell|Donovan Mitchell]] '21 (97% aligned similarity — cross-era via Procrustes chaining).
 

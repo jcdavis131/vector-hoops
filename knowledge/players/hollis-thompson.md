@@ -60,7 +60,7 @@ Closest career shapes in the era-normalized vector space:
 - [[allen-crabbe|Allen Crabbe]] '20 (91% similar)
 - [[jawad-williams|Jawad Williams]] '11 (89% similar)
 
-**Career shape:** Charted 4 seasons (2013-14–2016-17). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 4 seasons (2013-14–2016-17). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[trevor-ariza|Trevor Ariza]] '22 (89% aligned similarity — cross-era via Procrustes chaining).
 

@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[dirk-nowitzki|Dirk Nowitzki]] '06 (77% similar)
 - [[austin-croshere|Austin Croshere]] '99 (77% similar)
 
-**Career shape:** Charted 5 seasons (2014-15–2018-19). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+**Career shape:** Charted 5 seasons (2014-15–2018-19). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[danny-granger|Danny Granger]] '09 (75% aligned similarity — cross-era via Procrustes chaining).
 

@@ -71,7 +71,7 @@ Closest career shapes in the era-normalized vector space:
 - [[bradley-beal|Bradley Beal]] '20 (93% similar)
 - [[donovan-mitchell|Donovan Mitchell]] '21 (92% similar)
 
-**Career shape:** Charted 13 seasons (2012-13–2024-25). Consistent Scoring Volume + Shot Volume profile across his career.
+**Career shape:** Charted 13 seasons (2012-13–2024-25). Consistent Scoring Volume + Shot Volume profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[bradley-beal|Bradley Beal]] '20 (94% aligned similarity — cross-era via Procrustes chaining).
 

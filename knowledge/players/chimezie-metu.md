@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[anthony-randolph|Anthony Randolph]] '13 (82% similar)
 - [[bruno-fernando|Bruno Fernando]] '22 (81% similar)
 
-**Career shape:** Charted 6 seasons (2018-19–2023-24). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Rim Protection + Offensive Glass identity.
+**Career shape:** Charted 6 seasons (2018-19–2023-24). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Rim Protection + Offensive Glass identity. Career trajectory: drifter (4 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[zan-tabak|Zan Tabak]] '00 (87% aligned similarity — cross-era via Procrustes chaining).
 

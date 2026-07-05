@@ -70,7 +70,7 @@ Closest career shapes in the era-normalized vector space:
 - [[samuel-dalembert|Samuel Dalembert]] '13 (90% similar)
 - [[erick-dampier|Erick Dampier]] '97 (90% similar)
 
-**Career shape:** Charted 11 seasons (2008-09–2018-19). Consistent Rim Protection + Offensive Glass profile across his career.
+**Career shape:** Charted 11 seasons (2008-09–2018-19). Consistent Rim Protection + Offensive Glass profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[hilton-armstrong|Hilton Armstrong]] '11 (75% aligned similarity — cross-era via Procrustes chaining).
 

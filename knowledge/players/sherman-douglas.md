@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[acie-law|Acie Law]] '10 (84% similar)
 - [[tre-jones|Tre Jones]] '21 (83% similar)
 
-**Career shape:** Charted 5 seasons (1996-97–2000-01). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 5 seasons (1996-97–2000-01). Consistent Playmaking + Steals profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[ty-jerome|Ty Jerome]] '25 (76% aligned similarity — cross-era via Procrustes chaining).
 

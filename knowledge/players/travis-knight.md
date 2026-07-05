@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[chris-dudley|Chris Dudley]] '00 (90% similar)
 - [[michael-stewart|Michael Stewart]] '04 (90% similar)
 
-**Career shape:** Charted 7 seasons (1996-97–2002-03). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass + Defensive Glass identity.
+**Career shape:** Charted 7 seasons (1996-97–2002-03). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass + Defensive Glass identity. Career trajectory: migrator (4 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[william-cunningham|William Cunningham]] '99 (87% aligned similarity — cross-era via Procrustes chaining).
 

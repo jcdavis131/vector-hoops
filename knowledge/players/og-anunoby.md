@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[bryon-russell|Bryon Russell]] '97 (77% similar)
 - [[keon-ellis|Keon Ellis]] '25 (75% similar)
 
-**Career shape:** Charted 9 seasons (2017-18–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 9 seasons (2017-18–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: reinvention (3 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[luguentz-dort|Luguentz Dort]] '25 (88% aligned similarity — cross-era via Procrustes chaining).
 

@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jayson-williams|Jayson Williams]] '98 (92% similar)
 - [[lonny-baxter|Lonny Baxter]] '06 (92% similar)
 
-**Career shape:** Charted 7 seasons (2009-10–2015-16). Consistent Rim Protection + Offensive Glass profile across his career.
+**Career shape:** Charted 7 seasons (2009-10–2015-16). Consistent Rim Protection + Offensive Glass profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[moses-brown|Moses Brown]] '23 (91% aligned similarity — cross-era via Procrustes chaining).
 

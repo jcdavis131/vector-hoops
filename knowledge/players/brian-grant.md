@@ -69,7 +69,7 @@ Closest career shapes in the era-normalized vector space:
 - [[p-j-brown|P.J. Brown]] '08 (90% similar)
 - [[cheick-diallo|Cheick Diallo]] '17 (90% similar)
 
-**Career shape:** Charted 10 seasons (1996-97–2005-06). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+**Career shape:** Charted 10 seasons (1996-97–2005-06). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career. Career trajectory: reinvention (2 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[antonio-davis|Antonio Davis]] '01 (83% aligned similarity — cross-era via Procrustes chaining).
 

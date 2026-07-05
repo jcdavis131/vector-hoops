@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jacque-vaughn|Jacque Vaughn]] '99 (85% similar)
 - [[doug-overton|Doug Overton]] '02 (83% similar)
 
-**Career shape:** Charted 6 seasons (2014-15–2024-25). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 6 seasons (2014-15–2024-25). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: migrator (5 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[chris-chiozza|Chris Chiozza]] '22 (85% aligned similarity — cross-era via Procrustes chaining).
 

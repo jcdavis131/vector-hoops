@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[taelon-peter|Taelon Peter]] '26 (77% similar)
 - [[brandon-armstrong|Brandon Armstrong]] '04 (77% similar)
 
-**Career shape:** Charted 5 seasons (1996-97–2005-06). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+**Career shape:** Charted 5 seasons (1996-97–2005-06). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Offensive Glass (Low On-Court Impact) identity. Career trajectory: drifter (3 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[scottie-pippen|Scottie Pippen]] '04 (78% aligned similarity — cross-era via Procrustes chaining).
 

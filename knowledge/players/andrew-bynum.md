@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jermaine-o-neal|Jermaine O'Neal]] '05 (93% similar)
 - [[javale-mcgee|JaVale McGee]] '17 (93% similar)
 
-**Career shape:** Charted 8 seasons (2005-06–2013-14). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
+**Career shape:** Charted 8 seasons (2005-06–2013-14). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity. Career trajectory: reinvention (4 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[gheorghe-muresan|Gheorghe Muresan]] '97 (91% aligned similarity — cross-era via Procrustes chaining).
 

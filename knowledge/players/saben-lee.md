@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[david-vanterpool|David Vanterpool]] '01 (81% similar)
 - [[ricky-rubio|Ricky Rubio]] '13 (80% similar)
 
-**Career shape:** Charted 4 seasons (2020-21–2023-24). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 4 seasons (2020-21–2023-24). Consistent Playmaking + Steals profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[isaac-bonga|Isaac Bonga]] '19 (69% aligned similarity — cross-era via Procrustes chaining).
 

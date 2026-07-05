@@ -69,7 +69,7 @@ Closest career shapes in the era-normalized vector space:
 - [[andris-biedrins|Andris Biedrins]] '13 (92% similar)
 - [[will-perdue|Will Perdue]] '99 (92% similar)
 
-**Career shape:** Charted 10 seasons (1996-97–2005-06). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass + Defensive Glass identity.
+**Career shape:** Charted 10 seasons (1996-97–2005-06). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass + Defensive Glass identity. Career trajectory: reinvention (1 archetype change across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[olden-polynice|Olden Polynice]] '99 (80% aligned similarity — cross-era via Procrustes chaining).
 

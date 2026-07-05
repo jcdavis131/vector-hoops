@@ -71,7 +71,7 @@ Closest career shapes in the era-normalized vector space:
 - [[horacio-llamas|Horacio Llamas]] '97 (76% similar)
 - [[hamidou-diallo|Hamidou Diallo]] '23 (75% similar)
 
-**Career shape:** Charted 14 seasons (2001-02–2014-15). Consistent Offensive Glass + Defensive Glass profile across his career.
+**Career shape:** Charted 14 seasons (2001-02–2014-15). Consistent Offensive Glass + Defensive Glass profile across his career. Career trajectory: migrator (10 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[cody-martin|Cody Martin]] '21 (88% aligned similarity — cross-era via Procrustes chaining).
 

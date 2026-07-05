@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[devean-george|Devean George]] '10 (83% similar)
 - [[bobby-simmons|Bobby Simmons]] '12 (82% similar)
 
-**Career shape:** Charted 10 seasons (2009-10–2019-20). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 10 seasons (2009-10–2019-20). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: drifter (3 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[devean-george|Devean George]] '10 (85% aligned similarity — cross-era via Procrustes chaining).
 

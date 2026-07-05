@@ -61,7 +61,7 @@ Closest career shapes in the era-normalized vector space:
 - [[keon-ellis|Keon Ellis]] '25 (87% similar)
 - [[scott-brooks|Scott Brooks]] '97 (86% similar)
 
-**Career shape:** Charted 5 seasons (2021-22–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 5 seasons (2021-22–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[corey-brewer|Corey Brewer]] '19 (89% aligned similarity — cross-era via Procrustes chaining).
 

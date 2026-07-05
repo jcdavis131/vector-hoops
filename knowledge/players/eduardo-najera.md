@@ -70,7 +70,7 @@ Closest career shapes in the era-normalized vector space:
 - [[sam-dekker|Sam Dekker]] '19 (89% similar)
 - [[john-konchar|John Konchar]] '20 (89% similar)
 
-**Career shape:** Charted 12 seasons (2000-01–2011-12). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 12 seasons (2000-01–2011-12). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: migrator (7 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[matisse-thybulle|Matisse Thybulle]] '21 (85% aligned similarity — cross-era via Procrustes chaining).
 

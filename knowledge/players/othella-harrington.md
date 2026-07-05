@@ -70,7 +70,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jason-caffey|Jason Caffey]] '97 (88% similar)
 - [[nenad-krstic|Nenad Krstic]] '07 (87% similar)
 
-**Career shape:** Charted 12 seasons (1996-97–2007-08). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+**Career shape:** Charted 12 seasons (1996-97–2007-08). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity. Career trajectory: migrator (5 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[nenad-krstic|Nenad Krstic]] '07 (87% aligned similarity — cross-era via Procrustes chaining).
 

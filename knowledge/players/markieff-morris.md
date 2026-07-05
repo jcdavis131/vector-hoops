@@ -70,7 +70,7 @@ Closest career shapes in the era-normalized vector space:
 - [[brian-cook|Brian Cook]] '09 (75% similar)
 - [[dario-saric|Dario Saric]] '21 (71% similar)
 
-**Career shape:** Charted 13 seasons (2011-12–2023-24). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+**Career shape:** Charted 13 seasons (2011-12–2023-24). Consistent Offensive Glass (Low On-Court Impact) profile across his career. Career trajectory: migrator (7 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[wilson-chandler|Wilson Chandler]] '20 (91% aligned similarity — cross-era via Procrustes chaining).
 

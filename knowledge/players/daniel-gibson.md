@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[mike-penberthy|Mike Penberthy]] '01 (93% similar)
 - [[keith-bogans|Keith Bogans]] '13 (93% similar)
 
-**Career shape:** Charted 7 seasons (2006-07–2012-13). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 7 seasons (2006-07–2012-13). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: drifter (4 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[ricky-davis|Ricky Davis]] '09 (90% aligned similarity — cross-era via Procrustes chaining).
 

@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[joe-smith|Joe Smith]] '00 (88% similar)
 - [[zydrunas-ilgauskas|Zydrunas Ilgauskas]] '02 (88% similar)
 
-**Career shape:** Charted 5 seasons (1996-97–2000-01). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+**Career shape:** Charted 5 seasons (1996-97–2000-01). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[antonio-mcdyess|Antonio McDyess]] '01 (89% aligned similarity — cross-era via Procrustes chaining).
 

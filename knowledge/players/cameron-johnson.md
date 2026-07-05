@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[trey-murphy-iii|Trey Murphy III]] '24 (91% similar)
 - [[kyle-korver|Kyle Korver]] '04 (91% similar)
 
-**Career shape:** Charted 7 seasons (2019-20–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 7 seasons (2019-20–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: drifter (2 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[wesley-matthews|Wesley Matthews]] '20 (79% aligned similarity — cross-era via Procrustes chaining).
 

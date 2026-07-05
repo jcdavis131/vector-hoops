@@ -61,7 +61,7 @@ Closest career shapes in the era-normalized vector space:
 - [[chris-anstey|Chris Anstey]] '00 (75% similar)
 - [[jarell-martin|Jarell Martin]] '16 (74% similar)
 
-**Career shape:** Charted 5 seasons (2007-08–2011-12). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+**Career shape:** Charted 5 seasons (2007-08–2011-12). Consistent Offensive Glass (Low On-Court Impact) profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[randolph-morris|Randolph Morris]] '08 (77% aligned similarity — cross-era via Procrustes chaining).
 

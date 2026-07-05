@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[gary-trent|Gary Trent]] '01 (88% similar)
 - [[jason-thompson|Jason Thompson]] '15 (88% similar)
 
-**Career shape:** Charted 6 seasons (1997-98–2002-03). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass + Defensive Glass identity.
+**Career shape:** Charted 6 seasons (1997-98–2002-03). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass + Defensive Glass identity. Career trajectory: late-bloom (2 archetype changes across his charted seasons) — one sustained archetype switch coming late in his career (after the 60% mark).
 
 **Era twin:** [[deyonta-davis|Deyonta Davis]] '17 (86% aligned similarity — cross-era via Procrustes chaining).
 

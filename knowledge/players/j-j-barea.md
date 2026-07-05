@@ -71,7 +71,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jameer-nelson|Jameer Nelson]] '09 (92% similar)
 - [[damon-stoudamire|Damon Stoudamire]] '97 (91% similar)
 
-**Career shape:** Charted 14 seasons (2006-07–2019-20). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 14 seasons (2006-07–2019-20). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: migrator (10 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[t-j-ford|T.J. Ford]] '07 (89% aligned similarity — cross-era via Procrustes chaining).
 

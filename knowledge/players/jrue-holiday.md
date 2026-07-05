@@ -75,7 +75,7 @@ Closest career shapes in the era-normalized vector space:
 - [[terrell-brandon|Terrell Brandon]] '02 (89% similar)
 - [[goran-dragic|Goran Dragic]] '17 (89% similar)
 
-**Career shape:** Charted 17 seasons (2009-10–2025-26). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 17 seasons (2009-10–2025-26). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: migrator (9 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[robert-pack|Robert Pack]] '97 (95% aligned similarity — cross-era via Procrustes chaining).
 

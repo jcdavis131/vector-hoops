@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[aaron-brooks|Aaron Brooks]] '11 (94% similar)
 - [[anfernee-simons|Anfernee Simons]] '24 (94% similar)
 
-**Career shape:** Charted 9 seasons (2017-18–2025-26). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 9 seasons (2017-18–2025-26). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: reinvention (2 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[troy-hudson|Troy Hudson]] '06 (92% aligned similarity — cross-era via Procrustes chaining).
 

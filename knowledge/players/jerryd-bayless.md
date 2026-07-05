@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[troy-hudson|Troy Hudson]] '06 (91% similar)
 - [[jarrett-jack|Jarrett Jack]] '16 (91% similar)
 
-**Career shape:** Charted 10 seasons (2008-09–2018-19). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 10 seasons (2008-09–2018-19). Consistent Playmaking + Steals profile across his career. Career trajectory: migrator (9 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[justin-robinson|Justin Robinson]] '22 (91% aligned similarity — cross-era via Procrustes chaining).
 

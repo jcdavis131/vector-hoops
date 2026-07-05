@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[raef-lafrentz|Raef LaFrentz]] '08 (79% similar)
 - [[brook-lopez|Brook Lopez]] '13 (77% similar)
 
-**Career shape:** Charted 7 seasons (2018-19–2024-25). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+**Career shape:** Charted 7 seasons (2018-19–2024-25). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[jalen-smith|Jalen Smith]] '25 (84% aligned similarity — cross-era via Procrustes chaining).
 

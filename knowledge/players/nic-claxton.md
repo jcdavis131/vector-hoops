@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[dereck-lively-ii|Dereck Lively II]] '25 (93% similar)
 - [[walker-kessler|Walker Kessler]] '23 (93% similar)
 
-**Career shape:** Charted 6 seasons (2020-21–2025-26). Consistent Rim Protection + Offensive Glass profile across his career.
+**Career shape:** Charted 6 seasons (2020-21–2025-26). Consistent Rim Protection + Offensive Glass profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[dj-mbenga|DJ Mbenga]] '06 (96% aligned similarity — cross-era via Procrustes chaining).
 

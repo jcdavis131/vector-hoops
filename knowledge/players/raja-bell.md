@@ -69,7 +69,7 @@ Closest career shapes in the era-normalized vector space:
 - [[aj-green|AJ Green]] '23 (93% similar)
 - [[rodney-hood|Rodney Hood]] '22 (92% similar)
 
-**Career shape:** Charted 10 seasons (2001-02–2011-12). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+**Career shape:** Charted 10 seasons (2001-02–2011-12). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity. Career trajectory: reinvention (2 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[steve-kerr|Steve Kerr]] '97 (92% aligned similarity — cross-era via Procrustes chaining).
 

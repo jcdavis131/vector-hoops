@@ -68,7 +68,7 @@ Closest career shapes in the era-normalized vector space:
 - [[kelvin-cato|Kelvin Cato]] '99 (91% similar)
 - [[charles-bassey|Charles Bassey]] '24 (91% similar)
 
-**Career shape:** Charted 9 seasons (2013-14–2022-23). Consistent Rim Protection + Offensive Glass profile across his career.
+**Career shape:** Charted 9 seasons (2013-14–2022-23). Consistent Rim Protection + Offensive Glass profile across his career. Career trajectory: reinvention (4 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[derrick-favors|Derrick Favors]] '21 (92% aligned similarity — cross-era via Procrustes chaining).
 

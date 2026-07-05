@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[wayne-ellington|Wayne Ellington]] '17 (91% similar)
 - [[landry-shamet|Landry Shamet]] '20 (91% similar)
 
-**Career shape:** Charted 5 seasons (2021-22–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 5 seasons (2021-22–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: late-bloom (1 archetype change across his charted seasons) — one sustained archetype switch coming late in his career (after the 60% mark).
 
 **Era twin:** [[langston-galloway|Langston Galloway]] '18 (90% aligned similarity — cross-era via Procrustes chaining).
 

@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[justin-edwards|Justin Edwards]] '26 (89% similar)
 - [[patrick-mccaw|Patrick McCaw]] '19 (88% similar)
 
-**Career shape:** Charted 9 seasons (2004-05–2012-13). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 9 seasons (2004-05–2012-13). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: stable (3 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[sindarius-thornwell|Sindarius Thornwell]] '21 (87% aligned similarity — cross-era via Procrustes chaining).
 

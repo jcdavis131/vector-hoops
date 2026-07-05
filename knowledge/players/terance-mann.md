@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[mickael-gelabale|Mickael Gelabale]] '13 (82% similar)
 - [[isaac-okoro|Isaac Okoro]] '25 (80% similar)
 
-**Career shape:** Charted 7 seasons (2019-20–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 7 seasons (2019-20–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[ayo-dosunmu|Ayo Dosunmu]] '22 (87% aligned similarity — cross-era via Procrustes chaining).
 

@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[royal-ivey|Royal Ivey]] '12 (88% similar)
 - [[will-richard|Will Richard]] '26 (87% similar)
 
-**Career shape:** Charted 4 seasons (2016-17–2019-20). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 4 seasons (2016-17–2019-20). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[will-richard|Will Richard]] '26 (87% aligned similarity — cross-era via Procrustes chaining).
 

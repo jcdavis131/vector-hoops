@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jamario-moon|Jamario Moon]] '11 (79% similar)
 - [[greg-buckner|Greg Buckner]] '05 (78% similar)
 
-**Career shape:** Charted 8 seasons (2013-14–2021-22). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 8 seasons (2013-14–2021-22). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: reinvention (2 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[julian-champagnie|Julian Champagnie]] '26 (82% aligned similarity — cross-era via Procrustes chaining).
 

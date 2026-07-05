@@ -71,7 +71,7 @@ Closest career shapes in the era-normalized vector space:
 - [[luke-walton|Luke Walton]] '12 (67% similar)
 - [[dante-exum|Dante Exum]] '15 (67% similar)
 
-**Career shape:** Charted 14 seasons (2003-04–2016-17). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 14 seasons (2003-04–2016-17). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: migrator (11 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[ish-smith|Ish Smith]] '23 (79% aligned similarity — cross-era via Procrustes chaining).
 

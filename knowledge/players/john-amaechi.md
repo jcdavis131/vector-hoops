@@ -61,7 +61,7 @@ Closest career shapes in the era-normalized vector space:
 - [[cory-higgins|Cory Higgins]] '12 (78% similar)
 - [[luka-samanic|Luka Samanic]] '24 (78% similar)
 
-**Career shape:** Charted 4 seasons (1999-00–2002-03). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+**Career shape:** Charted 4 seasons (1999-00–2002-03). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass (Low On-Court Impact) identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[samardo-samuels|Samardo Samuels]] '11 (80% aligned similarity — cross-era via Procrustes chaining).
 

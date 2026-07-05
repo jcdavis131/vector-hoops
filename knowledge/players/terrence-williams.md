@@ -61,7 +61,7 @@ Closest career shapes in the era-normalized vector space:
 - [[brandon-goodwin|Brandon Goodwin]] '20 (75% similar)
 - [[mike-taylor|Mike Taylor]] '09 (75% similar)
 
-**Career shape:** Charted 4 seasons (2009-10–2012-13). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Playmaking + Steals identity.
+**Career shape:** Charted 4 seasons (2009-10–2012-13). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Playmaking + Steals identity. Career trajectory: drifter (3 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[ryan-rollins|Ryan Rollins]] '26 (86% aligned similarity — cross-era via Procrustes chaining).
 

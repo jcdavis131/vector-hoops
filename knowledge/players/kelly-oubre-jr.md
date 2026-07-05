@@ -70,7 +70,7 @@ Closest career shapes in the era-normalized vector space:
 - [[justin-anderson|Justin Anderson]] '18 (71% similar)
 - [[tyrone-nesby|Tyrone Nesby]] '00 (71% similar)
 
-**Career shape:** Charted 11 seasons (2015-16–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+**Career shape:** Charted 11 seasons (2015-16–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity. Career trajectory: migrator (6 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[ed-gray|Ed Gray]] '99 (81% aligned similarity — cross-era via Procrustes chaining).
 

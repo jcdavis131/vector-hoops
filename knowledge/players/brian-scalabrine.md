@@ -69,7 +69,7 @@ Closest career shapes in the era-normalized vector space:
 - [[grant-williams|Grant Williams]] '20 (87% similar)
 - [[royce-o-neale|Royce O'Neale]] '21 (87% similar)
 
-**Career shape:** Charted 11 seasons (2001-02–2011-12). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass + Defensive Glass identity.
+**Career shape:** Charted 11 seasons (2001-02–2011-12). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass + Defensive Glass identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[david-wingate|David Wingate]] '99 (89% aligned similarity — cross-era via Procrustes chaining).
 

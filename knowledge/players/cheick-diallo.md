@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[donnell-harvey|Donnell Harvey]] '02 (90% similar)
 - [[maxime-raynaud|Maxime Raynaud]] '26 (90% similar)
 
-**Career shape:** Charted 4 seasons (2016-17–2019-20). Consistent Rim Protection + Offensive Glass profile across his career.
+**Career shape:** Charted 4 seasons (2016-17–2019-20). Consistent Rim Protection + Offensive Glass profile across his career. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[mario-kasun|Mario Kasun]] '05 (86% aligned similarity — cross-era via Procrustes chaining).
 

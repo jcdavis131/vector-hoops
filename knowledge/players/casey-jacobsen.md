@@ -61,7 +61,7 @@ Closest career shapes in the era-normalized vector space:
 - [[keith-bogans|Keith Bogans]] '13 (91% similar)
 - [[yakhouba-diawara|Yakhouba Diawara]] '09 (91% similar)
 
-**Career shape:** Charted 4 seasons (2002-03–2007-08). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 4 seasons (2002-03–2007-08). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[anthony-brown|Anthony Brown]] '16 (94% aligned similarity — cross-era via Procrustes chaining).
 

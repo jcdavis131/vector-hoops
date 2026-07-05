@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[cedric-ceballos|Cedric Ceballos]] '00 (81% similar)
 - [[derrick-williams|Derrick Williams]] '16 (79% similar)
 
-**Career shape:** Charted 6 seasons (2020-21–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 6 seasons (2020-21–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: migrator (5 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[joe-young|Joe Young]] '17 (83% aligned similarity — cross-era via Procrustes chaining).
 

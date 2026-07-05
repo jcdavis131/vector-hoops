@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[delonte-west|Delonte West]] '09 (88% similar)
 - [[c-j-watson|C.J. Watson]] '11 (87% similar)
 
-**Career shape:** Charted 9 seasons (1996-97–2004-05). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 9 seasons (1996-97–2004-05). Consistent Playmaking + Steals profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[scott-brooks|Scott Brooks]] '97 (92% aligned similarity — cross-era via Procrustes chaining).
 

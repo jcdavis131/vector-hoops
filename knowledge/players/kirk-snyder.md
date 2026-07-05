@@ -61,7 +61,7 @@ Closest career shapes in the era-normalized vector space:
 - [[oscar-torres|Oscar Torres]] '03 (75% similar)
 - [[jerami-grant|Jerami Grant]] '21 (70% similar)
 
-**Career shape:** Charted 4 seasons (2004-05–2007-08). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+**Career shape:** Charted 4 seasons (2004-05–2007-08). Consistent Offensive Glass (Low On-Court Impact) profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[metta-world-peace|Metta World Peace]] '17 (78% aligned similarity — cross-era via Procrustes chaining).
 

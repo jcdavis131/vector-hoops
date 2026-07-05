@@ -71,7 +71,7 @@ Closest career shapes in the era-normalized vector space:
 - [[sam-cassell|Sam Cassell]] '04 (93% similar)
 - [[trae-young|Trae Young]] '20 (91% similar)
 
-**Career shape:** Charted 12 seasons (2005-06–2016-17). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 12 seasons (2005-06–2016-17). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: late-bloom (2 archetype changes across his charted seasons) — one sustained archetype switch coming late in his career (after the 60% mark).
 
 **Era twin:** [[damon-stoudamire|Damon Stoudamire]] '97 (94% aligned similarity — cross-era via Procrustes chaining).
 

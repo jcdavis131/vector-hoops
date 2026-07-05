@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[chris-whitney|Chris Whitney]] '04 (94% similar)
 - [[chucky-atkins|Chucky Atkins]] '08 (94% similar)
 
-**Career shape:** Charted 6 seasons (1999-00–2006-07). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Playmaking + Steals identity.
+**Career shape:** Charted 6 seasons (1999-00–2006-07). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Playmaking + Steals identity. Career trajectory: migrator (2 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[dedric-willoughby|Dedric Willoughby]] '00 (86% aligned similarity — cross-era via Procrustes chaining).
 

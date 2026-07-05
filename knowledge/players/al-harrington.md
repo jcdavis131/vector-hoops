@@ -72,7 +72,7 @@ Closest career shapes in the era-normalized vector space:
 - [[antoine-walker|Antoine Walker]] '01 (82% similar)
 - [[lamond-murray|Lamond Murray]] '04 (80% similar)
 
-**Career shape:** Charted 15 seasons (1998-99–2013-14). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+**Career shape:** Charted 15 seasons (1998-99–2013-14). Consistent Offensive Glass (Low On-Court Impact) profile across his career. Career trajectory: migrator (6 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[paul-davis|Paul Davis]] '08 (82% aligned similarity — cross-era via Procrustes chaining).
 

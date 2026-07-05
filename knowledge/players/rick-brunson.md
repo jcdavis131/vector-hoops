@@ -68,7 +68,7 @@ Closest career shapes in the era-normalized vector space:
 - [[anthony-carter|Anthony Carter]] '03 (92% similar)
 - [[moochie-norris|Moochie Norris]] '05 (92% similar)
 
-**Career shape:** Charted 9 seasons (1997-98–2005-06). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 9 seasons (1997-98–2005-06). Consistent Playmaking + Steals profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[david-vanterpool|David Vanterpool]] '01 (89% aligned similarity — cross-era via Procrustes chaining).
 

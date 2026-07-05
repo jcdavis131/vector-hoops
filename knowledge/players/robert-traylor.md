@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[moussa-diabate|Moussa Diabaté]] '25 (84% similar)
 - [[renaldo-balkman|Renaldo Balkman]] '08 (84% similar)
 
-**Career shape:** Charted 7 seasons (1998-99–2004-05). Entered as a Rim Protection + Offensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+**Career shape:** Charted 7 seasons (1998-99–2004-05). Entered as a Rim Protection + Offensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity. Career trajectory: migrator (4 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[ivano-newbill|Ivano Newbill]] '98 (78% aligned similarity — cross-era via Procrustes chaining).
 

@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[juancho-hernangomez|Juancho Hernangomez]] '23 (88% similar)
 - [[rodney-mcgruder|Rodney McGruder]] '18 (87% similar)
 
-**Career shape:** Charted 5 seasons (2019-20–2023-24). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 5 seasons (2019-20–2023-24). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[duane-ferrell|Duane Ferrell]] '98 (81% aligned similarity — cross-era via Procrustes chaining).
 

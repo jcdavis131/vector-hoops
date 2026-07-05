@@ -70,7 +70,7 @@ Closest career shapes in the era-normalized vector space:
 - [[reggie-jackson|Reggie Jackson]] '16 (94% similar)
 - [[marcus-sasser|Marcus Sasser]] '26 (94% similar)
 
-**Career shape:** Charted 12 seasons (1996-97–2007-08). Consistent Scoring Volume + Shot Volume profile across his career.
+**Career shape:** Charted 12 seasons (1996-97–2007-08). Consistent Scoring Volume + Shot Volume profile across his career. Career trajectory: migrator (5 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[devonte-graham|Devonte' Graham]] '20 (96% aligned similarity — cross-era via Procrustes chaining).
 

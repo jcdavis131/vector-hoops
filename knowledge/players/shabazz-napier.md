@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[dan-dickau|Dan Dickau]] '06 (90% similar)
 - [[marcus-smart|Marcus Smart]] '24 (90% similar)
 
-**Career shape:** Charted 6 seasons (2014-15–2019-20). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 6 seasons (2014-15–2019-20). Consistent Playmaking + Steals profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[marko-jaric|Marko Jaric]] '03 (92% aligned similarity — cross-era via Procrustes chaining).
 

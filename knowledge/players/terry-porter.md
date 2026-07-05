@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[mike-bibby|Mike Bibby]] '12 (84% similar)
 - [[jon-barry|Jon Barry]] '98 (83% similar)
 
-**Career shape:** Charted 6 seasons (1996-97–2001-02). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 6 seasons (1996-97–2001-02). Consistent Playmaking + Steals profile across his career. Career trajectory: drifter (2 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[malcolm-delaney|Malcolm Delaney]] '17 (89% aligned similarity — cross-era via Procrustes chaining).
 

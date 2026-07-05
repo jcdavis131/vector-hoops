@@ -71,7 +71,7 @@ Closest career shapes in the era-normalized vector space:
 - [[khem-birch|Khem Birch]] '19 (91% similar)
 - [[kevon-looney|Kevon Looney]] '23 (91% similar)
 
-**Career shape:** Charted 13 seasons (2004-05–2016-17). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass + Defensive Glass identity.
+**Career shape:** Charted 13 seasons (2004-05–2016-17). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass + Defensive Glass identity. Career trajectory: stable (3 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[udoka-azubuike|Udoka Azubuike]] '23 (87% aligned similarity — cross-era via Procrustes chaining).
 

@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[marcus-brown|Marcus Brown]] '97 (86% similar)
 - [[jaden-hardy|Jaden Hardy]] '26 (86% similar)
 
-**Career shape:** Charted 7 seasons (2012-13–2018-19). Entered as a Scoring Volume + Shot Volume profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+**Career shape:** Charted 7 seasons (2012-13–2018-19). Entered as a Scoring Volume + Shot Volume profile, peaked as a Three-Point Volume + Three-Point Accuracy identity. Career trajectory: migrator (4 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[armoni-brooks|Armoni Brooks]] '21 (81% aligned similarity — cross-era via Procrustes chaining).
 

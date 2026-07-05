@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[ryan-kalkbrenner|Ryan Kalkbrenner]] '26 (91% similar)
 - [[damian-jones|Damian Jones]] '19 (91% similar)
 
-**Career shape:** Charted 6 seasons (2010-11–2015-16). Consistent Rim Protection + Offensive Glass profile across his career.
+**Career shape:** Charted 6 seasons (2010-11–2015-16). Consistent Rim Protection + Offensive Glass profile across his career. Career trajectory: reinvention (1 archetype change across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[stojko-vrankovic|Stojko Vrankovic]] '97 (91% aligned similarity — cross-era via Procrustes chaining).
 

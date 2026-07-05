@@ -71,7 +71,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jamison-battle|Jamison Battle]] '25 (77% similar)
 - [[kevin-gamble|Kevin Gamble]] '97 (77% similar)
 
-**Career shape:** Charted 14 seasons (2002-03–2015-16). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 14 seasons (2002-03–2015-16). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: late-bloom (2 archetype changes across his charted seasons) — one sustained archetype switch coming late in his career (after the 60% mark).
 
 **Era twin:** [[johnny-davis|Johnny Davis]] '24 (94% aligned similarity — cross-era via Procrustes chaining).
 

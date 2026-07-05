@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[latrell-sprewell|Latrell Sprewell]] '97 (92% similar)
 - [[stephen-curry|Stephen Curry]] '16 (92% similar)
 
-**Career shape:** Charted 6 seasons (2020-21–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 6 seasons (2020-21–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: migrator (3 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[eric-gordon|Eric Gordon]] '13 (90% aligned similarity — cross-era via Procrustes chaining).
 

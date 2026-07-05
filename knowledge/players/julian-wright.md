@@ -61,7 +61,7 @@ Closest career shapes in the era-normalized vector space:
 - [[xavier-tillman|Xavier Tillman]] '26 (83% similar)
 - [[dyson-daniels|Dyson Daniels]] '25 (82% similar)
 
-**Career shape:** Charted 4 seasons (2007-08–2010-11). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass + Defensive Glass identity.
+**Career shape:** Charted 4 seasons (2007-08–2010-11). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass + Defensive Glass identity. Career trajectory: drifter (3 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[ausar-thompson|Ausar Thompson]] '26 (87% aligned similarity — cross-era via Procrustes chaining).
 

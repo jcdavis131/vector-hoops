@@ -61,7 +61,7 @@ Closest career shapes in the era-normalized vector space:
 - [[quincy-miller|Quincy Miller]] '14 (80% similar)
 - [[nemanja-nedovic|Nemanja Nedovic]] '14 (79% similar)
 
-**Career shape:** Charted 4 seasons (2002-03–2005-06). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+**Career shape:** Charted 4 seasons (2002-03–2005-06). Consistent Offensive Glass (Low On-Court Impact) profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[jontay-porter|Jontay Porter]] '24 (80% aligned similarity — cross-era via Procrustes chaining).
 

@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[dennis-scott|Dennis Scott]] '00 (91% similar)
 - [[terrence-ross|Terrence Ross]] '19 (91% similar)
 
-**Career shape:** Charted 7 seasons (2003-04–2009-10). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+**Career shape:** Charted 7 seasons (2003-04–2009-10). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity. Career trajectory: drifter (3 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[quentin-grimes|Quentin Grimes]] '24 (88% aligned similarity — cross-era via Procrustes chaining).
 

@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[enes-freedom|Enes Freedom]] '18 (83% similar)
 - [[marvin-bagley-iii|Marvin Bagley III]] '26 (83% similar)
 
-**Career shape:** Charted 9 seasons (2017-18–2025-26). Entered as a Rim Protection + Offensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+**Career shape:** Charted 9 seasons (2017-18–2025-26). Entered as a Rim Protection + Offensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity. Career trajectory: stable (3 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[bryant-reeves|Bryant Reeves]] '98 (92% aligned similarity — cross-era via Procrustes chaining).
 

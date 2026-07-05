@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[caleb-martin|Caleb Martin]] '26 (81% similar)
 - [[mario-west|Mario West]] '09 (81% similar)
 
-**Career shape:** Charted 6 seasons (2010-11–2015-16). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 6 seasons (2010-11–2015-16). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: reinvention (3 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[david-wood|David Wood]] '97 (88% aligned similarity — cross-era via Procrustes chaining).
 

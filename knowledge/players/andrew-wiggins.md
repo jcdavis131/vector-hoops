@@ -70,7 +70,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jordan-mcrae|Jordan McRae]] '16 (77% similar)
 - [[cam-thomas|Cam Thomas]] '25 (76% similar)
 
-**Career shape:** Charted 12 seasons (2014-15–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 12 seasons (2014-15–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: migrator (6 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[richard-hamilton|Richard Hamilton]] '03 (89% aligned similarity — cross-era via Procrustes chaining).
 

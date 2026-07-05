@@ -72,7 +72,7 @@ Closest career shapes in the era-normalized vector space:
 - [[anthony-peeler|Anthony Peeler]] '97 (87% similar)
 - [[jason-terry|Jason Terry]] '18 (86% similar)
 
-**Career shape:** Charted 13 seasons (1996-97–2008-09). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Playmaking + Steals identity.
+**Career shape:** Charted 13 seasons (1996-97–2008-09). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Playmaking + Steals identity. Career trajectory: drifter (5 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[dana-barros|Dana Barros]] '99 (84% aligned similarity — cross-era via Procrustes chaining).
 

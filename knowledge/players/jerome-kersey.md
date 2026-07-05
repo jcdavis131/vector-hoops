@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[kedrick-brown|Kedrick Brown]] '02 (80% similar)
 - [[gary-payton-ii|Gary Payton II]] '20 (80% similar)
 
-**Career shape:** Charted 5 seasons (1996-97–2000-01). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass + Defensive Glass identity.
+**Career shape:** Charted 5 seasons (1996-97–2000-01). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass + Defensive Glass identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[andrew-lang|Andrew Lang]] '00 (82% aligned similarity — cross-era via Procrustes chaining).
 

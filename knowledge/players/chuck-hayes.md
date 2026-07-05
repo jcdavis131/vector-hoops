@@ -69,7 +69,7 @@ Closest career shapes in the era-normalized vector space:
 - [[kevon-looney|Kevon Looney]] '23 (90% similar)
 - [[michael-cage|Michael Cage]] '00 (88% similar)
 
-**Career shape:** Charted 10 seasons (2005-06–2014-15). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass + Defensive Glass identity.
+**Career shape:** Charted 10 seasons (2005-06–2014-15). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass + Defensive Glass identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[adrian-caldwell|Adrian Caldwell]] '97 (90% aligned similarity — cross-era via Procrustes chaining).
 

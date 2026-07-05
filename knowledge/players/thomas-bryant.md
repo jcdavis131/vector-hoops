@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jalen-smith|Jalen Smith]] '25 (86% similar)
 - [[kel-el-ware|Kel'el Ware]] '26 (85% similar)
 
-**Career shape:** Charted 7 seasons (2018-19–2025-26). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+**Career shape:** Charted 7 seasons (2018-19–2025-26). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[todd-fuller|Todd Fuller]] '98 (82% aligned similarity — cross-era via Procrustes chaining).
 

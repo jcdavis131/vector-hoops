@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[wayne-ellington|Wayne Ellington]] '17 (83% similar)
 - [[taurean-prince|Taurean Prince]] '26 (82% similar)
 
-**Career shape:** Charted 5 seasons (2008-09–2014-15). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+**Career shape:** Charted 5 seasons (2008-09–2014-15). Consistent Offensive Glass (Low On-Court Impact) profile across his career. Career trajectory: drifter (2 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[greg-stiemsma|Greg Stiemsma]] '15 (79% aligned similarity — cross-era via Procrustes chaining).
 

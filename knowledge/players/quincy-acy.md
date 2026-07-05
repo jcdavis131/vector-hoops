@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[torrey-craig|Torrey Craig]] '20 (78% similar)
 - [[micah-potter|Micah Potter]] '25 (77% similar)
 
-**Career shape:** Charted 6 seasons (2012-13–2017-18). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+**Career shape:** Charted 6 seasons (2012-13–2017-18). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career. Career trajectory: migrator (4 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[jock-landale|Jock Landale]] '24 (78% aligned similarity — cross-era via Procrustes chaining).
 

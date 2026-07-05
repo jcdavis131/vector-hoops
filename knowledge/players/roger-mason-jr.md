@@ -68,7 +68,7 @@ Closest career shapes in the era-normalized vector space:
 - [[daequan-cook|Daequan Cook]] '11 (93% similar)
 - [[sam-merrill|Sam Merrill]] '24 (92% similar)
 
-**Career shape:** Charted 10 seasons (2002-03–2013-14). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 10 seasons (2002-03–2013-14). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: stable (4 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[bryce-drew|Bryce Drew]] '99 (93% aligned similarity — cross-era via Procrustes chaining).
 

@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[brandon-clarke|Brandon Clarke]] '25 (87% similar)
 - [[nene|Nene]] '19 (86% similar)
 
-**Career shape:** Charted 8 seasons (2015-16–2022-23). Entered as a Rim Protection + Offensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+**Career shape:** Charted 8 seasons (2015-16–2022-23). Entered as a Rim Protection + Offensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity. Career trajectory: drifter (4 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[monty-williams|Monty Williams]] '97 (88% aligned similarity — cross-era via Procrustes chaining).
 

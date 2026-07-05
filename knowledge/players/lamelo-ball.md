@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[bones-hyland|Bones Hyland]] '25 (89% similar)
 - [[stephen-curry|Stephen Curry]] '16 (88% similar)
 
-**Career shape:** Charted 6 seasons (2020-21–2025-26). Consistent Scoring Volume + Shot Volume profile across his career.
+**Career shape:** Charted 6 seasons (2020-21–2025-26). Consistent Scoring Volume + Shot Volume profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[bradley-beal|Bradley Beal]] '20 (92% aligned similarity — cross-era via Procrustes chaining).
 

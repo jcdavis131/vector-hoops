@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[glenn-robinson|Glenn Robinson]] '03 (87% similar)
 - [[al-harrington|Al Harrington]] '99 (87% similar)
 
-**Career shape:** Charted 9 seasons (1997-98–2005-06). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+**Career shape:** Charted 9 seasons (1997-98–2005-06). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity. Career trajectory: drifter (4 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[zach-randolph|Zach Randolph]] '07 (93% aligned similarity — cross-era via Procrustes chaining).
 

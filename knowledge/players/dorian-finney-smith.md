@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[p-j-tucker|P.J. Tucker]] '24 (89% similar)
 - [[dean-wade|Dean Wade]] '25 (89% similar)
 
-**Career shape:** Charted 10 seasons (2016-17–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 10 seasons (2016-17–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[alex-abrines|Alex Abrines]] '19 (87% aligned similarity — cross-era via Procrustes chaining).
 

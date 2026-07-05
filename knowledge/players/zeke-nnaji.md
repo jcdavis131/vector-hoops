@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[kj-martin|KJ Martin]] '25 (85% similar)
 - [[robert-swift|Robert Swift]] '05 (85% similar)
 
-**Career shape:** Charted 6 seasons (2020-21–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass + Defensive Glass identity.
+**Career shape:** Charted 6 seasons (2020-21–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass + Defensive Glass identity. Career trajectory: drifter (2 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[derrick-jones-jr|Derrick Jones Jr.]] '18 (84% aligned similarity — cross-era via Procrustes chaining).
 

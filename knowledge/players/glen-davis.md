@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[marty-conlon|Marty Conlon]] '98 (81% similar)
 - [[alan-williams|Alan Williams]] '17 (80% similar)
 
-**Career shape:** Charted 8 seasons (2007-08–2014-15). Consistent Offensive Glass + Defensive Glass profile across his career.
+**Career shape:** Charted 8 seasons (2007-08–2014-15). Consistent Offensive Glass + Defensive Glass profile across his career. Career trajectory: migrator (5 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[jarnell-stokes|Jarnell Stokes]] '15 (89% aligned similarity — cross-era via Procrustes chaining).
 

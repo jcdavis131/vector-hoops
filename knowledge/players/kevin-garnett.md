@@ -78,7 +78,7 @@ Closest career shapes in the era-normalized vector space:
 - [[hakeem-olajuwon|Hakeem Olajuwon]] '97 (84% similar)
 - [[nikola-jokic|Nikola Jokić]] '22 (82% similar)
 
-**Career shape:** Charted 20 seasons (1996-97–2015-16). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+**Career shape:** Charted 20 seasons (1996-97–2015-16). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[hakeem-olajuwon|Hakeem Olajuwon]] '97 (90% aligned similarity — cross-era via Procrustes chaining).
 

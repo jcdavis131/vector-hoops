@@ -70,7 +70,7 @@ Closest career shapes in the era-normalized vector space:
 - [[keith-closs|Keith Closs]] '98 (93% similar)
 - [[desagana-diop|DeSagana Diop]] '13 (92% similar)
 
-**Career shape:** Charted 11 seasons (1997-98–2007-08). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
+**Career shape:** Charted 11 seasons (1997-98–2007-08). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity. Career trajectory: reinvention (4 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[ronny-turiaf|Ronny Turiaf]] '14 (97% aligned similarity — cross-era via Procrustes chaining).
 

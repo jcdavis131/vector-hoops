@@ -70,7 +70,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jamaal-magloire|Jamaal Magloire]] '08 (92% similar)
 - [[josh-boone|Josh Boone]] '10 (92% similar)
 
-**Career shape:** Charted 11 seasons (2001-02–2012-13). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Offensive Glass + Defensive Glass identity.
+**Career shape:** Charted 11 seasons (2001-02–2012-13). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Offensive Glass + Defensive Glass identity. Career trajectory: drifter (5 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[josh-boone|Josh Boone]] '10 (91% aligned similarity — cross-era via Procrustes chaining).
 

@@ -75,7 +75,7 @@ Closest career shapes in the era-normalized vector space:
 - [[devin-booker|Devin Booker]] '19 (84% similar)
 - [[grant-hill|Grant Hill]] '97 (83% similar)
 
-**Career shape:** Charted 17 seasons (2009-10–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 17 seasons (2009-10–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: stable (4 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[franz-wagner|Franz Wagner]] '25 (93% aligned similarity — cross-era via Procrustes chaining).
 

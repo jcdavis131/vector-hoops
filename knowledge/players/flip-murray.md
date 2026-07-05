@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[monta-ellis|Monta Ellis]] '10 (89% similar)
 - [[rashad-mccants|Rashad McCants]] '08 (88% similar)
 
-**Career shape:** Charted 7 seasons (2003-04–2009-10). Entered as a Scoring Volume + Shot Volume profile, peaked as a Playmaking + Steals identity.
+**Career shape:** Charted 7 seasons (2003-04–2009-10). Entered as a Scoring Volume + Shot Volume profile, peaked as a Playmaking + Steals identity. Career trajectory: migrator (4 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[jrue-holiday|Jrue Holiday]] '16 (94% aligned similarity — cross-era via Procrustes chaining).
 

@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[richard-hamilton|Richard Hamilton]] '03 (92% similar)
 - [[jamal-murray|Jamal Murray]] '26 (90% similar)
 
-**Career shape:** Charted 8 seasons (2018-19–2025-26). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 8 seasons (2018-19–2025-26). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: migrator (2 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[lou-williams|Lou Williams]] '19 (96% aligned similarity — cross-era via Procrustes chaining).
 

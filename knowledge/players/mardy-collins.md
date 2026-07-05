@@ -61,7 +61,7 @@ Closest career shapes in the era-normalized vector space:
 - [[junior-harrington|Junior Harrington]] '03 (92% similar)
 - [[laron-profit|Laron Profit]] '00 (91% similar)
 
-**Career shape:** Charted 4 seasons (2006-07–2009-10). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 4 seasons (2006-07–2009-10). Consistent Playmaking + Steals profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[walker-russell|Walker Russell]] '12 (90% aligned similarity — cross-era via Procrustes chaining).
 

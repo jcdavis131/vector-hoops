@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jakob-poeltl|Jakob Poeltl]] '22 (91% similar)
 - [[trevor-booker|Trevor Booker]] '13 (90% similar)
 
-**Career shape:** Charted 7 seasons (2015-16–2021-22). Consistent Rim Protection + Offensive Glass profile across his career.
+**Career shape:** Charted 7 seasons (2015-16–2021-22). Consistent Rim Protection + Offensive Glass profile across his career. Career trajectory: migrator (4 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[freddie-gillespie|Freddie Gillespie]] '21 (89% aligned similarity — cross-era via Procrustes chaining).
 

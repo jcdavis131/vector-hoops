@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[tayshaun-prince|Tayshaun Prince]] '16 (79% similar)
 - [[amir-coffey|Amir Coffey]] '23 (78% similar)
 
-**Career shape:** Charted 6 seasons (1996-97–2001-02). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+**Career shape:** Charted 6 seasons (1996-97–2001-02). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity. Career trajectory: late-bloom (2 archetype changes across his charted seasons) — one sustained archetype switch coming late in his career (after the 60% mark).
 
 **Era twin:** [[corey-kispert|Corey Kispert]] '23 (85% aligned similarity — cross-era via Procrustes chaining).
 

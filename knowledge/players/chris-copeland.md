@@ -61,7 +61,7 @@ Closest career shapes in the era-normalized vector space:
 - [[anfernee-simons|Anfernee Simons]] '24 (90% similar)
 - [[salim-stoudamire|Salim Stoudamire]] '08 (90% similar)
 
-**Career shape:** Charted 4 seasons (2012-13–2015-16). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+**Career shape:** Charted 4 seasons (2012-13–2015-16). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Offensive Glass (Low On-Court Impact) identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[melvin-booker|Melvin Booker]] '97 (88% aligned similarity — cross-era via Procrustes chaining).
 

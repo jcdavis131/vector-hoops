@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[duncan-robinson|Duncan Robinson]] '20 (92% similar)
 - [[sam-merrill|Sam Merrill]] '24 (92% similar)
 
-**Career shape:** Charted 6 seasons (2020-21–2025-26). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 6 seasons (2020-21–2025-26). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[kerry-kittles|Kerry Kittles]] '03 (84% aligned similarity — cross-era via Procrustes chaining).
 

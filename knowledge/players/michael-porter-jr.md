@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[dirk-nowitzki|Dirk Nowitzki]] '06 (83% similar)
 - [[wang-zhi-zhi|Wang Zhi-zhi]] '02 (83% similar)
 
-**Career shape:** Charted 6 seasons (2019-20–2025-26). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 6 seasons (2019-20–2025-26). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: reinvention (2 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[glenn-robinson|Glenn Robinson]] '03 (81% aligned similarity — cross-era via Procrustes chaining).
 

@@ -69,7 +69,7 @@ Closest career shapes in the era-normalized vector space:
 - [[rudy-gobert|Rudy Gobert]] '21 (93% similar)
 - [[derrick-favors|Derrick Favors]] '21 (92% similar)
 
-**Career shape:** Charted 10 seasons (2016-17–2025-26). Consistent Rim Protection + Offensive Glass profile across his career.
+**Career shape:** Charted 10 seasons (2016-17–2025-26). Consistent Rim Protection + Offensive Glass profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[rudy-gobert|Rudy Gobert]] '21 (93% aligned similarity — cross-era via Procrustes chaining).
 

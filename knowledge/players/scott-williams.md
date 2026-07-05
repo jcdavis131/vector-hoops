@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[p-j-brown|P.J. Brown]] '08 (87% similar)
 - [[andrew-lang|Andrew Lang]] '00 (86% similar)
 
-**Career shape:** Charted 8 seasons (1996-97–2004-05). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+**Career shape:** Charted 8 seasons (1996-97–2004-05). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Offensive Glass (Low On-Court Impact) identity. Career trajectory: migrator (6 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[ryan-stack|Ryan Stack]] '99 (77% aligned similarity — cross-era via Procrustes chaining).
 

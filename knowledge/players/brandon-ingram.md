@@ -69,7 +69,7 @@ Closest career shapes in the era-normalized vector space:
 - [[kevin-durant|Kevin Durant]] '14 (88% similar)
 - [[zach-lavine|Zach LaVine]] '21 (88% similar)
 
-**Career shape:** Charted 10 seasons (2016-17–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 10 seasons (2016-17–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: drifter (2 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[devin-booker|Devin Booker]] '19 (84% aligned similarity — cross-era via Procrustes chaining).
 

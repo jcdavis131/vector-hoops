@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[nate-robinson|Nate Robinson]] '10 (91% similar)
 - [[tre-mann|Tre Mann]] '26 (91% similar)
 
-**Career shape:** Charted 7 seasons (2002-03–2008-09). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Playmaking + Steals identity.
+**Career shape:** Charted 7 seasons (2002-03–2008-09). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Playmaking + Steals identity. Career trajectory: late-bloom (3 archetype changes across his charted seasons) — one sustained archetype switch coming late in his career (after the 60% mark).
 
 **Era twin:** [[zabian-dowdell|Zabian Dowdell]] '11 (89% aligned similarity — cross-era via Procrustes chaining).
 

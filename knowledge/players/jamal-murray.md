@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[tyrese-maxey|Tyrese Maxey]] '25 (92% similar)
 - [[sam-cassell|Sam Cassell]] '04 (92% similar)
 
-**Career shape:** Charted 9 seasons (2016-17–2025-26). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 9 seasons (2016-17–2025-26). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[goran-dragic|Goran Dragic]] '17 (91% aligned similarity — cross-era via Procrustes chaining).
 

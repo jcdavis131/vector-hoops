@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[grayson-allen|Grayson Allen]] '19 (92% similar)
 - [[rodney-hood|Rodney Hood]] '22 (92% similar)
 
-**Career shape:** Charted 7 seasons (2005-06–2016-17). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 7 seasons (2005-06–2016-17). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: reinvention (3 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[ignas-brazdeikis|Ignas Brazdeikis]] '22 (89% aligned similarity — cross-era via Procrustes chaining).
 

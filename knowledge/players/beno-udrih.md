@@ -71,7 +71,7 @@ Closest career shapes in the era-normalized vector space:
 - [[howard-eisley|Howard Eisley]] '03 (92% similar)
 - [[darren-collison|Darren Collison]] '10 (91% similar)
 
-**Career shape:** Charted 13 seasons (2004-05–2016-17). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Playmaking + Steals identity.
+**Career shape:** Charted 13 seasons (2004-05–2016-17). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Playmaking + Steals identity. Career trajectory: stable (3 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[terrell-brandon|Terrell Brandon]] '02 (91% aligned similarity — cross-era via Procrustes chaining).
 

@@ -71,7 +71,7 @@ Closest career shapes in the era-normalized vector space:
 - [[onyeka-okongwu|Onyeka Okongwu]] '22 (86% similar)
 - [[buck-williams|Buck Williams]] '97 (85% similar)
 
-**Career shape:** Charted 12 seasons (2014-15–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Rim Protection + Offensive Glass identity.
+**Career shape:** Charted 12 seasons (2014-15–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Rim Protection + Offensive Glass identity. Career trajectory: migrator (5 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[khem-birch|Khem Birch]] '19 (90% aligned similarity — cross-era via Procrustes chaining).
 

@@ -69,7 +69,7 @@ Closest career shapes in the era-normalized vector space:
 - [[mike-bibby|Mike Bibby]] '12 (91% similar)
 - [[tim-hardaway|Tim Hardaway]] '97 (91% similar)
 
-**Career shape:** Charted 10 seasons (1996-97–2005-06). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 10 seasons (1996-97–2005-06). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: drifter (4 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[aaron-brooks|Aaron Brooks]] '11 (89% aligned similarity — cross-era via Procrustes chaining).
 

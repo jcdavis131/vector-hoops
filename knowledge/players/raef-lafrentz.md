@@ -68,7 +68,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jay-huff|Jay Huff]] '26 (81% similar)
 - [[mo-bamba|Mo Bamba]] '20 (80% similar)
 
-**Career shape:** Charted 9 seasons (1999-00–2007-08). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass + Defensive Glass identity.
+**Career shape:** Charted 9 seasons (1999-00–2007-08). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass + Defensive Glass identity. Career trajectory: migrator (5 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[jarred-vanderbilt|Jarred Vanderbilt]] '21 (92% aligned similarity — cross-era via Procrustes chaining).
 

@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jules-bernard|Jules Bernard]] '24 (68% similar)
 - [[tornike-shengelia|Tornike Shengelia]] '14 (66% similar)
 
-**Career shape:** Charted 5 seasons (2012-13–2016-17). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+**Career shape:** Charted 5 seasons (2012-13–2016-17). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Offensive Glass (Low On-Court Impact) identity. Career trajectory: drifter (3 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[dominic-mcguire|Dominic McGuire]] '10 (90% aligned similarity — cross-era via Procrustes chaining).
 

@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[rudy-gay|Rudy Gay]] '14 (78% similar)
 - [[dirk-nowitzki|Dirk Nowitzki]] '06 (76% similar)
 
-**Career shape:** Charted 9 seasons (2003-04–2011-12). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 9 seasons (2003-04–2011-12). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: migrator (6 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[michael-jordan|Michael Jordan]] '97 (88% aligned similarity — cross-era via Procrustes chaining).
 

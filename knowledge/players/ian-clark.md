@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[patty-mills|Patty Mills]] '14 (91% similar)
 - [[randy-foye|Randy Foye]] '12 (90% similar)
 
-**Career shape:** Charted 6 seasons (2013-14–2018-19). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 6 seasons (2013-14–2018-19). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: migrator (4 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[kareem-rush|Kareem Rush]] '09 (92% aligned similarity — cross-era via Procrustes chaining).
 

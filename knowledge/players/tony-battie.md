@@ -72,7 +72,7 @@ Closest career shapes in the era-normalized vector space:
 - [[francisco-elson|Francisco Elson]] '07 (89% similar)
 - [[joel-freeland|Joel Freeland]] '15 (89% similar)
 
-**Career shape:** Charted 13 seasons (1997-98–2011-12). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 13 seasons (1997-98–2011-12). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: migrator (7 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[brooks-barnhizer|Brooks Barnhizer]] '26 (81% aligned similarity — cross-era via Procrustes chaining).
 

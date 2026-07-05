@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[juwan-howard|Juwan Howard]] '12 (74% similar)
 - [[lawrence-funderburke|Lawrence Funderburke]] '03 (74% similar)
 
-**Career shape:** Charted 4 seasons (2001-02–2004-05). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+**Career shape:** Charted 4 seasons (2001-02–2004-05). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career. Career trajectory: migrator (3 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[travis-williams|Travis Williams]] '98 (76% aligned similarity — cross-era via Procrustes chaining).
 

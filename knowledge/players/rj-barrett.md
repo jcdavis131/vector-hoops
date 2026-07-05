@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jalen-green|Jalen Green]] '26 (83% similar)
 - [[carmelo-anthony|Carmelo Anthony]] '13 (83% similar)
 
-**Career shape:** Charted 7 seasons (2019-20–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 7 seasons (2019-20–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: drifter (2 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[trae-young|Trae Young]] '20 (85% aligned similarity — cross-era via Procrustes chaining).
 

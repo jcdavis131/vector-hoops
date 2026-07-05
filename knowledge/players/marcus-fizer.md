@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[hakim-warrick|Hakim Warrick]] '13 (81% similar)
 - [[julius-randle|Julius Randle]] '24 (81% similar)
 
-**Career shape:** Charted 5 seasons (2000-01–2004-05). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+**Career shape:** Charted 5 seasons (2000-01–2004-05). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity. Career trajectory: drifter (2 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[chris-gatling|Chris Gatling]] '97 (89% aligned similarity — cross-era via Procrustes chaining).
 

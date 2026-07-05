@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[shane-larkin|Shane Larkin]] '16 (89% similar)
 - [[lorenzo-brown|Lorenzo Brown]] '19 (88% similar)
 
-**Career shape:** Charted 6 seasons (1996-97–2002-03). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 6 seasons (1996-97–2002-03). Consistent Playmaking + Steals profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[herbert-jones|Herbert Jones]] '22 (84% aligned similarity — cross-era via Procrustes chaining).
 

@@ -71,7 +71,7 @@ Closest career shapes in the era-normalized vector space:
 - [[samuel-dalembert|Samuel Dalembert]] '13 (94% similar)
 - [[brendan-haywood|Brendan Haywood]] '15 (93% similar)
 
-**Career shape:** Charted 12 seasons (2013-14–2024-25). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
+**Career shape:** Charted 12 seasons (2013-14–2024-25). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity. Career trajectory: migrator (8 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[kyrylo-fesenko|Kyrylo Fesenko]] '09 (91% aligned similarity — cross-era via Procrustes chaining).
 

@@ -70,7 +70,7 @@ Closest career shapes in the era-normalized vector space:
 - [[ike-austin|Ike Austin]] '02 (85% similar)
 - [[chris-mihm|Chris Mihm]] '09 (85% similar)
 
-**Career shape:** Charted 12 seasons (2003-04–2014-15). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
+**Career shape:** Charted 12 seasons (2003-04–2014-15). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity. Career trajectory: reinvention (3 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[jonas-valanciunas|Jonas Valančiūnas]] '26 (93% aligned similarity — cross-era via Procrustes chaining).
 

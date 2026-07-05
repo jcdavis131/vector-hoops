@@ -70,7 +70,7 @@ Closest career shapes in the era-normalized vector space:
 - [[gary-neal|Gary Neal]] '14 (94% similar)
 - [[alan-anderson|Alan Anderson]] '17 (93% similar)
 
-**Career shape:** Charted 13 seasons (2007-08–2019-20). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 13 seasons (2007-08–2019-20). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[antonio-reeves|Antonio Reeves]] '25 (90% aligned similarity — cross-era via Procrustes chaining).
 

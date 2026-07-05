@@ -76,7 +76,7 @@ Closest career shapes in the era-normalized vector space:
 - [[dan-gadzuric|Dan Gadzuric]] '05 (93% similar)
 - [[jeremy-tyler|Jeremy Tyler]] '14 (93% similar)
 
-**Career shape:** Charted 17 seasons (1998-99–2014-15). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass + Defensive Glass identity.
+**Career shape:** Charted 17 seasons (1998-99–2014-15). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass + Defensive Glass identity. Career trajectory: migrator (7 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[othello-hunter|Othello Hunter]] '09 (92% aligned similarity — cross-era via Procrustes chaining).
 

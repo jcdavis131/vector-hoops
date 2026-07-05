@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[chauncey-billups|Chauncey Billups]] '06 (86% similar)
 - [[dennis-schroder|Dennis Schröder]] '16 (86% similar)
 
-**Career shape:** Charted 9 seasons (2014-15–2024-25). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 9 seasons (2014-15–2024-25). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[devin-harris|Devin Harris]] '09 (94% aligned similarity — cross-era via Procrustes chaining).
 

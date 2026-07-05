@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[joel-przybilla|Joel Przybilla]] '01 (90% similar)
 - [[travis-knight|Travis Knight]] '01 (90% similar)
 
-**Career shape:** Charted 6 seasons (1996-97–2001-02). Consistent Offensive Glass + Defensive Glass profile across his career.
+**Career shape:** Charted 6 seasons (1996-97–2001-02). Consistent Offensive Glass + Defensive Glass profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[michael-ruffin|Michael Ruffin]] '07 (91% aligned similarity — cross-era via Procrustes chaining).
 

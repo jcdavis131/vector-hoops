@@ -61,7 +61,7 @@ Closest career shapes in the era-normalized vector space:
 - [[marcus-brown|Marcus Brown]] '97 (86% similar)
 - [[collin-gillespie|Collin Gillespie]] '24 (85% similar)
 
-**Career shape:** Charted 4 seasons (1996-97–1999-00). Entered as a Playmaking + Steals profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+**Career shape:** Charted 4 seasons (1996-97–1999-00). Entered as a Playmaking + Steals profile, peaked as a Three-Point Volume + Three-Point Accuracy identity. Career trajectory: migrator (2 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[jr-smith|JR Smith]] '08 (84% aligned similarity — cross-era via Procrustes chaining).
 

@@ -71,7 +71,7 @@ Closest career shapes in the era-normalized vector space:
 - [[derek-harper|Derek Harper]] '99 (92% similar)
 - [[steve-blake|Steve Blake]] '16 (92% similar)
 
-**Career shape:** Charted 13 seasons (2003-04–2015-16). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 13 seasons (2003-04–2015-16). Consistent Playmaking + Steals profile across his career. Career trajectory: late-bloom (5 archetype changes across his charted seasons) — one sustained archetype switch coming late in his career (after the 60% mark).
 
 **Era twin:** [[dejuan-wheat|DeJuan Wheat]] '99 (94% aligned similarity — cross-era via Procrustes chaining).
 

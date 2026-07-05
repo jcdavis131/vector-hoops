@@ -61,7 +61,7 @@ Closest career shapes in the era-normalized vector space:
 - [[haywood-highsmith|Haywood Highsmith]] '22 (86% similar)
 - [[pete-nance|Pete Nance]] '26 (84% similar)
 
-**Career shape:** Charted 4 seasons (2018-19–2021-22). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+**Career shape:** Charted 4 seasons (2018-19–2021-22). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Offensive Glass (Low On-Court Impact) identity. Career trajectory: migrator (3 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[alex-poythress|Alex Poythress]] '18 (87% aligned similarity — cross-era via Procrustes chaining).
 

@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jahidi-white|Jahidi White]] '05 (93% similar)
 - [[nazr-mohammed|Nazr Mohammed]] '15 (93% similar)
 
-**Career shape:** Charted 4 seasons (2020-21–2023-24). Consistent Rim Protection + Offensive Glass profile across his career.
+**Career shape:** Charted 4 seasons (2020-21–2023-24). Consistent Rim Protection + Offensive Glass profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[kenneth-faried|Kenneth Faried]] '12 (93% aligned similarity — cross-era via Procrustes chaining).
 

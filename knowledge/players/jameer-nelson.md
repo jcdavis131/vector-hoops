@@ -72,7 +72,7 @@ Closest career shapes in the era-normalized vector space:
 - [[marcus-sasser|Marcus Sasser]] '26 (93% similar)
 - [[mark-price|Mark Price]] '98 (93% similar)
 
-**Career shape:** Charted 14 seasons (2004-05–2017-18). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 14 seasons (2004-05–2017-18). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: stable (4 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[john-lucas-iii|John Lucas III]] '12 (90% aligned similarity — cross-era via Procrustes chaining).
 

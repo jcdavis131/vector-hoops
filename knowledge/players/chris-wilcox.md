@@ -68,7 +68,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jj-hickson|JJ Hickson]] '16 (91% similar)
 - [[udoka-azubuike|Udoka Azubuike]] '23 (91% similar)
 
-**Career shape:** Charted 11 seasons (2002-03–2012-13). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
+**Career shape:** Charted 11 seasons (2002-03–2012-13). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity. Career trajectory: migrator (4 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[mark-blount|Mark Blount]] '01 (91% aligned similarity — cross-era via Procrustes chaining).
 

@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[casey-jacobsen|Casey Jacobsen]] '08 (91% similar)
 - [[dan-majerle|Dan Majerle]] '02 (91% similar)
 
-**Career shape:** Charted 9 seasons (2003-04–2012-13). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 9 seasons (2003-04–2012-13). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[jake-laravia|Jake LaRavia]] '23 (90% aligned similarity — cross-era via Procrustes chaining).
 

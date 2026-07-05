@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[ben-sheppard|Ben Sheppard]] '24 (90% similar)
 - [[isaiah-livers|Isaiah Livers]] '24 (90% similar)
 
-**Career shape:** Charted 7 seasons (2013-14–2020-21). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 7 seasons (2013-14–2020-21). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[anthony-parker|Anthony Parker]] '10 (90% aligned similarity — cross-era via Procrustes chaining).
 

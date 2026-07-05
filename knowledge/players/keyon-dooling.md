@@ -69,7 +69,7 @@ Closest career shapes in the era-normalized vector space:
 - [[mike-james|Mike James]] '06 (90% similar)
 - [[darrick-martin|Darrick Martin]] '08 (90% similar)
 
-**Career shape:** Charted 11 seasons (2000-01–2011-12). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 11 seasons (2000-01–2011-12). Consistent Playmaking + Steals profile across his career. Career trajectory: drifter (5 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[dejuan-wheat|DeJuan Wheat]] '99 (90% aligned similarity — cross-era via Procrustes chaining).
 

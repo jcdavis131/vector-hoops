@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[rodney-hood|Rodney Hood]] '22 (90% similar)
 - [[gary-trent-jr|Gary Trent Jr.]] '26 (89% similar)
 
-**Career shape:** Charted 8 seasons (2004-05–2011-12). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 8 seasons (2004-05–2011-12). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: stable (3 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[ian-clark|Ian Clark]] '15 (88% aligned similarity — cross-era via Procrustes chaining).
 

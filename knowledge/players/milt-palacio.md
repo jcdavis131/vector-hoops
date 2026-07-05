@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[elie-okobo|Elie Okobo]] '19 (90% similar)
 - [[junior-harrington|Junior Harrington]] '03 (90% similar)
 
-**Career shape:** Charted 7 seasons (1999-00–2005-06). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 7 seasons (1999-00–2005-06). Consistent Playmaking + Steals profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[scotty-pippen-jr|Scotty Pippen Jr.]] '24 (88% aligned similarity — cross-era via Procrustes chaining).
 

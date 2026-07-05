@@ -61,7 +61,7 @@ Closest career shapes in the era-normalized vector space:
 - [[courtney-lee|Courtney Lee]] '20 (77% similar)
 - [[damion-lee|Damion Lee]] '25 (76% similar)
 
-**Career shape:** Charted 4 seasons (1996-97–1999-00). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 4 seasons (1996-97–1999-00). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: drifter (2 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[trey-murphy-iii|Trey Murphy III]] '24 (86% aligned similarity — cross-era via Procrustes chaining).
 

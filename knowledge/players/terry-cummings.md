@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jared-sullinger|Jared Sullinger]] '16 (71% similar)
 - [[matt-harpring|Matt Harpring]] '03 (70% similar)
 
-**Career shape:** Charted 4 seasons (1996-97–1999-00). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+**Career shape:** Charted 4 seasons (1996-97–1999-00). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[jordan-hamilton|Jordan Hamilton]] '12 (72% aligned similarity — cross-era via Procrustes chaining).
 

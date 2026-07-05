@@ -68,7 +68,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jacob-toppin|Jacob Toppin]] '25 (69% similar)
 - [[dylan-windler|Dylan Windler]] '24 (68% similar)
 
-**Career shape:** Charted 10 seasons (2009-10–2018-19). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+**Career shape:** Charted 10 seasons (2009-10–2018-19). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity. Career trajectory: migrator (7 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[dikembe-mutombo|Dikembe Mutombo]] '00 (71% aligned similarity — cross-era via Procrustes chaining).
 

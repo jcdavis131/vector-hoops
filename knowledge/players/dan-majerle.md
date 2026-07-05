@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jaren-jackson|Jaren Jackson]] '01 (88% similar)
 - [[jorge-garbajosa|Jorge Garbajosa]] '07 (87% similar)
 
-**Career shape:** Charted 6 seasons (1996-97–2001-02). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 6 seasons (1996-97–2001-02). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[chuck-person|Chuck Person]] '00 (83% aligned similarity — cross-era via Procrustes chaining).
 

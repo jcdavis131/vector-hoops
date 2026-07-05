@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[loren-woods|Loren Woods]] '06 (86% similar)
 - [[charles-shackleford|Charles Shackleford]] '99 (86% similar)
 
-**Career shape:** Charted 7 seasons (2014-15–2022-23). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Offensive Glass + Defensive Glass identity.
+**Career shape:** Charted 7 seasons (2014-15–2022-23). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Offensive Glass + Defensive Glass identity. Career trajectory: drifter (3 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[francisco-elson|Francisco Elson]] '07 (78% aligned similarity — cross-era via Procrustes chaining).
 

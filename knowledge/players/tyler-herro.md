@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jalen-rose|Jalen Rose]] '07 (90% similar)
 - [[kon-knueppel|Kon Knueppel]] '26 (90% similar)
 
-**Career shape:** Charted 7 seasons (2019-20–2025-26). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 7 seasons (2019-20–2025-26). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: drifter (4 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[bojan-bogdanovic|Bojan Bogdanovic]] '20 (91% aligned similarity — cross-era via Procrustes chaining).
 

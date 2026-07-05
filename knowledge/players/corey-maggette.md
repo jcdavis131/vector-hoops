@@ -72,7 +72,7 @@ Closest career shapes in the era-normalized vector space:
 - [[rj-barrett|RJ Barrett]] '25 (82% similar)
 - [[moritz-wagner|Moritz Wagner]] '25 (82% similar)
 
-**Career shape:** Charted 14 seasons (1999-00–2012-13). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 14 seasons (1999-00–2012-13). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: reinvention (3 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[kevin-martin|Kevin Martin]] '11 (88% aligned similarity — cross-era via Procrustes chaining).
 

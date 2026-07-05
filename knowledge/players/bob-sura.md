@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[kyle-lowry|Kyle Lowry]] '16 (84% similar)
 - [[ricky-rubio|Ricky Rubio]] '13 (84% similar)
 
-**Career shape:** Charted 9 seasons (1996-97–2004-05). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 9 seasons (1996-97–2004-05). Consistent Playmaking + Steals profile across his career. Career trajectory: stable (4 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[scotty-pippen-jr|Scotty Pippen Jr.]] '24 (88% aligned similarity — cross-era via Procrustes chaining).
 

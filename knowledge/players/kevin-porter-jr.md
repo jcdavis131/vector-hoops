@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[mike-taylor|Mike Taylor]] '09 (91% similar)
 - [[john-wall|John Wall]] '17 (90% similar)
 
-**Career shape:** Charted 6 seasons (2019-20–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Playmaking + Steals identity.
+**Career shape:** Charted 6 seasons (2019-20–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Playmaking + Steals identity. Career trajectory: migrator (3 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[emmanuel-mudiay|Emmanuel Mudiay]] '16 (92% aligned similarity — cross-era via Procrustes chaining).
 

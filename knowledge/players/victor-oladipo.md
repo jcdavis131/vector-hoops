@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[lester-hudson|Lester Hudson]] '10 (92% similar)
 - [[paul-george|Paul George]] '22 (92% similar)
 
-**Career shape:** Charted 9 seasons (2013-14–2022-23). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 9 seasons (2013-14–2022-23). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: drifter (4 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[jalen-williams|Jalen Williams]] '25 (91% aligned similarity — cross-era via Procrustes chaining).
 

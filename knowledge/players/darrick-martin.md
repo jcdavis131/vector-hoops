@@ -68,7 +68,7 @@ Closest career shapes in the era-normalized vector space:
 - [[randy-foye|Randy Foye]] '12 (90% similar)
 - [[derek-anderson|Derek Anderson]] '01 (90% similar)
 
-**Career shape:** Charted 9 seasons (1996-97–2007-08). Entered as a Scoring Volume + Shot Volume profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 9 seasons (1996-97–2007-08). Entered as a Scoring Volume + Shot Volume profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: migrator (8 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[markel-brown|Markel Brown]] '15 (79% aligned similarity — cross-era via Procrustes chaining).
 

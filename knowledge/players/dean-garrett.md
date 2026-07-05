@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[brian-skinner|Brian Skinner]] '08 (92% similar)
 - [[adonal-foyle|Adonal Foyle]] '07 (91% similar)
 
-**Career shape:** Charted 6 seasons (1996-97–2001-02). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass + Defensive Glass identity.
+**Career shape:** Charted 6 seasons (1996-97–2001-02). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass + Defensive Glass identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[andrew-lang|Andrew Lang]] '00 (85% aligned similarity — cross-era via Procrustes chaining).
 

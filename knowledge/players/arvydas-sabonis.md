@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[chet-holmgren|Chet Holmgren]] '25 (83% similar)
 - [[pau-gasol|Pau Gasol]] '15 (83% similar)
 
-**Career shape:** Charted 6 seasons (1996-97–2002-03). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+**Career shape:** Charted 6 seasons (1996-97–2002-03). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[kevin-garnett|Kevin Garnett]] '04 (83% aligned similarity — cross-era via Procrustes chaining).
 

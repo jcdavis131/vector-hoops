@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[brandon-knight|Brandon Knight]] '20 (89% similar)
 - [[collin-sexton|Collin Sexton]] '21 (87% similar)
 
-**Career shape:** Charted 4 seasons (2022-23–2025-26). Consistent Scoring Volume + Shot Volume profile across his career.
+**Career shape:** Charted 4 seasons (2022-23–2025-26). Consistent Scoring Volume + Shot Volume profile across his career. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[nolan-smith|Nolan Smith]] '13 (91% aligned similarity — cross-era via Procrustes chaining).
 

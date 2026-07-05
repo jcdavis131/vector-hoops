@@ -75,7 +75,7 @@ Closest career shapes in the era-normalized vector space:
 - [[michael-jordan|Michael Jordan]] '97 (87% similar)
 - [[anthony-edwards|Anthony Edwards]] '25 (86% similar)
 
-**Career shape:** Charted 17 seasons (2006-07–2022-23). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 17 seasons (2006-07–2022-23). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: migrator (9 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[franz-wagner|Franz Wagner]] '25 (92% aligned similarity — cross-era via Procrustes chaining).
 

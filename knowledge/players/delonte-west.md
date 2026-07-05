@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[charlie-ward|Charlie Ward]] '02 (89% similar)
 - [[collin-gillespie|Collin Gillespie]] '24 (89% similar)
 
-**Career shape:** Charted 8 seasons (2004-05–2011-12). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 8 seasons (2004-05–2011-12). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: stable (3 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[hersey-hawkins|Hersey Hawkins]] '98 (93% aligned similarity — cross-era via Procrustes chaining).
 

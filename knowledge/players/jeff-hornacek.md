@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jalen-williams|Jalen Williams]] '25 (78% similar)
 - [[jamal-murray|Jamal Murray]] '26 (77% similar)
 
-**Career shape:** Charted 4 seasons (1996-97–1999-00). Consistent Scoring Volume + Shot Volume profile across his career.
+**Career shape:** Charted 4 seasons (1996-97–1999-00). Consistent Scoring Volume + Shot Volume profile across his career. Career trajectory: reinvention (1 archetype change across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[derek-anderson|Derek Anderson]] '01 (86% aligned similarity — cross-era via Procrustes chaining).
 

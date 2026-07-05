@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[zarko-cabarkapa|Zarko Cabarkapa]] '04 (78% similar)
 - [[marcus-fizer|Marcus Fizer]] '03 (78% similar)
 
-**Career shape:** Charted 7 seasons (1996-97–2003-04). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+**Career shape:** Charted 7 seasons (1996-97–2003-04). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career. Career trajectory: migrator (5 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[zydrunas-ilgauskas|Zydrunas Ilgauskas]] '02 (96% aligned similarity — cross-era via Procrustes chaining).
 

@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[mike-james|Mike James]] '06 (92% similar)
 - [[randy-foye|Randy Foye]] '12 (92% similar)
 
-**Career shape:** Charted 6 seasons (1996-97–2001-02). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Playmaking + Steals identity.
+**Career shape:** Charted 6 seasons (1996-97–2001-02). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Playmaking + Steals identity. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[howard-eisley|Howard Eisley]] '03 (93% aligned similarity — cross-era via Procrustes chaining).
 

@@ -69,7 +69,7 @@ Closest career shapes in the era-normalized vector space:
 - [[derrick-coleman|Derrick Coleman]] '00 (87% similar)
 - [[giannis-antetokounmpo|Giannis Antetokounmpo]] '20 (86% similar)
 
-**Career shape:** Charted 11 seasons (2015-16–2025-26). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+**Career shape:** Charted 11 seasons (2015-16–2025-26). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career. Career trajectory: stable (4 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[nikola-jokic|Nikola Jokić]] '22 (88% aligned similarity — cross-era via Procrustes chaining).
 

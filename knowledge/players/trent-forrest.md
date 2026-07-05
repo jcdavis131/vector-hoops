@@ -61,7 +61,7 @@ Closest career shapes in the era-normalized vector space:
 - [[milt-palacio|Milt Palacio]] '00 (79% similar)
 - [[eric-snow|Eric Snow]] '08 (78% similar)
 
-**Career shape:** Charted 4 seasons (2020-21–2023-24). Entered as a Playmaking + Steals profile, peaked as a Offensive Glass + Defensive Glass identity.
+**Career shape:** Charted 4 seasons (2020-21–2023-24). Entered as a Playmaking + Steals profile, peaked as a Offensive Glass + Defensive Glass identity. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[evan-turner|Evan Turner]] '20 (76% aligned similarity — cross-era via Procrustes chaining).
 

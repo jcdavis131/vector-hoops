@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[voshon-lenard|Voshon Lenard]] '97 (92% similar)
 - [[troy-daniels|Troy Daniels]] '15 (92% similar)
 
-**Career shape:** Charted 7 seasons (1996-97–2002-03). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 7 seasons (1996-97–2002-03). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[pj-hairston|PJ Hairston]] '15 (89% aligned similarity — cross-era via Procrustes chaining).
 

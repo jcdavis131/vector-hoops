@@ -69,7 +69,7 @@ Closest career shapes in the era-normalized vector space:
 - [[mike-james|Mike James]] '06 (94% similar)
 - [[marcus-sasser|Marcus Sasser]] '26 (93% similar)
 
-**Career shape:** Charted 10 seasons (2015-16–2025-26). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 10 seasons (2015-16–2025-26). Consistent Playmaking + Steals profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[lindsey-hunter|Lindsey Hunter]] '09 (79% aligned similarity — cross-era via Procrustes chaining).
 

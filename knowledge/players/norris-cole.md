@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[andrew-nembhard|Andrew Nembhard]] '26 (88% similar)
 - [[elliot-perry|Elliot Perry]] '99 (88% similar)
 
-**Career shape:** Charted 5 seasons (2011-12–2015-16). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 5 seasons (2011-12–2015-16). Consistent Playmaking + Steals profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[daniel-ewing|Daniel Ewing]] '07 (90% aligned similarity — cross-era via Procrustes chaining).
 

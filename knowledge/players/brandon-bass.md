@@ -71,7 +71,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jerome-jordan|Jerome Jordan]] '12 (88% similar)
 - [[brian-grant|Brian Grant]] '99 (88% similar)
 
-**Career shape:** Charted 12 seasons (2005-06–2016-17). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+**Career shape:** Charted 12 seasons (2005-06–2016-17). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity. Career trajectory: migrator (7 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[hanno-mottola|Hanno Mottola]] '01 (81% aligned similarity — cross-era via Procrustes chaining).
 

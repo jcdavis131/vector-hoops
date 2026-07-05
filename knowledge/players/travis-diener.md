@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[bryce-drew|Bryce Drew]] '99 (92% similar)
 - [[chris-quinn|Chris Quinn]] '10 (92% similar)
 
-**Career shape:** Charted 4 seasons (2005-06–2008-09). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 4 seasons (2005-06–2008-09). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[daniel-gibson|Daniel Gibson]] '13 (89% aligned similarity — cross-era via Procrustes chaining).
 

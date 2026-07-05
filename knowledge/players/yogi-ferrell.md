@@ -60,7 +60,7 @@ Closest career shapes in the era-normalized vector space:
 - [[bryce-drew|Bryce Drew]] '99 (92% similar)
 - [[chris-quinn|Chris Quinn]] '10 (91% similar)
 
-**Career shape:** Charted 4 seasons (2016-17–2019-20). Entered as a Playmaking + Steals profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+**Career shape:** Charted 4 seasons (2016-17–2019-20). Entered as a Playmaking + Steals profile, peaked as a Three-Point Volume + Three-Point Accuracy identity. Career trajectory: drifter (2 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[roger-mason-jr|Roger Mason Jr.]] '03 (80% aligned similarity — cross-era via Procrustes chaining).
 

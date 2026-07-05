@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[trevor-booker|Trevor Booker]] '13 (94% similar)
 - [[tristan-thompson|Tristan Thompson]] '25 (94% similar)
 
-**Career shape:** Charted 4 seasons (2014-15–2017-18). Consistent Rim Protection + Offensive Glass profile across his career.
+**Career shape:** Charted 4 seasons (2014-15–2017-18). Consistent Rim Protection + Offensive Glass profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[mitchell-robinson|Mitchell Robinson]] '26 (95% aligned similarity — cross-era via Procrustes chaining).
 

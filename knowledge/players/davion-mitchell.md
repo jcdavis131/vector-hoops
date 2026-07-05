@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[chris-duhon|Chris Duhon]] '13 (88% similar)
 - [[jeff-mcinnis|Jeff McInnis]] '08 (87% similar)
 
-**Career shape:** Charted 5 seasons (2021-22–2025-26). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 5 seasons (2021-22–2025-26). Consistent Playmaking + Steals profile across his career. Career trajectory: drifter (2 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[jose-calderon|Jose Calderon]] '08 (80% aligned similarity — cross-era via Procrustes chaining).
 

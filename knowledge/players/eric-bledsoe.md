@@ -70,7 +70,7 @@ Closest career shapes in the era-normalized vector space:
 - [[steve-francis|Steve Francis]] '05 (90% similar)
 - [[baron-davis|Baron Davis]] '04 (89% similar)
 
-**Career shape:** Charted 12 seasons (2010-11–2021-22). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 12 seasons (2010-11–2021-22). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: reinvention (3 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[cade-cunningham|Cade Cunningham]] '26 (92% aligned similarity — cross-era via Procrustes chaining).
 

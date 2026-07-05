@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jared-butler|Jared Butler]] '24 (92% similar)
 - [[raul-lopez|Raul Lopez]] '05 (92% similar)
 
-**Career shape:** Charted 5 seasons (2006-07–2016-17). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 5 seasons (2006-07–2016-17). Consistent Playmaking + Steals profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[tremont-waters|Tremont Waters]] '21 (96% aligned similarity — cross-era via Procrustes chaining).
 

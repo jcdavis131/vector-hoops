@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[michael-porter-jr|Michael Porter Jr.]] '26 (85% similar)
 - [[carmelo-anthony|Carmelo Anthony]] '13 (85% similar)
 
-**Career shape:** Charted 4 seasons (1996-97–2000-01). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+**Career shape:** Charted 4 seasons (1996-97–2000-01). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[antawn-jamison|Antawn Jamison]] '01 (85% aligned similarity — cross-era via Procrustes chaining).
 

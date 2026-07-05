@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[bracey-wright|Bracey Wright]] '07 (84% similar)
 - [[aaron-mckie|Aaron McKie]] '05 (82% similar)
 
-**Career shape:** Charted 5 seasons (1996-97–2000-01). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 5 seasons (1996-97–2000-01). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: drifter (2 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[anthony-parker|Anthony Parker]] '10 (89% aligned similarity — cross-era via Procrustes chaining).
 

@@ -68,7 +68,7 @@ Closest career shapes in the era-normalized vector space:
 - [[onyeka-okongwu|Onyeka Okongwu]] '22 (94% similar)
 - [[ante-zizic|Ante Zizic]] '18 (94% similar)
 
-**Career shape:** Charted 9 seasons (2017-18–2025-26). Consistent Rim Protection + Offensive Glass profile across his career.
+**Career shape:** Charted 9 seasons (2017-18–2025-26). Consistent Rim Protection + Offensive Glass profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[khem-birch|Khem Birch]] '19 (88% aligned similarity — cross-era via Procrustes chaining).
 

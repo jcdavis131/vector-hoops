@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[aaron-gray|Aaron Gray]] '11 (91% similar)
 - [[jamaal-magloire|Jamaal Magloire]] '08 (90% similar)
 
-**Career shape:** Charted 4 seasons (2000-01–2004-05). Consistent Offensive Glass + Defensive Glass profile across his career.
+**Career shape:** Charted 4 seasons (2000-01–2004-05). Consistent Offensive Glass + Defensive Glass profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[derik-queen|Derik Queen]] '26 (85% aligned similarity — cross-era via Procrustes chaining).
 

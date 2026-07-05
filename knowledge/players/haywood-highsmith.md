@@ -61,7 +61,7 @@ Closest career shapes in the era-normalized vector space:
 - [[kris-murray|Kris Murray]] '25 (89% similar)
 - [[justin-minaya|Justin Minaya]] '25 (88% similar)
 
-**Career shape:** Charted 4 seasons (2021-22–2024-25). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+**Career shape:** Charted 4 seasons (2021-22–2024-25). Consistent Offensive Glass (Low On-Court Impact) profile across his career. Career trajectory: migrator (2 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[patrick-patterson|Patrick Patterson]] '19 (90% aligned similarity — cross-era via Procrustes chaining).
 

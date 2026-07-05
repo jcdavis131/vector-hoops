@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[marco-belinelli|Marco Belinelli]] '08 (82% similar)
 - [[jared-mccain|Jared McCain]] '25 (82% similar)
 
-**Career shape:** Charted 7 seasons (2003-04–2009-10). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+**Career shape:** Charted 7 seasons (2003-04–2009-10). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[isaiah-canaan|Isaiah Canaan]] '16 (88% aligned similarity — cross-era via Procrustes chaining).
 

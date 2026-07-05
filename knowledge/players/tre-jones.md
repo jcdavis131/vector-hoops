@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jose-calderon|Jose Calderon]] '08 (82% similar)
 - [[carlos-arroyo|Carlos Arroyo]] '03 (82% similar)
 
-**Career shape:** Charted 6 seasons (2020-21–2025-26). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 6 seasons (2020-21–2025-26). Consistent Playmaking + Steals profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[kobi-simmons|Kobi Simmons]] '18 (85% aligned similarity — cross-era via Procrustes chaining).
 

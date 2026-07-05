@@ -71,7 +71,7 @@ Closest career shapes in the era-normalized vector space:
 - [[ed-davis|Ed Davis]] '22 (91% similar)
 - [[jerome-williams|Jerome Williams]] '00 (91% similar)
 
-**Career shape:** Charted 12 seasons (2004-05–2015-16). Consistent Rim Protection + Offensive Glass profile across his career.
+**Career shape:** Charted 12 seasons (2004-05–2015-16). Consistent Rim Protection + Offensive Glass profile across his career. Career trajectory: drifter (6 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[steven-adams|Steven Adams]] '23 (89% aligned similarity — cross-era via Procrustes chaining).
 

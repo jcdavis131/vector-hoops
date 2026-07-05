@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[bryant-stith|Bryant Stith]] '98 (88% similar)
 - [[jodie-meeks|Jodie Meeks]] '12 (88% similar)
 
-**Career shape:** Charted 6 seasons (2019-20–2024-25). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 6 seasons (2019-20–2024-25). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: drifter (4 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[nik-stauskas|Nik Stauskas]] '15 (89% aligned similarity — cross-era via Procrustes chaining).
 

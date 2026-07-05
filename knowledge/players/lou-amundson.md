@@ -68,7 +68,7 @@ Closest career shapes in the era-normalized vector space:
 - [[precious-achiuwa|Precious Achiuwa]] '21 (91% similar)
 - [[marshall-plumlee|Marshall Plumlee]] '17 (91% similar)
 
-**Career shape:** Charted 9 seasons (2007-08–2015-16). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
+**Career shape:** Charted 9 seasons (2007-08–2015-16). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity. Career trajectory: drifter (6 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[greg-anderson|Greg Anderson]] '98 (90% aligned similarity — cross-era via Procrustes chaining).
 

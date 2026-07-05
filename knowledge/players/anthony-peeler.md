@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[patty-mills|Patty Mills]] '14 (92% similar)
 - [[ian-clark|Ian Clark]] '15 (90% similar)
 
-**Career shape:** Charted 9 seasons (1996-97–2004-05). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 9 seasons (1996-97–2004-05). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[ray-allen|Ray Allen]] '06 (88% aligned similarity — cross-era via Procrustes chaining).
 

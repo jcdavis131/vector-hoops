@@ -68,7 +68,7 @@ Closest career shapes in the era-normalized vector space:
 - [[kirk-hinrich|Kirk Hinrich]] '04 (92% similar)
 - [[greg-anthony|Greg Anthony]] '99 (91% similar)
 
-**Career shape:** Charted 11 seasons (1999-00–2009-10). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 11 seasons (1999-00–2009-10). Consistent Playmaking + Steals profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[frank-williams|Frank Williams]] '03 (90% aligned similarity — cross-era via Procrustes chaining).
 

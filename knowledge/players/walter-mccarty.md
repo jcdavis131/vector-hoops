@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[chuck-person|Chuck Person]] '00 (87% similar)
 - [[yakhouba-diawara|Yakhouba Diawara]] '09 (86% similar)
 
-**Career shape:** Charted 10 seasons (1996-97–2005-06). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 10 seasons (1996-97–2005-06). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: stable (3 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[dale-ellis|Dale Ellis]] '00 (88% aligned similarity — cross-era via Procrustes chaining).
 

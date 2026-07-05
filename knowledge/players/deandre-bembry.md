@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[dalen-terry|Dalen Terry]] '26 (84% similar)
 - [[julian-wright|Julian Wright]] '11 (83% similar)
 
-**Career shape:** Charted 6 seasons (2016-17–2021-22). Consistent Offensive Glass + Defensive Glass profile across his career.
+**Career shape:** Charted 6 seasons (2016-17–2021-22). Consistent Offensive Glass + Defensive Glass profile across his career. Career trajectory: migrator (4 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[charles-jones|Charles Jones]] '98 (88% aligned similarity — cross-era via Procrustes chaining).
 

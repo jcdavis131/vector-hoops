@@ -71,7 +71,7 @@ Closest career shapes in the era-normalized vector space:
 - [[erick-dampier|Erick Dampier]] '97 (93% similar)
 - [[greg-ostertag|Greg Ostertag]] '99 (93% similar)
 
-**Career shape:** Charted 12 seasons (1996-97–2007-08). Consistent Rim Protection + Offensive Glass profile across his career.
+**Career shape:** Charted 12 seasons (1996-97–2007-08). Consistent Rim Protection + Offensive Glass profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[kris-humphries|Kris Humphries]] '11 (91% aligned similarity — cross-era via Procrustes chaining).
 

@@ -74,7 +74,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jermaine-o-neal|Jermaine O'Neal]] '05 (90% similar)
 - [[andrew-bynum|Andrew Bynum]] '08 (90% similar)
 
-**Career shape:** Charted 16 seasons (1999-00–2015-16). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+**Career shape:** Charted 16 seasons (1999-00–2015-16). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career. Career trajectory: late-bloom (4 archetype changes across his charted seasons) — one sustained archetype switch coming late in his career (after the 60% mark).
 
 **Era twin:** [[joe-smith|Joe Smith]] '00 (69% aligned similarity — cross-era via Procrustes chaining).
 

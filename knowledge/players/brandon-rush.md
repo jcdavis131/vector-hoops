@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[wesley-johnson|Wesley Johnson]] '17 (89% similar)
 - [[justin-jackson|Justin Jackson]] '23 (88% similar)
 
-**Career shape:** Charted 8 seasons (2008-09–2016-17). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+**Career shape:** Charted 8 seasons (2008-09–2016-17). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity. Career trajectory: stable (4 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[clifford-robinson|Clifford Robinson]] '07 (96% aligned similarity — cross-era via Procrustes chaining).
 

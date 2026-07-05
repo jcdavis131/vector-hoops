@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jerome-williams|Jerome Williams]] '00 (90% similar)
 - [[joey-dorsey|Joey Dorsey]] '15 (90% similar)
 
-**Career shape:** Charted 6 seasons (2020-21–2025-26). Consistent Rim Protection + Offensive Glass profile across his career.
+**Career shape:** Charted 6 seasons (2020-21–2025-26). Consistent Rim Protection + Offensive Glass profile across his career. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[raef-lafrentz|Raef LaFrentz]] '08 (92% aligned similarity — cross-era via Procrustes chaining).
 

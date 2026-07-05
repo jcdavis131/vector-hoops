@@ -73,7 +73,7 @@ Closest career shapes in the era-normalized vector space:
 - [[scoot-henderson|Scoot Henderson]] '24 (90% similar)
 - [[trae-young|Trae Young]] '20 (90% similar)
 
-**Career shape:** Charted 15 seasons (2008-09–2022-23). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 15 seasons (2008-09–2022-23). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: drifter (7 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[devin-harris|Devin Harris]] '09 (96% aligned similarity — cross-era via Procrustes chaining).
 

@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[andrew-bynum|Andrew Bynum]] '08 (90% similar)
 - [[pau-gasol|Pau Gasol]] '15 (89% similar)
 
-**Career shape:** Charted 5 seasons (2021-22–2025-26). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+**Career shape:** Charted 5 seasons (2021-22–2025-26). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[elden-campbell|Elden Campbell]] '02 (83% aligned similarity — cross-era via Procrustes chaining).
 

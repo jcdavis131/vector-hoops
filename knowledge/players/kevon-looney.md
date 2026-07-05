@@ -69,7 +69,7 @@ Closest career shapes in the era-normalized vector space:
 - [[corie-blount|Corie Blount]] '98 (92% similar)
 - [[scot-pollard|Scot Pollard]] '03 (92% similar)
 
-**Career shape:** Charted 10 seasons (2016-17–2025-26). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
+**Career shape:** Charted 10 seasons (2016-17–2025-26). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity. Career trajectory: migrator (5 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[khem-birch|Khem Birch]] '19 (91% aligned similarity — cross-era via Procrustes chaining).
 

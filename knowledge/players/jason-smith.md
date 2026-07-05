@@ -69,7 +69,7 @@ Closest career shapes in the era-normalized vector space:
 - [[roy-hibbert|Roy Hibbert]] '13 (83% similar)
 - [[antoine-carr|Antoine Carr]] '00 (82% similar)
 
-**Career shape:** Charted 11 seasons (2007-08–2018-19). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+**Career shape:** Charted 11 seasons (2007-08–2018-19). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Offensive Glass (Low On-Court Impact) identity. Career trajectory: migrator (7 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[jabari-smith-jr|Jabari Smith Jr.]] '23 (69% aligned similarity — cross-era via Procrustes chaining).
 

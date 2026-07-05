@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[franz-wagner|Franz Wagner]] '25 (90% similar)
 - [[demar-derozan|DeMar DeRozan]] '17 (90% similar)
 
-**Career shape:** Charted 8 seasons (2018-19–2025-26). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 8 seasons (2018-19–2025-26). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[kawhi-leonard|Kawhi Leonard]] '20 (95% aligned similarity — cross-era via Procrustes chaining).
 

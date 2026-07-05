@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[evan-fournier|Evan Fournier]] '24 (94% similar)
 - [[aaron-brooks|Aaron Brooks]] '11 (93% similar)
 
-**Career shape:** Charted 8 seasons (2008-09–2015-16). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 8 seasons (2008-09–2015-16). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[lonnie-walker-iv|Lonnie Walker IV]] '25 (88% aligned similarity — cross-era via Procrustes chaining).
 

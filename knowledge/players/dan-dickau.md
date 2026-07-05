@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[sarunas-jasikevicius|Sarunas Jasikevicius]] '07 (93% similar)
 - [[brent-price|Brent Price]] '02 (93% similar)
 
-**Career shape:** Charted 6 seasons (2002-03–2007-08). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 6 seasons (2002-03–2007-08). Consistent Playmaking + Steals profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[jon-barry|Jon Barry]] '98 (89% aligned similarity — cross-era via Procrustes chaining).
 

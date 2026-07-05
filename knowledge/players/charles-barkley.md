@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[karl-anthony-towns|Karl-Anthony Towns]] '19 (80% similar)
 - [[kevin-love|Kevin Love]] '19 (80% similar)
 
-**Career shape:** Charted 4 seasons (1996-97–1999-00). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+**Career shape:** Charted 4 seasons (1996-97–1999-00). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[marjon-beauchamp|MarJon Beauchamp]] '25 (74% aligned similarity — cross-era via Procrustes chaining).
 

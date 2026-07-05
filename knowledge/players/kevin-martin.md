@@ -70,7 +70,7 @@ Closest career shapes in the era-normalized vector space:
 - [[danilo-gallinari|Danilo Gallinari]] '16 (87% similar)
 - [[cam-thomas|Cam Thomas]] '25 (86% similar)
 
-**Career shape:** Charted 12 seasons (2004-05–2015-16). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 12 seasons (2004-05–2015-16). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: migrator (5 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[michael-redd|Michael Redd]] '07 (94% aligned similarity — cross-era via Procrustes chaining).
 

@@ -70,7 +70,7 @@ Closest career shapes in the era-normalized vector space:
 - [[bradley-beal|Bradley Beal]] '20 (92% similar)
 - [[latrell-sprewell|Latrell Sprewell]] '97 (92% similar)
 
-**Career shape:** Charted 12 seasons (2014-15–2025-26). Consistent Scoring Volume + Shot Volume profile across his career.
+**Career shape:** Charted 12 seasons (2014-15–2025-26). Consistent Scoring Volume + Shot Volume profile across his career. Career trajectory: drifter (7 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[gerald-green|Gerald Green]] '15 (93% aligned similarity — cross-era via Procrustes chaining).
 

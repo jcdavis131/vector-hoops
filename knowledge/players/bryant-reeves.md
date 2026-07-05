@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[joffrey-lauvergne|Joffrey Lauvergne]] '18 (87% similar)
 - [[jj-hickson|JJ Hickson]] '16 (86% similar)
 
-**Career shape:** Charted 5 seasons (1996-97–2000-01). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+**Career shape:** Charted 5 seasons (1996-97–2000-01). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career. Career trajectory: reinvention (1 archetype change across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[john-collins|John Collins]] '19 (92% aligned similarity — cross-era via Procrustes chaining).
 

@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jordan-mickey|Jordan Mickey]] '17 (89% similar)
 - [[rakeem-christmas|Rakeem Christmas]] '17 (89% similar)
 
-**Career shape:** Charted 6 seasons (2006-07–2011-12). Consistent Offensive Glass + Defensive Glass profile across his career.
+**Career shape:** Charted 6 seasons (2006-07–2011-12). Consistent Offensive Glass + Defensive Glass profile across his career. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[thomas-robinson|Thomas Robinson]] '16 (89% aligned similarity — cross-era via Procrustes chaining).
 

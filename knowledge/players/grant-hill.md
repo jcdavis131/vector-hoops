@@ -72,7 +72,7 @@ Closest career shapes in the era-normalized vector space:
 - [[lebron-james|LeBron James]] '10 (84% similar)
 - [[demar-derozan|DeMar DeRozan]] '17 (83% similar)
 
-**Career shape:** Charted 14 seasons (1996-97–2012-13). Consistent Scoring Volume + Shot Volume profile across his career.
+**Career shape:** Charted 14 seasons (1996-97–2012-13). Consistent Scoring Volume + Shot Volume profile across his career. Career trajectory: migrator (7 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[malcolm-brogdon|Malcolm Brogdon]] '20 (86% aligned similarity — cross-era via Procrustes chaining).
 

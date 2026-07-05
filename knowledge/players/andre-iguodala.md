@@ -75,7 +75,7 @@ Closest career shapes in the era-normalized vector space:
 - [[delon-wright|Delon Wright]] '23 (79% similar)
 - [[dyson-daniels|Dyson Daniels]] '25 (78% similar)
 
-**Career shape:** Charted 18 seasons (2004-05–2021-22). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass + Defensive Glass identity.
+**Career shape:** Charted 18 seasons (2004-05–2021-22). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass + Defensive Glass identity. Career trajectory: migrator (5 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[calbert-cheaney|Calbert Cheaney]] '00 (86% aligned similarity — cross-era via Procrustes chaining).
 

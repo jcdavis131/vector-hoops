@@ -71,7 +71,7 @@ Closest career shapes in the era-normalized vector space:
 - [[kevin-ollie|Kevin Ollie]] '10 (89% similar)
 - [[tyus-jones|Tyus Jones]] '18 (89% similar)
 
-**Career shape:** Charted 14 seasons (2011-12–2024-25). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 14 seasons (2011-12–2024-25). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: migrator (6 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[raja-bell|Raja Bell]] '07 (81% aligned similarity — cross-era via Procrustes chaining).
 

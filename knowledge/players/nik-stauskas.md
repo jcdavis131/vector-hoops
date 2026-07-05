@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[malachi-richardson|Malachi Richardson]] '19 (89% similar)
 - [[martell-webster|Martell Webster]] '15 (89% similar)
 
-**Career shape:** Charted 5 seasons (2014-15–2018-19). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 5 seasons (2014-15–2018-19). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[garrison-mathews|Garrison Mathews]] '21 (89% aligned similarity — cross-era via Procrustes chaining).
 

@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[hollis-thompson|Hollis Thompson]] '17 (92% similar)
 - [[rodney-mcgruder|Rodney McGruder]] '18 (92% similar)
 
-**Career shape:** Charted 4 seasons (2016-17–2019-20). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 4 seasons (2016-17–2019-20). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[dan-langhi|Dan Langhi]] '02 (81% aligned similarity — cross-era via Procrustes chaining).
 

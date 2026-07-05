@@ -69,7 +69,7 @@ Closest career shapes in the era-normalized vector space:
 - [[calvin-booth|Calvin Booth]] '08 (92% similar)
 - [[jim-mcilvaine|Jim McIlvaine]] '00 (92% similar)
 
-**Career shape:** Charted 10 seasons (2007-08–2016-17). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
+**Career shape:** Charted 10 seasons (2007-08–2016-17). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity. Career trajectory: late-bloom (1 archetype change across his charted seasons) — one sustained archetype switch coming late in his career (after the 60% mark).
 
 **Era twin:** [[theo-ratliff|Theo Ratliff]] '09 (89% aligned similarity — cross-era via Procrustes chaining).
 

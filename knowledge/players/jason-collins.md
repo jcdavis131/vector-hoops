@@ -70,7 +70,7 @@ Closest career shapes in the era-normalized vector space:
 - [[kz-okpala|KZ Okpala]] '21 (89% similar)
 - [[romeo-langford|Romeo Langford]] '20 (89% similar)
 
-**Career shape:** Charted 13 seasons (2001-02–2013-14). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass + Defensive Glass identity.
+**Career shape:** Charted 13 seasons (2001-02–2013-14). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass + Defensive Glass identity. Career trajectory: migrator (8 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[nate-wolters|Nate Wolters]] '15 (86% aligned similarity — cross-era via Procrustes chaining).
 

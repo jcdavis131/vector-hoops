@@ -76,7 +76,7 @@ Closest career shapes in the era-normalized vector space:
 - [[raymond-felton|Raymond Felton]] '11 (92% similar)
 - [[travis-best|Travis Best]] '04 (91% similar)
 
-**Career shape:** Charted 18 seasons (2007-08–2025-26). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 18 seasons (2007-08–2025-26). Consistent Playmaking + Steals profile across his career. Career trajectory: migrator (5 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[marko-jaric|Marko Jaric]] '03 (92% aligned similarity — cross-era via Procrustes chaining).
 

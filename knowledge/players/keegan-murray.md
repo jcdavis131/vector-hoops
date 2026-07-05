@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[ron-harper-jr|Ron Harper Jr.]] '26 (83% similar)
 - [[duop-reath|Duop Reath]] '26 (83% similar)
 
-**Career shape:** Charted 4 seasons (2022-23–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+**Career shape:** Charted 4 seasons (2022-23–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity. Career trajectory: migrator (3 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[quincy-miller|Quincy Miller]] '14 (76% aligned similarity — cross-era via Procrustes chaining).
 

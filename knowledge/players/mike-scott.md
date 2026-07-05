@@ -68,7 +68,7 @@ Closest career shapes in the era-normalized vector space:
 - [[dalton-knecht|Dalton Knecht]] '25 (86% similar)
 - [[matt-thomas|Matt Thomas]] '22 (85% similar)
 
-**Career shape:** Charted 9 seasons (2012-13–2020-21). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+**Career shape:** Charted 9 seasons (2012-13–2020-21). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career. Career trajectory: migrator (4 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[bryant-reeves|Bryant Reeves]] '98 (86% aligned similarity — cross-era via Procrustes chaining).
 

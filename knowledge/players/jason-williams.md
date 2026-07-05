@@ -70,7 +70,7 @@ Closest career shapes in the era-normalized vector space:
 - [[shammond-williams|Shammond Williams]] '04 (94% similar)
 - [[marcus-sasser|Marcus Sasser]] '26 (93% similar)
 
-**Career shape:** Charted 12 seasons (1998-99–2010-11). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 12 seasons (1998-99–2010-11). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: stable (3 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[jahmai-mashack|Jahmai Mashack]] '26 (88% aligned similarity — cross-era via Procrustes chaining).
 

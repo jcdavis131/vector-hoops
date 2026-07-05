@@ -68,7 +68,7 @@ Closest career shapes in the era-normalized vector space:
 - [[ricky-rubio|Ricky Rubio]] '13 (87% similar)
 - [[carlos-arroyo|Carlos Arroyo]] '03 (87% similar)
 
-**Career shape:** Charted 9 seasons (1996-97–2004-05). Entered as a Scoring Volume + Shot Volume profile, peaked as a Playmaking + Steals identity.
+**Career shape:** Charted 9 seasons (1996-97–2004-05). Entered as a Scoring Volume + Shot Volume profile, peaked as a Playmaking + Steals identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[earl-watson|Earl Watson]] '14 (91% aligned similarity — cross-era via Procrustes chaining).
 

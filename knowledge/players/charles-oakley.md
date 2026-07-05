@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[derrick-mckey|Derrick McKey]] '02 (72% similar)
 - [[francisco-elson|Francisco Elson]] '07 (71% similar)
 
-**Career shape:** Charted 7 seasons (1996-97–2002-03). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+**Career shape:** Charted 7 seasons (1996-97–2002-03). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Offensive Glass (Low On-Court Impact) identity. Career trajectory: migrator (3 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[mark-hendrickson|Mark Hendrickson]] '98 (81% aligned similarity — cross-era via Procrustes chaining).
 

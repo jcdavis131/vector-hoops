@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[greg-anderson|Greg Anderson]] '98 (87% similar)
 - [[kobe-brown|Kobe Brown]] '24 (87% similar)
 
-**Career shape:** Charted 6 seasons (2007-08–2012-13). Consistent Offensive Glass + Defensive Glass profile across his career.
+**Career shape:** Charted 6 seasons (2007-08–2012-13). Consistent Offensive Glass + Defensive Glass profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[donatas-motiejunas|Donatas Motiejunas]] '17 (90% aligned similarity — cross-era via Procrustes chaining).
 

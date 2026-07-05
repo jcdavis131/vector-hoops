@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[gustavo-ayon|Gustavo Ayon]] '14 (85% similar)
 - [[reggie-jordan|Reggie Jordan]] '97 (84% similar)
 
-**Career shape:** Charted 6 seasons (2020-21–2025-26). Consistent Offensive Glass + Defensive Glass profile across his career.
+**Career shape:** Charted 6 seasons (2020-21–2025-26). Consistent Offensive Glass + Defensive Glass profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[georgios-papagiannis|Georgios Papagiannis]] '18 (87% aligned similarity — cross-era via Procrustes chaining).
 

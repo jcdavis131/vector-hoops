@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[karlo-matkovic|Karlo Matković]] '26 (91% similar)
 - [[walker-kessler|Walker Kessler]] '23 (91% similar)
 
-**Career shape:** Charted 7 seasons (2017-18–2024-25). Consistent Rim Protection + Offensive Glass profile across his career.
+**Career shape:** Charted 7 seasons (2017-18–2024-25). Consistent Rim Protection + Offensive Glass profile across his career. Career trajectory: migrator (5 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[zach-edey|Zach Edey]] '25 (89% aligned similarity — cross-era via Procrustes chaining).
 

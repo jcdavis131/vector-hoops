@@ -74,7 +74,7 @@ Closest career shapes in the era-normalized vector space:
 - [[walker-kessler|Walker Kessler]] '23 (93% similar)
 - [[andrew-bynum|Andrew Bynum]] '08 (93% similar)
 
-**Career shape:** Charted 15 seasons (2008-09–2023-24). Consistent Rim Protection + Offensive Glass profile across his career.
+**Career shape:** Charted 15 seasons (2008-09–2023-24). Consistent Rim Protection + Offensive Glass profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[rudy-gobert|Rudy Gobert]] '21 (90% aligned similarity — cross-era via Procrustes chaining).
 

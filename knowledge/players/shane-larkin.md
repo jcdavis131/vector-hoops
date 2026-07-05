@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jason-hart|Jason Hart]] '09 (93% similar)
 - [[daniel-ewing|Daniel Ewing]] '07 (93% similar)
 
-**Career shape:** Charted 4 seasons (2013-14–2017-18). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 4 seasons (2013-14–2017-18). Consistent Playmaking + Steals profile across his career. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[sebastian-telfair|Sebastian Telfair]] '10 (92% aligned similarity — cross-era via Procrustes chaining).
 

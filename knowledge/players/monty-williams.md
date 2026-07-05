@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[viacheslav-kravtsov|Viacheslav Kravtsov]] '14 (74% similar)
 - [[stephen-howard|Stephen Howard]] '97 (73% similar)
 
-**Career shape:** Charted 6 seasons (1996-97–2002-03). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+**Career shape:** Charted 6 seasons (1996-97–2002-03). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career. Career trajectory: migrator (3 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[montrezl-harrell|Montrezl Harrell]] '20 (88% aligned similarity — cross-era via Procrustes chaining).
 

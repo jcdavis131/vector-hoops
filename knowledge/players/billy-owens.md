@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jacob-toppin|Jacob Toppin]] '25 (75% similar)
 - [[johnny-o-bryant-iii|Johnny O'Bryant III]] '16 (74% similar)
 
-**Career shape:** Charted 5 seasons (1996-97–2000-01). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Offensive Glass + Defensive Glass identity.
+**Career shape:** Charted 5 seasons (1996-97–2000-01). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Offensive Glass + Defensive Glass identity. Career trajectory: drifter (3 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[chris-dudley|Chris Dudley]] '00 (86% aligned similarity — cross-era via Procrustes chaining).
 

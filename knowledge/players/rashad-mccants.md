@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[bones-hyland|Bones Hyland]] '25 (88% similar)
 - [[juan-dixon|Juan Dixon]] '09 (88% similar)
 
-**Career shape:** Charted 4 seasons (2005-06–2008-09). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 4 seasons (2005-06–2008-09). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: migrator (3 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[gerald-green|Gerald Green]] '15 (93% aligned similarity — cross-era via Procrustes chaining).
 

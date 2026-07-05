@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[d-angelo-russell|D'Angelo Russell]] '19 (91% similar)
 - [[malik-monk|Malik Monk]] '18 (90% similar)
 
-**Career shape:** Charted 8 seasons (2011-12–2019-20). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Playmaking + Steals identity.
+**Career shape:** Charted 8 seasons (2011-12–2019-20). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Playmaking + Steals identity. Career trajectory: migrator (4 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[kyle-guy|Kyle Guy]] '22 (85% aligned similarity — cross-era via Procrustes chaining).
 

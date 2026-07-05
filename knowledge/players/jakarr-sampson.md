@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[steven-hunter|Steven Hunter]] '04 (90% similar)
 - [[deyonta-davis|Deyonta Davis]] '17 (89% similar)
 
-**Career shape:** Charted 5 seasons (2014-15–2020-21). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Offensive Glass + Defensive Glass identity.
+**Career shape:** Charted 5 seasons (2014-15–2020-21). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Offensive Glass + Defensive Glass identity. Career trajectory: migrator (2 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[karlo-matkovic|Karlo Matković]] '26 (81% aligned similarity — cross-era via Procrustes chaining).
 

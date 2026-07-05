@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[semi-ojeleye|Semi Ojeleye]] '18 (94% similar)
 - [[treveon-graham|Treveon Graham]] '17 (93% similar)
 
-**Career shape:** Charted 5 seasons (2012-13–2016-17). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 5 seasons (2012-13–2016-17). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[wes-iwundu|Wes Iwundu]] '21 (85% aligned similarity — cross-era via Procrustes chaining).
 

@@ -70,7 +70,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jonas-valanciunas|Jonas Valančiūnas]] '26 (85% similar)
 - [[zach-randolph|Zach Randolph]] '07 (85% similar)
 
-**Career shape:** Charted 13 seasons (2002-03–2015-16). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+**Career shape:** Charted 13 seasons (2002-03–2015-16). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass (Low On-Court Impact) identity. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[mfiondu-kabengele|Mfiondu Kabengele]] '21 (81% aligned similarity — cross-era via Procrustes chaining).
 

@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[karl-malone|Karl Malone]] '97 (84% similar)
 - [[giannis-antetokounmpo|Giannis Antetokounmpo]] '20 (84% similar)
 
-**Career shape:** Charted 5 seasons (2021-22–2025-26). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+**Career shape:** Charted 5 seasons (2021-22–2025-26). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[demar-derozan|DeMar DeRozan]] '17 (85% aligned similarity — cross-era via Procrustes chaining).
 

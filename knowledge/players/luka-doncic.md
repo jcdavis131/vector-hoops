@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[ja-morant|Ja Morant]] '23 (90% similar)
 - [[kobe-bryant|Kobe Bryant]] '06 (89% similar)
 
-**Career shape:** Charted 8 seasons (2018-19–2025-26). Consistent Scoring Volume + Shot Volume profile across his career.
+**Career shape:** Charted 8 seasons (2018-19–2025-26). Consistent Scoring Volume + Shot Volume profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[ja-morant|Ja Morant]] '23 (95% aligned similarity — cross-era via Procrustes chaining).
 

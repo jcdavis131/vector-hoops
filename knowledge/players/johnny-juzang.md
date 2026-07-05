@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[armoni-brooks|Armoni Brooks]] '21 (88% similar)
 - [[adam-morrison|Adam Morrison]] '10 (86% similar)
 
-**Career shape:** Charted 4 seasons (2022-23–2025-26). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+**Career shape:** Charted 4 seasons (2022-23–2025-26). Consistent Offensive Glass (Low On-Court Impact) profile across his career. Career trajectory: drifter (2 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[deonte-burton|Deonte Burton]] '20 (84% aligned similarity — cross-era via Procrustes chaining).
 

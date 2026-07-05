@@ -61,7 +61,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jalen-smith|Jalen Smith]] '25 (78% similar)
 - [[e-j-liddell|E.J. Liddell]] '26 (78% similar)
 
-**Career shape:** Charted 4 seasons (2022-23–2025-26). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+**Career shape:** Charted 4 seasons (2022-23–2025-26). Consistent Offensive Glass (Low On-Court Impact) profile across his career. Career trajectory: migrator (2 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[pat-burke|Pat Burke]] '07 (78% aligned similarity — cross-era via Procrustes chaining).
 

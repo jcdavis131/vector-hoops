@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[lonny-baxter|Lonny Baxter]] '06 (89% similar)
 - [[dexter-pittman|Dexter Pittman]] '12 (88% similar)
 
-**Career shape:** Charted 10 seasons (1996-97–2005-06). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass + Defensive Glass identity.
+**Career shape:** Charted 10 seasons (1996-97–2005-06). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass + Defensive Glass identity. Career trajectory: reinvention (1 archetype change across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[charles-jones|Charles Jones]] '98 (88% aligned similarity — cross-era via Procrustes chaining).
 

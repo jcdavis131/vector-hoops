@@ -70,7 +70,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jeremiah-fears|Jeremiah Fears]] '26 (87% similar)
 - [[tyreke-evans|Tyreke Evans]] '16 (86% similar)
 
-**Career shape:** Charted 12 seasons (1998-99–2009-10). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 12 seasons (1998-99–2009-10). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: migrator (7 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[kyle-lowry|Kyle Lowry]] '16 (88% aligned similarity — cross-era via Procrustes chaining).
 

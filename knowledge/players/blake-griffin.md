@@ -71,7 +71,7 @@ Closest career shapes in the era-normalized vector space:
 - [[paolo-banchero|Paolo Banchero]] '25 (89% similar)
 - [[joel-embiid|Joel Embiid]] '17 (88% similar)
 
-**Career shape:** Charted 13 seasons (2010-11–2022-23). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+**Career shape:** Charted 13 seasons (2010-11–2022-23). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career. Career trajectory: migrator (6 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[chris-gatling|Chris Gatling]] '97 (88% aligned similarity — cross-era via Procrustes chaining).
 

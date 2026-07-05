@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[salah-mejri|Salah Mejri]] '18 (92% similar)
 - [[john-henson|John Henson]] '16 (91% similar)
 
-**Career shape:** Charted 4 seasons (2021-22–2024-25). Consistent Rim Protection + Offensive Glass profile across his career.
+**Career shape:** Charted 4 seasons (2021-22–2024-25). Consistent Rim Protection + Offensive Glass profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[dj-mbenga|DJ Mbenga]] '06 (87% aligned similarity — cross-era via Procrustes chaining).
 

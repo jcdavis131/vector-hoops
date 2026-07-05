@@ -70,7 +70,7 @@ Closest career shapes in the era-normalized vector space:
 - [[muggsy-bogues|Muggsy Bogues]] '97 (78% similar)
 - [[brad-wanamaker|Brad Wanamaker]] '22 (77% similar)
 
-**Career shape:** Charted 13 seasons (2004-05–2018-19). Entered as a Playmaking + Steals profile, peaked as a Offensive Glass + Defensive Glass identity.
+**Career shape:** Charted 13 seasons (2004-05–2018-19). Entered as a Playmaking + Steals profile, peaked as a Offensive Glass + Defensive Glass identity. Career trajectory: late-bloom (4 archetype changes across his charted seasons) — one sustained archetype switch coming late in his career (after the 60% mark).
 
 **Era twin:** [[pervis-ellison|Pervis Ellison]] '98 (72% aligned similarity — cross-era via Procrustes chaining).
 

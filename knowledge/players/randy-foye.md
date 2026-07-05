@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[juan-carlos-navarro|Juan Carlos Navarro]] '08 (93% similar)
 - [[luther-head|Luther Head]] '07 (92% similar)
 
-**Career shape:** Charted 11 seasons (2006-07–2016-17). Entered as a Playmaking + Steals profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+**Career shape:** Charted 11 seasons (2006-07–2016-17). Entered as a Playmaking + Steals profile, peaked as a Three-Point Volume + Three-Point Accuracy identity. Career trajectory: late-bloom (2 archetype changes across his charted seasons) — one sustained archetype switch coming late in his career (after the 60% mark).
 
 **Era twin:** [[rex-chapman|Rex Chapman]] '98 (92% aligned similarity — cross-era via Procrustes chaining).
 

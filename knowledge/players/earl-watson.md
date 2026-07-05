@@ -71,7 +71,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jamaal-tinsley|Jamaal Tinsley]] '04 (94% similar)
 - [[kendall-marshall|Kendall Marshall]] '14 (94% similar)
 
-**Career shape:** Charted 13 seasons (2001-02–2013-14). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 13 seasons (2001-02–2013-14). Consistent Playmaking + Steals profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[chris-childs|Chris Childs]] '02 (91% aligned similarity — cross-era via Procrustes chaining).
 

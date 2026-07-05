@@ -70,7 +70,7 @@ Closest career shapes in the era-normalized vector space:
 - [[anthony-parker|Anthony Parker]] '10 (89% similar)
 - [[charlie-bell|Charlie Bell]] '11 (89% similar)
 
-**Career shape:** Charted 13 seasons (2002-03–2014-15). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 13 seasons (2002-03–2014-15). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: migrator (3 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[cam-reddish|Cam Reddish]] '25 (89% aligned similarity — cross-era via Procrustes chaining).
 

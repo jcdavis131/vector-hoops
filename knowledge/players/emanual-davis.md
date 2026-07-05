@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[keaton-wallace|Keaton Wallace]] '25 (88% similar)
 - [[fred-jones|Fred Jones]] '03 (87% similar)
 
-**Career shape:** Charted 5 seasons (1997-98–2002-03). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Playmaking + Steals identity.
+**Career shape:** Charted 5 seasons (1997-98–2002-03). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Playmaking + Steals identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[bryce-drew|Bryce Drew]] '99 (90% aligned similarity — cross-era via Procrustes chaining).
 

@@ -61,7 +61,7 @@ Closest career shapes in the era-normalized vector space:
 - [[mardy-collins|Mardy Collins]] '10 (90% similar)
 - [[elfrid-payton|Elfrid Payton]] '25 (87% similar)
 
-**Career shape:** Charted 4 seasons (2022-23–2025-26). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 4 seasons (2022-23–2025-26). Consistent Playmaking + Steals profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[daniel-hamilton|Daniel Hamilton]] '19 (84% aligned similarity — cross-era via Procrustes chaining).
 

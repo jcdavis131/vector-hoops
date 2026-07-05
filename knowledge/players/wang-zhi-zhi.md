@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[lauri-markkanen|Lauri Markkanen]] '23 (81% similar)
 - [[nikola-mirotic|Nikola Mirotic]] '15 (80% similar)
 
-**Career shape:** Charted 4 seasons (2001-02–2004-05). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 4 seasons (2001-02–2004-05). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[mirza-teletovic|Mirza Teletovic]] '17 (90% aligned similarity — cross-era via Procrustes chaining).
 

@@ -73,7 +73,7 @@ Closest career shapes in the era-normalized vector space:
 - [[gilbert-arenas|Gilbert Arenas]] '06 (92% similar)
 - [[donovan-mitchell|Donovan Mitchell]] '21 (92% similar)
 
-**Career shape:** Charted 14 seasons (1996-97–2009-10). Consistent Scoring Volume + Shot Volume profile across his career.
+**Career shape:** Charted 14 seasons (1996-97–2009-10). Consistent Scoring Volume + Shot Volume profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[derrick-rose|Derrick Rose]] '11 (92% aligned similarity — cross-era via Procrustes chaining).
 

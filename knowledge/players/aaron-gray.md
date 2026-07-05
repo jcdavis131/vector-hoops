@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[shawnelle-scott|Shawnelle Scott]] '01 (91% similar)
 - [[omer-asik|Omer Asik]] '18 (91% similar)
 
-**Career shape:** Charted 7 seasons (2007-08–2013-14). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Rim Protection + Offensive Glass identity.
+**Career shape:** Charted 7 seasons (2007-08–2013-14). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Rim Protection + Offensive Glass identity. Career trajectory: migrator (3 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[jamal-sampson|Jamal Sampson]] '07 (93% aligned similarity — cross-era via Procrustes chaining).
 

@@ -69,7 +69,7 @@ Closest career shapes in the era-normalized vector space:
 - [[mike-bibby|Mike Bibby]] '12 (88% similar)
 - [[jrue-holiday|Jrue Holiday]] '16 (88% similar)
 
-**Career shape:** Charted 11 seasons (1996-97–2006-07). Consistent Scoring Volume + Shot Volume profile across his career.
+**Career shape:** Charted 11 seasons (1996-97–2006-07). Consistent Scoring Volume + Shot Volume profile across his career. Career trajectory: late-bloom (3 archetype changes across his charted seasons) — one sustained archetype switch coming late in his career (after the 60% mark).
 
 **Era twin:** [[baron-davis|Baron Davis]] '04 (94% aligned similarity — cross-era via Procrustes chaining).
 

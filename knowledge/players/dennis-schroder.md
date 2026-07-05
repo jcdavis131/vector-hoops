@@ -71,7 +71,7 @@ Closest career shapes in the era-normalized vector space:
 - [[scoot-henderson|Scoot Henderson]] '24 (93% similar)
 - [[reggie-jackson|Reggie Jackson]] '16 (92% similar)
 
-**Career shape:** Charted 13 seasons (2013-14–2025-26). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 13 seasons (2013-14–2025-26). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: reinvention (2 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[darius-garland|Darius Garland]] '22 (95% aligned similarity — cross-era via Procrustes chaining).
 

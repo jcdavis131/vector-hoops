@@ -71,7 +71,7 @@ Closest career shapes in the era-normalized vector space:
 - [[rony-seikaly|Rony Seikaly]] '97 (88% similar)
 - [[anthony-davis|Anthony Davis]] '15 (87% similar)
 
-**Career shape:** Charted 13 seasons (2002-03–2015-16). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+**Career shape:** Charted 13 seasons (2002-03–2015-16). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[alonzo-mourning|Alonzo Mourning]] '00 (92% aligned similarity — cross-era via Procrustes chaining).
 

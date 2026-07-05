@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[ryan-bowen|Ryan Bowen]] '09 (82% similar)
 - [[matisse-thybulle|Matisse Thybulle]] '21 (81% similar)
 
-**Career shape:** Charted 8 seasons (2006-07–2013-14). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 8 seasons (2006-07–2013-14). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[jamir-watkins|Jamir Watkins]] '26 (88% aligned similarity — cross-era via Procrustes chaining).
 

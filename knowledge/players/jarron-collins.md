@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jon-brockman|Jon Brockman]] '10 (85% similar)
 - [[terry-davis|Terry Davis]] '01 (84% similar)
 
-**Career shape:** Charted 10 seasons (2001-02–2010-11). Consistent Offensive Glass + Defensive Glass profile across his career.
+**Career shape:** Charted 10 seasons (2001-02–2010-11). Consistent Offensive Glass + Defensive Glass profile across his career. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[omer-asik|Omer Asik]] '18 (88% aligned similarity — cross-era via Procrustes chaining).
 

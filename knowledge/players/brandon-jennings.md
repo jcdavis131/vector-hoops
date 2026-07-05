@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[mike-james|Mike James]] '06 (91% similar)
 - [[caris-levert|Caris LeVert]] '20 (91% similar)
 
-**Career shape:** Charted 8 seasons (2009-10–2016-17). Consistent Scoring Volume + Shot Volume profile across his career.
+**Career shape:** Charted 8 seasons (2009-10–2016-17). Consistent Scoring Volume + Shot Volume profile across his career. Career trajectory: reinvention (3 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[damon-stoudamire|Damon Stoudamire]] '97 (96% aligned similarity — cross-era via Procrustes chaining).
 

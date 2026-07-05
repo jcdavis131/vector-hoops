@@ -77,7 +77,7 @@ Closest career shapes in the era-normalized vector space:
 - [[deron-williams|Deron Williams]] '12 (86% similar)
 - [[goran-dragic|Goran Dragic]] '17 (85% similar)
 
-**Career shape:** Charted 18 seasons (2001-02–2018-19). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 18 seasons (2001-02–2018-19). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: stable (3 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[derrick-rose|Derrick Rose]] '11 (93% aligned similarity — cross-era via Procrustes chaining).
 

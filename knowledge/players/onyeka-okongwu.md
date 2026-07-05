@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[daniel-gafford|Daniel Gafford]] '25 (93% similar)
 - [[taj-gibson|Taj Gibson]] '21 (93% similar)
 
-**Career shape:** Charted 6 seasons (2020-21–2025-26). Consistent Rim Protection + Offensive Glass profile across his career.
+**Career shape:** Charted 6 seasons (2020-21–2025-26). Consistent Rim Protection + Offensive Glass profile across his career. Career trajectory: late-bloom (1 archetype change across his charted seasons) — one sustained archetype switch coming late in his career (after the 60% mark).
 
 **Era twin:** [[khem-birch|Khem Birch]] '19 (92% aligned similarity — cross-era via Procrustes chaining).
 

@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[bradley-beal|Bradley Beal]] '20 (94% similar)
 - [[damian-lillard|Damian Lillard]] '23 (92% similar)
 
-**Career shape:** Charted 9 seasons (2017-18–2025-26). Consistent Scoring Volume + Shot Volume profile across his career.
+**Career shape:** Charted 9 seasons (2017-18–2025-26). Consistent Scoring Volume + Shot Volume profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[kemba-walker|Kemba Walker]] '19 (97% aligned similarity — cross-era via Procrustes chaining).
 

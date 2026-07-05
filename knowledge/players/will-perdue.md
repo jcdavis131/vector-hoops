@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[ed-davis|Ed Davis]] '22 (93% similar)
 - [[deandre-jordan|DeAndre Jordan]] '16 (93% similar)
 
-**Career shape:** Charted 4 seasons (1996-97–1999-00). Consistent Rim Protection + Offensive Glass profile across his career.
+**Career shape:** Charted 4 seasons (1996-97–1999-00). Consistent Rim Protection + Offensive Glass profile across his career. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[michael-bradley|Michael Bradley]] '05 (91% aligned similarity — cross-era via Procrustes chaining).
 

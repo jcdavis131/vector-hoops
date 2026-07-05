@@ -70,7 +70,7 @@ Closest career shapes in the era-normalized vector space:
 - [[karl-anthony-towns|Karl-Anthony Towns]] '19 (87% similar)
 - [[demarcus-cousins|DeMarcus Cousins]] '15 (85% similar)
 
-**Career shape:** Charted 11 seasons (2015-16–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 11 seasons (2015-16–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: reinvention (2 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[zach-randolph|Zach Randolph]] '07 (92% aligned similarity — cross-era via Procrustes chaining).
 

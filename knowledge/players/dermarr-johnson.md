@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[quincy-douby|Quincy Douby]] '08 (87% similar)
 - [[terrence-ross|Terrence Ross]] '19 (87% similar)
 
-**Career shape:** Charted 6 seasons (2000-01–2006-07). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+**Career shape:** Charted 6 seasons (2000-01–2006-07). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[shane-heal|Shane Heal]] '97 (85% aligned similarity — cross-era via Procrustes chaining).
 

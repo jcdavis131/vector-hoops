@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[hakeem-olajuwon|Hakeem Olajuwon]] '97 (78% similar)
 - [[alperen-sengun|Alperen Sengun]] '25 (78% similar)
 
-**Career shape:** Charted 9 seasons (2005-06–2013-14). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+**Career shape:** Charted 9 seasons (2005-06–2013-14). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity. Career trajectory: drifter (4 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[alperen-sengun|Alperen Sengun]] '25 (85% aligned similarity — cross-era via Procrustes chaining).
 

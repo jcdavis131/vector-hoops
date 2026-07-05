@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[malcolm-brogdon|Malcolm Brogdon]] '20 (81% similar)
 - [[steven-smith|Steven Smith]] '99 (79% similar)
 
-**Career shape:** Charted 5 seasons (2021-22–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 5 seasons (2021-22–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: migrator (3 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[lou-williams|Lou Williams]] '19 (93% aligned similarity — cross-era via Procrustes chaining).
 

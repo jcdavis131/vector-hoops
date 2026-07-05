@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[bismack-biyombo|Bismack Biyombo]] '23 (91% similar)
 - [[jerome-moiso|Jerome Moiso]] '01 (91% similar)
 
-**Career shape:** Charted 6 seasons (2019-20–2024-25). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
+**Career shape:** Charted 6 seasons (2019-20–2024-25). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity. Career trajectory: reinvention (1 archetype change across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[jeremy-tyler|Jeremy Tyler]] '14 (79% aligned similarity — cross-era via Procrustes chaining).
 

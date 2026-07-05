@@ -70,7 +70,7 @@ Closest career shapes in the era-normalized vector space:
 - [[chris-herren|Chris Herren]] '01 (93% similar)
 - [[lee-mayberry|Lee Mayberry]] '97 (93% similar)
 
-**Career shape:** Charted 13 seasons (2003-04–2015-16). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 13 seasons (2003-04–2015-16). Consistent Playmaking + Steals profile across his career. Career trajectory: stable (6 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[muggsy-bogues|Muggsy Bogues]] '97 (92% aligned similarity — cross-era via Procrustes chaining).
 

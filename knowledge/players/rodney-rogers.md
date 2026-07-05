@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[stephen-jackson|Stephen Jackson]] '02 (79% similar)
 - [[paul-george|Paul George]] '22 (79% similar)
 
-**Career shape:** Charted 9 seasons (1996-97–2004-05). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 9 seasons (1996-97–2004-05). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: migrator (4 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[bobby-jackson|Bobby Jackson]] '04 (76% aligned similarity — cross-era via Procrustes chaining).
 

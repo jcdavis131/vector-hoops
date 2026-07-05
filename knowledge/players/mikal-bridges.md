@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[seth-curry|Seth Curry]] '21 (83% similar)
 - [[lucious-harris|Lucious Harris]] '98 (83% similar)
 
-**Career shape:** Charted 8 seasons (2018-19–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 8 seasons (2018-19–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: reinvention (2 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[tyrone-corbin|Tyrone Corbin]] '00 (88% aligned similarity — cross-era via Procrustes chaining).
 

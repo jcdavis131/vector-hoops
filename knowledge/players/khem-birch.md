@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[cristiano-felicio|Cristiano Felicio]] '21 (92% similar)
 - [[buck-williams|Buck Williams]] '97 (92% similar)
 
-**Career shape:** Charted 6 seasons (2017-18–2022-23). Consistent Rim Protection + Offensive Glass profile across his career.
+**Career shape:** Charted 6 seasons (2017-18–2022-23). Consistent Rim Protection + Offensive Glass profile across his career. Career trajectory: reinvention (2 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[derrick-favors|Derrick Favors]] '21 (94% aligned similarity — cross-era via Procrustes chaining).
 

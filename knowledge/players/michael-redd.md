@@ -68,7 +68,7 @@ Closest career shapes in the era-normalized vector space:
 - [[norman-powell|Norman Powell]] '25 (87% similar)
 - [[tyrese-maxey|Tyrese Maxey]] '25 (87% similar)
 
-**Career shape:** Charted 10 seasons (2001-02–2011-12). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 10 seasons (2001-02–2011-12). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: drifter (2 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[mitch-richmond|Mitch Richmond]] '97 (95% aligned similarity — cross-era via Procrustes chaining).
 

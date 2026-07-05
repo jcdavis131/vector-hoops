@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[rony-seikaly|Rony Seikaly]] '97 (88% similar)
 - [[matt-geiger|Matt Geiger]] '98 (87% similar)
 
-**Career shape:** Charted 5 seasons (2010-11–2014-15). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+**Career shape:** Charted 5 seasons (2010-11–2014-15). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[ben-handlogten|Ben Handlogten]] '04 (89% aligned similarity — cross-era via Procrustes chaining).
 

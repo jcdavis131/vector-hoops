@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[vinny-del-negro|Vinny Del Negro]] '01 (88% similar)
 - [[brian-roberts|Brian Roberts]] '13 (86% similar)
 
-**Career shape:** Charted 4 seasons (1996-97–1999-00). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 4 seasons (1996-97–1999-00). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: drifter (2 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[tyronn-lue|Tyronn Lue]] '05 (93% aligned similarity — cross-era via Procrustes chaining).
 

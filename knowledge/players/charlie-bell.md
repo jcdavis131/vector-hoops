@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[svi-mykhailiuk|Svi Mykhailiuk]] '24 (91% similar)
 - [[keith-bogans|Keith Bogans]] '13 (91% similar)
 
-**Career shape:** Charted 6 seasons (2005-06–2010-11). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 6 seasons (2005-06–2010-11). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: late-bloom (3 archetype changes across his charted seasons) — one sustained archetype switch coming late in his career (after the 60% mark).
 
 **Era twin:** [[chucky-atkins|Chucky Atkins]] '08 (91% aligned similarity — cross-era via Procrustes chaining).
 

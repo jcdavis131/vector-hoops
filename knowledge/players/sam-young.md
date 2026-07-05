@@ -61,7 +61,7 @@ Closest career shapes in the era-normalized vector space:
 - [[cam-reddish|Cam Reddish]] '25 (83% similar)
 - [[jeffery-taylor|Jeffery Taylor]] '14 (82% similar)
 
-**Career shape:** Charted 4 seasons (2009-10–2012-13). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+**Career shape:** Charted 4 seasons (2009-10–2012-13). Consistent Offensive Glass (Low On-Court Impact) profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[clifford-robinson|Clifford Robinson]] '07 (88% aligned similarity — cross-era via Procrustes chaining).
 

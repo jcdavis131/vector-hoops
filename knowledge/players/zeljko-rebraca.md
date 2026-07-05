@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[aaron-williams|Aaron Williams]] '05 (88% similar)
 - [[mikki-moore|Mikki Moore]] '00 (88% similar)
 
-**Career shape:** Charted 5 seasons (2001-02–2005-06). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+**Career shape:** Charted 5 seasons (2001-02–2005-06). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass (Low On-Court Impact) identity. Career trajectory: migrator (3 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[antoine-carr|Antoine Carr]] '00 (82% aligned similarity — cross-era via Procrustes chaining).
 

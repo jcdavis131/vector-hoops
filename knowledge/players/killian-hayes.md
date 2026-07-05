@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[tyler-ulis|Tyler Ulis]] '18 (91% similar)
 - [[diante-garrett|Diante Garrett]] '13 (91% similar)
 
-**Career shape:** Charted 5 seasons (2020-21–2025-26). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 5 seasons (2020-21–2025-26). Consistent Playmaking + Steals profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[tim-frazier|Tim Frazier]] '20 (86% aligned similarity — cross-era via Procrustes chaining).
 

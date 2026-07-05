@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[ira-newble|Ira Newble]] '01 (92% similar)
 - [[ochai-agbaji|Ochai Agbaji]] '23 (91% similar)
 
-**Career shape:** Charted 7 seasons (2014-15–2020-21). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+**Career shape:** Charted 7 seasons (2014-15–2020-21). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[nik-stauskas|Nik Stauskas]] '15 (87% aligned similarity — cross-era via Procrustes chaining).
 

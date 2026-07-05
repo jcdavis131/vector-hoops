@@ -68,7 +68,7 @@ Closest career shapes in the era-normalized vector space:
 - [[cartier-martin|Cartier Martin]] '15 (86% similar)
 - [[tyrone-corbin|Tyrone Corbin]] '00 (85% similar)
 
-**Career shape:** Charted 10 seasons (1999-00–2009-10). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 10 seasons (1999-00–2009-10). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[chris-singleton|Chris Singleton]] '12 (88% aligned similarity — cross-era via Procrustes chaining).
 

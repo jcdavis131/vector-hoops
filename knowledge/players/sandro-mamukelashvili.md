@@ -61,7 +61,7 @@ Closest career shapes in the era-normalized vector space:
 - [[pj-hall|PJ Hall]] '26 (74% similar)
 - [[tyler-cavanaugh|Tyler Cavanaugh]] '18 (74% similar)
 
-**Career shape:** Charted 5 seasons (2021-22–2025-26). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+**Career shape:** Charted 5 seasons (2021-22–2025-26). Consistent Offensive Glass (Low On-Court Impact) profile across his career. Career trajectory: reinvention (1 archetype change across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[doug-west|Doug West]] '98 (82% aligned similarity — cross-era via Procrustes chaining).
 

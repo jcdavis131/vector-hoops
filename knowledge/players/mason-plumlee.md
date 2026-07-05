@@ -72,7 +72,7 @@ Closest career shapes in the era-normalized vector space:
 - [[miles-plumlee|Miles Plumlee]] '19 (89% similar)
 - [[rudy-gobert|Rudy Gobert]] '21 (89% similar)
 
-**Career shape:** Charted 13 seasons (2013-14–2025-26). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass + Defensive Glass identity.
+**Career shape:** Charted 13 seasons (2013-14–2025-26). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass + Defensive Glass identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[jamal-sampson|Jamal Sampson]] '07 (85% aligned similarity — cross-era via Procrustes chaining).
 

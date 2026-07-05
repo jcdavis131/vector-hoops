@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[dalen-terry|Dalen Terry]] '26 (87% similar)
 - [[jahmai-mashack|Jahmai Mashack]] '26 (87% similar)
 
-**Career shape:** Charted 4 seasons (2011-12–2017-18). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+**Career shape:** Charted 4 seasons (2011-12–2017-18). Consistent Offensive Glass (Low On-Court Impact) profile across his career. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[matt-barnes|Matt Barnes]] '04 (87% aligned similarity — cross-era via Procrustes chaining).
 

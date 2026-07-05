@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[willie-reed|Willie Reed]] '16 (89% similar)
 - [[alex-len|Alex Len]] '24 (89% similar)
 
-**Career shape:** Charted 4 seasons (2016-17–2019-20). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Rim Protection + Offensive Glass identity.
+**Career shape:** Charted 4 seasons (2016-17–2019-20). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Rim Protection + Offensive Glass identity. Career trajectory: migrator (2 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[donovan-clingan|Donovan Clingan]] '25 (90% aligned similarity — cross-era via Procrustes chaining).
 

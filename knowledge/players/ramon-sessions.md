@@ -68,7 +68,7 @@ Closest career shapes in the era-normalized vector space:
 - [[spencer-dinwiddie|Spencer Dinwiddie]] '20 (85% similar)
 - [[will-bynum|Will Bynum]] '09 (85% similar)
 
-**Career shape:** Charted 11 seasons (2007-08–2017-18). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 11 seasons (2007-08–2017-18). Consistent Playmaking + Steals profile across his career. Career trajectory: drifter (4 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[javon-small|Javon Small]] '26 (91% aligned similarity — cross-era via Procrustes chaining).
 

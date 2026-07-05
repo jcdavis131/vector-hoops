@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[dermarr-johnson|DerMarr Johnson]] '07 (87% similar)
 - [[george-mccloud|George McCloud]] '98 (86% similar)
 
-**Career shape:** Charted 5 seasons (2003-04–2007-08). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 5 seasons (2003-04–2007-08). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[james-posey|James Posey]] '11 (83% aligned similarity — cross-era via Procrustes chaining).
 

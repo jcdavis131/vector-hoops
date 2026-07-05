@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[cameron-payne|Cameron Payne]] '26 (93% similar)
 - [[rumeal-robinson|Rumeal Robinson]] '97 (92% similar)
 
-**Career shape:** Charted 8 seasons (2006-07–2014-15). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 8 seasons (2006-07–2014-15). Consistent Playmaking + Steals profile across his career. Career trajectory: drifter (6 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[mark-price|Mark Price]] '98 (90% aligned similarity — cross-era via Procrustes chaining).
 

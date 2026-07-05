@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[bryant-reeves|Bryant Reeves]] '98 (87% similar)
 - [[mario-kasun|Mario Kasun]] '05 (87% similar)
 
-**Career shape:** Charted 4 seasons (2014-15–2017-18). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Offensive Glass + Defensive Glass identity.
+**Career shape:** Charted 4 seasons (2014-15–2017-18). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Offensive Glass + Defensive Glass identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[mario-kasun|Mario Kasun]] '05 (87% aligned similarity — cross-era via Procrustes chaining).
 

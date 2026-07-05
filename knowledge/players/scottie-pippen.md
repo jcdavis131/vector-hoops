@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[toni-kukoc|Toni Kukoc]] '99 (88% similar)
 - [[rodrigue-beaubois|Rodrigue Beaubois]] '10 (86% similar)
 
-**Career shape:** Charted 8 seasons (1996-97–2003-04). Entered as a Scoring Volume + Shot Volume profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+**Career shape:** Charted 8 seasons (1996-97–2003-04). Entered as a Scoring Volume + Shot Volume profile, peaked as a Offensive Glass (Low On-Court Impact) identity. Career trajectory: reinvention (2 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[keith-booth|Keith Booth]] '99 (80% aligned similarity — cross-era via Procrustes chaining).
 

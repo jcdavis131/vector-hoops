@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[ian-clark|Ian Clark]] '15 (88% similar)
 - [[wesley-matthews|Wesley Matthews]] '20 (87% similar)
 
-**Career shape:** Charted 9 seasons (2015-16–2023-24). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 9 seasons (2015-16–2023-24). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: reinvention (3 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[gary-harris|Gary Harris]] '25 (83% aligned similarity — cross-era via Procrustes chaining).
 

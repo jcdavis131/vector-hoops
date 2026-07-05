@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[joffrey-lauvergne|Joffrey Lauvergne]] '18 (87% similar)
 - [[james-wiseman|James Wiseman]] '24 (87% similar)
 
-**Career shape:** Charted 4 seasons (2018-19–2023-24). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+**Career shape:** Charted 4 seasons (2018-19–2023-24). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass (Low On-Court Impact) identity. Career trajectory: migrator (3 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[boniface-ndong|Boniface Ndong]] '06 (84% aligned similarity — cross-era via Procrustes chaining).
 

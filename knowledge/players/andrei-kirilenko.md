@@ -70,7 +70,7 @@ Closest career shapes in the era-normalized vector space:
 - [[gerald-wallace|Gerald Wallace]] '15 (66% similar)
 - [[marc-gasol|Marc Gasol]] '16 (66% similar)
 
-**Career shape:** Charted 12 seasons (2001-02–2013-14). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+**Career shape:** Charted 12 seasons (2001-02–2013-14). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career. Career trajectory: drifter (6 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[chet-holmgren|Chet Holmgren]] '25 (72% aligned similarity — cross-era via Procrustes chaining).
 

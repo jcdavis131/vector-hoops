@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[acie-law|Acie Law]] '10 (84% similar)
 - [[tomas-satoransky|Tomas Satoransky]] '22 (84% similar)
 
-**Career shape:** Charted 4 seasons (2018-19–2021-22). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 4 seasons (2018-19–2021-22). Consistent Playmaking + Steals profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[andrew-harrison|Andrew Harrison]] '19 (83% aligned similarity — cross-era via Procrustes chaining).
 

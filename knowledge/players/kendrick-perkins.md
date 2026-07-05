@@ -69,7 +69,7 @@ Closest career shapes in the era-normalized vector space:
 - [[will-perdue|Will Perdue]] '99 (91% similar)
 - [[antonio-harvey|Antonio Harvey]] '00 (90% similar)
 
-**Career shape:** Charted 12 seasons (2004-05–2015-16). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass + Defensive Glass identity.
+**Career shape:** Charted 12 seasons (2004-05–2015-16). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass + Defensive Glass identity. Career trajectory: reinvention (3 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[charles-jones|Charles Jones]] '98 (85% aligned similarity — cross-era via Procrustes chaining).
 

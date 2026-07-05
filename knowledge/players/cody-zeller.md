@@ -69,7 +69,7 @@ Closest career shapes in the era-normalized vector space:
 - [[mark-williams|Mark Williams]] '26 (87% similar)
 - [[tarik-black|Tarik Black]] '18 (87% similar)
 
-**Career shape:** Charted 10 seasons (2013-14–2023-24). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
+**Career shape:** Charted 10 seasons (2013-14–2023-24). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity. Career trajectory: migrator (7 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[ivan-rabb|Ivan Rabb]] '18 (92% aligned similarity — cross-era via Procrustes chaining).
 

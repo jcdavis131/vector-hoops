@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[tyrese-maxey|Tyrese Maxey]] '25 (94% similar)
 - [[jamal-crawford|Jamal Crawford]] '14 (93% similar)
 
-**Career shape:** Charted 8 seasons (1996-97–2004-05). Consistent Scoring Volume + Shot Volume profile across his career.
+**Career shape:** Charted 8 seasons (1996-97–2004-05). Consistent Scoring Volume + Shot Volume profile across his career. Career trajectory: reinvention (1 archetype change across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[isaiah-thomas|Isaiah Thomas]] '17 (95% aligned similarity — cross-era via Procrustes chaining).
 

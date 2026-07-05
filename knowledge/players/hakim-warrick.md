@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[johnathan-motley|Johnathan Motley]] '19 (83% similar)
 - [[samardo-samuels|Samardo Samuels]] '11 (82% similar)
 
-**Career shape:** Charted 8 seasons (2005-06–2012-13). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+**Career shape:** Charted 8 seasons (2005-06–2012-13). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass (Low On-Court Impact) identity. Career trajectory: late-bloom (3 archetype changes across his charted seasons) — one sustained archetype switch coming late in his career (after the 60% mark).
 
 **Era twin:** [[george-zidek|George Zidek]] '97 (88% aligned similarity — cross-era via Procrustes chaining).
 

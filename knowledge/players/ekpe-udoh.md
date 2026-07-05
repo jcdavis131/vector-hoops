@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jeff-withey|Jeff Withey]] '17 (90% similar)
 - [[theo-ratliff|Theo Ratliff]] '09 (90% similar)
 
-**Career shape:** Charted 7 seasons (2010-11–2018-19). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
+**Career shape:** Charted 7 seasons (2010-11–2018-19). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity. Career trajectory: late-bloom (1 archetype change across his charted seasons) — one sustained archetype switch coming late in his career (after the 60% mark).
 
 **Era twin:** [[goga-bitadze|Goga Bitadze]] '25 (91% aligned similarity — cross-era via Procrustes chaining).
 

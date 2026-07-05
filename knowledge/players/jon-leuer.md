@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[tony-massenburg|Tony Massenburg]] '02 (81% similar)
 - [[johan-petro|Johan Petro]] '12 (79% similar)
 
-**Career shape:** Charted 7 seasons (2011-12–2018-19). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+**Career shape:** Charted 7 seasons (2011-12–2018-19). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity. Career trajectory: migrator (6 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[j-r-giddens|J.R. Giddens]] '10 (82% aligned similarity — cross-era via Procrustes chaining).
 

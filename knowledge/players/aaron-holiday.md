@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[yogi-ferrell|Yogi Ferrell]] '19 (89% similar)
 - [[gabe-vincent|Gabe Vincent]] '26 (88% similar)
 
-**Career shape:** Charted 8 seasons (2018-19–2025-26). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 8 seasons (2018-19–2025-26). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: reinvention (3 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[wesley-matthews|Wesley Matthews]] '20 (82% aligned similarity — cross-era via Procrustes chaining).
 

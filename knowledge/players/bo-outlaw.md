@@ -70,7 +70,7 @@ Closest career shapes in the era-normalized vector space:
 - [[amir-johnson|Amir Johnson]] '08 (88% similar)
 - [[ronny-turiaf|Ronny Turiaf]] '14 (88% similar)
 
-**Career shape:** Charted 11 seasons (1996-97–2006-07). Consistent Rim Protection + Offensive Glass profile across his career.
+**Career shape:** Charted 11 seasons (1996-97–2006-07). Consistent Rim Protection + Offensive Glass profile across his career. Career trajectory: reinvention (3 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[andrew-declercq|Andrew DeClercq]] '01 (88% aligned similarity — cross-era via Procrustes chaining).
 

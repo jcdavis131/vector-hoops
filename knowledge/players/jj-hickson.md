@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jalen-duren|Jalen Duren]] '26 (92% similar)
 - [[chris-wilcox|Chris Wilcox]] '13 (91% similar)
 
-**Career shape:** Charted 8 seasons (2008-09–2015-16). Consistent Rim Protection + Offensive Glass profile across his career.
+**Career shape:** Charted 8 seasons (2008-09–2015-16). Consistent Rim Protection + Offensive Glass profile across his career. Career trajectory: stable (3 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[shawnelle-scott|Shawnelle Scott]] '01 (87% aligned similarity — cross-era via Procrustes chaining).
 

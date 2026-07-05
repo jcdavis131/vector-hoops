@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[derrick-favors|Derrick Favors]] '21 (92% similar)
 - [[jeff-withey|Jeff Withey]] '17 (92% similar)
 
-**Career shape:** Charted 4 seasons (2021-22–2025-26). Consistent Rim Protection + Offensive Glass profile across his career.
+**Career shape:** Charted 4 seasons (2021-22–2025-26). Consistent Rim Protection + Offensive Glass profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[salah-mejri|Salah Mejri]] '18 (90% aligned similarity — cross-era via Procrustes chaining).
 

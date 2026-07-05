@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jason-collins|Jason Collins]] '10 (89% similar)
 - [[kris-murray|Kris Murray]] '25 (88% similar)
 
-**Career shape:** Charted 4 seasons (2019-20–2022-23). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 4 seasons (2019-20–2022-23). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: drifter (3 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[gary-harris|Gary Harris]] '25 (85% aligned similarity — cross-era via Procrustes chaining).
 

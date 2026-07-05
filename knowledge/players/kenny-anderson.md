@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[tyus-jones|Tyus Jones]] '18 (91% similar)
 - [[luke-ridnour|Luke Ridnour]] '06 (91% similar)
 
-**Career shape:** Charted 9 seasons (1996-97–2004-05). Consistent Scoring Volume + Shot Volume profile across his career.
+**Career shape:** Charted 9 seasons (1996-97–2004-05). Consistent Scoring Volume + Shot Volume profile across his career. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[chauncey-billups|Chauncey Billups]] '06 (89% aligned similarity — cross-era via Procrustes chaining).
 

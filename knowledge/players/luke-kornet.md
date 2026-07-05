@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[shawn-bradley|Shawn Bradley]] '01 (85% similar)
 - [[greg-ostertag|Greg Ostertag]] '99 (84% similar)
 
-**Career shape:** Charted 8 seasons (2017-18–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Rim Protection + Offensive Glass identity.
+**Career shape:** Charted 8 seasons (2017-18–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Rim Protection + Offensive Glass identity. Career trajectory: migrator (4 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[daniel-theis|Daniel Theis]] '20 (81% aligned similarity — cross-era via Procrustes chaining).
 

@@ -70,7 +70,7 @@ Closest career shapes in the era-normalized vector space:
 - [[yakhouba-diawara|Yakhouba Diawara]] '09 (89% similar)
 - [[james-jones|James Jones]] '14 (89% similar)
 
-**Career shape:** Charted 12 seasons (2008-09–2019-20). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 12 seasons (2008-09–2019-20). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[charlie-bell|Charlie Bell]] '11 (84% aligned similarity — cross-era via Procrustes chaining).
 

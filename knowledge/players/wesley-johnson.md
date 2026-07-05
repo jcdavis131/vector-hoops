@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[justin-holiday|Justin Holiday]] '23 (89% similar)
 - [[shawne-williams|Shawne Williams]] '12 (88% similar)
 
-**Career shape:** Charted 9 seasons (2010-11–2018-19). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 9 seasons (2010-11–2018-19). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[jamir-watkins|Jamir Watkins]] '26 (85% aligned similarity — cross-era via Procrustes chaining).
 

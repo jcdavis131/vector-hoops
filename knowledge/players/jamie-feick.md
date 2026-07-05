@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[james-singleton|James Singleton]] '10 (83% similar)
 - [[dennis-rodman|Dennis Rodman]] '97 (83% similar)
 
-**Career shape:** Charted 4 seasons (1996-97–1999-00). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 4 seasons (1996-97–1999-00). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[ervin-johnson|Ervin Johnson]] '05 (74% aligned similarity — cross-era via Procrustes chaining).
 

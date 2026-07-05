@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[cody-martin|Cody Martin]] '21 (78% similar)
 - [[dillon-jones|Dillon Jones]] '25 (78% similar)
 
-**Career shape:** Charted 7 seasons (2015-16–2022-23). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+**Career shape:** Charted 7 seasons (2015-16–2022-23). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity. Career trajectory: migrator (6 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[olden-polynice|Olden Polynice]] '99 (80% aligned similarity — cross-era via Procrustes chaining).
 

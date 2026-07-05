@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[samuel-dalembert|Samuel Dalembert]] '13 (88% similar)
 - [[ivica-zubac|Ivica Zubac]] '20 (87% similar)
 
-**Career shape:** Charted 6 seasons (2008-09–2016-17). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Rim Protection + Offensive Glass identity.
+**Career shape:** Charted 6 seasons (2008-09–2016-17). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Rim Protection + Offensive Glass identity. Career trajectory: reinvention (2 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[greg-oden|Greg Oden]] '10 (93% aligned similarity — cross-era via Procrustes chaining).
 

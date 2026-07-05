@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[wesley-johnson|Wesley Johnson]] '17 (84% similar)
 - [[dennis-scott|Dennis Scott]] '00 (81% similar)
 
-**Career shape:** Charted 9 seasons (2005-06–2013-14). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 9 seasons (2005-06–2013-14). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: drifter (2 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[justin-holiday|Justin Holiday]] '23 (95% aligned similarity — cross-era via Procrustes chaining).
 

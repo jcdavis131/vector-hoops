@@ -69,7 +69,7 @@ Closest career shapes in the era-normalized vector space:
 - [[tony-bradley|Tony Bradley]] '20 (92% similar)
 - [[taj-gibson|Taj Gibson]] '21 (92% similar)
 
-**Career shape:** Charted 10 seasons (2015-16–2024-25). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
+**Career shape:** Charted 10 seasons (2015-16–2024-25). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity. Career trajectory: drifter (5 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[ante-zizic|Ante Zizic]] '18 (88% aligned similarity — cross-era via Procrustes chaining).
 

@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[erick-strickland|Erick Strickland]] '01 (86% similar)
 - [[shannon-brown|Shannon Brown]] '08 (86% similar)
 
-**Career shape:** Charted 4 seasons (2021-22–2025-26). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Playmaking + Steals identity.
+**Career shape:** Charted 4 seasons (2021-22–2025-26). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Playmaking + Steals identity. Career trajectory: reinvention (1 archetype change across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[nickeil-alexander-walker|Nickeil Alexander-Walker]] '20 (80% aligned similarity — cross-era via Procrustes chaining).
 

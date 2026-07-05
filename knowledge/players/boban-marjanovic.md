@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[matt-geiger|Matt Geiger]] '98 (90% similar)
 - [[willy-hernangomez|Willy Hernangomez]] '23 (89% similar)
 
-**Career shape:** Charted 8 seasons (2015-16–2022-23). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+**Career shape:** Charted 8 seasons (2015-16–2022-23). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[alperen-sengun|Alperen Sengun]] '25 (93% aligned similarity — cross-era via Procrustes chaining).
 

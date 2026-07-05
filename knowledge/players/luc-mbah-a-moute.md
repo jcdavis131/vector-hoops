@@ -68,7 +68,7 @@ Closest career shapes in the era-normalized vector space:
 - [[johnny-furphy|Johnny Furphy]] '26 (86% similar)
 - [[javonte-green|Javonte Green]] '26 (85% similar)
 
-**Career shape:** Charted 10 seasons (2008-09–2017-18). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 10 seasons (2008-09–2017-18). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: reinvention (4 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[mark-pope|Mark Pope]] '01 (87% aligned similarity — cross-era via Procrustes chaining).
 

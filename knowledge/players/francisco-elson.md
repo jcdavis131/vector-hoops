@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[tony-battie|Tony Battie]] '12 (89% similar)
 - [[hot-rod-williams|Hot Rod Williams]] '99 (89% similar)
 
-**Career shape:** Charted 7 seasons (2003-04–2010-11). Consistent Offensive Glass + Defensive Glass profile across his career.
+**Career shape:** Charted 7 seasons (2003-04–2010-11). Consistent Offensive Glass + Defensive Glass profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[greg-ostertag|Greg Ostertag]] '99 (90% aligned similarity — cross-era via Procrustes chaining).
 

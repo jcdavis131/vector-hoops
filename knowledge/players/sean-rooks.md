@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[brett-szabo|Brett Szabo]] '97 (88% similar)
 - [[rakeem-christmas|Rakeem Christmas]] '17 (88% similar)
 
-**Career shape:** Charted 8 seasons (1996-97–2003-04). Consistent Rim Protection + Offensive Glass profile across his career.
+**Career shape:** Charted 8 seasons (1996-97–2003-04). Consistent Rim Protection + Offensive Glass profile across his career. Career trajectory: migrator (6 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[mamadou-n-diaye|Mamadou N'diaye]] '04 (88% aligned similarity — cross-era via Procrustes chaining).
 

@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[max-strus|Max Strus]] '21 (93% similar)
 - [[anthony-morrow|Anthony Morrow]] '17 (91% similar)
 
-**Career shape:** Charted 4 seasons (1996-97–1999-00). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 4 seasons (1996-97–1999-00). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[matt-bullard|Matt Bullard]] '01 (89% aligned similarity — cross-era via Procrustes chaining).
 

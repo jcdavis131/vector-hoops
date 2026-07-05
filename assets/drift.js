@@ -11,6 +11,7 @@
 
   var DRIFT_URL = 'assets/drift.json';
   var ARCH_URL = 'assets/archetypes_time.json';
+  var TRAJ_URL = 'assets/trajectories.json';
   var SVG_NS = 'http://www.w3.org/2000/svg';
 
   var ORANGE_HEX = '#eb6834';
@@ -314,6 +315,135 @@
     if (methodEl) methodEl.textContent = 'Could not load method text (assets/archetypes_time.json).';
   }
 
+  // -------------------------------------------------------------------
+  // Career Shapes (assets/trajectories.json): class stat cards, headline
+  // callout, era transition-rate mini-chart, top reinvention motifs.
+  // -------------------------------------------------------------------
+
+  var TRAJ_CLASS_LABEL = {
+    'stable': 'Stable specialist',
+    'reinvention': 'Reinvention',
+    'late-bloom': 'Late bloom',
+    'migrator': 'Migrator',
+    'drifter': 'Drifter'
+  };
+
+  var TRAJ_CLASS_DEF = {
+    'stable': 'One archetype covered at least three-quarters of the career.',
+    'reinvention': 'One sustained archetype switch, each side holding at least two seasons.',
+    'late-bloom': 'One sustained archetype switch, arriving after the 60% mark of the career.',
+    'migrator': 'Three or more archetypes across the career, none ever reaching 60% of the seasons.',
+    'drifter': 'Moved between archetypes without a switch ever settling into a new majority.'
+  };
+
+  // Our own read of the most common reinvention motifs, not derived — kept
+  // separate from the counts the pipeline computes. A motif not in this map
+  // (e.g. after a rebuild reorders the top list) simply renders without a gloss.
+  var TRAJ_MOTIF_GLOSS = {
+    'Three-Point Volume + Three-Point Accuracy→Three-Point Accuracy (Low Turnovers)': 'the aging-shooter arc',
+    'Three-Point Accuracy (Low Turnovers)→Three-Point Volume + Three-Point Accuracy': 'volume creeping back in',
+    'Rim Protection + Offensive Glass→Offensive Glass + Defensive Glass': 'trading blocks for boards',
+    'Defensive Glass + Rim Pressure (Fts)→Offensive Glass + Defensive Glass': 'settling into the glass',
+    'Scoring Volume + Shot Volume→Playmaking + Steals': 'scorer turned table-setter',
+    'Offensive Glass + Defensive Glass→Rim Protection + Offensive Glass': 'adding rim protection'
+  };
+
+  function renderTrajectoryHeadline(host, classStats) {
+    var byClass = {};
+    classStats.forEach(function (c) { byClass[c.class] = c; });
+    var reinvention = byClass['reinvention'], stable = byClass['stable'];
+    if (!reinvention || !stable) { host.textContent = 'Not enough classes to compare.'; return; }
+    host.innerHTML = '<b>Reinventors last longest:</b> ' + reinvention.meanCareerLength.toFixed(1) +
+      ' seasons vs ' + stable.meanCareerLength.toFixed(1) + ' for stable specialists &mdash; ' +
+      'observed with selection effects.';
+  }
+
+  function renderTrajectoryClassCards(host, classStats) {
+    var sorted = classStats.slice().sort(function (a, b) { return b.share - a.share; });
+    host.innerHTML = sorted.map(function (c) {
+      var label = TRAJ_CLASS_LABEL[c.class] || c.class;
+      var def = TRAJ_CLASS_DEF[c.class] || '';
+      var pmSign = c.meanPMz >= 0 ? '+' : '';
+      return '<div class="trajectory-class-card">' +
+        '<div class="trajectory-class-card__head">' + escapeHtml(label) + '</div>' +
+        '<div class="trajectory-class-card__share">' + pct1(c.share) + ' of careers</div>' +
+        '<div class="trajectory-class-card__stats">' + c.meanCareerLength.toFixed(1) +
+        ' seasons avg &middot; PM-z ' + pmSign + c.meanPMz.toFixed(2) + '</div>' +
+        '<p class="trajectory-class-card__def">' + escapeHtml(def) + '</p>' +
+        '</div>';
+    }).join('');
+  }
+
+  function renderTrajectoryEraChart(host, eraRates) {
+    host.innerHTML = '';
+    host.removeAttribute('aria-label');
+
+    var W = 880, LEFT = 46, RIGHT = 20, TOP = 24, BOT = 34;
+    var H = 200;
+    var plotW = W - LEFT - RIGHT, plotH = H - TOP - BOT;
+    var n = eraRates.length;
+    var maxVal = eraRates.reduce(function (m, e) { return Math.max(m, e.meanTransitionRate); }, 0);
+    var yMax = maxVal * 1.25;
+    var step = plotW / n;
+    var barW = step * 0.55;
+
+    var svg = svgEl('svg', {
+      viewBox: '0 0 ' + W + ' ' + H,
+      role: 'img',
+      'aria-label': 'Mean archetype transition rate by decade, ' + eraRates[0].decade + ' through ' + eraRates[n - 1].decade,
+      'font-family': getComputedStyle(document.body).fontFamily
+    }, host);
+
+    svgEl('line', {
+      x1: LEFT, y1: TOP + plotH, x2: W - RIGHT, y2: TOP + plotH, stroke: INK, 'stroke-width': 1.5
+    }, svg);
+
+    eraRates.forEach(function (e, i) {
+      var cx = LEFT + step * i + step / 2;
+      var barH = yMax > 0 ? (e.meanTransitionRate / yMax) * plotH : 0;
+      var y = TOP + plotH - barH;
+      var rect = svgEl('rect', {
+        x: cx - barW / 2, y: y, width: barW, height: barH, fill: ORANGE_HEX, rx: 3
+      }, svg);
+      var title = document.createElementNS(SVG_NS, 'title');
+      title.textContent = e.decade + ': ' + e.meanTransitionRate.toFixed(3) +
+        ' mean transition rate (' + e.careers + ' careers)';
+      rect.appendChild(title);
+      svgEl('text', {
+        x: cx, y: y - 6, 'text-anchor': 'middle', 'font-size': 10, 'font-weight': 700, fill: INK
+      }, svg).textContent = e.meanTransitionRate.toFixed(2);
+      svgEl('text', {
+        x: cx, y: H - 10, 'text-anchor': 'middle', 'font-size': 10, fill: INK_MUTED
+      }, svg).textContent = e.decade;
+    });
+  }
+
+  function renderTrajectoryMotifs(host, motifs) {
+    host.innerHTML = motifs.map(function (m) {
+      var gloss = TRAJ_MOTIF_GLOSS[m.from + '→' + m.to];
+      return '<li class="trajectory-motif-item">' +
+        '<span class="trajectory-motif-item__path">' + escapeHtml(m.from) + ' &rarr; ' + escapeHtml(m.to) + '</span>' +
+        '<span class="trajectory-motif-item__count">&times;' + m.count + '</span>' +
+        (gloss ? '<span class="trajectory-motif-item__gloss">' + escapeHtml(gloss) + '</span>' : '') +
+        '</li>';
+    }).join('');
+  }
+
+  function showTrajectoryError(headlineHost, cardsHost, chartHost, motifHost, methodEl) {
+    if (headlineHost) headlineHost.textContent = 'Could not load career shape data (assets/trajectories.json).';
+    if (cardsHost) cardsHost.innerHTML = '<p class="drift-loading">Could not load.</p>';
+    if (chartHost) {
+      chartHost.innerHTML = '';
+      chartHost.setAttribute('aria-label', 'Career shapes chart failed to load');
+      var p = document.createElement('p');
+      p.className = 'drift-loading';
+      p.textContent = 'Could not load the career shapes data (assets/trajectories.json). Try reloading.';
+      chartHost.appendChild(p);
+    }
+    if (motifHost) motifHost.innerHTML = '<li class="drift-loading">Could not load.</li>';
+    if (methodEl) methodEl.textContent = 'Could not load method text (assets/trajectories.json).';
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
     var chartHost = document.getElementById('drift-chart');
     var shiftsTable = document.getElementById('drift-shifts-table');
@@ -350,6 +480,27 @@
         if (archMethodEl) archMethodEl.textContent = data.method;
       }).catch(function () {
         showArchetypeError(archChartHost, archLegendHost, archShiftsTable, archPanelsHost, archMethodEl);
+      });
+    }
+
+    var trajHeadlineHost = document.getElementById('trajectory-headline');
+    var trajCardsHost = document.getElementById('trajectory-class-cards');
+    var trajChartHost = document.getElementById('trajectory-era-chart');
+    var trajMotifHost = document.getElementById('trajectory-motif-list');
+    var trajMethodEl = document.getElementById('trajectory-method-quote');
+
+    if (trajChartHost) {
+      fetch(TRAJ_URL).then(function (res) {
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        return res.json();
+      }).then(function (data) {
+        renderTrajectoryHeadline(trajHeadlineHost, data.classStats);
+        renderTrajectoryClassCards(trajCardsHost, data.classStats);
+        renderTrajectoryEraChart(trajChartHost, data.eraTransitionRates);
+        renderTrajectoryMotifs(trajMotifHost, data.topReinventionMotifs);
+        if (trajMethodEl) trajMethodEl.textContent = data.method;
+      }).catch(function () {
+        showTrajectoryError(trajHeadlineHost, trajCardsHost, trajChartHost, trajMotifHost, trajMethodEl);
       });
     }
   });

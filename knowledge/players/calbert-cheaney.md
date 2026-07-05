@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[perry-jones-iii|Perry Jones III]] '13 (78% similar)
 - [[duane-ferrell|Duane Ferrell]] '98 (78% similar)
 
-**Career shape:** Charted 9 seasons (1996-97–2005-06). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 9 seasons (1996-97–2005-06). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: stable (4 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[sasha-pavlovic|Sasha Pavlovic]] '13 (94% aligned similarity — cross-era via Procrustes chaining).
 

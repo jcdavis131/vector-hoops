@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[chris-anstey|Chris Anstey]] '00 (85% similar)
 - [[isaiah-roby|Isaiah Roby]] '23 (83% similar)
 
-**Career shape:** Charted 5 seasons (2016-17–2021-22). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Rim Protection + Offensive Glass identity.
+**Career shape:** Charted 5 seasons (2016-17–2021-22). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Rim Protection + Offensive Glass identity. Career trajectory: drifter (2 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[cody-zeller|Cody Zeller]] '22 (86% aligned similarity — cross-era via Procrustes chaining).
 

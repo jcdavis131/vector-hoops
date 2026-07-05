@@ -61,7 +61,7 @@ Closest career shapes in the era-normalized vector space:
 - [[kendall-marshall|Kendall Marshall]] '14 (88% similar)
 - [[jonny-flynn|Jonny Flynn]] '11 (86% similar)
 
-**Career shape:** Charted 4 seasons (2011-12–2014-15). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 4 seasons (2011-12–2014-15). Consistent Playmaking + Steals profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[john-crotty|John Crotty]] '98 (77% aligned similarity — cross-era via Procrustes chaining).
 

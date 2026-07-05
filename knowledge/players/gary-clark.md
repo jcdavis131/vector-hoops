@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[kessler-edwards|Kessler Edwards]] '25 (87% similar)
 - [[robbie-hummel|Robbie Hummel]] '14 (87% similar)
 
-**Career shape:** Charted 4 seasons (2018-19–2021-22). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 4 seasons (2018-19–2021-22). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[sam-perkins|Sam Perkins]] '01 (83% aligned similarity — cross-era via Procrustes chaining).
 

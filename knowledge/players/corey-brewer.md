@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[shaquille-harrison|Shaquille Harrison]] '21 (84% similar)
 - [[jaden-springer|Jaden Springer]] '24 (83% similar)
 
-**Career shape:** Charted 11 seasons (2007-08–2018-19). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 11 seasons (2007-08–2018-19). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: migrator (6 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[delon-wright|Delon Wright]] '23 (90% aligned similarity — cross-era via Procrustes chaining).
 

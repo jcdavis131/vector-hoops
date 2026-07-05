@@ -77,7 +77,7 @@ Closest career shapes in the era-normalized vector space:
 - [[paul-pierce|Paul Pierce]] '03 (94% similar)
 - [[tracy-mcgrady|Tracy McGrady]] '03 (94% similar)
 
-**Career shape:** Charted 19 seasons (1996-97–2015-16). Consistent Scoring Volume + Shot Volume profile across his career.
+**Career shape:** Charted 19 seasons (1996-97–2015-16). Consistent Scoring Volume + Shot Volume profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[carmelo-anthony|Carmelo Anthony]] '13 (93% aligned similarity — cross-era via Procrustes chaining).
 

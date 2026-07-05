@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jalen-pickett|Jalen Pickett]] '25 (89% similar)
 - [[haywoode-workman|Haywoode Workman]] '00 (88% similar)
 
-**Career shape:** Charted 6 seasons (1996-97–2002-03). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 6 seasons (1996-97–2002-03). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: reinvention (1 archetype change across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[jaylen-adams|Jaylen Adams]] '19 (87% aligned similarity — cross-era via Procrustes chaining).
 

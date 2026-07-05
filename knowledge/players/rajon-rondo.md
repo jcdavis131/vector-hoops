@@ -75,7 +75,7 @@ Closest career shapes in the era-normalized vector space:
 - [[sergio-rodriguez|Sergio Rodriguez]] '09 (88% similar)
 - [[t-j-mcconnell|T.J. McConnell]] '21 (88% similar)
 
-**Career shape:** Charted 16 seasons (2006-07–2021-22). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 16 seasons (2006-07–2021-22). Consistent Playmaking + Steals profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[brevin-knight|Brevin Knight]] '03 (88% aligned similarity — cross-era via Procrustes chaining).
 

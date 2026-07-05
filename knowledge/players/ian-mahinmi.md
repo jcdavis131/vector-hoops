@@ -70,7 +70,7 @@ Closest career shapes in the era-normalized vector space:
 - [[mitchell-robinson|Mitchell Robinson]] '26 (90% similar)
 - [[tarik-black|Tarik Black]] '18 (90% similar)
 
-**Career shape:** Charted 11 seasons (2009-10–2019-20). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+**Career shape:** Charted 11 seasons (2009-10–2019-20). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career. Career trajectory: drifter (5 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[tiago-splitter|Tiago Splitter]] '12 (88% aligned similarity — cross-era via Procrustes chaining).
 

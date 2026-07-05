@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[josh-boone|Josh Boone]] '10 (93% similar)
 - [[brendan-haywood|Brendan Haywood]] '15 (93% similar)
 
-**Career shape:** Charted 10 seasons (2005-06–2014-15). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+**Career shape:** Charted 10 seasons (2005-06–2014-15). Consistent Offensive Glass (Low On-Court Impact) profile across his career. Career trajectory: reinvention (2 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[samardo-samuels|Samardo Samuels]] '11 (79% aligned similarity — cross-era via Procrustes chaining).
 

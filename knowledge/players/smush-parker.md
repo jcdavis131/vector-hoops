@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[will-solomon|Will Solomon]] '02 (90% similar)
 - [[tierre-brown|Tierre Brown]] '02 (90% similar)
 
-**Career shape:** Charted 5 seasons (2002-03–2007-08). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 5 seasons (2002-03–2007-08). Consistent Playmaking + Steals profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[rashard-lewis|Rashard Lewis]] '99 (90% aligned similarity — cross-era via Procrustes chaining).
 

@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[samaki-walker|Samaki Walker]] '02 (86% similar)
 - [[richaun-holmes|Richaun Holmes]] '25 (86% similar)
 
-**Career shape:** Charted 6 seasons (1996-97–2001-02). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+**Career shape:** Charted 6 seasons (1996-97–2001-02). Consistent Offensive Glass (Low On-Court Impact) profile across his career. Career trajectory: migrator (3 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[shawnelle-scott|Shawnelle Scott]] '01 (90% aligned similarity — cross-era via Procrustes chaining).
 

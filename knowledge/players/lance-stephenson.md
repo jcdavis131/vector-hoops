@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[shelvin-mack|Shelvin Mack]] '16 (80% similar)
 - [[ish-smith|Ish Smith]] '23 (79% similar)
 
-**Career shape:** Charted 9 seasons (2011-12–2021-22). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 9 seasons (2011-12–2021-22). Consistent Playmaking + Steals profile across his career. Career trajectory: drifter (5 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[antonio-burks|Antonio Burks]] '06 (85% aligned similarity — cross-era via Procrustes chaining).
 

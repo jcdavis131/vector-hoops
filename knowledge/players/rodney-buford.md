@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[carsen-edwards|Carsen Edwards]] '21 (81% similar)
 - [[dwayne-bacon|Dwayne Bacon]] '18 (80% similar)
 
-**Career shape:** Charted 5 seasons (1999-00–2004-05). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+**Career shape:** Charted 5 seasons (1999-00–2004-05). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Offensive Glass (Low On-Court Impact) identity. Career trajectory: drifter (2 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[duane-ferrell|Duane Ferrell]] '98 (79% aligned similarity — cross-era via Procrustes chaining).
 

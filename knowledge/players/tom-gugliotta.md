@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[alize-johnson|Alize Johnson]] '22 (63% similar)
 - [[loy-vaught|Loy Vaught]] '99 (61% similar)
 
-**Career shape:** Charted 9 seasons (1996-97–2004-05). Entered as a Scoring Volume + Shot Volume profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+**Career shape:** Charted 9 seasons (1996-97–2004-05). Entered as a Scoring Volume + Shot Volume profile, peaked as a Offensive Glass (Low On-Court Impact) identity. Career trajectory: migrator (3 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[caleb-houstan|Caleb Houstan]] '26 (68% aligned similarity — cross-era via Procrustes chaining).
 

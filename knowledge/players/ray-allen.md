@@ -76,7 +76,7 @@ Closest career shapes in the era-normalized vector space:
 - [[reggie-miller|Reggie Miller]] '98 (90% similar)
 - [[kon-knueppel|Kon Knueppel]] '26 (90% similar)
 
-**Career shape:** Charted 18 seasons (1996-97–2013-14). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 18 seasons (1996-97–2013-14). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: reinvention (2 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[gerald-green|Gerald Green]] '15 (94% aligned similarity — cross-era via Procrustes chaining).
 

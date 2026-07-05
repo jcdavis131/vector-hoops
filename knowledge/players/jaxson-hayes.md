@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[richaun-holmes|Richaun Holmes]] '25 (91% similar)
 - [[kai-jones|Kai Jones]] '22 (91% similar)
 
-**Career shape:** Charted 7 seasons (2019-20–2025-26). Consistent Rim Protection + Offensive Glass profile across his career.
+**Career shape:** Charted 7 seasons (2019-20–2025-26). Consistent Rim Protection + Offensive Glass profile across his career. Career trajectory: migrator (3 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[john-salley|John Salley]] '00 (71% aligned similarity — cross-era via Procrustes chaining).
 

@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[kawhi-leonard|Kawhi Leonard]] '20 (83% similar)
 - [[dwyane-wade|Dwyane Wade]] '09 (83% similar)
 
-**Career shape:** Charted 4 seasons (2022-23–2025-26). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 4 seasons (2022-23–2025-26). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[kawhi-leonard|Kawhi Leonard]] '20 (93% aligned similarity — cross-era via Procrustes chaining).
 

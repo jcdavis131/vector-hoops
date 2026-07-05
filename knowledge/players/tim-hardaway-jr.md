@@ -71,7 +71,7 @@ Closest career shapes in the era-normalized vector space:
 - [[nick-young|Nick Young]] '15 (93% similar)
 - [[marco-belinelli|Marco Belinelli]] '08 (93% similar)
 
-**Career shape:** Charted 13 seasons (2013-14–2025-26). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 13 seasons (2013-14–2025-26). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[lonnie-walker-iv|Lonnie Walker IV]] '25 (92% aligned similarity — cross-era via Procrustes chaining).
 

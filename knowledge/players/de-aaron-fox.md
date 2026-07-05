@@ -68,7 +68,7 @@ Closest career shapes in the era-normalized vector space:
 - [[john-wall|John Wall]] '17 (92% similar)
 - [[trae-young|Trae Young]] '20 (91% similar)
 
-**Career shape:** Charted 9 seasons (2017-18–2025-26). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 9 seasons (2017-18–2025-26). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[caris-levert|Caris LeVert]] '20 (92% aligned similarity — cross-era via Procrustes chaining).
 

@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[metta-world-peace|Metta World Peace]] '17 (86% similar)
 - [[ronnie-price|Ronnie Price]] '14 (84% similar)
 
-**Career shape:** Charted 7 seasons (2018-19–2025-26). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 7 seasons (2018-19–2025-26). Consistent Playmaking + Steals profile across his career. Career trajectory: migrator (2 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[dru-smith|Dru Smith]] '26 (90% aligned similarity — cross-era via Procrustes chaining).
 

@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[nick-richards|Nick Richards]] '23 (83% similar)
 - [[derrick-caracter|Derrick Caracter]] '11 (83% similar)
 
-**Career shape:** Charted 6 seasons (2015-16–2020-21). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+**Career shape:** Charted 6 seasons (2015-16–2020-21). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass (Low On-Court Impact) identity. Career trajectory: migrator (3 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[josh-powell|Josh Powell]] '07 (83% aligned similarity — cross-era via Procrustes chaining).
 

@@ -68,7 +68,7 @@ Closest career shapes in the era-normalized vector space:
 - [[alexander-johnson|Alexander Johnson]] '08 (88% similar)
 - [[mikki-moore|Mikki Moore]] '00 (88% similar)
 
-**Career shape:** Charted 10 seasons (2006-07–2015-16). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+**Career shape:** Charted 10 seasons (2006-07–2015-16). Consistent Offensive Glass (Low On-Court Impact) profile across his career. Career trajectory: drifter (6 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[eric-mobley|Eric Mobley]] '97 (83% aligned similarity — cross-era via Procrustes chaining).
 

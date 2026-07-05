@@ -68,7 +68,7 @@ Closest career shapes in the era-normalized vector space:
 - [[lynn-greer|Lynn Greer]] '07 (92% similar)
 - [[marcus-sasser|Marcus Sasser]] '26 (92% similar)
 
-**Career shape:** Charted 11 seasons (1996-97–2006-07). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 11 seasons (1996-97–2006-07). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: reinvention (2 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[marlon-garnett|Marlon Garnett]] '99 (88% aligned similarity — cross-era via Procrustes chaining).
 

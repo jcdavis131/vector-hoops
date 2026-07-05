@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[daniel-gibson|Daniel Gibson]] '13 (91% similar)
 - [[chandler-parsons|Chandler Parsons]] '19 (91% similar)
 
-**Career shape:** Charted 8 seasons (2018-19–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+**Career shape:** Charted 8 seasons (2018-19–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity. Career trajectory: drifter (5 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[malik-sealy|Malik Sealy]] '97 (82% aligned similarity — cross-era via Procrustes chaining).
 

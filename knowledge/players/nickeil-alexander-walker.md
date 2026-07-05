@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[aj-price|AJ Price]] '14 (88% similar)
 - [[mike-james|Mike James]] '06 (88% similar)
 
-**Career shape:** Charted 7 seasons (2019-20–2025-26). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 7 seasons (2019-20–2025-26). Consistent Playmaking + Steals profile across his career. Career trajectory: migrator (4 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[keon-johnson|Keon Johnson]] '23 (82% aligned similarity — cross-era via Procrustes chaining).
 

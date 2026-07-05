@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[alex-len|Alex Len]] '24 (95% similar)
 - [[jake-tsakalidis|Jake Tsakalidis]] '06 (95% similar)
 
-**Career shape:** Charted 8 seasons (2001-02–2009-10). Consistent Rim Protection + Offensive Glass profile across his career.
+**Career shape:** Charted 8 seasons (2001-02–2009-10). Consistent Rim Protection + Offensive Glass profile across his career. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[ronny-turiaf|Ronny Turiaf]] '14 (94% aligned similarity — cross-era via Procrustes chaining).
 

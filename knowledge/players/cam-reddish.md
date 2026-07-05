@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[justin-edwards|Justin Edwards]] '26 (84% similar)
 - [[garrett-temple|Garrett Temple]] '11 (84% similar)
 
-**Career shape:** Charted 6 seasons (2019-20–2024-25). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 6 seasons (2019-20–2024-25). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: migrator (4 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[maurice-harkless|Maurice Harkless]] '15 (90% aligned similarity — cross-era via Procrustes chaining).
 

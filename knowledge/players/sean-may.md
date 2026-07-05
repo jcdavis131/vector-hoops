@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[loren-meyer|Loren Meyer]] '97 (75% similar)
 - [[terry-cummings|Terry Cummings]] '99 (73% similar)
 
-**Career shape:** Charted 4 seasons (2005-06–2009-10). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+**Career shape:** Charted 4 seasons (2005-06–2009-10). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass (Low On-Court Impact) identity. Career trajectory: migrator (2 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[sean-marks|Sean Marks]] '11 (72% aligned similarity — cross-era via Procrustes chaining).
 

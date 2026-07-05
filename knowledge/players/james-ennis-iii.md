@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[kevon-harris|Kevon Harris]] '23 (82% similar)
 - [[julian-phillips|Julian Phillips]] '26 (82% similar)
 
-**Career shape:** Charted 7 seasons (2014-15–2020-21). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+**Career shape:** Charted 7 seasons (2014-15–2020-21). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[donte-divincenzo|Donte DiVincenzo]] '24 (81% aligned similarity — cross-era via Procrustes chaining).
 

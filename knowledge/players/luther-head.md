@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[anthony-peeler|Anthony Peeler]] '97 (93% similar)
 - [[chris-whitney|Chris Whitney]] '04 (93% similar)
 
-**Career shape:** Charted 6 seasons (2005-06–2010-11). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+**Career shape:** Charted 6 seasons (2005-06–2010-11). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity. Career trajectory: drifter (3 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[carlos-delfino|Carlos Delfino]] '13 (88% aligned similarity — cross-era via Procrustes chaining).
 

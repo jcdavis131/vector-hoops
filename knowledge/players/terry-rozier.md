@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[mike-james|Mike James]] '06 (89% similar)
 - [[bogdan-bogdanovic|Bogdan Bogdanović]] '21 (88% similar)
 
-**Career shape:** Charted 10 seasons (2015-16–2024-25). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+**Career shape:** Charted 10 seasons (2015-16–2024-25). Consistent Offensive Glass (Low On-Court Impact) profile across his career. Career trajectory: drifter (4 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[cj-elleby|CJ Elleby]] '22 (82% aligned similarity — cross-era via Procrustes chaining).
 

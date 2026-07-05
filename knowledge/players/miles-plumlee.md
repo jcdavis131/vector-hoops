@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[andrew-declercq|Andrew DeClercq]] '01 (92% similar)
 - [[josh-boone|Josh Boone]] '10 (92% similar)
 
-**Career shape:** Charted 6 seasons (2013-14–2018-19). Consistent Rim Protection + Offensive Glass profile across his career.
+**Career shape:** Charted 6 seasons (2013-14–2018-19). Consistent Rim Protection + Offensive Glass profile across his career. Career trajectory: drifter (4 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[precious-achiuwa|Precious Achiuwa]] '21 (86% aligned similarity — cross-era via Procrustes chaining).
 

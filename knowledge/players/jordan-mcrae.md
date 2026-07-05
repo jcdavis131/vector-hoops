@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[latrell-sprewell|Latrell Sprewell]] '97 (85% similar)
 - [[kevin-martin|Kevin Martin]] '11 (85% similar)
 
-**Career shape:** Charted 4 seasons (2015-16–2019-20). Consistent Scoring Volume + Shot Volume profile across his career.
+**Career shape:** Charted 4 seasons (2015-16–2019-20). Consistent Scoring Volume + Shot Volume profile across his career. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[brandon-roy|Brandon Roy]] '09 (85% aligned similarity — cross-era via Procrustes chaining).
 

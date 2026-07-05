@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[larry-johnson|Larry Johnson]] '98 (73% similar)
 - [[david-benoit|David Benoit]] '98 (72% similar)
 
-**Career shape:** Charted 6 seasons (2020-21–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+**Career shape:** Charted 6 seasons (2020-21–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity. Career trajectory: migrator (4 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[dorell-wright|Dorell Wright]] '06 (76% aligned similarity — cross-era via Procrustes chaining).
 

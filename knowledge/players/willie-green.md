@@ -69,7 +69,7 @@ Closest career shapes in the era-normalized vector space:
 - [[gary-neal|Gary Neal]] '14 (90% similar)
 - [[rex-chapman|Rex Chapman]] '98 (90% similar)
 
-**Career shape:** Charted 11 seasons (2003-04–2014-15). Consistent Scoring Volume + Shot Volume profile across his career.
+**Career shape:** Charted 11 seasons (2003-04–2014-15). Consistent Scoring Volume + Shot Volume profile across his career. Career trajectory: stable (3 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[ed-gray|Ed Gray]] '99 (87% aligned similarity — cross-era via Procrustes chaining).
 

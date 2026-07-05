@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[nolan-traore|Nolan Traore]] '26 (91% similar)
 - [[jonny-flynn|Jonny Flynn]] '11 (91% similar)
 
-**Career shape:** Charted 5 seasons (2015-16–2019-20). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 5 seasons (2015-16–2019-20). Consistent Playmaking + Steals profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[kevin-porter-jr|Kevin Porter Jr.]] '21 (92% aligned similarity — cross-era via Procrustes chaining).
 

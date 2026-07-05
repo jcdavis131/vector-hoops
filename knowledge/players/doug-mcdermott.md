@@ -71,7 +71,7 @@ Closest career shapes in the era-normalized vector space:
 - [[john-jenkins|John Jenkins]] '19 (93% similar)
 - [[bryn-forbes|Bryn Forbes]] '17 (93% similar)
 
-**Career shape:** Charted 12 seasons (2014-15–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+**Career shape:** Charted 12 seasons (2014-15–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity. Career trajectory: stable (5 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[ryan-broekhoff|Ryan Broekhoff]] '19 (83% aligned similarity — cross-era via Procrustes chaining).
 

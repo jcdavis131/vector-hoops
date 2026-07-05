@@ -69,7 +69,7 @@ Closest career shapes in the era-normalized vector space:
 - [[marcus-thornton|Marcus Thornton]] '13 (81% similar)
 - [[cj-miles|CJ Miles]] '18 (80% similar)
 
-**Career shape:** Charted 10 seasons (2012-13–2021-22). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 10 seasons (2012-13–2021-22). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[alec-burks|Alec Burks]] '24 (91% aligned similarity — cross-era via Procrustes chaining).
 

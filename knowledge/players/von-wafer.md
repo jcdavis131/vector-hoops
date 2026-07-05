@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[lonnie-walker-iv|Lonnie Walker IV]] '25 (87% similar)
 - [[allan-ray|Allan Ray]] '07 (86% similar)
 
-**Career shape:** Charted 5 seasons (2005-06–2011-12). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 5 seasons (2005-06–2011-12). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[lloyd-daniels|Lloyd Daniels]] '97 (80% aligned similarity — cross-era via Procrustes chaining).
 

@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[marcus-banks|Marcus Banks]] '09 (86% similar)
 - [[arvydas-macijauskas|Arvydas Macijauskas]] '06 (84% similar)
 
-**Career shape:** Charted 4 seasons (2001-02–2005-06). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 4 seasons (2001-02–2005-06). Consistent Playmaking + Steals profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[mario-chalmers|Mario Chalmers]] '16 (82% aligned similarity — cross-era via Procrustes chaining).
 

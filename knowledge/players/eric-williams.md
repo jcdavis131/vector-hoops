@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jiri-welsch|Jiri Welsch]] '03 (78% similar)
 - [[garrison-mathews|Garrison Mathews]] '21 (77% similar)
 
-**Career shape:** Charted 10 seasons (1996-97–2006-07). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+**Career shape:** Charted 10 seasons (1996-97–2006-07). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity. Career trajectory: migrator (5 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[nikola-jovic|Nikola Jović]] '26 (80% aligned similarity — cross-era via Procrustes chaining).
 

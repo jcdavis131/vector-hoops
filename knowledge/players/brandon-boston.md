@@ -61,7 +61,7 @@ Closest career shapes in the era-normalized vector space:
 - [[corey-benjamin|Corey Benjamin]] '00 (77% similar)
 - [[will-riley|Will Riley]] '26 (76% similar)
 
-**Career shape:** Charted 4 seasons (2021-22–2024-25). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+**Career shape:** Charted 4 seasons (2021-22–2024-25). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Offensive Glass (Low On-Court Impact) identity. Career trajectory: migrator (2 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[maurice-ager|Maurice Ager]] '08 (82% aligned similarity — cross-era via Procrustes chaining).
 

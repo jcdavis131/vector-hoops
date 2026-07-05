@@ -61,7 +61,7 @@ Closest career shapes in the era-normalized vector space:
 - [[rex-walters|Rex Walters]] '98 (87% similar)
 - [[luther-head|Luther Head]] '07 (87% similar)
 
-**Career shape:** Charted 4 seasons (1996-97–2000-01). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 4 seasons (1996-97–2000-01). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[mario-hezonja|Mario Hezonja]] '17 (91% aligned similarity — cross-era via Procrustes chaining).
 

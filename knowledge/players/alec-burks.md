@@ -73,7 +73,7 @@ Closest career shapes in the era-normalized vector space:
 - [[michael-redd|Michael Redd]] '07 (83% similar)
 - [[cam-thomas|Cam Thomas]] '25 (82% similar)
 
-**Career shape:** Charted 14 seasons (2011-12–2024-25). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 14 seasons (2011-12–2024-25). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: stable (6 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[nick-young|Nick Young]] '15 (91% aligned similarity — cross-era via Procrustes chaining).
 

@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[amen-thompson|Amen Thompson]] '24 (77% similar)
 - [[greg-monroe|Greg Monroe]] '18 (76% similar)
 
-**Career shape:** Charted 5 seasons (2015-16–2019-20). Consistent Offensive Glass + Defensive Glass profile across his career.
+**Career shape:** Charted 5 seasons (2015-16–2019-20). Consistent Offensive Glass + Defensive Glass profile across his career. Career trajectory: migrator (3 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[evan-eschmeyer|Evan Eschmeyer]] '03 (88% aligned similarity — cross-era via Procrustes chaining).
 

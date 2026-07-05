@@ -71,7 +71,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jason-thompson|Jason Thompson]] '15 (94% similar)
 - [[tristan-thompson|Tristan Thompson]] '25 (94% similar)
 
-**Career shape:** Charted 12 seasons (2010-11–2021-22). Consistent Rim Protection + Offensive Glass profile across his career.
+**Career shape:** Charted 12 seasons (2010-11–2021-22). Consistent Rim Protection + Offensive Glass profile across his career. Career trajectory: drifter (6 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[ronny-turiaf|Ronny Turiaf]] '14 (90% aligned similarity — cross-era via Procrustes chaining).
 

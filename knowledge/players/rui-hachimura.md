@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[dalton-knecht|Dalton Knecht]] '25 (75% similar)
 - [[jamison-battle|Jamison Battle]] '25 (75% similar)
 
-**Career shape:** Charted 7 seasons (2019-20–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 7 seasons (2019-20–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: migrator (4 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[rodney-mcgruder|Rodney McGruder]] '18 (82% aligned similarity — cross-era via Procrustes chaining).
 

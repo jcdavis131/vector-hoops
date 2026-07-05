@@ -61,7 +61,7 @@ Closest career shapes in the era-normalized vector space:
 - [[spencer-hawes|Spencer Hawes]] '12 (81% similar)
 - [[duane-causwell|Duane Causwell]] '99 (78% similar)
 
-**Career shape:** Charted 4 seasons (2020-21–2024-25). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+**Career shape:** Charted 4 seasons (2020-21–2024-25). Consistent Offensive Glass (Low On-Court Impact) profile across his career. Career trajectory: migrator (2 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[erik-murphy|Erik Murphy]] '14 (78% aligned similarity — cross-era via Procrustes chaining).
 

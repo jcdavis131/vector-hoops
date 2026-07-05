@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[darren-collison|Darren Collison]] '10 (87% similar)
 - [[jrue-holiday|Jrue Holiday]] '16 (87% similar)
 
-**Career shape:** Charted 7 seasons (1996-97–2002-03). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 7 seasons (1996-97–2002-03). Consistent Playmaking + Steals profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[raymond-felton|Raymond Felton]] '11 (91% aligned similarity — cross-era via Procrustes chaining).
 

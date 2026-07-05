@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[mychal-mulder|Mychal Mulder]] '22 (92% similar)
 - [[simone-fontecchio|Simone Fontecchio]] '23 (92% similar)
 
-**Career shape:** Charted 6 seasons (2016-17–2021-22). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+**Career shape:** Charted 6 seasons (2016-17–2021-22). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Offensive Glass (Low On-Court Impact) identity. Career trajectory: late-bloom (3 archetype changes across his charted seasons) — one sustained archetype switch coming late in his career (after the 60% mark).
 
 **Era twin:** [[isaiah-livers|Isaiah Livers]] '24 (87% aligned similarity — cross-era via Procrustes chaining).
 

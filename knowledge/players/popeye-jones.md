@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[orlando-robinson|Orlando Robinson]] '23 (83% similar)
 - [[noah-vonleh|Noah Vonleh]] '23 (82% similar)
 
-**Career shape:** Charted 6 seasons (1996-97–2002-03). Consistent Offensive Glass + Defensive Glass profile across his career.
+**Career shape:** Charted 6 seasons (1996-97–2002-03). Consistent Offensive Glass + Defensive Glass profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[thomas-robinson|Thomas Robinson]] '16 (88% aligned similarity — cross-era via Procrustes chaining).
 

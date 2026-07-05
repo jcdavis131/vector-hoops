@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[cj-mccollum|CJ McCollum]] '21 (90% similar)
 - [[coby-white|Coby White]] '26 (89% similar)
 
-**Career shape:** Charted 5 seasons (1996-97–2000-01). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 5 seasons (1996-97–2000-01). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[mike-dunleavy|Mike Dunleavy]] '09 (91% aligned similarity — cross-era via Procrustes chaining).
 

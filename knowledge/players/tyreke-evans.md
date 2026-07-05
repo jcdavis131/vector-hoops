@@ -68,7 +68,7 @@ Closest career shapes in the era-normalized vector space:
 - [[steve-francis|Steve Francis]] '05 (92% similar)
 - [[jeremiah-fears|Jeremiah Fears]] '26 (91% similar)
 
-**Career shape:** Charted 10 seasons (2009-10–2018-19). Consistent Scoring Volume + Shot Volume profile across his career.
+**Career shape:** Charted 10 seasons (2009-10–2018-19). Consistent Scoring Volume + Shot Volume profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[cade-cunningham|Cade Cunningham]] '26 (93% aligned similarity — cross-era via Procrustes chaining).
 

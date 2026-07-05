@@ -68,7 +68,7 @@ Closest career shapes in the era-normalized vector space:
 - [[lawrence-funderburke|Lawrence Funderburke]] '03 (84% similar)
 - [[marvin-bagley-iii|Marvin Bagley III]] '26 (83% similar)
 
-**Career shape:** Charted 9 seasons (2007-08–2015-16). Consistent Rim Protection + Offensive Glass profile across his career.
+**Career shape:** Charted 9 seasons (2007-08–2015-16). Consistent Rim Protection + Offensive Glass profile across his career. Career trajectory: drifter (3 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[vernon-macklin|Vernon Macklin]] '12 (82% aligned similarity — cross-era via Procrustes chaining).
 

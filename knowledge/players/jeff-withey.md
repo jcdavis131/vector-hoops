@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[daniel-gafford|Daniel Gafford]] '25 (93% similar)
 - [[adem-bona|Adem Bona]] '25 (93% similar)
 
-**Career shape:** Charted 4 seasons (2013-14–2016-17). Consistent Rim Protection + Offensive Glass profile across his career.
+**Career shape:** Charted 4 seasons (2013-14–2016-17). Consistent Rim Protection + Offensive Glass profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[goga-bitadze|Goga Bitadze]] '25 (92% aligned similarity — cross-era via Procrustes chaining).
 

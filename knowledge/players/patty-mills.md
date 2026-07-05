@@ -72,7 +72,7 @@ Closest career shapes in the era-normalized vector space:
 - [[eddie-house|Eddie House]] '06 (91% similar)
 - [[ian-clark|Ian Clark]] '15 (91% similar)
 
-**Career shape:** Charted 14 seasons (2010-11–2024-25). Entered as a Playmaking + Steals profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+**Career shape:** Charted 14 seasons (2010-11–2024-25). Entered as a Playmaking + Steals profile, peaked as a Three-Point Volume + Three-Point Accuracy identity. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[bobby-jackson|Bobby Jackson]] '04 (85% aligned similarity — cross-era via Procrustes chaining).
 

@@ -75,7 +75,7 @@ Closest career shapes in the era-normalized vector space:
 - [[damian-lillard|Damian Lillard]] '23 (93% similar)
 - [[gilbert-arenas|Gilbert Arenas]] '06 (92% similar)
 
-**Career shape:** Charted 17 seasons (2005-06–2021-22). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 17 seasons (2005-06–2021-22). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: reinvention (6 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[jalen-brunson|Jalen Brunson]] '24 (96% aligned similarity — cross-era via Procrustes chaining).
 

@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[alperen-sengun|Alperen Sengun]] '25 (84% similar)
 - [[malik-rose|Malik Rose]] '99 (84% similar)
 
-**Career shape:** Charted 7 seasons (1996-97–2002-03). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+**Career shape:** Charted 7 seasons (1996-97–2002-03). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[julius-randle|Julius Randle]] '24 (90% aligned similarity — cross-era via Procrustes chaining).
 

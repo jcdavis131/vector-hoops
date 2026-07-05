@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[lauri-markkanen|Lauri Markkanen]] '23 (85% similar)
 - [[tim-thomas|Tim Thomas]] '06 (85% similar)
 
-**Career shape:** Charted 9 seasons (2005-06–2014-15). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 9 seasons (2005-06–2014-15). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: migrator (4 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[mitch-richmond|Mitch Richmond]] '97 (92% aligned similarity — cross-era via Procrustes chaining).
 

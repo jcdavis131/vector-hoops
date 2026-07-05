@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jose-alvarado|Jose Alvarado]] '22 (91% similar)
 - [[marko-jaric|Marko Jaric]] '03 (91% similar)
 
-**Career shape:** Charted 9 seasons (2008-09–2017-18). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 9 seasons (2008-09–2017-18). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[jimmy-butler-iii|Jimmy Butler III]] '21 (83% aligned similarity — cross-era via Procrustes chaining).
 

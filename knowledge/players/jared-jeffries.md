@@ -70,7 +70,7 @@ Closest career shapes in the era-normalized vector space:
 - [[luc-mbah-a-moute|Luc Mbah a Moute]] '16 (85% similar)
 - [[andre-roberson|Andre Roberson]] '18 (85% similar)
 
-**Career shape:** Charted 11 seasons (2002-03–2012-13). Consistent Offensive Glass + Defensive Glass profile across his career.
+**Career shape:** Charted 11 seasons (2002-03–2012-13). Consistent Offensive Glass + Defensive Glass profile across his career. Career trajectory: drifter (5 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[george-lynch|George Lynch]] '03 (85% aligned similarity — cross-era via Procrustes chaining).
 

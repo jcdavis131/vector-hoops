@@ -70,7 +70,7 @@ Closest career shapes in the era-normalized vector space:
 - [[corey-maggette|Corey Maggette]] '06 (84% similar)
 - [[joel-embiid|Joel Embiid]] '17 (84% similar)
 
-**Career shape:** Charted 11 seasons (1996-97–2006-07). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 11 seasons (1996-97–2006-07). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: stable (3 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[jaylen-brown|Jaylen Brown]] '26 (91% aligned similarity — cross-era via Procrustes chaining).
 

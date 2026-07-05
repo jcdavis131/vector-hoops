@@ -61,7 +61,7 @@ Closest career shapes in the era-normalized vector space:
 - [[steve-blake|Steve Blake]] '16 (88% similar)
 - [[john-crotty|John Crotty]] '98 (88% similar)
 
-**Career shape:** Charted 4 seasons (1996-97–1999-00). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Playmaking + Steals identity.
+**Career shape:** Charted 4 seasons (1996-97–1999-00). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Playmaking + Steals identity. Career trajectory: migrator (3 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[sarunas-jasikevicius|Sarunas Jasikevicius]] '07 (79% aligned similarity — cross-era via Procrustes chaining).
 

@@ -70,7 +70,7 @@ Closest career shapes in the era-normalized vector space:
 - [[muggsy-bogues|Muggsy Bogues]] '97 (92% similar)
 - [[kenny-anderson|Kenny Anderson]] '97 (91% similar)
 
-**Career shape:** Charted 11 seasons (2015-16–2025-26). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 11 seasons (2015-16–2025-26). Consistent Playmaking + Steals profile across his career. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[erick-barkley|Erick Barkley]] '02 (90% aligned similarity — cross-era via Procrustes chaining).
 

@@ -69,7 +69,7 @@ Closest career shapes in the era-normalized vector space:
 - [[alex-abrines|Alex Abrines]] '19 (93% similar)
 - [[keith-bogans|Keith Bogans]] '13 (92% similar)
 
-**Career shape:** Charted 11 seasons (2013-14–2023-24). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 11 seasons (2013-14–2023-24). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[jared-dudley|Jared Dudley]] '20 (90% aligned similarity — cross-era via Procrustes chaining).
 

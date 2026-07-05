@@ -69,7 +69,7 @@ Closest career shapes in the era-normalized vector space:
 - [[luke-ridnour|Luke Ridnour]] '06 (94% similar)
 - [[marcus-sasser|Marcus Sasser]] '26 (94% similar)
 
-**Career shape:** Charted 10 seasons (1996-97–2005-06). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 10 seasons (1996-97–2005-06). Consistent Playmaking + Steals profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[dana-barros|Dana Barros]] '99 (93% aligned similarity — cross-era via Procrustes chaining).
 

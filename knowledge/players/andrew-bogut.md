@@ -71,7 +71,7 @@ Closest career shapes in the era-normalized vector space:
 - [[marcin-gortat|Marcin Gortat]] '09 (90% similar)
 - [[tacko-fall|Tacko Fall]] '21 (90% similar)
 
-**Career shape:** Charted 12 seasons (2005-06–2017-18). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
+**Career shape:** Charted 12 seasons (2005-06–2017-18). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity. Career trajectory: reinvention (5 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[jakob-poeltl|Jakob Poeltl]] '22 (75% aligned similarity — cross-era via Procrustes chaining).
 

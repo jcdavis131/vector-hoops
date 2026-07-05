@@ -61,7 +61,7 @@ Closest career shapes in the era-normalized vector space:
 - [[antonio-reeves|Antonio Reeves]] '25 (87% similar)
 - [[brice-sensabaugh|Brice Sensabaugh]] '24 (85% similar)
 
-**Career shape:** Charted 4 seasons (2022-23–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+**Career shape:** Charted 4 seasons (2022-23–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity. Career trajectory: drifter (2 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[bryn-forbes|Bryn Forbes]] '17 (88% aligned similarity — cross-era via Procrustes chaining).
 

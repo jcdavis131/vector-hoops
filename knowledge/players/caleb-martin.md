@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[juaquin-hawkins|Juaquin Hawkins]] '03 (84% similar)
 - [[patrick-mccaw|Patrick McCaw]] '19 (84% similar)
 
-**Career shape:** Charted 7 seasons (2019-20–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+**Career shape:** Charted 7 seasons (2019-20–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity. Career trajectory: late-bloom (3 archetype changes across his charted seasons) — one sustained archetype switch coming late in his career (after the 60% mark).
 
 **Era twin:** [[semaj-christon|Semaj Christon]] '17 (88% aligned similarity — cross-era via Procrustes chaining).
 

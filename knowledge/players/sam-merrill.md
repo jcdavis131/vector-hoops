@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[pat-garrity|Pat Garrity]] '02 (93% similar)
 - [[wayne-ellington|Wayne Ellington]] '17 (93% similar)
 
-**Career shape:** Charted 4 seasons (2020-21–2025-26). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 4 seasons (2020-21–2025-26). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[wayne-ellington|Wayne Ellington]] '17 (90% aligned similarity — cross-era via Procrustes chaining).
 

@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[cam-thomas|Cam Thomas]] '25 (89% similar)
 - [[isaiah-thomas|Isaiah Thomas]] '17 (88% similar)
 
-**Career shape:** Charted 7 seasons (2018-19–2025-26). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 7 seasons (2018-19–2025-26). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[bradley-beal|Bradley Beal]] '20 (91% aligned similarity — cross-era via Procrustes chaining).
 

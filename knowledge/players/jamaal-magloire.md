@@ -70,7 +70,7 @@ Closest career shapes in the era-normalized vector space:
 - [[samaki-walker|Samaki Walker]] '02 (91% similar)
 - [[jeff-adrien|Jeff Adrien]] '15 (91% similar)
 
-**Career shape:** Charted 12 seasons (2000-01–2011-12). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass + Defensive Glass identity.
+**Career shape:** Charted 12 seasons (2000-01–2011-12). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass + Defensive Glass identity. Career trajectory: migrator (7 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[derik-queen|Derik Queen]] '26 (85% aligned similarity — cross-era via Procrustes chaining).
 

@@ -61,7 +61,7 @@ Closest career shapes in the era-normalized vector space:
 - [[arron-afflalo|Arron Afflalo]] '18 (73% similar)
 - [[obi-toppin|Obi Toppin]] '26 (73% similar)
 
-**Career shape:** Charted 5 seasons (1996-97–2000-01). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+**Career shape:** Charted 5 seasons (1996-97–2000-01). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity. Career trajectory: drifter (2 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[luka-samanic|Luka Samanic]] '24 (74% aligned similarity — cross-era via Procrustes chaining).
 

@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[marcus-fizer|Marcus Fizer]] '03 (85% similar)
 - [[moritz-wagner|Moritz Wagner]] '25 (84% similar)
 
-**Career shape:** Charted 6 seasons (1996-97–2001-02). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+**Career shape:** Charted 6 seasons (1996-97–2001-02). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[chris-bosh|Chris Bosh]] '10 (93% aligned similarity — cross-era via Procrustes chaining).
 

@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[moochie-norris|Moochie Norris]] '05 (91% similar)
 - [[anthony-johnson|Anthony Johnson]] '02 (91% similar)
 
-**Career shape:** Charted 4 seasons (2015-16–2018-19). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 4 seasons (2015-16–2018-19). Consistent Playmaking + Steals profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[gerald-madkins|Gerald Madkins]] '98 (93% aligned similarity — cross-era via Procrustes chaining).
 

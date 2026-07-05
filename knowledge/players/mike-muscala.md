@@ -69,7 +69,7 @@ Closest career shapes in the era-normalized vector space:
 - [[marvin-williams|Marvin Williams]] '16 (79% similar)
 - [[e-j-liddell|E.J. Liddell]] '26 (79% similar)
 
-**Career shape:** Charted 11 seasons (2013-14–2023-24). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+**Career shape:** Charted 11 seasons (2013-14–2023-24). Consistent Offensive Glass (Low On-Court Impact) profile across his career. Career trajectory: migrator (6 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[chris-mihm|Chris Mihm]] '09 (82% aligned similarity — cross-era via Procrustes chaining).
 

@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[hollis-thompson|Hollis Thompson]] '17 (82% similar)
 - [[dwayne-bacon|Dwayne Bacon]] '18 (82% similar)
 
-**Career shape:** Charted 7 seasons (2005-06–2011-12). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 7 seasons (2005-06–2011-12). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: migrator (3 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[vlatko-cancar|Vlatko Čančar]] '21 (86% aligned similarity — cross-era via Procrustes chaining).
 

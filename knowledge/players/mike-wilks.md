@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[alvin-williams|Alvin Williams]] '01 (91% similar)
 - [[gerald-madkins|Gerald Madkins]] '98 (91% similar)
 
-**Career shape:** Charted 5 seasons (2002-03–2006-07). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+**Career shape:** Charted 5 seasons (2002-03–2006-07). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity. Career trajectory: drifter (2 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[anthony-bowie|Anthony Bowie]] '98 (77% aligned similarity — cross-era via Procrustes chaining).
 

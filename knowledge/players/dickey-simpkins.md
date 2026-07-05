@@ -61,7 +61,7 @@ Closest career shapes in the era-normalized vector space:
 - [[tom-hammonds|Tom Hammonds]] '00 (82% similar)
 - [[marshall-plumlee|Marshall Plumlee]] '17 (81% similar)
 
-**Career shape:** Charted 4 seasons (1996-97–1999-00). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Offensive Glass + Defensive Glass identity.
+**Career shape:** Charted 4 seasons (1996-97–1999-00). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Offensive Glass + Defensive Glass identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[ognjen-kuzmic|Ognjen Kuzmic]] '14 (97% aligned similarity — cross-era via Procrustes chaining).
 

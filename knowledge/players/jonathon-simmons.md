@@ -60,7 +60,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jacque-vaughn|Jacque Vaughn]] '99 (75% similar)
 - [[anthony-black|Anthony Black]] '24 (74% similar)
 
-**Career shape:** Charted 4 seasons (2015-16–2018-19). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 4 seasons (2015-16–2018-19). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: migrator (2 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[acie-law|Acie Law]] '10 (64% aligned similarity — cross-era via Procrustes chaining).
 

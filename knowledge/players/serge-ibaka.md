@@ -72,7 +72,7 @@ Closest career shapes in the era-normalized vector space:
 - [[branden-carlson|Branden Carlson]] '25 (83% similar)
 - [[shawn-bradley|Shawn Bradley]] '01 (83% similar)
 
-**Career shape:** Charted 13 seasons (2009-10–2021-22). Consistent Rim Protection + Offensive Glass profile across his career.
+**Career shape:** Charted 13 seasons (2009-10–2021-22). Consistent Rim Protection + Offensive Glass profile across his career. Career trajectory: reinvention (2 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[khaman-maluach|Khaman Maluach]] '26 (95% aligned similarity — cross-era via Procrustes chaining).
 

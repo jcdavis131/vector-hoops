@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jr-smith|JR Smith]] '08 (93% similar)
 - [[john-starks|John Starks]] '00 (93% similar)
 
-**Career shape:** Charted 8 seasons (1996-97–2005-06). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 8 seasons (1996-97–2005-06). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[kyle-korver|Kyle Korver]] '04 (86% aligned similarity — cross-era via Procrustes chaining).
 

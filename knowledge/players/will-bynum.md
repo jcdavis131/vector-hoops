@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[john-wall|John Wall]] '17 (91% similar)
 - [[talen-horton-tucker|Talen Horton-Tucker]] '23 (91% similar)
 
-**Career shape:** Charted 6 seasons (2008-09–2013-14). Consistent Scoring Volume + Shot Volume profile across his career.
+**Career shape:** Charted 6 seasons (2008-09–2013-14). Consistent Scoring Volume + Shot Volume profile across his career. Career trajectory: drifter (3 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[goran-dragic|Goran Dragic]] '17 (94% aligned similarity — cross-era via Procrustes chaining).
 

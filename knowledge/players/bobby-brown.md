@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[nick-smith-jr|Nick Smith Jr.]] '25 (89% similar)
 - [[juan-carlos-navarro|Juan Carlos Navarro]] '08 (88% similar)
 
-**Career shape:** Charted 4 seasons (2008-09–2017-18). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 4 seasons (2008-09–2017-18). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[elijah-hughes|Elijah Hughes]] '21 (88% aligned similarity — cross-era via Procrustes chaining).
 

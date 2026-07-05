@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[sasha-kaun|Sasha Kaun]] '16 (87% similar)
 - [[tarik-black|Tarik Black]] '18 (87% similar)
 
-**Career shape:** Charted 4 seasons (2019-20–2022-23). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Offensive Glass + Defensive Glass identity.
+**Career shape:** Charted 4 seasons (2019-20–2022-23). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Offensive Glass + Defensive Glass identity. Career trajectory: migrator (2 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[bernard-james|Bernard James]] '13 (94% aligned similarity — cross-era via Procrustes chaining).
 

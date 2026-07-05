@@ -71,7 +71,7 @@ Closest career shapes in the era-normalized vector space:
 - [[josh-green|Josh Green]] '26 (85% similar)
 - [[darius-miller|Darius Miller]] '21 (84% similar)
 
-**Career shape:** Charted 13 seasons (2007-08–2019-20). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 13 seasons (2007-08–2019-20). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[troy-brown-jr|Troy Brown Jr.]] '23 (91% aligned similarity — cross-era via Procrustes chaining).
 

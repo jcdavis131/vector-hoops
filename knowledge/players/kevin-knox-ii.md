@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[daeqwon-plowden|Daeqwon Plowden]] '26 (87% similar)
 - [[pj-hairston|PJ Hairston]] '15 (85% similar)
 
-**Career shape:** Charted 6 seasons (2018-19–2023-24). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+**Career shape:** Charted 6 seasons (2018-19–2023-24). Consistent Offensive Glass (Low On-Court Impact) profile across his career. Career trajectory: drifter (3 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[marcus-morris-sr|Marcus Morris Sr.]] '12 (90% aligned similarity — cross-era via Procrustes chaining).
 

@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[onyeka-okongwu|Onyeka Okongwu]] '22 (93% similar)
 - [[cheick-diallo|Cheick Diallo]] '17 (92% similar)
 
-**Career shape:** Charted 4 seasons (2022-23–2025-26). Entered as a Rim Protection + Offensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+**Career shape:** Charted 4 seasons (2022-23–2025-26). Entered as a Rim Protection + Offensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[tony-bradley|Tony Bradley]] '20 (81% aligned similarity — cross-era via Procrustes chaining).
 

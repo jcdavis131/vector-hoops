@@ -72,7 +72,7 @@ Closest career shapes in the era-normalized vector space:
 - [[kendrick-nunn|Kendrick Nunn]] '20 (90% similar)
 - [[tony-delk|Tony Delk]] '05 (89% similar)
 
-**Career shape:** Charted 14 seasons (2003-04–2016-17). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 14 seasons (2003-04–2016-17). Consistent Playmaking + Steals profile across his career. Career trajectory: stable (3 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[randolph-childress|Randolph Childress]] '97 (92% aligned similarity — cross-era via Procrustes chaining).
 

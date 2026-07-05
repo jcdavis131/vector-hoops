@@ -69,7 +69,7 @@ Closest career shapes in the era-normalized vector space:
 - [[don-maclean|Don MacLean]] '99 (80% similar)
 - [[andres-nocioni|Andres Nocioni]] '08 (79% similar)
 
-**Career shape:** Charted 10 seasons (2006-07–2015-16). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+**Career shape:** Charted 10 seasons (2006-07–2015-16). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Offensive Glass (Low On-Court Impact) identity. Career trajectory: migrator (3 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[maurice-taylor|Maurice Taylor]] '99 (93% aligned similarity — cross-era via Procrustes chaining).
 

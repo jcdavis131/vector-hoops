@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[sasha-vezenkov|Sasha Vezenkov]] '24 (82% similar)
 - [[austin-daye|Austin Daye]] '14 (82% similar)
 
-**Career shape:** Charted 8 seasons (1999-00–2006-07). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+**Career shape:** Charted 8 seasons (1999-00–2006-07). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity. Career trajectory: migrator (5 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[david-benoit|David Benoit]] '98 (91% aligned similarity — cross-era via Procrustes chaining).
 

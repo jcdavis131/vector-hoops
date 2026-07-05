@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[antonius-cleveland|Antonius Cleveland]] '18 (83% similar)
 - [[dequan-jones|DeQuan Jones]] '13 (82% similar)
 
-**Career shape:** Charted 6 seasons (2020-21–2025-26). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+**Career shape:** Charted 6 seasons (2020-21–2025-26). Consistent Offensive Glass (Low On-Court Impact) profile across his career. Career trajectory: reinvention (2 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[david-wood|David Wood]] '97 (74% aligned similarity — cross-era via Procrustes chaining).
 

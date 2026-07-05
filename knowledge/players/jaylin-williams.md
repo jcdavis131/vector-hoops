@@ -61,7 +61,7 @@ Closest career shapes in the era-normalized vector space:
 - [[dennis-rodman|Dennis Rodman]] '97 (71% similar)
 - [[matt-barnes|Matt Barnes]] '04 (70% similar)
 
-**Career shape:** Charted 4 seasons (2022-23–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 4 seasons (2022-23–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[shawn-marion|Shawn Marion]] '06 (84% aligned similarity — cross-era via Procrustes chaining).
 

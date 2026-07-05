@@ -61,7 +61,7 @@ Closest career shapes in the era-normalized vector space:
 - [[damyean-dotson|Damyean Dotson]] '21 (82% similar)
 - [[ryan-gomes|Ryan Gomes]] '12 (82% similar)
 
-**Career shape:** Charted 4 seasons (2017-18–2020-21). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 4 seasons (2017-18–2020-21). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: reinvention (1 archetype change across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[max-christie|Max Christie]] '23 (84% aligned similarity — cross-era via Procrustes chaining).
 

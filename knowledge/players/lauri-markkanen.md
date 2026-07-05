@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[michael-porter-jr|Michael Porter Jr.]] '26 (84% similar)
 - [[dirk-nowitzki|Dirk Nowitzki]] '06 (83% similar)
 
-**Career shape:** Charted 9 seasons (2017-18–2025-26). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+**Career shape:** Charted 9 seasons (2017-18–2025-26). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity. Career trajectory: drifter (3 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[keith-van-horn|Keith Van Horn]] '99 (89% aligned similarity — cross-era via Procrustes chaining).
 

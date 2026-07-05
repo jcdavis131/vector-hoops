@@ -71,7 +71,7 @@ Closest career shapes in the era-normalized vector space:
 - [[salah-mejri|Salah Mejri]] '18 (93% similar)
 - [[tony-bradley|Tony Bradley]] '20 (92% similar)
 
-**Career shape:** Charted 12 seasons (2007-08–2018-19). Consistent Rim Protection + Offensive Glass profile across his career.
+**Career shape:** Charted 12 seasons (2007-08–2018-19). Consistent Rim Protection + Offensive Glass profile across his career. Career trajectory: drifter (4 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[dewayne-dedmon|Dewayne Dedmon]] '17 (91% aligned similarity — cross-era via Procrustes chaining).
 

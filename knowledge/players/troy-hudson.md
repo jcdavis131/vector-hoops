@@ -68,7 +68,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jimmer-fredette|Jimmer Fredette]] '14 (94% similar)
 - [[nick-van-exel|Nick Van Exel]] '02 (93% similar)
 
-**Career shape:** Charted 9 seasons (1998-99–2006-07). Entered as a Playmaking + Steals profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+**Career shape:** Charted 9 seasons (1998-99–2006-07). Entered as a Playmaking + Steals profile, peaked as a Three-Point Volume + Three-Point Accuracy identity. Career trajectory: reinvention (3 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[malik-monk|Malik Monk]] '18 (92% aligned similarity — cross-era via Procrustes chaining).
 

@@ -69,7 +69,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jordan-poole|Jordan Poole]] '25 (94% similar)
 - [[zach-lavine|Zach LaVine]] '21 (94% similar)
 
-**Career shape:** Charted 11 seasons (2004-05–2014-15). Consistent Scoring Volume + Shot Volume profile across his career.
+**Career shape:** Charted 11 seasons (2004-05–2014-15). Consistent Scoring Volume + Shot Volume profile across his career. Career trajectory: reinvention (3 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[jamal-crawford|Jamal Crawford]] '14 (93% aligned similarity — cross-era via Procrustes chaining).
 

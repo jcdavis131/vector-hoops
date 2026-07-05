@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[james-johnson|James Johnson]] '13 (76% similar)
 - [[jerome-james|Jerome James]] '06 (76% similar)
 
-**Career shape:** Charted 7 seasons (2000-01–2008-09). Entered as a Rim Protection + Offensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+**Career shape:** Charted 7 seasons (2000-01–2008-09). Entered as a Rim Protection + Offensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity. Career trajectory: migrator (4 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[scottie-barnes|Scottie Barnes]] '25 (75% aligned similarity — cross-era via Procrustes chaining).
 

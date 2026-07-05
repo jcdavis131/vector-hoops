@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[grant-hill|Grant Hill]] '97 (90% similar)
 - [[chris-bosh|Chris Bosh]] '10 (89% similar)
 
-**Career shape:** Charted 8 seasons (1996-97–2003-04). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+**Career shape:** Charted 8 seasons (1996-97–2003-04). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career. Career trajectory: reinvention (2 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[chris-webber|Chris Webber]] '01 (86% aligned similarity — cross-era via Procrustes chaining).
 

@@ -68,7 +68,7 @@ Closest career shapes in the era-normalized vector space:
 - [[vincent-poirier|Vincent Poirier]] '20 (78% similar)
 - [[isaiah-stewart|Isaiah Stewart]] '25 (77% similar)
 
-**Career shape:** Charted 10 seasons (2007-08–2016-17). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+**Career shape:** Charted 10 seasons (2007-08–2016-17). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity. Career trajectory: drifter (5 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[vlade-divac|Vlade Divac]] '97 (90% aligned similarity — cross-era via Procrustes chaining).
 

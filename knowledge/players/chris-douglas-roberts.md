@@ -60,7 +60,7 @@ Closest career shapes in the era-normalized vector space:
 - [[bryant-stith|Bryant Stith]] '98 (80% similar)
 - [[tyler-johnson|Tyler Johnson]] '21 (80% similar)
 
-**Career shape:** Charted 4 seasons (2008-09–2013-14). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+**Career shape:** Charted 4 seasons (2008-09–2013-14). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Offensive Glass (Low On-Court Impact) identity. Career trajectory: migrator (3 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[cory-carr|Cory Carr]] '99 (77% aligned similarity — cross-era via Procrustes chaining).
 

@@ -71,7 +71,7 @@ Closest career shapes in the era-normalized vector space:
 - [[desmond-bane|Desmond Bane]] '24 (90% similar)
 - [[jordan-clarkson|Jordan Clarkson]] '21 (90% similar)
 
-**Career shape:** Charted 13 seasons (2013-14–2025-26). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 13 seasons (2013-14–2025-26). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: drifter (4 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[kemba-walker|Kemba Walker]] '19 (86% aligned similarity — cross-era via Procrustes chaining).
 

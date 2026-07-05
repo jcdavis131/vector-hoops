@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[wesley-johnson|Wesley Johnson]] '17 (88% similar)
 - [[matt-bullard|Matt Bullard]] '01 (87% similar)
 
-**Career shape:** Charted 6 seasons (2006-07–2014-15). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 6 seasons (2006-07–2014-15). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: drifter (2 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[brian-evans|Brian Evans]] '98 (90% aligned similarity — cross-era via Procrustes chaining).
 

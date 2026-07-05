@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[harry-giles-iii|Harry Giles III]] '24 (79% similar)
 - [[thomas-hamilton|Thomas Hamilton]] '00 (79% similar)
 
-**Career shape:** Charted 6 seasons (1996-97–2001-02). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+**Career shape:** Charted 6 seasons (1996-97–2001-02). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass (Low On-Court Impact) identity. Career trajectory: reinvention (1 archetype change across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[justin-hamilton|Justin Hamilton]] '15 (86% aligned similarity — cross-era via Procrustes chaining).
 

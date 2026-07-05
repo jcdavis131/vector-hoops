@@ -61,7 +61,7 @@ Closest career shapes in the era-normalized vector space:
 - [[matisse-thybulle|Matisse Thybulle]] '21 (83% similar)
 - [[herbert-jones|Herbert Jones]] '22 (83% similar)
 
-**Career shape:** Charted 4 seasons (2017-18–2020-21). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 4 seasons (2017-18–2020-21). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: migrator (2 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[julian-washburn|Julian Washburn]] '19 (93% aligned similarity — cross-era via Procrustes chaining).
 

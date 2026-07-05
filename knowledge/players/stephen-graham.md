@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[john-jenkins|John Jenkins]] '19 (76% similar)
 - [[arron-afflalo|Arron Afflalo]] '18 (75% similar)
 
-**Career shape:** Charted 5 seasons (2005-06–2010-11). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+**Career shape:** Charted 5 seasons (2005-06–2010-11). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Offensive Glass (Low On-Court Impact) identity. Career trajectory: migrator (4 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[grant-long|Grant Long]] '03 (82% aligned similarity — cross-era via Procrustes chaining).
 

@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[quinn-cook|Quinn Cook]] '18 (89% similar)
 - [[yogi-ferrell|Yogi Ferrell]] '19 (88% similar)
 
-**Career shape:** Charted 9 seasons (2000-01–2008-09). Entered as a Playmaking + Steals profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+**Career shape:** Charted 9 seasons (2000-01–2008-09). Entered as a Playmaking + Steals profile, peaked as a Three-Point Volume + Three-Point Accuracy identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[b-j-armstrong|B.J. Armstrong]] '00 (93% aligned similarity — cross-era via Procrustes chaining).
 

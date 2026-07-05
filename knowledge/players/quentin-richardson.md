@@ -70,7 +70,7 @@ Closest career shapes in the era-normalized vector space:
 - [[cartier-martin|Cartier Martin]] '15 (89% similar)
 - [[chuck-person|Chuck Person]] '00 (87% similar)
 
-**Career shape:** Charted 12 seasons (2000-01–2011-12). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 12 seasons (2000-01–2011-12). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: reinvention (3 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[george-mccloud|George McCloud]] '98 (91% aligned similarity — cross-era via Procrustes chaining).
 

@@ -70,7 +70,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jim-mcilvaine|Jim McIlvaine]] '00 (89% similar)
 - [[jared-reiner|Jared Reiner]] '07 (89% similar)
 
-**Career shape:** Charted 12 seasons (2001-02–2012-13). Consistent Offensive Glass + Defensive Glass profile across his career.
+**Career shape:** Charted 12 seasons (2001-02–2012-13). Consistent Offensive Glass + Defensive Glass profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[clifford-robinson|Clifford Robinson]] '07 (85% aligned similarity — cross-era via Procrustes chaining).
 

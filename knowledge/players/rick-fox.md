@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[patty-mills|Patty Mills]] '14 (86% similar)
 - [[donte-divincenzo|Donte DiVincenzo]] '24 (86% similar)
 
-**Career shape:** Charted 8 seasons (1996-97–2003-04). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 8 seasons (1996-97–2003-04). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: drifter (4 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[norris-cole|Norris Cole]] '14 (88% aligned similarity — cross-era via Procrustes chaining).
 

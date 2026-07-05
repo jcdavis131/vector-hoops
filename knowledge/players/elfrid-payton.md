@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[pat-spencer|Pat Spencer]] '25 (88% similar)
 - [[blake-wesley|Blake Wesley]] '23 (87% similar)
 
-**Career shape:** Charted 9 seasons (2014-15–2024-25). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 9 seasons (2014-15–2024-25). Consistent Playmaking + Steals profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[tim-frazier|Tim Frazier]] '20 (85% aligned similarity — cross-era via Procrustes chaining).
 

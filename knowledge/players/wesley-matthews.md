@@ -73,7 +73,7 @@ Closest career shapes in the era-normalized vector space:
 - [[isaiah-joe|Isaiah Joe]] '25 (93% similar)
 - [[luguentz-dort|Luguentz Dort]] '25 (93% similar)
 
-**Career shape:** Charted 15 seasons (2009-10–2023-24). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 15 seasons (2009-10–2023-24). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: late-bloom (1 archetype change across his charted seasons) — one sustained archetype switch coming late in his career (after the 60% mark).
 
 **Era twin:** [[matt-thomas|Matt Thomas]] '22 (85% aligned similarity — cross-era via Procrustes chaining).
 

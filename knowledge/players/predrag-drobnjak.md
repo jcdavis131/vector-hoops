@@ -60,7 +60,7 @@ Closest career shapes in the era-normalized vector space:
 - [[maciej-lampe|Maciej Lampe]] '04 (74% similar)
 - [[mike-batiste|Mike Batiste]] '03 (73% similar)
 
-**Career shape:** Charted 4 seasons (2001-02–2004-05). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+**Career shape:** Charted 4 seasons (2001-02–2004-05). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Offensive Glass (Low On-Court Impact) identity. Career trajectory: migrator (2 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[trey-thompkins|Trey Thompkins]] '12 (82% aligned similarity — cross-era via Procrustes chaining).
 

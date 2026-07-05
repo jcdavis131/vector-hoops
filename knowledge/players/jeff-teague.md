@@ -71,7 +71,7 @@ Closest career shapes in the era-normalized vector space:
 - [[devin-harris|Devin Harris]] '09 (92% similar)
 - [[andre-miller|Andre Miller]] '02 (92% similar)
 
-**Career shape:** Charted 12 seasons (2009-10–2020-21). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 12 seasons (2009-10–2020-21). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: drifter (2 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[t-j-ford|T.J. Ford]] '07 (94% aligned similarity — cross-era via Procrustes chaining).
 

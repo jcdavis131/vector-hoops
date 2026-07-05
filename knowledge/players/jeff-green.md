@@ -77,7 +77,7 @@ Closest career shapes in the era-normalized vector space:
 - [[ricky-pierce|Ricky Pierce]] '98 (83% similar)
 - [[henry-james|Henry James]] '98 (83% similar)
 
-**Career shape:** Charted 18 seasons (2007-08–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+**Career shape:** Charted 18 seasons (2007-08–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity. Career trajectory: drifter (6 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[cam-reynolds|Cam Reynolds]] '19 (87% aligned similarity — cross-era via Procrustes chaining).
 

@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[anthony-morrow|Anthony Morrow]] '17 (94% similar)
 - [[jodie-meeks|Jodie Meeks]] '12 (93% similar)
 
-**Career shape:** Charted 8 seasons (2014-15–2021-22). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 8 seasons (2014-15–2021-22). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: reinvention (1 archetype change across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[robbie-hummel|Robbie Hummel]] '14 (92% aligned similarity — cross-era via Procrustes chaining).
 

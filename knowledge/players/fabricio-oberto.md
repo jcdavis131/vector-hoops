@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[chris-richard|Chris Richard]] '10 (89% similar)
 - [[terry-davis|Terry Davis]] '01 (87% similar)
 
-**Career shape:** Charted 5 seasons (2005-06–2009-10). Consistent Offensive Glass + Defensive Glass profile across his career.
+**Career shape:** Charted 5 seasons (2005-06–2009-10). Consistent Offensive Glass + Defensive Glass profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[lorenzo-williams|Lorenzo Williams]] '97 (84% aligned similarity — cross-era via Procrustes chaining).
 

@@ -72,7 +72,7 @@ Closest career shapes in the era-normalized vector space:
 - [[walt-williams|Walt Williams]] '03 (81% similar)
 - [[marcus-brown|Marcus Brown]] '97 (80% similar)
 
-**Career shape:** Charted 14 seasons (2000-01–2014-15). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 14 seasons (2000-01–2014-15). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: migrator (5 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[jorge-garbajosa|Jorge Garbajosa]] '07 (77% aligned similarity — cross-era via Procrustes chaining).
 

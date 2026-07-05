@@ -68,7 +68,7 @@ Closest career shapes in the era-normalized vector space:
 - [[mike-dunleavy|Mike Dunleavy]] '09 (90% similar)
 - [[sam-merrill|Sam Merrill]] '24 (90% similar)
 
-**Career shape:** Charted 9 seasons (2017-18–2025-26). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 9 seasons (2017-18–2025-26). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[duncan-robinson|Duncan Robinson]] '20 (90% aligned similarity — cross-era via Procrustes chaining).
 

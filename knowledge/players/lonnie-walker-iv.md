@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[gary-neal|Gary Neal]] '14 (90% similar)
 - [[frank-jackson|Frank Jackson]] '22 (90% similar)
 
-**Career shape:** Charted 6 seasons (2019-20–2024-25). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+**Career shape:** Charted 6 seasons (2019-20–2024-25). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[tim-hardaway-jr|Tim Hardaway Jr.]] '15 (92% aligned similarity — cross-era via Procrustes chaining).
 

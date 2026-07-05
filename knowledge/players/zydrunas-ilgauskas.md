@@ -71,7 +71,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jonas-valanciunas|Jonas Valančiūnas]] '26 (88% similar)
 - [[matt-geiger|Matt Geiger]] '98 (88% similar)
 
-**Career shape:** Charted 12 seasons (1997-98–2010-11). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+**Career shape:** Charted 12 seasons (1997-98–2010-11). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[john-wallace|John Wallace]] '99 (96% aligned similarity — cross-era via Procrustes chaining).
 

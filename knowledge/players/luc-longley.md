@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[chris-kaman|Chris Kaman]] '08 (75% similar)
 - [[kendrick-perkins|Kendrick Perkins]] '16 (74% similar)
 
-**Career shape:** Charted 5 seasons (1996-97–2000-01). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass + Defensive Glass identity.
+**Career shape:** Charted 5 seasons (1996-97–2000-01). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass + Defensive Glass identity. Career trajectory: drifter (2 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[chaney-johnson|Chaney Johnson]] '26 (80% aligned similarity — cross-era via Procrustes chaining).
 

@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[speedy-claxton|Speedy Claxton]] '07 (85% similar)
 - [[robert-pack|Robert Pack]] '97 (85% similar)
 
-**Career shape:** Charted 6 seasons (2018-19–2024-25). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Playmaking + Steals identity.
+**Career shape:** Charted 6 seasons (2018-19–2024-25). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Playmaking + Steals identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[michael-carter-williams|Michael Carter-Williams]] '15 (92% aligned similarity — cross-era via Procrustes chaining).
 

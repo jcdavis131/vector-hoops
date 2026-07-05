@@ -61,7 +61,7 @@ Closest career shapes in the era-normalized vector space:
 - [[shelvin-mack|Shelvin Mack]] '16 (92% similar)
 - [[tyler-ulis|Tyler Ulis]] '18 (92% similar)
 
-**Career shape:** Charted 4 seasons (2022-23–2025-26). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 4 seasons (2022-23–2025-26). Consistent Playmaking + Steals profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[jarrett-jack|Jarrett Jack]] '16 (95% aligned similarity — cross-era via Procrustes chaining).
 

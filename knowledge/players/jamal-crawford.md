@@ -77,7 +77,7 @@ Closest career shapes in the era-normalized vector space:
 - [[joe-crispin|Joe Crispin]] '02 (94% similar)
 - [[jordan-crawford|Jordan Crawford]] '11 (94% similar)
 
-**Career shape:** Charted 19 seasons (2000-01–2018-19). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 19 seasons (2000-01–2018-19). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: migrator (11 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[mitch-richmond|Mitch Richmond]] '97 (95% aligned similarity — cross-era via Procrustes chaining).
 

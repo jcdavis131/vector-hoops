@@ -69,7 +69,7 @@ Closest career shapes in the era-normalized vector space:
 - [[boban-marjanovic|Boban Marjanovic]] '18 (87% similar)
 - [[deandre-ayton|Deandre Ayton]] '26 (86% similar)
 
-**Career shape:** Charted 10 seasons (2007-08–2016-17). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+**Career shape:** Charted 10 seasons (2007-08–2016-17). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[carlos-boozer|Carlos Boozer]] '07 (92% aligned similarity — cross-era via Procrustes chaining).
 

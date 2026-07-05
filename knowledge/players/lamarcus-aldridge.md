@@ -74,7 +74,7 @@ Closest career shapes in the era-normalized vector space:
 - [[matt-geiger|Matt Geiger]] '98 (85% similar)
 - [[al-jefferson|Al Jefferson]] '09 (84% similar)
 
-**Career shape:** Charted 16 seasons (2006-07–2021-22). Entered as a Rim Protection + Offensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+**Career shape:** Charted 16 seasons (2006-07–2021-22). Entered as a Rim Protection + Offensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity. Career trajectory: stable (3 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[chris-gatling|Chris Gatling]] '97 (87% aligned similarity — cross-era via Procrustes chaining).
 

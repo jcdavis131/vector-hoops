@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[will-bynum|Will Bynum]] '09 (93% similar)
 - [[robert-pack|Robert Pack]] '97 (93% similar)
 
-**Career shape:** Charted 7 seasons (2003-04–2010-11). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 7 seasons (2003-04–2010-11). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: drifter (2 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[robert-pack|Robert Pack]] '97 (95% aligned similarity — cross-era via Procrustes chaining).
 

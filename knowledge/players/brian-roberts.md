@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[randy-foye|Randy Foye]] '12 (90% similar)
 - [[yogi-ferrell|Yogi Ferrell]] '19 (90% similar)
 
-**Career shape:** Charted 5 seasons (2012-13–2016-17). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 5 seasons (2012-13–2016-17). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[troy-hudson|Troy Hudson]] '06 (90% aligned similarity — cross-era via Procrustes chaining).
 

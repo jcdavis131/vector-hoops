@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[joe-smith|Joe Smith]] '00 (77% similar)
 - [[drew-gooden|Drew Gooden]] '16 (77% similar)
 
-**Career shape:** Charted 7 seasons (2000-01–2006-07). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+**Career shape:** Charted 7 seasons (2000-01–2006-07). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career. Career trajectory: drifter (5 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[joe-smith|Joe Smith]] '00 (83% aligned similarity — cross-era via Procrustes chaining).
 

@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[brian-shaw|Brian Shaw]] '02 (82% similar)
 - [[gerald-madkins|Gerald Madkins]] '98 (82% similar)
 
-**Career shape:** Charted 10 seasons (2003-04–2012-13). Entered as a Playmaking + Steals profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+**Career shape:** Charted 10 seasons (2003-04–2012-13). Entered as a Playmaking + Steals profile, peaked as a Offensive Glass (Low On-Court Impact) identity. Career trajectory: migrator (6 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[jahmai-mashack|Jahmai Mashack]] '26 (82% aligned similarity — cross-era via Procrustes chaining).
 

@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[bam-adebayo|Bam Adebayo]] '22 (87% similar)
 - [[domantas-sabonis|Domantas Sabonis]] '24 (84% similar)
 
-**Career shape:** Charted 5 seasons (2021-22–2025-26). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+**Career shape:** Charted 5 seasons (2021-22–2025-26). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[boban-marjanovic|Boban Marjanovic]] '18 (93% aligned similarity — cross-era via Procrustes chaining).
 

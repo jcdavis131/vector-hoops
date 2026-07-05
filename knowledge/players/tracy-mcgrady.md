@@ -73,7 +73,7 @@ Closest career shapes in the era-normalized vector space:
 - [[donovan-mitchell|Donovan Mitchell]] '21 (90% similar)
 - [[michael-jordan|Michael Jordan]] '97 (90% similar)
 
-**Career shape:** Charted 15 seasons (1997-98–2011-12). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 15 seasons (1997-98–2011-12). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: drifter (4 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[mitch-richmond|Mitch Richmond]] '97 (93% aligned similarity — cross-era via Procrustes chaining).
 

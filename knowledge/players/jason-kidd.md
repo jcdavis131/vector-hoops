@@ -75,7 +75,7 @@ Closest career shapes in the era-normalized vector space:
 - [[kyle-lowry|Kyle Lowry]] '16 (87% similar)
 - [[gary-grant|Gary Grant]] '98 (87% similar)
 
-**Career shape:** Charted 17 seasons (1996-97–2012-13). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 17 seasons (1996-97–2012-13). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: stable (5 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[darrell-armstrong|Darrell Armstrong]] '99 (94% aligned similarity — cross-era via Procrustes chaining).
 

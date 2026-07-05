@@ -69,7 +69,7 @@ Closest career shapes in the era-normalized vector space:
 - [[killian-hayes|Killian Hayes]] '21 (93% similar)
 - [[tyler-ennis|Tyler Ennis]] '15 (92% similar)
 
-**Career shape:** Charted 11 seasons (1999-00–2011-12). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 11 seasons (1999-00–2011-12). Consistent Playmaking + Steals profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[shane-larkin|Shane Larkin]] '16 (87% aligned similarity — cross-era via Procrustes chaining).
 

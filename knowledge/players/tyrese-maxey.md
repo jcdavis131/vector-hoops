@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[mitch-richmond|Mitch Richmond]] '97 (92% similar)
 - [[bradley-beal|Bradley Beal]] '20 (92% similar)
 
-**Career shape:** Charted 6 seasons (2020-21–2025-26). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 6 seasons (2020-21–2025-26). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: reinvention (1 archetype change across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[monta-ellis|Monta Ellis]] '10 (95% aligned similarity — cross-era via Procrustes chaining).
 

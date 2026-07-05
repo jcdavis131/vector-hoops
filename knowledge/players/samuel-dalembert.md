@@ -72,7 +72,7 @@ Closest career shapes in the era-normalized vector space:
 - [[salah-mejri|Salah Mejri]] '18 (93% similar)
 - [[khaman-maluach|Khaman Maluach]] '26 (93% similar)
 
-**Career shape:** Charted 13 seasons (2001-02–2014-15). Entered as a Rim Protection + Offensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+**Career shape:** Charted 13 seasons (2001-02–2014-15). Entered as a Rim Protection + Offensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[jakob-poeltl|Jakob Poeltl]] '22 (78% aligned similarity — cross-era via Procrustes chaining).
 

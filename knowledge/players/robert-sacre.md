@@ -61,7 +61,7 @@ Closest career shapes in the era-normalized vector space:
 - [[enrique-freeman|Enrique Freeman]] '25 (89% similar)
 - [[andrew-lang|Andrew Lang]] '00 (88% similar)
 
-**Career shape:** Charted 4 seasons (2012-13–2015-16). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+**Career shape:** Charted 4 seasons (2012-13–2015-16). Consistent Offensive Glass (Low On-Court Impact) profile across his career. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[tosan-evbuomwan|Tosan Evbuomwan]] '24 (89% aligned similarity — cross-era via Procrustes chaining).
 

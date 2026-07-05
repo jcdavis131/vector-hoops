@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[quentin-richardson|Quentin Richardson]] '05 (84% similar)
 - [[troy-daniels|Troy Daniels]] '15 (84% similar)
 
-**Career shape:** Charted 10 seasons (2003-04–2012-13). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 10 seasons (2003-04–2012-13). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: late-bloom (4 archetype changes across his charted seasons) — one sustained archetype switch coming late in his career (after the 60% mark).
 
 **Era twin:** [[kyle-korver|Kyle Korver]] '04 (90% aligned similarity — cross-era via Procrustes chaining).
 

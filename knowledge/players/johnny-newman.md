@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[courtney-alexander|Courtney Alexander]] '01 (80% similar)
 - [[eric-williams|Eric Williams]] '07 (79% similar)
 
-**Career shape:** Charted 6 seasons (1996-97–2001-02). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 6 seasons (1996-97–2001-02). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: migrator (3 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[danilo-gallinari|Danilo Gallinari]] '16 (88% aligned similarity — cross-era via Procrustes chaining).
 

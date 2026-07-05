@@ -61,7 +61,7 @@ Closest career shapes in the era-normalized vector space:
 - [[george-lynch|George Lynch]] '03 (78% similar)
 - [[trevelin-queen|Trevelin Queen]] '25 (78% similar)
 
-**Career shape:** Charted 4 seasons (2022-23–2025-26). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 4 seasons (2022-23–2025-26). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: migrator (2 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[myke-henry|Myke Henry]] '18 (77% aligned similarity — cross-era via Procrustes chaining).
 

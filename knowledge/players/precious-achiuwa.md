@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[kosta-koufos|Kosta Koufos]] '19 (93% similar)
 - [[shawnelle-scott|Shawnelle Scott]] '01 (92% similar)
 
-**Career shape:** Charted 6 seasons (2020-21–2025-26). Consistent Rim Protection + Offensive Glass profile across his career.
+**Career shape:** Charted 6 seasons (2020-21–2025-26). Consistent Rim Protection + Offensive Glass profile across his career. Career trajectory: drifter (3 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[tarik-black|Tarik Black]] '18 (92% aligned similarity — cross-era via Procrustes chaining).
 

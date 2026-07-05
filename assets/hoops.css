@@ -2122,8 +2122,8 @@ main{
 }
 .vh-arc-reveal-row{
   display: flex;
-  align-items: center;
-  gap: 10px;
+  flex-direction: column;
+  gap: 3px;
   padding: 8px 10px;
   border: 1px solid var(--hairline);
   border-radius: 8px;
@@ -2131,6 +2131,11 @@ main{
 }
 .vh-arc-reveal-row.is-correct{ border-color: var(--hot); background: #eefbe9; }
 .vh-arc-reveal-row.is-wrong{ border-color: var(--cold); background: #fdeeee; }
+.vh-arc-reveal-row__top{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
 .vh-arc-reveal-row__rank{
   font-family: var(--mono);
   font-weight: 800;
@@ -2139,6 +2144,19 @@ main{
 }
 .vh-arc-reveal-row__season{ font-family: var(--mono); font-weight: 700; }
 .vh-arc-reveal-row__mark{ margin-left: auto; font-weight: 800; }
+.vh-arc-reveal-row__transition{
+  padding-left: 28px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--data-blue);
+}
+
+.vh-arc-trajectory-line{
+  margin: 0 0 16px;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--ink-soft);
+}
 
 .vh-arc-linechart{ width: 100%; }
 .vh-arc-linechart svg{ width: 100%; height: auto; display: block; }

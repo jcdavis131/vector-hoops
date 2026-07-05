@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[dana-barros|Dana Barros]] '99 (93% similar)
 - [[george-mccloud|George McCloud]] '98 (92% similar)
 
-**Career shape:** Charted 8 seasons (1996-97–2003-04). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 8 seasons (1996-97–2003-04). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: migrator (5 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[rusty-larue|Rusty LaRue]] '99 (92% aligned similarity — cross-era via Procrustes chaining).
 

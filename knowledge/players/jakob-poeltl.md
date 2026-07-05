@@ -69,7 +69,7 @@ Closest career shapes in the era-normalized vector space:
 - [[clint-capela|Clint Capela]] '21 (94% similar)
 - [[tarik-black|Tarik Black]] '18 (93% similar)
 
-**Career shape:** Charted 10 seasons (2016-17–2025-26). Entered as a Rim Protection + Offensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+**Career shape:** Charted 10 seasons (2016-17–2025-26). Entered as a Rim Protection + Offensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[gorgui-dieng|Gorgui Dieng]] '14 (81% aligned similarity — cross-era via Procrustes chaining).
 

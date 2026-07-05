@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[dario-saric|Dario Saric]] '21 (67% similar)
 - [[gordon-hayward|Gordon Hayward]] '17 (64% similar)
 
-**Career shape:** Charted 5 seasons (1996-97–2000-01). Entered as a Scoring Volume + Shot Volume profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+**Career shape:** Charted 5 seasons (1996-97–2000-01). Entered as a Scoring Volume + Shot Volume profile, peaked as a Three-Point Volume + Three-Point Accuracy identity. Career trajectory: migrator (4 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[vasilije-micic|Vasilije Micic]] '25 (79% aligned similarity — cross-era via Procrustes chaining).
 

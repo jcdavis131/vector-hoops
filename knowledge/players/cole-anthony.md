@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[kevin-porter-jr|Kevin Porter Jr.]] '21 (87% similar)
 - [[trae-young|Trae Young]] '20 (87% similar)
 
-**Career shape:** Charted 6 seasons (2020-21–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Playmaking + Steals identity.
+**Career shape:** Charted 6 seasons (2020-21–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Playmaking + Steals identity. Career trajectory: migrator (4 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[emmanuel-mudiay|Emmanuel Mudiay]] '16 (86% aligned similarity — cross-era via Procrustes chaining).
 

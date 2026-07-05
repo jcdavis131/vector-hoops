@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[shaquille-harrison|Shaquille Harrison]] '21 (87% similar)
 - [[erick-barkley|Erick Barkley]] '02 (86% similar)
 
-**Career shape:** Charted 10 seasons (2015-16–2024-25). Entered as a Scoring Volume + Shot Volume profile, peaked as a Playmaking + Steals identity.
+**Career shape:** Charted 10 seasons (2015-16–2024-25). Entered as a Scoring Volume + Shot Volume profile, peaked as a Playmaking + Steals identity. Career trajectory: drifter (4 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[kris-dunn|Kris Dunn]] '20 (93% aligned similarity — cross-era via Procrustes chaining).
 

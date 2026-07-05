@@ -69,7 +69,7 @@ Closest career shapes in the era-normalized vector space:
 - [[steve-blake|Steve Blake]] '16 (90% similar)
 - [[willie-warren|Willie Warren]] '11 (88% similar)
 
-**Career shape:** Charted 12 seasons (2014-15–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Playmaking + Steals identity.
+**Career shape:** Charted 12 seasons (2014-15–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Playmaking + Steals identity. Career trajectory: migrator (4 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[isaiah-briscoe|Isaiah Briscoe]] '19 (73% aligned similarity — cross-era via Procrustes chaining).
 

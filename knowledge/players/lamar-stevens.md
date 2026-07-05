@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[dexter-pittman|Dexter Pittman]] '12 (71% similar)
 - [[scot-pollard|Scot Pollard]] '03 (71% similar)
 
-**Career shape:** Charted 5 seasons (2020-21–2024-25). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+**Career shape:** Charted 5 seasons (2020-21–2024-25). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity. Career trajectory: migrator (2 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[shawn-marion|Shawn Marion]] '06 (77% aligned similarity — cross-era via Procrustes chaining).
 

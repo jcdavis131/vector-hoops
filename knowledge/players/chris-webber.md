@@ -69,7 +69,7 @@ Closest career shapes in the era-normalized vector space:
 - [[nikola-jokic|Nikola Jokić]] '22 (82% similar)
 - [[karl-malone|Karl Malone]] '97 (82% similar)
 
-**Career shape:** Charted 11 seasons (1996-97–2006-07). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+**Career shape:** Charted 11 seasons (1996-97–2006-07). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[hakeem-olajuwon|Hakeem Olajuwon]] '97 (92% aligned similarity — cross-era via Procrustes chaining).
 

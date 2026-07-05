@@ -61,7 +61,7 @@ Closest career shapes in the era-normalized vector space:
 - [[pete-nance|Pete Nance]] '26 (82% similar)
 - [[tidjane-salaun|Tidjane Salaün]] '25 (82% similar)
 
-**Career shape:** Charted 4 seasons (2017-18–2020-21). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+**Career shape:** Charted 4 seasons (2017-18–2020-21). Consistent Offensive Glass (Low On-Court Impact) profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[jermaine-jackson|Jermaine Jackson]] '06 (83% aligned similarity — cross-era via Procrustes chaining).
 

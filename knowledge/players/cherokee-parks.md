@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[deyonta-davis|Deyonta Davis]] '17 (89% similar)
 - [[ervin-johnson|Ervin Johnson]] '05 (89% similar)
 
-**Career shape:** Charted 7 seasons (1996-97–2002-03). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+**Career shape:** Charted 7 seasons (1996-97–2002-03). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Offensive Glass (Low On-Court Impact) identity. Career trajectory: late-bloom (3 archetype changes across his charted seasons) — one sustained archetype switch coming late in his career (after the 60% mark).
 
 **Era twin:** [[william-cunningham|William Cunningham]] '99 (87% aligned similarity — cross-era via Procrustes chaining).
 

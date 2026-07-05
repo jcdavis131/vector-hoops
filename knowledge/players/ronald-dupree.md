@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[daniel-ochefu|Daniel Ochefu]] '17 (77% similar)
 - [[alex-poythress|Alex Poythress]] '18 (77% similar)
 
-**Career shape:** Charted 4 seasons (2003-04–2006-07). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Offensive Glass + Defensive Glass identity.
+**Career shape:** Charted 4 seasons (2003-04–2006-07). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Offensive Glass + Defensive Glass identity. Career trajectory: reinvention (1 archetype change across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[hamidou-diallo|Hamidou Diallo]] '23 (89% aligned similarity — cross-era via Procrustes chaining).
 

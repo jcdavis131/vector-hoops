@@ -72,7 +72,7 @@ Closest career shapes in the era-normalized vector space:
 - [[damon-stoudamire|Damon Stoudamire]] '97 (94% similar)
 - [[jameer-nelson|Jameer Nelson]] '09 (93% similar)
 
-**Career shape:** Charted 13 seasons (2003-04–2015-16). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 13 seasons (2003-04–2015-16). Consistent Playmaking + Steals profile across his career. Career trajectory: migrator (8 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[mark-price|Mark Price]] '98 (93% aligned similarity — cross-era via Procrustes chaining).
 

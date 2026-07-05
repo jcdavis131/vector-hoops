@@ -70,7 +70,7 @@ Closest career shapes in the era-normalized vector space:
 - [[john-starks|John Starks]] '00 (92% similar)
 - [[leandro-barbosa|Leandro Barbosa]] '04 (92% similar)
 
-**Career shape:** Charted 12 seasons (2012-13–2023-24). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 12 seasons (2012-13–2023-24). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[devin-brown|Devin Brown]] '10 (84% aligned similarity — cross-era via Procrustes chaining).
 

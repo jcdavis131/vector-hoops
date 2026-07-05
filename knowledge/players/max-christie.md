@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[travis-wear|Travis Wear]] '18 (88% similar)
 - [[deng-adel|Deng Adel]] '19 (88% similar)
 
-**Career shape:** Charted 4 seasons (2022-23–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 4 seasons (2022-23–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[arron-afflalo|Arron Afflalo]] '18 (90% aligned similarity — cross-era via Procrustes chaining).
 

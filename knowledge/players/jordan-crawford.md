@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[ben-gordon|Ben Gordon]] '05 (94% similar)
 - [[jamal-crawford|Jamal Crawford]] '14 (94% similar)
 
-**Career shape:** Charted 5 seasons (2010-11–2016-17). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 5 seasons (2010-11–2016-17). Consistent Playmaking + Steals profile across his career. Career trajectory: migrator (2 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[kevin-edwards|Kevin Edwards]] '97 (90% aligned similarity — cross-era via Procrustes chaining).
 

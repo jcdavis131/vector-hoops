@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[myles-turner|Myles Turner]] '19 (79% similar)
 - [[donyell-marshall|Donyell Marshall]] '09 (78% similar)
 
-**Career shape:** Charted 7 seasons (2019-20–2025-26). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+**Career shape:** Charted 7 seasons (2019-20–2025-26). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career. Career trajectory: reinvention (1 archetype change across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[jermareo-davidson|Jermareo Davidson]] '08 (92% aligned similarity — cross-era via Procrustes chaining).
 

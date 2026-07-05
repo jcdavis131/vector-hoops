@@ -77,7 +77,7 @@ Closest career shapes in the era-normalized vector space:
 - [[marc-gasol|Marc Gasol]] '16 (88% similar)
 - [[david-west|David West]] '18 (86% similar)
 
-**Career shape:** Charted 18 seasons (2001-02–2018-19). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+**Career shape:** Charted 18 seasons (2001-02–2018-19). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[antonio-mcdyess|Antonio McDyess]] '01 (91% aligned similarity — cross-era via Procrustes chaining).
 

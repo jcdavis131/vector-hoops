@@ -71,7 +71,7 @@ Closest career shapes in the era-normalized vector space:
 - [[john-crotty|John Crotty]] '98 (88% similar)
 - [[randy-livingston|Randy Livingston]] '05 (88% similar)
 
-**Career shape:** Charted 12 seasons (1997-98–2008-09). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 12 seasons (1997-98–2008-09). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: stable (4 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[austin-reaves|Austin Reaves]] '26 (91% aligned similarity — cross-era via Procrustes chaining).
 

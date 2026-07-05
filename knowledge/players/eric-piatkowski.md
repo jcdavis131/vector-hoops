@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[grayson-allen|Grayson Allen]] '19 (93% similar)
 - [[chase-budinger|Chase Budinger]] '10 (93% similar)
 
-**Career shape:** Charted 10 seasons (1996-97–2005-06). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 10 seasons (1996-97–2005-06). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[jason-kapono|Jason Kapono]] '11 (88% aligned similarity — cross-era via Procrustes chaining).
 

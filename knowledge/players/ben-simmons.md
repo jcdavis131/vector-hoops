@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[david-vanterpool|David Vanterpool]] '01 (71% similar)
 - [[draymond-green|Draymond Green]] '21 (67% similar)
 
-**Career shape:** Charted 6 seasons (2017-18–2024-25). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass + Defensive Glass identity.
+**Career shape:** Charted 6 seasons (2017-18–2024-25). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass + Defensive Glass identity. Career trajectory: late-bloom (3 archetype changes across his charted seasons) — one sustained archetype switch coming late in his career (after the 60% mark).
 
 **Era twin:** [[bo-outlaw|Bo Outlaw]] '00 (83% aligned similarity — cross-era via Procrustes chaining).
 

@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jeff-green|Jeff Green]] '26 (76% similar)
 - [[shabazz-muhammad|Shabazz Muhammad]] '15 (74% similar)
 
-**Career shape:** Charted 5 seasons (1997-98–2003-04). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+**Career shape:** Charted 5 seasons (1997-98–2003-04). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career. Career trajectory: migrator (3 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[danilo-gallinari|Danilo Gallinari]] '16 (81% aligned similarity — cross-era via Procrustes chaining).
 

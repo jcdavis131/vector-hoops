@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[ja-kobe-walter|Ja'Kobe Walter]] '26 (78% similar)
 - [[malcolm-hill|Malcolm Hill]] '22 (78% similar)
 
-**Career shape:** Charted 4 seasons (2022-23–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 4 seasons (2022-23–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: migrator (2 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[mark-hendrickson|Mark Hendrickson]] '98 (78% aligned similarity — cross-era via Procrustes chaining).
 

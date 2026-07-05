@@ -68,7 +68,7 @@ Closest career shapes in the era-normalized vector space:
 - [[todd-macculloch|Todd MacCulloch]] '01 (93% similar)
 - [[onyeka-okongwu|Onyeka Okongwu]] '22 (92% similar)
 
-**Career shape:** Charted 9 seasons (2007-08–2017-18). Consistent Rim Protection + Offensive Glass profile across his career.
+**Career shape:** Charted 9 seasons (2007-08–2017-18). Consistent Rim Protection + Offensive Glass profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[derrick-favors|Derrick Favors]] '21 (93% aligned similarity — cross-era via Procrustes chaining).
 

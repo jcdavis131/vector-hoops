@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[john-wall|John Wall]] '17 (92% similar)
 - [[tyreke-evans|Tyreke Evans]] '16 (92% similar)
 
-**Career shape:** Charted 8 seasons (1999-00–2006-07). Consistent Scoring Volume + Shot Volume profile across his career.
+**Career shape:** Charted 8 seasons (1999-00–2006-07). Consistent Scoring Volume + Shot Volume profile across his career. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[lou-williams|Lou Williams]] '19 (95% aligned similarity — cross-era via Procrustes chaining).
 

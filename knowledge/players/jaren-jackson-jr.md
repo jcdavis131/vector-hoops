@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[brook-lopez|Brook Lopez]] '13 (80% similar)
 - [[joel-embiid|Joel Embiid]] '17 (77% similar)
 
-**Career shape:** Charted 7 seasons (2018-19–2025-26). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+**Career shape:** Charted 7 seasons (2018-19–2025-26). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career. Career trajectory: drifter (4 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[kristaps-porzingis|Kristaps Porziņģis]] '18 (82% aligned similarity — cross-era via Procrustes chaining).
 

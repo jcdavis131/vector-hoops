@@ -60,7 +60,7 @@ Closest career shapes in the era-normalized vector space:
 - [[r-j-hampton|R.J. Hampton]] '22 (75% similar)
 - [[xavier-henry|Xavier Henry]] '13 (75% similar)
 
-**Career shape:** Charted 4 seasons (1998-99–2001-02). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+**Career shape:** Charted 4 seasons (1998-99–2001-02). Consistent Offensive Glass (Low On-Court Impact) profile across his career. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[hamidou-diallo|Hamidou Diallo]] '23 (84% aligned similarity — cross-era via Procrustes chaining).
 

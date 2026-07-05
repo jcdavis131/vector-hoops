@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[robert-williams-iii|Robert Williams III]] '19 (93% similar)
 - [[greg-stiemsma|Greg Stiemsma]] '15 (92% similar)
 
-**Career shape:** Charted 6 seasons (1996-97–2001-02). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
+**Career shape:** Charted 6 seasons (1996-97–2001-02). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity. Career trajectory: late-bloom (1 archetype change across his charted seasons) — one sustained archetype switch coming late in his career (after the 60% mark).
 
 **Era twin:** [[oliver-miller|Oliver Miller]] '00 (91% aligned similarity — cross-era via Procrustes chaining).
 

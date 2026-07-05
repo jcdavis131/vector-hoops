@@ -72,7 +72,7 @@ Closest career shapes in the era-normalized vector space:
 - [[antawn-jamison|Antawn Jamison]] '01 (72% similar)
 - [[michael-porter-jr|Michael Porter Jr.]] '26 (70% similar)
 
-**Career shape:** Charted 14 seasons (2004-05–2018-19). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+**Career shape:** Charted 14 seasons (2004-05–2018-19). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity. Career trajectory: migrator (5 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[danny-manning|Danny Manning]] '98 (88% aligned similarity — cross-era via Procrustes chaining).
 

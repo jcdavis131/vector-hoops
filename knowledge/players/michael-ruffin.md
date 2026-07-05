@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jared-jeffries|Jared Jeffries]] '11 (89% similar)
 - [[greg-anderson|Greg Anderson]] '98 (89% similar)
 
-**Career shape:** Charted 7 seasons (1999-00–2007-08). Consistent Offensive Glass + Defensive Glass profile across his career.
+**Career shape:** Charted 7 seasons (1999-00–2007-08). Consistent Offensive Glass + Defensive Glass profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[chris-dudley|Chris Dudley]] '00 (91% aligned similarity — cross-era via Procrustes chaining).
 

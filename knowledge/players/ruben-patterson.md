@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[ivan-johnson|Ivan Johnson]] '13 (76% similar)
 - [[travis-williams|Travis Williams]] '98 (76% similar)
 
-**Career shape:** Charted 10 seasons (1998-99–2007-08). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Offensive Glass + Defensive Glass identity.
+**Career shape:** Charted 10 seasons (1998-99–2007-08). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Offensive Glass + Defensive Glass identity. Career trajectory: drifter (4 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[ivan-johnson|Ivan Johnson]] '13 (87% aligned similarity — cross-era via Procrustes chaining).
 

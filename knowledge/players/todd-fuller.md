@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[lonny-baxter|Lonny Baxter]] '06 (89% similar)
 - [[tom-hammonds|Tom Hammonds]] '00 (89% similar)
 
-**Career shape:** Charted 4 seasons (1996-97–1999-00). Consistent Offensive Glass + Defensive Glass profile across his career.
+**Career shape:** Charted 4 seasons (1996-97–1999-00). Consistent Offensive Glass + Defensive Glass profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[jabari-walker|Jabari Walker]] '24 (90% aligned similarity — cross-era via Procrustes chaining).
 

@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[gary-trent-jr|Gary Trent Jr.]] '26 (92% similar)
 - [[jarvis-hayes|Jarvis Hayes]] '10 (91% similar)
 
-**Career shape:** Charted 10 seasons (2000-01–2009-10). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 10 seasons (2000-01–2009-10). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: stable (3 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[taelon-peter|Taelon Peter]] '26 (92% aligned similarity — cross-era via Procrustes chaining).
 

@@ -145,6 +145,35 @@
     </p>
   </section>
 
+  <section class="methods-section" id="trajectories">
+    <h2>Career Shapes (career trajectories)</h2>
+    <p>
+      The <a href="/drift#trajectories-method">Drift page</a>'s <b>Career Shapes</b> section asks a
+      career-level question on top of the per-season archetypes above: not "what archetype was this
+      season" but "how did this player's own archetype label move across his whole career." Careers
+      require at least 4 charted seasons; each season keeps its own per-season global archetype
+      label (never career-static). The taxonomy is rule-based, stated plainly:
+    </p>
+    <ul>
+      <li><b>stable</b> &mdash; one archetype covers at least 75% of the charted seasons.</li>
+      <li><b>reinvention</b> &mdash; exactly one sustained switch: a modal archetype covering at
+        least 75% of the seasons before the switch, and a different modal archetype covering at
+        least 75% of the seasons after it.</li>
+      <li><b>late-bloom</b> &mdash; a reinvention whose switch lands at or after the 60% mark of
+        the career.</li>
+      <li><b>migrator</b> &mdash; three or more distinct archetypes, none ever reaching 60% share.</li>
+      <li><b>drifter</b> &mdash; everything else: two or more archetypes, no sustained switch.</li>
+    </ul>
+    <p>
+      Era comparison: mean transition rate (archetype changes per season-pair) for careers whose
+      midpoint falls in each decade &mdash; do careers migrate more now? Correlates shown
+      (career length, mean plus-minus z) are <b>observed, with selection effects stated</b> &mdash;
+      trajectory class is an outcome of a career, not something assigned to it. The method, quoted
+      verbatim from <code>assets/trajectories.json</code>:
+    </p>
+    <p style="font-family:var(--mono); font-size:12px; background:var(--paper); padding:10px 12px; border-radius:8px; border:1px solid var(--hairline); line-height:1.6; white-space:pre-wrap;">careers &gt;=4 charted seasons; per-season global archetype labels (never career-static); taxonomy rule-based as documented (stable &gt;=75% modal; reinvention = one sustained &gt;=75%/&gt;=75% switch; late-bloom = switch at &gt;=60% career index; migrator = 3+ archetypes none &gt;=60%); era comparison by career-midpoint decade; correlates are observed with selection effects &mdash; trajectory class is an outcome, not an assignment</p>
+  </section>
+
   <section class="methods-section" id="accuracy-harness">
     <h2>The accuracy harness</h2>
     <p><code>pipeline/verify_accuracy.py</code> gates every deploy &mdash; a non-zero exit blocks shipping. It checks:</p>

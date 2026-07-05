@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[markel-brown|Markel Brown]] '15 (87% similar)
 - [[gary-harris|Gary Harris]] '25 (86% similar)
 
-**Career shape:** Charted 10 seasons (2004-05–2017-18). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+**Career shape:** Charted 10 seasons (2004-05–2017-18). Consistent Three-Point Accuracy (Low Turnovers) profile across his career. Career trajectory: migrator (5 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[miye-oni|Miye Oni]] '21 (90% aligned similarity — cross-era via Procrustes chaining).
 

@@ -69,7 +69,7 @@ Closest career shapes in the era-normalized vector space:
 - [[willie-warren|Willie Warren]] '11 (84% similar)
 - [[aaron-mckie|Aaron McKie]] '05 (82% similar)
 
-**Career shape:** Charted 11 seasons (2012-13–2023-24). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 11 seasons (2012-13–2023-24). Consistent Playmaking + Steals profile across his career. Career trajectory: stable (3 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[jamal-shead|Jamal Shead]] '26 (84% aligned similarity — cross-era via Procrustes chaining).
 

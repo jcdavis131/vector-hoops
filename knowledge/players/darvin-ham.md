@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[wenyen-gabriel|Wenyen Gabriel]] '23 (85% similar)
 - [[greg-smith|Greg Smith]] '16 (84% similar)
 
-**Career shape:** Charted 8 seasons (1996-97–2004-05). Consistent Offensive Glass + Defensive Glass profile across his career.
+**Career shape:** Charted 8 seasons (1996-97–2004-05). Consistent Offensive Glass + Defensive Glass profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[john-thomas|John Thomas]] '00 (90% aligned similarity — cross-era via Procrustes chaining).
 

@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[pete-chilcutt|Pete Chilcutt]] '00 (82% similar)
 - [[micah-potter|Micah Potter]] '25 (81% similar)
 
-**Career shape:** Charted 5 seasons (2021-22–2025-26). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+**Career shape:** Charted 5 seasons (2021-22–2025-26). Consistent Offensive Glass (Low On-Court Impact) profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[jaron-blossomgame|Jaron Blossomgame]] '19 (79% aligned similarity — cross-era via Procrustes chaining).
 

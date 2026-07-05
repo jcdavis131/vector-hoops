@@ -69,7 +69,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jimmer-fredette|Jimmer Fredette]] '14 (92% similar)
 - [[rodrigue-beaubois|Rodrigue Beaubois]] '10 (91% similar)
 
-**Career shape:** Charted 10 seasons (2002-03–2013-14). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 10 seasons (2002-03–2013-14). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: reinvention (2 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[elliot-perry|Elliot Perry]] '99 (92% aligned similarity — cross-era via Procrustes chaining).
 

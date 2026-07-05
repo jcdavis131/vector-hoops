@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[kai-jones|Kai Jones]] '22 (89% similar)
 - [[carlos-rogers|Carlos Rogers]] '01 (89% similar)
 
-**Career shape:** Charted 5 seasons (1998-99–2002-03). Consistent Rim Protection + Offensive Glass profile across his career.
+**Career shape:** Charted 5 seasons (1998-99–2002-03). Consistent Rim Protection + Offensive Glass profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[duane-causwell|Duane Causwell]] '99 (88% aligned similarity — cross-era via Procrustes chaining).
 

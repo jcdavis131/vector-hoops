@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[isaiah-joe|Isaiah Joe]] '25 (89% similar)
 - [[kentavious-caldwell-pope|Kentavious Caldwell-Pope]] '24 (88% similar)
 
-**Career shape:** Charted 6 seasons (2018-19–2023-24). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 6 seasons (2018-19–2023-24). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: late-bloom (1 archetype change across his charted seasons) — one sustained archetype switch coming late in his career (after the 60% mark).
 
 **Era twin:** [[lucious-harris|Lucious Harris]] '98 (89% aligned similarity — cross-era via Procrustes chaining).
 

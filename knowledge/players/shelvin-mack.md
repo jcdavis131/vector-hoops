@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[kendall-marshall|Kendall Marshall]] '14 (92% similar)
 - [[norris-cole|Norris Cole]] '14 (92% similar)
 
-**Career shape:** Charted 8 seasons (2011-12–2018-19). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 8 seasons (2011-12–2018-19). Consistent Playmaking + Steals profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[john-stockton|John Stockton]] '01 (90% aligned similarity — cross-era via Procrustes chaining).
 

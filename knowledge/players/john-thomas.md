@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[khem-birch|Khem Birch]] '19 (88% similar)
 - [[mark-madsen|Mark Madsen]] '09 (88% similar)
 
-**Career shape:** Charted 5 seasons (1997-98–2005-06). Consistent Offensive Glass + Defensive Glass profile across his career.
+**Career shape:** Charted 5 seasons (1997-98–2005-06). Consistent Offensive Glass + Defensive Glass profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[darvin-ham|Darvin Ham]] '05 (90% aligned similarity — cross-era via Procrustes chaining).
 

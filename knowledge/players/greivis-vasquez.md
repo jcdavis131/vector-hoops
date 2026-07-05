@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[mark-price|Mark Price]] '98 (92% similar)
 - [[damon-stoudamire|Damon Stoudamire]] '97 (92% similar)
 
-**Career shape:** Charted 6 seasons (2010-11–2015-16). Consistent Playmaking + Steals profile across his career.
+**Career shape:** Charted 6 seasons (2010-11–2015-16). Consistent Playmaking + Steals profile across his career. Career trajectory: drifter (2 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[andrew-nembhard|Andrew Nembhard]] '26 (89% aligned similarity — cross-era via Procrustes chaining).
 

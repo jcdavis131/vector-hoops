@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[horace-grant|Horace Grant]] '01 (89% similar)
 - [[p-j-brown|P.J. Brown]] '08 (89% similar)
 
-**Career shape:** Charted 6 seasons (2011-12–2016-17). Consistent Offensive Glass + Defensive Glass profile across his career.
+**Career shape:** Charted 6 seasons (2011-12–2016-17). Consistent Offensive Glass + Defensive Glass profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[dale-davis|Dale Davis]] '06 (87% aligned similarity — cross-era via Procrustes chaining).
 

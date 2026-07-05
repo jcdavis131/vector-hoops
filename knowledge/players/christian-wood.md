@@ -65,7 +65,7 @@ Closest career shapes in the era-normalized vector space:
 - [[pau-gasol|Pau Gasol]] '15 (82% similar)
 - [[chris-bosh|Chris Bosh]] '10 (82% similar)
 
-**Career shape:** Charted 6 seasons (2018-19–2023-24). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+**Career shape:** Charted 6 seasons (2018-19–2023-24). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[moritz-wagner|Moritz Wagner]] '25 (86% aligned similarity — cross-era via Procrustes chaining).
 

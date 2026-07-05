@@ -68,7 +68,7 @@ Closest career shapes in the era-normalized vector space:
 - [[roger-mason-jr|Roger Mason Jr.]] '03 (90% similar)
 - [[anthony-peeler|Anthony Peeler]] '97 (90% similar)
 
-**Career shape:** Charted 9 seasons (2004-05–2016-17). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 9 seasons (2004-05–2016-17). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: reinvention (5 archetype changes across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[ian-clark|Ian Clark]] '15 (89% aligned similarity — cross-era via Procrustes chaining).
 

@@ -61,7 +61,7 @@ Closest career shapes in the era-normalized vector space:
 - [[mike-penberthy|Mike Penberthy]] '01 (93% similar)
 - [[kevin-huerter|Kevin Huerter]] '23 (93% similar)
 
-**Career shape:** Charted 4 seasons (1996-97–2000-01). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 4 seasons (1996-97–2000-01). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[chris-herren|Chris Herren]] '01 (94% aligned similarity — cross-era via Procrustes chaining).
 

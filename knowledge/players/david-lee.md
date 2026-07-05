@@ -71,7 +71,7 @@ Closest career shapes in the era-normalized vector space:
 - [[ivica-zubac|Ivica Zubac]] '20 (90% similar)
 - [[jarrett-allen|Jarrett Allen]] '25 (88% similar)
 
-**Career shape:** Charted 12 seasons (2005-06–2016-17). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
+**Career shape:** Charted 12 seasons (2005-06–2016-17). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity. Career trajectory: migrator (6 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[jake-tsakalidis|Jake Tsakalidis]] '06 (95% aligned similarity — cross-era via Procrustes chaining).
 

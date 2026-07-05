@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[chris-webber|Chris Webber]] '01 (87% similar)
 - [[zion-williamson|Zion Williamson]] '25 (85% similar)
 
-**Career shape:** Charted 10 seasons (2016-17–2025-26). Consistent Offensive Glass + Defensive Glass profile across his career.
+**Career shape:** Charted 10 seasons (2016-17–2025-26). Consistent Offensive Glass + Defensive Glass profile across his career. Career trajectory: migrator (4 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[theo-ratliff|Theo Ratliff]] '09 (90% aligned similarity — cross-era via Procrustes chaining).
 

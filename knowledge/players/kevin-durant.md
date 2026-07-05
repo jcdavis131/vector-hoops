@@ -76,7 +76,7 @@ Closest career shapes in the era-normalized vector space:
 - [[lebron-james|LeBron James]] '10 (90% similar)
 - [[shai-gilgeous-alexander|Shai Gilgeous-Alexander]] '25 (90% similar)
 
-**Career shape:** Charted 18 seasons (2007-08–2025-26). Consistent Scoring Volume + Shot Volume profile across his career.
+**Career shape:** Charted 18 seasons (2007-08–2025-26). Consistent Scoring Volume + Shot Volume profile across his career. Career trajectory: stable (0 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[lebron-james|LeBron James]] '10 (94% aligned similarity — cross-era via Procrustes chaining).
 

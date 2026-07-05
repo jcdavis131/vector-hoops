@@ -62,7 +62,7 @@ Closest career shapes in the era-normalized vector space:
 - [[juan-carlos-navarro|Juan Carlos Navarro]] '08 (91% similar)
 - [[randy-foye|Randy Foye]] '12 (91% similar)
 
-**Career shape:** Charted 6 seasons (1996-97–2001-02). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+**Career shape:** Charted 6 seasons (1996-97–2001-02). Consistent Three-Point Volume + Three-Point Accuracy profile across his career. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[quentin-richardson|Quentin Richardson]] '05 (91% aligned similarity — cross-era via Procrustes chaining).
 

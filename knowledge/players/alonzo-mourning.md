@@ -68,7 +68,7 @@ Closest career shapes in the era-normalized vector space:
 - [[andrew-bynum|Andrew Bynum]] '08 (89% similar)
 - [[david-robinson|David Robinson]] '98 (89% similar)
 
-**Career shape:** Charted 9 seasons (1996-97–2007-08). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+**Career shape:** Charted 9 seasons (1996-97–2007-08). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career. Career trajectory: reinvention (1 archetype change across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[elden-campbell|Elden Campbell]] '02 (95% aligned similarity — cross-era via Procrustes chaining).
 

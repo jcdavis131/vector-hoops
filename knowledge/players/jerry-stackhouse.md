@@ -74,7 +74,7 @@ Closest career shapes in the era-normalized vector space:
 - [[ben-gordon|Ben Gordon]] '05 (92% similar)
 - [[jordan-poole|Jordan Poole]] '25 (92% similar)
 
-**Career shape:** Charted 15 seasons (1996-97–2012-13). Consistent Scoring Volume + Shot Volume profile across his career.
+**Career shape:** Charted 15 seasons (1996-97–2012-13). Consistent Scoring Volume + Shot Volume profile across his career. Career trajectory: late-bloom (1 archetype change across his charted seasons) — one sustained archetype switch coming late in his career (after the 60% mark).
 
 **Era twin:** [[kevin-martin|Kevin Martin]] '11 (93% aligned similarity — cross-era via Procrustes chaining).
 

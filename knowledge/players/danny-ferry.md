@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[pat-garrity|Pat Garrity]] '02 (92% similar)
 - [[raja-bell|Raja Bell]] '07 (90% similar)
 
-**Career shape:** Charted 7 seasons (1996-97–2002-03). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 7 seasons (1996-97–2002-03). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: drifter (3 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[steve-kerr|Steve Kerr]] '97 (88% aligned similarity — cross-era via Procrustes chaining).
 

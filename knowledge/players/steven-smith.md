@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[ray-allen|Ray Allen]] '06 (89% similar)
 - [[cuttino-mobley|Cuttino Mobley]] '02 (88% similar)
 
-**Career shape:** Charted 9 seasons (1996-97–2004-05). Consistent Scoring Volume + Shot Volume profile across his career.
+**Career shape:** Charted 9 seasons (1996-97–2004-05). Consistent Scoring Volume + Shot Volume profile across his career. Career trajectory: reinvention (1 archetype change across his charted seasons) — one sustained archetype switch, each side holding at least two seasons.
 
 **Era twin:** [[ben-gordon|Ben Gordon]] '05 (92% aligned similarity — cross-era via Procrustes chaining).
 

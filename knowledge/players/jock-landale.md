@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jerome-jordan|Jerome Jordan]] '12 (82% similar)
 - [[aron-baynes|Aron Baynes]] '17 (82% similar)
 
-**Career shape:** Charted 5 seasons (2021-22–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Offensive Glass + Defensive Glass identity.
+**Career shape:** Charted 5 seasons (2021-22–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Offensive Glass + Defensive Glass identity. Career trajectory: drifter (2 archetype changes across his charted seasons) — moved between archetypes without any switch settling into a new majority.
 
 **Era twin:** [[dakari-johnson|Dakari Johnson]] '18 (85% aligned similarity — cross-era via Procrustes chaining).
 

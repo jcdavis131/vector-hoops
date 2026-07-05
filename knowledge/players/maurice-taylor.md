@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[lee-nailon|Lee Nailon]] '03 (80% similar)
 - [[juwan-howard|Juwan Howard]] '12 (80% similar)
 
-**Career shape:** Charted 8 seasons (1997-98–2005-06). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+**Career shape:** Charted 8 seasons (1997-98–2005-06). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career. Career trajectory: late-bloom (3 archetype changes across his charted seasons) — one sustained archetype switch coming late in his career (after the 60% mark).
 
 **Era twin:** [[andrea-bargnani|Andrea Bargnani]] '15 (93% aligned similarity — cross-era via Procrustes chaining).
 

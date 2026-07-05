@@ -64,7 +64,7 @@ Closest career shapes in the era-normalized vector space:
 - [[marcus-camby|Marcus Camby]] '11 (80% similar)
 - [[jim-mcilvaine|Jim McIlvaine]] '00 (79% similar)
 
-**Career shape:** Charted 6 seasons (2017-18–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Rim Protection + Offensive Glass identity.
+**Career shape:** Charted 6 seasons (2017-18–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Rim Protection + Offensive Glass identity. Career trajectory: migrator (4 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[stephane-lasme|Stephane Lasme]] '08 (83% aligned similarity — cross-era via Procrustes chaining).
 

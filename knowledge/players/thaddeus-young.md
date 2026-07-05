@@ -76,7 +76,7 @@ Closest career shapes in the era-normalized vector space:
 - [[tony-allen|Tony Allen]] '15 (76% similar)
 - [[larry-nance-jr|Larry Nance Jr.]] '18 (75% similar)
 
-**Career shape:** Charted 17 seasons (2007-08–2023-24). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass + Defensive Glass identity.
+**Career shape:** Charted 17 seasons (2007-08–2023-24). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass + Defensive Glass identity. Career trajectory: migrator (10 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[furkan-aldemir|Furkan Aldemir]] '15 (83% aligned similarity — cross-era via Procrustes chaining).
 

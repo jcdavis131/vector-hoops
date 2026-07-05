@@ -69,7 +69,7 @@ Closest career shapes in the era-normalized vector space:
 - [[joel-przybilla|Joel Przybilla]] '01 (93% similar)
 - [[erick-dampier|Erick Dampier]] '97 (93% similar)
 
-**Career shape:** Charted 10 seasons (1996-97–2005-06). Consistent Rim Protection + Offensive Glass profile across his career.
+**Career shape:** Charted 10 seasons (1996-97–2005-06). Consistent Rim Protection + Offensive Glass profile across his career. Career trajectory: stable (2 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[isaiah-stewart|Isaiah Stewart]] '25 (94% aligned similarity — cross-era via Procrustes chaining).
 

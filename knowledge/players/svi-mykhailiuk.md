@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[kareem-rush|Kareem Rush]] '09 (91% similar)
 - [[matt-maloney|Matt Maloney]] '00 (90% similar)
 
-**Career shape:** Charted 8 seasons (2018-19–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+**Career shape:** Charted 8 seasons (2018-19–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity. Career trajectory: stable (3 archetype changes across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[kerry-kittles|Kerry Kittles]] '03 (89% aligned similarity — cross-era via Procrustes chaining).
 

@@ -68,7 +68,7 @@ Closest career shapes in the era-normalized vector space:
 - [[todd-day|Todd Day]] '01 (75% similar)
 - [[jr-smith|JR Smith]] '08 (74% similar)
 
-**Career shape:** Charted 11 seasons (1996-97–2006-07). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+**Career shape:** Charted 11 seasons (1996-97–2006-07). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Offensive Glass (Low On-Court Impact) identity. Career trajectory: migrator (6 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[brandon-rush|Brandon Rush]] '15 (96% aligned similarity — cross-era via Procrustes chaining).
 

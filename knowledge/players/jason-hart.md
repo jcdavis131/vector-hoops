@@ -63,7 +63,7 @@ Closest career shapes in the era-normalized vector space:
 - [[facundo-campazzo|Facundo Campazzo]] '21 (91% similar)
 - [[keaton-wallace|Keaton Wallace]] '25 (90% similar)
 
-**Career shape:** Charted 6 seasons (2003-04–2008-09). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+**Career shape:** Charted 6 seasons (2003-04–2008-09). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity. Career trajectory: migrator (4 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[rafer-alston|Rafer Alston]] '00 (85% aligned similarity — cross-era via Procrustes chaining).
 

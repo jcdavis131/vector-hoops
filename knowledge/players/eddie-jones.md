@@ -70,7 +70,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jr-smith|JR Smith]] '08 (84% similar)
 - [[cj-miles|CJ Miles]] '18 (84% similar)
 
-**Career shape:** Charted 12 seasons (1996-97–2007-08). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
+**Career shape:** Charted 12 seasons (1996-97–2007-08). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity. Career trajectory: migrator (4 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[manu-ginobili|Manu Ginobili]] '08 (87% aligned similarity — cross-era via Procrustes chaining).
 

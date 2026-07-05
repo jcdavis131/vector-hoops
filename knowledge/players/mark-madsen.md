@@ -66,7 +66,7 @@ Closest career shapes in the era-normalized vector space:
 - [[jon-brockman|Jon Brockman]] '10 (88% similar)
 - [[john-thomas|John Thomas]] '00 (88% similar)
 
-**Career shape:** Charted 9 seasons (2000-01–2008-09). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass + Defensive Glass identity.
+**Career shape:** Charted 9 seasons (2000-01–2008-09). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass + Defensive Glass identity. Career trajectory: stable (1 archetype change across his charted seasons) — one archetype covered at least three-quarters of his seasons.
 
 **Era twin:** [[cj-elleby|CJ Elleby]] '22 (88% aligned similarity — cross-era via Procrustes chaining).
 

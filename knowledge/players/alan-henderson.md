@@ -67,7 +67,7 @@ Closest career shapes in the era-normalized vector space:
 - [[justin-williams|Justin Williams]] '07 (89% similar)
 - [[ben-handlogten|Ben Handlogten]] '04 (88% similar)
 
-**Career shape:** Charted 10 seasons (1996-97–2006-07). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+**Career shape:** Charted 10 seasons (1996-97–2006-07). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Three-Point Accuracy (Low Turnovers) identity. Career trajectory: migrator (6 archetype changes across his charted seasons) — three or more archetypes, none ever reaching 60% of his seasons.
 
 **Era twin:** [[joe-smith|Joe Smith]] '00 (79% aligned similarity — cross-era via Procrustes chaining).
 
