@@ -38,7 +38,7 @@ Closest career shapes in the era-normalized vector space:
 
 ## Scouting report
 
-**Play style:** C · Offensive Glass + Defensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look — an archetype claiming 8.1% of the league in his signature season, 8.1% today.
 
 **Signature-season stat line:** 13.7 pts · 15.4 reb · 1.3 ast · 1.9 blk per 100 (2014-15).
 

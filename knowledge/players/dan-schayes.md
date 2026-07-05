@@ -38,7 +38,7 @@ Closest career shapes in the era-normalized vector space:
 
 ## Scouting report
 
-**Play style:** C · Three-Point Accuracy (Low Turnovers). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+**Play style:** C · Three-Point Accuracy (Low Turnovers). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look — an archetype claiming 10.5% of the league in his signature season, 20.7% today.
 
 **Signature-season stat line:** 10.5 pts · 5.2 reb · 1.5 ast · 0.7 blk per 100 (1998-99).
 

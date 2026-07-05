@@ -74,6 +74,53 @@
       other method on the site: <a href="/methods#drift">read the methods page &rarr;</a></p>
   </section>
 
+  <section class="drift-card" aria-label="The archetype eras">
+    <div class="drift-card__head">
+      <h2>The Archetype Eras</h2>
+      <p>The 8 statistical archetypes' share of the charted league, season by season, 1996-97
+        through 2025-26 &mdash; the league's playstyle population, shifting under your feet.
+        Hover a season for every archetype's share that year.</p>
+    </div>
+    <div id="archetype-stream-chart" class="drift-chart archetype-stream-chart" role="img" aria-label="Loading archetype share chart&hellip;"></div>
+    <ul id="archetype-legend" class="archetype-legend" aria-label="Archetype legend"></ul>
+  </section>
+
+  <section class="drift-card" aria-label="Biggest archetype shifts">
+    <div class="drift-card__head">
+      <h2>Biggest archetype shifts</h2>
+      <p>Each archetype's mean share across the league's first five charted seasons vs. its
+        last five &mdash; the clearest long-run gainers and decliners in the league's shape.</p>
+    </div>
+    <div class="drift-table-wrap">
+      <table class="drift-table" id="archetype-shifts-table">
+        <thead>
+          <tr><th>Archetype</th><th>Early (first 5 seasons)</th><th>Late (last 5 seasons)</th><th>&Delta;</th></tr>
+        </thead>
+        <tbody><tr><td colspan="4" class="drift-loading">Loading&hellip;</td></tr></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="drift-card" aria-label="Era panels">
+    <div class="drift-card__head">
+      <h2>Five eras, re-fit</h2>
+      <p>Layer two: k-means re-fit within each era window (not carried over from the global 8),
+        named from their own centroids, then matched back to the nearest predecessor-era
+        archetype by cosine similarity in the Procrustes root frame &mdash; the same chained
+        transform behind the rotation chart above. A blue, bold lineage line marks a strong
+        match (&ge;0.9 aligned similarity) to its ancestor archetype.</p>
+    </div>
+    <div id="archetype-era-panels" class="archetype-era-grid">
+      <p class="drift-loading">Loading&hellip;</p>
+    </div>
+  </section>
+
+  <section class="methods-section drift-method" id="archetype-eras-method" aria-label="Archetype eras method">
+    <h2>Method</h2>
+    <p id="archetype-method-quote" class="drift-method-quote">Loading&hellip;</p>
+    <p>Full write-up alongside the rest of the archetype method: <a href="/methods#archetypes">read the methods page &rarr;</a></p>
+  </section>
+
 </main>
 
 <footer class="site-footer">

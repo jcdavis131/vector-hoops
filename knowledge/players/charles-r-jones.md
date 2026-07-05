@@ -37,7 +37,7 @@ Closest career shapes in the era-normalized vector space:
 
 ## Scouting report
 
-**Play style:** Unlisted · Playmaking + Steals. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+**Play style:** Unlisted · Playmaking + Steals. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others — an archetype claiming 16.6% of the league in his signature season, 11.6% today.
 
 **Signature-season stat line:** 13.9 pts · 4.6 reb · 7.0 ast · 2.2 stl per 100 (1999-00).
 

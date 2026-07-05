@@ -17,6 +17,7 @@
   var DEADLINE_URL = 'assets/deadline.json';
   var FADERFINISHER_URL = 'assets/faderfinisher.json';
   var CHEMISTRY_URL = 'assets/chemistry.json';
+  var ARCHETYPE_TIME_URL = 'assets/archetypes_time.json';
   var EPOCH_DATE = '2026-07-01'; // puzzle #1
   // v4: THREE-PART ANSWERS. The equation itself is three simultaneous
   // guessable slots — Stats Player + Archetype Player = Mashup Player —
@@ -2294,6 +2295,54 @@
     return entries.map(shareEmojiRow).join('');
   }
 
+  // Lazy-fetched, cached, fail-soft: the archetype-eras data only loads once
+  // a round actually reveals, and any fetch/parse failure is silent — the
+  // reveal card already has everything it needs without this bonus line.
+  var archetypeTimeCache = null; // null = not yet tried; false = failed; object = loaded
+  function loadArchetypeTime(cb) {
+    if (archetypeTimeCache) { cb(archetypeTimeCache); return; }
+    if (archetypeTimeCache === false) return;
+    fetch(ARCHETYPE_TIME_URL).then(function (res) {
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      return res.json();
+    }).then(function (data) {
+      archetypeTimeCache = data;
+      cb(data);
+    }).catch(function () {
+      archetypeTimeCache = false;
+    });
+  }
+
+  // "The mashup's archetype ({name}) peaked at {max}% in {season} — {current}%
+  // of the league today" — appended to the reveal card when the data loads in
+  // time; silently skipped otherwise (fail-soft, no error surfaced to the player).
+  function appendArchetypePrevalenceLine(clusterIdx) {
+    if (typeof clusterIdx !== 'number' || clusterIdx < 0) return;
+    loadArchetypeTime(function (data) {
+      if (!data || !data.globalArchetypes || !data.prevalence || !data.prevalence.length) return;
+      var name = data.globalArchetypes[clusterIdx];
+      if (!name) return;
+      var peak = null, peakSeason = null;
+      data.prevalence.forEach(function (p) {
+        var share = p.shares && p.shares[clusterIdx];
+        if (typeof share === 'number' && (peak === null || share > peak)) {
+          peak = share;
+          peakSeason = p.season;
+        }
+      });
+      var last = data.prevalence[data.prevalence.length - 1];
+      var current = last.shares && last.shares[clusterIdx];
+      if (peak === null || typeof current !== 'number') return;
+      if (!els.revealBody) return;
+      var line = document.createElement('p');
+      line.className = 'vh-reveal__prevalence';
+      line.textContent = "The mashup's archetype (" + name + ') peaked at ' +
+        (peak * 100).toFixed(1) + '% in ' + peakSeason + ' — ' +
+        (current * 100).toFixed(1) + '% of the league today.';
+      els.revealBody.appendChild(line);
+    });
+  }
+
   function showReveal(rec) {
     els.revealCard.hidden = false;
     var isPractice = activeChimeraMode === 'practice';
@@ -2325,6 +2374,7 @@
       '<a href="#" class="vh-dossier-link" data-slug="' + playerSlug(TARGET.b.name) + '" data-name="' +
         TARGET.b.name + '">' + TARGET.b.name + '</a></div>';
     els.shareCopied.hidden = true;
+    appendArchetypePrevalenceLine(TARGET.clusterIdx);
   }
 
   // LOSS reveal doctrine: name all three true answers regardless of whether

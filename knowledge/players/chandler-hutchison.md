@@ -38,7 +38,7 @@ Closest career shapes in the era-normalized vector space:
 
 ## Scouting report
 
-**Play style:** SF · Offensive Glass + Defensive Glass. Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+**Play style:** SF · Offensive Glass + Defensive Glass. Plays as a balanced-diet wing: no single shot zone dominates his shot chart — an archetype claiming 6.4% of the league in his signature season, 8.1% today.
 
 **Signature-season stat line:** 12.2 pts · 9.9 reb · 1.8 ast · 1.2 stl per 100 (2018-19).
 

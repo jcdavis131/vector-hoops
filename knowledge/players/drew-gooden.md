@@ -48,7 +48,7 @@ Closest career shapes in the era-normalized vector space:
 
 ## Scouting report
 
-**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a stretch big: lives beyond the arc, unusual range for the position — an archetype claiming 8.1% of the league in his signature season, 13.3% today.
 
 **Signature-season stat line:** 12.7 pts · 13.1 reb · 2.0 ast · 1.7 blk per 100 (2015-16).
 

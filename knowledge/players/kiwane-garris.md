@@ -36,7 +36,7 @@ Closest career shapes in the era-normalized vector space:
 
 ## Scouting report
 
-**Play style:** Unlisted · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+**Play style:** Unlisted · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet wing: no single shot zone dominates his shot chart — an archetype claiming 8.8% of the league in his signature season, 13.3% today.
 
 **Signature-season stat line:** 14.8 pts · 4.2 reb · 6.1 ast · 1.5 stl per 100 (1997-98).
 

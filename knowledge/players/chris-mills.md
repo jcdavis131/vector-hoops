@@ -41,7 +41,7 @@ Closest career shapes in the era-normalized vector space:
 
 ## Scouting report
 
-**Play style:** PF · Three-Point Volume + Three-Point Accuracy. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+**Play style:** PF · Three-Point Volume + Three-Point Accuracy. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look — an archetype claiming 18.4% of the league in his signature season, 17.6% today.
 
 **Signature-season stat line:** 19.4 pts · 9.7 reb · 4.2 ast · 1.3 stl per 100 (2002-03).
 

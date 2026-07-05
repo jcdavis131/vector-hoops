@@ -40,7 +40,7 @@ Closest career shapes in the era-normalized vector space:
 
 ## Scouting report
 
-**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a balanced-diet wing: no single shot zone dominates his shot chart — an archetype claiming 18.7% of the league in his signature season, 20.7% today.
 
 **Signature-season stat line:** 10.5 pts · 5.9 reb · 3.4 ast · 2.5 stl per 100 (2014-15).
 

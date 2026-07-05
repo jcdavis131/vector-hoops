@@ -982,6 +982,13 @@ main{
 }
 .vh-reveal__okf a{ color: var(--ink); font-weight: 700; }
 
+.vh-reveal__prevalence{
+  margin-top: 8px;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+
 .vh-mapcard__legend{
   display: flex;
   flex-wrap: wrap;

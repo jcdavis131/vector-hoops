@@ -37,7 +37,7 @@ Closest career shapes in the era-normalized vector space:
 
 ## Scouting report
 
-**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots — an archetype claiming 11.0% of the league in his signature season, 13.3% today.
 
 **Signature-season stat line:** 17.3 pts · 7.3 reb · 6.2 ast · 2.3 stl per 100 (2006-07).
 

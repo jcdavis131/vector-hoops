@@ -29,6 +29,7 @@ import numpy as np
 ROOT = Path(__file__).resolve().parent.parent
 VECTORS = ROOT / "assets" / "vectors.json"
 DRIFT = ROOT / "assets" / "drift.json"
+ARCHETYPE_TIME = ROOT / "assets" / "archetypes_time.json"
 KNOW = ROOT / "knowledge"
 CACHE = ROOT / "pipeline" / "cache"
 
@@ -290,6 +291,23 @@ def main() -> None:
     positions = data.get("positions", [])
     players = data["players"]
 
+    # ---- archetype prevalence over time (assets/archetypes_time.json),
+    #      used to add era context to the scouting report's play-style line.
+    #      Fails soft: missing file or a globalArchetypes order that doesn't
+    #      match vectors.json clusters just skips the context, never breaks
+    #      the build. ----
+    prevalence_by_season: dict[str, list[float]] = {}
+    today_season = today_shares = None
+    if ARCHETYPE_TIME.exists():
+        _at = json.loads(ARCHETYPE_TIME.read_text(encoding="utf-8"))
+        if _at.get("globalArchetypes") == clusters and _at.get("prevalence"):
+            prevalence_by_season = {p["season"]: p["shares"] for p in _at["prevalence"]}
+            today_season = _at["prevalence"][-1]["season"]
+            today_shares = _at["prevalence"][-1]["shares"]
+        else:
+            print("archetypes_time.json globalArchetypes order doesn't match "
+                  "vectors.json clusters -- skipping prevalence context")
+
     # ---- group player-seasons by name (the dataset carries no person id;
     #      same-name players are flagged, see `ambiguous`) ----
     by_name: dict[str, list[dict]] = defaultdict(list)
@@ -436,7 +454,16 @@ def main() -> None:
         pos_label = sig_pos or (c["positions"][0] if c["positions"] else "Unlisted")
         pos_group = POS_GROUP.get(pos_label, "wing")
         style_sentence = style_for(s["v"], data["features"], pos_group)
-        body.append(f"**Play style:** {pos_label} · {clusters[s['c']]}. {style_sentence}")
+        prevalence_note = ""
+        sig_shares = prevalence_by_season.get(s["season"])
+        ci = s["c"]
+        if sig_shares is not None and today_shares is not None and 0 <= ci < len(sig_shares):
+            x_pct = sig_shares[ci] * 100
+            y_pct = today_shares[ci] * 100
+            prevalence_note = (f" — an archetype claiming {x_pct:.1f}% of the league in his "
+                                f"signature season, {y_pct:.1f}% today")
+        body.append(f"**Play style:** {pos_label} · {clusters[s['c']]}. "
+                    f"{style_sentence.rstrip('.')}{prevalence_note}.")
         body.append("")
         raw_rows = base_cache.get(s["season"])
         raw = raw_rows.get(name) if raw_rows else None

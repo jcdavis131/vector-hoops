@@ -47,7 +47,7 @@ Closest career shapes in the era-normalized vector space:
 
 ## Scouting report
 
-**Play style:** PF · Scoring Volume + Shot Volume. Plays as a stretch big: lives beyond the arc, unusual range for the position.
+**Play style:** PF · Scoring Volume + Shot Volume. Plays as a stretch big: lives beyond the arc, unusual range for the position — an archetype claiming 9.2% of the league in his signature season, 11.3% today.
 
 **Signature-season stat line:** 28.5 pts · 10.9 reb · 6.7 ast · 2.1 stl per 100 (2000-01).
 

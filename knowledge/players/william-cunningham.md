@@ -36,7 +36,7 @@ Closest career shapes in the era-normalized vector space:
 
 ## Scouting report
 
-**Play style:** C · Offensive Glass + Defensive Glass. Plays as a stretch big: lives beyond the arc, unusual range for the position.
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a stretch big: lives beyond the arc, unusual range for the position — an archetype claiming 14.5% of the league in his signature season, 8.1% today.
 
 **Signature-season stat line:** 1.9 pts · 8.8 reb · 0.3 ast · 3.5 blk per 100 (1998-99).
 

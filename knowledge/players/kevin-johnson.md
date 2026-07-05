@@ -37,7 +37,7 @@ Closest career shapes in the era-normalized vector space:
 
 ## Scouting report
 
-**Play style:** PG · Scoring Volume + Shot Volume. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble — an archetype claiming 8.8% of the league in his signature season, 11.3% today.
 
 **Signature-season stat line:** 26.7 pts · 4.8 reb · 12.4 ast · 1.9 stl per 100 (1996-97).
 

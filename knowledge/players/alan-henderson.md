@@ -45,7 +45,7 @@ Closest career shapes in the era-normalized vector space:
 
 ## Scouting report
 
-**Play style:** PF · Three-Point Accuracy (Low Turnovers). Plays as a rim-pressure big: lives at the line, never shoots threes.
+**Play style:** PF · Three-Point Accuracy (Low Turnovers). Plays as a rim-pressure big: lives at the line, never shoots threes — an archetype claiming 11.2% of the league in his signature season, 20.7% today.
 
 **Signature-season stat line:** 17.1 pts · 11.6 reb · 1.3 ast · 1.8 blk per 100 (2001-02).
 

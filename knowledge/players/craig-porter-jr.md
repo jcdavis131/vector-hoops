@@ -38,7 +38,7 @@ Closest career shapes in the era-normalized vector space:
 
 ## Scouting report
 
-**Play style:** PG · Three-Point Accuracy (Low Turnovers). Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+**Play style:** PG · Three-Point Accuracy (Low Turnovers). Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots — an archetype claiming 20.7% of the league in his signature season, 20.7% today.
 
 **Signature-season stat line:** 11.9 pts · 9.0 reb · 8.4 ast · 2.3 stl per 100 (2025-26).
 

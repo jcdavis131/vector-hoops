@@ -36,7 +36,7 @@ Closest career shapes in the era-normalized vector space:
 
 ## Scouting report
 
-**Play style:** PF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch big: lives beyond the arc, unusual range for the position.
+**Play style:** PF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch big: lives beyond the arc, unusual range for the position — an archetype claiming 20.5% of the league in his signature season, 17.6% today.
 
 **Signature-season stat line:** 17.0 pts · 7.7 reb · 2.5 ast · 0.4 stl per 100 (2017-18).
 

@@ -46,7 +46,7 @@ Closest career shapes in the era-normalized vector space:
 
 ## Scouting report
 
-**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others — an archetype claiming 21.2% of the league in his signature season, 17.6% today.
 
 **Signature-season stat line:** 21.9 pts · 4.6 reb · 3.2 ast · 1.0 stl per 100 (2006-07).
 

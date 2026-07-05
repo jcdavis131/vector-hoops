@@ -43,7 +43,7 @@ Closest career shapes in the era-normalized vector space:
 
 ## Scouting report
 
-**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes — an archetype claiming 9.4% of the league in his signature season, 8.3% today.
 
 **Signature-season stat line:** 19.9 pts · 13.4 reb · 3.4 ast · 2.5 blk per 100 (2018-19).
 

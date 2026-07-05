@@ -41,7 +41,7 @@ Closest career shapes in the era-normalized vector space:
 
 ## Scouting report
 
-**Play style:** SF · Defensive Glass + Rim Pressure (Fts). Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+**Play style:** SF · Defensive Glass + Rim Pressure (Fts). Plays as a slashing wing: lives at the free-throw line, attacks closeouts — an archetype claiming 14.6% of the league in his signature season, 9.2% today.
 
 **Signature-season stat line:** 23.2 pts · 8.2 reb · 3.6 ast · 2.2 stl per 100 (1996-97).
 

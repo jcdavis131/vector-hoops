@@ -41,7 +41,7 @@ Closest career shapes in the era-normalized vector space:
 
 ## Scouting report
 
-**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a slashing wing: lives at the free-throw line, attacks closeouts — an archetype claiming 8.6% of the league in his signature season, 13.3% today.
 
 **Signature-season stat line:** 11.2 pts · 6.7 reb · 2.2 ast · 2.0 stl per 100 (2017-18).
 

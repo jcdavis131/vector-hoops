@@ -41,7 +41,7 @@ Closest career shapes in the era-normalized vector space:
 
 ## Scouting report
 
-**Play style:** SF · Offensive Glass + Defensive Glass. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+**Play style:** SF · Offensive Glass + Defensive Glass. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others — an archetype claiming 12.1% of the league in his signature season, 8.1% today.
 
 **Signature-season stat line:** 6.3 pts · 13.1 reb · 1.8 ast · 0.8 stl per 100 (2009-10).
 

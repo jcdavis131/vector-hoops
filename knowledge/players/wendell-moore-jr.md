@@ -38,7 +38,7 @@ Closest career shapes in the era-normalized vector space:
 
 ## Scouting report
 
-**Play style:** SG · Offensive Glass + Defensive Glass. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+**Play style:** SG · Offensive Glass + Defensive Glass. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep — an archetype claiming 5.7% of the league in his signature season, 8.1% today.
 
 **Signature-season stat line:** 10.0 pts · 6.7 reb · 3.3 ast · 2.8 stl per 100 (2023-24).
 

@@ -42,7 +42,7 @@ Closest career shapes in the era-normalized vector space:
 
 ## Scouting report
 
-**Play style:** SG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+**Play style:** SG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep — an archetype claiming 11.2% of the league in his signature season, 11.6% today.
 
 **Signature-season stat line:** 20.8 pts · 6.5 reb · 6.9 ast · 1.3 stl per 100 (2019-20).
 

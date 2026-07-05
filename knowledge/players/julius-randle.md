@@ -46,7 +46,7 @@ Closest career shapes in the era-normalized vector space:
 
 ## Scouting report
 
-**Play style:** PF · Scoring Volume + Shot Volume. Plays as a rim-pressure big: lives at the line, never shoots threes.
+**Play style:** PF · Scoring Volume + Shot Volume. Plays as a rim-pressure big: lives at the line, never shoots threes — an archetype claiming 12.5% of the league in his signature season, 11.3% today.
 
 **Signature-season stat line:** 32.8 pts · 12.5 reb · 6.8 ast · 0.7 stl per 100 (2023-24).
 

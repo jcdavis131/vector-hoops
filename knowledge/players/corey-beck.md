@@ -37,7 +37,7 @@ Closest career shapes in the era-normalized vector space:
 
 ## Scouting report
 
-**Play style:** PG · Three-Point Accuracy (Low Turnovers). Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+**Play style:** PG · Three-Point Accuracy (Low Turnovers). Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble — an archetype claiming 10.5% of the league in his signature season, 20.7% today.
 
 **Signature-season stat line:** 13.3 pts · 8.3 reb · 5.9 ast · 2.7 stl per 100 (1998-99).
 

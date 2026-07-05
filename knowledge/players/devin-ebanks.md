@@ -38,7 +38,7 @@ Closest career shapes in the era-normalized vector space:
 
 ## Scouting report
 
-**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble — an archetype claiming 8.3% of the league in his signature season, 13.3% today.
 
 **Signature-season stat line:** 24.6 pts · 10.8 reb · 0.8 ast · 2.0 blk per 100 (2010-11).
 

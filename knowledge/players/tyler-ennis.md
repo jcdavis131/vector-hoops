@@ -39,7 +39,7 @@ Closest career shapes in the era-normalized vector space:
 
 ## Scouting report
 
-**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots — an archetype claiming 12.5% of the league in his signature season, 11.6% today.
 
 **Signature-season stat line:** 14.5 pts · 4.2 reb · 8.7 ast · 2.2 stl per 100 (2014-15).
 

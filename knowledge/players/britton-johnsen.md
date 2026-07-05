@@ -36,7 +36,7 @@ Closest career shapes in the era-normalized vector space:
 
 ## Scouting report
 
-**Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+**Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a stretch big: lives beyond the arc, unusual range for the position — an archetype claiming 9.0% of the league in his signature season, 13.3% today.
 
 **Signature-season stat line:** 7.7 pts · 8.2 reb · 2.2 ast · 1.3 stl per 100 (2003-04).
 

@@ -36,7 +36,7 @@ Closest career shapes in the era-normalized vector space:
 
 ## Scouting report
 
-**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep — an archetype claiming 21.1% of the league in his signature season, 20.7% today.
 
 **Signature-season stat line:** 14.9 pts · 4.9 reb · 2.0 ast · 1.7 stl per 100 (2018-19).
 

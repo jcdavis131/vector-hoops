@@ -36,7 +36,7 @@ Closest career shapes in the era-normalized vector space:
 
 ## Scouting report
 
-**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a slashing wing: lives at the free-throw line, attacks closeouts — an archetype claiming 21.0% of the league in his signature season, 20.7% today.
 
 **Signature-season stat line:** 9.4 pts · 8.1 reb · 4.0 ast · 1.1 stl per 100 (2021-22).
 

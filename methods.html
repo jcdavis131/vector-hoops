@@ -92,6 +92,13 @@
       <li>Playmaking + Steals</li>
     </ul>
     <p>The client never re-derives cluster membership independently &mdash; it uses the label the pipeline computed, verified identical for all 12,392 players by the accuracy harness (check V2, below).</p>
+    <p>
+      The <a href="/drift#archetype-eras-method">Drift page</a>'s <b>Archetype Eras</b> section asks how that
+      population of 8 archetypes shifted over three decades, and re-fits a second, independent
+      layer of archetypes within five era windows to see whether names and centroids
+      persist across eras. The method, quoted verbatim from <code>assets/archetypes_time.json</code>:
+    </p>
+    <p style="font-family:var(--mono); font-size:12px; background:var(--paper); padding:10px 12px; border-radius:8px; border:1px solid var(--hairline); line-height:1.6; white-space:pre-wrap;">layer 1: per-season share of the 8 global k-means archetypes (labels from vectors.json, no re-fit); layer 2: k-means K=8 re-fit within five era windows (seeded, numpy), named from top-2 centroid sigmas; lineage = nearest predecessor-era centroid by cosine in the Procrustes root frame (era-geometry-corrected); shares are of charted players (MIN&gt;=800), not all rosters &mdash; stated scope</p>
   </section>
 
   <section class="methods-section" id="the-deadline">

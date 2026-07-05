@@ -42,7 +42,7 @@ Closest career shapes in the era-normalized vector space:
 
 ## Scouting report
 
-**Play style:** C · Three-Point Volume + Three-Point Accuracy. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+**Play style:** C · Three-Point Volume + Three-Point Accuracy. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look — an archetype claiming 21.7% of the league in his signature season, 17.6% today.
 
 **Signature-season stat line:** 23.8 pts · 10.3 reb · 3.5 ast · 1.6 stl per 100 (2020-21).
 

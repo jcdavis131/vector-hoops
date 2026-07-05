@@ -42,7 +42,7 @@ Closest career shapes in the era-normalized vector space:
 
 ## Scouting report
 
-**Play style:** Unlisted · Playmaking + Steals. Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+**Play style:** Unlisted · Playmaking + Steals. Plays as a balanced-diet wing: no single shot zone dominates his shot chart — an archetype claiming 15.6% of the league in his signature season, 11.6% today.
 
 **Signature-season stat line:** 22.4 pts · 4.7 reb · 8.2 ast · 2.2 stl per 100 (2007-08).
 

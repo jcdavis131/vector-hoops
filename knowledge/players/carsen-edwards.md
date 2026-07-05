@@ -37,7 +37,7 @@ Closest career shapes in the era-normalized vector space:
 
 ## Scouting report
 
-**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep — an archetype claiming 21.7% of the league in his signature season, 17.6% today.
 
 **Signature-season stat line:** 21.0 pts · 4.4 reb · 2.4 ast · 1.2 stl per 100 (2020-21).
 

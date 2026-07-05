@@ -10,6 +10,7 @@
   'use strict';
 
   var DRIFT_URL = 'assets/drift.json';
+  var ARCH_URL = 'assets/archetypes_time.json';
   var SVG_NS = 'http://www.w3.org/2000/svg';
 
   var ORANGE_HEX = '#eb6834';
@@ -17,6 +18,17 @@
   var INK = '#111111';
   var INK_MUTED = '#898781';
   var HAIRLINE = '#e1e0d9';
+  var SURFACE_HEX = '#ffffff';
+  var HOT_HEX = '#006300';
+  var COLD_HEX = '#d03b3b';
+
+  // 8 cluster hues, fixed order — the SAME validated palette as the 3D map's
+  // archetype color mode (assets/game.js PALETTE). globalArchetypes in
+  // archetypes_time.json is emitted in the identical order as vectors.json
+  // clusters, so index i here always names the same archetype as PALETTE[i]
+  // does on the map.
+  var ARCH_PALETTE = ['#3987e5', '#199e70', '#c98500', '#008300', '#9085e9',
+                      '#e66767', '#d55181', '#d95926'];
 
   // The math finds the spikes; these labels are our own read of known
   // league events near them — stated as observations, not derived facts.
@@ -150,6 +162,158 @@
     host.appendChild(p);
   }
 
+  function pct1(v) { return (v * 100).toFixed(1) + '%'; }
+
+  // -------------------------------------------------------------------
+  // The Archetype Eras (assets/archetypes_time.json): stream chart,
+  // biggest-shifts table, five era panels with lineage.
+  // -------------------------------------------------------------------
+
+  function renderArchetypeStream(host, legendHost, data) {
+    host.innerHTML = '';
+    host.removeAttribute('aria-label');
+
+    var names = data.globalArchetypes;
+    var prevalence = data.prevalence;
+    var n = prevalence.length;
+    var K = names.length;
+
+    var W = 880, LEFT = 40, RIGHT = 16, TOP = 14, BOT = 34;
+    var H = 340;
+    var plotW = W - LEFT - RIGHT, plotH = H - TOP - BOT;
+
+    function xOf(i) { return n <= 1 ? LEFT + plotW / 2 : LEFT + (i / (n - 1)) * plotW; }
+    function yOf(v) { return TOP + (1 - v) * plotH; }
+
+    // cumulative share stack per season, bottom-to-top in archetype order
+    var cum = prevalence.map(function (p) {
+      var c = [], running = 0;
+      for (var k = 0; k < K; k++) { running += p.shares[k] || 0; c.push(running); }
+      return c;
+    });
+
+    var svg = svgEl('svg', {
+      viewBox: '0 0 ' + W + ' ' + H,
+      role: 'img',
+      'aria-label': 'Archetype share of the league, ' + prevalence[0].season + ' through ' + prevalence[n - 1].season,
+      'font-family': getComputedStyle(document.body).fontFamily
+    }, host);
+
+    // gridlines every 25%
+    for (var g = 0; g <= 4; g++) {
+      var frac = g / 4;
+      var gy = yOf(frac);
+      svgEl('line', {
+        x1: LEFT, y1: gy, x2: W - RIGHT, y2: gy,
+        stroke: g === 0 ? INK : HAIRLINE, 'stroke-width': g === 0 ? 1.5 : 1
+      }, svg);
+      svgEl('text', {
+        x: LEFT - 8, y: gy + 3, 'text-anchor': 'end', 'font-size': 9, fill: INK_MUTED
+      }, svg).textContent = Math.round(frac * 100) + '%';
+    }
+
+    // stacked bands, bottom archetype first — a 2px surface-colored stroke
+    // on every band separates touching fills (no border-as-separator).
+    for (var k = 0; k < K; k++) {
+      var d = 'M ' + xOf(0) + ' ' + yOf(k === 0 ? 0 : cum[0][k - 1]) + ' ';
+      for (var i = 0; i < n; i++) d += 'L ' + xOf(i) + ' ' + yOf(cum[i][k]) + ' ';
+      for (var j = n - 1; j >= 0; j--) d += 'L ' + xOf(j) + ' ' + yOf(k === 0 ? 0 : cum[j][k - 1]) + ' ';
+      d += 'Z';
+      svgEl('path', {
+        d: d, fill: ARCH_PALETTE[k % ARCH_PALETTE.length],
+        stroke: SURFACE_HEX, 'stroke-width': 1.5, 'stroke-linejoin': 'round'
+      }, svg);
+    }
+
+    // per-season invisible hit columns + native tooltip listing every
+    // archetype's share that season (same title-tooltip pattern as the
+    // rotation chart above).
+    var step = n > 1 ? plotW / (n - 1) : plotW;
+    prevalence.forEach(function (p, i) {
+      var cx = xOf(i);
+      var hit = svgEl('rect', {
+        x: Math.max(LEFT, cx - step / 2), y: TOP, width: step, height: plotH,
+        fill: 'transparent'
+      }, svg);
+      var lines = names.map(function (nm, k) { return nm + ': ' + pct1(p.shares[k] || 0); });
+      var title = document.createElementNS(SVG_NS, 'title');
+      title.textContent = p.season + ' (n=' + p.n + ') — ' + lines.join(', ');
+      hit.appendChild(title);
+    });
+
+    var xLabelStep = Math.max(1, Math.ceil(n / 10));
+    prevalence.forEach(function (p, i) {
+      if (i % xLabelStep === 0 || i === n - 1) {
+        svgEl('text', {
+          x: xOf(i), y: H - 10, 'text-anchor': 'middle', 'font-size': 9, fill: INK_MUTED
+        }, svg).textContent = "'" + p.season.slice(2, 4);
+      }
+    });
+
+    if (legendHost) {
+      legendHost.innerHTML = names.map(function (nm, k) {
+        return '<li class="archetype-legend__item">' +
+          '<span class="archetype-legend__swatch" style="background:' + ARCH_PALETTE[k % ARCH_PALETTE.length] + '"></span>' +
+          escapeHtml(nm) + '</li>';
+      }).join('');
+    }
+  }
+
+  function renderArchetypeShiftsTable(table, shifts) {
+    var tbody = table.querySelector('tbody');
+    tbody.innerHTML = shifts.map(function (s) {
+      var up = s.delta >= 0;
+      var deltaCls = 'archetype-delta ' + (up ? 'archetype-delta--up' : 'archetype-delta--down');
+      var deltaText = (up ? '+' : '') + (s.delta * 100).toFixed(1) + 'pp';
+      return '<tr>' +
+        '<td>' + escapeHtml(s.archetype) + '</td>' +
+        '<td>' + pct1(s.early) + '</td>' +
+        '<td>' + pct1(s.late) + '</td>' +
+        '<td class="' + deltaCls + '">' + deltaText + '</td>' +
+        '</tr>';
+    }).join('');
+  }
+
+  function eraLineageHtml(item) {
+    if (!item.ancestor) return '';
+    var strong = item.ancestor.similarity >= 0.9;
+    var cls = 'archetype-lineage' + (strong ? ' archetype-lineage--strong' : '');
+    var chain = strong ? '⛓' : '←';
+    return '<p class="' + cls + '"><span class="archetype-lineage__chain">' + chain + '</span> descends from ' +
+      escapeHtml(item.ancestor.name) + ', ' + item.ancestor.similarity.toFixed(2) + ' aligned similarity</p>';
+  }
+
+  function renderEraPanels(host, eras) {
+    host.innerHTML = eras.map(function (era) {
+      var items = era.archetypes.slice().sort(function (a, b) { return b.share - a.share; }).map(function (item) {
+        return '<li class="archetype-era-item">' +
+          '<div class="archetype-era-item__name">' + escapeHtml(item.name) + '</div>' +
+          '<div class="archetype-era-item__share">' + pct1(item.share) + ' of the era</div>' +
+          eraLineageHtml(item) +
+          '</li>';
+      }).join('');
+      return '<div class="archetype-era-card">' +
+        '<div class="archetype-era-card__head">' + escapeHtml(era.era) +
+        ' <span class="archetype-era-card__n">(n=' + era.n + ')</span></div>' +
+        '<ul class="archetype-era-list">' + items + '</ul>' +
+        '</div>';
+    }).join('');
+  }
+
+  function showArchetypeError(chartHost, legendHost, table, panelsHost, methodEl) {
+    chartHost.innerHTML = '';
+    chartHost.setAttribute('aria-label', 'Archetype eras chart failed to load');
+    var p = document.createElement('p');
+    p.className = 'drift-loading';
+    p.textContent = 'Could not load the archetype eras data (assets/archetypes_time.json). Try reloading.';
+    chartHost.appendChild(p);
+    if (legendHost) legendHost.innerHTML = '';
+    var tbody = table && table.querySelector('tbody');
+    if (tbody) tbody.innerHTML = '<tr><td colspan="4" class="drift-loading">Could not load.</td></tr>';
+    if (panelsHost) panelsHost.innerHTML = '<p class="drift-loading">Could not load.</p>';
+    if (methodEl) methodEl.textContent = 'Could not load method text (assets/archetypes_time.json).';
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
     var chartHost = document.getElementById('drift-chart');
     var shiftsTable = document.getElementById('drift-shifts-table');
@@ -168,5 +332,25 @@
       if (tbody) tbody.innerHTML = '<tr><td colspan="5" class="drift-loading">Could not load.</td></tr>';
       if (methodEl) methodEl.textContent = 'Could not load method text (assets/drift.json).';
     });
+
+    var archChartHost = document.getElementById('archetype-stream-chart');
+    var archLegendHost = document.getElementById('archetype-legend');
+    var archShiftsTable = document.getElementById('archetype-shifts-table');
+    var archPanelsHost = document.getElementById('archetype-era-panels');
+    var archMethodEl = document.getElementById('archetype-method-quote');
+
+    if (archChartHost) {
+      fetch(ARCH_URL).then(function (res) {
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        return res.json();
+      }).then(function (data) {
+        renderArchetypeStream(archChartHost, archLegendHost, data);
+        renderArchetypeShiftsTable(archShiftsTable, data.biggestShifts);
+        renderEraPanels(archPanelsHost, data.eras);
+        if (archMethodEl) archMethodEl.textContent = data.method;
+      }).catch(function () {
+        showArchetypeError(archChartHost, archLegendHost, archShiftsTable, archPanelsHost, archMethodEl);
+      });
+    }
   });
 })();

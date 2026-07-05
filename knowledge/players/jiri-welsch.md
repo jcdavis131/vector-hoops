@@ -39,7 +39,7 @@ Closest career shapes in the era-normalized vector space:
 
 ## Scouting report
 
-**Play style:** SF · Playmaking + Steals. Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+**Play style:** SF · Playmaking + Steals. Plays as a slashing wing: lives at the free-throw line, attacks closeouts — an archetype claiming 16.0% of the league in his signature season, 11.6% today.
 
 **Signature-season stat line:** 12.5 pts · 5.8 reb · 5.5 ast · 1.6 stl per 100 (2002-03).
 
