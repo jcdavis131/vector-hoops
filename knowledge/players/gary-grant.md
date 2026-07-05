@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[chris-childs|Chris Childs]] — cosine 0.90
 - [[delonte-west|Delonte West]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 15.0 pts · 6.8 reb · 12.0 ast · 2.4 stl per 100 (1997-98).
+
+**Strengths:**
+
+- High-volume table-setter (+2.6σ vs era)
+- Reliable touch from the free-throw line (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.3σ)
+
+**Comparables:**
+
+- [[kirk-hinrich|Kirk Hinrich]] '04 (93% similar)
+- [[charlie-ward|Charlie Ward]] '02 (92% similar)
+- [[nando-de-colo|Nando De Colo]] '13 (91% similar)
+- [[howard-eisley|Howard Eisley]] '03 (91% similar)
+- [[chris-childs|Chris Childs]] '02 (90% similar)
+- [[delonte-west|Delonte West]] '09 (90% similar)
+
+**Career shape:** Charted 2 seasons (1996-97–1997-98). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

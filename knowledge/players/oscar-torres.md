@@ -35,6 +35,33 @@ Closest career shapes in the era-normalized vector space:
 - [[johnny-newman|Johnny Newman]] — cosine 0.79
 - [[alec-burks|Alec Burks]] — cosine 0.79
 
+## Scouting report
+
+**Play style:** SG · Scoring Volume + Shot Volume. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 25.1 pts · 5.7 reb · 1.4 ast · 1.9 stl per 100 (2002-03).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+2.0σ vs era)
+- Knockdown three-point shooter (+1.8σ vs era)
+- High-volume three-point shooter (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Table-setting role well below era (−1.0σ)
+
+**Comparables:**
+
+- [[kevin-martin|Kevin Martin]] '11 (84% similar)
+- [[gary-forbes|Gary Forbes]] '12 (83% similar)
+- [[norman-powell|Norman Powell]] '25 (82% similar)
+- [[eric-gordon|Eric Gordon]] '13 (82% similar)
+- [[johnny-newman|Johnny Newman]] '98 (79% similar)
+- [[alec-burks|Alec Burks]] '24 (79% similar)
+
+**Career shape:** Charted 2 seasons (2001-02–2002-03). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

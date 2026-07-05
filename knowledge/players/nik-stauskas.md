@@ -38,6 +38,32 @@ Closest career shapes in the era-normalized vector space:
 - [[malachi-richardson|Malachi Richardson]] — cosine 0.89
 - [[martell-webster|Martell Webster]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 13.9 pts · 3.9 reb · 2.9 ast · 0.9 stl per 100 (2014-15).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.1σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.2σ)
+- Finishing efficiency well below era (−1.2σ)
+
+**Comparables:**
+
+- [[timothe-luwawu-cabarrot|Timothe Luwawu-Cabarrot]] '19 (93% similar)
+- [[matt-ryan|Matt Ryan]] '25 (92% similar)
+- [[james-anderson|James Anderson]] '11 (91% similar)
+- [[alan-anderson|Alan Anderson]] '17 (91% similar)
+- [[malachi-richardson|Malachi Richardson]] '19 (89% similar)
+- [[martell-webster|Martell Webster]] '15 (89% similar)
+
+**Career shape:** Charted 5 seasons (2014-15–2018-19). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

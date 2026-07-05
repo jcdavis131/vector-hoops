@@ -40,6 +40,32 @@ Closest career shapes in the era-normalized vector space:
 - [[liam-mcneeley|Liam McNeeley]] — cosine 0.71
 - [[david-andersen|David Andersen]] — cosine 0.71
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 21.0 pts · 12.7 reb · 5.3 ast · 1.2 blk per 100 (2020-21).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.3σ)
+- Ball-hawking activity well below era (−1.0σ)
+
+**Comparables:**
+
+- [[trey-lyles|Trey Lyles]] '21 (79% similar)
+- [[linas-kleiza|Linas Kleiza]] '13 (79% similar)
+- [[walter-herrmann|Walter Herrmann]] '09 (72% similar)
+- [[jabari-smith-jr|Jabari Smith Jr.]] '23 (71% similar)
+- [[liam-mcneeley|Liam McNeeley]] '26 (71% similar)
+- [[david-andersen|David Andersen]] '11 (71% similar)
+
+**Career shape:** Charted 7 seasons (2015-16–2022-23). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

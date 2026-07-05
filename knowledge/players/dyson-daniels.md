@@ -37,6 +37,31 @@ Closest career shapes in the era-normalized vector space:
 - [[dalen-terry|Dalen Terry]] — cosine 0.85
 - [[kris-dunn|Kris Dunn]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** SG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 19.3 pts · 8.0 reb · 6.0 ast · 4.1 stl per 100 (2024-25).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+4.0σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.3σ)
+
+**Comparables:**
+
+- [[gary-payton-ii|Gary Payton II]] '20 (86% similar)
+- [[cody-martin|Cody Martin]] '21 (86% similar)
+- [[adrian-griffin|Adrian Griffin]] '04 (86% similar)
+- [[nick-calathes|Nick Calathes]] '15 (86% similar)
+- [[dalen-terry|Dalen Terry]] '26 (85% similar)
+- [[kris-dunn|Kris Dunn]] '20 (85% similar)
+
+**Career shape:** Charted 4 seasons (2022-23–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Playmaking + Steals identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

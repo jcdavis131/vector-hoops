@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[j-r-bremer|J.R. Bremer]] — cosine 0.88
 - [[toney-douglas|Toney Douglas]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 18.6 pts · 5.0 reb · 6.5 ast · 2.3 stl per 100 (1999-00).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.5σ vs era)
+- Active hands, disrupts passing lanes (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.8σ)
+
+**Comparables:**
+
+- [[devonte-graham|Devonte' Graham]] '20 (90% similar)
+- [[will-solomon|Will Solomon]] '02 (89% similar)
+- [[isaiah-canaan|Isaiah Canaan]] '16 (88% similar)
+- [[erick-strickland|Erick Strickland]] '01 (88% similar)
+- [[j-r-bremer|J.R. Bremer]] '04 (88% similar)
+- [[toney-douglas|Toney Douglas]] '12 (87% similar)
+
+**Career shape:** Charted 1 season (1999-00). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

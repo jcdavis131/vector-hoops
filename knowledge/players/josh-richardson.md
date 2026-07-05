@@ -42,6 +42,32 @@ Closest career shapes in the era-normalized vector space:
 - [[ian-clark|Ian Clark]] — cosine 0.88
 - [[wesley-matthews|Wesley Matthews]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 15.5 pts · 4.9 reb · 3.3 ast · 1.6 stl per 100 (2015-16).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+1.2σ vs era)
+- Rarely turns the ball over (−1.1σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.1σ)
+
+**Comparables:**
+
+- [[aaron-holiday|Aaron Holiday]] '26 (92% similar)
+- [[kentavious-caldwell-pope|Kentavious Caldwell-Pope]] '24 (91% similar)
+- [[tyler-johnson|Tyler Johnson]] '21 (91% similar)
+- [[patty-mills|Patty Mills]] '14 (88% similar)
+- [[ian-clark|Ian Clark]] '15 (88% similar)
+- [[wesley-matthews|Wesley Matthews]] '20 (87% similar)
+
+**Career shape:** Charted 9 seasons (2015-16–2023-24). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

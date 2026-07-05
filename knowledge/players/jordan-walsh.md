@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[dean-wade|Dean Wade]] — cosine 0.86
 - [[maxi-kleber|Maxi Kleber]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** PF · Three-Point Accuracy (Low Turnovers). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 10.0 pts · 8.4 reb · 2.3 ast · 1.5 stl per 100 (2024-25).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Scoring load well below era (−1.6σ)
+- Free-throw touch well below era (−1.4σ)
+
+**Comparables:**
+
+- [[johnny-furphy|Johnny Furphy]] '26 (92% similar)
+- [[andre-roberson|Andre Roberson]] '18 (89% similar)
+- [[jason-collins|Jason Collins]] '10 (87% similar)
+- [[eduardo-najera|Eduardo Najera]] '12 (86% similar)
+- [[dean-wade|Dean Wade]] '25 (86% similar)
+- [[maxi-kleber|Maxi Kleber]] '26 (85% similar)
+
+**Career shape:** Charted 2 seasons (2024-25–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

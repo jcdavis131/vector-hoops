@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[sterling-brown|Sterling Brown]] — cosine 0.81
 - [[pete-chilcutt|Pete Chilcutt]] — cosine 0.80
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 13.5 pts · 9.8 reb · 1.9 ast · 1.9 stl per 100 (2024-25).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+2.0σ vs era)
+- Knockdown three-point shooter (+1.5σ vs era)
+- Rarely turns the ball over (−1.0σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.4σ)
+- Rim-protection impact well below era (−1.2σ)
+
+**Comparables:**
+
+- [[bobby-simmons|Bobby Simmons]] '12 (86% similar)
+- [[ryan-gomes|Ryan Gomes]] '12 (84% similar)
+- [[robbie-hummel|Robbie Hummel]] '14 (83% similar)
+- [[david-noel|David Noel]] '07 (82% similar)
+- [[sterling-brown|Sterling Brown]] '22 (81% similar)
+- [[pete-chilcutt|Pete Chilcutt]] '00 (80% similar)
+
+**Career shape:** Charted 1 season (2024-25). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -41,6 +41,33 @@ Closest career shapes in the era-normalized vector space:
 - [[jaylen-nowell|Jaylen Nowell]] — cosine 0.74
 - [[t-j-warren|T.J. Warren]] — cosine 0.73
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 18.3 pts · 5.3 reb · 2.7 ast · 2.1 stl per 100 (2004-05).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+1.2σ vs era)
+- Rarely turns the ball over (−1.1σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.4σ)
+- On-court net impact well below era (−1.4σ)
+
+**Comparables:**
+
+- [[mahmoud-abdul-rauf|Mahmoud Abdul-Rauf]] '98 (86% similar)
+- [[courtney-alexander|Courtney Alexander]] '01 (84% similar)
+- [[willie-green|Willie Green]] '04 (76% similar)
+- [[erick-green|Erick Green]] '15 (74% similar)
+- [[jaylen-nowell|Jaylen Nowell]] '22 (74% similar)
+- [[t-j-warren|T.J. Warren]] '18 (73% similar)
+
+**Career shape:** Charted 8 seasons (1997-98–2004-05). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

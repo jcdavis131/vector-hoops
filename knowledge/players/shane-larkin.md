@@ -37,6 +37,33 @@ Closest career shapes in the era-normalized vector space:
 - [[jason-hart|Jason Hart]] — cosine 0.93
 - [[daniel-ewing|Daniel Ewing]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 16.0 pts · 5.1 reb · 9.6 ast · 2.7 stl per 100 (2015-16).
+
+**Strengths:**
+
+- High-volume table-setter (+2.0σ vs era)
+- Active hands, disrupts passing lanes (+1.9σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.4σ)
+- On-court net impact well below era (−1.3σ)
+
+**Comparables:**
+
+- [[marko-jaric|Marko Jaric]] '03 (94% similar)
+- [[jordan-mclaughlin|Jordan McLaughlin]] '24 (94% similar)
+- [[jerian-grant|Jerian Grant]] '19 (94% similar)
+- [[anthony-johnson|Anthony Johnson]] '02 (94% similar)
+- [[jason-hart|Jason Hart]] '09 (93% similar)
+- [[daniel-ewing|Daniel Ewing]] '07 (93% similar)
+
+**Career shape:** Charted 4 seasons (2013-14–2017-18). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

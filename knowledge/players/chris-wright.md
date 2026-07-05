@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[daniel-orton|Daniel Orton]] — cosine 0.84
 - [[joan-beringer|Joan Beringer]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** SF · Rim Protection + Offensive Glass. Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 18.4 pts · 11.8 reb · 1.1 ast · 3.4 blk per 100 (2011-12).
+
+**Strengths:**
+
+- Elite rim protection (+2.0σ vs era)
+- Draws contact, gets to the line often (+1.7σ vs era)
+- Relentless on the offensive glass (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.5σ)
+- Three-point volume well below era (−1.1σ)
+
+**Comparables:**
+
+- [[jeff-withey|Jeff Withey]] '17 (92% similar)
+- [[isaiah-jackson|Isaiah Jackson]] '24 (88% similar)
+- [[daniel-gafford|Daniel Gafford]] '25 (85% similar)
+- [[mamadou-n-diaye|Mamadou N'diaye]] '04 (85% similar)
+- [[daniel-orton|Daniel Orton]] '12 (84% similar)
+- [[joan-beringer|Joan Beringer]] '26 (84% similar)
+
+**Career shape:** Charted 1 season (2011-12). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

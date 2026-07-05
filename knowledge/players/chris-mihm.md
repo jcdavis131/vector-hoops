@@ -41,6 +41,34 @@ Closest career shapes in the era-normalized vector space:
 - [[mario-kasun|Mario Kasun]] — cosine 0.88
 - [[kevin-seraphin|Kevin Seraphin]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 17.1 pts · 16.1 reb · 4.7 ast · 2.8 blk per 100 (2008-09).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+2.5σ vs era)
+- Elite rim protection (+1.5σ vs era)
+- Strong presence on the defensive glass (+1.1σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−3.0σ)
+- Turnover rate well above era (+2.1σ)
+
+**Comparables:**
+
+- [[jordan-hill|Jordan Hill]] '13 (91% similar)
+- [[jeremy-tyler|Jeremy Tyler]] '14 (90% similar)
+- [[bruno-fernando|Bruno Fernando]] '22 (89% similar)
+- [[roy-hibbert|Roy Hibbert]] '13 (89% similar)
+- [[mario-kasun|Mario Kasun]] '05 (88% similar)
+- [[kevin-seraphin|Kevin Seraphin]] '16 (88% similar)
+
+**Career shape:** Charted 8 seasons (2000-01–2008-09). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

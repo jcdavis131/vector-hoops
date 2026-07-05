@@ -38,6 +38,33 @@ Closest career shapes in the era-normalized vector space:
 - [[michael-jordan|Michael Jordan]] — cosine 0.92
 - [[demar-derozan|DeMar DeRozan]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** SF · Scoring Volume + Shot Volume. Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 35.2 pts · 8.3 reb · 6.9 ast · 1.8 stl per 100 (2024-25).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+2.5σ vs era)
+- Featured, high-usage scoring role (+2.2σ vs era)
+- Draws contact, gets to the line often (+1.6σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[kobe-bryant|Kobe Bryant]] '06 (93% similar)
+- [[carmelo-anthony|Carmelo Anthony]] '13 (93% similar)
+- [[brandon-roy|Brandon Roy]] '09 (93% similar)
+- [[devin-booker|Devin Booker]] '19 (92% similar)
+- [[michael-jordan|Michael Jordan]] '97 (92% similar)
+- [[demar-derozan|DeMar DeRozan]] '17 (92% similar)
+
+**Career shape:** Charted 5 seasons (2021-22–2025-26). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -36,6 +36,33 @@ Closest career shapes in the era-normalized vector space:
 - [[james-young|James Young]] — cosine 0.90
 - [[walter-mccarty|Walter McCarty]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 15.4 pts · 5.3 reb · 2.5 ast · 2.1 stl per 100 (2016-17).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.1σ vs era)
+- High-volume three-point shooter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.8σ)
+- Rim pressure (free-throw generation) well below era (−1.6σ)
+
+**Comparables:**
+
+- [[wesley-johnson|Wesley Johnson]] '17 (92% similar)
+- [[sasha-pavlovic|Sasha Pavlovic]] '13 (91% similar)
+- [[khyri-thomas|Khyri Thomas]] '19 (91% similar)
+- [[antoine-wright|Antoine Wright]] '06 (91% similar)
+- [[james-young|James Young]] '16 (90% similar)
+- [[walter-mccarty|Walter McCarty]] '05 (90% similar)
+
+**Career shape:** Charted 3 seasons (2015-16–2017-18). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

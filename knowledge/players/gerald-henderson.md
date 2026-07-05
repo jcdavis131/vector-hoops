@@ -41,6 +41,32 @@ Closest career shapes in the era-normalized vector space:
 - [[antonio-blakeney|Antonio Blakeney]] — cosine 0.79
 - [[jordan-mcrae|Jordan McRae]] — cosine 0.78
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 25.5 pts · 6.0 reb · 4.3 ast · 1.6 stl per 100 (2012-13).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+1.5σ vs era)
+- Featured, high-usage scoring role (+1.1σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.4σ)
+
+**Comparables:**
+
+- [[courtney-alexander|Courtney Alexander]] '01 (91% similar)
+- [[ricky-pierce|Ricky Pierce]] '98 (89% similar)
+- [[al-thornton|Al Thornton]] '09 (80% similar)
+- [[chris-crawford|Chris Crawford]] '98 (79% similar)
+- [[antonio-blakeney|Antonio Blakeney]] '19 (79% similar)
+- [[jordan-mcrae|Jordan McRae]] '16 (78% similar)
+
+**Career shape:** Charted 8 seasons (2009-10–2016-17). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

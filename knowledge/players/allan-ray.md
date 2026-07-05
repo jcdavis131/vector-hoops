@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[tracy-murray|Tracy Murray]] — cosine 0.89
 - [[rex-chapman|Rex Chapman]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 20.7 pts · 4.9 reb · 3.1 ast · 1.4 stl per 100 (2006-07).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.5σ vs era)
+- Knockdown three-point shooter (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.1σ)
+
+**Comparables:**
+
+- [[voshon-lenard|Voshon Lenard]] '97 (93% similar)
+- [[vernon-maxwell|Vernon Maxwell]] '00 (92% similar)
+- [[john-starks|John Starks]] '00 (90% similar)
+- [[quentin-grimes|Quentin Grimes]] '24 (89% similar)
+- [[tracy-murray|Tracy Murray]] '02 (89% similar)
+- [[rex-chapman|Rex Chapman]] '98 (89% similar)
+
+**Career shape:** Charted 1 season (2006-07). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -47,6 +47,33 @@ Closest career shapes in the era-normalized vector space:
 - [[vlade-divac|Vlade Divac]] — cosine 0.74
 - [[charles-barkley|Charles Barkley]] — cosine 0.74
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 10.5 pts · 15.2 reb · 4.5 ast · 2.2 stl per 100 (2012-13).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+1.9σ vs era)
+- Strong net on-court impact (+1.7σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.7σ)
+- Scoring load well below era (−1.5σ)
+
+**Comparables:**
+
+- [[jalen-johnson|Jalen Johnson]] '26 (80% similar)
+- [[domantas-sabonis|Domantas Sabonis]] '24 (79% similar)
+- [[arvydas-sabonis|Arvydas Sabonis]] '97 (78% similar)
+- [[nikola-jokic|Nikola Jokić]] '22 (75% similar)
+- [[vlade-divac|Vlade Divac]] '97 (74% similar)
+- [[charles-barkley|Charles Barkley]] '97 (74% similar)
+
+**Career shape:** Charted 14 seasons (1999-00–2012-13). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

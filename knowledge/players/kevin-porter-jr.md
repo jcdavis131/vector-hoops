@@ -39,6 +39,32 @@ Closest career shapes in the era-normalized vector space:
 - [[mike-taylor|Mike Taylor]] — cosine 0.91
 - [[john-wall|John Wall]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** SG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 24.1 pts · 5.5 reb · 9.2 ast · 1.1 stl per 100 (2020-21).
+
+**Strengths:**
+
+- High-volume table-setter (+1.8σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.6σ)
+- On-court net impact well below era (−1.6σ)
+
+**Comparables:**
+
+- [[tony-wroten|Tony Wroten]] '15 (92% similar)
+- [[will-bynum|Will Bynum]] '09 (92% similar)
+- [[tyreke-evans|Tyreke Evans]] '16 (91% similar)
+- [[emmanuel-mudiay|Emmanuel Mudiay]] '16 (91% similar)
+- [[mike-taylor|Mike Taylor]] '09 (91% similar)
+- [[john-wall|John Wall]] '17 (90% similar)
+
+**Career shape:** Charted 6 seasons (2019-20–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Playmaking + Steals identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

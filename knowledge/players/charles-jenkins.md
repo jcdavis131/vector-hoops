@@ -35,6 +35,33 @@ Closest career shapes in the era-normalized vector space:
 - [[anthony-johnson|Anthony Johnson]] — cosine 0.85
 - [[elie-okobo|Elie Okobo]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 16.7 pts · 3.9 reb · 9.6 ast · 1.9 stl per 100 (2011-12).
+
+**Strengths:**
+
+- High-volume table-setter (+1.8σ vs era)
+- Reliable touch from the free-throw line (+1.1σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.5σ)
+- Defensive rebounding well below era (−1.2σ)
+
+**Comparables:**
+
+- [[jeff-mcinnis|Jeff McInnis]] '08 (88% similar)
+- [[bimbo-coles|Bimbo Coles]] '04 (87% similar)
+- [[ray-mccallum|Ray McCallum]] '14 (86% similar)
+- [[cory-joseph|Cory Joseph]] '24 (86% similar)
+- [[anthony-johnson|Anthony Johnson]] '02 (85% similar)
+- [[elie-okobo|Elie Okobo]] '19 (85% similar)
+
+**Career shape:** Charted 2 seasons (2011-12–2012-13). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

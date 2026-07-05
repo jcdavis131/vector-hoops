@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[luke-ridnour|Luke Ridnour]] — cosine 0.88
 - [[jeff-mcinnis|Jeff McInnis]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** Unlisted · Playmaking + Steals. Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 14.1 pts · 3.9 reb · 8.9 ast · 1.6 stl per 100 (2010-11).
+
+**Strengths:**
+
+- High-volume table-setter (+1.7σ vs era)
+- Reliable touch from the free-throw line (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.2σ)
+- Offensive-glass activity well below era (−1.1σ)
+
+**Comparables:**
+
+- [[bimbo-coles|Bimbo Coles]] '04 (92% similar)
+- [[andrew-nembhard|Andrew Nembhard]] '26 (89% similar)
+- [[josh-magette|Josh Magette]] '18 (89% similar)
+- [[muggsy-bogues|Muggsy Bogues]] '97 (88% similar)
+- [[luke-ridnour|Luke Ridnour]] '06 (88% similar)
+- [[jeff-mcinnis|Jeff McInnis]] '08 (87% similar)
+
+**Career shape:** Charted 1 season (2010-11). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

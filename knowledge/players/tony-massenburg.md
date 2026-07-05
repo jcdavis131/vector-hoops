@@ -41,6 +41,33 @@ Closest career shapes in the era-normalized vector space:
 - [[mark-strickland|Mark Strickland]] — cosine 0.91
 - [[samaki-walker|Samaki Walker]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 16.8 pts · 13.5 reb · 1.1 ast · 1.3 blk per 100 (2001-02).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+4.0σ vs era)
+- Strong presence on the defensive glass (+1.2σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.0σ)
+- Table-setting role well below era (−1.1σ)
+
+**Comparables:**
+
+- [[james-wiseman|James Wiseman]] '24 (92% similar)
+- [[nick-richards|Nick Richards]] '23 (92% similar)
+- [[donnell-harvey|Donnell Harvey]] '02 (91% similar)
+- [[lonny-baxter|Lonny Baxter]] '06 (91% similar)
+- [[mark-strickland|Mark Strickland]] '97 (91% similar)
+- [[samaki-walker|Samaki Walker]] '02 (90% similar)
+
+**Career shape:** Charted 8 seasons (1996-97–2004-05). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

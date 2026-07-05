@@ -35,6 +35,34 @@ Closest career shapes in the era-normalized vector space:
 - [[amar-e-stoudemire|Amar'e Stoudemire]] — cosine 0.88
 - [[nikola-pekovic|Nikola Pekovic]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 26.2 pts · 14.4 reb · 1.9 ast · 2.2 blk per 100 (1996-97).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+2.2σ vs era)
+- Relentless on the offensive glass (+1.6σ vs era)
+- Featured, high-usage scoring role (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.4σ)
+- Turnover rate well above era (+1.3σ)
+
+**Comparables:**
+
+- [[johnathan-motley|Johnathan Motley]] '19 (89% similar)
+- [[ike-diogu|Ike Diogu]] '09 (88% similar)
+- [[michael-sweetney|Michael Sweetney]] '07 (88% similar)
+- [[vin-baker|Vin Baker]] '05 (88% similar)
+- [[amar-e-stoudemire|Amar'e Stoudemire]] '08 (88% similar)
+- [[nikola-pekovic|Nikola Pekovic]] '12 (88% similar)
+
+**Career shape:** Charted 2 seasons (1996-97–1997-98). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

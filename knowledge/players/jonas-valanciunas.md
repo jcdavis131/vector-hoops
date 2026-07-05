@@ -47,6 +47,34 @@ Closest career shapes in the era-normalized vector space:
 - [[john-collins|John Collins]] — cosine 0.89
 - [[deandre-ayton|Deandre Ayton]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 32.2 pts · 18.7 reb · 4.4 ast · 2.1 blk per 100 (2025-26).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+2.7σ vs era)
+- Relentless on the offensive glass (+2.1σ vs era)
+- Featured, high-usage scoring role (+1.7σ vs era)
+
+**Areas of concern:**
+
+- Three-point volume well below era (−1.5σ)
+- Turnover rate well above era (+1.5σ)
+
+**Comparables:**
+
+- [[enes-freedom|Enes Freedom]] '18 (94% similar)
+- [[boban-marjanovic|Boban Marjanovic]] '18 (92% similar)
+- [[wendell-carter-jr|Wendell Carter Jr.]] '19 (90% similar)
+- [[pau-gasol|Pau Gasol]] '15 (89% similar)
+- [[john-collins|John Collins]] '19 (89% similar)
+- [[deandre-ayton|Deandre Ayton]] '26 (89% similar)
+
+**Career shape:** Charted 14 seasons (2012-13–2025-26). Entered as a Rim Protection + Offensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

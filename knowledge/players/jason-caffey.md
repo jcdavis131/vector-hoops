@@ -40,6 +40,34 @@ Closest career shapes in the era-normalized vector space:
 - [[anzejs-pasecniks|Anžejs Pasečņiks]] — cosine 0.88
 - [[craig-smith|Craig Smith]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PF · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 20.1 pts · 11.0 reb · 3.3 ast · 0.9 stl per 100 (1996-97).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+1.5σ vs era)
+- Strong net on-court impact (+1.2σ vs era)
+- Relentless on the offensive glass (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.4σ)
+- Ball-hawking activity well below era (−1.1σ)
+
+**Comparables:**
+
+- [[reggie-slater|Reggie Slater]] '03 (90% similar)
+- [[garret-siler|Garret Siler]] '11 (90% similar)
+- [[brandon-hunter|Brandon Hunter]] '05 (89% similar)
+- [[ben-handlogten|Ben Handlogten]] '04 (89% similar)
+- [[anzejs-pasecniks|Anžejs Pasečņiks]] '20 (88% similar)
+- [[craig-smith|Craig Smith]] '09 (88% similar)
+
+**Career shape:** Charted 7 seasons (1996-97–2002-03). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

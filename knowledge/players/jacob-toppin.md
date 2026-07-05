@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[alex-poythress|Alex Poythress]] — cosine 0.84
 - [[daniel-hamilton|Daniel Hamilton]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 14.6 pts · 9.5 reb · 3.8 ast · 1.3 stl per 100 (2024-25).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+1.7σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−4.0σ)
+- On-court net impact well below era (−2.1σ)
+
+**Comparables:**
+
+- [[erik-daniels|Erik Daniels]] '05 (90% similar)
+- [[pete-nance|Pete Nance]] '26 (87% similar)
+- [[d-j-wilson|D.J. Wilson]] '18 (86% similar)
+- [[tyler-lydon|Tyler Lydon]] '19 (85% similar)
+- [[alex-poythress|Alex Poythress]] '18 (84% similar)
+- [[daniel-hamilton|Daniel Hamilton]] '19 (83% similar)
+
+**Career shape:** Charted 1 season (2024-25). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

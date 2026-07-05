@@ -35,6 +35,33 @@ Closest career shapes in the era-normalized vector space:
 - [[gerald-henderson|Gerald Henderson]] — cosine 0.71
 - [[danilo-gallinari|Danilo Gallinari]] — cosine 0.71
 
+## Scouting report
+
+**Play style:** SG · Defensive Glass + Rim Pressure (Fts). Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 28.0 pts · 7.5 reb · 2.6 ast · 1.3 stl per 100 (2023-24).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+3.2σ vs era)
+- Rarely turns the ball over (−1.7σ vs era)
+- Featured, high-usage scoring role (+1.1σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[derrick-williams|Derrick Williams]] '16 (84% similar)
+- [[bennedict-mathurin|Bennedict Mathurin]] '26 (74% similar)
+- [[shabazz-muhammad|Shabazz Muhammad]] '15 (74% similar)
+- [[devin-gray|Devin Gray]] '00 (72% similar)
+- [[gerald-henderson|Gerald Henderson]] '13 (71% similar)
+- [[danilo-gallinari|Danilo Gallinari]] '16 (71% similar)
+
+**Career shape:** Charted 2 seasons (2023-24–2024-25). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -39,6 +39,34 @@ Closest career shapes in the era-normalized vector space:
 - [[john-wall|John Wall]] — cosine 0.91
 - [[talen-horton-tucker|Talen Horton-Tucker]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 27.8 pts · 5.1 reb · 10.6 ast · 2.3 stl per 100 (2008-09).
+
+**Strengths:**
+
+- High-volume table-setter (+2.4σ vs era)
+- Heavy shot volume, focal scoring option (+1.6σ vs era)
+- Featured, high-usage scoring role (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.6σ)
+- Defensive rebounding well below era (−1.0σ)
+
+**Comparables:**
+
+- [[t-j-ford|T.J. Ford]] '07 (93% similar)
+- [[kevin-porter-jr|Kevin Porter Jr.]] '21 (92% similar)
+- [[dennis-schroder|Dennis Schröder]] '16 (92% similar)
+- [[robert-pack|Robert Pack]] '97 (91% similar)
+- [[john-wall|John Wall]] '17 (91% similar)
+- [[talen-horton-tucker|Talen Horton-Tucker]] '23 (91% similar)
+
+**Career shape:** Charted 6 seasons (2008-09–2013-14). Consistent Scoring Volume + Shot Volume profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

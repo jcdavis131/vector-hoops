@@ -44,6 +44,34 @@ Closest career shapes in the era-normalized vector space:
 - [[corey-maggette|Corey Maggette]] — cosine 0.84
 - [[joel-embiid|Joel Embiid]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** SF · Scoring Volume + Shot Volume. Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 30.0 pts · 9.8 reb · 4.5 ast · 1.8 stl per 100 (1998-99).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+2.3σ vs era)
+- Featured, high-usage scoring role (+2.1σ vs era)
+- Heavy shot volume, focal scoring option (+1.7σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.6σ)
+- On-court net impact well below era (−1.3σ)
+
+**Comparables:**
+
+- [[moritz-wagner|Moritz Wagner]] '25 (90% similar)
+- [[chris-bosh|Chris Bosh]] '10 (85% similar)
+- [[amar-e-stoudemire|Amar'e Stoudemire]] '08 (84% similar)
+- [[julius-randle|Julius Randle]] '24 (84% similar)
+- [[corey-maggette|Corey Maggette]] '06 (84% similar)
+- [[joel-embiid|Joel Embiid]] '17 (84% similar)
+
+**Career shape:** Charted 11 seasons (1996-97–2006-07). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

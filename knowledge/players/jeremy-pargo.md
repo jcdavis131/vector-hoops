@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[william-avery|William Avery]] — cosine 0.89
 - [[emmanuel-mudiay|Emmanuel Mudiay]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 14.8 pts · 4.3 reb · 6.4 ast · 1.8 stl per 100 (2011-12).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.3σ)
+- On-court net impact well below era (−1.7σ)
+
+**Comparables:**
+
+- [[nolan-smith|Nolan Smith]] '13 (97% similar)
+- [[jonny-flynn|Jonny Flynn]] '11 (93% similar)
+- [[darius-morris|Darius Morris]] '12 (91% similar)
+- [[nolan-traore|Nolan Traore]] '26 (90% similar)
+- [[william-avery|William Avery]] '00 (89% similar)
+- [[emmanuel-mudiay|Emmanuel Mudiay]] '16 (89% similar)
+
+**Career shape:** Charted 2 seasons (2011-12–2012-13). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

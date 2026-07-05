@@ -38,6 +38,33 @@ Closest career shapes in the era-normalized vector space:
 - [[baron-davis|Baron Davis]] — cosine 0.87
 - [[jeremy-lin|Jeremy Lin]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 27.5 pts · 6.8 reb · 6.3 ast · 2.5 stl per 100 (2024-25).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+1.4σ vs era)
+- Active hands, disrupts passing lanes (+1.4σ vs era)
+- High-volume three-point shooter (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.3σ)
+
+**Comparables:**
+
+- [[lester-hudson|Lester Hudson]] '10 (92% similar)
+- [[eric-bledsoe|Eric Bledsoe]] '17 (90% similar)
+- [[victor-oladipo|Victor Oladipo]] '18 (89% similar)
+- [[shabazz-napier|Shabazz Napier]] '17 (88% similar)
+- [[baron-davis|Baron Davis]] '04 (87% similar)
+- [[jeremy-lin|Jeremy Lin]] '12 (86% similar)
+
+**Career shape:** Charted 5 seasons (2021-22–2025-26). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

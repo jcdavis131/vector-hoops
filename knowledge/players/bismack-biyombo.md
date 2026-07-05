@@ -48,6 +48,34 @@ Closest career shapes in the era-normalized vector space:
 - [[brian-skinner|Brian Skinner]] — cosine 0.95
 - [[hasheem-thabeet|Hasheem Thabeet]] — cosine 0.95
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 14.6 pts · 14.4 reb · 3.1 ast · 4.9 blk per 100 (2022-23).
+
+**Strengths:**
+
+- Elite rim protection (+4.0σ vs era)
+- Relentless on the offensive glass (+1.6σ vs era)
+- Efficient finisher inside the arc (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−3.5σ)
+- Three-point accuracy well below era (−2.8σ)
+
+**Comparables:**
+
+- [[etan-thomas|Etan Thomas]] '07 (97% similar)
+- [[yves-missi|Yves Missi]] '26 (96% similar)
+- [[deyonta-davis|Deyonta Davis]] '17 (96% similar)
+- [[brendan-haywood|Brendan Haywood]] '15 (95% similar)
+- [[brian-skinner|Brian Skinner]] '08 (95% similar)
+- [[hasheem-thabeet|Hasheem Thabeet]] '12 (95% similar)
+
+**Career shape:** Charted 15 seasons (2011-12–2025-26). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

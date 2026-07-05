@@ -37,6 +37,33 @@ Closest career shapes in the era-normalized vector space:
 - [[willie-green|Willie Green]] — cosine 0.88
 - [[luke-kennard|Luke Kennard]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 20.5 pts · 5.4 reb · 5.8 ast · 0.8 stl per 100 (2017-18).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+1.1σ vs era)
+- Knockdown three-point shooter (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.2σ)
+- Rim pressure (free-throw generation) well below era (−1.1σ)
+
+**Comparables:**
+
+- [[gordan-giricek|Gordan Giricek]] '06 (91% similar)
+- [[andrew-goudelock|Andrew Goudelock]] '12 (89% similar)
+- [[gary-neal|Gary Neal]] '14 (89% similar)
+- [[tyronn-lue|Tyronn Lue]] '05 (89% similar)
+- [[willie-green|Willie Green]] '04 (88% similar)
+- [[luke-kennard|Luke Kennard]] '23 (88% similar)
+
+**Career shape:** Charted 4 seasons (2017-18–2020-21). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[david-noel|David Noel]] — cosine 0.75
 - [[rayan-rupert|Rayan Rupert]] — cosine 0.75
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 11.4 pts · 9.8 reb · 3.2 ast · 1.9 stl per 100 (2015-16).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+1.1σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.9σ)
+- Finishing efficiency well below era (−1.4σ)
+
+**Comparables:**
+
+- [[mario-hezonja|Mario Hezonja]] '17 (86% similar)
+- [[javonte-cooke|Javonte Cooke]] '26 (82% similar)
+- [[javonte-smart|Javonte Smart]] '22 (78% similar)
+- [[lionel-simmons|Lionel Simmons]] '97 (75% similar)
+- [[david-noel|David Noel]] '07 (75% similar)
+- [[rayan-rupert|Rayan Rupert]] '24 (75% similar)
+
+**Career shape:** Charted 1 season (2015-16). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

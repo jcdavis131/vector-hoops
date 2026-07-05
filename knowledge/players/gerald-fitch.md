@@ -34,6 +34,31 @@ Closest career shapes in the era-normalized vector space:
 - [[cameron-payne|Cameron Payne]] — cosine 0.82
 - [[brandon-jennings|Brandon Jennings]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 17.5 pts · 6.3 reb · 6.9 ast · 1.5 stl per 100 (2005-06).
+
+**Strengths:**
+
+- High-volume table-setter (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.7σ)
+
+**Comparables:**
+
+- [[devonte-graham|Devonte' Graham]] '20 (88% similar)
+- [[william-avery|William Avery]] '00 (85% similar)
+- [[darrick-martin|Darrick Martin]] '08 (84% similar)
+- [[rafer-alston|Rafer Alston]] '00 (82% similar)
+- [[cameron-payne|Cameron Payne]] '26 (82% similar)
+- [[brandon-jennings|Brandon Jennings]] '15 (81% similar)
+
+**Career shape:** Charted 1 season (2005-06). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

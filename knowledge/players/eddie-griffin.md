@@ -37,6 +37,34 @@ Closest career shapes in the era-normalized vector space:
 - [[carter-bryant|Carter Bryant]] — cosine 0.78
 - [[p-j-washington|P.J. Washington]] — cosine 0.74
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 12.7 pts · 15.4 reb · 1.6 ast · 5.9 blk per 100 (2005-06).
+
+**Strengths:**
+
+- Elite rim protection (+4.0σ vs era)
+- Strong presence on the defensive glass (+2.1σ vs era)
+- Rarely turns the ball over (−1.3σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.6σ)
+- Finishing efficiency well below era (−1.5σ)
+
+**Comparables:**
+
+- [[branden-carlson|Branden Carlson]] '25 (90% similar)
+- [[raef-lafrentz|Raef LaFrentz]] '08 (89% similar)
+- [[mo-bamba|Mo Bamba]] '20 (82% similar)
+- [[santi-aldama|Santi Aldama]] '22 (79% similar)
+- [[carter-bryant|Carter Bryant]] '26 (78% similar)
+- [[p-j-washington|P.J. Washington]] '26 (74% similar)
+
+**Career shape:** Charted 4 seasons (2001-02–2005-06). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

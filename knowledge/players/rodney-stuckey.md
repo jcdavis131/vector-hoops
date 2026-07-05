@@ -43,6 +43,33 @@ Closest career shapes in the era-normalized vector space:
 - [[collin-sexton|Collin Sexton]] — cosine 0.87
 - [[will-bynum|Will Bynum]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 26.3 pts · 5.2 reb · 8.8 ast · 1.8 stl per 100 (2010-11).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+1.9σ vs era)
+- High-volume table-setter (+1.6σ vs era)
+- Featured, high-usage scoring role (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.1σ)
+
+**Comparables:**
+
+- [[lou-williams|Lou Williams]] '19 (91% similar)
+- [[ramon-sessions|Ramon Sessions]] '08 (88% similar)
+- [[dennis-schroder|Dennis Schröder]] '16 (88% similar)
+- [[de-aaron-fox|De'Aaron Fox]] '21 (87% similar)
+- [[collin-sexton|Collin Sexton]] '21 (87% similar)
+- [[will-bynum|Will Bynum]] '09 (87% similar)
+
+**Career shape:** Charted 10 seasons (2007-08–2016-17). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

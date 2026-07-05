@@ -44,6 +44,33 @@ Closest career shapes in the era-normalized vector space:
 - [[randy-foye|Randy Foye]] — cosine 0.92
 - [[aj-price|AJ Price]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 15.0 pts · 4.1 reb · 6.2 ast · 1.2 stl per 100 (2007-08).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.1σ vs era)
+- Rarely turns the ball over (−1.6σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.2σ)
+- Finishing efficiency well below era (−1.6σ)
+
+**Comparables:**
+
+- [[shammond-williams|Shammond Williams]] '04 (94% similar)
+- [[luther-head|Luther Head]] '07 (93% similar)
+- [[mike-james|Mike James]] '06 (93% similar)
+- [[devonte-graham|Devonte' Graham]] '20 (92% similar)
+- [[randy-foye|Randy Foye]] '12 (92% similar)
+- [[aj-price|AJ Price]] '14 (92% similar)
+
+**Career shape:** Charted 11 seasons (1999-00–2009-10). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

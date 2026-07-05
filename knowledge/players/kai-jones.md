@@ -36,6 +36,33 @@ Closest career shapes in the era-normalized vector space:
 - [[jelani-mccoy|Jelani McCoy]] — cosine 0.89
 - [[ariel-hukporti|Ariel Hukporti]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 16.2 pts · 8.1 reb · 2.9 ast · 1.5 blk per 100 (2021-22).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+2.3σ vs era)
+- Knockdown three-point shooter (+1.7σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−3.1σ)
+- Turnover rate well above era (+1.8σ)
+
+**Comparables:**
+
+- [[maceo-baston|Maceo Baston]] '07 (94% similar)
+- [[damian-jones|Damian Jones]] '19 (93% similar)
+- [[jaxson-hayes|Jaxson Hayes]] '26 (91% similar)
+- [[adem-bona|Adem Bona]] '25 (90% similar)
+- [[jelani-mccoy|Jelani McCoy]] '02 (89% similar)
+- [[ariel-hukporti|Ariel Hukporti]] '25 (87% similar)
+
+**Career shape:** Charted 3 seasons (2021-22–2024-25). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

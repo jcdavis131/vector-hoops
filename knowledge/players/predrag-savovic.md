@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[bronny-james|Bronny James]] — cosine 0.84
 - [[peyton-siva|Peyton Siva]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** SG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 15.9 pts · 4.8 reb · 4.2 ast · 2.7 stl per 100 (2002-03).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.2σ)
+- Defensive rebounding well below era (−1.4σ)
+
+**Comparables:**
+
+- [[kj-simpson|KJ Simpson]] '26 (88% similar)
+- [[kenny-satterfield|Kenny Satterfield]] '02 (85% similar)
+- [[donnie-boyce|Donnie Boyce]] '97 (85% similar)
+- [[eddie-gill|Eddie Gill]] '06 (84% similar)
+- [[bronny-james|Bronny James]] '25 (84% similar)
+- [[peyton-siva|Peyton Siva]] '14 (84% similar)
+
+**Career shape:** Charted 1 season (2002-03). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

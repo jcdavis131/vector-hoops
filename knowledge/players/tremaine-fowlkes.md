@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[donald-royal|Donald Royal]] — cosine 0.83
 - [[julian-washburn|Julian Washburn]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 9.1 pts · 10.9 reb · 2.9 ast · 1.9 stl per 100 (2003-04).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.1σ)
+- Scoring load well below era (−1.6σ)
+
+**Comparables:**
+
+- [[grant-long|Grant Long]] '03 (92% similar)
+- [[mark-hendrickson|Mark Hendrickson]] '98 (90% similar)
+- [[charlie-brown-jr|Charlie Brown Jr.]] '22 (86% similar)
+- [[wes-iwundu|Wes Iwundu]] '21 (85% similar)
+- [[donald-royal|Donald Royal]] '98 (83% similar)
+- [[julian-washburn|Julian Washburn]] '19 (81% similar)
+
+**Career shape:** Charted 3 seasons (2001-02–2003-04). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

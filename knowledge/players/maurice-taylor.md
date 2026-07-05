@@ -41,6 +41,33 @@ Closest career shapes in the era-normalized vector space:
 - [[lee-nailon|Lee Nailon]] — cosine 0.80
 - [[juwan-howard|Juwan Howard]] — cosine 0.80
 
+## Scouting report
+
+**Play style:** PF · Defensive Glass + Rim Pressure (Fts). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 27.0 pts · 8.5 reb · 2.3 ast · 1.0 blk per 100 (1998-99).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+1.7σ vs era)
+- Featured, high-usage scoring role (+1.6σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.6σ)
+- Ball-hawking activity well below era (−1.5σ)
+
+**Comparables:**
+
+- [[bryant-reeves|Bryant Reeves]] '98 (84% similar)
+- [[marcus-fizer|Marcus Fizer]] '03 (83% similar)
+- [[john-wallace|John Wallace]] '99 (82% similar)
+- [[jahlil-okafor|Jahlil Okafor]] '18 (82% similar)
+- [[lee-nailon|Lee Nailon]] '03 (80% similar)
+- [[juwan-howard|Juwan Howard]] '12 (80% similar)
+
+**Career shape:** Charted 8 seasons (1997-98–2005-06). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

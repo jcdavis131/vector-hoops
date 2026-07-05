@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[terance-mann|Terance Mann]] — cosine 0.71
 - [[tony-snell|Tony Snell]] — cosine 0.70
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 17.0 pts · 5.9 reb · 2.5 ast · 1.4 stl per 100 (1997-98).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+2.2σ vs era)
+- Efficient finisher inside the arc (+1.6σ vs era)
+- Reliable touch from the free-throw line (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.3σ)
+
+**Comparables:**
+
+- [[mickael-gelabale|Mickael Gelabale]] '13 (85% similar)
+- [[sam-jacobson|Sam Jacobson]] '00 (77% similar)
+- [[kelenna-azubuike|Kelenna Azubuike]] '07 (72% similar)
+- [[ayo-dosunmu|Ayo Dosunmu]] '22 (72% similar)
+- [[terance-mann|Terance Mann]] '20 (71% similar)
+- [[tony-snell|Tony Snell]] '21 (70% similar)
+
+**Career shape:** Charted 1 season (1997-98). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

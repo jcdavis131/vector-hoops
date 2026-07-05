@@ -42,6 +42,34 @@ Closest career shapes in the era-normalized vector space:
 - [[anthony-carter|Anthony Carter]] — cosine 0.92
 - [[moochie-norris|Moochie Norris]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 9.5 pts · 5.6 reb · 10.6 ast · 5.0 stl per 100 (1998-99).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+4.0σ vs era)
+- High-volume table-setter (+2.2σ vs era)
+- Draws contact, gets to the line often (+1.8σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+3.5σ)
+- Free-throw touch well below era (−3.1σ)
+
+**Comparables:**
+
+- [[earl-watson|Earl Watson]] '14 (97% similar)
+- [[phil-pressey|Phil Pressey]] '16 (95% similar)
+- [[walker-russell|Walker Russell]] '12 (93% similar)
+- [[kendall-marshall|Kendall Marshall]] '14 (92% similar)
+- [[anthony-carter|Anthony Carter]] '03 (92% similar)
+- [[moochie-norris|Moochie Norris]] '05 (92% similar)
+
+**Career shape:** Charted 9 seasons (1997-98–2005-06). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

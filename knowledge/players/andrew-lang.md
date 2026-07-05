@@ -37,6 +37,33 @@ Closest career shapes in the era-normalized vector space:
 - [[hot-rod-williams|Hot Rod Williams]] — cosine 0.90
 - [[stephen-zimmerman|Stephen Zimmerman]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 12.5 pts · 12.7 reb · 0.6 ast · 1.7 stl per 100 (1999-00).
+
+**Strengths:**
+
+- Rarely turns the ball over (−2.0σ vs era)
+- Strong presence on the defensive glass (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.6σ)
+- Rim pressure (free-throw generation) well below era (−1.5σ)
+
+**Comparables:**
+
+- [[travis-knight|Travis Knight]] '01 (94% similar)
+- [[dean-garrett|Dean Garrett]] '02 (92% similar)
+- [[michael-stewart|Michael Stewart]] '04 (91% similar)
+- [[mark-bradtke|Mark Bradtke]] '97 (90% similar)
+- [[hot-rod-williams|Hot Rod Williams]] '99 (90% similar)
+- [[stephen-zimmerman|Stephen Zimmerman]] '17 (89% similar)
+
+**Career shape:** Charted 4 seasons (1996-97–1999-00). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

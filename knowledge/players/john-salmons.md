@@ -46,6 +46,32 @@ Closest career shapes in the era-normalized vector space:
 - [[anthony-parker|Anthony Parker]] — cosine 0.89
 - [[charlie-bell|Charlie Bell]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 8.0 pts · 4.0 reb · 2.5 ast · 1.7 stl per 100 (2014-15).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.8σ vs era)
+
+**Areas of concern:**
+
+- Scoring load well below era (−2.0σ)
+- Free-throw touch well below era (−1.8σ)
+
+**Comparables:**
+
+- [[fred-jones|Fred Jones]] '03 (96% similar)
+- [[tyler-johnson|Tyler Johnson]] '21 (93% similar)
+- [[sedale-threatt|Sedale Threatt]] '97 (92% similar)
+- [[royal-ivey|Royal Ivey]] '12 (91% similar)
+- [[anthony-parker|Anthony Parker]] '10 (89% similar)
+- [[charlie-bell|Charlie Bell]] '11 (89% similar)
+
+**Career shape:** Charted 13 seasons (2002-03–2014-15). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

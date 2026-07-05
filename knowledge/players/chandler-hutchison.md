@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[tosan-evbuomwan|Tosan Evbuomwan]] — cosine 0.79
 - [[sam-young|Sam Young]] — cosine 0.78
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass + Defensive Glass. Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 12.2 pts · 9.9 reb · 1.8 ast · 1.2 stl per 100 (2018-19).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.3σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.4σ)
+- Scoring load well below era (−1.3σ)
+
+**Comparables:**
+
+- [[jalen-mcdaniels|Jalen McDaniels]] '24 (87% similar)
+- [[brooks-barnhizer|Brooks Barnhizer]] '26 (84% similar)
+- [[keita-bates-diop|Keita Bates-Diop]] '20 (82% similar)
+- [[chris-singleton|Chris Singleton]] '12 (81% similar)
+- [[tosan-evbuomwan|Tosan Evbuomwan]] '24 (79% similar)
+- [[sam-young|Sam Young]] '13 (78% similar)
+
+**Career shape:** Charted 3 seasons (2018-19–2020-21). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

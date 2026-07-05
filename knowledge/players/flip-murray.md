@@ -40,6 +40,34 @@ Closest career shapes in the era-normalized vector space:
 - [[monta-ellis|Monta Ellis]] — cosine 0.89
 - [[rashad-mccants|Rashad McCants]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** Unlisted · Playmaking + Steals. Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 22.4 pts · 4.7 reb · 8.2 ast · 2.2 stl per 100 (2007-08).
+
+**Strengths:**
+
+- High-volume table-setter (+1.5σ vs era)
+- Active hands, disrupts passing lanes (+1.2σ vs era)
+- Heavy shot volume, focal scoring option (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.2σ)
+- Defensive rebounding well below era (−1.2σ)
+
+**Comparables:**
+
+- [[caris-levert|Caris LeVert]] '20 (93% similar)
+- [[dion-waiters|Dion Waiters]] '19 (93% similar)
+- [[stephen-jackson|Stephen Jackson]] '02 (89% similar)
+- [[nate-robinson|Nate Robinson]] '10 (89% similar)
+- [[monta-ellis|Monta Ellis]] '10 (89% similar)
+- [[rashad-mccants|Rashad McCants]] '08 (88% similar)
+
+**Career shape:** Charted 7 seasons (2003-04–2009-10). Entered as a Scoring Volume + Shot Volume profile, peaked as a Playmaking + Steals identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

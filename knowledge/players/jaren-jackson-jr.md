@@ -40,6 +40,33 @@ Closest career shapes in the era-normalized vector space:
 - [[brook-lopez|Brook Lopez]] — cosine 0.80
 - [[joel-embiid|Joel Embiid]] — cosine 0.77
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 30.5 pts · 11.1 reb · 1.6 ast · 4.9 blk per 100 (2022-23).
+
+**Strengths:**
+
+- Elite rim protection (+4.0σ vs era)
+- Strong net on-court impact (+1.7σ vs era)
+- Draws contact, gets to the line often (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Table-setting role well below era (−1.1σ)
+
+**Comparables:**
+
+- [[kristaps-porzingis|Kristaps Porziņģis]] '18 (91% similar)
+- [[victor-wembanyama|Victor Wembanyama]] '26 (85% similar)
+- [[naz-reid|Naz Reid]] '21 (84% similar)
+- [[anthony-davis|Anthony Davis]] '15 (82% similar)
+- [[brook-lopez|Brook Lopez]] '13 (80% similar)
+- [[joel-embiid|Joel Embiid]] '17 (77% similar)
+
+**Career shape:** Charted 7 seasons (2018-19–2025-26). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

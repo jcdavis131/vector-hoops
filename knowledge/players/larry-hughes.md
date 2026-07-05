@@ -45,6 +45,33 @@ Closest career shapes in the era-normalized vector space:
 - [[jeremiah-fears|Jeremiah Fears]] — cosine 0.87
 - [[tyreke-evans|Tyreke Evans]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** SG · Scoring Volume + Shot Volume. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 28.4 pts · 8.1 reb · 6.0 ast · 3.7 stl per 100 (2004-05).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+3.4σ vs era)
+- Draws contact, gets to the line often (+1.7σ vs era)
+- Featured, high-usage scoring role (+1.6σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[victor-oladipo|Victor Oladipo]] '18 (94% similar)
+- [[monta-ellis|Monta Ellis]] '10 (91% similar)
+- [[allen-iverson|Allen Iverson]] '02 (90% similar)
+- [[gilbert-arenas|Gilbert Arenas]] '06 (88% similar)
+- [[jeremiah-fears|Jeremiah Fears]] '26 (87% similar)
+- [[tyreke-evans|Tyreke Evans]] '16 (86% similar)
+
+**Career shape:** Charted 12 seasons (1998-99–2009-10). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

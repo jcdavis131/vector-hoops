@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[olden-polynice|Olden Polynice]] — cosine 0.86
 - [[luke-schenscher|Luke Schenscher]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 16.5 pts · 12.7 reb · 0.7 ast · 2.1 blk per 100 (2005-06).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+2.5σ vs era)
+- Rarely turns the ball over (−2.4σ vs era)
+- Relentless on the offensive glass (+2.4σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−4.0σ)
+- Three-point accuracy well below era (−1.3σ)
+
+**Comparables:**
+
+- [[othello-hunter|Othello Hunter]] '09 (92% similar)
+- [[t-j-leaf|T.J. Leaf]] '20 (87% similar)
+- [[rasho-nesterovic|Rasho Nesterovic]] '10 (87% similar)
+- [[josh-boone|Josh Boone]] '10 (87% similar)
+- [[olden-polynice|Olden Polynice]] '99 (86% similar)
+- [[luke-schenscher|Luke Schenscher]] '06 (86% similar)
+
+**Career shape:** Charted 1 season (2005-06). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

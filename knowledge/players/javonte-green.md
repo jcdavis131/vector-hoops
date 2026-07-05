@@ -39,6 +39,33 @@ Closest career shapes in the era-normalized vector space:
 - [[maurice-harkless|Maurice Harkless]] — cosine 0.83
 - [[thabo-sefolosha|Thabo Sefolosha]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 18.4 pts · 7.4 reb · 1.8 ast · 3.3 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.6σ vs era)
+- Strong net on-court impact (+1.1σ vs era)
+- Rarely turns the ball over (−1.1σ vs era)
+
+**Areas of concern:**
+
+- Table-setting role well below era (−1.2σ)
+
+**Comparables:**
+
+- [[ryan-bowen|Ryan Bowen]] '09 (88% similar)
+- [[jaylen-clark|Jaylen Clark]] '25 (88% similar)
+- [[luc-mbah-a-moute|Luc Mbah a Moute]] '16 (85% similar)
+- [[matisse-thybulle|Matisse Thybulle]] '21 (85% similar)
+- [[maurice-harkless|Maurice Harkless]] '15 (83% similar)
+- [[thabo-sefolosha|Thabo Sefolosha]] '20 (83% similar)
+
+**Career shape:** Charted 6 seasons (2019-20–2025-26). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

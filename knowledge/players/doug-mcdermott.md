@@ -45,6 +45,34 @@ Closest career shapes in the era-normalized vector space:
 - [[john-jenkins|John Jenkins]] — cosine 0.93
 - [[bryn-forbes|Bryn Forbes]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 20.2 pts · 3.0 reb · 1.0 ast · 0.5 stl per 100 (2024-25).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.8σ vs era)
+- Rarely turns the ball over (−1.7σ vs era)
+- Knockdown three-point shooter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.9σ)
+- Table-setting role well below era (−1.5σ)
+
+**Comparables:**
+
+- [[corey-kispert|Corey Kispert]] '23 (97% similar)
+- [[matt-thomas|Matt Thomas]] '22 (95% similar)
+- [[dalton-knecht|Dalton Knecht]] '25 (94% similar)
+- [[joe-harris|Joe Harris]] '15 (93% similar)
+- [[john-jenkins|John Jenkins]] '19 (93% similar)
+- [[bryn-forbes|Bryn Forbes]] '17 (93% similar)
+
+**Career shape:** Charted 12 seasons (2014-15–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

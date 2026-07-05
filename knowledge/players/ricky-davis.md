@@ -44,6 +44,32 @@ Closest career shapes in the era-normalized vector space:
 - [[collin-sexton|Collin Sexton]] — cosine 0.85
 - [[emmanuel-mudiay|Emmanuel Mudiay]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 14.8 pts · 3.8 reb · 5.2 ast · 1.2 stl per 100 (2008-09).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.0σ)
+- Finishing efficiency well below era (−1.7σ)
+
+**Comparables:**
+
+- [[brandon-knight|Brandon Knight]] '20 (89% similar)
+- [[will-bynum|Will Bynum]] '09 (86% similar)
+- [[jordan-crawford|Jordan Crawford]] '11 (86% similar)
+- [[jeremiah-fears|Jeremiah Fears]] '26 (85% similar)
+- [[collin-sexton|Collin Sexton]] '21 (85% similar)
+- [[emmanuel-mudiay|Emmanuel Mudiay]] '16 (84% similar)
+
+**Career shape:** Charted 11 seasons (1998-99–2009-10). Entered as a Playmaking + Steals profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

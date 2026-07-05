@@ -47,6 +47,32 @@ Closest career shapes in the era-normalized vector space:
 - [[larry-johnson|Larry Johnson]] — cosine 0.84
 - [[richard-jefferson|Richard Jefferson]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 18.0 pts · 7.6 reb · 2.7 ast · 1.0 stl per 100 (2015-16).
+
+**Strengths:**
+
+- Strong net on-court impact (+1.7σ vs era)
+- Rarely turns the ball over (−1.4σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[arron-afflalo|Arron Afflalo]] '18 (87% similar)
+- [[sam-mitchell|Sam Mitchell]] '00 (86% similar)
+- [[ledell-eackles|Ledell Eackles]] '98 (85% similar)
+- [[de-andre-hunter|De'Andre Hunter]] '25 (84% similar)
+- [[larry-johnson|Larry Johnson]] '98 (84% similar)
+- [[richard-jefferson|Richard Jefferson]] '18 (83% similar)
+
+**Career shape:** Charted 14 seasons (2012-13–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

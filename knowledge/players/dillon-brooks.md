@@ -42,6 +42,33 @@ Closest career shapes in the era-normalized vector space:
 - [[evan-fournier|Evan Fournier]] — cosine 0.85
 - [[willie-green|Willie Green]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** SF · Scoring Volume + Shot Volume. Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 31.5 pts · 5.4 reb · 4.7 ast · 1.9 stl per 100 (2021-22).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+2.5σ vs era)
+- Strong net on-court impact (+1.9σ vs era)
+- Featured, high-usage scoring role (+1.8σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.1σ)
+
+**Comparables:**
+
+- [[jared-mccain|Jared McCain]] '25 (89% similar)
+- [[jaylen-nowell|Jaylen Nowell]] '22 (87% similar)
+- [[norman-powell|Norman Powell]] '25 (86% similar)
+- [[nick-young|Nick Young]] '15 (86% similar)
+- [[evan-fournier|Evan Fournier]] '24 (85% similar)
+- [[willie-green|Willie Green]] '04 (85% similar)
+
+**Career shape:** Charted 9 seasons (2017-18–2025-26). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

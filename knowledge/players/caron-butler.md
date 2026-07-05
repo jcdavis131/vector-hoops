@@ -46,6 +46,33 @@ Closest career shapes in the era-normalized vector space:
 - [[malik-sealy|Malik Sealy]] — cosine 0.80
 - [[latrell-sprewell|Latrell Sprewell]] — cosine 0.78
 
+## Scouting report
+
+**Play style:** SF · Scoring Volume + Shot Volume. Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 26.8 pts · 8.8 reb · 6.4 ast · 2.9 stl per 100 (2007-08).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.4σ vs era)
+- Reliable touch from the free-throw line (+1.4σ vs era)
+- Featured, high-usage scoring role (+1.3σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[bobby-jackson|Bobby Jackson]] '04 (82% similar)
+- [[norman-powell|Norman Powell]] '25 (81% similar)
+- [[khris-middleton|Khris Middleton]] '20 (81% similar)
+- [[mitch-richmond|Mitch Richmond]] '97 (81% similar)
+- [[malik-sealy|Malik Sealy]] '97 (80% similar)
+- [[latrell-sprewell|Latrell Sprewell]] '97 (78% similar)
+
+**Career shape:** Charted 13 seasons (2002-03–2014-15). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

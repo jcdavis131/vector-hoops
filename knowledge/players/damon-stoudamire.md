@@ -45,6 +45,33 @@ Closest career shapes in the era-normalized vector space:
 - [[reggie-jackson|Reggie Jackson]] — cosine 0.94
 - [[marcus-sasser|Marcus Sasser]] — cosine 0.94
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 25.8 pts · 5.3 reb · 11.2 ast · 1.9 stl per 100 (1996-97).
+
+**Strengths:**
+
+- High-volume table-setter (+2.4σ vs era)
+- Heavy shot volume, focal scoring option (+1.4σ vs era)
+- High-volume three-point shooter (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.3σ)
+
+**Comparables:**
+
+- [[jameer-nelson|Jameer Nelson]] '09 (96% similar)
+- [[mike-james|Mike James]] '06 (96% similar)
+- [[mike-bibby|Mike Bibby]] '12 (96% similar)
+- [[cameron-payne|Cameron Payne]] '26 (94% similar)
+- [[reggie-jackson|Reggie Jackson]] '16 (94% similar)
+- [[marcus-sasser|Marcus Sasser]] '26 (94% similar)
+
+**Career shape:** Charted 12 seasons (1996-97–2007-08). Consistent Scoring Volume + Shot Volume profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

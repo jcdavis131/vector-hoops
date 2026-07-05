@@ -43,6 +43,33 @@ Closest career shapes in the era-normalized vector space:
 - [[rajon-rondo|Rajon Rondo]] — cosine 0.91
 - [[rick-brunson|Rick Brunson]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 16.5 pts · 5.2 reb · 11.6 ast · 3.2 stl per 100 (2003-04).
+
+**Strengths:**
+
+- High-volume table-setter (+2.8σ vs era)
+- Active hands, disrupts passing lanes (+2.4σ vs era)
+- Strong net on-court impact (+2.4σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.3σ)
+
+**Comparables:**
+
+- [[sergio-rodriguez|Sergio Rodriguez]] '09 (94% similar)
+- [[earl-watson|Earl Watson]] '14 (94% similar)
+- [[tremont-waters|Tremont Waters]] '21 (92% similar)
+- [[raul-lopez|Raul Lopez]] '05 (92% similar)
+- [[rajon-rondo|Rajon Rondo]] '11 (91% similar)
+- [[rick-brunson|Rick Brunson]] '99 (91% similar)
+
+**Career shape:** Charted 10 seasons (2001-02–2012-13). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

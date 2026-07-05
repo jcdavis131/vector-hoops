@@ -40,6 +40,34 @@ Closest career shapes in the era-normalized vector space:
 - [[richaun-holmes|Richaun Holmes]] — cosine 0.91
 - [[kai-jones|Kai Jones]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 19.6 pts · 10.7 reb · 2.3 ast · 2.1 blk per 100 (2025-26).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+4.0σ vs era)
+- Efficient finisher inside the arc (+3.7σ vs era)
+- Rarely turns the ball over (−1.4σ vs era)
+
+**Areas of concern:**
+
+- Three-point volume well below era (−1.9σ)
+- Shot volume well below era (−1.3σ)
+
+**Comparables:**
+
+- [[dwight-powell|Dwight Powell]] '23 (93% similar)
+- [[damian-jones|Damian Jones]] '19 (93% similar)
+- [[jeremy-evans|Jeremy Evans]] '12 (91% similar)
+- [[onyeka-okongwu|Onyeka Okongwu]] '22 (91% similar)
+- [[richaun-holmes|Richaun Holmes]] '25 (91% similar)
+- [[kai-jones|Kai Jones]] '22 (91% similar)
+
+**Career shape:** Charted 7 seasons (2019-20–2025-26). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

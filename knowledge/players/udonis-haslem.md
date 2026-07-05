@@ -45,6 +45,34 @@ Closest career shapes in the era-normalized vector space:
 - [[joel-freeland|Joel Freeland]] — cosine 0.89
 - [[olumide-oyedeji|Olumide Oyedeji]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 10.7 pts · 14.9 reb · 1.4 ast · 1.1 stl per 100 (2012-13).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+1.8σ vs era)
+- Strong net on-court impact (+1.8σ vs era)
+- Rarely turns the ball over (−1.2σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.6σ)
+- Scoring load well below era (−1.5σ)
+
+**Comparables:**
+
+- [[clar-weatherspoon|Clar. Weatherspoon]] '03 (92% similar)
+- [[brian-grant|Brian Grant]] '99 (91% similar)
+- [[a-c-green|A.C. Green]] '00 (90% similar)
+- [[rick-mahorn|Rick Mahorn]] '98 (90% similar)
+- [[joel-freeland|Joel Freeland]] '15 (89% similar)
+- [[olumide-oyedeji|Olumide Oyedeji]] '03 (89% similar)
+
+**Career shape:** Charted 12 seasons (2003-04–2015-16). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

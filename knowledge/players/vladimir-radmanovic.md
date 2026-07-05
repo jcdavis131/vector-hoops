@@ -45,6 +45,33 @@ Closest career shapes in the era-normalized vector space:
 - [[quentin-richardson|Quentin Richardson]] — cosine 0.85
 - [[james-posey|James Posey]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 11.9 pts · 10.1 reb · 2.9 ast · 2.9 stl per 100 (2012-13).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.1σ vs era)
+- High-volume three-point shooter (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.1σ)
+- On-court net impact well below era (−2.0σ)
+
+**Comparables:**
+
+- [[carlos-delfino|Carlos Delfino]] '13 (89% similar)
+- [[scott-burrell|Scott Burrell]] '00 (88% similar)
+- [[larry-robinson|Larry Robinson]] '01 (88% similar)
+- [[denzel-valentine|Denzel Valentine]] '22 (86% similar)
+- [[quentin-richardson|Quentin Richardson]] '05 (85% similar)
+- [[james-posey|James Posey]] '11 (85% similar)
+
+**Career shape:** Charted 12 seasons (2001-02–2012-13). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

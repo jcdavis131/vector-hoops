@@ -47,6 +47,33 @@ Closest career shapes in the era-normalized vector space:
 - [[marcus-sasser|Marcus Sasser]] — cosine 0.93
 - [[mark-price|Mark Price]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 27.2 pts · 5.6 reb · 8.8 ast · 2.0 stl per 100 (2008-09).
+
+**Strengths:**
+
+- Strong net on-court impact (+2.3σ vs era)
+- High-volume table-setter (+1.8σ vs era)
+- Featured, high-usage scoring role (+1.3σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[damon-stoudamire|Damon Stoudamire]] '97 (96% similar)
+- [[greivis-vasquez|Greivis Vasquez]] '13 (95% similar)
+- [[mike-bibby|Mike Bibby]] '12 (94% similar)
+- [[raymond-felton|Raymond Felton]] '11 (93% similar)
+- [[marcus-sasser|Marcus Sasser]] '26 (93% similar)
+- [[mark-price|Mark Price]] '98 (93% similar)
+
+**Career shape:** Charted 14 seasons (2004-05–2017-18). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

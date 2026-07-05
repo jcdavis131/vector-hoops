@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[corey-beck|Corey Beck]] — cosine 0.71
 - [[tim-frazier|Tim Frazier]] — cosine 0.70
 
+## Scouting report
+
+**Play style:** PG · Three-Point Accuracy (Low Turnovers). Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 11.9 pts · 9.0 reb · 8.4 ast · 2.3 stl per 100 (2025-26).
+
+**Strengths:**
+
+- High-volume table-setter (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.4σ)
+- Scoring load well below era (−1.4σ)
+
+**Comparables:**
+
+- [[elfrid-payton|Elfrid Payton]] '25 (75% similar)
+- [[rajon-rondo|Rajon Rondo]] '11 (75% similar)
+- [[t-j-mcconnell|T.J. McConnell]] '21 (74% similar)
+- [[ish-smith|Ish Smith]] '23 (72% similar)
+- [[corey-beck|Corey Beck]] '99 (71% similar)
+- [[tim-frazier|Tim Frazier]] '20 (70% similar)
+
+**Career shape:** Charted 3 seasons (2023-24–2025-26). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

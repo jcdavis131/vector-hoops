@@ -41,6 +41,33 @@ Closest career shapes in the era-normalized vector space:
 - [[grant-hill|Grant Hill]] — cosine 0.90
 - [[chris-bosh|Chris Bosh]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** PF · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 39.0 pts · 14.0 reb · 6.4 ast · 2.0 stl per 100 (1996-97).
+
+**Strengths:**
+
+- Featured, high-usage scoring role (+3.5σ vs era)
+- Draws contact, gets to the line often (+3.0σ vs era)
+- Heavy shot volume, focal scoring option (+2.6σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.4σ)
+
+**Comparables:**
+
+- [[giannis-antetokounmpo|Giannis Antetokounmpo]] '20 (95% similar)
+- [[blake-griffin|Blake Griffin]] '14 (93% similar)
+- [[pascal-siakam|Pascal Siakam]] '17 (93% similar)
+- [[joel-embiid|Joel Embiid]] '17 (91% similar)
+- [[grant-hill|Grant Hill]] '97 (90% similar)
+- [[chris-bosh|Chris Bosh]] '10 (89% similar)
+
+**Career shape:** Charted 8 seasons (1996-97–2003-04). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

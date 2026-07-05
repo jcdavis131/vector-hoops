@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[quinten-post|Quinten Post]] — cosine 0.79
 - [[luke-babbitt|Luke Babbitt]] — cosine 0.79
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 19.5 pts · 8.4 reb · 0.0 ast · 0.9 blk per 100 (2009-10).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.7σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.9σ)
+- Table-setting role well below era (−1.4σ)
+
+**Comparables:**
+
+- [[mirza-teletovic|Mirza Teletovic]] '17 (90% similar)
+- [[chuck-person|Chuck Person]] '00 (85% similar)
+- [[jett-howard|Jett Howard]] '24 (84% similar)
+- [[lester-quinones|Lester Quinones]] '24 (83% similar)
+- [[quinten-post|Quinten Post]] '25 (79% similar)
+- [[luke-babbitt|Luke Babbitt]] '11 (79% similar)
+
+**Career shape:** Charted 1 season (2009-10). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

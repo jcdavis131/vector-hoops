@@ -37,6 +37,32 @@ Closest career shapes in the era-normalized vector space:
 - [[isaiah-livers|Isaiah Livers]] — cosine 0.86
 - [[julian-washburn|Julian Washburn]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 12.2 pts · 9.2 reb · 2.3 ast · 1.0 stl per 100 (2023-24).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.4σ)
+- Free-throw touch well below era (−1.3σ)
+
+**Comparables:**
+
+- [[davon-reed|Davon Reed]] '18 (91% similar)
+- [[jeryl-sasser|Jeryl Sasser]] '03 (88% similar)
+- [[wesley-johnson|Wesley Johnson]] '17 (87% similar)
+- [[chris-singleton|Chris Singleton]] '12 (87% similar)
+- [[isaiah-livers|Isaiah Livers]] '24 (86% similar)
+- [[julian-washburn|Julian Washburn]] '19 (85% similar)
+
+**Career shape:** Charted 4 seasons (2020-21–2023-24). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[samardo-samuels|Samardo Samuels]] — cosine 0.69
 - [[brandon-boston|Brandon Boston]] — cosine 0.68
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 19.1 pts · 8.2 reb · 2.7 ast · 2.0 stl per 100 (2000-01).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.8σ)
+- Three-point accuracy well below era (−1.4σ)
+
+**Comparables:**
+
+- [[paul-davis|Paul Davis]] '08 (73% similar)
+- [[david-duke-jr|David Duke Jr.]] '23 (73% similar)
+- [[eugene-omoruyi|Eugene Omoruyi]] '24 (73% similar)
+- [[earl-barron|Earl Barron]] '07 (71% similar)
+- [[samardo-samuels|Samardo Samuels]] '11 (69% similar)
+- [[brandon-boston|Brandon Boston]] '24 (68% similar)
+
+**Career shape:** Charted 1 season (2000-01). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

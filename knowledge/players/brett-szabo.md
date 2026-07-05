@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[alton-lister|Alton Lister]] — cosine 0.90
 - [[curtis-borchardt|Curtis Borchardt]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 10.9 pts · 11.7 reb · 1.2 ast · 2.3 blk per 100 (1996-97).
+
+**Strengths:**
+
+- Elite rim protection (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.7σ)
+- On-court net impact well below era (−1.6σ)
+
+**Comparables:**
+
+- [[nathan-mensah|Nathan Mensah]] '24 (95% similar)
+- [[solomon-jones|Solomon Jones]] '08 (94% similar)
+- [[michael-stewart|Michael Stewart]] '04 (92% similar)
+- [[amari-williams|Amari Williams]] '26 (91% similar)
+- [[alton-lister|Alton Lister]] '97 (90% similar)
+- [[curtis-borchardt|Curtis Borchardt]] '05 (90% similar)
+
+**Career shape:** Charted 1 season (1996-97). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

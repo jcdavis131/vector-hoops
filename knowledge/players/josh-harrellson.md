@@ -35,6 +35,33 @@ Closest career shapes in the era-normalized vector space:
 - [[raef-lafrentz|Raef LaFrentz]] — cosine 0.77
 - [[mouhamed-gueye|Mouhamed Gueye]] — cosine 0.77
 
+## Scouting report
+
+**Play style:** C · Three-Point Accuracy (Low Turnovers). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 14.2 pts · 11.6 reb · 2.3 ast · 2.3 blk per 100 (2013-14).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.4σ vs era)
+- Elite rim protection (+1.3σ vs era)
+- Relentless on the offensive glass (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.4σ)
+
+**Comparables:**
+
+- [[jordan-walsh|Jordan Walsh]] '25 (81% similar)
+- [[robert-horry|Robert Horry]] '07 (80% similar)
+- [[patrick-patterson|Patrick Patterson]] '19 (78% similar)
+- [[torrey-craig|Torrey Craig]] '20 (78% similar)
+- [[raef-lafrentz|Raef LaFrentz]] '08 (77% similar)
+- [[mouhamed-gueye|Mouhamed Gueye]] '25 (77% similar)
+
+**Career shape:** Charted 2 seasons (2011-12–2013-14). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

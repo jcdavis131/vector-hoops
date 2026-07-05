@@ -40,6 +40,33 @@ Closest career shapes in the era-normalized vector space:
 - [[raef-lafrentz|Raef LaFrentz]] — cosine 0.79
 - [[brook-lopez|Brook Lopez]] — cosine 0.77
 
+## Scouting report
+
+**Play style:** PF · Defensive Glass + Rim Pressure (Fts). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 25.5 pts · 15.4 reb · 0.5 ast · 6.6 blk per 100 (2018-19).
+
+**Strengths:**
+
+- Elite rim protection (+4.0σ vs era)
+- Strong presence on the defensive glass (+1.6σ vs era)
+- Relentless on the offensive glass (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Table-setting role well below era (−1.5σ)
+
+**Comparables:**
+
+- [[jalen-smith|Jalen Smith]] '25 (83% similar)
+- [[terrence-jones|Terrence Jones]] '15 (82% similar)
+- [[myles-turner|Myles Turner]] '19 (81% similar)
+- [[serge-ibaka|Serge Ibaka]] '12 (80% similar)
+- [[raef-lafrentz|Raef LaFrentz]] '08 (79% similar)
+- [[brook-lopez|Brook Lopez]] '13 (77% similar)
+
+**Career shape:** Charted 7 seasons (2018-19–2024-25). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

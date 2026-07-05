@@ -38,6 +38,32 @@ Closest career shapes in the era-normalized vector space:
 - [[wayne-ellington|Wayne Ellington]] — cosine 0.83
 - [[taurean-prince|Taurean Prince]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 20.1 pts · 6.6 reb · 3.0 ast · 1.4 stl per 100 (2008-09).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+2.6σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.9σ)
+- Turnover rate well above era (+1.5σ)
+
+**Comparables:**
+
+- [[mike-penberthy|Mike Penberthy]] '01 (86% similar)
+- [[quentin-grimes|Quentin Grimes]] '24 (84% similar)
+- [[eric-piatkowski|Eric Piatkowski]] '06 (83% similar)
+- [[joe-harris|Joe Harris]] '15 (83% similar)
+- [[wayne-ellington|Wayne Ellington]] '17 (83% similar)
+- [[taurean-prince|Taurean Prince]] '26 (82% similar)
+
+**Career shape:** Charted 5 seasons (2008-09–2014-15). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

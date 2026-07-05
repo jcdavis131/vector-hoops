@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jae-sean-tate|Jae'Sean Tate]] — cosine 0.75
 - [[mario-west|Mario West]] — cosine 0.73
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 16.4 pts · 8.8 reb · 2.9 ast · 1.8 stl per 100 (2010-11).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+1.7σ vs era)
+- Knockdown three-point shooter (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.4σ)
+
+**Comparables:**
+
+- [[josh-childress|Josh Childress]] '12 (87% similar)
+- [[david-nwaba|David Nwaba]] '17 (81% similar)
+- [[adou-thiero|Adou Thiero]] '26 (81% similar)
+- [[james-michael-mcadoo|James Michael McAdoo]] '16 (79% similar)
+- [[jae-sean-tate|Jae'Sean Tate]] '26 (75% similar)
+- [[mario-west|Mario West]] '09 (73% similar)
+
+**Career shape:** Charted 3 seasons (2009-10–2011-12). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -42,6 +42,33 @@ Closest career shapes in the era-normalized vector space:
 - [[eduardo-najera|Eduardo Najera]] — cosine 0.83
 - [[noah-penda|Noah Penda]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 12.7 pts · 12.4 reb · 3.6 ast · 2.3 stl per 100 (2002-03).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.3σ vs era)
+- Relentless on the offensive glass (+1.3σ vs era)
+- Active hands, disrupts passing lanes (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.6σ)
+
+**Comparables:**
+
+- [[john-konchar|John Konchar]] '20 (87% similar)
+- [[adrian-griffin|Adrian Griffin]] '04 (86% similar)
+- [[larry-nance-jr|Larry Nance Jr.]] '18 (84% similar)
+- [[usman-garuba|Usman Garuba]] '22 (84% similar)
+- [[eduardo-najera|Eduardo Najera]] '12 (83% similar)
+- [[noah-penda|Noah Penda]] '26 (83% similar)
+
+**Career shape:** Charted 9 seasons (1996-97–2004-05). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

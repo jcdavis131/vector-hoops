@@ -35,6 +35,34 @@ Closest career shapes in the era-normalized vector space:
 - [[ruben-boumtje-boumtje|Ruben Boumtje-Boumtje]] — cosine 0.85
 - [[steven-hunter|Steven Hunter]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 16.7 pts · 9.2 reb · 1.1 ast · 2.3 blk per 100 (2008-09).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.9σ vs era)
+- Draws contact, gets to the line often (+1.8σ vs era)
+- Elite rim protection (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.2σ)
+- On-court net impact well below era (−2.0σ)
+
+**Comparables:**
+
+- [[soumaila-samake|Soumaila Samake]] '01 (93% similar)
+- [[jason-maxiell|Jason Maxiell]] '06 (90% similar)
+- [[mickell-gladness|Mickell Gladness]] '12 (88% similar)
+- [[robert-sacre|Robert Sacre]] '13 (87% similar)
+- [[ruben-boumtje-boumtje|Ruben Boumtje-Boumtje]] '02 (85% similar)
+- [[steven-hunter|Steven Hunter]] '04 (85% similar)
+
+**Career shape:** Charted 2 seasons (2006-07–2008-09). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

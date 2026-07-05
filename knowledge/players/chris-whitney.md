@@ -41,6 +41,34 @@ Closest career shapes in the era-normalized vector space:
 - [[dana-barros|Dana Barros]] — cosine 0.93
 - [[george-mccloud|George McCloud]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** PG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 13.1 pts · 4.1 reb · 3.9 ast · 1.7 stl per 100 (2003-04).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+2.2σ vs era)
+- Rarely turns the ball over (−1.4σ vs era)
+- Knockdown three-point shooter (+1.3σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.4σ)
+- Rim pressure (free-throw generation) well below era (−1.5σ)
+
+**Comparables:**
+
+- [[anthony-goldwire|Anthony Goldwire]] '01 (95% similar)
+- [[randy-foye|Randy Foye]] '12 (95% similar)
+- [[shammond-williams|Shammond Williams]] '04 (94% similar)
+- [[luther-head|Luther Head]] '07 (93% similar)
+- [[dana-barros|Dana Barros]] '99 (93% similar)
+- [[george-mccloud|George McCloud]] '98 (92% similar)
+
+**Career shape:** Charted 8 seasons (1996-97–2003-04). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

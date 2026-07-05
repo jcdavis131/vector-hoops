@@ -35,6 +35,33 @@ Closest career shapes in the era-normalized vector space:
 - [[david-vaughn|David Vaughn]] — cosine 0.90
 - [[bismack-biyombo|Bismack Biyombo]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 12.8 pts · 11.5 reb · 2.4 ast · 2.0 blk per 100 (2016-17).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+1.3σ vs era)
+- Elite rim protection (+1.2σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.9σ)
+- Three-point accuracy well below era (−2.2σ)
+
+**Comparables:**
+
+- [[norvel-pelle|Norvel Pelle]] '20 (93% similar)
+- [[amari-williams|Amari Williams]] '26 (92% similar)
+- [[mitch-mcgary|Mitch McGary]] '16 (91% similar)
+- [[amal-mccaskill|Amal McCaskill]] '02 (91% similar)
+- [[david-vaughn|David Vaughn]] '97 (90% similar)
+- [[bismack-biyombo|Bismack Biyombo]] '23 (89% similar)
+
+**Career shape:** Charted 2 seasons (2016-17–2017-18). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

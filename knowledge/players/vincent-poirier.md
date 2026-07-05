@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[gorgui-dieng|Gorgui Dieng]] — cosine 0.81
 - [[karlo-matkovic|Karlo Matković]] — cosine 0.80
 
+## Scouting report
+
+**Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 14.0 pts · 14.6 reb · 2.7 ast · 3.1 blk per 100 (2019-20).
+
+**Strengths:**
+
+- Elite rim protection (+2.3σ vs era)
+- Knockdown three-point shooter (+1.5σ vs era)
+- Relentless on the offensive glass (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Three-point volume well below era (−1.6σ)
+- Ball-hawking activity well below era (−1.3σ)
+
+**Comparables:**
+
+- [[isaiah-stewart|Isaiah Stewart]] '25 (86% similar)
+- [[pj-hall|PJ Hall]] '26 (84% similar)
+- [[drew-eubanks|Drew Eubanks]] '20 (82% similar)
+- [[olivier-sarr|Olivier Sarr]] '22 (81% similar)
+- [[gorgui-dieng|Gorgui Dieng]] '14 (81% similar)
+- [[karlo-matkovic|Karlo Matković]] '26 (80% similar)
+
+**Career shape:** Charted 1 season (2019-20). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -38,6 +38,32 @@ Closest career shapes in the era-normalized vector space:
 - [[joffrey-lauvergne|Joffrey Lauvergne]] — cosine 0.87
 - [[jj-hickson|JJ Hickson]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 24.6 pts · 11.9 reb · 3.2 ast · 1.6 blk per 100 (1997-98).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.4σ)
+- Three-point accuracy well below era (−1.3σ)
+
+**Comparables:**
+
+- [[james-wiseman|James Wiseman]] '24 (96% similar)
+- [[jahlil-okafor|Jahlil Okafor]] '18 (91% similar)
+- [[gary-trent|Gary Trent]] '01 (88% similar)
+- [[tony-massenburg|Tony Massenburg]] '02 (87% similar)
+- [[joffrey-lauvergne|Joffrey Lauvergne]] '18 (87% similar)
+- [[jj-hickson|JJ Hickson]] '16 (86% similar)
+
+**Career shape:** Charted 5 seasons (1996-97–2000-01). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

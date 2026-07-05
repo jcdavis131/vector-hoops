@@ -43,6 +43,34 @@ Closest career shapes in the era-normalized vector space:
 - [[don-maclean|Don MacLean]] — cosine 0.80
 - [[andres-nocioni|Andres Nocioni]] — cosine 0.79
 
+## Scouting report
+
+**Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 27.9 pts · 8.3 reb · 3.0 ast · 1.7 blk per 100 (2014-15).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+1.6σ vs era)
+- Featured, high-usage scoring role (+1.5σ vs era)
+- Draws contact, gets to the line often (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−2.4σ)
+- On-court net impact well below era (−2.3σ)
+
+**Comparables:**
+
+- [[miles-bridges|Miles Bridges]] '25 (90% similar)
+- [[chris-carr|Chris Carr]] '01 (84% similar)
+- [[gg-jackson|GG Jackson]] '24 (81% similar)
+- [[lauri-markkanen|Lauri Markkanen]] '23 (81% similar)
+- [[don-maclean|Don MacLean]] '99 (80% similar)
+- [[andres-nocioni|Andres Nocioni]] '08 (79% similar)
+
+**Career shape:** Charted 10 seasons (2006-07–2015-16). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

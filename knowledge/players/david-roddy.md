@@ -36,6 +36,31 @@ Closest career shapes in the era-normalized vector space:
 - [[d-j-wilson|D.J. Wilson]] — cosine 0.85
 - [[antoine-wright|Antoine Wright]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** PF · Three-Point Accuracy (Low Turnovers). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 17.3 pts · 7.2 reb · 2.2 ast · 1.1 stl per 100 (2022-23).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.1σ)
+
+**Comparables:**
+
+- [[admiral-schofield|Admiral Schofield]] '24 (94% similar)
+- [[sekou-doumbouya|Sekou Doumbouya]] '20 (93% similar)
+- [[daquan-jeffries|DaQuan Jeffries]] '24 (91% similar)
+- [[britton-johnsen|Britton Johnsen]] '04 (87% similar)
+- [[d-j-wilson|D.J. Wilson]] '18 (85% similar)
+- [[antoine-wright|Antoine Wright]] '06 (84% similar)
+
+**Career shape:** Charted 3 seasons (2022-23–2024-25). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

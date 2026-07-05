@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[sarunas-jasikevicius|Sarunas Jasikevicius]] — cosine 0.86
 - [[vasilije-micic|Vasilije Micic]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 17.1 pts · 2.9 reb · 8.1 ast · 1.2 stl per 100 (2016-17).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+2.1σ vs era)
+- High-volume table-setter (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.8σ)
+- On-court net impact well below era (−1.8σ)
+
+**Comparables:**
+
+- [[kenny-smith|Kenny Smith]] '97 (89% similar)
+- [[walter-clayton-jr|Walter Clayton Jr.]] '26 (89% similar)
+- [[mateen-cleaves|Mateen Cleaves]] '02 (89% similar)
+- [[jonny-flynn|Jonny Flynn]] '11 (88% similar)
+- [[sarunas-jasikevicius|Sarunas Jasikevicius]] '07 (86% similar)
+- [[vasilije-micic|Vasilije Micic]] '25 (86% similar)
+
+**Career shape:** Charted 1 season (2016-17). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

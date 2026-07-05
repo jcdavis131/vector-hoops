@@ -35,6 +35,33 @@ Closest career shapes in the era-normalized vector space:
 - [[sam-mack|Sam Mack]] — cosine 0.87
 - [[pj-hairston|PJ Hairston]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 12.9 pts · 7.9 reb · 4.9 ast · 1.2 stl per 100 (1996-97).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+2.5σ vs era)
+- High-volume three-point shooter (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.9σ)
+- Finishing efficiency well below era (−1.2σ)
+
+**Comparables:**
+
+- [[rj-hunter|RJ Hunter]] '16 (90% similar)
+- [[quincy-douby|Quincy Douby]] '08 (89% similar)
+- [[larry-robinson|Larry Robinson]] '01 (88% similar)
+- [[lloyd-daniels|Lloyd Daniels]] '97 (88% similar)
+- [[sam-mack|Sam Mack]] '00 (87% similar)
+- [[pj-hairston|PJ Hairston]] '15 (87% similar)
+
+**Career shape:** Charted 2 seasons (1996-97–1997-98). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

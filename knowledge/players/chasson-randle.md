@@ -36,6 +36,31 @@ Closest career shapes in the era-normalized vector space:
 - [[terry-dehere|Terry Dehere]] — cosine 0.86
 - [[keyon-dooling|Keyon Dooling]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** PG · Offensive Glass (Low On-Court Impact). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 15.1 pts · 4.7 reb · 4.2 ast · 1.3 stl per 100 (2020-21).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.0σ)
+
+**Comparables:**
+
+- [[kiwane-garris|Kiwane Garris]] '98 (90% similar)
+- [[isaiah-canaan|Isaiah Canaan]] '16 (90% similar)
+- [[fred-jones|Fred Jones]] '03 (86% similar)
+- [[khalid-reeves|Khalid Reeves]] '97 (86% similar)
+- [[terry-dehere|Terry Dehere]] '97 (86% similar)
+- [[keyon-dooling|Keyon Dooling]] '10 (86% similar)
+
+**Career shape:** Charted 3 seasons (2016-17–2020-21). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

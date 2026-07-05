@@ -37,6 +37,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jared-rhoden|Jared Rhoden]] — cosine 0.82
 - [[myles-turner|Myles Turner]] — cosine 0.80
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 19.6 pts · 9.7 reb · 2.9 ast · 2.9 blk per 100 (2022-23).
+
+**Strengths:**
+
+- Elite rim protection (+2.4σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.8σ)
+- On-court net impact well below era (−1.8σ)
+
+**Comparables:**
+
+- [[roy-rogers|Roy Rogers]] '97 (91% similar)
+- [[aj-hammons|AJ Hammons]] '17 (88% similar)
+- [[thon-maker|Thon Maker]] '20 (84% similar)
+- [[keith-closs|Keith Closs]] '98 (82% similar)
+- [[jared-rhoden|Jared Rhoden]] '24 (82% similar)
+- [[myles-turner|Myles Turner]] '19 (80% similar)
+
+**Career shape:** Charted 4 seasons (2022-23–2025-26). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

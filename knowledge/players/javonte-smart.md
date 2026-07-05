@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[nemanja-nedovic|Nemanja Nedovic]] — cosine 0.87
 - [[cory-carr|Cory Carr]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** PG · Offensive Glass (Low On-Court Impact). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 12.2 pts · 5.7 reb · 3.8 ast · 1.4 stl per 100 (2021-22).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.8σ)
+- On-court net impact well below era (−1.3σ)
+
+**Comparables:**
+
+- [[rayan-rupert|Rayan Rupert]] '24 (91% similar)
+- [[cleanthony-early|Cleanthony Early]] '16 (90% similar)
+- [[reece-gaines|Reece Gaines]] '05 (90% similar)
+- [[maxwell-lewis|Maxwell Lewis]] '24 (88% similar)
+- [[nemanja-nedovic|Nemanja Nedovic]] '14 (87% similar)
+- [[cory-carr|Cory Carr]] '99 (87% similar)
+
+**Career shape:** Charted 1 season (2021-22). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

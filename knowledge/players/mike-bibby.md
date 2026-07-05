@@ -47,6 +47,34 @@ Closest career shapes in the era-normalized vector space:
 - [[david-wesley|David Wesley]] — cosine 0.94
 - [[jason-terry|Jason Terry]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** PG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 9.3 pts · 5.4 reb · 7.2 ast · 1.9 stl per 100 (2011-12).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.2σ vs era)
+- High-volume table-setter (+1.0σ vs era)
+- Rarely turns the ball over (−1.0σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.5σ)
+- Scoring load well below era (−1.6σ)
+
+**Comparables:**
+
+- [[mike-james|Mike James]] '06 (96% similar)
+- [[damon-stoudamire|Damon Stoudamire]] '97 (96% similar)
+- [[marcus-sasser|Marcus Sasser]] '26 (95% similar)
+- [[jameer-nelson|Jameer Nelson]] '09 (94% similar)
+- [[david-wesley|David Wesley]] '07 (94% similar)
+- [[jason-terry|Jason Terry]] '18 (93% similar)
+
+**Career shape:** Charted 14 seasons (1998-99–2011-12). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

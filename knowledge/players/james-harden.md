@@ -50,6 +50,33 @@ Closest career shapes in the era-normalized vector space:
 - [[damian-lillard|Damian Lillard]] — cosine 0.91
 - [[lebron-james|LeBron James]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 48.2 pts · 8.8 reb · 10.0 ast · 2.7 stl per 100 (2018-19).
+
+**Strengths:**
+
+- Featured, high-usage scoring role (+4.0σ vs era)
+- Draws contact, gets to the line often (+4.0σ vs era)
+- Heavy shot volume, focal scoring option (+3.7σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+4.0σ)
+
+**Comparables:**
+
+- [[steve-francis|Steve Francis]] '05 (94% similar)
+- [[luka-doncic|Luka Dončić]] '20 (94% similar)
+- [[trae-young|Trae Young]] '20 (92% similar)
+- [[paul-pierce|Paul Pierce]] '03 (92% similar)
+- [[damian-lillard|Damian Lillard]] '23 (91% similar)
+- [[lebron-james|LeBron James]] '10 (91% similar)
+
+**Career shape:** Charted 17 seasons (2009-10–2025-26). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

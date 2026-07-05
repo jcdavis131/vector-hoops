@@ -39,6 +39,33 @@ Closest career shapes in the era-normalized vector space:
 - [[larry-johnson|Larry Johnson]] — cosine 0.73
 - [[david-benoit|David Benoit]] — cosine 0.72
 
+## Scouting report
+
+**Play style:** PF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 30.4 pts · 11.5 reb · 6.0 ast · 1.3 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+1.6σ vs era)
+- Featured, high-usage scoring role (+1.4σ vs era)
+- Reliable touch from the free-throw line (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Rim-protection impact well below era (−1.1σ)
+
+**Comparables:**
+
+- [[michael-porter-jr|Michael Porter Jr.]] '26 (88% similar)
+- [[tobias-harris|Tobias Harris]] '21 (80% similar)
+- [[walter-herrmann|Walter Herrmann]] '09 (74% similar)
+- [[channing-frye|Channing Frye]] '19 (74% similar)
+- [[larry-johnson|Larry Johnson]] '98 (73% similar)
+- [[david-benoit|David Benoit]] '98 (72% similar)
+
+**Career shape:** Charted 6 seasons (2020-21–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

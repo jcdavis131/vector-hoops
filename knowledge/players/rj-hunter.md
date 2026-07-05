@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[alex-abrines|Alex Abrines]] — cosine 0.89
 - [[sasha-vujacic|Sasha Vujacic]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 14.5 pts · 5.5 reb · 1.9 ast · 2.1 stl per 100 (2015-16).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.4σ vs era)
+- Rarely turns the ball over (−1.1σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.4σ)
+- Finishing efficiency well below era (−1.2σ)
+
+**Comparables:**
+
+- [[justin-holiday|Justin Holiday]] '23 (96% similar)
+- [[billy-thomas|Billy Thomas]] '06 (93% similar)
+- [[larry-robinson|Larry Robinson]] '01 (91% similar)
+- [[carl-thomas|Carl Thomas]] '97 (90% similar)
+- [[alex-abrines|Alex Abrines]] '19 (89% similar)
+- [[sasha-vujacic|Sasha Vujacic]] '05 (89% similar)
+
+**Career shape:** Charted 1 season (2015-16). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

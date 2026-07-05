@@ -40,6 +40,32 @@ Closest career shapes in the era-normalized vector space:
 - [[hollis-thompson|Hollis Thompson]] — cosine 0.82
 - [[dwayne-bacon|Dwayne Bacon]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 8.8 pts · 7.3 reb · 1.4 ast · 1.9 stl per 100 (2011-12).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.0σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.8σ)
+- Scoring load well below era (−1.7σ)
+
+**Comparables:**
+
+- [[glenn-robinson-iii|Glenn Robinson III]] '21 (87% similar)
+- [[robbie-hummel|Robbie Hummel]] '14 (86% similar)
+- [[alex-ducas|Alex Ducas]] '25 (84% similar)
+- [[cam-reynolds|Cam Reynolds]] '19 (83% similar)
+- [[hollis-thompson|Hollis Thompson]] '17 (82% similar)
+- [[dwayne-bacon|Dwayne Bacon]] '18 (82% similar)
+
+**Career shape:** Charted 7 seasons (2005-06–2011-12). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

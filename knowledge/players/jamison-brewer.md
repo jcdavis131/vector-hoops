@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[mardy-collins|Mardy Collins]] — cosine 0.88
 - [[britton-johnsen|Britton Johnsen]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** PG · Offensive Glass (Low On-Court Impact). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 9.1 pts · 6.5 reb · 3.5 ast · 2.4 stl per 100 (2004-05).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.3σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.6σ)
+- Finishing efficiency well below era (−2.5σ)
+
+**Comparables:**
+
+- [[chris-garner|Chris Garner]] '98 (91% similar)
+- [[jahmai-mashack|Jahmai Mashack]] '26 (90% similar)
+- [[justin-robinson|Justin Robinson]] '22 (89% similar)
+- [[keljin-blevins|Keljin Blevins]] '22 (88% similar)
+- [[mardy-collins|Mardy Collins]] '10 (88% similar)
+- [[britton-johnsen|Britton Johnsen]] '04 (86% similar)
+
+**Career shape:** Charted 1 season (2004-05). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

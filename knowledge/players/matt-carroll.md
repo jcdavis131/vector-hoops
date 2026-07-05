@@ -41,6 +41,33 @@ Closest career shapes in the era-normalized vector space:
 - [[rodney-hood|Rodney Hood]] — cosine 0.90
 - [[gary-trent-jr|Gary Trent Jr.]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 18.3 pts · 4.8 reb · 2.4 ast · 2.0 stl per 100 (2009-10).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+2.0σ vs era)
+- High-volume three-point shooter (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.6σ)
+- Defensive rebounding well below era (−1.3σ)
+
+**Comparables:**
+
+- [[jodie-meeks|Jodie Meeks]] '12 (95% similar)
+- [[gradey-dick|Gradey Dick]] '24 (94% similar)
+- [[chris-duarte|Chris Duarte]] '23 (93% similar)
+- [[bryant-stith|Bryant Stith]] '98 (91% similar)
+- [[rodney-hood|Rodney Hood]] '22 (90% similar)
+- [[gary-trent-jr|Gary Trent Jr.]] '26 (89% similar)
+
+**Career shape:** Charted 8 seasons (2004-05–2011-12). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

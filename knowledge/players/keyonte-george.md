@@ -36,6 +36,34 @@ Closest career shapes in the era-normalized vector space:
 - [[zach-lavine|Zach LaVine]] — cosine 0.89
 - [[scoot-henderson|Scoot Henderson]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 33.2 pts · 5.2 reb · 8.6 ast · 1.5 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+2.2σ vs era)
+- Featured, high-usage scoring role (+1.8σ vs era)
+- High-volume table-setter (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.7σ)
+- Offensive-glass activity well below era (−1.0σ)
+
+**Comparables:**
+
+- [[brandon-knight|Brandon Knight]] '20 (92% similar)
+- [[jaden-ivey|Jaden Ivey]] '23 (91% similar)
+- [[emmanuel-mudiay|Emmanuel Mudiay]] '16 (89% similar)
+- [[jordan-poole|Jordan Poole]] '25 (89% similar)
+- [[zach-lavine|Zach LaVine]] '21 (89% similar)
+- [[scoot-henderson|Scoot Henderson]] '24 (88% similar)
+
+**Career shape:** Charted 3 seasons (2023-24–2025-26). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

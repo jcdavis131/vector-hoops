@@ -46,6 +46,34 @@ Closest career shapes in the era-normalized vector space:
 - [[anthony-peeler|Anthony Peeler]] — cosine 0.87
 - [[jason-terry|Jason Terry]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** SG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 18.1 pts · 5.8 reb · 9.7 ast · 2.4 stl per 100 (2003-04).
+
+**Strengths:**
+
+- High-volume table-setter (+2.1σ vs era)
+- High-volume three-point shooter (+1.5σ vs era)
+- Efficient finisher inside the arc (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Offensive-glass activity well below era (−1.2σ)
+- Turnover rate well above era (+1.1σ)
+
+**Comparables:**
+
+- [[jon-barry|Jon Barry]] '98 (92% similar)
+- [[rick-fox|Rick Fox]] '04 (91% similar)
+- [[chris-mullin|Chris Mullin]] '00 (89% similar)
+- [[matt-maloney|Matt Maloney]] '00 (87% similar)
+- [[anthony-peeler|Anthony Peeler]] '97 (87% similar)
+- [[jason-terry|Jason Terry]] '18 (86% similar)
+
+**Career shape:** Charted 13 seasons (1996-97–2008-09). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Playmaking + Steals identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[dragan-tarlac|Dragan Tarlac]] — cosine 0.78
 - [[ha-ha|Ha Ha]] — cosine 0.77
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 16.1 pts · 8.2 reb · 3.2 ast · 0.8 blk per 100 (2017-18).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.8σ)
+- On-court net impact well below era (−1.2σ)
+
+**Comparables:**
+
+- [[josh-powell|Josh Powell]] '07 (86% similar)
+- [[hanno-mottola|Hanno Mottola]] '01 (85% similar)
+- [[eric-mobley|Eric Mobley]] '97 (80% similar)
+- [[dickey-simpkins|Dickey Simpkins]] '00 (79% similar)
+- [[dragan-tarlac|Dragan Tarlac]] '01 (78% similar)
+- [[ha-ha|Ha Ha]] '06 (77% similar)
+
+**Career shape:** Charted 1 season (2017-18). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

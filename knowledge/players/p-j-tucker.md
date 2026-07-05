@@ -45,6 +45,33 @@ Closest career shapes in the era-normalized vector space:
 - [[troy-brown-jr|Troy Brown Jr.]] — cosine 0.88
 - [[kessler-edwards|Kessler Edwards]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** PF · Three-Point Accuracy (Low Turnovers). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 5.2 pts · 8.5 reb · 1.6 ast · 1.6 stl per 100 (2023-24).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+1.8σ vs era)
+- Rarely turns the ball over (−1.7σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−2.3σ)
+- Scoring load well below era (−2.2σ)
+
+**Comparables:**
+
+- [[derrick-mckey|Derrick McKey]] '02 (93% similar)
+- [[solomon-hill|Solomon Hill]] '21 (92% similar)
+- [[greg-buckner|Greg Buckner]] '05 (90% similar)
+- [[dorian-finney-smith|Dorian Finney-Smith]] '26 (89% similar)
+- [[troy-brown-jr|Troy Brown Jr.]] '23 (88% similar)
+- [[kessler-edwards|Kessler Edwards]] '25 (87% similar)
+
+**Career shape:** Charted 12 seasons (2012-13–2023-24). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -38,6 +38,31 @@ Closest career shapes in the era-normalized vector space:
 - [[jared-dudley|Jared Dudley]] — cosine 0.78
 - [[seth-curry|Seth Curry]] — cosine 0.75
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 24.7 pts · 8.0 reb · 3.6 ast · 1.6 stl per 100 (2024-25).
+
+**Strengths:**
+
+- Strong net on-court impact (+2.1σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[shandon-anderson|Shandon Anderson]] '05 (82% similar)
+- [[mikal-bridges|Mikal Bridges]] '19 (81% similar)
+- [[og-anunoby|OG Anunoby]] '18 (80% similar)
+- [[courtney-lee|Courtney Lee]] '20 (79% similar)
+- [[jared-dudley|Jared Dudley]] '20 (78% similar)
+- [[seth-curry|Seth Curry]] '21 (75% similar)
+
+**Career shape:** Charted 5 seasons (2021-22–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[reggie-evans|Reggie Evans]] — cosine 0.80
 - [[caleb-swanigan|Caleb Swanigan]] — cosine 0.80
 
+## Scouting report
+
+**Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 10.3 pts · 12.3 reb · 1.3 ast · 2.0 stl per 100 (2005-06).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.5σ)
+- On-court net impact well below era (−1.4σ)
+
+**Comparables:**
+
+- [[esteban-batista|Esteban Batista]] '06 (89% similar)
+- [[kenny-thomas|Kenny Thomas]] '08 (86% similar)
+- [[jackson-vroman|Jackson Vroman]] '06 (86% similar)
+- [[rick-mahorn|Rick Mahorn]] '98 (83% similar)
+- [[reggie-evans|Reggie Evans]] '13 (80% similar)
+- [[caleb-swanigan|Caleb Swanigan]] '20 (80% similar)
+
+**Career shape:** Charted 3 seasons (2004-05–2006-07). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

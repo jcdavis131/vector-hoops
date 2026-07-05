@@ -35,6 +35,34 @@ Closest career shapes in the era-normalized vector space:
 - [[carlos-delfino|Carlos Delfino]] — cosine 0.90
 - [[jevon-carter|Jevon Carter]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 14.1 pts · 5.2 reb · 3.3 ast · 3.7 stl per 100 (2005-06).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+3.4σ vs era)
+- High-volume three-point shooter (+2.6σ vs era)
+- Reliable touch from the free-throw line (+2.3σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.9σ)
+- Rim pressure (free-throw generation) well below era (−1.7σ)
+
+**Comparables:**
+
+- [[larry-robinson|Larry Robinson]] '01 (94% similar)
+- [[rj-hunter|RJ Hunter]] '16 (93% similar)
+- [[sasha-vujacic|Sasha Vujacic]] '05 (92% similar)
+- [[justin-holiday|Justin Holiday]] '23 (90% similar)
+- [[carlos-delfino|Carlos Delfino]] '13 (90% similar)
+- [[jevon-carter|Jevon Carter]] '24 (89% similar)
+
+**Career shape:** Charted 2 seasons (2004-05–2005-06). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

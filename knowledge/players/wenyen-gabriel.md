@@ -37,6 +37,33 @@ Closest career shapes in the era-normalized vector space:
 - [[sasha-kaun|Sasha Kaun]] — cosine 0.87
 - [[tarik-black|Tarik Black]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 16.9 pts · 13.0 reb · 1.6 ast · 1.6 blk per 100 (2022-23).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+1.8σ vs era)
+- Efficient finisher inside the arc (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Three-point volume well below era (−1.3σ)
+- Free-throw touch well below era (−1.2σ)
+
+**Comparables:**
+
+- [[moussa-diabate|Moussa Diabaté]] '25 (91% similar)
+- [[dwayne-jones|Dwayne Jones]] '08 (89% similar)
+- [[hilton-armstrong|Hilton Armstrong]] '11 (89% similar)
+- [[lou-amundson|Lou Amundson]] '14 (88% similar)
+- [[sasha-kaun|Sasha Kaun]] '16 (87% similar)
+- [[tarik-black|Tarik Black]] '18 (87% similar)
+
+**Career shape:** Charted 4 seasons (2019-20–2022-23). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

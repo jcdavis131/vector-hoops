@@ -36,6 +36,33 @@ Closest career shapes in the era-normalized vector space:
 - [[lou-williams|Lou Williams]] — cosine 0.85
 - [[dedric-willoughby|Dedric Willoughby]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** SG · Scoring Volume + Shot Volume. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 27.7 pts · 6.3 reb · 6.8 ast · 1.9 stl per 100 (2014-15).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+2.3σ vs era)
+- Featured, high-usage scoring role (+1.5σ vs era)
+- High-volume three-point shooter (+1.2σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[jordan-poole|Jordan Poole]] '25 (87% similar)
+- [[brandon-jennings|Brandon Jennings]] '15 (87% similar)
+- [[gilbert-arenas|Gilbert Arenas]] '06 (85% similar)
+- [[brandon-knight|Brandon Knight]] '20 (85% similar)
+- [[lou-williams|Lou Williams]] '19 (85% similar)
+- [[dedric-willoughby|Dedric Willoughby]] '00 (85% similar)
+
+**Career shape:** Charted 3 seasons (2012-13–2014-15). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

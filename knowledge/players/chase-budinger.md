@@ -40,6 +40,32 @@ Closest career shapes in the era-normalized vector space:
 - [[richie-frahm|Richie Frahm]] — cosine 0.93
 - [[morris-peterson|Morris Peterson]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 21.8 pts · 7.3 reb · 2.9 ast · 1.1 stl per 100 (2009-10).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.5σ vs era)
+- Rarely turns the ball over (−1.3σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[pat-garrity|Pat Garrity]] '02 (95% similar)
+- [[dennis-scott|Dennis Scott]] '00 (94% similar)
+- [[wayne-ellington|Wayne Ellington]] '17 (94% similar)
+- [[daequan-cook|Daequan Cook]] '11 (93% similar)
+- [[richie-frahm|Richie Frahm]] '04 (93% similar)
+- [[morris-peterson|Morris Peterson]] '10 (93% similar)
+
+**Career shape:** Charted 7 seasons (2009-10–2015-16). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

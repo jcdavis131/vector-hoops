@@ -37,6 +37,31 @@ Closest career shapes in the era-normalized vector space:
 - [[bryant-stith|Bryant Stith]] — cosine 0.80
 - [[tyler-johnson|Tyler Johnson]] — cosine 0.80
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 19.5 pts · 5.8 reb · 2.8 ast · 1.6 stl per 100 (2009-10).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.5σ)
+
+**Comparables:**
+
+- [[johnny-newman|Johnny Newman]] '98 (87% similar)
+- [[terrence-shannon-jr|Terrence Shannon Jr.]] '26 (86% similar)
+- [[malik-sealy|Malik Sealy]] '97 (81% similar)
+- [[arron-afflalo|Arron Afflalo]] '18 (80% similar)
+- [[bryant-stith|Bryant Stith]] '98 (80% similar)
+- [[tyler-johnson|Tyler Johnson]] '21 (80% similar)
+
+**Career shape:** Charted 4 seasons (2008-09–2013-14). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -34,6 +34,31 @@ Closest career shapes in the era-normalized vector space:
 - [[dakari-johnson|Dakari Johnson]] — cosine 0.65
 - [[lazaro-borrell|Lazaro Borrell]] — cosine 0.65
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 21.2 pts · 9.6 reb · 1.2 ast · 2.3 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Strong net on-court impact (+2.1σ vs era)
+
+**Areas of concern:**
+
+- Table-setting role well below era (−1.4σ)
+
+**Comparables:**
+
+- [[devontae-cacok|Devontae Cacok]] '21 (73% similar)
+- [[og-anunoby|OG Anunoby]] '18 (72% similar)
+- [[mike-harris|Mike Harris]] '14 (69% similar)
+- [[nae-qwan-tomlin|Nae'Qwan Tomlin]] '26 (68% similar)
+- [[dakari-johnson|Dakari Johnson]] '18 (65% similar)
+- [[lazaro-borrell|Lazaro Borrell]] '00 (65% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

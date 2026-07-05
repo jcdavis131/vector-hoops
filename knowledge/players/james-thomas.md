@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[fabricio-oberto|Fabricio Oberto]] — cosine 0.85
 - [[will-perdue|Will Perdue]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 8.9 pts · 12.4 reb · 0.3 ast · 1.0 blk per 100 (2005-06).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+1.3σ vs era)
+- Strong net on-court impact (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−2.3σ)
+- Shot volume well below era (−2.1σ)
+
+**Comparables:**
+
+- [[steve-hamer|Steve Hamer]] '97 (95% similar)
+- [[terry-davis|Terry Davis]] '01 (87% similar)
+- [[mark-west|Mark West]] '99 (87% similar)
+- [[jake-tsakalidis|Jake Tsakalidis]] '06 (85% similar)
+- [[fabricio-oberto|Fabricio Oberto]] '10 (85% similar)
+- [[will-perdue|Will Perdue]] '99 (85% similar)
+
+**Career shape:** Charted 1 season (2005-06). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

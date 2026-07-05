@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[mychal-mulder|Mychal Mulder]] — cosine 0.87
 - [[justin-jackson|Justin Jackson]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 14.3 pts · 5.8 reb · 2.3 ast · 0.5 stl per 100 (2023-24).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.7σ)
+- Rim pressure (free-throw generation) well below era (−1.2σ)
+
+**Comparables:**
+
+- [[trey-alexander|Trey Alexander]] '25 (89% similar)
+- [[malachi-richardson|Malachi Richardson]] '19 (88% similar)
+- [[jawad-williams|Jawad Williams]] '11 (88% similar)
+- [[aj-griffin|AJ Griffin]] '24 (88% similar)
+- [[mychal-mulder|Mychal Mulder]] '22 (87% similar)
+- [[justin-jackson|Justin Jackson]] '23 (87% similar)
+
+**Career shape:** Charted 1 season (2023-24). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

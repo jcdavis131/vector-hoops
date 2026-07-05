@@ -39,6 +39,33 @@ Closest career shapes in the era-normalized vector space:
 - [[jason-thompson|Jason Thompson]] — cosine 0.92
 - [[jordan-hill|Jordan Hill]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 16.3 pts · 11.3 reb · 3.9 ast · 1.9 blk per 100 (2016-17).
+
+**Strengths:**
+
+- Elite rim protection (+1.1σ vs era)
+- Relentless on the offensive glass (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.2σ)
+- Ball-hawking activity well below era (−1.6σ)
+
+**Comparables:**
+
+- [[ante-zizic|Ante Zizic]] '18 (94% similar)
+- [[brandon-bass|Brandon Bass]] '17 (94% similar)
+- [[ivica-zubac|Ivica Zubac]] '20 (93% similar)
+- [[nenad-krstic|Nenad Krstic]] '07 (93% similar)
+- [[jason-thompson|Jason Thompson]] '15 (92% similar)
+- [[jordan-hill|Jordan Hill]] '13 (91% similar)
+
+**Career shape:** Charted 6 seasons (2012-13–2017-18). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

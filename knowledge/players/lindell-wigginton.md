@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jabari-brown|Jabari Brown]] — cosine 0.75
 - [[j-r-henderson|J.R. Henderson]] — cosine 0.75
 
+## Scouting report
+
+**Play style:** PG · Offensive Glass (Low On-Court Impact). Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 18.3 pts · 5.7 reb · 5.3 ast · 1.1 stl per 100 (2021-22).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+1.7σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.7σ)
+- On-court net impact well below era (−1.5σ)
+
+**Comparables:**
+
+- [[mason-jones|Mason Jones]] '21 (84% similar)
+- [[jared-cunningham|Jared Cunningham]] '15 (80% similar)
+- [[r-j-hampton|R.J. Hampton]] '22 (77% similar)
+- [[xavier-henry|Xavier Henry]] '13 (76% similar)
+- [[jabari-brown|Jabari Brown]] '15 (75% similar)
+- [[j-r-henderson|J.R. Henderson]] '99 (75% similar)
+
+**Career shape:** Charted 1 season (2021-22). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

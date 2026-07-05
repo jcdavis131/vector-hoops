@@ -35,6 +35,34 @@ Closest career shapes in the era-normalized vector space:
 - [[ben-davis|Ben Davis]] — cosine 0.85
 - [[scot-pollard|Scot Pollard]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 14.1 pts · 13.6 reb · 1.4 ast · 2.2 stl per 100 (2005-06).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+2.7σ vs era)
+- Rarely turns the ball over (−1.7σ vs era)
+- Active hands, disrupts passing lanes (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.0σ)
+- Three-point accuracy well below era (−1.3σ)
+
+**Comparables:**
+
+- [[shavlik-randolph|Shavlik Randolph]] '15 (95% similar)
+- [[jerome-williams|Jerome Williams]] '00 (90% similar)
+- [[jordan-williams|Jordan Williams]] '12 (90% similar)
+- [[jeff-foster|Jeff Foster]] '00 (89% similar)
+- [[ben-davis|Ben Davis]] '97 (85% similar)
+- [[scot-pollard|Scot Pollard]] '03 (85% similar)
+
+**Career shape:** Charted 2 seasons (2005-06–2006-07). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

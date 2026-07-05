@@ -36,6 +36,33 @@ Closest career shapes in the era-normalized vector space:
 - [[amal-mccaskill|Amal McCaskill]] — cosine 0.85
 - [[greg-brown-iii|Greg Brown III]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** PF · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 22.7 pts · 11.8 reb · 2.5 ast · 2.9 stl per 100 (2016-17).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.3σ vs era)
+- Elite rim protection (+1.8σ vs era)
+- Draws contact, gets to the line often (+1.1σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[dalibor-bagaric|Dalibor Bagaric]] '01 (87% similar)
+- [[keith-booth|Keith Booth]] '99 (86% similar)
+- [[marquese-chriss|Marquese Chriss]] '20 (85% similar)
+- [[chris-anstey|Chris Anstey]] '00 (85% similar)
+- [[amal-mccaskill|Amal McCaskill]] '02 (85% similar)
+- [[greg-brown-iii|Greg Brown III]] '22 (81% similar)
+
+**Career shape:** Charted 3 seasons (2014-15–2016-17). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -38,6 +38,33 @@ Closest career shapes in the era-normalized vector space:
 - [[taelon-peter|Taelon Peter]] — cosine 0.77
 - [[brandon-armstrong|Brandon Armstrong]] — cosine 0.77
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 13.7 pts · 3.9 reb · 2.1 ast · 2.8 stl per 100 (1998-99).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.4σ vs era)
+- Elite rim protection (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.0σ)
+- On-court net impact well below era (−1.9σ)
+
+**Comparables:**
+
+- [[christian-eyenga|Christian Eyenga]] '11 (85% similar)
+- [[chris-robinson|Chris Robinson]] '98 (81% similar)
+- [[khyri-thomas|Khyri Thomas]] '19 (78% similar)
+- [[rashad-vaughn|Rashad Vaughn]] '17 (77% similar)
+- [[taelon-peter|Taelon Peter]] '26 (77% similar)
+- [[brandon-armstrong|Brandon Armstrong]] '04 (77% similar)
+
+**Career shape:** Charted 5 seasons (1996-97–2005-06). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/sg|SG]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

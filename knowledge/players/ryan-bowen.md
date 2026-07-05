@@ -42,6 +42,34 @@ Closest career shapes in the era-normalized vector space:
 - [[jaylen-clark|Jaylen Clark]] — cosine 0.85
 - [[john-konchar|John Konchar]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass + Defensive Glass. Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 11.2 pts · 5.7 reb · 2.1 ast · 3.3 stl per 100 (2008-09).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+3.0σ vs era)
+- Efficient finisher inside the arc (+2.0σ vs era)
+- Rarely turns the ball over (−1.8σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.6σ)
+- Rim pressure (free-throw generation) well below era (−1.4σ)
+
+**Comparables:**
+
+- [[eduardo-najera|Eduardo Najera]] '12 (89% similar)
+- [[maurice-harkless|Maurice Harkless]] '15 (89% similar)
+- [[luc-mbah-a-moute|Luc Mbah a Moute]] '16 (89% similar)
+- [[javonte-green|Javonte Green]] '26 (88% similar)
+- [[jaylen-clark|Jaylen Clark]] '25 (85% similar)
+- [[john-konchar|John Konchar]] '20 (85% similar)
+
+**Career shape:** Charted 9 seasons (1999-00–2008-09). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -43,6 +43,34 @@ Closest career shapes in the era-normalized vector space:
 - [[mark-williams|Mark Williams]] — cosine 0.87
 - [[tarik-black|Tarik Black]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 18.9 pts · 16.8 reb · 3.0 ast · 1.1 stl per 100 (2021-22).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+2.5σ vs era)
+- Efficient finisher inside the arc (+1.3σ vs era)
+- Strong presence on the defensive glass (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−3.0σ)
+- Three-point volume well below era (−1.7σ)
+
+**Comparables:**
+
+- [[orlando-robinson|Orlando Robinson]] '23 (90% similar)
+- [[kenneth-faried|Kenneth Faried]] '12 (89% similar)
+- [[moussa-diabate|Moussa Diabaté]] '25 (89% similar)
+- [[buck-williams|Buck Williams]] '97 (87% similar)
+- [[mark-williams|Mark Williams]] '26 (87% similar)
+- [[tarik-black|Tarik Black]] '18 (87% similar)
+
+**Career shape:** Charted 10 seasons (2013-14–2023-24). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

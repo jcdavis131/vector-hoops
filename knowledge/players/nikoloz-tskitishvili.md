@@ -37,6 +37,32 @@ Closest career shapes in the era-normalized vector space:
 - [[quincy-miller|Quincy Miller]] — cosine 0.80
 - [[nemanja-nedovic|Nemanja Nedovic]] — cosine 0.79
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 11.6 pts · 9.5 reb · 2.3 ast · 2.6 blk per 100 (2004-05).
+
+**Strengths:**
+
+- Elite rim protection (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.5σ)
+- Turnover rate well above era (+1.6σ)
+
+**Comparables:**
+
+- [[cleanthony-early|Cleanthony Early]] '16 (84% similar)
+- [[bruno-sundov|Bruno Sundov]] '03 (81% similar)
+- [[maxwell-lewis|Maxwell Lewis]] '24 (81% similar)
+- [[zhou-qi|Zhou Qi]] '18 (81% similar)
+- [[quincy-miller|Quincy Miller]] '14 (80% similar)
+- [[nemanja-nedovic|Nemanja Nedovic]] '14 (79% similar)
+
+**Career shape:** Charted 4 seasons (2002-03–2005-06). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -45,6 +45,33 @@ Closest career shapes in the era-normalized vector space:
 - [[greivis-vasquez|Greivis Vasquez]] — cosine 0.89
 - [[dennis-schroder|Dennis Schröder]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 19.7 pts · 6.5 reb · 11.3 ast · 1.6 stl per 100 (2015-16).
+
+**Strengths:**
+
+- High-volume table-setter (+2.6σ vs era)
+- Reliable touch from the free-throw line (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.8σ)
+- Offensive-glass activity well below era (−1.1σ)
+
+**Comparables:**
+
+- [[carlos-arroyo|Carlos Arroyo]] '03 (91% similar)
+- [[jerryd-bayless|Jerryd Bayless]] '19 (91% similar)
+- [[beno-udrih|Beno Udrih]] '17 (90% similar)
+- [[d-j-augustin|D.J. Augustin]] '12 (89% similar)
+- [[greivis-vasquez|Greivis Vasquez]] '13 (89% similar)
+- [[dennis-schroder|Dennis Schröder]] '16 (88% similar)
+
+**Career shape:** Charted 12 seasons (2005-06–2017-18). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

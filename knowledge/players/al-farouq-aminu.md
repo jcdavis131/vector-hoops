@@ -44,6 +44,32 @@ Closest career shapes in the era-normalized vector space:
 - [[george-lynch|George Lynch]] — cosine 0.78
 - [[derrick-mckey|Derrick McKey]] — cosine 0.78
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 9.8 pts · 10.9 reb · 2.6 ast · 2.3 stl per 100 (2019-20).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.2σ)
+- Scoring load well below era (−1.6σ)
+
+**Comparables:**
+
+- [[usman-garuba|Usman Garuba]] '22 (83% similar)
+- [[linton-johnson|Linton Johnson]] '04 (82% similar)
+- [[noah-penda|Noah Penda]] '26 (79% similar)
+- [[chris-singleton|Chris Singleton]] '12 (79% similar)
+- [[george-lynch|George Lynch]] '03 (78% similar)
+- [[derrick-mckey|Derrick McKey]] '02 (78% similar)
+
+**Career shape:** Charted 11 seasons (2010-11–2020-21). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

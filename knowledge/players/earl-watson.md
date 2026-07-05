@@ -46,6 +46,33 @@ Closest career shapes in the era-normalized vector space:
 - [[jamaal-tinsley|Jamaal Tinsley]] — cosine 0.94
 - [[kendall-marshall|Kendall Marshall]] — cosine 0.94
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 3.7 pts · 4.5 reb · 8.5 ast · 1.5 stl per 100 (2013-14).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+2.0σ vs era)
+- High-volume table-setter (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−2.8σ)
+- Finishing efficiency well below era (−2.6σ)
+
+**Comparables:**
+
+- [[rick-brunson|Rick Brunson]] '99 (97% similar)
+- [[anthony-carter|Anthony Carter]] '03 (96% similar)
+- [[phil-pressey|Phil Pressey]] '16 (94% similar)
+- [[tim-frazier|Tim Frazier]] '20 (94% similar)
+- [[jamaal-tinsley|Jamaal Tinsley]] '04 (94% similar)
+- [[kendall-marshall|Kendall Marshall]] '14 (94% similar)
+
+**Career shape:** Charted 13 seasons (2001-02–2013-14). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

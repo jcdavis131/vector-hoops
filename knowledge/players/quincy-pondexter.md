@@ -39,6 +39,32 @@ Closest career shapes in the era-normalized vector space:
 - [[amir-coffey|Amir Coffey]] — cosine 0.92
 - [[semi-ojeleye|Semi Ojeleye]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 11.2 pts · 6.7 reb · 2.2 ast · 2.0 stl per 100 (2017-18).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−3.2σ)
+- Finishing efficiency well below era (−2.4σ)
+
+**Comparables:**
+
+- [[treveon-graham|Treveon Graham]] '17 (96% similar)
+- [[glenn-robinson-iii|Glenn Robinson III]] '21 (95% similar)
+- [[kyle-singler|Kyle Singler]] '17 (95% similar)
+- [[terrance-ferguson|Terrance Ferguson]] '20 (93% similar)
+- [[amir-coffey|Amir Coffey]] '23 (92% similar)
+- [[semi-ojeleye|Semi Ojeleye]] '18 (92% similar)
+
+**Career shape:** Charted 6 seasons (2010-11–2018-19). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

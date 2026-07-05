@@ -37,6 +37,34 @@ Closest career shapes in the era-normalized vector space:
 - [[daniel-ochefu|Daniel Ochefu]] — cosine 0.77
 - [[alex-poythress|Alex Poythress]] — cosine 0.77
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass + Defensive Glass. Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 15.7 pts · 9.6 reb · 2.8 ast · 2.4 stl per 100 (2005-06).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.4σ vs era)
+- Efficient finisher inside the arc (+1.2σ vs era)
+- Draws contact, gets to the line often (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−3.1σ)
+- On-court net impact well below era (−1.9σ)
+
+**Comparables:**
+
+- [[jarrett-culver|Jarrett Culver]] '22 (80% similar)
+- [[hamidou-diallo|Hamidou Diallo]] '23 (79% similar)
+- [[ben-davis|Ben Davis]] '97 (79% similar)
+- [[carl-herrera|Carl Herrera]] '99 (77% similar)
+- [[daniel-ochefu|Daniel Ochefu]] '17 (77% similar)
+- [[alex-poythress|Alex Poythress]] '18 (77% similar)
+
+**Career shape:** Charted 4 seasons (2003-04–2006-07). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

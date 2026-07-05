@@ -42,6 +42,33 @@ Closest career shapes in the era-normalized vector space:
 - [[hersey-hawkins|Hersey Hawkins]] — cosine 0.84
 - [[sam-perkins|Sam Perkins]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 18.0 pts · 6.8 reb · 2.5 ast · 2.7 stl per 100 (1996-97).
+
+**Strengths:**
+
+- Strong net on-court impact (+2.2σ vs era)
+- Active hands, disrupts passing lanes (+1.4σ vs era)
+- Rarely turns the ball over (−1.3σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[jae-crowder|Jae Crowder]] '22 (94% similar)
+- [[isaiah-joe|Isaiah Joe]] '25 (85% similar)
+- [[james-posey|James Posey]] '11 (85% similar)
+- [[tyrone-corbin|Tyrone Corbin]] '00 (85% similar)
+- [[hersey-hawkins|Hersey Hawkins]] '98 (84% similar)
+- [[sam-perkins|Sam Perkins]] '01 (84% similar)
+
+**Career shape:** Charted 9 seasons (1996-97–2004-05). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

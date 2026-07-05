@@ -44,6 +44,34 @@ Closest career shapes in the era-normalized vector space:
 - [[julius-randle|Julius Randle]] — cosine 0.85
 - [[chris-gatling|Chris Gatling]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 34.8 pts · 18.3 reb · 5.1 ast · 2.5 blk per 100 (2014-15).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+3.8σ vs era)
+- Strong presence on the defensive glass (+2.7σ vs era)
+- Featured, high-usage scoring role (+2.7σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+3.5σ)
+- Three-point volume well below era (−1.2σ)
+
+**Comparables:**
+
+- [[shawn-kemp|Shawn Kemp]] '00 (94% similar)
+- [[joel-embiid|Joel Embiid]] '17 (92% similar)
+- [[giannis-antetokounmpo|Giannis Antetokounmpo]] '20 (91% similar)
+- [[alperen-sengun|Alperen Sengun]] '25 (88% similar)
+- [[julius-randle|Julius Randle]] '24 (85% similar)
+- [[chris-gatling|Chris Gatling]] '97 (85% similar)
+
+**Career shape:** Charted 11 seasons (2010-11–2021-22). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

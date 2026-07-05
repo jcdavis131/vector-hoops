@@ -38,6 +38,32 @@ Closest career shapes in the era-normalized vector space:
 - [[semi-ojeleye|Semi Ojeleye]] — cosine 0.94
 - [[treveon-graham|Treveon Graham]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 11.2 pts · 6.1 reb · 1.1 ast · 0.9 stl per 100 (2016-17).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.2σ vs era)
+
+**Areas of concern:**
+
+- Scoring load well below era (−1.3σ)
+- Shot volume well below era (−1.3σ)
+
+**Comparables:**
+
+- [[terrance-ferguson|Terrance Ferguson]] '20 (97% similar)
+- [[ochai-agbaji|Ochai Agbaji]] '23 (95% similar)
+- [[glenn-robinson-iii|Glenn Robinson III]] '21 (95% similar)
+- [[quincy-pondexter|Quincy Pondexter]] '18 (95% similar)
+- [[semi-ojeleye|Semi Ojeleye]] '18 (94% similar)
+- [[treveon-graham|Treveon Graham]] '17 (93% similar)
+
+**Career shape:** Charted 5 seasons (2012-13–2016-17). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

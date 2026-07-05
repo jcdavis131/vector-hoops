@@ -39,6 +39,33 @@ Closest career shapes in the era-normalized vector space:
 - [[jose-calderon|Jose Calderon]] — cosine 0.82
 - [[carlos-arroyo|Carlos Arroyo]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 16.7 pts · 3.7 reb · 6.9 ast · 1.4 stl per 100 (2020-21).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+2.4σ vs era)
+- Reliable touch from the free-throw line (+1.2σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.0σ)
+- Defensive rebounding well below era (−1.7σ)
+
+**Comparables:**
+
+- [[tomas-satoransky|Tomas Satoransky]] '22 (87% similar)
+- [[muggsy-bogues|Muggsy Bogues]] '97 (86% similar)
+- [[andrew-nembhard|Andrew Nembhard]] '26 (86% similar)
+- [[sherman-douglas|Sherman Douglas]] '00 (83% similar)
+- [[jose-calderon|Jose Calderon]] '08 (82% similar)
+- [[carlos-arroyo|Carlos Arroyo]] '03 (82% similar)
+
+**Career shape:** Charted 6 seasons (2020-21–2025-26). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

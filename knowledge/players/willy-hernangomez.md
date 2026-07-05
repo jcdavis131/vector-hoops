@@ -40,6 +40,34 @@ Closest career shapes in the era-normalized vector space:
 - [[michael-sweetney|Michael Sweetney]] — cosine 0.90
 - [[wendell-carter-jr|Wendell Carter Jr.]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 26.3 pts · 18.1 reb · 3.3 ast · 1.7 stl per 100 (2022-23).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+2.4σ vs era)
+- Strong presence on the defensive glass (+2.3σ vs era)
+- Relentless on the offensive glass (+2.1σ vs era)
+
+**Areas of concern:**
+
+- Three-point volume well below era (−1.5σ)
+- Turnover rate well above era (+1.4σ)
+
+**Comparables:**
+
+- [[enes-freedom|Enes Freedom]] '18 (92% similar)
+- [[kenneth-faried|Kenneth Faried]] '12 (91% similar)
+- [[danny-fortson|Danny Fortson]] '05 (91% similar)
+- [[day-ron-sharpe|Day'Ron Sharpe]] '24 (91% similar)
+- [[michael-sweetney|Michael Sweetney]] '07 (90% similar)
+- [[wendell-carter-jr|Wendell Carter Jr.]] '19 (90% similar)
+
+**Career shape:** Charted 7 seasons (2016-17–2022-23). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

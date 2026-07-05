@@ -35,6 +35,33 @@ Closest career shapes in the era-normalized vector space:
 - [[egor-demin|Egor Dëmin]] — cosine 0.90
 - [[isaiah-canaan|Isaiah Canaan]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** PG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 14.6 pts · 4.0 reb · 4.5 ast · 2.4 stl per 100 (1998-99).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+2.1σ vs era)
+- High-volume three-point shooter (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.5σ)
+- On-court net impact well below era (−1.3σ)
+
+**Comparables:**
+
+- [[c-j-wilcox|C.J. Wilcox]] '17 (93% similar)
+- [[sherron-collins|Sherron Collins]] '11 (91% similar)
+- [[ian-clark|Ian Clark]] '15 (91% similar)
+- [[randy-foye|Randy Foye]] '12 (90% similar)
+- [[egor-demin|Egor Dëmin]] '26 (90% similar)
+- [[isaiah-canaan|Isaiah Canaan]] '16 (89% similar)
+
+**Career shape:** Charted 2 seasons (1998-99–2001-02). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

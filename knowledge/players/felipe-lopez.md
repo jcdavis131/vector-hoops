@@ -37,6 +37,31 @@ Closest career shapes in the era-normalized vector space:
 - [[r-j-hampton|R.J. Hampton]] — cosine 0.75
 - [[xavier-henry|Xavier Henry]] — cosine 0.75
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 19.1 pts · 8.1 reb · 2.9 ast · 2.1 stl per 100 (1999-00).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.0σ)
+
+**Comparables:**
+
+- [[tariq-abdul-wahad|Tariq Abdul-Wahad]] '01 (88% similar)
+- [[j-r-henderson|J.R. Henderson]] '99 (78% similar)
+- [[sam-young|Sam Young]] '13 (76% similar)
+- [[melvin-frazier-jr|Melvin Frazier Jr.]] '20 (76% similar)
+- [[r-j-hampton|R.J. Hampton]] '22 (75% similar)
+- [[xavier-henry|Xavier Henry]] '13 (75% similar)
+
+**Career shape:** Charted 4 seasons (1998-99–2001-02). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

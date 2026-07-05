@@ -39,6 +39,33 @@ Closest career shapes in the era-normalized vector space:
 - [[herb-williams|Herb Williams]] — cosine 0.82
 - [[dante-cunningham|Dante Cunningham]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass + Defensive Glass. Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 10.3 pts · 16.2 reb · 3.0 ast · 2.0 blk per 100 (2001-02).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+2.1σ vs era)
+- Relentless on the offensive glass (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.7σ)
+- Rim pressure (free-throw generation) well below era (−1.6σ)
+
+**Comparables:**
+
+- [[perry-jones-iii|Perry Jones III]] '13 (90% similar)
+- [[jaron-blossomgame|Jaron Blossomgame]] '19 (87% similar)
+- [[nassir-little|Nassir Little]] '20 (84% similar)
+- [[malik-allen|Malik Allen]] '11 (83% similar)
+- [[herb-williams|Herb Williams]] '98 (82% similar)
+- [[dante-cunningham|Dante Cunningham]] '19 (82% similar)
+
+**Career shape:** Charted 6 seasons (1996-97–2001-02). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

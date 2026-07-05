@@ -42,6 +42,33 @@ Closest career shapes in the era-normalized vector space:
 - [[mike-james|Mike James]] — cosine 0.90
 - [[shabazz-napier|Shabazz Napier]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 16.2 pts · 8.0 reb · 5.9 ast · 2.7 stl per 100 (2000-01).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.8σ vs era)
+- High-volume three-point shooter (+1.2σ vs era)
+- Reliable touch from the free-throw line (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.3σ)
+
+**Comparables:**
+
+- [[tyrese-proctor|Tyrese Proctor]] '26 (93% similar)
+- [[toney-douglas|Toney Douglas]] '12 (92% similar)
+- [[dan-dickau|Dan Dickau]] '06 (91% similar)
+- [[derek-anderson|Derek Anderson]] '01 (90% similar)
+- [[mike-james|Mike James]] '06 (90% similar)
+- [[shabazz-napier|Shabazz Napier]] '17 (90% similar)
+
+**Career shape:** Charted 9 seasons (1996-97–2004-05). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Playmaking + Steals identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

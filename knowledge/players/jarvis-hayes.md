@@ -40,6 +40,33 @@ Closest career shapes in the era-normalized vector space:
 - [[dennis-scott|Dennis Scott]] — cosine 0.91
 - [[terrence-ross|Terrence Ross]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 17.4 pts · 5.3 reb · 2.0 ast · 1.4 stl per 100 (2009-10).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.6σ vs era)
+- Rarely turns the ball over (−1.5σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.5σ)
+- Offensive-glass activity well below era (−1.2σ)
+
+**Comparables:**
+
+- [[wayne-ellington|Wayne Ellington]] '17 (94% similar)
+- [[langston-galloway|Langston Galloway]] '18 (93% similar)
+- [[chase-budinger|Chase Budinger]] '10 (93% similar)
+- [[morris-peterson|Morris Peterson]] '10 (91% similar)
+- [[dennis-scott|Dennis Scott]] '00 (91% similar)
+- [[terrence-ross|Terrence Ross]] '19 (91% similar)
+
+**Career shape:** Charted 7 seasons (2003-04–2009-10). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

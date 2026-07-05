@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[sherron-collins|Sherron Collins]] — cosine 0.90
 - [[keifer-sykes|Keifer Sykes]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 9.4 pts · 5.4 reb · 5.4 ast · 0.9 stl per 100 (2016-17).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+2.1σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.8σ)
+- Scoring load well below era (−1.6σ)
+
+**Comparables:**
+
+- [[ian-clark|Ian Clark]] '15 (93% similar)
+- [[rusty-larue|Rusty LaRue]] '99 (93% similar)
+- [[quincy-douby|Quincy Douby]] '08 (92% similar)
+- [[gabe-vincent|Gabe Vincent]] '26 (91% similar)
+- [[sherron-collins|Sherron Collins]] '11 (90% similar)
+- [[keifer-sykes|Keifer Sykes]] '22 (87% similar)
+
+**Career shape:** Charted 3 seasons (2014-15–2016-17). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

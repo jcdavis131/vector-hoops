@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[briante-weber|Briante Weber]] — cosine 0.78
 - [[bilal-coulibaly|Bilal Coulibaly]] — cosine 0.76
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 20.1 pts · 4.4 reb · 3.9 ast · 3.4 stl per 100 (2020-21).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+3.3σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−3.6σ)
+- Finishing efficiency well below era (−1.4σ)
+
+**Comparables:**
+
+- [[keon-johnson|Keon Johnson]] '23 (84% similar)
+- [[josh-christopher|Josh Christopher]] '23 (81% similar)
+- [[quinndary-weatherspoon|Quinndary Weatherspoon]] '21 (79% similar)
+- [[trevelin-queen|Trevelin Queen]] '25 (78% similar)
+- [[briante-weber|Briante Weber]] '18 (78% similar)
+- [[bilal-coulibaly|Bilal Coulibaly]] '26 (76% similar)
+
+**Career shape:** Charted 1 season (2020-21). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

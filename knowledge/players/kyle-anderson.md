@@ -45,6 +45,33 @@ Closest career shapes in the era-normalized vector space:
 - [[cody-martin|Cody Martin]] — cosine 0.76
 - [[adrian-griffin|Adrian Griffin]] — cosine 0.76
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 10.3 pts · 10.1 reb · 3.9 ast · 2.1 stl per 100 (2014-15).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.4σ vs era)
+- Strong presence on the defensive glass (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Scoring load well below era (−1.6σ)
+- Finishing efficiency well below era (−1.4σ)
+
+**Comparables:**
+
+- [[john-konchar|John Konchar]] '20 (82% similar)
+- [[dyson-daniels|Dyson Daniels]] '25 (82% similar)
+- [[juan-toscano-anderson|Juan Toscano-Anderson]] '21 (79% similar)
+- [[derrick-mckey|Derrick McKey]] '02 (77% similar)
+- [[cody-martin|Cody Martin]] '21 (76% similar)
+- [[adrian-griffin|Adrian Griffin]] '04 (76% similar)
+
+**Career shape:** Charted 12 seasons (2014-15–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

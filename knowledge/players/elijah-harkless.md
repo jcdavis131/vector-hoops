@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[facundo-campazzo|Facundo Campazzo]] — cosine 0.84
 - [[garrett-temple|Garrett Temple]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** SG · Playmaking + Steals. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 15.1 pts · 4.5 reb · 6.4 ast · 2.6 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.7σ)
+- Defensive rebounding well below era (−1.1σ)
+
+**Comparables:**
+
+- [[reece-beekman|Reece Beekman]] '25 (86% similar)
+- [[litterial-green|Litterial Green]] '98 (86% similar)
+- [[jawun-evans|Jawun Evans]] '18 (86% similar)
+- [[ron-baker|Ron Baker]] '18 (84% similar)
+- [[facundo-campazzo|Facundo Campazzo]] '21 (84% similar)
+- [[garrett-temple|Garrett Temple]] '11 (82% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

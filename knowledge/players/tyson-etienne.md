@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[a-j-guyton|A.J. Guyton]] — cosine 0.86
 - [[lonnie-walker-iv|Lonnie Walker IV]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** PG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 23.5 pts · 3.3 reb · 5.0 ast · 1.4 stl per 100 (2025-26).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.8σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.6σ)
+- Defensive rebounding well below era (−1.5σ)
+
+**Comparables:**
+
+- [[isaiah-canaan|Isaiah Canaan]] '16 (90% similar)
+- [[tracy-moore|Tracy Moore]] '97 (90% similar)
+- [[juan-carlos-navarro|Juan Carlos Navarro]] '08 (89% similar)
+- [[dajuan-wagner|Dajuan Wagner]] '03 (87% similar)
+- [[a-j-guyton|A.J. Guyton]] '02 (86% similar)
+- [[lonnie-walker-iv|Lonnie Walker IV]] '25 (86% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

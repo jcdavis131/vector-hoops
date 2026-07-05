@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[tom-hammonds|Tom Hammonds]] — cosine 0.84
 - [[donald-royal|Donald Royal]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 11.2 pts · 7.3 reb · 2.2 ast · 0.7 stl per 100 (2024-25).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.0σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.0σ)
+- Shot volume well below era (−1.6σ)
+
+**Comparables:**
+
+- [[jarron-collins|Jarron Collins]] '10 (95% similar)
+- [[robert-sacre|Robert Sacre]] '13 (89% similar)
+- [[mark-bryant|Mark Bryant]] '03 (86% similar)
+- [[rakeem-christmas|Rakeem Christmas]] '17 (85% similar)
+- [[tom-hammonds|Tom Hammonds]] '00 (84% similar)
+- [[donald-royal|Donald Royal]] '98 (84% similar)
+
+**Career shape:** Charted 1 season (2024-25). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

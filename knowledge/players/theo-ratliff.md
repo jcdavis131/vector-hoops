@@ -45,6 +45,34 @@ Closest career shapes in the era-normalized vector space:
 - [[dj-mbenga|DJ Mbenga]] — cosine 0.92
 - [[khaman-maluach|Khaman Maluach]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 8.0 pts · 11.5 reb · 0.8 ast · 4.2 blk per 100 (2008-09).
+
+**Strengths:**
+
+- Elite rim protection (+2.8σ vs era)
+- Rarely turns the ball over (−1.6σ vs era)
+- Efficient finisher inside the arc (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−2.4σ)
+- Scoring load well below era (−1.9σ)
+
+**Comparables:**
+
+- [[keon-clark|Keon Clark]] '01 (94% similar)
+- [[jeff-withey|Jeff Withey]] '17 (94% similar)
+- [[kelvin-cato|Kelvin Cato]] '99 (93% similar)
+- [[shawn-bradley|Shawn Bradley]] '01 (92% similar)
+- [[dj-mbenga|DJ Mbenga]] '06 (92% similar)
+- [[khaman-maluach|Khaman Maluach]] '26 (92% similar)
+
+**Career shape:** Charted 12 seasons (1996-97–2009-10). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

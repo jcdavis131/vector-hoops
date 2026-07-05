@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[terry-davis|Terry Davis]] — cosine 0.88
 - [[tom-hammonds|Tom Hammonds]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 13.4 pts · 10.6 reb · 1.2 ast · 0.7 blk per 100 (1996-97).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.8σ)
+- Free-throw touch well below era (−1.4σ)
+
+**Comparables:**
+
+- [[james-thomas|James Thomas]] '06 (95% similar)
+- [[greg-smith|Greg Smith]] '16 (92% similar)
+- [[luke-schenscher|Luke Schenscher]] '06 (91% similar)
+- [[malik-hairston|Malik Hairston]] '10 (88% similar)
+- [[terry-davis|Terry Davis]] '01 (88% similar)
+- [[tom-hammonds|Tom Hammonds]] '00 (87% similar)
+
+**Career shape:** Charted 1 season (1996-97). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[john-amaechi|John Amaechi]] — cosine 0.74
 - [[leon-powe|Leon Powe]] — cosine 0.72
 
+## Scouting report
+
+**Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 17.7 pts · 11.5 reb · 1.6 ast · 0.7 stl per 100 (1999-00).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+3.0σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.0σ)
+- Ball-hawking activity well below era (−1.4σ)
+
+**Comparables:**
+
+- [[obinna-ekezie|Obinna Ekezie]] '02 (88% similar)
+- [[sean-lampley|Sean Lampley]] '03 (81% similar)
+- [[tyler-hansbrough|Tyler Hansbrough]] '16 (77% similar)
+- [[zendon-hamilton|Zendon Hamilton]] '05 (75% similar)
+- [[john-amaechi|John Amaechi]] '02 (74% similar)
+- [[leon-powe|Leon Powe]] '08 (72% similar)
+
+**Career shape:** Charted 1 season (1999-00). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

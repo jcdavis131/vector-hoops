@@ -42,6 +42,32 @@ Closest career shapes in the era-normalized vector space:
 - [[delonte-west|Delonte West]] — cosine 0.88
 - [[c-j-watson|C.J. Watson]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** SG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 13.5 pts · 6.2 reb · 6.8 ast · 3.2 stl per 100 (2002-03).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.4σ vs era)
+- Strong net on-court impact (+1.7σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.3σ)
+
+**Comparables:**
+
+- [[mario-chalmers|Mario Chalmers]] '16 (93% similar)
+- [[jon-barry|Jon Barry]] '98 (91% similar)
+- [[hersey-hawkins|Hersey Hawkins]] '98 (88% similar)
+- [[de-anthony-melton|De'Anthony Melton]] '19 (88% similar)
+- [[delonte-west|Delonte West]] '09 (88% similar)
+- [[c-j-watson|C.J. Watson]] '11 (87% similar)
+
+**Career shape:** Charted 9 seasons (1996-97–2004-05). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

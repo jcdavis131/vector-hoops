@@ -42,6 +42,34 @@ Closest career shapes in the era-normalized vector space:
 - [[zydrunas-ilgauskas|Zydrunas Ilgauskas]] — cosine 0.89
 - [[chris-mihm|Chris Mihm]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 21.8 pts · 15.3 reb · 2.6 ast · 4.8 blk per 100 (2012-13).
+
+**Strengths:**
+
+- Elite rim protection (+3.5σ vs era)
+- Relentless on the offensive glass (+2.4σ vs era)
+- Strong net on-court impact (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.1σ)
+- Three-point volume well below era (−1.1σ)
+
+**Comparables:**
+
+- [[jermaine-o-neal|Jermaine O'Neal]] '05 (92% similar)
+- [[andrew-bynum|Andrew Bynum]] '08 (90% similar)
+- [[hamed-haddadi|Hamed Haddadi]] '09 (90% similar)
+- [[khaman-maluach|Khaman Maluach]] '26 (89% similar)
+- [[zydrunas-ilgauskas|Zydrunas Ilgauskas]] '02 (89% similar)
+- [[chris-mihm|Chris Mihm]] '09 (89% similar)
+
+**Career shape:** Charted 9 seasons (2008-09–2016-17). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

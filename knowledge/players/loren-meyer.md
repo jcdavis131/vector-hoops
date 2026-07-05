@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[zarko-cabarkapa|Zarko Cabarkapa]] — cosine 0.73
 - [[john-wallace|John Wallace]] — cosine 0.68
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 19.1 pts · 10.4 reb · 1.4 ast · 1.1 blk per 100 (1996-97).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+1.7σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.3σ)
+- Turnover rate well above era (+1.3σ)
+
+**Comparables:**
+
+- [[kevin-duckworth|Kevin Duckworth]] '97 (81% similar)
+- [[mengke-bateer|Mengke Bateer]] '02 (78% similar)
+- [[uros-slokar|Uros Slokar]] '07 (78% similar)
+- [[sean-may|Sean May]] '09 (75% similar)
+- [[zarko-cabarkapa|Zarko Cabarkapa]] '04 (73% similar)
+- [[john-wallace|John Wallace]] '99 (68% similar)
+
+**Career shape:** Charted 1 season (1996-97). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

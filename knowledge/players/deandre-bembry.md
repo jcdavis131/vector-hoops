@@ -39,6 +39,32 @@ Closest career shapes in the era-normalized vector space:
 - [[dalen-terry|Dalen Terry]] — cosine 0.84
 - [[julian-wright|Julian Wright]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass + Defensive Glass. Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 13.6 pts · 8.0 reb · 3.8 ast · 1.1 stl per 100 (2016-17).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−3.0σ)
+- Three-point accuracy well below era (−1.8σ)
+
+**Comparables:**
+
+- [[deandre-liggins|DeAndre Liggins]] '12 (90% similar)
+- [[cody-martin|Cody Martin]] '21 (88% similar)
+- [[jahmai-mashack|Jahmai Mashack]] '26 (87% similar)
+- [[wendell-moore-jr|Wendell Moore Jr.]] '24 (86% similar)
+- [[dalen-terry|Dalen Terry]] '26 (84% similar)
+- [[julian-wright|Julian Wright]] '11 (83% similar)
+
+**Career shape:** Charted 6 seasons (2016-17–2021-22). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

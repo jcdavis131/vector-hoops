@@ -49,6 +49,33 @@ Closest career shapes in the era-normalized vector space:
 - [[bam-adebayo|Bam Adebayo]] — cosine 0.80
 - [[tim-duncan|Tim Duncan]] — cosine 0.79
 
+## Scouting report
+
+**Play style:** PF · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 19.7 pts · 15.0 reb · 2.2 ast · 2.6 blk per 100 (2006-07).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+2.3σ vs era)
+- Active hands, disrupts passing lanes (+1.5σ vs era)
+- Elite rim protection (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Three-point volume well below era (−1.0σ)
+
+**Comparables:**
+
+- [[david-robinson|David Robinson]] '98 (87% similar)
+- [[anthony-davis|Anthony Davis]] '15 (83% similar)
+- [[hakeem-olajuwon|Hakeem Olajuwon]] '97 (82% similar)
+- [[shayne-whittington|Shayne Whittington]] '15 (81% similar)
+- [[bam-adebayo|Bam Adebayo]] '22 (80% similar)
+- [[tim-duncan|Tim Duncan]] '04 (79% similar)
+
+**Career shape:** Charted 16 seasons (2006-07–2021-22). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

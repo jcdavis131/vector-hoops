@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[ruben-boumtje-boumtje|Ruben Boumtje-Boumtje]] — cosine 0.86
 - [[j-r-giddens|J.R. Giddens]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 7.3 pts · 10.2 reb · 1.0 ast · 1.9 blk per 100 (2013-14).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+1.4σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−3.9σ)
+- Shot volume well below era (−2.1σ)
+
+**Comparables:**
+
+- [[eric-mobley|Eric Mobley]] '97 (94% similar)
+- [[amal-mccaskill|Amal McCaskill]] '02 (90% similar)
+- [[lari-ketner|Lari Ketner]] '00 (89% similar)
+- [[dalibor-bagaric|Dalibor Bagaric]] '01 (87% similar)
+- [[ruben-boumtje-boumtje|Ruben Boumtje-Boumtje]] '02 (86% similar)
+- [[j-r-giddens|J.R. Giddens]] '10 (86% similar)
+
+**Career shape:** Charted 1 season (2013-14). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

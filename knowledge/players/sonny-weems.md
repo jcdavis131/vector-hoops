@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[dean-oliver|Dean Oliver]] — cosine 0.79
 - [[darius-morris|Darius Morris]] — cosine 0.78
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 10.0 pts · 5.0 reb · 4.6 ast · 0.9 stl per 100 (2015-16).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.7σ)
+- Scoring load well below era (−1.6σ)
+
+**Comparables:**
+
+- [[nique-clifford|Nique Clifford]] '26 (84% similar)
+- [[kam-jones|Kam Jones]] '26 (82% similar)
+- [[charles-jenkins|Charles Jenkins]] '12 (80% similar)
+- [[jacob-evans|Jacob Evans]] '19 (79% similar)
+- [[dean-oliver|Dean Oliver]] '02 (79% similar)
+- [[darius-morris|Darius Morris]] '12 (78% similar)
+
+**Career shape:** Charted 3 seasons (2009-10–2015-16). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

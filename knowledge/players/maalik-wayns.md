@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[sherron-collins|Sherron Collins]] — cosine 0.86
 - [[cory-carr|Cory Carr]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 19.0 pts · 1.7 reb · 6.7 ast · 1.5 stl per 100 (2012-13).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+1.2σ vs era)
+- Heavy shot volume, focal scoring option (+1.2σ vs era)
+- High-volume three-point shooter (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.2σ)
+- On-court net impact well below era (−2.2σ)
+
+**Comparables:**
+
+- [[joe-young|Joe Young]] '17 (90% similar)
+- [[isaiah-canaan|Isaiah Canaan]] '16 (87% similar)
+- [[bobby-brown|Bobby Brown]] '18 (87% similar)
+- [[brandon-knight|Brandon Knight]] '20 (86% similar)
+- [[sherron-collins|Sherron Collins]] '11 (86% similar)
+- [[cory-carr|Cory Carr]] '99 (85% similar)
+
+**Career shape:** Charted 1 season (2012-13). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

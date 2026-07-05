@@ -37,6 +37,32 @@ Closest career shapes in the era-normalized vector space:
 - [[rex-walters|Rex Walters]] — cosine 0.87
 - [[luther-head|Luther Head]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** PG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 13.2 pts · 6.4 reb · 5.0 ast · 0.8 stl per 100 (2000-01).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.8σ)
+- Ball-hawking activity well below era (−1.3σ)
+
+**Comparables:**
+
+- [[jim-jackson|Jim Jackson]] '06 (91% similar)
+- [[bryce-drew|Bryce Drew]] '99 (89% similar)
+- [[luke-kennard|Luke Kennard]] '23 (88% similar)
+- [[ian-clark|Ian Clark]] '15 (88% similar)
+- [[rex-walters|Rex Walters]] '98 (87% similar)
+- [[luther-head|Luther Head]] '07 (87% similar)
+
+**Career shape:** Charted 4 seasons (1996-97–2000-01). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

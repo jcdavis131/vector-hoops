@@ -40,6 +40,31 @@ Closest career shapes in the era-normalized vector space:
 - [[marco-belinelli|Marco Belinelli]] — cosine 0.82
 - [[jared-mccain|Jared McCain]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 19.0 pts · 5.9 reb · 3.1 ast · 1.6 stl per 100 (2009-10).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.3σ)
+
+**Comparables:**
+
+- [[allan-ray|Allan Ray]] '07 (86% similar)
+- [[derek-anderson|Derek Anderson]] '01 (83% similar)
+- [[grayson-allen|Grayson Allen]] '19 (82% similar)
+- [[alec-burks|Alec Burks]] '24 (82% similar)
+- [[marco-belinelli|Marco Belinelli]] '08 (82% similar)
+- [[jared-mccain|Jared McCain]] '25 (82% similar)
+
+**Career shape:** Charted 7 seasons (2003-04–2009-10). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

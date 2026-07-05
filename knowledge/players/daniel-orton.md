@@ -35,6 +35,34 @@ Closest career shapes in the era-normalized vector space:
 - [[semih-erden|Semih Erden]] — cosine 0.90
 - [[greg-stiemsma|Greg Stiemsma]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 12.3 pts · 10.7 reb · 1.4 ast · 2.5 blk per 100 (2011-12).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+2.0σ vs era)
+- Relentless on the offensive glass (+1.5σ vs era)
+- Elite rim protection (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.0σ)
+- Shot volume well below era (−1.8σ)
+
+**Comparables:**
+
+- [[hasheem-thabeet|Hasheem Thabeet]] '12 (94% similar)
+- [[pervis-ellison|Pervis Ellison]] '98 (91% similar)
+- [[freddie-gillespie|Freddie Gillespie]] '21 (91% similar)
+- [[bismack-biyombo|Bismack Biyombo]] '23 (90% similar)
+- [[semih-erden|Semih Erden]] '12 (90% similar)
+- [[greg-stiemsma|Greg Stiemsma]] '15 (90% similar)
+
+**Career shape:** Charted 2 seasons (2011-12–2013-14). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

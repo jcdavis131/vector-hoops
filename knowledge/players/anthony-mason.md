@@ -39,6 +39,33 @@ Closest career shapes in the era-normalized vector space:
 - [[james-thomas|James Thomas]] — cosine 0.66
 - [[tyler-cook|Tyler Cook]] — cosine 0.65
 
+## Scouting report
+
+**Play style:** PF · Three-Point Accuracy (Low Turnovers). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 13.0 pts · 10.7 reb · 5.7 ast · 0.9 stl per 100 (2001-02).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+4.0σ vs era)
+- Efficient finisher inside the arc (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.3σ)
+- Ball-hawking activity well below era (−1.1σ)
+
+**Comparables:**
+
+- [[udonis-haslem|Udonis Haslem]] '13 (71% similar)
+- [[brad-miller|Brad Miller]] '99 (70% similar)
+- [[steve-hamer|Steve Hamer]] '97 (67% similar)
+- [[josh-hart|Josh Hart]] '23 (66% similar)
+- [[james-thomas|James Thomas]] '06 (66% similar)
+- [[tyler-cook|Tyler Cook]] '22 (65% similar)
+
+**Career shape:** Charted 6 seasons (1996-97–2002-03). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

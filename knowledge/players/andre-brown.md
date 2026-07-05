@@ -35,6 +35,34 @@ Closest career shapes in the era-normalized vector space:
 - [[kenny-thomas|Kenny Thomas]] — cosine 0.91
 - [[chris-wilcox|Chris Wilcox]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 17.0 pts · 15.6 reb · 1.4 ast · 1.2 stl per 100 (2007-08).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+2.1σ vs era)
+- Draws contact, gets to the line often (+1.4σ vs era)
+- Strong presence on the defensive glass (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.2σ)
+- Three-point accuracy well below era (−1.4σ)
+
+**Comparables:**
+
+- [[brandon-hunter|Brandon Hunter]] '05 (96% similar)
+- [[ben-handlogten|Ben Handlogten]] '04 (94% similar)
+- [[aaron-gray|Aaron Gray]] '11 (94% similar)
+- [[mitch-mcgary|Mitch McGary]] '16 (92% similar)
+- [[kenny-thomas|Kenny Thomas]] '08 (91% similar)
+- [[chris-wilcox|Chris Wilcox]] '13 (90% similar)
+
+**Career shape:** Charted 2 seasons (2006-07–2007-08). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

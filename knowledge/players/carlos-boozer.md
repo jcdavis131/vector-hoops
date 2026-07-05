@@ -46,6 +46,34 @@ Closest career shapes in the era-normalized vector space:
 - [[boban-marjanovic|Boban Marjanovic]] — cosine 0.86
 - [[bison-dele|Bison Dele]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** PF · Defensive Glass + Rim Pressure (Fts). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 30.8 pts · 17.3 reb · 4.4 ast · 1.4 stl per 100 (2006-07).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+2.5σ vs era)
+- Featured, high-usage scoring role (+2.0σ vs era)
+- Efficient finisher inside the arc (+1.7σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.4σ)
+- Three-point volume well below era (−1.1σ)
+
+**Comparables:**
+
+- [[luis-scola|Luis Scola]] '11 (96% similar)
+- [[david-lee|David Lee]] '17 (90% similar)
+- [[zach-randolph|Zach Randolph]] '07 (87% similar)
+- [[greg-monroe|Greg Monroe]] '18 (86% similar)
+- [[boban-marjanovic|Boban Marjanovic]] '18 (86% similar)
+- [[bison-dele|Bison Dele]] '99 (86% similar)
+
+**Career shape:** Charted 13 seasons (2002-03–2014-15). Entered as a Rim Protection + Offensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

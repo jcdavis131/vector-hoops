@@ -40,6 +40,32 @@ Closest career shapes in the era-normalized vector space:
 - [[joel-freeland|Joel Freeland]] — cosine 0.87
 - [[antonio-davis|Antonio Davis]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 10.6 pts · 11.8 reb · 2.5 ast · 1.1 blk per 100 (2019-20).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.8σ)
+- Finishing efficiency well below era (−1.7σ)
+
+**Comparables:**
+
+- [[sean-rooks|Sean Rooks]] '98 (90% similar)
+- [[clar-weatherspoon|Clar. Weatherspoon]] '03 (89% similar)
+- [[jason-thompson|Jason Thompson]] '15 (88% similar)
+- [[khem-birch|Khem Birch]] '19 (88% similar)
+- [[joel-freeland|Joel Freeland]] '15 (87% similar)
+- [[antonio-davis|Antonio Davis]] '01 (87% similar)
+
+**Career shape:** Charted 7 seasons (2012-13–2019-20). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -42,6 +42,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jordan-walsh|Jordan Walsh]] — cosine 0.85
 - [[hot-rod-williams|Hot Rod Williams]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 8.7 pts · 8.6 reb · 2.7 ast · 1.8 stl per 100 (2025-26).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.9σ)
+- Shot volume well below era (−1.9σ)
+
+**Comparables:**
+
+- [[grant-williams|Grant Williams]] '20 (91% similar)
+- [[kz-okpala|KZ Okpala]] '21 (90% similar)
+- [[harvey-grant|Harvey Grant]] '97 (88% similar)
+- [[mark-pope|Mark Pope]] '01 (88% similar)
+- [[jordan-walsh|Jordan Walsh]] '25 (85% similar)
+- [[hot-rod-williams|Hot Rod Williams]] '99 (83% similar)
+
+**Career shape:** Charted 9 seasons (2017-18–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

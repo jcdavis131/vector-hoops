@@ -46,6 +46,34 @@ Closest career shapes in the era-normalized vector space:
 - [[nick-fazekas|Nick Fazekas]] — cosine 0.93
 - [[emeka-okafor|Emeka Okafor]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** PF · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 29.2 pts · 16.9 reb · 2.9 ast · 2.0 blk per 100 (2000-01).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+2.3σ vs era)
+- Featured, high-usage scoring role (+1.9σ vs era)
+- Draws contact, gets to the line often (+1.7σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.4σ)
+- Ball-hawking activity well below era (−1.1σ)
+
+**Comparables:**
+
+- [[alan-williams|Alan Williams]] '17 (95% similar)
+- [[derrick-favors|Derrick Favors]] '21 (94% similar)
+- [[deandre-ayton|Deandre Ayton]] '26 (94% similar)
+- [[clint-capela|Clint Capela]] '21 (94% similar)
+- [[nick-fazekas|Nick Fazekas]] '08 (93% similar)
+- [[emeka-okafor|Emeka Okafor]] '18 (92% similar)
+
+**Career shape:** Charted 13 seasons (1996-97–2010-11). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

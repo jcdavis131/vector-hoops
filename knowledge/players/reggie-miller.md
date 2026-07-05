@@ -42,6 +42,33 @@ Closest career shapes in the era-normalized vector space:
 - [[cuttino-mobley|Cuttino Mobley]] — cosine 0.91
 - [[ray-allen|Ray Allen]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 29.8 pts · 4.4 reb · 3.2 ast · 1.5 stl per 100 (1997-98).
+
+**Strengths:**
+
+- Featured, high-usage scoring role (+1.9σ vs era)
+- High-volume three-point shooter (+1.7σ vs era)
+- Strong net on-court impact (+1.7σ vs era)
+
+**Areas of concern:**
+
+- Offensive-glass activity well below era (−1.1σ)
+
+**Comparables:**
+
+- [[steven-smith|Steven Smith]] '99 (95% similar)
+- [[jj-redick|JJ Redick]] '16 (95% similar)
+- [[glen-rice|Glen Rice]] '97 (93% similar)
+- [[peja-stojakovic|Peja Stojakovic]] '04 (92% similar)
+- [[cuttino-mobley|Cuttino Mobley]] '02 (91% similar)
+- [[ray-allen|Ray Allen]] '06 (90% similar)
+
+**Career shape:** Charted 9 seasons (1996-97–2004-05). Entered as a Scoring Volume + Shot Volume profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

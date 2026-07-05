@@ -41,6 +41,33 @@ Closest career shapes in the era-normalized vector space:
 - [[kevin-love|Kevin Love]] — cosine 0.84
 - [[patrick-ewing|Patrick Ewing]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** PF · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 26.5 pts · 13.5 reb · 3.7 ast · 2.8 blk per 100 (1999-00).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+1.9σ vs era)
+- Elite rim protection (+1.5σ vs era)
+- Featured, high-usage scoring role (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.4σ)
+
+**Comparables:**
+
+- [[christian-wood|Christian Wood]] '19 (89% similar)
+- [[karl-anthony-towns|Karl-Anthony Towns]] '19 (87% similar)
+- [[mehmet-okur|Mehmet Okur]] '12 (84% similar)
+- [[pau-gasol|Pau Gasol]] '15 (84% similar)
+- [[kevin-love|Kevin Love]] '19 (84% similar)
+- [[patrick-ewing|Patrick Ewing]] '98 (84% similar)
+
+**Career shape:** Charted 8 seasons (1996-97–2003-04). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

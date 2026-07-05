@@ -34,6 +34,31 @@ Closest career shapes in the era-normalized vector space:
 - [[jack-white|Jack White]] — cosine 0.82
 - [[kedrick-brown|Kedrick Brown]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 16.6 pts · 8.8 reb · 3.0 ast · 2.4 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.2σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[troy-williams|Troy Williams]] '18 (87% similar)
+- [[chris-singleton|Chris Singleton]] '12 (86% similar)
+- [[keita-bates-diop|Keita Bates-Diop]] '20 (84% similar)
+- [[deandre-liggins|DeAndre Liggins]] '12 (82% similar)
+- [[jack-white|Jack White]] '23 (82% similar)
+- [[kedrick-brown|Kedrick Brown]] '02 (82% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

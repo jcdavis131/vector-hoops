@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[ryan-dunn|Ryan Dunn]] — cosine 0.82
 - [[d-j-wilson|D.J. Wilson]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** PF · Three-Point Accuracy (Low Turnovers). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 16.9 pts · 8.3 reb · 3.2 ast · 0.9 stl per 100 (2025-26).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−3.5σ)
+- Rim pressure (free-throw generation) well below era (−1.4σ)
+
+**Comparables:**
+
+- [[tyler-lydon|Tyler Lydon]] '19 (90% similar)
+- [[jacob-toppin|Jacob Toppin]] '25 (87% similar)
+- [[alex-poythress|Alex Poythress]] '18 (86% similar)
+- [[alfonzo-mckinnie|Alfonzo McKinnie]] '22 (84% similar)
+- [[ryan-dunn|Ryan Dunn]] '25 (82% similar)
+- [[d-j-wilson|D.J. Wilson]] '18 (82% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

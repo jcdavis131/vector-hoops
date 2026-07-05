@@ -38,6 +38,34 @@ Closest career shapes in the era-normalized vector space:
 - [[marc-jackson|Marc Jackson]] — cosine 0.87
 - [[gary-trent|Gary Trent]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** PF · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 28.6 pts · 13.5 reb · 0.7 ast · 0.7 stl per 100 (2008-09).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+3.1σ vs era)
+- Relentless on the offensive glass (+2.1σ vs era)
+- Featured, high-usage scoring role (+1.6σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−3.2σ)
+- Ball-hawking activity well below era (−1.3σ)
+
+**Comparables:**
+
+- [[carl-landry|Carl Landry]] '08 (92% similar)
+- [[nikola-pekovic|Nikola Pekovic]] '12 (92% similar)
+- [[hakim-warrick|Hakim Warrick]] '13 (90% similar)
+- [[rony-seikaly|Rony Seikaly]] '97 (88% similar)
+- [[marc-jackson|Marc Jackson]] '03 (87% similar)
+- [[gary-trent|Gary Trent]] '01 (86% similar)
+
+**Career shape:** Charted 5 seasons (2005-06–2010-11). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

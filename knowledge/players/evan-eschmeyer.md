@@ -37,6 +37,33 @@ Closest career shapes in the era-normalized vector space:
 - [[ervin-johnson|Ervin Johnson]] — cosine 0.91
 - [[michael-ruffin|Michael Ruffin]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 6.3 pts · 10.7 reb · 2.2 ast · 3.7 stl per 100 (2002-03).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+3.1σ vs era)
+- Elite rim protection (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Scoring load well below era (−2.1σ)
+- Shot volume well below era (−2.0σ)
+
+**Comparables:**
+
+- [[corie-blount|Corie Blount]] '98 (92% similar)
+- [[francisco-elson|Francisco Elson]] '07 (92% similar)
+- [[chuck-hayes|Chuck Hayes]] '09 (91% similar)
+- [[usman-garuba|Usman Garuba]] '22 (91% similar)
+- [[ervin-johnson|Ervin Johnson]] '05 (91% similar)
+- [[michael-ruffin|Michael Ruffin]] '07 (90% similar)
+
+**Career shape:** Charted 4 seasons (1999-00–2002-03). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

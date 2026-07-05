@@ -45,6 +45,33 @@ Closest career shapes in the era-normalized vector space:
 - [[yakhouba-diawara|Yakhouba Diawara]] — cosine 0.89
 - [[james-jones|James Jones]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** PF · Three-Point Accuracy (Low Turnovers). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 13.0 pts · 10.3 reb · 4.3 ast · 1.3 stl per 100 (2008-09).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.0σ vs era)
+- Rarely turns the ball over (−1.1σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.4σ)
+- Free-throw touch well below era (−1.8σ)
+
+**Comparables:**
+
+- [[pat-connaughton|Pat Connaughton]] '16 (92% similar)
+- [[luke-babbitt|Luke Babbitt]] '11 (91% similar)
+- [[shawne-williams|Shawne Williams]] '12 (90% similar)
+- [[orlando-johnson|Orlando Johnson]] '14 (89% similar)
+- [[yakhouba-diawara|Yakhouba Diawara]] '09 (89% similar)
+- [[james-jones|James Jones]] '14 (89% similar)
+
+**Career shape:** Charted 12 seasons (2008-09–2019-20). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

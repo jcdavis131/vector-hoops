@@ -35,6 +35,34 @@ Closest career shapes in the era-normalized vector space:
 - [[jalen-duren|Jalen Duren]] — cosine 0.90
 - [[vitaly-potapenko|Vitaly Potapenko]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** PF · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 19.0 pts · 14.9 reb · 3.0 ast · 1.2 blk per 100 (2017-18).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+1.8σ vs era)
+- Efficient finisher inside the arc (+1.5σ vs era)
+- Strong presence on the defensive glass (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.3σ)
+- Three-point volume well below era (−1.5σ)
+
+**Comparables:**
+
+- [[alize-johnson|Alize Johnson]] '22 (91% similar)
+- [[cheick-diallo|Cheick Diallo]] '17 (91% similar)
+- [[otis-thorpe|Otis Thorpe]] '01 (91% similar)
+- [[ben-handlogten|Ben Handlogten]] '04 (91% similar)
+- [[jalen-duren|Jalen Duren]] '26 (90% similar)
+- [[vitaly-potapenko|Vitaly Potapenko]] '06 (90% similar)
+
+**Career shape:** Charted 2 seasons (2017-18–2018-19). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

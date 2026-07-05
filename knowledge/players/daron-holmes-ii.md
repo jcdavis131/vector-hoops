@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[andres-nocioni|Andres Nocioni]] — cosine 0.67
 - [[david-benoit|David Benoit]] — cosine 0.66
 
+## Scouting report
+
+**Play style:** PF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 22.1 pts · 8.3 reb · 3.8 ast · 1.4 blk per 100 (2025-26).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.0σ vs era)
+- Knockdown three-point shooter (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−2.3σ)
+
+**Comparables:**
+
+- [[e-j-liddell|E.J. Liddell]] '26 (74% similar)
+- [[jonathan-bender|Jonathan Bender]] '04 (69% similar)
+- [[matas-buzelis|Matas Buzelis]] '26 (67% similar)
+- [[tyler-smith|Tyler Smith]] '25 (67% similar)
+- [[andres-nocioni|Andres Nocioni]] '08 (67% similar)
+- [[david-benoit|David Benoit]] '98 (66% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

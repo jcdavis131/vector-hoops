@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[dragan-bender|Dragan Bender]] — cosine 0.89
 - [[brandon-rush|Brandon Rush]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 14.4 pts · 5.2 reb · 5.2 ast · 1.0 blk per 100 (2023-24).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−4.0σ)
+- Ball-hawking activity well below era (−2.6σ)
+
+**Comparables:**
+
+- [[admiral-schofield|Admiral Schofield]] '24 (92% similar)
+- [[antoine-wright|Antoine Wright]] '06 (92% similar)
+- [[david-roddy|David Roddy]] '23 (91% similar)
+- [[deonte-burton|Deonte Burton]] '20 (91% similar)
+- [[dragan-bender|Dragan Bender]] '17 (89% similar)
+- [[brandon-rush|Brandon Rush]] '15 (89% similar)
+
+**Career shape:** Charted 3 seasons (2020-21–2024-25). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

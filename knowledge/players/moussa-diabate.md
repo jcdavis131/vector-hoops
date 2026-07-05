@@ -36,6 +36,34 @@ Closest career shapes in the era-normalized vector space:
 - [[wenyen-gabriel|Wenyen Gabriel]] — cosine 0.91
 - [[trayce-jackson-davis|Trayce Jackson-Davis]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 16.1 pts · 17.5 reb · 2.2 ast · 1.8 stl per 100 (2024-25).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+3.1σ vs era)
+- Efficient finisher inside the arc (+1.7σ vs era)
+- Strong presence on the defensive glass (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.9σ)
+- Three-point volume well below era (−1.9σ)
+
+**Comparables:**
+
+- [[trevor-booker|Trevor Booker]] '13 (94% similar)
+- [[tarik-black|Tarik Black]] '18 (92% similar)
+- [[tony-bradley|Tony Bradley]] '20 (92% similar)
+- [[collin-murray-boyles|Collin Murray-Boyles]] '26 (91% similar)
+- [[wenyen-gabriel|Wenyen Gabriel]] '23 (91% similar)
+- [[trayce-jackson-davis|Trayce Jackson-Davis]] '26 (89% similar)
+
+**Career shape:** Charted 3 seasons (2022-23–2025-26). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

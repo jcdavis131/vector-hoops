@@ -45,6 +45,33 @@ Closest career shapes in the era-normalized vector space:
 - [[samaki-walker|Samaki Walker]] — cosine 0.91
 - [[jeff-adrien|Jeff Adrien]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 10.0 pts · 15.9 reb · 1.2 ast · 1.8 blk per 100 (2007-08).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+2.5σ vs era)
+- Draws contact, gets to the line often (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.8σ)
+- Ball-hawking activity well below era (−2.1σ)
+
+**Comparables:**
+
+- [[omer-asik|Omer Asik]] '18 (95% similar)
+- [[jahidi-white|Jahidi White]] '05 (94% similar)
+- [[kwame-brown|Kwame Brown]] '13 (92% similar)
+- [[jamal-sampson|Jamal Sampson]] '07 (92% similar)
+- [[samaki-walker|Samaki Walker]] '02 (91% similar)
+- [[jeff-adrien|Jeff Adrien]] '15 (91% similar)
+
+**Career shape:** Charted 12 seasons (2000-01–2011-12). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

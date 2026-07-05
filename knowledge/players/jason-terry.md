@@ -52,6 +52,34 @@ Closest career shapes in the era-normalized vector space:
 - [[patty-mills|Patty Mills]] — cosine 0.93
 - [[bogdan-bogdanovic|Bogdan Bogdanović]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 9.9 pts · 2.9 reb · 3.5 ast · 2.5 stl per 100 (2017-18).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.6σ vs era)
+- Reliable touch from the free-throw line (+1.2σ vs era)
+- Rarely turns the ball over (−1.1σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.6σ)
+- Scoring load well below era (−1.6σ)
+
+**Comparables:**
+
+- [[david-wesley|David Wesley]] '07 (95% similar)
+- [[leandro-barbosa|Leandro Barbosa]] '04 (94% similar)
+- [[dana-barros|Dana Barros]] '99 (94% similar)
+- [[mike-bibby|Mike Bibby]] '12 (93% similar)
+- [[patty-mills|Patty Mills]] '14 (93% similar)
+- [[bogdan-bogdanovic|Bogdan Bogdanović]] '21 (93% similar)
+
+**Career shape:** Charted 19 seasons (1999-00–2017-18). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

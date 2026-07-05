@@ -43,6 +43,33 @@ Closest career shapes in the era-normalized vector space:
 - [[scottie-pippen|Scottie Pippen]] — cosine 0.88
 - [[gary-payton|Gary Payton]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** SF · Scoring Volume + Shot Volume. Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 27.0 pts · 10.1 reb · 7.7 ast · 1.6 stl per 100 (1998-99).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+1.9σ vs era)
+- Featured, high-usage scoring role (+1.6σ vs era)
+- High-volume table-setter (+1.2σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[tim-hardaway|Tim Hardaway]] '97 (93% similar)
+- [[clyde-drexler|Clyde Drexler]] '98 (89% similar)
+- [[stephen-curry|Stephen Curry]] '16 (88% similar)
+- [[baron-davis|Baron Davis]] '04 (88% similar)
+- [[scottie-pippen|Scottie Pippen]] '04 (88% similar)
+- [[gary-payton|Gary Payton]] '99 (87% similar)
+
+**Career shape:** Charted 10 seasons (1996-97–2005-06). Consistent Scoring Volume + Shot Volume profile across his career.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

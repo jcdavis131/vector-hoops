@@ -46,6 +46,34 @@ Closest career shapes in the era-normalized vector space:
 - [[francisco-elson|Francisco Elson]] — cosine 0.89
 - [[joel-freeland|Joel Freeland]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** C · Three-Point Accuracy (Low Turnovers). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 7.5 pts · 11.9 reb · 2.9 ast · 1.1 blk per 100 (2011-12).
+
+**Strengths:**
+
+- Rarely turns the ball over (−2.0σ vs era)
+- Reliable touch from the free-throw line (+2.0σ vs era)
+- Strong presence on the defensive glass (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Scoring load well below era (−1.9σ)
+- Rim pressure (free-throw generation) well below era (−1.6σ)
+
+**Comparables:**
+
+- [[dean-garrett|Dean Garrett]] '02 (94% similar)
+- [[ervin-johnson|Ervin Johnson]] '05 (93% similar)
+- [[dale-davis|Dale Davis]] '06 (92% similar)
+- [[kurt-thomas|Kurt Thomas]] '13 (90% similar)
+- [[francisco-elson|Francisco Elson]] '07 (89% similar)
+- [[joel-freeland|Joel Freeland]] '15 (89% similar)
+
+**Career shape:** Charted 13 seasons (1997-98–2011-12). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

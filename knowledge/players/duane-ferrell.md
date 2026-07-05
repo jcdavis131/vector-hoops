@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[marcus-georges-hunt|Marcus Georges-Hunt]] — cosine 0.85
 - [[kris-murray|Kris Murray]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 10.1 pts · 5.1 reb · 2.8 ast · 2.3 stl per 100 (1997-98).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.2σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.5σ)
+- Scoring load well below era (−1.5σ)
+
+**Comparables:**
+
+- [[johnny-davis|Johnny Davis]] '24 (90% similar)
+- [[justin-minaya|Justin Minaya]] '25 (88% similar)
+- [[ansu-sesay|Ansu Sesay]] '03 (88% similar)
+- [[nigel-hayes-davis|Nigel Hayes-Davis]] '26 (85% similar)
+- [[marcus-georges-hunt|Marcus Georges-Hunt]] '18 (85% similar)
+- [[kris-murray|Kris Murray]] '25 (84% similar)
+
+**Career shape:** Charted 2 seasons (1996-97–1997-98). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

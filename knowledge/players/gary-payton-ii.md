@@ -40,6 +40,32 @@ Closest career shapes in the era-normalized vector space:
 - [[renaldo-balkman|Renaldo Balkman]] — cosine 0.85
 - [[jerome-kersey|Jerome Kersey]] — cosine 0.80
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 12.3 pts · 8.7 reb · 5.2 ast · 3.6 stl per 100 (2019-20).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+3.7σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.4σ)
+- Free-throw touch well below era (−2.2σ)
+
+**Comparables:**
+
+- [[julian-wright|Julian Wright]] '11 (94% similar)
+- [[thaddeus-young|Thaddeus Young]] '24 (87% similar)
+- [[dyson-daniels|Dyson Daniels]] '25 (86% similar)
+- [[larry-nance-jr|Larry Nance Jr.]] '18 (86% similar)
+- [[renaldo-balkman|Renaldo Balkman]] '08 (85% similar)
+- [[jerome-kersey|Jerome Kersey]] '01 (80% similar)
+
+**Career shape:** Charted 7 seasons (2017-18–2025-26). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

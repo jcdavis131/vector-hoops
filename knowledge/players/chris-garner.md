@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[laron-profit|Laron Profit]] — cosine 0.90
 - [[diante-garrett|Diante Garrett]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 8.7 pts · 3.9 reb · 7.4 ast · 3.4 stl per 100 (1997-98).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.4σ vs era)
+- High-volume table-setter (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.4σ)
+- On-court net impact well below era (−2.3σ)
+
+**Comparables:**
+
+- [[mardy-collins|Mardy Collins]] '10 (95% similar)
+- [[omar-cook|Omar Cook]] '04 (93% similar)
+- [[jahmai-mashack|Jahmai Mashack]] '26 (92% similar)
+- [[jamison-brewer|Jamison Brewer]] '05 (91% similar)
+- [[laron-profit|Laron Profit]] '00 (90% similar)
+- [[diante-garrett|Diante Garrett]] '13 (88% similar)
+
+**Career shape:** Charted 1 season (1997-98). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

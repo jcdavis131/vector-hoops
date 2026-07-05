@@ -40,6 +40,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jason-kapono|Jason Kapono]] — cosine 0.89
 - [[paul-watson|Paul Watson]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 13.7 pts · 4.1 reb · 2.6 ast · 0.7 stl per 100 (2014-15).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.4σ)
+- On-court net impact well below era (−1.3σ)
+
+**Comparables:**
+
+- [[doug-mcdermott|Doug McDermott]] '25 (93% similar)
+- [[matt-thomas|Matt Thomas]] '22 (91% similar)
+- [[jamison-battle|Jamison Battle]] '25 (89% similar)
+- [[corey-kispert|Corey Kispert]] '23 (89% similar)
+- [[jason-kapono|Jason Kapono]] '11 (89% similar)
+- [[paul-watson|Paul Watson]] '21 (87% similar)
+
+**Career shape:** Charted 7 seasons (2014-15–2022-23). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

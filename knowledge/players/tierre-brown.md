@@ -35,6 +35,33 @@ Closest career shapes in the era-normalized vector space:
 - [[sebastian-telfair|Sebastian Telfair]] — cosine 0.92
 - [[junior-harrington|Junior Harrington]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** SG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 15.8 pts · 5.4 reb · 9.0 ast · 2.4 stl per 100 (2001-02).
+
+**Strengths:**
+
+- High-volume table-setter (+1.6σ vs era)
+- Active hands, disrupts passing lanes (+1.2σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.7σ)
+- Turnover rate well above era (+2.3σ)
+
+**Comparables:**
+
+- [[jonny-flynn|Jonny Flynn]] '11 (95% similar)
+- [[nico-mannion|Nico Mannion]] '21 (93% similar)
+- [[frank-williams|Frank Williams]] '03 (92% similar)
+- [[mateen-cleaves|Mateen Cleaves]] '02 (92% similar)
+- [[sebastian-telfair|Sebastian Telfair]] '10 (92% similar)
+- [[junior-harrington|Junior Harrington]] '03 (91% similar)
+
+**Career shape:** Charted 2 seasons (2001-02–2004-05). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

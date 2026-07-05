@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[nathan-knight|Nathan Knight]] — cosine 0.75
 - [[tyler-hansbrough|Tyler Hansbrough]] — cosine 0.74
 
+## Scouting report
+
+**Play style:** PF · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 26.5 pts · 13.5 reb · 2.8 ast · 2.3 stl per 100 (2014-15).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+2.7σ vs era)
+- Relentless on the offensive glass (+1.3σ vs era)
+- Strong net on-court impact (+1.3σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[paul-millsap|Paul Millsap]] '07 (81% similar)
+- [[jimmy-butler-iii|Jimmy Butler III]] '21 (81% similar)
+- [[karl-malone|Karl Malone]] '97 (76% similar)
+- [[david-robinson|David Robinson]] '98 (75% similar)
+- [[nathan-knight|Nathan Knight]] '22 (75% similar)
+- [[tyler-hansbrough|Tyler Hansbrough]] '16 (74% similar)
+
+**Career shape:** Charted 1 season (2014-15). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

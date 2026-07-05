@@ -37,6 +37,32 @@ Closest career shapes in the era-normalized vector space:
 - [[pete-nance|Pete Nance]] — cosine 0.82
 - [[tidjane-salaun|Tidjane Salaün]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 13.8 pts · 6.6 reb · 2.0 ast · 2.0 stl per 100 (2017-18).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+1.5σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−3.9σ)
+- Free-throw touch well below era (−2.0σ)
+
+**Comparables:**
+
+- [[dragan-bender|Dragan Bender]] '17 (88% similar)
+- [[jacob-toppin|Jacob Toppin]] '25 (86% similar)
+- [[david-roddy|David Roddy]] '23 (85% similar)
+- [[deividas-sirvydis|Deividas Sirvydis]] '21 (85% similar)
+- [[pete-nance|Pete Nance]] '26 (82% similar)
+- [[tidjane-salaun|Tidjane Salaün]] '25 (82% similar)
+
+**Career shape:** Charted 4 seasons (2017-18–2020-21). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -38,6 +38,32 @@ Closest career shapes in the era-normalized vector space:
 - [[amen-thompson|Amen Thompson]] — cosine 0.77
 - [[greg-monroe|Greg Monroe]] — cosine 0.76
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass + Defensive Glass. Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 13.3 pts · 12.3 reb · 3.4 ast · 3.1 stl per 100 (2015-16).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.6σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.2σ)
+- Three-point volume well below era (−1.0σ)
+
+**Comparables:**
+
+- [[glen-davis|Glen Davis]] '08 (81% similar)
+- [[zaza-pachulia|Zaza Pachulia]] '17 (80% similar)
+- [[ausar-thompson|Ausar Thompson]] '26 (78% similar)
+- [[jerome-williams|Jerome Williams]] '00 (77% similar)
+- [[amen-thompson|Amen Thompson]] '24 (77% similar)
+- [[greg-monroe|Greg Monroe]] '18 (76% similar)
+
+**Career shape:** Charted 5 seasons (2015-16–2019-20). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

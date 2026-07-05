@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[tony-farmer|Tony Farmer]] — cosine 0.64
 - [[josh-okogie|Josh Okogie]] — cosine 0.60
 
+## Scouting report
+
+**Play style:** PF · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 33.3 pts · 5.6 reb · 5.6 ast · 5.6 stl per 100 (2013-14).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+4.0σ vs era)
+- Relentless on the offensive glass (+3.9σ vs era)
+- Active hands, disrupts passing lanes (+3.5σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.9σ)
+- Free-throw touch well below era (−1.1σ)
+
+**Comparables:**
+
+- [[ashraf-amaya|Ashraf Amaya]] '97 (72% similar)
+- [[gerald-wallace|Gerald Wallace]] '15 (69% similar)
+- [[robert-traylor|Robert Traylor]] '02 (67% similar)
+- [[othyus-jeffers|Othyus Jeffers]] '11 (66% similar)
+- [[tony-farmer|Tony Farmer]] '98 (64% similar)
+- [[josh-okogie|Josh Okogie]] '25 (60% similar)
+
+**Career shape:** Charted 1 season (2013-14). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

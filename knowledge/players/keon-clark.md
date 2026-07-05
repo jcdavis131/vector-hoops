@@ -38,6 +38,33 @@ Closest career shapes in the era-normalized vector space:
 - [[goga-bitadze|Goga Bitadze]] — cosine 0.94
 - [[samuel-dalembert|Samuel Dalembert]] — cosine 0.94
 
+## Scouting report
+
+**Play style:** PF · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 18.8 pts · 12.8 reb · 2.1 ast · 4.5 blk per 100 (2000-01).
+
+**Strengths:**
+
+- Elite rim protection (+3.0σ vs era)
+- Draws contact, gets to the line often (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.4σ)
+- Ball-hawking activity well below era (−1.1σ)
+
+**Comparables:**
+
+- [[john-henson|John Henson]] '16 (96% similar)
+- [[walker-kessler|Walker Kessler]] '23 (95% similar)
+- [[salah-mejri|Salah Mejri]] '18 (95% similar)
+- [[theo-ratliff|Theo Ratliff]] '09 (94% similar)
+- [[goga-bitadze|Goga Bitadze]] '25 (94% similar)
+- [[samuel-dalembert|Samuel Dalembert]] '13 (94% similar)
+
+**Career shape:** Charted 5 seasons (1998-99–2002-03). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

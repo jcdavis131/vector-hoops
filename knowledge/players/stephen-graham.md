@@ -38,6 +38,32 @@ Closest career shapes in the era-normalized vector space:
 - [[john-jenkins|John Jenkins]] — cosine 0.76
 - [[arron-afflalo|Arron Afflalo]] — cosine 0.75
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 10.8 pts · 6.7 reb · 2.2 ast · 0.8 stl per 100 (2010-11).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.3σ)
+- Scoring load well below era (−1.4σ)
+
+**Comparables:**
+
+- [[joey-graham|Joey Graham]] '08 (81% similar)
+- [[malaki-branham|Malaki Branham]] '24 (77% similar)
+- [[gordan-giricek|Gordan Giricek]] '06 (77% similar)
+- [[john-long|John Long]] '97 (76% similar)
+- [[john-jenkins|John Jenkins]] '19 (76% similar)
+- [[arron-afflalo|Arron Afflalo]] '18 (75% similar)
+
+**Career shape:** Charted 5 seasons (2005-06–2010-11). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -39,6 +39,34 @@ Closest career shapes in the era-normalized vector space:
 - [[blake-griffin|Blake Griffin]] — cosine 0.86
 - [[pascal-siakam|Pascal Siakam]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** PF · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 40.0 pts · 11.7 reb · 8.6 ast · 2.0 stl per 100 (2024-25).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+4.0σ vs era)
+- Featured, high-usage scoring role (+2.9σ vs era)
+- Heavy shot volume, focal scoring option (+2.3σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.2σ)
+- Three-point volume well below era (−1.7σ)
+
+**Comparables:**
+
+- [[jonathan-kuminga|Jonathan Kuminga]] '25 (92% similar)
+- [[giannis-antetokounmpo|Giannis Antetokounmpo]] '20 (88% similar)
+- [[karl-malone|Karl Malone]] '97 (88% similar)
+- [[amar-e-stoudemire|Amar'e Stoudemire]] '08 (86% similar)
+- [[blake-griffin|Blake Griffin]] '14 (86% similar)
+- [[pascal-siakam|Pascal Siakam]] '17 (85% similar)
+
+**Career shape:** Charted 6 seasons (2019-20–2025-26). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

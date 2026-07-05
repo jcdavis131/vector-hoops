@@ -37,6 +37,33 @@ Closest career shapes in the era-normalized vector space:
 - [[donnell-harvey|Donnell Harvey]] — cosine 0.90
 - [[maxime-raynaud|Maxime Raynaud]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** PF · Rim Protection + Offensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 20.8 pts · 17.4 reb · 1.0 ast · 1.7 blk per 100 (2016-17).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+1.9σ vs era)
+- Strong presence on the defensive glass (+1.9σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.2σ)
+- On-court net impact well below era (−1.8σ)
+
+**Comparables:**
+
+- [[mark-williams|Mark Williams]] '26 (92% similar)
+- [[ivan-rabb|Ivan Rabb]] '18 (91% similar)
+- [[richaun-holmes|Richaun Holmes]] '25 (91% similar)
+- [[deandre-ayton|Deandre Ayton]] '26 (91% similar)
+- [[donnell-harvey|Donnell Harvey]] '02 (90% similar)
+- [[maxime-raynaud|Maxime Raynaud]] '26 (90% similar)
+
+**Career shape:** Charted 4 seasons (2016-17–2019-20). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -40,6 +40,33 @@ Closest career shapes in the era-normalized vector space:
 - [[alan-henderson|Alan Henderson]] — cosine 0.87
 - [[willy-hernangomez|Willy Hernangomez]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** PF · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 24.2 pts · 14.1 reb · 3.3 ast · 1.7 blk per 100 (2025-26).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+2.0σ vs era)
+- Efficient finisher inside the arc (+1.9σ vs era)
+- Knockdown three-point shooter (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Three-point volume well below era (−1.4σ)
+
+**Comparables:**
+
+- [[gary-trent|Gary Trent]] '01 (90% similar)
+- [[kenneth-faried|Kenneth Faried]] '12 (89% similar)
+- [[jordan-hill|Jordan Hill]] '13 (88% similar)
+- [[enes-freedom|Enes Freedom]] '18 (88% similar)
+- [[alan-henderson|Alan Henderson]] '02 (87% similar)
+- [[willy-hernangomez|Willy Hernangomez]] '23 (86% similar)
+
+**Career shape:** Charted 7 seasons (2018-19–2025-26). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

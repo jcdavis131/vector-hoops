@@ -46,6 +46,33 @@ Closest career shapes in the era-normalized vector space:
 - [[mychal-mulder|Mychal Mulder]] — cosine 0.91
 - [[lindy-waters-iii|Lindy Waters III]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 23.3 pts · 4.7 reb · 1.8 ast · 1.0 blk per 100 (2003-04).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.9σ vs era)
+- Knockdown three-point shooter (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Offensive-glass activity well below era (−1.4σ)
+- Rim pressure (free-throw generation) well below era (−1.4σ)
+
+**Comparables:**
+
+- [[matt-bullard|Matt Bullard]] '01 (94% similar)
+- [[james-jones|James Jones]] '14 (93% similar)
+- [[steve-novak|Steve Novak]] '15 (92% similar)
+- [[daequan-cook|Daequan Cook]] '11 (92% similar)
+- [[mychal-mulder|Mychal Mulder]] '22 (91% similar)
+- [[lindy-waters-iii|Lindy Waters III]] '23 (91% similar)
+
+**Career shape:** Charted 13 seasons (2002-03–2015-16). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

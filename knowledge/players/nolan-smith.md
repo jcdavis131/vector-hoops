@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[mateen-cleaves|Mateen Cleaves]] — cosine 0.92
 - [[william-avery|William Avery]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 18.9 pts · 4.6 reb · 6.0 ast · 1.2 stl per 100 (2012-13).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.2σ)
+- Defensive rebounding well below era (−1.1σ)
+
+**Comparables:**
+
+- [[jeremy-pargo|Jeremy Pargo]] '12 (97% similar)
+- [[jonny-flynn|Jonny Flynn]] '11 (93% similar)
+- [[josh-selby|Josh Selby]] '12 (92% similar)
+- [[nolan-traore|Nolan Traore]] '26 (92% similar)
+- [[mateen-cleaves|Mateen Cleaves]] '02 (92% similar)
+- [[william-avery|William Avery]] '00 (90% similar)
+
+**Career shape:** Charted 2 seasons (2011-12–2012-13). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

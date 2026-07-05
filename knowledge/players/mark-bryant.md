@@ -40,6 +40,32 @@ Closest career shapes in the era-normalized vector space:
 - [[chris-richard|Chris Richard]] — cosine 0.87
 - [[colin-castleton|Colin Castleton]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 6.7 pts · 10.3 reb · 2.1 ast · 0.5 stl per 100 (2002-03).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−3.1σ)
+- Scoring load well below era (−2.0σ)
+
+**Comparables:**
+
+- [[mark-bradtke|Mark Bradtke]] '97 (90% similar)
+- [[joel-freeland|Joel Freeland]] '15 (89% similar)
+- [[tom-hammonds|Tom Hammonds]] '00 (89% similar)
+- [[terry-davis|Terry Davis]] '01 (88% similar)
+- [[chris-richard|Chris Richard]] '10 (87% similar)
+- [[colin-castleton|Colin Castleton]] '25 (87% similar)
+
+**Career shape:** Charted 7 seasons (1996-97–2002-03). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

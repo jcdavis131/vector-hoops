@@ -40,6 +40,32 @@ Closest career shapes in the era-normalized vector space:
 - [[grayson-allen|Grayson Allen]] — cosine 0.92
 - [[rodney-hood|Rodney Hood]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 13.9 pts · 3.9 reb · 1.8 ast · 0.5 stl per 100 (2016-17).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.5σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.8σ)
+- Ball-hawking activity well below era (−1.8σ)
+
+**Comparables:**
+
+- [[bryn-forbes|Bryn Forbes]] '17 (97% similar)
+- [[matt-ryan|Matt Ryan]] '25 (94% similar)
+- [[timothe-luwawu-cabarrot|Timothe Luwawu-Cabarrot]] '19 (94% similar)
+- [[marco-belinelli|Marco Belinelli]] '08 (93% similar)
+- [[grayson-allen|Grayson Allen]] '19 (92% similar)
+- [[rodney-hood|Rodney Hood]] '22 (92% similar)
+
+**Career shape:** Charted 7 seasons (2005-06–2016-17). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

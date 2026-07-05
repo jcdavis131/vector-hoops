@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[onuralp-bitim|Onuralp Bitim]] — cosine 0.88
 - [[matt-ryan|Matt Ryan]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 12.6 pts · 5.4 reb · 0.0 ast · 0.4 stl per 100 (2018-19).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.0σ)
+- Ball-hawking activity well below era (−1.9σ)
+
+**Comparables:**
+
+- [[timothe-luwawu-cabarrot|Timothe Luwawu-Cabarrot]] '19 (96% similar)
+- [[nik-stauskas|Nik Stauskas]] '15 (89% similar)
+- [[marlon-garnett|Marlon Garnett]] '99 (89% similar)
+- [[jawad-williams|Jawad Williams]] '11 (89% similar)
+- [[onuralp-bitim|Onuralp Bitim]] '24 (88% similar)
+- [[matt-ryan|Matt Ryan]] '25 (88% similar)
+
+**Career shape:** Charted 3 seasons (2016-17–2018-19). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -48,6 +48,34 @@ Closest career shapes in the era-normalized vector space:
 - [[giannis-antetokounmpo|Giannis Antetokounmpo]] — cosine 0.88
 - [[boban-marjanovic|Boban Marjanovic]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 39.8 pts · 16.0 reb · 3.3 ast · 3.4 blk per 100 (1997-98).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+4.0σ vs era)
+- Featured, high-usage scoring role (+3.6σ vs era)
+- Strong net on-court impact (+2.5σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.6σ)
+- Ball-hawking activity well below era (−1.3σ)
+
+**Comparables:**
+
+- [[amar-e-stoudemire|Amar'e Stoudemire]] '08 (92% similar)
+- [[tim-duncan|Tim Duncan]] '04 (90% similar)
+- [[alonzo-mourning|Alonzo Mourning]] '00 (89% similar)
+- [[dwight-howard|Dwight Howard]] '10 (88% similar)
+- [[giannis-antetokounmpo|Giannis Antetokounmpo]] '20 (88% similar)
+- [[boban-marjanovic|Boban Marjanovic]] '18 (87% similar)
+
+**Career shape:** Charted 15 seasons (1996-97–2010-11). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

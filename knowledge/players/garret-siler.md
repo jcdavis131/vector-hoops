@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[chris-silva|Chris Silva]] — cosine 0.86
 - [[jahidi-white|Jahidi White]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 20.5 pts · 12.8 reb · 1.4 ast · 1.8 blk per 100 (2010-11).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+2.7σ vs era)
+- Draws contact, gets to the line often (+2.2σ vs era)
+- Efficient finisher inside the arc (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.8σ)
+- Free-throw touch well below era (−1.7σ)
+
+**Comparables:**
+
+- [[vin-baker|Vin Baker]] '05 (91% similar)
+- [[jason-caffey|Jason Caffey]] '97 (90% similar)
+- [[viacheslav-kravtsov|Viacheslav Kravtsov]] '14 (89% similar)
+- [[reggie-slater|Reggie Slater]] '03 (87% similar)
+- [[chris-silva|Chris Silva]] '20 (86% similar)
+- [[jahidi-white|Jahidi White]] '05 (84% similar)
+
+**Career shape:** Charted 1 season (2010-11). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

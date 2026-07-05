@@ -36,6 +36,31 @@ Closest career shapes in the era-normalized vector space:
 - [[sheldon-mac|Sheldon Mac]] — cosine 0.85
 - [[jeffery-taylor|Jeffery Taylor]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 17.9 pts · 4.6 reb · 3.3 ast · 1.4 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.7σ vs era)
+
+**Areas of concern:**
+
+- Offensive-glass activity well below era (−1.0σ)
+
+**Comparables:**
+
+- [[dahntay-jones|Dahntay Jones]] '15 (93% similar)
+- [[amir-coffey|Amir Coffey]] '23 (92% similar)
+- [[lance-thomas|Lance Thomas]] '13 (88% similar)
+- [[quincy-pondexter|Quincy Pondexter]] '18 (87% similar)
+- [[sheldon-mac|Sheldon Mac]] '17 (85% similar)
+- [[jeffery-taylor|Jeffery Taylor]] '14 (85% similar)
+
+**Career shape:** Charted 3 seasons (2022-23–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

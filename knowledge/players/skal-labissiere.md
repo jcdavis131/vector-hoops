@@ -37,6 +37,34 @@ Closest career shapes in the era-normalized vector space:
 - [[willie-reed|Willie Reed]] — cosine 0.89
 - [[alex-len|Alex Len]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 15.6 pts · 13.8 reb · 3.4 ast · 2.5 blk per 100 (2019-20).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+1.9σ vs era)
+- Elite rim protection (+1.6σ vs era)
+- Efficient finisher inside the arc (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.5σ)
+- Three-point volume well below era (−1.5σ)
+
+**Comparables:**
+
+- [[drew-eubanks|Drew Eubanks]] '20 (93% similar)
+- [[tony-bradley|Tony Bradley]] '20 (93% similar)
+- [[pj-hall|PJ Hall]] '26 (90% similar)
+- [[isaiah-stewart|Isaiah Stewart]] '25 (89% similar)
+- [[willie-reed|Willie Reed]] '16 (89% similar)
+- [[alex-len|Alex Len]] '24 (89% similar)
+
+**Career shape:** Charted 4 seasons (2016-17–2019-20). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Rim Protection + Offensive Glass identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[tre-johnson|Tre Johnson]] — cosine 0.86
 - [[aj-griffin|AJ Griffin]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 17.6 pts · 5.4 reb · 2.9 ast · 1.2 stl per 100 (1996-97).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Offensive-glass activity well below era (−1.2σ)
+- On-court net impact well below era (−1.1σ)
+
+**Comparables:**
+
+- [[jeremy-richardson|Jeremy Richardson]] '08 (92% similar)
+- [[matt-ryan|Matt Ryan]] '25 (89% similar)
+- [[malaki-branham|Malaki Branham]] '24 (89% similar)
+- [[nik-stauskas|Nik Stauskas]] '15 (88% similar)
+- [[tre-johnson|Tre Johnson]] '26 (86% similar)
+- [[aj-griffin|AJ Griffin]] '24 (86% similar)
+
+**Career shape:** Charted 1 season (1996-97). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[adonal-foyle|Adonal Foyle]] — cosine 0.90
 - [[lorenzen-wright|Lorenzen Wright]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 13.4 pts · 16.7 reb · 2.2 ast · 3.1 blk per 100 (1996-97).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+2.6σ vs era)
+- Elite rim protection (+1.9σ vs era)
+- Strong presence on the defensive glass (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.8σ)
+- Three-point accuracy well below era (−1.4σ)
+
+**Comparables:**
+
+- [[dan-gadzuric|Dan Gadzuric]] '05 (96% similar)
+- [[precious-achiuwa|Precious Achiuwa]] '21 (91% similar)
+- [[lou-amundson|Lou Amundson]] '14 (91% similar)
+- [[loren-woods|Loren Woods]] '06 (91% similar)
+- [[adonal-foyle|Adonal Foyle]] '07 (90% similar)
+- [[lorenzen-wright|Lorenzen Wright]] '08 (90% similar)
+
+**Career shape:** Charted 1 season (1996-97). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

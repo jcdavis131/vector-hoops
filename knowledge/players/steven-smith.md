@@ -42,6 +42,33 @@ Closest career shapes in the era-normalized vector space:
 - [[ray-allen|Ray Allen]] — cosine 0.89
 - [[cuttino-mobley|Cuttino Mobley]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PF · Scoring Volume + Shot Volume. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 27.8 pts · 6.3 reb · 4.9 ast · 1.5 stl per 100 (1998-99).
+
+**Strengths:**
+
+- Featured, high-usage scoring role (+1.7σ vs era)
+- Strong net on-court impact (+1.6σ vs era)
+- Draws contact, gets to the line often (+1.5σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[reggie-miller|Reggie Miller]] '98 (95% similar)
+- [[jj-redick|JJ Redick]] '16 (95% similar)
+- [[glen-rice|Glen Rice]] '97 (92% similar)
+- [[allan-houston|Allan Houston]] '03 (89% similar)
+- [[ray-allen|Ray Allen]] '06 (89% similar)
+- [[cuttino-mobley|Cuttino Mobley]] '02 (88% similar)
+
+**Career shape:** Charted 9 seasons (1996-97–2004-05). Consistent Scoring Volume + Shot Volume profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

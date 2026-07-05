@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[greg-stiemsma|Greg Stiemsma]] — cosine 0.87
 - [[jeff-ayres|Jeff Ayres]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 8.4 pts · 12.8 reb · 0.7 ast · 1.5 blk per 100 (1996-97).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+3.4σ vs era)
+- Relentless on the offensive glass (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−2.3σ)
+- Scoring load well below era (−1.8σ)
+
+**Comparables:**
+
+- [[jericho-sims|Jericho Sims]] '22 (90% similar)
+- [[fabricio-oberto|Fabricio Oberto]] '10 (89% similar)
+- [[ed-pinckney|Ed Pinckney]] '97 (89% similar)
+- [[charles-jones|Charles Jones]] '98 (88% similar)
+- [[greg-stiemsma|Greg Stiemsma]] '15 (87% similar)
+- [[jeff-ayres|Jeff Ayres]] '16 (85% similar)
+
+**Career shape:** Charted 1 season (1996-97). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

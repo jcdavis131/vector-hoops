@@ -42,6 +42,33 @@ Closest career shapes in the era-normalized vector space:
 - [[lester-hudson|Lester Hudson]] — cosine 0.92
 - [[paul-george|Paul George]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** SG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 33.2 pts · 7.5 reb · 6.2 ast · 3.4 stl per 100 (2017-18).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+3.0σ vs era)
+- Featured, high-usage scoring role (+2.2σ vs era)
+- Heavy shot volume, focal scoring option (+2.1σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.5σ)
+
+**Comparables:**
+
+- [[larry-hughes|Larry Hughes]] '05 (94% similar)
+- [[gilbert-arenas|Gilbert Arenas]] '06 (94% similar)
+- [[stephen-jackson|Stephen Jackson]] '02 (93% similar)
+- [[monta-ellis|Monta Ellis]] '10 (92% similar)
+- [[lester-hudson|Lester Hudson]] '10 (92% similar)
+- [[paul-george|Paul George]] '22 (92% similar)
+
+**Career shape:** Charted 9 seasons (2013-14–2022-23). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

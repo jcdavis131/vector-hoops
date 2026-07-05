@@ -37,6 +37,34 @@ Closest career shapes in the era-normalized vector space:
 - [[salah-mejri|Salah Mejri]] — cosine 0.92
 - [[john-henson|John Henson]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 13.8 pts · 16.7 reb · 4.6 ast · 3.7 blk per 100 (2023-24).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+3.3σ vs era)
+- Elite rim protection (+3.2σ vs era)
+- Strong presence on the defensive glass (+2.1σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.7σ)
+- Three-point volume well below era (−1.8σ)
+
+**Comparables:**
+
+- [[samuel-dalembert|Samuel Dalembert]] '13 (94% similar)
+- [[kyle-o-quinn|Kyle O'Quinn]] '17 (93% similar)
+- [[robert-williams-iii|Robert Williams III]] '19 (93% similar)
+- [[cole-aldrich|Cole Aldrich]] '16 (93% similar)
+- [[salah-mejri|Salah Mejri]] '18 (92% similar)
+- [[john-henson|John Henson]] '16 (91% similar)
+
+**Career shape:** Charted 4 seasons (2021-22–2024-25). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

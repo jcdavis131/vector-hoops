@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[damir-markota|Damir Markota]] — cosine 0.74
 - [[johnny-o-bryant-iii|Johnny O'Bryant III]] — cosine 0.71
 
+## Scouting report
+
+**Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 13.9 pts · 8.1 reb · 2.1 ast · 1.5 blk per 100 (1996-97).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+2.7σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.7σ)
+- Rim pressure (free-throw generation) well below era (−1.3σ)
+
+**Comparables:**
+
+- [[loren-meyer|Loren Meyer]] '97 (81% similar)
+- [[antonius-cleveland|Antonius Cleveland]] '18 (78% similar)
+- [[frank-brickowski|Frank Brickowski]] '97 (76% similar)
+- [[patrick-williams|Patrick Williams]] '22 (74% similar)
+- [[damir-markota|Damir Markota]] '07 (74% similar)
+- [[johnny-o-bryant-iii|Johnny O'Bryant III]] '16 (71% similar)
+
+**Career shape:** Charted 1 season (1996-97). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

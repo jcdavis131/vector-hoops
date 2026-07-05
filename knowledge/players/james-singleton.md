@@ -37,6 +37,33 @@ Closest career shapes in the era-normalized vector space:
 - [[scott-williams|Scott Williams]] — cosine 0.83
 - [[jamie-feick|Jamie Feick]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 13.4 pts · 14.6 reb · 1.6 ast · 2.3 blk per 100 (2009-10).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+1.9σ vs era)
+- Elite rim protection (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.2σ)
+- On-court net impact well below era (−1.1σ)
+
+**Comparables:**
+
+- [[justin-champagnie|Justin Champagnie]] '22 (89% similar)
+- [[noah-vonleh|Noah Vonleh]] '23 (86% similar)
+- [[usman-garuba|Usman Garuba]] '22 (84% similar)
+- [[quincy-acy|Quincy Acy]] '13 (84% similar)
+- [[scott-williams|Scott Williams]] '05 (83% similar)
+- [[jamie-feick|Jamie Feick]] '00 (83% similar)
+
+**Career shape:** Charted 4 seasons (2005-06–2009-10). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

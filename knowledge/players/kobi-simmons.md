@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[keifer-sykes|Keifer Sykes]] — cosine 0.79
 - [[nicolas-laprovittola|Nicolas Laprovittola]] — cosine 0.78
 
+## Scouting report
+
+**Play style:** PG · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 14.9 pts · 3.8 reb · 5.2 ast · 1.4 stl per 100 (2017-18).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+2.1σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.3σ)
+- Defensive rebounding well below era (−1.4σ)
+
+**Comparables:**
+
+- [[drake-powell|Drake Powell]] '26 (86% similar)
+- [[ky-bowman|Ky Bowman]] '20 (84% similar)
+- [[bimbo-coles|Bimbo Coles]] '04 (84% similar)
+- [[javon-freeman-liberty|Javon Freeman-Liberty]] '24 (83% similar)
+- [[keifer-sykes|Keifer Sykes]] '22 (79% similar)
+- [[nicolas-laprovittola|Nicolas Laprovittola]] '17 (78% similar)
+
+**Career shape:** Charted 1 season (2017-18). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

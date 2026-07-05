@@ -46,6 +46,33 @@ Closest career shapes in the era-normalized vector space:
 - [[derek-harper|Derek Harper]] — cosine 0.92
 - [[steve-blake|Steve Blake]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 17.5 pts · 4.9 reb · 9.9 ast · 1.9 stl per 100 (2003-04).
+
+**Strengths:**
+
+- High-volume table-setter (+2.1σ vs era)
+- High-volume three-point shooter (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Offensive-glass activity well below era (−1.1σ)
+- Turnover rate well above era (+1.0σ)
+
+**Comparables:**
+
+- [[jason-williams|Jason Williams]] '11 (95% similar)
+- [[howard-eisley|Howard Eisley]] '03 (95% similar)
+- [[marcus-sasser|Marcus Sasser]] '26 (94% similar)
+- [[gary-grant|Gary Grant]] '98 (93% similar)
+- [[derek-harper|Derek Harper]] '99 (92% similar)
+- [[steve-blake|Steve Blake]] '16 (92% similar)
+
+**Career shape:** Charted 13 seasons (2003-04–2015-16). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

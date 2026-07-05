@@ -46,6 +46,34 @@ Closest career shapes in the era-normalized vector space:
 - [[michael-sweetney|Michael Sweetney]] — cosine 0.77
 - [[nathan-knight|Nathan Knight]] — cosine 0.75
 
+## Scouting report
+
+**Play style:** PF · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 24.5 pts · 15.8 reb · 2.5 ast · 3.5 stl per 100 (1998-99).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+2.7σ vs era)
+- Relentless on the offensive glass (+2.7σ vs era)
+- Active hands, disrupts passing lanes (+2.3σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.6σ)
+- Three-point accuracy well below era (−1.1σ)
+
+**Comparables:**
+
+- [[shawn-kemp|Shawn Kemp]] '00 (84% similar)
+- [[jusuf-nurkic|Jusuf Nurkić]] '16 (80% similar)
+- [[willy-hernangomez|Willy Hernangomez]] '23 (78% similar)
+- [[danny-fortson|Danny Fortson]] '05 (77% similar)
+- [[michael-sweetney|Michael Sweetney]] '07 (77% similar)
+- [[nathan-knight|Nathan Knight]] '22 (75% similar)
+
+**Career shape:** Charted 13 seasons (1996-97–2008-09). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

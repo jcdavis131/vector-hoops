@@ -36,6 +36,33 @@ Closest career shapes in the era-normalized vector space:
 - [[charlie-villanueva|Charlie Villanueva]] — cosine 0.80
 - [[shaedon-sharpe|Shaedon Sharpe]] — cosine 0.77
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 30.5 pts · 9.5 reb · 1.7 ast · 1.6 stl per 100 (2023-24).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+1.7σ vs era)
+- Featured, high-usage scoring role (+1.5σ vs era)
+- High-volume three-point shooter (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Table-setting role well below era (−1.2σ)
+
+**Comparables:**
+
+- [[lamond-murray|Lamond Murray]] '04 (85% similar)
+- [[kelly-oubre-jr|Kelly Oubre Jr.]] '23 (83% similar)
+- [[gg-jackson|GG Jackson]] '24 (82% similar)
+- [[james-collins|James Collins]] '98 (81% similar)
+- [[charlie-villanueva|Charlie Villanueva]] '14 (80% similar)
+- [[shaedon-sharpe|Shaedon Sharpe]] '26 (77% similar)
+
+**Career shape:** Charted 3 seasons (2023-24–2025-26). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

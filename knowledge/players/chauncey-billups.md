@@ -49,6 +49,34 @@ Closest career shapes in the era-normalized vector space:
 - [[tim-hardaway|Tim Hardaway]] — cosine 0.88
 - [[damian-lillard|Damian Lillard]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 27.9 pts · 4.7 reb · 13.1 ast · 1.3 stl per 100 (2005-06).
+
+**Strengths:**
+
+- High-volume table-setter (+3.5σ vs era)
+- Strong net on-court impact (+2.0σ vs era)
+- Draws contact, gets to the line often (+1.8σ vs era)
+
+**Areas of concern:**
+
+- Offensive-glass activity well below era (−1.0σ)
+- Defensive rebounding well below era (−1.0σ)
+
+**Comparables:**
+
+- [[immanuel-quickley|Immanuel Quickley]] '25 (94% similar)
+- [[derek-anderson|Derek Anderson]] '01 (93% similar)
+- [[isaiah-thomas|Isaiah Thomas]] '17 (90% similar)
+- [[lou-williams|Lou Williams]] '19 (89% similar)
+- [[tim-hardaway|Tim Hardaway]] '97 (88% similar)
+- [[damian-lillard|Damian Lillard]] '23 (88% similar)
+
+**Career shape:** Charted 16 seasons (1997-98–2013-14). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

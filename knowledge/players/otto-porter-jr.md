@@ -41,6 +41,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jamario-moon|Jamario Moon]] — cosine 0.79
 - [[greg-buckner|Greg Buckner]] — cosine 0.78
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 19.9 pts · 9.5 reb · 2.2 ast · 2.1 stl per 100 (2016-17).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.8σ vs era)
+- Knockdown three-point shooter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[jorge-garbajosa|Jorge Garbajosa]] '07 (86% similar)
+- [[jae-crowder|Jae Crowder]] '22 (82% similar)
+- [[sasha-vezenkov|Sasha Vezenkov]] '24 (82% similar)
+- [[tyrone-corbin|Tyrone Corbin]] '00 (81% similar)
+- [[jamario-moon|Jamario Moon]] '11 (79% similar)
+- [[greg-buckner|Greg Buckner]] '05 (78% similar)
+
+**Career shape:** Charted 8 seasons (2013-14–2021-22). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -36,6 +36,33 @@ Closest career shapes in the era-normalized vector space:
 - [[jamir-watkins|Jamir Watkins]] — cosine 0.86
 - [[julian-washburn|Julian Washburn]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 10.9 pts · 8.3 reb · 1.7 ast · 2.5 stl per 100 (2011-12).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.4σ vs era)
+- Rarely turns the ball over (−1.4σ vs era)
+
+**Areas of concern:**
+
+- Scoring load well below era (−1.3σ)
+- Rim pressure (free-throw generation) well below era (−1.2σ)
+
+**Comparables:**
+
+- [[jeryl-sasser|Jeryl Sasser]] '03 (91% similar)
+- [[davon-reed|Davon Reed]] '18 (89% similar)
+- [[chuma-okeke|Chuma Okeke]] '24 (87% similar)
+- [[jalen-mcdaniels|Jalen McDaniels]] '24 (86% similar)
+- [[jamir-watkins|Jamir Watkins]] '26 (86% similar)
+- [[julian-washburn|Julian Washburn]] '19 (82% similar)
+
+**Career shape:** Charted 3 seasons (2011-12–2013-14). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[greg-smith|Greg Smith]] — cosine 0.83
 - [[jakarr-sampson|JaKarr Sampson]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass + Defensive Glass. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 15.2 pts · 7.5 reb · 2.5 ast · 1.4 blk per 100 (2009-10).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.2σ vs era)
+- Efficient finisher inside the arc (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.6σ)
+- Free-throw touch well below era (−1.2σ)
+
+**Comparables:**
+
+- [[luke-schenscher|Luke Schenscher]] '06 (89% similar)
+- [[steve-hamer|Steve Hamer]] '97 (88% similar)
+- [[kj-martin|KJ Martin]] '25 (87% similar)
+- [[charles-jones|Charles Jones]] '98 (86% similar)
+- [[greg-smith|Greg Smith]] '16 (83% similar)
+- [[jakarr-sampson|JaKarr Sampson]] '18 (82% similar)
+
+**Career shape:** Charted 1 season (2009-10). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -41,6 +41,31 @@ Closest career shapes in the era-normalized vector space:
 - [[daniel-gibson|Daniel Gibson]] — cosine 0.91
 - [[chandler-parsons|Chandler Parsons]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 24.7 pts · 5.4 reb · 4.8 ast · 1.7 stl per 100 (2022-23).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.3σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[anthony-peeler|Anthony Peeler]] '97 (93% similar)
+- [[matt-maloney|Matt Maloney]] '00 (93% similar)
+- [[jaren-jackson|Jaren Jackson]] '01 (92% similar)
+- [[jevon-carter|Jevon Carter]] '24 (91% similar)
+- [[daniel-gibson|Daniel Gibson]] '13 (91% similar)
+- [[chandler-parsons|Chandler Parsons]] '19 (91% similar)
+
+**Career shape:** Charted 8 seasons (2018-19–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

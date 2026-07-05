@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jonny-flynn|Jonny Flynn]] — cosine 0.81
 - [[vasilije-micic|Vasilije Micic]] — cosine 0.77
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 22.1 pts · 5.7 reb · 8.2 ast · 1.1 stl per 100 (2025-26).
+
+**Strengths:**
+
+- High-volume table-setter (+1.3σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.5σ)
+- Turnover rate well above era (+1.4σ)
+
+**Comparables:**
+
+- [[jarrett-jack|Jarrett Jack]] '16 (83% similar)
+- [[mateen-cleaves|Mateen Cleaves]] '02 (83% similar)
+- [[nicolas-laprovittola|Nicolas Laprovittola]] '17 (82% similar)
+- [[gerald-brown|Gerald Brown]] '99 (81% similar)
+- [[jonny-flynn|Jonny Flynn]] '11 (81% similar)
+- [[vasilije-micic|Vasilije Micic]] '25 (77% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

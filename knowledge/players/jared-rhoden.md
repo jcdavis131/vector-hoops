@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[nassir-little|Nassir Little]] — cosine 0.76
 - [[mickell-gladness|Mickell Gladness]] — cosine 0.76
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 16.2 pts · 6.4 reb · 2.7 ast · 2.5 blk per 100 (2023-24).
+
+**Strengths:**
+
+- Elite rim protection (+1.8σ vs era)
+- Rarely turns the ball over (−1.1σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.5σ)
+
+**Comparables:**
+
+- [[roy-rogers|Roy Rogers]] '97 (82% similar)
+- [[peyton-watson|Peyton Watson]] '23 (82% similar)
+- [[ken-johnson|Ken Johnson]] '03 (77% similar)
+- [[dequan-jones|DeQuan Jones]] '13 (77% similar)
+- [[nassir-little|Nassir Little]] '20 (76% similar)
+- [[mickell-gladness|Mickell Gladness]] '12 (76% similar)
+
+**Career shape:** Charted 1 season (2023-24). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

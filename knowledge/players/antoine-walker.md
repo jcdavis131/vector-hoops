@@ -45,6 +45,33 @@ Closest career shapes in the era-normalized vector space:
 - [[kyle-kuzma|Kyle Kuzma]] — cosine 0.75
 - [[rodney-white|Rodney White]] — cosine 0.74
 
+## Scouting report
+
+**Play style:** PF · Scoring Volume + Shot Volume. Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 28.5 pts · 10.9 reb · 6.7 ast · 2.1 stl per 100 (2000-01).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.4σ vs era)
+- Heavy shot volume, focal scoring option (+2.3σ vs era)
+- Featured, high-usage scoring role (+1.8σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.7σ)
+
+**Comparables:**
+
+- [[jerald-honeycutt|Jerald Honeycutt]] '98 (87% similar)
+- [[rodney-rogers|Rodney Rogers]] '00 (83% similar)
+- [[al-harrington|Al Harrington]] '99 (82% similar)
+- [[jordan-hamilton|Jordan Hamilton]] '12 (77% similar)
+- [[kyle-kuzma|Kyle Kuzma]] '24 (75% similar)
+- [[rodney-white|Rodney White]] '03 (74% similar)
+
+**Career shape:** Charted 12 seasons (1996-97–2007-08). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

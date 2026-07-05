@@ -43,6 +43,33 @@ Closest career shapes in the era-normalized vector space:
 - [[will-richard|Will Richard]] — cosine 0.88
 - [[landry-fields|Landry Fields]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 14.2 pts · 6.9 reb · 4.4 ast · 2.5 stl per 100 (2004-05).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+1.5σ vs era)
+- Active hands, disrupts passing lanes (+1.5σ vs era)
+- Rarely turns the ball over (−1.4σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.3σ)
+
+**Comparables:**
+
+- [[jared-dudley|Jared Dudley]] '20 (94% similar)
+- [[p-j-tucker|P.J. Tucker]] '24 (90% similar)
+- [[derrick-mckey|Derrick McKey]] '02 (89% similar)
+- [[patrick-mccaw|Patrick McCaw]] '19 (88% similar)
+- [[will-richard|Will Richard]] '26 (88% similar)
+- [[landry-fields|Landry Fields]] '15 (86% similar)
+
+**Career shape:** Charted 10 seasons (1999-00–2008-09). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

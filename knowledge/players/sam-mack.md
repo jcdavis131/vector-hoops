@@ -37,6 +37,34 @@ Closest career shapes in the era-normalized vector space:
 - [[quincy-douby|Quincy Douby]] — cosine 0.93
 - [[tracy-murray|Tracy Murray]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 16.4 pts · 5.6 reb · 3.5 ast · 2.6 stl per 100 (1999-00).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.3σ vs era)
+- Reliable touch from the free-throw line (+1.9σ vs era)
+- Active hands, disrupts passing lanes (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.5σ)
+- Offensive-glass activity well below era (−1.0σ)
+
+**Comparables:**
+
+- [[anthony-roberson|Anthony Roberson]] '09 (96% similar)
+- [[george-mccloud|George McCloud]] '98 (96% similar)
+- [[terrence-ross|Terrence Ross]] '19 (94% similar)
+- [[larry-robinson|Larry Robinson]] '01 (94% similar)
+- [[quincy-douby|Quincy Douby]] '08 (93% similar)
+- [[tracy-murray|Tracy Murray]] '02 (92% similar)
+
+**Career shape:** Charted 4 seasons (1996-97–1999-00). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

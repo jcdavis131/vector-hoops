@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[jud-buechler|Jud Buechler]] — cosine 0.84
 - [[kevin-gamble|Kevin Gamble]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 17.6 pts · 7.1 reb · 2.7 ast · 0.9 stl per 100 (2020-21).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+1.3σ vs era)
+- Rarely turns the ball over (−1.1σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.2σ)
+- Rim pressure (free-throw generation) well below era (−1.2σ)
+
+**Comparables:**
+
+- [[joe-harris|Joe Harris]] '15 (87% similar)
+- [[jamison-battle|Jamison Battle]] '25 (86% similar)
+- [[luke-babbitt|Luke Babbitt]] '11 (84% similar)
+- [[dylan-windler|Dylan Windler]] '24 (84% similar)
+- [[jud-buechler|Jud Buechler]] '00 (84% similar)
+- [[kevin-gamble|Kevin Gamble]] '97 (83% similar)
+
+**Career shape:** Charted 1 season (2020-21). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

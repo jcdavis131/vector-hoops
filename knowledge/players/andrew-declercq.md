@@ -41,6 +41,34 @@ Closest career shapes in the era-normalized vector space:
 - [[jordan-williams|Jordan Williams]] — cosine 0.92
 - [[joey-dorsey|Joey Dorsey]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 14.7 pts · 13.2 reb · 1.8 ast · 2.3 stl per 100 (2000-01).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+2.1σ vs era)
+- Relentless on the offensive glass (+1.4σ vs era)
+- Strong net on-court impact (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.4σ)
+- Free-throw touch well below era (−1.2σ)
+
+**Comparables:**
+
+- [[mitchell-robinson|Mitchell Robinson]] '26 (94% similar)
+- [[ed-davis|Ed Davis]] '22 (93% similar)
+- [[miles-plumlee|Miles Plumlee]] '19 (92% similar)
+- [[tarik-black|Tarik Black]] '18 (92% similar)
+- [[jordan-williams|Jordan Williams]] '12 (92% similar)
+- [[joey-dorsey|Joey Dorsey]] '15 (92% similar)
+
+**Career shape:** Charted 8 seasons (1996-97–2003-04). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

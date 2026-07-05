@@ -45,6 +45,33 @@ Closest career shapes in the era-normalized vector space:
 - [[shammond-williams|Shammond Williams]] — cosine 0.94
 - [[marcus-sasser|Marcus Sasser]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** PG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 9.1 pts · 5.0 reb · 8.7 ast · 1.8 stl per 100 (2010-11).
+
+**Strengths:**
+
+- High-volume table-setter (+1.6σ vs era)
+- Strong net on-court impact (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−4.0σ)
+- Finishing efficiency well below era (−1.9σ)
+
+**Comparables:**
+
+- [[rafer-alston|Rafer Alston]] '00 (96% similar)
+- [[jordan-farmar|Jordan Farmar]] '14 (96% similar)
+- [[kirk-hinrich|Kirk Hinrich]] '04 (95% similar)
+- [[cameron-payne|Cameron Payne]] '26 (94% similar)
+- [[shammond-williams|Shammond Williams]] '04 (94% similar)
+- [[marcus-sasser|Marcus Sasser]] '26 (93% similar)
+
+**Career shape:** Charted 12 seasons (1998-99–2010-11). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

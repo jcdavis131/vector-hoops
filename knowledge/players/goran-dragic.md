@@ -48,6 +48,33 @@ Closest career shapes in the era-normalized vector space:
 - [[scoot-henderson|Scoot Henderson]] — cosine 0.90
 - [[trae-young|Trae Young]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 29.9 pts · 5.6 reb · 8.5 ast · 1.8 stl per 100 (2016-17).
+
+**Strengths:**
+
+- Featured, high-usage scoring role (+1.6σ vs era)
+- High-volume table-setter (+1.6σ vs era)
+- Draws contact, gets to the line often (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.7σ)
+
+**Comparables:**
+
+- [[darius-garland|Darius Garland]] '22 (97% similar)
+- [[deron-williams|Deron Williams]] '12 (96% similar)
+- [[dennis-schroder|Dennis Schröder]] '16 (95% similar)
+- [[stephon-marbury|Stephon Marbury]] '01 (95% similar)
+- [[scoot-henderson|Scoot Henderson]] '24 (90% similar)
+- [[trae-young|Trae Young]] '20 (90% similar)
+
+**Career shape:** Charted 15 seasons (2008-09–2022-23). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -46,6 +46,34 @@ Closest career shapes in the era-normalized vector space:
 - [[keith-askins|Keith Askins]] — cosine 0.83
 - [[jae-crowder|Jae Crowder]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 13.8 pts · 4.8 reb · 2.1 ast · 1.6 blk per 100 (2012-13).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.9σ vs era)
+- Strong net on-court impact (+1.8σ vs era)
+- High-volume three-point shooter (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.4σ)
+- Shot volume well below era (−1.3σ)
+
+**Comparables:**
+
+- [[danny-green|Danny Green]] '19 (86% similar)
+- [[jared-dudley|Jared Dudley]] '20 (86% similar)
+- [[bruce-bowen|Bruce Bowen]] '99 (85% similar)
+- [[dean-wade|Dean Wade]] '25 (84% similar)
+- [[keith-askins|Keith Askins]] '99 (83% similar)
+- [[jae-crowder|Jae Crowder]] '22 (83% similar)
+
+**Career shape:** Charted 13 seasons (2001-02–2013-14). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

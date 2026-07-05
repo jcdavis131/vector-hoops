@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[david-noel|David Noel]] — cosine 0.75
 - [[anthony-lamb|Anthony Lamb]] — cosine 0.75
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 10.5 pts · 11.6 reb · 2.8 ast · 0.6 stl per 100 (2004-05).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+1.2σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.5σ)
+- Finishing efficiency well below era (−2.0σ)
+
+**Comparables:**
+
+- [[joe-kleine|Joe Kleine]] '97 (82% similar)
+- [[paul-zipser|Paul Zipser]] '18 (80% similar)
+- [[cleanthony-early|Cleanthony Early]] '16 (79% similar)
+- [[greg-foster|Greg Foster]] '03 (78% similar)
+- [[david-noel|David Noel]] '07 (75% similar)
+- [[anthony-lamb|Anthony Lamb]] '21 (75% similar)
+
+**Career shape:** Charted 2 seasons (2003-04–2004-05). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

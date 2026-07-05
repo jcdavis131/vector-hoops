@@ -45,6 +45,34 @@ Closest career shapes in the era-normalized vector space:
 - [[t-j-ford|T.J. Ford]] — cosine 0.90
 - [[tyus-edney|Tyus Edney]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 18.2 pts · 6.8 reb · 12.5 ast · 4.1 stl per 100 (2012-13).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+4.0σ vs era)
+- High-volume table-setter (+2.9σ vs era)
+- Draws contact, gets to the line often (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.3σ)
+- Finishing efficiency well below era (−1.2σ)
+
+**Comparables:**
+
+- [[moochie-norris|Moochie Norris]] '05 (93% similar)
+- [[tremont-waters|Tremont Waters]] '21 (91% similar)
+- [[jamaal-tinsley|Jamaal Tinsley]] '04 (91% similar)
+- [[jason-kidd|Jason Kidd]] '03 (90% similar)
+- [[t-j-ford|T.J. Ford]] '07 (90% similar)
+- [[tyus-edney|Tyus Edney]] '01 (90% similar)
+
+**Career shape:** Charted 12 seasons (2011-12–2022-23). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

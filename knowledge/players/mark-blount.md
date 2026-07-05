@@ -42,6 +42,34 @@ Closest career shapes in the era-normalized vector space:
 - [[adem-bona|Adem Bona]] — cosine 0.88
 - [[ibou-badji|Ibou Badji]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 11.5 pts · 10.7 reb · 1.5 ast · 3.5 blk per 100 (2000-01).
+
+**Strengths:**
+
+- Elite rim protection (+2.1σ vs era)
+- Efficient finisher inside the arc (+1.3σ vs era)
+- Relentless on the offensive glass (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.5σ)
+- Three-point accuracy well below era (−1.4σ)
+
+**Comparables:**
+
+- [[timofey-mozgov|Timofey Mozgov]] '13 (93% similar)
+- [[ariel-hukporti|Ariel Hukporti]] '25 (92% similar)
+- [[aaron-williams|Aaron Williams]] '05 (90% similar)
+- [[kevin-seraphin|Kevin Seraphin]] '16 (89% similar)
+- [[adem-bona|Adem Bona]] '25 (88% similar)
+- [[ibou-badji|Ibou Badji]] '24 (87% similar)
+
+**Career shape:** Charted 9 seasons (2000-01–2008-09). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

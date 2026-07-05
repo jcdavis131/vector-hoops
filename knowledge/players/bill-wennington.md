@@ -36,6 +36,34 @@ Closest career shapes in the era-normalized vector space:
 - [[rui-hachimura|Rui Hachimura]] — cosine 0.74
 - [[greg-foster|Greg Foster]] — cosine 0.74
 
+## Scouting report
+
+**Play style:** C · Three-Point Volume + Three-Point Accuracy. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 16.9 pts · 9.4 reb · 2.1 ast · 1.5 stl per 100 (1998-99).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+4.0σ vs era)
+- Heavy shot volume, focal scoring option (+1.1σ vs era)
+- Rarely turns the ball over (−1.1σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.4σ)
+- On-court net impact well below era (−1.4σ)
+
+**Comparables:**
+
+- [[predrag-drobnjak|Predrag Drobnjak]] '04 (85% similar)
+- [[malik-allen|Malik Allen]] '11 (79% similar)
+- [[sam-mitchell|Sam Mitchell]] '00 (77% similar)
+- [[tayshaun-prince|Tayshaun Prince]] '16 (77% similar)
+- [[rui-hachimura|Rui Hachimura]] '26 (74% similar)
+- [[greg-foster|Greg Foster]] '03 (74% similar)
+
+**Career shape:** Charted 3 seasons (1996-97–1998-99). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

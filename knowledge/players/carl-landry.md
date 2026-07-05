@@ -42,6 +42,34 @@ Closest career shapes in the era-normalized vector space:
 - [[lawrence-funderburke|Lawrence Funderburke]] — cosine 0.84
 - [[marvin-bagley-iii|Marvin Bagley III]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** PF · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 24.8 pts · 15.0 reb · 1.5 ast · 1.2 stl per 100 (2007-08).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+2.6σ vs era)
+- Relentless on the offensive glass (+2.5σ vs era)
+- Draws contact, gets to the line often (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.4σ)
+- Three-point volume well below era (−1.0σ)
+
+**Comparables:**
+
+- [[ike-diogu|Ike Diogu]] '09 (92% similar)
+- [[nikola-pekovic|Nikola Pekovic]] '12 (89% similar)
+- [[gary-trent|Gary Trent]] '01 (86% similar)
+- [[craig-smith|Craig Smith]] '09 (85% similar)
+- [[lawrence-funderburke|Lawrence Funderburke]] '03 (84% similar)
+- [[marvin-bagley-iii|Marvin Bagley III]] '26 (83% similar)
+
+**Career shape:** Charted 9 seasons (2007-08–2015-16). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

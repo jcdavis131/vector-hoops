@@ -40,6 +40,34 @@ Closest career shapes in the era-normalized vector space:
 - [[reggie-jackson|Reggie Jackson]] — cosine 0.94
 - [[sam-cassell|Sam Cassell]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 29.7 pts · 4.5 reb · 11.8 ast · 1.8 stl per 100 (2021-22).
+
+**Strengths:**
+
+- High-volume table-setter (+2.8σ vs era)
+- Heavy shot volume, focal scoring option (+1.5σ vs era)
+- Featured, high-usage scoring role (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.4σ)
+- Defensive rebounding well below era (−1.1σ)
+
+**Comparables:**
+
+- [[goran-dragic|Goran Dragic]] '17 (97% similar)
+- [[dennis-schroder|Dennis Schröder]] '16 (96% similar)
+- [[mo-williams|Mo Williams]] '11 (95% similar)
+- [[deron-williams|Deron Williams]] '12 (95% similar)
+- [[reggie-jackson|Reggie Jackson]] '16 (94% similar)
+- [[sam-cassell|Sam Cassell]] '04 (93% similar)
+
+**Career shape:** Charted 7 seasons (2019-20–2025-26). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

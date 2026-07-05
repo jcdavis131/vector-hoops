@@ -47,6 +47,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jaden-springer|Jaden Springer]] — cosine 0.77
 - [[shaquille-harrison|Shaquille Harrison]] — cosine 0.76
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 16.7 pts · 8.7 reb · 2.7 ast · 4.0 stl per 100 (2014-15).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+3.9σ vs era)
+- Strong net on-court impact (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Three-point volume well below era (−1.0σ)
+
+**Comparables:**
+
+- [[gerald-wallace|Gerald Wallace]] '15 (83% similar)
+- [[horacio-llamas|Horacio Llamas]] '97 (80% similar)
+- [[ausar-thompson|Ausar Thompson]] '26 (79% similar)
+- [[jordan-adams|Jordan Adams]] '15 (79% similar)
+- [[jaden-springer|Jaden Springer]] '24 (77% similar)
+- [[shaquille-harrison|Shaquille Harrison]] '21 (76% similar)
+
+**Career shape:** Charted 14 seasons (2004-05–2017-18). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

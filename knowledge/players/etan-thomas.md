@@ -41,6 +41,34 @@ Closest career shapes in the era-normalized vector space:
 - [[alex-len|Alex Len]] — cosine 0.95
 - [[jake-tsakalidis|Jake Tsakalidis]] — cosine 0.95
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 16.2 pts · 15.5 reb · 1.2 ast · 3.6 blk per 100 (2006-07).
+
+**Strengths:**
+
+- Elite rim protection (+2.4σ vs era)
+- Efficient finisher inside the arc (+1.9σ vs era)
+- Relentless on the offensive glass (+1.8σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.4σ)
+- Three-point accuracy well below era (−1.4σ)
+
+**Comparables:**
+
+- [[brendan-haywood|Brendan Haywood]] '15 (97% similar)
+- [[bismack-biyombo|Bismack Biyombo]] '23 (97% similar)
+- [[erick-dampier|Erick Dampier]] '97 (96% similar)
+- [[jahidi-white|Jahidi White]] '05 (96% similar)
+- [[alex-len|Alex Len]] '24 (95% similar)
+- [[jake-tsakalidis|Jake Tsakalidis]] '06 (95% similar)
+
+**Career shape:** Charted 8 seasons (2001-02–2009-10). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

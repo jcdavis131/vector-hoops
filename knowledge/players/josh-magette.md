@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[chris-childs|Chris Childs]] — cosine 0.87
 - [[cory-joseph|Cory Joseph]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 10.2 pts · 4.2 reb · 12.7 ast · 1.8 stl per 100 (2017-18).
+
+**Strengths:**
+
+- High-volume table-setter (+3.2σ vs era)
+- Reliable touch from the free-throw line (+2.1σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.8σ)
+- Scoring load well below era (−1.5σ)
+
+**Comparables:**
+
+- [[pooh-jeter|Pooh Jeter]] '11 (89% similar)
+- [[matthew-dellavedova|Matthew Dellavedova]] '23 (88% similar)
+- [[muggsy-bogues|Muggsy Bogues]] '97 (87% similar)
+- [[tyus-jones|Tyus Jones]] '18 (87% similar)
+- [[chris-childs|Chris Childs]] '02 (87% similar)
+- [[cory-joseph|Cory Joseph]] '24 (86% similar)
+
+**Career shape:** Charted 1 season (2017-18). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

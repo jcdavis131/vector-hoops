@@ -38,6 +38,33 @@ Closest career shapes in the era-normalized vector space:
 - [[bradley-beal|Bradley Beal]] — cosine 0.92
 - [[gordon-hayward|Gordon Hayward]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** SG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 33.0 pts · 6.9 reb · 7.5 ast · 1.6 stl per 100 (2008-09).
+
+**Strengths:**
+
+- Featured, high-usage scoring role (+2.3σ vs era)
+- Heavy shot volume, focal scoring option (+1.9σ vs era)
+- Draws contact, gets to the line often (+1.8σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[tyrese-maxey|Tyrese Maxey]] '25 (96% similar)
+- [[jalen-brunson|Jalen Brunson]] '24 (93% similar)
+- [[franz-wagner|Franz Wagner]] '25 (93% similar)
+- [[kyrie-irving|Kyrie Irving]] '20 (92% similar)
+- [[bradley-beal|Bradley Beal]] '20 (92% similar)
+- [[gordon-hayward|Gordon Hayward]] '17 (90% similar)
+
+**Career shape:** Charted 5 seasons (2006-07–2010-11). Consistent Scoring Volume + Shot Volume profile across his career.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

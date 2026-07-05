@@ -43,6 +43,32 @@ Closest career shapes in the era-normalized vector space:
 - [[josh-green|Josh Green]] — cosine 0.76
 - [[courtney-lee|Courtney Lee]] — cosine 0.76
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 11.2 pts · 8.4 reb · 3.1 ast · 1.8 stl per 100 (2004-05).
+
+**Strengths:**
+
+- Strong net on-court impact (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.4σ)
+- Scoring load well below era (−1.3σ)
+
+**Comparables:**
+
+- [[kobe-sanders|Kobe Sanders]] '26 (89% similar)
+- [[aaron-wiggins|Aaron Wiggins]] '25 (82% similar)
+- [[jared-dudley|Jared Dudley]] '20 (78% similar)
+- [[mario-elie|Mario Elie]] '01 (78% similar)
+- [[josh-green|Josh Green]] '26 (76% similar)
+- [[courtney-lee|Courtney Lee]] '20 (76% similar)
+
+**Career shape:** Charted 10 seasons (1996-97–2005-06). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

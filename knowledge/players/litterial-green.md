@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jawun-evans|Jawun Evans]] — cosine 0.76
 - [[acie-law|Acie Law]] — cosine 0.74
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 10.1 pts · 2.8 reb · 6.5 ast · 1.6 stl per 100 (1997-98).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−4.0σ)
+- Shot volume well below era (−1.5σ)
+
+**Comparables:**
+
+- [[elijah-harkless|Elijah Harkless]] '26 (86% similar)
+- [[kevin-ollie|Kevin Ollie]] '10 (79% similar)
+- [[vincent-askew|Vincent Askew]] '98 (77% similar)
+- [[eric-snow|Eric Snow]] '08 (76% similar)
+- [[jawun-evans|Jawun Evans]] '18 (76% similar)
+- [[acie-law|Acie Law]] '10 (74% similar)
+
+**Career shape:** Charted 2 seasons (1996-97–1997-98). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Playmaking + Steals identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

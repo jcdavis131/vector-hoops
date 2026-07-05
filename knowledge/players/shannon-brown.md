@@ -41,6 +41,33 @@ Closest career shapes in the era-normalized vector space:
 - [[dajuan-wagner|Dajuan Wagner]] — cosine 0.86
 - [[tre-mann|Tre Mann]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** SG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 24.9 pts · 4.4 reb · 3.7 ast · 2.4 stl per 100 (2007-08).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+2.6σ vs era)
+- Active hands, disrupts passing lanes (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.8σ)
+- On-court net impact well below era (−2.3σ)
+
+**Comparables:**
+
+- [[dion-glover|Dion Glover]] '00 (94% similar)
+- [[rashad-mccants|Rashad McCants]] '08 (88% similar)
+- [[juan-dixon|Juan Dixon]] '09 (88% similar)
+- [[brandon-boston|Brandon Boston]] '24 (86% similar)
+- [[dajuan-wagner|Dajuan Wagner]] '03 (86% similar)
+- [[tre-mann|Tre Mann]] '26 (86% similar)
+
+**Career shape:** Charted 8 seasons (2006-07–2013-14). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

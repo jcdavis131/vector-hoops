@@ -35,6 +35,33 @@ Closest career shapes in the era-normalized vector space:
 - [[norvel-pelle|Norvel Pelle]] — cosine 0.93
 - [[keith-closs|Keith Closs]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 12.3 pts · 11.4 reb · 0.9 ast · 4.5 blk per 100 (1996-97).
+
+**Strengths:**
+
+- Elite rim protection (+3.3σ vs era)
+- Efficient finisher inside the arc (+2.0σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.5σ)
+- Ball-hawking activity well below era (−1.4σ)
+
+**Comparables:**
+
+- [[robert-swift|Robert Swift]] '05 (95% similar)
+- [[joel-przybilla|Joel Przybilla]] '01 (94% similar)
+- [[adonal-foyle|Adonal Foyle]] '07 (94% similar)
+- [[hasheem-thabeet|Hasheem Thabeet]] '12 (93% similar)
+- [[norvel-pelle|Norvel Pelle]] '20 (93% similar)
+- [[keith-closs|Keith Closs]] '98 (92% similar)
+
+**Career shape:** Charted 2 seasons (1996-97–1997-98). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

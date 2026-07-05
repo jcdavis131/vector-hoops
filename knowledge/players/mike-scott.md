@@ -42,6 +42,34 @@ Closest career shapes in the era-normalized vector space:
 - [[dalton-knecht|Dalton Knecht]] — cosine 0.86
 - [[matt-thomas|Matt Thomas]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** PF · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 24.0 pts · 14.4 reb · 1.6 ast · 0.5 stl per 100 (2012-13).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+1.4σ vs era)
+- Draws contact, gets to the line often (+1.4σ vs era)
+- Strong presence on the defensive glass (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.8σ)
+- Three-point accuracy well below era (−1.5σ)
+
+**Comparables:**
+
+- [[jamison-battle|Jamison Battle]] '25 (90% similar)
+- [[walter-herrmann|Walter Herrmann]] '09 (89% similar)
+- [[luke-babbitt|Luke Babbitt]] '11 (88% similar)
+- [[wilson-chandler|Wilson Chandler]] '20 (87% similar)
+- [[dalton-knecht|Dalton Knecht]] '25 (86% similar)
+- [[matt-thomas|Matt Thomas]] '22 (85% similar)
+
+**Career shape:** Charted 9 seasons (2012-13–2020-21). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

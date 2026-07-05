@@ -35,6 +35,31 @@ Closest career shapes in the era-normalized vector space:
 - [[keith-mcleod|Keith McLeod]] — cosine 0.89
 - [[donald-sloan|Donald Sloan]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 15.1 pts · 4.9 reb · 6.3 ast · 1.6 stl per 100 (2018-19).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.5σ)
+
+**Comparables:**
+
+- [[bobby-hurley|Bobby Hurley]] '97 (92% similar)
+- [[milt-palacio|Milt Palacio]] '00 (90% similar)
+- [[peyton-siva|Peyton Siva]] '14 (90% similar)
+- [[jerian-grant|Jerian Grant]] '19 (89% similar)
+- [[keith-mcleod|Keith McLeod]] '04 (89% similar)
+- [[donald-sloan|Donald Sloan]] '12 (89% similar)
+
+**Career shape:** Charted 2 seasons (2018-19–2019-20). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -45,6 +45,33 @@ Closest career shapes in the era-normalized vector space:
 - [[devean-george|Devean George]] — cosine 0.83
 - [[bryon-russell|Bryon Russell]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 17.6 pts · 6.8 reb · 2.7 ast · 1.6 stl per 100 (2018-19).
+
+**Strengths:**
+
+- Strong net on-court impact (+2.4σ vs era)
+- Knockdown three-point shooter (+1.3σ vs era)
+- High-volume three-point shooter (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.4σ)
+
+**Comparables:**
+
+- [[scott-burrell|Scott Burrell]] '00 (89% similar)
+- [[shane-battier|Shane Battier]] '13 (86% similar)
+- [[jae-crowder|Jae Crowder]] '22 (85% similar)
+- [[dan-majerle|Dan Majerle]] '02 (84% similar)
+- [[devean-george|Devean George]] '10 (83% similar)
+- [[bryon-russell|Bryon Russell]] '97 (83% similar)
+
+**Career shape:** Charted 12 seasons (2009-10–2021-22). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -43,6 +43,34 @@ Closest career shapes in the era-normalized vector space:
 - [[mike-james|Mike James]] — cosine 0.94
 - [[jannero-pargo|Jannero Pargo]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 24.7 pts · 3.1 reb · 9.1 ast · 1.3 stl per 100 (2010-11).
+
+**Strengths:**
+
+- High-volume table-setter (+1.7σ vs era)
+- High-volume three-point shooter (+1.7σ vs era)
+- Heavy shot volume, focal scoring option (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.6σ)
+- Finishing efficiency well below era (−1.2σ)
+
+**Comparables:**
+
+- [[troy-hudson|Troy Hudson]] '06 (97% similar)
+- [[jimmer-fredette|Jimmer Fredette]] '14 (95% similar)
+- [[mo-williams|Mo Williams]] '11 (94% similar)
+- [[malik-monk|Malik Monk]] '18 (94% similar)
+- [[mike-james|Mike James]] '06 (94% similar)
+- [[jannero-pargo|Jannero Pargo]] '14 (93% similar)
+
+**Career shape:** Charted 10 seasons (2007-08–2017-18). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -46,6 +46,34 @@ Closest career shapes in the era-normalized vector space:
 - [[moses-brown|Moses Brown]] — cosine 0.92
 - [[emeka-okafor|Emeka Okafor]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** PF · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 18.8 pts · 19.5 reb · 2.1 ast · 2.0 blk per 100 (2010-11).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+2.9σ vs era)
+- Relentless on the offensive glass (+1.8σ vs era)
+- Efficient finisher inside the arc (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.4σ)
+- Ball-hawking activity well below era (−1.1σ)
+
+**Comparables:**
+
+- [[jordan-hill|Jordan Hill]] '13 (93% similar)
+- [[samaki-walker|Samaki Walker]] '02 (92% similar)
+- [[jeff-adrien|Jeff Adrien]] '15 (92% similar)
+- [[jayson-williams|Jayson Williams]] '98 (92% similar)
+- [[moses-brown|Moses Brown]] '23 (92% similar)
+- [[emeka-okafor|Emeka Okafor]] '18 (91% similar)
+
+**Career shape:** Charted 13 seasons (2004-05–2016-17). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Rim Protection + Offensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

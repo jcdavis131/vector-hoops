@@ -52,6 +52,34 @@ Closest career shapes in the era-normalized vector space:
 - [[pau-gasol|Pau Gasol]] — cosine 0.91
 - [[shaquille-o-neal|Shaquille O'Neal]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** PF · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 32.4 pts · 18.1 reb · 4.5 ast · 3.9 blk per 100 (2003-04).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+3.4σ vs era)
+- Strong presence on the defensive glass (+2.9σ vs era)
+- Featured, high-usage scoring role (+2.5σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.1σ)
+- Turnover rate well above era (+1.0σ)
+
+**Comparables:**
+
+- [[david-robinson|David Robinson]] '98 (93% similar)
+- [[evan-mobley|Evan Mobley]] '25 (93% similar)
+- [[patrick-ewing|Patrick Ewing]] '98 (92% similar)
+- [[yao-ming|Yao Ming]] '07 (92% similar)
+- [[pau-gasol|Pau Gasol]] '15 (91% similar)
+- [[shaquille-o-neal|Shaquille O'Neal]] '98 (90% similar)
+
+**Career shape:** Charted 19 seasons (1997-98–2015-16). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

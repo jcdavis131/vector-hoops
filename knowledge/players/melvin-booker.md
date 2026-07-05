@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[b-j-armstrong|B.J. Armstrong]] — cosine 0.85
 - [[keifer-sykes|Keifer Sykes]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** PG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 14.5 pts · 3.4 reb · 6.3 ast · 0.4 stl per 100 (1996-97).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.8σ)
+- Defensive rebounding well below era (−1.3σ)
+
+**Comparables:**
+
+- [[rex-walters|Rex Walters]] '98 (88% similar)
+- [[eldridge-recasner|Eldridge Recasner]] '01 (86% similar)
+- [[doug-overton|Doug Overton]] '02 (86% similar)
+- [[hubert-davis|Hubert Davis]] '04 (86% similar)
+- [[b-j-armstrong|B.J. Armstrong]] '00 (85% similar)
+- [[keifer-sykes|Keifer Sykes]] '22 (83% similar)
+
+**Career shape:** Charted 1 season (1996-97). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

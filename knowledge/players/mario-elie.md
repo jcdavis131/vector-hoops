@@ -38,6 +38,32 @@ Closest career shapes in the era-normalized vector space:
 - [[kasparas-jakucionis|Kasparas Jakučionis]] — cosine 0.86
 - [[derek-fisher|Derek Fisher]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 10.2 pts · 5.3 reb · 4.5 ast · 2.0 stl per 100 (2000-01).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.1σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.7σ)
+- Scoring load well below era (−1.4σ)
+
+**Comparables:**
+
+- [[darius-miller|Darius Miller]] '21 (89% similar)
+- [[jon-barry|Jon Barry]] '98 (87% similar)
+- [[steve-kerr|Steve Kerr]] '97 (87% similar)
+- [[george-hill|George Hill]] '22 (87% similar)
+- [[kasparas-jakucionis|Kasparas Jakučionis]] '26 (86% similar)
+- [[derek-fisher|Derek Fisher]] '02 (86% similar)
+
+**Career shape:** Charted 5 seasons (1996-97–2000-01). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -35,6 +35,34 @@ Closest career shapes in the era-normalized vector space:
 - [[jj-hickson|JJ Hickson]] — cosine 0.90
 - [[marshall-plumlee|Marshall Plumlee]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** PF · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 20.7 pts · 15.1 reb · 0.7 ast · 1.5 blk per 100 (2004-05).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+1.6σ vs era)
+- Strong presence on the defensive glass (+1.4σ vs era)
+- Draws contact, gets to the line often (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.0σ)
+- Free-throw touch well below era (−1.5σ)
+
+**Comparables:**
+
+- [[andre-brown|Andre Brown]] '08 (96% similar)
+- [[ben-handlogten|Ben Handlogten]] '04 (91% similar)
+- [[thomas-robinson|Thomas Robinson]] '16 (91% similar)
+- [[moses-brown|Moses Brown]] '23 (90% similar)
+- [[jj-hickson|JJ Hickson]] '16 (90% similar)
+- [[marshall-plumlee|Marshall Plumlee]] '17 (89% similar)
+
+**Career shape:** Charted 2 seasons (2003-04–2004-05). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jared-jeffries|Jared Jeffries]] — cosine 0.84
 - [[noah-penda|Noah Penda]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass + Defensive Glass. Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 10.4 pts · 11.0 reb · 5.8 ast · 1.8 stl per 100 (2017-18).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.8σ)
+- Scoring load well below era (−1.5σ)
+
+**Comparables:**
+
+- [[robert-archibald|Robert Archibald]] '04 (87% similar)
+- [[reggie-jordan|Reggie Jordan]] '97 (87% similar)
+- [[michael-ruffin|Michael Ruffin]] '07 (87% similar)
+- [[justise-winslow|Justise Winslow]] '21 (84% similar)
+- [[jared-jeffries|Jared Jeffries]] '11 (84% similar)
+- [[noah-penda|Noah Penda]] '26 (83% similar)
+
+**Career shape:** Charted 1 season (2017-18). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

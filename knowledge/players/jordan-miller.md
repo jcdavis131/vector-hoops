@@ -35,6 +35,31 @@ Closest career shapes in the era-normalized vector space:
 - [[jaylen-hoard|Jaylen Hoard]] — cosine 0.65
 - [[adou-thiero|Adou Thiero]] — cosine 0.64
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 17.4 pts · 6.6 reb · 3.9 ast · 1.9 stl per 100 (2024-25).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[justin-reed|Justin Reed]] '07 (76% similar)
+- [[darrin-hancock|Darrin Hancock]] '97 (70% similar)
+- [[quinndary-weatherspoon|Quinndary Weatherspoon]] '21 (69% similar)
+- [[monty-williams|Monty Williams]] '97 (68% similar)
+- [[jaylen-hoard|Jaylen Hoard]] '21 (65% similar)
+- [[adou-thiero|Adou Thiero]] '26 (64% similar)
+
+**Career shape:** Charted 2 seasons (2024-25–2025-26). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

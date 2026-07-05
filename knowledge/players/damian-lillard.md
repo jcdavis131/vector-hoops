@@ -46,6 +46,33 @@ Closest career shapes in the era-normalized vector space:
 - [[bradley-beal|Bradley Beal]] — cosine 0.93
 - [[donovan-mitchell|Donovan Mitchell]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 42.6 pts · 6.3 reb · 9.7 ast · 1.1 stl per 100 (2022-23).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+3.3σ vs era)
+- Featured, high-usage scoring role (+3.1σ vs era)
+- High-volume three-point shooter (+2.4σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.9σ)
+
+**Comparables:**
+
+- [[isaiah-thomas|Isaiah Thomas]] '17 (96% similar)
+- [[devin-booker|Devin Booker]] '19 (95% similar)
+- [[kemba-walker|Kemba Walker]] '19 (94% similar)
+- [[lou-williams|Lou Williams]] '19 (93% similar)
+- [[bradley-beal|Bradley Beal]] '20 (93% similar)
+- [[donovan-mitchell|Donovan Mitchell]] '21 (92% similar)
+
+**Career shape:** Charted 13 seasons (2012-13–2024-25). Consistent Scoring Volume + Shot Volume profile across his career.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

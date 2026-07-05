@@ -37,6 +37,33 @@ Closest career shapes in the era-normalized vector space:
 - [[yogi-ferrell|Yogi Ferrell]] — cosine 0.92
 - [[chris-quinn|Chris Quinn]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** PG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 13.8 pts · 3.8 reb · 6.1 ast · 1.4 stl per 100 (1998-99).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+2.1σ vs era)
+- High-volume three-point shooter (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.6σ)
+- Offensive-glass activity well below era (−1.3σ)
+
+**Comparables:**
+
+- [[matt-maloney|Matt Maloney]] '00 (96% similar)
+- [[steve-blake|Steve Blake]] '16 (94% similar)
+- [[gabe-vincent|Gabe Vincent]] '26 (92% similar)
+- [[travis-diener|Travis Diener]] '06 (92% similar)
+- [[yogi-ferrell|Yogi Ferrell]] '19 (92% similar)
+- [[chris-quinn|Chris Quinn]] '10 (91% similar)
+
+**Career shape:** Charted 4 seasons (1998-99–2001-02). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

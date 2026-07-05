@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[john-starks|John Starks]] — cosine 0.87
 - [[tim-hardaway|Tim Hardaway]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** PG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 22.8 pts · 4.2 reb · 5.6 ast · 2.2 stl per 100 (1996-97).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.7σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.1σ)
+- Offensive-glass activity well below era (−1.0σ)
+
+**Comparables:**
+
+- [[jr-smith|JR Smith]] '08 (92% similar)
+- [[nickeil-alexander-walker|Nickeil Alexander-Walker]] '20 (91% similar)
+- [[todd-day|Todd Day]] '01 (89% similar)
+- [[nate-robinson|Nate Robinson]] '10 (87% similar)
+- [[john-starks|John Starks]] '00 (87% similar)
+- [[tim-hardaway|Tim Hardaway]] '97 (87% similar)
+
+**Career shape:** Charted 1 season (1996-97). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -41,6 +41,34 @@ Closest career shapes in the era-normalized vector space:
 - [[jason-kidd|Jason Kidd]] — cosine 0.90
 - [[greg-anthony|Greg Anthony]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 16.3 pts · 6.4 reb · 10.2 ast · 3.4 stl per 100 (2001-02).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.7σ vs era)
+- High-volume table-setter (+2.0σ vs era)
+- High-volume three-point shooter (+1.8σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.2σ)
+- Offensive-glass activity well below era (−1.1σ)
+
+**Comparables:**
+
+- [[gary-grant|Gary Grant]] '98 (92% similar)
+- [[darrell-armstrong|Darrell Armstrong]] '99 (90% similar)
+- [[haywoode-workman|Haywoode Workman]] '00 (90% similar)
+- [[collin-gillespie|Collin Gillespie]] '24 (90% similar)
+- [[jason-kidd|Jason Kidd]] '03 (90% similar)
+- [[greg-anthony|Greg Anthony]] '99 (90% similar)
+
+**Career shape:** Charted 8 seasons (1996-97–2003-04). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

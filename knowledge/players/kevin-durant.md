@@ -51,6 +51,33 @@ Closest career shapes in the era-normalized vector space:
 - [[lebron-james|LeBron James]] — cosine 0.90
 - [[shai-gilgeous-alexander|Shai Gilgeous-Alexander]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** SF · Scoring Volume + Shot Volume. Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 40.9 pts · 9.4 reb · 7.0 ast · 1.6 stl per 100 (2013-14).
+
+**Strengths:**
+
+- Featured, high-usage scoring role (+3.6σ vs era)
+- Draws contact, gets to the line often (+3.6σ vs era)
+- Heavy shot volume, focal scoring option (+2.3σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.7σ)
+
+**Comparables:**
+
+- [[jayson-tatum|Jayson Tatum]] '23 (93% similar)
+- [[paul-pierce|Paul Pierce]] '03 (92% similar)
+- [[kobe-bryant|Kobe Bryant]] '06 (91% similar)
+- [[carmelo-anthony|Carmelo Anthony]] '13 (90% similar)
+- [[lebron-james|LeBron James]] '10 (90% similar)
+- [[shai-gilgeous-alexander|Shai Gilgeous-Alexander]] '25 (90% similar)
+
+**Career shape:** Charted 18 seasons (2007-08–2025-26). Consistent Scoring Volume + Shot Volume profile across his career.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -49,6 +49,33 @@ Closest career shapes in the era-normalized vector space:
 - [[al-horford|Al Horford]] — cosine 0.67
 - [[ersan-ilyasova|Ersan Ilyasova]] — cosine 0.66
 
+## Scouting report
+
+**Play style:** PF · Defensive Glass + Rim Pressure (Fts). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 26.6 pts · 14.4 reb · 2.2 ast · 2.4 stl per 100 (2005-06).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+1.9σ vs era)
+- Active hands, disrupts passing lanes (+1.4σ vs era)
+- Featured, high-usage scoring role (+1.3σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[tari-eason|Tari Eason]] '24 (72% similar)
+- [[rasheed-wallace|Rasheed Wallace]] '13 (70% similar)
+- [[kel-el-ware|Kel'el Ware]] '26 (69% similar)
+- [[kevin-garnett|Kevin Garnett]] '04 (69% similar)
+- [[al-horford|Al Horford]] '10 (67% similar)
+- [[ersan-ilyasova|Ersan Ilyasova]] '21 (66% similar)
+
+**Career shape:** Charted 16 seasons (1999-00–2014-15). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -38,6 +38,33 @@ Closest career shapes in the era-normalized vector space:
 - [[greg-buckner|Greg Buckner]] — cosine 0.89
 - [[landry-fields|Landry Fields]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 8.1 pts · 8.7 reb · 3.1 ast · 2.8 stl per 100 (2001-02).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.8σ vs era)
+- Rarely turns the ball over (−1.5σ vs era)
+
+**Areas of concern:**
+
+- Scoring load well below era (−1.9σ)
+- Shot volume well below era (−1.8σ)
+
+**Comparables:**
+
+- [[john-konchar|John Konchar]] '20 (93% similar)
+- [[p-j-tucker|P.J. Tucker]] '24 (93% similar)
+- [[adrian-griffin|Adrian Griffin]] '04 (92% similar)
+- [[thabo-sefolosha|Thabo Sefolosha]] '20 (91% similar)
+- [[greg-buckner|Greg Buckner]] '05 (89% similar)
+- [[landry-fields|Landry Fields]] '15 (86% similar)
+
+**Career shape:** Charted 5 seasons (1996-97–2001-02). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

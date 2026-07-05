@@ -36,6 +36,34 @@ Closest career shapes in the era-normalized vector space:
 - [[jarrett-allen|Jarrett Allen]] — cosine 0.92
 - [[nick-fazekas|Nick Fazekas]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 22.5 pts · 17.9 reb · 2.9 ast · 3.1 blk per 100 (2023-24).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+3.3σ vs era)
+- Strong net on-court impact (+2.9σ vs era)
+- Elite rim protection (+2.5σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.7σ)
+- Three-point volume well below era (−1.8σ)
+
+**Comparables:**
+
+- [[dereck-lively-ii|Dereck Lively II]] '25 (94% similar)
+- [[onyeka-okongwu|Onyeka Okongwu]] '22 (92% similar)
+- [[isaiah-hartenstein|Isaiah Hartenstein]] '26 (92% similar)
+- [[clint-capela|Clint Capela]] '21 (92% similar)
+- [[jarrett-allen|Jarrett Allen]] '25 (92% similar)
+- [[nick-fazekas|Nick Fazekas]] '08 (91% similar)
+
+**Career shape:** Charted 3 seasons (2023-24–2025-26). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

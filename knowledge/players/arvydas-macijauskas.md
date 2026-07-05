@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[corey-brewer|Corey Brewer]] — cosine 0.80
 - [[shannon-brown|Shannon Brown]] — cosine 0.80
 
+## Scouting report
+
+**Play style:** SG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 17.4 pts · 4.0 reb · 2.0 ast · 2.8 stl per 100 (2005-06).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.0σ vs era)
+- Reliable touch from the free-throw line (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.6σ)
+- Defensive rebounding well below era (−1.5σ)
+
+**Comparables:**
+
+- [[eddie-gill|Eddie Gill]] '06 (84% similar)
+- [[predrag-savovic|Predrag Savovic]] '03 (84% similar)
+- [[kevin-edwards|Kevin Edwards]] '97 (83% similar)
+- [[kevin-burleson|Kevin Burleson]] '06 (82% similar)
+- [[corey-brewer|Corey Brewer]] '19 (80% similar)
+- [[shannon-brown|Shannon Brown]] '08 (80% similar)
+
+**Career shape:** Charted 1 season (2005-06). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

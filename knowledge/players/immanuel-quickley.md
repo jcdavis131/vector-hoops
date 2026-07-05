@@ -39,6 +39,33 @@ Closest career shapes in the era-normalized vector space:
 - [[damian-lillard|Damian Lillard]] — cosine 0.90
 - [[isaiah-thomas|Isaiah Thomas]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 29.1 pts · 6.0 reb · 9.9 ast · 1.2 stl per 100 (2024-25).
+
+**Strengths:**
+
+- High-volume table-setter (+2.0σ vs era)
+- Heavy shot volume, focal scoring option (+1.3σ vs era)
+- Featured, high-usage scoring role (+1.3σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[chauncey-billups|Chauncey Billups]] '06 (94% similar)
+- [[kemba-walker|Kemba Walker]] '19 (91% similar)
+- [[tyrese-maxey|Tyrese Maxey]] '25 (90% similar)
+- [[jamal-murray|Jamal Murray]] '26 (90% similar)
+- [[damian-lillard|Damian Lillard]] '23 (90% similar)
+- [[isaiah-thomas|Isaiah Thomas]] '17 (88% similar)
+
+**Career shape:** Charted 6 seasons (2020-21–2025-26). Consistent Scoring Volume + Shot Volume profile across his career.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

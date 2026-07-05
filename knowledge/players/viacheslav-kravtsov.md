@@ -35,6 +35,33 @@ Closest career shapes in the era-normalized vector space:
 - [[ben-handlogten|Ben Handlogten]] — cosine 0.86
 - [[mitch-mcgary|Mitch McGary]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 15.3 pts · 13.0 reb · 0.8 ast · 0.8 blk per 100 (2013-14).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+2.5σ vs era)
+- Efficient finisher inside the arc (+1.3σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−4.0σ)
+- Ball-hawking activity well below era (−2.4σ)
+
+**Comparables:**
+
+- [[garret-siler|Garret Siler]] '11 (89% similar)
+- [[ryan-hollins|Ryan Hollins]] '07 (88% similar)
+- [[jelani-mccoy|Jelani McCoy]] '02 (87% similar)
+- [[andre-brown|Andre Brown]] '08 (86% similar)
+- [[ben-handlogten|Ben Handlogten]] '04 (86% similar)
+- [[mitch-mcgary|Mitch McGary]] '16 (84% similar)
+
+**Career shape:** Charted 2 seasons (2012-13–2013-14). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

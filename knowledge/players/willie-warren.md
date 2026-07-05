@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[tyler-kolek|Tyler Kolek]] — cosine 0.88
 - [[kirk-hinrich|Kirk Hinrich]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 13.8 pts · 4.5 reb · 10.1 ast · 2.2 stl per 100 (2010-11).
+
+**Strengths:**
+
+- High-volume table-setter (+2.1σ vs era)
+- Strong net on-court impact (+1.7σ vs era)
+- Active hands, disrupts passing lanes (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.3σ)
+- Offensive-glass activity well below era (−1.2σ)
+
+**Comparables:**
+
+- [[chris-chiozza|Chris Chiozza]] '22 (89% similar)
+- [[gary-grant|Gary Grant]] '98 (88% similar)
+- [[joe-ingles|Joe Ingles]] '25 (88% similar)
+- [[derek-fisher|Derek Fisher]] '02 (88% similar)
+- [[tyler-kolek|Tyler Kolek]] '25 (88% similar)
+- [[kirk-hinrich|Kirk Hinrich]] '04 (88% similar)
+
+**Career shape:** Charted 1 season (2010-11). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

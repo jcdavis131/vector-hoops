@@ -40,6 +40,32 @@ Closest career shapes in the era-normalized vector space:
 - [[tony-massenburg|Tony Massenburg]] — cosine 0.81
 - [[johan-petro|Johan Petro]] — cosine 0.79
 
+## Scouting report
+
+**Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 14.6 pts · 9.7 reb · 2.1 ast · 1.6 stl per 100 (2012-13).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.5σ)
+- Free-throw touch well below era (−1.8σ)
+
+**Comparables:**
+
+- [[maxime-raynaud|Maxime Raynaud]] '26 (91% similar)
+- [[leonard-miller|Leonard Miller]] '26 (87% similar)
+- [[mark-strickland|Mark Strickland]] '97 (85% similar)
+- [[cheick-diallo|Cheick Diallo]] '17 (83% similar)
+- [[tony-massenburg|Tony Massenburg]] '02 (81% similar)
+- [[johan-petro|Johan Petro]] '12 (79% similar)
+
+**Career shape:** Charted 7 seasons (2011-12–2018-19). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

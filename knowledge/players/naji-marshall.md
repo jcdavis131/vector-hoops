@@ -39,6 +39,31 @@ Closest career shapes in the era-normalized vector space:
 - [[micheal-williams|Micheal Williams]] — cosine 0.64
 - [[darrin-hancock|Darrin Hancock]] — cosine 0.63
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 20.1 pts · 9.1 reb · 4.0 ast · 2.1 stl per 100 (2021-22).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.1σ)
+
+**Comparables:**
+
+- [[acie-law|Acie Law]] '10 (67% similar)
+- [[tyus-edney|Tyus Edney]] '01 (67% similar)
+- [[saben-lee|Saben Lee]] '24 (66% similar)
+- [[moochie-norris|Moochie Norris]] '05 (64% similar)
+- [[micheal-williams|Micheal Williams]] '98 (64% similar)
+- [[darrin-hancock|Darrin Hancock]] '97 (63% similar)
+
+**Career shape:** Charted 6 seasons (2020-21–2025-26). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

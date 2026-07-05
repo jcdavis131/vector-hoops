@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[theo-ratliff|Theo Ratliff]] — cosine 0.91
 - [[dj-mbenga|DJ Mbenga]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 15.5 pts · 11.2 reb · 1.3 ast · 5.4 blk per 100 (1997-98).
+
+**Strengths:**
+
+- Elite rim protection (+3.8σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.4σ)
+- Three-point accuracy well below era (−1.3σ)
+
+**Comparables:**
+
+- [[robert-swift|Robert Swift]] '05 (94% similar)
+- [[adonal-foyle|Adonal Foyle]] '07 (93% similar)
+- [[stojko-vrankovic|Stojko Vrankovic]] '97 (92% similar)
+- [[mickell-gladness|Mickell Gladness]] '12 (91% similar)
+- [[theo-ratliff|Theo Ratliff]] '09 (91% similar)
+- [[dj-mbenga|DJ Mbenga]] '06 (91% similar)
+
+**Career shape:** Charted 2 seasons (1997-98–1999-00). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

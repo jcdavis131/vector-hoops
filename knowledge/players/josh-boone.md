@@ -37,6 +37,34 @@ Closest career shapes in the era-normalized vector space:
 - [[tristan-thompson|Tristan Thompson]] — cosine 0.93
 - [[justin-williams|Justin Williams]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 12.4 pts · 15.5 reb · 1.4 ast · 2.4 blk per 100 (2009-10).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+2.1σ vs era)
+- Elite rim protection (+1.3σ vs era)
+- Strong presence on the defensive glass (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.9σ)
+- On-court net impact well below era (−1.7σ)
+
+**Comparables:**
+
+- [[tarik-black|Tarik Black]] '18 (96% similar)
+- [[andris-biedrins|Andris Biedrins]] '13 (94% similar)
+- [[dan-gadzuric|Dan Gadzuric]] '05 (94% similar)
+- [[ed-davis|Ed Davis]] '22 (94% similar)
+- [[tristan-thompson|Tristan Thompson]] '25 (93% similar)
+- [[justin-williams|Justin Williams]] '07 (93% similar)
+
+**Career shape:** Charted 4 seasons (2006-07–2009-10). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

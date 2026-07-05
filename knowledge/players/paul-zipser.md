@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[anthony-brown|Anthony Brown]] — cosine 0.85
 - [[javonte-smart|Javonte Smart]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 13.1 pts · 7.9 reb · 2.8 ast · 1.2 stl per 100 (2017-18).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.8σ)
+- Finishing efficiency well below era (−1.5σ)
+
+**Comparables:**
+
+- [[cleanthony-early|Cleanthony Early]] '16 (92% similar)
+- [[brandon-rush|Brandon Rush]] '15 (89% similar)
+- [[onuralp-bitim|Onuralp Bitim]] '24 (86% similar)
+- [[jawad-williams|Jawad Williams]] '11 (85% similar)
+- [[anthony-brown|Anthony Brown]] '16 (85% similar)
+- [[javonte-smart|Javonte Smart]] '22 (84% similar)
+
+**Career shape:** Charted 2 seasons (2016-17–2017-18). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

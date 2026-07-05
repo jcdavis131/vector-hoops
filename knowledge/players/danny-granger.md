@@ -42,6 +42,33 @@ Closest career shapes in the era-normalized vector space:
 - [[lauri-markkanen|Lauri Markkanen]] — cosine 0.85
 - [[tim-thomas|Tim Thomas]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** SF · Scoring Volume + Shot Volume. Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 34.7 pts · 6.9 reb · 3.7 ast · 1.9 blk per 100 (2008-09).
+
+**Strengths:**
+
+- Featured, high-usage scoring role (+2.6σ vs era)
+- Heavy shot volume, focal scoring option (+2.2σ vs era)
+- Draws contact, gets to the line often (+1.8σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[vince-carter|Vince Carter]] '01 (89% similar)
+- [[mitch-richmond|Mitch Richmond]] '97 (88% similar)
+- [[michael-redd|Michael Redd]] '07 (87% similar)
+- [[brandon-miller|Brandon Miller]] '26 (85% similar)
+- [[lauri-markkanen|Lauri Markkanen]] '23 (85% similar)
+- [[tim-thomas|Tim Thomas]] '06 (85% similar)
+
+**Career shape:** Charted 9 seasons (2005-06–2014-15). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -37,6 +37,33 @@ Closest career shapes in the era-normalized vector space:
 - [[acie-law|Acie Law]] — cosine 0.84
 - [[tomas-satoransky|Tomas Satoransky]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 12.6 pts · 5.9 reb · 8.4 ast · 1.1 stl per 100 (2021-22).
+
+**Strengths:**
+
+- High-volume table-setter (+1.5σ vs era)
+- Reliable touch from the free-throw line (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Scoring load well below era (−1.2σ)
+- Finishing efficiency well below era (−1.2σ)
+
+**Comparables:**
+
+- [[aaron-miles|Aaron Miles]] '06 (86% similar)
+- [[pooh-jeter|Pooh Jeter]] '11 (86% similar)
+- [[malcolm-delaney|Malcolm Delaney]] '17 (85% similar)
+- [[josh-magette|Josh Magette]] '18 (85% similar)
+- [[acie-law|Acie Law]] '10 (84% similar)
+- [[tomas-satoransky|Tomas Satoransky]] '22 (84% similar)
+
+**Career shape:** Charted 4 seasons (2018-19–2021-22). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

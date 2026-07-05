@@ -34,6 +34,31 @@ Closest career shapes in the era-normalized vector space:
 - [[zhou-qi|Zhou Qi]] — cosine 0.77
 - [[donte-greene|Donte Greene]] — cosine 0.77
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 15.3 pts · 8.7 reb · 1.6 ast · 1.9 blk per 100 (2013-14).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.2σ)
+
+**Comparables:**
+
+- [[stanley-umude|Stanley Umude]] '25 (90% similar)
+- [[cleanthony-early|Cleanthony Early]] '16 (81% similar)
+- [[nikoloz-tskitishvili|Nikoloz Tskitishvili]] '05 (80% similar)
+- [[paul-zipser|Paul Zipser]] '18 (77% similar)
+- [[zhou-qi|Zhou Qi]] '18 (77% similar)
+- [[donte-greene|Donte Greene]] '09 (77% similar)
+
+**Career shape:** Charted 1 season (2013-14). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -44,6 +44,32 @@ Closest career shapes in the era-normalized vector space:
 - [[lynn-greer|Lynn Greer]] — cosine 0.92
 - [[marcus-sasser|Marcus Sasser]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 10.5 pts · 5.0 reb · 5.3 ast · 1.7 stl per 100 (2006-07).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.3σ)
+- Scoring load well below era (−1.4σ)
+
+**Comparables:**
+
+- [[jason-terry|Jason Terry]] '18 (95% similar)
+- [[keyon-dooling|Keyon Dooling]] '10 (95% similar)
+- [[mike-bibby|Mike Bibby]] '12 (94% similar)
+- [[mike-james|Mike James]] '06 (93% similar)
+- [[lynn-greer|Lynn Greer]] '07 (92% similar)
+- [[marcus-sasser|Marcus Sasser]] '26 (92% similar)
+
+**Career shape:** Charted 11 seasons (1996-97–2006-07). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

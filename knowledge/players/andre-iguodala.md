@@ -51,6 +51,32 @@ Closest career shapes in the era-normalized vector space:
 - [[delon-wright|Delon Wright]] — cosine 0.79
 - [[dyson-daniels|Dyson Daniels]] — cosine 0.78
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass + Defensive Glass. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 10.6 pts · 8.7 reb · 5.7 ast · 2.3 blk per 100 (2019-20).
+
+**Strengths:**
+
+- Elite rim protection (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−3.1σ)
+- Scoring load well below era (−1.5σ)
+
+**Comparables:**
+
+- [[alex-caruso|Alex Caruso]] '25 (86% similar)
+- [[nick-calathes|Nick Calathes]] '15 (83% similar)
+- [[ron-harper|Ron Harper]] '97 (82% similar)
+- [[jordan-mclaughlin|Jordan McLaughlin]] '24 (79% similar)
+- [[delon-wright|Delon Wright]] '23 (79% similar)
+- [[dyson-daniels|Dyson Daniels]] '25 (78% similar)
+
+**Career shape:** Charted 18 seasons (2004-05–2021-22). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

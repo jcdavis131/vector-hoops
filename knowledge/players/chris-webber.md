@@ -44,6 +44,33 @@ Closest career shapes in the era-normalized vector space:
 - [[nikola-jokic|Nikola Jokić]] — cosine 0.82
 - [[karl-malone|Karl Malone]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** PF · Defensive Glass + Rim Pressure (Fts). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 33.2 pts · 13.6 reb · 5.1 ast · 2.1 blk per 100 (2000-01).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+2.9σ vs era)
+- Featured, high-usage scoring role (+2.6σ vs era)
+- Strong presence on the defensive glass (+1.7σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[kevin-garnett|Kevin Garnett]] '04 (87% similar)
+- [[pascal-siakam|Pascal Siakam]] '17 (87% similar)
+- [[giannis-antetokounmpo|Giannis Antetokounmpo]] '20 (85% similar)
+- [[tim-duncan|Tim Duncan]] '04 (82% similar)
+- [[nikola-jokic|Nikola Jokić]] '22 (82% similar)
+- [[karl-malone|Karl Malone]] '97 (82% similar)
+
+**Career shape:** Charted 11 seasons (1996-97–2006-07). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[luc-mbah-a-moute|Luc Mbah a Moute]] — cosine 0.84
 - [[toumani-camara|Toumani Camara]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 14.7 pts · 7.3 reb · 1.7 ast · 1.8 stl per 100 (2022-23).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Table-setting role well below era (−1.1σ)
+- Shot volume well below era (−1.0σ)
+
+**Comparables:**
+
+- [[jake-laravia|Jake LaRavia]] '23 (89% similar)
+- [[jaylen-clark|Jaylen Clark]] '25 (85% similar)
+- [[josh-okogie|Josh Okogie]] '25 (85% similar)
+- [[caleb-martin|Caleb Martin]] '26 (84% similar)
+- [[luc-mbah-a-moute|Luc Mbah a Moute]] '16 (84% similar)
+- [[toumani-camara|Toumani Camara]] '24 (83% similar)
+
+**Career shape:** Charted 1 season (2022-23). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -40,6 +40,33 @@ Closest career shapes in the era-normalized vector space:
 - [[eddie-house|Eddie House]] — cosine 0.86
 - [[morris-peterson|Morris Peterson]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 22.1 pts · 6.6 reb · 4.4 ast · 2.6 stl per 100 (2002-03).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.7σ vs era)
+- Active hands, disrupts passing lanes (+1.5σ vs era)
+- Strong net on-court impact (+1.1σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[devin-vassell|Devin Vassell]] '23 (88% similar)
+- [[tony-delk|Tony Delk]] '05 (88% similar)
+- [[eddie-jones|Eddie Jones]] '00 (87% similar)
+- [[gary-trent-jr|Gary Trent Jr.]] '26 (87% similar)
+- [[eddie-house|Eddie House]] '06 (86% similar)
+- [[morris-peterson|Morris Peterson]] '10 (84% similar)
+
+**Career shape:** Charted 7 seasons (1996-97–2003-04). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -35,6 +35,33 @@ Closest career shapes in the era-normalized vector space:
 - [[shane-battier|Shane Battier]] — cosine 0.80
 - [[danny-green|Danny Green]] — cosine 0.79
 
+## Scouting report
+
+**Play style:** C · Three-Point Accuracy (Low Turnovers). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 14.7 pts · 6.1 reb · 2.1 ast · 2.1 blk per 100 (2020-21).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.9σ vs era)
+- Strong net on-court impact (+1.7σ vs era)
+- Elite rim protection (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.7σ)
+
+**Comparables:**
+
+- [[ish-wainright|Ish Wainright]] '22 (88% similar)
+- [[devean-george|Devean George]] '10 (83% similar)
+- [[keith-askins|Keith Askins]] '99 (82% similar)
+- [[jake-layman|Jake Layman]] '18 (81% similar)
+- [[shane-battier|Shane Battier]] '13 (80% similar)
+- [[danny-green|Danny Green]] '19 (79% similar)
+
+**Career shape:** Charted 2 seasons (2020-21–2021-22). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

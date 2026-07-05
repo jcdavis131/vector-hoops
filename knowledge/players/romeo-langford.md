@@ -37,6 +37,33 @@ Closest career shapes in the era-normalized vector space:
 - [[jason-collins|Jason Collins]] — cosine 0.89
 - [[kris-murray|Kris Murray]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 10.1 pts · 5.2 reb · 1.7 ast · 1.0 stl per 100 (2019-20).
+
+**Strengths:**
+
+- Strong net on-court impact (+1.6σ vs era)
+- Rarely turns the ball over (−1.2σ vs era)
+
+**Areas of concern:**
+
+- Scoring load well below era (−1.5σ)
+- Finishing efficiency well below era (−1.4σ)
+
+**Comparables:**
+
+- [[kz-okpala|KZ Okpala]] '21 (92% similar)
+- [[quinton-ross|Quinton Ross]] '11 (92% similar)
+- [[mark-pope|Mark Pope]] '01 (90% similar)
+- [[julian-phillips|Julian Phillips]] '26 (89% similar)
+- [[jason-collins|Jason Collins]] '10 (89% similar)
+- [[kris-murray|Kris Murray]] '25 (88% similar)
+
+**Career shape:** Charted 4 seasons (2019-20–2022-23). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

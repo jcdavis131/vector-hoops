@@ -42,6 +42,33 @@ Closest career shapes in the era-normalized vector space:
 - [[alize-johnson|Alize Johnson]] — cosine 0.63
 - [[loy-vaught|Loy Vaught]] — cosine 0.61
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 15.1 pts · 11.7 reb · 3.6 ast · 1.6 stl per 100 (2002-03).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+2.3σ vs era)
+- Strong presence on the defensive glass (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.6σ)
+- Three-point accuracy well below era (−1.3σ)
+
+**Comparables:**
+
+- [[christian-laettner|Christian Laettner]] '05 (71% similar)
+- [[chimezie-metu|Chimezie Metu]] '20 (65% similar)
+- [[darius-songaila|Darius Songaila]] '04 (65% similar)
+- [[charles-oakley|Charles Oakley]] '02 (63% similar)
+- [[alize-johnson|Alize Johnson]] '22 (63% similar)
+- [[loy-vaught|Loy Vaught]] '99 (61% similar)
+
+**Career shape:** Charted 9 seasons (1996-97–2004-05). Entered as a Scoring Volume + Shot Volume profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

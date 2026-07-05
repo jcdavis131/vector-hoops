@@ -43,6 +43,33 @@ Closest career shapes in the era-normalized vector space:
 - [[ray-allen|Ray Allen]] — cosine 0.92
 - [[eric-gordon|Eric Gordon]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 27.4 pts · 5.1 reb · 3.2 ast · 1.9 stl per 100 (2001-02).
+
+**Strengths:**
+
+- Featured, high-usage scoring role (+1.6σ vs era)
+- Heavy shot volume, focal scoring option (+1.6σ vs era)
+- High-volume three-point shooter (+1.2σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[leandro-barbosa|Leandro Barbosa]] '04 (95% similar)
+- [[norman-powell|Norman Powell]] '25 (93% similar)
+- [[evan-fournier|Evan Fournier]] '24 (92% similar)
+- [[sasha-danilovic|Sasha Danilovic]] '97 (92% similar)
+- [[ray-allen|Ray Allen]] '06 (92% similar)
+- [[eric-gordon|Eric Gordon]] '13 (91% similar)
+
+**Career shape:** Charted 10 seasons (1998-99–2007-08). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

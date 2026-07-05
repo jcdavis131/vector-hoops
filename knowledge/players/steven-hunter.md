@@ -41,6 +41,34 @@ Closest career shapes in the era-normalized vector space:
 - [[bismack-biyombo|Bismack Biyombo]] — cosine 0.91
 - [[jakarr-sampson|JaKarr Sampson]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 12.3 pts · 11.2 reb · 0.8 ast · 4.8 blk per 100 (2003-04).
+
+**Strengths:**
+
+- Elite rim protection (+3.3σ vs era)
+- Efficient finisher inside the arc (+1.8σ vs era)
+- Rarely turns the ball over (−1.2σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−3.3σ)
+- Ball-hawking activity well below era (−2.1σ)
+
+**Comparables:**
+
+- [[brendan-haywood|Brendan Haywood]] '15 (93% similar)
+- [[jason-maxiell|Jason Maxiell]] '06 (93% similar)
+- [[etan-thomas|Etan Thomas]] '07 (93% similar)
+- [[deyonta-davis|Deyonta Davis]] '17 (91% similar)
+- [[bismack-biyombo|Bismack Biyombo]] '23 (91% similar)
+- [[jakarr-sampson|JaKarr Sampson]] '18 (90% similar)
+
+**Career shape:** Charted 8 seasons (2001-02–2009-10). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

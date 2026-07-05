@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[isaiah-livers|Isaiah Livers]] — cosine 0.91
 - [[kyle-singler|Kyle Singler]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 9.5 pts · 5.8 reb · 1.6 ast · 1.2 stl per 100 (2015-16).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.5σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.0σ)
+- Scoring load well below era (−1.7σ)
+
+**Comparables:**
+
+- [[axel-toupane|Axel Toupane]] '16 (92% similar)
+- [[ben-sheppard|Ben Sheppard]] '24 (92% similar)
+- [[solomon-hill|Solomon Hill]] '21 (92% similar)
+- [[sion-james|Sion James]] '26 (91% similar)
+- [[isaiah-livers|Isaiah Livers]] '24 (91% similar)
+- [[kyle-singler|Kyle Singler]] '17 (90% similar)
+
+**Career shape:** Charted 1 season (2015-16). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

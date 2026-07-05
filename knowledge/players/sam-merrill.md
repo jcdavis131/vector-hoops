@@ -37,6 +37,34 @@ Closest career shapes in the era-normalized vector space:
 - [[pat-garrity|Pat Garrity]] — cosine 0.93
 - [[wayne-ellington|Wayne Ellington]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 22.2 pts · 5.5 reb · 4.9 ast · 0.9 stl per 100 (2023-24).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.7σ vs era)
+- Rarely turns the ball over (−1.6σ vs era)
+- Reliable touch from the free-throw line (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.1σ)
+- Ball-hawking activity well below era (−1.0σ)
+
+**Comparables:**
+
+- [[mike-penberthy|Mike Penberthy]] '01 (96% similar)
+- [[kyle-korver|Kyle Korver]] '04 (94% similar)
+- [[duncan-robinson|Duncan Robinson]] '20 (94% similar)
+- [[aj-green|AJ Green]] '23 (94% similar)
+- [[pat-garrity|Pat Garrity]] '02 (93% similar)
+- [[wayne-ellington|Wayne Ellington]] '17 (93% similar)
+
+**Career shape:** Charted 4 seasons (2020-21–2025-26). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

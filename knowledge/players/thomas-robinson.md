@@ -38,6 +38,33 @@ Closest career shapes in the era-normalized vector space:
 - [[moses-brown|Moses Brown]] — cosine 0.90
 - [[harry-giles-iii|Harry Giles III]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** PF · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 16.4 pts · 19.2 reb · 2.5 ast · 2.1 stl per 100 (2015-16).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+3.0σ vs era)
+- Strong presence on the defensive glass (+1.9σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.6σ)
+- On-court net impact well below era (−2.1σ)
+
+**Comparables:**
+
+- [[andre-drummond|Andre Drummond]] '24 (92% similar)
+- [[dejuan-blair|DeJuan Blair]] '16 (92% similar)
+- [[shawnelle-scott|Shawnelle Scott]] '01 (91% similar)
+- [[brandon-hunter|Brandon Hunter]] '05 (91% similar)
+- [[moses-brown|Moses Brown]] '23 (90% similar)
+- [[harry-giles-iii|Harry Giles III]] '24 (90% similar)
+
+**Career shape:** Charted 5 seasons (2012-13–2016-17). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

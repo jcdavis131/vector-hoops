@@ -38,6 +38,33 @@ Closest career shapes in the era-normalized vector space:
 - [[andrew-bynum|Andrew Bynum]] — cosine 0.90
 - [[pau-gasol|Pau Gasol]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** PF · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 28.6 pts · 14.3 reb · 4.9 ast · 2.5 blk per 100 (2024-25).
+
+**Strengths:**
+
+- Strong net on-court impact (+1.8σ vs era)
+- Elite rim protection (+1.8σ vs era)
+- Strong presence on the defensive glass (+1.6σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[tim-duncan|Tim Duncan]] '04 (93% similar)
+- [[hassan-whiteside|Hassan Whiteside]] '22 (91% similar)
+- [[alonzo-mourning|Alonzo Mourning]] '00 (91% similar)
+- [[david-robinson|David Robinson]] '98 (90% similar)
+- [[andrew-bynum|Andrew Bynum]] '08 (90% similar)
+- [[pau-gasol|Pau Gasol]] '15 (89% similar)
+
+**Career shape:** Charted 5 seasons (2021-22–2025-26). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

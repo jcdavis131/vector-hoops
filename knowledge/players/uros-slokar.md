@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[allonzo-trier|Allonzo Trier]] — cosine 0.74
 - [[jermaine-taylor|Jermaine Taylor]] — cosine 0.73
 
+## Scouting report
+
+**Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 24.1 pts · 8.8 reb · 0.6 ast · 1.3 blk per 100 (2006-07).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+1.5σ vs era)
+- Efficient finisher inside the arc (+1.3σ vs era)
+- Draws contact, gets to the line often (+1.3σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−3.6σ)
+- Turnover rate well above era (+2.8σ)
+
+**Comparables:**
+
+- [[zarko-cabarkapa|Zarko Cabarkapa]] '04 (82% similar)
+- [[eddy-curry|Eddy Curry]] '07 (79% similar)
+- [[loren-meyer|Loren Meyer]] '97 (78% similar)
+- [[randell-jackson|Randell Jackson]] '99 (76% similar)
+- [[allonzo-trier|Allonzo Trier]] '20 (74% similar)
+- [[jermaine-taylor|Jermaine Taylor]] '10 (73% similar)
+
+**Career shape:** Charted 1 season (2006-07). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -41,6 +41,34 @@ Closest career shapes in the era-normalized vector space:
 - [[lonny-baxter|Lonny Baxter]] — cosine 0.90
 - [[charles-shackleford|Charles Shackleford]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 19.9 pts · 13.4 reb · 3.4 ast · 2.5 blk per 100 (2018-19).
+
+**Strengths:**
+
+- Elite rim protection (+1.6σ vs era)
+- Relentless on the offensive glass (+1.1σ vs era)
+- Strong presence on the defensive glass (+1.0σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.9σ)
+- Three-point volume well below era (−1.3σ)
+
+**Comparables:**
+
+- [[omer-yurtseven|Omer Yurtseven]] '22 (90% similar)
+- [[jonas-valanciunas|Jonas Valančiūnas]] '26 (90% similar)
+- [[kris-humphries|Kris Humphries]] '11 (90% similar)
+- [[willy-hernangomez|Willy Hernangomez]] '23 (90% similar)
+- [[lonny-baxter|Lonny Baxter]] '06 (90% similar)
+- [[charles-shackleford|Charles Shackleford]] '99 (89% similar)
+
+**Career shape:** Charted 8 seasons (2018-19–2025-26). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

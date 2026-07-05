@@ -42,6 +42,32 @@ Closest career shapes in the era-normalized vector space:
 - [[sterling-brown|Sterling Brown]] — cosine 0.87
 - [[brian-scalabrine|Brian Scalabrine]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 10.7 pts · 10.5 reb · 3.9 ast · 1.2 stl per 100 (2020-21).
+
+**Strengths:**
+
+- Strong net on-court impact (+1.7σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.7σ)
+- Scoring load well below era (−1.5σ)
+
+**Comparables:**
+
+- [[keith-askins|Keith Askins]] '99 (89% similar)
+- [[nicolas-batum|Nicolas Batum]] '20 (88% similar)
+- [[dean-wade|Dean Wade]] '25 (88% similar)
+- [[pat-connaughton|Pat Connaughton]] '16 (88% similar)
+- [[sterling-brown|Sterling Brown]] '22 (87% similar)
+- [[brian-scalabrine|Brian Scalabrine]] '11 (87% similar)
+
+**Career shape:** Charted 9 seasons (2017-18–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -45,6 +45,32 @@ Closest career shapes in the era-normalized vector space:
 - [[will-perdue|Will Perdue]] — cosine 0.91
 - [[antonio-harvey|Antonio Harvey]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 8.1 pts · 11.4 reb · 2.8 ast · 1.0 stl per 100 (2015-16).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.5σ)
+- Shot volume well below era (−2.1σ)
+
+**Comparables:**
+
+- [[ariel-hukporti|Ariel Hukporti]] '25 (94% similar)
+- [[jordan-bell|Jordan Bell]] '18 (91% similar)
+- [[omer-asik|Omer Asik]] '18 (91% similar)
+- [[joel-przybilla|Joel Przybilla]] '01 (91% similar)
+- [[will-perdue|Will Perdue]] '99 (91% similar)
+- [[antonio-harvey|Antonio Harvey]] '00 (90% similar)
+
+**Career shape:** Charted 12 seasons (2004-05–2015-16). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

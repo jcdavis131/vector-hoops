@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[aaron-gray|Aaron Gray]] — cosine 0.87
 - [[reggie-evans|Reggie Evans]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 10.2 pts · 14.6 reb · 0.7 ast · 1.5 stl per 100 (2005-06).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+2.1σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.6σ)
+- Scoring load well below era (−1.3σ)
+
+**Comparables:**
+
+- [[jackson-vroman|Jackson Vroman]] '06 (92% similar)
+- [[rafael-araujo|Rafael Araujo]] '06 (89% similar)
+- [[kenny-thomas|Kenny Thomas]] '08 (89% similar)
+- [[felton-spencer|Felton Spencer]] '01 (88% similar)
+- [[aaron-gray|Aaron Gray]] '11 (87% similar)
+- [[reggie-evans|Reggie Evans]] '13 (86% similar)
+
+**Career shape:** Charted 1 season (2005-06). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

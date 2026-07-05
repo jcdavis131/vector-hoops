@@ -35,6 +35,34 @@ Closest career shapes in the era-normalized vector space:
 - [[malik-monk|Malik Monk]] — cosine 0.88
 - [[jordan-crawford|Jordan Crawford]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** SG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 29.2 pts · 4.3 reb · 7.5 ast · 0.7 stl per 100 (2022-23).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+3.0σ vs era)
+- High-volume three-point shooter (+1.9σ vs era)
+- Featured, high-usage scoring role (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.6σ)
+- Ball-hawking activity well below era (−1.4σ)
+
+**Comparables:**
+
+- [[jaden-hardy|Jaden Hardy]] '26 (93% similar)
+- [[caleb-love|Caleb Love]] '26 (93% similar)
+- [[dion-waiters|Dion Waiters]] '19 (92% similar)
+- [[anfernee-simons|Anfernee Simons]] '24 (89% similar)
+- [[malik-monk|Malik Monk]] '18 (88% similar)
+- [[jordan-crawford|Jordan Crawford]] '11 (88% similar)
+
+**Career shape:** Charted 2 seasons (2021-22–2022-23). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

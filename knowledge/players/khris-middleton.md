@@ -47,6 +47,33 @@ Closest career shapes in the era-normalized vector space:
 - [[sam-cassell|Sam Cassell]] — cosine 0.88
 - [[kyrie-irving|Kyrie Irving]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** SF · Scoring Volume + Shot Volume. Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 31.5 pts · 9.3 reb · 6.4 ast · 1.3 stl per 100 (2019-20).
+
+**Strengths:**
+
+- Strong net on-court impact (+2.2σ vs era)
+- Featured, high-usage scoring role (+1.8σ vs era)
+- Heavy shot volume, focal scoring option (+1.4σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[desmond-bane|Desmond Bane]] '24 (93% similar)
+- [[jamal-murray|Jamal Murray]] '26 (93% similar)
+- [[stephen-curry|Stephen Curry]] '16 (90% similar)
+- [[gordon-hayward|Gordon Hayward]] '17 (88% similar)
+- [[sam-cassell|Sam Cassell]] '04 (88% similar)
+- [[kyrie-irving|Kyrie Irving]] '20 (88% similar)
+
+**Career shape:** Charted 14 seasons (2012-13–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

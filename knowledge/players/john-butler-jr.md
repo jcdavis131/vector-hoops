@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[wesley-johnson|Wesley Johnson]] — cosine 0.85
 - [[cj-elleby|CJ Elleby]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** C · Three-Point Accuracy (Low Turnovers). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 9.2 pts · 3.5 reb · 2.3 ast · 1.8 blk per 100 (2022-23).
+
+**Strengths:**
+
+- Rarely turns the ball over (−2.3σ vs era)
+- Elite rim protection (+1.0σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.1σ)
+- Finishing efficiency well below era (−1.9σ)
+
+**Comparables:**
+
+- [[isaiah-livers|Isaiah Livers]] '24 (88% similar)
+- [[justin-jackson|Justin Jackson]] '23 (88% similar)
+- [[spencer-jones|Spencer Jones]] '25 (87% similar)
+- [[khyri-thomas|Khyri Thomas]] '19 (86% similar)
+- [[wesley-johnson|Wesley Johnson]] '17 (85% similar)
+- [[cj-elleby|CJ Elleby]] '22 (84% similar)
+
+**Career shape:** Charted 1 season (2022-23). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

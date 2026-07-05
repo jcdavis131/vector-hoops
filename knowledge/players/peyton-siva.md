@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[kenny-satterfield|Kenny Satterfield]] — cosine 0.93
 - [[keith-mcleod|Keith McLeod]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** SG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 12.9 pts · 3.4 reb · 8.2 ast · 2.2 stl per 100 (2013-14).
+
+**Strengths:**
+
+- High-volume table-setter (+1.5σ vs era)
+- Active hands, disrupts passing lanes (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.0σ)
+- Turnover rate well above era (+1.5σ)
+
+**Comparables:**
+
+- [[nico-mannion|Nico Mannion]] '21 (95% similar)
+- [[frank-williams|Frank Williams]] '03 (94% similar)
+- [[diante-garrett|Diante Garrett]] '13 (93% similar)
+- [[walker-russell|Walker Russell]] '12 (93% similar)
+- [[kenny-satterfield|Kenny Satterfield]] '02 (93% similar)
+- [[keith-mcleod|Keith McLeod]] '04 (93% similar)
+
+**Career shape:** Charted 1 season (2013-14). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

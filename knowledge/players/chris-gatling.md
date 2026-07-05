@@ -39,6 +39,34 @@ Closest career shapes in the era-normalized vector space:
 - [[marcus-fizer|Marcus Fizer]] — cosine 0.85
 - [[moritz-wagner|Moritz Wagner]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** PF · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 35.5 pts · 14.7 reb · 1.1 ast · 1.6 stl per 100 (1996-97).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+3.5σ vs era)
+- Featured, high-usage scoring role (+2.9σ vs era)
+- Heavy shot volume, focal scoring option (+2.0σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.5σ)
+- Table-setting role well below era (−1.1σ)
+
+**Comparables:**
+
+- [[shawn-kemp|Shawn Kemp]] '00 (88% similar)
+- [[jonathan-kuminga|Jonathan Kuminga]] '25 (87% similar)
+- [[zach-randolph|Zach Randolph]] '07 (85% similar)
+- [[demarcus-cousins|DeMarcus Cousins]] '15 (85% similar)
+- [[marcus-fizer|Marcus Fizer]] '03 (85% similar)
+- [[moritz-wagner|Moritz Wagner]] '25 (84% similar)
+
+**Career shape:** Charted 6 seasons (1996-97–2001-02). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

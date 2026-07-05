@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[nathan-jawai|Nathan Jawai]] — cosine 0.89
 - [[tom-hammonds|Tom Hammonds]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 12.9 pts · 12.3 reb · 0.9 ast · 1.3 blk per 100 (2016-17).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+2.1σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.2σ)
+- Shot volume well below era (−1.5σ)
+
+**Comparables:**
+
+- [[colin-castleton|Colin Castleton]] '25 (95% similar)
+- [[robert-sacre|Robert Sacre]] '13 (90% similar)
+- [[jake-voskuhl|Jake Voskuhl]] '01 (89% similar)
+- [[solomon-jones|Solomon Jones]] '08 (89% similar)
+- [[nathan-jawai|Nathan Jawai]] '10 (89% similar)
+- [[tom-hammonds|Tom Hammonds]] '00 (88% similar)
+
+**Career shape:** Charted 1 season (2016-17). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

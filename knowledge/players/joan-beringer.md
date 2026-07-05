@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[onyeka-okongwu|Onyeka Okongwu]] — cosine 0.93
 - [[dereck-lively-ii|Dereck Lively II]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** PF · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 22.4 pts · 13.3 reb · 1.7 ast · 3.7 blk per 100 (2025-26).
+
+**Strengths:**
+
+- Elite rim protection (+3.4σ vs era)
+- Efficient finisher inside the arc (+2.5σ vs era)
+- Relentless on the offensive glass (+2.4σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.9σ)
+- Three-point volume well below era (−2.0σ)
+
+**Comparables:**
+
+- [[daniel-gafford|Daniel Gafford]] '25 (96% similar)
+- [[brandan-wright|Brandan Wright]] '18 (96% similar)
+- [[ryan-kalkbrenner|Ryan Kalkbrenner]] '26 (95% similar)
+- [[jeff-withey|Jeff Withey]] '17 (94% similar)
+- [[onyeka-okongwu|Onyeka Okongwu]] '22 (93% similar)
+- [[dereck-lively-ii|Dereck Lively II]] '25 (93% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

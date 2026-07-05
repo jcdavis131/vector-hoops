@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[predrag-savovic|Predrag Savovic]] — cosine 0.73
 - [[taurean-green|Taurean Green]] — cosine 0.73
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 18.0 pts · 8.1 reb · 4.0 ast · 1.4 stl per 100 (2019-20).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.2σ)
+- Rim-protection impact well below era (−1.0σ)
+
+**Comparables:**
+
+- [[vassilis-spanoulis|Vassilis Spanoulis]] '07 (82% similar)
+- [[jalen-hood-schifino|Jalen Hood-Schifino]] '24 (75% similar)
+- [[terrel-harris|Terrel Harris]] '13 (74% similar)
+- [[ben-hansbrough|Ben Hansbrough]] '13 (74% similar)
+- [[predrag-savovic|Predrag Savovic]] '03 (73% similar)
+- [[taurean-green|Taurean Green]] '08 (73% similar)
+
+**Career shape:** Charted 1 season (2019-20). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

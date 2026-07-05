@@ -39,6 +39,33 @@ Closest career shapes in the era-normalized vector space:
 - [[richaun-holmes|Richaun Holmes]] — cosine 0.92
 - [[jeremy-evans|Jeremy Evans]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 15.2 pts · 8.7 reb · 3.3 ast · 2.9 blk per 100 (2018-19).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+3.6σ vs era)
+- Elite rim protection (+2.1σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.8σ)
+- Three-point volume well below era (−1.8σ)
+
+**Comparables:**
+
+- [[maceo-baston|Maceo Baston]] '07 (95% similar)
+- [[kai-jones|Kai Jones]] '22 (93% similar)
+- [[jaxson-hayes|Jaxson Hayes]] '26 (93% similar)
+- [[adem-bona|Adem Bona]] '25 (92% similar)
+- [[richaun-holmes|Richaun Holmes]] '25 (92% similar)
+- [[jeremy-evans|Jeremy Evans]] '12 (91% similar)
+
+**Career shape:** Charted 6 seasons (2018-19–2023-24). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

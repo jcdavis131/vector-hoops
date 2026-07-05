@@ -43,6 +43,33 @@ Closest career shapes in the era-normalized vector space:
 - [[moses-brown|Moses Brown]] — cosine 0.94
 - [[jordan-hill|Jordan Hill]] — cosine 0.94
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 14.7 pts · 15.5 reb · 1.0 ast · 3.2 blk per 100 (2017-18).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+2.5σ vs era)
+- Elite rim protection (+2.4σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.3σ)
+- Three-point volume well below era (−1.5σ)
+
+**Comparables:**
+
+- [[derrick-favors|Derrick Favors]] '21 (97% similar)
+- [[clint-capela|Clint Capela]] '21 (96% similar)
+- [[nazr-mohammed|Nazr Mohammed]] '15 (95% similar)
+- [[hassan-whiteside|Hassan Whiteside]] '22 (94% similar)
+- [[moses-brown|Moses Brown]] '23 (94% similar)
+- [[jordan-hill|Jordan Hill]] '13 (94% similar)
+
+**Career shape:** Charted 10 seasons (2004-05–2017-18). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Rim Protection + Offensive Glass identity.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

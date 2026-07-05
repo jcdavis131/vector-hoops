@@ -40,6 +40,32 @@ Closest career shapes in the era-normalized vector space:
 - [[yogi-ferrell|Yogi Ferrell]] — cosine 0.88
 - [[sedale-threatt|Sedale Threatt]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 10.3 pts · 4.0 reb · 2.2 ast · 2.7 stl per 100 (2002-03).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.8σ)
+- Scoring load well below era (−1.4σ)
+
+**Comparables:**
+
+- [[john-salmons|John Salmons]] '15 (96% similar)
+- [[tyler-johnson|Tyler Johnson]] '21 (92% similar)
+- [[donald-whiteside|Donald Whiteside]] '97 (92% similar)
+- [[kim-english|Kim English]] '13 (89% similar)
+- [[yogi-ferrell|Yogi Ferrell]] '19 (88% similar)
+- [[sedale-threatt|Sedale Threatt]] '97 (88% similar)
+
+**Career shape:** Charted 7 seasons (2002-03–2008-09). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

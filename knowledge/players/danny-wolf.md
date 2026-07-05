@@ -34,6 +34,31 @@ Closest career shapes in the era-normalized vector space:
 - [[yi-jianlian|Yi Jianlian]] — cosine 0.69
 - [[mirsad-turkcan|Mirsad Turkcan]] — cosine 0.68
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 21.0 pts · 11.7 reb · 5.2 ast · 1.3 blk per 100 (2025-26).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+1.3σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.1σ)
+
+**Comparables:**
+
+- [[aleksej-pokusevski|Aleksej Pokusevski]] '21 (77% similar)
+- [[byron-mullens|Byron Mullens]] '14 (74% similar)
+- [[mfiondu-kabengele|Mfiondu Kabengele]] '21 (71% similar)
+- [[lionel-simmons|Lionel Simmons]] '97 (69% similar)
+- [[yi-jianlian|Yi Jianlian]] '12 (69% similar)
+- [[mirsad-turkcan|Mirsad Turkcan]] '00 (68% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

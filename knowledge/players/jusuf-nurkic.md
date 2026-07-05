@@ -44,6 +44,34 @@ Closest career shapes in the era-normalized vector space:
 - [[michael-sweetney|Michael Sweetney]] — cosine 0.86
 - [[willy-hernangomez|Willy Hernangomez]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 23.6 pts · 15.7 reb · 3.6 ast · 3.9 blk per 100 (2015-16).
+
+**Strengths:**
+
+- Elite rim protection (+2.9σ vs era)
+- Relentless on the offensive glass (+2.1σ vs era)
+- Draws contact, gets to the line often (+1.9σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.2σ)
+- Three-point accuracy well below era (−1.9σ)
+
+**Comparables:**
+
+- [[andre-drummond|Andre Drummond]] '24 (90% similar)
+- [[alperen-sengun|Alperen Sengun]] '25 (89% similar)
+- [[bam-adebayo|Bam Adebayo]] '22 (88% similar)
+- [[dwight-howard|Dwight Howard]] '10 (87% similar)
+- [[michael-sweetney|Michael Sweetney]] '07 (86% similar)
+- [[willy-hernangomez|Willy Hernangomez]] '23 (84% similar)
+
+**Career shape:** Charted 11 seasons (2014-15–2025-26). Entered as a Rim Protection + Offensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

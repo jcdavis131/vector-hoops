@@ -37,6 +37,34 @@ Closest career shapes in the era-normalized vector space:
 - [[jj-hickson|JJ Hickson]] — cosine 0.92
 - [[derrick-favors|Derrick Favors]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 32.9 pts · 17.8 reb · 3.3 ast · 1.4 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+2.5σ vs era)
+- Efficient finisher inside the arc (+2.3σ vs era)
+- Relentless on the offensive glass (+2.3σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.9σ)
+- Three-point volume well below era (−2.0σ)
+
+**Comparables:**
+
+- [[ivica-zubac|Ivica Zubac]] '20 (96% similar)
+- [[jarrett-allen|Jarrett Allen]] '25 (95% similar)
+- [[david-lee|David Lee]] '17 (94% similar)
+- [[ante-zizic|Ante Zizic]] '18 (94% similar)
+- [[jj-hickson|JJ Hickson]] '16 (92% similar)
+- [[derrick-favors|Derrick Favors]] '21 (92% similar)
+
+**Career shape:** Charted 4 seasons (2022-23–2025-26). Entered as a Rim Protection + Offensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

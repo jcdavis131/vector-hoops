@@ -35,6 +35,31 @@ Closest career shapes in the era-normalized vector space:
 - [[pete-chilcutt|Pete Chilcutt]] — cosine 0.82
 - [[jamir-watkins|Jamir Watkins]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** PF · Three-Point Accuracy (Low Turnovers). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 16.2 pts · 10.3 reb · 1.8 ast · 1.7 blk per 100 (2023-24).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Table-setting role well below era (−1.2σ)
+
+**Comparables:**
+
+- [[linton-johnson|Linton Johnson]] '04 (87% similar)
+- [[jack-white|Jack White]] '23 (84% similar)
+- [[justin-hamilton|Justin Hamilton]] '15 (83% similar)
+- [[torrey-craig|Torrey Craig]] '20 (83% similar)
+- [[pete-chilcutt|Pete Chilcutt]] '00 (82% similar)
+- [[jamir-watkins|Jamir Watkins]] '26 (81% similar)
+
+**Career shape:** Charted 2 seasons (2023-24–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

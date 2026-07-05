@@ -38,6 +38,34 @@ Closest career shapes in the era-normalized vector space:
 - [[steven-hunter|Steven Hunter]] — cosine 0.90
 - [[deyonta-davis|Deyonta Davis]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass + Defensive Glass. Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 15.1 pts · 11.4 reb · 1.3 ast · 3.2 blk per 100 (2017-18).
+
+**Strengths:**
+
+- Elite rim protection (+2.4σ vs era)
+- Knockdown three-point shooter (+1.5σ vs era)
+- Rarely turns the ball over (−1.4σ vs era)
+
+**Areas of concern:**
+
+- Table-setting role well below era (−1.1σ)
+- Three-point volume well below era (−1.1σ)
+
+**Comparables:**
+
+- [[robert-swift|Robert Swift]] '05 (91% similar)
+- [[zeke-nnaji|Zeke Nnaji]] '24 (91% similar)
+- [[hasheem-thabeet|Hasheem Thabeet]] '12 (90% similar)
+- [[brian-skinner|Brian Skinner]] '08 (90% similar)
+- [[steven-hunter|Steven Hunter]] '04 (90% similar)
+- [[deyonta-davis|Deyonta Davis]] '17 (89% similar)
+
+**Career shape:** Charted 5 seasons (2014-15–2020-21). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

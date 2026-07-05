@@ -34,6 +34,31 @@ Closest career shapes in the era-normalized vector space:
 - [[cole-aldrich|Cole Aldrich]] — cosine 0.78
 - [[greg-anderson|Greg Anderson]] — cosine 0.78
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass + Defensive Glass. Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 13.8 pts · 10.6 reb · 2.5 ast · 2.0 stl per 100 (2010-11).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.4σ)
+
+**Comparables:**
+
+- [[jonathan-mogbo|Jonathan Mogbo]] '26 (86% similar)
+- [[pape-sow|Pape Sow]] '05 (81% similar)
+- [[wendell-moore-jr|Wendell Moore Jr.]] '24 (79% similar)
+- [[evan-eschmeyer|Evan Eschmeyer]] '03 (79% similar)
+- [[cole-aldrich|Cole Aldrich]] '16 (78% similar)
+- [[greg-anderson|Greg Anderson]] '98 (78% similar)
+
+**Career shape:** Charted 1 season (2010-11). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

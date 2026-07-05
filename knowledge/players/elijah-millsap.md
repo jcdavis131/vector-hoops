@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[eddie-basden|Eddie Basden]] — cosine 0.75
 - [[elijah-harkless|Elijah Harkless]] — cosine 0.74
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 10.3 pts · 10.0 reb · 5.4 ast · 2.0 stl per 100 (2015-16).
+
+**Strengths:**
+
+- Strong net on-court impact (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.4σ)
+- Scoring load well below era (−1.5σ)
+
+**Comparables:**
+
+- [[isaac-bonga|Isaac Bonga]] '19 (81% similar)
+- [[ron-baker|Ron Baker]] '18 (79% similar)
+- [[stanley-johnson|Stanley Johnson]] '20 (76% similar)
+- [[robert-archibald|Robert Archibald]] '04 (76% similar)
+- [[eddie-basden|Eddie Basden]] '06 (75% similar)
+- [[elijah-harkless|Elijah Harkless]] '26 (74% similar)
+
+**Career shape:** Charted 2 seasons (2014-15–2015-16). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

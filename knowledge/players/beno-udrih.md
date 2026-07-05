@@ -46,6 +46,33 @@ Closest career shapes in the era-normalized vector space:
 - [[howard-eisley|Howard Eisley]] — cosine 0.92
 - [[darren-collison|Darren Collison]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 20.2 pts · 5.0 reb · 11.7 ast · 1.2 stl per 100 (2016-17).
+
+**Strengths:**
+
+- High-volume table-setter (+2.7σ vs era)
+- Reliable touch from the free-throw line (+1.6σ vs era)
+- Strong net on-court impact (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Rim-protection impact well below era (−1.2σ)
+
+**Comparables:**
+
+- [[carlos-arroyo|Carlos Arroyo]] '03 (96% similar)
+- [[jameer-nelson|Jameer Nelson]] '09 (93% similar)
+- [[luke-ridnour|Luke Ridnour]] '06 (93% similar)
+- [[andrew-nembhard|Andrew Nembhard]] '26 (93% similar)
+- [[howard-eisley|Howard Eisley]] '03 (92% similar)
+- [[darren-collison|Darren Collison]] '10 (91% similar)
+
+**Career shape:** Charted 13 seasons (2004-05–2016-17). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Playmaking + Steals identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -41,6 +41,32 @@ Closest career shapes in the era-normalized vector space:
 - [[javonte-green|Javonte Green]] — cosine 0.83
 - [[matisse-thybulle|Matisse Thybulle]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 22.1 pts · 8.8 reb · 2.6 ast · 3.7 stl per 100 (2024-25).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+3.3σ vs era)
+- Draws contact, gets to the line often (+1.2σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[jaylen-clark|Jaylen Clark]] '25 (86% similar)
+- [[kevon-harris|Kevon Harris]] '23 (85% similar)
+- [[jaden-springer|Jaden Springer]] '24 (84% similar)
+- [[jake-laravia|Jake LaRavia]] '23 (83% similar)
+- [[javonte-green|Javonte Green]] '26 (83% similar)
+- [[matisse-thybulle|Matisse Thybulle]] '21 (82% similar)
+
+**Career shape:** Charted 8 seasons (2018-19–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

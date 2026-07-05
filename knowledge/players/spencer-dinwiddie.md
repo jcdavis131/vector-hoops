@@ -42,6 +42,33 @@ Closest career shapes in the era-normalized vector space:
 - [[chauncey-billups|Chauncey Billups]] — cosine 0.86
 - [[dennis-schroder|Dennis Schröder]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 31.2 pts · 5.3 reb · 10.2 ast · 0.9 stl per 100 (2019-20).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+2.7σ vs era)
+- High-volume table-setter (+2.2σ vs era)
+- Featured, high-usage scoring role (+1.7σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.5σ)
+
+**Comparables:**
+
+- [[stephon-marbury|Stephon Marbury]] '01 (90% similar)
+- [[d-j-augustin|D.J. Augustin]] '12 (89% similar)
+- [[jerryd-bayless|Jerryd Bayless]] '19 (89% similar)
+- [[deron-williams|Deron Williams]] '12 (87% similar)
+- [[chauncey-billups|Chauncey Billups]] '06 (86% similar)
+- [[dennis-schroder|Dennis Schröder]] '16 (86% similar)
+
+**Career shape:** Charted 9 seasons (2014-15–2024-25). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

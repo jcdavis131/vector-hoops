@@ -38,6 +38,33 @@ Closest career shapes in the era-normalized vector space:
 - [[nolan-traore|Nolan Traore]] — cosine 0.91
 - [[jonny-flynn|Jonny Flynn]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 20.6 pts · 5.5 reb · 8.8 ast · 1.5 stl per 100 (2015-16).
+
+**Strengths:**
+
+- High-volume table-setter (+1.7σ vs era)
+- Heavy shot volume, focal scoring option (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.4σ)
+- Finishing efficiency well below era (−1.2σ)
+
+**Comparables:**
+
+- [[scoot-henderson|Scoot Henderson]] '24 (96% similar)
+- [[jaden-ivey|Jaden Ivey]] '23 (93% similar)
+- [[cole-anthony|Cole Anthony]] '26 (92% similar)
+- [[kevin-porter-jr|Kevin Porter Jr.]] '21 (91% similar)
+- [[nolan-traore|Nolan Traore]] '26 (91% similar)
+- [[jonny-flynn|Jonny Flynn]] '11 (91% similar)
+
+**Career shape:** Charted 5 seasons (2015-16–2019-20). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -40,6 +40,33 @@ Closest career shapes in the era-normalized vector space:
 - [[dalton-knecht|Dalton Knecht]] — cosine 0.75
 - [[jamison-battle|Jamison Battle]] — cosine 0.75
 
+## Scouting report
+
+**Play style:** PF · Three-Point Accuracy (Low Turnovers). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 19.3 pts · 5.6 reb · 1.4 ast · 1.0 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.6σ vs era)
+- Knockdown three-point shooter (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Table-setting role well below era (−1.4σ)
+- Ball-hawking activity well below era (−1.0σ)
+
+**Comparables:**
+
+- [[sam-mitchell|Sam Mitchell]] '00 (82% similar)
+- [[harrison-barnes|Harrison Barnes]] '16 (82% similar)
+- [[tayshaun-prince|Tayshaun Prince]] '16 (78% similar)
+- [[joey-graham|Joey Graham]] '08 (76% similar)
+- [[dalton-knecht|Dalton Knecht]] '25 (75% similar)
+- [[jamison-battle|Jamison Battle]] '25 (75% similar)
+
+**Career shape:** Charted 7 seasons (2019-20–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -36,6 +36,34 @@ Closest career shapes in the era-normalized vector space:
 - [[kendrick-nunn|Kendrick Nunn]] — cosine 0.85
 - [[joe-johnson|Joe Johnson]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** PG · Three-Point Volume + Three-Point Accuracy. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 21.5 pts · 3.5 reb · 5.5 ast · 1.5 stl per 100 (1997-98).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+2.3σ vs era)
+- Heavy shot volume, focal scoring option (+2.3σ vs era)
+- Rarely turns the ball over (−1.3σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.5σ)
+- Offensive-glass activity well below era (−1.3σ)
+
+**Comparables:**
+
+- [[jaylen-nowell|Jaylen Nowell]] '22 (90% similar)
+- [[trey-burke|Trey Burke]] '18 (89% similar)
+- [[ron-mercer|Ron Mercer]] '05 (86% similar)
+- [[willie-green|Willie Green]] '04 (85% similar)
+- [[kendrick-nunn|Kendrick Nunn]] '20 (85% similar)
+- [[joe-johnson|Joe Johnson]] '07 (85% similar)
+
+**Career shape:** Charted 3 seasons (1996-97–2000-01). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

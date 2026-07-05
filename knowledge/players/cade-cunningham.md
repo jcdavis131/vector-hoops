@@ -37,6 +37,33 @@ Closest career shapes in the era-normalized vector space:
 - [[russell-westbrook|Russell Westbrook]] — cosine 0.93
 - [[tyreke-evans|Tyreke Evans]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 33.5 pts · 7.7 reb · 13.9 ast · 2.0 stl per 100 (2025-26).
+
+**Strengths:**
+
+- High-volume table-setter (+3.5σ vs era)
+- Heavy shot volume, focal scoring option (+2.0σ vs era)
+- Featured, high-usage scoring role (+1.9σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.6σ)
+
+**Comparables:**
+
+- [[ja-morant|Ja Morant]] '23 (94% similar)
+- [[trae-young|Trae Young]] '20 (94% similar)
+- [[cole-anthony|Cole Anthony]] '26 (93% similar)
+- [[john-wall|John Wall]] '17 (93% similar)
+- [[russell-westbrook|Russell Westbrook]] '17 (93% similar)
+- [[tyreke-evans|Tyreke Evans]] '16 (92% similar)
+
+**Career shape:** Charted 4 seasons (2021-22–2025-26). Consistent Scoring Volume + Shot Volume profile across his career.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

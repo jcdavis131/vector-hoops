@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[will-bynum|Will Bynum]] — cosine 0.88
 - [[kay-felder|Kay Felder]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 20.0 pts · 4.4 reb · 8.6 ast · 1.6 stl per 100 (2018-19).
+
+**Strengths:**
+
+- High-volume table-setter (+1.6σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.2σ)
+- Turnover rate well above era (+1.2σ)
+
+**Comparables:**
+
+- [[brandon-williams|Brandon Williams]] '22 (90% similar)
+- [[emmanuel-mudiay|Emmanuel Mudiay]] '16 (89% similar)
+- [[ramon-sessions|Ramon Sessions]] '08 (88% similar)
+- [[kevin-porter-jr|Kevin Porter Jr.]] '21 (88% similar)
+- [[will-bynum|Will Bynum]] '09 (88% similar)
+- [[kay-felder|Kay Felder]] '17 (87% similar)
+
+**Career shape:** Charted 2 seasons (2017-18–2018-19). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

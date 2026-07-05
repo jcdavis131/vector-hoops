@@ -49,6 +49,33 @@ Closest career shapes in the era-normalized vector space:
 - [[ja-morant|Ja Morant]] — cosine 0.91
 - [[kobe-bryant|Kobe Bryant]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** SG · Scoring Volume + Shot Volume. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 40.4 pts · 6.7 reb · 10.0 ast · 2.9 stl per 100 (2008-09).
+
+**Strengths:**
+
+- Featured, high-usage scoring role (+3.5σ vs era)
+- Draws contact, gets to the line often (+3.3σ vs era)
+- Heavy shot volume, focal scoring option (+3.1σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.0σ)
+
+**Comparables:**
+
+- [[shai-gilgeous-alexander|Shai Gilgeous-Alexander]] '25 (95% similar)
+- [[lebron-james|LeBron James]] '10 (93% similar)
+- [[de-aaron-fox|De'Aaron Fox]] '21 (93% similar)
+- [[allen-iverson|Allen Iverson]] '02 (92% similar)
+- [[ja-morant|Ja Morant]] '23 (91% similar)
+- [[kobe-bryant|Kobe Bryant]] '06 (91% similar)
+
+**Career shape:** Charted 16 seasons (2003-04–2018-19). Consistent Scoring Volume + Shot Volume profile across his career.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -36,6 +36,34 @@ Closest career shapes in the era-normalized vector space:
 - [[wayne-ellington|Wayne Ellington]] — cosine 0.91
 - [[darius-miller|Darius Miller]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 12.9 pts · 3.7 reb · 1.6 ast · 1.3 stl per 100 (2018-19).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+1.7σ vs era)
+- Rarely turns the ball over (−1.5σ vs era)
+- High-volume three-point shooter (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.4σ)
+- Finishing efficiency well below era (−1.4σ)
+
+**Comparables:**
+
+- [[wesley-matthews|Wesley Matthews]] '20 (95% similar)
+- [[reggie-bullock-jr|Reggie Bullock Jr.]] '24 (93% similar)
+- [[langston-galloway|Langston Galloway]] '18 (92% similar)
+- [[kentavious-caldwell-pope|Kentavious Caldwell-Pope]] '24 (91% similar)
+- [[wayne-ellington|Wayne Ellington]] '17 (91% similar)
+- [[darius-miller|Darius Miller]] '21 (91% similar)
+
+**Career shape:** Charted 3 seasons (2016-17–2018-19). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

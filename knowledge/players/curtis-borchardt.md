@@ -35,6 +35,33 @@ Closest career shapes in the era-normalized vector space:
 - [[sean-rooks|Sean Rooks]] — cosine 0.87
 - [[jordan-mickey|Jordan Mickey]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 12.7 pts · 14.1 reb · 3.1 ast · 2.0 blk per 100 (2004-05).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+1.6σ vs era)
+- Strong presence on the defensive glass (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.5σ)
+- Three-point accuracy well below era (−1.3σ)
+
+**Comparables:**
+
+- [[amari-williams|Amari Williams]] '26 (90% similar)
+- [[brett-szabo|Brett Szabo]] '97 (90% similar)
+- [[dragan-tarlac|Dragan Tarlac]] '01 (88% similar)
+- [[alton-lister|Alton Lister]] '97 (87% similar)
+- [[sean-rooks|Sean Rooks]] '98 (87% similar)
+- [[jordan-mickey|Jordan Mickey]] '17 (87% similar)
+
+**Career shape:** Charted 2 seasons (2003-04–2004-05). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -47,6 +47,32 @@ Closest career shapes in the era-normalized vector space:
 - [[trevor-ariza|Trevor Ariza]] — cosine 0.86
 - [[matisse-thybulle|Matisse Thybulle]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 9.5 pts · 9.6 reb · 2.6 ast · 2.5 stl per 100 (2019-20).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.8σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−3.3σ)
+- Scoring load well below era (−1.6σ)
+
+**Comparables:**
+
+- [[derrick-mckey|Derrick McKey]] '02 (91% similar)
+- [[john-konchar|John Konchar]] '20 (89% similar)
+- [[adrian-griffin|Adrian Griffin]] '04 (89% similar)
+- [[cason-wallace|Cason Wallace]] '26 (88% similar)
+- [[trevor-ariza|Trevor Ariza]] '22 (86% similar)
+- [[matisse-thybulle|Matisse Thybulle]] '21 (85% similar)
+
+**Career shape:** Charted 14 seasons (2006-07–2019-20). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

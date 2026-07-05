@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[andre-barrett|Andre Barrett]] — cosine 0.89
 - [[pat-spencer|Pat Spencer]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 16.7 pts · 4.2 reb · 8.5 ast · 1.7 stl per 100 (2008-09).
+
+**Strengths:**
+
+- High-volume table-setter (+1.7σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.5σ)
+- Finishing efficiency well below era (−1.1σ)
+
+**Comparables:**
+
+- [[tyler-ulis|Tyler Ulis]] '18 (94% similar)
+- [[jamal-shead|Jamal Shead]] '26 (91% similar)
+- [[sebastian-telfair|Sebastian Telfair]] '10 (89% similar)
+- [[kenny-satterfield|Kenny Satterfield]] '02 (89% similar)
+- [[andre-barrett|Andre Barrett]] '06 (89% similar)
+- [[pat-spencer|Pat Spencer]] '25 (88% similar)
+
+**Career shape:** Charted 1 season (2008-09). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

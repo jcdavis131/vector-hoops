@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[marcus-banks|Marcus Banks]] — cosine 0.85
 - [[dwight-buycks|Dwight Buycks]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 20.7 pts · 3.5 reb · 8.7 ast · 3.4 stl per 100 (2010-11).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+3.0σ vs era)
+- Reliable touch from the free-throw line (+1.6σ vs era)
+- High-volume table-setter (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.2σ)
+- Defensive rebounding well below era (−1.5σ)
+
+**Comparables:**
+
+- [[tremont-waters|Tremont Waters]] '21 (90% similar)
+- [[elliot-perry|Elliot Perry]] '99 (88% similar)
+- [[robert-pack|Robert Pack]] '97 (86% similar)
+- [[anfernee-hardaway|Anfernee Hardaway]] '08 (85% similar)
+- [[marcus-banks|Marcus Banks]] '09 (85% similar)
+- [[dwight-buycks|Dwight Buycks]] '18 (85% similar)
+
+**Career shape:** Charted 1 season (2010-11). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -34,6 +34,31 @@ Closest career shapes in the era-normalized vector space:
 - [[sergei-monia|Sergei Monia]] — cosine 0.72
 - [[taylor-hendricks|Taylor Hendricks]] — cosine 0.72
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 16.9 pts · 8.8 reb · 2.2 ast · 2.0 blk per 100 (2008-09).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.2σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.7σ)
+
+**Comparables:**
+
+- [[omari-spellman|Omari Spellman]] '19 (83% similar)
+- [[justin-hamilton|Justin Hamilton]] '15 (80% similar)
+- [[justin-anderson|Justin Anderson]] '18 (75% similar)
+- [[noah-clowney|Noah Clowney]] '25 (74% similar)
+- [[sergei-monia|Sergei Monia]] '06 (72% similar)
+- [[taylor-hendricks|Taylor Hendricks]] '24 (72% similar)
+
+**Career shape:** Charted 1 season (2008-09). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

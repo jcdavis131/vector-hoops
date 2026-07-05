@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[vernon-macklin|Vernon Macklin]] — cosine 0.88
 - [[buck-williams|Buck Williams]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 19.9 pts · 12.6 reb · 1.6 ast · 1.0 stl per 100 (2018-19).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+2.5σ vs era)
+- Efficient finisher inside the arc (+1.9σ vs era)
+- Strong net on-court impact (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.8σ)
+- Free-throw touch well below era (−1.8σ)
+
+**Comparables:**
+
+- [[dexter-pittman|Dexter Pittman]] '12 (93% similar)
+- [[steven-adams|Steven Adams]] '23 (92% similar)
+- [[anzejs-pasecniks|Anžejs Pasečņiks]] '20 (92% similar)
+- [[jordan-williams|Jordan Williams]] '12 (89% similar)
+- [[vernon-macklin|Vernon Macklin]] '12 (88% similar)
+- [[buck-williams|Buck Williams]] '97 (88% similar)
+
+**Career shape:** Charted 1 season (2018-19). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

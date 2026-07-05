@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[antonius-cleveland|Antonius Cleveland]] — cosine 0.63
 - [[kevin-duckworth|Kevin Duckworth]] — cosine 0.62
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 18.7 pts · 10.5 reb · 1.4 ast · 2.3 stl per 100 (2005-06).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+2.5σ vs era)
+- Active hands, disrupts passing lanes (+1.2σ vs era)
+- Strong presence on the defensive glass (+1.0σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.2σ)
+
+**Comparables:**
+
+- [[corey-beck|Corey Beck]] '99 (67% similar)
+- [[qyntel-woods|Qyntel Woods]] '03 (65% similar)
+- [[omri-casspi|Omri Casspi]] '18 (65% similar)
+- [[jarace-walker|Jarace Walker]] '24 (63% similar)
+- [[antonius-cleveland|Antonius Cleveland]] '18 (63% similar)
+- [[kevin-duckworth|Kevin Duckworth]] '97 (62% similar)
+
+**Career shape:** Charted 1 season (2005-06). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

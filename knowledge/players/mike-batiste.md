@@ -34,6 +34,31 @@ Closest career shapes in the era-normalized vector space:
 - [[laphonso-ellis|LaPhonso Ellis]] — cosine 0.71
 - [[markieff-morris|Markieff Morris]] — cosine 0.71
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 19.5 pts · 10.4 reb · 2.1 ast · 1.7 stl per 100 (2002-03).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[oleksiy-pecherov|Oleksiy Pecherov]] '09 (76% similar)
+- [[trey-thompkins|Trey Thompkins]] '12 (75% similar)
+- [[predrag-drobnjak|Predrag Drobnjak]] '04 (73% similar)
+- [[jordan-nwora|Jordan Nwora]] '21 (73% similar)
+- [[laphonso-ellis|LaPhonso Ellis]] '97 (71% similar)
+- [[markieff-morris|Markieff Morris]] '24 (71% similar)
+
+**Career shape:** Charted 1 season (2002-03). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

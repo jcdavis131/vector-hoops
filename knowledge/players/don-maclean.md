@@ -35,6 +35,34 @@ Closest career shapes in the era-normalized vector space:
 - [[kyle-kuzma|Kyle Kuzma]] — cosine 0.83
 - [[cam-thomas|Cam Thomas]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** PF · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 25.6 pts · 9.0 reb · 2.2 ast · 0.7 stl per 100 (1998-99).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+2.2σ vs era)
+- Heavy shot volume, focal scoring option (+1.4σ vs era)
+- Featured, high-usage scoring role (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.4σ)
+- On-court net impact well below era (−1.0σ)
+
+**Comparables:**
+
+- [[rj-barrett|RJ Barrett]] '25 (90% similar)
+- [[gg-jackson|GG Jackson]] '24 (87% similar)
+- [[keldon-johnson|Keldon Johnson]] '23 (87% similar)
+- [[dominique-wilkins|Dominique Wilkins]] '97 (84% similar)
+- [[kyle-kuzma|Kyle Kuzma]] '24 (83% similar)
+- [[cam-thomas|Cam Thomas]] '25 (81% similar)
+
+**Career shape:** Charted 2 seasons (1996-97–1998-99). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

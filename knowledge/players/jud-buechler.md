@@ -39,6 +39,33 @@ Closest career shapes in the era-normalized vector space:
 - [[dylan-windler|Dylan Windler]] — cosine 0.89
 - [[yuta-watanabe|Yuta Watanabe]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 9.5 pts · 6.7 reb · 2.4 ast · 1.8 stl per 100 (1999-00).
+
+**Strengths:**
+
+- Rarely turns the ball over (−2.1σ vs era)
+- High-volume three-point shooter (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−3.9σ)
+- Rim pressure (free-throw generation) well below era (−1.9σ)
+
+**Comparables:**
+
+- [[bruce-bowen|Bruce Bowen]] '99 (93% similar)
+- [[rodney-mcgruder|Rodney McGruder]] '18 (91% similar)
+- [[haywood-highsmith|Haywood Highsmith]] '22 (90% similar)
+- [[dean-wade|Dean Wade]] '25 (89% similar)
+- [[dylan-windler|Dylan Windler]] '24 (89% similar)
+- [[yuta-watanabe|Yuta Watanabe]] '20 (88% similar)
+
+**Career shape:** Charted 6 seasons (1996-97–2001-02). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

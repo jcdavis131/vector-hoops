@@ -36,6 +36,33 @@ Closest career shapes in the era-normalized vector space:
 - [[cameron-bairstow|Cameron Bairstow]] — cosine 0.75
 - [[ryan-stack|Ryan Stack]] — cosine 0.73
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 24.6 pts · 10.8 reb · 0.8 ast · 2.0 blk per 100 (2010-11).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+2.0σ vs era)
+- Draws contact, gets to the line often (+1.9σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.4σ)
+- Table-setting role well below era (−1.1σ)
+
+**Comparables:**
+
+- [[earl-barron|Earl Barron]] '07 (78% similar)
+- [[devin-green|Devin Green]] '06 (76% similar)
+- [[jason-collier|Jason Collier]] '05 (76% similar)
+- [[george-zidek|George Zidek]] '97 (76% similar)
+- [[cameron-bairstow|Cameron Bairstow]] '15 (75% similar)
+- [[ryan-stack|Ryan Stack]] '99 (73% similar)
+
+**Career shape:** Charted 3 seasons (2010-11–2012-13). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

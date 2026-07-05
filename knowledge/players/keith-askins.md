@@ -36,6 +36,33 @@ Closest career shapes in the era-normalized vector space:
 - [[ime-udoka|Ime Udoka]] — cosine 0.89
 - [[miye-oni|Miye Oni]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 7.0 pts · 5.8 reb · 1.3 ast · 2.2 stl per 100 (1998-99).
+
+**Strengths:**
+
+- Strong net on-court impact (+1.8σ vs era)
+- Rarely turns the ball over (−1.4σ vs era)
+
+**Areas of concern:**
+
+- Scoring load well below era (−2.1σ)
+- Finishing efficiency well below era (−1.8σ)
+
+**Comparables:**
+
+- [[dean-wade|Dean Wade]] '25 (93% similar)
+- [[dorian-finney-smith|Dorian Finney-Smith]] '26 (93% similar)
+- [[bruce-bowen|Bruce Bowen]] '99 (91% similar)
+- [[royce-o-neale|Royce O'Neale]] '21 (89% similar)
+- [[ime-udoka|Ime Udoka]] '11 (89% similar)
+- [[miye-oni|Miye Oni]] '21 (88% similar)
+
+**Career shape:** Charted 3 seasons (1996-97–1998-99). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

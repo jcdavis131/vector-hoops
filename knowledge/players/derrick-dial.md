@@ -35,6 +35,31 @@ Closest career shapes in the era-normalized vector space:
 - [[jules-bernard|Jules Bernard]] — cosine 0.53
 - [[andrew-gaze|Andrew Gaze]] — cosine 0.52
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 17.7 pts · 9.7 reb · 6.1 ast · 1.7 stl per 100 (2001-02).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.8σ)
+
+**Comparables:**
+
+- [[cassius-stanley|Cassius Stanley]] '21 (55% similar)
+- [[jack-haley|Jack Haley]] '97 (54% similar)
+- [[lazaro-borrell|Lazaro Borrell]] '00 (54% similar)
+- [[dylan-harper|Dylan Harper]] '26 (54% similar)
+- [[jules-bernard|Jules Bernard]] '24 (53% similar)
+- [[andrew-gaze|Andrew Gaze]] '99 (52% similar)
+
+**Career shape:** Charted 2 seasons (2000-01–2001-02). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

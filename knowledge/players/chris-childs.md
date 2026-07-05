@@ -39,6 +39,32 @@ Closest career shapes in the era-normalized vector space:
 - [[howard-eisley|Howard Eisley]] — cosine 0.91
 - [[joe-ingles|Joe Ingles]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 9.6 pts · 5.2 reb · 11.9 ast · 1.9 stl per 100 (2001-02).
+
+**Strengths:**
+
+- High-volume table-setter (+2.6σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.0σ)
+- Scoring load well below era (−1.6σ)
+
+**Comparables:**
+
+- [[matthew-dellavedova|Matthew Dellavedova]] '23 (93% similar)
+- [[chris-duhon|Chris Duhon]] '13 (93% similar)
+- [[steve-blake|Steve Blake]] '16 (92% similar)
+- [[mark-jackson|Mark Jackson]] '03 (92% similar)
+- [[howard-eisley|Howard Eisley]] '03 (91% similar)
+- [[joe-ingles|Joe Ingles]] '25 (91% similar)
+
+**Career shape:** Charted 6 seasons (1996-97–2001-02). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

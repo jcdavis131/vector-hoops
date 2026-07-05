@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[will-riley|Will Riley]] — cosine 0.80
 - [[dahntay-jones|Dahntay Jones]] — cosine 0.78
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 20.1 pts · 3.2 reb · 3.5 ast · 1.1 stl per 100 (2014-15).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.4σ)
+- On-court net impact well below era (−1.4σ)
+
+**Comparables:**
+
+- [[allonzo-trier|Allonzo Trier]] '20 (83% similar)
+- [[kirk-snyder|Kirk Snyder]] '05 (83% similar)
+- [[chasson-randle|Chasson Randle]] '21 (82% similar)
+- [[johnny-newman|Johnny Newman]] '98 (81% similar)
+- [[will-riley|Will Riley]] '26 (80% similar)
+- [[dahntay-jones|Dahntay Jones]] '15 (78% similar)
+
+**Career shape:** Charted 1 season (2014-15). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

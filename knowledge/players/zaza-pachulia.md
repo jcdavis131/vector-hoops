@@ -49,6 +49,34 @@ Closest career shapes in the era-normalized vector space:
 - [[cristiano-felicio|Cristiano Felicio]] — cosine 0.84
 - [[jalen-duren|Jalen Duren]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 15.8 pts · 15.2 reb · 4.9 ast · 2.2 stl per 100 (2016-17).
+
+**Strengths:**
+
+- Strong net on-court impact (+2.6σ vs era)
+- Relentless on the offensive glass (+1.8σ vs era)
+- Strong presence on the defensive glass (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.2σ)
+- Three-point volume well below era (−1.5σ)
+
+**Comparables:**
+
+- [[shelden-williams|Shelden Williams]] '12 (87% similar)
+- [[tyrone-hill|Tyrone Hill]] '97 (86% similar)
+- [[alize-johnson|Alize Johnson]] '22 (86% similar)
+- [[joakim-noah|Joakim Noah]] '17 (85% similar)
+- [[cristiano-felicio|Cristiano Felicio]] '21 (84% similar)
+- [[jalen-duren|Jalen Duren]] '26 (84% similar)
+
+**Career shape:** Charted 16 seasons (2003-04–2018-19). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[pj-dozier|PJ Dozier]] — cosine 0.88
 - [[chris-quinn|Chris Quinn]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 11.7 pts · 3.9 reb · 9.2 ast · 1.8 stl per 100 (1997-98).
+
+**Strengths:**
+
+- High-volume table-setter (+1.6σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.7σ)
+- Rim pressure (free-throw generation) well below era (−1.5σ)
+
+**Comparables:**
+
+- [[malachi-flynn|Malachi Flynn]] '22 (93% similar)
+- [[lee-mayberry|Lee Mayberry]] '97 (90% similar)
+- [[andre-barrett|Andre Barrett]] '06 (89% similar)
+- [[lionel-chalmers|Lionel Chalmers]] '05 (88% similar)
+- [[pj-dozier|PJ Dozier]] '22 (88% similar)
+- [[chris-quinn|Chris Quinn]] '10 (88% similar)
+
+**Career shape:** Charted 2 seasons (1996-97–1997-98). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

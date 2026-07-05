@@ -44,6 +44,32 @@ Closest career shapes in the era-normalized vector space:
 - [[kirk-hinrich|Kirk Hinrich]] — cosine 0.92
 - [[greg-anthony|Greg Anthony]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 8.5 pts · 3.3 reb · 9.9 ast · 1.7 stl per 100 (1999-00).
+
+**Strengths:**
+
+- High-volume table-setter (+2.0σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.9σ)
+- On-court net impact well below era (−2.2σ)
+
+**Comparables:**
+
+- [[jason-williams|Jason Williams]] '11 (96% similar)
+- [[cameron-payne|Cameron Payne]] '26 (94% similar)
+- [[jordan-farmar|Jordan Farmar]] '14 (93% similar)
+- [[mookie-blaylock|Mookie Blaylock]] '97 (92% similar)
+- [[kirk-hinrich|Kirk Hinrich]] '04 (92% similar)
+- [[greg-anthony|Greg Anthony]] '99 (91% similar)
+
+**Career shape:** Charted 11 seasons (1999-00–2009-10). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

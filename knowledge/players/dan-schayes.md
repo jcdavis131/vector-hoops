@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[ruben-wolkowyski|Ruben Wolkowyski]] — cosine 0.81
 - [[enrique-freeman|Enrique Freeman]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** C · Three-Point Accuracy (Low Turnovers). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 10.5 pts · 5.2 reb · 1.5 ast · 0.7 blk per 100 (1998-99).
+
+**Strengths:**
+
+- Strong net on-court impact (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.8σ)
+- Scoring load well below era (−1.5σ)
+
+**Comparables:**
+
+- [[donald-royal|Donald Royal]] '98 (86% similar)
+- [[sean-rooks|Sean Rooks]] '98 (85% similar)
+- [[rick-mahorn|Rick Mahorn]] '98 (84% similar)
+- [[mark-bradtke|Mark Bradtke]] '97 (84% similar)
+- [[ruben-wolkowyski|Ruben Wolkowyski]] '01 (81% similar)
+- [[enrique-freeman|Enrique Freeman]] '25 (81% similar)
+
+**Career shape:** Charted 3 seasons (1996-97–1998-99). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

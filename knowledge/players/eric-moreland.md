@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[jordan-bell|Jordan Bell]] — cosine 0.90
 - [[dan-gadzuric|Dan Gadzuric]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** PF · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 8.9 pts · 17.3 reb · 4.9 ast · 3.2 blk per 100 (2017-18).
+
+**Strengths:**
+
+- Elite rim protection (+2.4σ vs era)
+- Strong presence on the defensive glass (+2.0σ vs era)
+- Relentless on the offensive glass (+1.8σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−3.0σ)
+- Three-point accuracy well below era (−2.3σ)
+
+**Comparables:**
+
+- [[andris-biedrins|Andris Biedrins]] '13 (92% similar)
+- [[ben-wallace|Ben Wallace]] '03 (92% similar)
+- [[oliver-miller|Oliver Miller]] '00 (91% similar)
+- [[gustavo-ayon|Gustavo Ayon]] '14 (91% similar)
+- [[jordan-bell|Jordan Bell]] '18 (90% similar)
+- [[dan-gadzuric|Dan Gadzuric]] '05 (89% similar)
+
+**Career shape:** Charted 1 season (2017-18). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -38,6 +38,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jeff-mcinnis|Jeff McInnis]] — cosine 0.88
 - [[kevin-pangos|Kevin Pangos]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PG · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 14.4 pts · 5.3 reb · 8.3 ast · 1.0 stl per 100 (2011-12).
+
+**Strengths:**
+
+- High-volume table-setter (+1.4σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.4σ)
+- Defensive rebounding well below era (−1.0σ)
+
+**Comparables:**
+
+- [[bub-carrington|Bub Carrington]] '26 (93% similar)
+- [[dean-oliver|Dean Oliver]] '02 (89% similar)
+- [[bimbo-coles|Bimbo Coles]] '04 (89% similar)
+- [[elie-okobo|Elie Okobo]] '19 (89% similar)
+- [[jeff-mcinnis|Jeff McInnis]] '08 (88% similar)
+- [[kevin-pangos|Kevin Pangos]] '22 (88% similar)
+
+**Career shape:** Charted 5 seasons (2011-12–2015-16). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

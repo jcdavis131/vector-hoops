@@ -36,6 +36,34 @@ Closest career shapes in the era-normalized vector space:
 - [[jeff-teague|Jeff Teague]] — cosine 0.90
 - [[moochie-norris|Moochie Norris]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 19.5 pts · 4.4 reb · 9.9 ast · 3.1 stl per 100 (2000-01).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.4σ vs era)
+- High-volume table-setter (+2.0σ vs era)
+- Reliable touch from the free-throw line (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.8σ)
+- On-court net impact well below era (−1.2σ)
+
+**Comparables:**
+
+- [[speedy-claxton|Speedy Claxton]] '07 (92% similar)
+- [[jeremy-lin|Jeremy Lin]] '12 (92% similar)
+- [[robert-pack|Robert Pack]] '97 (91% similar)
+- [[ricky-rubio|Ricky Rubio]] '13 (90% similar)
+- [[jeff-teague|Jeff Teague]] '15 (90% similar)
+- [[moochie-norris|Moochie Norris]] '05 (89% similar)
+
+**Career shape:** Charted 3 seasons (1996-97–2000-01). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

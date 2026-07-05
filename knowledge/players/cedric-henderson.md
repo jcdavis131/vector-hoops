@@ -37,6 +37,32 @@ Closest career shapes in the era-normalized vector space:
 - [[cody-williams|Cody Williams]] — cosine 0.76
 - [[sonny-weems|Sonny Weems]] — cosine 0.73
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 12.5 pts · 4.8 reb · 4.2 ast · 1.5 stl per 100 (2000-01).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.0σ)
+- Rim pressure (free-throw generation) well below era (−1.0σ)
+
+**Comparables:**
+
+- [[wendell-moore-jr|Wendell Moore Jr.]] '24 (78% similar)
+- [[nique-clifford|Nique Clifford]] '26 (78% similar)
+- [[darrin-hancock|Darrin Hancock]] '97 (76% similar)
+- [[trent-forrest|Trent Forrest]] '23 (76% similar)
+- [[cody-williams|Cody Williams]] '25 (76% similar)
+- [[sonny-weems|Sonny Weems]] '16 (73% similar)
+
+**Career shape:** Charted 4 seasons (1997-98–2000-01). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

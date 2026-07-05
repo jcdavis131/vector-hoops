@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[vincent-poirier|Vincent Poirier]] — cosine 0.63
 - [[jason-smith|Jason Smith]] — cosine 0.62
 
+## Scouting report
+
+**Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 16.5 pts · 8.7 reb · 2.3 ast · 2.6 blk per 100 (2022-23).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+2.1σ vs era)
+- Elite rim protection (+2.0σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.4σ)
+
+**Comparables:**
+
+- [[bruno-caboclo|Bruno Caboclo]] '20 (79% similar)
+- [[antonis-fotsis|Antonis Fotsis]] '02 (75% similar)
+- [[jay-huff|Jay Huff]] '26 (66% similar)
+- [[kj-mcdaniels|KJ McDaniels]] '16 (65% similar)
+- [[vincent-poirier|Vincent Poirier]] '20 (63% similar)
+- [[jason-smith|Jason Smith]] '18 (62% similar)
+
+**Career shape:** Charted 1 season (2022-23). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

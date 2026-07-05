@@ -36,6 +36,33 @@ Closest career shapes in the era-normalized vector space:
 - [[matt-bullard|Matt Bullard]] — cosine 0.87
 - [[quinten-post|Quinten Post]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** PF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 23.9 pts · 10.5 reb · 2.8 ast · 1.0 stl per 100 (1996-97).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.6σ vs era)
+- Strong net on-court impact (+2.1σ vs era)
+- Strong presence on the defensive glass (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.4σ)
+
+**Comparables:**
+
+- [[sam-hauser|Sam Hauser]] '22 (91% similar)
+- [[matt-bonner|Matt Bonner]] '12 (88% similar)
+- [[channing-frye|Channing Frye]] '19 (88% similar)
+- [[sam-perkins|Sam Perkins]] '01 (87% similar)
+- [[matt-bullard|Matt Bullard]] '01 (87% similar)
+- [[quinten-post|Quinten Post]] '25 (86% similar)
+
+**Career shape:** Charted 3 seasons (1996-97–1999-00). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

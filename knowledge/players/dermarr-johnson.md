@@ -39,6 +39,32 @@ Closest career shapes in the era-normalized vector space:
 - [[quincy-douby|Quincy Douby]] — cosine 0.87
 - [[terrence-ross|Terrence Ross]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 15.2 pts · 6.4 reb · 1.9 ast · 1.8 stl per 100 (2006-07).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.0σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.9σ)
+- Rim pressure (free-throw generation) well below era (−1.1σ)
+
+**Comparables:**
+
+- [[sam-mack|Sam Mack]] '00 (90% similar)
+- [[taurean-prince|Taurean Prince]] '26 (89% similar)
+- [[george-mccloud|George McCloud]] '98 (87% similar)
+- [[tracy-murray|Tracy Murray]] '02 (87% similar)
+- [[quincy-douby|Quincy Douby]] '08 (87% similar)
+- [[terrence-ross|Terrence Ross]] '19 (87% similar)
+
+**Career shape:** Charted 6 seasons (2000-01–2006-07). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

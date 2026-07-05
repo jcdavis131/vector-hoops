@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[kessler-edwards|Kessler Edwards]] — cosine 0.85
 - [[romeo-langford|Romeo Langford]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 9.5 pts · 6.2 reb · 1.8 ast · 1.8 stl per 100 (2024-25).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+2.0σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.4σ)
+- On-court net impact well below era (−2.1σ)
+
+**Comparables:**
+
+- [[isaiah-livers|Isaiah Livers]] '24 (87% similar)
+- [[john-butler-jr|John Butler Jr.]] '23 (87% similar)
+- [[micah-peavy|Micah Peavy]] '26 (85% similar)
+- [[kz-okpala|KZ Okpala]] '21 (85% similar)
+- [[kessler-edwards|Kessler Edwards]] '25 (85% similar)
+- [[romeo-langford|Romeo Langford]] '20 (85% similar)
+
+**Career shape:** Charted 2 seasons (2024-25–2025-26). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

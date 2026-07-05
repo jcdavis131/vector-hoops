@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[ricky-ledo|Ricky Ledo]] — cosine 0.77
 - [[donnie-boyce|Donnie Boyce]] — cosine 0.77
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 17.9 pts · 6.2 reb · 2.7 ast · 1.3 stl per 100 (1996-97).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+1.5σ vs era)
+- Heavy shot volume, focal scoring option (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.6σ)
+- Free-throw touch well below era (−2.1σ)
+
+**Comparables:**
+
+- [[jalen-hood-schifino|Jalen Hood-Schifino]] '24 (86% similar)
+- [[corey-benjamin|Corey Benjamin]] '00 (81% similar)
+- [[cory-higgins|Cory Higgins]] '12 (81% similar)
+- [[josh-jackson|Josh Jackson]] '18 (77% similar)
+- [[ricky-ledo|Ricky Ledo]] '15 (77% similar)
+- [[donnie-boyce|Donnie Boyce]] '97 (77% similar)
+
+**Career shape:** Charted 1 season (1996-97). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

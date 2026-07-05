@@ -38,6 +38,32 @@ Closest career shapes in the era-normalized vector space:
 - [[hollis-thompson|Hollis Thompson]] — cosine 0.91
 - [[doron-lamb|Doron Lamb]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 9.8 pts · 4.2 reb · 1.7 ast · 0.6 stl per 100 (2005-06).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.8σ)
+- On-court net impact well below era (−1.5σ)
+
+**Comparables:**
+
+- [[brandon-rush|Brandon Rush]] '15 (92% similar)
+- [[deshawn-stevenson|DeShawn Stevenson]] '12 (92% similar)
+- [[damjan-rudez|Damjan Rudez]] '17 (92% similar)
+- [[daquan-jeffries|DaQuan Jeffries]] '24 (92% similar)
+- [[hollis-thompson|Hollis Thompson]] '17 (91% similar)
+- [[doron-lamb|Doron Lamb]] '14 (91% similar)
+
+**Career shape:** Charted 5 seasons (2005-06–2009-10). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

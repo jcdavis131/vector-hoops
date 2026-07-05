@@ -41,6 +41,32 @@ Closest career shapes in the era-normalized vector space:
 - [[rodney-hood|Rodney Hood]] — cosine 0.93
 - [[aj-green|AJ Green]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 15.8 pts · 3.2 reb · 3.2 ast · 0.6 stl per 100 (2019-20).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.3σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.5σ)
+- Defensive rebounding well below era (−1.4σ)
+
+**Comparables:**
+
+- [[wesley-matthews|Wesley Matthews]] '20 (96% similar)
+- [[raja-bell|Raja Bell]] '07 (95% similar)
+- [[daniel-gibson|Daniel Gibson]] '13 (94% similar)
+- [[jason-kapono|Jason Kapono]] '11 (93% similar)
+- [[rodney-hood|Rodney Hood]] '22 (93% similar)
+- [[aj-green|AJ Green]] '23 (93% similar)
+
+**Career shape:** Charted 8 seasons (2018-19–2025-26). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

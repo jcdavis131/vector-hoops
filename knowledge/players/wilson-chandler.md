@@ -44,6 +44,32 @@ Closest career shapes in the era-normalized vector space:
 - [[marcus-morris-sr|Marcus Morris Sr.]] — cosine 0.89
 - [[steve-novak|Steve Novak]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 13.1 pts · 9.3 reb · 2.5 ast · 1.0 stl per 100 (2019-20).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+1.0σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.2σ)
+- Rim pressure (free-throw generation) well below era (−1.1σ)
+
+**Comparables:**
+
+- [[walter-herrmann|Walter Herrmann]] '09 (94% similar)
+- [[david-benoit|David Benoit]] '98 (92% similar)
+- [[channing-frye|Channing Frye]] '19 (92% similar)
+- [[brian-cook|Brian Cook]] '09 (89% similar)
+- [[marcus-morris-sr|Marcus Morris Sr.]] '12 (89% similar)
+- [[steve-novak|Steve Novak]] '15 (89% similar)
+
+**Career shape:** Charted 11 seasons (2007-08–2019-20). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

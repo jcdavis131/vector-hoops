@@ -43,6 +43,33 @@ Closest career shapes in the era-normalized vector space:
 - [[steve-francis|Steve Francis]] — cosine 0.92
 - [[jeremiah-fears|Jeremiah Fears]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** SG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 25.2 pts · 8.5 reb · 10.9 ast · 2.1 stl per 100 (2015-16).
+
+**Strengths:**
+
+- High-volume table-setter (+2.4σ vs era)
+- Heavy shot volume, focal scoring option (+1.0σ vs era)
+- Featured, high-usage scoring role (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.1σ)
+
+**Comparables:**
+
+- [[de-aaron-fox|De'Aaron Fox]] '21 (95% similar)
+- [[john-wall|John Wall]] '17 (94% similar)
+- [[russell-westbrook|Russell Westbrook]] '17 (93% similar)
+- [[cade-cunningham|Cade Cunningham]] '26 (92% similar)
+- [[steve-francis|Steve Francis]] '05 (92% similar)
+- [[jeremiah-fears|Jeremiah Fears]] '26 (91% similar)
+
+**Career shape:** Charted 10 seasons (2009-10–2018-19). Consistent Scoring Volume + Shot Volume profile across his career.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

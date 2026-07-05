@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[kendall-marshall|Kendall Marshall]] — cosine 0.92
 - [[marcus-williams|Marcus Williams]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 8.7 pts · 5.6 reb · 10.6 ast · 2.2 stl per 100 (2002-03).
+
+**Strengths:**
+
+- High-volume table-setter (+2.4σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−3.9σ)
+- Finishing efficiency well below era (−3.0σ)
+
+**Comparables:**
+
+- [[nico-mannion|Nico Mannion]] '21 (95% similar)
+- [[peyton-siva|Peyton Siva]] '14 (94% similar)
+- [[tierre-brown|Tierre Brown]] '02 (92% similar)
+- [[junior-harrington|Junior Harrington]] '03 (92% similar)
+- [[kendall-marshall|Kendall Marshall]] '14 (92% similar)
+- [[marcus-williams|Marcus Williams]] '07 (91% similar)
+
+**Career shape:** Charted 2 seasons (2002-03–2003-04). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

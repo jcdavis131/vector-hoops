@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[pete-nance|Pete Nance]] — cosine 0.86
 - [[jeff-grayer|Jeff Grayer]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 12.1 pts · 8.0 reb · 0.9 ast · 1.4 stl per 100 (2017-18).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.7σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−4.0σ)
+- Rim pressure (free-throw generation) well below era (−1.8σ)
+
+**Comparables:**
+
+- [[alfonzo-mckinnie|Alfonzo McKinnie]] '22 (94% similar)
+- [[tyler-lydon|Tyler Lydon]] '19 (90% similar)
+- [[juwan-morgan|Juwan Morgan]] '21 (88% similar)
+- [[haywood-highsmith|Haywood Highsmith]] '22 (86% similar)
+- [[pete-nance|Pete Nance]] '26 (86% similar)
+- [[jeff-grayer|Jeff Grayer]] '97 (85% similar)
+
+**Career shape:** Charted 2 seasons (2017-18–2018-19). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -44,6 +44,34 @@ Closest career shapes in the era-normalized vector space:
 - [[jamaal-magloire|Jamaal Magloire]] — cosine 0.92
 - [[josh-boone|Josh Boone]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 7.9 pts · 14.2 reb · 1.7 ast · 1.9 blk per 100 (2012-13).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.4σ vs era)
+- Strong presence on the defensive glass (+1.2σ vs era)
+- Relentless on the offensive glass (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.5σ)
+- Shot volume well below era (−2.1σ)
+
+**Comparables:**
+
+- [[omer-asik|Omer Asik]] '18 (95% similar)
+- [[tarik-black|Tarik Black]] '18 (93% similar)
+- [[felton-spencer|Felton Spencer]] '01 (93% similar)
+- [[tristan-thompson|Tristan Thompson]] '25 (92% similar)
+- [[jamaal-magloire|Jamaal Magloire]] '08 (92% similar)
+- [[josh-boone|Josh Boone]] '10 (92% similar)
+
+**Career shape:** Charted 11 seasons (2001-02–2012-13). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[daquan-jeffries|DaQuan Jeffries]] — cosine 0.87
 - [[john-edwards|John Edwards]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 10.1 pts · 5.0 reb · 2.6 ast · 1.0 stl per 100 (2024-25).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.9σ)
+- Finishing efficiency well below era (−1.8σ)
+
+**Comparables:**
+
+- [[cj-elleby|CJ Elleby]] '22 (89% similar)
+- [[maxwell-lewis|Maxwell Lewis]] '24 (88% similar)
+- [[trey-alexander|Trey Alexander]] '25 (87% similar)
+- [[sekou-doumbouya|Sekou Doumbouya]] '20 (87% similar)
+- [[daquan-jeffries|DaQuan Jeffries]] '24 (87% similar)
+- [[john-edwards|John Edwards]] '05 (86% similar)
+
+**Career shape:** Charted 2 seasons (2024-25–2025-26). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

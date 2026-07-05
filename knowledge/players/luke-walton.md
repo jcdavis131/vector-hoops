@@ -43,6 +43,32 @@ Closest career shapes in the era-normalized vector space:
 - [[brian-shaw|Brian Shaw]] — cosine 0.82
 - [[gerald-madkins|Gerald Madkins]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 7.9 pts · 7.1 reb · 5.0 ast · 0.7 stl per 100 (2011-12).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−4.0σ)
+- Rim pressure (free-throw generation) well below era (−1.9σ)
+
+**Comparables:**
+
+- [[jerome-allen|Jerome Allen]] '97 (84% similar)
+- [[julyan-stone|Julyan Stone]] '18 (84% similar)
+- [[chris-duhon|Chris Duhon]] '13 (83% similar)
+- [[isaiah-briscoe|Isaiah Briscoe]] '19 (83% similar)
+- [[brian-shaw|Brian Shaw]] '02 (82% similar)
+- [[gerald-madkins|Gerald Madkins]] '98 (82% similar)
+
+**Career shape:** Charted 10 seasons (2003-04–2012-13). Entered as a Playmaking + Steals profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -48,6 +48,33 @@ Closest career shapes in the era-normalized vector space:
 - [[isaiah-joe|Isaiah Joe]] — cosine 0.93
 - [[luguentz-dort|Luguentz Dort]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 13.5 pts · 4.5 reb · 2.5 ast · 1.0 stl per 100 (2019-20).
+
+**Strengths:**
+
+- Strong net on-court impact (+2.2σ vs era)
+- Rarely turns the ball over (−1.4σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.1σ)
+- Scoring load well below era (−1.0σ)
+
+**Comparables:**
+
+- [[landry-shamet|Landry Shamet]] '20 (96% similar)
+- [[alex-abrines|Alex Abrines]] '19 (95% similar)
+- [[kentavious-caldwell-pope|Kentavious Caldwell-Pope]] '24 (95% similar)
+- [[langston-galloway|Langston Galloway]] '18 (95% similar)
+- [[isaiah-joe|Isaiah Joe]] '25 (93% similar)
+- [[luguentz-dort|Luguentz Dort]] '25 (93% similar)
+
+**Career shape:** Charted 15 seasons (2009-10–2023-24). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

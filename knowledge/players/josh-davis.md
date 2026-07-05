@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[quinten-post|Quinten Post]] — cosine 0.82
 - [[pero-antic|Pero Antic]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** PF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 17.8 pts · 12.0 reb · 1.8 ast · 1.2 stl per 100 (2004-05).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.7σ vs era)
+- Strong net on-court impact (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.1σ)
+
+**Comparables:**
+
+- [[scott-padgett|Scott Padgett]] '07 (87% similar)
+- [[ryan-anderson|Ryan Anderson]] '14 (87% similar)
+- [[brian-cook|Brian Cook]] '09 (83% similar)
+- [[chris-morris|Chris Morris]] '99 (82% similar)
+- [[quinten-post|Quinten Post]] '25 (82% similar)
+- [[pero-antic|Pero Antic]] '15 (81% similar)
+
+**Career shape:** Charted 1 season (2004-05). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

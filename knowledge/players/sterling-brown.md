@@ -38,6 +38,33 @@ Closest career shapes in the era-normalized vector space:
 - [[robbie-hummel|Robbie Hummel]] — cosine 0.88
 - [[reggie-bullock-jr|Reggie Bullock Jr.]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 12.2 pts · 11.4 reb · 2.6 ast · 1.1 stl per 100 (2021-22).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+1.5σ vs era)
+- Strong presence on the defensive glass (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Scoring load well below era (−1.3σ)
+- Rim pressure (free-throw generation) well below era (−1.3σ)
+
+**Comparables:**
+
+- [[troy-brown-jr|Troy Brown Jr.]] '23 (92% similar)
+- [[pat-connaughton|Pat Connaughton]] '16 (90% similar)
+- [[baylor-scheierman|Baylor Scheierman]] '26 (89% similar)
+- [[solomon-hill|Solomon Hill]] '21 (88% similar)
+- [[robbie-hummel|Robbie Hummel]] '14 (88% similar)
+- [[reggie-bullock-jr|Reggie Bullock Jr.]] '24 (87% similar)
+
+**Career shape:** Charted 5 seasons (2017-18–2021-22). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

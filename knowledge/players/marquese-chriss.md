@@ -38,6 +38,34 @@ Closest career shapes in the era-normalized vector space:
 - [[chris-anstey|Chris Anstey]] — cosine 0.85
 - [[isaiah-roby|Isaiah Roby]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** PF · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 21.4 pts · 14.3 reb · 4.5 ast · 2.4 blk per 100 (2019-20).
+
+**Strengths:**
+
+- Elite rim protection (+1.5σ vs era)
+- Relentless on the offensive glass (+1.4σ vs era)
+- Strong presence on the defensive glass (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Three-point volume well below era (−1.4σ)
+- On-court net impact well below era (−1.4σ)
+
+**Comparables:**
+
+- [[vitor-faverani|Vitor Faverani]] '14 (86% similar)
+- [[mouhamed-sene|Mouhamed Sene]] '07 (85% similar)
+- [[adreian-payne|Adreian Payne]] '17 (85% similar)
+- [[vladimir-stepania|Vladimir Stepania]] '00 (85% similar)
+- [[chris-anstey|Chris Anstey]] '00 (85% similar)
+- [[isaiah-roby|Isaiah Roby]] '23 (83% similar)
+
+**Career shape:** Charted 5 seasons (2016-17–2021-22). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Rim Protection + Offensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

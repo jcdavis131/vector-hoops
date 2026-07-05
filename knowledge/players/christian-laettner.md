@@ -42,6 +42,33 @@ Closest career shapes in the era-normalized vector space:
 - [[jason-lawson|Jason Lawson]] — cosine 0.70
 - [[arvydas-sabonis|Arvydas Sabonis]] — cosine 0.69
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 18.1 pts · 9.1 reb · 2.9 ast · 2.2 stl per 100 (2004-05).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+2.5σ vs era)
+- Strong net on-court impact (+1.8σ vs era)
+- Active hands, disrupts passing lanes (+1.0σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[brad-miller|Brad Miller]] '99 (75% similar)
+- [[david-west|David West]] '18 (73% similar)
+- [[tom-gugliotta|Tom Gugliotta]] '03 (71% similar)
+- [[kevin-garnett|Kevin Garnett]] '04 (71% similar)
+- [[jason-lawson|Jason Lawson]] '98 (70% similar)
+- [[arvydas-sabonis|Arvydas Sabonis]] '97 (69% similar)
+
+**Career shape:** Charted 9 seasons (1996-97–2004-05). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

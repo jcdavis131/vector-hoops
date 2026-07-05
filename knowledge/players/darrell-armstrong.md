@@ -45,6 +45,33 @@ Closest career shapes in the era-normalized vector space:
 - [[cory-alexander|Cory Alexander]] — cosine 0.90
 - [[charlie-ward|Charlie Ward]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 23.9 pts · 6.2 reb · 11.6 ast · 3.7 stl per 100 (1998-99).
+
+**Strengths:**
+
+- High-volume table-setter (+2.6σ vs era)
+- Active hands, disrupts passing lanes (+2.6σ vs era)
+- Reliable touch from the free-throw line (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.3σ)
+
+**Comparables:**
+
+- [[shabazz-napier|Shabazz Napier]] '17 (96% similar)
+- [[mario-chalmers|Mario Chalmers]] '16 (92% similar)
+- [[tremont-waters|Tremont Waters]] '21 (92% similar)
+- [[dan-dickau|Dan Dickau]] '06 (91% similar)
+- [[cory-alexander|Cory Alexander]] '01 (90% similar)
+- [[charlie-ward|Charlie Ward]] '02 (90% similar)
+
+**Career shape:** Charted 12 seasons (1996-97–2007-08). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

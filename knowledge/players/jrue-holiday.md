@@ -50,6 +50,33 @@ Closest career shapes in the era-normalized vector space:
 - [[terrell-brandon|Terrell Brandon]] — cosine 0.89
 - [[goran-dragic|Goran Dragic]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 28.8 pts · 5.1 reb · 10.3 ast · 2.3 stl per 100 (2015-16).
+
+**Strengths:**
+
+- High-volume table-setter (+2.2σ vs era)
+- Heavy shot volume, focal scoring option (+1.9σ vs era)
+- Featured, high-usage scoring role (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.7σ)
+
+**Comparables:**
+
+- [[ryan-rollins|Ryan Rollins]] '26 (92% similar)
+- [[darius-garland|Darius Garland]] '22 (91% similar)
+- [[baron-davis|Baron Davis]] '04 (90% similar)
+- [[tyrese-haliburton|Tyrese Haliburton]] '23 (90% similar)
+- [[terrell-brandon|Terrell Brandon]] '02 (89% similar)
+- [[goran-dragic|Goran Dragic]] '17 (89% similar)
+
+**Career shape:** Charted 17 seasons (2009-10–2025-26). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

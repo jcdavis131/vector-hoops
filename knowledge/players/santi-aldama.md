@@ -38,6 +38,32 @@ Closest career shapes in the era-normalized vector space:
 - [[david-andersen|David Andersen]] — cosine 0.74
 - [[branden-carlson|Branden Carlson]] — cosine 0.73
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 17.3 pts · 11.4 reb · 2.7 ast · 1.3 blk per 100 (2021-22).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.8σ)
+- Ball-hawking activity well below era (−1.2σ)
+
+**Comparables:**
+
+- [[carter-bryant|Carter Bryant]] '26 (79% similar)
+- [[eddie-griffin|Eddie Griffin]] '06 (79% similar)
+- [[trey-lyles|Trey Lyles]] '21 (79% similar)
+- [[jalen-smith|Jalen Smith]] '25 (75% similar)
+- [[david-andersen|David Andersen]] '11 (74% similar)
+- [[branden-carlson|Branden Carlson]] '25 (73% similar)
+
+**Career shape:** Charted 5 seasons (2021-22–2025-26). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

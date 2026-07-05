@@ -42,6 +42,34 @@ Closest career shapes in the era-normalized vector space:
 - [[jj-hickson|JJ Hickson]] — cosine 0.87
 - [[david-lee|David Lee]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 24.2 pts · 16.1 reb · 5.3 ast · 2.0 stl per 100 (2017-18).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+1.8σ vs era)
+- Strong presence on the defensive glass (+1.6σ vs era)
+- Efficient finisher inside the arc (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.3σ)
+- Turnover rate well above era (+1.6σ)
+
+**Comparables:**
+
+- [[bam-adebayo|Bam Adebayo]] '22 (89% similar)
+- [[jalen-duren|Jalen Duren]] '26 (89% similar)
+- [[alan-williams|Alan Williams]] '17 (88% similar)
+- [[johnathan-motley|Johnathan Motley]] '19 (88% similar)
+- [[jj-hickson|JJ Hickson]] '16 (87% similar)
+- [[david-lee|David Lee]] '17 (87% similar)
+
+**Career shape:** Charted 9 seasons (2010-11–2018-19). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

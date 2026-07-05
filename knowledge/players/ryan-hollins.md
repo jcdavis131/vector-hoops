@@ -43,6 +43,33 @@ Closest career shapes in the era-normalized vector space:
 - [[alexander-johnson|Alexander Johnson]] — cosine 0.88
 - [[mikki-moore|Mikki Moore]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 17.1 pts · 8.2 reb · 0.3 ast · 1.9 blk per 100 (2006-07).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+2.3σ vs era)
+- Efficient finisher inside the arc (+1.6σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−3.9σ)
+- Shot volume well below era (−1.4σ)
+
+**Comparables:**
+
+- [[semih-erden|Semih Erden]] '12 (91% similar)
+- [[nick-richards|Nick Richards]] '23 (90% similar)
+- [[adem-bona|Adem Bona]] '25 (90% similar)
+- [[damian-jones|Damian Jones]] '19 (89% similar)
+- [[alexander-johnson|Alexander Johnson]] '08 (88% similar)
+- [[mikki-moore|Mikki Moore]] '00 (88% similar)
+
+**Career shape:** Charted 10 seasons (2006-07–2015-16). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

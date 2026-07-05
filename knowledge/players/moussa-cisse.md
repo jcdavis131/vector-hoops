@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[brendan-haywood|Brendan Haywood]] — cosine 0.93
 - [[ian-mahinmi|Ian Mahinmi]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 14.9 pts · 18.9 reb · 0.8 ast · 3.9 blk per 100 (2025-26).
+
+**Strengths:**
+
+- Elite rim protection (+3.6σ vs era)
+- Relentless on the offensive glass (+3.1σ vs era)
+- Strong presence on the defensive glass (+2.0σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.9σ)
+- Free-throw touch well below era (−2.6σ)
+
+**Comparables:**
+
+- [[dan-gadzuric|Dan Gadzuric]] '05 (95% similar)
+- [[festus-ezeli|Festus Ezeli]] '16 (95% similar)
+- [[nazr-mohammed|Nazr Mohammed]] '15 (94% similar)
+- [[john-henson|John Henson]] '16 (93% similar)
+- [[brendan-haywood|Brendan Haywood]] '15 (93% similar)
+- [[ian-mahinmi|Ian Mahinmi]] '10 (93% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[julian-champagnie|Julian Champagnie]] — cosine 0.89
 - [[lindy-waters-iii|Lindy Waters III]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 18.1 pts · 7.2 reb · 3.1 ast · 1.0 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Rarely turns the ball over (−2.1σ vs era)
+- High-volume three-point shooter (+1.9σ vs era)
+- Reliable touch from the free-throw line (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.5σ)
+- Ball-hawking activity well below era (−1.0σ)
+
+**Comparables:**
+
+- [[alec-peters|Alec Peters]] '18 (91% similar)
+- [[davis-bertans|Davis Bertans]] '24 (90% similar)
+- [[james-jones|James Jones]] '14 (89% similar)
+- [[daequan-cook|Daequan Cook]] '11 (89% similar)
+- [[julian-champagnie|Julian Champagnie]] '26 (89% similar)
+- [[lindy-waters-iii|Lindy Waters III]] '23 (88% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

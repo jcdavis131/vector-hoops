@@ -38,6 +38,32 @@ Closest career shapes in the era-normalized vector space:
 - [[tyshawn-taylor|Tyshawn Taylor]] — cosine 0.70
 - [[brandon-davies|Brandon Davies]] — cosine 0.70
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 13.2 pts · 7.0 reb · 2.6 ast · 1.7 stl per 100 (2000-01).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.6σ)
+- Turnover rate well above era (+1.1σ)
+
+**Comparables:**
+
+- [[felipe-lopez|Felipe Lopez]] '00 (88% similar)
+- [[sam-young|Sam Young]] '13 (81% similar)
+- [[j-r-henderson|J.R. Henderson]] '99 (74% similar)
+- [[tamar-slay|Tamar Slay]] '04 (70% similar)
+- [[tyshawn-taylor|Tyshawn Taylor]] '14 (70% similar)
+- [[brandon-davies|Brandon Davies]] '15 (70% similar)
+
+**Career shape:** Charted 5 seasons (1997-98–2001-02). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

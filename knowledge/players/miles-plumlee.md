@@ -39,6 +39,34 @@ Closest career shapes in the era-normalized vector space:
 - [[andrew-declercq|Andrew DeClercq]] — cosine 0.92
 - [[josh-boone|Josh Boone]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 20.7 pts · 10.0 reb · 4.4 ast · 1.6 stl per 100 (2018-19).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+3.0σ vs era)
+- Draws contact, gets to the line often (+1.6σ vs era)
+- Relentless on the offensive glass (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.8σ)
+- Free-throw touch well below era (−2.1σ)
+
+**Comparables:**
+
+- [[trey-jemison-iii|Trey Jemison III]] '25 (95% similar)
+- [[kosta-koufos|Kosta Koufos]] '19 (93% similar)
+- [[bismack-biyombo|Bismack Biyombo]] '23 (93% similar)
+- [[ed-davis|Ed Davis]] '22 (93% similar)
+- [[andrew-declercq|Andrew DeClercq]] '01 (92% similar)
+- [[josh-boone|Josh Boone]] '10 (92% similar)
+
+**Career shape:** Charted 6 seasons (2013-14–2018-19). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

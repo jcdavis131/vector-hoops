@@ -41,6 +41,34 @@ Closest career shapes in the era-normalized vector space:
 - [[mario-kasun|Mario Kasun]] — cosine 0.87
 - [[boban-marjanovic|Boban Marjanovic]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 23.7 pts · 17.8 reb · 0.4 ast · 0.8 stl per 100 (2004-05).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+3.1σ vs era)
+- Relentless on the offensive glass (+3.0σ vs era)
+- Strong presence on the defensive glass (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.9σ)
+- Three-point accuracy well below era (−1.3σ)
+
+**Comparables:**
+
+- [[willy-hernangomez|Willy Hernangomez]] '23 (91% similar)
+- [[michael-sweetney|Michael Sweetney]] '07 (89% similar)
+- [[wendell-carter-jr|Wendell Carter Jr.]] '19 (88% similar)
+- [[enes-freedom|Enes Freedom]] '18 (88% similar)
+- [[mario-kasun|Mario Kasun]] '05 (87% similar)
+- [[boban-marjanovic|Boban Marjanovic]] '18 (84% similar)
+
+**Career shape:** Charted 8 seasons (1997-98–2005-06). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -37,6 +37,32 @@ Closest career shapes in the era-normalized vector space:
 - [[mike-penberthy|Mike Penberthy]] — cosine 0.93
 - [[kevin-huerter|Kevin Huerter]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** PG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 14.6 pts · 2.8 reb · 6.2 ast · 1.4 stl per 100 (1999-00).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.8σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.6σ)
+- Finishing efficiency well below era (−1.5σ)
+
+**Comparables:**
+
+- [[bryce-drew|Bryce Drew]] '99 (96% similar)
+- [[travis-diener|Travis Diener]] '06 (95% similar)
+- [[daniel-gibson|Daniel Gibson]] '13 (95% similar)
+- [[luther-head|Luther Head]] '07 (94% similar)
+- [[mike-penberthy|Mike Penberthy]] '01 (93% similar)
+- [[kevin-huerter|Kevin Huerter]] '23 (93% similar)
+
+**Career shape:** Charted 4 seasons (1996-97–2000-01). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

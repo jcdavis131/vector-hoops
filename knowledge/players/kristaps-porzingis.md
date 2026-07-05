@@ -43,6 +43,33 @@ Closest career shapes in the era-normalized vector space:
 - [[joel-embiid|Joel Embiid]] — cosine 0.82
 - [[brook-lopez|Brook Lopez]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** PF · Defensive Glass + Rim Pressure (Fts). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 34.4 pts · 10.0 reb · 1.8 ast · 3.6 blk per 100 (2017-18).
+
+**Strengths:**
+
+- Elite rim protection (+2.9σ vs era)
+- Heavy shot volume, focal scoring option (+2.6σ vs era)
+- Featured, high-usage scoring role (+2.4σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[jaren-jackson-jr|Jaren Jackson Jr.]] '23 (91% similar)
+- [[victor-wembanyama|Victor Wembanyama]] '26 (87% similar)
+- [[naz-reid|Naz Reid]] '21 (86% similar)
+- [[anthony-davis|Anthony Davis]] '15 (84% similar)
+- [[joel-embiid|Joel Embiid]] '17 (82% similar)
+- [[brook-lopez|Brook Lopez]] '13 (82% similar)
+
+**Career shape:** Charted 10 seasons (2015-16–2025-26). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

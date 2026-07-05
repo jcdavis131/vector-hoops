@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[andrew-lang|Andrew Lang]] — cosine 0.85
 - [[jason-collins|Jason Collins]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass + Defensive Glass. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 7.0 pts · 8.7 reb · 2.5 ast · 0.8 stl per 100 (1997-98).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Scoring load well below era (−2.1σ)
+- Finishing efficiency well below era (−1.9σ)
+
+**Comparables:**
+
+- [[joe-kleine|Joe Kleine]] '97 (87% similar)
+- [[mark-bradtke|Mark Bradtke]] '97 (87% similar)
+- [[rick-mahorn|Rick Mahorn]] '98 (86% similar)
+- [[joe-wolf|Joe Wolf]] '98 (86% similar)
+- [[andrew-lang|Andrew Lang]] '00 (85% similar)
+- [[jason-collins|Jason Collins]] '10 (83% similar)
+
+**Career shape:** Charted 2 seasons (1996-97–1997-98). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

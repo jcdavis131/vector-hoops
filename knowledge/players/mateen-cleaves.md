@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[nolan-smith|Nolan Smith]] — cosine 0.92
 - [[josh-selby|Josh Selby]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 20.1 pts · 2.3 reb · 7.2 ast · 2.0 stl per 100 (2001-02).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+4.0σ)
+- Defensive rebounding well below era (−1.8σ)
+
+**Comparables:**
+
+- [[jonny-flynn|Jonny Flynn]] '11 (96% similar)
+- [[nolan-traore|Nolan Traore]] '26 (94% similar)
+- [[vasilije-micic|Vasilije Micic]] '25 (94% similar)
+- [[tierre-brown|Tierre Brown]] '02 (92% similar)
+- [[nolan-smith|Nolan Smith]] '13 (92% similar)
+- [[josh-selby|Josh Selby]] '12 (91% similar)
+
+**Career shape:** Charted 3 seasons (2000-01–2005-06). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

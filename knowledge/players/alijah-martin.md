@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[david-duke-jr|David Duke Jr.]] — cosine 0.74
 - [[trevelin-queen|Trevelin Queen]] — cosine 0.73
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 17.1 pts · 7.0 reb · 4.0 ast · 2.7 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.9σ)
+- Three-point accuracy well below era (−1.2σ)
+
+**Comparables:**
+
+- [[jaden-springer|Jaden Springer]] '24 (81% similar)
+- [[charlie-brown-jr|Charlie Brown Jr.]] '22 (77% similar)
+- [[elijah-harkless|Elijah Harkless]] '26 (77% similar)
+- [[predrag-savovic|Predrag Savovic]] '03 (76% similar)
+- [[david-duke-jr|David Duke Jr.]] '23 (74% similar)
+- [[trevelin-queen|Trevelin Queen]] '25 (73% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

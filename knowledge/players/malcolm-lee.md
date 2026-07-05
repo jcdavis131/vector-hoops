@@ -35,6 +35,31 @@ Closest career shapes in the era-normalized vector space:
 - [[sindarius-thornwell|Sindarius Thornwell]] — cosine 0.85
 - [[sedale-threatt|Sedale Threatt]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** SG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 12.9 pts · 5.4 reb · 6.4 ast · 1.7 stl per 100 (2011-12).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.2σ)
+
+**Comparables:**
+
+- [[frank-ntilikina|Frank Ntilikina]] '21 (90% similar)
+- [[ron-baker|Ron Baker]] '18 (88% similar)
+- [[garrett-temple|Garrett Temple]] '11 (87% similar)
+- [[patrick-mccaw|Patrick McCaw]] '19 (86% similar)
+- [[sindarius-thornwell|Sindarius Thornwell]] '21 (85% similar)
+- [[sedale-threatt|Sedale Threatt]] '97 (83% similar)
+
+**Career shape:** Charted 2 seasons (2011-12–2012-13). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

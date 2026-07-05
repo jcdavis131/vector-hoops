@@ -38,6 +38,34 @@ Closest career shapes in the era-normalized vector space:
 - [[jarnell-stokes|Jarnell Stokes]] — cosine 0.87
 - [[garret-siler|Garret Siler]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** PF · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 27.0 pts · 10.3 reb · 1.3 ast · 2.0 stl per 100 (2002-03).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+4.0σ vs era)
+- Efficient finisher inside the arc (+2.0σ vs era)
+- Relentless on the offensive glass (+1.9σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.3σ)
+- Free-throw touch well below era (−1.2σ)
+
+**Comparables:**
+
+- [[leon-powe|Leon Powe]] '08 (96% similar)
+- [[jason-caffey|Jason Caffey]] '97 (90% similar)
+- [[nathan-knight|Nathan Knight]] '22 (89% similar)
+- [[johnathan-motley|Johnathan Motley]] '19 (87% similar)
+- [[jarnell-stokes|Jarnell Stokes]] '15 (87% similar)
+- [[garret-siler|Garret Siler]] '11 (87% similar)
+
+**Career shape:** Charted 5 seasons (1996-97–2002-03). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[kyle-singler|Kyle Singler]] — cosine 0.86
 - [[gary-clark|Gary Clark]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 14.8 pts · 7.8 reb · 2.6 ast · 0.7 stl per 100 (2020-21).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.4σ)
+- On-court net impact well below era (−1.2σ)
+
+**Comparables:**
+
+- [[deng-adel|Deng Adel]] '19 (87% similar)
+- [[semi-ojeleye|Semi Ojeleye]] '18 (86% similar)
+- [[caleb-houstan|Caleb Houstan]] '26 (86% similar)
+- [[travis-hansen|Travis Hansen]] '04 (86% similar)
+- [[kyle-singler|Kyle Singler]] '17 (86% similar)
+- [[gary-clark|Gary Clark]] '19 (85% similar)
+
+**Career shape:** Charted 2 seasons (2020-21–2022-23). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

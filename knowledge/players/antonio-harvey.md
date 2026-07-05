@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[udoka-azubuike|Udoka Azubuike]] — cosine 0.82
 - [[andrew-bogut|Andrew Bogut]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** PF · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 15.5 pts · 12.5 reb · 1.9 ast · 2.3 blk per 100 (1999-00).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+2.3σ vs era)
+- Strong net on-court impact (+1.6σ vs era)
+- Strong presence on the defensive glass (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.9σ)
+- Turnover rate well above era (+1.6σ)
+
+**Comparables:**
+
+- [[kendrick-perkins|Kendrick Perkins]] '16 (90% similar)
+- [[gheorghe-muresan|Gheorghe Muresan]] '97 (85% similar)
+- [[tacko-fall|Tacko Fall]] '21 (83% similar)
+- [[ariel-hukporti|Ariel Hukporti]] '25 (82% similar)
+- [[udoka-azubuike|Udoka Azubuike]] '23 (82% similar)
+- [[andrew-bogut|Andrew Bogut]] '16 (81% similar)
+
+**Career shape:** Charted 1 season (1999-00). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

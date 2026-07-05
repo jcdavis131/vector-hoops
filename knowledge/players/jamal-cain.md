@@ -37,6 +37,33 @@ Closest career shapes in the era-normalized vector space:
 - [[ja-kobe-walter|Ja'Kobe Walter]] — cosine 0.78
 - [[malcolm-hill|Malcolm Hill]] — cosine 0.78
 
+## Scouting report
+
+**Play style:** PF · Three-Point Accuracy (Low Turnovers). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 19.2 pts · 10.1 reb · 2.3 ast · 2.2 stl per 100 (2022-23).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.5σ vs era)
+- Rarely turns the ball over (−1.3σ vs era)
+- Efficient finisher inside the arc (+1.1σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[james-ennis-iii|James Ennis III]] '16 (86% similar)
+- [[jaylen-clark|Jaylen Clark]] '25 (83% similar)
+- [[kevon-harris|Kevon Harris]] '23 (82% similar)
+- [[demarre-carroll|DeMarre Carroll]] '16 (80% similar)
+- [[ja-kobe-walter|Ja'Kobe Walter]] '26 (78% similar)
+- [[malcolm-hill|Malcolm Hill]] '22 (78% similar)
+
+**Career shape:** Charted 4 seasons (2022-23–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

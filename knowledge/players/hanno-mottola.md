@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jason-collier|Jason Collier]] — cosine 0.81
 - [[tom-hammonds|Tom Hammonds]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 15.9 pts · 8.6 reb · 1.2 ast · 0.5 stl per 100 (2000-01).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.8σ)
+- On-court net impact well below era (−1.7σ)
+
+**Comparables:**
+
+- [[josh-powell|Josh Powell]] '07 (90% similar)
+- [[isaiah-hicks|Isaiah Hicks]] '18 (85% similar)
+- [[mark-bryant|Mark Bryant]] '03 (83% similar)
+- [[dragan-tarlac|Dragan Tarlac]] '01 (83% similar)
+- [[jason-collier|Jason Collier]] '05 (81% similar)
+- [[tom-hammonds|Tom Hammonds]] '00 (81% similar)
+
+**Career shape:** Charted 2 seasons (2000-01–2001-02). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

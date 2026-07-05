@@ -34,6 +34,31 @@ Closest career shapes in the era-normalized vector space:
 - [[t-j-leaf|T.J. Leaf]] — cosine 0.79
 - [[jeff-grayer|Jeff Grayer]] — cosine 0.78
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 20.6 pts · 8.7 reb · 2.4 ast · 1.5 stl per 100 (2025-26).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.8σ)
+
+**Comparables:**
+
+- [[alex-poythress|Alex Poythress]] '18 (84% similar)
+- [[chris-taft|Chris Taft]] '06 (82% similar)
+- [[alfonzo-mckinnie|Alfonzo McKinnie]] '22 (81% similar)
+- [[olden-polynice|Olden Polynice]] '99 (79% similar)
+- [[t-j-leaf|T.J. Leaf]] '20 (79% similar)
+- [[jeff-grayer|Jeff Grayer]] '97 (78% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

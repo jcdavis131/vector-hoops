@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jacque-vaughn|Jacque Vaughn]] — cosine 0.90
 - [[peyton-siva|Peyton Siva]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 15.3 pts · 4.8 reb · 7.5 ast · 1.5 stl per 100 (2016-17).
+
+**Strengths:**
+
+- High-volume table-setter (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Rim-protection impact well below era (−1.2σ)
+- Finishing efficiency well below era (−1.1σ)
+
+**Comparables:**
+
+- [[keith-mcleod|Keith McLeod]] '04 (94% similar)
+- [[bobby-hurley|Bobby Hurley]] '97 (94% similar)
+- [[jamal-shead|Jamal Shead]] '26 (92% similar)
+- [[acie-law|Acie Law]] '10 (91% similar)
+- [[jacque-vaughn|Jacque Vaughn]] '99 (90% similar)
+- [[peyton-siva|Peyton Siva]] '14 (90% similar)
+
+**Career shape:** Charted 2 seasons (2016-17–2017-18). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

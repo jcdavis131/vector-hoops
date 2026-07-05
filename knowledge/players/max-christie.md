@@ -37,6 +37,33 @@ Closest career shapes in the era-normalized vector space:
 - [[travis-wear|Travis Wear]] — cosine 0.88
 - [[deng-adel|Deng Adel]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 11.6 pts · 6.7 reb · 1.9 ast · 0.8 stl per 100 (2022-23).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.3σ vs era)
+- Reliable touch from the free-throw line (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.4σ)
+- Scoring load well below era (−1.3σ)
+
+**Comparables:**
+
+- [[tony-snell|Tony Snell]] '21 (93% similar)
+- [[tristan-da-silva|Tristan da Silva]] '25 (89% similar)
+- [[allen-crabbe|Allen Crabbe]] '20 (88% similar)
+- [[hubert-davis|Hubert Davis]] '04 (88% similar)
+- [[travis-wear|Travis Wear]] '18 (88% similar)
+- [[deng-adel|Deng Adel]] '19 (88% similar)
+
+**Career shape:** Charted 4 seasons (2022-23–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

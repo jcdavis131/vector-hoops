@@ -36,6 +36,33 @@ Closest career shapes in the era-normalized vector space:
 - [[alan-anderson|Alan Anderson]] — cosine 0.94
 - [[bryn-forbes|Bryn Forbes]] — cosine 0.94
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 18.8 pts · 5.4 reb · 2.0 ast · 1.3 stl per 100 (2024-25).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+2.0σ vs era)
+- High-volume three-point shooter (+1.5σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−3.6σ)
+- Finishing efficiency well below era (−1.8σ)
+
+**Comparables:**
+
+- [[aj-griffin|AJ Griffin]] '24 (96% similar)
+- [[simone-fontecchio|Simone Fontecchio]] '23 (95% similar)
+- [[jordan-hawkins|Jordan Hawkins]] '25 (95% similar)
+- [[timothe-luwawu-cabarrot|Timothe Luwawu-Cabarrot]] '19 (95% similar)
+- [[alan-anderson|Alan Anderson]] '17 (94% similar)
+- [[bryn-forbes|Bryn Forbes]] '17 (94% similar)
+
+**Career shape:** Charted 3 seasons (2022-23–2024-25). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

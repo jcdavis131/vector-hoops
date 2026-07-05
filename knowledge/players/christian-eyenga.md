@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[keljin-blevins|Keljin Blevins]] — cosine 0.79
 - [[taelon-peter|Taelon Peter]] — cosine 0.79
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 16.1 pts · 6.5 reb · 1.9 ast · 1.8 stl per 100 (2010-11).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.5σ)
+- Rim pressure (free-throw generation) well below era (−1.3σ)
+
+**Comparables:**
+
+- [[charles-smith|Charles Smith]] '99 (85% similar)
+- [[eric-washington|Eric Washington]] '98 (84% similar)
+- [[wesley-johnson|Wesley Johnson]] '17 (83% similar)
+- [[rashad-vaughn|Rashad Vaughn]] '17 (81% similar)
+- [[keljin-blevins|Keljin Blevins]] '22 (79% similar)
+- [[taelon-peter|Taelon Peter]] '26 (79% similar)
+
+**Career shape:** Charted 1 season (2010-11). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

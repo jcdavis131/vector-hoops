@@ -51,6 +51,33 @@ Closest career shapes in the era-normalized vector space:
 - [[karl-anthony-towns|Karl-Anthony Towns]] — cosine 0.80
 - [[dario-saric|Dario Saric]] — cosine 0.78
 
+## Scouting report
+
+**Play style:** PF · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 30.0 pts · 19.1 reb · 3.8 ast · 0.5 stl per 100 (2018-19).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+3.6σ vs era)
+- Draws contact, gets to the line often (+2.2σ vs era)
+- High-volume three-point shooter (+1.8σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.7σ)
+
+**Comparables:**
+
+- [[mehmet-okur|Mehmet Okur]] '12 (85% similar)
+- [[derrick-coleman|Derrick Coleman]] '00 (84% similar)
+- [[cedric-coward|Cedric Coward]] '26 (82% similar)
+- [[charles-barkley|Charles Barkley]] '97 (80% similar)
+- [[karl-anthony-towns|Karl-Anthony Towns]] '19 (80% similar)
+- [[dario-saric|Dario Saric]] '21 (78% similar)
+
+**Career shape:** Charted 18 seasons (2008-09–2025-26). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

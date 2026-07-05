@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[kiwane-garris|Kiwane Garris]] — cosine 0.85
 - [[mckinley-wright-iv|McKinley Wright IV]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 17.9 pts · 5.6 reb · 7.8 ast · 1.1 stl per 100 (2025-26).
+
+**Strengths:**
+
+- High-volume table-setter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.9σ)
+- Turnover rate well above era (+1.3σ)
+
+**Comparables:**
+
+- [[donald-sloan|Donald Sloan]] '12 (93% similar)
+- [[dean-oliver|Dean Oliver]] '02 (89% similar)
+- [[gerald-brown|Gerald Brown]] '99 (88% similar)
+- [[cassius-winston|Cassius Winston]] '21 (86% similar)
+- [[kiwane-garris|Kiwane Garris]] '98 (85% similar)
+- [[mckinley-wright-iv|McKinley Wright IV]] '23 (83% similar)
+
+**Career shape:** Charted 2 seasons (2024-25–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Playmaking + Steals identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

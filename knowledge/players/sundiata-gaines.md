@@ -36,6 +36,34 @@ Closest career shapes in the era-normalized vector space:
 - [[scotty-pippen-jr|Scotty Pippen Jr.]] — cosine 0.81
 - [[speedy-claxton|Speedy Claxton]] — cosine 0.80
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 23.7 pts · 6.4 reb · 8.7 ast · 2.7 stl per 100 (2009-10).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.2σ vs era)
+- Draws contact, gets to the line often (+2.2σ vs era)
+- High-volume table-setter (+1.7σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.7σ)
+- Rim-protection impact well below era (−1.1σ)
+
+**Comparables:**
+
+- [[eric-murdock|Eric Murdock]] '00 (86% similar)
+- [[devin-carter|Devin Carter]] '25 (86% similar)
+- [[bob-sura|Bob Sura]] '98 (83% similar)
+- [[dennis-smith-jr|Dennis Smith Jr.]] '20 (82% similar)
+- [[scotty-pippen-jr|Scotty Pippen Jr.]] '24 (81% similar)
+- [[speedy-claxton|Speedy Claxton]] '07 (80% similar)
+
+**Career shape:** Charted 3 seasons (2009-10–2011-12). Consistent Scoring Volume + Shot Volume profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

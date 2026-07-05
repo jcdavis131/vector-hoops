@@ -35,6 +35,34 @@ Closest career shapes in the era-normalized vector space:
 - [[jared-rhoden|Jared Rhoden]] — cosine 0.82
 - [[isaiah-stewart|Isaiah Stewart]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 15.6 pts · 11.1 reb · 1.3 ast · 4.7 blk per 100 (1996-97).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+4.0σ vs era)
+- Elite rim protection (+3.5σ vs era)
+- Efficient finisher inside the arc (+1.0σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.9σ)
+- Ball-hawking activity well below era (−1.6σ)
+
+**Comparables:**
+
+- [[peyton-watson|Peyton Watson]] '23 (91% similar)
+- [[thon-maker|Thon Maker]] '20 (91% similar)
+- [[aj-hammons|AJ Hammons]] '17 (88% similar)
+- [[keith-closs|Keith Closs]] '98 (84% similar)
+- [[jared-rhoden|Jared Rhoden]] '24 (82% similar)
+- [[isaiah-stewart|Isaiah Stewart]] '25 (82% similar)
+
+**Career shape:** Charted 2 seasons (1996-97–1999-00). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

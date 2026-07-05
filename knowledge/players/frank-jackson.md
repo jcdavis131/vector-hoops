@@ -37,6 +37,31 @@ Closest career shapes in the era-normalized vector space:
 - [[alan-anderson|Alan Anderson]] — cosine 0.89
 - [[jaylen-wells|Jaylen Wells]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 22.9 pts · 3.6 reb · 2.2 ast · 1.1 stl per 100 (2021-22).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.5σ)
+
+**Comparables:**
+
+- [[nick-young|Nick Young]] '15 (91% similar)
+- [[lonnie-walker-iv|Lonnie Walker IV]] '25 (90% similar)
+- [[julian-strawther|Julian Strawther]] '24 (90% similar)
+- [[bryn-forbes|Bryn Forbes]] '17 (90% similar)
+- [[alan-anderson|Alan Anderson]] '17 (89% similar)
+- [[jaylen-wells|Jaylen Wells]] '25 (88% similar)
+
+**Career shape:** Charted 4 seasons (2018-19–2021-22). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

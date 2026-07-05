@@ -47,6 +47,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jamison-battle|Jamison Battle]] — cosine 0.77
 - [[kevin-gamble|Kevin Gamble]] — cosine 0.77
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 7.7 pts · 5.1 reb · 2.6 ast · 1.2 stl per 100 (2015-16).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.8σ vs era)
+
+**Areas of concern:**
+
+- Scoring load well below era (−2.0σ)
+- Shot volume well below era (−1.9σ)
+
+**Comparables:**
+
+- [[sam-mitchell|Sam Mitchell]] '00 (79% similar)
+- [[jason-kapono|Jason Kapono]] '11 (78% similar)
+- [[rui-hachimura|Rui Hachimura]] '26 (78% similar)
+- [[danny-ferry|Danny Ferry]] '01 (77% similar)
+- [[jamison-battle|Jamison Battle]] '25 (77% similar)
+- [[kevin-gamble|Kevin Gamble]] '97 (77% similar)
+
+**Career shape:** Charted 14 seasons (2002-03–2015-16). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

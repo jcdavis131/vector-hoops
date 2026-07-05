@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[james-anderson|James Anderson]] — cosine 0.87
 - [[chuck-person|Chuck Person]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 12.8 pts · 7.1 reb · 2.6 ast · 0.8 stl per 100 (2013-14).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.9σ)
+- Ball-hawking activity well below era (−1.2σ)
+
+**Comparables:**
+
+- [[pacome-dadiet|Pacôme Dadiet]] '26 (91% similar)
+- [[jawad-williams|Jawad Williams]] '11 (91% similar)
+- [[luke-babbitt|Luke Babbitt]] '11 (90% similar)
+- [[anthony-tolliver|Anthony Tolliver]] '09 (89% similar)
+- [[james-anderson|James Anderson]] '11 (87% similar)
+- [[chuck-person|Chuck Person]] '00 (87% similar)
+
+**Career shape:** Charted 2 seasons (2012-13–2013-14). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

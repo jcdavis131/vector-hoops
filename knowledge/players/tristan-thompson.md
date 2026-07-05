@@ -46,6 +46,33 @@ Closest career shapes in the era-normalized vector space:
 - [[kosta-koufos|Kosta Koufos]] — cosine 0.93
 - [[moses-brown|Moses Brown]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 10.0 pts · 19.5 reb · 3.5 ast · 1.6 blk per 100 (2024-25).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+3.2σ vs era)
+- Relentless on the offensive glass (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−4.0σ)
+- Three-point accuracy well below era (−2.9σ)
+
+**Comparables:**
+
+- [[jason-thompson|Jason Thompson]] '15 (96% similar)
+- [[ed-davis|Ed Davis]] '22 (94% similar)
+- [[tarik-black|Tarik Black]] '18 (94% similar)
+- [[josh-boone|Josh Boone]] '10 (93% similar)
+- [[kosta-koufos|Kosta Koufos]] '19 (93% similar)
+- [[moses-brown|Moses Brown]] '23 (93% similar)
+
+**Career shape:** Charted 13 seasons (2011-12–2024-25). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

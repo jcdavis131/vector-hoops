@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[cory-carr|Cory Carr]] — cosine 0.88
 - [[kevin-pangos|Kevin Pangos]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 14.2 pts · 2.7 reb · 7.1 ast · 1.0 stl per 100 (2001-02).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.8σ)
+- Offensive-glass activity well below era (−1.6σ)
+
+**Comparables:**
+
+- [[donald-sloan|Donald Sloan]] '12 (89% similar)
+- [[bub-carrington|Bub Carrington]] '26 (89% similar)
+- [[kyle-guy|Kyle Guy]] '22 (88% similar)
+- [[darius-morris|Darius Morris]] '12 (88% similar)
+- [[cory-carr|Cory Carr]] '99 (88% similar)
+- [[kevin-pangos|Kevin Pangos]] '22 (87% similar)
+
+**Career shape:** Charted 1 season (2001-02). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

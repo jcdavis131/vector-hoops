@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[olivier-maxence-prosper|Olivier-Maxence Prosper]] — cosine 0.73
 - [[dahntay-jones|Dahntay Jones]] — cosine 0.72
 
+## Scouting report
+
+**Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 18.3 pts · 8.9 reb · 3.2 ast · 1.7 blk per 100 (2003-04).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.1σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.9σ)
+- Ball-hawking activity well below era (−1.7σ)
+
+**Comparables:**
+
+- [[cedric-simmons|Cedric Simmons]] '09 (85% similar)
+- [[soumaila-samake|Soumaila Samake]] '01 (77% similar)
+- [[devin-green|Devin Green]] '06 (75% similar)
+- [[robert-sacre|Robert Sacre]] '13 (74% similar)
+- [[olivier-maxence-prosper|Olivier-Maxence Prosper]] '25 (73% similar)
+- [[dahntay-jones|Dahntay Jones]] '15 (72% similar)
+
+**Career shape:** Charted 3 seasons (2001-02–2004-05). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[tyler-dorsey|Tyler Dorsey]] — cosine 0.75
 - [[antonio-blakeney|Antonio Blakeney]] — cosine 0.75
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 20.8 pts · 4.5 reb · 2.4 ast · 0.3 stl per 100 (2021-22).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.0σ)
+- Ball-hawking activity well below era (−2.0σ)
+
+**Comparables:**
+
+- [[maurice-ager|Maurice Ager]] '08 (89% similar)
+- [[justin-james|Justin James]] '20 (84% similar)
+- [[dajuan-summers|DaJuan Summers]] '11 (79% similar)
+- [[ignas-brazdeikis|Ignas Brazdeikis]] '22 (75% similar)
+- [[tyler-dorsey|Tyler Dorsey]] '18 (75% similar)
+- [[antonio-blakeney|Antonio Blakeney]] '19 (75% similar)
+
+**Career shape:** Charted 1 season (2021-22). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

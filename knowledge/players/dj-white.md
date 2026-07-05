@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[kj-martin|KJ Martin]] — cosine 0.71
 - [[marcus-haislip|Marcus Haislip]] — cosine 0.70
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 18.5 pts · 9.9 reb · 2.2 ast · 1.1 blk per 100 (2011-12).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+4.0σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.9σ)
+- Ball-hawking activity well below era (−1.3σ)
+
+**Comparables:**
+
+- [[maxime-raynaud|Maxime Raynaud]] '26 (78% similar)
+- [[jon-leuer|Jon Leuer]] '13 (76% similar)
+- [[rui-hachimura|Rui Hachimura]] '26 (74% similar)
+- [[maciej-lampe|Maciej Lampe]] '04 (71% similar)
+- [[kj-martin|KJ Martin]] '25 (71% similar)
+- [[marcus-haislip|Marcus Haislip]] '04 (70% similar)
+
+**Career shape:** Charted 2 seasons (2010-11–2011-12). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

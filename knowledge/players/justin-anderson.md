@@ -37,6 +37,32 @@ Closest career shapes in the era-normalized vector space:
 - [[tyrone-nesby|Tyrone Nesby]] — cosine 0.79
 - [[taylor-hendricks|Taylor Hendricks]] — cosine 0.79
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 21.5 pts · 8.5 reb · 2.3 ast · 1.4 stl per 100 (2017-18).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.1σ vs era)
+- Rarely turns the ball over (−1.1σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[pj-hairston|PJ Hairston]] '15 (82% similar)
+- [[rodney-carney|Rodney Carney]] '09 (80% similar)
+- [[jumaine-jones|Jumaine Jones]] '07 (80% similar)
+- [[jarell-eddie|Jarell Eddie]] '16 (79% similar)
+- [[tyrone-nesby|Tyrone Nesby]] '00 (79% similar)
+- [[taylor-hendricks|Taylor Hendricks]] '24 (79% similar)
+
+**Career shape:** Charted 4 seasons (2015-16–2018-19). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

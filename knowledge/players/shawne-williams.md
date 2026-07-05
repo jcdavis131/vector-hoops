@@ -39,6 +39,33 @@ Closest career shapes in the era-normalized vector space:
 - [[wesley-johnson|Wesley Johnson]] — cosine 0.88
 - [[matt-bullard|Matt Bullard]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 11.3 pts · 6.8 reb · 1.6 ast · 1.1 blk per 100 (2011-12).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.5σ vs era)
+- High-volume three-point shooter (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.4σ)
+- Rim pressure (free-throw generation) well below era (−1.4σ)
+
+**Comparables:**
+
+- [[luke-babbitt|Luke Babbitt]] '11 (92% similar)
+- [[anthony-tolliver|Anthony Tolliver]] '09 (90% similar)
+- [[rasual-butler|Rasual Butler]] '04 (90% similar)
+- [[lindy-waters-iii|Lindy Waters III]] '23 (88% similar)
+- [[wesley-johnson|Wesley Johnson]] '17 (88% similar)
+- [[matt-bullard|Matt Bullard]] '01 (87% similar)
+
+**Career shape:** Charted 6 seasons (2006-07–2014-15). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

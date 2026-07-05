@@ -46,6 +46,32 @@ Closest career shapes in the era-normalized vector space:
 - [[tyler-johnson|Tyler Johnson]] — cosine 0.91
 - [[alex-abrines|Alex Abrines]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 15.6 pts · 3.7 reb · 3.7 ast · 2.0 stl per 100 (2023-24).
+
+**Strengths:**
+
+- Strong net on-court impact (+1.8σ vs era)
+- Reliable touch from the free-throw line (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.3σ)
+
+**Comparables:**
+
+- [[gary-harris|Gary Harris]] '25 (96% similar)
+- [[courtney-lee|Courtney Lee]] '20 (95% similar)
+- [[wesley-matthews|Wesley Matthews]] '20 (95% similar)
+- [[lucious-harris|Lucious Harris]] '98 (94% similar)
+- [[tyler-johnson|Tyler Johnson]] '21 (91% similar)
+- [[alex-abrines|Alex Abrines]] '19 (91% similar)
+
+**Career shape:** Charted 13 seasons (2013-14–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

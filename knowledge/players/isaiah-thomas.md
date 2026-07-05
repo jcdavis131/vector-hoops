@@ -42,6 +42,34 @@ Closest career shapes in the era-normalized vector space:
 - [[kemba-walker|Kemba Walker]] — cosine 0.94
 - [[bradley-beal|Bradley Beal]] — cosine 0.94
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 41.7 pts · 3.9 reb · 8.5 ast · 1.3 stl per 100 (2016-17).
+
+**Strengths:**
+
+- Featured, high-usage scoring role (+3.5σ vs era)
+- Draws contact, gets to the line often (+3.4σ vs era)
+- Heavy shot volume, focal scoring option (+2.5σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.4σ)
+- Defensive rebounding well below era (−1.3σ)
+
+**Comparables:**
+
+- [[damian-lillard|Damian Lillard]] '23 (96% similar)
+- [[lou-williams|Lou Williams]] '19 (96% similar)
+- [[jerry-stackhouse|Jerry Stackhouse]] '01 (95% similar)
+- [[devin-booker|Devin Booker]] '19 (94% similar)
+- [[kemba-walker|Kemba Walker]] '19 (94% similar)
+- [[bradley-beal|Bradley Beal]] '20 (94% similar)
+
+**Career shape:** Charted 9 seasons (2011-12–2021-22). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[yaroslav-korolev|Yaroslav Korolev]] — cosine 0.90
 - [[jawad-williams|Jawad Williams]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 11.0 pts · 3.8 reb · 1.9 ast · 1.3 stl per 100 (2004-05).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.1σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.4σ)
+- Finishing efficiency well below era (−1.7σ)
+
+**Comparables:**
+
+- [[pj-dozier|PJ Dozier]] '22 (90% similar)
+- [[deshawn-stevenson|DeShawn Stevenson]] '12 (90% similar)
+- [[marlon-garnett|Marlon Garnett]] '99 (90% similar)
+- [[javonte-smart|Javonte Smart]] '22 (90% similar)
+- [[yaroslav-korolev|Yaroslav Korolev]] '06 (90% similar)
+- [[jawad-williams|Jawad Williams]] '11 (88% similar)
+
+**Career shape:** Charted 2 seasons (2003-04–2004-05). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

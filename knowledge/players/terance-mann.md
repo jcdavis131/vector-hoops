@@ -40,6 +40,32 @@ Closest career shapes in the era-normalized vector space:
 - [[mickael-gelabale|Mickael Gelabale]] — cosine 0.82
 - [[isaac-okoro|Isaac Okoro]] — cosine 0.80
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 12.4 pts · 7.0 reb · 6.7 ast · 1.4 stl per 100 (2019-20).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.3σ)
+- Scoring load well below era (−1.2σ)
+
+**Comparables:**
+
+- [[derrick-walton-jr|Derrick Walton Jr.]] '20 (90% similar)
+- [[michael-curry|Michael Curry]] '05 (87% similar)
+- [[trenton-hassell|Trenton Hassell]] '04 (84% similar)
+- [[christian-braun|Christian Braun]] '25 (83% similar)
+- [[mickael-gelabale|Mickael Gelabale]] '13 (82% similar)
+- [[isaac-okoro|Isaac Okoro]] '25 (80% similar)
+
+**Career shape:** Charted 7 seasons (2019-20–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

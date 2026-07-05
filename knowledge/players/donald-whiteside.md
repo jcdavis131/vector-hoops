@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[lee-mayberry|Lee Mayberry]] — cosine 0.91
 - [[emanual-davis|Emanual Davis]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 11.1 pts · 2.3 reb · 6.8 ast · 2.1 stl per 100 (1996-97).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.0σ)
+- Defensive rebounding well below era (−1.6σ)
+
+**Comparables:**
+
+- [[chris-herren|Chris Herren]] '01 (95% similar)
+- [[frank-ntilikina|Frank Ntilikina]] '21 (92% similar)
+- [[fred-jones|Fred Jones]] '03 (92% similar)
+- [[jaylen-adams|Jaylen Adams]] '19 (92% similar)
+- [[lee-mayberry|Lee Mayberry]] '97 (91% similar)
+- [[emanual-davis|Emanual Davis]] '02 (91% similar)
+
+**Career shape:** Charted 1 season (1996-97). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

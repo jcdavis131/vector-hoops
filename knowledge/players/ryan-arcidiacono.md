@@ -39,6 +39,32 @@ Closest career shapes in the era-normalized vector space:
 - [[nate-wolters|Nate Wolters]] — cosine 0.85
 - [[julyan-stone|Julyan Stone]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** PG · Offensive Glass + Defensive Glass. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 0.0 pts · 8.4 reb · 4.2 ast · 2.1 stl per 100 (2023-24).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−4.0σ)
+- Free-throw touch well below era (−4.0σ)
+
+**Comparables:**
+
+- [[semaj-christon|Semaj Christon]] '17 (91% similar)
+- [[cedric-bozeman|Cedric Bozeman]] '07 (89% similar)
+- [[pj-dozier|PJ Dozier]] '22 (86% similar)
+- [[reece-gaines|Reece Gaines]] '05 (85% similar)
+- [[nate-wolters|Nate Wolters]] '15 (85% similar)
+- [[julyan-stone|Julyan Stone]] '18 (84% similar)
+
+**Career shape:** Charted 6 seasons (2017-18–2023-24). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

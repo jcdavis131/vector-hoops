@@ -35,6 +35,31 @@ Closest career shapes in the era-normalized vector space:
 - [[josh-davis|Josh Davis]] — cosine 0.82
 - [[gigi-datome|Gigi Datome]] — cosine 0.79
 
+## Scouting report
+
+**Play style:** PF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 23.7 pts · 10.3 reb · 3.9 ast · 1.3 blk per 100 (2024-25).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.5σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[brian-cook|Brian Cook]] '09 (92% similar)
+- [[mirza-teletovic|Mirza Teletovic]] '17 (86% similar)
+- [[terry-mills|Terry Mills]] '97 (86% similar)
+- [[channing-frye|Channing Frye]] '19 (85% similar)
+- [[josh-davis|Josh Davis]] '05 (82% similar)
+- [[gigi-datome|Gigi Datome]] '15 (79% similar)
+
+**Career shape:** Charted 2 seasons (2024-25–2025-26). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

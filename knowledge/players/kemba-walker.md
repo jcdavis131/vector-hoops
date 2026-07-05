@@ -44,6 +44,33 @@ Closest career shapes in the era-normalized vector space:
 - [[bradley-beal|Bradley Beal]] — cosine 0.92
 - [[tyrese-maxey|Tyrese Maxey]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 35.4 pts · 6.1 reb · 8.2 ast · 1.7 stl per 100 (2018-19).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+2.7σ vs era)
+- Featured, high-usage scoring role (+2.5σ vs era)
+- High-volume three-point shooter (+1.9σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.1σ)
+
+**Comparables:**
+
+- [[damian-lillard|Damian Lillard]] '23 (94% similar)
+- [[isaiah-thomas|Isaiah Thomas]] '17 (94% similar)
+- [[lou-williams|Lou Williams]] '19 (94% similar)
+- [[kyrie-irving|Kyrie Irving]] '20 (93% similar)
+- [[bradley-beal|Bradley Beal]] '20 (92% similar)
+- [[tyrese-maxey|Tyrese Maxey]] '25 (92% similar)
+
+**Career shape:** Charted 11 seasons (2011-12–2021-22). Consistent Scoring Volume + Shot Volume profile across his career.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

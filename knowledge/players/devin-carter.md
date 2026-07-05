@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[rodrick-rhodes|Rodrick Rhodes]] — cosine 0.73
 - [[dennis-smith-jr|Dennis Smith Jr.]] — cosine 0.72
 
+## Scouting report
+
+**Play style:** PG · Three-Point Accuracy (Low Turnovers). Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 16.6 pts · 9.2 reb · 4.9 ast · 2.5 stl per 100 (2024-25).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.3σ)
+- Finishing efficiency well below era (−1.2σ)
+
+**Comparables:**
+
+- [[sundiata-gaines|Sundiata Gaines]] '10 (86% similar)
+- [[donnie-boyce|Donnie Boyce]] '97 (80% similar)
+- [[michael-carter-williams|Michael Carter-Williams]] '15 (75% similar)
+- [[donell-taylor|Donell Taylor]] '07 (73% similar)
+- [[rodrick-rhodes|Rodrick Rhodes]] '98 (73% similar)
+- [[dennis-smith-jr|Dennis Smith Jr.]] '20 (72% similar)
+
+**Career shape:** Charted 2 seasons (2024-25–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

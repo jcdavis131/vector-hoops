@@ -37,6 +37,32 @@ Closest career shapes in the era-normalized vector space:
 - [[enrique-freeman|Enrique Freeman]] — cosine 0.89
 - [[andrew-lang|Andrew Lang]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 9.7 pts · 7.6 reb · 1.4 ast · 2.3 blk per 100 (2012-13).
+
+**Strengths:**
+
+- Elite rim protection (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−2.6σ)
+- On-court net impact well below era (−1.7σ)
+
+**Comparables:**
+
+- [[sean-rooks|Sean Rooks]] '98 (95% similar)
+- [[michael-stewart|Michael Stewart]] '04 (92% similar)
+- [[rakeem-christmas|Rakeem Christmas]] '17 (90% similar)
+- [[nathan-mensah|Nathan Mensah]] '24 (89% similar)
+- [[enrique-freeman|Enrique Freeman]] '25 (89% similar)
+- [[andrew-lang|Andrew Lang]] '00 (88% similar)
+
+**Career shape:** Charted 4 seasons (2012-13–2015-16). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

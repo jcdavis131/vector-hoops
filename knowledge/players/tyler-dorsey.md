@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[cedi-osman|Cedi Osman]] — cosine 0.84
 - [[tracy-moore|Tracy Moore]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 19.8 pts · 6.3 reb · 3.9 ast · 0.8 stl per 100 (2017-18).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.2σ)
+- Finishing efficiency well below era (−1.1σ)
+
+**Comparables:**
+
+- [[johnny-juzang|Johnny Juzang]] '23 (91% similar)
+- [[adam-morrison|Adam Morrison]] '10 (89% similar)
+- [[damyean-dotson|Damyean Dotson]] '21 (86% similar)
+- [[lester-quinones|Lester Quinones]] '24 (84% similar)
+- [[cedi-osman|Cedi Osman]] '23 (84% similar)
+- [[tracy-moore|Tracy Moore]] '97 (83% similar)
+
+**Career shape:** Charted 2 seasons (2017-18–2018-19). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -34,6 +34,31 @@ Closest career shapes in the era-normalized vector space:
 - [[santi-aldama|Santi Aldama]] — cosine 0.79
 - [[anthony-tolliver|Anthony Tolliver]] — cosine 0.79
 
+## Scouting report
+
+**Play style:** PF · Three-Point Accuracy (Low Turnovers). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 17.2 pts · 10.3 reb · 2.7 ast · 1.3 blk per 100 (2025-26).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.2σ)
+
+**Comparables:**
+
+- [[trey-lyles|Trey Lyles]] '21 (83% similar)
+- [[jabari-smith-jr|Jabari Smith Jr.]] '23 (83% similar)
+- [[shawne-williams|Shawne Williams]] '12 (80% similar)
+- [[luke-babbitt|Luke Babbitt]] '11 (80% similar)
+- [[santi-aldama|Santi Aldama]] '22 (79% similar)
+- [[anthony-tolliver|Anthony Tolliver]] '09 (79% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

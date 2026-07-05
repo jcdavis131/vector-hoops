@@ -38,6 +38,32 @@ Closest career shapes in the era-normalized vector space:
 - [[randy-foye|Randy Foye]] — cosine 0.90
 - [[yogi-ferrell|Yogi Ferrell]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** PG · Three-Point Volume + Three-Point Accuracy. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 22.2 pts · 3.9 reb · 8.7 ast · 1.5 stl per 100 (2012-13).
+
+**Strengths:**
+
+- High-volume table-setter (+1.6σ vs era)
+- Reliable touch from the free-throw line (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.2σ)
+
+**Comparables:**
+
+- [[tyronn-lue|Tyronn Lue]] '05 (93% similar)
+- [[d-j-augustin|D.J. Augustin]] '12 (92% similar)
+- [[troy-hudson|Troy Hudson]] '06 (91% similar)
+- [[earl-boykins|Earl Boykins]] '00 (90% similar)
+- [[randy-foye|Randy Foye]] '12 (90% similar)
+- [[yogi-ferrell|Yogi Ferrell]] '19 (90% similar)
+
+**Career shape:** Charted 5 seasons (2012-13–2016-17). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

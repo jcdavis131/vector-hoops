@@ -39,6 +39,32 @@ Closest career shapes in the era-normalized vector space:
 - [[kevin-porter-jr|Kevin Porter Jr.]] — cosine 0.87
 - [[trae-young|Trae Young]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 20.9 pts · 7.8 reb · 10.8 ast · 1.8 stl per 100 (2025-26).
+
+**Strengths:**
+
+- High-volume table-setter (+2.3σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+3.2σ)
+- Free-throw touch well below era (−1.3σ)
+
+**Comparables:**
+
+- [[cade-cunningham|Cade Cunningham]] '26 (93% similar)
+- [[emmanuel-mudiay|Emmanuel Mudiay]] '16 (92% similar)
+- [[scoot-henderson|Scoot Henderson]] '24 (90% similar)
+- [[d-angelo-russell|D'Angelo Russell]] '19 (88% similar)
+- [[kevin-porter-jr|Kevin Porter Jr.]] '21 (87% similar)
+- [[trae-young|Trae Young]] '20 (87% similar)
+
+**Career shape:** Charted 6 seasons (2020-21–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Playmaking + Steals identity.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

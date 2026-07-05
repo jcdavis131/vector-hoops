@@ -44,6 +44,33 @@ Closest career shapes in the era-normalized vector space:
 - [[mike-bibby|Mike Bibby]] — cosine 0.88
 - [[jrue-holiday|Jrue Holiday]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 28.4 pts · 6.4 reb · 11.4 ast · 2.9 stl per 100 (1998-99).
+
+**Strengths:**
+
+- High-volume table-setter (+2.5σ vs era)
+- Heavy shot volume, focal scoring option (+1.9σ vs era)
+- Featured, high-usage scoring role (+1.8σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[terrell-brandon|Terrell Brandon]] '02 (90% similar)
+- [[tyrese-haliburton|Tyrese Haliburton]] '23 (90% similar)
+- [[mike-conley|Mike Conley]] '13 (90% similar)
+- [[tim-hardaway|Tim Hardaway]] '97 (89% similar)
+- [[mike-bibby|Mike Bibby]] '12 (88% similar)
+- [[jrue-holiday|Jrue Holiday]] '16 (88% similar)
+
+**Career shape:** Charted 11 seasons (1996-97–2006-07). Consistent Scoring Volume + Shot Volume profile across his career.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

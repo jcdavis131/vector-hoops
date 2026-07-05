@@ -37,6 +37,34 @@ Closest career shapes in the era-normalized vector space:
 - [[rusty-larue|Rusty LaRue]] — cosine 0.82
 - [[carl-thomas|Carl Thomas]] — cosine 0.80
 
+## Scouting report
+
+**Play style:** SG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 15.4 pts · 6.9 reb · 7.2 ast · 2.2 stl per 100 (2019-20).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+1.6σ vs era)
+- Active hands, disrupts passing lanes (+1.2σ vs era)
+- High-volume three-point shooter (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.2σ)
+- Turnover rate well above era (+1.6σ)
+
+**Comparables:**
+
+- [[sherron-collins|Sherron Collins]] '11 (93% similar)
+- [[egor-demin|Egor Dëmin]] '26 (83% similar)
+- [[marko-guduric|Marko Guduric]] '20 (82% similar)
+- [[isaiah-canaan|Isaiah Canaan]] '16 (82% similar)
+- [[rusty-larue|Rusty LaRue]] '99 (82% similar)
+- [[carl-thomas|Carl Thomas]] '97 (80% similar)
+
+**Career shape:** Charted 4 seasons (2018-19–2022-23). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Playmaking + Steals identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

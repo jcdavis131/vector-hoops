@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[ognjen-kuzmic|Ognjen Kuzmic]] — cosine 0.77
 - [[adreian-payne|Adreian Payne]] — cosine 0.76
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 16.8 pts · 10.5 reb · 3.7 ast · 1.8 stl per 100 (2022-23).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.4σ)
+- On-court net impact well below era (−1.5σ)
+
+**Comparables:**
+
+- [[greg-brown-iii|Greg Brown III]] '22 (87% similar)
+- [[viktor-khryapa|Viktor Khryapa]] '05 (84% similar)
+- [[marquese-chriss|Marquese Chriss]] '20 (83% similar)
+- [[qyntel-woods|Qyntel Woods]] '03 (78% similar)
+- [[ognjen-kuzmic|Ognjen Kuzmic]] '14 (77% similar)
+- [[adreian-payne|Adreian Payne]] '17 (76% similar)
+
+**Career shape:** Charted 3 seasons (2020-21–2022-23). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

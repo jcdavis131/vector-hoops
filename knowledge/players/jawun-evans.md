@@ -34,6 +34,31 @@ Closest career shapes in the era-normalized vector space:
 - [[randy-brown|Randy Brown]] — cosine 0.87
 - [[elijah-harkless|Elijah Harkless]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 13.9 pts · 5.0 reb · 6.0 ast · 2.2 stl per 100 (2017-18).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.5σ)
+
+**Comparables:**
+
+- [[jason-hart|Jason Hart]] '09 (90% similar)
+- [[frank-ntilikina|Frank Ntilikina]] '21 (90% similar)
+- [[ron-baker|Ron Baker]] '18 (88% similar)
+- [[daniel-ewing|Daniel Ewing]] '07 (87% similar)
+- [[randy-brown|Randy Brown]] '03 (87% similar)
+- [[elijah-harkless|Elijah Harkless]] '26 (86% similar)
+
+**Career shape:** Charted 1 season (2017-18). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

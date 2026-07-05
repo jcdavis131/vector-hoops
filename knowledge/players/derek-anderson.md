@@ -44,6 +44,32 @@ Closest career shapes in the era-normalized vector space:
 - [[tyrese-proctor|Tyrese Proctor]] — cosine 0.89
 - [[jamal-crawford|Jamal Crawford]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** SG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 23.1 pts · 6.6 reb · 5.5 ast · 2.2 stl per 100 (2000-01).
+
+**Strengths:**
+
+- Strong net on-court impact (+2.2σ vs era)
+- Draws contact, gets to the line often (+1.1σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[chauncey-billups|Chauncey Billups]] '06 (93% similar)
+- [[erick-strickland|Erick Strickland]] '01 (90% similar)
+- [[david-wesley|David Wesley]] '07 (90% similar)
+- [[darrick-martin|Darrick Martin]] '08 (90% similar)
+- [[tyrese-proctor|Tyrese Proctor]] '26 (89% similar)
+- [[jamal-crawford|Jamal Crawford]] '14 (88% similar)
+
+**Career shape:** Charted 11 seasons (1997-98–2007-08). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

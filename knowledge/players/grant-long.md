@@ -40,6 +40,32 @@ Closest career shapes in the era-normalized vector space:
 - [[j-r-reid|J.R. Reid]] — cosine 0.83
 - [[wes-iwundu|Wes Iwundu]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** PF · Three-Point Accuracy (Low Turnovers). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 7.7 pts · 8.9 reb · 2.7 ast · 1.0 stl per 100 (2002-03).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.1σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.9σ)
+- Scoring load well below era (−1.8σ)
+
+**Comparables:**
+
+- [[tremaine-fowlkes|Tremaine Fowlkes]] '04 (92% similar)
+- [[mark-hendrickson|Mark Hendrickson]] '98 (92% similar)
+- [[landry-fields|Landry Fields]] '15 (85% similar)
+- [[pape-sow|Pape Sow]] '05 (83% similar)
+- [[j-r-reid|J.R. Reid]] '00 (83% similar)
+- [[wes-iwundu|Wes Iwundu]] '21 (82% similar)
+
+**Career shape:** Charted 7 seasons (1996-97–2002-03). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

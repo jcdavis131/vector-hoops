@@ -37,6 +37,33 @@ Closest career shapes in the era-normalized vector space:
 - [[lauri-markkanen|Lauri Markkanen]] — cosine 0.81
 - [[nikola-mirotic|Nikola Mirotic]] — cosine 0.80
 
+## Scouting report
+
+**Play style:** C · Three-Point Volume + Three-Point Accuracy. Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 25.6 pts · 9.3 reb · 1.8 ast · 1.5 blk per 100 (2001-02).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.3σ vs era)
+- Featured, high-usage scoring role (+1.3σ vs era)
+- Strong net on-court impact (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.1σ)
+
+**Comparables:**
+
+- [[tyler-smith|Tyler Smith]] '25 (86% similar)
+- [[tim-thomas|Tim Thomas]] '06 (85% similar)
+- [[danny-granger|Danny Granger]] '09 (85% similar)
+- [[michael-porter-jr|Michael Porter Jr.]] '26 (83% similar)
+- [[lauri-markkanen|Lauri Markkanen]] '23 (81% similar)
+- [[nikola-mirotic|Nikola Mirotic]] '15 (80% similar)
+
+**Career shape:** Charted 4 seasons (2001-02–2004-05). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

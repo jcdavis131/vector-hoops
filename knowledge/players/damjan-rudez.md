@@ -36,6 +36,33 @@ Closest career shapes in the era-normalized vector space:
 - [[hollis-thompson|Hollis Thompson]] — cosine 0.89
 - [[vit-krejci|Vít Krejčí]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 12.8 pts · 3.9 reb · 3.1 ast · 1.9 stl per 100 (2016-17).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.4σ vs era)
+- Rarely turns the ball over (−1.2σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−4.0σ)
+- Rim pressure (free-throw generation) well below era (−1.8σ)
+
+**Comparables:**
+
+- [[yakhouba-diawara|Yakhouba Diawara]] '09 (92% similar)
+- [[antoine-wright|Antoine Wright]] '06 (92% similar)
+- [[doron-lamb|Doron Lamb]] '14 (90% similar)
+- [[deshawn-stevenson|DeShawn Stevenson]] '12 (90% similar)
+- [[hollis-thompson|Hollis Thompson]] '17 (89% similar)
+- [[vit-krejci|Vít Krejčí]] '23 (89% similar)
+
+**Career shape:** Charted 3 seasons (2014-15–2016-17). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

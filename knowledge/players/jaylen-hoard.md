@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jonathan-mogbo|Jonathan Mogbo]] — cosine 0.81
 - [[cristiano-felicio|Cristiano Felicio]] — cosine 0.80
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass + Defensive Glass. Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 16.6 pts · 9.3 reb · 3.4 ast · 1.9 stl per 100 (2020-21).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.8σ)
+- Three-point volume well below era (−1.4σ)
+
+**Comparables:**
+
+- [[thanasis-antetokounmpo|Thanasis Antetokounmpo]] '24 (86% similar)
+- [[freddie-gillespie|Freddie Gillespie]] '21 (81% similar)
+- [[anzejs-pasecniks|Anžejs Pasečņiks]] '20 (81% similar)
+- [[gerard-king|Gerard King]] '99 (81% similar)
+- [[jonathan-mogbo|Jonathan Mogbo]] '26 (81% similar)
+- [[cristiano-felicio|Cristiano Felicio]] '21 (80% similar)
+
+**Career shape:** Charted 1 season (2020-21). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

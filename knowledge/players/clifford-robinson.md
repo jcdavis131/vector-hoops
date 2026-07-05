@@ -44,6 +44,32 @@ Closest career shapes in the era-normalized vector space:
 - [[todd-day|Todd Day]] — cosine 0.75
 - [[jr-smith|JR Smith]] — cosine 0.74
 
+## Scouting report
+
+**Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 10.9 pts · 6.6 reb · 2.7 ast · 1.2 blk per 100 (2006-07).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.5σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.3σ)
+- On-court net impact well below era (−1.8σ)
+
+**Comparables:**
+
+- [[voshon-lenard|Voshon Lenard]] '97 (77% similar)
+- [[mickael-pietrus|Mickael Pietrus]] '11 (77% similar)
+- [[michael-dickerson|Michael Dickerson]] '99 (76% similar)
+- [[jason-richardson|Jason Richardson]] '06 (76% similar)
+- [[todd-day|Todd Day]] '01 (75% similar)
+- [[jr-smith|JR Smith]] '08 (74% similar)
+
+**Career shape:** Charted 11 seasons (1996-97–2006-07). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

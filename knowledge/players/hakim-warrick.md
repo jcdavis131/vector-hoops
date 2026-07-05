@@ -41,6 +41,32 @@ Closest career shapes in the era-normalized vector space:
 - [[johnathan-motley|Johnathan Motley]] — cosine 0.83
 - [[samardo-samuels|Samardo Samuels]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 20.1 pts · 9.2 reb · 2.6 ast · 1.3 stl per 100 (2012-13).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+2.1σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.0σ)
+- Three-point accuracy well below era (−1.5σ)
+
+**Comparables:**
+
+- [[ike-diogu|Ike Diogu]] '09 (90% similar)
+- [[reggie-slater|Reggie Slater]] '03 (84% similar)
+- [[zendon-hamilton|Zendon Hamilton]] '05 (83% similar)
+- [[rony-seikaly|Rony Seikaly]] '97 (83% similar)
+- [[johnathan-motley|Johnathan Motley]] '19 (83% similar)
+- [[samardo-samuels|Samardo Samuels]] '11 (82% similar)
+
+**Career shape:** Charted 8 seasons (2005-06–2012-13). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

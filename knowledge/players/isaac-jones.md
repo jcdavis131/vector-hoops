@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[kj-martin|KJ Martin]] — cosine 0.84
 - [[maceo-baston|Maceo Baston]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** PF · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 20.6 pts · 8.8 reb · 1.8 ast · 1.5 blk per 100 (2024-25).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+2.5σ vs era)
+
+**Areas of concern:**
+
+- Three-point volume well below era (−1.6σ)
+- Ball-hawking activity well below era (−1.4σ)
+
+**Comparables:**
+
+- [[kai-jones|Kai Jones]] '22 (87% similar)
+- [[damian-jones|Damian Jones]] '19 (85% similar)
+- [[jaxson-hayes|Jaxson Hayes]] '26 (85% similar)
+- [[tyler-cook|Tyler Cook]] '22 (85% similar)
+- [[kj-martin|KJ Martin]] '25 (84% similar)
+- [[maceo-baston|Maceo Baston]] '07 (84% similar)
+
+**Career shape:** Charted 1 season (2024-25). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

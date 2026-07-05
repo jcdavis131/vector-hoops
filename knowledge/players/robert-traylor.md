@@ -40,6 +40,33 @@ Closest career shapes in the era-normalized vector space:
 - [[moussa-diabate|Moussa Diabaté]] — cosine 0.84
 - [[renaldo-balkman|Renaldo Balkman]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** PF · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 17.2 pts · 14.0 reb · 2.8 ast · 2.8 blk per 100 (2001-02).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+4.0σ vs era)
+- Elite rim protection (+1.5σ vs era)
+- Relentless on the offensive glass (+1.2σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[paul-reed|Paul Reed]] '21 (91% similar)
+- [[andre-drummond|Andre Drummond]] '24 (87% similar)
+- [[day-ron-sharpe|Day'Ron Sharpe]] '24 (86% similar)
+- [[collin-murray-boyles|Collin Murray-Boyles]] '26 (85% similar)
+- [[moussa-diabate|Moussa Diabaté]] '25 (84% similar)
+- [[renaldo-balkman|Renaldo Balkman]] '08 (84% similar)
+
+**Career shape:** Charted 7 seasons (1998-99–2004-05). Entered as a Rim Protection + Offensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

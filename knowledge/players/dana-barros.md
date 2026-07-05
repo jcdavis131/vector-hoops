@@ -39,6 +39,33 @@ Closest career shapes in the era-normalized vector space:
 - [[mike-james|Mike James]] — cosine 0.92
 - [[randy-foye|Randy Foye]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 20.3 pts · 4.6 reb · 9.1 ast · 2.3 stl per 100 (1998-99).
+
+**Strengths:**
+
+- High-volume table-setter (+1.7σ vs era)
+- High-volume three-point shooter (+1.5σ vs era)
+- Reliable touch from the free-throw line (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Offensive-glass activity well below era (−1.2σ)
+
+**Comparables:**
+
+- [[jason-terry|Jason Terry]] '18 (94% similar)
+- [[luther-head|Luther Head]] '07 (93% similar)
+- [[bogdan-bogdanovic|Bogdan Bogdanović]] '21 (93% similar)
+- [[chris-whitney|Chris Whitney]] '04 (93% similar)
+- [[mike-james|Mike James]] '06 (92% similar)
+- [[randy-foye|Randy Foye]] '12 (92% similar)
+
+**Career shape:** Charted 6 seasons (1996-97–2001-02). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Playmaking + Steals identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

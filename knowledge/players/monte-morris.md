@@ -40,6 +40,32 @@ Closest career shapes in the era-normalized vector space:
 - [[alvin-williams|Alvin Williams]] — cosine 0.81
 - [[cam-spencer|Cam Spencer]] — cosine 0.80
 
+## Scouting report
+
+**Play style:** PG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 16.7 pts · 5.8 reb · 7.0 ast · 1.9 stl per 100 (2023-24).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.8σ vs era)
+- Strong net on-court impact (+1.4σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[george-hill|George Hill]] '22 (88% similar)
+- [[vinny-del-negro|Vinny Del Negro]] '01 (85% similar)
+- [[derek-fisher|Derek Fisher]] '02 (83% similar)
+- [[antonio-daniels|Antonio Daniels]] '04 (83% similar)
+- [[alvin-williams|Alvin Williams]] '01 (81% similar)
+- [[cam-spencer|Cam Spencer]] '26 (80% similar)
+
+**Career shape:** Charted 7 seasons (2018-19–2024-25). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

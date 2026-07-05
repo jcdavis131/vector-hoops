@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[ira-newble|Ira Newble]] — cosine 0.81
 - [[rayan-rupert|Rayan Rupert]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 13.7 pts · 8.1 reb · 2.3 ast · 1.8 stl per 100 (2020-21).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.2σ)
+- Scoring load well below era (−1.0σ)
+
+**Comparables:**
+
+- [[david-noel|David Noel]] '07 (86% similar)
+- [[drake-powell|Drake Powell]] '26 (86% similar)
+- [[jalen-mcdaniels|Jalen McDaniels]] '24 (85% similar)
+- [[sean-mcdermott|Sean McDermott]] '21 (83% similar)
+- [[ira-newble|Ira Newble]] '01 (81% similar)
+- [[rayan-rupert|Rayan Rupert]] '24 (81% similar)
+
+**Career shape:** Charted 2 seasons (2020-21–2022-23). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

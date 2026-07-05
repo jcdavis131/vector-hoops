@@ -39,6 +39,33 @@ Closest career shapes in the era-normalized vector space:
 - [[tayshaun-prince|Tayshaun Prince]] — cosine 0.79
 - [[amir-coffey|Amir Coffey]] — cosine 0.78
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 17.7 pts · 5.8 reb · 4.6 ast · 1.1 stl per 100 (1999-00).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+1.3σ vs era)
+- Rarely turns the ball over (−1.2σ vs era)
+- Knockdown three-point shooter (+1.2σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[harrison-barnes|Harrison Barnes]] '16 (86% similar)
+- [[terrence-shannon-jr|Terrence Shannon Jr.]] '26 (83% similar)
+- [[arron-afflalo|Arron Afflalo]] '18 (83% similar)
+- [[rui-hachimura|Rui Hachimura]] '26 (82% similar)
+- [[tayshaun-prince|Tayshaun Prince]] '16 (79% similar)
+- [[amir-coffey|Amir Coffey]] '23 (78% similar)
+
+**Career shape:** Charted 6 seasons (1996-97–2001-02). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

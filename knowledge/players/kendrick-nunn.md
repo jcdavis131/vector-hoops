@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[buddy-hield|Buddy Hield]] — cosine 0.91
 - [[eddie-house|Eddie House]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** PG · Three-Point Volume + Three-Point Accuracy. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 25.2 pts · 4.4 reb · 5.4 ast · 1.4 stl per 100 (2019-20).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.1σ)
+- Offensive-glass activity well below era (−1.0σ)
+
+**Comparables:**
+
+- [[bogdan-bogdanovic|Bogdan Bogdanović]] '21 (94% similar)
+- [[jimmer-fredette|Jimmer Fredette]] '14 (93% similar)
+- [[jared-mccain|Jared McCain]] '25 (93% similar)
+- [[gordan-giricek|Gordan Giricek]] '06 (92% similar)
+- [[buddy-hield|Buddy Hield]] '20 (91% similar)
+- [[eddie-house|Eddie House]] '06 (91% similar)
+
+**Career shape:** Charted 3 seasons (2019-20–2022-23). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

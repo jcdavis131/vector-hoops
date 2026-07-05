@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[darko-milicic|Darko Milicic]] — cosine 0.81
 - [[acie-earl|Acie Earl]] — cosine 0.80
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 19.1 pts · 9.8 reb · 2.1 ast · 2.4 blk per 100 (2007-08).
+
+**Strengths:**
+
+- Elite rim protection (+1.3σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.4σ)
+- Three-point accuracy well below era (−1.4σ)
+
+**Comparables:**
+
+- [[jajuan-johnson|JaJuan Johnson]] '12 (86% similar)
+- [[boniface-ndong|Boniface Ndong]] '06 (84% similar)
+- [[sharone-wright|Sharone Wright]] '97 (83% similar)
+- [[mouhamed-sene|Mouhamed Sene]] '07 (82% similar)
+- [[darko-milicic|Darko Milicic]] '04 (81% similar)
+- [[acie-earl|Acie Earl]] '97 (80% similar)
+
+**Career shape:** Charted 1 season (2007-08). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

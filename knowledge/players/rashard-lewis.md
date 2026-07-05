@@ -49,6 +49,32 @@ Closest career shapes in the era-normalized vector space:
 - [[trey-murphy-iii|Trey Murphy III]] — cosine 0.87
 - [[jason-richardson|Jason Richardson]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 14.9 pts · 7.9 reb · 1.3 ast · 2.5 stl per 100 (1998-99).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Turnover rate well above era (+3.1σ)
+- On-court net impact well below era (−2.4σ)
+
+**Comparables:**
+
+- [[tim-thomas|Tim Thomas]] '06 (92% similar)
+- [[cj-miles|CJ Miles]] '18 (90% similar)
+- [[peja-stojakovic|Peja Stojakovic]] '04 (90% similar)
+- [[dell-curry|Dell Curry]] '00 (88% similar)
+- [[trey-murphy-iii|Trey Murphy III]] '24 (87% similar)
+- [[jason-richardson|Jason Richardson]] '06 (87% similar)
+
+**Career shape:** Charted 16 seasons (1998-99–2013-14). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

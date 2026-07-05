@@ -41,6 +41,34 @@ Closest career shapes in the era-normalized vector space:
 - [[tyrese-maxey|Tyrese Maxey]] — cosine 0.94
 - [[jamal-crawford|Jamal Crawford]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** SG · Scoring Volume + Shot Volume. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 29.6 pts · 5.6 reb · 7.7 ast · 2.0 stl per 100 (1996-97).
+
+**Strengths:**
+
+- Featured, high-usage scoring role (+1.9σ vs era)
+- Draws contact, gets to the line often (+1.7σ vs era)
+- Heavy shot volume, focal scoring option (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.6σ)
+- Offensive-glass activity well below era (−1.1σ)
+
+**Comparables:**
+
+- [[mitch-richmond|Mitch Richmond]] '97 (97% similar)
+- [[jalen-rose|Jalen Rose]] '07 (95% similar)
+- [[ben-gordon|Ben Gordon]] '05 (95% similar)
+- [[bradley-beal|Bradley Beal]] '20 (94% similar)
+- [[tyrese-maxey|Tyrese Maxey]] '25 (94% similar)
+- [[jamal-crawford|Jamal Crawford]] '14 (93% similar)
+
+**Career shape:** Charted 8 seasons (1996-97–2004-05). Consistent Scoring Volume + Shot Volume profile across his career.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -45,6 +45,33 @@ Closest career shapes in the era-normalized vector space:
 - [[andrew-wiggins|Andrew Wiggins]] — cosine 0.67
 - [[jaren-jackson-jr|Jaren Jackson Jr.]] — cosine 0.65
 
+## Scouting report
+
+**Play style:** SF · Scoring Volume + Shot Volume. Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 31.9 pts · 6.6 reb · 4.0 ast · 1.5 blk per 100 (2020-21).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+2.3σ vs era)
+- Featured, high-usage scoring role (+1.8σ vs era)
+- Heavy shot volume, focal scoring option (+1.7σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.0σ)
+
+**Comparables:**
+
+- [[jonathan-bender|Jonathan Bender]] '04 (74% similar)
+- [[kirk-snyder|Kirk Snyder]] '05 (70% similar)
+- [[chris-crawford|Chris Crawford]] '98 (68% similar)
+- [[travis-outlaw|Travis Outlaw]] '06 (67% similar)
+- [[andrew-wiggins|Andrew Wiggins]] '17 (67% similar)
+- [[jaren-jackson-jr|Jaren Jackson Jr.]] '23 (65% similar)
+
+**Career shape:** Charted 12 seasons (2014-15–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

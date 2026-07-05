@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[daniel-ewing|Daniel Ewing]] — cosine 0.89
 - [[malcolm-lee|Malcolm Lee]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** SG · Playmaking + Steals. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 9.0 pts · 3.8 reb · 6.0 ast · 3.3 stl per 100 (2017-18).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.8σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.9σ)
+- Scoring load well below era (−1.7σ)
+
+**Comparables:**
+
+- [[frank-ntilikina|Frank Ntilikina]] '21 (92% similar)
+- [[garrett-temple|Garrett Temple]] '11 (92% similar)
+- [[facundo-campazzo|Facundo Campazzo]] '21 (91% similar)
+- [[randy-brown|Randy Brown]] '03 (90% similar)
+- [[daniel-ewing|Daniel Ewing]] '07 (89% similar)
+- [[malcolm-lee|Malcolm Lee]] '12 (88% similar)
+
+**Career shape:** Charted 2 seasons (2016-17–2017-18). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

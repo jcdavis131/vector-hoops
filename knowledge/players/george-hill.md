@@ -48,6 +48,33 @@ Closest career shapes in the era-normalized vector space:
 - [[terry-porter|Terry Porter]] — cosine 0.86
 - [[antonio-daniels|Antonio Daniels]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** PG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 12.6 pts · 5.8 reb · 4.5 ast · 1.6 stl per 100 (2021-22).
+
+**Strengths:**
+
+- Strong net on-court impact (+2.0σ vs era)
+- Reliable touch from the free-throw line (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.3σ)
+- Scoring load well below era (−1.2σ)
+
+**Comparables:**
+
+- [[derek-fisher|Derek Fisher]] '02 (91% similar)
+- [[monte-morris|Monte Morris]] '24 (88% similar)
+- [[jeff-hornacek|Jeff Hornacek]] '97 (87% similar)
+- [[mario-elie|Mario Elie]] '01 (87% similar)
+- [[terry-porter|Terry Porter]] '02 (86% similar)
+- [[antonio-daniels|Antonio Daniels]] '04 (85% similar)
+
+**Career shape:** Charted 15 seasons (2008-09–2022-23). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

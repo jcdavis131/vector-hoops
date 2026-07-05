@@ -40,6 +40,31 @@ Closest career shapes in the era-normalized vector space:
 - [[aaron-mckie|Aaron McKie]] — cosine 0.88
 - [[trevor-ariza|Trevor Ariza]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 16.8 pts · 5.6 reb · 4.9 ast · 3.0 stl per 100 (2011-12).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.2σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[brian-cardinal|Brian Cardinal]] '12 (89% similar)
+- [[billy-thomas|Billy Thomas]] '06 (88% similar)
+- [[jevon-carter|Jevon Carter]] '24 (88% similar)
+- [[ime-udoka|Ime Udoka]] '11 (88% similar)
+- [[aaron-mckie|Aaron McKie]] '05 (88% similar)
+- [[trevor-ariza|Trevor Ariza]] '22 (88% similar)
+
+**Career shape:** Charted 7 seasons (2011-12–2018-19). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

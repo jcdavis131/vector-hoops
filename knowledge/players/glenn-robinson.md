@@ -41,6 +41,33 @@ Closest career shapes in the era-normalized vector space:
 - [[keith-van-horn|Keith Van Horn]] — cosine 0.87
 - [[anthony-edwards|Anthony Edwards]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** SF · Scoring Volume + Shot Volume. Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 28.0 pts · 8.9 reb · 4.0 ast · 1.8 stl per 100 (2002-03).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+1.9σ vs era)
+- Featured, high-usage scoring role (+1.7σ vs era)
+- Reliable touch from the free-throw line (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.0σ)
+
+**Comparables:**
+
+- [[rudy-gay|Rudy Gay]] '14 (92% similar)
+- [[carmelo-anthony|Carmelo Anthony]] '13 (89% similar)
+- [[michael-beasley|Michael Beasley]] '16 (87% similar)
+- [[bradley-beal|Bradley Beal]] '20 (87% similar)
+- [[keith-van-horn|Keith Van Horn]] '99 (87% similar)
+- [[anthony-edwards|Anthony Edwards]] '25 (86% similar)
+
+**Career shape:** Charted 8 seasons (1996-97–2003-04). Consistent Scoring Volume + Shot Volume profile across his career.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

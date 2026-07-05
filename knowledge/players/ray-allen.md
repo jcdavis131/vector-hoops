@@ -51,6 +51,33 @@ Closest career shapes in the era-normalized vector space:
 - [[reggie-miller|Reggie Miller]] — cosine 0.90
 - [[kon-knueppel|Kon Knueppel]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** SG · Scoring Volume + Shot Volume. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 33.5 pts · 5.7 reb · 4.9 ast · 1.8 stl per 100 (2005-06).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.6σ vs era)
+- Featured, high-usage scoring role (+2.4σ vs era)
+- Heavy shot volume, focal scoring option (+2.2σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[desmond-bane|Desmond Bane]] '24 (96% similar)
+- [[mitch-richmond|Mitch Richmond]] '97 (92% similar)
+- [[cuttino-mobley|Cuttino Mobley]] '02 (92% similar)
+- [[klay-thompson|Klay Thompson]] '15 (90% similar)
+- [[reggie-miller|Reggie Miller]] '98 (90% similar)
+- [[kon-knueppel|Kon Knueppel]] '26 (90% similar)
+
+**Career shape:** Charted 18 seasons (1996-97–2013-14). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

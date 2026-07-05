@@ -43,6 +43,33 @@ Closest career shapes in the era-normalized vector space:
 - [[ryan-bowen|Ryan Bowen]] — cosine 0.79
 - [[reggie-jordan|Reggie Jordan]] — cosine 0.77
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 12.7 pts · 7.7 reb · 3.6 ast · 3.5 stl per 100 (1998-99).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.3σ vs era)
+- Rarely turns the ball over (−1.3σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.2σ)
+- Three-point accuracy well below era (−1.1σ)
+
+**Comparables:**
+
+- [[maurice-ndour|Maurice Ndour]] '17 (85% similar)
+- [[isaac-bonga|Isaac Bonga]] '19 (81% similar)
+- [[antonio-lang|Antonio Lang]] '97 (80% similar)
+- [[grant-long|Grant Long]] '03 (80% similar)
+- [[ryan-bowen|Ryan Bowen]] '09 (79% similar)
+- [[reggie-jordan|Reggie Jordan]] '97 (77% similar)
+
+**Career shape:** Charted 10 seasons (1996-97–2005-06). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

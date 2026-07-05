@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[amile-jefferson|Amile Jefferson]] — cosine 0.84
 - [[gheorghe-muresan|Gheorghe Muresan]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 17.0 pts · 13.5 reb · 1.5 ast · 2.0 blk per 100 (2014-15).
+
+**Strengths:**
+
+- Strong net on-court impact (+1.2σ vs era)
+- Relentless on the offensive glass (+1.1σ vs era)
+- Elite rim protection (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.2σ)
+- Ball-hawking activity well below era (−1.1σ)
+
+**Comparables:**
+
+- [[dale-davis|Dale Davis]] '06 (88% similar)
+- [[festus-ezeli|Festus Ezeli]] '16 (87% similar)
+- [[greg-ostertag|Greg Ostertag]] '99 (86% similar)
+- [[othello-hunter|Othello Hunter]] '09 (85% similar)
+- [[amile-jefferson|Amile Jefferson]] '20 (84% similar)
+- [[gheorghe-muresan|Gheorghe Muresan]] '97 (84% similar)
+
+**Career shape:** Charted 1 season (2014-15). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

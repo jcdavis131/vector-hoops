@@ -36,6 +36,33 @@ Closest career shapes in the era-normalized vector space:
 - [[luke-babbitt|Luke Babbitt]] — cosine 0.90
 - [[max-strus|Max Strus]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 14.5 pts · 7.6 reb · 3.1 ast · 0.7 stl per 100 (1999-00).
+
+**Strengths:**
+
+- High-volume three-point shooter (+3.8σ vs era)
+- Rarely turns the ball over (−1.3σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.6σ)
+- Free-throw touch well below era (−2.0σ)
+
+**Comparables:**
+
+- [[daequan-cook|Daequan Cook]] '11 (93% similar)
+- [[matt-bullard|Matt Bullard]] '01 (92% similar)
+- [[lindy-waters-iii|Lindy Waters III]] '23 (91% similar)
+- [[cartier-martin|Cartier Martin]] '15 (91% similar)
+- [[luke-babbitt|Luke Babbitt]] '11 (90% similar)
+- [[max-strus|Max Strus]] '21 (89% similar)
+
+**Career shape:** Charted 3 seasons (1997-98–1999-00). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

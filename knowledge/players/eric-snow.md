@@ -45,6 +45,33 @@ Closest career shapes in the era-normalized vector space:
 - [[kevin-ollie|Kevin Ollie]] — cosine 0.88
 - [[jordan-mclaughlin|Jordan McLaughlin]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** PG · Three-Point Accuracy (Low Turnovers). Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 3.7 pts · 3.4 reb · 7.1 ast · 1.7 stl per 100 (2007-08).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.2σ vs era)
+- High-volume table-setter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−4.0σ)
+- Scoring load well below era (−2.5σ)
+
+**Comparables:**
+
+- [[tomas-satoransky|Tomas Satoransky]] '22 (91% similar)
+- [[anthony-carter|Anthony Carter]] '03 (88% similar)
+- [[jamal-shead|Jamal Shead]] '26 (88% similar)
+- [[cory-joseph|Cory Joseph]] '24 (88% similar)
+- [[kevin-ollie|Kevin Ollie]] '10 (88% similar)
+- [[jordan-mclaughlin|Jordan McLaughlin]] '24 (87% similar)
+
+**Career shape:** Charted 12 seasons (1996-97–2007-08). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

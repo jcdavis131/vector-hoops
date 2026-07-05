@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[loren-woods|Loren Woods]] — cosine 0.82
 - [[joakim-noah|Joakim Noah]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 16.4 pts · 14.6 reb · 3.0 ast · 2.1 blk per 100 (2020-21).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+2.6σ vs era)
+- Elite rim protection (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Three-point volume well below era (−1.4σ)
+- Three-point accuracy well below era (−1.1σ)
+
+**Comparables:**
+
+- [[orlando-robinson|Orlando Robinson]] '23 (86% similar)
+- [[nazr-mohammed|Nazr Mohammed]] '15 (85% similar)
+- [[jayson-williams|Jayson Williams]] '98 (83% similar)
+- [[taj-gibson|Taj Gibson]] '21 (82% similar)
+- [[loren-woods|Loren Woods]] '06 (82% similar)
+- [[joakim-noah|Joakim Noah]] '17 (81% similar)
+
+**Career shape:** Charted 1 season (2020-21). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

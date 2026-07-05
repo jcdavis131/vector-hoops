@@ -37,6 +37,33 @@ Closest career shapes in the era-normalized vector space:
 - [[anthony-gill|Anthony Gill]] — cosine 0.77
 - [[josh-green|Josh Green]] — cosine 0.74
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 21.6 pts · 7.2 reb · 3.6 ast · 1.5 stl per 100 (2024-25).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+1.5σ vs era)
+- Strong net on-court impact (+1.3σ vs era)
+- Rarely turns the ball over (−1.1σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[terance-mann|Terance Mann]] '20 (83% similar)
+- [[david-wood|David Wood]] '97 (81% similar)
+- [[isaac-okoro|Isaac Okoro]] '25 (81% similar)
+- [[greg-minor|Greg Minor]] '97 (78% similar)
+- [[anthony-gill|Anthony Gill]] '22 (77% similar)
+- [[josh-green|Josh Green]] '26 (74% similar)
+
+**Career shape:** Charted 4 seasons (2022-23–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

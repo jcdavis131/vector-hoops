@@ -39,6 +39,33 @@ Closest career shapes in the era-normalized vector space:
 - [[antonio-mcdyess|Antonio McDyess]] — cosine 0.73
 - [[kevin-garnett|Kevin Garnett]] — cosine 0.72
 
+## Scouting report
+
+**Play style:** PF · Defensive Glass + Rim Pressure (Fts). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 27.1 pts · 11.3 reb · 4.0 ast · 2.0 stl per 100 (1997-98).
+
+**Strengths:**
+
+- Featured, high-usage scoring role (+1.4σ vs era)
+- Strong net on-court impact (+1.3σ vs era)
+- Efficient finisher inside the arc (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.3σ)
+
+**Comparables:**
+
+- [[kenyon-martin|Kenyon Martin]] '13 (84% similar)
+- [[brandon-clarke|Brandon Clarke]] '25 (80% similar)
+- [[nene|Nene]] '19 (78% similar)
+- [[hakeem-olajuwon|Hakeem Olajuwon]] '97 (77% similar)
+- [[antonio-mcdyess|Antonio McDyess]] '01 (73% similar)
+- [[kevin-garnett|Kevin Garnett]] '04 (72% similar)
+
+**Career shape:** Charted 6 seasons (1996-97–2001-02). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

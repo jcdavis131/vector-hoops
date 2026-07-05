@@ -42,6 +42,33 @@ Closest career shapes in the era-normalized vector space:
 - [[hakeem-olajuwon|Hakeem Olajuwon]] — cosine 0.78
 - [[alperen-sengun|Alperen Sengun]] — cosine 0.78
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 28.8 pts · 14.2 reb · 2.9 ast · 2.9 stl per 100 (2012-13).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.1σ vs era)
+- Featured, high-usage scoring role (+1.7σ vs era)
+- Relentless on the offensive glass (+1.7σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.4σ)
+
+**Comparables:**
+
+- [[anthony-randolph|Anthony Randolph]] '13 (89% similar)
+- [[sean-may|Sean May]] '09 (81% similar)
+- [[tyrus-thomas|Tyrus Thomas]] '07 (79% similar)
+- [[jusuf-nurkic|Jusuf Nurkić]] '16 (78% similar)
+- [[hakeem-olajuwon|Hakeem Olajuwon]] '97 (78% similar)
+- [[alperen-sengun|Alperen Sengun]] '25 (78% similar)
+
+**Career shape:** Charted 9 seasons (2005-06–2013-14). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

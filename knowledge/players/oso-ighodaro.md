@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[dereck-lively-ii|Dereck Lively II]] — cosine 0.87
 - [[greg-smith|Greg Smith]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** PF · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 14.4 pts · 11.3 reb · 5.0 ast · 2.0 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+2.4σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.9σ)
+- Free-throw touch well below era (−2.7σ)
+
+**Comparables:**
+
+- [[miles-plumlee|Miles Plumlee]] '19 (92% similar)
+- [[jericho-sims|Jericho Sims]] '22 (91% similar)
+- [[gustavo-ayon|Gustavo Ayon]] '14 (88% similar)
+- [[jan-vesely|Jan Vesely]] '14 (88% similar)
+- [[dereck-lively-ii|Dereck Lively II]] '25 (87% similar)
+- [[greg-smith|Greg Smith]] '16 (87% similar)
+
+**Career shape:** Charted 2 seasons (2024-25–2025-26). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

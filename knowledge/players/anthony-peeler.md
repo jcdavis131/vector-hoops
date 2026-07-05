@@ -42,6 +42,32 @@ Closest career shapes in the era-normalized vector space:
 - [[patty-mills|Patty Mills]] — cosine 0.92
 - [[ian-clark|Ian Clark]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 24.0 pts · 5.6 reb · 5.9 ast · 2.4 stl per 100 (1996-97).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+1.7σ vs era)
+- High-volume three-point shooter (+1.4σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.3σ)
+
+**Comparables:**
+
+- [[kevin-huerter|Kevin Huerter]] '23 (93% similar)
+- [[luther-head|Luther Head]] '07 (93% similar)
+- [[eddie-house|Eddie House]] '06 (93% similar)
+- [[matt-maloney|Matt Maloney]] '00 (92% similar)
+- [[patty-mills|Patty Mills]] '14 (92% similar)
+- [[ian-clark|Ian Clark]] '15 (90% similar)
+
+**Career shape:** Charted 9 seasons (1996-97–2004-05). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

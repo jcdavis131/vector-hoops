@@ -36,6 +36,33 @@ Closest career shapes in the era-normalized vector space:
 - [[jaren-jackson-jr|Jaren Jackson Jr.]] — cosine 0.85
 - [[anthony-davis|Anthony Davis]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 40.2 pts · 18.5 reb · 5.0 ast · 5.0 blk per 100 (2025-26).
+
+**Strengths:**
+
+- Elite rim protection (+4.0σ vs era)
+- Strong presence on the defensive glass (+3.8σ vs era)
+- Featured, high-usage scoring role (+2.9σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.3σ)
+
+**Comparables:**
+
+- [[kristaps-porzingis|Kristaps Porziņģis]] '18 (87% similar)
+- [[josh-smith|Josh Smith]] '10 (87% similar)
+- [[joel-embiid|Joel Embiid]] '17 (86% similar)
+- [[naz-reid|Naz Reid]] '21 (85% similar)
+- [[jaren-jackson-jr|Jaren Jackson Jr.]] '23 (85% similar)
+- [[anthony-davis|Anthony Davis]] '15 (85% similar)
+
+**Career shape:** Charted 3 seasons (2023-24–2025-26). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

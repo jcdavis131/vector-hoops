@@ -47,6 +47,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jameer-nelson|Jameer Nelson]] — cosine 0.92
 - [[damon-stoudamire|Damon Stoudamire]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 25.7 pts · 5.9 reb · 13.1 ast · 1.4 stl per 100 (2018-19).
+
+**Strengths:**
+
+- High-volume table-setter (+3.3σ vs era)
+- Heavy shot volume, focal scoring option (+1.7σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.0σ)
+
+**Comparables:**
+
+- [[reggie-jackson|Reggie Jackson]] '16 (94% similar)
+- [[greivis-vasquez|Greivis Vasquez]] '13 (93% similar)
+- [[nick-van-exel|Nick Van Exel]] '02 (93% similar)
+- [[mo-williams|Mo Williams]] '11 (92% similar)
+- [[jameer-nelson|Jameer Nelson]] '09 (92% similar)
+- [[damon-stoudamire|Damon Stoudamire]] '97 (91% similar)
+
+**Career shape:** Charted 14 seasons (2006-07–2019-20). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

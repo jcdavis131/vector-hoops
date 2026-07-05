@@ -36,6 +36,33 @@ Closest career shapes in the era-normalized vector space:
 - [[matisse-thybulle|Matisse Thybulle]] — cosine 0.67
 - [[andrei-kirilenko|Andrei Kirilenko]] — cosine 0.65
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 22.9 pts · 7.8 reb · 3.7 ast · 2.3 stl per 100 (2023-24).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.6σ vs era)
+- Elite rim protection (+1.5σ vs era)
+- Strong net on-court impact (+1.5σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[robert-covington|Robert Covington]] '24 (76% similar)
+- [[keon-ellis|Keon Ellis]] '25 (74% similar)
+- [[javonte-green|Javonte Green]] '26 (70% similar)
+- [[jonathan-isaac|Jonathan Isaac]] '24 (70% similar)
+- [[matisse-thybulle|Matisse Thybulle]] '21 (67% similar)
+- [[andrei-kirilenko|Andrei Kirilenko]] '05 (65% similar)
+
+**Career shape:** Charted 3 seasons (2023-24–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

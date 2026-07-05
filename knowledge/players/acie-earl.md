@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[darko-milicic|Darko Milicic]] — cosine 0.77
 - [[dalibor-bagaric|Dalibor Bagaric]] — cosine 0.76
 
+## Scouting report
+
+**Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 19.0 pts · 9.7 reb · 2.0 ast · 2.8 blk per 100 (1996-97).
+
+**Strengths:**
+
+- Elite rim protection (+1.7σ vs era)
+- Draws contact, gets to the line often (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.4σ)
+- Finishing efficiency well below era (−1.2σ)
+
+**Comparables:**
+
+- [[mouhamed-sene|Mouhamed Sene]] '07 (88% similar)
+- [[sharone-wright|Sharone Wright]] '97 (83% similar)
+- [[jermareo-davidson|Jermareo Davidson]] '08 (80% similar)
+- [[stromile-swift|Stromile Swift]] '09 (77% similar)
+- [[darko-milicic|Darko Milicic]] '04 (77% similar)
+- [[dalibor-bagaric|Dalibor Bagaric]] '01 (76% similar)
+
+**Career shape:** Charted 1 season (1996-97). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

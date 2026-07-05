@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[tariq-abdul-wahad|Tariq Abdul-Wahad]] — cosine 0.74
 - [[johnny-o-bryant-iii|Johnny O'Bryant III]] — cosine 0.73
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 15.8 pts · 7.7 reb · 3.6 ast · 1.5 stl per 100 (1998-99).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.1σ)
+- Free-throw touch well below era (−1.1σ)
+
+**Comparables:**
+
+- [[xavier-henry|Xavier Henry]] '13 (79% similar)
+- [[felipe-lopez|Felipe Lopez]] '00 (78% similar)
+- [[lindell-wigginton|Lindell Wigginton]] '22 (75% similar)
+- [[dajuan-summers|DaJuan Summers]] '11 (74% similar)
+- [[tariq-abdul-wahad|Tariq Abdul-Wahad]] '01 (74% similar)
+- [[johnny-o-bryant-iii|Johnny O'Bryant III]] '16 (73% similar)
+
+**Career shape:** Charted 1 season (1998-99). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

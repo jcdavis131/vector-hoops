@@ -43,6 +43,33 @@ Closest career shapes in the era-normalized vector space:
 - [[norman-powell|Norman Powell]] — cosine 0.87
 - [[tyrese-maxey|Tyrese Maxey]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** SF · Scoring Volume + Shot Volume. Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 35.3 pts · 4.8 reb · 3.1 ast · 1.6 stl per 100 (2006-07).
+
+**Strengths:**
+
+- Featured, high-usage scoring role (+2.7σ vs era)
+- Heavy shot volume, focal scoring option (+2.2σ vs era)
+- Draws contact, gets to the line often (+2.1σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[vince-carter|Vince Carter]] '01 (91% similar)
+- [[mitch-richmond|Mitch Richmond]] '97 (91% similar)
+- [[kevin-martin|Kevin Martin]] '11 (91% similar)
+- [[danny-granger|Danny Granger]] '09 (87% similar)
+- [[norman-powell|Norman Powell]] '25 (87% similar)
+- [[tyrese-maxey|Tyrese Maxey]] '25 (87% similar)
+
+**Career shape:** Charted 10 seasons (2001-02–2011-12). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

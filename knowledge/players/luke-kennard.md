@@ -42,6 +42,34 @@ Closest career shapes in the era-normalized vector space:
 - [[mike-dunleavy|Mike Dunleavy]] — cosine 0.90
 - [[sam-merrill|Sam Merrill]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 19.8 pts · 5.7 reb · 3.3 ast · 1.2 stl per 100 (2022-23).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+1.7σ vs era)
+- Knockdown three-point shooter (+1.4σ vs era)
+- Strong net on-court impact (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.0σ)
+- Offensive-glass activity well below era (−1.0σ)
+
+**Comparables:**
+
+- [[seth-curry|Seth Curry]] '21 (94% similar)
+- [[steve-kerr|Steve Kerr]] '97 (93% similar)
+- [[kyle-korver|Kyle Korver]] '04 (91% similar)
+- [[mike-penberthy|Mike Penberthy]] '01 (90% similar)
+- [[mike-dunleavy|Mike Dunleavy]] '09 (90% similar)
+- [[sam-merrill|Sam Merrill]] '24 (90% similar)
+
+**Career shape:** Charted 9 seasons (2017-18–2025-26). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[neemias-queta|Neemias Queta]] — cosine 0.84
 - [[anderson-varejao|Anderson Varejao]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** PF · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 18.1 pts · 14.9 reb · 0.5 ast · 2.3 stl per 100 (2020-21).
+
+**Strengths:**
+
+- Strong net on-court impact (+3.0σ vs era)
+- Relentless on the offensive glass (+2.1σ vs era)
+- Efficient finisher inside the arc (+1.7σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.8σ)
+- Free-throw touch well below era (−2.7σ)
+
+**Comparables:**
+
+- [[steven-adams|Steven Adams]] '23 (90% similar)
+- [[dakari-johnson|Dakari Johnson]] '18 (88% similar)
+- [[kenyon-martin|Kenyon Martin]] '13 (85% similar)
+- [[johnathan-williams|Johnathan Williams]] '19 (85% similar)
+- [[neemias-queta|Neemias Queta]] '24 (84% similar)
+- [[anderson-varejao|Anderson Varejao]] '05 (84% similar)
+
+**Career shape:** Charted 1 season (2020-21). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

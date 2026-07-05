@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[chucky-brown|Chucky Brown]] — cosine 0.87
 - [[malik-allen|Malik Allen]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass + Defensive Glass. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 12.6 pts · 10.9 reb · 1.4 ast · 0.9 blk per 100 (2018-19).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.4σ vs era)
+
+**Areas of concern:**
+
+- Scoring load well below era (−1.2σ)
+- Rim pressure (free-throw generation) well below era (−1.2σ)
+
+**Comparables:**
+
+- [[mark-bradtke|Mark Bradtke]] '97 (90% similar)
+- [[joe-kleine|Joe Kleine]] '97 (90% similar)
+- [[nassir-little|Nassir Little]] '20 (89% similar)
+- [[terence-morris|Terence Morris]] '06 (88% similar)
+- [[chucky-brown|Chucky Brown]] '02 (87% similar)
+- [[malik-allen|Malik Allen]] '11 (86% similar)
+
+**Career shape:** Charted 1 season (2018-19). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

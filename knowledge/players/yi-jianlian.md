@@ -38,6 +38,31 @@ Closest career shapes in the era-normalized vector space:
 - [[chris-anstey|Chris Anstey]] — cosine 0.75
 - [[jarell-martin|Jarell Martin]] — cosine 0.74
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 18.2 pts · 11.3 reb · 1.2 ast · 1.8 blk per 100 (2011-12).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.8σ)
+
+**Comparables:**
+
+- [[earl-clark|Earl Clark]] '12 (81% similar)
+- [[pat-burke|Pat Burke]] '07 (78% similar)
+- [[sean-marks|Sean Marks]] '11 (77% similar)
+- [[darius-bazley|Darius Bazley]] '23 (76% similar)
+- [[chris-anstey|Chris Anstey]] '00 (75% similar)
+- [[jarell-martin|Jarell Martin]] '16 (74% similar)
+
+**Career shape:** Charted 5 seasons (2007-08–2011-12). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -36,6 +36,33 @@ Closest career shapes in the era-normalized vector space:
 - [[chris-robinson|Chris Robinson]] — cosine 0.84
 - [[james-bouknight|James Bouknight]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 18.5 pts · 5.3 reb · 1.7 ast · 1.5 stl per 100 (2003-04).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.2σ vs era)
+- Heavy shot volume, focal scoring option (+1.2σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.2σ)
+- Free-throw touch well below era (−1.9σ)
+
+**Comparables:**
+
+- [[gerald-wilkins|Gerald Wilkins]] '98 (88% similar)
+- [[tamar-slay|Tamar Slay]] '04 (86% similar)
+- [[kevin-murphy|Kevin Murphy]] '13 (85% similar)
+- [[lawrence-moten|Lawrence Moten]] '97 (84% similar)
+- [[chris-robinson|Chris Robinson]] '98 (84% similar)
+- [[james-bouknight|James Bouknight]] '22 (82% similar)
+
+**Career shape:** Charted 3 seasons (2001-02–2003-04). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

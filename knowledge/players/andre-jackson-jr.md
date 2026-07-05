@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[cody-martin|Cody Martin]] — cosine 0.81
 - [[erik-daniels|Erik Daniels]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass + Defensive Glass. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 11.1 pts · 8.7 reb · 4.0 ast · 1.6 stl per 100 (2024-25).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.1σ)
+- Shot volume well below era (−1.5σ)
+
+**Comparables:**
+
+- [[jared-jeffries|Jared Jeffries]] '11 (84% similar)
+- [[justin-minaya|Justin Minaya]] '25 (83% similar)
+- [[kris-murray|Kris Murray]] '25 (82% similar)
+- [[daniel-hamilton|Daniel Hamilton]] '19 (82% similar)
+- [[cody-martin|Cody Martin]] '21 (81% similar)
+- [[erik-daniels|Erik Daniels]] '05 (81% similar)
+
+**Career shape:** Charted 3 seasons (2023-24–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

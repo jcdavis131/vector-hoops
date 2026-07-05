@@ -40,6 +40,31 @@ Closest career shapes in the era-normalized vector space:
 - [[terrance-ferguson|Terrance Ferguson]] — cosine 0.87
 - [[reggie-bullock-jr|Reggie Bullock Jr.]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 17.9 pts · 6.8 reb · 2.0 ast · 1.0 stl per 100 (2018-19).
+
+**Strengths:**
+
+- Strong net on-court impact (+1.5σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[casey-jacobsen|Casey Jacobsen]] '08 (93% similar)
+- [[kyle-singler|Kyle Singler]] '17 (91% similar)
+- [[axel-toupane|Axel Toupane]] '16 (87% similar)
+- [[anthony-tolliver|Anthony Tolliver]] '09 (87% similar)
+- [[terrance-ferguson|Terrance Ferguson]] '20 (87% similar)
+- [[reggie-bullock-jr|Reggie Bullock Jr.]] '24 (87% similar)
+
+**Career shape:** Charted 7 seasons (2017-18–2023-24). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

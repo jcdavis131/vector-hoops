@@ -43,6 +43,34 @@ Closest career shapes in the era-normalized vector space:
 - [[clint-capela|Clint Capela]] — cosine 0.94
 - [[tarik-black|Tarik Black]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 22.2 pts · 15.4 reb · 4.6 ast · 2.9 blk per 100 (2021-22).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+4.0σ vs era)
+- Elite rim protection (+2.4σ vs era)
+- Relentless on the offensive glass (+2.4σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.1σ)
+- Three-point volume well below era (−1.8σ)
+
+**Comparables:**
+
+- [[dereck-lively-ii|Dereck Lively II]] '25 (96% similar)
+- [[trayce-jackson-davis|Trayce Jackson-Davis]] '26 (95% similar)
+- [[nic-claxton|Nic Claxton]] '23 (95% similar)
+- [[mitchell-robinson|Mitchell Robinson]] '26 (94% similar)
+- [[clint-capela|Clint Capela]] '21 (94% similar)
+- [[tarik-black|Tarik Black]] '18 (93% similar)
+
+**Career shape:** Charted 10 seasons (2016-17–2025-26). Entered as a Rim Protection + Offensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

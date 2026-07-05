@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[sekou-doumbouya|Sekou Doumbouya]] — cosine 0.80
 - [[daquan-jeffries|DaQuan Jeffries]] — cosine 0.79
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 15.1 pts · 3.9 reb · 2.4 ast · 0.3 blk per 100 (2007-08).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.1σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−2.5σ)
+- Finishing efficiency well below era (−1.9σ)
+
+**Comparables:**
+
+- [[jahmi-us-ramsey|Jahmi'us Ramsey]] '22 (89% similar)
+- [[dajuan-summers|DaJuan Summers]] '11 (88% similar)
+- [[kevin-murphy|Kevin Murphy]] '13 (87% similar)
+- [[adam-morrison|Adam Morrison]] '10 (82% similar)
+- [[sekou-doumbouya|Sekou Doumbouya]] '20 (80% similar)
+- [[daquan-jeffries|DaQuan Jeffries]] '24 (79% similar)
+
+**Career shape:** Charted 3 seasons (2006-07–2008-09). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

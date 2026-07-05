@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[malaki-branham|Malaki Branham]] — cosine 0.81
 - [[johnny-newman|Johnny Newman]] — cosine 0.80
 
+## Scouting report
+
+**Play style:** PG · Three-Point Volume + Three-Point Accuracy. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 22.5 pts · 5.2 reb · 2.3 ast · 1.6 stl per 100 (2000-01).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+1.1σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.5σ)
+- Defensive rebounding well below era (−1.1σ)
+
+**Comparables:**
+
+- [[ricky-pierce|Ricky Pierce]] '98 (93% similar)
+- [[gerald-henderson|Gerald Henderson]] '13 (91% similar)
+- [[ron-mercer|Ron Mercer]] '05 (84% similar)
+- [[chris-crawford|Chris Crawford]] '98 (82% similar)
+- [[malaki-branham|Malaki Branham]] '24 (81% similar)
+- [[johnny-newman|Johnny Newman]] '98 (80% similar)
+
+**Career shape:** Charted 3 seasons (2000-01–2002-03). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

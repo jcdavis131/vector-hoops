@@ -45,6 +45,33 @@ Closest career shapes in the era-normalized vector space:
 - [[john-starks|John Starks]] — cosine 0.92
 - [[leandro-barbosa|Leandro Barbosa]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 18.0 pts · 4.7 reb · 3.9 ast · 2.4 stl per 100 (2023-24).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.6σ vs era)
+- High-volume three-point shooter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.4σ)
+- On-court net impact well below era (−1.4σ)
+
+**Comparables:**
+
+- [[o-j-mayo|O.J. Mayo]] '14 (94% similar)
+- [[eric-gordon|Eric Gordon]] '13 (93% similar)
+- [[jamal-crawford|Jamal Crawford]] '14 (93% similar)
+- [[tony-delk|Tony Delk]] '05 (92% similar)
+- [[john-starks|John Starks]] '00 (92% similar)
+- [[leandro-barbosa|Leandro Barbosa]] '04 (92% similar)
+
+**Career shape:** Charted 12 seasons (2012-13–2023-24). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

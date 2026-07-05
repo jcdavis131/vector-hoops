@@ -51,6 +51,33 @@ Closest career shapes in the era-normalized vector space:
 - [[arvydas-sabonis|Arvydas Sabonis]] — cosine 0.68
 - [[shawn-marion|Shawn Marion]] — cosine 0.67
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 21.5 pts · 14.9 reb · 3.5 ast · 1.7 blk per 100 (2009-10).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+4.0σ vs era)
+- Strong presence on the defensive glass (+1.6σ vs era)
+- Strong net on-court impact (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Three-point volume well below era (−1.1σ)
+
+**Comparables:**
+
+- [[serge-ibaka|Serge Ibaka]] '12 (80% similar)
+- [[kel-el-ware|Kel'el Ware]] '26 (73% similar)
+- [[kurt-thomas|Kurt Thomas]] '13 (73% similar)
+- [[chet-holmgren|Chet Holmgren]] '25 (71% similar)
+- [[arvydas-sabonis|Arvydas Sabonis]] '97 (68% similar)
+- [[shawn-marion|Shawn Marion]] '06 (67% similar)
+
+**Career shape:** Charted 18 seasons (2007-08–2025-26). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

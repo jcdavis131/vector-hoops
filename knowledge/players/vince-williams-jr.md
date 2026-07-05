@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[gal-mekel|Gal Mekel]] — cosine 0.77
 - [[taurean-green|Taurean Green]] — cosine 0.77
 
+## Scouting report
+
+**Play style:** SG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 17.2 pts · 8.8 reb · 9.5 ast · 1.7 stl per 100 (2025-26).
+
+**Strengths:**
+
+- High-volume table-setter (+1.8σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.5σ)
+- Turnover rate well above era (+1.4σ)
+
+**Comparables:**
+
+- [[brian-shaw|Brian Shaw]] '02 (80% similar)
+- [[chris-chiozza|Chris Chiozza]] '22 (80% similar)
+- [[terrel-harris|Terrel Harris]] '13 (79% similar)
+- [[frank-williams|Frank Williams]] '03 (78% similar)
+- [[gal-mekel|Gal Mekel]] '14 (77% similar)
+- [[taurean-green|Taurean Green]] '08 (77% similar)
+
+**Career shape:** Charted 3 seasons (2023-24–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Playmaking + Steals identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

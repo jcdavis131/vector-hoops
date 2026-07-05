@@ -46,6 +46,32 @@ Closest career shapes in the era-normalized vector space:
 - [[muggsy-bogues|Muggsy Bogues]] — cosine 0.78
 - [[brad-wanamaker|Brad Wanamaker]] — cosine 0.77
 
+## Scouting report
+
+**Play style:** PG · Offensive Glass + Defensive Glass. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 12.7 pts · 5.8 reb · 5.6 ast · 1.5 stl per 100 (2018-19).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.8σ)
+- Three-point volume well below era (−1.7σ)
+
+**Comparables:**
+
+- [[avery-johnson|Avery Johnson]] '99 (83% similar)
+- [[tomas-satoransky|Tomas Satoransky]] '22 (83% similar)
+- [[trent-forrest|Trent Forrest]] '23 (83% similar)
+- [[eric-snow|Eric Snow]] '08 (80% similar)
+- [[muggsy-bogues|Muggsy Bogues]] '97 (78% similar)
+- [[brad-wanamaker|Brad Wanamaker]] '22 (77% similar)
+
+**Career shape:** Charted 13 seasons (2004-05–2018-19). Entered as a Playmaking + Steals profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

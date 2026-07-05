@@ -45,6 +45,33 @@ Closest career shapes in the era-normalized vector space:
 - [[bernard-james|Bernard James]] — cosine 0.95
 - [[jake-tsakalidis|Jake Tsakalidis]] — cosine 0.95
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 14.2 pts · 11.7 reb · 0.8 ast · 4.1 blk per 100 (2014-15).
+
+**Strengths:**
+
+- Elite rim protection (+3.1σ vs era)
+- Strong presence on the defensive glass (+1.0σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.7σ)
+- Three-point accuracy well below era (−1.8σ)
+
+**Comparables:**
+
+- [[etan-thomas|Etan Thomas]] '07 (97% similar)
+- [[festus-ezeli|Festus Ezeli]] '16 (97% similar)
+- [[erick-dampier|Erick Dampier]] '97 (96% similar)
+- [[bismack-biyombo|Bismack Biyombo]] '23 (95% similar)
+- [[bernard-james|Bernard James]] '13 (95% similar)
+- [[jake-tsakalidis|Jake Tsakalidis]] '06 (95% similar)
+
+**Career shape:** Charted 12 seasons (2001-02–2014-15). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

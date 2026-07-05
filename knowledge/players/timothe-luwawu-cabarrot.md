@@ -39,6 +39,32 @@ Closest career shapes in the era-normalized vector space:
 - [[mychal-mulder|Mychal Mulder]] — cosine 0.92
 - [[simone-fontecchio|Simone Fontecchio]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 16.0 pts · 6.8 reb · 1.8 ast · 1.3 stl per 100 (2018-19).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.0σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.2σ)
+- Finishing efficiency well below era (−1.1σ)
+
+**Comparables:**
+
+- [[malachi-richardson|Malachi Richardson]] '19 (96% similar)
+- [[matt-ryan|Matt Ryan]] '25 (95% similar)
+- [[alan-anderson|Alan Anderson]] '17 (94% similar)
+- [[nik-stauskas|Nik Stauskas]] '15 (93% similar)
+- [[mychal-mulder|Mychal Mulder]] '22 (92% similar)
+- [[simone-fontecchio|Simone Fontecchio]] '23 (92% similar)
+
+**Career shape:** Charted 6 seasons (2016-17–2021-22). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

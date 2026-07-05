@@ -42,6 +42,33 @@ Closest career shapes in the era-normalized vector space:
 - [[jaden-hardy|Jaden Hardy]] — cosine 0.77
 - [[andres-nocioni|Andres Nocioni]] — cosine 0.77
 
+## Scouting report
+
+**Play style:** PF · Scoring Volume + Shot Volume. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 31.6 pts · 9.5 reb · 6.0 ast · 1.0 blk per 100 (2023-24).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+2.1σ vs era)
+- Featured, high-usage scoring role (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.5σ)
+- On-court net impact well below era (−1.4σ)
+
+**Comparables:**
+
+- [[gg-jackson|GG Jackson]] '24 (85% similar)
+- [[don-maclean|Don MacLean]] '99 (83% similar)
+- [[rj-barrett|RJ Barrett]] '25 (82% similar)
+- [[jalen-green|Jalen Green]] '26 (79% similar)
+- [[jaden-hardy|Jaden Hardy]] '26 (77% similar)
+- [[andres-nocioni|Andres Nocioni]] '08 (77% similar)
+
+**Career shape:** Charted 9 seasons (2017-18–2025-26). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

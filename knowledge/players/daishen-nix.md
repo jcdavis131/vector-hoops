@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[diante-garrett|Diante Garrett]] — cosine 0.90
 - [[junior-harrington|Junior Harrington]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** SG · Playmaking + Steals. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 13.7 pts · 5.8 reb · 7.1 ast · 2.7 stl per 100 (2021-22).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.0σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.0σ)
+- Free-throw touch well below era (−1.8σ)
+
+**Comparables:**
+
+- [[mardy-collins|Mardy Collins]] '10 (93% similar)
+- [[blake-wesley|Blake Wesley]] '23 (93% similar)
+- [[walker-russell|Walker Russell]] '12 (92% similar)
+- [[laron-profit|Laron Profit]] '00 (92% similar)
+- [[diante-garrett|Diante Garrett]] '13 (90% similar)
+- [[junior-harrington|Junior Harrington]] '03 (89% similar)
+
+**Career shape:** Charted 2 seasons (2021-22–2022-23). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

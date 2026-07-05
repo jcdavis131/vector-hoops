@@ -41,6 +41,33 @@ Closest career shapes in the era-normalized vector space:
 - [[richard-hamilton|Richard Hamilton]] — cosine 0.92
 - [[jamal-murray|Jamal Murray]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 40.2 pts · 5.1 reb · 9.4 ast · 1.3 stl per 100 (2023-24).
+
+**Strengths:**
+
+- Featured, high-usage scoring role (+2.9σ vs era)
+- Heavy shot volume, focal scoring option (+2.8σ vs era)
+- Draws contact, gets to the line often (+2.2σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.0σ)
+
+**Comparables:**
+
+- [[sam-cassell|Sam Cassell]] '04 (93% similar)
+- [[brandon-roy|Brandon Roy]] '09 (93% similar)
+- [[tony-parker|Tony Parker]] '09 (93% similar)
+- [[malcolm-brogdon|Malcolm Brogdon]] '20 (92% similar)
+- [[richard-hamilton|Richard Hamilton]] '03 (92% similar)
+- [[jamal-murray|Jamal Murray]] '26 (90% similar)
+
+**Career shape:** Charted 8 seasons (2018-19–2025-26). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

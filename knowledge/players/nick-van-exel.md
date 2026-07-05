@@ -43,6 +43,34 @@ Closest career shapes in the era-normalized vector space:
 - [[mike-bibby|Mike Bibby]] — cosine 0.91
 - [[tim-hardaway|Tim Hardaway]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** SG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 27.6 pts · 5.3 reb · 10.0 ast · 0.9 stl per 100 (2001-02).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+2.1σ vs era)
+- High-volume table-setter (+1.9σ vs era)
+- Featured, high-usage scoring role (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Offensive-glass activity well below era (−1.2σ)
+- Ball-hawking activity well below era (−1.1σ)
+
+**Comparables:**
+
+- [[damon-stoudamire|Damon Stoudamire]] '97 (93% similar)
+- [[mike-james|Mike James]] '06 (93% similar)
+- [[j-j-barea|J.J. Barea]] '19 (93% similar)
+- [[troy-hudson|Troy Hudson]] '06 (93% similar)
+- [[mike-bibby|Mike Bibby]] '12 (91% similar)
+- [[tim-hardaway|Tim Hardaway]] '97 (91% similar)
+
+**Career shape:** Charted 10 seasons (1996-97–2005-06). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

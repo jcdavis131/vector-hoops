@@ -46,6 +46,34 @@ Closest career shapes in the era-normalized vector space:
 - [[clint-capela|Clint Capela]] — cosine 0.79
 - [[nic-claxton|Nic Claxton]] — cosine 0.79
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 16.3 pts · 12.0 reb · 1.0 ast · 2.1 blk per 100 (2012-13).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+2.3σ vs era)
+- Strong net on-court impact (+1.4σ vs era)
+- Relentless on the offensive glass (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.1σ)
+- Three-point accuracy well below era (−1.5σ)
+
+**Comparables:**
+
+- [[devontae-cacok|Devontae Cacok]] '21 (85% similar)
+- [[danny-manning|Danny Manning]] '98 (84% similar)
+- [[willie-cauley-stein|Willie Cauley-Stein]] '20 (83% similar)
+- [[brandon-clarke|Brandon Clarke]] '25 (80% similar)
+- [[clint-capela|Clint Capela]] '21 (79% similar)
+- [[nic-claxton|Nic Claxton]] '23 (79% similar)
+
+**Career shape:** Charted 13 seasons (2000-01–2013-14). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Rim Protection + Offensive Glass identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

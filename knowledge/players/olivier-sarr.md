@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[skal-labissiere|Skal Labissiere]] — cosine 0.79
 - [[daniel-theis|Daniel Theis]] — cosine 0.78
 
+## Scouting report
+
+**Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 17.4 pts · 10.6 reb · 2.2 ast · 1.7 blk per 100 (2021-22).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+1.4σ vs era)
+- Knockdown three-point shooter (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.3σ)
+- Shot volume well below era (−1.1σ)
+
+**Comparables:**
+
+- [[drew-eubanks|Drew Eubanks]] '20 (84% similar)
+- [[karlo-matkovic|Karlo Matković]] '26 (82% similar)
+- [[vincent-poirier|Vincent Poirier]] '20 (81% similar)
+- [[isaiah-stewart|Isaiah Stewart]] '25 (80% similar)
+- [[skal-labissiere|Skal Labissiere]] '20 (79% similar)
+- [[daniel-theis|Daniel Theis]] '20 (78% similar)
+
+**Career shape:** Charted 1 season (2021-22). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

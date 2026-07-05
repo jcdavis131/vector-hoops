@@ -38,6 +38,34 @@ Closest career shapes in the era-normalized vector space:
 - [[hasheem-thabeet|Hasheem Thabeet]] — cosine 0.91
 - [[robert-swift|Robert Swift]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 16.3 pts · 13.0 reb · 0.7 ast · 4.1 blk per 100 (1998-99).
+
+**Strengths:**
+
+- Elite rim protection (+2.6σ vs era)
+- Efficient finisher inside the arc (+2.4σ vs era)
+- Relentless on the offensive glass (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+3.5σ)
+- On-court net impact well below era (−3.2σ)
+
+**Comparables:**
+
+- [[norvel-pelle|Norvel Pelle]] '20 (94% similar)
+- [[sean-marks|Sean Marks]] '11 (91% similar)
+- [[stojko-vrankovic|Stojko Vrankovic]] '97 (91% similar)
+- [[ibou-badji|Ibou Badji]] '24 (91% similar)
+- [[hasheem-thabeet|Hasheem Thabeet]] '12 (91% similar)
+- [[robert-swift|Robert Swift]] '05 (90% similar)
+
+**Career shape:** Charted 5 seasons (1996-97–2000-01). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

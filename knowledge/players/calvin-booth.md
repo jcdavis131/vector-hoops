@@ -40,6 +40,33 @@ Closest career shapes in the era-normalized vector space:
 - [[adonal-foyle|Adonal Foyle]] — cosine 0.89
 - [[hot-rod-williams|Hot Rod Williams]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 5.7 pts · 9.0 reb · 1.9 ast · 4.3 blk per 100 (2007-08).
+
+**Strengths:**
+
+- Elite rim protection (+3.0σ vs era)
+- Rarely turns the ball over (−2.1σ vs era)
+
+**Areas of concern:**
+
+- Scoring load well below era (−2.2σ)
+- Shot volume well below era (−2.2σ)
+
+**Comparables:**
+
+- [[jim-mcilvaine|Jim McIlvaine]] '00 (95% similar)
+- [[joel-anthony|Joel Anthony]] '16 (92% similar)
+- [[dean-garrett|Dean Garrett]] '02 (91% similar)
+- [[theo-ratliff|Theo Ratliff]] '09 (89% similar)
+- [[adonal-foyle|Adonal Foyle]] '07 (89% similar)
+- [[hot-rod-williams|Hot Rod Williams]] '99 (88% similar)
+
+**Career shape:** Charted 7 seasons (2000-01–2007-08). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

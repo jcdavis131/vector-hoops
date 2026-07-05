@@ -38,6 +38,32 @@ Closest career shapes in the era-normalized vector space:
 - [[devean-george|Devean George]] — cosine 0.85
 - [[jorge-garbajosa|Jorge Garbajosa]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 5.4 pts · 7.3 reb · 5.0 ast · 3.1 stl per 100 (2010-11).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.5σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−3.3σ)
+- Scoring load well below era (−2.3σ)
+
+**Comparables:**
+
+- [[kedrick-brown|Kedrick Brown]] '02 (93% similar)
+- [[keith-askins|Keith Askins]] '99 (89% similar)
+- [[iman-shumpert|Iman Shumpert]] '12 (88% similar)
+- [[julian-washburn|Julian Washburn]] '19 (87% similar)
+- [[devean-george|Devean George]] '10 (85% similar)
+- [[jorge-garbajosa|Jorge Garbajosa]] '07 (85% similar)
+
+**Career shape:** Charted 5 seasons (2006-07–2010-11). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

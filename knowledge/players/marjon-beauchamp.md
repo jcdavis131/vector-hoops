@@ -36,6 +36,31 @@ Closest career shapes in the era-normalized vector space:
 - [[nick-johnson|Nick Johnson]] — cosine 0.63
 - [[dariq-whitehead|Dariq Whitehead]] — cosine 0.63
 
+## Scouting report
+
+**Play style:** SF · Defensive Glass + Rim Pressure (Fts). Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 22.8 pts · 12.7 reb · 3.2 ast · 1.2 stl per 100 (2024-25).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.6σ)
+
+**Comparables:**
+
+- [[damir-markota|Damir Markota]] '07 (77% similar)
+- [[henry-ellenson|Henry Ellenson]] '17 (69% similar)
+- [[tidjane-salaun|Tidjane Salaün]] '25 (64% similar)
+- [[marcus-landry|Marcus Landry]] '10 (64% similar)
+- [[nick-johnson|Nick Johnson]] '15 (63% similar)
+- [[dariq-whitehead|Dariq Whitehead]] '25 (63% similar)
+
+**Career shape:** Charted 3 seasons (2022-23–2024-25). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

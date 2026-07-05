@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[james-white|James White]] — cosine 0.84
 - [[taelon-peter|Taelon Peter]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 12.1 pts · 7.5 reb · 2.5 ast · 1.9 stl per 100 (2017-18).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.3σ)
+- On-court net impact well below era (−2.0σ)
+
+**Comparables:**
+
+- [[chuma-okeke|Chuma Okeke]] '24 (91% similar)
+- [[chris-singleton|Chris Singleton]] '12 (89% similar)
+- [[jeryl-sasser|Jeryl Sasser]] '03 (89% similar)
+- [[reece-gaines|Reece Gaines]] '05 (85% similar)
+- [[james-white|James White]] '13 (84% similar)
+- [[taelon-peter|Taelon Peter]] '26 (83% similar)
+
+**Career shape:** Charted 3 seasons (2017-18–2022-23). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

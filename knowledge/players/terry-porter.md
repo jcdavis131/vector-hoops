@@ -39,6 +39,32 @@ Closest career shapes in the era-normalized vector space:
 - [[mike-bibby|Mike Bibby]] — cosine 0.84
 - [[jon-barry|Jon Barry]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 15.8 pts · 6.5 reb · 8.1 ast · 1.8 stl per 100 (2001-02).
+
+**Strengths:**
+
+- Strong net on-court impact (+2.7σ vs era)
+- High-volume table-setter (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Offensive-glass activity well below era (−1.3σ)
+
+**Comparables:**
+
+- [[rick-fox|Rick Fox]] '04 (88% similar)
+- [[hedo-turkoglu|Hedo Turkoglu]] '14 (87% similar)
+- [[george-hill|George Hill]] '22 (86% similar)
+- [[brent-barry|Brent Barry]] '04 (86% similar)
+- [[mike-bibby|Mike Bibby]] '12 (84% similar)
+- [[jon-barry|Jon Barry]] '98 (83% similar)
+
+**Career shape:** Charted 6 seasons (1996-97–2001-02). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[keegan-murray|Keegan Murray]] — cosine 0.85
 - [[wilson-chandler|Wilson Chandler]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 22.9 pts · 11.4 reb · 2.5 ast · 1.5 stl per 100 (2020-21).
+
+**Strengths:**
+
+- Strong net on-court impact (+2.2σ vs era)
+- Reliable touch from the free-throw line (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.1σ)
+
+**Comparables:**
+
+- [[gigi-datome|Gigi Datome]] '15 (87% similar)
+- [[brian-cook|Brian Cook]] '09 (87% similar)
+- [[channing-frye|Channing Frye]] '19 (85% similar)
+- [[georges-niang|Georges Niang]] '17 (85% similar)
+- [[keegan-murray|Keegan Murray]] '26 (85% similar)
+- [[wilson-chandler|Wilson Chandler]] '20 (83% similar)
+
+**Career shape:** Charted 3 seasons (2019-20–2021-22). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

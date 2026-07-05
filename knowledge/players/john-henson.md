@@ -40,6 +40,34 @@ Closest career shapes in the era-normalized vector space:
 - [[isaiah-jackson|Isaiah Jackson]] — cosine 0.94
 - [[daniel-gafford|Daniel Gafford]] — cosine 0.94
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 20.8 pts · 11.6 reb · 2.8 ast · 5.7 blk per 100 (2015-16).
+
+**Strengths:**
+
+- Elite rim protection (+4.0σ vs era)
+- Efficient finisher inside the arc (+1.7σ vs era)
+- Relentless on the offensive glass (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.9σ)
+- Three-point volume well below era (−1.3σ)
+
+**Comparables:**
+
+- [[keon-clark|Keon Clark]] '01 (96% similar)
+- [[javale-mcgee|JaVale McGee]] '17 (96% similar)
+- [[nic-claxton|Nic Claxton]] '23 (95% similar)
+- [[goga-bitadze|Goga Bitadze]] '25 (95% similar)
+- [[isaiah-jackson|Isaiah Jackson]] '24 (94% similar)
+- [[daniel-gafford|Daniel Gafford]] '25 (94% similar)
+
+**Career shape:** Charted 7 seasons (2012-13–2019-20). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

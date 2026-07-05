@@ -37,6 +37,31 @@ Closest career shapes in the era-normalized vector space:
 - [[mouhamed-sene|Mouhamed Sene]] — cosine 0.79
 - [[d-j-wilson|D.J. Wilson]] — cosine 0.79
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 17.3 pts · 10.6 reb · 2.9 ast · 2.6 blk per 100 (2022-23).
+
+**Strengths:**
+
+- Elite rim protection (+2.0σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.9σ)
+
+**Comparables:**
+
+- [[earl-clark|Earl Clark]] '12 (86% similar)
+- [[sean-marks|Sean Marks]] '11 (83% similar)
+- [[p-j-washington|P.J. Washington]] '26 (81% similar)
+- [[stanley-umude|Stanley Umude]] '25 (80% similar)
+- [[mouhamed-sene|Mouhamed Sene]] '07 (79% similar)
+- [[d-j-wilson|D.J. Wilson]] '18 (79% similar)
+
+**Career shape:** Charted 4 seasons (2019-20–2022-23). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

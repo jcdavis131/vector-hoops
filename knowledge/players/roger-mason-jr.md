@@ -43,6 +43,33 @@ Closest career shapes in the era-normalized vector space:
 - [[daequan-cook|Daequan Cook]] — cosine 0.93
 - [[sam-merrill|Sam Merrill]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 12.7 pts · 5.0 reb · 5.1 ast · 1.7 stl per 100 (2002-03).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+2.3σ vs era)
+- High-volume three-point shooter (+1.7σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.7σ)
+- Finishing efficiency well below era (−1.4σ)
+
+**Comparables:**
+
+- [[dennis-scott|Dennis Scott]] '00 (96% similar)
+- [[wayne-ellington|Wayne Ellington]] '17 (95% similar)
+- [[mike-penberthy|Mike Penberthy]] '01 (95% similar)
+- [[aj-green|AJ Green]] '23 (93% similar)
+- [[daequan-cook|Daequan Cook]] '11 (93% similar)
+- [[sam-merrill|Sam Merrill]] '24 (92% similar)
+
+**Career shape:** Charted 10 seasons (2002-03–2013-14). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -35,6 +35,34 @@ Closest career shapes in the era-normalized vector space:
 - [[james-augustine|James Augustine]] — cosine 0.62
 - [[thaddeus-young|Thaddeus Young]] — cosine 0.61
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass + Defensive Glass. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 22.0 pts · 8.0 reb · 2.4 ast · 1.4 stl per 100 (2023-24).
+
+**Strengths:**
+
+- Strong net on-court impact (+1.3σ vs era)
+- Relentless on the offensive glass (+1.1σ vs era)
+- Rarely turns the ball over (−1.1σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.6σ)
+- Three-point volume well below era (−1.4σ)
+
+**Comparables:**
+
+- [[jarrett-culver|Jarrett Culver]] '22 (67% similar)
+- [[paul-mcpherson|Paul McPherson]] '01 (65% similar)
+- [[asa-newell|Asa Newell]] '26 (64% similar)
+- [[hamidou-diallo|Hamidou Diallo]] '23 (64% similar)
+- [[james-augustine|James Augustine]] '08 (62% similar)
+- [[thaddeus-young|Thaddeus Young]] '24 (61% similar)
+
+**Career shape:** Charted 2 seasons (2023-24–2024-25). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[cedric-bozeman|Cedric Bozeman]] — cosine 0.88
 - [[maxwell-lewis|Maxwell Lewis]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 9.3 pts · 5.8 reb · 5.4 ast · 1.2 stl per 100 (2018-19).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−4.0σ)
+- Scoring load well below era (−1.7σ)
+
+**Comparables:**
+
+- [[semaj-christon|Semaj Christon]] '17 (91% similar)
+- [[britton-johnsen|Britton Johnsen]] '04 (90% similar)
+- [[justin-robinson|Justin Robinson]] '22 (90% similar)
+- [[nique-clifford|Nique Clifford]] '26 (89% similar)
+- [[cedric-bozeman|Cedric Bozeman]] '07 (88% similar)
+- [[maxwell-lewis|Maxwell Lewis]] '24 (88% similar)
+
+**Career shape:** Charted 2 seasons (2018-19–2019-20). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

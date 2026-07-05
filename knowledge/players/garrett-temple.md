@@ -49,6 +49,34 @@ Closest career shapes in the era-normalized vector space:
 - [[stanley-johnson|Stanley Johnson]] — cosine 0.89
 - [[royal-ivey|Royal Ivey]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 13.3 pts · 5.3 reb · 7.4 ast · 2.6 stl per 100 (2010-11).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.7σ vs era)
+- High-volume three-point shooter (+1.5σ vs era)
+- High-volume table-setter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.5σ)
+- Finishing efficiency well below era (−2.4σ)
+
+**Comparables:**
+
+- [[frank-ntilikina|Frank Ntilikina]] '21 (94% similar)
+- [[ron-baker|Ron Baker]] '18 (92% similar)
+- [[donald-whiteside|Donald Whiteside]] '97 (90% similar)
+- [[kim-english|Kim English]] '13 (89% similar)
+- [[stanley-johnson|Stanley Johnson]] '20 (89% similar)
+- [[royal-ivey|Royal Ivey]] '12 (87% similar)
+
+**Career shape:** Charted 16 seasons (2009-10–2025-26). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

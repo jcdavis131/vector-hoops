@@ -37,6 +37,32 @@ Closest career shapes in the era-normalized vector space:
 - [[antonio-reeves|Antonio Reeves]] — cosine 0.87
 - [[brice-sensabaugh|Brice Sensabaugh]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** PG · Three-Point Volume + Three-Point Accuracy. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 20.0 pts · 4.3 reb · 4.5 ast · 0.8 stl per 100 (2023-24).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.3σ)
+- Ball-hawking activity well below era (−1.2σ)
+
+**Comparables:**
+
+- [[tre-johnson|Tre Johnson]] '26 (92% similar)
+- [[nick-smith-jr|Nick Smith Jr.]] '25 (92% similar)
+- [[john-long|John Long]] '97 (89% similar)
+- [[wayne-selden|Wayne Selden]] '18 (88% similar)
+- [[antonio-reeves|Antonio Reeves]] '25 (87% similar)
+- [[brice-sensabaugh|Brice Sensabaugh]] '24 (85% similar)
+
+**Career shape:** Charted 4 seasons (2022-23–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[lorenzo-brown|Lorenzo Brown]] — cosine 0.88
 - [[marcus-smart|Marcus Smart]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 9.9 pts · 3.7 reb · 6.8 ast · 3.7 stl per 100 (2005-06).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+3.4σ vs era)
+- Reliable touch from the free-throw line (+1.8σ vs era)
+- High-volume three-point shooter (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−3.0σ)
+- Scoring load well below era (−1.4σ)
+
+**Comparables:**
+
+- [[ronnie-price|Ronnie Price]] '14 (93% similar)
+- [[gabe-pruitt|Gabe Pruitt]] '09 (91% similar)
+- [[facundo-campazzo|Facundo Campazzo]] '21 (89% similar)
+- [[erick-barkley|Erick Barkley]] '02 (89% similar)
+- [[lorenzo-brown|Lorenzo Brown]] '19 (88% similar)
+- [[marcus-smart|Marcus Smart]] '24 (88% similar)
+
+**Career shape:** Charted 1 season (2005-06). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

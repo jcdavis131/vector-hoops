@@ -38,6 +38,33 @@ Closest career shapes in the era-normalized vector space:
 - [[charlie-bell|Charlie Bell]] — cosine 0.92
 - [[malachi-flynn|Malachi Flynn]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 12.7 pts · 3.6 reb · 6.6 ast · 2.0 stl per 100 (2009-10).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+2.0σ vs era)
+- High-volume three-point shooter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.6σ)
+- On-court net impact well below era (−1.5σ)
+
+**Comparables:**
+
+- [[anthony-goldwire|Anthony Goldwire]] '01 (96% similar)
+- [[shammond-williams|Shammond Williams]] '04 (93% similar)
+- [[derek-harper|Derek Harper]] '99 (92% similar)
+- [[travis-diener|Travis Diener]] '06 (92% similar)
+- [[charlie-bell|Charlie Bell]] '11 (92% similar)
+- [[malachi-flynn|Malachi Flynn]] '22 (91% similar)
+
+**Career shape:** Charted 5 seasons (2006-07–2010-11). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

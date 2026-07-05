@@ -44,6 +44,31 @@ Closest career shapes in the era-normalized vector space:
 - [[shaquille-harrison|Shaquille Harrison]] — cosine 0.84
 - [[jaden-springer|Jaden Springer]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 14.2 pts · 7.1 reb · 3.7 ast · 3.0 stl per 100 (2018-19).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.8σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.1σ)
+
+**Comparables:**
+
+- [[myke-henry|Myke Henry]] '18 (90% similar)
+- [[trevor-ariza|Trevor Ariza]] '22 (85% similar)
+- [[edmond-sumner|Edmond Sumner]] '19 (85% similar)
+- [[dru-smith|Dru Smith]] '26 (84% similar)
+- [[shaquille-harrison|Shaquille Harrison]] '21 (84% similar)
+- [[jaden-springer|Jaden Springer]] '24 (83% similar)
+
+**Career shape:** Charted 11 seasons (2007-08–2018-19). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -34,6 +34,31 @@ Closest career shapes in the era-normalized vector space:
 - [[anthony-morrow|Anthony Morrow]] — cosine 0.85
 - [[jaylen-wells|Jaylen Wells]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 19.8 pts · 6.8 reb · 1.5 ast · 1.5 stl per 100 (1997-98).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+1.3σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[damion-lee|Damion Lee]] '25 (90% similar)
+- [[cameron-johnson|Cameron Johnson]] '26 (86% similar)
+- [[aaron-nesmith|Aaron Nesmith]] '25 (86% similar)
+- [[harrison-barnes|Harrison Barnes]] '16 (85% similar)
+- [[anthony-morrow|Anthony Morrow]] '17 (85% similar)
+- [[jaylen-wells|Jaylen Wells]] '25 (84% similar)
+
+**Career shape:** Charted 1 season (1997-98). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

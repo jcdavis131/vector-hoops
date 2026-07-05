@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[corey-brewer|Corey Brewer]] — cosine 0.75
 - [[eddie-gill|Eddie Gill]] — cosine 0.74
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 18.0 pts · 6.7 reb · 1.8 ast · 2.1 stl per 100 (2008-09).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.3σ)
+- Rim-protection impact well below era (−1.0σ)
+
+**Comparables:**
+
+- [[alonzo-gee|Alonzo Gee]] '16 (78% similar)
+- [[arvydas-macijauskas|Arvydas Macijauskas]] '06 (77% similar)
+- [[cam-reddish|Cam Reddish]] '25 (76% similar)
+- [[edmond-sumner|Edmond Sumner]] '19 (76% similar)
+- [[corey-brewer|Corey Brewer]] '19 (75% similar)
+- [[eddie-gill|Eddie Gill]] '06 (74% similar)
+
+**Career shape:** Charted 2 seasons (2006-07–2008-09). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

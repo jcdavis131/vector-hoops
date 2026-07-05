@@ -36,6 +36,31 @@ Closest career shapes in the era-normalized vector space:
 - [[grant-hill|Grant Hill]] — cosine 0.71
 - [[tony-parker|Tony Parker]] — cosine 0.71
 
+## Scouting report
+
+**Play style:** SF · Defensive Glass + Rim Pressure (Fts). Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 24.7 pts · 8.1 reb · 7.5 ast · 1.1 stl per 100 (2025-26).
+
+**Strengths:**
+
+- High-volume table-setter (+1.0σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[andre-miller|Andre Miller]] '02 (80% similar)
+- [[markelle-fultz|Markelle Fultz]] '22 (75% similar)
+- [[will-bynum|Will Bynum]] '09 (73% similar)
+- [[t-j-ford|T.J. Ford]] '07 (71% similar)
+- [[grant-hill|Grant Hill]] '97 (71% similar)
+- [[tony-parker|Tony Parker]] '09 (71% similar)
+
+**Career shape:** Charted 3 seasons (2023-24–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

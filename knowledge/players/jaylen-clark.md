@@ -35,6 +35,34 @@ Closest career shapes in the era-normalized vector space:
 - [[cason-wallace|Cason Wallace]] — cosine 0.86
 - [[kevon-harris|Kevon Harris]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 14.8 pts · 4.9 reb · 2.4 ast · 3.3 stl per 100 (2024-25).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.7σ vs era)
+- Rarely turns the ball over (−1.8σ vs era)
+- Knockdown three-point shooter (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.5σ)
+- Shot volume well below era (−1.2σ)
+
+**Comparables:**
+
+- [[ronnie-brewer|Ronnie Brewer]] '14 (90% similar)
+- [[javonte-green|Javonte Green]] '26 (88% similar)
+- [[josh-okogie|Josh Okogie]] '25 (86% similar)
+- [[donta-smith|Donta Smith]] '06 (86% similar)
+- [[cason-wallace|Cason Wallace]] '26 (86% similar)
+- [[kevon-harris|Kevon Harris]] '23 (85% similar)
+
+**Career shape:** Charted 2 seasons (2024-25–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

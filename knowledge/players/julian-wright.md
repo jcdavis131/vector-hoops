@@ -37,6 +37,32 @@ Closest career shapes in the era-normalized vector space:
 - [[xavier-tillman|Xavier Tillman]] — cosine 0.83
 - [[dyson-daniels|Dyson Daniels]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass + Defensive Glass. Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 12.5 pts · 7.8 reb · 3.8 ast · 2.6 stl per 100 (2010-11).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.7σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.6σ)
+- Shot volume well below era (−1.2σ)
+
+**Comparables:**
+
+- [[gary-payton-ii|Gary Payton II]] '20 (94% similar)
+- [[larry-nance-jr|Larry Nance Jr.]] '18 (85% similar)
+- [[renaldo-balkman|Renaldo Balkman]] '08 (85% similar)
+- [[deandre-bembry|DeAndre' Bembry]] '17 (83% similar)
+- [[xavier-tillman|Xavier Tillman]] '26 (83% similar)
+- [[dyson-daniels|Dyson Daniels]] '25 (82% similar)
+
+**Career shape:** Charted 4 seasons (2007-08–2010-11). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

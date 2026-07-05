@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[brian-scalabrine|Brian Scalabrine]] — cosine 0.89
 - [[sion-james|Sion James]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 9.6 pts · 7.7 reb · 2.6 ast · 1.0 stl per 100 (2020-21).
+
+**Strengths:**
+
+- Strong net on-court impact (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Scoring load well below era (−1.7σ)
+- Shot volume well below era (−1.6σ)
+
+**Comparables:**
+
+- [[okaro-white|Okaro White]] '17 (91% similar)
+- [[dorian-finney-smith|Dorian Finney-Smith]] '26 (90% similar)
+- [[grant-williams|Grant Williams]] '20 (90% similar)
+- [[pat-connaughton|Pat Connaughton]] '16 (89% similar)
+- [[brian-scalabrine|Brian Scalabrine]] '11 (89% similar)
+- [[sion-james|Sion James]] '26 (89% similar)
+
+**Career shape:** Charted 1 season (2020-21). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -39,6 +39,33 @@ Closest career shapes in the era-normalized vector space:
 - [[jt-thor|JT Thor]] — cosine 0.91
 - [[andrew-lang|Andrew Lang]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 4.2 pts · 9.4 reb · 0.0 ast · 3.2 blk per 100 (2003-04).
+
+**Strengths:**
+
+- Rarely turns the ball over (−2.2σ vs era)
+- Elite rim protection (+1.8σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−2.7σ)
+- On-court net impact well below era (−2.7σ)
+
+**Comparables:**
+
+- [[mickell-gladness|Mickell Gladness]] '12 (93% similar)
+- [[ruben-boumtje-boumtje|Ruben Boumtje-Boumtje]] '02 (93% similar)
+- [[robert-sacre|Robert Sacre]] '13 (92% similar)
+- [[brett-szabo|Brett Szabo]] '97 (92% similar)
+- [[jt-thor|JT Thor]] '25 (91% similar)
+- [[andrew-lang|Andrew Lang]] '00 (91% similar)
+
+**Career shape:** Charted 6 seasons (1997-98–2003-04). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

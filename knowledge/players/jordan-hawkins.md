@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[mychal-mulder|Mychal Mulder]] — cosine 0.90
 - [[timothe-luwawu-cabarrot|Timothe Luwawu-Cabarrot]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 21.7 pts · 5.7 reb · 2.4 ast · 1.1 stl per 100 (2024-25).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.3σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.4σ)
+- Finishing efficiency well below era (−1.2σ)
+
+**Comparables:**
+
+- [[matt-ryan|Matt Ryan]] '25 (95% similar)
+- [[simone-fontecchio|Simone Fontecchio]] '23 (94% similar)
+- [[pj-hairston|PJ Hairston]] '15 (92% similar)
+- [[aj-griffin|AJ Griffin]] '24 (91% similar)
+- [[mychal-mulder|Mychal Mulder]] '22 (90% similar)
+- [[timothe-luwawu-cabarrot|Timothe Luwawu-Cabarrot]] '19 (90% similar)
+
+**Career shape:** Charted 3 seasons (2023-24–2025-26). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

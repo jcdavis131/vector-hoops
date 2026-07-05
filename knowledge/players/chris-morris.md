@@ -36,6 +36,33 @@ Closest career shapes in the era-normalized vector space:
 - [[josh-davis|Josh Davis]] — cosine 0.82
 - [[scott-burrell|Scott Burrell]] — cosine 0.80
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 17.8 pts · 11.7 reb · 2.2 ast · 1.6 stl per 100 (1998-99).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+1.2σ vs era)
+- Reliable touch from the free-throw line (+1.1σ vs era)
+- Rarely turns the ball over (−1.1σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[sasha-vezenkov|Sasha Vezenkov]] '24 (85% similar)
+- [[jumaine-jones|Jumaine Jones]] '07 (84% similar)
+- [[ersan-ilyasova|Ersan Ilyasova]] '21 (84% similar)
+- [[brian-cook|Brian Cook]] '09 (83% similar)
+- [[josh-davis|Josh Davis]] '05 (82% similar)
+- [[scott-burrell|Scott Burrell]] '00 (80% similar)
+
+**Career shape:** Charted 3 seasons (1996-97–1998-99). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

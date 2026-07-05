@@ -35,6 +35,34 @@ Closest career shapes in the era-normalized vector space:
 - [[anzejs-pasecniks|Anžejs Pasečņiks]] — cosine 0.92
 - [[melvin-ely|Melvin Ely]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 11.7 pts · 12.9 reb · 2.0 ast · 1.9 blk per 100 (2024-25).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+1.8σ vs era)
+- Efficient finisher inside the arc (+1.2σ vs era)
+- Elite rim protection (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−3.0σ)
+- Three-point accuracy well below era (−2.9σ)
+
+**Comparables:**
+
+- [[miles-plumlee|Miles Plumlee]] '19 (95% similar)
+- [[yves-missi|Yves Missi]] '26 (95% similar)
+- [[bismack-biyombo|Bismack Biyombo]] '23 (93% similar)
+- [[freddie-gillespie|Freddie Gillespie]] '21 (92% similar)
+- [[anzejs-pasecniks|Anžejs Pasečņiks]] '20 (92% similar)
+- [[melvin-ely|Melvin Ely]] '11 (91% similar)
+
+**Career shape:** Charted 2 seasons (2023-24–2024-25). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

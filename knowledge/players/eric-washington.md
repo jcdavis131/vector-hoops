@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[daeqwon-plowden|Daeqwon Plowden]] — cosine 0.86
 - [[antonio-reeves|Antonio Reeves]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 17.1 pts · 4.3 reb · 2.6 ast · 1.8 stl per 100 (1997-98).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.6σ)
+- Defensive rebounding well below era (−1.3σ)
+
+**Comparables:**
+
+- [[hollis-thompson|Hollis Thompson]] '17 (88% similar)
+- [[donte-greene|Donte Greene]] '09 (88% similar)
+- [[johnny-taylor|Johnny Taylor]] '99 (87% similar)
+- [[jeremy-richardson|Jeremy Richardson]] '08 (87% similar)
+- [[daeqwon-plowden|Daeqwon Plowden]] '26 (86% similar)
+- [[antonio-reeves|Antonio Reeves]] '25 (84% similar)
+
+**Career shape:** Charted 2 seasons (1997-98–1998-99). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

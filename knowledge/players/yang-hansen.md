@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[zhou-qi|Zhou Qi]] — cosine 0.78
 - [[curtis-borchardt|Curtis Borchardt]] — cosine 0.76
 
+## Scouting report
+
+**Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 14.5 pts · 10.1 reb · 3.4 ast · 1.5 blk per 100 (2025-26).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.3σ)
+- Finishing efficiency well below era (−2.0σ)
+
+**Comparables:**
+
+- [[terrel-harris|Terrel Harris]] '13 (80% similar)
+- [[ryan-stack|Ryan Stack]] '99 (79% similar)
+- [[amal-mccaskill|Amal McCaskill]] '02 (79% similar)
+- [[nemanja-nedovic|Nemanja Nedovic]] '14 (78% similar)
+- [[zhou-qi|Zhou Qi]] '18 (78% similar)
+- [[curtis-borchardt|Curtis Borchardt]] '05 (76% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[chris-taft|Chris Taft]] — cosine 0.79
 - [[brandon-hunter|Brandon Hunter]] — cosine 0.79
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 17.2 pts · 10.2 reb · 1.9 ast · 0.6 stl per 100 (1999-00).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.4σ)
+- Ball-hawking activity well below era (−1.6σ)
+
+**Comparables:**
+
+- [[johnathan-williams|Johnathan Williams]] '19 (85% similar)
+- [[anzejs-pasecniks|Anžejs Pasečņiks]] '20 (80% similar)
+- [[luke-schenscher|Luke Schenscher]] '06 (80% similar)
+- [[primoz-brezec|Primoz Brezec]] '10 (80% similar)
+- [[chris-taft|Chris Taft]] '06 (79% similar)
+- [[brandon-hunter|Brandon Hunter]] '05 (79% similar)
+
+**Career shape:** Charted 1 season (1999-00). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

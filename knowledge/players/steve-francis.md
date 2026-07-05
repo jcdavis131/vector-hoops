@@ -41,6 +41,33 @@ Closest career shapes in the era-normalized vector space:
 - [[john-wall|John Wall]] — cosine 0.92
 - [[tyreke-evans|Tyreke Evans]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 27.9 pts · 7.5 reb · 9.2 ast · 1.9 stl per 100 (2004-05).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+1.9σ vs era)
+- High-volume table-setter (+1.8σ vs era)
+- Featured, high-usage scoring role (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.6σ)
+
+**Comparables:**
+
+- [[trae-young|Trae Young]] '20 (96% similar)
+- [[james-harden|James Harden]] '19 (94% similar)
+- [[russell-westbrook|Russell Westbrook]] '17 (93% similar)
+- [[ja-morant|Ja Morant]] '23 (93% similar)
+- [[john-wall|John Wall]] '17 (92% similar)
+- [[tyreke-evans|Tyreke Evans]] '16 (92% similar)
+
+**Career shape:** Charted 8 seasons (1999-00–2006-07). Consistent Scoring Volume + Shot Volume profile across his career.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jamison-battle|Jamison Battle]] — cosine 0.88
 - [[aj-green|AJ Green]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 17.6 pts · 6.6 reb · 2.3 ast · 0.6 stl per 100 (2018-19).
+
+**Strengths:**
+
+- Strong net on-court impact (+1.4σ vs era)
+- High-volume three-point shooter (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.5σ)
+
+**Comparables:**
+
+- [[danny-ferry|Danny Ferry]] '01 (92% similar)
+- [[sam-hauser|Sam Hauser]] '22 (91% similar)
+- [[matt-thomas|Matt Thomas]] '22 (89% similar)
+- [[pat-garrity|Pat Garrity]] '02 (88% similar)
+- [[jamison-battle|Jamison Battle]] '25 (88% similar)
+- [[aj-green|AJ Green]] '23 (87% similar)
+
+**Career shape:** Charted 1 season (2018-19). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

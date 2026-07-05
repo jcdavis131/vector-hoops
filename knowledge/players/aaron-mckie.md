@@ -42,6 +42,32 @@ Closest career shapes in the era-normalized vector space:
 - [[iman-shumpert|Iman Shumpert]] — cosine 0.88
 - [[nate-mcmillan|Nate McMillan]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 6.5 pts · 7.4 reb · 4.4 ast · 2.1 stl per 100 (2004-05).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.7σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−2.2σ)
+- Scoring load well below era (−2.1σ)
+
+**Comparables:**
+
+- [[jordan-mclaughlin|Jordan McLaughlin]] '24 (90% similar)
+- [[pablo-prigioni|Pablo Prigioni]] '16 (90% similar)
+- [[scott-brooks|Scott Brooks]] '97 (90% similar)
+- [[daniel-ewing|Daniel Ewing]] '07 (88% similar)
+- [[iman-shumpert|Iman Shumpert]] '12 (88% similar)
+- [[nate-mcmillan|Nate McMillan]] '98 (87% similar)
+
+**Career shape:** Charted 9 seasons (1996-97–2004-05). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

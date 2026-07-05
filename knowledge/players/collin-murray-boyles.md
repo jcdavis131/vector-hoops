@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[mitchell-robinson|Mitchell Robinson]] — cosine 0.87
 - [[dylan-cardwell|Dylan Cardwell]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 18.8 pts · 11.1 reb · 4.1 ast · 2.1 blk per 100 (2025-26).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+1.6σ vs era)
+- Efficient finisher inside the arc (+1.4σ vs era)
+- Elite rim protection (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Three-point volume well below era (−1.4σ)
+
+**Comparables:**
+
+- [[moussa-diabate|Moussa Diabaté]] '25 (91% similar)
+- [[amir-johnson|Amir Johnson]] '08 (90% similar)
+- [[jakob-poeltl|Jakob Poeltl]] '22 (89% similar)
+- [[trayce-jackson-davis|Trayce Jackson-Davis]] '26 (88% similar)
+- [[mitchell-robinson|Mitchell Robinson]] '26 (87% similar)
+- [[dylan-cardwell|Dylan Cardwell]] '26 (86% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

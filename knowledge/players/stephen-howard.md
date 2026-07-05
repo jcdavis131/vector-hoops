@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[craig-smith|Craig Smith]] — cosine 0.83
 - [[ian-mahinmi|Ian Mahinmi]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** SF · Defensive Glass + Rim Pressure (Fts). Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 21.7 pts · 10.5 reb · 1.4 ast · 2.3 stl per 100 (1996-97).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+2.2σ vs era)
+- Draws contact, gets to the line often (+2.1σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.4σ)
+- Three-point volume well below era (−1.0σ)
+
+**Comparables:**
+
+- [[nene|Nene]] '19 (89% similar)
+- [[jarnell-stokes|Jarnell Stokes]] '15 (89% similar)
+- [[montrezl-harrell|Montrezl Harrell]] '20 (86% similar)
+- [[harold-ellis|Harold Ellis]] '98 (83% similar)
+- [[craig-smith|Craig Smith]] '09 (83% similar)
+- [[ian-mahinmi|Ian Mahinmi]] '10 (83% similar)
+
+**Career shape:** Charted 1 season (1996-97). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[sean-rooks|Sean Rooks]] — cosine 0.77
 - [[cameron-bairstow|Cameron Bairstow]] — cosine 0.75
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 12.1 pts · 7.4 reb · 0.5 ast · 2.9 blk per 100 (2000-01).
+
+**Strengths:**
+
+- Elite rim protection (+1.6σ vs era)
+- Rarely turns the ball over (−1.2σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.1σ)
+- Three-point accuracy well below era (−1.4σ)
+
+**Comparables:**
+
+- [[kevin-salvadori|Kevin Salvadori]] '97 (82% similar)
+- [[dan-schayes|Dan Schayes]] '99 (81% similar)
+- [[john-salley|John Salley]] '00 (79% similar)
+- [[cal-bowdler|Cal Bowdler]] '01 (78% similar)
+- [[sean-rooks|Sean Rooks]] '98 (77% similar)
+- [[cameron-bairstow|Cameron Bairstow]] '15 (75% similar)
+
+**Career shape:** Charted 1 season (2000-01). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

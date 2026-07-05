@@ -38,6 +38,34 @@ Closest career shapes in the era-normalized vector space:
 - [[troy-daniels|Troy Daniels]] — cosine 0.84
 - [[damyean-dotson|Damyean Dotson]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 17.3 pts · 7.9 reb · 4.7 ast · 0.5 stl per 100 (2014-15).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+2.1σ vs era)
+- Rarely turns the ball over (−1.9σ vs era)
+- High-volume three-point shooter (+1.2σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.2σ)
+- Ball-hawking activity well below era (−1.7σ)
+
+**Comparables:**
+
+- [[tyson-etienne|Tyson Etienne]] '26 (86% similar)
+- [[john-jenkins|John Jenkins]] '19 (85% similar)
+- [[anthony-roberson|Anthony Roberson]] '09 (84% similar)
+- [[a-j-guyton|A.J. Guyton]] '02 (84% similar)
+- [[troy-daniels|Troy Daniels]] '15 (84% similar)
+- [[damyean-dotson|Damyean Dotson]] '21 (83% similar)
+
+**Career shape:** Charted 5 seasons (2009-10–2014-15). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -35,6 +35,34 @@ Closest career shapes in the era-normalized vector space:
 - [[keon-clark|Keon Clark]] — cosine 0.90
 - [[oliver-miller|Oliver Miller]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 15.6 pts · 12.8 reb · 1.8 ast · 4.0 blk per 100 (2007-08).
+
+**Strengths:**
+
+- Elite rim protection (+2.8σ vs era)
+- Efficient finisher inside the arc (+1.6σ vs era)
+- Relentless on the offensive glass (+1.0σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.7σ)
+- Three-point accuracy well below era (−1.4σ)
+
+**Comparables:**
+
+- [[charles-bassey|Charles Bassey]] '24 (91% similar)
+- [[norvel-pelle|Norvel Pelle]] '20 (91% similar)
+- [[john-henson|John Henson]] '16 (90% similar)
+- [[jerome-james|Jerome James]] '06 (90% similar)
+- [[keon-clark|Keon Clark]] '01 (90% similar)
+- [[oliver-miller|Oliver Miller]] '00 (89% similar)
+
+**Career shape:** Charted 2 seasons (2007-08–2008-09). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -37,6 +37,33 @@ Closest career shapes in the era-normalized vector space:
 - [[karl-anthony-towns|Karl-Anthony Towns]] — cosine 0.80
 - [[kevin-love|Kevin Love]] — cosine 0.80
 
+## Scouting report
+
+**Play style:** PF · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 26.1 pts · 18.3 reb · 6.4 ast · 1.8 stl per 100 (1996-97).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+2.7σ vs era)
+- Draws contact, gets to the line often (+2.4σ vs era)
+- Relentless on the offensive glass (+1.5σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[domantas-sabonis|Domantas Sabonis]] '24 (87% similar)
+- [[boban-marjanovic|Boban Marjanovic]] '18 (83% similar)
+- [[willy-hernangomez|Willy Hernangomez]] '23 (83% similar)
+- [[blake-griffin|Blake Griffin]] '14 (82% similar)
+- [[karl-anthony-towns|Karl-Anthony Towns]] '19 (80% similar)
+- [[kevin-love|Kevin Love]] '19 (80% similar)
+
+**Career shape:** Charted 4 seasons (1996-97–1999-00). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

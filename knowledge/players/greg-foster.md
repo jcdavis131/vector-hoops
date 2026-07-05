@@ -39,6 +39,32 @@ Closest career shapes in the era-normalized vector space:
 - [[theron-smith|Theron Smith]] — cosine 0.78
 - [[chucky-brown|Chucky Brown]] — cosine 0.78
 
+## Scouting report
+
+**Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 11.9 pts · 10.0 reb · 1.3 ast · 0.9 blk per 100 (2002-03).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−2.3σ)
+- On-court net impact well below era (−1.7σ)
+
+**Comparables:**
+
+- [[joe-kleine|Joe Kleine]] '97 (88% similar)
+- [[malik-allen|Malik Allen]] '11 (82% similar)
+- [[maciej-lampe|Maciej Lampe]] '04 (82% similar)
+- [[jaron-blossomgame|Jaron Blossomgame]] '19 (80% similar)
+- [[theron-smith|Theron Smith]] '05 (78% similar)
+- [[chucky-brown|Chucky Brown]] '02 (78% similar)
+
+**Career shape:** Charted 6 seasons (1996-97–2002-03). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

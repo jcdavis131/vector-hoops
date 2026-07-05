@@ -48,6 +48,34 @@ Closest career shapes in the era-normalized vector space:
 - [[donovan-mitchell|Donovan Mitchell]] — cosine 0.91
 - [[anthony-edwards|Anthony Edwards]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** PF · Scoring Volume + Shot Volume. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 33.6 pts · 9.5 reb · 7.9 ast · 3.0 stl per 100 (2021-22).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+2.5σ vs era)
+- Active hands, disrupts passing lanes (+2.5σ vs era)
+- Featured, high-usage scoring role (+2.1σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+3.0σ)
+- Offensive-glass activity well below era (−1.0σ)
+
+**Comparables:**
+
+- [[victor-oladipo|Victor Oladipo]] '18 (92% similar)
+- [[clyde-drexler|Clyde Drexler]] '98 (91% similar)
+- [[stephen-curry|Stephen Curry]] '16 (91% similar)
+- [[paul-pierce|Paul Pierce]] '03 (91% similar)
+- [[donovan-mitchell|Donovan Mitchell]] '21 (91% similar)
+- [[anthony-edwards|Anthony Edwards]] '25 (90% similar)
+
+**Career shape:** Charted 15 seasons (2010-11–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

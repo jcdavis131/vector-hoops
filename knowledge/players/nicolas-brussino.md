@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[carl-thomas|Carl Thomas]] — cosine 0.83
 - [[tyrese-martin|Tyrese Martin]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 14.3 pts · 9.1 reb · 4.5 ast · 1.6 stl per 100 (2016-17).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.4σ)
+- Finishing efficiency well below era (−1.2σ)
+
+**Comparables:**
+
+- [[charles-r-jones|Charles R. Jones]] '00 (85% similar)
+- [[sergei-monia|Sergei Monia]] '06 (85% similar)
+- [[chuma-okeke|Chuma Okeke]] '24 (85% similar)
+- [[david-noel|David Noel]] '07 (84% similar)
+- [[carl-thomas|Carl Thomas]] '97 (83% similar)
+- [[tyrese-martin|Tyrese Martin]] '26 (83% similar)
+
+**Career shape:** Charted 1 season (2016-17). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -40,6 +40,33 @@ Closest career shapes in the era-normalized vector space:
 - [[mike-penberthy|Mike Penberthy]] — cosine 0.93
 - [[keith-bogans|Keith Bogans]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** PG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 13.9 pts · 3.4 reb · 4.6 ast · 1.7 stl per 100 (2012-13).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.4σ vs era)
+- Rarely turns the ball over (−1.2σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.6σ)
+- Finishing efficiency well below era (−1.5σ)
+
+**Comparables:**
+
+- [[matt-maloney|Matt Maloney]] '00 (95% similar)
+- [[landry-shamet|Landry Shamet]] '20 (94% similar)
+- [[charlie-bell|Charlie Bell]] '11 (94% similar)
+- [[damon-jones|Damon Jones]] '09 (93% similar)
+- [[mike-penberthy|Mike Penberthy]] '01 (93% similar)
+- [[keith-bogans|Keith Bogans]] '13 (93% similar)
+
+**Career shape:** Charted 7 seasons (2006-07–2012-13). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

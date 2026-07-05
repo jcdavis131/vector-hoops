@@ -41,6 +41,32 @@ Closest career shapes in the era-normalized vector space:
 - [[collin-gillespie|Collin Gillespie]] — cosine 0.85
 - [[iman-shumpert|Iman Shumpert]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 26.4 pts · 6.2 reb · 4.5 ast · 2.2 stl per 100 (2023-24).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.3σ vs era)
+- Active hands, disrupts passing lanes (+1.2σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[rudy-fernandez|Rudy Fernandez]] '11 (88% similar)
+- [[rick-fox|Rick Fox]] '04 (86% similar)
+- [[lindsey-hunter|Lindsey Hunter]] '09 (86% similar)
+- [[nate-mcmillan|Nate McMillan]] '98 (85% similar)
+- [[collin-gillespie|Collin Gillespie]] '24 (85% similar)
+- [[iman-shumpert|Iman Shumpert]] '12 (84% similar)
+
+**Career shape:** Charted 8 seasons (2018-19–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

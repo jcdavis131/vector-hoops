@@ -37,6 +37,34 @@ Closest career shapes in the era-normalized vector space:
 - [[amir-johnson|Amir Johnson]] — cosine 0.92
 - [[zach-edey|Zach Edey]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 20.1 pts · 18.8 reb · 1.6 ast · 2.3 blk per 100 (2019-20).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+4.0σ vs era)
+- Relentless on the offensive glass (+3.5σ vs era)
+- Efficient finisher inside the arc (+2.7σ vs era)
+
+**Areas of concern:**
+
+- Three-point volume well below era (−1.7σ)
+- Table-setting role well below era (−1.1σ)
+
+**Comparables:**
+
+- [[skal-labissiere|Skal Labissiere]] '20 (93% similar)
+- [[taj-gibson|Taj Gibson]] '21 (92% similar)
+- [[moussa-diabate|Moussa Diabaté]] '25 (92% similar)
+- [[richaun-holmes|Richaun Holmes]] '25 (92% similar)
+- [[amir-johnson|Amir Johnson]] '08 (92% similar)
+- [[zach-edey|Zach Edey]] '25 (91% similar)
+
+**Career shape:** Charted 4 seasons (2019-20–2025-26). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

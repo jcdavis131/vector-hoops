@@ -38,6 +38,32 @@ Closest career shapes in the era-normalized vector space:
 - [[rashad-mccants|Rashad McCants]] — cosine 0.85
 - [[markus-howard|Markus Howard]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 21.7 pts · 4.3 reb · 3.0 ast · 1.7 stl per 100 (1999-00).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+1.2σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.9σ)
+- Defensive rebounding well below era (−1.5σ)
+
+**Comparables:**
+
+- [[shannon-brown|Shannon Brown]] '08 (94% similar)
+- [[brandon-boston|Brandon Boston]] '24 (90% similar)
+- [[dajuan-wagner|Dajuan Wagner]] '03 (90% similar)
+- [[ed-gray|Ed Gray]] '99 (86% similar)
+- [[rashad-mccants|Rashad McCants]] '08 (85% similar)
+- [[markus-howard|Markus Howard]] '22 (84% similar)
+
+**Career shape:** Charted 5 seasons (1999-00–2003-04). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

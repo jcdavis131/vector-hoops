@@ -41,6 +41,33 @@ Closest career shapes in the era-normalized vector space:
 - [[seth-curry|Seth Curry]] — cosine 0.83
 - [[lucious-harris|Lucious Harris]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 13.3 pts · 5.2 reb · 3.4 ast · 2.5 stl per 100 (2018-19).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.9σ vs era)
+- Rarely turns the ball over (−1.2σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.2σ)
+- Scoring load well below era (−1.1σ)
+
+**Comparables:**
+
+- [[courtney-lee|Courtney Lee]] '20 (90% similar)
+- [[kentavious-caldwell-pope|Kentavious Caldwell-Pope]] '24 (86% similar)
+- [[josh-richardson|Josh Richardson]] '16 (83% similar)
+- [[steve-kerr|Steve Kerr]] '97 (83% similar)
+- [[seth-curry|Seth Curry]] '21 (83% similar)
+- [[lucious-harris|Lucious Harris]] '98 (83% similar)
+
+**Career shape:** Charted 8 seasons (2018-19–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

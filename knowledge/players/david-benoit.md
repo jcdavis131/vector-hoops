@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[marcus-morris-sr|Marcus Morris Sr.]] — cosine 0.88
 - [[henry-james|Henry James]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 18.9 pts · 9.1 reb · 1.1 ast · 1.6 stl per 100 (1997-98).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.8σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.2σ)
+- Table-setting role well below era (−1.1σ)
+
+**Comparables:**
+
+- [[wilson-chandler|Wilson Chandler]] '20 (92% similar)
+- [[walter-herrmann|Walter Herrmann]] '09 (88% similar)
+- [[channing-frye|Channing Frye]] '19 (88% similar)
+- [[brian-cook|Brian Cook]] '09 (88% similar)
+- [[marcus-morris-sr|Marcus Morris Sr.]] '12 (88% similar)
+- [[henry-james|Henry James]] '98 (87% similar)
+
+**Career shape:** Charted 2 seasons (1997-98–2000-01). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

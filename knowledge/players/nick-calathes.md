@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[brevin-knight|Brevin Knight]] — cosine 0.86
 - [[marko-jaric|Marko Jaric]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** SG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 14.7 pts · 6.4 reb · 8.8 ast · 3.8 stl per 100 (2014-15).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+3.6σ vs era)
+- High-volume table-setter (+1.7σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.5σ)
+
+**Comparables:**
+
+- [[kris-dunn|Kris Dunn]] '20 (92% similar)
+- [[rajon-rondo|Rajon Rondo]] '11 (89% similar)
+- [[phil-pressey|Phil Pressey]] '16 (88% similar)
+- [[dyson-daniels|Dyson Daniels]] '25 (86% similar)
+- [[brevin-knight|Brevin Knight]] '03 (86% similar)
+- [[marko-jaric|Marko Jaric]] '03 (85% similar)
+
+**Career shape:** Charted 2 seasons (2013-14–2014-15). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -36,6 +36,33 @@ Closest career shapes in the era-normalized vector space:
 - [[tristan-thompson|Tristan Thompson]] — cosine 0.92
 - [[alan-henderson|Alan Henderson]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 15.1 pts · 14.9 reb · 0.5 ast · 1.4 stl per 100 (2005-06).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+1.8σ vs era)
+- Strong presence on the defensive glass (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.3σ)
+- Table-setting role well below era (−1.2σ)
+
+**Comparables:**
+
+- [[jason-thompson|Jason Thompson]] '15 (94% similar)
+- [[mario-kasun|Mario Kasun]] '05 (92% similar)
+- [[samaki-walker|Samaki Walker]] '02 (92% similar)
+- [[jordan-hill|Jordan Hill]] '13 (92% similar)
+- [[tristan-thompson|Tristan Thompson]] '25 (92% similar)
+- [[alan-henderson|Alan Henderson]] '02 (92% similar)
+
+**Career shape:** Charted 3 seasons (2002-03–2005-06). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

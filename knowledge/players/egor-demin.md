@@ -34,6 +34,31 @@ Closest career shapes in the era-normalized vector space:
 - [[khalid-reeves|Khalid Reeves]] — cosine 0.91
 - [[kenny-smith|Kenny Smith]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** Unlisted · Three-Point Volume + Three-Point Accuracy. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 19.8 pts · 6.1 reb · 6.4 ast · 1.6 stl per 100 (2025-26).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.4σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[terry-dehere|Terry Dehere]] '97 (94% similar)
+- [[isaiah-canaan|Isaiah Canaan]] '16 (91% similar)
+- [[randy-foye|Randy Foye]] '12 (91% similar)
+- [[chris-whitney|Chris Whitney]] '04 (91% similar)
+- [[khalid-reeves|Khalid Reeves]] '97 (91% similar)
+- [[kenny-smith|Kenny Smith]] '97 (90% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

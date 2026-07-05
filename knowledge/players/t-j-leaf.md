@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[ray-owes|Ray Owes]] — cosine 0.85
 - [[alex-poythress|Alex Poythress]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 17.0 pts · 14.3 reb · 1.8 ast · 2.0 stl per 100 (2019-20).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+1.5σ vs era)
+- Strong presence on the defensive glass (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.7σ)
+
+**Comparables:**
+
+- [[alfonzo-mckinnie|Alfonzo McKinnie]] '22 (90% similar)
+- [[olden-polynice|Olden Polynice]] '99 (89% similar)
+- [[chris-taft|Chris Taft]] '06 (87% similar)
+- [[sam-dekker|Sam Dekker]] '19 (86% similar)
+- [[ray-owes|Ray Owes]] '97 (85% similar)
+- [[alex-poythress|Alex Poythress]] '18 (84% similar)
+
+**Career shape:** Charted 3 seasons (2017-18–2019-20). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

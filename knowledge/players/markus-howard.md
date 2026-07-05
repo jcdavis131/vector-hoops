@@ -35,6 +35,34 @@ Closest career shapes in the era-normalized vector space:
 - [[james-robinson|James Robinson]] — cosine 0.89
 - [[evan-fournier|Evan Fournier]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 33.2 pts · 3.1 reb · 1.8 ast · 2.4 stl per 100 (2021-22).
+
+**Strengths:**
+
+- High-volume three-point shooter (+3.2σ vs era)
+- Heavy shot volume, focal scoring option (+2.2σ vs era)
+- Featured, high-usage scoring role (+2.0σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.6σ)
+- Rim-protection impact well below era (−1.2σ)
+
+**Comparables:**
+
+- [[vernon-maxwell|Vernon Maxwell]] '00 (92% similar)
+- [[dajuan-wagner|Dajuan Wagner]] '03 (91% similar)
+- [[rashad-mccants|Rashad McCants]] '08 (91% similar)
+- [[chris-clemons|Chris Clemons]] '20 (90% similar)
+- [[james-robinson|James Robinson]] '98 (89% similar)
+- [[evan-fournier|Evan Fournier]] '24 (89% similar)
+
+**Career shape:** Charted 2 seasons (2020-21–2021-22). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

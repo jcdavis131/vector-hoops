@@ -38,6 +38,32 @@ Closest career shapes in the era-normalized vector space:
 - [[dexter-pittman|Dexter Pittman]] — cosine 0.71
 - [[scot-pollard|Scot Pollard]] — cosine 0.71
 
+## Scouting report
+
+**Play style:** PF · Defensive Glass + Rim Pressure (Fts). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 22.9 pts · 11.7 reb · 2.5 ast · 1.5 stl per 100 (2024-25).
+
+**Strengths:**
+
+- Strong net on-court impact (+3.0σ vs era)
+- Strong presence on the defensive glass (+1.6σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[michael-kidd-gilchrist|Michael Kidd-Gilchrist]] '20 (77% similar)
+- [[cal-bowdler|Cal Bowdler]] '01 (74% similar)
+- [[cory-jefferson|Cory Jefferson]] '15 (73% similar)
+- [[maurice-ndour|Maurice Ndour]] '17 (72% similar)
+- [[dexter-pittman|Dexter Pittman]] '12 (71% similar)
+- [[scot-pollard|Scot Pollard]] '03 (71% similar)
+
+**Career shape:** Charted 5 seasons (2020-21–2024-25). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

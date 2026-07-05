@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[ray-mccallum|Ray McCallum]] — cosine 0.85
 - [[trey-alexander|Trey Alexander]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 11.3 pts · 3.2 reb · 8.7 ast · 0.9 stl per 100 (2021-22).
+
+**Strengths:**
+
+- High-volume table-setter (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.7σ)
+- Defensive rebounding well below era (−1.6σ)
+
+**Comparables:**
+
+- [[bimbo-coles|Bimbo Coles]] '04 (91% similar)
+- [[donald-sloan|Donald Sloan]] '12 (88% similar)
+- [[dean-oliver|Dean Oliver]] '02 (87% similar)
+- [[doug-overton|Doug Overton]] '02 (87% similar)
+- [[ray-mccallum|Ray McCallum]] '14 (85% similar)
+- [[trey-alexander|Trey Alexander]] '25 (85% similar)
+
+**Career shape:** Charted 1 season (2021-22). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

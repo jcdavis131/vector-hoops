@@ -46,6 +46,33 @@ Closest career shapes in the era-normalized vector space:
 - [[rashad-mccants|Rashad McCants]] — cosine 0.91
 - [[flip-murray|Flip Murray]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** SF · Playmaking + Steals. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 19.5 pts · 5.7 reb · 2.4 ast · 3.3 stl per 100 (2001-02).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.5σ vs era)
+- High-volume three-point shooter (+1.7σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.2σ)
+- Offensive-glass activity well below era (−1.2σ)
+
+**Comparables:**
+
+- [[bones-hyland|Bones Hyland]] '25 (94% similar)
+- [[lester-hudson|Lester Hudson]] '10 (94% similar)
+- [[gilbert-arenas|Gilbert Arenas]] '06 (93% similar)
+- [[victor-oladipo|Victor Oladipo]] '18 (93% similar)
+- [[rashad-mccants|Rashad McCants]] '08 (91% similar)
+- [[flip-murray|Flip Murray]] '08 (89% similar)
+
+**Career shape:** Charted 13 seasons (2000-01–2012-13). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

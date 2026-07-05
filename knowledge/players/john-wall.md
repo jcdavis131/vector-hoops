@@ -44,6 +44,33 @@ Closest career shapes in the era-normalized vector space:
 - [[steve-francis|Steve Francis]] — cosine 0.92
 - [[de-aaron-fox|De'Aaron Fox]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 30.7 pts · 5.5 reb · 14.1 ast · 2.7 stl per 100 (2016-17).
+
+**Strengths:**
+
+- High-volume table-setter (+3.6σ vs era)
+- Active hands, disrupts passing lanes (+2.0σ vs era)
+- Draws contact, gets to the line often (+2.0σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.8σ)
+
+**Comparables:**
+
+- [[tyreke-evans|Tyreke Evans]] '16 (94% similar)
+- [[cade-cunningham|Cade Cunningham]] '26 (93% similar)
+- [[russell-westbrook|Russell Westbrook]] '17 (93% similar)
+- [[ja-morant|Ja Morant]] '23 (93% similar)
+- [[steve-francis|Steve Francis]] '05 (92% similar)
+- [[de-aaron-fox|De'Aaron Fox]] '21 (92% similar)
+
+**Career shape:** Charted 11 seasons (2010-11–2022-23). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

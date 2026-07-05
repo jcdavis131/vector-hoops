@@ -37,6 +37,33 @@ Closest career shapes in the era-normalized vector space:
 - [[gary-neal|Gary Neal]] — cosine 0.93
 - [[bogdan-bogdanovic|Bogdan Bogdanović]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 24.4 pts · 3.9 reb · 4.6 ast · 1.6 stl per 100 (1997-98).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.6σ vs era)
+- Heavy shot volume, focal scoring option (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Offensive-glass activity well below era (−1.2σ)
+- Defensive rebounding well below era (−1.1σ)
+
+**Comparables:**
+
+- [[voshon-lenard|Voshon Lenard]] '97 (95% similar)
+- [[marco-belinelli|Marco Belinelli]] '08 (95% similar)
+- [[tim-hardaway-jr|Tim Hardaway Jr.]] '15 (94% similar)
+- [[joe-dumars|Joe Dumars]] '98 (94% similar)
+- [[gary-neal|Gary Neal]] '14 (93% similar)
+- [[bogdan-bogdanovic|Bogdan Bogdanović]] '21 (93% similar)
+
+**Career shape:** Charted 4 seasons (1996-97–1999-00). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

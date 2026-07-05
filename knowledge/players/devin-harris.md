@@ -48,6 +48,34 @@ Closest career shapes in the era-normalized vector space:
 - [[ty-lawson|Ty Lawson]] — cosine 0.90
 - [[goran-dragic|Goran Dragic]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 30.4 pts · 4.8 reb · 9.8 ast · 2.4 stl per 100 (2008-09).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+3.1σ vs era)
+- High-volume table-setter (+2.1σ vs era)
+- Featured, high-usage scoring role (+1.9σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.8σ)
+- Offensive-glass activity well below era (−1.1σ)
+
+**Comparables:**
+
+- [[jeremy-lin|Jeremy Lin]] '12 (93% similar)
+- [[kyle-lowry|Kyle Lowry]] '16 (92% similar)
+- [[mike-conley|Mike Conley]] '13 (92% similar)
+- [[jeff-teague|Jeff Teague]] '15 (92% similar)
+- [[ty-lawson|Ty Lawson]] '14 (90% similar)
+- [[goran-dragic|Goran Dragic]] '17 (86% similar)
+
+**Career shape:** Charted 15 seasons (2004-05–2018-19). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

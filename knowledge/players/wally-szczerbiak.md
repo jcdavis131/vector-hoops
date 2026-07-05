@@ -43,6 +43,33 @@ Closest career shapes in the era-normalized vector space:
 - [[steven-smith|Steven Smith]] — cosine 0.86
 - [[reggie-miller|Reggie Miller]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 26.7 pts · 5.5 reb · 3.1 ast · 1.0 stl per 100 (2006-07).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+1.4σ vs era)
+- Heavy shot volume, focal scoring option (+1.3σ vs era)
+- Featured, high-usage scoring role (+1.3σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[allan-houston|Allan Houston]] '03 (87% similar)
+- [[glen-rice|Glen Rice]] '97 (87% similar)
+- [[jj-redick|JJ Redick]] '16 (87% similar)
+- [[michael-finley|Michael Finley]] '03 (86% similar)
+- [[steven-smith|Steven Smith]] '99 (86% similar)
+- [[reggie-miller|Reggie Miller]] '98 (85% similar)
+
+**Career shape:** Charted 10 seasons (1999-00–2008-09). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

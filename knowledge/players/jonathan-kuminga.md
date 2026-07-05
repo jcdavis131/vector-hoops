@@ -38,6 +38,33 @@ Closest career shapes in the era-normalized vector space:
 - [[karl-malone|Karl Malone]] — cosine 0.84
 - [[giannis-antetokounmpo|Giannis Antetokounmpo]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** PF · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 30.2 pts · 9.2 reb · 4.4 ast · 1.6 stl per 100 (2024-25).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+2.6σ vs era)
+- Heavy shot volume, focal scoring option (+1.5σ vs era)
+- Featured, high-usage scoring role (+1.4σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[zion-williamson|Zion Williamson]] '25 (92% similar)
+- [[chris-gatling|Chris Gatling]] '97 (87% similar)
+- [[blake-griffin|Blake Griffin]] '14 (87% similar)
+- [[paolo-banchero|Paolo Banchero]] '25 (85% similar)
+- [[karl-malone|Karl Malone]] '97 (84% similar)
+- [[giannis-antetokounmpo|Giannis Antetokounmpo]] '20 (84% similar)
+
+**Career shape:** Charted 5 seasons (2021-22–2025-26). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

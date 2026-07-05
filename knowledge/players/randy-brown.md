@@ -39,6 +39,33 @@ Closest career shapes in the era-normalized vector space:
 - [[shane-larkin|Shane Larkin]] — cosine 0.89
 - [[lorenzo-brown|Lorenzo Brown]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 8.3 pts · 5.2 reb · 7.1 ast · 3.4 stl per 100 (2002-03).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.7σ vs era)
+- High-volume table-setter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Scoring load well below era (−1.7σ)
+- Shot volume well below era (−1.6σ)
+
+**Comparables:**
+
+- [[reece-beekman|Reece Beekman]] '25 (94% similar)
+- [[jason-hart|Jason Hart]] '09 (91% similar)
+- [[ron-baker|Ron Baker]] '18 (90% similar)
+- [[antonio-burks|Antonio Burks]] '06 (89% similar)
+- [[shane-larkin|Shane Larkin]] '16 (89% similar)
+- [[lorenzo-brown|Lorenzo Brown]] '19 (88% similar)
+
+**Career shape:** Charted 6 seasons (1996-97–2002-03). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -44,6 +44,34 @@ Closest career shapes in the era-normalized vector space:
 - [[darius-garland|Darius Garland]] — cosine 0.93
 - [[jamal-murray|Jamal Murray]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 29.6 pts · 5.0 reb · 10.9 ast · 1.9 stl per 100 (2003-04).
+
+**Strengths:**
+
+- High-volume table-setter (+2.5σ vs era)
+- Featured, high-usage scoring role (+2.0σ vs era)
+- Strong net on-court impact (+1.9σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.2σ)
+- Offensive-glass activity well below era (−1.1σ)
+
+**Comparables:**
+
+- [[derrick-rose|Derrick Rose]] '11 (94% similar)
+- [[malcolm-brogdon|Malcolm Brogdon]] '20 (94% similar)
+- [[jalen-brunson|Jalen Brunson]] '24 (93% similar)
+- [[deron-williams|Deron Williams]] '12 (93% similar)
+- [[darius-garland|Darius Garland]] '22 (93% similar)
+- [[jamal-murray|Jamal Murray]] '26 (92% similar)
+
+**Career shape:** Charted 11 seasons (1996-97–2007-08). Consistent Scoring Volume + Shot Volume profile across his career.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

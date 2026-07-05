@@ -40,6 +40,32 @@ Closest career shapes in the era-normalized vector space:
 - [[ruben-boumtje-boumtje|Ruben Boumtje-Boumtje]] — cosine 0.87
 - [[robert-swift|Robert Swift]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 10.6 pts · 9.5 reb · 0.9 ast · 1.2 blk per 100 (2010-11).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+4.0σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.5σ)
+- Scoring load well below era (−1.4σ)
+
+**Comparables:**
+
+- [[duane-causwell|Duane Causwell]] '99 (91% similar)
+- [[earl-clark|Earl Clark]] '12 (89% similar)
+- [[tony-massenburg|Tony Massenburg]] '02 (88% similar)
+- [[mickell-gladness|Mickell Gladness]] '12 (87% similar)
+- [[ruben-boumtje-boumtje|Ruben Boumtje-Boumtje]] '02 (87% similar)
+- [[robert-swift|Robert Swift]] '05 (86% similar)
+
+**Career shape:** Charted 7 seasons (2001-02–2010-11). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -42,6 +42,33 @@ Closest career shapes in the era-normalized vector space:
 - [[allen-crabbe|Allen Crabbe]] — cosine 0.94
 - [[bryn-forbes|Bryn Forbes]] — cosine 0.94
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 6.7 pts · 4.7 reb · 1.7 ast · 0.8 stl per 100 (2010-11).
+
+**Strengths:**
+
+- Strong net on-court impact (+2.5σ vs era)
+- Rarely turns the ball over (−2.0σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−3.1σ)
+- Scoring load well below era (−2.1σ)
+
+**Comparables:**
+
+- [[raja-bell|Raja Bell]] '07 (96% similar)
+- [[matt-thomas|Matt Thomas]] '22 (96% similar)
+- [[hubert-davis|Hubert Davis]] '04 (95% similar)
+- [[aj-green|AJ Green]] '23 (95% similar)
+- [[allen-crabbe|Allen Crabbe]] '20 (94% similar)
+- [[bryn-forbes|Bryn Forbes]] '17 (94% similar)
+
+**Career shape:** Charted 9 seasons (2003-04–2011-12). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

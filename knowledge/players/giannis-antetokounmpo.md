@@ -46,6 +46,34 @@ Closest career shapes in the era-normalized vector space:
 - [[zion-williamson|Zion Williamson]] — cosine 0.88
 - [[pascal-siakam|Pascal Siakam]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PF · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 43.2 pts · 19.9 reb · 8.2 ast · 1.5 blk per 100 (2019-20).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+4.0σ vs era)
+- Strong presence on the defensive glass (+3.7σ vs era)
+- Featured, high-usage scoring role (+3.6σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.6σ)
+- Free-throw touch well below era (−1.0σ)
+
+**Comparables:**
+
+- [[karl-malone|Karl Malone]] '97 (95% similar)
+- [[joel-embiid|Joel Embiid]] '17 (94% similar)
+- [[blake-griffin|Blake Griffin]] '14 (92% similar)
+- [[demarcus-cousins|DeMarcus Cousins]] '15 (91% similar)
+- [[zion-williamson|Zion Williamson]] '25 (88% similar)
+- [[pascal-siakam|Pascal Siakam]] '17 (88% similar)
+
+**Career shape:** Charted 13 seasons (2013-14–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

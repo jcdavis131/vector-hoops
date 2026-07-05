@@ -37,6 +37,33 @@ Closest career shapes in the era-normalized vector space:
 - [[ed-davis|Ed Davis]] — cosine 0.93
 - [[deandre-jordan|DeAndre Jordan]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 10.4 pts · 15.9 reb · 2.1 ast · 1.2 blk per 100 (1998-99).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+3.5σ vs era)
+- Strong presence on the defensive glass (+2.4σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−2.1σ)
+- Scoring load well below era (−1.5σ)
+
+**Comparables:**
+
+- [[jamal-sampson|Jamal Sampson]] '07 (98% similar)
+- [[omer-asik|Omer Asik]] '18 (97% similar)
+- [[joel-przybilla|Joel Przybilla]] '01 (94% similar)
+- [[tyson-chandler|Tyson Chandler]] '20 (94% similar)
+- [[ed-davis|Ed Davis]] '22 (93% similar)
+- [[deandre-jordan|DeAndre Jordan]] '16 (93% similar)
+
+**Career shape:** Charted 4 seasons (1996-97–1999-00). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

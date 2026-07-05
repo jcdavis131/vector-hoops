@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[jared-butler|Jared Butler]] — cosine 0.91
 - [[ricky-rubio|Ricky Rubio]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 19.4 pts · 4.1 reb · 12.2 ast · 2.9 stl per 100 (2020-21).
+
+**Strengths:**
+
+- High-volume table-setter (+2.9σ vs era)
+- Active hands, disrupts passing lanes (+2.5σ vs era)
+- Reliable touch from the free-throw line (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.8σ)
+- Defensive rebounding well below era (−1.4σ)
+
+**Comparables:**
+
+- [[raul-lopez|Raul Lopez]] '05 (93% similar)
+- [[t-j-ford|T.J. Ford]] '07 (93% similar)
+- [[jamaal-tinsley|Jamaal Tinsley]] '04 (92% similar)
+- [[darrell-armstrong|Darrell Armstrong]] '99 (92% similar)
+- [[jared-butler|Jared Butler]] '24 (91% similar)
+- [[ricky-rubio|Ricky Rubio]] '13 (91% similar)
+
+**Career shape:** Charted 1 season (2020-21). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -38,6 +38,33 @@ Closest career shapes in the era-normalized vector space:
 - [[hubert-davis|Hubert Davis]] — cosine 0.81
 - [[yogi-ferrell|Yogi Ferrell]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** PG · Three-Point Accuracy (Low Turnovers). Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 13.7 pts · 4.4 reb · 6.8 ast · 1.4 stl per 100 (2000-01).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+1.6σ vs era)
+- Rarely turns the ball over (−1.3σ vs era)
+
+**Areas of concern:**
+
+- Offensive-glass activity well below era (−1.2σ)
+- Rim pressure (free-throw generation) well below era (−1.1σ)
+
+**Comparables:**
+
+- [[b-j-armstrong|B.J. Armstrong]] '00 (88% similar)
+- [[ayo-dosunmu|Ayo Dosunmu]] '22 (87% similar)
+- [[monte-morris|Monte Morris]] '24 (85% similar)
+- [[jeff-mcinnis|Jeff McInnis]] '08 (82% similar)
+- [[hubert-davis|Hubert Davis]] '04 (81% similar)
+- [[yogi-ferrell|Yogi Ferrell]] '19 (81% similar)
+
+**Career shape:** Charted 5 seasons (1996-97–2000-01). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

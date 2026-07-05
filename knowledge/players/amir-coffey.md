@@ -40,6 +40,32 @@ Closest career shapes in the era-normalized vector space:
 - [[doron-lamb|Doron Lamb]] — cosine 0.90
 - [[terrence-shannon-jr|Terrence Shannon Jr.]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 13.0 pts · 4.0 reb · 4.0 ast · 0.5 stl per 100 (2022-23).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.8σ)
+- Defensive rebounding well below era (−1.5σ)
+
+**Comparables:**
+
+- [[glenn-robinson-iii|Glenn Robinson III]] '21 (94% similar)
+- [[quincy-pondexter|Quincy Pondexter]] '18 (92% similar)
+- [[bryce-mcgowens|Bryce McGowens]] '26 (92% similar)
+- [[michael-curry|Michael Curry]] '05 (91% similar)
+- [[doron-lamb|Doron Lamb]] '14 (90% similar)
+- [[terrence-shannon-jr|Terrence Shannon Jr.]] '26 (90% similar)
+
+**Career shape:** Charted 7 seasons (2019-20–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

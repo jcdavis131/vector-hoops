@@ -42,6 +42,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jalen-pickett|Jalen Pickett]] — cosine 0.94
 - [[chris-childs|Chris Childs]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** PG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 8.1 pts · 4.2 reb · 8.1 ast · 1.2 stl per 100 (2012-13).
+
+**Strengths:**
+
+- High-volume table-setter (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−2.0σ)
+- Scoring load well below era (−1.9σ)
+
+**Comparables:**
+
+- [[steve-blake|Steve Blake]] '16 (97% similar)
+- [[matthew-dellavedova|Matthew Dellavedova]] '23 (95% similar)
+- [[lee-mayberry|Lee Mayberry]] '97 (95% similar)
+- [[chris-herren|Chris Herren]] '01 (95% similar)
+- [[jalen-pickett|Jalen Pickett]] '25 (94% similar)
+- [[chris-childs|Chris Childs]] '02 (93% similar)
+
+**Career shape:** Charted 9 seasons (2004-05–2012-13). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

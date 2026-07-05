@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[harvey-grant|Harvey Grant]] — cosine 0.84
 - [[romeo-langford|Romeo Langford]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 11.6 pts · 6.1 reb · 3.3 ast · 0.8 stl per 100 (1997-98).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.6σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.4σ)
+- Three-point accuracy well below era (−1.3σ)
+
+**Comparables:**
+
+- [[trenton-hassell|Trenton Hassell]] '04 (90% similar)
+- [[quinton-ross|Quinton Ross]] '11 (90% similar)
+- [[michael-curry|Michael Curry]] '05 (89% similar)
+- [[wes-iwundu|Wes Iwundu]] '21 (88% similar)
+- [[harvey-grant|Harvey Grant]] '97 (84% similar)
+- [[romeo-langford|Romeo Langford]] '20 (84% similar)
+
+**Career shape:** Charted 3 seasons (1996-97–1999-00). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -35,6 +35,33 @@ Closest career shapes in the era-normalized vector space:
 - [[emeka-okafor|Emeka Okafor]] — cosine 0.91
 - [[wendell-carter-jr|Wendell Carter Jr.]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 20.8 pts · 20.4 reb · 3.4 ast · 1.4 blk per 100 (2021-22).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+3.0σ vs era)
+- Relentless on the offensive glass (+2.1σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.1σ)
+- Three-point volume well below era (−1.6σ)
+
+**Comparables:**
+
+- [[charles-shackleford|Charles Shackleford]] '99 (93% similar)
+- [[jordan-hill|Jordan Hill]] '13 (93% similar)
+- [[mario-kasun|Mario Kasun]] '05 (93% similar)
+- [[nazr-mohammed|Nazr Mohammed]] '15 (91% similar)
+- [[emeka-okafor|Emeka Okafor]] '18 (91% similar)
+- [[wendell-carter-jr|Wendell Carter Jr.]] '19 (90% similar)
+
+**Career shape:** Charted 2 seasons (2021-22–2023-24). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

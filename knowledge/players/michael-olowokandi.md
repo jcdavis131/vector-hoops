@@ -42,6 +42,34 @@ Closest career shapes in the era-normalized vector space:
 - [[thomas-hamilton|Thomas Hamilton]] — cosine 0.88
 - [[jerome-james|Jerome James]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 16.3 pts · 14.4 reb · 1.4 ast · 4.0 blk per 100 (2003-04).
+
+**Strengths:**
+
+- Elite rim protection (+2.5σ vs era)
+- Strong net on-court impact (+1.8σ vs era)
+- Strong presence on the defensive glass (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.4σ)
+- Ball-hawking activity well below era (−1.2σ)
+
+**Comparables:**
+
+- [[darko-milicic|Darko Milicic]] '04 (92% similar)
+- [[norvel-pelle|Norvel Pelle]] '20 (92% similar)
+- [[jeremy-tyler|Jeremy Tyler]] '14 (90% similar)
+- [[georgios-papagiannis|Georgios Papagiannis]] '18 (90% similar)
+- [[thomas-hamilton|Thomas Hamilton]] '00 (88% similar)
+- [[jerome-james|Jerome James]] '06 (88% similar)
+
+**Career shape:** Charted 9 seasons (1998-99–2006-07). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

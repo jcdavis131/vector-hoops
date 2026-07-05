@@ -39,6 +39,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jordan-mickey|Jordan Mickey]] — cosine 0.89
 - [[rakeem-christmas|Rakeem Christmas]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 11.3 pts · 13.5 reb · 0.0 ast · 1.6 blk per 100 (2007-08).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+2.0σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.6σ)
+- Table-setting role well below era (−1.4σ)
+
+**Comparables:**
+
+- [[brett-szabo|Brett Szabo]] '97 (94% similar)
+- [[nathan-mensah|Nathan Mensah]] '24 (93% similar)
+- [[ruben-boumtje-boumtje|Ruben Boumtje-Boumtje]] '02 (92% similar)
+- [[michael-stewart|Michael Stewart]] '04 (90% similar)
+- [[jordan-mickey|Jordan Mickey]] '17 (89% similar)
+- [[rakeem-christmas|Rakeem Christmas]] '17 (89% similar)
+
+**Career shape:** Charted 6 seasons (2006-07–2011-12). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -46,6 +46,33 @@ Closest career shapes in the era-normalized vector space:
 - [[shavlik-randolph|Shavlik Randolph]] — cosine 0.87
 - [[michael-smith|Michael Smith]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 9.9 pts · 24.2 reb · 1.2 ast · 2.0 stl per 100 (2012-13).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+4.0σ vs era)
+- Relentless on the offensive glass (+2.5σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−2.1σ)
+- Scoring load well below era (−1.6σ)
+
+**Comparables:**
+
+- [[kenny-thomas|Kenny Thomas]] '08 (91% similar)
+- [[tyrone-hill|Tyrone Hill]] '97 (90% similar)
+- [[joey-dorsey|Joey Dorsey]] '15 (89% similar)
+- [[jeff-foster|Jeff Foster]] '00 (88% similar)
+- [[shavlik-randolph|Shavlik Randolph]] '15 (87% similar)
+- [[michael-smith|Michael Smith]] '01 (87% similar)
+
+**Career shape:** Charted 13 seasons (2002-03–2014-15). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

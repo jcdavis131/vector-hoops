@@ -46,6 +46,33 @@ Closest career shapes in the era-normalized vector space:
 - [[samaki-walker|Samaki Walker]] — cosine 0.91
 - [[jason-thompson|Jason Thompson]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 4.9 pts · 12.4 reb · 1.3 ast · 1.0 stl per 100 (2007-08).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.6σ vs era)
+- Strong presence on the defensive glass (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.4σ)
+- Scoring load well below era (−2.3σ)
+
+**Comparables:**
+
+- [[precious-achiuwa|Precious Achiuwa]] '21 (93% similar)
+- [[kosta-koufos|Kosta Koufos]] '19 (93% similar)
+- [[tristan-thompson|Tristan Thompson]] '25 (91% similar)
+- [[brian-skinner|Brian Skinner]] '08 (91% similar)
+- [[samaki-walker|Samaki Walker]] '02 (91% similar)
+- [[jason-thompson|Jason Thompson]] '15 (91% similar)
+
+**Career shape:** Charted 13 seasons (1996-97–2008-09). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

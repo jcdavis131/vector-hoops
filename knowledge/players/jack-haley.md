@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[derek-strong|Derek Strong]] — cosine 0.71
 - [[tim-young|Tim Young]] — cosine 0.70
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 22.7 pts · 18.2 reb · 2.8 ast · 0.6 stl per 100 (1996-97).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+2.6σ vs era)
+- Draws contact, gets to the line often (+2.5σ vs era)
+- Strong net on-court impact (+2.1σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.6σ)
+- Ball-hawking activity well below era (−1.6σ)
+
+**Comparables:**
+
+- [[tyler-hansbrough|Tyler Hansbrough]] '16 (74% similar)
+- [[joe-smith|Joe Smith]] '00 (74% similar)
+- [[cassius-stanley|Cassius Stanley]] '21 (73% similar)
+- [[jared-sullinger|Jared Sullinger]] '16 (72% similar)
+- [[derek-strong|Derek Strong]] '98 (71% similar)
+- [[tim-young|Tim Young]] '00 (70% similar)
+
+**Career shape:** Charted 1 season (1996-97). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

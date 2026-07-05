@@ -35,6 +35,33 @@ Closest career shapes in the era-normalized vector space:
 - [[jawad-williams|Jawad Williams]] — cosine 0.87
 - [[ryan-kelly|Ryan Kelly]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 16.7 pts · 9.4 reb · 4.2 ast · 1.0 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.6σ vs era)
+- High-volume three-point shooter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.7σ)
+- Ball-hawking activity well below era (−1.0σ)
+
+**Comparables:**
+
+- [[hunter-tyson|Hunter Tyson]] '26 (94% similar)
+- [[orlando-johnson|Orlando Johnson]] '14 (91% similar)
+- [[nicolo-melli|Nicolo Melli]] '21 (91% similar)
+- [[matt-freije|Matt Freije]] '07 (89% similar)
+- [[jawad-williams|Jawad Williams]] '11 (87% similar)
+- [[ryan-kelly|Ryan Kelly]] '15 (87% similar)
+
+**Career shape:** Charted 2 seasons (2024-25–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

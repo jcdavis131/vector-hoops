@@ -35,6 +35,34 @@ Closest career shapes in the era-normalized vector space:
 - [[klay-thompson|Klay Thompson]] — cosine 0.79
 - [[payton-pritchard|Payton Pritchard]] — cosine 0.78
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 24.9 pts · 6.9 reb · 2.1 ast · 1.7 blk per 100 (2014-15).
+
+**Strengths:**
+
+- Strong net on-court impact (+2.5σ vs era)
+- Reliable touch from the free-throw line (+2.1σ vs era)
+- High-volume three-point shooter (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.8σ)
+- Ball-hawking activity well below era (−1.7σ)
+
+**Comparables:**
+
+- [[kelan-martin|Kelan Martin]] '21 (87% similar)
+- [[georges-niang|Georges Niang]] '17 (82% similar)
+- [[quinten-post|Quinten Post]] '25 (79% similar)
+- [[brian-cook|Brian Cook]] '09 (79% similar)
+- [[klay-thompson|Klay Thompson]] '15 (79% similar)
+- [[payton-pritchard|Payton Pritchard]] '22 (78% similar)
+
+**Career shape:** Charted 2 seasons (2013-14–2014-15). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

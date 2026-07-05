@@ -38,6 +38,34 @@ Closest career shapes in the era-normalized vector space:
 - [[adonal-foyle|Adonal Foyle]] — cosine 0.92
 - [[dan-gadzuric|Dan Gadzuric]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** PF · Rim Protection + Offensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 14.8 pts · 12.7 reb · 2.6 ast · 6.0 blk per 100 (2011-12).
+
+**Strengths:**
+
+- Elite rim protection (+4.0σ vs era)
+- Active hands, disrupts passing lanes (+1.4σ vs era)
+- Relentless on the offensive glass (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.7σ)
+- Three-point accuracy well below era (−1.5σ)
+
+**Comparables:**
+
+- [[goga-bitadze|Goga Bitadze]] '25 (93% similar)
+- [[dj-mbenga|DJ Mbenga]] '06 (93% similar)
+- [[john-henson|John Henson]] '16 (93% similar)
+- [[moussa-cisse|Moussa Cisse]] '26 (92% similar)
+- [[adonal-foyle|Adonal Foyle]] '07 (92% similar)
+- [[dan-gadzuric|Dan Gadzuric]] '05 (91% similar)
+
+**Career shape:** Charted 5 seasons (2010-11–2014-15). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[gal-mekel|Gal Mekel]] — cosine 0.91
 - [[bobby-hurley|Bobby Hurley]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 16.9 pts · 5.6 reb · 8.1 ast · 0.9 stl per 100 (2024-25).
+
+**Strengths:**
+
+- High-volume table-setter (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.1σ)
+- Finishing efficiency well below era (−1.5σ)
+
+**Comparables:**
+
+- [[mateen-cleaves|Mateen Cleaves]] '02 (94% similar)
+- [[jonny-flynn|Jonny Flynn]] '11 (93% similar)
+- [[greivis-vasquez|Greivis Vasquez]] '13 (92% similar)
+- [[marcus-williams|Marcus Williams]] '07 (91% similar)
+- [[gal-mekel|Gal Mekel]] '14 (91% similar)
+- [[bobby-hurley|Bobby Hurley]] '97 (91% similar)
+
+**Career shape:** Charted 2 seasons (2023-24–2024-25). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

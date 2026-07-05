@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[cedric-henderson|Cedric Henderson]] — cosine 0.71
 - [[jason-collins|Jason Collins]] — cosine 0.71
 
+## Scouting report
+
+**Play style:** PG · Offensive Glass + Defensive Glass. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 15.4 pts · 7.1 reb · 3.0 ast · 1.5 stl per 100 (2018-19).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.1σ)
+- Three-point volume well below era (−1.4σ)
+
+**Comparables:**
+
+- [[nate-wolters|Nate Wolters]] '15 (78% similar)
+- [[stacey-augmon|Stacey Augmon]] '99 (77% similar)
+- [[brandon-paul|Brandon Paul]] '18 (75% similar)
+- [[sidy-cissoko|Sidy Cissoko]] '25 (72% similar)
+- [[cedric-henderson|Cedric Henderson]] '01 (71% similar)
+- [[jason-collins|Jason Collins]] '10 (71% similar)
+
+**Career shape:** Charted 2 seasons (2017-18–2018-19). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

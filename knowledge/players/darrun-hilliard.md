@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[andre-owens|Andre Owens]] — cosine 0.78
 - [[keyon-dooling|Keyon Dooling]] — cosine 0.78
 
+## Scouting report
+
+**Play style:** SG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 16.5 pts · 4.3 reb · 4.3 ast · 1.4 stl per 100 (2016-17).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.1σ)
+- Offensive-glass activity well below era (−1.1σ)
+
+**Comparables:**
+
+- [[gerald-wilkins|Gerald Wilkins]] '98 (84% similar)
+- [[svi-mykhailiuk|Svi Mykhailiuk]] '24 (78% similar)
+- [[devin-brown|Devin Brown]] '10 (78% similar)
+- [[tony-dumas|Tony Dumas]] '97 (78% similar)
+- [[andre-owens|Andre Owens]] '06 (78% similar)
+- [[keyon-dooling|Keyon Dooling]] '10 (78% similar)
+
+**Career shape:** Charted 2 seasons (2015-16–2016-17). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Playmaking + Steals identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

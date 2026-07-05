@@ -42,6 +42,33 @@ Closest career shapes in the era-normalized vector space:
 - [[justin-edwards|Justin Edwards]] — cosine 0.89
 - [[patrick-mccaw|Patrick McCaw]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 10.0 pts · 3.3 reb · 1.4 ast · 2.0 stl per 100 (2011-12).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.5σ vs era)
+- High-volume three-point shooter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−4.0σ)
+- Scoring load well below era (−1.5σ)
+
+**Comparables:**
+
+- [[sedale-threatt|Sedale Threatt]] '97 (93% similar)
+- [[damien-wilkins|Damien Wilkins]] '18 (92% similar)
+- [[john-salmons|John Salmons]] '15 (91% similar)
+- [[kim-english|Kim English]] '13 (89% similar)
+- [[justin-edwards|Justin Edwards]] '26 (89% similar)
+- [[patrick-mccaw|Patrick McCaw]] '19 (88% similar)
+
+**Career shape:** Charted 9 seasons (2004-05–2012-13). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

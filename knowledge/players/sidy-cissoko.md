@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[justin-minaya|Justin Minaya]] — cosine 0.78
 - [[isaiah-briscoe|Isaiah Briscoe]] — cosine 0.77
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass + Defensive Glass. Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 12.9 pts · 8.4 reb · 6.0 ast · 0.8 stl per 100 (2024-25).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−3.5σ)
+- Turnover rate well above era (+1.7σ)
+
+**Comparables:**
+
+- [[tornike-shengelia|Tornike Shengelia]] '14 (83% similar)
+- [[nate-wolters|Nate Wolters]] '15 (83% similar)
+- [[andre-jackson-jr|Andre Jackson Jr.]] '25 (79% similar)
+- [[cedric-bozeman|Cedric Bozeman]] '07 (79% similar)
+- [[justin-minaya|Justin Minaya]] '25 (78% similar)
+- [[isaiah-briscoe|Isaiah Briscoe]] '19 (77% similar)
+
+**Career shape:** Charted 2 seasons (2024-25–2025-26). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

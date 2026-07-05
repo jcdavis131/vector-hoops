@@ -36,6 +36,33 @@ Closest career shapes in the era-normalized vector space:
 - [[joey-dorsey|Joey Dorsey]] — cosine 0.86
 - [[gustavo-ayon|Gustavo Ayon]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass + Defensive Glass. Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 12.2 pts · 11.7 reb · 2.2 ast · 2.4 stl per 100 (2007-08).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.5σ vs era)
+- Relentless on the offensive glass (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.3σ)
+- Shot volume well below era (−1.3σ)
+
+**Comparables:**
+
+- [[jarred-vanderbilt|Jarred Vanderbilt]] '21 (93% similar)
+- [[larry-nance-jr|Larry Nance Jr.]] '18 (92% similar)
+- [[xavier-tillman|Xavier Tillman]] '26 (88% similar)
+- [[ausar-thompson|Ausar Thompson]] '26 (88% similar)
+- [[joey-dorsey|Joey Dorsey]] '15 (86% similar)
+- [[gustavo-ayon|Gustavo Ayon]] '14 (86% similar)
+
+**Career shape:** Charted 3 seasons (2006-07–2008-09). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

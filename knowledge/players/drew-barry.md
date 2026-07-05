@@ -35,6 +35,34 @@ Closest career shapes in the era-normalized vector space:
 - [[willie-warren|Willie Warren]] — cosine 0.83
 - [[brian-shaw|Brian Shaw]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 10.7 pts · 6.7 reb · 9.3 ast · 1.9 stl per 100 (1997-98).
+
+**Strengths:**
+
+- Strong net on-court impact (+2.1σ vs era)
+- High-volume table-setter (+1.7σ vs era)
+- Knockdown three-point shooter (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.6σ)
+- Shot volume well below era (−2.0σ)
+
+**Comparables:**
+
+- [[joe-ingles|Joe Ingles]] '25 (94% similar)
+- [[chris-childs|Chris Childs]] '02 (91% similar)
+- [[chris-duhon|Chris Duhon]] '13 (87% similar)
+- [[steve-blake|Steve Blake]] '16 (83% similar)
+- [[willie-warren|Willie Warren]] '11 (83% similar)
+- [[brian-shaw|Brian Shaw]] '02 (81% similar)
+
+**Career shape:** Charted 2 seasons (1997-98–1998-99). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

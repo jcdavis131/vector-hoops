@@ -41,6 +41,34 @@ Closest career shapes in the era-normalized vector space:
 - [[matt-geiger|Matt Geiger]] — cosine 0.90
 - [[willy-hernangomez|Willy Hernangomez]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 32.4 pts · 19.8 reb · 3.0 ast · 1.5 blk per 100 (2017-18).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+4.0σ vs era)
+- Relentless on the offensive glass (+2.8σ vs era)
+- Strong presence on the defensive glass (+2.3σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.3σ)
+- Three-point accuracy well below era (−2.3σ)
+
+**Comparables:**
+
+- [[jonas-valanciunas|Jonas Valančiūnas]] '26 (92% similar)
+- [[michael-sweetney|Michael Sweetney]] '07 (92% similar)
+- [[amar-e-stoudemire|Amar'e Stoudemire]] '08 (90% similar)
+- [[enes-freedom|Enes Freedom]] '18 (90% similar)
+- [[matt-geiger|Matt Geiger]] '98 (90% similar)
+- [[willy-hernangomez|Willy Hernangomez]] '23 (89% similar)
+
+**Career shape:** Charted 8 seasons (2015-16–2022-23). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

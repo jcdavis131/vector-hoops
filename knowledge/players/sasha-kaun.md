@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[jan-vesely|Jan Vesely]] — cosine 0.92
 - [[miles-plumlee|Miles Plumlee]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 11.1 pts · 12.5 reb · 1.4 ast · 2.4 blk per 100 (2015-16).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+2.1σ vs era)
+- Elite rim protection (+1.4σ vs era)
+- Efficient finisher inside the arc (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.4σ)
+- Three-point accuracy well below era (−1.9σ)
+
+**Comparables:**
+
+- [[hilton-armstrong|Hilton Armstrong]] '11 (94% similar)
+- [[lou-amundson|Lou Amundson]] '14 (93% similar)
+- [[marshall-plumlee|Marshall Plumlee]] '17 (93% similar)
+- [[joey-dorsey|Joey Dorsey]] '15 (92% similar)
+- [[jan-vesely|Jan Vesely]] '14 (92% similar)
+- [[miles-plumlee|Miles Plumlee]] '19 (92% similar)
+
+**Career shape:** Charted 1 season (2015-16). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

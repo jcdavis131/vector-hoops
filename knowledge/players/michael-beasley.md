@@ -44,6 +44,34 @@ Closest career shapes in the era-normalized vector space:
 - [[marcus-fizer|Marcus Fizer]] — cosine 0.80
 - [[cooper-flagg|Cooper Flagg]] — cosine 0.80
 
+## Scouting report
+
+**Play style:** PF · Defensive Glass + Rim Pressure (Fts). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 33.4 pts · 12.8 reb · 2.1 ast · 1.4 stl per 100 (2015-16).
+
+**Strengths:**
+
+- Featured, high-usage scoring role (+2.4σ vs era)
+- Heavy shot volume, focal scoring option (+2.4σ vs era)
+- Efficient finisher inside the arc (+1.1σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.2σ)
+- Three-point volume well below era (−1.0σ)
+
+**Comparables:**
+
+- [[glenn-robinson|Glenn Robinson]] '03 (87% similar)
+- [[john-wallace|John Wallace]] '99 (86% similar)
+- [[jabari-parker|Jabari Parker]] '19 (83% similar)
+- [[shareef-abdur-rahim|Shareef Abdur-Rahim]] '99 (82% similar)
+- [[marcus-fizer|Marcus Fizer]] '03 (80% similar)
+- [[cooper-flagg|Cooper Flagg]] '26 (80% similar)
+
+**Career shape:** Charted 11 seasons (2008-09–2018-19). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -50,6 +50,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jj-redick|JJ Redick]] — cosine 0.74
 - [[wally-szczerbiak|Wally Szczerbiak]] — cosine 0.73
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 8.8 pts · 5.0 reb · 4.4 ast · 0.6 stl per 100 (2017-18).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.1σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.8σ)
+- Scoring load well below era (−1.8σ)
+
+**Comparables:**
+
+- [[harrison-barnes|Harrison Barnes]] '16 (83% similar)
+- [[de-andre-hunter|De'Andre Hunter]] '25 (81% similar)
+- [[terrence-shannon-jr|Terrence Shannon Jr.]] '26 (74% similar)
+- [[arron-afflalo|Arron Afflalo]] '18 (74% similar)
+- [[jj-redick|JJ Redick]] '16 (74% similar)
+- [[wally-szczerbiak|Wally Szczerbiak]] '07 (73% similar)
+
+**Career shape:** Charted 17 seasons (2001-02–2017-18). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -41,6 +41,33 @@ Closest career shapes in the era-normalized vector space:
 - [[vladimir-radmanovic|Vladimir Radmanovic]] — cosine 0.89
 - [[scott-burrell|Scott Burrell]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 20.6 pts · 6.4 reb · 3.9 ast · 2.0 stl per 100 (2012-13).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.3σ vs era)
+- Strong net on-court impact (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.2σ)
+- Offensive-glass activity well below era (−1.1σ)
+
+**Comparables:**
+
+- [[sasha-vujacic|Sasha Vujacic]] '05 (91% similar)
+- [[larry-robinson|Larry Robinson]] '01 (90% similar)
+- [[james-posey|James Posey]] '11 (90% similar)
+- [[billy-thomas|Billy Thomas]] '06 (90% similar)
+- [[vladimir-radmanovic|Vladimir Radmanovic]] '13 (89% similar)
+- [[scott-burrell|Scott Burrell]] '00 (88% similar)
+
+**Career shape:** Charted 8 seasons (2004-05–2012-13). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -43,6 +43,33 @@ Closest career shapes in the era-normalized vector space:
 - [[jacob-toppin|Jacob Toppin]] — cosine 0.69
 - [[dylan-windler|Dylan Windler]] — cosine 0.68
 
+## Scouting report
+
+**Play style:** SF · Defensive Glass + Rim Pressure (Fts). Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 19.0 pts · 12.7 reb · 3.2 ast · 1.2 blk per 100 (2017-18).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+1.7σ vs era)
+- Strong presence on the defensive glass (+1.5σ vs era)
+- Knockdown three-point shooter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Three-point volume well below era (−1.1σ)
+
+**Comparables:**
+
+- [[greg-dreiling|Greg Dreiling]] '97 (77% similar)
+- [[patrick-baldwin-jr|Patrick Baldwin Jr.]] '23 (72% similar)
+- [[paul-watson|Paul Watson]] '21 (71% similar)
+- [[tidjane-salaun|Tidjane Salaün]] '25 (70% similar)
+- [[jacob-toppin|Jacob Toppin]] '25 (69% similar)
+- [[dylan-windler|Dylan Windler]] '24 (68% similar)
+
+**Career shape:** Charted 10 seasons (2009-10–2018-19). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

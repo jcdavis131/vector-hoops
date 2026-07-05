@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[cherokee-parks|Cherokee Parks]] — cosine 0.91
 - [[adonal-foyle|Adonal Foyle]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 10.9 pts · 11.2 reb · 1.0 ast · 3.9 blk per 100 (2011-12).
+
+**Strengths:**
+
+- Elite rim protection (+2.4σ vs era)
+- Rarely turns the ball over (−1.4σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.8σ)
+- Free-throw touch well below era (−1.6σ)
+
+**Comparables:**
+
+- [[robert-swift|Robert Swift]] '05 (93% similar)
+- [[michael-stewart|Michael Stewart]] '04 (93% similar)
+- [[keith-closs|Keith Closs]] '98 (91% similar)
+- [[stojko-vrankovic|Stojko Vrankovic]] '97 (91% similar)
+- [[cherokee-parks|Cherokee Parks]] '02 (91% similar)
+- [[adonal-foyle|Adonal Foyle]] '07 (90% similar)
+
+**Career shape:** Charted 1 season (2011-12). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

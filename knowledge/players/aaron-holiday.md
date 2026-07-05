@@ -41,6 +41,31 @@ Closest career shapes in the era-normalized vector space:
 - [[yogi-ferrell|Yogi Ferrell]] — cosine 0.89
 - [[gabe-vincent|Gabe Vincent]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 19.3 pts · 3.6 reb · 3.7 ast · 1.7 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Strong net on-court impact (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.5σ)
+
+**Comparables:**
+
+- [[derek-fisher|Derek Fisher]] '02 (93% similar)
+- [[josh-richardson|Josh Richardson]] '16 (92% similar)
+- [[patty-mills|Patty Mills]] '14 (90% similar)
+- [[bryce-drew|Bryce Drew]] '99 (89% similar)
+- [[yogi-ferrell|Yogi Ferrell]] '19 (89% similar)
+- [[gabe-vincent|Gabe Vincent]] '26 (88% similar)
+
+**Career shape:** Charted 8 seasons (2018-19–2025-26). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

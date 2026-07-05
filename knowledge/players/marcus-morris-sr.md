@@ -46,6 +46,33 @@ Closest career shapes in the era-normalized vector space:
 - [[chase-budinger|Chase Budinger]] — cosine 0.90
 - [[wilson-chandler|Wilson Chandler]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 16.1 pts · 6.4 reb · 1.2 ast · 0.8 stl per 100 (2011-12).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.2σ vs era)
+- Heavy shot volume, focal scoring option (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.2σ)
+- On-court net impact well below era (−1.4σ)
+
+**Comparables:**
+
+- [[eddie-johnson|Eddie Johnson]] '98 (93% similar)
+- [[linas-kleiza|Linas Kleiza]] '13 (92% similar)
+- [[walter-herrmann|Walter Herrmann]] '09 (91% similar)
+- [[tim-hardaway-jr|Tim Hardaway Jr.]] '15 (90% similar)
+- [[chase-budinger|Chase Budinger]] '10 (90% similar)
+- [[wilson-chandler|Wilson Chandler]] '20 (89% similar)
+
+**Career shape:** Charted 13 seasons (2011-12–2023-24). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

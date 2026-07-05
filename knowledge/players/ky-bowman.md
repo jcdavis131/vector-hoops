@@ -34,6 +34,31 @@ Closest career shapes in the era-normalized vector space:
 - [[keaton-wallace|Keaton Wallace]] — cosine 0.88
 - [[vincent-yarbrough|Vincent Yarbrough]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 15.6 pts · 5.6 reb · 6.1 ast · 2.0 stl per 100 (2019-20).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.2σ)
+
+**Comparables:**
+
+- [[bronny-james|Bronny James]] '25 (93% similar)
+- [[killian-hayes|Killian Hayes]] '21 (89% similar)
+- [[diante-garrett|Diante Garrett]] '13 (88% similar)
+- [[tyler-ulis|Tyler Ulis]] '18 (88% similar)
+- [[keaton-wallace|Keaton Wallace]] '25 (88% similar)
+- [[vincent-yarbrough|Vincent Yarbrough]] '03 (88% similar)
+
+**Career shape:** Charted 1 season (2019-20). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

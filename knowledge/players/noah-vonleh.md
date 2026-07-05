@@ -40,6 +40,34 @@ Closest career shapes in the era-normalized vector space:
 - [[loren-woods|Loren Woods]] — cosine 0.86
 - [[charles-shackleford|Charles Shackleford]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 7.0 pts · 13.4 reb · 2.0 ast · 2.2 blk per 100 (2022-23).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+2.1σ vs era)
+- Relentless on the offensive glass (+1.6σ vs era)
+- Elite rim protection (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Scoring load well below era (−2.0σ)
+- Shot volume well below era (−2.0σ)
+
+**Comparables:**
+
+- [[alton-lister|Alton Lister]] '97 (93% similar)
+- [[jabari-walker|Jabari Walker]] '24 (88% similar)
+- [[johan-petro|Johan Petro]] '12 (87% similar)
+- [[james-singleton|James Singleton]] '10 (86% similar)
+- [[loren-woods|Loren Woods]] '06 (86% similar)
+- [[charles-shackleford|Charles Shackleford]] '99 (86% similar)
+
+**Career shape:** Charted 7 seasons (2014-15–2022-23). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

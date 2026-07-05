@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[zendon-hamilton|Zendon Hamilton]] — cosine 0.86
 - [[jarnell-stokes|Jarnell Stokes]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** PF · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 23.8 pts · 14.6 reb · 3.8 ast · 1.4 blk per 100 (2021-22).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+2.7σ vs era)
+- Relentless on the offensive glass (+1.8σ vs era)
+
+**Areas of concern:**
+
+- Three-point volume well below era (−1.2σ)
+
+**Comparables:**
+
+- [[leon-powe|Leon Powe]] '08 (92% similar)
+- [[reggie-slater|Reggie Slater]] '03 (89% similar)
+- [[tyler-hansbrough|Tyler Hansbrough]] '16 (88% similar)
+- [[obinna-ekezie|Obinna Ekezie]] '02 (87% similar)
+- [[zendon-hamilton|Zendon Hamilton]] '05 (86% similar)
+- [[jarnell-stokes|Jarnell Stokes]] '15 (83% similar)
+
+**Career shape:** Charted 3 seasons (2020-21–2022-23). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

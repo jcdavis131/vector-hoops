@@ -37,6 +37,33 @@ Closest career shapes in the era-normalized vector space:
 - [[luka-doncic|Luka Dončić]] — cosine 0.88
 - [[joel-embiid|Joel Embiid]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PF · Scoring Volume + Shot Volume. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 37.2 pts · 10.8 reb · 6.8 ast · 1.1 stl per 100 (2024-25).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+3.6σ vs era)
+- Heavy shot volume, focal scoring option (+2.5σ vs era)
+- Featured, high-usage scoring role (+2.5σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.5σ)
+
+**Comparables:**
+
+- [[julius-randle|Julius Randle]] '24 (92% similar)
+- [[brandon-ingram|Brandon Ingram]] '25 (90% similar)
+- [[rj-barrett|RJ Barrett]] '25 (89% similar)
+- [[blake-griffin|Blake Griffin]] '14 (89% similar)
+- [[luka-doncic|Luka Dončić]] '20 (88% similar)
+- [[joel-embiid|Joel Embiid]] '17 (88% similar)
+
+**Career shape:** Charted 4 seasons (2022-23–2025-26). Consistent Scoring Volume + Shot Volume profile across his career.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

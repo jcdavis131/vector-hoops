@@ -43,6 +43,33 @@ Closest career shapes in the era-normalized vector space:
 - [[zach-randolph|Zach Randolph]] — cosine 0.85
 - [[john-collins|John Collins]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** C · Three-Point Volume + Three-Point Accuracy. Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 28.7 pts · 9.5 reb · 2.9 ast · 1.6 blk per 100 (2017-18).
+
+**Strengths:**
+
+- High-volume three-point shooter (+3.2σ vs era)
+- Heavy shot volume, focal scoring option (+1.9σ vs era)
+- Featured, high-usage scoring role (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.5σ)
+
+**Comparables:**
+
+- [[lamarcus-aldridge|LaMarcus Aldridge]] '18 (89% similar)
+- [[matt-geiger|Matt Geiger]] '98 (87% similar)
+- [[zydrunas-ilgauskas|Zydrunas Ilgauskas]] '02 (86% similar)
+- [[rik-smits|Rik Smits]] '98 (85% similar)
+- [[zach-randolph|Zach Randolph]] '07 (85% similar)
+- [[john-collins|John Collins]] '19 (84% similar)
+
+**Career shape:** Charted 10 seasons (2008-09–2017-18). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

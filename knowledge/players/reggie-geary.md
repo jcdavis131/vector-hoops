@@ -35,6 +35,33 @@ Closest career shapes in the era-normalized vector space:
 - [[ron-baker|Ron Baker]] — cosine 0.83
 - [[lonzo-ball|Lonzo Ball]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 12.2 pts · 3.2 reb · 7.7 ast · 2.8 stl per 100 (1996-97).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.5σ vs era)
+- High-volume table-setter (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.3σ)
+- Defensive rebounding well below era (−1.5σ)
+
+**Comparables:**
+
+- [[carldell-johnson|Carldell Johnson]] '12 (93% similar)
+- [[craig-ehlo|Craig Ehlo]] '97 (86% similar)
+- [[juaquin-hawkins|Juaquin Hawkins]] '03 (86% similar)
+- [[omar-cook|Omar Cook]] '04 (85% similar)
+- [[ron-baker|Ron Baker]] '18 (83% similar)
+- [[lonzo-ball|Lonzo Ball]] '26 (83% similar)
+
+**Career shape:** Charted 2 seasons (1996-97–1997-98). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

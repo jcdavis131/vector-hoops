@@ -38,6 +38,32 @@ Closest career shapes in the era-normalized vector space:
 - [[de-aaron-fox|De'Aaron Fox]] — cosine 0.89
 - [[god-shammgod|God Shammgod]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** SG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 24.7 pts · 7.5 reb · 8.7 ast · 1.5 stl per 100 (2022-23).
+
+**Strengths:**
+
+- High-volume table-setter (+1.6σ vs era)
+- Heavy shot volume, focal scoring option (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.0σ)
+
+**Comparables:**
+
+- [[john-wall|John Wall]] '17 (92% similar)
+- [[will-bynum|Will Bynum]] '09 (91% similar)
+- [[caris-levert|Caris LeVert]] '20 (91% similar)
+- [[jeremy-lin|Jeremy Lin]] '12 (90% similar)
+- [[de-aaron-fox|De'Aaron Fox]] '21 (89% similar)
+- [[god-shammgod|God Shammgod]] '98 (89% similar)
+
+**Career shape:** Charted 5 seasons (2020-21–2024-25). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

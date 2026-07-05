@@ -44,6 +44,33 @@ Closest career shapes in the era-normalized vector space:
 - [[jordan-crawford|Jordan Crawford]] — cosine 0.91
 - [[darius-garland|Darius Garland]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 32.8 pts · 6.0 reb · 10.8 ast · 1.9 stl per 100 (2018-19).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+2.9σ vs era)
+- High-volume table-setter (+2.5σ vs era)
+- Featured, high-usage scoring role (+2.1σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.3σ)
+
+**Comparables:**
+
+- [[lamelo-ball|LaMelo Ball]] '25 (94% similar)
+- [[stephon-marbury|Stephon Marbury]] '01 (92% similar)
+- [[brandon-jennings|Brandon Jennings]] '15 (92% similar)
+- [[brandon-knight|Brandon Knight]] '20 (91% similar)
+- [[jordan-crawford|Jordan Crawford]] '11 (91% similar)
+- [[darius-garland|Darius Garland]] '22 (91% similar)
+
+**Career shape:** Charted 11 seasons (2015-16–2025-26). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

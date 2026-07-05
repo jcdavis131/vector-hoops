@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[amir-coffey|Amir Coffey]] — cosine 0.87
 - [[quincy-pondexter|Quincy Pondexter]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** PG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 9.9 pts · 3.0 reb · 5.0 ast · 1.3 stl per 100 (2019-20).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.7σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.9σ)
+- Scoring load well below era (−1.6σ)
+
+**Comparables:**
+
+- [[michael-curry|Michael Curry]] '05 (94% similar)
+- [[terance-mann|Terance Mann]] '20 (90% similar)
+- [[vit-krejci|Vít Krejčí]] '23 (90% similar)
+- [[isaac-okoro|Isaac Okoro]] '25 (88% similar)
+- [[amir-coffey|Amir Coffey]] '23 (87% similar)
+- [[quincy-pondexter|Quincy Pondexter]] '18 (86% similar)
+
+**Career shape:** Charted 1 season (2019-20). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

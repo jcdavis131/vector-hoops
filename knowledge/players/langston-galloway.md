@@ -40,6 +40,32 @@ Closest career shapes in the era-normalized vector space:
 - [[lucious-harris|Lucious Harris]] — cosine 0.93
 - [[jarvis-hayes|Jarvis Hayes]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 20.4 pts · 5.2 reb · 3.3 ast · 2.0 stl per 100 (2017-18).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.0σ vs era)
+- Rarely turns the ball over (−1.6σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.2σ)
+
+**Comparables:**
+
+- [[wayne-ellington|Wayne Ellington]] '17 (97% similar)
+- [[rodney-hood|Rodney Hood]] '22 (96% similar)
+- [[dennis-scott|Dennis Scott]] '00 (95% similar)
+- [[wesley-matthews|Wesley Matthews]] '20 (95% similar)
+- [[lucious-harris|Lucious Harris]] '98 (93% similar)
+- [[jarvis-hayes|Jarvis Hayes]] '10 (93% similar)
+
+**Career shape:** Charted 7 seasons (2014-15–2020-21). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

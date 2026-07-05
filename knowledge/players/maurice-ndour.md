@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[scot-pollard|Scot Pollard]] — cosine 0.81
 - [[nae-qwan-tomlin|Nae'Qwan Tomlin]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 14.6 pts · 9.6 reb · 1.2 ast · 2.2 stl per 100 (2016-17).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Three-point volume well below era (−1.2σ)
+- Three-point accuracy well below era (−1.1σ)
+
+**Comparables:**
+
+- [[pape-sow|Pape Sow]] '05 (88% similar)
+- [[stacey-augmon|Stacey Augmon]] '99 (85% similar)
+- [[ryan-bowen|Ryan Bowen]] '09 (83% similar)
+- [[antonio-lang|Antonio Lang]] '97 (82% similar)
+- [[scot-pollard|Scot Pollard]] '03 (81% similar)
+- [[nae-qwan-tomlin|Nae'Qwan Tomlin]] '26 (81% similar)
+
+**Career shape:** Charted 1 season (2016-17). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

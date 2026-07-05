@@ -40,6 +40,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jeff-mcinnis|Jeff McInnis]] — cosine 0.88
 - [[ray-mccallum|Ray McCallum]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 15.1 pts · 4.7 reb · 5.0 ast · 1.2 stl per 100 (2001-02).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.6σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.2σ)
+- Turnover rate well above era (+1.9σ)
+
+**Comparables:**
+
+- [[keifer-sykes|Keifer Sykes]] '22 (96% similar)
+- [[rex-walters|Rex Walters]] '98 (91% similar)
+- [[matthew-dellavedova|Matthew Dellavedova]] '23 (90% similar)
+- [[bimbo-coles|Bimbo Coles]] '04 (89% similar)
+- [[jeff-mcinnis|Jeff McInnis]] '08 (88% similar)
+- [[ray-mccallum|Ray McCallum]] '14 (88% similar)
+
+**Career shape:** Charted 7 seasons (1996-97–2003-04). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

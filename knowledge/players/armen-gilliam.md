@@ -37,6 +37,34 @@ Closest career shapes in the era-normalized vector space:
 - [[jj-hickson|JJ Hickson]] — cosine 0.83
 - [[juwan-howard|Juwan Howard]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** PF · Defensive Glass + Rim Pressure (Fts). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 22.4 pts · 14.0 reb · 2.8 ast · 1.1 blk per 100 (1999-00).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+1.2σ vs era)
+- Strong presence on the defensive glass (+1.2σ vs era)
+- Heavy shot volume, focal scoring option (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.3σ)
+- Ball-hawking activity well below era (−1.2σ)
+
+**Comparables:**
+
+- [[nikola-pekovic|Nikola Pekovic]] '12 (87% similar)
+- [[ike-diogu|Ike Diogu]] '09 (84% similar)
+- [[brandon-bass|Brandon Bass]] '17 (84% similar)
+- [[kevin-willis|Kevin Willis]] '02 (83% similar)
+- [[jj-hickson|JJ Hickson]] '16 (83% similar)
+- [[juwan-howard|Juwan Howard]] '12 (83% similar)
+
+**Career shape:** Charted 4 seasons (1996-97–1999-00). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

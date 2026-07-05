@@ -42,6 +42,34 @@ Closest career shapes in the era-normalized vector space:
 - [[cameron-payne|Cameron Payne]] — cosine 0.94
 - [[aaron-brooks|Aaron Brooks]] — cosine 0.94
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 28.4 pts · 4.6 reb · 8.1 ast · 1.3 stl per 100 (2005-06).
+
+**Strengths:**
+
+- High-volume table-setter (+1.6σ vs era)
+- Featured, high-usage scoring role (+1.6σ vs era)
+- Heavy shot volume, focal scoring option (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.1σ)
+- Offensive-glass activity well below era (−1.0σ)
+
+**Comparables:**
+
+- [[mike-bibby|Mike Bibby]] '12 (96% similar)
+- [[damon-stoudamire|Damon Stoudamire]] '97 (96% similar)
+- [[troy-hudson|Troy Hudson]] '06 (94% similar)
+- [[shammond-williams|Shammond Williams]] '04 (94% similar)
+- [[cameron-payne|Cameron Payne]] '26 (94% similar)
+- [[aaron-brooks|Aaron Brooks]] '11 (94% similar)
+
+**Career shape:** Charted 9 seasons (2002-03–2017-18). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

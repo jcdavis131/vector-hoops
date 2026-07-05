@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jose-alvarado|Jose Alvarado]] — cosine 0.91
 - [[charlie-ward|Charlie Ward]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 18.5 pts · 4.5 reb · 5.7 ast · 2.8 stl per 100 (2023-24).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.3σ vs era)
+
+**Areas of concern:**
+
+- Rim-protection impact well below era (−1.2σ)
+- Offensive-glass activity well below era (−1.2σ)
+
+**Comparables:**
+
+- [[toney-douglas|Toney Douglas]] '12 (92% similar)
+- [[greg-anthony|Greg Anthony]] '99 (92% similar)
+- [[mookie-blaylock|Mookie Blaylock]] '97 (92% similar)
+- [[lindsey-hunter|Lindsey Hunter]] '09 (91% similar)
+- [[jose-alvarado|Jose Alvarado]] '22 (91% similar)
+- [[charlie-ward|Charlie Ward]] '02 (90% similar)
+
+**Career shape:** Charted 3 seasons (2023-24–2025-26). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

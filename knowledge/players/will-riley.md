@@ -34,6 +34,31 @@ Closest career shapes in the era-normalized vector space:
 - [[jabari-brown|Jabari Brown]] — cosine 0.80
 - [[r-j-hampton|R.J. Hampton]] — cosine 0.80
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 21.7 pts · 6.0 reb · 4.2 ast · 1.5 stl per 100 (2025-26).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.7σ)
+
+**Comparables:**
+
+- [[jermaine-taylor|Jermaine Taylor]] '10 (84% similar)
+- [[malaki-branham|Malaki Branham]] '24 (83% similar)
+- [[wayne-selden|Wayne Selden]] '18 (81% similar)
+- [[javon-freeman-liberty|Javon Freeman-Liberty]] '24 (80% similar)
+- [[jabari-brown|Jabari Brown]] '15 (80% similar)
+- [[r-j-hampton|R.J. Hampton]] '22 (80% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

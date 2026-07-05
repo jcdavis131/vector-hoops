@@ -37,6 +37,33 @@ Closest career shapes in the era-normalized vector space:
 - [[kawhi-leonard|Kawhi Leonard]] — cosine 0.83
 - [[dwyane-wade|Dwyane Wade]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** SG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 31.3 pts · 7.7 reb · 7.4 ast · 2.3 stl per 100 (2024-25).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+1.7σ vs era)
+- Featured, high-usage scoring role (+1.6σ vs era)
+- Strong net on-court impact (+1.5σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[grant-hill|Grant Hill]] '97 (88% similar)
+- [[shai-gilgeous-alexander|Shai Gilgeous-Alexander]] '25 (85% similar)
+- [[tony-parker|Tony Parker]] '09 (84% similar)
+- [[sam-cassell|Sam Cassell]] '04 (83% similar)
+- [[kawhi-leonard|Kawhi Leonard]] '20 (83% similar)
+- [[dwyane-wade|Dwyane Wade]] '09 (83% similar)
+
+**Career shape:** Charted 4 seasons (2022-23–2025-26). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

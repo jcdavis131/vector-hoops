@@ -39,6 +39,34 @@ Closest career shapes in the era-normalized vector space:
 - [[chuck-person|Chuck Person]] — cosine 0.93
 - [[max-strus|Max Strus]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 20.3 pts · 6.1 reb · 1.7 ast · 1.2 stl per 100 (2010-11).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.9σ vs era)
+- Rarely turns the ball over (−1.4σ vs era)
+- Strong net on-court impact (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.2σ)
+- Rim-protection impact well below era (−1.0σ)
+
+**Comparables:**
+
+- [[matt-bullard|Matt Bullard]] '01 (97% similar)
+- [[lindy-waters-iii|Lindy Waters III]] '23 (96% similar)
+- [[dennis-scott|Dennis Scott]] '00 (96% similar)
+- [[chase-budinger|Chase Budinger]] '10 (93% similar)
+- [[chuck-person|Chuck Person]] '00 (93% similar)
+- [[max-strus|Max Strus]] '21 (93% similar)
+
+**Career shape:** Charted 6 seasons (2007-08–2012-13). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

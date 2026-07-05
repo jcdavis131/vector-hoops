@@ -43,6 +43,31 @@ Closest career shapes in the era-normalized vector space:
 - [[quentin-richardson|Quentin Richardson]] — cosine 0.84
 - [[troy-daniels|Troy Daniels]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 19.0 pts · 5.8 reb · 1.5 ast · 1.3 stl per 100 (2010-11).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.2σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[cartier-martin|Cartier Martin]] '15 (90% similar)
+- [[jaren-jackson|Jaren Jackson]] '01 (88% similar)
+- [[morris-peterson|Morris Peterson]] '10 (86% similar)
+- [[quentin-grimes|Quentin Grimes]] '24 (85% similar)
+- [[quentin-richardson|Quentin Richardson]] '05 (84% similar)
+- [[troy-daniels|Troy Daniels]] '15 (84% similar)
+
+**Career shape:** Charted 10 seasons (2003-04–2012-13). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

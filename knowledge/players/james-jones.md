@@ -46,6 +46,34 @@ Closest career shapes in the era-normalized vector space:
 - [[lindy-waters-iii|Lindy Waters III]] — cosine 0.93
 - [[rasual-butler|Rasual Butler]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 22.1 pts · 5.3 reb · 2.1 ast · 0.9 blk per 100 (2013-14).
+
+**Strengths:**
+
+- Strong net on-court impact (+2.7σ vs era)
+- High-volume three-point shooter (+2.3σ vs era)
+- Rarely turns the ball over (−2.0σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.3σ)
+- Offensive-glass activity well below era (−1.1σ)
+
+**Comparables:**
+
+- [[richie-frahm|Richie Frahm]] '04 (95% similar)
+- [[davis-bertans|Davis Bertans]] '24 (95% similar)
+- [[matt-bullard|Matt Bullard]] '01 (95% similar)
+- [[steve-novak|Steve Novak]] '15 (94% similar)
+- [[lindy-waters-iii|Lindy Waters III]] '23 (93% similar)
+- [[rasual-butler|Rasual Butler]] '04 (93% similar)
+
+**Career shape:** Charted 13 seasons (2004-05–2016-17). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

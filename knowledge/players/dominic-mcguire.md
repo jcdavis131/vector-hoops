@@ -39,6 +39,32 @@ Closest career shapes in the era-normalized vector space:
 - [[greg-anderson|Greg Anderson]] — cosine 0.87
 - [[kobe-brown|Kobe Brown]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass + Defensive Glass. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 6.3 pts · 13.1 reb · 1.8 ast · 0.8 stl per 100 (2009-10).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−4.0σ)
+- On-court net impact well below era (−3.4σ)
+
+**Comparables:**
+
+- [[eric-montross|Eric Montross]] '97 (91% similar)
+- [[jared-reiner|Jared Reiner]] '07 (90% similar)
+- [[brooks-barnhizer|Brooks Barnhizer]] '26 (90% similar)
+- [[michael-ruffin|Michael Ruffin]] '07 (89% similar)
+- [[greg-anderson|Greg Anderson]] '98 (87% similar)
+- [[kobe-brown|Kobe Brown]] '24 (87% similar)
+
+**Career shape:** Charted 6 seasons (2007-08–2012-13). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

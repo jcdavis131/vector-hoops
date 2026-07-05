@@ -36,6 +36,31 @@ Closest career shapes in the era-normalized vector space:
 - [[shane-heal|Shane Heal]] — cosine 0.68
 - [[mohamed-diawara|Mohamed Diawara]] — cosine 0.67
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 18.9 pts · 8.4 reb · 5.6 ast · 1.4 stl per 100 (2025-26).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.3σ)
+
+**Comparables:**
+
+- [[hedo-turkoglu|Hedo Turkoglu]] '14 (79% similar)
+- [[yuki-kawamura|Yuki Kawamura]] '25 (77% similar)
+- [[sean-elliott|Sean Elliott]] '00 (72% similar)
+- [[henry-ellenson|Henry Ellenson]] '17 (68% similar)
+- [[shane-heal|Shane Heal]] '97 (68% similar)
+- [[mohamed-diawara|Mohamed Diawara]] '26 (67% similar)
+
+**Career shape:** Charted 3 seasons (2023-24–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

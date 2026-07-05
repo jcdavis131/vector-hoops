@@ -35,6 +35,33 @@ Closest career shapes in the era-normalized vector space:
 - [[jason-maxiell|Jason Maxiell]] — cosine 0.94
 - [[etan-thomas|Etan Thomas]] — cosine 0.94
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 13.9 pts · 14.1 reb · 3.1 ast · 3.7 blk per 100 (2025-26).
+
+**Strengths:**
+
+- Elite rim protection (+3.4σ vs era)
+- Relentless on the offensive glass (+2.5σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.9σ)
+- Three-point volume well below era (−2.0σ)
+
+**Comparables:**
+
+- [[bismack-biyombo|Bismack Biyombo]] '23 (96% similar)
+- [[deyonta-davis|Deyonta Davis]] '17 (95% similar)
+- [[brendan-haywood|Brendan Haywood]] '15 (95% similar)
+- [[trey-jemison-iii|Trey Jemison III]] '25 (95% similar)
+- [[jason-maxiell|Jason Maxiell]] '06 (94% similar)
+- [[etan-thomas|Etan Thomas]] '07 (94% similar)
+
+**Career shape:** Charted 2 seasons (2024-25–2025-26). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

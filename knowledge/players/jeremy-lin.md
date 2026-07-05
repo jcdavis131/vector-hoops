@@ -41,6 +41,33 @@ Closest career shapes in the era-normalized vector space:
 - [[john-wall|John Wall]] — cosine 0.92
 - [[steve-francis|Steve Francis]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 27.1 pts · 5.7 reb · 11.4 ast · 2.9 stl per 100 (2011-12).
+
+**Strengths:**
+
+- High-volume table-setter (+2.4σ vs era)
+- Draws contact, gets to the line often (+2.3σ vs era)
+- Active hands, disrupts passing lanes (+2.1σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+3.5σ)
+
+**Comparables:**
+
+- [[eric-bledsoe|Eric Bledsoe]] '17 (96% similar)
+- [[jeff-teague|Jeff Teague]] '15 (95% similar)
+- [[devin-harris|Devin Harris]] '09 (93% similar)
+- [[tyus-edney|Tyus Edney]] '01 (92% similar)
+- [[john-wall|John Wall]] '17 (92% similar)
+- [[steve-francis|Steve Francis]] '05 (91% similar)
+
+**Career shape:** Charted 8 seasons (2010-11–2018-19). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

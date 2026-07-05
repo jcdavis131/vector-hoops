@@ -41,6 +41,34 @@ Closest career shapes in the era-normalized vector space:
 - [[nick-fazekas|Nick Fazekas]] — cosine 0.91
 - [[cheick-diallo|Cheick Diallo]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 22.1 pts · 14.2 reb · 1.5 ast · 1.7 blk per 100 (2025-26).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+2.6σ vs era)
+- Strong presence on the defensive glass (+1.4σ vs era)
+- Relentless on the offensive glass (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.9σ)
+- Three-point volume well below era (−2.0σ)
+
+**Comparables:**
+
+- [[antonio-mcdyess|Antonio McDyess]] '01 (94% similar)
+- [[david-lee|David Lee]] '17 (93% similar)
+- [[ivica-zubac|Ivica Zubac]] '20 (92% similar)
+- [[jalen-duren|Jalen Duren]] '26 (91% similar)
+- [[nick-fazekas|Nick Fazekas]] '08 (91% similar)
+- [[cheick-diallo|Cheick Diallo]] '17 (91% similar)
+
+**Career shape:** Charted 8 seasons (2018-19–2025-26). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

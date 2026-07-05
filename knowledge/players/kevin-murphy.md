@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[keljin-blevins|Keljin Blevins]] — cosine 0.84
 - [[ken-norman|Ken Norman]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 13.6 pts · 3.6 reb · 1.8 ast · 0.9 stl per 100 (2012-13).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+2.0σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−4.0σ)
+- On-court net impact well below era (−4.0σ)
+
+**Comparables:**
+
+- [[bruno-sundov|Bruno Sundov]] '03 (87% similar)
+- [[maurice-ager|Maurice Ager]] '08 (87% similar)
+- [[justin-robinson|Justin Robinson]] '22 (86% similar)
+- [[brandon-armstrong|Brandon Armstrong]] '04 (85% similar)
+- [[keljin-blevins|Keljin Blevins]] '22 (84% similar)
+- [[ken-norman|Ken Norman]] '97 (81% similar)
+
+**Career shape:** Charted 1 season (2012-13). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[lionel-simmons|Lionel Simmons]] — cosine 0.80
 - [[ryan-stack|Ryan Stack]] — cosine 0.79
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 15.9 pts · 10.0 reb · 2.8 ast · 2.2 blk per 100 (2020-21).
+
+**Strengths:**
+
+- Elite rim protection (+1.3σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.0σ)
+- Finishing efficiency well below era (−1.2σ)
+
+**Comparables:**
+
+- [[zhou-qi|Zhou Qi]] '18 (91% similar)
+- [[aleksej-pokusevski|Aleksej Pokusevski]] '21 (85% similar)
+- [[stanley-umude|Stanley Umude]] '25 (82% similar)
+- [[noah-clowney|Noah Clowney]] '25 (80% similar)
+- [[lionel-simmons|Lionel Simmons]] '97 (80% similar)
+- [[ryan-stack|Ryan Stack]] '99 (79% similar)
+
+**Career shape:** Charted 1 season (2020-21). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

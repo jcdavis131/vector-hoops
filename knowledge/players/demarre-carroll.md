@@ -43,6 +43,31 @@ Closest career shapes in the era-normalized vector space:
 - [[devean-george|Devean George]] — cosine 0.83
 - [[bobby-simmons|Bobby Simmons]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 18.2 pts · 7.8 reb · 1.7 ast · 2.8 stl per 100 (2015-16).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.1σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.2σ)
+
+**Comparables:**
+
+- [[ja-kobe-walter|Ja'Kobe Walter]] '26 (86% similar)
+- [[jae-crowder|Jae Crowder]] '22 (86% similar)
+- [[jaylen-clark|Jaylen Clark]] '25 (84% similar)
+- [[ish-wainright|Ish Wainright]] '22 (83% similar)
+- [[devean-george|Devean George]] '10 (83% similar)
+- [[bobby-simmons|Bobby Simmons]] '12 (82% similar)
+
+**Career shape:** Charted 10 seasons (2009-10–2019-20). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

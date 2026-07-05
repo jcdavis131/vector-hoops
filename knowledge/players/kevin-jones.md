@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[scot-pollard|Scot Pollard]] — cosine 0.77
 - [[lavoy-allen|Lavoy Allen]] — cosine 0.76
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 14.4 pts · 11.8 reb · 1.5 ast · 1.4 stl per 100 (2012-13).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+1.8σ vs era)
+- Rarely turns the ball over (−1.7σ vs era)
+- Strong net on-court impact (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.5σ)
+- Three-point volume well below era (−1.1σ)
+
+**Comparables:**
+
+- [[lazaro-borrell|Lazaro Borrell]] '00 (84% similar)
+- [[mark-bradtke|Mark Bradtke]] '97 (81% similar)
+- [[horace-grant|Horace Grant]] '01 (81% similar)
+- [[nae-qwan-tomlin|Nae'Qwan Tomlin]] '26 (77% similar)
+- [[scot-pollard|Scot Pollard]] '03 (77% similar)
+- [[lavoy-allen|Lavoy Allen]] '17 (76% similar)
+
+**Career shape:** Charted 1 season (2012-13). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

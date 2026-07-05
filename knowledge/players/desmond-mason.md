@@ -42,6 +42,32 @@ Closest career shapes in the era-normalized vector space:
 - [[corliss-williamson|Corliss Williamson]] — cosine 0.71
 - [[hakim-warrick|Hakim Warrick]] — cosine 0.70
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass + Defensive Glass. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 13.8 pts · 7.3 reb · 2.2 ast · 1.4 blk per 100 (2008-09).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.5σ)
+- Three-point accuracy well below era (−1.4σ)
+
+**Comparables:**
+
+- [[sean-lampley|Sean Lampley]] '03 (81% similar)
+- [[eric-paschall|Eric Paschall]] '20 (75% similar)
+- [[rayjon-tucker|Rayjon Tucker]] '20 (75% similar)
+- [[justin-reed|Justin Reed]] '07 (72% similar)
+- [[corliss-williamson|Corliss Williamson]] '06 (71% similar)
+- [[hakim-warrick|Hakim Warrick]] '13 (70% similar)
+
+**Career shape:** Charted 9 seasons (2000-01–2008-09). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

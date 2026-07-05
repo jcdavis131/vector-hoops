@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[daniel-theis|Daniel Theis]] — cosine 0.86
 - [[salah-mejri|Salah Mejri]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 12.6 pts · 17.6 reb · 3.3 ast · 3.6 blk per 100 (2025-26).
+
+**Strengths:**
+
+- Elite rim protection (+3.2σ vs era)
+- Relentless on the offensive glass (+3.1σ vs era)
+- Efficient finisher inside the arc (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.2σ)
+- Three-point volume well below era (−1.9σ)
+
+**Comparables:**
+
+- [[donovan-clingan|Donovan Clingan]] '25 (89% similar)
+- [[moussa-diabate|Moussa Diabaté]] '25 (88% similar)
+- [[walker-kessler|Walker Kessler]] '23 (88% similar)
+- [[collin-murray-boyles|Collin Murray-Boyles]] '26 (86% similar)
+- [[daniel-theis|Daniel Theis]] '20 (86% similar)
+- [[salah-mejri|Salah Mejri]] '18 (86% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

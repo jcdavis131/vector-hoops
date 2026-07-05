@@ -38,6 +38,33 @@ Closest career shapes in the era-normalized vector space:
 - [[grant-long|Grant Long]] — cosine 0.85
 - [[p-j-tucker|P.J. Tucker]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 10.5 pts · 5.9 reb · 3.4 ast · 2.5 stl per 100 (2014-15).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+1.6σ vs era)
+- Active hands, disrupts passing lanes (+1.5σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.3σ)
+- Shot volume well below era (−1.6σ)
+
+**Comparables:**
+
+- [[bruce-brown|Bruce Brown]] '19 (87% similar)
+- [[derrick-mckey|Derrick McKey]] '02 (86% similar)
+- [[josh-green|Josh Green]] '26 (86% similar)
+- [[greg-buckner|Greg Buckner]] '05 (86% similar)
+- [[grant-long|Grant Long]] '03 (85% similar)
+- [[p-j-tucker|P.J. Tucker]] '24 (85% similar)
+
+**Career shape:** Charted 5 seasons (2010-11–2014-15). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

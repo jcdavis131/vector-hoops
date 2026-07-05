@@ -46,6 +46,33 @@ Closest career shapes in the era-normalized vector space:
 - [[jared-butler|Jared Butler]] — cosine 0.89
 - [[eric-bledsoe|Eric Bledsoe]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 30.1 pts · 5.6 reb · 9.8 ast · 3.1 stl per 100 (2003-04).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.9σ vs era)
+- Heavy shot volume, focal scoring option (+2.5σ vs era)
+- Active hands, disrupts passing lanes (+2.2σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.3σ)
+
+**Comparables:**
+
+- [[caris-levert|Caris LeVert]] '20 (92% similar)
+- [[brandon-jennings|Brandon Jennings]] '15 (92% similar)
+- [[scottie-pippen|Scottie Pippen]] '04 (91% similar)
+- [[jrue-holiday|Jrue Holiday]] '16 (90% similar)
+- [[jared-butler|Jared Butler]] '24 (89% similar)
+- [[eric-bledsoe|Eric Bledsoe]] '17 (89% similar)
+
+**Career shape:** Charted 13 seasons (1999-00–2011-12). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

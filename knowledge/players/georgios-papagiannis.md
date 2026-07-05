@@ -35,6 +35,33 @@ Closest career shapes in the era-normalized vector space:
 - [[jordan-bell|Jordan Bell]] — cosine 0.88
 - [[yves-missi|Yves Missi]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 14.0 pts · 14.4 reb · 3.5 ast · 2.3 blk per 100 (2017-18).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+1.9σ vs era)
+- Elite rim protection (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−4.0σ)
+- Three-point accuracy well below era (−2.3σ)
+
+**Comparables:**
+
+- [[zan-tabak|Zan Tabak]] '00 (93% similar)
+- [[kosta-koufos|Kosta Koufos]] '19 (91% similar)
+- [[michael-olowokandi|Michael Olowokandi]] '04 (90% similar)
+- [[trey-jemison-iii|Trey Jemison III]] '25 (90% similar)
+- [[jordan-bell|Jordan Bell]] '18 (88% similar)
+- [[yves-missi|Yves Missi]] '26 (87% similar)
+
+**Career shape:** Charted 2 seasons (2016-17–2017-18). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

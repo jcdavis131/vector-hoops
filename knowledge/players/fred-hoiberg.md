@@ -41,6 +41,33 @@ Closest career shapes in the era-normalized vector space:
 - [[jae-crowder|Jae Crowder]] — cosine 0.83
 - [[bryon-russell|Bryon Russell]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 18.1 pts · 7.5 reb · 3.5 ast · 2.1 stl per 100 (2004-05).
+
+**Strengths:**
+
+- Rarely turns the ball over (−2.3σ vs era)
+- Knockdown three-point shooter (+1.5σ vs era)
+- Strong net on-court impact (+1.2σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[hersey-hawkins|Hersey Hawkins]] '98 (89% similar)
+- [[james-posey|James Posey]] '11 (88% similar)
+- [[brian-cardinal|Brian Cardinal]] '12 (84% similar)
+- [[anthony-parker|Anthony Parker]] '10 (84% similar)
+- [[jae-crowder|Jae Crowder]] '22 (83% similar)
+- [[bryon-russell|Bryon Russell]] '97 (81% similar)
+
+**Career shape:** Charted 8 seasons (1996-97–2004-05). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

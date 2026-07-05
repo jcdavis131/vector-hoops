@@ -46,6 +46,32 @@ Closest career shapes in the era-normalized vector space:
 - [[voshon-lenard|Voshon Lenard]] — cosine 0.89
 - [[peja-stojakovic|Peja Stojakovic]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 22.0 pts · 9.6 reb · 1.5 ast · 1.2 stl per 100 (2005-06).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.6σ vs era)
+- Knockdown three-point shooter (+1.0σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[rashard-lewis|Rashard Lewis]] '99 (92% similar)
+- [[gerald-green|Gerald Green]] '15 (91% similar)
+- [[klay-thompson|Klay Thompson]] '15 (90% similar)
+- [[jason-richardson|Jason Richardson]] '06 (89% similar)
+- [[voshon-lenard|Voshon Lenard]] '97 (89% similar)
+- [[peja-stojakovic|Peja Stojakovic]] '04 (88% similar)
+
+**Career shape:** Charted 13 seasons (1997-98–2009-10). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

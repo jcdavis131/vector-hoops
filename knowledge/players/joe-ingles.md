@@ -45,6 +45,32 @@ Closest career shapes in the era-normalized vector space:
 - [[steve-blake|Steve Blake]] — cosine 0.90
 - [[willie-warren|Willie Warren]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** SF · Playmaking + Steals. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 6.0 pts · 4.4 reb · 9.3 ast · 0.8 stl per 100 (2024-25).
+
+**Strengths:**
+
+- High-volume table-setter (+1.8σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−4.0σ)
+- Finishing efficiency well below era (−2.6σ)
+
+**Comparables:**
+
+- [[drew-barry|Drew Barry]] '98 (94% similar)
+- [[chris-duhon|Chris Duhon]] '13 (92% similar)
+- [[chris-childs|Chris Childs]] '02 (91% similar)
+- [[jalen-pickett|Jalen Pickett]] '25 (90% similar)
+- [[steve-blake|Steve Blake]] '16 (90% similar)
+- [[willie-warren|Willie Warren]] '11 (88% similar)
+
+**Career shape:** Charted 12 seasons (2014-15–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Playmaking + Steals identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -35,6 +35,31 @@ Closest career shapes in the era-normalized vector space:
 - [[alec-burks|Alec Burks]] — cosine 0.81
 - [[zach-lavine|Zach LaVine]] — cosine 0.79
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 23.0 pts · 7.4 reb · 3.9 ast · 1.7 stl per 100 (2011-12).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[marshon-brooks|MarShon Brooks]] '14 (87% similar)
+- [[shaedon-sharpe|Shaedon Sharpe]] '26 (83% similar)
+- [[oscar-torres|Oscar Torres]] '03 (83% similar)
+- [[jaden-hardy|Jaden Hardy]] '26 (81% similar)
+- [[alec-burks|Alec Burks]] '24 (81% similar)
+- [[zach-lavine|Zach LaVine]] '21 (79% similar)
+
+**Career shape:** Charted 2 seasons (2010-11–2011-12). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

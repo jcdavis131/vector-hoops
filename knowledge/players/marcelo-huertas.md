@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jamal-shead|Jamal Shead]] — cosine 0.93
 - [[earl-watson|Earl Watson]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 12.6 pts · 4.8 reb · 10.4 ast · 2.0 stl per 100 (2016-17).
+
+**Strengths:**
+
+- High-volume table-setter (+2.2σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.8σ)
+- Finishing efficiency well below era (−1.2σ)
+
+**Comparables:**
+
+- [[bobby-hurley|Bobby Hurley]] '97 (95% similar)
+- [[tim-frazier|Tim Frazier]] '20 (95% similar)
+- [[kendall-marshall|Kendall Marshall]] '14 (94% similar)
+- [[anthony-carter|Anthony Carter]] '03 (94% similar)
+- [[jamal-shead|Jamal Shead]] '26 (93% similar)
+- [[earl-watson|Earl Watson]] '14 (92% similar)
+
+**Career shape:** Charted 2 seasons (2015-16–2016-17). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

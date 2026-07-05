@@ -50,6 +50,34 @@ Closest career shapes in the era-normalized vector space:
 - [[mo-bamba|Mo Bamba]] — cosine 0.88
 - [[hassan-whiteside|Hassan Whiteside]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 9.8 pts · 21.4 reb · 4.3 ast · 3.3 blk per 100 (2010-11).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+3.4σ vs era)
+- Elite rim protection (+2.3σ vs era)
+- Relentless on the offensive glass (+2.2σ vs era)
+
+**Areas of concern:**
+
+- Scoring load well below era (−1.5σ)
+- Three-point accuracy well below era (−1.4σ)
+
+**Comparables:**
+
+- [[samuel-dalembert|Samuel Dalembert]] '13 (90% similar)
+- [[donovan-clingan|Donovan Clingan]] '25 (90% similar)
+- [[dewayne-dedmon|Dewayne Dedmon]] '17 (89% similar)
+- [[kelvin-cato|Kelvin Cato]] '99 (89% similar)
+- [[mo-bamba|Mo Bamba]] '20 (88% similar)
+- [[hassan-whiteside|Hassan Whiteside]] '22 (88% similar)
+
+**Career shape:** Charted 17 seasons (1996-97–2012-13). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

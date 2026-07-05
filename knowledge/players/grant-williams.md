@@ -39,6 +39,32 @@ Closest career shapes in the era-normalized vector space:
 - [[dorian-finney-smith|Dorian Finney-Smith]] — cosine 0.85
 - [[danuel-house-jr|Danuel House Jr.]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** PF · Three-Point Accuracy (Low Turnovers). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 10.6 pts · 7.9 reb · 3.0 ast · 1.6 blk per 100 (2019-20).
+
+**Strengths:**
+
+- Strong net on-court impact (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Scoring load well below era (−1.5σ)
+- Shot volume well below era (−1.4σ)
+
+**Comparables:**
+
+- [[maxi-kleber|Maxi Kleber]] '26 (91% similar)
+- [[miye-oni|Miye Oni]] '21 (90% similar)
+- [[okaro-white|Okaro White]] '17 (88% similar)
+- [[brian-scalabrine|Brian Scalabrine]] '11 (87% similar)
+- [[dorian-finney-smith|Dorian Finney-Smith]] '26 (85% similar)
+- [[danuel-house-jr|Danuel House Jr.]] '19 (83% similar)
+
+**Career shape:** Charted 6 seasons (2019-20–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

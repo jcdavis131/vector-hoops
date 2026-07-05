@@ -40,6 +40,32 @@ Closest career shapes in the era-normalized vector space:
 - [[fred-jones|Fred Jones]] — cosine 0.92
 - [[yogi-ferrell|Yogi Ferrell]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 14.7 pts · 5.4 reb · 3.3 ast · 1.0 stl per 100 (2020-21).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.2σ vs era)
+
+**Areas of concern:**
+
+- Rim-protection impact well below era (−1.1σ)
+- Rim pressure (free-throw generation) well below era (−1.1σ)
+
+**Comparables:**
+
+- [[john-salmons|John Salmons]] '15 (93% similar)
+- [[charlie-bell|Charlie Bell]] '11 (92% similar)
+- [[wesley-matthews|Wesley Matthews]] '20 (92% similar)
+- [[daniel-gibson|Daniel Gibson]] '13 (92% similar)
+- [[fred-jones|Fred Jones]] '03 (92% similar)
+- [[yogi-ferrell|Yogi Ferrell]] '19 (92% similar)
+
+**Career shape:** Charted 7 seasons (2014-15–2020-21). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

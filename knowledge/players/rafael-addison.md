@@ -34,6 +34,31 @@ Closest career shapes in the era-normalized vector space:
 - [[adam-morrison|Adam Morrison]] — cosine 0.77
 - [[arron-afflalo|Arron Afflalo]] — cosine 0.77
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 18.2 pts · 6.4 reb · 4.8 ast · 1.1 stl per 100 (1996-97).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[erick-green|Erick Green]] '15 (84% similar)
+- [[ricky-pierce|Ricky Pierce]] '98 (80% similar)
+- [[adam-harrington|Adam Harrington]] '03 (79% similar)
+- [[bryn-forbes|Bryn Forbes]] '17 (77% similar)
+- [[adam-morrison|Adam Morrison]] '10 (77% similar)
+- [[arron-afflalo|Arron Afflalo]] '18 (77% similar)
+
+**Career shape:** Charted 1 season (1996-97). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

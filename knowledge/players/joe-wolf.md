@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[kobe-brown|Kobe Brown]] — cosine 0.87
 - [[mark-pope|Mark Pope]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** PF · Three-Point Accuracy (Low Turnovers). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 7.3 pts · 10.6 reb · 2.5 ast · 1.7 stl per 100 (1997-98).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.2σ vs era)
+
+**Areas of concern:**
+
+- Scoring load well below era (−2.0σ)
+- Finishing efficiency well below era (−2.0σ)
+
+**Comparables:**
+
+- [[brooks-barnhizer|Brooks Barnhizer]] '26 (94% similar)
+- [[johnny-furphy|Johnny Furphy]] '26 (91% similar)
+- [[harvey-grant|Harvey Grant]] '97 (90% similar)
+- [[kz-okpala|KZ Okpala]] '21 (88% similar)
+- [[kobe-brown|Kobe Brown]] '24 (87% similar)
+- [[mark-pope|Mark Pope]] '01 (87% similar)
+
+**Career shape:** Charted 2 seasons (1996-97–1997-98). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -43,6 +43,33 @@ Closest career shapes in the era-normalized vector space:
 - [[donovan-clingan|Donovan Clingan]] — cosine 0.77
 - [[dylan-cardwell|Dylan Cardwell]] — cosine 0.77
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 17.0 pts · 17.8 reb · 2.3 ast · 3.0 blk per 100 (2013-14).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+4.0σ vs era)
+- Relentless on the offensive glass (+2.1σ vs era)
+- Elite rim protection (+2.0σ vs era)
+
+**Areas of concern:**
+
+- Three-point volume well below era (−1.2σ)
+
+**Comparables:**
+
+- [[drew-eubanks|Drew Eubanks]] '20 (82% similar)
+- [[vincent-poirier|Vincent Poirier]] '20 (81% similar)
+- [[james-singleton|James Singleton]] '10 (80% similar)
+- [[dewayne-dedmon|Dewayne Dedmon]] '17 (79% similar)
+- [[donovan-clingan|Donovan Clingan]] '25 (77% similar)
+- [[dylan-cardwell|Dylan Cardwell]] '26 (77% similar)
+
+**Career shape:** Charted 10 seasons (2013-14–2022-23). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

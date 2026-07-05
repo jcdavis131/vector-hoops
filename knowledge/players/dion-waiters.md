@@ -40,6 +40,32 @@ Closest career shapes in the era-normalized vector space:
 - [[marcus-brown|Marcus Brown]] — cosine 0.86
 - [[jaden-hardy|Jaden Hardy]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 22.7 pts · 5.0 reb · 5.2 ast · 1.2 stl per 100 (2018-19).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.9σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.4σ)
+- Offensive-glass activity well below era (−1.1σ)
+
+**Comparables:**
+
+- [[flip-murray|Flip Murray]] '08 (93% similar)
+- [[duane-washington-jr|Duane Washington Jr.]] '23 (92% similar)
+- [[nickeil-alexander-walker|Nickeil Alexander-Walker]] '20 (87% similar)
+- [[cj-mccollum|CJ McCollum]] '21 (86% similar)
+- [[marcus-brown|Marcus Brown]] '97 (86% similar)
+- [[jaden-hardy|Jaden Hardy]] '26 (86% similar)
+
+**Career shape:** Charted 7 seasons (2012-13–2018-19). Entered as a Scoring Volume + Shot Volume profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

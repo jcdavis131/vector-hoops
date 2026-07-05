@@ -47,6 +47,32 @@ Closest career shapes in the era-normalized vector space:
 - [[kevin-ollie|Kevin Ollie]] — cosine 0.89
 - [[tyus-jones|Tyus Jones]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** PG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 10.0 pts · 4.7 reb · 6.6 ast · 0.6 stl per 100 (2023-24).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.5σ)
+- Scoring load well below era (−1.5σ)
+
+**Comparables:**
+
+- [[anthony-johnson|Anthony Johnson]] '02 (93% similar)
+- [[mike-wilks|Mike Wilks]] '04 (93% similar)
+- [[davion-mitchell|Davion Mitchell]] '26 (89% similar)
+- [[gerald-madkins|Gerald Madkins]] '98 (89% similar)
+- [[kevin-ollie|Kevin Ollie]] '10 (89% similar)
+- [[tyus-jones|Tyus Jones]] '18 (89% similar)
+
+**Career shape:** Charted 14 seasons (2011-12–2024-25). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

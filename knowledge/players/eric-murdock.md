@@ -35,6 +35,33 @@ Closest career shapes in the era-normalized vector space:
 - [[eddie-gill|Eddie Gill]] — cosine 0.88
 - [[moochie-norris|Moochie Norris]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 16.0 pts · 5.5 reb · 7.7 ast · 3.3 stl per 100 (1999-00).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.6σ vs era)
+- High-volume table-setter (+1.2σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.5σ)
+- Turnover rate well above era (+1.1σ)
+
+**Comparables:**
+
+- [[marko-jaric|Marko Jaric]] '03 (89% similar)
+- [[scotty-pippen-jr|Scotty Pippen Jr.]] '24 (89% similar)
+- [[speedy-claxton|Speedy Claxton]] '07 (88% similar)
+- [[marcus-banks|Marcus Banks]] '09 (88% similar)
+- [[eddie-gill|Eddie Gill]] '06 (88% similar)
+- [[moochie-norris|Moochie Norris]] '05 (87% similar)
+
+**Career shape:** Charted 2 seasons (1997-98–1999-00). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[lee-mayberry|Lee Mayberry]] — cosine 0.91
 - [[mike-wilks|Mike Wilks]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** SG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 7.9 pts · 3.2 reb · 9.7 ast · 2.8 stl per 100 (1997-98).
+
+**Strengths:**
+
+- High-volume table-setter (+1.8σ vs era)
+- Active hands, disrupts passing lanes (+1.5σ vs era)
+- Knockdown three-point shooter (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−2.0σ)
+- Scoring load well below era (−1.9σ)
+
+**Comparables:**
+
+- [[haywoode-workman|Haywoode Workman]] '00 (94% similar)
+- [[anthony-johnson|Anthony Johnson]] '02 (92% similar)
+- [[jordan-mclaughlin|Jordan McLaughlin]] '24 (91% similar)
+- [[sedale-threatt|Sedale Threatt]] '97 (91% similar)
+- [[lee-mayberry|Lee Mayberry]] '97 (91% similar)
+- [[mike-wilks|Mike Wilks]] '04 (91% similar)
+
+**Career shape:** Charted 1 season (1997-98). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

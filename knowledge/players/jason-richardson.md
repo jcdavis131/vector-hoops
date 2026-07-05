@@ -46,6 +46,33 @@ Closest career shapes in the era-normalized vector space:
 - [[cj-mccollum|CJ McCollum]] — cosine 0.88
 - [[marcus-thornton|Marcus Thornton]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** SG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 30.5 pts · 7.6 reb · 4.1 ast · 1.7 stl per 100 (2005-06).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+2.1σ vs era)
+- Featured, high-usage scoring role (+1.9σ vs era)
+- High-volume three-point shooter (+1.7σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[jr-smith|JR Smith]] '08 (93% similar)
+- [[voshon-lenard|Voshon Lenard]] '97 (92% similar)
+- [[tim-thomas|Tim Thomas]] '06 (89% similar)
+- [[dell-curry|Dell Curry]] '00 (88% similar)
+- [[cj-mccollum|CJ McCollum]] '21 (88% similar)
+- [[marcus-thornton|Marcus Thornton]] '13 (87% similar)
+
+**Career shape:** Charted 13 seasons (2001-02–2014-15). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

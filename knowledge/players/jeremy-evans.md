@@ -39,6 +39,34 @@ Closest career shapes in the era-normalized vector space:
 - [[ryan-kalkbrenner|Ryan Kalkbrenner]] — cosine 0.91
 - [[damian-jones|Damian Jones]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** SF · Rim Protection + Offensive Glass. Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 14.3 pts · 11.5 reb · 3.0 ast · 5.5 blk per 100 (2011-12).
+
+**Strengths:**
+
+- Elite rim protection (+3.8σ vs era)
+- Efficient finisher inside the arc (+3.2σ vs era)
+- Rarely turns the ball over (−1.6σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.6σ)
+- Free-throw touch well below era (−1.6σ)
+
+**Comparables:**
+
+- [[don-reid|Don Reid]] '01 (94% similar)
+- [[onyeka-okongwu|Onyeka Okongwu]] '22 (92% similar)
+- [[brandan-wright|Brandan Wright]] '18 (92% similar)
+- [[jaxson-hayes|Jaxson Hayes]] '26 (91% similar)
+- [[ryan-kalkbrenner|Ryan Kalkbrenner]] '26 (91% similar)
+- [[damian-jones|Damian Jones]] '19 (91% similar)
+
+**Career shape:** Charted 6 seasons (2010-11–2015-16). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

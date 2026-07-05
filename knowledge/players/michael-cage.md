@@ -36,6 +36,34 @@ Closest career shapes in the era-normalized vector space:
 - [[ervin-johnson|Ervin Johnson]] — cosine 0.89
 - [[dante-cunningham|Dante Cunningham]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 5.5 pts · 16.5 reb · 1.8 ast · 1.6 stl per 100 (1999-00).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+2.4σ vs era)
+- Relentless on the offensive glass (+2.3σ vs era)
+- Rarely turns the ball over (−2.3σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−2.6σ)
+- Scoring load well below era (−2.4σ)
+
+**Comparables:**
+
+- [[hot-rod-williams|Hot Rod Williams]] '99 (94% similar)
+- [[francisco-elson|Francisco Elson]] '07 (91% similar)
+- [[corie-blount|Corie Blount]] '98 (89% similar)
+- [[evan-eschmeyer|Evan Eschmeyer]] '03 (89% similar)
+- [[ervin-johnson|Ervin Johnson]] '05 (89% similar)
+- [[dante-cunningham|Dante Cunningham]] '19 (89% similar)
+
+**Career shape:** Charted 3 seasons (1996-97–1999-00). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

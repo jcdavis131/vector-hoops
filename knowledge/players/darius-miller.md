@@ -38,6 +38,33 @@ Closest career shapes in the era-normalized vector space:
 - [[mario-elie|Mario Elie]] — cosine 0.89
 - [[ben-sheppard|Ben Sheppard]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 16.9 pts · 5.6 reb · 4.8 ast · 3.0 stl per 100 (2020-21).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.6σ vs era)
+- Reliable touch from the free-throw line (+2.1σ vs era)
+- Strong net on-court impact (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.1σ)
+
+**Comparables:**
+
+- [[tony-snell|Tony Snell]] '21 (92% similar)
+- [[alex-abrines|Alex Abrines]] '19 (91% similar)
+- [[steve-kerr|Steve Kerr]] '97 (90% similar)
+- [[reggie-bullock-jr|Reggie Bullock Jr.]] '24 (90% similar)
+- [[mario-elie|Mario Elie]] '01 (89% similar)
+- [[ben-sheppard|Ben Sheppard]] '24 (89% similar)
+
+**Career shape:** Charted 5 seasons (2012-13–2020-21). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -38,6 +38,32 @@ Closest career shapes in the era-normalized vector space:
 - [[dario-saric|Dario Saric]] — cosine 0.67
 - [[gordon-hayward|Gordon Hayward]] — cosine 0.64
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 23.7 pts · 10.7 reb · 6.6 ast · 1.2 stl per 100 (1997-98).
+
+**Strengths:**
+
+- Strong net on-court impact (+1.8σ vs era)
+- Knockdown three-point shooter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[brad-miller|Brad Miller]] '99 (72% similar)
+- [[austin-reaves|Austin Reaves]] '26 (71% similar)
+- [[cedric-coward|Cedric Coward]] '26 (71% similar)
+- [[kevin-johnson|Kevin Johnson]] '97 (69% similar)
+- [[dario-saric|Dario Saric]] '21 (67% similar)
+- [[gordon-hayward|Gordon Hayward]] '17 (64% similar)
+
+**Career shape:** Charted 5 seasons (1996-97–2000-01). Entered as a Scoring Volume + Shot Volume profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

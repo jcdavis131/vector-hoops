@@ -38,6 +38,32 @@ Closest career shapes in the era-normalized vector space:
 - [[matt-carroll|Matt Carroll]] — cosine 0.85
 - [[cam-reddish|Cam Reddish]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 21.4 pts · 5.0 reb · 2.2 ast · 2.8 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.8σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.3σ)
+- Table-setting role well below era (−1.0σ)
+
+**Comparables:**
+
+- [[chris-duarte|Chris Duarte]] '23 (92% similar)
+- [[gradey-dick|Gradey Dick]] '24 (88% similar)
+- [[jeremy-richardson|Jeremy Richardson]] '08 (86% similar)
+- [[mario-hezonja|Mario Hezonja]] '17 (85% similar)
+- [[matt-carroll|Matt Carroll]] '10 (85% similar)
+- [[cam-reddish|Cam Reddish]] '25 (84% similar)
+
+**Career shape:** Charted 5 seasons (2021-22–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

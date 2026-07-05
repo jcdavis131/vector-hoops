@@ -41,6 +41,34 @@ Closest career shapes in the era-normalized vector space:
 - [[shawn-bradley|Shawn Bradley]] — cosine 0.85
 - [[greg-ostertag|Greg Ostertag]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 16.9 pts · 13.2 reb · 3.4 ast · 3.1 blk per 100 (2023-24).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+4.0σ vs era)
+- Efficient finisher inside the arc (+2.9σ vs era)
+- Elite rim protection (+2.5σ vs era)
+
+**Areas of concern:**
+
+- Three-point volume well below era (−1.8σ)
+- Shot volume well below era (−1.2σ)
+
+**Comparables:**
+
+- [[daniel-theis|Daniel Theis]] '20 (89% similar)
+- [[theo-ratliff|Theo Ratliff]] '09 (87% similar)
+- [[calvin-booth|Calvin Booth]] '08 (86% similar)
+- [[joel-anthony|Joel Anthony]] '16 (86% similar)
+- [[shawn-bradley|Shawn Bradley]] '01 (85% similar)
+- [[greg-ostertag|Greg Ostertag]] '99 (84% similar)
+
+**Career shape:** Charted 8 seasons (2017-18–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Rim Protection + Offensive Glass identity.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

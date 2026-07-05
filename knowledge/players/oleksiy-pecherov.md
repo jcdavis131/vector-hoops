@@ -36,6 +36,34 @@ Closest career shapes in the era-normalized vector space:
 - [[gg-jackson|GG Jackson]] — cosine 0.72
 - [[chris-morris|Chris Morris]] — cosine 0.72
 
+## Scouting report
+
+**Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 20.6 pts · 13.5 reb · 0.4 ast · 1.1 stl per 100 (2008-09).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+2.0σ vs era)
+- High-volume three-point shooter (+1.2σ vs era)
+- Rarely turns the ball over (−1.1σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.5σ)
+- Table-setting role well below era (−1.3σ)
+
+**Comparables:**
+
+- [[laphonso-ellis|LaPhonso Ellis]] '97 (85% similar)
+- [[charlie-villanueva|Charlie Villanueva]] '14 (79% similar)
+- [[byron-mullens|Byron Mullens]] '14 (77% similar)
+- [[mike-batiste|Mike Batiste]] '03 (76% similar)
+- [[gg-jackson|GG Jackson]] '24 (72% similar)
+- [[chris-morris|Chris Morris]] '99 (72% similar)
+
+**Career shape:** Charted 3 seasons (2007-08–2009-10). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

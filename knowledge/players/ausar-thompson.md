@@ -36,6 +36,33 @@ Closest career shapes in the era-normalized vector space:
 - [[horacio-llamas|Horacio Llamas]] — cosine 0.84
 - [[xavier-tillman|Xavier Tillman]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass + Defensive Glass. Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 18.2 pts · 10.6 reb · 5.8 ast · 3.7 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+3.2σ vs era)
+- Strong net on-court impact (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Three-point volume well below era (−1.8σ)
+- Free-throw touch well below era (−1.7σ)
+
+**Comparables:**
+
+- [[paul-reed|Paul Reed]] '21 (89% similar)
+- [[renaldo-balkman|Renaldo Balkman]] '08 (88% similar)
+- [[brice-johnson|Brice Johnson]] '18 (86% similar)
+- [[gerald-wallace|Gerald Wallace]] '15 (85% similar)
+- [[horacio-llamas|Horacio Llamas]] '97 (84% similar)
+- [[xavier-tillman|Xavier Tillman]] '26 (82% similar)
+
+**Career shape:** Charted 3 seasons (2023-24–2025-26). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

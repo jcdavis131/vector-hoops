@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[derek-fisher|Derek Fisher]] — cosine 0.81
 - [[cason-wallace|Cason Wallace]] — cosine 0.78
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 17.5 pts · 5.5 reb · 3.9 ast · 2.4 stl per 100 (2006-07).
+
+**Strengths:**
+
+- Strong net on-court impact (+2.5σ vs era)
+- Active hands, disrupts passing lanes (+1.5σ vs era)
+- Rarely turns the ball over (−1.5σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.0σ)
+
+**Comparables:**
+
+- [[miles-mcbride|Miles McBride]] '22 (87% similar)
+- [[ron-harper|Ron Harper]] '97 (84% similar)
+- [[bryon-russell|Bryon Russell]] '97 (82% similar)
+- [[og-anunoby|OG Anunoby]] '18 (81% similar)
+- [[derek-fisher|Derek Fisher]] '02 (81% similar)
+- [[cason-wallace|Cason Wallace]] '26 (78% similar)
+
+**Career shape:** Charted 1 season (2006-07). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

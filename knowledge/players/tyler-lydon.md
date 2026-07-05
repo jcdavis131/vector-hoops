@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jacob-toppin|Jacob Toppin]] — cosine 0.85
 - [[jeff-grayer|Jeff Grayer]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 11.1 pts · 8.7 reb · 2.9 ast · 1.0 stl per 100 (2018-19).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−4.0σ)
+- Shot volume well below era (−1.7σ)
+
+**Comparables:**
+
+- [[pete-nance|Pete Nance]] '26 (90% similar)
+- [[alex-poythress|Alex Poythress]] '18 (90% similar)
+- [[alfonzo-mckinnie|Alfonzo McKinnie]] '22 (89% similar)
+- [[juwan-morgan|Juwan Morgan]] '21 (86% similar)
+- [[jacob-toppin|Jacob Toppin]] '25 (85% similar)
+- [[jeff-grayer|Jeff Grayer]] '97 (84% similar)
+
+**Career shape:** Charted 1 season (2018-19). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

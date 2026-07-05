@@ -37,6 +37,33 @@ Closest career shapes in the era-normalized vector space:
 - [[jalen-williams|Jalen Williams]] — cosine 0.78
 - [[jamal-murray|Jamal Murray]] — cosine 0.77
 
+## Scouting report
+
+**Play style:** SG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 23.8 pts · 4.8 reb · 7.2 ast · 2.5 stl per 100 (1996-97).
+
+**Strengths:**
+
+- Strong net on-court impact (+2.4σ vs era)
+- Reliable touch from the free-throw line (+1.6σ vs era)
+- Active hands, disrupts passing lanes (+1.1σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[ajay-mitchell|Ajay Mitchell]] '26 (87% similar)
+- [[george-hill|George Hill]] '22 (87% similar)
+- [[khris-middleton|Khris Middleton]] '20 (80% similar)
+- [[terry-porter|Terry Porter]] '02 (80% similar)
+- [[jalen-williams|Jalen Williams]] '25 (78% similar)
+- [[jamal-murray|Jamal Murray]] '26 (77% similar)
+
+**Career shape:** Charted 4 seasons (1996-97–1999-00). Consistent Scoring Volume + Shot Volume profile across his career.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

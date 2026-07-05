@@ -42,6 +42,34 @@ Closest career shapes in the era-normalized vector space:
 - [[ricky-rubio|Ricky Rubio]] — cosine 0.87
 - [[carlos-arroyo|Carlos Arroyo]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 7.7 pts · 7.4 reb · 10.7 ast · 0.8 stl per 100 (2004-05).
+
+**Strengths:**
+
+- High-volume table-setter (+2.4σ vs era)
+- Knockdown three-point shooter (+1.6σ vs era)
+- Reliable touch from the free-throw line (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−4.0σ)
+- Scoring load well below era (−1.9σ)
+
+**Comparables:**
+
+- [[t-j-ford|T.J. Ford]] '07 (95% similar)
+- [[andre-miller|Andre Miller]] '02 (94% similar)
+- [[jeff-teague|Jeff Teague]] '15 (91% similar)
+- [[ty-lawson|Ty Lawson]] '14 (89% similar)
+- [[ricky-rubio|Ricky Rubio]] '13 (87% similar)
+- [[carlos-arroyo|Carlos Arroyo]] '03 (87% similar)
+
+**Career shape:** Charted 9 seasons (1996-97–2004-05). Entered as a Scoring Volume + Shot Volume profile, peaked as a Playmaking + Steals identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

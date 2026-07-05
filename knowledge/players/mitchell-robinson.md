@@ -41,6 +41,34 @@ Closest career shapes in the era-normalized vector space:
 - [[moussa-cisse|Moussa Cisse]] — cosine 0.92
 - [[dan-gadzuric|Dan Gadzuric]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 14.2 pts · 21.9 reb · 2.2 ast · 2.9 blk per 100 (2025-26).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+4.0σ vs era)
+- Efficient finisher inside the arc (+3.3σ vs era)
+- Elite rim protection (+2.4σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−3.1σ)
+- Three-point accuracy well below era (−2.9σ)
+
+**Comparables:**
+
+- [[jakob-poeltl|Jakob Poeltl]] '22 (94% similar)
+- [[andrew-declercq|Andrew DeClercq]] '01 (94% similar)
+- [[robert-williams-iii|Robert Williams III]] '19 (93% similar)
+- [[dereck-lively-ii|Dereck Lively II]] '25 (93% similar)
+- [[moussa-cisse|Moussa Cisse]] '26 (92% similar)
+- [[dan-gadzuric|Dan Gadzuric]] '05 (92% similar)
+
+**Career shape:** Charted 8 seasons (2018-19–2025-26). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

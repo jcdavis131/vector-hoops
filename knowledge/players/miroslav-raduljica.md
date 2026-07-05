@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[ivan-rabb|Ivan Rabb]] — cosine 0.87
 - [[nikola-pekovic|Nikola Pekovic]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 19.6 pts · 11.6 reb · 2.5 ast · 1.4 blk per 100 (2013-14).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+1.9σ vs era)
+- Efficient finisher inside the arc (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.5σ)
+- Three-point volume well below era (−1.2σ)
+
+**Comparables:**
+
+- [[jerome-jordan|Jerome Jordan]] '12 (91% similar)
+- [[tyler-zeller|Tyler Zeller]] '17 (89% similar)
+- [[ante-zizic|Ante Zizic]] '18 (88% similar)
+- [[robin-lopez|Robin Lopez]] '14 (87% similar)
+- [[ivan-rabb|Ivan Rabb]] '18 (87% similar)
+- [[nikola-pekovic|Nikola Pekovic]] '12 (87% similar)
+
+**Career shape:** Charted 1 season (2013-14). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

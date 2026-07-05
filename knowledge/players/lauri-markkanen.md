@@ -42,6 +42,33 @@ Closest career shapes in the era-normalized vector space:
 - [[michael-porter-jr|Michael Porter Jr.]] — cosine 0.84
 - [[dirk-nowitzki|Dirk Nowitzki]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** PF · Defensive Glass + Rim Pressure (Fts). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 35.4 pts · 11.9 reb · 2.6 ast · 0.9 stl per 100 (2022-23).
+
+**Strengths:**
+
+- Featured, high-usage scoring role (+2.1σ vs era)
+- Draws contact, gets to the line often (+1.6σ vs era)
+- Heavy shot volume, focal scoring option (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.0σ)
+
+**Comparables:**
+
+- [[cedric-ceballos|Cedric Ceballos]] '00 (88% similar)
+- [[keith-van-horn|Keith Van Horn]] '99 (88% similar)
+- [[miles-bridges|Miles Bridges]] '25 (86% similar)
+- [[danny-granger|Danny Granger]] '09 (85% similar)
+- [[michael-porter-jr|Michael Porter Jr.]] '26 (84% similar)
+- [[dirk-nowitzki|Dirk Nowitzki]] '06 (83% similar)
+
+**Career shape:** Charted 9 seasons (2017-18–2025-26). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

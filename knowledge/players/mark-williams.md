@@ -37,6 +37,34 @@ Closest career shapes in the era-normalized vector space:
 - [[onyeka-okongwu|Onyeka Okongwu]] — cosine 0.93
 - [[cheick-diallo|Cheick Diallo]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 23.4 pts · 16.0 reb · 1.9 ast · 1.8 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+4.0σ vs era)
+- Efficient finisher inside the arc (+2.3σ vs era)
+- Relentless on the offensive glass (+2.2σ vs era)
+
+**Areas of concern:**
+
+- Three-point volume well below era (−2.0σ)
+- Table-setting role well below era (−1.2σ)
+
+**Comparables:**
+
+- [[derrick-favors|Derrick Favors]] '21 (95% similar)
+- [[kenneth-faried|Kenneth Faried]] '12 (94% similar)
+- [[jarrett-allen|Jarrett Allen]] '25 (94% similar)
+- [[richaun-holmes|Richaun Holmes]] '25 (93% similar)
+- [[onyeka-okongwu|Onyeka Okongwu]] '22 (93% similar)
+- [[cheick-diallo|Cheick Diallo]] '17 (92% similar)
+
+**Career shape:** Charted 4 seasons (2022-23–2025-26). Entered as a Rim Protection + Offensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

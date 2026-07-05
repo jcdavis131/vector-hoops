@@ -44,6 +44,33 @@ Closest career shapes in the era-normalized vector space:
 - [[cj-miles|CJ Miles]] — cosine 0.94
 - [[malik-beasley|Malik Beasley]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 27.2 pts · 6.2 reb · 3.0 ast · 1.6 stl per 100 (2018-19).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.0σ vs era)
+- Heavy shot volume, focal scoring option (+1.5σ vs era)
+- Reliable touch from the free-throw line (+1.2σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[anthony-roberson|Anthony Roberson]] '09 (94% similar)
+- [[devin-vassell|Devin Vassell]] '23 (94% similar)
+- [[sam-mack|Sam Mack]] '00 (94% similar)
+- [[gary-trent-jr|Gary Trent Jr.]] '26 (94% similar)
+- [[cj-miles|CJ Miles]] '18 (94% similar)
+- [[malik-beasley|Malik Beasley]] '25 (93% similar)
+
+**Career shape:** Charted 11 seasons (2012-13–2022-23). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

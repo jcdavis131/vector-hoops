@@ -37,6 +37,32 @@ Closest career shapes in the era-normalized vector space:
 - [[mardy-collins|Mardy Collins]] — cosine 0.90
 - [[elfrid-payton|Elfrid Payton]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** SG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 12.6 pts · 5.6 reb · 6.7 ast · 1.7 stl per 100 (2022-23).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.0σ)
+- Turnover rate well above era (+2.0σ)
+
+**Comparables:**
+
+- [[daishen-nix|Daishen Nix]] '22 (93% similar)
+- [[milt-palacio|Milt Palacio]] '00 (91% similar)
+- [[javaris-crittenton|Javaris Crittenton]] '09 (91% similar)
+- [[walker-russell|Walker Russell]] '12 (90% similar)
+- [[mardy-collins|Mardy Collins]] '10 (90% similar)
+- [[elfrid-payton|Elfrid Payton]] '25 (87% similar)
+
+**Career shape:** Charted 4 seasons (2022-23–2025-26). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -36,6 +36,33 @@ Closest career shapes in the era-normalized vector space:
 - [[francisco-elson|Francisco Elson]] — cosine 0.89
 - [[mark-bradtke|Mark Bradtke]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 3.7 pts · 10.5 reb · 1.9 ast · 2.3 blk per 100 (1998-99).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.5σ vs era)
+- Elite rim protection (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−2.7σ)
+- Scoring load well below era (−2.7σ)
+
+**Comparables:**
+
+- [[michael-cage|Michael Cage]] '00 (94% similar)
+- [[dean-garrett|Dean Garrett]] '02 (91% similar)
+- [[evan-eschmeyer|Evan Eschmeyer]] '03 (90% similar)
+- [[andrew-lang|Andrew Lang]] '00 (90% similar)
+- [[francisco-elson|Francisco Elson]] '07 (89% similar)
+- [[mark-bradtke|Mark Bradtke]] '97 (89% similar)
+
+**Career shape:** Charted 3 seasons (1996-97–1998-99). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

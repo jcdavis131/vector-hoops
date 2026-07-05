@@ -42,6 +42,32 @@ Closest career shapes in the era-normalized vector space:
 - [[terence-morris|Terence Morris]] — cosine 0.82
 - [[joe-kleine|Joe Kleine]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 6.6 pts · 9.1 reb · 1.1 ast · 1.1 blk per 100 (2010-11).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.9σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.3σ)
+- Scoring load well below era (−2.1σ)
+
+**Comparables:**
+
+- [[jaron-blossomgame|Jaron Blossomgame]] '19 (86% similar)
+- [[michael-doleac|Michael Doleac]] '08 (86% similar)
+- [[chucky-brown|Chucky Brown]] '02 (83% similar)
+- [[greg-foster|Greg Foster]] '03 (82% similar)
+- [[terence-morris|Terence Morris]] '06 (82% similar)
+- [[joe-kleine|Joe Kleine]] '97 (82% similar)
+
+**Career shape:** Charted 9 seasons (2002-03–2010-11). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

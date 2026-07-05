@@ -44,6 +44,34 @@ Closest career shapes in the era-normalized vector space:
 - [[justin-anderson|Justin Anderson]] — cosine 0.71
 - [[tyrone-nesby|Tyrone Nesby]] — cosine 0.71
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 29.7 pts · 7.6 reb · 1.6 ast · 2.1 stl per 100 (2022-23).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+1.8σ vs era)
+- Featured, high-usage scoring role (+1.3σ vs era)
+- Active hands, disrupts passing lanes (+1.3σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.2σ)
+- Table-setting role well below era (−1.1σ)
+
+**Comparables:**
+
+- [[cam-whitmore|Cam Whitmore]] '24 (83% similar)
+- [[a-j-lawson|A.J. Lawson]] '26 (83% similar)
+- [[rodney-carney|Rodney Carney]] '09 (78% similar)
+- [[brandon-boston|Brandon Boston]] '24 (72% similar)
+- [[justin-anderson|Justin Anderson]] '18 (71% similar)
+- [[tyrone-nesby|Tyrone Nesby]] '00 (71% similar)
+
+**Career shape:** Charted 11 seasons (2015-16–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

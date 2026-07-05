@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[jordan-mickey|Jordan Mickey]] — cosine 0.86
 - [[marquese-chriss|Marquese Chriss]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 15.6 pts · 13.3 reb · 0.0 ast · 3.5 blk per 100 (2006-07).
+
+**Strengths:**
+
+- Elite rim protection (+2.4σ vs era)
+- Draws contact, gets to the line often (+1.4σ vs era)
+- Relentless on the offensive glass (+1.3σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.2σ)
+- Table-setting role well below era (−1.4σ)
+
+**Comparables:**
+
+- [[amal-mccaskill|Amal McCaskill]] '02 (90% similar)
+- [[acie-earl|Acie Earl]] '97 (88% similar)
+- [[dalibor-bagaric|Dalibor Bagaric]] '01 (87% similar)
+- [[mamadou-n-diaye|Mamadou N'diaye]] '04 (86% similar)
+- [[jordan-mickey|Jordan Mickey]] '17 (86% similar)
+- [[marquese-chriss|Marquese Chriss]] '20 (85% similar)
+
+**Career shape:** Charted 1 season (2006-07). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

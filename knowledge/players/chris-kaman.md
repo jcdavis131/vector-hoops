@@ -45,6 +45,33 @@ Closest career shapes in the era-normalized vector space:
 - [[ike-austin|Ike Austin]] — cosine 0.85
 - [[chris-mihm|Chris Mihm]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 21.6 pts · 17.5 reb · 2.6 ast · 3.8 blk per 100 (2007-08).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+2.8σ vs era)
+- Elite rim protection (+2.6σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.4σ)
+- Turnover rate well above era (+1.3σ)
+
+**Comparables:**
+
+- [[dino-radja|Dino Radja]] '97 (91% similar)
+- [[alexis-ajinca|Alexis Ajinca]] '15 (90% similar)
+- [[kevin-seraphin|Kevin Seraphin]] '16 (87% similar)
+- [[jermaine-o-neal|Jermaine O'Neal]] '05 (86% similar)
+- [[ike-austin|Ike Austin]] '02 (85% similar)
+- [[chris-mihm|Chris Mihm]] '09 (85% similar)
+
+**Career shape:** Charted 12 seasons (2003-04–2014-15). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

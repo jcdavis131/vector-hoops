@@ -35,6 +35,34 @@ Closest career shapes in the era-normalized vector space:
 - [[ruben-boumtje-boumtje|Ruben Boumtje-Boumtje]] — cosine 0.85
 - [[curtis-borchardt|Curtis Borchardt]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 13.2 pts · 9.5 reb · 1.4 ast · 3.1 blk per 100 (1998-99).
+
+**Strengths:**
+
+- Elite rim protection (+1.8σ vs era)
+- Reliable touch from the free-throw line (+1.7σ vs era)
+- Relentless on the offensive glass (+1.3σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.7σ)
+- Ball-hawking activity well below era (−1.5σ)
+
+**Comparables:**
+
+- [[solomon-jones|Solomon Jones]] '08 (88% similar)
+- [[nathan-mensah|Nathan Mensah]] '24 (88% similar)
+- [[dragan-tarlac|Dragan Tarlac]] '01 (85% similar)
+- [[brett-szabo|Brett Szabo]] '97 (85% similar)
+- [[ruben-boumtje-boumtje|Ruben Boumtje-Boumtje]] '02 (85% similar)
+- [[curtis-borchardt|Curtis Borchardt]] '05 (85% similar)
+
+**Career shape:** Charted 2 seasons (1998-99–1999-00). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

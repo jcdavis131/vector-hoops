@@ -38,6 +38,32 @@ Closest career shapes in the era-normalized vector space:
 - [[juancho-hernangomez|Juancho Hernangomez]] — cosine 0.88
 - [[rodney-mcgruder|Rodney McGruder]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 15.9 pts · 8.9 reb · 2.2 ast · 2.2 stl per 100 (2019-20).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.7σ vs era)
+- Active hands, disrupts passing lanes (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−3.3σ)
+
+**Comparables:**
+
+- [[haywood-highsmith|Haywood Highsmith]] '22 (96% similar)
+- [[james-young|James Young]] '16 (90% similar)
+- [[jud-buechler|Jud Buechler]] '00 (88% similar)
+- [[johnny-furphy|Johnny Furphy]] '26 (88% similar)
+- [[juancho-hernangomez|Juancho Hernangomez]] '23 (88% similar)
+- [[rodney-mcgruder|Rodney McGruder]] '18 (87% similar)
+
+**Career shape:** Charted 5 seasons (2019-20–2023-24). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

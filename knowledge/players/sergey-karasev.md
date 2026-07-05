@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[sion-james|Sion James]] — cosine 0.84
 - [[max-christie|Max Christie]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 11.5 pts · 5.0 reb · 1.9 ast · 0.9 stl per 100 (2013-14).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+1.3σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.9σ)
+- Finishing efficiency well below era (−1.6σ)
+
+**Comparables:**
+
+- [[deng-adel|Deng Adel]] '19 (87% similar)
+- [[solomon-hill|Solomon Hill]] '21 (86% similar)
+- [[anthony-brown|Anthony Brown]] '16 (86% similar)
+- [[marlon-garnett|Marlon Garnett]] '99 (84% similar)
+- [[sion-james|Sion James]] '26 (84% similar)
+- [[max-christie|Max Christie]] '23 (84% similar)
+
+**Career shape:** Charted 3 seasons (2013-14–2015-16). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -42,6 +42,34 @@ Closest career shapes in the era-normalized vector space:
 - [[andrew-bynum|Andrew Bynum]] — cosine 0.89
 - [[david-robinson|David Robinson]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 32.6 pts · 14.3 reb · 2.3 ast · 5.6 blk per 100 (1999-00).
+
+**Strengths:**
+
+- Elite rim protection (+4.0σ vs era)
+- Draws contact, gets to the line often (+2.6σ vs era)
+- Featured, high-usage scoring role (+2.6σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.3σ)
+- Ball-hawking activity well below era (−1.2σ)
+
+**Comparables:**
+
+- [[jermaine-o-neal|Jermaine O'Neal]] '05 (94% similar)
+- [[evan-mobley|Evan Mobley]] '25 (91% similar)
+- [[elden-campbell|Elden Campbell]] '02 (90% similar)
+- [[greg-oden|Greg Oden]] '10 (89% similar)
+- [[andrew-bynum|Andrew Bynum]] '08 (89% similar)
+- [[david-robinson|David Robinson]] '98 (89% similar)
+
+**Career shape:** Charted 9 seasons (1996-97–2007-08). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

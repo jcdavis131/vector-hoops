@@ -45,6 +45,33 @@ Closest career shapes in the era-normalized vector space:
 - [[gerald-wallace|Gerald Wallace]] — cosine 0.66
 - [[marc-gasol|Marc Gasol]] — cosine 0.66
 
+## Scouting report
+
+**Play style:** PF · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 25.3 pts · 10.1 reb · 5.2 ast · 5.4 blk per 100 (2004-05).
+
+**Strengths:**
+
+- Elite rim protection (+3.8σ vs era)
+- Draws contact, gets to the line often (+2.0σ vs era)
+- Active hands, disrupts passing lanes (+1.7σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[paul-millsap|Paul Millsap]] '07 (73% similar)
+- [[david-robinson|David Robinson]] '98 (68% similar)
+- [[tyrus-thomas|Tyrus Thomas]] '07 (67% similar)
+- [[josh-smith|Josh Smith]] '10 (67% similar)
+- [[gerald-wallace|Gerald Wallace]] '15 (66% similar)
+- [[marc-gasol|Marc Gasol]] '16 (66% similar)
+
+**Career shape:** Charted 12 seasons (2001-02–2013-14). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

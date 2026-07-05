@@ -45,6 +45,33 @@ Closest career shapes in the era-normalized vector space:
 - [[steve-francis|Steve Francis]] — cosine 0.90
 - [[baron-davis|Baron Davis]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 30.2 pts · 6.9 reb · 9.1 ast · 2.0 stl per 100 (2016-17).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+2.4σ vs era)
+- High-volume table-setter (+1.8σ vs era)
+- Featured, high-usage scoring role (+1.7σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.2σ)
+
+**Comparables:**
+
+- [[jeremy-lin|Jeremy Lin]] '12 (96% similar)
+- [[john-wall|John Wall]] '17 (92% similar)
+- [[scotty-pippen-jr|Scotty Pippen Jr.]] '24 (91% similar)
+- [[jalen-suggs|Jalen Suggs]] '25 (90% similar)
+- [[steve-francis|Steve Francis]] '05 (90% similar)
+- [[baron-davis|Baron Davis]] '04 (89% similar)
+
+**Career shape:** Charted 12 seasons (2010-11–2021-22). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

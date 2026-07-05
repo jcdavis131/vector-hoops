@@ -37,6 +37,32 @@ Closest career shapes in the era-normalized vector space:
 - [[anfernee-simons|Anfernee Simons]] — cosine 0.90
 - [[salim-stoudamire|Salim Stoudamire]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 16.0 pts · 3.2 reb · 3.5 ast · 0.6 stl per 100 (2015-16).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.1σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−3.6σ)
+- Finishing efficiency well below era (−1.7σ)
+
+**Comparables:**
+
+- [[tracy-murray|Tracy Murray]] '02 (91% similar)
+- [[chris-carr|Chris Carr]] '01 (90% similar)
+- [[andrew-goudelock|Andrew Goudelock]] '12 (90% similar)
+- [[troy-daniels|Troy Daniels]] '15 (90% similar)
+- [[anfernee-simons|Anfernee Simons]] '24 (90% similar)
+- [[salim-stoudamire|Salim Stoudamire]] '08 (90% similar)
+
+**Career shape:** Charted 4 seasons (2012-13–2015-16). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

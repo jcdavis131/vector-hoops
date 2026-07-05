@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[chris-duhon|Chris Duhon]] — cosine 0.86
 - [[gerald-madkins|Gerald Madkins]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** PG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 14.0 pts · 3.8 reb · 6.1 ast · 1.9 stl per 100 (1996-97).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.5σ)
+- Rim pressure (free-throw generation) well below era (−1.1σ)
+
+**Comparables:**
+
+- [[davion-mitchell|Davion Mitchell]] '26 (89% similar)
+- [[frank-ntilikina|Frank Ntilikina]] '21 (87% similar)
+- [[lee-mayberry|Lee Mayberry]] '97 (86% similar)
+- [[anthony-johnson|Anthony Johnson]] '02 (86% similar)
+- [[chris-duhon|Chris Duhon]] '13 (86% similar)
+- [[gerald-madkins|Gerald Madkins]] '98 (85% similar)
+
+**Career shape:** Charted 1 season (1996-97). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -41,6 +41,32 @@ Closest career shapes in the era-normalized vector space:
 - [[wesley-johnson|Wesley Johnson]] — cosine 0.89
 - [[justin-jackson|Justin Jackson]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 5.1 pts · 7.0 reb · 2.0 ast · 2.0 blk per 100 (2014-15).
+
+**Strengths:**
+
+- Elite rim protection (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−3.5σ)
+- On-court net impact well below era (−2.8σ)
+
+**Comparables:**
+
+- [[antoine-wright|Antoine Wright]] '06 (92% similar)
+- [[daquan-jeffries|DaQuan Jeffries]] '24 (89% similar)
+- [[hollis-thompson|Hollis Thompson]] '17 (89% similar)
+- [[paul-zipser|Paul Zipser]] '18 (89% similar)
+- [[wesley-johnson|Wesley Johnson]] '17 (89% similar)
+- [[justin-jackson|Justin Jackson]] '23 (88% similar)
+
+**Career shape:** Charted 8 seasons (2008-09–2016-17). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

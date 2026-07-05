@@ -47,6 +47,34 @@ Closest career shapes in the era-normalized vector space:
 - [[marcus-brown|Marcus Brown]] — cosine 0.92
 - [[vernon-maxwell|Vernon Maxwell]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** SG · Scoring Volume + Shot Volume. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 29.6 pts · 5.0 reb · 4.2 ast · 2.0 stl per 100 (2007-08).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.8σ vs era)
+- Featured, high-usage scoring role (+1.8σ vs era)
+- Heavy shot volume, focal scoring option (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.1σ)
+- Turnover rate well above era (+1.0σ)
+
+**Comparables:**
+
+- [[voshon-lenard|Voshon Lenard]] '97 (93% similar)
+- [[jason-richardson|Jason Richardson]] '06 (93% similar)
+- [[cj-miles|CJ Miles]] '18 (93% similar)
+- [[todd-day|Todd Day]] '01 (93% similar)
+- [[marcus-brown|Marcus Brown]] '97 (92% similar)
+- [[vernon-maxwell|Vernon Maxwell]] '00 (92% similar)
+
+**Career shape:** Charted 14 seasons (2004-05–2017-18). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

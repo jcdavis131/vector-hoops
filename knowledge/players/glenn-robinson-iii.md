@@ -40,6 +40,33 @@ Closest career shapes in the era-normalized vector space:
 - [[ira-newble|Ira Newble]] — cosine 0.92
 - [[ochai-agbaji|Ochai Agbaji]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 15.3 pts · 5.7 reb · 2.5 ast · 0.5 stl per 100 (2020-21).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+1.3σ vs era)
+- Rarely turns the ball over (−1.1σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.2σ)
+- Ball-hawking activity well below era (−1.7σ)
+
+**Comparables:**
+
+- [[quincy-pondexter|Quincy Pondexter]] '18 (95% similar)
+- [[kyle-singler|Kyle Singler]] '17 (95% similar)
+- [[treveon-graham|Treveon Graham]] '17 (94% similar)
+- [[amir-coffey|Amir Coffey]] '23 (94% similar)
+- [[ira-newble|Ira Newble]] '01 (92% similar)
+- [[ochai-agbaji|Ochai Agbaji]] '23 (91% similar)
+
+**Career shape:** Charted 7 seasons (2014-15–2020-21). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

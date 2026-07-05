@@ -41,6 +41,33 @@ Closest career shapes in the era-normalized vector space:
 - [[kevin-porter-jr|Kevin Porter Jr.]] — cosine 0.84
 - [[t-j-ford|T.J. Ford]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 28.8 pts · 11.3 reb · 12.6 ast · 2.8 stl per 100 (2021-22).
+
+**Strengths:**
+
+- High-volume table-setter (+3.1σ vs era)
+- Active hands, disrupts passing lanes (+2.1σ vs era)
+- Heavy shot volume, focal scoring option (+1.8σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.1σ)
+
+**Comparables:**
+
+- [[tyreke-evans|Tyreke Evans]] '16 (88% similar)
+- [[russell-westbrook|Russell Westbrook]] '17 (86% similar)
+- [[eric-bledsoe|Eric Bledsoe]] '17 (85% similar)
+- [[john-wall|John Wall]] '17 (84% similar)
+- [[kevin-porter-jr|Kevin Porter Jr.]] '21 (84% similar)
+- [[t-j-ford|T.J. Ford]] '07 (83% similar)
+
+**Career shape:** Charted 8 seasons (2016-17–2024-25). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

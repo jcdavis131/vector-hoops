@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[pete-nance|Pete Nance]] — cosine 0.74
 - [[yuta-watanabe|Yuta Watanabe]] — cosine 0.74
 
+## Scouting report
+
+**Play style:** C · Three-Point Accuracy (Low Turnovers). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 10.8 pts · 10.3 reb · 1.5 ast · 1.1 stl per 100 (1996-97).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+4.0σ vs era)
+- Rarely turns the ball over (−1.9σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.7σ)
+- Scoring load well below era (−1.4σ)
+
+**Comparables:**
+
+- [[omri-casspi|Omri Casspi]] '18 (77% similar)
+- [[leaky-black|Leaky Black]] '24 (77% similar)
+- [[ivano-newbill|Ivano Newbill]] '98 (76% similar)
+- [[jacob-toppin|Jacob Toppin]] '25 (75% similar)
+- [[pete-nance|Pete Nance]] '26 (74% similar)
+- [[yuta-watanabe|Yuta Watanabe]] '20 (74% similar)
+
+**Career shape:** Charted 1 season (1996-97). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

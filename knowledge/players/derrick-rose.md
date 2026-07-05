@@ -47,6 +47,33 @@ Closest career shapes in the era-normalized vector space:
 - [[jalen-brunson|Jalen Brunson]] — cosine 0.90
 - [[devin-booker|Devin Booker]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 34.9 pts · 5.7 reb · 10.7 ast · 1.5 stl per 100 (2010-11).
+
+**Strengths:**
+
+- Featured, high-usage scoring role (+2.7σ vs era)
+- Heavy shot volume, focal scoring option (+2.5σ vs era)
+- High-volume table-setter (+2.3σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.0σ)
+
+**Comparables:**
+
+- [[sam-cassell|Sam Cassell]] '04 (94% similar)
+- [[richard-hamilton|Richard Hamilton]] '03 (93% similar)
+- [[dennis-schroder|Dennis Schröder]] '16 (91% similar)
+- [[darius-garland|Darius Garland]] '22 (91% similar)
+- [[jalen-brunson|Jalen Brunson]] '24 (90% similar)
+- [[devin-booker|Devin Booker]] '19 (90% similar)
+
+**Career shape:** Charted 14 seasons (2008-09–2023-24). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

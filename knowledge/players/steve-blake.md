@@ -46,6 +46,32 @@ Closest career shapes in the era-normalized vector space:
 - [[chris-herren|Chris Herren]] — cosine 0.93
 - [[lee-mayberry|Lee Mayberry]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 12.6 pts · 4.4 reb · 9.9 ast · 1.2 stl per 100 (2015-16).
+
+**Strengths:**
+
+- High-volume table-setter (+2.1σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.4σ)
+- Turnover rate well above era (+1.3σ)
+
+**Comparables:**
+
+- [[chris-duhon|Chris Duhon]] '13 (97% similar)
+- [[jalen-pickett|Jalen Pickett]] '25 (94% similar)
+- [[matthew-dellavedova|Matthew Dellavedova]] '23 (94% similar)
+- [[bryce-drew|Bryce Drew]] '99 (94% similar)
+- [[chris-herren|Chris Herren]] '01 (93% similar)
+- [[lee-mayberry|Lee Mayberry]] '97 (93% similar)
+
+**Career shape:** Charted 13 seasons (2003-04–2015-16). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

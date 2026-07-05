@@ -39,6 +39,32 @@ Closest career shapes in the era-normalized vector space:
 - [[willie-green|Willie Green]] — cosine 0.90
 - [[allan-houston|Allan Houston]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 22.0 pts · 3.9 reb · 3.5 ast · 0.9 stl per 100 (2005-06).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.4σ)
+- Offensive-glass activity well below era (−1.0σ)
+
+**Comparables:**
+
+- [[jared-mccain|Jared McCain]] '25 (93% similar)
+- [[gary-neal|Gary Neal]] '14 (92% similar)
+- [[kendrick-nunn|Kendrick Nunn]] '20 (92% similar)
+- [[quinn-cook|Quinn Cook]] '18 (91% similar)
+- [[willie-green|Willie Green]] '04 (90% similar)
+- [[allan-houston|Allan Houston]] '03 (90% similar)
+
+**Career shape:** Charted 6 seasons (2002-03–2007-08). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

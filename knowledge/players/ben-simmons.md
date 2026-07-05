@@ -39,6 +39,34 @@ Closest career shapes in the era-normalized vector space:
 - [[david-vanterpool|David Vanterpool]] — cosine 0.71
 - [[draymond-green|Draymond Green]] — cosine 0.67
 
+## Scouting report
+
+**Play style:** PG · Offensive Glass + Defensive Glass. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 12.7 pts · 11.4 reb · 11.1 ast · 2.3 stl per 100 (2022-23).
+
+**Strengths:**
+
+- High-volume table-setter (+2.5σ vs era)
+- Active hands, disrupts passing lanes (+1.7σ vs era)
+- Strong presence on the defensive glass (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.8σ)
+- Free-throw touch well below era (−2.8σ)
+
+**Comparables:**
+
+- [[amen-thompson|Amen Thompson]] '24 (77% similar)
+- [[elfrid-payton|Elfrid Payton]] '25 (75% similar)
+- [[rajon-rondo|Rajon Rondo]] '11 (72% similar)
+- [[mason-plumlee|Mason Plumlee]] '26 (71% similar)
+- [[david-vanterpool|David Vanterpool]] '01 (71% similar)
+- [[draymond-green|Draymond Green]] '21 (67% similar)
+
+**Career shape:** Charted 6 seasons (2017-18–2024-25). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

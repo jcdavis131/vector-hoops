@@ -47,6 +47,34 @@ Closest career shapes in the era-normalized vector space:
 - [[gilbert-arenas|Gilbert Arenas]] — cosine 0.92
 - [[donovan-mitchell|Donovan Mitchell]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** SG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 37.5 pts · 5.4 reb · 6.6 ast · 3.3 stl per 100 (2001-02).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+3.8σ vs era)
+- Featured, high-usage scoring role (+3.4σ vs era)
+- Draws contact, gets to the line often (+3.0σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.9σ)
+- Offensive-glass activity well below era (−1.1σ)
+
+**Comparables:**
+
+- [[de-aaron-fox|De'Aaron Fox]] '21 (95% similar)
+- [[kobe-bryant|Kobe Bryant]] '06 (95% similar)
+- [[lou-williams|Lou Williams]] '19 (93% similar)
+- [[dwyane-wade|Dwyane Wade]] '09 (92% similar)
+- [[gilbert-arenas|Gilbert Arenas]] '06 (92% similar)
+- [[donovan-mitchell|Donovan Mitchell]] '21 (92% similar)
+
+**Career shape:** Charted 14 seasons (1996-97–2009-10). Consistent Scoring Volume + Shot Volume profile across his career.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

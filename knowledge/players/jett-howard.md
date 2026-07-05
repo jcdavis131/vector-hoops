@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jordan-hawkins|Jordan Hawkins]] — cosine 0.88
 - [[rasual-butler|Rasual Butler]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 19.7 pts · 4.8 reb · 4.1 ast · 1.4 stl per 100 (2023-24).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.9σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.8σ)
+- Finishing efficiency well below era (−1.7σ)
+
+**Comparables:**
+
+- [[troy-daniels|Troy Daniels]] '15 (90% similar)
+- [[daequan-cook|Daequan Cook]] '11 (89% similar)
+- [[armoni-brooks|Armoni Brooks]] '21 (89% similar)
+- [[mychal-mulder|Mychal Mulder]] '22 (88% similar)
+- [[jordan-hawkins|Jordan Hawkins]] '25 (88% similar)
+- [[rasual-butler|Rasual Butler]] '04 (87% similar)
+
+**Career shape:** Charted 3 seasons (2023-24–2025-26). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

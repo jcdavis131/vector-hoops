@@ -38,6 +38,32 @@ Closest career shapes in the era-normalized vector space:
 - [[terry-davis|Terry Davis]] — cosine 0.86
 - [[chris-richard|Chris Richard]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 13.8 pts · 11.7 reb · 2.1 ast · 0.8 blk per 100 (2004-05).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+3.2σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.8σ)
+- Ball-hawking activity well below era (−1.9σ)
+
+**Comparables:**
+
+- [[will-perdue|Will Perdue]] '99 (89% similar)
+- [[eric-montross|Eric Montross]] '97 (89% similar)
+- [[brian-skinner|Brian Skinner]] '08 (87% similar)
+- [[juwan-morgan|Juwan Morgan]] '21 (87% similar)
+- [[terry-davis|Terry Davis]] '01 (86% similar)
+- [[chris-richard|Chris Richard]] '10 (86% similar)
+
+**Career shape:** Charted 5 seasons (2001-02–2005-06). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

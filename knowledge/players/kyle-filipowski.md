@@ -35,6 +35,31 @@ Closest career shapes in the era-normalized vector space:
 - [[harry-giles-iii|Harry Giles III]] — cosine 0.74
 - [[mirsad-turkcan|Mirsad Turkcan]] — cosine 0.74
 
+## Scouting report
+
+**Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 21.2 pts · 13.5 reb · 4.3 ast · 1.5 stl per 100 (2024-25).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+1.4σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.4σ)
+
+**Comparables:**
+
+- [[joffrey-lauvergne|Joffrey Lauvergne]] '18 (76% similar)
+- [[wendell-carter-jr|Wendell Carter Jr.]] '19 (75% similar)
+- [[marquese-chriss|Marquese Chriss]] '20 (75% similar)
+- [[isaiah-roby|Isaiah Roby]] '23 (74% similar)
+- [[harry-giles-iii|Harry Giles III]] '24 (74% similar)
+- [[mirsad-turkcan|Mirsad Turkcan]] '00 (74% similar)
+
+**Career shape:** Charted 2 seasons (2024-25–2025-26). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

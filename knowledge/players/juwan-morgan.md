@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[kobe-brown|Kobe Brown]] — cosine 0.86
 - [[tyler-lydon|Tyler Lydon]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 10.9 pts · 8.7 reb · 2.8 ast · 1.2 stl per 100 (2020-21).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.2σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−4.0σ)
+- Free-throw touch well below era (−2.9σ)
+
+**Comparables:**
+
+- [[kj-martin|KJ Martin]] '25 (89% similar)
+- [[alex-poythress|Alex Poythress]] '18 (88% similar)
+- [[michael-bradley|Michael Bradley]] '05 (87% similar)
+- [[terry-davis|Terry Davis]] '01 (87% similar)
+- [[kobe-brown|Kobe Brown]] '24 (86% similar)
+- [[tyler-lydon|Tyler Lydon]] '19 (86% similar)
+
+**Career shape:** Charted 2 seasons (2019-20–2020-21). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

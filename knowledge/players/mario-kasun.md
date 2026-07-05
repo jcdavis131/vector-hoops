@@ -35,6 +35,33 @@ Closest career shapes in the era-normalized vector space:
 - [[vitaly-potapenko|Vitaly Potapenko]] — cosine 0.90
 - [[jayson-williams|Jayson Williams]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 16.1 pts · 17.4 reb · 1.1 ast · 1.8 blk per 100 (2004-05).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+2.5σ vs era)
+- Strong presence on the defensive glass (+1.7σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.4σ)
+- Three-point accuracy well below era (−1.3σ)
+
+**Comparables:**
+
+- [[jordan-hill|Jordan Hill]] '13 (93% similar)
+- [[omer-yurtseven|Omer Yurtseven]] '22 (93% similar)
+- [[lonny-baxter|Lonny Baxter]] '06 (92% similar)
+- [[jeremy-tyler|Jeremy Tyler]] '14 (91% similar)
+- [[vitaly-potapenko|Vitaly Potapenko]] '06 (90% similar)
+- [[jayson-williams|Jayson Williams]] '98 (90% similar)
+
+**Career shape:** Charted 2 seasons (2004-05–2005-06). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

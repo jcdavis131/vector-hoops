@@ -36,6 +36,34 @@ Closest career shapes in the era-normalized vector space:
 - [[jae-sean-tate|Jae'Sean Tate]] — cosine 0.83
 - [[landry-fields|Landry Fields]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 7.8 pts · 10.2 reb · 3.5 ast · 3.3 stl per 100 (2008-09).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+3.9σ vs era)
+- Active hands, disrupts passing lanes (+3.0σ vs era)
+- Relentless on the offensive glass (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−2.3σ)
+- Free-throw touch well below era (−2.0σ)
+
+**Comparables:**
+
+- [[deandre-liggins|DeAndre Liggins]] '12 (89% similar)
+- [[cody-martin|Cody Martin]] '21 (86% similar)
+- [[luc-mbah-a-moute|Luc Mbah a Moute]] '16 (85% similar)
+- [[ryan-bowen|Ryan Bowen]] '09 (84% similar)
+- [[jae-sean-tate|Jae'Sean Tate]] '26 (83% similar)
+- [[landry-fields|Landry Fields]] '15 (83% similar)
+
+**Career shape:** Charted 3 seasons (2007-08–2009-10). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

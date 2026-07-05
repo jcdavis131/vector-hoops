@@ -52,6 +52,33 @@ Closest career shapes in the era-normalized vector space:
 - [[kevin-durant|Kevin Durant]] — cosine 0.92
 - [[donovan-mitchell|Donovan Mitchell]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** SG · Scoring Volume + Shot Volume. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 34.2 pts · 9.7 reb · 5.8 ast · 2.3 stl per 100 (2002-03).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+3.4σ vs era)
+- Featured, high-usage scoring role (+2.7σ vs era)
+- Heavy shot volume, focal scoring option (+2.4σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.0σ)
+
+**Comparables:**
+
+- [[anthony-edwards|Anthony Edwards]] '25 (94% similar)
+- [[kobe-bryant|Kobe Bryant]] '06 (94% similar)
+- [[jayson-tatum|Jayson Tatum]] '23 (94% similar)
+- [[james-harden|James Harden]] '19 (92% similar)
+- [[kevin-durant|Kevin Durant]] '14 (92% similar)
+- [[donovan-mitchell|Donovan Mitchell]] '21 (91% similar)
+
+**Career shape:** Charted 19 seasons (1998-99–2016-17). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

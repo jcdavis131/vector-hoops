@@ -40,6 +40,34 @@ Closest career shapes in the era-normalized vector space:
 - [[chris-bosh|Chris Bosh]] — cosine 0.90
 - [[karl-anthony-towns|Karl-Anthony Towns]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 37.8 pts · 14.2 reb · 3.0 ast · 3.0 blk per 100 (2006-07).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+3.2σ vs era)
+- Featured, high-usage scoring role (+3.1σ vs era)
+- Heavy shot volume, focal scoring option (+2.3σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.3σ)
+- Ball-hawking activity well below era (−1.7σ)
+
+**Comparables:**
+
+- [[amar-e-stoudemire|Amar'e Stoudemire]] '08 (93% similar)
+- [[pau-gasol|Pau Gasol]] '15 (93% similar)
+- [[tim-duncan|Tim Duncan]] '04 (92% similar)
+- [[patrick-ewing|Patrick Ewing]] '98 (91% similar)
+- [[chris-bosh|Chris Bosh]] '10 (90% similar)
+- [[karl-anthony-towns|Karl-Anthony Towns]] '19 (90% similar)
+
+**Career shape:** Charted 7 seasons (2002-03–2008-09). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

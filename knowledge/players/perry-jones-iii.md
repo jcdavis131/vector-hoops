@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[nassir-little|Nassir Little]] — cosine 0.85
 - [[harvey-grant|Harvey Grant]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 15.6 pts · 10.9 reb · 1.8 ast · 1.1 blk per 100 (2012-13).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.5σ)
+- Ball-hawking activity well below era (−1.1σ)
+
+**Comparables:**
+
+- [[chucky-brown|Chucky Brown]] '02 (90% similar)
+- [[mark-pope|Mark Pope]] '01 (88% similar)
+- [[kz-okpala|KZ Okpala]] '21 (87% similar)
+- [[deonte-burton|Deonte Burton]] '20 (86% similar)
+- [[nassir-little|Nassir Little]] '20 (85% similar)
+- [[harvey-grant|Harvey Grant]] '97 (84% similar)
+
+**Career shape:** Charted 3 seasons (2012-13–2014-15). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

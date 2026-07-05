@@ -40,6 +40,34 @@ Closest career shapes in the era-normalized vector space:
 - [[nic-claxton|Nic Claxton]] — cosine 0.94
 - [[john-henson|John Henson]] — cosine 0.94
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 27.0 pts · 15.0 reb · 3.1 ast · 3.9 blk per 100 (2024-25).
+
+**Strengths:**
+
+- Elite rim protection (+3.4σ vs era)
+- Efficient finisher inside the arc (+3.1σ vs era)
+- Relentless on the offensive glass (+2.2σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.9σ)
+- Three-point volume well below era (−1.9σ)
+
+**Comparables:**
+
+- [[joan-beringer|Joan Beringer]] '26 (96% similar)
+- [[ryan-kalkbrenner|Ryan Kalkbrenner]] '26 (96% similar)
+- [[dereck-lively-ii|Dereck Lively II]] '25 (95% similar)
+- [[isaiah-jackson|Isaiah Jackson]] '24 (94% similar)
+- [[nic-claxton|Nic Claxton]] '23 (94% similar)
+- [[john-henson|John Henson]] '16 (94% similar)
+
+**Career shape:** Charted 7 seasons (2019-20–2025-26). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

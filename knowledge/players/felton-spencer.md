@@ -39,6 +39,34 @@ Closest career shapes in the era-normalized vector space:
 - [[ian-mahinmi|Ian Mahinmi]] — cosine 0.90
 - [[jeff-adrien|Jeff Adrien]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 18.6 pts · 16.6 reb · 1.0 ast · 1.0 stl per 100 (2000-01).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+3.1σ vs era)
+- Efficient finisher inside the arc (+2.9σ vs era)
+- Relentless on the offensive glass (+2.8σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.5σ)
+- Shot volume well below era (−1.4σ)
+
+**Comparables:**
+
+- [[kwame-brown|Kwame Brown]] '13 (93% similar)
+- [[omer-asik|Omer Asik]] '18 (91% similar)
+- [[alvin-jones|Alvin Jones]] '02 (90% similar)
+- [[jamaal-magloire|Jamaal Magloire]] '08 (90% similar)
+- [[ian-mahinmi|Ian Mahinmi]] '10 (90% similar)
+- [[jeff-adrien|Jeff Adrien]] '15 (90% similar)
+
+**Career shape:** Charted 6 seasons (1996-97–2001-02). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

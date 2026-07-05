@@ -39,6 +39,34 @@ Closest career shapes in the era-normalized vector space:
 - [[chris-whitney|Chris Whitney]] — cosine 0.94
 - [[chucky-atkins|Chucky Atkins]] — cosine 0.94
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 17.2 pts · 4.0 reb · 7.8 ast · 2.5 stl per 100 (2003-04).
+
+**Strengths:**
+
+- High-volume table-setter (+1.4σ vs era)
+- High-volume three-point shooter (+1.3σ vs era)
+- Active hands, disrupts passing lanes (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.3σ)
+- Offensive-glass activity well below era (−1.2σ)
+
+**Comparables:**
+
+- [[luther-head|Luther Head]] '07 (96% similar)
+- [[anthony-goldwire|Anthony Goldwire]] '01 (95% similar)
+- [[jordan-farmar|Jordan Farmar]] '14 (94% similar)
+- [[jason-williams|Jason Williams]] '11 (94% similar)
+- [[chris-whitney|Chris Whitney]] '04 (94% similar)
+- [[chucky-atkins|Chucky Atkins]] '08 (94% similar)
+
+**Career shape:** Charted 6 seasons (1999-00–2006-07). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Playmaking + Steals identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

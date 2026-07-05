@@ -41,6 +41,34 @@ Closest career shapes in the era-normalized vector space:
 - [[brandon-clarke|Brandon Clarke]] — cosine 0.87
 - [[nene|Nene]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 30.7 pts · 11.7 reb · 2.8 ast · 1.9 blk per 100 (2019-20).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+2.1σ vs era)
+- Featured, high-usage scoring role (+1.6σ vs era)
+- Efficient finisher inside the arc (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.7σ)
+- Three-point volume well below era (−1.6σ)
+
+**Comparables:**
+
+- [[tiago-splitter|Tiago Splitter]] '12 (90% similar)
+- [[jarnell-stokes|Jarnell Stokes]] '15 (90% similar)
+- [[jarrett-allen|Jarrett Allen]] '25 (90% similar)
+- [[ante-zizic|Ante Zizic]] '18 (89% similar)
+- [[brandon-clarke|Brandon Clarke]] '25 (87% similar)
+- [[nene|Nene]] '19 (86% similar)
+
+**Career shape:** Charted 8 seasons (2015-16–2022-23). Entered as a Rim Protection + Offensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

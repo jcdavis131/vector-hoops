@@ -38,6 +38,34 @@ Closest career shapes in the era-normalized vector space:
 - [[alan-henderson|Alan Henderson]] — cosine 0.87
 - [[tyler-cook|Tyler Cook]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 17.1 pts · 13.3 reb · 0.9 ast · 1.7 blk per 100 (2000-01).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+4.0σ vs era)
+- Rarely turns the ball over (−1.5σ vs era)
+- Relentless on the offensive glass (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.4σ)
+- Free-throw touch well below era (−1.3σ)
+
+**Comparables:**
+
+- [[greg-smith|Greg Smith]] '16 (91% similar)
+- [[josh-boone|Josh Boone]] '10 (89% similar)
+- [[jelani-mccoy|Jelani McCoy]] '02 (89% similar)
+- [[willie-reed|Willie Reed]] '16 (88% similar)
+- [[alan-henderson|Alan Henderson]] '02 (87% similar)
+- [[tyler-cook|Tyler Cook]] '22 (87% similar)
+
+**Career shape:** Charted 5 seasons (1996-97–2001-02). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

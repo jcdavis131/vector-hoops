@@ -48,6 +48,32 @@ Closest career shapes in the era-normalized vector space:
 - [[antoine-walker|Antoine Walker]] — cosine 0.82
 - [[lamond-murray|Lamond Murray]] — cosine 0.80
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 14.9 pts · 12.9 reb · 1.7 ast · 1.3 stl per 100 (1998-99).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+2.0σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.9σ)
+- Three-point accuracy well below era (−1.1σ)
+
+**Comparables:**
+
+- [[keith-van-horn|Keith Van Horn]] '99 (87% similar)
+- [[cedric-ceballos|Cedric Ceballos]] '00 (87% similar)
+- [[jaylen-brown|Jaylen Brown]] '26 (83% similar)
+- [[dominique-wilkins|Dominique Wilkins]] '97 (82% similar)
+- [[antoine-walker|Antoine Walker]] '01 (82% similar)
+- [[lamond-murray|Lamond Murray]] '04 (80% similar)
+
+**Career shape:** Charted 15 seasons (1998-99–2013-14). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

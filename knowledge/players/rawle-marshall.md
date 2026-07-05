@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[sam-young|Sam Young]] — cosine 0.78
 - [[nick-johnson|Nick Johnson]] — cosine 0.77
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 13.0 pts · 3.9 reb · 1.7 ast · 1.6 stl per 100 (2006-07).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.4σ)
+- Finishing efficiency well below era (−1.3σ)
+
+**Comparables:**
+
+- [[dahntay-jones|Dahntay Jones]] '15 (90% similar)
+- [[cam-reddish|Cam Reddish]] '25 (81% similar)
+- [[brodric-thomas|Brodric Thomas]] '21 (79% similar)
+- [[sindarius-thornwell|Sindarius Thornwell]] '21 (79% similar)
+- [[sam-young|Sam Young]] '13 (78% similar)
+- [[nick-johnson|Nick Johnson]] '15 (77% similar)
+
+**Career shape:** Charted 2 seasons (2005-06–2006-07). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

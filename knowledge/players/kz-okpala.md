@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[maxi-kleber|Maxi Kleber]] — cosine 0.90
 - [[jt-thor|JT Thor]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 10.1 pts · 7.4 reb · 2.1 ast · 1.2 blk per 100 (2020-21).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.0σ)
+- Scoring load well below era (−1.6σ)
+
+**Comparables:**
+
+- [[mark-pope|Mark Pope]] '01 (97% similar)
+- [[harvey-grant|Harvey Grant]] '97 (94% similar)
+- [[romeo-langford|Romeo Langford]] '20 (92% similar)
+- [[quinton-ross|Quinton Ross]] '11 (91% similar)
+- [[maxi-kleber|Maxi Kleber]] '26 (90% similar)
+- [[jt-thor|JT Thor]] '25 (90% similar)
+
+**Career shape:** Charted 3 seasons (2020-21–2022-23). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

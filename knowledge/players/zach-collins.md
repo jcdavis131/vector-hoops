@@ -39,6 +39,33 @@ Closest career shapes in the era-normalized vector space:
 - [[chris-mihm|Chris Mihm]] — cosine 0.80
 - [[alex-len|Alex Len]] — cosine 0.80
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 20.0 pts · 14.0 reb · 5.6 ast · 2.1 blk per 100 (2021-22).
+
+**Strengths:**
+
+- Elite rim protection (+1.4σ vs era)
+- Strong presence on the defensive glass (+1.2σ vs era)
+- Relentless on the offensive glass (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.5σ)
+
+**Comparables:**
+
+- [[hamed-haddadi|Hamed Haddadi]] '09 (84% similar)
+- [[pj-hall|PJ Hall]] '26 (83% similar)
+- [[kyle-o-quinn|Kyle O'Quinn]] '17 (82% similar)
+- [[thomas-hamilton|Thomas Hamilton]] '00 (81% similar)
+- [[chris-mihm|Chris Mihm]] '09 (80% similar)
+- [[alex-len|Alex Len]] '24 (80% similar)
+
+**Career shape:** Charted 6 seasons (2017-18–2024-25). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

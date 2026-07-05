@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[dj-mbenga|DJ Mbenga]] — cosine 0.75
 - [[sean-rooks|Sean Rooks]] — cosine 0.74
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 11.4 pts · 7.6 reb · 3.1 ast · 4.0 blk per 100 (1996-97).
+
+**Strengths:**
+
+- Elite rim protection (+2.8σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.6σ)
+- Finishing efficiency well below era (−1.4σ)
+
+**Comparables:**
+
+- [[yinka-dare|Yinka Dare]] '97 (83% similar)
+- [[ruben-wolkowyski|Ruben Wolkowyski]] '01 (82% similar)
+- [[john-salley|John Salley]] '00 (81% similar)
+- [[jim-mcilvaine|Jim McIlvaine]] '00 (76% similar)
+- [[dj-mbenga|DJ Mbenga]] '06 (75% similar)
+- [[sean-rooks|Sean Rooks]] '98 (74% similar)
+
+**Career shape:** Charted 1 season (1996-97). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[cj-elleby|CJ Elleby]] — cosine 0.82
 - [[charlie-brown-jr|Charlie Brown Jr.]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 7.7 pts · 6.1 reb · 0.8 ast · 1.5 stl per 100 (2014-15).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−3.4σ)
+- Scoring load well below era (−2.0σ)
+
+**Comparables:**
+
+- [[anthony-avent|Anthony Avent]] '00 (86% similar)
+- [[lasalle-thompson|LaSalle Thompson]] '97 (85% similar)
+- [[devin-green|Devin Green]] '06 (84% similar)
+- [[earl-barron|Earl Barron]] '07 (83% similar)
+- [[cj-elleby|CJ Elleby]] '22 (82% similar)
+- [[charlie-brown-jr|Charlie Brown Jr.]] '22 (82% similar)
+
+**Career shape:** Charted 2 seasons (2014-15–2015-16). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

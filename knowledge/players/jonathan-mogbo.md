@@ -35,6 +35,33 @@ Closest career shapes in the era-normalized vector space:
 - [[damion-james|Damion James]] — cosine 0.86
 - [[freddie-gillespie|Freddie Gillespie]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 11.3 pts · 12.6 reb · 4.6 ast · 2.0 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+1.6σ vs era)
+- Strong presence on the defensive glass (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.9σ)
+- Three-point volume well below era (−1.9σ)
+
+**Comparables:**
+
+- [[pervis-ellison|Pervis Ellison]] '98 (89% similar)
+- [[chris-richard|Chris Richard]] '10 (88% similar)
+- [[greg-anderson|Greg Anderson]] '98 (87% similar)
+- [[greg-stiemsma|Greg Stiemsma]] '15 (86% similar)
+- [[damion-james|Damion James]] '11 (86% similar)
+- [[freddie-gillespie|Freddie Gillespie]] '21 (86% similar)
+
+**Career shape:** Charted 2 seasons (2024-25–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

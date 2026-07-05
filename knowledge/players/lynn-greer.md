@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[anthony-peeler|Anthony Peeler]] — cosine 0.90
 - [[anthony-goldwire|Anthony Goldwire]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 19.7 pts · 3.2 reb · 6.3 ast · 2.0 stl per 100 (2006-07).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Offensive-glass activity well below era (−1.4σ)
+- Defensive rebounding well below era (−1.3σ)
+
+**Comparables:**
+
+- [[yogi-ferrell|Yogi Ferrell]] '19 (94% similar)
+- [[david-wesley|David Wesley]] '07 (92% similar)
+- [[ty-jerome|Ty Jerome]] '25 (91% similar)
+- [[jason-terry|Jason Terry]] '18 (90% similar)
+- [[anthony-peeler|Anthony Peeler]] '97 (90% similar)
+- [[anthony-goldwire|Anthony Goldwire]] '01 (89% similar)
+
+**Career shape:** Charted 1 season (2006-07). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

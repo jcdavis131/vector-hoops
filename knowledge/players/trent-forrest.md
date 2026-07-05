@@ -37,6 +37,32 @@ Closest career shapes in the era-normalized vector space:
 - [[milt-palacio|Milt Palacio]] — cosine 0.79
 - [[eric-snow|Eric Snow]] — cosine 0.78
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass + Defensive Glass. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 8.9 pts · 6.4 reb · 6.5 ast · 1.2 stl per 100 (2022-23).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.8σ)
+- Scoring load well below era (−1.7σ)
+
+**Comparables:**
+
+- [[aaron-miles|Aaron Miles]] '06 (83% similar)
+- [[shaun-livingston|Shaun Livingston]] '19 (83% similar)
+- [[kevin-ollie|Kevin Ollie]] '10 (82% similar)
+- [[vincent-askew|Vincent Askew]] '98 (82% similar)
+- [[milt-palacio|Milt Palacio]] '00 (79% similar)
+- [[eric-snow|Eric Snow]] '08 (78% similar)
+
+**Career shape:** Charted 4 seasons (2020-21–2023-24). Entered as a Playmaking + Steals profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

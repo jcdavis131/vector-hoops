@@ -38,6 +38,34 @@ Closest career shapes in the era-normalized vector space:
 - [[acie-law|Acie Law]] — cosine 0.84
 - [[tre-jones|Tre Jones]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 19.6 pts · 4.7 reb · 5.6 ast · 2.8 stl per 100 (1999-00).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.9σ vs era)
+- Reliable touch from the free-throw line (+1.4σ vs era)
+- Efficient finisher inside the arc (+1.1σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.7σ)
+- Defensive rebounding well below era (−1.5σ)
+
+**Comparables:**
+
+- [[andrew-nembhard|Andrew Nembhard]] '26 (91% similar)
+- [[milt-palacio|Milt Palacio]] '00 (86% similar)
+- [[tyler-ulis|Tyler Ulis]] '18 (85% similar)
+- [[avery-johnson|Avery Johnson]] '99 (85% similar)
+- [[acie-law|Acie Law]] '10 (84% similar)
+- [[tre-jones|Tre Jones]] '21 (83% similar)
+
+**Career shape:** Charted 5 seasons (1996-97–2000-01). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[vit-krejci|Vít Krejčí]] — cosine 0.86
 - [[rashad-vaughn|Rashad Vaughn]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 14.5 pts · 5.6 reb · 3.4 ast · 1.5 stl per 100 (2012-13).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.4σ)
+- Offensive-glass activity well below era (−1.0σ)
+
+**Comparables:**
+
+- [[antoine-wright|Antoine Wright]] '06 (90% similar)
+- [[hollis-thompson|Hollis Thompson]] '17 (89% similar)
+- [[damyean-dotson|Damyean Dotson]] '21 (88% similar)
+- [[jeffery-taylor|Jeffery Taylor]] '14 (87% similar)
+- [[vit-krejci|Vít Krejčí]] '23 (86% similar)
+- [[rashad-vaughn|Rashad Vaughn]] '17 (84% similar)
+
+**Career shape:** Charted 1 season (2012-13). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

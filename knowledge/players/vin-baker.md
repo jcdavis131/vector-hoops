@@ -42,6 +42,32 @@ Closest career shapes in the era-normalized vector space:
 - [[gary-trent|Gary Trent]] — cosine 0.85
 - [[reggie-slater|Reggie Slater]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 8.5 pts · 9.5 reb · 2.4 ast · 1.0 blk per 100 (2004-05).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.4σ)
+- Finishing efficiency well below era (−2.3σ)
+
+**Comparables:**
+
+- [[garret-siler|Garret Siler]] '11 (91% similar)
+- [[rony-seikaly|Rony Seikaly]] '97 (88% similar)
+- [[jason-caffey|Jason Caffey]] '97 (86% similar)
+- [[nikola-pekovic|Nikola Pekovic]] '12 (86% similar)
+- [[gary-trent|Gary Trent]] '01 (85% similar)
+- [[reggie-slater|Reggie Slater]] '03 (85% similar)
+
+**Career shape:** Charted 9 seasons (1996-97–2004-05). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

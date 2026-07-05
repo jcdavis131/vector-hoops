@@ -37,6 +37,31 @@ Closest career shapes in the era-normalized vector space:
 - [[jacque-vaughn|Jacque Vaughn]] — cosine 0.75
 - [[anthony-black|Anthony Black]] — cosine 0.74
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 20.2 pts · 5.9 reb · 3.5 ast · 1.5 stl per 100 (2015-16).
+
+**Strengths:**
+
+- Strong net on-court impact (+1.0σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[acie-law|Acie Law]] '10 (81% similar)
+- [[igor-rakocevic|Igor Rakocevic]] '03 (80% similar)
+- [[isaiah-taylor|Isaiah Taylor]] '18 (78% similar)
+- [[dante-exum|Dante Exum]] '15 (75% similar)
+- [[jacque-vaughn|Jacque Vaughn]] '99 (75% similar)
+- [[anthony-black|Anthony Black]] '24 (74% similar)
+
+**Career shape:** Charted 4 seasons (2015-16–2018-19). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

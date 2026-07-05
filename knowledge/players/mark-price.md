@@ -35,6 +35,33 @@ Closest career shapes in the era-normalized vector space:
 - [[raul-lopez|Raul Lopez]] — cosine 0.91
 - [[dan-dickau|Dan Dickau]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 21.6 pts · 4.7 reb · 10.7 ast · 1.9 stl per 100 (1997-98).
+
+**Strengths:**
+
+- High-volume table-setter (+2.1σ vs era)
+- High-volume three-point shooter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.8σ)
+- Offensive-glass activity well below era (−1.1σ)
+
+**Comparables:**
+
+- [[mo-williams|Mo Williams]] '11 (95% similar)
+- [[sarunas-jasikevicius|Sarunas Jasikevicius]] '07 (93% similar)
+- [[jameer-nelson|Jameer Nelson]] '09 (93% similar)
+- [[greivis-vasquez|Greivis Vasquez]] '13 (92% similar)
+- [[raul-lopez|Raul Lopez]] '05 (91% similar)
+- [[dan-dickau|Dan Dickau]] '06 (91% similar)
+
+**Career shape:** Charted 2 seasons (1996-97–1997-98). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

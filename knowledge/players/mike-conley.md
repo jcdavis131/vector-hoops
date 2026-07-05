@@ -51,6 +51,33 @@ Closest career shapes in the era-normalized vector space:
 - [[raymond-felton|Raymond Felton]] — cosine 0.92
 - [[travis-best|Travis Best]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 22.6 pts · 4.3 reb · 9.4 ast · 3.4 stl per 100 (2012-13).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.9σ vs era)
+- High-volume table-setter (+1.8σ vs era)
+- Strong net on-court impact (+1.8σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.1σ)
+
+**Comparables:**
+
+- [[fred-vanvleet|Fred VanVleet]] '23 (93% similar)
+- [[kyle-lowry|Kyle Lowry]] '16 (93% similar)
+- [[mike-bibby|Mike Bibby]] '12 (92% similar)
+- [[devin-harris|Devin Harris]] '09 (92% similar)
+- [[raymond-felton|Raymond Felton]] '11 (92% similar)
+- [[travis-best|Travis Best]] '04 (91% similar)
+
+**Career shape:** Charted 18 seasons (2007-08–2025-26). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

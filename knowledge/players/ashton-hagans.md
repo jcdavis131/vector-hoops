@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[tim-frazier|Tim Frazier]] — cosine 0.79
 - [[earl-watson|Earl Watson]] — cosine 0.78
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 12.6 pts · 7.1 reb · 8.5 ast · 1.7 stl per 100 (2023-24).
+
+**Strengths:**
+
+- High-volume table-setter (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.4σ)
+- Scoring load well below era (−1.1σ)
+
+**Comparables:**
+
+- [[marcelo-huertas|Marcelo Huertas]] '17 (82% similar)
+- [[isaiah-whitehead|Isaiah Whitehead]] '17 (81% similar)
+- [[aaron-miles|Aaron Miles]] '06 (79% similar)
+- [[anthony-carter|Anthony Carter]] '03 (79% similar)
+- [[tim-frazier|Tim Frazier]] '20 (79% similar)
+- [[earl-watson|Earl Watson]] '14 (78% similar)
+
+**Career shape:** Charted 1 season (2023-24). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

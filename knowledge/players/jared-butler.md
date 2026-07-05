@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[raul-lopez|Raul Lopez]] — cosine 0.90
 - [[raymond-felton|Raymond Felton]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** SG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 20.6 pts · 4.7 reb · 10.4 ast · 2.4 stl per 100 (2023-24).
+
+**Strengths:**
+
+- High-volume table-setter (+2.2σ vs era)
+- Active hands, disrupts passing lanes (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.7σ)
+
+**Comparables:**
+
+- [[sergio-rodriguez|Sergio Rodriguez]] '09 (92% similar)
+- [[t-j-ford|T.J. Ford]] '07 (92% similar)
+- [[tremont-waters|Tremont Waters]] '21 (91% similar)
+- [[jamaal-tinsley|Jamaal Tinsley]] '04 (91% similar)
+- [[raul-lopez|Raul Lopez]] '05 (90% similar)
+- [[raymond-felton|Raymond Felton]] '11 (89% similar)
+
+**Career shape:** Charted 3 seasons (2021-22–2024-25). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

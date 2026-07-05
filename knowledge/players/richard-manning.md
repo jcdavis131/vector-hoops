@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[bill-wennington|Bill Wennington]] — cosine 0.70
 - [[rodney-buford|Rodney Buford]] — cosine 0.70
 
+## Scouting report
+
+**Play style:** Unlisted · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 18.7 pts · 9.7 reb · 0.7 ast · 1.0 stl per 100 (1996-97).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.5σ vs era)
+- Knockdown three-point shooter (+1.4σ vs era)
+- Heavy shot volume, focal scoring option (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Table-setting role well below era (−1.2σ)
+- On-court net impact well below era (−1.0σ)
+
+**Comparables:**
+
+- [[johnny-o-bryant-iii|Johnny O'Bryant III]] '16 (85% similar)
+- [[dan-langhi|Dan Langhi]] '02 (79% similar)
+- [[predrag-drobnjak|Predrag Drobnjak]] '04 (74% similar)
+- [[toby-bailey|Toby Bailey]] '99 (70% similar)
+- [[bill-wennington|Bill Wennington]] '99 (70% similar)
+- [[rodney-buford|Rodney Buford]] '04 (70% similar)
+
+**Career shape:** Charted 1 season (1996-97). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

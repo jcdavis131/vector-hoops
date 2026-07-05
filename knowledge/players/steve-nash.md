@@ -50,6 +50,34 @@ Closest career shapes in the era-normalized vector space:
 - [[raul-lopez|Raul Lopez]] — cosine 0.87
 - [[j-j-barea|J.J. Barea]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 25.9 pts · 5.0 reb · 16.2 ast · 1.0 stl per 100 (2006-07).
+
+**Strengths:**
+
+- High-volume table-setter (+4.0σ vs era)
+- Strong net on-court impact (+2.1σ vs era)
+- Reliable touch from the free-throw line (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.4σ)
+- Offensive-glass activity well below era (−1.1σ)
+
+**Comparables:**
+
+- [[jameer-nelson|Jameer Nelson]] '09 (91% similar)
+- [[deron-williams|Deron Williams]] '12 (90% similar)
+- [[beno-udrih|Beno Udrih]] '17 (90% similar)
+- [[mark-price|Mark Price]] '98 (88% similar)
+- [[raul-lopez|Raul Lopez]] '05 (87% similar)
+- [[j-j-barea|J.J. Barea]] '19 (87% similar)
+
+**Career shape:** Charted 17 seasons (1996-97–2012-13). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

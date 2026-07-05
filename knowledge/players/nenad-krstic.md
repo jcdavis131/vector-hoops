@@ -40,6 +40,33 @@ Closest career shapes in the era-normalized vector space:
 - [[joe-smith|Joe Smith]] — cosine 0.87
 - [[ante-zizic|Ante Zizic]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 25.7 pts · 10.6 reb · 2.8 ast · 1.4 blk per 100 (2006-07).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+1.1σ vs era)
+- Featured, high-usage scoring role (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.5σ)
+- Three-point accuracy well below era (−1.4σ)
+
+**Comparables:**
+
+- [[tyler-zeller|Tyler Zeller]] '17 (93% similar)
+- [[brandon-bass|Brandon Bass]] '17 (93% similar)
+- [[lawrence-funderburke|Lawrence Funderburke]] '03 (92% similar)
+- [[othella-harrington|Othella Harrington]] '99 (87% similar)
+- [[joe-smith|Joe Smith]] '00 (87% similar)
+- [[ante-zizic|Ante Zizic]] '18 (87% similar)
+
+**Career shape:** Charted 7 seasons (2004-05–2010-11). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

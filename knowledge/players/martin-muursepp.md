@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[rob-kurz|Rob Kurz]] — cosine 0.68
 - [[devin-gray|Devin Gray]] — cosine 0.67
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 22.7 pts · 9.8 reb · 2.9 ast · 1.7 stl per 100 (1996-97).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+2.2σ vs era)
+- Relentless on the offensive glass (+1.3σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.7σ)
+
+**Comparables:**
+
+- [[tony-farmer|Tony Farmer]] '98 (72% similar)
+- [[chris-mccullough|Chris McCullough]] '16 (71% similar)
+- [[olivier-maxence-prosper|Olivier-Maxence Prosper]] '25 (69% similar)
+- [[devin-ebanks|Devin Ebanks]] '11 (68% similar)
+- [[rob-kurz|Rob Kurz]] '09 (68% similar)
+- [[devin-gray|Devin Gray]] '00 (67% similar)
+
+**Career shape:** Charted 2 seasons (1996-97–1997-98). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

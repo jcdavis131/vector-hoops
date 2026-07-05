@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[kareem-rush|Kareem Rush]] — cosine 0.90
 - [[bobby-brown|Bobby Brown]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 20.8 pts · 4.5 reb · 5.1 ast · 0.6 stl per 100 (2024-25).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+1.5σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.8σ)
+- Ball-hawking activity well below era (−1.7σ)
+
+**Comparables:**
+
+- [[tre-johnson|Tre Johnson]] '26 (95% similar)
+- [[a-j-guyton|A.J. Guyton]] '02 (92% similar)
+- [[andrew-goudelock|Andrew Goudelock]] '12 (92% similar)
+- [[malaki-branham|Malaki Branham]] '24 (92% similar)
+- [[kareem-rush|Kareem Rush]] '09 (90% similar)
+- [[bobby-brown|Bobby Brown]] '18 (89% similar)
+
+**Career shape:** Charted 3 seasons (2023-24–2025-26). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

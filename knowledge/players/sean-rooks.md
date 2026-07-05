@@ -41,6 +41,34 @@ Closest career shapes in the era-normalized vector space:
 - [[brett-szabo|Brett Szabo]] — cosine 0.88
 - [[rakeem-christmas|Rakeem Christmas]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 15.6 pts · 13.3 reb · 2.7 ast · 2.6 blk per 100 (1997-98).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+1.4σ vs era)
+- Relentless on the offensive glass (+1.3σ vs era)
+- Elite rim protection (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−2.3σ)
+- Three-point accuracy well below era (−1.3σ)
+
+**Comparables:**
+
+- [[robert-sacre|Robert Sacre]] '13 (95% similar)
+- [[michael-kidd-gilchrist|Michael Kidd-Gilchrist]] '20 (90% similar)
+- [[michael-stewart|Michael Stewart]] '04 (89% similar)
+- [[chris-hunter|Chris Hunter]] '10 (89% similar)
+- [[brett-szabo|Brett Szabo]] '97 (88% similar)
+- [[rakeem-christmas|Rakeem Christmas]] '17 (88% similar)
+
+**Career shape:** Charted 8 seasons (1996-97–2003-04). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

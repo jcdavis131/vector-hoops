@@ -42,6 +42,34 @@ Closest career shapes in the era-normalized vector space:
 - [[kemba-walker|Kemba Walker]] — cosine 0.92
 - [[bones-hyland|Bones Hyland]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 35.1 pts · 4.2 reb · 7.2 ast · 2.4 stl per 100 (2005-06).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+2.7σ vs era)
+- Featured, high-usage scoring role (+2.7σ vs era)
+- Heavy shot volume, focal scoring option (+2.0σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.7σ)
+- Defensive rebounding well below era (−1.3σ)
+
+**Comparables:**
+
+- [[victor-oladipo|Victor Oladipo]] '18 (94% similar)
+- [[stephen-jackson|Stephen Jackson]] '02 (93% similar)
+- [[lou-williams|Lou Williams]] '19 (92% similar)
+- [[allen-iverson|Allen Iverson]] '02 (92% similar)
+- [[kemba-walker|Kemba Walker]] '19 (92% similar)
+- [[bones-hyland|Bones Hyland]] '25 (91% similar)
+
+**Career shape:** Charted 9 seasons (2001-02–2011-12). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

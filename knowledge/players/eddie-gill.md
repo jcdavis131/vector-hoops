@@ -37,6 +37,34 @@ Closest career shapes in the era-normalized vector space:
 - [[marcus-banks|Marcus Banks]] — cosine 0.86
 - [[arvydas-macijauskas|Arvydas Macijauskas]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 17.0 pts · 5.7 reb · 4.5 ast · 4.2 stl per 100 (2005-06).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+4.0σ vs era)
+- High-volume three-point shooter (+1.8σ vs era)
+- Draws contact, gets to the line often (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−3.5σ)
+- Offensive-glass activity well below era (−1.5σ)
+
+**Comparables:**
+
+- [[cory-alexander|Cory Alexander]] '01 (88% similar)
+- [[eric-murdock|Eric Murdock]] '00 (88% similar)
+- [[shabazz-napier|Shabazz Napier]] '17 (87% similar)
+- [[kent-bazemore|Kent Bazemore]] '13 (86% similar)
+- [[marcus-banks|Marcus Banks]] '09 (86% similar)
+- [[arvydas-macijauskas|Arvydas Macijauskas]] '06 (84% similar)
+
+**Career shape:** Charted 4 seasons (2001-02–2005-06). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

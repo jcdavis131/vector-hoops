@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[charles-jenkins|Charles Jenkins]] — cosine 0.86
 - [[andre-barrett|Andre Barrett]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 16.0 pts · 4.5 reb · 6.8 ast · 1.3 stl per 100 (2013-14).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.2σ)
+- Finishing efficiency well below era (−1.1σ)
+
+**Comparables:**
+
+- [[jeff-mcinnis|Jeff McInnis]] '08 (91% similar)
+- [[davion-mitchell|Davion Mitchell]] '26 (89% similar)
+- [[doug-overton|Doug Overton]] '02 (88% similar)
+- [[matthew-dellavedova|Matthew Dellavedova]] '23 (88% similar)
+- [[charles-jenkins|Charles Jenkins]] '12 (86% similar)
+- [[andre-barrett|Andre Barrett]] '06 (86% similar)
+
+**Career shape:** Charted 3 seasons (2013-14–2015-16). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

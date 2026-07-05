@@ -46,6 +46,33 @@ Closest career shapes in the era-normalized vector space:
 - [[khem-birch|Khem Birch]] — cosine 0.91
 - [[kevon-looney|Kevon Looney]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 12.6 pts · 11.8 reb · 4.6 ast · 0.8 stl per 100 (2016-17).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+2.3σ vs era)
+- Rarely turns the ball over (−1.1σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.2σ)
+- On-court net impact well below era (−2.2σ)
+
+**Comparables:**
+
+- [[jericho-sims|Jericho Sims]] '22 (95% similar)
+- [[buck-williams|Buck Williams]] '97 (95% similar)
+- [[fabricio-oberto|Fabricio Oberto]] '10 (95% similar)
+- [[adam-keefe|Adam Keefe]] '98 (91% similar)
+- [[khem-birch|Khem Birch]] '19 (91% similar)
+- [[kevon-looney|Kevon Looney]] '23 (91% similar)
+
+**Career shape:** Charted 13 seasons (2004-05–2016-17). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

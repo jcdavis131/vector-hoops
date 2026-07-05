@@ -48,6 +48,33 @@ Closest career shapes in the era-normalized vector space:
 - [[montrezl-harrell|Montrezl Harrell]] — cosine 0.86
 - [[bam-adebayo|Bam Adebayo]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 13.1 pts · 10.6 reb · 2.3 ast · 1.6 stl per 100 (2018-19).
+
+**Strengths:**
+
+- Strong net on-court impact (+1.6σ vs era)
+- Rarely turns the ball over (−1.6σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.8σ)
+- Three-point volume well below era (−1.7σ)
+
+**Comparables:**
+
+- [[tiago-splitter|Tiago Splitter]] '12 (91% similar)
+- [[stephen-howard|Stephen Howard]] '97 (89% similar)
+- [[amen-thompson|Amen Thompson]] '24 (89% similar)
+- [[jarnell-stokes|Jarnell Stokes]] '15 (88% similar)
+- [[montrezl-harrell|Montrezl Harrell]] '20 (86% similar)
+- [[bam-adebayo|Bam Adebayo]] '22 (85% similar)
+
+**Career shape:** Charted 15 seasons (2002-03–2018-19). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

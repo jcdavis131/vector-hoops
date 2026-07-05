@@ -36,6 +36,34 @@ Closest career shapes in the era-normalized vector space:
 - [[cam-thomas|Cam Thomas]] — cosine 0.88
 - [[bojan-bogdanovic|Bojan Bogdanovic]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 27.2 pts · 4.4 reb · 2.3 ast · 0.9 stl per 100 (2015-16).
+
+**Strengths:**
+
+- Featured, high-usage scoring role (+1.3σ vs era)
+- High-volume three-point shooter (+1.3σ vs era)
+- Reliable touch from the free-throw line (+1.3σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.6σ)
+- Defensive rebounding well below era (−1.2σ)
+
+**Comparables:**
+
+- [[chris-carr|Chris Carr]] '01 (93% similar)
+- [[brice-sensabaugh|Brice Sensabaugh]] '24 (90% similar)
+- [[salim-stoudamire|Salim Stoudamire]] '08 (89% similar)
+- [[anfernee-simons|Anfernee Simons]] '24 (89% similar)
+- [[cam-thomas|Cam Thomas]] '25 (88% similar)
+- [[bojan-bogdanovic|Bojan Bogdanovic]] '20 (88% similar)
+
+**Career shape:** Charted 3 seasons (2015-16–2017-18). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

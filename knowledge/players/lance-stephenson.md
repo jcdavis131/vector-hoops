@@ -42,6 +42,32 @@ Closest career shapes in the era-normalized vector space:
 - [[shelvin-mack|Shelvin Mack]] — cosine 0.80
 - [[ish-smith|Ish Smith]] — cosine 0.79
 
+## Scouting report
+
+**Play style:** SG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 12.2 pts · 6.1 reb · 5.3 ast · 2.4 stl per 100 (2011-12).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.8σ)
+- Turnover rate well above era (+1.1σ)
+
+**Comparables:**
+
+- [[rob-dillingham|Rob Dillingham]] '25 (87% similar)
+- [[terrence-williams|Terrence Williams]] '11 (84% similar)
+- [[gal-mekel|Gal Mekel]] '14 (81% similar)
+- [[darius-washington|Darius Washington]] '08 (80% similar)
+- [[shelvin-mack|Shelvin Mack]] '16 (80% similar)
+- [[ish-smith|Ish Smith]] '23 (79% similar)
+
+**Career shape:** Charted 9 seasons (2011-12–2021-22). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

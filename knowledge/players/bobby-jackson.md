@@ -45,6 +45,33 @@ Closest career shapes in the era-normalized vector space:
 - [[rodrigue-beaubois|Rodrigue Beaubois]] — cosine 0.88
 - [[clyde-drexler|Clyde Drexler]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 29.8 pts · 7.5 reb · 4.5 ast · 2.1 stl per 100 (2003-04).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.3σ vs era)
+- Heavy shot volume, focal scoring option (+2.1σ vs era)
+- Featured, high-usage scoring role (+2.0σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[nate-robinson|Nate Robinson]] '10 (95% similar)
+- [[tim-hardaway|Tim Hardaway]] '97 (90% similar)
+- [[john-starks|John Starks]] '00 (90% similar)
+- [[bogdan-bogdanovic|Bogdan Bogdanović]] '21 (89% similar)
+- [[rodrigue-beaubois|Rodrigue Beaubois]] '10 (88% similar)
+- [[clyde-drexler|Clyde Drexler]] '98 (88% similar)
+
+**Career shape:** Charted 12 seasons (1997-98–2008-09). Entered as a Playmaking + Steals profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

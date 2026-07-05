@@ -40,6 +40,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jajuan-johnson|JaJuan Johnson]] — cosine 0.87
 - [[jason-smith|Jason Smith]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 17.4 pts · 11.8 reb · 4.4 ast · 3.4 blk per 100 (2015-16).
+
+**Strengths:**
+
+- Elite rim protection (+2.4σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.9σ)
+- Ball-hawking activity well below era (−1.4σ)
+
+**Comparables:**
+
+- [[mark-blount|Mark Blount]] '01 (89% similar)
+- [[chris-mihm|Chris Mihm]] '09 (88% similar)
+- [[chris-kaman|Chris Kaman]] '08 (87% similar)
+- [[timofey-mozgov|Timofey Mozgov]] '13 (87% similar)
+- [[jajuan-johnson|JaJuan Johnson]] '12 (87% similar)
+- [[jason-smith|Jason Smith]] '18 (86% similar)
+
+**Career shape:** Charted 7 seasons (2010-11–2016-17). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

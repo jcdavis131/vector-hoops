@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jalen-mcdaniels|Jalen McDaniels]] — cosine 0.87
 - [[chandler-hutchison|Chandler Hutchison]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 9.2 pts · 10.6 reb · 3.0 ast · 1.5 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.2σ vs era)
+
+**Areas of concern:**
+
+- Scoring load well below era (−1.8σ)
+- On-court net impact well below era (−1.7σ)
+
+**Comparables:**
+
+- [[joe-wolf|Joe Wolf]] '98 (94% similar)
+- [[kobe-brown|Kobe Brown]] '24 (91% similar)
+- [[dominic-mcguire|Dominic McGuire]] '10 (90% similar)
+- [[joe-kleine|Joe Kleine]] '97 (89% similar)
+- [[jalen-mcdaniels|Jalen McDaniels]] '24 (87% similar)
+- [[chandler-hutchison|Chandler Hutchison]] '19 (84% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -39,6 +39,32 @@ Closest career shapes in the era-normalized vector space:
 - [[svi-mykhailiuk|Svi Mykhailiuk]] — cosine 0.91
 - [[keith-bogans|Keith Bogans]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 9.6 pts · 5.4 reb · 3.9 ast · 1.8 stl per 100 (2010-11).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.7σ)
+- Free-throw touch well below era (−1.7σ)
+
+**Comparables:**
+
+- [[jevon-carter|Jevon Carter]] '24 (95% similar)
+- [[daniel-gibson|Daniel Gibson]] '13 (94% similar)
+- [[tyler-johnson|Tyler Johnson]] '21 (92% similar)
+- [[chris-quinn|Chris Quinn]] '10 (92% similar)
+- [[svi-mykhailiuk|Svi Mykhailiuk]] '24 (91% similar)
+- [[keith-bogans|Keith Bogans]] '13 (91% similar)
+
+**Career shape:** Charted 6 seasons (2005-06–2010-11). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

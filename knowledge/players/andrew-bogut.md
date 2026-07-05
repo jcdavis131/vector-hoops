@@ -45,6 +45,34 @@ Closest career shapes in the era-normalized vector space:
 - [[marcin-gortat|Marcin Gortat]] — cosine 0.90
 - [[tacko-fall|Tacko Fall]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 12.4 pts · 16.3 reb · 5.4 ast · 3.8 blk per 100 (2015-16).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+4.0σ vs era)
+- Elite rim protection (+2.8σ vs era)
+- Efficient finisher inside the arc (+2.6σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.2σ)
+- Shot volume well below era (−1.6σ)
+
+**Comparables:**
+
+- [[salah-mejri|Salah Mejri]] '18 (92% similar)
+- [[walker-kessler|Walker Kessler]] '23 (90% similar)
+- [[deandre-jordan|DeAndre Jordan]] '16 (90% similar)
+- [[jakob-poeltl|Jakob Poeltl]] '22 (90% similar)
+- [[marcin-gortat|Marcin Gortat]] '09 (90% similar)
+- [[tacko-fall|Tacko Fall]] '21 (90% similar)
+
+**Career shape:** Charted 12 seasons (2005-06–2017-18). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

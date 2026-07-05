@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[mark-madsen|Mark Madsen]] — cosine 0.77
 - [[isaiah-briscoe|Isaiah Briscoe]] — cosine 0.77
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 11.6 pts · 10.4 reb · 5.0 ast · 1.4 stl per 100 (2024-25).
+
+**Strengths:**
+
+- Strong net on-court impact (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Scoring load well below era (−1.4σ)
+- Free-throw touch well below era (−1.2σ)
+
+**Comparables:**
+
+- [[jason-collins|Jason Collins]] '10 (78% similar)
+- [[xavier-mcdaniel|Xavier McDaniel]] '98 (78% similar)
+- [[justise-winslow|Justise Winslow]] '21 (78% similar)
+- [[victor-claver|Victor Claver]] '13 (77% similar)
+- [[mark-madsen|Mark Madsen]] '09 (77% similar)
+- [[isaiah-briscoe|Isaiah Briscoe]] '19 (77% similar)
+
+**Career shape:** Charted 1 season (2024-25). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

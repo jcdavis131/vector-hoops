@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[daniel-orton|Daniel Orton]] — cosine 0.90
 - [[tyler-cook|Tyler Cook]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 15.1 pts · 11.1 reb · 1.4 ast · 1.5 stl per 100 (2011-12).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+1.4σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.5σ)
+- Free-throw touch well below era (−1.5σ)
+
+**Comparables:**
+
+- [[greg-smith|Greg Smith]] '16 (94% similar)
+- [[miles-plumlee|Miles Plumlee]] '19 (92% similar)
+- [[ryan-hollins|Ryan Hollins]] '07 (91% similar)
+- [[kwame-brown|Kwame Brown]] '13 (91% similar)
+- [[daniel-orton|Daniel Orton]] '12 (90% similar)
+- [[tyler-cook|Tyler Cook]] '22 (90% similar)
+
+**Career shape:** Charted 2 seasons (2010-11–2011-12). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

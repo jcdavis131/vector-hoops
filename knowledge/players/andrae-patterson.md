@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[mark-davis|Mark Davis]] — cosine 0.72
 - [[ruben-patterson|Ruben Patterson]] — cosine 0.72
 
+## Scouting report
+
+**Play style:** PF · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 20.1 pts · 11.5 reb · 2.6 ast · 3.4 stl per 100 (1998-99).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.2σ vs era)
+- Relentless on the offensive glass (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.1σ)
+
+**Comparables:**
+
+- [[mike-harris|Mike Harris]] '14 (86% similar)
+- [[brice-johnson|Brice Johnson]] '18 (77% similar)
+- [[eugene-omoruyi|Eugene Omoruyi]] '24 (75% similar)
+- [[tony-allen|Tony Allen]] '15 (74% similar)
+- [[mark-davis|Mark Davis]] '98 (72% similar)
+- [[ruben-patterson|Ruben Patterson]] '08 (72% similar)
+
+**Career shape:** Charted 1 season (1998-99). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

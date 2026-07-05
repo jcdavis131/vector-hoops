@@ -43,6 +43,32 @@ Closest career shapes in the era-normalized vector space:
 - [[trent-forrest|Trent Forrest]] — cosine 0.74
 - [[lance-stephenson|Lance Stephenson]] — cosine 0.73
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 11.0 pts · 6.7 reb · 6.8 ast · 1.6 stl per 100 (2019-20).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.7σ)
+- Turnover rate well above era (+2.0σ)
+
+**Comparables:**
+
+- [[aaron-miles|Aaron Miles]] '06 (82% similar)
+- [[ryan-nembhard|Ryan Nembhard]] '26 (78% similar)
+- [[marcelo-huertas|Marcelo Huertas]] '17 (75% similar)
+- [[marquis-teague|Marquis Teague]] '14 (75% similar)
+- [[trent-forrest|Trent Forrest]] '23 (74% similar)
+- [[lance-stephenson|Lance Stephenson]] '12 (73% similar)
+
+**Career shape:** Charted 10 seasons (2010-11–2019-20). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

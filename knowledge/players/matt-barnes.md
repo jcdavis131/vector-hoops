@@ -47,6 +47,32 @@ Closest career shapes in the era-normalized vector space:
 - [[drew-peterson|Drew Peterson]] — cosine 0.82
 - [[dan-majerle|Dan Majerle]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 12.2 pts · 10.8 reb · 3.4 ast · 1.9 stl per 100 (2003-04).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.2σ)
+- Shot volume well below era (−1.4σ)
+
+**Comparables:**
+
+- [[nemanja-bjelica|Nemanja Bjelica]] '22 (87% similar)
+- [[royce-o-neale|Royce O'Neale]] '21 (84% similar)
+- [[nicolas-batum|Nicolas Batum]] '20 (83% similar)
+- [[baylor-scheierman|Baylor Scheierman]] '26 (82% similar)
+- [[drew-peterson|Drew Peterson]] '25 (82% similar)
+- [[dan-majerle|Dan Majerle]] '02 (81% similar)
+
+**Career shape:** Charted 14 seasons (2003-04–2016-17). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

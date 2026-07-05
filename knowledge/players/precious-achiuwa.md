@@ -39,6 +39,34 @@ Closest career shapes in the era-normalized vector space:
 - [[kosta-koufos|Kosta Koufos]] — cosine 0.93
 - [[shawnelle-scott|Shawnelle Scott]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** PF · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 19.5 pts · 13.4 reb · 1.9 ast · 1.8 blk per 100 (2020-21).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+1.6σ vs era)
+- Draws contact, gets to the line often (+1.4σ vs era)
+- Efficient finisher inside the arc (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.8σ)
+- Free-throw touch well below era (−2.2σ)
+
+**Comparables:**
+
+- [[dan-gadzuric|Dan Gadzuric]] '05 (96% similar)
+- [[nazr-mohammed|Nazr Mohammed]] '15 (95% similar)
+- [[tarik-black|Tarik Black]] '18 (94% similar)
+- [[lorenzen-wright|Lorenzen Wright]] '08 (93% similar)
+- [[kosta-koufos|Kosta Koufos]] '19 (93% similar)
+- [[shawnelle-scott|Shawnelle Scott]] '01 (92% similar)
+
+**Career shape:** Charted 6 seasons (2020-21–2025-26). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -37,6 +37,31 @@ Closest career shapes in the era-normalized vector space:
 - [[aaron-gray|Aaron Gray]] — cosine 0.84
 - [[kenny-thomas|Kenny Thomas]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 16.1 pts · 10.9 reb · 4.1 ast · 1.7 stl per 100 (2025-26).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[joffrey-lauvergne|Joffrey Lauvergne]] '18 (87% similar)
+- [[nathan-jawai|Nathan Jawai]] '10 (87% similar)
+- [[ivan-rabb|Ivan Rabb]] '18 (85% similar)
+- [[alize-johnson|Alize Johnson]] '22 (85% similar)
+- [[aaron-gray|Aaron Gray]] '11 (84% similar)
+- [[kenny-thomas|Kenny Thomas]] '08 (82% similar)
+
+**Career shape:** Charted 4 seasons (2022-23–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

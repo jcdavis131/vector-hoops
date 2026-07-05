@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[chris-copeland|Chris Copeland]] — cosine 0.82
 - [[caleb-love|Caleb Love]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 20.5 pts · 5.4 reb · 4.1 ast · 1.0 stl per 100 (1996-97).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.7σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.1σ)
+- Rim-protection impact well below era (−1.0σ)
+
+**Comparables:**
+
+- [[tyson-etienne|Tyson Etienne]] '26 (90% similar)
+- [[frank-jackson|Frank Jackson]] '22 (85% similar)
+- [[von-wafer|Von Wafer]] '06 (84% similar)
+- [[tyler-dorsey|Tyler Dorsey]] '18 (83% similar)
+- [[chris-copeland|Chris Copeland]] '16 (82% similar)
+- [[caleb-love|Caleb Love]] '26 (81% similar)
+
+**Career shape:** Charted 1 season (1996-97). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -39,6 +39,34 @@ Closest career shapes in the era-normalized vector space:
 - [[rudy-gobert|Rudy Gobert]] — cosine 0.89
 - [[jalen-duren|Jalen Duren]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 25.0 pts · 13.9 reb · 3.0 ast · 2.1 blk per 100 (2011-12).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+2.8σ vs era)
+- Draws contact, gets to the line often (+1.7σ vs era)
+- Strong net on-court impact (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.5σ)
+- Three-point volume well below era (−1.1σ)
+
+**Comparables:**
+
+- [[jarrett-allen|Jarrett Allen]] '25 (92% similar)
+- [[nene|Nene]] '19 (91% similar)
+- [[neemias-queta|Neemias Queta]] '24 (91% similar)
+- [[montrezl-harrell|Montrezl Harrell]] '20 (90% similar)
+- [[rudy-gobert|Rudy Gobert]] '21 (89% similar)
+- [[jalen-duren|Jalen Duren]] '26 (87% similar)
+
+**Career shape:** Charted 6 seasons (2010-11–2015-16). Entered as a Rim Protection + Offensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

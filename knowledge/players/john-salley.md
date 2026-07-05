@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[kevin-salvadori|Kevin Salvadori]] — cosine 0.81
 - [[sean-rooks|Sean Rooks]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 11.4 pts · 10.4 reb · 4.2 ast · 2.2 blk per 100 (1999-00).
+
+**Strengths:**
+
+- Elite rim protection (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.4σ)
+- Scoring load well below era (−1.3σ)
+
+**Comparables:**
+
+- [[lasalle-thompson|LaSalle Thompson]] '97 (86% similar)
+- [[travis-knight|Travis Knight]] '01 (84% similar)
+- [[curtis-borchardt|Curtis Borchardt]] '05 (82% similar)
+- [[anthony-avent|Anthony Avent]] '00 (82% similar)
+- [[kevin-salvadori|Kevin Salvadori]] '97 (81% similar)
+- [[sean-rooks|Sean Rooks]] '98 (81% similar)
+
+**Career shape:** Charted 1 season (1999-00). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

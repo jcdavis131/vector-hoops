@@ -41,6 +41,33 @@ Closest career shapes in the era-normalized vector space:
 - [[caleb-houstan|Caleb Houstan]] — cosine 0.89
 - [[langston-galloway|Langston Galloway]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 15.0 pts · 5.1 reb · 1.5 ast · 1.1 stl per 100 (2010-11).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.7σ vs era)
+- Reliable touch from the free-throw line (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.2σ)
+- On-court net impact well below era (−1.1σ)
+
+**Comparables:**
+
+- [[lucious-harris|Lucious Harris]] '98 (91% similar)
+- [[raja-bell|Raja Bell]] '07 (90% similar)
+- [[anthony-morrow|Anthony Morrow]] '17 (89% similar)
+- [[moses-moody|Moses Moody]] '22 (89% similar)
+- [[caleb-houstan|Caleb Houstan]] '26 (89% similar)
+- [[langston-galloway|Langston Galloway]] '18 (89% similar)
+
+**Career shape:** Charted 8 seasons (2004-05–2011-12). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

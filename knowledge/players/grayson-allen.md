@@ -41,6 +41,33 @@ Closest career shapes in the era-normalized vector space:
 - [[alan-anderson|Alan Anderson]] — cosine 0.92
 - [[rodney-hood|Rodney Hood]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 23.4 pts · 2.5 reb · 2.8 ast · 0.7 stl per 100 (2018-19).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.5σ vs era)
+- Draws contact, gets to the line often (+1.1σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.9σ)
+- Defensive rebounding well below era (−1.7σ)
+
+**Comparables:**
+
+- [[marco-belinelli|Marco Belinelli]] '08 (97% similar)
+- [[jodie-meeks|Jodie Meeks]] '12 (94% similar)
+- [[eric-piatkowski|Eric Piatkowski]] '06 (93% similar)
+- [[sasha-danilovic|Sasha Danilovic]] '97 (93% similar)
+- [[alan-anderson|Alan Anderson]] '17 (92% similar)
+- [[rodney-hood|Rodney Hood]] '22 (92% similar)
+
+**Career shape:** Charted 8 seasons (2018-19–2025-26). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

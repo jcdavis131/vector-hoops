@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[deonte-burton|Deonte Burton]] — cosine 0.88
 - [[jacob-evans|Jacob Evans]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 4.6 pts · 6.1 reb · 1.5 ast · 3.1 blk per 100 (2013-14).
+
+**Strengths:**
+
+- Elite rim protection (+2.1σ vs era)
+- Rarely turns the ball over (−1.4σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−4.0σ)
+- On-court net impact well below era (−4.0σ)
+
+**Comparables:**
+
+- [[william-cunningham|William Cunningham]] '99 (94% similar)
+- [[dragan-bender|Dragan Bender]] '17 (88% similar)
+- [[britton-johnsen|Britton Johnsen]] '04 (88% similar)
+- [[daquan-jeffries|DaQuan Jeffries]] '24 (88% similar)
+- [[deonte-burton|Deonte Burton]] '20 (88% similar)
+- [[jacob-evans|Jacob Evans]] '19 (87% similar)
+
+**Career shape:** Charted 1 season (2013-14). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

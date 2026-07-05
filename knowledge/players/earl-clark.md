@@ -38,6 +38,32 @@ Closest career shapes in the era-normalized vector space:
 - [[michael-stewart|Michael Stewart]] — cosine 0.83
 - [[erik-murphy|Erik Murphy]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 11.6 pts · 11.7 reb · 1.7 ast · 3.0 blk per 100 (2011-12).
+
+**Strengths:**
+
+- Elite rim protection (+1.6σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.0σ)
+- Three-point accuracy well below era (−1.5σ)
+
+**Comparables:**
+
+- [[sean-marks|Sean Marks]] '11 (89% similar)
+- [[stephen-zimmerman|Stephen Zimmerman]] '17 (87% similar)
+- [[darius-bazley|Darius Bazley]] '23 (86% similar)
+- [[mickell-gladness|Mickell Gladness]] '12 (86% similar)
+- [[michael-stewart|Michael Stewart]] '04 (83% similar)
+- [[erik-murphy|Erik Murphy]] '14 (83% similar)
+
+**Career shape:** Charted 5 seasons (2009-10–2013-14). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

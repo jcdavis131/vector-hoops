@@ -45,6 +45,34 @@ Closest career shapes in the era-normalized vector space:
 - [[jerome-jordan|Jerome Jordan]] — cosine 0.88
 - [[brian-grant|Brian Grant]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PF · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 24.7 pts · 10.9 reb · 1.8 ast · 1.2 stl per 100 (2016-17).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+1.8σ vs era)
+- Draws contact, gets to the line often (+1.4σ vs era)
+- Reliable touch from the free-throw line (+1.1σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.7σ)
+- Three-point volume well below era (−1.4σ)
+
+**Comparables:**
+
+- [[tyler-zeller|Tyler Zeller]] '17 (94% similar)
+- [[nenad-krstic|Nenad Krstic]] '07 (93% similar)
+- [[vernon-carey-jr|Vernon Carey Jr.]] '21 (91% similar)
+- [[antonio-davis|Antonio Davis]] '01 (89% similar)
+- [[jerome-jordan|Jerome Jordan]] '12 (88% similar)
+- [[brian-grant|Brian Grant]] '99 (88% similar)
+
+**Career shape:** Charted 12 seasons (2005-06–2016-17). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

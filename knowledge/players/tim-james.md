@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[travis-wear|Travis Wear]] — cosine 0.78
 - [[cameron-bairstow|Cameron Bairstow]] — cosine 0.77
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 11.5 pts · 8.9 reb · 2.0 ast · 1.3 blk per 100 (2000-01).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.1σ vs era)
+- Reliable touch from the free-throw line (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.2σ)
+- Ball-hawking activity well below era (−1.8σ)
+
+**Comparables:**
+
+- [[travis-hansen|Travis Hansen]] '04 (88% similar)
+- [[deng-adel|Deng Adel]] '19 (82% similar)
+- [[okaro-white|Okaro White]] '17 (78% similar)
+- [[anthony-lamb|Anthony Lamb]] '21 (78% similar)
+- [[travis-wear|Travis Wear]] '18 (78% similar)
+- [[cameron-bairstow|Cameron Bairstow]] '15 (77% similar)
+
+**Career shape:** Charted 1 season (2000-01). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

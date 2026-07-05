@@ -38,6 +38,32 @@ Closest career shapes in the era-normalized vector space:
 - [[isaiah-joe|Isaiah Joe]] — cosine 0.89
 - [[richie-frahm|Richie Frahm]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PF · Three-Point Accuracy (Low Turnovers). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 12.8 pts · 8.9 reb · 2.2 ast · 1.7 stl per 100 (2000-01).
+
+**Strengths:**
+
+- Rarely turns the ball over (−2.2σ vs era)
+- High-volume three-point shooter (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.2σ)
+
+**Comparables:**
+
+- [[julian-champagnie|Julian Champagnie]] '26 (92% similar)
+- [[matt-bonner|Matt Bonner]] '12 (90% similar)
+- [[sam-hauser|Sam Hauser]] '22 (90% similar)
+- [[davis-bertans|Davis Bertans]] '24 (90% similar)
+- [[isaiah-joe|Isaiah Joe]] '25 (89% similar)
+- [[richie-frahm|Richie Frahm]] '04 (88% similar)
+
+**Career shape:** Charted 5 seasons (1996-97–2000-01). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

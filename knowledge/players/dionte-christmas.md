@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[orlando-johnson|Orlando Johnson]] — cosine 0.76
 - [[kevin-knox-ii|Kevin Knox II]] — cosine 0.76
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 17.1 pts · 9.1 reb · 1.9 ast · 0.7 blk per 100 (2013-14).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.5σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.6σ)
+- Finishing efficiency well below era (−1.4σ)
+
+**Comparables:**
+
+- [[jalen-wilson|Jalen Wilson]] '26 (84% similar)
+- [[hunter-tyson|Hunter Tyson]] '26 (80% similar)
+- [[pacome-dadiet|Pacôme Dadiet]] '26 (77% similar)
+- [[martell-webster|Martell Webster]] '15 (77% similar)
+- [[orlando-johnson|Orlando Johnson]] '14 (76% similar)
+- [[kevin-knox-ii|Kevin Knox II]] '22 (76% similar)
+
+**Career shape:** Charted 1 season (2013-14). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

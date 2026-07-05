@@ -35,6 +35,34 @@ Closest career shapes in the era-normalized vector space:
 - [[greg-anthony|Greg Anthony]] — cosine 0.86
 - [[rafer-alston|Rafer Alston]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 16.7 pts · 4.3 reb · 7.6 ast · 2.8 stl per 100 (1997-98).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.1σ vs era)
+- Active hands, disrupts passing lanes (+1.5σ vs era)
+- High-volume table-setter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.8σ)
+- Offensive-glass activity well below era (−1.4σ)
+
+**Comparables:**
+
+- [[will-solomon|Will Solomon]] '02 (91% similar)
+- [[jordan-farmar|Jordan Farmar]] '14 (87% similar)
+- [[chris-robinson|Chris Robinson]] '98 (87% similar)
+- [[jay-williams|Jay Williams]] '03 (87% similar)
+- [[greg-anthony|Greg Anthony]] '99 (86% similar)
+- [[rafer-alston|Rafer Alston]] '00 (86% similar)
+
+**Career shape:** Charted 2 seasons (1996-97–1997-98). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

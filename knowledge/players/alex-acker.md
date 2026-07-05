@@ -34,6 +34,31 @@ Closest career shapes in the era-normalized vector space:
 - [[craig-ehlo|Craig Ehlo]] — cosine 0.77
 - [[james-young|James Young]] — cosine 0.75
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 18.1 pts · 6.0 reb · 3.0 ast · 1.3 stl per 100 (2008-09).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.1σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.8σ)
+
+**Comparables:**
+
+- [[joe-wieskamp|Joe Wieskamp]] '22 (81% similar)
+- [[sasha-pavlovic|Sasha Pavlovic]] '13 (80% similar)
+- [[zaccharie-risacher|Zaccharie Risacher]] '26 (80% similar)
+- [[adam-flagler|Adam Flagler]] '25 (77% similar)
+- [[craig-ehlo|Craig Ehlo]] '97 (77% similar)
+- [[james-young|James Young]] '16 (75% similar)
+
+**Career shape:** Charted 1 season (2008-09). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

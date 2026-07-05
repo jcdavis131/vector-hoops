@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[nick-smith-jr|Nick Smith Jr.]] — cosine 0.92
 - [[eddie-johnson|Eddie Johnson]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 22.0 pts · 3.9 reb · 2.5 ast · 0.5 stl per 100 (2011-12).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.7σ vs era)
+- Reliable touch from the free-throw line (+1.4σ vs era)
+- Heavy shot volume, focal scoring option (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.8σ)
+- Defensive rebounding well below era (−1.3σ)
+
+**Comparables:**
+
+- [[gary-neal|Gary Neal]] '14 (94% similar)
+- [[henry-james|Henry James]] '98 (93% similar)
+- [[lj-cryer|LJ Cryer]] '26 (93% similar)
+- [[salim-stoudamire|Salim Stoudamire]] '08 (92% similar)
+- [[nick-smith-jr|Nick Smith Jr.]] '25 (92% similar)
+- [[eddie-johnson|Eddie Johnson]] '98 (92% similar)
+
+**Career shape:** Charted 1 season (2011-12). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -44,6 +44,34 @@ Closest career shapes in the era-normalized vector space:
 - [[frank-jackson|Frank Jackson]] — cosine 0.91
 - [[marcus-thornton|Marcus Thornton]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 27.7 pts · 4.7 reb · 2.0 ast · 1.1 stl per 100 (2014-15).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.9σ vs era)
+- Heavy shot volume, focal scoring option (+1.6σ vs era)
+- Featured, high-usage scoring role (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.1σ)
+- Defensive rebounding well below era (−1.0σ)
+
+**Comparables:**
+
+- [[salim-stoudamire|Salim Stoudamire]] '08 (95% similar)
+- [[tim-hardaway-jr|Tim Hardaway Jr.]] '15 (93% similar)
+- [[lonnie-walker-iv|Lonnie Walker IV]] '25 (93% similar)
+- [[gary-neal|Gary Neal]] '14 (92% similar)
+- [[frank-jackson|Frank Jackson]] '22 (91% similar)
+- [[marcus-thornton|Marcus Thornton]] '13 (90% similar)
+
+**Career shape:** Charted 11 seasons (2007-08–2017-18). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

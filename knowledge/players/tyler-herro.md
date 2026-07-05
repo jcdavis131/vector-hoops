@@ -40,6 +40,33 @@ Closest career shapes in the era-normalized vector space:
 - [[jalen-rose|Jalen Rose]] — cosine 0.90
 - [[kon-knueppel|Kon Knueppel]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** SG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 31.1 pts · 7.5 reb · 6.0 ast · 1.0 stl per 100 (2021-22).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+1.9σ vs era)
+- Featured, high-usage scoring role (+1.7σ vs era)
+- Strong net on-court impact (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.4σ)
+
+**Comparables:**
+
+- [[isaiah-rider|Isaiah Rider]] '00 (94% similar)
+- [[jamal-mashburn|Jamal Mashburn]] '04 (94% similar)
+- [[coby-white|Coby White]] '26 (93% similar)
+- [[desmond-bane|Desmond Bane]] '24 (92% similar)
+- [[jalen-rose|Jalen Rose]] '07 (90% similar)
+- [[kon-knueppel|Kon Knueppel]] '26 (90% similar)
+
+**Career shape:** Charted 7 seasons (2019-20–2025-26). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

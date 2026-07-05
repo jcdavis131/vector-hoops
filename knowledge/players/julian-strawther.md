@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[bryn-forbes|Bryn Forbes]] — cosine 0.91
 - [[matt-ryan|Matt Ryan]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 19.5 pts · 5.2 reb · 4.0 ast · 1.5 stl per 100 (2023-24).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.3σ)
+- Offensive-glass activity well below era (−1.1σ)
+
+**Comparables:**
+
+- [[ben-mclemore|Ben McLemore]] '22 (93% similar)
+- [[carsen-edwards|Carsen Edwards]] '21 (93% similar)
+- [[rodney-hood|Rodney Hood]] '22 (91% similar)
+- [[lonnie-walker-iv|Lonnie Walker IV]] '25 (91% similar)
+- [[bryn-forbes|Bryn Forbes]] '17 (91% similar)
+- [[matt-ryan|Matt Ryan]] '25 (91% similar)
+
+**Career shape:** Charted 3 seasons (2023-24–2025-26). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

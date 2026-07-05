@@ -45,6 +45,34 @@ Closest career shapes in the era-normalized vector space:
 - [[ervin-johnson|Ervin Johnson]] — cosine 0.94
 - [[adonal-foyle|Adonal Foyle]] — cosine 0.94
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 12.5 pts · 13.5 reb · 0.9 ast · 4.4 blk per 100 (2007-08).
+
+**Strengths:**
+
+- Elite rim protection (+3.1σ vs era)
+- Knockdown three-point shooter (+2.5σ vs era)
+- Strong presence on the defensive glass (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.6σ)
+- Table-setting role well below era (−1.1σ)
+
+**Comparables:**
+
+- [[hasheem-thabeet|Hasheem Thabeet]] '12 (96% similar)
+- [[bismack-biyombo|Bismack Biyombo]] '23 (95% similar)
+- [[joel-przybilla|Joel Przybilla]] '01 (95% similar)
+- [[bernard-james|Bernard James]] '13 (94% similar)
+- [[ervin-johnson|Ervin Johnson]] '05 (94% similar)
+- [[adonal-foyle|Adonal Foyle]] '07 (94% similar)
+
+**Career shape:** Charted 12 seasons (1998-99–2009-10). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[brandon-williams|Brandon Williams]] — cosine 0.80
 - [[jermaine-taylor|Jermaine Taylor]] — cosine 0.80
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 21.2 pts · 6.8 reb · 4.0 ast · 1.7 stl per 100 (2014-15).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+1.4σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.9σ)
+- Turnover rate well above era (+1.7σ)
+
+**Comparables:**
+
+- [[tony-wroten|Tony Wroten]] '15 (87% similar)
+- [[tyshawn-taylor|Tyshawn Taylor]] '14 (83% similar)
+- [[cory-higgins|Cory Higgins]] '12 (82% similar)
+- [[josh-jackson|Josh Jackson]] '18 (82% similar)
+- [[brandon-williams|Brandon Williams]] '22 (80% similar)
+- [[jermaine-taylor|Jermaine Taylor]] '10 (80% similar)
+
+**Career shape:** Charted 3 seasons (2013-14–2015-16). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

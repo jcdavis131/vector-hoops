@@ -35,6 +35,33 @@ Closest career shapes in the era-normalized vector space:
 - [[lawrence-moten|Lawrence Moten]] — cosine 0.86
 - [[denzel-valentine|Denzel Valentine]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 19.1 pts · 5.5 reb · 4.6 ast · 2.2 stl per 100 (1997-98).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.9σ vs era)
+- Heavy shot volume, focal scoring option (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.8σ)
+- Rim pressure (free-throw generation) well below era (−1.4σ)
+
+**Comparables:**
+
+- [[charles-r-jones|Charles R. Jones]] '00 (91% similar)
+- [[taelon-peter|Taelon Peter]] '26 (90% similar)
+- [[brooks-thompson|Brooks Thompson]] '98 (87% similar)
+- [[tamar-slay|Tamar Slay]] '04 (87% similar)
+- [[lawrence-moten|Lawrence Moten]] '97 (86% similar)
+- [[denzel-valentine|Denzel Valentine]] '22 (85% similar)
+
+**Career shape:** Charted 2 seasons (1996-97–1997-98). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -49,6 +49,33 @@ Closest career shapes in the era-normalized vector space:
 - [[jermaine-o-neal|Jermaine O'Neal]] — cosine 0.90
 - [[andrew-bynum|Andrew Bynum]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** PF · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 27.6 pts · 12.5 reb · 4.0 ast · 3.0 blk per 100 (2006-07).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+4.0σ vs era)
+- Elite rim protection (+1.9σ vs era)
+- Featured, high-usage scoring role (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Three-point volume well below era (−1.1σ)
+
+**Comparables:**
+
+- [[derrick-favors|Derrick Favors]] '21 (93% similar)
+- [[hassan-whiteside|Hassan Whiteside]] '22 (91% similar)
+- [[javale-mcgee|JaVale McGee]] '17 (91% similar)
+- [[greg-oden|Greg Oden]] '10 (90% similar)
+- [[jermaine-o-neal|Jermaine O'Neal]] '05 (90% similar)
+- [[andrew-bynum|Andrew Bynum]] '08 (90% similar)
+
+**Career shape:** Charted 16 seasons (1999-00–2015-16). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

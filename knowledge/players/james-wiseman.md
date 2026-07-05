@@ -36,6 +36,34 @@ Closest career shapes in the era-normalized vector space:
 - [[mark-strickland|Mark Strickland]] — cosine 0.89
 - [[jj-hickson|JJ Hickson]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 19.3 pts · 14.6 reb · 2.3 ast · 1.7 blk per 100 (2023-24).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+1.8σ vs era)
+- Relentless on the offensive glass (+1.5σ vs era)
+- Strong presence on the defensive glass (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.7σ)
+- Three-point volume well below era (−1.8σ)
+
+**Comparables:**
+
+- [[bryant-reeves|Bryant Reeves]] '98 (96% similar)
+- [[jahlil-okafor|Jahlil Okafor]] '18 (95% similar)
+- [[tony-massenburg|Tony Massenburg]] '02 (92% similar)
+- [[nick-richards|Nick Richards]] '23 (90% similar)
+- [[mark-strickland|Mark Strickland]] '97 (89% similar)
+- [[jj-hickson|JJ Hickson]] '16 (88% similar)
+
+**Career shape:** Charted 3 seasons (2020-21–2023-24). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Rim Protection + Offensive Glass identity.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

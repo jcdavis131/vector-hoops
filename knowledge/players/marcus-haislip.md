@@ -35,6 +35,33 @@ Closest career shapes in the era-normalized vector space:
 - [[jared-rhoden|Jared Rhoden]] — cosine 0.71
 - [[dj-white|DJ White]] — cosine 0.70
 
+## Scouting report
+
+**Play style:** PF · Three-Point Accuracy (Low Turnovers). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 17.3 pts · 9.9 reb · 0.7 ast · 2.2 blk per 100 (2003-04).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+1.6σ vs era)
+- Rarely turns the ball over (−1.4σ vs era)
+- Efficient finisher inside the arc (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Table-setting role well below era (−1.3σ)
+
+**Comparables:**
+
+- [[roy-rogers|Roy Rogers]] '97 (75% similar)
+- [[derrick-jones-jr|Derrick Jones Jr.]] '18 (75% similar)
+- [[zeke-nnaji|Zeke Nnaji]] '24 (74% similar)
+- [[peyton-watson|Peyton Watson]] '23 (74% similar)
+- [[jared-rhoden|Jared Rhoden]] '24 (71% similar)
+- [[dj-white|DJ White]] '12 (70% similar)
+
+**Career shape:** Charted 2 seasons (2002-03–2003-04). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

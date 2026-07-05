@@ -39,6 +39,34 @@ Closest career shapes in the era-normalized vector space:
 - [[tony-massenburg|Tony Massenburg]] — cosine 0.92
 - [[aaron-williams|Aaron Williams]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 20.6 pts · 16.1 reb · 1.5 ast · 2.7 blk per 100 (2022-23).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+4.0σ vs era)
+- Elite rim protection (+2.1σ vs era)
+- Relentless on the offensive glass (+2.1σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−2.0σ)
+- Three-point volume well below era (−1.8σ)
+
+**Comparables:**
+
+- [[timofey-mozgov|Timofey Mozgov]] '13 (94% similar)
+- [[etan-thomas|Etan Thomas]] '07 (94% similar)
+- [[jason-thompson|Jason Thompson]] '15 (93% similar)
+- [[alex-len|Alex Len]] '24 (92% similar)
+- [[tony-massenburg|Tony Massenburg]] '02 (92% similar)
+- [[aaron-williams|Aaron Williams]] '05 (92% similar)
+
+**Career shape:** Charted 6 seasons (2020-21–2025-26). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -43,6 +43,34 @@ Closest career shapes in the era-normalized vector space:
 - [[luke-ridnour|Luke Ridnour]] — cosine 0.94
 - [[marcus-sasser|Marcus Sasser]] — cosine 0.94
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 17.3 pts · 4.4 reb · 10.3 ast · 1.7 stl per 100 (2002-03).
+
+**Strengths:**
+
+- High-volume table-setter (+2.3σ vs era)
+- High-volume three-point shooter (+1.8σ vs era)
+- Reliable touch from the free-throw line (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Offensive-glass activity well below era (−1.3σ)
+- Defensive rebounding well below era (−1.1σ)
+
+**Comparables:**
+
+- [[dan-dickau|Dan Dickau]] '06 (97% similar)
+- [[kirk-hinrich|Kirk Hinrich]] '04 (95% similar)
+- [[raymond-felton|Raymond Felton]] '11 (94% similar)
+- [[greivis-vasquez|Greivis Vasquez]] '13 (94% similar)
+- [[luke-ridnour|Luke Ridnour]] '06 (94% similar)
+- [[marcus-sasser|Marcus Sasser]] '26 (94% similar)
+
+**Career shape:** Charted 10 seasons (1996-97–2005-06). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

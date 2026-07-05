@@ -36,6 +36,34 @@ Closest career shapes in the era-normalized vector space:
 - [[nic-claxton|Nic Claxton]] — cosine 0.93
 - [[deandre-jordan|DeAndre Jordan]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 16.8 pts · 13.4 reb · 3.6 ast · 2.2 blk per 100 (2025-26).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+4.0σ vs era)
+- Relentless on the offensive glass (+2.1σ vs era)
+- Elite rim protection (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.2σ)
+- Three-point volume well below era (−1.9σ)
+
+**Comparables:**
+
+- [[willie-reed|Willie Reed]] '16 (96% similar)
+- [[jakob-poeltl|Jakob Poeltl]] '22 (95% similar)
+- [[tarik-black|Tarik Black]] '18 (94% similar)
+- [[walker-kessler|Walker Kessler]] '23 (93% similar)
+- [[nic-claxton|Nic Claxton]] '23 (93% similar)
+- [[deandre-jordan|DeAndre Jordan]] '16 (91% similar)
+
+**Career shape:** Charted 3 seasons (2023-24–2025-26). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

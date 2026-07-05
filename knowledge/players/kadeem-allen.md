@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[bobby-hurley|Bobby Hurley]] — cosine 0.87
 - [[elie-okobo|Elie Okobo]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** PG · Offensive Glass (Low On-Court Impact). Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 8.4 pts · 4.9 reb · 5.3 ast · 1.3 stl per 100 (2017-18).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.6σ)
+- Three-point accuracy well below era (−2.3σ)
+
+**Comparables:**
+
+- [[andrew-harrison|Andrew Harrison]] '19 (92% similar)
+- [[keith-mcleod|Keith McLeod]] '04 (90% similar)
+- [[wade-baldwin-iv|Wade Baldwin IV]] '17 (89% similar)
+- [[ben-hansbrough|Ben Hansbrough]] '13 (88% similar)
+- [[bobby-hurley|Bobby Hurley]] '97 (87% similar)
+- [[elie-okobo|Elie Okobo]] '19 (87% similar)
+
+**Career shape:** Charted 2 seasons (2017-18–2018-19). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

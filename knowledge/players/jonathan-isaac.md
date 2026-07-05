@@ -39,6 +39,33 @@ Closest career shapes in the era-normalized vector space:
 - [[marcus-camby|Marcus Camby]] — cosine 0.80
 - [[jim-mcilvaine|Jim McIlvaine]] — cosine 0.79
 
+## Scouting report
+
+**Play style:** PF · Rim Protection + Offensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 21.0 pts · 13.9 reb · 1.6 ast · 3.7 blk per 100 (2023-24).
+
+**Strengths:**
+
+- Elite rim protection (+3.2σ vs era)
+- Strong net on-court impact (+1.5σ vs era)
+- Strong presence on the defensive glass (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Table-setting role well below era (−1.2σ)
+
+**Comparables:**
+
+- [[mouhamed-gueye|Mouhamed Gueye]] '25 (90% similar)
+- [[shawn-bradley|Shawn Bradley]] '01 (83% similar)
+- [[stephane-lasme|Stephane Lasme]] '08 (81% similar)
+- [[larry-sanders|Larry Sanders]] '12 (81% similar)
+- [[marcus-camby|Marcus Camby]] '11 (80% similar)
+- [[jim-mcilvaine|Jim McIlvaine]] '00 (79% similar)
+
+**Career shape:** Charted 6 seasons (2017-18–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Rim Protection + Offensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

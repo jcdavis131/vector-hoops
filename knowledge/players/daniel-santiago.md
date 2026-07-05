@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[alexander-johnson|Alexander Johnson]] — cosine 0.84
 - [[ian-mahinmi|Ian Mahinmi]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 14.3 pts · 8.5 reb · 0.9 ast · 1.8 blk per 100 (2000-01).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.4σ)
+- Table-setting role well below era (−1.1σ)
+
+**Comparables:**
+
+- [[anzejs-pasecniks|Anžejs Pasečņiks]] '20 (86% similar)
+- [[ryan-hollins|Ryan Hollins]] '07 (85% similar)
+- [[semih-erden|Semih Erden]] '12 (85% similar)
+- [[gerard-king|Gerard King]] '99 (84% similar)
+- [[alexander-johnson|Alexander Johnson]] '08 (84% similar)
+- [[ian-mahinmi|Ian Mahinmi]] '10 (84% similar)
+
+**Career shape:** Charted 2 seasons (2000-01–2003-04). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

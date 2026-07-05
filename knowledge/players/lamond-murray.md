@@ -42,6 +42,33 @@ Closest career shapes in the era-normalized vector space:
 - [[rodney-rogers|Rodney Rogers]] — cosine 0.82
 - [[ed-gray|Ed Gray]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 20.5 pts · 9.4 reb · 2.9 ast · 1.6 stl per 100 (2003-04).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+1.4σ vs era)
+- High-volume three-point shooter (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.4σ)
+- Turnover rate well above era (+1.1σ)
+
+**Comparables:**
+
+- [[jordan-nwora|Jordan Nwora]] '21 (87% similar)
+- [[cam-whitmore|Cam Whitmore]] '24 (85% similar)
+- [[rodney-white|Rodney White]] '03 (84% similar)
+- [[james-collins|James Collins]] '98 (82% similar)
+- [[rodney-rogers|Rodney Rogers]] '00 (82% similar)
+- [[ed-gray|Ed Gray]] '99 (81% similar)
+
+**Career shape:** Charted 9 seasons (1996-97–2005-06). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

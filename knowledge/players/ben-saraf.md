@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[mateen-cleaves|Mateen Cleaves]] — cosine 0.88
 - [[dominique-jones|Dominique Jones]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** SG · Playmaking + Steals. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 17.4 pts · 4.8 reb · 7.6 ast · 2.0 stl per 100 (2025-26).
+
+**Strengths:**
+
+- High-volume table-setter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.6σ)
+- On-court net impact well below era (−1.5σ)
+
+**Comparables:**
+
+- [[wade-baldwin-iv|Wade Baldwin IV]] '17 (92% similar)
+- [[josh-selby|Josh Selby]] '12 (92% similar)
+- [[nolan-traore|Nolan Traore]] '26 (90% similar)
+- [[robert-pack|Robert Pack]] '97 (89% similar)
+- [[mateen-cleaves|Mateen Cleaves]] '02 (88% similar)
+- [[dominique-jones|Dominique Jones]] '13 (88% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

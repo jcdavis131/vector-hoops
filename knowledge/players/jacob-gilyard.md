@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[tyus-jones|Tyus Jones]] — cosine 0.86
 - [[facundo-campazzo|Facundo Campazzo]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 12.2 pts · 3.2 reb · 9.7 ast · 2.3 stl per 100 (2023-24).
+
+**Strengths:**
+
+- High-volume table-setter (+1.9σ vs era)
+- Reliable touch from the free-throw line (+1.8σ vs era)
+- Active hands, disrupts passing lanes (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.6σ)
+- Defensive rebounding well below era (−1.5σ)
+
+**Comparables:**
+
+- [[keaton-wallace|Keaton Wallace]] '25 (93% similar)
+- [[fred-jones|Fred Jones]] '03 (87% similar)
+- [[michael-hawkins|Michael Hawkins]] '99 (87% similar)
+- [[luke-ridnour|Luke Ridnour]] '06 (87% similar)
+- [[tyus-jones|Tyus Jones]] '18 (86% similar)
+- [[facundo-campazzo|Facundo Campazzo]] '21 (86% similar)
+
+**Career shape:** Charted 1 season (2023-24). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

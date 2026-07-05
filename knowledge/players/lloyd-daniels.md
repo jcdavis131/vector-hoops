@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[matt-freije|Matt Freije]] — cosine 0.87
 - [[armoni-brooks|Armoni Brooks]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 15.7 pts · 6.8 reb · 4.2 ast · 1.6 stl per 100 (1996-97).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.5σ vs era)
+- Reliable touch from the free-throw line (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.4σ)
+- Rim pressure (free-throw generation) well below era (−1.8σ)
+
+**Comparables:**
+
+- [[pj-hairston|PJ Hairston]] '15 (91% similar)
+- [[carl-thomas|Carl Thomas]] '97 (88% similar)
+- [[quincy-douby|Quincy Douby]] '08 (88% similar)
+- [[brian-evans|Brian Evans]] '98 (87% similar)
+- [[matt-freije|Matt Freije]] '07 (87% similar)
+- [[armoni-brooks|Armoni Brooks]] '21 (86% similar)
+
+**Career shape:** Charted 1 season (1996-97). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

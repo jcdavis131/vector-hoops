@@ -44,6 +44,33 @@ Closest career shapes in the era-normalized vector space:
 - [[channing-frye|Channing Frye]] — cosine 0.79
 - [[ryan-anderson|Ryan Anderson]] — cosine 0.78
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 19.9 pts · 9.8 reb · 2.2 ast · 1.7 blk per 100 (1998-99).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.2σ vs era)
+- Reliable touch from the free-throw line (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.8σ)
+- On-court net impact well below era (−1.8σ)
+
+**Comparables:**
+
+- [[david-benoit|David Benoit]] '98 (81% similar)
+- [[andres-nocioni|Andres Nocioni]] '08 (80% similar)
+- [[josh-davis|Josh Davis]] '05 (80% similar)
+- [[dario-saric|Dario Saric]] '21 (79% similar)
+- [[channing-frye|Channing Frye]] '19 (79% similar)
+- [[ryan-anderson|Ryan Anderson]] '14 (78% similar)
+
+**Career shape:** Charted 11 seasons (1997-98–2007-08). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

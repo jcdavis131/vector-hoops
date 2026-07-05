@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[nicolo-melli|Nicolo Melli]] — cosine 0.80
 - [[gary-clark|Gary Clark]] — cosine 0.78
 
+## Scouting report
+
+**Play style:** PF · Three-Point Accuracy (Low Turnovers). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 13.7 pts · 6.0 reb · 3.8 ast · 1.2 stl per 100 (2014-15).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.3σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.6σ)
+- Offensive-glass activity well below era (−1.0σ)
+
+**Comparables:**
+
+- [[pacome-dadiet|Pacôme Dadiet]] '26 (87% similar)
+- [[hunter-tyson|Hunter Tyson]] '26 (83% similar)
+- [[anthony-brown|Anthony Brown]] '16 (82% similar)
+- [[axel-toupane|Axel Toupane]] '16 (80% similar)
+- [[nicolo-melli|Nicolo Melli]] '21 (80% similar)
+- [[gary-clark|Gary Clark]] '19 (78% similar)
+
+**Career shape:** Charted 3 seasons (2013-14–2015-16). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

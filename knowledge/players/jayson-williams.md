@@ -36,6 +36,34 @@ Closest career shapes in the era-normalized vector space:
 - [[mario-kasun|Mario Kasun]] — cosine 0.90
 - [[lonny-baxter|Lonny Baxter]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 18.4 pts · 19.5 reb · 1.5 ast · 1.1 blk per 100 (1997-98).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+4.0σ vs era)
+- Strong presence on the defensive glass (+1.5σ vs era)
+- Rarely turns the ball over (−1.0σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.3σ)
+- Ball-hawking activity well below era (−1.2σ)
+
+**Comparables:**
+
+- [[shawnelle-scott|Shawnelle Scott]] '01 (92% similar)
+- [[kris-humphries|Kris Humphries]] '11 (92% similar)
+- [[jordan-hill|Jordan Hill]] '13 (92% similar)
+- [[tristan-thompson|Tristan Thompson]] '25 (91% similar)
+- [[mario-kasun|Mario Kasun]] '05 (90% similar)
+- [[lonny-baxter|Lonny Baxter]] '06 (90% similar)
+
+**Career shape:** Charted 3 seasons (1996-97–1998-99). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

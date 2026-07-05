@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[eric-gordon|Eric Gordon]] — cosine 0.91
 - [[jared-mccain|Jared McCain]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 20.8 pts · 4.1 reb · 3.0 ast · 1.6 stl per 100 (1996-97).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Offensive-glass activity well below era (−1.1σ)
+- Defensive rebounding well below era (−1.1σ)
+
+**Comparables:**
+
+- [[grayson-allen|Grayson Allen]] '19 (93% similar)
+- [[marco-belinelli|Marco Belinelli]] '08 (92% similar)
+- [[cuttino-mobley|Cuttino Mobley]] '02 (92% similar)
+- [[trajan-langdon|Trajan Langdon]] '02 (91% similar)
+- [[eric-gordon|Eric Gordon]] '13 (91% similar)
+- [[jared-mccain|Jared McCain]] '25 (91% similar)
+
+**Career shape:** Charted 1 season (1996-97). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

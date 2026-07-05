@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[george-lynch|George Lynch]] — cosine 0.81
 - [[chris-singleton|Chris Singleton]] — cosine 0.80
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 11.8 pts · 12.5 reb · 1.8 ast · 2.5 stl per 100 (2003-04).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.3σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.5σ)
+- Finishing efficiency well below era (−1.3σ)
+
+**Comparables:**
+
+- [[jack-white|Jack White]] '23 (88% similar)
+- [[taylor-hendricks|Taylor Hendricks]] '24 (87% similar)
+- [[usman-garuba|Usman Garuba]] '22 (84% similar)
+- [[al-farouq-aminu|Al-Farouq Aminu]] '20 (82% similar)
+- [[george-lynch|George Lynch]] '03 (81% similar)
+- [[chris-singleton|Chris Singleton]] '12 (80% similar)
+
+**Career shape:** Charted 3 seasons (2003-04–2006-07). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

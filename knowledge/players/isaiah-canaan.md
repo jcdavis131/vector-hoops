@@ -39,6 +39,32 @@ Closest career shapes in the era-normalized vector space:
 - [[egor-demin|Egor Dëmin]] — cosine 0.91
 - [[tyson-etienne|Tyson Etienne]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 20.8 pts · 4.3 reb · 3.4 ast · 1.4 stl per 100 (2015-16).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.2σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.6σ)
+- Finishing efficiency well below era (−1.3σ)
+
+**Comparables:**
+
+- [[terry-dehere|Terry Dehere]] '97 (94% similar)
+- [[randy-foye|Randy Foye]] '12 (93% similar)
+- [[chris-whitney|Chris Whitney]] '04 (92% similar)
+- [[khalid-reeves|Khalid Reeves]] '97 (91% similar)
+- [[egor-demin|Egor Dëmin]] '26 (91% similar)
+- [[tyson-etienne|Tyson Etienne]] '26 (90% similar)
+
+**Career shape:** Charted 6 seasons (2013-14–2018-19). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

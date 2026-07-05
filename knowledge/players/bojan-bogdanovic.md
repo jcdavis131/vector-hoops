@@ -43,6 +43,34 @@ Closest career shapes in the era-normalized vector space:
 - [[gary-neal|Gary Neal]] — cosine 0.89
 - [[glen-rice|Glen Rice]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** SF · Scoring Volume + Shot Volume. Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 29.5 pts · 6.0 reb · 3.0 ast · 0.8 stl per 100 (2019-20).
+
+**Strengths:**
+
+- Featured, high-usage scoring role (+1.5σ vs era)
+- Reliable touch from the free-throw line (+1.3σ vs era)
+- High-volume three-point shooter (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.2σ)
+- Turnover rate well above era (+1.1σ)
+
+**Comparables:**
+
+- [[allan-houston|Allan Houston]] '03 (94% similar)
+- [[chris-carr|Chris Carr]] '01 (93% similar)
+- [[jared-mccain|Jared McCain]] '25 (91% similar)
+- [[de-andre-hunter|De'Andre Hunter]] '25 (90% similar)
+- [[gary-neal|Gary Neal]] '14 (89% similar)
+- [[glen-rice|Glen Rice]] '97 (88% similar)
+
+**Career shape:** Charted 10 seasons (2014-15–2023-24). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

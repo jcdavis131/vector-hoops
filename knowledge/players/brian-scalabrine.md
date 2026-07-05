@@ -44,6 +44,33 @@ Closest career shapes in the era-normalized vector space:
 - [[grant-williams|Grant Williams]] — cosine 0.87
 - [[royce-o-neale|Royce O'Neale]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 10.9 pts · 4.3 reb · 3.3 ast · 2.2 blk per 100 (2010-11).
+
+**Strengths:**
+
+- Elite rim protection (+1.2σ vs era)
+- Efficient finisher inside the arc (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−4.0σ)
+- Rim pressure (free-throw generation) well below era (−1.9σ)
+
+**Comparables:**
+
+- [[victor-claver|Victor Claver]] '13 (92% similar)
+- [[miye-oni|Miye Oni]] '21 (89% similar)
+- [[keith-askins|Keith Askins]] '99 (88% similar)
+- [[solomon-hill|Solomon Hill]] '21 (88% similar)
+- [[grant-williams|Grant Williams]] '20 (87% similar)
+- [[royce-o-neale|Royce O'Neale]] '21 (87% similar)
+
+**Career shape:** Charted 11 seasons (2001-02–2011-12). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

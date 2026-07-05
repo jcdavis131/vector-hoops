@@ -39,6 +39,32 @@ Closest career shapes in the era-normalized vector space:
 - [[facundo-campazzo|Facundo Campazzo]] — cosine 0.91
 - [[keaton-wallace|Keaton Wallace]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** PG · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 11.4 pts · 6.7 reb · 7.0 ast · 1.8 stl per 100 (2008-09).
+
+**Strengths:**
+
+- High-volume table-setter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−3.1σ)
+- Finishing efficiency well below era (−2.0σ)
+
+**Comparables:**
+
+- [[shane-larkin|Shane Larkin]] '16 (93% similar)
+- [[tyus-jones|Tyus Jones]] '18 (93% similar)
+- [[jerian-grant|Jerian Grant]] '19 (92% similar)
+- [[randy-brown|Randy Brown]] '03 (91% similar)
+- [[facundo-campazzo|Facundo Campazzo]] '21 (91% similar)
+- [[keaton-wallace|Keaton Wallace]] '25 (90% similar)
+
+**Career shape:** Charted 6 seasons (2003-04–2008-09). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

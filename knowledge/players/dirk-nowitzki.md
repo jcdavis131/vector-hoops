@@ -54,6 +54,33 @@ Closest career shapes in the era-normalized vector space:
 - [[chris-bosh|Chris Bosh]] — cosine 0.83
 - [[michael-porter-jr|Michael Porter Jr.]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** PF · Scoring Volume + Shot Volume. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 37.3 pts · 12.6 reb · 3.9 ast · 1.4 blk per 100 (2005-06).
+
+**Strengths:**
+
+- Featured, high-usage scoring role (+3.0σ vs era)
+- Heavy shot volume, focal scoring option (+2.5σ vs era)
+- Draws contact, gets to the line often (+2.1σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[tobias-harris|Tobias Harris]] '21 (91% similar)
+- [[jayson-tatum|Jayson Tatum]] '23 (88% similar)
+- [[keith-van-horn|Keith Van Horn]] '99 (85% similar)
+- [[kevin-durant|Kevin Durant]] '14 (84% similar)
+- [[chris-bosh|Chris Bosh]] '10 (83% similar)
+- [[michael-porter-jr|Michael Porter Jr.]] '26 (83% similar)
+
+**Career shape:** Charted 21 seasons (1998-99–2018-19). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -34,6 +34,31 @@ Closest career shapes in the era-normalized vector space:
 - [[darius-miller|Darius Miller]] — cosine 0.79
 - [[seth-curry|Seth Curry]] — cosine 0.78
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 17.6 pts · 5.4 reb · 3.9 ast · 1.7 stl per 100 (2025-26).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[shandon-anderson|Shandon Anderson]] '05 (89% similar)
+- [[jamaal-franklin|Jamaal Franklin]] '14 (83% similar)
+- [[mario-elie|Mario Elie]] '01 (82% similar)
+- [[aaron-holiday|Aaron Holiday]] '26 (81% similar)
+- [[darius-miller|Darius Miller]] '21 (79% similar)
+- [[seth-curry|Seth Curry]] '21 (78% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[walker-russell|Walker Russell]] — cosine 0.81
 - [[donnie-boyce|Donnie Boyce]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** SF · Playmaking + Steals. Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 16.1 pts · 3.3 reb · 5.2 ast · 3.0 stl per 100 (1997-98).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.8σ vs era)
+- Draws contact, gets to the line often (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.6σ)
+- Turnover rate well above era (+1.5σ)
+
+**Comparables:**
+
+- [[anthony-black|Anthony Black]] '24 (91% similar)
+- [[edmond-sumner|Edmond Sumner]] '19 (83% similar)
+- [[toure-murry|Toure' Murry]] '14 (82% similar)
+- [[kay-felder|Kay Felder]] '17 (82% similar)
+- [[walker-russell|Walker Russell]] '12 (81% similar)
+- [[donnie-boyce|Donnie Boyce]] '97 (81% similar)
+
+**Career shape:** Charted 1 season (1997-98). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -2107,6 +2107,7 @@
     pushModal(els.reportSheet, closeReportSheet);
   }
   function closeReportSheet() {
+    if (isDesktopWide()) return; // pinned open as a static panel; close btn is a no-op here
     els.reportSheetBackdrop.hidden = true;
     if (reportSheetTrigger && reportSheetTrigger.focus) reportSheetTrigger.focus();
     popModal();
@@ -2124,6 +2125,7 @@
     startMapLoopIfNeeded();
   }
   function closeMapSheet() {
+    if (isDesktopWide()) return; // pinned open as a static panel; close btn is a no-op here
     els.mapSheetBackdrop.hidden = true;
     mapSheetOpen = false;
     mapVisible = false;
@@ -2172,6 +2174,14 @@
   // ---------------------------------------------------------------------
 
   function pinDesktopAuxPanels() {
+    // A sheet opened as a mobile/tablet overlay (<1000px) pushes itself onto
+    // the modal stack (Escape + focus trap). If the viewport then crosses to
+    // >=1000px while it's open, drop it from the stack before pinning it open
+    // as a static panel — otherwise it dead-ends there: closeReportSheet/
+    // closeMapSheet no-op at desktop width, so nothing would ever pop it and
+    // Escape/Tab would keep targeting a panel that's no longer an overlay.
+    removeModalEntry(els.reportSheet);
+    removeModalEntry(els.mapSheet);
     els.reportSheetBackdrop.hidden = false;
     els.mapSheetBackdrop.hidden = false;
     mapSheetOpen = true;
@@ -3279,13 +3289,29 @@
   // ---------------------------------------------------------------------
 
   var modalStack = [];
+  var MODAL_OPEN_BODY_CLASS = 'vh-modal-open';
+
+  function syncModalBodyClass() {
+    if (modalStack.length === 0) document.body.classList.remove(MODAL_OPEN_BODY_CLASS);
+    else document.body.classList.add(MODAL_OPEN_BODY_CLASS);
+  }
 
   function pushModal(container, closeFn) {
     modalStack.push({ container: container, close: closeFn });
+    syncModalBodyClass();
   }
 
   function popModal() {
     modalStack.pop();
+    syncModalBodyClass();
+  }
+
+  // Removes any stack entries for `container` without invoking their close
+  // callback — used when a sheet stops being an overlay out from under the
+  // stack (e.g. pinDesktopAuxPanels) rather than being explicitly closed.
+  function removeModalEntry(container) {
+    modalStack = modalStack.filter(function (entry) { return entry.container !== container; });
+    syncModalBodyClass();
   }
 
   document.addEventListener('keydown', function (ev) {

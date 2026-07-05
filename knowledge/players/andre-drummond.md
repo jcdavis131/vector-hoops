@@ -47,6 +47,34 @@ Closest career shapes in the era-normalized vector space:
 - [[willy-hernangomez|Willy Hernangomez]] — cosine 0.88
 - [[derrick-favors|Derrick Favors]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 24.0 pts · 25.7 reb · 1.3 ast · 2.6 stl per 100 (2023-24).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+4.0σ vs era)
+- Strong presence on the defensive glass (+3.8σ vs era)
+- Active hands, disrupts passing lanes (+1.9σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.7σ)
+- Three-point volume well below era (−1.8σ)
+
+**Comparables:**
+
+- [[alan-williams|Alan Williams]] '17 (94% similar)
+- [[thomas-robinson|Thomas Robinson]] '16 (92% similar)
+- [[jusuf-nurkic|Jusuf Nurkić]] '16 (90% similar)
+- [[day-ron-sharpe|Day'Ron Sharpe]] '24 (88% similar)
+- [[willy-hernangomez|Willy Hernangomez]] '23 (88% similar)
+- [[derrick-favors|Derrick Favors]] '21 (88% similar)
+
+**Career shape:** Charted 14 seasons (2012-13–2025-26). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -46,6 +46,33 @@ Closest career shapes in the era-normalized vector space:
 - [[nick-young|Nick Young]] — cosine 0.93
 - [[marco-belinelli|Marco Belinelli]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 24.4 pts · 4.8 reb · 3.8 ast · 0.6 stl per 100 (2014-15).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.7σ vs era)
+- Heavy shot volume, focal scoring option (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.6σ)
+- On-court net impact well below era (−1.3σ)
+
+**Comparables:**
+
+- [[eddie-johnson|Eddie Johnson]] '98 (95% similar)
+- [[rex-chapman|Rex Chapman]] '98 (94% similar)
+- [[glen-rice|Glen Rice]] '97 (94% similar)
+- [[gary-neal|Gary Neal]] '14 (93% similar)
+- [[nick-young|Nick Young]] '15 (93% similar)
+- [[marco-belinelli|Marco Belinelli]] '08 (93% similar)
+
+**Career shape:** Charted 13 seasons (2013-14–2025-26). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

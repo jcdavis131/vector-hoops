@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[keljin-blevins|Keljin Blevins]] — cosine 0.87
 - [[cody-williams|Cody Williams]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 15.7 pts · 7.6 reb · 1.2 ast · 1.3 stl per 100 (2019-20).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.8σ)
+- Table-setting role well below era (−1.2σ)
+
+**Comparables:**
+
+- [[david-roddy|David Roddy]] '23 (93% similar)
+- [[britton-johnsen|Britton Johnsen]] '04 (91% similar)
+- [[cj-elleby|CJ Elleby]] '22 (89% similar)
+- [[maxwell-lewis|Maxwell Lewis]] '24 (89% similar)
+- [[keljin-blevins|Keljin Blevins]] '22 (87% similar)
+- [[cody-williams|Cody Williams]] '25 (87% similar)
+
+**Career shape:** Charted 2 seasons (2019-20–2020-21). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

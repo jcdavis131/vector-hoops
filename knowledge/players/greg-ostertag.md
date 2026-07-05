@@ -43,6 +43,34 @@ Closest career shapes in the era-normalized vector space:
 - [[joel-przybilla|Joel Przybilla]] — cosine 0.93
 - [[erick-dampier|Erick Dampier]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 11.1 pts · 14.2 reb · 0.9 ast · 5.3 blk per 100 (1998-99).
+
+**Strengths:**
+
+- Elite rim protection (+3.7σ vs era)
+- Strong net on-court impact (+2.1σ vs era)
+- Strong presence on the defensive glass (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.7σ)
+- Ball-hawking activity well below era (−1.6σ)
+
+**Comparables:**
+
+- [[khaman-maluach|Khaman Maluach]] '26 (94% similar)
+- [[festus-ezeli|Festus Ezeli]] '16 (94% similar)
+- [[kelvin-cato|Kelvin Cato]] '99 (94% similar)
+- [[bernard-james|Bernard James]] '13 (93% similar)
+- [[joel-przybilla|Joel Przybilla]] '01 (93% similar)
+- [[erick-dampier|Erick Dampier]] '97 (93% similar)
+
+**Career shape:** Charted 10 seasons (1996-97–2005-06). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

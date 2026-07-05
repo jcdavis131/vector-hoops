@@ -34,6 +34,31 @@ Closest career shapes in the era-normalized vector space:
 - [[mitchell-butler|Mitchell Butler]] — cosine 0.80
 - [[isaac-okoro|Isaac Okoro]] — cosine 0.79
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 19.4 pts · 5.1 reb · 4.7 ast · 1.5 stl per 100 (2025-26).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.2σ)
+
+**Comparables:**
+
+- [[austin-rivers|Austin Rivers]] '19 (87% similar)
+- [[pelle-larsson|Pelle Larsson]] '25 (85% similar)
+- [[amir-coffey|Amir Coffey]] '23 (83% similar)
+- [[marcus-georges-hunt|Marcus Georges-Hunt]] '18 (81% similar)
+- [[mitchell-butler|Mitchell Butler]] '98 (80% similar)
+- [[isaac-okoro|Isaac Okoro]] '25 (79% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -41,6 +41,34 @@ Closest career shapes in the era-normalized vector space:
 - [[mike-james|Mike James]] — cosine 0.91
 - [[caris-levert|Caris LeVert]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 26.8 pts · 4.4 reb · 11.5 ast · 1.9 stl per 100 (2014-15).
+
+**Strengths:**
+
+- High-volume table-setter (+2.7σ vs era)
+- Heavy shot volume, focal scoring option (+1.5σ vs era)
+- Featured, high-usage scoring role (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.2σ)
+- Turnover rate well above era (+1.1σ)
+
+**Comparables:**
+
+- [[nate-robinson|Nate Robinson]] '10 (92% similar)
+- [[tim-hardaway|Tim Hardaway]] '97 (92% similar)
+- [[baron-davis|Baron Davis]] '04 (92% similar)
+- [[d-angelo-russell|D'Angelo Russell]] '19 (92% similar)
+- [[mike-james|Mike James]] '06 (91% similar)
+- [[caris-levert|Caris LeVert]] '20 (91% similar)
+
+**Career shape:** Charted 8 seasons (2009-10–2016-17). Consistent Scoring Volume + Shot Volume profile across his career.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -37,6 +37,33 @@ Closest career shapes in the era-normalized vector space:
 - [[erick-strickland|Erick Strickland]] — cosine 0.86
 - [[shannon-brown|Shannon Brown]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 21.6 pts · 6.8 reb · 6.4 ast · 1.9 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+1.3σ vs era)
+- High-volume three-point shooter (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.4σ)
+- Turnover rate well above era (+1.4σ)
+
+**Comparables:**
+
+- [[juan-dixon|Juan Dixon]] '09 (91% similar)
+- [[will-solomon|Will Solomon]] '02 (89% similar)
+- [[vonteego-cummings|Vonteego Cummings]] '01 (88% similar)
+- [[jannero-pargo|Jannero Pargo]] '14 (87% similar)
+- [[erick-strickland|Erick Strickland]] '01 (86% similar)
+- [[shannon-brown|Shannon Brown]] '08 (86% similar)
+
+**Career shape:** Charted 4 seasons (2021-22–2025-26). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Playmaking + Steals identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

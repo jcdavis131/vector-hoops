@@ -37,6 +37,33 @@ Closest career shapes in the era-normalized vector space:
 - [[brandon-knight|Brandon Knight]] — cosine 0.89
 - [[collin-sexton|Collin Sexton]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** SG · Scoring Volume + Shot Volume. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 25.0 pts · 6.0 reb · 8.0 ast · 1.3 stl per 100 (2022-23).
+
+**Strengths:**
+
+- High-volume table-setter (+1.3σ vs era)
+- Draws contact, gets to the line often (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.4σ)
+- On-court net impact well below era (−1.9σ)
+
+**Comparables:**
+
+- [[scoot-henderson|Scoot Henderson]] '24 (94% similar)
+- [[emmanuel-mudiay|Emmanuel Mudiay]] '16 (93% similar)
+- [[tony-wroten|Tony Wroten]] '15 (92% similar)
+- [[keyonte-george|Keyonte George]] '26 (91% similar)
+- [[brandon-knight|Brandon Knight]] '20 (89% similar)
+- [[collin-sexton|Collin Sexton]] '21 (87% similar)
+
+**Career shape:** Charted 4 seasons (2022-23–2025-26). Consistent Scoring Volume + Shot Volume profile across his career.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

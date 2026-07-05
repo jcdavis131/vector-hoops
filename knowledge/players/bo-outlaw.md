@@ -44,6 +44,34 @@ Closest career shapes in the era-normalized vector space:
 - [[amir-johnson|Amir Johnson]] — cosine 0.88
 - [[ronny-turiaf|Ronny Turiaf]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PF · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 10.4 pts · 11.1 reb · 5.2 ast · 3.1 blk per 100 (1999-00).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+3.0σ vs era)
+- Elite rim protection (+1.8σ vs era)
+- Active hands, disrupts passing lanes (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−2.0σ)
+- Free-throw touch well below era (−2.0σ)
+
+**Comparables:**
+
+- [[andris-biedrins|Andris Biedrins]] '13 (91% similar)
+- [[don-reid|Don Reid]] '01 (89% similar)
+- [[lucas-nogueira|Lucas Nogueira]] '17 (89% similar)
+- [[oliver-miller|Oliver Miller]] '00 (89% similar)
+- [[amir-johnson|Amir Johnson]] '08 (88% similar)
+- [[ronny-turiaf|Ronny Turiaf]] '14 (88% similar)
+
+**Career shape:** Charted 11 seasons (1996-97–2006-07). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

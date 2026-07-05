@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[garrett-temple|Garrett Temple]] — cosine 0.89
 - [[donald-whiteside|Donald Whiteside]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 14.5 pts · 4.5 reb · 3.2 ast · 1.9 stl per 100 (2012-13).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.1σ)
+- Finishing efficiency well below era (−1.0σ)
+
+**Comparables:**
+
+- [[markel-brown|Markel Brown]] '15 (92% similar)
+- [[damien-wilkins|Damien Wilkins]] '18 (91% similar)
+- [[fred-jones|Fred Jones]] '03 (89% similar)
+- [[royal-ivey|Royal Ivey]] '12 (89% similar)
+- [[garrett-temple|Garrett Temple]] '11 (89% similar)
+- [[donald-whiteside|Donald Whiteside]] '97 (89% similar)
+
+**Career shape:** Charted 1 season (2012-13). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -37,6 +37,32 @@ Closest career shapes in the era-normalized vector space:
 - [[kiwane-garris|Kiwane Garris]] — cosine 0.84
 - [[markel-brown|Markel Brown]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** SF · Playmaking + Steals. Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 12.5 pts · 5.8 reb · 5.5 ast · 1.6 stl per 100 (2002-03).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−3.3σ)
+- Defensive rebounding well below era (−1.3σ)
+
+**Comparables:**
+
+- [[kevin-edwards|Kevin Edwards]] '97 (86% similar)
+- [[keith-mcleod|Keith McLeod]] '04 (86% similar)
+- [[donald-whiteside|Donald Whiteside]] '97 (85% similar)
+- [[chasson-randle|Chasson Randle]] '21 (85% similar)
+- [[kiwane-garris|Kiwane Garris]] '98 (84% similar)
+- [[markel-brown|Markel Brown]] '15 (83% similar)
+
+**Career shape:** Charted 4 seasons (2002-03–2005-06). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

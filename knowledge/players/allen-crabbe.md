@@ -39,6 +39,32 @@ Closest career shapes in the era-normalized vector space:
 - [[wayne-ellington|Wayne Ellington]] — cosine 0.94
 - [[aj-green|AJ Green]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 11.9 pts · 5.4 reb · 2.3 ast · 1.0 stl per 100 (2019-20).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.4σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.4σ)
+- Finishing efficiency well below era (−1.4σ)
+
+**Comparables:**
+
+- [[mychal-mulder|Mychal Mulder]] '22 (95% similar)
+- [[reggie-bullock-jr|Reggie Bullock Jr.]] '24 (95% similar)
+- [[cam-reynolds|Cam Reynolds]] '19 (95% similar)
+- [[jason-kapono|Jason Kapono]] '11 (94% similar)
+- [[wayne-ellington|Wayne Ellington]] '17 (94% similar)
+- [[aj-green|AJ Green]] '23 (93% similar)
+
+**Career shape:** Charted 6 seasons (2014-15–2019-20). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

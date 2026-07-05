@@ -37,6 +37,33 @@ Closest career shapes in the era-normalized vector space:
 - [[bones-hyland|Bones Hyland]] — cosine 0.88
 - [[juan-dixon|Juan Dixon]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** SG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 28.2 pts · 5.2 reb · 4.1 ast · 1.7 stl per 100 (2007-08).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+1.8σ vs era)
+- High-volume three-point shooter (+1.6σ vs era)
+- Featured, high-usage scoring role (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.8σ)
+
+**Comparables:**
+
+- [[stephen-jackson|Stephen Jackson]] '02 (91% similar)
+- [[markus-howard|Markus Howard]] '22 (91% similar)
+- [[o-j-mayo|O.J. Mayo]] '14 (90% similar)
+- [[flip-murray|Flip Murray]] '08 (88% similar)
+- [[bones-hyland|Bones Hyland]] '25 (88% similar)
+- [[juan-dixon|Juan Dixon]] '09 (88% similar)
+
+**Career shape:** Charted 4 seasons (2005-06–2008-09). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

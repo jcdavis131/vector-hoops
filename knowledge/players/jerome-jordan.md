@@ -35,6 +35,34 @@ Closest career shapes in the era-normalized vector space:
 - [[brandon-bass|Brandon Bass]] — cosine 0.88
 - [[joan-beringer|Joan Beringer]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 18.3 pts · 11.8 reb · 1.7 ast · 2.6 blk per 100 (2011-12).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+2.0σ vs era)
+- Rarely turns the ball over (−1.9σ vs era)
+- Strong net on-court impact (+1.7σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.9σ)
+- Three-point accuracy well below era (−1.5σ)
+
+**Comparables:**
+
+- [[miroslav-raduljica|Miroslav Raduljica]] '14 (91% similar)
+- [[tyler-zeller|Tyler Zeller]] '17 (91% similar)
+- [[robin-lopez|Robin Lopez]] '14 (90% similar)
+- [[taj-gibson|Taj Gibson]] '21 (89% similar)
+- [[brandon-bass|Brandon Bass]] '17 (88% similar)
+- [[joan-beringer|Joan Beringer]] '26 (88% similar)
+
+**Career shape:** Charted 2 seasons (2011-12–2014-15). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

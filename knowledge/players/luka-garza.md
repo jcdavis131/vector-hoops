@@ -38,6 +38,33 @@ Closest career shapes in the era-normalized vector space:
 - [[marvin-bagley-iii|Marvin Bagley III]] — cosine 0.70
 - [[dominique-wilkins|Dominique Wilkins]] — cosine 0.70
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 35.5 pts · 11.1 reb · 1.4 ast · 1.4 stl per 100 (2023-24).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+2.7σ vs era)
+- Featured, high-usage scoring role (+2.2σ vs era)
+- Draws contact, gets to the line often (+2.2σ vs era)
+
+**Areas of concern:**
+
+- Table-setting role well below era (−1.3σ)
+
+**Comparables:**
+
+- [[shawn-long|Shawn Long]] '17 (78% similar)
+- [[matt-harpring|Matt Harpring]] '03 (77% similar)
+- [[nikola-pekovic|Nikola Pekovic]] '12 (72% similar)
+- [[reggie-slater|Reggie Slater]] '03 (72% similar)
+- [[marvin-bagley-iii|Marvin Bagley III]] '26 (70% similar)
+- [[dominique-wilkins|Dominique Wilkins]] '97 (70% similar)
+
+**Career shape:** Charted 5 seasons (2021-22–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

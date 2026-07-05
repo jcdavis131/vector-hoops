@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[david-noel|David Noel]] — cosine 0.79
 - [[dragan-tarlac|Dragan Tarlac]] — cosine 0.78
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 13.3 pts · 10.0 reb · 5.5 ast · 1.2 blk per 100 (1996-97).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+1.4σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−3.1σ)
+- Finishing efficiency well below era (−1.9σ)
+
+**Comparables:**
+
+- [[nemanja-nedovic|Nemanja Nedovic]] '14 (85% similar)
+- [[javon-freeman-liberty|Javon Freeman-Liberty]] '24 (83% similar)
+- [[sergei-monia|Sergei Monia]] '06 (81% similar)
+- [[mfiondu-kabengele|Mfiondu Kabengele]] '21 (80% similar)
+- [[david-noel|David Noel]] '07 (79% similar)
+- [[dragan-tarlac|Dragan Tarlac]] '01 (78% similar)
+
+**Career shape:** Charted 1 season (1996-97). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

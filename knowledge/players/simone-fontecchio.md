@@ -37,6 +37,32 @@ Closest career shapes in the era-normalized vector space:
 - [[pat-garrity|Pat Garrity]] — cosine 0.92
 - [[pj-hairston|PJ Hairston]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 19.5 pts · 5.1 reb · 2.5 ast · 0.9 stl per 100 (2022-23).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.4σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.8σ)
+- Finishing efficiency well below era (−1.3σ)
+
+**Comparables:**
+
+- [[matt-ryan|Matt Ryan]] '25 (95% similar)
+- [[jordan-hawkins|Jordan Hawkins]] '25 (94% similar)
+- [[mychal-mulder|Mychal Mulder]] '22 (93% similar)
+- [[timothe-luwawu-cabarrot|Timothe Luwawu-Cabarrot]] '19 (92% similar)
+- [[pat-garrity|Pat Garrity]] '02 (92% similar)
+- [[pj-hairston|PJ Hairston]] '15 (91% similar)
+
+**Career shape:** Charted 4 seasons (2022-23–2025-26). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

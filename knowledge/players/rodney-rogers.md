@@ -42,6 +42,33 @@ Closest career shapes in the era-normalized vector space:
 - [[stephen-jackson|Stephen Jackson]] — cosine 0.79
 - [[paul-george|Paul George]] — cosine 0.79
 
+## Scouting report
+
+**Play style:** PF · Scoring Volume + Shot Volume. Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 24.7 pts · 9.8 reb · 3.7 ast · 2.1 stl per 100 (1999-00).
+
+**Strengths:**
+
+- Strong net on-court impact (+1.7σ vs era)
+- Knockdown three-point shooter (+1.2σ vs era)
+- Featured, high-usage scoring role (+1.1σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[jerald-honeycutt|Jerald Honeycutt]] '98 (86% similar)
+- [[antoine-walker|Antoine Walker]] '01 (83% similar)
+- [[lamond-murray|Lamond Murray]] '04 (82% similar)
+- [[rodney-white|Rodney White]] '03 (81% similar)
+- [[stephen-jackson|Stephen Jackson]] '02 (79% similar)
+- [[paul-george|Paul George]] '22 (79% similar)
+
+**Career shape:** Charted 9 seasons (1996-97–2004-05). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -36,6 +36,33 @@ Closest career shapes in the era-normalized vector space:
 - [[tyler-hansbrough|Tyler Hansbrough]] — cosine 0.85
 - [[hakim-warrick|Hakim Warrick]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 16.3 pts · 13.5 reb · 1.9 ast · 1.6 stl per 100 (2004-05).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+3.9σ vs era)
+- Relentless on the offensive glass (+1.8σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.7σ)
+- On-court net impact well below era (−1.4σ)
+
+**Comparables:**
+
+- [[obinna-ekezie|Obinna Ekezie]] '02 (94% similar)
+- [[leon-powe|Leon Powe]] '08 (89% similar)
+- [[nathan-knight|Nathan Knight]] '22 (86% similar)
+- [[reggie-slater|Reggie Slater]] '03 (86% similar)
+- [[tyler-hansbrough|Tyler Hansbrough]] '16 (85% similar)
+- [[hakim-warrick|Hakim Warrick]] '13 (83% similar)
+
+**Career shape:** Charted 3 seasons (2001-02–2004-05). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

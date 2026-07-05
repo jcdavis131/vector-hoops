@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[god-shammgod|God Shammgod]] — cosine 0.81
 - [[dalano-banton|Dalano Banton]] — cosine 0.79
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 15.8 pts · 6.8 reb · 7.7 ast · 1.5 stl per 100 (2010-11).
+
+**Strengths:**
+
+- High-volume table-setter (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.8σ)
+- Finishing efficiency well below era (−1.5σ)
+
+**Comparables:**
+
+- [[joseph-forte|Joseph Forte]] '03 (88% similar)
+- [[rob-dillingham|Rob Dillingham]] '25 (84% similar)
+- [[jd-davison|JD Davison]] '25 (83% similar)
+- [[marquis-teague|Marquis Teague]] '14 (81% similar)
+- [[god-shammgod|God Shammgod]] '98 (81% similar)
+- [[dalano-banton|Dalano Banton]] '23 (79% similar)
+
+**Career shape:** Charted 1 season (2010-11). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

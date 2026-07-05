@@ -35,6 +35,34 @@ Closest career shapes in the era-normalized vector space:
 - [[ervin-johnson|Ervin Johnson]] — cosine 0.86
 - [[corie-blount|Corie Blount]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 9.3 pts · 16.1 reb · 3.3 ast · 2.1 blk per 100 (2021-22).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+2.0σ vs era)
+- Elite rim protection (+1.4σ vs era)
+- Rarely turns the ball over (−1.2σ vs era)
+
+**Areas of concern:**
+
+- Scoring load well below era (−1.8σ)
+- Shot volume well below era (−1.7σ)
+
+**Comparables:**
+
+- [[evan-eschmeyer|Evan Eschmeyer]] '03 (91% similar)
+- [[noah-penda|Noah Penda]] '26 (88% similar)
+- [[jamie-feick|Jamie Feick]] '00 (88% similar)
+- [[ben-wallace|Ben Wallace]] '03 (87% similar)
+- [[ervin-johnson|Ervin Johnson]] '05 (86% similar)
+- [[corie-blount|Corie Blount]] '98 (85% similar)
+
+**Career shape:** Charted 2 seasons (2021-22–2022-23). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

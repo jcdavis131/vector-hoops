@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[wes-iwundu|Wes Iwundu]] — cosine 0.81
 - [[sergey-karasev|Sergey Karasev]] — cosine 0.80
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 9.4 pts · 8.1 reb · 4.0 ast · 1.1 stl per 100 (2021-22).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.8σ)
+- Scoring load well below era (−1.7σ)
+
+**Comparables:**
+
+- [[vincent-askew|Vincent Askew]] '98 (85% similar)
+- [[sion-james|Sion James]] '26 (83% similar)
+- [[yaroslav-korolev|Yaroslav Korolev]] '06 (83% similar)
+- [[xavier-mcdaniel|Xavier McDaniel]] '98 (82% similar)
+- [[wes-iwundu|Wes Iwundu]] '21 (81% similar)
+- [[sergey-karasev|Sergey Karasev]] '14 (80% similar)
+
+**Career shape:** Charted 1 season (2021-22). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

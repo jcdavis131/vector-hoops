@@ -36,6 +36,31 @@ Closest career shapes in the era-normalized vector space:
 - [[ky-bowman|Ky Bowman]] — cosine 0.84
 - [[elliot-perry|Elliot Perry]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** SF · Playmaking + Steals. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 14.7 pts · 6.3 reb · 5.7 ast · 3.2 stl per 100 (1998-99).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.9σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.0σ)
+
+**Comparables:**
+
+- [[vincent-yarbrough|Vincent Yarbrough]] '03 (86% similar)
+- [[rusty-larue|Rusty LaRue]] '99 (85% similar)
+- [[bronny-james|Bronny James]] '25 (85% similar)
+- [[marcus-banks|Marcus Banks]] '09 (84% similar)
+- [[ky-bowman|Ky Bowman]] '20 (84% similar)
+- [[elliot-perry|Elliot Perry]] '99 (84% similar)
+
+**Career shape:** Charted 3 seasons (1996-97–1998-99). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Playmaking + Steals identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

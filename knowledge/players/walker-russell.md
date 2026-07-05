@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[peyton-siva|Peyton Siva]] — cosine 0.93
 - [[daishen-nix|Daishen Nix]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 12.1 pts · 3.7 reb · 8.3 ast · 2.6 stl per 100 (2011-12).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.6σ vs era)
+- High-volume table-setter (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.7σ)
+- Defensive rebounding well below era (−1.5σ)
+
+**Comparables:**
+
+- [[diante-garrett|Diante Garrett]] '13 (96% similar)
+- [[junior-harrington|Junior Harrington]] '03 (96% similar)
+- [[mardy-collins|Mardy Collins]] '10 (96% similar)
+- [[rick-brunson|Rick Brunson]] '99 (93% similar)
+- [[peyton-siva|Peyton Siva]] '14 (93% similar)
+- [[daishen-nix|Daishen Nix]] '22 (92% similar)
+
+**Career shape:** Charted 1 season (2011-12). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

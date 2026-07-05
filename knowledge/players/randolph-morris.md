@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[mitch-mcgary|Mitch McGary]] — cosine 0.82
 - [[samardo-samuels|Samardo Samuels]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 15.6 pts · 10.2 reb · 0.6 ast · 1.1 stl per 100 (2007-08).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+1.3σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−4.0σ)
+- Free-throw touch well below era (−1.9σ)
+
+**Comparables:**
+
+- [[chris-livingston|Chris Livingston]] '25 (88% similar)
+- [[donnell-harvey|Donnell Harvey]] '02 (86% similar)
+- [[alexander-johnson|Alexander Johnson]] '08 (85% similar)
+- [[jordan-mickey|Jordan Mickey]] '17 (82% similar)
+- [[mitch-mcgary|Mitch McGary]] '16 (82% similar)
+- [[samardo-samuels|Samardo Samuels]] '11 (82% similar)
+
+**Career shape:** Charted 3 seasons (2007-08–2009-10). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

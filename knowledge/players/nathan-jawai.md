@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[nathan-mensah|Nathan Mensah]] — cosine 0.87
 - [[jordan-mickey|Jordan Mickey]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 14.3 pts · 11.9 reb · 2.8 ast · 1.1 stl per 100 (2009-10).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+1.8σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.5σ)
+- On-court net impact well below era (−1.2σ)
+
+**Comparables:**
+
+- [[colin-castleton|Colin Castleton]] '25 (92% similar)
+- [[rakeem-christmas|Rakeem Christmas]] '17 (89% similar)
+- [[jeremy-sochan|Jeremy Sochan]] '26 (87% similar)
+- [[josh-powell|Josh Powell]] '07 (87% similar)
+- [[nathan-mensah|Nathan Mensah]] '24 (87% similar)
+- [[jordan-mickey|Jordan Mickey]] '17 (85% similar)
+
+**Career shape:** Charted 1 season (2009-10). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

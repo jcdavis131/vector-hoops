@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[justin-robinson|Justin Robinson]] — cosine 0.84
 - [[jamison-brewer|Jamison Brewer]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 15.9 pts · 5.5 reb · 3.7 ast · 2.4 stl per 100 (2025-26).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.3σ vs era)
+- Active hands, disrupts passing lanes (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.2σ)
+- Finishing efficiency well below era (−1.1σ)
+
+**Comparables:**
+
+- [[chris-robinson|Chris Robinson]] '98 (90% similar)
+- [[charles-r-jones|Charles R. Jones]] '00 (89% similar)
+- [[rashad-vaughn|Rashad Vaughn]] '17 (85% similar)
+- [[sasha-pavlovic|Sasha Pavlovic]] '13 (84% similar)
+- [[justin-robinson|Justin Robinson]] '22 (84% similar)
+- [[jamison-brewer|Jamison Brewer]] '05 (84% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

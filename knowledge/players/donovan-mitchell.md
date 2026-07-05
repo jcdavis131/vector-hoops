@@ -42,6 +42,33 @@ Closest career shapes in the era-normalized vector space:
 - [[bradley-beal|Bradley Beal]] — cosine 0.94
 - [[damian-lillard|Damian Lillard]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 38.0 pts · 6.4 reb · 7.5 ast · 1.4 stl per 100 (2020-21).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+2.8σ vs era)
+- Featured, high-usage scoring role (+2.7σ vs era)
+- Draws contact, gets to the line often (+2.0σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.5σ)
+
+**Comparables:**
+
+- [[anthony-edwards|Anthony Edwards]] '25 (97% similar)
+- [[kobe-bryant|Kobe Bryant]] '06 (96% similar)
+- [[kyrie-irving|Kyrie Irving]] '20 (96% similar)
+- [[stephen-curry|Stephen Curry]] '16 (95% similar)
+- [[bradley-beal|Bradley Beal]] '20 (94% similar)
+- [[damian-lillard|Damian Lillard]] '23 (92% similar)
+
+**Career shape:** Charted 9 seasons (2017-18–2025-26). Consistent Scoring Volume + Shot Volume profile across his career.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

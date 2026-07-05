@@ -41,6 +41,34 @@ Closest career shapes in the era-normalized vector space:
 - [[damian-jones|Damian Jones]] — cosine 0.85
 - [[tony-bradley|Tony Bradley]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 17.7 pts · 14.0 reb · 2.5 ast · 2.8 blk per 100 (2019-20).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+4.0σ vs era)
+- Efficient finisher inside the arc (+2.4σ vs era)
+- Elite rim protection (+1.9σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.8σ)
+- Three-point volume well below era (−1.7σ)
+
+**Comparables:**
+
+- [[skal-labissiere|Skal Labissiere]] '20 (93% similar)
+- [[karlo-matkovic|Karlo Matković]] '26 (88% similar)
+- [[isaiah-stewart|Isaiah Stewart]] '25 (86% similar)
+- [[kai-jones|Kai Jones]] '22 (86% similar)
+- [[damian-jones|Damian Jones]] '19 (85% similar)
+- [[tony-bradley|Tony Bradley]] '20 (85% similar)
+
+**Career shape:** Charted 8 seasons (2018-19–2025-26). Entered as a Rim Protection + Offensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

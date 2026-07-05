@@ -46,6 +46,33 @@ Closest career shapes in the era-normalized vector space:
 - [[isaiah-thomas|Isaiah Thomas]] — cosine 0.94
 - [[zach-lavine|Zach LaVine]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** SG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 39.3 pts · 5.5 reb · 7.8 ast · 1.6 stl per 100 (2019-20).
+
+**Strengths:**
+
+- Featured, high-usage scoring role (+3.0σ vs era)
+- Heavy shot volume, focal scoring option (+2.8σ vs era)
+- Draws contact, gets to the line often (+2.6σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.8σ)
+
+**Comparables:**
+
+- [[kyrie-irving|Kyrie Irving]] '20 (97% similar)
+- [[devin-booker|Devin Booker]] '19 (95% similar)
+- [[latrell-sprewell|Latrell Sprewell]] '97 (94% similar)
+- [[donovan-mitchell|Donovan Mitchell]] '21 (94% similar)
+- [[isaiah-thomas|Isaiah Thomas]] '17 (94% similar)
+- [[zach-lavine|Zach LaVine]] '21 (93% similar)
+
+**Career shape:** Charted 13 seasons (2012-13–2024-25). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

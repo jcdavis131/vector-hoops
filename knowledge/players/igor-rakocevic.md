@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[milos-teodosic|Milos Teodosic]] — cosine 0.70
 - [[malcolm-delaney|Malcolm Delaney]] — cosine 0.70
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 15.5 pts · 3.4 reb · 6.6 ast · 0.8 stl per 100 (2002-03).
+
+**Strengths:**
+
+- Strong net on-court impact (+1.7σ vs era)
+- Knockdown three-point shooter (+1.1σ vs era)
+- Draws contact, gets to the line often (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.8σ)
+- Defensive rebounding well below era (−1.6σ)
+
+**Comparables:**
+
+- [[dante-exum|Dante Exum]] '15 (81% similar)
+- [[jonathon-simmons|Jonathon Simmons]] '16 (80% similar)
+- [[john-crotty|John Crotty]] '98 (79% similar)
+- [[austin-reaves|Austin Reaves]] '26 (75% similar)
+- [[milos-teodosic|Milos Teodosic]] '18 (70% similar)
+- [[malcolm-delaney|Malcolm Delaney]] '17 (70% similar)
+
+**Career shape:** Charted 1 season (2002-03). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

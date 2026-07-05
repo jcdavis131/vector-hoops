@@ -41,6 +41,34 @@ Closest career shapes in the era-normalized vector space:
 - [[devin-harris|Devin Harris]] — cosine 0.90
 - [[mike-conley|Mike Conley]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 23.5 pts · 4.7 reb · 11.7 ast · 2.2 stl per 100 (2013-14).
+
+**Strengths:**
+
+- High-volume table-setter (+2.7σ vs era)
+- Draws contact, gets to the line often (+1.9σ vs era)
+- Active hands, disrupts passing lanes (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.5σ)
+- Defensive rebounding well below era (−1.1σ)
+
+**Comparables:**
+
+- [[jeff-teague|Jeff Teague]] '15 (94% similar)
+- [[darren-collison|Darren Collison]] '10 (94% similar)
+- [[andre-miller|Andre Miller]] '02 (92% similar)
+- [[john-stockton|John Stockton]] '01 (90% similar)
+- [[devin-harris|Devin Harris]] '09 (90% similar)
+- [[mike-conley|Mike Conley]] '13 (90% similar)
+
+**Career shape:** Charted 8 seasons (2009-10–2016-17). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

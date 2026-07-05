@@ -37,6 +37,32 @@ Closest career shapes in the era-normalized vector space:
 - [[courtney-lee|Courtney Lee]] — cosine 0.77
 - [[damion-lee|Damion Lee]] — cosine 0.76
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 22.4 pts · 4.9 reb · 3.4 ast · 2.6 stl per 100 (1996-97).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+1.4σ vs era)
+- Active hands, disrupts passing lanes (+1.3σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[chris-douglas-roberts|Chris Douglas-Roberts]] '10 (81% similar)
+- [[caron-butler|Caron Butler]] '08 (80% similar)
+- [[mikal-bridges|Mikal Bridges]] '19 (79% similar)
+- [[kentavious-caldwell-pope|Kentavious Caldwell-Pope]] '24 (78% similar)
+- [[courtney-lee|Courtney Lee]] '20 (77% similar)
+- [[damion-lee|Damion Lee]] '25 (76% similar)
+
+**Career shape:** Charted 4 seasons (1996-97–1999-00). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

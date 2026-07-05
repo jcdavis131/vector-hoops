@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[anthony-brown|Anthony Brown]] — cosine 0.90
 - [[terrance-ferguson|Terrance Ferguson]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 16.1 pts · 4.9 reb · 4.1 ast · 1.4 stl per 100 (2025-26).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.2σ)
+- Defensive rebounding well below era (−1.1σ)
+
+**Comparables:**
+
+- [[axel-toupane|Axel Toupane]] '16 (92% similar)
+- [[casey-jacobsen|Casey Jacobsen]] '08 (92% similar)
+- [[chaz-lanier|Chaz Lanier]] '26 (91% similar)
+- [[yaroslav-korolev|Yaroslav Korolev]] '06 (91% similar)
+- [[anthony-brown|Anthony Brown]] '16 (90% similar)
+- [[terrance-ferguson|Terrance Ferguson]] '20 (88% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

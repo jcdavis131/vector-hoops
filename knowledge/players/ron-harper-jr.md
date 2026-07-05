@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[matt-bullard|Matt Bullard]] — cosine 0.83
 - [[devean-george|Devean George]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 19.3 pts · 7.6 reb · 3.5 ast · 1.6 stl per 100 (2025-26).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.5σ vs era)
+- Rarely turns the ball over (−1.3σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.4σ)
+
+**Comparables:**
+
+- [[lindy-waters-iii|Lindy Waters III]] '23 (90% similar)
+- [[shawne-williams|Shawne Williams]] '12 (83% similar)
+- [[sam-hauser|Sam Hauser]] '22 (83% similar)
+- [[keegan-murray|Keegan Murray]] '26 (83% similar)
+- [[matt-bullard|Matt Bullard]] '01 (83% similar)
+- [[devean-george|Devean George]] '10 (83% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

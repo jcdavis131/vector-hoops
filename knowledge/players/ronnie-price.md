@@ -44,6 +44,33 @@ Closest career shapes in the era-normalized vector space:
 - [[shane-larkin|Shane Larkin]] — cosine 0.92
 - [[marcus-smart|Marcus Smart]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** SG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 10.0 pts · 5.8 reb · 8.9 ast · 3.4 stl per 100 (2013-14).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.9σ vs era)
+- High-volume table-setter (+1.7σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.2σ)
+- Scoring load well below era (−1.5σ)
+
+**Comparables:**
+
+- [[marko-jaric|Marko Jaric]] '03 (96% similar)
+- [[kevin-burleson|Kevin Burleson]] '06 (93% similar)
+- [[facundo-campazzo|Facundo Campazzo]] '21 (93% similar)
+- [[daniel-ewing|Daniel Ewing]] '07 (92% similar)
+- [[shane-larkin|Shane Larkin]] '16 (92% similar)
+- [[marcus-smart|Marcus Smart]] '24 (92% similar)
+
+**Career shape:** Charted 11 seasons (2005-06–2015-16). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Playmaking + Steals identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

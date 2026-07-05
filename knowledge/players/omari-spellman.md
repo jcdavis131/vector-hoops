@@ -35,6 +35,31 @@ Closest career shapes in the era-normalized vector space:
 - [[anthony-bennett|Anthony Bennett]] — cosine 0.79
 - [[linton-johnson|Linton Johnson]] — cosine 0.77
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 15.3 pts · 10.8 reb · 2.6 ast · 1.5 stl per 100 (2018-19).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+1.2σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.6σ)
+
+**Comparables:**
+
+- [[jack-white|Jack White]] '23 (85% similar)
+- [[rob-kurz|Rob Kurz]] '09 (83% similar)
+- [[taylor-hendricks|Taylor Hendricks]] '24 (80% similar)
+- [[justin-hamilton|Justin Hamilton]] '15 (80% similar)
+- [[anthony-bennett|Anthony Bennett]] '16 (79% similar)
+- [[linton-johnson|Linton Johnson]] '04 (77% similar)
+
+**Career shape:** Charted 2 seasons (2018-19–2019-20). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

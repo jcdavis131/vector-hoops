@@ -34,6 +34,31 @@ Closest career shapes in the era-normalized vector space:
 - [[jabari-smith-jr|Jabari Smith Jr.]] — cosine 0.78
 - [[greg-foster|Greg Foster]] — cosine 0.76
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 20.3 pts · 9.5 reb · 3.3 ast · 1.4 blk per 100 (2025-26).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.3σ)
+
+**Comparables:**
+
+- [[nassir-little|Nassir Little]] '20 (79% similar)
+- [[meyers-leonard|Meyers Leonard]] '15 (79% similar)
+- [[mike-muscala|Mike Muscala]] '14 (79% similar)
+- [[micah-potter|Micah Potter]] '25 (78% similar)
+- [[jabari-smith-jr|Jabari Smith Jr.]] '23 (78% similar)
+- [[greg-foster|Greg Foster]] '03 (76% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

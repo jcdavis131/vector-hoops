@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[quinndary-weatherspoon|Quinndary Weatherspoon]] — cosine 0.79
 - [[darrin-hancock|Darrin Hancock]] — cosine 0.78
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 15.5 pts · 8.7 reb · 4.0 ast · 2.7 stl per 100 (1997-98).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.9σ)
+- Three-point accuracy well below era (−1.3σ)
+
+**Comparables:**
+
+- [[orien-greene|Orien Greene]] '07 (85% similar)
+- [[thanasis-antetokounmpo|Thanasis Antetokounmpo]] '24 (84% similar)
+- [[j-r-giddens|J.R. Giddens]] '10 (80% similar)
+- [[brandon-davies|Brandon Davies]] '15 (80% similar)
+- [[quinndary-weatherspoon|Quinndary Weatherspoon]] '21 (79% similar)
+- [[darrin-hancock|Darrin Hancock]] '97 (78% similar)
+
+**Career shape:** Charted 3 seasons (1996-97–1999-00). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

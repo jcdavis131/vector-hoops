@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jeremy-pargo|Jeremy Pargo]] — cosine 0.90
 - [[josh-selby|Josh Selby]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 19.6 pts · 3.9 reb · 8.4 ast · 1.8 stl per 100 (2025-26).
+
+**Strengths:**
+
+- High-volume table-setter (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.5σ)
+- On-court net impact well below era (−1.3σ)
+
+**Comparables:**
+
+- [[mateen-cleaves|Mateen Cleaves]] '02 (94% similar)
+- [[jonny-flynn|Jonny Flynn]] '11 (94% similar)
+- [[nolan-smith|Nolan Smith]] '13 (92% similar)
+- [[emmanuel-mudiay|Emmanuel Mudiay]] '16 (91% similar)
+- [[jeremy-pargo|Jeremy Pargo]] '12 (90% similar)
+- [[josh-selby|Josh Selby]] '12 (90% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

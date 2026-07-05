@@ -36,6 +36,33 @@ Closest career shapes in the era-normalized vector space:
 - [[lionel-chalmers|Lionel Chalmers]] — cosine 0.89
 - [[sebastian-telfair|Sebastian Telfair]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 16.1 pts · 4.1 reb · 9.2 ast · 1.5 stl per 100 (1999-00).
+
+**Strengths:**
+
+- High-volume table-setter (+1.8σ vs era)
+- High-volume three-point shooter (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.4σ)
+- On-court net impact well below era (−1.5σ)
+
+**Comparables:**
+
+- [[will-solomon|Will Solomon]] '02 (92% similar)
+- [[nolan-smith|Nolan Smith]] '13 (90% similar)
+- [[marcus-williams|Marcus Williams]] '07 (89% similar)
+- [[jeremy-pargo|Jeremy Pargo]] '12 (89% similar)
+- [[lionel-chalmers|Lionel Chalmers]] '05 (89% similar)
+- [[sebastian-telfair|Sebastian Telfair]] '10 (89% similar)
+
+**Career shape:** Charted 3 seasons (1999-00–2001-02). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

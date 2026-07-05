@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[devin-green|Devin Green]] — cosine 0.88
 - [[jeryl-sasser|Jeryl Sasser]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 13.8 pts · 9.2 reb · 3.5 ast · 1.4 stl per 100 (2021-22).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.0σ)
+- Scoring load well below era (−1.0σ)
+
+**Comparables:**
+
+- [[sekou-doumbouya|Sekou Doumbouya]] '20 (89% similar)
+- [[cody-williams|Cody Williams]] '25 (89% similar)
+- [[britton-johnsen|Britton Johnsen]] '04 (88% similar)
+- [[nigel-hayes-davis|Nigel Hayes-Davis]] '26 (88% similar)
+- [[devin-green|Devin Green]] '06 (88% similar)
+- [[jeryl-sasser|Jeryl Sasser]] '03 (85% similar)
+
+**Career shape:** Charted 2 seasons (2020-21–2021-22). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

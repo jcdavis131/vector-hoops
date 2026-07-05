@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jett-howard|Jett Howard]] — cosine 0.89
 - [[johnny-juzang|Johnny Juzang]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 20.0 pts · 6.1 reb · 2.7 ast · 1.1 stl per 100 (2020-21).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.1σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.6σ)
+- On-court net impact well below era (−1.6σ)
+
+**Comparables:**
+
+- [[carsen-edwards|Carsen Edwards]] '21 (91% similar)
+- [[troy-daniels|Troy Daniels]] '15 (91% similar)
+- [[pj-hairston|PJ Hairston]] '15 (90% similar)
+- [[kareem-rush|Kareem Rush]] '09 (89% similar)
+- [[jett-howard|Jett Howard]] '24 (89% similar)
+- [[johnny-juzang|Johnny Juzang]] '23 (88% similar)
+
+**Career shape:** Charted 2 seasons (2020-21–2021-22). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

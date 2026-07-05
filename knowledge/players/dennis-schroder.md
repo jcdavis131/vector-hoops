@@ -46,6 +46,33 @@ Closest career shapes in the era-normalized vector space:
 - [[scoot-henderson|Scoot Henderson]] — cosine 0.93
 - [[reggie-jackson|Reggie Jackson]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 26.7 pts · 6.2 reb · 10.6 ast · 2.1 stl per 100 (2015-16).
+
+**Strengths:**
+
+- High-volume table-setter (+2.3σ vs era)
+- Heavy shot volume, focal scoring option (+1.7σ vs era)
+- Featured, high-usage scoring role (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.9σ)
+
+**Comparables:**
+
+- [[darius-garland|Darius Garland]] '22 (96% similar)
+- [[goran-dragic|Goran Dragic]] '17 (95% similar)
+- [[stephon-marbury|Stephon Marbury]] '01 (94% similar)
+- [[deron-williams|Deron Williams]] '12 (94% similar)
+- [[scoot-henderson|Scoot Henderson]] '24 (93% similar)
+- [[reggie-jackson|Reggie Jackson]] '16 (92% similar)
+
+**Career shape:** Charted 13 seasons (2013-14–2025-26). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -34,6 +34,31 @@ Closest career shapes in the era-normalized vector space:
 - [[kam-jones|Kam Jones]] — cosine 0.77
 - [[sonny-weems|Sonny Weems]] — cosine 0.76
 
+## Scouting report
+
+**Play style:** PG · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 16.3 pts · 6.7 reb · 8.3 ast · 1.1 stl per 100 (2022-23).
+
+**Strengths:**
+
+- High-volume table-setter (+1.4σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.3σ)
+
+**Comparables:**
+
+- [[jermaine-jackson|Jermaine Jackson]] '06 (85% similar)
+- [[bub-carrington|Bub Carrington]] '26 (83% similar)
+- [[donald-sloan|Donald Sloan]] '12 (83% similar)
+- [[r-j-hampton|R.J. Hampton]] '22 (78% similar)
+- [[kam-jones|Kam Jones]] '26 (77% similar)
+- [[sonny-weems|Sonny Weems]] '16 (76% similar)
+
+**Career shape:** Charted 1 season (2022-23). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -42,6 +42,34 @@ Closest career shapes in the era-normalized vector space:
 - [[nemanja-bjelica|Nemanja Bjelica]] — cosine 0.76
 - [[michael-cage|Michael Cage]] — cosine 0.75
 
+## Scouting report
+
+**Play style:** PF · Playmaking + Steals. Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 12.9 pts · 8.1 reb · 5.9 ast · 2.1 stl per 100 (2014-15).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+1.2σ vs era)
+- Knockdown three-point shooter (+1.1σ vs era)
+- Strong net on-court impact (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.6σ)
+- Turnover rate well above era (+1.2σ)
+
+**Comparables:**
+
+- [[julyan-stone|Julyan Stone]] '18 (82% similar)
+- [[juan-toscano-anderson|Juan Toscano-Anderson]] '21 (80% similar)
+- [[john-konchar|John Konchar]] '20 (78% similar)
+- [[usman-garuba|Usman Garuba]] '22 (78% similar)
+- [[nemanja-bjelica|Nemanja Bjelica]] '22 (76% similar)
+- [[michael-cage|Michael Cage]] '00 (75% similar)
+
+**Career shape:** Charted 9 seasons (2008-09–2016-17). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Playmaking + Steals identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

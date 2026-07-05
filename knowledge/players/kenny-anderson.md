@@ -42,6 +42,33 @@ Closest career shapes in the era-normalized vector space:
 - [[tyus-jones|Tyus Jones]] — cosine 0.91
 - [[luke-ridnour|Luke Ridnour]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 24.1 pts · 6.1 reb · 9.8 ast · 2.7 stl per 100 (1996-97).
+
+**Strengths:**
+
+- High-volume table-setter (+1.9σ vs era)
+- Active hands, disrupts passing lanes (+1.4σ vs era)
+- Strong net on-court impact (+1.0σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[travis-best|Travis Best]] '04 (96% similar)
+- [[raymond-felton|Raymond Felton]] '11 (93% similar)
+- [[alvin-williams|Alvin Williams]] '01 (91% similar)
+- [[elliot-perry|Elliot Perry]] '99 (91% similar)
+- [[tyus-jones|Tyus Jones]] '18 (91% similar)
+- [[luke-ridnour|Luke Ridnour]] '06 (91% similar)
+
+**Career shape:** Charted 9 seasons (1996-97–2004-05). Consistent Scoring Volume + Shot Volume profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -44,6 +44,34 @@ Closest career shapes in the era-normalized vector space:
 - [[samuel-dalembert|Samuel Dalembert]] — cosine 0.90
 - [[erick-dampier|Erick Dampier]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** PF · Rim Protection + Offensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 15.3 pts · 18.3 reb · 0.9 ast · 3.4 blk per 100 (2008-09).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+3.9σ vs era)
+- Strong presence on the defensive glass (+2.4σ vs era)
+- Elite rim protection (+2.0σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.2σ)
+- Table-setting role well below era (−1.1σ)
+
+**Comparables:**
+
+- [[dewayne-dedmon|Dewayne Dedmon]] '17 (92% similar)
+- [[deandre-jordan|DeAndre Jordan]] '16 (91% similar)
+- [[dikembe-mutombo|Dikembe Mutombo]] '00 (91% similar)
+- [[tyson-chandler|Tyson Chandler]] '20 (91% similar)
+- [[samuel-dalembert|Samuel Dalembert]] '13 (90% similar)
+- [[erick-dampier|Erick Dampier]] '97 (90% similar)
+
+**Career shape:** Charted 11 seasons (2008-09–2018-19). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

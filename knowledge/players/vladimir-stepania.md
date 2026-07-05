@@ -39,6 +39,34 @@ Closest career shapes in the era-normalized vector space:
 - [[thomas-robinson|Thomas Robinson]] — cosine 0.88
 - [[david-vaughn|David Vaughn]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 17.0 pts · 10.7 reb · 0.7 ast · 2.5 blk per 100 (1999-00).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+1.4σ vs era)
+- Elite rim protection (+1.3σ vs era)
+- Relentless on the offensive glass (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.3σ)
+- Turnover rate well above era (+2.1σ)
+
+**Comparables:**
+
+- [[nazr-mohammed|Nazr Mohammed]] '15 (91% similar)
+- [[pops-mensah-bonsu|Pops Mensah-Bonsu]] '10 (90% similar)
+- [[shawnelle-scott|Shawnelle Scott]] '01 (90% similar)
+- [[precious-achiuwa|Precious Achiuwa]] '21 (89% similar)
+- [[thomas-robinson|Thomas Robinson]] '16 (88% similar)
+- [[david-vaughn|David Vaughn]] '97 (87% similar)
+
+**Career shape:** Charted 6 seasons (1998-99–2003-04). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

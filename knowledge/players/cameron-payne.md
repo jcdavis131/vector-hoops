@@ -43,6 +43,34 @@ Closest career shapes in the era-normalized vector space:
 - [[mike-james|Mike James]] — cosine 0.94
 - [[marcus-sasser|Marcus Sasser]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 20.0 pts · 5.4 reb · 7.1 ast · 2.9 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.9σ vs era)
+- High-volume three-point shooter (+1.4σ vs era)
+- Rarely turns the ball over (−1.3σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.2σ)
+- Offensive-glass activity well below era (−1.1σ)
+
+**Comparables:**
+
+- [[raymond-felton|Raymond Felton]] '11 (96% similar)
+- [[jason-williams|Jason Williams]] '11 (94% similar)
+- [[damon-stoudamire|Damon Stoudamire]] '97 (94% similar)
+- [[rafer-alston|Rafer Alston]] '00 (94% similar)
+- [[mike-james|Mike James]] '06 (94% similar)
+- [[marcus-sasser|Marcus Sasser]] '26 (93% similar)
+
+**Career shape:** Charted 10 seasons (2015-16–2025-26). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[isaiah-rider|Isaiah Rider]] — cosine 0.87
 - [[jamal-mashburn|Jamal Mashburn]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 28.3 pts · 8.1 reb · 5.2 ast · 1.1 stl per 100 (2025-26).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.4σ vs era)
+- Featured, high-usage scoring role (+1.1σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[ray-allen|Ray Allen]] '06 (90% similar)
+- [[tyler-herro|Tyler Herro]] '22 (90% similar)
+- [[desmond-bane|Desmond Bane]] '24 (88% similar)
+- [[klay-thompson|Klay Thompson]] '15 (87% similar)
+- [[isaiah-rider|Isaiah Rider]] '00 (87% similar)
+- [[jamal-mashburn|Jamal Mashburn]] '04 (85% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

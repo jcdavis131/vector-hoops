@@ -38,6 +38,32 @@ Closest career shapes in the era-normalized vector space:
 - [[uros-slokar|Uros Slokar]] — cosine 0.71
 - [[bryant-reeves|Bryant Reeves]] — cosine 0.70
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 19.7 pts · 10.8 reb · 4.4 ast · 1.5 blk per 100 (2021-22).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.7σ)
+- Three-point volume well below era (−1.2σ)
+
+**Comparables:**
+
+- [[jahlil-okafor|Jahlil Okafor]] '18 (77% similar)
+- [[alton-ford|Alton Ford]] '02 (75% similar)
+- [[derik-queen|Derik Queen]] '26 (73% similar)
+- [[james-wiseman|James Wiseman]] '24 (73% similar)
+- [[uros-slokar|Uros Slokar]] '07 (71% similar)
+- [[bryant-reeves|Bryant Reeves]] '98 (70% similar)
+
+**Career shape:** Charted 5 seasons (2021-22–2025-26). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

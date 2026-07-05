@@ -37,6 +37,32 @@ Closest career shapes in the era-normalized vector space:
 - [[mark-bryant|Mark Bryant]] — cosine 0.89
 - [[rakeem-christmas|Rakeem Christmas]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 14.8 pts · 12.8 reb · 1.3 ast · 1.0 stl per 100 (1999-00).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.2σ)
+- Three-point accuracy well below era (−1.3σ)
+
+**Comparables:**
+
+- [[terry-davis|Terry Davis]] '01 (90% similar)
+- [[gerard-king|Gerard King]] '99 (89% similar)
+- [[jason-thompson|Jason Thompson]] '15 (89% similar)
+- [[todd-fuller|Todd Fuller]] '98 (89% similar)
+- [[mark-bryant|Mark Bryant]] '03 (89% similar)
+- [[rakeem-christmas|Rakeem Christmas]] '17 (88% similar)
+
+**Career shape:** Charted 4 seasons (1996-97–1999-00). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[chris-robinson|Chris Robinson]] — cosine 0.74
 - [[deividas-sirvydis|Deividas Sirvydis]] — cosine 0.73
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 14.8 pts · 9.0 reb · 2.8 ast · 1.6 stl per 100 (1996-97).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.7σ vs era)
+- Heavy shot volume, focal scoring option (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−3.3σ)
+- Finishing efficiency well below era (−2.7σ)
+
+**Comparables:**
+
+- [[kobe-bufkin|Kobe Bufkin]] '24 (87% similar)
+- [[bruno-sundov|Bruno Sundov]] '03 (83% similar)
+- [[kevin-murphy|Kevin Murphy]] '13 (81% similar)
+- [[adam-flagler|Adam Flagler]] '25 (76% similar)
+- [[chris-robinson|Chris Robinson]] '98 (74% similar)
+- [[deividas-sirvydis|Deividas Sirvydis]] '21 (73% similar)
+
+**Career shape:** Charted 1 season (1996-97). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

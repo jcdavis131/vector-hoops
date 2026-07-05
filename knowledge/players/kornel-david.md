@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[lari-ketner|Lari Ketner]] — cosine 0.78
 - [[chris-livingston|Chris Livingston]] — cosine 0.77
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 14.2 pts · 11.9 reb · 1.6 ast · 1.4 stl per 100 (2000-01).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+1.5σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.6σ)
+- Three-point accuracy well below era (−1.4σ)
+
+**Comparables:**
+
+- [[javon-freeman-liberty|Javon Freeman-Liberty]] '24 (84% similar)
+- [[george-zidek|George Zidek]] '97 (81% similar)
+- [[hanno-mottola|Hanno Mottola]] '01 (80% similar)
+- [[wayne-simien|Wayne Simien]] '06 (79% similar)
+- [[lari-ketner|Lari Ketner]] '00 (78% similar)
+- [[chris-livingston|Chris Livingston]] '25 (77% similar)
+
+**Career shape:** Charted 3 seasons (1998-99–2000-01). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

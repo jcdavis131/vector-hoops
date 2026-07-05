@@ -42,6 +42,32 @@ Closest career shapes in the era-normalized vector space:
 - [[christian-eyenga|Christian Eyenga]] — cosine 0.67
 - [[justin-hamilton|Justin Hamilton]] — cosine 0.67
 
+## Scouting report
+
+**Play style:** PF · Playmaking + Steals. Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 17.7 pts · 4.9 reb · 3.0 ast · 2.6 stl per 100 (2017-18).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.7σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.2σ)
+- On-court net impact well below era (−1.5σ)
+
+**Comparables:**
+
+- [[linton-johnson|Linton Johnson]] '04 (75% similar)
+- [[bruno-caboclo|Bruno Caboclo]] '20 (74% similar)
+- [[taylor-hendricks|Taylor Hendricks]] '24 (73% similar)
+- [[johan-petro|Johan Petro]] '12 (68% similar)
+- [[christian-eyenga|Christian Eyenga]] '11 (67% similar)
+- [[justin-hamilton|Justin Hamilton]] '15 (67% similar)
+
+**Career shape:** Charted 9 seasons (2008-09–2017-18). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Playmaking + Steals identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

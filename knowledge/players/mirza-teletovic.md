@@ -38,6 +38,32 @@ Closest career shapes in the era-normalized vector space:
 - [[daequan-cook|Daequan Cook]] — cosine 0.89
 - [[walt-williams|Walt Williams]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 19.8 pts · 7.1 reb · 2.1 ast · 0.6 blk per 100 (2016-17).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.4σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.8σ)
+- Finishing efficiency well below era (−1.1σ)
+
+**Comparables:**
+
+- [[tracy-murray|Tracy Murray]] '02 (90% similar)
+- [[marcus-landry|Marcus Landry]] '10 (90% similar)
+- [[quentin-richardson|Quentin Richardson]] '05 (89% similar)
+- [[brian-cook|Brian Cook]] '09 (89% similar)
+- [[daequan-cook|Daequan Cook]] '11 (89% similar)
+- [[walt-williams|Walt Williams]] '03 (88% similar)
+
+**Career shape:** Charted 5 seasons (2012-13–2016-17). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

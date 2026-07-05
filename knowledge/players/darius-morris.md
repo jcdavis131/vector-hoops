@@ -37,6 +37,32 @@ Closest career shapes in the era-normalized vector space:
 - [[kendall-marshall|Kendall Marshall]] — cosine 0.88
 - [[jonny-flynn|Jonny Flynn]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 14.6 pts · 5.0 reb · 6.7 ast · 0.6 stl per 100 (2011-12).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.9σ)
+- On-court net impact well below era (−2.2σ)
+
+**Comparables:**
+
+- [[jeremy-pargo|Jeremy Pargo]] '12 (91% similar)
+- [[eric-maynor|Eric Maynor]] '14 (89% similar)
+- [[nolan-smith|Nolan Smith]] '13 (89% similar)
+- [[dean-oliver|Dean Oliver]] '02 (88% similar)
+- [[kendall-marshall|Kendall Marshall]] '14 (88% similar)
+- [[jonny-flynn|Jonny Flynn]] '11 (86% similar)
+
+**Career shape:** Charted 4 seasons (2011-12–2014-15). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

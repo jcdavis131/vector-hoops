@@ -40,6 +40,34 @@ Closest career shapes in the era-normalized vector space:
 - [[sam-merrill|Sam Merrill]] — cosine 0.94
 - [[dale-ellis|Dale Ellis]] — cosine 0.94
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 21.9 pts · 5.2 reb · 2.3 ast · 0.8 stl per 100 (2019-20).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.1σ vs era)
+- Reliable touch from the free-throw line (+1.6σ vs era)
+- Strong net on-court impact (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Offensive-glass activity well below era (−1.2σ)
+- Ball-hawking activity well below era (−1.2σ)
+
+**Comparables:**
+
+- [[max-strus|Max Strus]] '21 (97% similar)
+- [[kyle-korver|Kyle Korver]] '04 (95% similar)
+- [[pat-garrity|Pat Garrity]] '02 (94% similar)
+- [[aj-green|AJ Green]] '23 (94% similar)
+- [[sam-merrill|Sam Merrill]] '24 (94% similar)
+- [[dale-ellis|Dale Ellis]] '00 (94% similar)
+
+**Career shape:** Charted 7 seasons (2019-20–2025-26). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

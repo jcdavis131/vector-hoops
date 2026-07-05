@@ -35,6 +35,31 @@ Closest career shapes in the era-normalized vector space:
 - [[raul-lopez|Raul Lopez]] — cosine 0.87
 - [[darrell-armstrong|Darrell Armstrong]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** SG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 14.7 pts · 7.3 reb · 7.4 ast · 2.2 stl per 100 (2012-13).
+
+**Strengths:**
+
+- High-volume table-setter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.5σ)
+
+**Comparables:**
+
+- [[gary-grant|Gary Grant]] '98 (91% similar)
+- [[randy-livingston|Randy Livingston]] '05 (90% similar)
+- [[tremont-waters|Tremont Waters]] '21 (89% similar)
+- [[charlie-ward|Charlie Ward]] '02 (88% similar)
+- [[raul-lopez|Raul Lopez]] '05 (87% similar)
+- [[darrell-armstrong|Darrell Armstrong]] '99 (87% similar)
+
+**Career shape:** Charted 2 seasons (2012-13–2013-14). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -39,6 +39,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jodie-meeks|Jodie Meeks]] — cosine 0.87
 - [[tyler-johnson|Tyler Johnson]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 17.3 pts · 4.8 reb · 3.7 ast · 1.5 stl per 100 (1997-98).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+1.2σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.2σ)
+- Finishing efficiency well below era (−1.9σ)
+
+**Comparables:**
+
+- [[matt-carroll|Matt Carroll]] '10 (91% similar)
+- [[garrison-mathews|Garrison Mathews]] '21 (88% similar)
+- [[shawn-respert|Shawn Respert]] '98 (88% similar)
+- [[timothe-luwawu-cabarrot|Timothe Luwawu-Cabarrot]] '19 (88% similar)
+- [[jodie-meeks|Jodie Meeks]] '12 (87% similar)
+- [[tyler-johnson|Tyler Johnson]] '21 (87% similar)
+
+**Career shape:** Charted 6 seasons (1996-97–2001-02). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

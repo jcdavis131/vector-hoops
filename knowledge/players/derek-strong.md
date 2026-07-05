@@ -38,6 +38,34 @@ Closest career shapes in the era-normalized vector space:
 - [[udonis-haslem|Udonis Haslem]] — cosine 0.83
 - [[clar-weatherspoon|Clar. Weatherspoon]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** PF · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 24.0 pts · 13.9 reb · 1.7 ast · 1.0 stl per 100 (1997-98).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+1.5σ vs era)
+- Strong presence on the defensive glass (+1.2σ vs era)
+- Relentless on the offensive glass (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.3σ)
+- Ball-hawking activity well below era (−1.2σ)
+
+**Comparables:**
+
+- [[brian-grant|Brian Grant]] '99 (87% similar)
+- [[antonio-davis|Antonio Davis]] '01 (85% similar)
+- [[todd-fuller|Todd Fuller]] '98 (84% similar)
+- [[rick-mahorn|Rick Mahorn]] '98 (83% similar)
+- [[udonis-haslem|Udonis Haslem]] '13 (83% similar)
+- [[clar-weatherspoon|Clar. Weatherspoon]] '03 (82% similar)
+
+**Career shape:** Charted 5 seasons (1996-97–2000-01). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

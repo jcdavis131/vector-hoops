@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[matt-maloney|Matt Maloney]] — cosine 0.93
 - [[aj-green|AJ Green]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** PG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 15.7 pts · 3.7 reb · 4.2 ast · 1.3 stl per 100 (2000-01).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.0σ vs era)
+- Reliable touch from the free-throw line (+1.4σ vs era)
+- Rarely turns the ball over (−1.1σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.3σ)
+- Defensive rebounding well below era (−1.3σ)
+
+**Comparables:**
+
+- [[sam-merrill|Sam Merrill]] '24 (96% similar)
+- [[roger-mason-jr|Roger Mason Jr.]] '03 (95% similar)
+- [[travis-diener|Travis Diener]] '06 (95% similar)
+- [[wayne-ellington|Wayne Ellington]] '17 (94% similar)
+- [[matt-maloney|Matt Maloney]] '00 (93% similar)
+- [[aj-green|AJ Green]] '23 (93% similar)
+
+**Career shape:** Charted 1 season (2000-01). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -39,6 +39,33 @@ Closest career shapes in the era-normalized vector space:
 - [[nikola-pekovic|Nikola Pekovic]] — cosine 0.72
 - [[carl-landry|Carl Landry]] — cosine 0.72
 
+## Scouting report
+
+**Play style:** SF · Defensive Glass + Rim Pressure (Fts). Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 26.3 pts · 8.8 reb · 3.3 ast · 0.8 stl per 100 (2002-03).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+1.7σ vs era)
+- Featured, high-usage scoring role (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.3σ)
+- Ball-hawking activity well below era (−1.2σ)
+
+**Comparables:**
+
+- [[slava-medvedenko|Slava Medvedenko]] '02 (84% similar)
+- [[juwan-howard|Juwan Howard]] '12 (81% similar)
+- [[maurice-taylor|Maurice Taylor]] '99 (80% similar)
+- [[corliss-williamson|Corliss Williamson]] '06 (74% similar)
+- [[nikola-pekovic|Nikola Pekovic]] '12 (72% similar)
+- [[carl-landry|Carl Landry]] '08 (72% similar)
+
+**Career shape:** Charted 6 seasons (2000-01–2005-06). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

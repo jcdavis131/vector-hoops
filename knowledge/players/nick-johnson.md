@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[britton-johnsen|Britton Johnsen]] — cosine 0.83
 - [[joshua-primo|Joshua Primo]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 13.3 pts · 7.0 reb · 2.0 ast · 1.3 stl per 100 (2014-15).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.4σ)
+- Scoring load well below era (−1.0σ)
+
+**Comparables:**
+
+- [[maxwell-lewis|Maxwell Lewis]] '24 (91% similar)
+- [[rayan-rupert|Rayan Rupert]] '24 (86% similar)
+- [[sekou-doumbouya|Sekou Doumbouya]] '20 (84% similar)
+- [[darnell-jackson|Darnell Jackson]] '10 (83% similar)
+- [[britton-johnsen|Britton Johnsen]] '04 (83% similar)
+- [[joshua-primo|Joshua Primo]] '22 (82% similar)
+
+**Career shape:** Charted 1 season (2014-15). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

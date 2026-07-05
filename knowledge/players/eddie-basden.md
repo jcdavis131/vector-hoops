@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[trevor-ariza|Trevor Ariza]] — cosine 0.78
 - [[adrian-griffin|Adrian Griffin]] — cosine 0.76
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 13.9 pts · 10.0 reb · 2.8 ast · 3.2 stl per 100 (2005-06).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.7σ vs era)
+- Strong net on-court impact (+1.2σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[de-anthony-melton|De'Anthony Melton]] '19 (82% similar)
+- [[alex-caruso|Alex Caruso]] '25 (80% similar)
+- [[jaden-springer|Jaden Springer]] '24 (79% similar)
+- [[ronald-holland-ii|Ronald Holland II]] '26 (78% similar)
+- [[trevor-ariza|Trevor Ariza]] '22 (78% similar)
+- [[adrian-griffin|Adrian Griffin]] '04 (76% similar)
+
+**Career shape:** Charted 1 season (2005-06). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

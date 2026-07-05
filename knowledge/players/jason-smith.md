@@ -44,6 +44,33 @@ Closest career shapes in the era-normalized vector space:
 - [[roy-hibbert|Roy Hibbert]] — cosine 0.83
 - [[antoine-carr|Antoine Carr]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 18.3 pts · 8.6 reb · 2.3 ast · 2.1 blk per 100 (2017-18).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+1.3σ vs era)
+- Elite rim protection (+1.2σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.9σ)
+- Ball-hawking activity well below era (−1.6σ)
+
+**Comparables:**
+
+- [[kevin-seraphin|Kevin Seraphin]] '16 (86% similar)
+- [[chris-mihm|Chris Mihm]] '09 (85% similar)
+- [[isaiah-stewart|Isaiah Stewart]] '25 (84% similar)
+- [[vernon-carey-jr|Vernon Carey Jr.]] '21 (84% similar)
+- [[roy-hibbert|Roy Hibbert]] '13 (83% similar)
+- [[antoine-carr|Antoine Carr]] '00 (82% similar)
+
+**Career shape:** Charted 11 seasons (2007-08–2018-19). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

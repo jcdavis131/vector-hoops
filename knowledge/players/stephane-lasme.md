@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[ekpe-udoh|Ekpe Udoh]] — cosine 0.84
 - [[isaiah-jackson|Isaiah Jackson]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass + Defensive Glass. Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 15.2 pts · 9.8 reb · 0.6 ast · 4.0 blk per 100 (2007-08).
+
+**Strengths:**
+
+- Elite rim protection (+2.8σ vs era)
+- Active hands, disrupts passing lanes (+1.5σ vs era)
+- Relentless on the offensive glass (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.4σ)
+- Table-setting role well below era (−1.2σ)
+
+**Comparables:**
+
+- [[larry-sanders|Larry Sanders]] '12 (87% similar)
+- [[sean-williams|Sean Williams]] '10 (86% similar)
+- [[nerlens-noel|Nerlens Noel]] '21 (86% similar)
+- [[dj-mbenga|DJ Mbenga]] '06 (84% similar)
+- [[ekpe-udoh|Ekpe Udoh]] '19 (84% similar)
+- [[isaiah-jackson|Isaiah Jackson]] '24 (83% similar)
+
+**Career shape:** Charted 1 season (2007-08). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

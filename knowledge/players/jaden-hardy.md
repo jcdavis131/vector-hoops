@@ -37,6 +37,33 @@ Closest career shapes in the era-normalized vector space:
 - [[jalen-green|Jalen Green]] — cosine 0.90
 - [[shaedon-sharpe|Shaedon Sharpe]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 27.0 pts · 4.5 reb · 3.0 ast · 0.8 stl per 100 (2025-26).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.8σ vs era)
+- Heavy shot volume, focal scoring option (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.3σ)
+- Defensive rebounding well below era (−1.1σ)
+
+**Comparables:**
+
+- [[duane-washington-jr|Duane Washington Jr.]] '23 (93% similar)
+- [[anfernee-simons|Anfernee Simons]] '24 (93% similar)
+- [[ben-gordon|Ben Gordon]] '05 (91% similar)
+- [[chris-carr|Chris Carr]] '01 (90% similar)
+- [[jalen-green|Jalen Green]] '26 (90% similar)
+- [[shaedon-sharpe|Shaedon Sharpe]] '26 (89% similar)
+
+**Career shape:** Charted 4 seasons (2022-23–2025-26). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

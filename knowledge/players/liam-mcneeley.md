@@ -34,6 +34,31 @@ Closest career shapes in the era-normalized vector space:
 - [[jalen-wilson|Jalen Wilson]] — cosine 0.75
 - [[trey-lyles|Trey Lyles]] — cosine 0.75
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 17.5 pts · 9.7 reb · 3.2 ast · 0.7 stl per 100 (2025-26).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.5σ)
+
+**Comparables:**
+
+- [[anthony-tolliver|Anthony Tolliver]] '09 (78% similar)
+- [[ryan-kelly|Ryan Kelly]] '15 (77% similar)
+- [[orlando-johnson|Orlando Johnson]] '14 (77% similar)
+- [[dionte-christmas|Dionte Christmas]] '14 (75% similar)
+- [[jalen-wilson|Jalen Wilson]] '26 (75% similar)
+- [[trey-lyles|Trey Lyles]] '21 (75% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -47,6 +47,33 @@ Closest career shapes in the era-normalized vector space:
 - [[kendrick-nunn|Kendrick Nunn]] — cosine 0.90
 - [[tony-delk|Tony Delk]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 18.4 pts · 4.1 reb · 5.5 ast · 3.1 stl per 100 (2003-04).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.2σ vs era)
+- High-volume three-point shooter (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.3σ)
+- Rim pressure (free-throw generation) well below era (−1.2σ)
+
+**Comparables:**
+
+- [[cuttino-mobley|Cuttino Mobley]] '02 (95% similar)
+- [[jason-terry|Jason Terry]] '18 (94% similar)
+- [[evan-fournier|Evan Fournier]] '24 (92% similar)
+- [[bogdan-bogdanovic|Bogdan Bogdanović]] '21 (91% similar)
+- [[kendrick-nunn|Kendrick Nunn]] '20 (90% similar)
+- [[tony-delk|Tony Delk]] '05 (89% similar)
+
+**Career shape:** Charted 14 seasons (2003-04–2016-17). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

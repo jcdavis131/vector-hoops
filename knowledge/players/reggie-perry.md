@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[mirsad-turkcan|Mirsad Turkcan]] — cosine 0.82
 - [[kevin-willis|Kevin Willis]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 17.5 pts · 16.4 reb · 3.1 ast · 1.3 stl per 100 (2020-21).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+2.4σ vs era)
+- Strong presence on the defensive glass (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.2σ)
+
+**Comparables:**
+
+- [[david-vaughn|David Vaughn]] '97 (88% similar)
+- [[alize-johnson|Alize Johnson]] '22 (87% similar)
+- [[mario-kasun|Mario Kasun]] '05 (84% similar)
+- [[joffrey-lauvergne|Joffrey Lauvergne]] '18 (83% similar)
+- [[mirsad-turkcan|Mirsad Turkcan]] '00 (82% similar)
+- [[kevin-willis|Kevin Willis]] '02 (82% similar)
+
+**Career shape:** Charted 1 season (2020-21). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

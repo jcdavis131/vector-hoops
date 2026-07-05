@@ -36,6 +36,34 @@ Closest career shapes in the era-normalized vector space:
 - [[xavier-tillman|Xavier Tillman]] — cosine 0.90
 - [[furkan-aldemir|Furkan Aldemir]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 12.7 pts · 12.3 reb · 1.4 ast · 3.4 stl per 100 (2013-14).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.9σ vs era)
+- Relentless on the offensive glass (+1.6σ vs era)
+- Elite rim protection (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.9σ)
+- Three-point accuracy well below era (−1.5σ)
+
+**Comparables:**
+
+- [[gustavo-ayon|Gustavo Ayon]] '14 (92% similar)
+- [[sasha-kaun|Sasha Kaun]] '16 (92% similar)
+- [[miles-plumlee|Miles Plumlee]] '19 (91% similar)
+- [[joey-dorsey|Joey Dorsey]] '15 (90% similar)
+- [[xavier-tillman|Xavier Tillman]] '26 (90% similar)
+- [[furkan-aldemir|Furkan Aldemir]] '15 (90% similar)
+
+**Career shape:** Charted 3 seasons (2011-12–2013-14). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

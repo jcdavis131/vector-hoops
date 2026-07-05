@@ -49,6 +49,34 @@ Closest career shapes in the era-normalized vector space:
 - [[richaun-holmes|Richaun Holmes]] — cosine 0.92
 - [[adem-bona|Adem Bona]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 12.7 pts · 13.2 reb · 1.9 ast · 2.6 blk per 100 (2020-21).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+2.3σ vs era)
+- Relentless on the offensive glass (+1.9σ vs era)
+- Elite rim protection (+1.8σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.7σ)
+- Three-point volume well below era (−1.6σ)
+
+**Comparables:**
+
+- [[onyeka-okongwu|Onyeka Okongwu]] '22 (93% similar)
+- [[tony-bradley|Tony Bradley]] '20 (92% similar)
+- [[jake-tsakalidis|Jake Tsakalidis]] '06 (92% similar)
+- [[daniel-theis|Daniel Theis]] '20 (92% similar)
+- [[richaun-holmes|Richaun Holmes]] '25 (92% similar)
+- [[adem-bona|Adem Bona]] '25 (91% similar)
+
+**Career shape:** Charted 16 seasons (2009-10–2024-25). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

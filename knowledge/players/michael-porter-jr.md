@@ -39,6 +39,33 @@ Closest career shapes in the era-normalized vector space:
 - [[dirk-nowitzki|Dirk Nowitzki]] — cosine 0.83
 - [[wang-zhi-zhi|Wang Zhi-zhi]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** SF · Scoring Volume + Shot Volume. Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 36.4 pts · 10.6 reb · 4.6 ast · 1.6 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+2.4σ vs era)
+- Featured, high-usage scoring role (+2.3σ vs era)
+- High-volume three-point shooter (+1.9σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[obi-toppin|Obi Toppin]] '26 (88% similar)
+- [[keith-van-horn|Keith Van Horn]] '99 (87% similar)
+- [[cedric-ceballos|Cedric Ceballos]] '00 (85% similar)
+- [[lauri-markkanen|Lauri Markkanen]] '23 (84% similar)
+- [[dirk-nowitzki|Dirk Nowitzki]] '06 (83% similar)
+- [[wang-zhi-zhi|Wang Zhi-zhi]] '02 (83% similar)
+
+**Career shape:** Charted 6 seasons (2019-20–2025-26). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -41,6 +41,33 @@ Closest career shapes in the era-normalized vector space:
 - [[jerome-jordan|Jerome Jordan]] — cosine 0.86
 - [[jeff-ayres|Jeff Ayres]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 15.3 pts · 14.0 reb · 1.3 ast · 1.6 blk per 100 (2016-17).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+1.5σ vs era)
+- Strong net on-court impact (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.2σ)
+- Three-point volume well below era (−1.5σ)
+
+**Comparables:**
+
+- [[brian-grant|Brian Grant]] '99 (90% similar)
+- [[tyler-zeller|Tyler Zeller]] '17 (87% similar)
+- [[p-j-brown|P.J. Brown]] '08 (86% similar)
+- [[joel-freeland|Joel Freeland]] '15 (86% similar)
+- [[jerome-jordan|Jerome Jordan]] '12 (86% similar)
+- [[jeff-ayres|Jeff Ayres]] '16 (85% similar)
+
+**Career shape:** Charted 8 seasons (2013-14–2020-21). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

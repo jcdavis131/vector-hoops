@@ -37,6 +37,32 @@ Closest career shapes in the era-normalized vector space:
 - [[cam-reddish|Cam Reddish]] — cosine 0.83
 - [[jeffery-taylor|Jeffery Taylor]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 11.5 pts · 9.1 reb · 3.1 ast · 1.1 stl per 100 (2012-13).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Scoring load well below era (−1.3σ)
+- Free-throw touch well below era (−1.3σ)
+
+**Comparables:**
+
+- [[jalen-mcdaniels|Jalen McDaniels]] '24 (85% similar)
+- [[rayan-rupert|Rayan Rupert]] '24 (84% similar)
+- [[damien-wilkins|Damien Wilkins]] '18 (84% similar)
+- [[alonzo-gee|Alonzo Gee]] '16 (83% similar)
+- [[cam-reddish|Cam Reddish]] '25 (83% similar)
+- [[jeffery-taylor|Jeffery Taylor]] '14 (82% similar)
+
+**Career shape:** Charted 4 seasons (2009-10–2012-13). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

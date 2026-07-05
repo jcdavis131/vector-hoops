@@ -40,6 +40,33 @@ Closest career shapes in the era-normalized vector space:
 - [[shammond-williams|Shammond Williams]] — cosine 0.90
 - [[tyrese-proctor|Tyrese Proctor]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 18.3 pts · 5.5 reb · 6.0 ast · 2.2 stl per 100 (2011-12).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.6σ vs era)
+- Heavy shot volume, focal scoring option (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.8σ)
+- Turnover rate well above era (+1.3σ)
+
+**Comparables:**
+
+- [[collin-gillespie|Collin Gillespie]] '24 (92% similar)
+- [[rudy-fernandez|Rudy Fernandez]] '11 (92% similar)
+- [[lindsey-hunter|Lindsey Hunter]] '09 (92% similar)
+- [[erick-strickland|Erick Strickland]] '01 (92% similar)
+- [[shammond-williams|Shammond Williams]] '04 (90% similar)
+- [[tyrese-proctor|Tyrese Proctor]] '26 (88% similar)
+
+**Career shape:** Charted 7 seasons (2009-10–2016-17). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Playmaking + Steals identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[paul-george|Paul George]] — cosine 0.87
 - [[bones-hyland|Bones Hyland]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 21.2 pts · 6.6 reb · 4.7 ast · 2.9 stl per 100 (2009-10).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.6σ vs era)
+- Strong net on-court impact (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.6σ)
+
+**Comparables:**
+
+- [[stephen-jackson|Stephen Jackson]] '02 (94% similar)
+- [[jalen-suggs|Jalen Suggs]] '25 (92% similar)
+- [[victor-oladipo|Victor Oladipo]] '18 (92% similar)
+- [[gilbert-arenas|Gilbert Arenas]] '06 (87% similar)
+- [[paul-george|Paul George]] '22 (87% similar)
+- [[bones-hyland|Bones Hyland]] '25 (86% similar)
+
+**Career shape:** Charted 2 seasons (2009-10–2011-12). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

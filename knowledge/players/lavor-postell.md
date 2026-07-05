@@ -35,6 +35,34 @@ Closest career shapes in the era-normalized vector space:
 - [[kevin-martin|Kevin Martin]] — cosine 0.74
 - [[jalen-green|Jalen Green]] — cosine 0.73
 
+## Scouting report
+
+**Play style:** SG · Scoring Volume + Shot Volume. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 26.6 pts · 4.6 reb · 1.4 ast · 1.7 stl per 100 (2001-02).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+3.0σ vs era)
+- Heavy shot volume, focal scoring option (+1.8σ vs era)
+- High-volume three-point shooter (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.9σ)
+- Offensive-glass activity well below era (−1.2σ)
+
+**Comparables:**
+
+- [[jerry-stackhouse|Jerry Stackhouse]] '01 (82% similar)
+- [[willie-burton|Willie Burton]] '97 (80% similar)
+- [[bennedict-mathurin|Bennedict Mathurin]] '26 (80% similar)
+- [[alec-burks|Alec Burks]] '24 (77% similar)
+- [[kevin-martin|Kevin Martin]] '11 (74% similar)
+- [[jalen-green|Jalen Green]] '26 (73% similar)
+
+**Career shape:** Charted 2 seasons (2000-01–2001-02). Consistent Scoring Volume + Shot Volume profile across his career.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

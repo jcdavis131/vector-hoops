@@ -44,6 +44,33 @@ Closest career shapes in the era-normalized vector space:
 - [[jabari-smith-jr|Jabari Smith Jr.]] — cosine 0.73
 - [[tidjane-salaun|Tidjane Salaün]] — cosine 0.73
 
+## Scouting report
+
+**Play style:** PF · Defensive Glass + Rim Pressure (Fts). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 20.5 pts · 17.0 reb · 3.4 ast · 1.1 stl per 100 (2008-09).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+3.1σ vs era)
+- High-volume three-point shooter (+1.0σ vs era)
+- Knockdown three-point shooter (+1.0σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[trey-lyles|Trey Lyles]] '21 (84% similar)
+- [[bobby-portis|Bobby Portis]] '23 (78% similar)
+- [[meyers-leonard|Meyers Leonard]] '15 (77% similar)
+- [[sandro-mamukelashvili|Sandro Mamukelashvili]] '22 (75% similar)
+- [[jabari-smith-jr|Jabari Smith Jr.]] '23 (73% similar)
+- [[tidjane-salaun|Tidjane Salaün]] '25 (73% similar)
+
+**Career shape:** Charted 11 seasons (2001-02–2011-12). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

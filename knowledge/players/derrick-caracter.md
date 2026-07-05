@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[jordan-mickey|Jordan Mickey]] — cosine 0.82
 - [[randell-jackson|Randell Jackson]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 18.2 pts · 9.7 reb · 1.6 ast · 2.2 blk per 100 (2010-11).
+
+**Strengths:**
+
+- Elite rim protection (+1.2σ vs era)
+- Relentless on the offensive glass (+1.0σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.8σ)
+- Turnover rate well above era (+1.5σ)
+
+**Comparables:**
+
+- [[kevin-seraphin|Kevin Seraphin]] '16 (85% similar)
+- [[mark-blount|Mark Blount]] '01 (84% similar)
+- [[eric-mobley|Eric Mobley]] '97 (84% similar)
+- [[jahlil-okafor|Jahlil Okafor]] '18 (83% similar)
+- [[jordan-mickey|Jordan Mickey]] '17 (82% similar)
+- [[randell-jackson|Randell Jackson]] '99 (82% similar)
+
+**Career shape:** Charted 1 season (2010-11). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

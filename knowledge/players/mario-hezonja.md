@@ -38,6 +38,32 @@ Closest career shapes in the era-normalized vector space:
 - [[bronny-james|Bronny James]] — cosine 0.78
 - [[carl-thomas|Carl Thomas]] — cosine 0.78
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 16.3 pts · 7.5 reb · 3.2 ast · 1.5 stl per 100 (2016-17).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.1σ)
+- Finishing efficiency well below era (−1.4σ)
+
+**Comparables:**
+
+- [[javonte-cooke|Javonte Cooke]] '26 (88% similar)
+- [[damien-inglis|Damien Inglis]] '16 (86% similar)
+- [[ziaire-williams|Ziaire Williams]] '26 (85% similar)
+- [[sean-singletary|Sean Singletary]] '09 (80% similar)
+- [[bronny-james|Bronny James]] '25 (78% similar)
+- [[carl-thomas|Carl Thomas]] '97 (78% similar)
+
+**Career shape:** Charted 5 seasons (2015-16–2019-20). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

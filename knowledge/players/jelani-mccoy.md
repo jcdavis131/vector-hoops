@@ -38,6 +38,33 @@ Closest career shapes in the era-normalized vector space:
 - [[kai-jones|Kai Jones]] — cosine 0.89
 - [[carlos-rogers|Carlos Rogers]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 12.6 pts · 12.1 reb · 3.4 ast · 2.4 blk per 100 (2001-02).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+2.5σ vs era)
+- Elite rim protection (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−3.6σ)
+- On-court net impact well below era (−2.8σ)
+
+**Comparables:**
+
+- [[udoka-azubuike|Udoka Azubuike]] '23 (94% similar)
+- [[steven-hunter|Steven Hunter]] '04 (89% similar)
+- [[miles-plumlee|Miles Plumlee]] '19 (89% similar)
+- [[bismack-biyombo|Bismack Biyombo]] '23 (89% similar)
+- [[kai-jones|Kai Jones]] '22 (89% similar)
+- [[carlos-rogers|Carlos Rogers]] '01 (89% similar)
+
+**Career shape:** Charted 5 seasons (1998-99–2002-03). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -42,6 +42,34 @@ Closest career shapes in the era-normalized vector space:
 - [[roger-mason-jr|Roger Mason Jr.]] — cosine 0.90
 - [[anthony-peeler|Anthony Peeler]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 12.6 pts · 7.7 reb · 6.4 ast · 1.5 stl per 100 (2004-05).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+1.7σ vs era)
+- High-volume three-point shooter (+1.7σ vs era)
+- Rarely turns the ball over (−1.1σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.7σ)
+- Scoring load well below era (−1.0σ)
+
+**Comparables:**
+
+- [[larry-robinson|Larry Robinson]] '01 (93% similar)
+- [[billy-thomas|Billy Thomas]] '06 (92% similar)
+- [[langston-galloway|Langston Galloway]] '18 (92% similar)
+- [[carlos-delfino|Carlos Delfino]] '13 (91% similar)
+- [[roger-mason-jr|Roger Mason Jr.]] '03 (90% similar)
+- [[anthony-peeler|Anthony Peeler]] '97 (90% similar)
+
+**Career shape:** Charted 9 seasons (2004-05–2016-17). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -36,6 +36,34 @@ Closest career shapes in the era-normalized vector space:
 - [[jerome-moiso|Jerome Moiso]] — cosine 0.82
 - [[jeremy-sochan|Jeremy Sochan]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** PF · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 10.4 pts · 16.0 reb · 5.0 ast · 1.1 blk per 100 (2019-20).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+1.9σ vs era)
+- Efficient finisher inside the arc (+1.8σ vs era)
+- Relentless on the offensive glass (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+3.2σ)
+- Three-point accuracy well below era (−2.7σ)
+
+**Comparables:**
+
+- [[david-vaughn|David Vaughn]] '97 (91% similar)
+- [[thomas-hamilton|Thomas Hamilton]] '00 (87% similar)
+- [[aaron-gray|Aaron Gray]] '11 (85% similar)
+- [[kenny-thomas|Kenny Thomas]] '08 (83% similar)
+- [[jerome-moiso|Jerome Moiso]] '01 (82% similar)
+- [[jeremy-sochan|Jeremy Sochan]] '26 (81% similar)
+
+**Career shape:** Charted 3 seasons (2017-18–2019-20). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Rim Protection + Offensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

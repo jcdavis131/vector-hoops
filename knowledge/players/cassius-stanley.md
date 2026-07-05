@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[oshae-brissett|Oshae Brissett]] — cosine 0.68
 - [[alec-peters|Alec Peters]] — cosine 0.67
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 18.0 pts · 10.0 reb · 0.5 ast · 1.0 blk per 100 (2020-21).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.9σ vs era)
+- Strong net on-court impact (+1.5σ vs era)
+- Relentless on the offensive glass (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.2σ)
+- Ball-hawking activity well below era (−1.7σ)
+
+**Comparables:**
+
+- [[jack-haley|Jack Haley]] '97 (73% similar)
+- [[kevin-jones|Kevin Jones]] '13 (70% similar)
+- [[dionte-christmas|Dionte Christmas]] '14 (69% similar)
+- [[tim-james|Tim James]] '01 (68% similar)
+- [[oshae-brissett|Oshae Brissett]] '20 (68% similar)
+- [[alec-peters|Alec Peters]] '18 (67% similar)
+
+**Career shape:** Charted 1 season (2020-21). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

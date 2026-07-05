@@ -44,6 +44,32 @@ Closest career shapes in the era-normalized vector space:
 - [[sam-young|Sam Young]] — cosine 0.80
 - [[abdel-nader|Abdel Nader]] — cosine 0.79
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 8.1 pts · 4.3 reb · 0.8 ast · 1.2 stl per 100 (2014-15).
+
+**Strengths:**
+
+- Rarely turns the ball over (−2.4σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−4.0σ)
+- Finishing efficiency well below era (−2.3σ)
+
+**Comparables:**
+
+- [[bryce-mcgowens|Bryce McGowens]] '26 (93% similar)
+- [[rawle-marshall|Rawle Marshall]] '07 (90% similar)
+- [[xavier-henry|Xavier Henry]] '13 (84% similar)
+- [[jeffery-taylor|Jeffery Taylor]] '14 (82% similar)
+- [[sam-young|Sam Young]] '13 (80% similar)
+- [[abdel-nader|Abdel Nader]] '18 (79% similar)
+
+**Career shape:** Charted 11 seasons (2003-04–2014-15). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

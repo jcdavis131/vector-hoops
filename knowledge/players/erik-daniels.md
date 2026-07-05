@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[kevin-mccullar-jr|Kevin McCullar Jr.]] — cosine 0.81
 - [[britton-johnsen|Britton Johnsen]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 8.7 pts · 12.0 reb · 2.7 ast · 1.3 stl per 100 (2004-05).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+1.6σ vs era)
+- Relentless on the offensive glass (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−4.0σ)
+- On-court net impact well below era (−3.1σ)
+
+**Comparables:**
+
+- [[daniel-hamilton|Daniel Hamilton]] '19 (91% similar)
+- [[jacob-toppin|Jacob Toppin]] '25 (90% similar)
+- [[billy-owens|Billy Owens]] '01 (84% similar)
+- [[andre-jackson-jr|Andre Jackson Jr.]] '25 (81% similar)
+- [[kevin-mccullar-jr|Kevin McCullar Jr.]] '26 (81% similar)
+- [[britton-johnsen|Britton Johnsen]] '04 (81% similar)
+
+**Career shape:** Charted 1 season (2004-05). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

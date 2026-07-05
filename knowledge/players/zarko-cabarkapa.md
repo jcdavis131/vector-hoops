@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[mengke-bateer|Mengke Bateer]] — cosine 0.76
 - [[eddy-curry|Eddy Curry]] — cosine 0.76
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 17.8 pts · 8.7 reb · 3.5 ast · 1.1 blk per 100 (2003-04).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.9σ)
+- On-court net impact well below era (−1.8σ)
+
+**Comparables:**
+
+- [[marcus-fizer|Marcus Fizer]] '03 (82% similar)
+- [[uros-slokar|Uros Slokar]] '07 (82% similar)
+- [[gg-jackson|GG Jackson]] '24 (79% similar)
+- [[john-wallace|John Wallace]] '99 (78% similar)
+- [[mengke-bateer|Mengke Bateer]] '02 (76% similar)
+- [[eddy-curry|Eddy Curry]] '07 (76% similar)
+
+**Career shape:** Charted 3 seasons (2003-04–2005-06). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

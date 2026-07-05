@@ -40,6 +40,32 @@ Closest career shapes in the era-normalized vector space:
 - [[elie-okobo|Elie Okobo]] — cosine 0.90
 - [[junior-harrington|Junior Harrington]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 14.3 pts · 6.7 reb · 6.3 ast · 2.6 stl per 100 (1999-00).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.9σ)
+- Three-point accuracy well below era (−1.3σ)
+
+**Comparables:**
+
+- [[marcelo-huertas|Marcelo Huertas]] '17 (92% similar)
+- [[blake-wesley|Blake Wesley]] '23 (91% similar)
+- [[bobby-hurley|Bobby Hurley]] '97 (91% similar)
+- [[walker-russell|Walker Russell]] '12 (90% similar)
+- [[elie-okobo|Elie Okobo]] '19 (90% similar)
+- [[junior-harrington|Junior Harrington]] '03 (90% similar)
+
+**Career shape:** Charted 7 seasons (1999-00–2005-06). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

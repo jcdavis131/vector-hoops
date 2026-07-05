@@ -38,6 +38,34 @@ Closest career shapes in the era-normalized vector space:
 - [[corie-blount|Corie Blount]] — cosine 0.89
 - [[kevon-looney|Kevon Looney]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 9.4 pts · 17.6 reb · 3.2 ast · 1.8 stl per 100 (2000-01).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+2.3σ vs era)
+- Relentless on the offensive glass (+1.6σ vs era)
+- Rarely turns the ball over (−1.2σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−2.0σ)
+- On-court net impact well below era (−1.6σ)
+
+**Comparables:**
+
+- [[furkan-aldemir|Furkan Aldemir]] '15 (92% similar)
+- [[ed-davis|Ed Davis]] '22 (92% similar)
+- [[jeff-foster|Jeff Foster]] '00 (90% similar)
+- [[greg-anderson|Greg Anderson]] '98 (90% similar)
+- [[corie-blount|Corie Blount]] '98 (89% similar)
+- [[kevon-looney|Kevon Looney]] '23 (89% similar)
+
+**Career shape:** Charted 5 seasons (1996-97–2000-01). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

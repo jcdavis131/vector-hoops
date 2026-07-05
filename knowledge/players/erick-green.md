@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[john-lucas-iii|John Lucas III]] — cosine 0.84
 - [[rodney-buford|Rodney Buford]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** PG · Three-Point Volume + Three-Point Accuracy. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 17.4 pts · 3.7 reb · 4.6 ast · 1.4 stl per 100 (2014-15).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.1σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.4σ)
+- Rim pressure (free-throw generation) well below era (−1.3σ)
+
+**Comparables:**
+
+- [[quincy-douby|Quincy Douby]] '08 (88% similar)
+- [[adam-harrington|Adam Harrington]] '03 (86% similar)
+- [[jeremy-richardson|Jeremy Richardson]] '08 (85% similar)
+- [[rafael-addison|Rafael Addison]] '97 (84% similar)
+- [[john-lucas-iii|John Lucas III]] '12 (84% similar)
+- [[rodney-buford|Rodney Buford]] '04 (84% similar)
+
+**Career shape:** Charted 1 season (2014-15). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

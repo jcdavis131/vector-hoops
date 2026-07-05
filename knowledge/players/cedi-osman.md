@@ -40,6 +40,31 @@ Closest career shapes in the era-normalized vector space:
 - [[tyler-dorsey|Tyler Dorsey]] — cosine 0.84
 - [[quentin-grimes|Quentin Grimes]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 21.3 pts · 5.6 reb · 3.7 ast · 1.1 stl per 100 (2022-23).
+
+**Strengths:**
+
+- Strong net on-court impact (+1.4σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[damyean-dotson|Damyean Dotson]] '21 (93% similar)
+- [[dariq-whitehead|Dariq Whitehead]] '25 (87% similar)
+- [[armoni-brooks|Armoni Brooks]] '21 (85% similar)
+- [[ben-mclemore|Ben McLemore]] '22 (85% similar)
+- [[tyler-dorsey|Tyler Dorsey]] '18 (84% similar)
+- [[quentin-grimes|Quentin Grimes]] '24 (84% similar)
+
+**Career shape:** Charted 7 seasons (2017-18–2023-24). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

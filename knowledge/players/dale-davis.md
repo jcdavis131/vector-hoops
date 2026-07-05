@@ -44,6 +44,34 @@ Closest career shapes in the era-normalized vector space:
 - [[ervin-johnson|Ervin Johnson]] — cosine 0.91
 - [[lavoy-allen|Lavoy Allen]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 7.5 pts · 15.3 reb · 1.7 ast · 2.6 blk per 100 (2005-06).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+2.0σ vs era)
+- Rarely turns the ball over (−1.9σ vs era)
+- Elite rim protection (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−2.3σ)
+- Shot volume well below era (−1.9σ)
+
+**Comparables:**
+
+- [[scot-pollard|Scot Pollard]] '03 (93% similar)
+- [[kevon-looney|Kevon Looney]] '23 (93% similar)
+- [[ed-davis|Ed Davis]] '22 (93% similar)
+- [[tony-battie|Tony Battie]] '12 (92% similar)
+- [[ervin-johnson|Ervin Johnson]] '05 (91% similar)
+- [[lavoy-allen|Lavoy Allen]] '17 (90% similar)
+
+**Career shape:** Charted 11 seasons (1996-97–2006-07). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

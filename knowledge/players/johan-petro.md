@@ -41,6 +41,31 @@ Closest career shapes in the era-normalized vector space:
 - [[sean-marks|Sean Marks]] — cosine 0.84
 - [[alton-lister|Alton Lister]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** C · Three-Point Accuracy (Low Turnovers). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 13.9 pts · 12.5 reb · 2.5 ast · 1.3 blk per 100 (2011-12).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+4.0σ vs era)
+
+**Areas of concern:**
+
+- Three-point volume well below era (−1.1σ)
+
+**Comparables:**
+
+- [[noah-vonleh|Noah Vonleh]] '23 (87% similar)
+- [[cherokee-parks|Cherokee Parks]] '02 (86% similar)
+- [[brian-skinner|Brian Skinner]] '08 (85% similar)
+- [[lorenzen-wright|Lorenzen Wright]] '08 (85% similar)
+- [[sean-marks|Sean Marks]] '11 (84% similar)
+- [[alton-lister|Alton Lister]] '97 (83% similar)
+
+**Career shape:** Charted 8 seasons (2005-06–2012-13). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

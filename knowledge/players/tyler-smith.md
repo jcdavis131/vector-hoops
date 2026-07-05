@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[andres-nocioni|Andres Nocioni]] — cosine 0.73
 - [[tim-thomas|Tim Thomas]] — cosine 0.73
 
+## Scouting report
+
+**Play style:** PF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 25.7 pts · 9.6 reb · 1.5 ast · 1.5 blk per 100 (2024-25).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.2σ vs era)
+- Knockdown three-point shooter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Table-setting role well below era (−1.3σ)
+
+**Comparables:**
+
+- [[wang-zhi-zhi|Wang Zhi-zhi]] '02 (86% similar)
+- [[michael-porter-jr|Michael Porter Jr.]] '26 (81% similar)
+- [[quinten-post|Quinten Post]] '25 (76% similar)
+- [[david-benoit|David Benoit]] '98 (73% similar)
+- [[andres-nocioni|Andres Nocioni]] '08 (73% similar)
+- [[tim-thomas|Tim Thomas]] '06 (73% similar)
+
+**Career shape:** Charted 1 season (2024-25). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

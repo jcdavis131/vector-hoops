@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[cedric-bozeman|Cedric Bozeman]] — cosine 0.88
 - [[herb-williams|Herb Williams]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 11.3 pts · 5.3 reb · 2.4 ast · 1.3 stl per 100 (2023-24).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.5σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.4σ)
+- Scoring load well below era (−1.3σ)
+
+**Comparables:**
+
+- [[duane-ferrell|Duane Ferrell]] '98 (90% similar)
+- [[justin-minaya|Justin Minaya]] '25 (88% similar)
+- [[james-young|James Young]] '16 (88% similar)
+- [[nigel-hayes-davis|Nigel Hayes-Davis]] '26 (88% similar)
+- [[cedric-bozeman|Cedric Bozeman]] '07 (88% similar)
+- [[herb-williams|Herb Williams]] '98 (87% similar)
+
+**Career shape:** Charted 3 seasons (2022-23–2024-25). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -40,6 +40,32 @@ Closest career shapes in the era-normalized vector space:
 - [[brevin-knight|Brevin Knight]] — cosine 0.91
 - [[jamaal-tinsley|Jamaal Tinsley]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 13.5 pts · 6.9 reb · 5.9 ast · 2.7 stl per 100 (2004-05).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.8σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.1σ)
+- Three-point accuracy well below era (−1.3σ)
+
+**Comparables:**
+
+- [[ricky-rubio|Ricky Rubio]] '13 (93% similar)
+- [[earl-watson|Earl Watson]] '14 (92% similar)
+- [[rick-brunson|Rick Brunson]] '99 (92% similar)
+- [[jerian-grant|Jerian Grant]] '19 (91% similar)
+- [[brevin-knight|Brevin Knight]] '03 (91% similar)
+- [[jamaal-tinsley|Jamaal Tinsley]] '04 (91% similar)
+
+**Career shape:** Charted 7 seasons (1999-00–2005-06). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

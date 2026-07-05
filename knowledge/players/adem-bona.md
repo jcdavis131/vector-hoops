@@ -35,6 +35,34 @@ Closest career shapes in the era-normalized vector space:
 - [[salah-mejri|Salah Mejri]] — cosine 0.93
 - [[brendan-haywood|Brendan Haywood]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 17.7 pts · 12.9 reb · 1.4 ast · 3.6 blk per 100 (2024-25).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+3.1σ vs era)
+- Elite rim protection (+3.1σ vs era)
+- Relentless on the offensive glass (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.9σ)
+- Three-point volume well below era (−1.9σ)
+
+**Comparables:**
+
+- [[ryan-kalkbrenner|Ryan Kalkbrenner]] '26 (95% similar)
+- [[don-reid|Don Reid]] '01 (94% similar)
+- [[daniel-gafford|Daniel Gafford]] '25 (94% similar)
+- [[onyeka-okongwu|Onyeka Okongwu]] '22 (93% similar)
+- [[salah-mejri|Salah Mejri]] '18 (93% similar)
+- [[brendan-haywood|Brendan Haywood]] '15 (93% similar)
+
+**Career shape:** Charted 2 seasons (2024-25–2025-26). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

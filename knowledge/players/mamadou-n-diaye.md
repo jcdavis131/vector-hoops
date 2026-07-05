@@ -35,6 +35,34 @@ Closest career shapes in the era-normalized vector space:
 - [[sean-williams|Sean Williams]] — cosine 0.87
 - [[mouhamed-sene|Mouhamed Sene]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 13.4 pts · 15.3 reb · 0.0 ast · 3.4 blk per 100 (2003-04).
+
+**Strengths:**
+
+- Elite rim protection (+2.0σ vs era)
+- Relentless on the offensive glass (+1.8σ vs era)
+- Draws contact, gets to the line often (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Table-setting role well below era (−1.5σ)
+- Shot volume well below era (−1.5σ)
+
+**Comparables:**
+
+- [[jeff-withey|Jeff Withey]] '17 (91% similar)
+- [[theo-ratliff|Theo Ratliff]] '09 (88% similar)
+- [[etan-thomas|Etan Thomas]] '07 (88% similar)
+- [[kelvin-cato|Kelvin Cato]] '99 (88% similar)
+- [[sean-williams|Sean Williams]] '10 (87% similar)
+- [[mouhamed-sene|Mouhamed Sene]] '07 (86% similar)
+
+**Career shape:** Charted 2 seasons (2002-03–2003-04). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

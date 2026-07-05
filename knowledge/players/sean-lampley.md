@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[reggie-slater|Reggie Slater]] — cosine 0.77
 - [[hakim-warrick|Hakim Warrick]] — cosine 0.76
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 18.4 pts · 9.0 reb · 3.4 ast · 0.8 stl per 100 (2002-03).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+1.8σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.3σ)
+- Ball-hawking activity well below era (−1.2σ)
+
+**Comparables:**
+
+- [[tim-young|Tim Young]] '00 (81% similar)
+- [[desmond-mason|Desmond Mason]] '09 (81% similar)
+- [[leon-powe|Leon Powe]] '08 (77% similar)
+- [[obinna-ekezie|Obinna Ekezie]] '02 (77% similar)
+- [[reggie-slater|Reggie Slater]] '03 (77% similar)
+- [[hakim-warrick|Hakim Warrick]] '13 (76% similar)
+
+**Career shape:** Charted 1 season (2002-03). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

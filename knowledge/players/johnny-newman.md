@@ -39,6 +39,33 @@ Closest career shapes in the era-normalized vector space:
 - [[courtney-alexander|Courtney Alexander]] — cosine 0.80
 - [[eric-williams|Eric Williams]] — cosine 0.79
 
+## Scouting report
+
+**Play style:** SF · Scoring Volume + Shot Volume. Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 26.0 pts · 3.4 reb · 3.3 ast · 1.8 stl per 100 (1997-98).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+2.2σ vs era)
+- Featured, high-usage scoring role (+1.2σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.7σ)
+- Defensive rebounding well below era (−1.5σ)
+
+**Comparables:**
+
+- [[chris-douglas-roberts|Chris Douglas-Roberts]] '10 (87% similar)
+- [[jodie-meeks|Jodie Meeks]] '12 (81% similar)
+- [[jabari-brown|Jabari Brown]] '15 (81% similar)
+- [[matt-carroll|Matt Carroll]] '10 (81% similar)
+- [[courtney-alexander|Courtney Alexander]] '01 (80% similar)
+- [[eric-williams|Eric Williams]] '07 (79% similar)
+
+**Career shape:** Charted 6 seasons (1996-97–2001-02). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

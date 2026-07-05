@@ -43,6 +43,32 @@ Closest career shapes in the era-normalized vector space:
 - [[omer-asik|Omer Asik]] — cosine 0.90
 - [[tristan-thompson|Tristan Thompson]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 5.7 pts · 10.9 reb · 2.3 ast · 1.1 stl per 100 (2007-08).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−4.0σ)
+- Scoring load well below era (−2.2σ)
+
+**Comparables:**
+
+- [[aaron-gray|Aaron Gray]] '11 (97% similar)
+- [[tyrone-hill|Tyrone Hill]] '97 (91% similar)
+- [[andre-brown|Andre Brown]] '08 (91% similar)
+- [[reggie-evans|Reggie Evans]] '13 (91% similar)
+- [[omer-asik|Omer Asik]] '18 (90% similar)
+- [[tristan-thompson|Tristan Thompson]] '25 (89% similar)
+
+**Career shape:** Charted 10 seasons (1999-00–2009-10). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

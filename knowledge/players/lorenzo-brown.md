@@ -36,6 +36,33 @@ Closest career shapes in the era-normalized vector space:
 - [[randy-brown|Randy Brown]] — cosine 0.88
 - [[erick-barkley|Erick Barkley]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 12.0 pts · 6.8 reb · 6.1 ast · 2.6 stl per 100 (2018-19).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+2.4σ vs era)
+- Active hands, disrupts passing lanes (+2.1σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.8σ)
+- Rim pressure (free-throw generation) well below era (−1.5σ)
+
+**Comparables:**
+
+- [[killian-hayes|Killian Hayes]] '21 (90% similar)
+- [[facundo-campazzo|Facundo Campazzo]] '21 (90% similar)
+- [[anthony-carter|Anthony Carter]] '03 (89% similar)
+- [[ronnie-price|Ronnie Price]] '14 (89% similar)
+- [[randy-brown|Randy Brown]] '03 (88% similar)
+- [[erick-barkley|Erick Barkley]] '02 (88% similar)
+
+**Career shape:** Charted 3 seasons (2013-14–2018-19). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

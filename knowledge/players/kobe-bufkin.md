@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[lawrence-moten|Lawrence Moten]] — cosine 0.74
 - [[adam-flagler|Adam Flagler]] — cosine 0.73
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 19.5 pts · 7.9 reb · 6.5 ast · 1.7 stl per 100 (2023-24).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.8σ)
+- Finishing efficiency well below era (−1.2σ)
+
+**Comparables:**
+
+- [[ken-norman|Ken Norman]] '97 (87% similar)
+- [[kevin-murphy|Kevin Murphy]] '13 (79% similar)
+- [[bruno-sundov|Bruno Sundov]] '03 (78% similar)
+- [[dj-strawberry|DJ Strawberry]] '08 (74% similar)
+- [[lawrence-moten|Lawrence Moten]] '97 (74% similar)
+- [[adam-flagler|Adam Flagler]] '25 (73% similar)
+
+**Career shape:** Charted 1 season (2023-24). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

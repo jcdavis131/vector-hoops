@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[cedric-bozeman|Cedric Bozeman]] — cosine 0.87
 - [[britton-johnsen|Britton Johnsen]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 1.9 pts · 8.8 reb · 0.3 ast · 3.5 blk per 100 (1998-99).
+
+**Strengths:**
+
+- Elite rim protection (+2.1σ vs era)
+- Rarely turns the ball over (−1.5σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−4.0σ)
+- Free-throw touch well below era (−4.0σ)
+
+**Comparables:**
+
+- [[erik-murphy|Erik Murphy]] '14 (94% similar)
+- [[jt-thor|JT Thor]] '25 (90% similar)
+- [[jared-reiner|Jared Reiner]] '07 (87% similar)
+- [[dragan-bender|Dragan Bender]] '17 (87% similar)
+- [[cedric-bozeman|Cedric Bozeman]] '07 (87% similar)
+- [[britton-johnsen|Britton Johnsen]] '04 (87% similar)
+
+**Career shape:** Charted 1 season (1998-99). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

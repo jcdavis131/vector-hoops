@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[killian-hayes|Killian Hayes]] — cosine 0.82
 - [[peyton-siva|Peyton Siva]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 18.2 pts · 7.2 reb · 7.2 ast · 2.8 stl per 100 (2024-25).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.9σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+4.0σ)
+- On-court net impact well below era (−2.0σ)
+
+**Comparables:**
+
+- [[joseph-forte|Joseph Forte]] '03 (85% similar)
+- [[kj-simpson|KJ Simpson]] '26 (84% similar)
+- [[daishen-nix|Daishen Nix]] '22 (84% similar)
+- [[mustafa-shakur|Mustafa Shakur]] '11 (83% similar)
+- [[killian-hayes|Killian Hayes]] '21 (82% similar)
+- [[peyton-siva|Peyton Siva]] '14 (82% similar)
+
+**Career shape:** Charted 2 seasons (2024-25–2025-26). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

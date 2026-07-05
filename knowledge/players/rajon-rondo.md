@@ -49,6 +49,34 @@ Closest career shapes in the era-normalized vector space:
 - [[sergio-rodriguez|Sergio Rodriguez]] — cosine 0.88
 - [[t-j-mcconnell|T.J. McConnell]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 14.8 pts · 6.1 reb · 15.6 ast · 3.2 stl per 100 (2010-11).
+
+**Strengths:**
+
+- High-volume table-setter (+4.0σ vs era)
+- Active hands, disrupts passing lanes (+2.6σ vs era)
+- Strong net on-court impact (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.0σ)
+- Free-throw touch well below era (−1.2σ)
+
+**Comparables:**
+
+- [[elfrid-payton|Elfrid Payton]] '25 (91% similar)
+- [[jamaal-tinsley|Jamaal Tinsley]] '04 (91% similar)
+- [[nick-calathes|Nick Calathes]] '15 (89% similar)
+- [[phil-pressey|Phil Pressey]] '16 (88% similar)
+- [[sergio-rodriguez|Sergio Rodriguez]] '09 (88% similar)
+- [[t-j-mcconnell|T.J. McConnell]] '21 (88% similar)
+
+**Career shape:** Charted 16 seasons (2006-07–2021-22). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

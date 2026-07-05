@@ -48,6 +48,34 @@ Closest career shapes in the era-normalized vector space:
 - [[tim-duncan|Tim Duncan]] — cosine 0.85
 - [[jonas-valanciunas|Jonas Valančiūnas]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 24.6 pts · 11.9 reb · 6.9 ast · 3.7 blk per 100 (2017-18).
+
+**Strengths:**
+
+- Elite rim protection (+3.0σ vs era)
+- Efficient finisher inside the arc (+1.6σ vs era)
+- Active hands, disrupts passing lanes (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Three-point volume well below era (−1.4σ)
+- Turnover rate well above era (+1.4σ)
+
+**Comparables:**
+
+- [[kevin-garnett|Kevin Garnett]] '04 (88% similar)
+- [[pau-gasol|Pau Gasol]] '15 (86% similar)
+- [[lamarcus-aldridge|LaMarcus Aldridge]] '18 (86% similar)
+- [[bison-dele|Bison Dele]] '99 (85% similar)
+- [[tim-duncan|Tim Duncan]] '04 (85% similar)
+- [[jonas-valanciunas|Jonas Valančiūnas]] '26 (84% similar)
+
+**Career shape:** Charted 15 seasons (2003-04–2017-18). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

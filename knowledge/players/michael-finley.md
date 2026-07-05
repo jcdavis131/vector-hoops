@@ -47,6 +47,33 @@ Closest career shapes in the era-normalized vector space:
 - [[dell-curry|Dell Curry]] — cosine 0.91
 - [[klay-thompson|Klay Thompson]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 25.8 pts · 7.8 reb · 4.0 ast · 1.5 stl per 100 (2002-03).
+
+**Strengths:**
+
+- Strong net on-court impact (+2.2σ vs era)
+- Heavy shot volume, focal scoring option (+1.6σ vs era)
+- Featured, high-usage scoring role (+1.3σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[peja-stojakovic|Peja Stojakovic]] '04 (92% similar)
+- [[rex-chapman|Rex Chapman]] '98 (92% similar)
+- [[eddie-johnson|Eddie Johnson]] '98 (92% similar)
+- [[glen-rice|Glen Rice]] '97 (91% similar)
+- [[dell-curry|Dell Curry]] '00 (91% similar)
+- [[klay-thompson|Klay Thompson]] '15 (91% similar)
+
+**Career shape:** Charted 14 seasons (1996-97–2009-10). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

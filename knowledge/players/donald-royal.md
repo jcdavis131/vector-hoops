@@ -35,6 +35,34 @@ Closest career shapes in the era-normalized vector space:
 - [[enrique-freeman|Enrique Freeman]] — cosine 0.84
 - [[tremaine-fowlkes|Tremaine Fowlkes]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 12.5 pts · 6.4 reb · 2.7 ast · 1.1 stl per 100 (1997-98).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.5σ vs era)
+- Reliable touch from the free-throw line (+1.3σ vs era)
+- Strong net on-court impact (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.4σ)
+- Three-point accuracy well below era (−1.3σ)
+
+**Comparables:**
+
+- [[wes-iwundu|Wes Iwundu]] '21 (89% similar)
+- [[dan-schayes|Dan Schayes]] '99 (86% similar)
+- [[mark-hendrickson|Mark Hendrickson]] '98 (84% similar)
+- [[jarron-collins|Jarron Collins]] '10 (84% similar)
+- [[enrique-freeman|Enrique Freeman]] '25 (84% similar)
+- [[tremaine-fowlkes|Tremaine Fowlkes]] '04 (83% similar)
+
+**Career shape:** Charted 2 seasons (1996-97–1997-98). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

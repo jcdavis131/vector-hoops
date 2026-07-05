@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[sekou-doumbouya|Sekou Doumbouya]] — cosine 0.80
 - [[nick-johnson|Nick Johnson]] — cosine 0.79
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 9.4 pts · 9.1 reb · 2.6 ast · 1.1 stl per 100 (2005-06).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+1.1σ vs era)
+- Rarely turns the ball over (−1.1σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−3.6σ)
+- On-court net impact well below era (−2.4σ)
+
+**Comparables:**
+
+- [[cj-elleby|CJ Elleby]] '22 (88% similar)
+- [[cameron-bairstow|Cameron Bairstow]] '15 (84% similar)
+- [[britton-johnsen|Britton Johnsen]] '04 (84% similar)
+- [[jeryl-sasser|Jeryl Sasser]] '03 (81% similar)
+- [[sekou-doumbouya|Sekou Doumbouya]] '20 (80% similar)
+- [[nick-johnson|Nick Johnson]] '15 (79% similar)
+
+**Career shape:** Charted 1 season (2005-06). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

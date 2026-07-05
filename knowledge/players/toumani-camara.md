@@ -36,6 +36,31 @@ Closest career shapes in the era-normalized vector space:
 - [[p-j-tucker|P.J. Tucker]] — cosine 0.80
 - [[haywood-highsmith|Haywood Highsmith]] — cosine 0.79
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 14.7 pts · 9.6 reb · 2.4 ast · 1.8 stl per 100 (2023-24).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[jake-laravia|Jake LaRavia]] '23 (87% similar)
+- [[kevon-harris|Kevon Harris]] '23 (83% similar)
+- [[dorian-finney-smith|Dorian Finney-Smith]] '26 (82% similar)
+- [[caleb-martin|Caleb Martin]] '26 (81% similar)
+- [[p-j-tucker|P.J. Tucker]] '24 (80% similar)
+- [[haywood-highsmith|Haywood Highsmith]] '22 (79% similar)
+
+**Career shape:** Charted 3 seasons (2023-24–2025-26). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -43,6 +43,32 @@ Closest career shapes in the era-normalized vector space:
 - [[troy-hudson|Troy Hudson]] — cosine 0.91
 - [[jarrett-jack|Jarrett Jack]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 15.3 pts · 4.5 reb · 8.7 ast · 1.3 stl per 100 (2018-19).
+
+**Strengths:**
+
+- High-volume table-setter (+1.6σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.7σ)
+- Free-throw touch well below era (−1.7σ)
+
+**Comparables:**
+
+- [[d-j-augustin|D.J. Augustin]] '12 (95% similar)
+- [[sebastian-telfair|Sebastian Telfair]] '10 (94% similar)
+- [[khalid-reeves|Khalid Reeves]] '97 (93% similar)
+- [[dan-dickau|Dan Dickau]] '06 (92% similar)
+- [[troy-hudson|Troy Hudson]] '06 (91% similar)
+- [[jarrett-jack|Jarrett Jack]] '16 (91% similar)
+
+**Career shape:** Charted 10 seasons (2008-09–2018-19). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -42,6 +42,33 @@ Closest career shapes in the era-normalized vector space:
 - [[glenn-robinson|Glenn Robinson]] — cosine 0.87
 - [[al-harrington|Al Harrington]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** PF · Defensive Glass + Rim Pressure (Fts). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 29.6 pts · 11.6 reb · 2.1 ast · 1.7 blk per 100 (1998-99).
+
+**Strengths:**
+
+- Featured, high-usage scoring role (+2.1σ vs era)
+- Heavy shot volume, focal scoring option (+1.9σ vs era)
+- Draws contact, gets to the line often (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.1σ)
+
+**Comparables:**
+
+- [[cedric-ceballos|Cedric Ceballos]] '00 (95% similar)
+- [[lauri-markkanen|Lauri Markkanen]] '23 (88% similar)
+- [[rudy-gay|Rudy Gay]] '14 (87% similar)
+- [[michael-porter-jr|Michael Porter Jr.]] '26 (87% similar)
+- [[glenn-robinson|Glenn Robinson]] '03 (87% similar)
+- [[al-harrington|Al Harrington]] '99 (87% similar)
+
+**Career shape:** Charted 9 seasons (1997-98–2005-06). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

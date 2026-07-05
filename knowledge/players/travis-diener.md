@@ -37,6 +37,33 @@ Closest career shapes in the era-normalized vector space:
 - [[bryce-drew|Bryce Drew]] — cosine 0.92
 - [[chris-quinn|Chris Quinn]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** PG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 17.8 pts · 4.2 reb · 3.2 ast · 1.4 stl per 100 (2005-06).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.7σ vs era)
+- Knockdown three-point shooter (+1.2σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.6σ)
+- Rim pressure (free-throw generation) well below era (−1.5σ)
+
+**Comparables:**
+
+- [[matt-maloney|Matt Maloney]] '00 (95% similar)
+- [[mike-penberthy|Mike Penberthy]] '01 (95% similar)
+- [[roger-mason-jr|Roger Mason Jr.]] '03 (92% similar)
+- [[daniel-gibson|Daniel Gibson]] '13 (92% similar)
+- [[bryce-drew|Bryce Drew]] '99 (92% similar)
+- [[chris-quinn|Chris Quinn]] '10 (92% similar)
+
+**Career shape:** Charted 4 seasons (2005-06–2008-09). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

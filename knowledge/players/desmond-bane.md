@@ -39,6 +39,33 @@ Closest career shapes in the era-normalized vector space:
 - [[latrell-sprewell|Latrell Sprewell]] — cosine 0.92
 - [[stephen-curry|Stephen Curry]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** SG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 32.8 pts · 6.1 reb · 7.6 ast · 1.4 stl per 100 (2023-24).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+1.9σ vs era)
+- Featured, high-usage scoring role (+1.8σ vs era)
+- High-volume three-point shooter (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.3σ)
+
+**Comparables:**
+
+- [[ray-allen|Ray Allen]] '06 (96% similar)
+- [[jamal-murray|Jamal Murray]] '26 (95% similar)
+- [[khris-middleton|Khris Middleton]] '20 (93% similar)
+- [[kyrie-irving|Kyrie Irving]] '20 (93% similar)
+- [[latrell-sprewell|Latrell Sprewell]] '97 (92% similar)
+- [[stephen-curry|Stephen Curry]] '16 (92% similar)
+
+**Career shape:** Charted 6 seasons (2020-21–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

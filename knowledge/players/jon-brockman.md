@@ -36,6 +36,34 @@ Closest career shapes in the era-normalized vector space:
 - [[rick-mahorn|Rick Mahorn]] — cosine 0.89
 - [[colin-castleton|Colin Castleton]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 11.6 pts · 16.8 reb · 1.7 ast · 1.2 stl per 100 (2009-10).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+3.3σ vs era)
+- Efficient finisher inside the arc (+1.2σ vs era)
+- Rarely turns the ball over (−1.1σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.9σ)
+- Three-point accuracy well below era (−1.5σ)
+
+**Comparables:**
+
+- [[corie-blount|Corie Blount]] '98 (91% similar)
+- [[adam-keefe|Adam Keefe]] '98 (91% similar)
+- [[terry-davis|Terry Davis]] '01 (90% similar)
+- [[jeff-foster|Jeff Foster]] '00 (90% similar)
+- [[rick-mahorn|Rick Mahorn]] '98 (89% similar)
+- [[colin-castleton|Colin Castleton]] '25 (88% similar)
+
+**Career shape:** Charted 3 seasons (2009-10–2011-12). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

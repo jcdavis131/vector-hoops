@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[tim-hardaway-jr|Tim Hardaway Jr.]] — cosine 0.92
 - [[glen-rice|Glen Rice]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** PG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 24.2 pts · 4.6 reb · 2.9 ast · 0.5 stl per 100 (2025-26).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.3σ vs era)
+- Reliable touch from the free-throw line (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.8σ)
+- Rim-protection impact well below era (−1.2σ)
+
+**Comparables:**
+
+- [[henry-james|Henry James]] '98 (97% similar)
+- [[eddie-johnson|Eddie Johnson]] '98 (94% similar)
+- [[duncan-robinson|Duncan Robinson]] '20 (93% similar)
+- [[andrew-goudelock|Andrew Goudelock]] '12 (93% similar)
+- [[tim-hardaway-jr|Tim Hardaway Jr.]] '15 (92% similar)
+- [[glen-rice|Glen Rice]] '97 (91% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

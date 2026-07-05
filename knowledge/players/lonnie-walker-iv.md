@@ -39,6 +39,32 @@ Closest career shapes in the era-normalized vector space:
 - [[gary-neal|Gary Neal]] — cosine 0.90
 - [[frank-jackson|Frank Jackson]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 24.5 pts · 6.2 reb · 5.0 ast · 1.0 stl per 100 (2024-25).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.5σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.8σ)
+- Offensive-glass activity well below era (−1.1σ)
+
+**Comparables:**
+
+- [[nick-young|Nick Young]] '15 (93% similar)
+- [[salim-stoudamire|Salim Stoudamire]] '08 (93% similar)
+- [[willie-green|Willie Green]] '04 (92% similar)
+- [[julian-strawther|Julian Strawther]] '24 (91% similar)
+- [[gary-neal|Gary Neal]] '14 (90% similar)
+- [[frank-jackson|Frank Jackson]] '22 (90% similar)
+
+**Career shape:** Charted 6 seasons (2019-20–2024-25). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

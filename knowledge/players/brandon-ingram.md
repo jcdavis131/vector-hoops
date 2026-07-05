@@ -43,6 +43,34 @@ Closest career shapes in the era-normalized vector space:
 - [[kevin-durant|Kevin Durant]] — cosine 0.88
 - [[zach-lavine|Zach LaVine]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** SF · Scoring Volume + Shot Volume. Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 33.1 pts · 8.3 reb · 7.7 ast · 1.3 stl per 100 (2024-25).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+2.3σ vs era)
+- Featured, high-usage scoring role (+1.9σ vs era)
+- High-volume table-setter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+3.0σ)
+- On-court net impact well below era (−1.3σ)
+
+**Comparables:**
+
+- [[devin-booker|Devin Booker]] '19 (94% similar)
+- [[paolo-banchero|Paolo Banchero]] '25 (90% similar)
+- [[ja-morant|Ja Morant]] '23 (89% similar)
+- [[rj-barrett|RJ Barrett]] '25 (88% similar)
+- [[kevin-durant|Kevin Durant]] '14 (88% similar)
+- [[zach-lavine|Zach LaVine]] '21 (88% similar)
+
+**Career shape:** Charted 10 seasons (2016-17–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

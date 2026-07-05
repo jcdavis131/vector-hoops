@@ -35,6 +35,31 @@ Closest career shapes in the era-normalized vector space:
 - [[josh-okogie|Josh Okogie]] — cosine 0.84
 - [[corey-brewer|Corey Brewer]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** SG · Playmaking + Steals. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 15.6 pts · 7.5 reb · 4.2 ast · 3.4 stl per 100 (2023-24).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+3.3σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[dru-smith|Dru Smith]] '26 (91% similar)
+- [[shaquille-harrison|Shaquille Harrison]] '21 (89% similar)
+- [[trevelin-queen|Trevelin Queen]] '25 (84% similar)
+- [[reece-beekman|Reece Beekman]] '25 (84% similar)
+- [[josh-okogie|Josh Okogie]] '25 (84% similar)
+- [[corey-brewer|Corey Brewer]] '19 (83% similar)
+
+**Career shape:** Charted 2 seasons (2023-24–2024-25). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

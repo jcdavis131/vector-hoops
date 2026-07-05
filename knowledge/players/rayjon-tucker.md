@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[morris-almond|Morris Almond]] — cosine 0.74
 - [[sean-lampley|Sean Lampley]] — cosine 0.73
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 17.8 pts · 5.8 reb · 1.4 ast · 0.3 stl per 100 (2019-20).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−2.0σ)
+- Three-point accuracy well below era (−1.2σ)
+
+**Comparables:**
+
+- [[hanno-mottola|Hanno Mottola]] '01 (79% similar)
+- [[justin-reed|Justin Reed]] '07 (78% similar)
+- [[desmond-mason|Desmond Mason]] '09 (75% similar)
+- [[enrique-freeman|Enrique Freeman]] '25 (74% similar)
+- [[morris-almond|Morris Almond]] '09 (74% similar)
+- [[sean-lampley|Sean Lampley]] '03 (73% similar)
+
+**Career shape:** Charted 1 season (2019-20). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

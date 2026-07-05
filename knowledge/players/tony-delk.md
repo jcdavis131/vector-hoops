@@ -43,6 +43,33 @@ Closest career shapes in the era-normalized vector space:
 - [[voshon-lenard|Voshon Lenard]] — cosine 0.92
 - [[evan-fournier|Evan Fournier]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 24.9 pts · 4.8 reb · 3.9 ast · 1.8 stl per 100 (2004-05).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.5σ vs era)
+- Heavy shot volume, focal scoring option (+1.4σ vs era)
+- Featured, high-usage scoring role (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.1σ)
+
+**Comparables:**
+
+- [[eddie-house|Eddie House]] '06 (96% similar)
+- [[john-starks|John Starks]] '00 (95% similar)
+- [[bogdan-bogdanovic|Bogdan Bogdanović]] '21 (93% similar)
+- [[marcus-thornton|Marcus Thornton]] '13 (93% similar)
+- [[voshon-lenard|Voshon Lenard]] '97 (92% similar)
+- [[evan-fournier|Evan Fournier]] '24 (92% similar)
+
+**Career shape:** Charted 10 seasons (1996-97–2005-06). Entered as a Playmaking + Steals profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

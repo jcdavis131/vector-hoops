@@ -40,6 +40,31 @@ Closest career shapes in the era-normalized vector space:
 - [[patrick-baldwin-jr|Patrick Baldwin Jr.]] — cosine 0.72
 - [[mo-bamba|Mo Bamba]] — cosine 0.71
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 21.1 pts · 10.5 reb · 2.6 ast · 1.6 blk per 100 (2025-26).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[darius-bazley|Darius Bazley]] '23 (81% similar)
+- [[eddie-griffin|Eddie Griffin]] '06 (74% similar)
+- [[aj-hammons|AJ Hammons]] '17 (73% similar)
+- [[quincy-miller|Quincy Miller]] '14 (73% similar)
+- [[patrick-baldwin-jr|Patrick Baldwin Jr.]] '23 (72% similar)
+- [[mo-bamba|Mo Bamba]] '20 (71% similar)
+
+**Career shape:** Charted 7 seasons (2019-20–2025-26). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

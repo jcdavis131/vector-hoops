@@ -37,6 +37,32 @@ Closest career shapes in the era-normalized vector space:
 - [[cory-higgins|Cory Higgins]] — cosine 0.78
 - [[luka-samanic|Luka Samanic]] — cosine 0.78
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 15.2 pts · 9.5 reb · 2.5 ast · 0.9 blk per 100 (2001-02).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+1.9σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.1σ)
+- Turnover rate well above era (+2.0σ)
+
+**Comparables:**
+
+- [[josh-hall|Josh Hall]] '21 (81% similar)
+- [[samardo-samuels|Samardo Samuels]] '11 (81% similar)
+- [[jalen-hood-schifino|Jalen Hood-Schifino]] '24 (81% similar)
+- [[sharone-wright|Sharone Wright]] '97 (78% similar)
+- [[cory-higgins|Cory Higgins]] '12 (78% similar)
+- [[luka-samanic|Luka Samanic]] '24 (78% similar)
+
+**Career shape:** Charted 4 seasons (1999-00–2002-03). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

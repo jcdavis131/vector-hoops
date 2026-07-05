@@ -35,6 +35,31 @@ Closest career shapes in the era-normalized vector space:
 - [[dajuan-summers|DaJuan Summers]] — cosine 0.75
 - [[jeff-grayer|Jeff Grayer]] — cosine 0.74
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 17.7 pts · 6.4 reb · 3.6 ast · 1.8 blk per 100 (2019-20).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.4σ)
+
+**Comparables:**
+
+- [[jahmi-us-ramsey|Jahmi'us Ramsey]] '22 (84% similar)
+- [[maurice-ager|Maurice Ager]] '08 (76% similar)
+- [[elliot-williams|Elliot Williams]] '12 (75% similar)
+- [[johnny-davis|Johnny Davis]] '24 (75% similar)
+- [[dajuan-summers|DaJuan Summers]] '11 (75% similar)
+- [[jeff-grayer|Jeff Grayer]] '97 (74% similar)
+
+**Career shape:** Charted 2 seasons (2019-20–2020-21). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

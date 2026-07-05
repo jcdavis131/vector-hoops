@@ -36,6 +36,34 @@ Closest career shapes in the era-normalized vector space:
 - [[etan-thomas|Etan Thomas]] — cosine 0.93
 - [[goga-bitadze|Goga Bitadze]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 19.7 pts · 15.8 reb · 2.0 ast · 3.1 blk per 100 (2015-16).
+
+**Strengths:**
+
+- Strong net on-court impact (+2.2σ vs era)
+- Elite rim protection (+2.1σ vs era)
+- Relentless on the offensive glass (+2.0σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.9σ)
+- Free-throw touch well below era (−1.8σ)
+
+**Comparables:**
+
+- [[brendan-haywood|Brendan Haywood]] '15 (97% similar)
+- [[erick-dampier|Erick Dampier]] '97 (96% similar)
+- [[moussa-cisse|Moussa Cisse]] '26 (95% similar)
+- [[greg-ostertag|Greg Ostertag]] '99 (94% similar)
+- [[etan-thomas|Etan Thomas]] '07 (93% similar)
+- [[goga-bitadze|Goga Bitadze]] '25 (93% similar)
+
+**Career shape:** Charted 3 seasons (2012-13–2015-16). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

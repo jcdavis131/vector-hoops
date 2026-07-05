@@ -40,6 +40,33 @@ Closest career shapes in the era-normalized vector space:
 - [[will-bynum|Will Bynum]] — cosine 0.93
 - [[robert-pack|Robert Pack]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 23.7 pts · 5.3 reb · 13.5 ast · 2.3 stl per 100 (2006-07).
+
+**Strengths:**
+
+- High-volume table-setter (+3.4σ vs era)
+- Active hands, disrupts passing lanes (+1.3σ vs era)
+- Heavy shot volume, focal scoring option (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.3σ)
+
+**Comparables:**
+
+- [[rod-strickland|Rod Strickland]] '05 (95% similar)
+- [[jeff-teague|Jeff Teague]] '15 (94% similar)
+- [[andre-miller|Andre Miller]] '02 (93% similar)
+- [[tremont-waters|Tremont Waters]] '21 (93% similar)
+- [[will-bynum|Will Bynum]] '09 (93% similar)
+- [[robert-pack|Robert Pack]] '97 (93% similar)
+
+**Career shape:** Charted 7 seasons (2003-04–2010-11). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

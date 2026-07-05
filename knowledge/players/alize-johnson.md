@@ -35,6 +35,33 @@ Closest career shapes in the era-normalized vector space:
 - [[kevin-willis|Kevin Willis]] — cosine 0.87
 - [[henry-sims|Henry Sims]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 12.2 pts · 18.1 reb · 2.7 ast · 1.5 stl per 100 (2021-22).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+3.4σ vs era)
+- Strong presence on the defensive glass (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−3.0σ)
+- On-court net impact well below era (−1.9σ)
+
+**Comparables:**
+
+- [[ivan-rabb|Ivan Rabb]] '18 (91% similar)
+- [[omer-yurtseven|Omer Yurtseven]] '22 (88% similar)
+- [[mario-kasun|Mario Kasun]] '05 (88% similar)
+- [[reggie-perry|Reggie Perry]] '21 (87% similar)
+- [[kevin-willis|Kevin Willis]] '02 (87% similar)
+- [[henry-sims|Henry Sims]] '14 (86% similar)
+
+**Career shape:** Charted 2 seasons (2020-21–2021-22). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

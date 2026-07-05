@@ -46,6 +46,32 @@ Closest career shapes in the era-normalized vector space:
 - [[demarcus-cousins|DeMarcus Cousins]] — cosine 0.66
 - [[arvydas-sabonis|Arvydas Sabonis]] — cosine 0.65
 
+## Scouting report
+
+**Play style:** C · Playmaking + Steals. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 20.4 pts · 11.0 reb · 9.3 ast · 2.0 stl per 100 (2023-24).
+
+**Strengths:**
+
+- High-volume table-setter (+1.7σ vs era)
+- Efficient finisher inside the arc (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.7σ)
+
+**Comparables:**
+
+- [[nikola-jokic|Nikola Jokić]] '22 (81% similar)
+- [[lamar-odom|Lamar Odom]] '13 (70% similar)
+- [[domantas-sabonis|Domantas Sabonis]] '24 (70% similar)
+- [[karl-anthony-towns|Karl-Anthony Towns]] '19 (68% similar)
+- [[demarcus-cousins|DeMarcus Cousins]] '15 (66% similar)
+- [[arvydas-sabonis|Arvydas Sabonis]] '97 (65% similar)
+
+**Career shape:** Charted 13 seasons (2013-14–2025-26). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Playmaking + Steals identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

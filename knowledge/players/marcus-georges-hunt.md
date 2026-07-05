@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[quinton-ross|Quinton Ross]] — cosine 0.86
 - [[treveon-graham|Treveon Graham]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 12.5 pts · 3.4 reb · 1.5 ast · 1.3 stl per 100 (2017-18).
+
+**Strengths:**
+
+- Rarely turns the ball over (−2.0σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.7σ)
+- Shot volume well below era (−1.3σ)
+
+**Comparables:**
+
+- [[isaac-okoro|Isaac Okoro]] '25 (87% similar)
+- [[romeo-langford|Romeo Langford]] '20 (86% similar)
+- [[quincy-pondexter|Quincy Pondexter]] '18 (86% similar)
+- [[amir-coffey|Amir Coffey]] '23 (86% similar)
+- [[quinton-ross|Quinton Ross]] '11 (86% similar)
+- [[treveon-graham|Treveon Graham]] '17 (86% similar)
+
+**Career shape:** Charted 1 season (2017-18). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

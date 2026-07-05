@@ -40,6 +40,34 @@ Closest career shapes in the era-normalized vector space:
 - [[darren-collison|Darren Collison]] — cosine 0.87
 - [[jrue-holiday|Jrue Holiday]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 20.4 pts · 4.9 reb · 15.4 ast · 2.9 stl per 100 (2000-01).
+
+**Strengths:**
+
+- High-volume table-setter (+4.0σ vs era)
+- Strong net on-court impact (+2.2σ vs era)
+- Active hands, disrupts passing lanes (+2.1σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.6σ)
+- Defensive rebounding well below era (−1.1σ)
+
+**Comparables:**
+
+- [[chris-paul|Chris Paul]] '09 (93% similar)
+- [[ty-lawson|Ty Lawson]] '14 (90% similar)
+- [[andre-miller|Andre Miller]] '02 (89% similar)
+- [[jeff-teague|Jeff Teague]] '15 (89% similar)
+- [[darren-collison|Darren Collison]] '10 (87% similar)
+- [[jrue-holiday|Jrue Holiday]] '16 (87% similar)
+
+**Career shape:** Charted 7 seasons (1996-97–2002-03). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

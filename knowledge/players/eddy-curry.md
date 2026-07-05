@@ -40,6 +40,34 @@ Closest career shapes in the era-normalized vector space:
 - [[jahlil-okafor|Jahlil Okafor]] — cosine 0.81
 - [[john-wallace|John Wallace]] — cosine 0.80
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 28.8 pts · 10.5 reb · 1.2 ast · 0.7 blk per 100 (2006-07).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+4.0σ vs era)
+- Draws contact, gets to the line often (+2.8σ vs era)
+- Efficient finisher inside the arc (+1.9σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.5σ)
+- Ball-hawking activity well below era (−1.5σ)
+
+**Comparables:**
+
+- [[vin-baker|Vin Baker]] '05 (84% similar)
+- [[ike-diogu|Ike Diogu]] '09 (84% similar)
+- [[amar-e-stoudemire|Amar'e Stoudemire]] '08 (83% similar)
+- [[rony-seikaly|Rony Seikaly]] '97 (83% similar)
+- [[jahlil-okafor|Jahlil Okafor]] '18 (81% similar)
+- [[john-wallace|John Wallace]] '99 (80% similar)
+
+**Career shape:** Charted 7 seasons (2001-02–2007-08). Entered as a Rim Protection + Offensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

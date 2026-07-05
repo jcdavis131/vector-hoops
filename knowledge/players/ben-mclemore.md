@@ -42,6 +42,32 @@ Closest career shapes in the era-normalized vector space:
 - [[alan-anderson|Alan Anderson]] — cosine 0.90
 - [[wayne-ellington|Wayne Ellington]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 24.3 pts · 3.8 reb · 2.2 ast · 1.4 stl per 100 (2021-22).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.4σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.8σ)
+- Defensive rebounding well below era (−1.3σ)
+
+**Comparables:**
+
+- [[troy-daniels|Troy Daniels]] '15 (95% similar)
+- [[quentin-grimes|Quentin Grimes]] '24 (94% similar)
+- [[julian-strawther|Julian Strawther]] '24 (93% similar)
+- [[kareem-rush|Kareem Rush]] '09 (92% similar)
+- [[alan-anderson|Alan Anderson]] '17 (90% similar)
+- [[wayne-ellington|Wayne Ellington]] '17 (90% similar)
+
+**Career shape:** Charted 9 seasons (2013-14–2021-22). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

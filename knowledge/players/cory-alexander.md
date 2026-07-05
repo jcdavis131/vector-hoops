@@ -38,6 +38,33 @@ Closest career shapes in the era-normalized vector space:
 - [[peyton-siva|Peyton Siva]] — cosine 0.90
 - [[diante-garrett|Diante Garrett]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 10.9 pts · 5.2 reb · 7.5 ast · 3.3 stl per 100 (2000-01).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.7σ vs era)
+- High-volume table-setter (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.5σ)
+- Finishing efficiency well below era (−2.0σ)
+
+**Comparables:**
+
+- [[shabazz-napier|Shabazz Napier]] '17 (93% similar)
+- [[smush-parker|Smush Parker]] '05 (92% similar)
+- [[nico-mannion|Nico Mannion]] '21 (91% similar)
+- [[darrell-armstrong|Darrell Armstrong]] '99 (90% similar)
+- [[peyton-siva|Peyton Siva]] '14 (90% similar)
+- [[diante-garrett|Diante Garrett]] '13 (90% similar)
+
+**Career shape:** Charted 5 seasons (1996-97–2000-01). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

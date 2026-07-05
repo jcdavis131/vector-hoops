@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[blake-wesley|Blake Wesley]] — cosine 0.82
 - [[saben-lee|Saben Lee]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 14.8 pts · 4.5 reb · 8.0 ast · 2.8 stl per 100 (2000-01).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.9σ vs era)
+- High-volume table-setter (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.7σ)
+- Defensive rebounding well below era (−1.5σ)
+
+**Comparables:**
+
+- [[speedy-claxton|Speedy Claxton]] '07 (85% similar)
+- [[dennis-smith-jr|Dennis Smith Jr.]] '20 (82% similar)
+- [[nick-calathes|Nick Calathes]] '15 (82% similar)
+- [[phil-pressey|Phil Pressey]] '16 (82% similar)
+- [[blake-wesley|Blake Wesley]] '23 (82% similar)
+- [[saben-lee|Saben Lee]] '24 (81% similar)
+
+**Career shape:** Charted 1 season (2000-01). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

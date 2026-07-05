@@ -44,6 +44,33 @@ Closest career shapes in the era-normalized vector space:
 - [[jordan-bell|Jordan Bell]] — cosine 0.88
 - [[mason-plumlee|Mason Plumlee]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 11.3 pts · 19.7 reb · 5.0 ast · 1.8 blk per 100 (2016-17).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+3.3σ vs era)
+- Strong presence on the defensive glass (+1.9σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.5σ)
+- Three-point accuracy well below era (−2.2σ)
+
+**Comparables:**
+
+- [[isaiah-hartenstein|Isaiah Hartenstein]] '26 (90% similar)
+- [[moussa-cisse|Moussa Cisse]] '26 (88% similar)
+- [[bruno-fernando|Bruno Fernando]] '22 (88% similar)
+- [[rudy-gobert|Rudy Gobert]] '21 (88% similar)
+- [[jordan-bell|Jordan Bell]] '18 (88% similar)
+- [[mason-plumlee|Mason Plumlee]] '26 (88% similar)
+
+**Career shape:** Charted 11 seasons (2007-08–2018-19). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

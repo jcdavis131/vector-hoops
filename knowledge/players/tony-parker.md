@@ -51,6 +51,34 @@ Closest career shapes in the era-normalized vector space:
 - [[deron-williams|Deron Williams]] — cosine 0.86
 - [[goran-dragic|Goran Dragic]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 34.2 pts · 4.8 reb · 10.7 ast · 1.5 stl per 100 (2008-09).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+2.6σ vs era)
+- Featured, high-usage scoring role (+2.5σ vs era)
+- High-volume table-setter (+2.4σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.4σ)
+- Offensive-glass activity well below era (−1.1σ)
+
+**Comparables:**
+
+- [[jalen-brunson|Jalen Brunson]] '24 (93% similar)
+- [[sam-cassell|Sam Cassell]] '04 (91% similar)
+- [[dylan-harper|Dylan Harper]] '26 (90% similar)
+- [[derrick-rose|Derrick Rose]] '11 (87% similar)
+- [[deron-williams|Deron Williams]] '12 (86% similar)
+- [[goran-dragic|Goran Dragic]] '17 (85% similar)
+
+**Career shape:** Charted 18 seasons (2001-02–2018-19). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

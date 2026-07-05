@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[sean-williams|Sean Williams]] — cosine 0.93
 - [[stojko-vrankovic|Stojko Vrankovic]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 11.7 pts · 14.8 reb · 1.6 ast · 6.4 blk per 100 (2019-20).
+
+**Strengths:**
+
+- Elite rim protection (+4.0σ vs era)
+- Strong presence on the defensive glass (+1.5σ vs era)
+- Relentless on the offensive glass (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.7σ)
+- On-court net impact well below era (−2.4σ)
+
+**Comparables:**
+
+- [[ibou-badji|Ibou Badji]] '24 (95% similar)
+- [[darko-milicic|Darko Milicic]] '04 (94% similar)
+- [[duane-causwell|Duane Causwell]] '99 (94% similar)
+- [[jordan-mickey|Jordan Mickey]] '17 (93% similar)
+- [[sean-williams|Sean Williams]] '10 (93% similar)
+- [[stojko-vrankovic|Stojko Vrankovic]] '97 (93% similar)
+
+**Career shape:** Charted 1 season (2019-20). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

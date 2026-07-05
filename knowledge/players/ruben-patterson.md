@@ -43,6 +43,32 @@ Closest career shapes in the era-normalized vector space:
 - [[ivan-johnson|Ivan Johnson]] — cosine 0.76
 - [[travis-williams|Travis Williams]] — cosine 0.76
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass + Defensive Glass. Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 15.4 pts · 9.6 reb · 2.6 ast · 3.2 stl per 100 (2007-08).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.9σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.4σ)
+- Three-point accuracy well below era (−1.4σ)
+
+**Comparables:**
+
+- [[harold-ellis|Harold Ellis]] '98 (85% similar)
+- [[monty-williams|Monty Williams]] '97 (79% similar)
+- [[paul-mcpherson|Paul McPherson]] '01 (77% similar)
+- [[hamidou-diallo|Hamidou Diallo]] '23 (77% similar)
+- [[ivan-johnson|Ivan Johnson]] '13 (76% similar)
+- [[travis-williams|Travis Williams]] '98 (76% similar)
+
+**Career shape:** Charted 10 seasons (1998-99–2007-08). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

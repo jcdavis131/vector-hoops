@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[kelly-oubre-jr|Kelly Oubre Jr.]] — cosine 0.71
 - [[kevin-martin|Kevin Martin]] — cosine 0.70
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 23.2 pts · 3.2 reb · 2.7 ast · 3.0 stl per 100 (1996-97).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+2.1σ vs era)
+- Active hands, disrupts passing lanes (+1.8σ vs era)
+- High-volume three-point shooter (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.4σ)
+- Offensive-glass activity well below era (−1.4σ)
+
+**Comparables:**
+
+- [[metta-world-peace|Metta World Peace]] '17 (81% similar)
+- [[larry-hughes|Larry Hughes]] '05 (73% similar)
+- [[todd-day|Todd Day]] '01 (72% similar)
+- [[marcus-brown|Marcus Brown]] '97 (71% similar)
+- [[kelly-oubre-jr|Kelly Oubre Jr.]] '23 (71% similar)
+- [[kevin-martin|Kevin Martin]] '11 (70% similar)
+
+**Career shape:** Charted 1 season (1996-97). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

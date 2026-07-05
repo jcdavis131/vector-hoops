@@ -41,6 +41,33 @@ Closest career shapes in the era-normalized vector space:
 - [[voshon-lenard|Voshon Lenard]] — cosine 0.89
 - [[dell-curry|Dell Curry]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 26.7 pts · 5.3 reb · 2.7 ast · 1.8 stl per 100 (2012-13).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.0σ vs era)
+- Heavy shot volume, focal scoring option (+1.4σ vs era)
+- Featured, high-usage scoring role (+1.3σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.2σ)
+
+**Comparables:**
+
+- [[tony-delk|Tony Delk]] '05 (93% similar)
+- [[nick-young|Nick Young]] '15 (90% similar)
+- [[cj-miles|CJ Miles]] '18 (90% similar)
+- [[markus-howard|Markus Howard]] '22 (89% similar)
+- [[voshon-lenard|Voshon Lenard]] '97 (89% similar)
+- [[dell-curry|Dell Curry]] '00 (89% similar)
+
+**Career shape:** Charted 8 seasons (2009-10–2016-17). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

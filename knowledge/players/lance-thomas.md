@@ -40,6 +40,32 @@ Closest career shapes in the era-normalized vector space:
 - [[sean-mcdermott|Sean McDermott]] — cosine 0.87
 - [[quincy-pondexter|Quincy Pondexter]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass + Defensive Glass. Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 12.4 pts · 9.6 reb · 1.4 ast · 0.9 stl per 100 (2012-13).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.7σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.7σ)
+- Three-point accuracy well below era (−1.5σ)
+
+**Comparables:**
+
+- [[ira-newble|Ira Newble]] '01 (92% similar)
+- [[glenn-robinson-iii|Glenn Robinson III]] '21 (90% similar)
+- [[trenton-hassell|Trenton Hassell]] '04 (88% similar)
+- [[bryce-mcgowens|Bryce McGowens]] '26 (88% similar)
+- [[sean-mcdermott|Sean McDermott]] '21 (87% similar)
+- [[quincy-pondexter|Quincy Pondexter]] '18 (87% similar)
+
+**Career shape:** Charted 7 seasons (2011-12–2018-19). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

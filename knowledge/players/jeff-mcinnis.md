@@ -43,6 +43,32 @@ Closest career shapes in the era-normalized vector space:
 - [[charles-jenkins|Charles Jenkins]] — cosine 0.88
 - [[doug-overton|Doug Overton]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 8.9 pts · 3.5 reb · 8.1 ast · 0.8 stl per 100 (2007-08).
+
+**Strengths:**
+
+- High-volume table-setter (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Scoring load well below era (−1.7σ)
+- Shot volume well below era (−1.6σ)
+
+**Comparables:**
+
+- [[bimbo-coles|Bimbo Coles]] '04 (91% similar)
+- [[ray-mccallum|Ray McCallum]] '14 (91% similar)
+- [[b-j-armstrong|B.J. Armstrong]] '00 (89% similar)
+- [[donald-sloan|Donald Sloan]] '12 (88% similar)
+- [[charles-jenkins|Charles Jenkins]] '12 (88% similar)
+- [[doug-overton|Doug Overton]] '02 (88% similar)
+
+**Career shape:** Charted 10 seasons (1998-99–2007-08). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

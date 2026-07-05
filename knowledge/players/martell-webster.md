@@ -42,6 +42,32 @@ Closest career shapes in the era-normalized vector space:
 - [[alan-anderson|Alan Anderson]] — cosine 0.89
 - [[garrison-mathews|Garrison Mathews]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 14.6 pts · 6.4 reb · 2.3 ast · 1.0 stl per 100 (2014-15).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+1.9σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.6σ)
+- On-court net impact well below era (−2.4σ)
+
+**Comparables:**
+
+- [[timothe-luwawu-cabarrot|Timothe Luwawu-Cabarrot]] '19 (92% similar)
+- [[matt-ryan|Matt Ryan]] '25 (91% similar)
+- [[simone-fontecchio|Simone Fontecchio]] '23 (91% similar)
+- [[jordan-hawkins|Jordan Hawkins]] '25 (89% similar)
+- [[alan-anderson|Alan Anderson]] '17 (89% similar)
+- [[garrison-mathews|Garrison Mathews]] '21 (89% similar)
+
+**Career shape:** Charted 9 seasons (2005-06–2014-15). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[keon-johnson|Keon Johnson]] — cosine 0.80
 - [[theo-maledon|Theo Maledon]] — cosine 0.79
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 17.4 pts · 7.6 reb · 4.6 ast · 1.7 stl per 100 (2010-11).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.8σ)
+- Finishing efficiency well below era (−1.2σ)
+
+**Comparables:**
+
+- [[jonathan-gibson|Jonathan Gibson]] '17 (87% similar)
+- [[kiwane-garris|Kiwane Garris]] '98 (83% similar)
+- [[r-j-hampton|R.J. Hampton]] '22 (83% similar)
+- [[lazar-hayward|Lazar Hayward]] '12 (81% similar)
+- [[keon-johnson|Keon Johnson]] '23 (80% similar)
+- [[theo-maledon|Theo Maledon]] '21 (79% similar)
+
+**Career shape:** Charted 2 seasons (2010-11–2011-12). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

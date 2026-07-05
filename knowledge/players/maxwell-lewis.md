@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[cody-williams|Cody Williams]] — cosine 0.88
 - [[javonte-smart|Javonte Smart]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 4.8 pts · 1.8 reb · 2.6 ast · 0.9 stl per 100 (2023-24).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−4.0σ)
+- Finishing efficiency well below era (−3.5σ)
+
+**Comparables:**
+
+- [[nick-johnson|Nick Johnson]] '15 (91% similar)
+- [[rayan-rupert|Rayan Rupert]] '24 (90% similar)
+- [[sekou-doumbouya|Sekou Doumbouya]] '20 (89% similar)
+- [[jacob-evans|Jacob Evans]] '19 (88% similar)
+- [[cody-williams|Cody Williams]] '25 (88% similar)
+- [[javonte-smart|Javonte Smart]] '22 (88% similar)
+
+**Career shape:** Charted 2 seasons (2023-24–2024-25). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

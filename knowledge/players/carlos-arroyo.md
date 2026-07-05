@@ -42,6 +42,33 @@ Closest career shapes in the era-normalized vector space:
 - [[ty-lawson|Ty Lawson]] — cosine 0.89
 - [[luke-ridnour|Luke Ridnour]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 21.1 pts · 4.5 reb · 9.2 ast · 2.1 stl per 100 (2002-03).
+
+**Strengths:**
+
+- High-volume table-setter (+1.9σ vs era)
+- Knockdown three-point shooter (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.4σ)
+- Defensive rebounding well below era (−1.6σ)
+
+**Comparables:**
+
+- [[beno-udrih|Beno Udrih]] '17 (96% similar)
+- [[andrew-nembhard|Andrew Nembhard]] '26 (96% similar)
+- [[jarrett-jack|Jarrett Jack]] '16 (91% similar)
+- [[darren-collison|Darren Collison]] '10 (91% similar)
+- [[ty-lawson|Ty Lawson]] '14 (89% similar)
+- [[luke-ridnour|Luke Ridnour]] '06 (88% similar)
+
+**Career shape:** Charted 9 seasons (2001-02–2010-11). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

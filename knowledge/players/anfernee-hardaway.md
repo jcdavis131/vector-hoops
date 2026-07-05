@@ -42,6 +42,34 @@ Closest career shapes in the era-normalized vector space:
 - [[travis-best|Travis Best]] — cosine 0.88
 - [[raymond-felton|Raymond Felton]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 9.6 pts · 5.6 reb · 5.6 ast · 3.0 stl per 100 (2007-08).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.6σ vs era)
+- Reliable touch from the free-throw line (+1.3σ vs era)
+- Knockdown three-point shooter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Scoring load well below era (−1.6σ)
+- Shot volume well below era (−1.4σ)
+
+**Comparables:**
+
+- [[mike-conley|Mike Conley]] '13 (91% similar)
+- [[ryan-rollins|Ryan Rollins]] '26 (89% similar)
+- [[kenny-anderson|Kenny Anderson]] '97 (88% similar)
+- [[terrell-brandon|Terrell Brandon]] '02 (88% similar)
+- [[travis-best|Travis Best]] '04 (88% similar)
+- [[raymond-felton|Raymond Felton]] '11 (88% similar)
+
+**Career shape:** Charted 9 seasons (1996-97–2007-08). Entered as a Scoring Volume + Shot Volume profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

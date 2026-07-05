@@ -37,6 +37,32 @@ Closest career shapes in the era-normalized vector space:
 - [[rawle-marshall|Rawle Marshall]] — cosine 0.76
 - [[tarence-kinsey|Tarence Kinsey]] — cosine 0.76
 
+## Scouting report
+
+**Play style:** PG · Offensive Glass (Low On-Court Impact). Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 14.2 pts · 5.1 reb · 2.1 ast · 2.6 stl per 100 (2018-19).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.1σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.5σ)
+- Defensive rebounding well below era (−1.3σ)
+
+**Comparables:**
+
+- [[corey-brewer|Corey Brewer]] '19 (85% similar)
+- [[rodrick-rhodes|Rodrick Rhodes]] '98 (83% similar)
+- [[anthony-black|Anthony Black]] '24 (82% similar)
+- [[cam-reddish|Cam Reddish]] '25 (81% similar)
+- [[rawle-marshall|Rawle Marshall]] '07 (76% similar)
+- [[tarence-kinsey|Tarence Kinsey]] '09 (76% similar)
+
+**Career shape:** Charted 4 seasons (2018-19–2022-23). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -47,6 +47,33 @@ Closest career shapes in the era-normalized vector space:
 - [[eddie-house|Eddie House]] — cosine 0.91
 - [[ian-clark|Ian Clark]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** PG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 26.6 pts · 5.4 reb · 4.8 ast · 2.2 stl per 100 (2013-14).
+
+**Strengths:**
+
+- Strong net on-court impact (+1.7σ vs era)
+- High-volume three-point shooter (+1.7σ vs era)
+- Featured, high-usage scoring role (+1.3σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[bogdan-bogdanovic|Bogdan Bogdanović]] '21 (93% similar)
+- [[jason-terry|Jason Terry]] '18 (93% similar)
+- [[anthony-peeler|Anthony Peeler]] '97 (92% similar)
+- [[john-starks|John Starks]] '00 (91% similar)
+- [[eddie-house|Eddie House]] '06 (91% similar)
+- [[ian-clark|Ian Clark]] '15 (91% similar)
+
+**Career shape:** Charted 14 seasons (2010-11–2024-25). Entered as a Playmaking + Steals profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

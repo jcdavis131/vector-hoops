@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jason-collins|Jason Collins]] — cosine 0.88
 - [[romeo-langford|Romeo Langford]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass + Defensive Glass. Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 12.9 pts · 8.2 reb · 3.1 ast · 1.6 stl per 100 (2024-25).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.4σ)
+- Scoring load well below era (−1.2σ)
+
+**Comparables:**
+
+- [[justin-minaya|Justin Minaya]] '25 (95% similar)
+- [[jared-jeffries|Jared Jeffries]] '11 (90% similar)
+- [[haywood-highsmith|Haywood Highsmith]] '22 (89% similar)
+- [[ansu-sesay|Ansu Sesay]] '03 (88% similar)
+- [[jason-collins|Jason Collins]] '10 (88% similar)
+- [[romeo-langford|Romeo Langford]] '20 (88% similar)
+
+**Career shape:** Charted 3 seasons (2023-24–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

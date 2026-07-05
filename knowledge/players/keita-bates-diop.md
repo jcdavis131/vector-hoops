@@ -39,6 +39,31 @@ Closest career shapes in the era-normalized vector space:
 - [[jt-thor|JT Thor]] — cosine 0.83
 - [[chandler-hutchison|Chandler Hutchison]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 18.0 pts · 8.0 reb · 1.9 ast · 1.5 blk per 100 (2019-20).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.5σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.7σ)
+
+**Comparables:**
+
+- [[dante-cunningham|Dante Cunningham]] '19 (85% similar)
+- [[dequan-jones|DeQuan Jones]] '13 (84% similar)
+- [[jalen-mcdaniels|Jalen McDaniels]] '24 (84% similar)
+- [[jamir-watkins|Jamir Watkins]] '26 (84% similar)
+- [[jt-thor|JT Thor]] '25 (83% similar)
+- [[chandler-hutchison|Chandler Hutchison]] '19 (82% similar)
+
+**Career shape:** Charted 6 seasons (2018-19–2023-24). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

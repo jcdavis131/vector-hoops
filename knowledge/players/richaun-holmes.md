@@ -43,6 +43,34 @@ Closest career shapes in the era-normalized vector space:
 - [[tony-bradley|Tony Bradley]] — cosine 0.92
 - [[taj-gibson|Taj Gibson]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** PF · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 20.4 pts · 15.7 reb · 3.7 ast · 2.0 blk per 100 (2024-25).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+2.4σ vs era)
+- Relentless on the offensive glass (+1.9σ vs era)
+- Strong presence on the defensive glass (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.9σ)
+- Three-point volume well below era (−1.8σ)
+
+**Comparables:**
+
+- [[onyeka-okongwu|Onyeka Okongwu]] '22 (96% similar)
+- [[mark-williams|Mark Williams]] '26 (93% similar)
+- [[aaron-williams|Aaron Williams]] '05 (93% similar)
+- [[damian-jones|Damian Jones]] '19 (92% similar)
+- [[tony-bradley|Tony Bradley]] '20 (92% similar)
+- [[taj-gibson|Taj Gibson]] '21 (92% similar)
+
+**Career shape:** Charted 10 seasons (2015-16–2024-25). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

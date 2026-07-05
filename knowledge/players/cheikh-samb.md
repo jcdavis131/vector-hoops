@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[william-cunningham|William Cunningham]] — cosine 0.73
 - [[jim-mcilvaine|Jim McIlvaine]] — cosine 0.73
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 8.8 pts · 14.0 reb · 0.6 ast · 5.8 blk per 100 (2008-09).
+
+**Strengths:**
+
+- Elite rim protection (+4.0σ vs era)
+- Relentless on the offensive glass (+1.8σ vs era)
+- Rarely turns the ball over (−1.1σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−4.0σ)
+- Free-throw touch well below era (−2.3σ)
+
+**Comparables:**
+
+- [[yinka-dare|Yinka Dare]] '97 (79% similar)
+- [[jonathan-isaac|Jonathan Isaac]] '24 (73% similar)
+- [[desagana-diop|DeSagana Diop]] '13 (73% similar)
+- [[dalibor-bagaric|Dalibor Bagaric]] '01 (73% similar)
+- [[william-cunningham|William Cunningham]] '99 (73% similar)
+- [[jim-mcilvaine|Jim McIlvaine]] '00 (73% similar)
+
+**Career shape:** Charted 1 season (2008-09). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

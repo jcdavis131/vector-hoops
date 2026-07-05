@@ -36,6 +36,34 @@ Closest career shapes in the era-normalized vector space:
 - [[mirza-teletovic|Mirza Teletovic]] — cosine 0.72
 - [[marcus-landry|Marcus Landry]] — cosine 0.72
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 20.2 pts · 13.8 reb · 2.4 ast · 0.3 stl per 100 (2016-17).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.9σ vs era)
+- Strong presence on the defensive glass (+1.6σ vs era)
+- Heavy shot volume, focal scoring option (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−2.1σ)
+- Turnover rate well above era (+2.0σ)
+
+**Comparables:**
+
+- [[andres-nocioni|Andres Nocioni]] '08 (79% similar)
+- [[kyle-kuzma|Kyle Kuzma]] '24 (76% similar)
+- [[trey-lyles|Trey Lyles]] '21 (75% similar)
+- [[austin-croshere|Austin Croshere]] '99 (72% similar)
+- [[mirza-teletovic|Mirza Teletovic]] '17 (72% similar)
+- [[marcus-landry|Marcus Landry]] '10 (72% similar)
+
+**Career shape:** Charted 3 seasons (2016-17–2018-19). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

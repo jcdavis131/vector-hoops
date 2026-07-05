@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[ryan-arcidiacono|Ryan Arcidiacono]] — cosine 0.85
 - [[isaiah-briscoe|Isaiah Briscoe]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** PG · Offensive Glass + Defensive Glass. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 8.8 pts · 7.1 reb · 4.4 ast · 1.7 stl per 100 (2014-15).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−3.1σ)
+- Scoring load well below era (−1.8σ)
+
+**Comparables:**
+
+- [[semaj-christon|Semaj Christon]] '17 (93% similar)
+- [[kam-jones|Kam Jones]] '26 (88% similar)
+- [[cedric-bozeman|Cedric Bozeman]] '07 (86% similar)
+- [[kennedy-chandler|Kennedy Chandler]] '23 (85% similar)
+- [[ryan-arcidiacono|Ryan Arcidiacono]] '24 (85% similar)
+- [[isaiah-briscoe|Isaiah Briscoe]] '19 (84% similar)
+
+**Career shape:** Charted 2 seasons (2013-14–2014-15). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

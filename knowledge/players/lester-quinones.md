@@ -34,6 +34,31 @@ Closest career shapes in the era-normalized vector space:
 - [[orlando-johnson|Orlando Johnson]] — cosine 0.80
 - [[linas-kleiza|Linas Kleiza]] — cosine 0.79
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 19.5 pts · 8.6 reb · 4.3 ast · 0.7 stl per 100 (2023-24).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.4σ)
+
+**Comparables:**
+
+- [[tyler-dorsey|Tyler Dorsey]] '18 (84% similar)
+- [[alec-peters|Alec Peters]] '18 (83% similar)
+- [[marcus-landry|Marcus Landry]] '10 (83% similar)
+- [[pero-antic|Pero Antic]] '15 (83% similar)
+- [[orlando-johnson|Orlando Johnson]] '14 (80% similar)
+- [[linas-kleiza|Linas Kleiza]] '13 (79% similar)
+
+**Career shape:** Charted 1 season (2023-24). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

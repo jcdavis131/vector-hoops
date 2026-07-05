@@ -38,6 +38,33 @@ Closest career shapes in the era-normalized vector space:
 - [[charlie-bell|Charlie Bell]] — cosine 0.87
 - [[bracey-wright|Bracey Wright]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** PG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 11.8 pts · 5.5 reb · 5.4 ast · 1.9 stl per 100 (2021-22).
+
+**Strengths:**
+
+- Strong net on-court impact (+2.2σ vs era)
+- Rarely turns the ball over (−1.7σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.1σ)
+- Scoring load well below era (−1.4σ)
+
+**Comparables:**
+
+- [[furkan-korkmaz|Furkan Korkmaz]] '24 (91% similar)
+- [[derek-fisher|Derek Fisher]] '02 (88% similar)
+- [[jevon-carter|Jevon Carter]] '24 (88% similar)
+- [[wesley-matthews|Wesley Matthews]] '20 (87% similar)
+- [[charlie-bell|Charlie Bell]] '11 (87% similar)
+- [[bracey-wright|Bracey Wright]] '07 (87% similar)
+
+**Career shape:** Charted 5 seasons (2021-22–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

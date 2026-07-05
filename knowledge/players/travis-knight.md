@@ -40,6 +40,32 @@ Closest career shapes in the era-normalized vector space:
 - [[chris-dudley|Chris Dudley]] — cosine 0.90
 - [[michael-stewart|Michael Stewart]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 5.9 pts · 10.9 reb · 1.0 ast · 2.2 blk per 100 (2000-01).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.1σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−4.0σ)
+- Scoring load well below era (−2.1σ)
+
+**Comparables:**
+
+- [[andrew-lang|Andrew Lang]] '00 (94% similar)
+- [[loren-woods|Loren Woods]] '06 (93% similar)
+- [[dean-garrett|Dean Garrett]] '02 (90% similar)
+- [[joel-freeland|Joel Freeland]] '15 (90% similar)
+- [[chris-dudley|Chris Dudley]] '00 (90% similar)
+- [[michael-stewart|Michael Stewart]] '04 (90% similar)
+
+**Career shape:** Charted 7 seasons (1996-97–2002-03). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

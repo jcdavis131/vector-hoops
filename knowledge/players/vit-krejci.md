@@ -38,6 +38,32 @@ Closest career shapes in the era-normalized vector space:
 - [[rodney-mcgruder|Rodney McGruder]] — cosine 0.89
 - [[hollis-thompson|Hollis Thompson]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 10.3 pts · 7.4 reb · 4.9 ast · 1.4 stl per 100 (2022-23).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.1σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.2σ)
+- Scoring load well below era (−1.5σ)
+
+**Comparables:**
+
+- [[derrick-walton-jr|Derrick Walton Jr.]] '20 (90% similar)
+- [[terrance-ferguson|Terrance Ferguson]] '20 (90% similar)
+- [[antoine-wright|Antoine Wright]] '06 (90% similar)
+- [[damjan-rudez|Damjan Rudez]] '17 (89% similar)
+- [[rodney-mcgruder|Rodney McGruder]] '18 (89% similar)
+- [[hollis-thompson|Hollis Thompson]] '17 (88% similar)
+
+**Career shape:** Charted 5 seasons (2021-22–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

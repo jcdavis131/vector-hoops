@@ -38,6 +38,33 @@ Closest career shapes in the era-normalized vector space:
 - [[jared-butler|Jared Butler]] — cosine 0.92
 - [[raul-lopez|Raul Lopez]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 15.4 pts · 5.7 reb · 12.4 ast · 2.3 stl per 100 (2008-09).
+
+**Strengths:**
+
+- High-volume table-setter (+3.1σ vs era)
+- Active hands, disrupts passing lanes (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.6σ)
+- Defensive rebounding well below era (−1.0σ)
+
+**Comparables:**
+
+- [[jamaal-tinsley|Jamaal Tinsley]] '04 (94% similar)
+- [[kendall-marshall|Kendall Marshall]] '14 (94% similar)
+- [[shelvin-mack|Shelvin Mack]] '16 (93% similar)
+- [[earl-watson|Earl Watson]] '14 (93% similar)
+- [[jared-butler|Jared Butler]] '24 (92% similar)
+- [[raul-lopez|Raul Lopez]] '05 (92% similar)
+
+**Career shape:** Charted 5 seasons (2006-07–2016-17). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

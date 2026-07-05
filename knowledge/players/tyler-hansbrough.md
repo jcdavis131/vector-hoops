@@ -40,6 +40,34 @@ Closest career shapes in the era-normalized vector space:
 - [[devin-gray|Devin Gray]] — cosine 0.86
 - [[glen-davis|Glen Davis]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 14.9 pts · 12.7 reb · 1.1 ast · 1.7 stl per 100 (2015-16).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+2.6σ vs era)
+- Draws contact, gets to the line often (+2.1σ vs era)
+- Relentless on the offensive glass (+2.0σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.4σ)
+- Free-throw touch well below era (−1.3σ)
+
+**Comparables:**
+
+- [[leon-powe|Leon Powe]] '08 (93% similar)
+- [[obinna-ekezie|Obinna Ekezie]] '02 (88% similar)
+- [[nathan-knight|Nathan Knight]] '22 (88% similar)
+- [[marty-conlon|Marty Conlon]] '98 (87% similar)
+- [[devin-gray|Devin Gray]] '00 (86% similar)
+- [[glen-davis|Glen Davis]] '08 (86% similar)
+
+**Career shape:** Charted 7 seasons (2009-10–2015-16). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

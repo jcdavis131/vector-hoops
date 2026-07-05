@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[robert-whaley|Robert Whaley]] — cosine 0.84
 - [[thanasis-antetokounmpo|Thanasis Antetokounmpo]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass + Defensive Glass. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 16.0 pts · 10.1 reb · 5.0 ast · 1.8 stl per 100 (2023-24).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.0σ)
+- Free-throw touch well below era (−1.5σ)
+
+**Comparables:**
+
+- [[xavier-tillman|Xavier Tillman]] '26 (92% similar)
+- [[reggie-jordan|Reggie Jordan]] '97 (85% similar)
+- [[justin-minaya|Justin Minaya]] '25 (85% similar)
+- [[nigel-hayes-davis|Nigel Hayes-Davis]] '26 (84% similar)
+- [[robert-whaley|Robert Whaley]] '06 (84% similar)
+- [[thanasis-antetokounmpo|Thanasis Antetokounmpo]] '24 (84% similar)
+
+**Career shape:** Charted 2 seasons (2023-24–2024-25). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

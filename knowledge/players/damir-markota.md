@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[marjon-beauchamp|MarJon Beauchamp]] — cosine 0.77
 - [[lazar-hayward|Lazar Hayward]] — cosine 0.76
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 15.3 pts · 9.3 reb · 1.8 ast · 0.9 stl per 100 (2006-07).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.0σ)
+- Turnover rate well above era (+1.6σ)
+
+**Comparables:**
+
+- [[ricky-ledo|Ricky Ledo]] '15 (82% similar)
+- [[erik-daniels|Erik Daniels]] '05 (80% similar)
+- [[nikoloz-tskitishvili|Nikoloz Tskitishvili]] '05 (78% similar)
+- [[maxwell-lewis|Maxwell Lewis]] '24 (78% similar)
+- [[marjon-beauchamp|MarJon Beauchamp]] '25 (77% similar)
+- [[lazar-hayward|Lazar Hayward]] '12 (76% similar)
+
+**Career shape:** Charted 1 season (2006-07). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[thomas-hamilton|Thomas Hamilton]] — cosine 0.79
 - [[zach-collins|Zach Collins]] — cosine 0.78
 
+## Scouting report
+
+**Play style:** Unlisted · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 17.1 pts · 13.4 reb · 1.7 ast · 2.8 blk per 100 (2013-14).
+
+**Strengths:**
+
+- Elite rim protection (+1.8σ vs era)
+- Relentless on the offensive glass (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.5σ)
+- On-court net impact well below era (−1.2σ)
+
+**Comparables:**
+
+- [[marquese-chriss|Marquese Chriss]] '20 (86% similar)
+- [[mo-bamba|Mo Bamba]] '20 (81% similar)
+- [[aleksej-pokusevski|Aleksej Pokusevski]] '21 (80% similar)
+- [[jerome-james|Jerome James]] '06 (79% similar)
+- [[thomas-hamilton|Thomas Hamilton]] '00 (79% similar)
+- [[zach-collins|Zach Collins]] '22 (78% similar)
+
+**Career shape:** Charted 1 season (2013-14). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

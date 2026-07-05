@@ -39,6 +39,34 @@ Closest career shapes in the era-normalized vector space:
 - [[sarunas-jasikevicius|Sarunas Jasikevicius]] — cosine 0.93
 - [[brent-price|Brent Price]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 13.0 pts · 3.3 reb · 8.4 ast · 2.3 stl per 100 (2005-06).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+2.3σ vs era)
+- High-volume table-setter (+1.7σ vs era)
+- Knockdown three-point shooter (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.7σ)
+- Shot volume well below era (−1.3σ)
+
+**Comparables:**
+
+- [[howard-eisley|Howard Eisley]] '03 (97% similar)
+- [[sebastian-telfair|Sebastian Telfair]] '10 (95% similar)
+- [[marcus-sasser|Marcus Sasser]] '26 (94% similar)
+- [[raymond-felton|Raymond Felton]] '11 (94% similar)
+- [[sarunas-jasikevicius|Sarunas Jasikevicius]] '07 (93% similar)
+- [[brent-price|Brent Price]] '02 (93% similar)
+
+**Career shape:** Charted 6 seasons (2002-03–2007-08). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[tyler-ennis|Tyler Ennis]] — cosine 0.87
 - [[brevin-knight|Brevin Knight]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 18.3 pts · 8.6 reb · 9.0 ast · 2.6 stl per 100 (2024-25).
+
+**Strengths:**
+
+- High-volume table-setter (+1.6σ vs era)
+- Active hands, disrupts passing lanes (+1.5σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[tyler-ulis|Tyler Ulis]] '18 (89% similar)
+- [[markelle-fultz|Markelle Fultz]] '22 (89% similar)
+- [[elfrid-payton|Elfrid Payton]] '25 (88% similar)
+- [[roko-ukic|Roko Ukic]] '09 (88% similar)
+- [[tyler-ennis|Tyler Ennis]] '15 (87% similar)
+- [[brevin-knight|Brevin Knight]] '03 (87% similar)
+
+**Career shape:** Charted 2 seasons (2024-25–2025-26). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -38,6 +38,32 @@ Closest career shapes in the era-normalized vector space:
 - [[c-j-wilcox|C.J. Wilcox]] — cosine 0.91
 - [[ian-clark|Ian Clark]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** PG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 12.3 pts · 2.9 reb · 4.1 ast · 1.4 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.2σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.8σ)
+- Finishing efficiency well below era (−1.5σ)
+
+**Comparables:**
+
+- [[matt-maloney|Matt Maloney]] '00 (92% similar)
+- [[bryce-drew|Bryce Drew]] '99 (92% similar)
+- [[svi-mykhailiuk|Svi Mykhailiuk]] '24 (92% similar)
+- [[charlie-bell|Charlie Bell]] '11 (91% similar)
+- [[c-j-wilcox|C.J. Wilcox]] '17 (91% similar)
+- [[ian-clark|Ian Clark]] '15 (90% similar)
+
+**Career shape:** Charted 5 seasons (2020-21–2025-26). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

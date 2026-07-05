@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[brian-evans|Brian Evans]] — cosine 0.76
 - [[antonis-fotsis|Antonis Fotsis]] — cosine 0.75
 
+## Scouting report
+
+**Play style:** C · Three-Point Accuracy (Low Turnovers). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 16.8 pts · 6.8 reb · 1.8 ast · 1.4 blk per 100 (2025-26).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.3σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.2σ)
+- Table-setting role well below era (−1.2σ)
+
+**Comparables:**
+
+- [[mike-muscala|Mike Muscala]] '14 (85% similar)
+- [[keegan-murray|Keegan Murray]] '26 (83% similar)
+- [[shawne-williams|Shawne Williams]] '12 (83% similar)
+- [[daeqwon-plowden|Daeqwon Plowden]] '26 (77% similar)
+- [[brian-evans|Brian Evans]] '98 (76% similar)
+- [[antonis-fotsis|Antonis Fotsis]] '02 (75% similar)
+
+**Career shape:** Charted 3 seasons (2023-24–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

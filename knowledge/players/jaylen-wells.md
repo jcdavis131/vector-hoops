@@ -35,6 +35,31 @@ Closest career shapes in the era-normalized vector space:
 - [[matt-thomas|Matt Thomas]] — cosine 0.88
 - [[simone-fontecchio|Simone Fontecchio]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 18.5 pts · 6.1 reb · 3.0 ast · 1.0 stl per 100 (2024-25).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.0σ)
+
+**Comparables:**
+
+- [[landry-shamet|Landry Shamet]] '20 (91% similar)
+- [[bryn-forbes|Bryn Forbes]] '17 (91% similar)
+- [[alan-anderson|Alan Anderson]] '17 (90% similar)
+- [[rodney-hood|Rodney Hood]] '22 (90% similar)
+- [[matt-thomas|Matt Thomas]] '22 (88% similar)
+- [[simone-fontecchio|Simone Fontecchio]] '23 (88% similar)
+
+**Career shape:** Charted 2 seasons (2024-25–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

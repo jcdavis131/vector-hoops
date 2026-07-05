@@ -36,6 +36,31 @@ Closest career shapes in the era-normalized vector space:
 - [[steve-novak|Steve Novak]] — cosine 0.79
 - [[rodney-carney|Rodney Carney]] — cosine 0.79
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 20.6 pts · 6.6 reb · 2.0 ast · 1.6 stl per 100 (2006-07).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.7σ)
+
+**Comparables:**
+
+- [[martell-webster|Martell Webster]] '15 (82% similar)
+- [[eric-piatkowski|Eric Piatkowski]] '06 (81% similar)
+- [[anthony-morrow|Anthony Morrow]] '17 (80% similar)
+- [[cam-reynolds|Cam Reynolds]] '19 (79% similar)
+- [[steve-novak|Steve Novak]] '15 (79% similar)
+- [[rodney-carney|Rodney Carney]] '09 (79% similar)
+
+**Career shape:** Charted 3 seasons (2006-07–2008-09). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

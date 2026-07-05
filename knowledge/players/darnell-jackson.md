@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[eric-mobley|Eric Mobley]] — cosine 0.84
 - [[kobe-brown|Kobe Brown]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 9.0 pts · 8.6 reb · 1.6 ast · 1.6 blk per 100 (2009-10).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.7σ)
+- Turnover rate well above era (+2.6σ)
+
+**Comparables:**
+
+- [[lari-ketner|Lari Ketner]] '00 (87% similar)
+- [[ognjen-kuzmic|Ognjen Kuzmic]] '14 (85% similar)
+- [[john-edwards|John Edwards]] '05 (85% similar)
+- [[maxwell-lewis|Maxwell Lewis]] '24 (85% similar)
+- [[eric-mobley|Eric Mobley]] '97 (84% similar)
+- [[kobe-brown|Kobe Brown]] '24 (84% similar)
+
+**Career shape:** Charted 3 seasons (2008-09–2010-11). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

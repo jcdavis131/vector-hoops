@@ -46,6 +46,33 @@ Closest career shapes in the era-normalized vector space:
 - [[rodney-hood|Rodney Hood]] — cosine 0.95
 - [[eric-piatkowski|Eric Piatkowski]] — cosine 0.94
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 21.5 pts · 4.4 reb · 2.3 ast · 1.2 stl per 100 (2016-17).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.3σ vs era)
+- Rarely turns the ball over (−1.6σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.2σ)
+- Defensive rebounding well below era (−1.1σ)
+
+**Comparables:**
+
+- [[dennis-scott|Dennis Scott]] '00 (98% similar)
+- [[langston-galloway|Langston Galloway]] '18 (97% similar)
+- [[roger-mason-jr|Roger Mason Jr.]] '03 (95% similar)
+- [[aj-green|AJ Green]] '23 (95% similar)
+- [[rodney-hood|Rodney Hood]] '22 (95% similar)
+- [[eric-piatkowski|Eric Piatkowski]] '06 (94% similar)
+
+**Career shape:** Charted 13 seasons (2009-10–2021-22). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

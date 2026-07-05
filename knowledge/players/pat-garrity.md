@@ -42,6 +42,33 @@ Closest career shapes in the era-normalized vector space:
 - [[matt-bullard|Matt Bullard]] — cosine 0.95
 - [[duncan-robinson|Duncan Robinson]] — cosine 0.94
 
+## Scouting report
+
+**Play style:** PF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 18.6 pts · 7.1 reb · 2.1 ast · 1.3 stl per 100 (2001-02).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.8σ vs era)
+- Rarely turns the ball over (−1.6σ vs era)
+- Knockdown three-point shooter (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.4σ)
+
+**Comparables:**
+
+- [[aj-green|AJ Green]] '23 (98% similar)
+- [[matt-thomas|Matt Thomas]] '22 (97% similar)
+- [[georges-niang|Georges Niang]] '17 (96% similar)
+- [[chase-budinger|Chase Budinger]] '10 (95% similar)
+- [[matt-bullard|Matt Bullard]] '01 (95% similar)
+- [[duncan-robinson|Duncan Robinson]] '20 (94% similar)
+
+**Career shape:** Charted 9 seasons (1998-99–2007-08). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

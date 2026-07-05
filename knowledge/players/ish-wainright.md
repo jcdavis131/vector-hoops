@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[kedrick-brown|Kedrick Brown]] — cosine 0.84
 - [[demarre-carroll|DeMarre Carroll]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** PF · Three-Point Accuracy (Low Turnovers). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 14.0 pts · 7.0 reb · 1.9 ast · 2.6 stl per 100 (2021-22).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.8σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.4σ)
+- Defensive rebounding well below era (−1.2σ)
+
+**Comparables:**
+
+- [[killian-tillie|Killian Tillie]] '21 (88% similar)
+- [[keith-askins|Keith Askins]] '99 (84% similar)
+- [[ime-udoka|Ime Udoka]] '11 (84% similar)
+- [[iman-shumpert|Iman Shumpert]] '12 (84% similar)
+- [[kedrick-brown|Kedrick Brown]] '02 (84% similar)
+- [[demarre-carroll|DeMarre Carroll]] '16 (83% similar)
+
+**Career shape:** Charted 2 seasons (2021-22–2022-23). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

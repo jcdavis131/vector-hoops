@@ -36,6 +36,34 @@ Closest career shapes in the era-normalized vector space:
 - [[tyrone-hill|Tyrone Hill]] — cosine 0.91
 - [[buck-williams|Buck Williams]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** PF · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 13.5 pts · 17.0 reb · 1.7 ast · 1.1 stl per 100 (1999-00).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+2.3σ vs era)
+- Efficient finisher inside the arc (+1.7σ vs era)
+- Relentless on the offensive glass (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.9σ)
+- Shot volume well below era (−1.4σ)
+
+**Comparables:**
+
+- [[anderson-varejao|Anderson Varejao]] '05 (94% similar)
+- [[jeff-foster|Jeff Foster]] '00 (94% similar)
+- [[jordan-williams|Jordan Williams]] '12 (91% similar)
+- [[andrew-declercq|Andrew DeClercq]] '01 (91% similar)
+- [[tyrone-hill|Tyrone Hill]] '97 (91% similar)
+- [[buck-williams|Buck Williams]] '97 (91% similar)
+
+**Career shape:** Charted 3 seasons (1997-98–1999-00). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

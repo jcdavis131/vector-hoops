@@ -37,6 +37,32 @@ Closest career shapes in the era-normalized vector space:
 - [[alonzo-gee|Alonzo Gee]] — cosine 0.82
 - [[garrett-temple|Garrett Temple]] — cosine 0.80
 
+## Scouting report
+
+**Play style:** PF · Three-Point Accuracy (Low Turnovers). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 11.9 pts · 7.2 reb · 2.4 ast · 1.4 stl per 100 (2022-23).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Scoring load well below era (−1.3σ)
+- On-court net impact well below era (−1.2σ)
+
+**Comparables:**
+
+- [[kevon-harris|Kevon Harris]] '23 (89% similar)
+- [[toumani-camara|Toumani Camara]] '24 (87% similar)
+- [[josh-okogie|Josh Okogie]] '25 (83% similar)
+- [[caleb-martin|Caleb Martin]] '26 (83% similar)
+- [[alonzo-gee|Alonzo Gee]] '16 (82% similar)
+- [[garrett-temple|Garrett Temple]] '11 (80% similar)
+
+**Career shape:** Charted 4 seasons (2022-23–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

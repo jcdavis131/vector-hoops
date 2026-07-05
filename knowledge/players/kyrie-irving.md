@@ -47,6 +47,33 @@ Closest career shapes in the era-normalized vector space:
 - [[kobe-bryant|Kobe Bryant]] — cosine 0.94
 - [[kemba-walker|Kemba Walker]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 38.3 pts · 7.2 reb · 9.0 ast · 1.9 stl per 100 (2019-20).
+
+**Strengths:**
+
+- Featured, high-usage scoring role (+2.8σ vs era)
+- Heavy shot volume, focal scoring option (+2.8σ vs era)
+- High-volume table-setter (+1.8σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[bradley-beal|Bradley Beal]] '20 (97% similar)
+- [[donovan-mitchell|Donovan Mitchell]] '21 (96% similar)
+- [[jamal-murray|Jamal Murray]] '26 (95% similar)
+- [[stephen-curry|Stephen Curry]] '16 (94% similar)
+- [[kobe-bryant|Kobe Bryant]] '06 (94% similar)
+- [[kemba-walker|Kemba Walker]] '19 (93% similar)
+
+**Career shape:** Charted 14 seasons (2011-12–2024-25). Consistent Scoring Volume + Shot Volume profile across his career.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

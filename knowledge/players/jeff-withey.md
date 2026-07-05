@@ -37,6 +37,34 @@ Closest career shapes in the era-normalized vector space:
 - [[daniel-gafford|Daniel Gafford]] — cosine 0.93
 - [[adem-bona|Adem Bona]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 16.5 pts · 13.7 reb · 0.8 ast · 3.6 blk per 100 (2016-17).
+
+**Strengths:**
+
+- Elite rim protection (+3.1σ vs era)
+- Relentless on the offensive glass (+2.2σ vs era)
+- Efficient finisher inside the arc (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.2σ)
+- Three-point volume well below era (−1.5σ)
+
+**Comparables:**
+
+- [[theo-ratliff|Theo Ratliff]] '09 (94% similar)
+- [[joan-beringer|Joan Beringer]] '26 (94% similar)
+- [[goga-bitadze|Goga Bitadze]] '25 (94% similar)
+- [[chris-andersen|Chris Andersen]] '10 (94% similar)
+- [[daniel-gafford|Daniel Gafford]] '25 (93% similar)
+- [[adem-bona|Adem Bona]] '25 (93% similar)
+
+**Career shape:** Charted 4 seasons (2013-14–2016-17). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

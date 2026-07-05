@@ -45,6 +45,33 @@ Closest career shapes in the era-normalized vector space:
 - [[devin-booker|Devin Booker]] — cosine 0.93
 - [[cam-thomas|Cam Thomas]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** SG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 37.0 pts · 6.7 reb · 6.6 ast · 1.1 stl per 100 (2020-21).
+
+**Strengths:**
+
+- Featured, high-usage scoring role (+2.6σ vs era)
+- Heavy shot volume, focal scoring option (+2.1σ vs era)
+- Draws contact, gets to the line often (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.2σ)
+
+**Comparables:**
+
+- [[jalen-rose|Jalen Rose]] '07 (95% similar)
+- [[ben-gordon|Ben Gordon]] '05 (94% similar)
+- [[jalen-green|Jalen Green]] '26 (93% similar)
+- [[bradley-beal|Bradley Beal]] '20 (93% similar)
+- [[devin-booker|Devin Booker]] '19 (93% similar)
+- [[cam-thomas|Cam Thomas]] '25 (93% similar)
+
+**Career shape:** Charted 12 seasons (2014-15–2025-26). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -36,6 +36,33 @@ Closest career shapes in the era-normalized vector space:
 - [[eddie-johnson|Eddie Johnson]] — cosine 0.91
 - [[matt-bullard|Matt Bullard]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 18.5 pts · 8.8 reb · 1.8 ast · 0.6 stl per 100 (2008-09).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.9σ vs era)
+- Rarely turns the ball over (−1.5σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.5σ)
+- Rim pressure (free-throw generation) well below era (−1.0σ)
+
+**Comparables:**
+
+- [[wilson-chandler|Wilson Chandler]] '20 (94% similar)
+- [[chase-budinger|Chase Budinger]] '10 (93% similar)
+- [[steve-novak|Steve Novak]] '15 (92% similar)
+- [[marcus-morris-sr|Marcus Morris Sr.]] '12 (91% similar)
+- [[eddie-johnson|Eddie Johnson]] '98 (91% similar)
+- [[matt-bullard|Matt Bullard]] '01 (89% similar)
+
+**Career shape:** Charted 3 seasons (2006-07–2008-09). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

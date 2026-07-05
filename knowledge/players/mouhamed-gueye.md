@@ -35,6 +35,33 @@ Closest career shapes in the era-normalized vector space:
 - [[jordan-walsh|Jordan Walsh]] — cosine 0.78
 - [[usman-garuba|Usman Garuba]] — cosine 0.78
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 17.2 pts · 12.1 reb · 2.4 ast · 2.9 blk per 100 (2024-25).
+
+**Strengths:**
+
+- Elite rim protection (+2.2σ vs era)
+- Active hands, disrupts passing lanes (+1.2σ vs era)
+- Strong net on-court impact (+1.2σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[jonathan-isaac|Jonathan Isaac]] '24 (90% similar)
+- [[ben-wallace|Ben Wallace]] '03 (82% similar)
+- [[jerome-kersey|Jerome Kersey]] '01 (78% similar)
+- [[evan-eschmeyer|Evan Eschmeyer]] '03 (78% similar)
+- [[jordan-walsh|Jordan Walsh]] '25 (78% similar)
+- [[usman-garuba|Usman Garuba]] '22 (78% similar)
+
+**Career shape:** Charted 2 seasons (2024-25–2025-26). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

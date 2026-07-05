@@ -48,6 +48,33 @@ Closest career shapes in the era-normalized vector space:
 - [[dirk-nowitzki|Dirk Nowitzki]] — cosine 0.74
 - [[kristaps-porzingis|Kristaps Porziņģis]] — cosine 0.73
 
+## Scouting report
+
+**Play style:** C · Three-Point Volume + Three-Point Accuracy. Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 25.6 pts · 14.5 reb · 1.1 ast · 2.6 blk per 100 (2012-13).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+2.3σ vs era)
+- High-volume three-point shooter (+2.3σ vs era)
+- Heavy shot volume, focal scoring option (+1.9σ vs era)
+
+**Areas of concern:**
+
+- Table-setting role well below era (−1.1σ)
+
+**Comparables:**
+
+- [[naz-reid|Naz Reid]] '21 (80% similar)
+- [[nikola-mirotic|Nikola Mirotic]] '15 (80% similar)
+- [[michael-porter-jr|Michael Porter Jr.]] '26 (79% similar)
+- [[chet-holmgren|Chet Holmgren]] '25 (75% similar)
+- [[dirk-nowitzki|Dirk Nowitzki]] '06 (74% similar)
+- [[kristaps-porzingis|Kristaps Porziņģis]] '18 (73% similar)
+
+**Career shape:** Charted 15 seasons (1996-97–2012-13). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -37,6 +37,31 @@ Closest career shapes in the era-normalized vector space:
 - [[matt-ryan|Matt Ryan]] — cosine 0.90
 - [[alan-anderson|Alan Anderson]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 17.5 pts · 5.4 reb · 3.2 ast · 0.3 blk per 100 (2018-19).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.3σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−2.6σ)
+
+**Comparables:**
+
+- [[corey-kispert|Corey Kispert]] '23 (98% similar)
+- [[arron-afflalo|Arron Afflalo]] '18 (94% similar)
+- [[doug-mcdermott|Doug McDermott]] '25 (93% similar)
+- [[bryn-forbes|Bryn Forbes]] '17 (92% similar)
+- [[matt-ryan|Matt Ryan]] '25 (90% similar)
+- [[alan-anderson|Alan Anderson]] '17 (89% similar)
+
+**Career shape:** Charted 4 seasons (2012-13–2018-19). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

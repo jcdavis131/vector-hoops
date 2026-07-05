@@ -37,6 +37,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jeffery-taylor|Jeffery Taylor]] — cosine 0.81
 - [[paul-zipser|Paul Zipser]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 13.4 pts · 6.5 reb · 2.4 ast · 1.4 stl per 100 (2017-18).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.7σ)
+- On-court net impact well below era (−1.3σ)
+
+**Comparables:**
+
+- [[patrick-williams|Patrick Williams]] '22 (90% similar)
+- [[brandon-rush|Brandon Rush]] '15 (84% similar)
+- [[dequan-jones|DeQuan Jones]] '13 (83% similar)
+- [[antoine-wright|Antoine Wright]] '06 (82% similar)
+- [[jeffery-taylor|Jeffery Taylor]] '14 (81% similar)
+- [[paul-zipser|Paul Zipser]] '18 (81% similar)
+
+**Career shape:** Charted 4 seasons (2017-18–2020-21). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

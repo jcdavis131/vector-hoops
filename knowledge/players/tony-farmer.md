@@ -35,6 +35,33 @@ Closest career shapes in the era-normalized vector space:
 - [[nathan-knight|Nathan Knight]] — cosine 0.66
 - [[josh-okogie|Josh Okogie]] — cosine 0.65
 
+## Scouting report
+
+**Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 18.7 pts · 9.0 reb · 1.4 ast · 2.8 stl per 100 (1997-98).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+2.3σ vs era)
+- Active hands, disrupts passing lanes (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.2σ)
+- Table-setting role well below era (−1.0σ)
+
+**Comparables:**
+
+- [[devin-gray|Devin Gray]] '00 (74% similar)
+- [[alijah-martin|Alijah Martin]] '26 (73% similar)
+- [[martin-muursepp|Martin Muursepp]] '97 (72% similar)
+- [[tyler-hansbrough|Tyler Hansbrough]] '16 (69% similar)
+- [[nathan-knight|Nathan Knight]] '22 (66% similar)
+- [[josh-okogie|Josh Okogie]] '25 (65% similar)
+
+**Career shape:** Charted 2 seasons (1997-98–1999-00). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

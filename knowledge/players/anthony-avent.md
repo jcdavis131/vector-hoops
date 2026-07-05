@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[isaac-bonga|Isaac Bonga]] — cosine 0.81
 - [[dalibor-bagaric|Dalibor Bagaric]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 10.5 pts · 9.6 reb · 1.4 ast · 2.1 stl per 100 (1999-00).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.5σ)
+- Scoring load well below era (−1.5σ)
+
+**Comparables:**
+
+- [[lasalle-thompson|LaSalle Thompson]] '97 (89% similar)
+- [[cameron-bairstow|Cameron Bairstow]] '15 (86% similar)
+- [[charlie-brown-jr|Charlie Brown Jr.]] '22 (86% similar)
+- [[john-salley|John Salley]] '00 (82% similar)
+- [[isaac-bonga|Isaac Bonga]] '19 (81% similar)
+- [[dalibor-bagaric|Dalibor Bagaric]] '01 (81% similar)
+
+**Career shape:** Charted 1 season (1999-00). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

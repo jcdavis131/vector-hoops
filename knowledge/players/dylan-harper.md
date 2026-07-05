@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[sam-cassell|Sam Cassell]] — cosine 0.73
 - [[john-stockton|John Stockton]] — cosine 0.73
 
+## Scouting report
+
+**Play style:** SG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 24.7 pts · 7.1 reb · 8.1 ast · 1.6 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Strong net on-court impact (+1.4σ vs era)
+- High-volume table-setter (+1.2σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[tony-parker|Tony Parker]] '09 (90% similar)
+- [[jalen-williams|Jalen Williams]] '25 (81% similar)
+- [[jrue-holiday|Jrue Holiday]] '16 (76% similar)
+- [[jalen-brunson|Jalen Brunson]] '24 (76% similar)
+- [[sam-cassell|Sam Cassell]] '04 (73% similar)
+- [[john-stockton|John Stockton]] '01 (73% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

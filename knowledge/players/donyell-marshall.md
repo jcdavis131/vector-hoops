@@ -46,6 +46,34 @@ Closest career shapes in the era-normalized vector space:
 - [[naz-reid|Naz Reid]] — cosine 0.78
 - [[nikola-mirotic|Nikola Mirotic]] — cosine 0.77
 
+## Scouting report
+
+**Play style:** PF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 24.9 pts · 10.6 reb · 4.0 ast · 1.3 blk per 100 (2008-09).
+
+**Strengths:**
+
+- High-volume three-point shooter (+3.3σ vs era)
+- Strong net on-court impact (+1.8σ vs era)
+- Rarely turns the ball over (−1.3σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.8σ)
+- Rim pressure (free-throw generation) well below era (−1.2σ)
+
+**Comparables:**
+
+- [[charlie-villanueva|Charlie Villanueva]] '14 (84% similar)
+- [[ersan-ilyasova|Ersan Ilyasova]] '21 (80% similar)
+- [[chris-morris|Chris Morris]] '99 (79% similar)
+- [[bobby-portis|Bobby Portis]] '23 (79% similar)
+- [[naz-reid|Naz Reid]] '21 (78% similar)
+- [[nikola-mirotic|Nikola Mirotic]] '15 (77% similar)
+
+**Career shape:** Charted 13 seasons (1996-97–2008-09). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

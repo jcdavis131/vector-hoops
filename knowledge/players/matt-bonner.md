@@ -45,6 +45,34 @@ Closest career shapes in the era-normalized vector space:
 - [[patrick-patterson|Patrick Patterson]] — cosine 0.88
 - [[ryan-broekhoff|Ryan Broekhoff]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** PF · Three-Point Accuracy (Low Turnovers). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 16.6 pts · 8.2 reb · 2.4 ast · 0.8 blk per 100 (2011-12).
+
+**Strengths:**
+
+- Rarely turns the ball over (−2.2σ vs era)
+- Strong net on-court impact (+2.1σ vs era)
+- High-volume three-point shooter (+1.7σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.6σ)
+- Rim pressure (free-throw generation) well below era (−1.5σ)
+
+**Comparables:**
+
+- [[sam-hauser|Sam Hauser]] '22 (96% similar)
+- [[sam-perkins|Sam Perkins]] '01 (90% similar)
+- [[danny-ferry|Danny Ferry]] '01 (89% similar)
+- [[terry-mills|Terry Mills]] '97 (88% similar)
+- [[patrick-patterson|Patrick Patterson]] '19 (88% similar)
+- [[ryan-broekhoff|Ryan Broekhoff]] '19 (87% similar)
+
+**Career shape:** Charted 12 seasons (2004-05–2015-16). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

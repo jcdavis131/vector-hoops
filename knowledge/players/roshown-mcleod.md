@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[maurice-taylor|Maurice Taylor]] — cosine 0.70
 - [[juwan-howard|Juwan Howard]] — cosine 0.69
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 24.2 pts · 7.5 reb · 2.1 ast · 0.3 stl per 100 (1998-99).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+1.9σ vs era)
+- Featured, high-usage scoring role (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.9σ)
+
+**Comparables:**
+
+- [[tre-johnson|Tre Johnson]] '26 (72% similar)
+- [[lee-nailon|Lee Nailon]] '03 (71% similar)
+- [[aj-johnson|AJ Johnson]] '25 (70% similar)
+- [[malaki-branham|Malaki Branham]] '24 (70% similar)
+- [[maurice-taylor|Maurice Taylor]] '99 (70% similar)
+- [[juwan-howard|Juwan Howard]] '12 (69% similar)
+
+**Career shape:** Charted 3 seasons (1998-99–2000-01). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -37,6 +37,33 @@ Closest career shapes in the era-normalized vector space:
 - [[bryant-reeves|Bryant Reeves]] — cosine 0.87
 - [[mario-kasun|Mario Kasun]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 20.2 pts · 15.3 reb · 3.7 ast · 0.8 stl per 100 (2017-18).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+2.2σ vs era)
+- Strong presence on the defensive glass (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.3σ)
+- Three-point volume well below era (−1.4σ)
+
+**Comparables:**
+
+- [[jeremy-sochan|Jeremy Sochan]] '26 (87% similar)
+- [[kevin-willis|Kevin Willis]] '02 (87% similar)
+- [[harry-giles-iii|Harry Giles III]] '24 (87% similar)
+- [[james-wiseman|James Wiseman]] '24 (87% similar)
+- [[bryant-reeves|Bryant Reeves]] '98 (87% similar)
+- [[mario-kasun|Mario Kasun]] '05 (87% similar)
+
+**Career shape:** Charted 4 seasons (2014-15–2017-18). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

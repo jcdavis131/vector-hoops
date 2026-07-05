@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[reece-gaines|Reece Gaines]] — cosine 0.86
 - [[sekou-doumbouya|Sekou Doumbouya]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 11.8 pts · 7.0 reb · 4.7 ast · 0.9 stl per 100 (2023-24).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.7σ)
+- Scoring load well below era (−1.3σ)
+
+**Comparables:**
+
+- [[javonte-smart|Javonte Smart]] '22 (91% similar)
+- [[maxwell-lewis|Maxwell Lewis]] '24 (90% similar)
+- [[nique-clifford|Nique Clifford]] '26 (89% similar)
+- [[nick-johnson|Nick Johnson]] '15 (86% similar)
+- [[reece-gaines|Reece Gaines]] '05 (86% similar)
+- [[sekou-doumbouya|Sekou Doumbouya]] '20 (86% similar)
+
+**Career shape:** Charted 3 seasons (2023-24–2025-26). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

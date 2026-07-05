@@ -45,6 +45,34 @@ Closest career shapes in the era-normalized vector space:
 - [[jonas-valanciunas|Jonas Valančiūnas]] — cosine 0.88
 - [[matt-geiger|Matt Geiger]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 27.6 pts · 13.3 reb · 2.8 ast · 3.4 blk per 100 (2001-02).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+2.7σ vs era)
+- Elite rim protection (+2.0σ vs era)
+- Featured, high-usage scoring role (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.4σ)
+- Three-point accuracy well below era (−1.3σ)
+
+**Comparables:**
+
+- [[jermaine-o-neal|Jermaine O'Neal]] '05 (92% similar)
+- [[elton-brand|Elton Brand]] '07 (89% similar)
+- [[roy-hibbert|Roy Hibbert]] '13 (89% similar)
+- [[yao-ming|Yao Ming]] '07 (89% similar)
+- [[jonas-valanciunas|Jonas Valančiūnas]] '26 (88% similar)
+- [[matt-geiger|Matt Geiger]] '98 (88% similar)
+
+**Career shape:** Charted 12 seasons (1997-98–2010-11). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

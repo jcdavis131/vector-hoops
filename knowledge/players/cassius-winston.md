@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[wayne-selden|Wayne Selden]] — cosine 0.80
 - [[will-riley|Will Riley]] — cosine 0.80
 
+## Scouting report
+
+**Play style:** PG · Offensive Glass (Low On-Court Impact). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 19.7 pts · 4.3 reb · 5.8 ast · 1.0 stl per 100 (2020-21).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+1.3σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−3.2σ)
+- Offensive-glass activity well below era (−1.2σ)
+
+**Comparables:**
+
+- [[frank-brickowski|Frank Brickowski]] '97 (88% similar)
+- [[bub-carrington|Bub Carrington]] '26 (86% similar)
+- [[kiwane-garris|Kiwane Garris]] '98 (84% similar)
+- [[malaki-branham|Malaki Branham]] '24 (80% similar)
+- [[wayne-selden|Wayne Selden]] '18 (80% similar)
+- [[will-riley|Will Riley]] '26 (80% similar)
+
+**Career shape:** Charted 1 season (2020-21). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

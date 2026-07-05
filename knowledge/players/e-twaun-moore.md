@@ -43,6 +43,32 @@ Closest career shapes in the era-normalized vector space:
 - [[courtney-lee|Courtney Lee]] — cosine 0.86
 - [[charlie-bell|Charlie Bell]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** PG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 17.0 pts · 5.1 reb · 5.2 ast · 1.7 stl per 100 (2011-12).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+2.0σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.4σ)
+- Offensive-glass activity well below era (−1.1σ)
+
+**Comparables:**
+
+- [[avery-bradley|Avery Bradley]] '11 (88% similar)
+- [[gary-harris|Gary Harris]] '25 (87% similar)
+- [[quincy-lewis|Quincy Lewis]] '02 (87% similar)
+- [[raja-bell|Raja Bell]] '07 (86% similar)
+- [[courtney-lee|Courtney Lee]] '20 (86% similar)
+- [[charlie-bell|Charlie Bell]] '11 (85% similar)
+
+**Career shape:** Charted 10 seasons (2011-12–2020-21). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

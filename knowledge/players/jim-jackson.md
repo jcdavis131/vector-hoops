@@ -43,6 +43,32 @@ Closest career shapes in the era-normalized vector space:
 - [[will-barton|Will Barton]] — cosine 0.84
 - [[juan-carlos-navarro|Juan Carlos Navarro]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 11.6 pts · 7.3 reb · 3.4 ast · 1.1 stl per 100 (2005-06).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.4σ)
+- Rim pressure (free-throw generation) well below era (−1.5σ)
+
+**Comparables:**
+
+- [[eldridge-recasner|Eldridge Recasner]] '01 (91% similar)
+- [[quinn-cook|Quinn Cook]] '18 (85% similar)
+- [[trajan-langdon|Trajan Langdon]] '02 (85% similar)
+- [[jimmer-fredette|Jimmer Fredette]] '14 (85% similar)
+- [[will-barton|Will Barton]] '13 (84% similar)
+- [[juan-carlos-navarro|Juan Carlos Navarro]] '08 (84% similar)
+
+**Career shape:** Charted 10 seasons (1996-97–2005-06). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

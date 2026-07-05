@@ -43,6 +43,32 @@ Closest career shapes in the era-normalized vector space:
 - [[shaquille-harrison|Shaquille Harrison]] — cosine 0.87
 - [[erick-barkley|Erick Barkley]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 14.6 pts · 7.1 reb · 7.7 ast · 3.6 stl per 100 (2022-23).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+4.0σ vs era)
+- High-volume table-setter (+1.2σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[alex-caruso|Alex Caruso]] '25 (93% similar)
+- [[dru-smith|Dru Smith]] '26 (93% similar)
+- [[jordan-mclaughlin|Jordan McLaughlin]] '24 (90% similar)
+- [[herbert-jones|Herbert Jones]] '22 (88% similar)
+- [[shaquille-harrison|Shaquille Harrison]] '21 (87% similar)
+- [[erick-barkley|Erick Barkley]] '02 (86% similar)
+
+**Career shape:** Charted 10 seasons (2015-16–2024-25). Entered as a Scoring Volume + Shot Volume profile, peaked as a Playmaking + Steals identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

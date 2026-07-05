@@ -38,6 +38,32 @@ Closest career shapes in the era-normalized vector space:
 - [[daniel-gibson|Daniel Gibson]] — cosine 0.91
 - [[mychal-mulder|Mychal Mulder]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 16.7 pts · 4.1 reb · 3.2 ast · 1.1 blk per 100 (2010-11).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.6σ)
+- Offensive-glass activity well below era (−1.2σ)
+
+**Comparables:**
+
+- [[casey-jacobsen|Casey Jacobsen]] '08 (94% similar)
+- [[roger-mason-jr|Roger Mason Jr.]] '03 (91% similar)
+- [[nik-stauskas|Nik Stauskas]] '15 (91% similar)
+- [[hubert-davis|Hubert Davis]] '04 (91% similar)
+- [[daniel-gibson|Daniel Gibson]] '13 (91% similar)
+- [[mychal-mulder|Mychal Mulder]] '22 (91% similar)
+
+**Career shape:** Charted 5 seasons (2010-11–2015-16). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

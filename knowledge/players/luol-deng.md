@@ -47,6 +47,33 @@ Closest career shapes in the era-normalized vector space:
 - [[antawn-jamison|Antawn Jamison]] — cosine 0.72
 - [[michael-porter-jr|Michael Porter Jr.]] — cosine 0.70
 
+## Scouting report
+
+**Play style:** SF · Defensive Glass + Rim Pressure (Fts). Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 25.3 pts · 9.5 reb · 3.4 ast · 1.6 stl per 100 (2006-07).
+
+**Strengths:**
+
+- Strong net on-court impact (+1.4σ vs era)
+- Featured, high-usage scoring role (+1.0σ vs era)
+- Efficient finisher inside the arc (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Three-point volume well below era (−1.0σ)
+
+**Comparables:**
+
+- [[josh-howard|Josh Howard]] '07 (90% similar)
+- [[tobias-harris|Tobias Harris]] '21 (82% similar)
+- [[dirk-nowitzki|Dirk Nowitzki]] '06 (73% similar)
+- [[wally-szczerbiak|Wally Szczerbiak]] '07 (73% similar)
+- [[antawn-jamison|Antawn Jamison]] '01 (72% similar)
+- [[michael-porter-jr|Michael Porter Jr.]] '26 (70% similar)
+
+**Career shape:** Charted 14 seasons (2004-05–2018-19). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

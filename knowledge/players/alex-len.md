@@ -45,6 +45,34 @@ Closest career shapes in the era-normalized vector space:
 - [[samuel-dalembert|Samuel Dalembert]] — cosine 0.94
 - [[brendan-haywood|Brendan Haywood]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 12.8 pts · 13.6 reb · 5.3 ast · 3.5 blk per 100 (2023-24).
+
+**Strengths:**
+
+- Elite rim protection (+2.9σ vs era)
+- Strong net on-court impact (+2.3σ vs era)
+- Efficient finisher inside the arc (+1.9σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.7σ)
+- Three-point volume well below era (−1.8σ)
+
+**Comparables:**
+
+- [[erick-dampier|Erick Dampier]] '97 (97% similar)
+- [[etan-thomas|Etan Thomas]] '07 (95% similar)
+- [[bruno-fernando|Bruno Fernando]] '22 (94% similar)
+- [[jahidi-white|Jahidi White]] '05 (94% similar)
+- [[samuel-dalembert|Samuel Dalembert]] '13 (94% similar)
+- [[brendan-haywood|Brendan Haywood]] '15 (93% similar)
+
+**Career shape:** Charted 12 seasons (2013-14–2024-25). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

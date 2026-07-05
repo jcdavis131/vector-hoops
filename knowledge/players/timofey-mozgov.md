@@ -41,6 +41,33 @@ Closest career shapes in the era-normalized vector space:
 - [[jake-tsakalidis|Jake Tsakalidis]] — cosine 0.92
 - [[bruno-fernando|Bruno Fernando]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 14.4 pts · 14.3 reb · 1.2 ast · 2.4 blk per 100 (2012-13).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+2.3σ vs era)
+- Elite rim protection (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.5σ)
+- On-court net impact well below era (−1.3σ)
+
+**Comparables:**
+
+- [[nick-richards|Nick Richards]] '23 (94% similar)
+- [[aaron-williams|Aaron Williams]] '05 (94% similar)
+- [[mark-blount|Mark Blount]] '01 (93% similar)
+- [[alex-len|Alex Len]] '24 (93% similar)
+- [[jake-tsakalidis|Jake Tsakalidis]] '06 (92% similar)
+- [[bruno-fernando|Bruno Fernando]] '22 (92% similar)
+
+**Career shape:** Charted 8 seasons (2010-11–2017-18). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

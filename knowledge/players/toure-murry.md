@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[zoran-planinic|Zoran Planinic]] — cosine 0.81
 - [[dennis-smith-jr|Dennis Smith Jr.]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 18.3 pts · 5.8 reb · 6.4 ast · 2.5 stl per 100 (2013-14).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.6σ)
+- Free-throw touch well below era (−1.0σ)
+
+**Comparables:**
+
+- [[mike-taylor|Mike Taylor]] '09 (90% similar)
+- [[scotty-pippen-jr|Scotty Pippen Jr.]] '24 (84% similar)
+- [[rodrick-rhodes|Rodrick Rhodes]] '98 (82% similar)
+- [[walker-russell|Walker Russell]] '12 (82% similar)
+- [[zoran-planinic|Zoran Planinic]] '05 (81% similar)
+- [[dennis-smith-jr|Dennis Smith Jr.]] '20 (81% similar)
+
+**Career shape:** Charted 1 season (2013-14). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

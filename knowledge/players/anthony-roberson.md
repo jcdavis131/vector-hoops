@@ -36,6 +36,34 @@ Closest career shapes in the era-normalized vector space:
 - [[devin-vassell|Devin Vassell]] — cosine 0.91
 - [[wayne-ellington|Wayne Ellington]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** PG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 20.7 pts · 3.8 reb · 3.5 ast · 1.7 stl per 100 (2008-09).
+
+**Strengths:**
+
+- High-volume three-point shooter (+3.2σ vs era)
+- Reliable touch from the free-throw line (+1.9σ vs era)
+- Rarely turns the ball over (−1.5σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.5σ)
+- Defensive rebounding well below era (−1.4σ)
+
+**Comparables:**
+
+- [[sam-mack|Sam Mack]] '00 (96% similar)
+- [[terrence-ross|Terrence Ross]] '19 (94% similar)
+- [[eddie-house|Eddie House]] '06 (93% similar)
+- [[quincy-douby|Quincy Douby]] '08 (92% similar)
+- [[devin-vassell|Devin Vassell]] '23 (91% similar)
+- [[wayne-ellington|Wayne Ellington]] '17 (91% similar)
+
+**Career shape:** Charted 3 seasons (2005-06–2008-09). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

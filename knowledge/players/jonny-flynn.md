@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[vasilije-micic|Vasilije Micic]] — cosine 0.93
 - [[jeremy-pargo|Jeremy Pargo]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 13.8 pts · 3.8 reb · 9.0 ast · 1.7 stl per 100 (2010-11).
+
+**Strengths:**
+
+- High-volume table-setter (+1.7σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.8σ)
+- Finishing efficiency well below era (−1.4σ)
+
+**Comparables:**
+
+- [[mateen-cleaves|Mateen Cleaves]] '02 (96% similar)
+- [[tierre-brown|Tierre Brown]] '02 (95% similar)
+- [[nolan-traore|Nolan Traore]] '26 (94% similar)
+- [[marcus-williams|Marcus Williams]] '07 (94% similar)
+- [[vasilije-micic|Vasilije Micic]] '25 (93% similar)
+- [[jeremy-pargo|Jeremy Pargo]] '12 (93% similar)
+
+**Career shape:** Charted 3 seasons (2009-10–2011-12). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

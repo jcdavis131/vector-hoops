@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[haywood-highsmith|Haywood Highsmith]] — cosine 0.87
 - [[luc-mbah-a-moute|Luc Mbah a Moute]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass + Defensive Glass. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 13.1 pts · 11.1 reb · 3.0 ast · 1.5 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.4σ)
+- Shot volume well below era (−1.2σ)
+
+**Comparables:**
+
+- [[jordan-walsh|Jordan Walsh]] '25 (92% similar)
+- [[joe-wolf|Joe Wolf]] '98 (91% similar)
+- [[jason-collins|Jason Collins]] '10 (91% similar)
+- [[yuta-watanabe|Yuta Watanabe]] '20 (88% similar)
+- [[haywood-highsmith|Haywood Highsmith]] '22 (87% similar)
+- [[luc-mbah-a-moute|Luc Mbah a Moute]] '16 (86% similar)
+
+**Career shape:** Charted 2 seasons (2024-25–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

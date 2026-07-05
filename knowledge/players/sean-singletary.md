@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[theo-maledon|Theo Maledon]] — cosine 0.87
 - [[frank-williams|Frank Williams]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 15.4 pts · 6.0 reb · 5.0 ast · 1.9 stl per 100 (2008-09).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.4σ)
+- Finishing efficiency well below era (−1.3σ)
+
+**Comparables:**
+
+- [[tierre-brown|Tierre Brown]] '02 (90% similar)
+- [[nico-mannion|Nico Mannion]] '21 (90% similar)
+- [[bronny-james|Bronny James]] '25 (90% similar)
+- [[kevin-edwards|Kevin Edwards]] '97 (88% similar)
+- [[theo-maledon|Theo Maledon]] '21 (87% similar)
+- [[frank-williams|Frank Williams]] '03 (86% similar)
+
+**Career shape:** Charted 1 season (2008-09). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

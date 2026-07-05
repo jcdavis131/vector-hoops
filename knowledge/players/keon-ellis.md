@@ -36,6 +36,33 @@ Closest career shapes in the era-normalized vector space:
 - [[c-j-williams|C.J. Williams]] — cosine 0.81
 - [[javonte-green|Javonte Green]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 16.7 pts · 5.3 reb · 3.0 ast · 3.0 stl per 100 (2024-25).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.2σ vs era)
+- Knockdown three-point shooter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.1σ)
+- Defensive rebounding well below era (−1.0σ)
+
+**Comparables:**
+
+- [[matisse-thybulle|Matisse Thybulle]] '21 (93% similar)
+- [[cason-wallace|Cason Wallace]] '26 (88% similar)
+- [[herbert-jones|Herbert Jones]] '22 (87% similar)
+- [[thabo-sefolosha|Thabo Sefolosha]] '20 (83% similar)
+- [[c-j-williams|C.J. Williams]] '18 (81% similar)
+- [[javonte-green|Javonte Green]] '26 (81% similar)
+
+**Career shape:** Charted 3 seasons (2023-24–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

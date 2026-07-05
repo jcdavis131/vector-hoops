@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[oscar-tshiebwe|Oscar Tshiebwe]] — cosine 0.85
 - [[jordan-williams|Jordan Williams]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 16.4 pts · 13.7 reb · 0.9 ast · 1.6 stl per 100 (2012-13).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+2.6σ vs era)
+- Efficient finisher inside the arc (+2.0σ vs era)
+- Rarely turns the ball over (−1.1σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.5σ)
+- Table-setting role well below era (−1.2σ)
+
+**Comparables:**
+
+- [[harold-jamison|Harold Jamison]] '02 (91% similar)
+- [[trevor-booker|Trevor Booker]] '13 (88% similar)
+- [[andrew-declercq|Andrew DeClercq]] '01 (86% similar)
+- [[alan-henderson|Alan Henderson]] '02 (85% similar)
+- [[oscar-tshiebwe|Oscar Tshiebwe]] '26 (85% similar)
+- [[jordan-williams|Jordan Williams]] '12 (85% similar)
+
+**Career shape:** Charted 1 season (2012-13). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

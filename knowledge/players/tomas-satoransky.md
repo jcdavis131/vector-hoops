@@ -39,6 +39,32 @@ Closest career shapes in the era-normalized vector space:
 - [[tre-jones|Tre Jones]] — cosine 0.87
 - [[andrew-nembhard|Andrew Nembhard]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** SG · Playmaking + Steals. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 10.7 pts · 6.8 reb · 9.9 ast · 1.6 stl per 100 (2021-22).
+
+**Strengths:**
+
+- High-volume table-setter (+2.0σ vs era)
+
+**Areas of concern:**
+
+- Scoring load well below era (−1.5σ)
+- Shot volume well below era (−1.3σ)
+
+**Comparables:**
+
+- [[muggsy-bogues|Muggsy Bogues]] '97 (92% similar)
+- [[eric-snow|Eric Snow]] '08 (91% similar)
+- [[tim-frazier|Tim Frazier]] '20 (90% similar)
+- [[cory-joseph|Cory Joseph]] '24 (87% similar)
+- [[tre-jones|Tre Jones]] '21 (87% similar)
+- [[andrew-nembhard|Andrew Nembhard]] '26 (86% similar)
+
+**Career shape:** Charted 6 seasons (2016-17–2021-22). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Playmaking + Steals identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

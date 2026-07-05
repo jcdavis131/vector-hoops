@@ -38,6 +38,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jeff-green|Jeff Green]] — cosine 0.76
 - [[shabazz-muhammad|Shabazz Muhammad]] — cosine 0.74
 
+## Scouting report
+
+**Play style:** PF · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 26.9 pts · 7.4 reb · 1.6 ast · 2.2 stl per 100 (1997-98).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+2.8σ vs era)
+- Featured, high-usage scoring role (+1.4σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.3σ)
+
+**Comparables:**
+
+- [[ricky-pierce|Ricky Pierce]] '98 (85% similar)
+- [[courtney-alexander|Courtney Alexander]] '01 (82% similar)
+- [[al-thornton|Al Thornton]] '09 (80% similar)
+- [[gerald-henderson|Gerald Henderson]] '13 (79% similar)
+- [[jeff-green|Jeff Green]] '26 (76% similar)
+- [[shabazz-muhammad|Shabazz Muhammad]] '15 (74% similar)
+
+**Career shape:** Charted 5 seasons (1997-98–2003-04). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

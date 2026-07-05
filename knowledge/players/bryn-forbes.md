@@ -40,6 +40,32 @@ Closest career shapes in the era-normalized vector space:
 - [[wayne-ellington|Wayne Ellington]] — cosine 0.94
 - [[matt-ryan|Matt Ryan]] — cosine 0.94
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 16.2 pts · 3.9 reb · 4.0 ast · 0.2 stl per 100 (2016-17).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−2.3σ)
+- Rim pressure (free-throw generation) well below era (−1.3σ)
+
+**Comparables:**
+
+- [[alan-anderson|Alan Anderson]] '17 (97% similar)
+- [[rodney-hood|Rodney Hood]] '22 (95% similar)
+- [[marco-belinelli|Marco Belinelli]] '08 (95% similar)
+- [[jason-kapono|Jason Kapono]] '11 (94% similar)
+- [[wayne-ellington|Wayne Ellington]] '17 (94% similar)
+- [[matt-ryan|Matt Ryan]] '25 (94% similar)
+
+**Career shape:** Charted 7 seasons (2016-17–2022-23). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -42,6 +42,34 @@ Closest career shapes in the era-normalized vector space:
 - [[dyson-daniels|Dyson Daniels]] — cosine 0.86
 - [[cody-martin|Cody Martin]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 4.7 pts · 8.0 reb · 4.2 ast · 3.0 stl per 100 (2003-04).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.1σ vs era)
+- Rarely turns the ball over (−1.9σ vs era)
+- Knockdown three-point shooter (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−4.0σ)
+- On-court net impact well below era (−3.0σ)
+
+**Comparables:**
+
+- [[derrick-mckey|Derrick McKey]] '02 (92% similar)
+- [[thabo-sefolosha|Thabo Sefolosha]] '20 (89% similar)
+- [[julian-washburn|Julian Washburn]] '19 (88% similar)
+- [[john-konchar|John Konchar]] '20 (87% similar)
+- [[dyson-daniels|Dyson Daniels]] '25 (86% similar)
+- [[cody-martin|Cody Martin]] '21 (86% similar)
+
+**Career shape:** Charted 9 seasons (1999-00–2007-08). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

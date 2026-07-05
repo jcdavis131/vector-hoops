@@ -35,6 +35,33 @@ Closest career shapes in the era-normalized vector space:
 - [[william-cunningham|William Cunningham]] — cosine 0.87
 - [[carl-herrera|Carl Herrera]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 6.8 pts · 14.6 reb · 2.7 ast · 1.2 blk per 100 (2006-07).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+1.6σ vs era)
+- Relentless on the offensive glass (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−3.5σ)
+- On-court net impact well below era (−2.3σ)
+
+**Comparables:**
+
+- [[eric-montross|Eric Montross]] '97 (95% similar)
+- [[dominic-mcguire|Dominic McGuire]] '10 (90% similar)
+- [[adrian-caldwell|Adrian Caldwell]] '97 (89% similar)
+- [[desagana-diop|DeSagana Diop]] '13 (89% similar)
+- [[william-cunningham|William Cunningham]] '99 (87% similar)
+- [[carl-herrera|Carl Herrera]] '99 (87% similar)
+
+**Career shape:** Charted 2 seasons (2004-05–2006-07). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

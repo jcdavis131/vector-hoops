@@ -44,6 +44,34 @@ Closest career shapes in the era-normalized vector space:
 - [[mitchell-robinson|Mitchell Robinson]] — cosine 0.90
 - [[tarik-black|Tarik Black]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 29.8 pts · 15.3 reb · 0.6 ast · 2.4 blk per 100 (2009-10).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+3.6σ vs era)
+- Efficient finisher inside the arc (+2.9σ vs era)
+- Strong presence on the defensive glass (+2.0σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.8σ)
+- Three-point accuracy well below era (−1.5σ)
+
+**Comparables:**
+
+- [[moussa-cisse|Moussa Cisse]] '26 (93% similar)
+- [[mason-plumlee|Mason Plumlee]] '26 (92% similar)
+- [[rudy-gobert|Rudy Gobert]] '21 (91% similar)
+- [[andrew-declercq|Andrew DeClercq]] '01 (91% similar)
+- [[mitchell-robinson|Mitchell Robinson]] '26 (90% similar)
+- [[tarik-black|Tarik Black]] '18 (90% similar)
+
+**Career shape:** Charted 11 seasons (2009-10–2019-20). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

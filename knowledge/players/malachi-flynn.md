@@ -37,6 +37,31 @@ Closest career shapes in the era-normalized vector space:
 - [[charles-r-jones|Charles R. Jones]] — cosine 0.89
 - [[khalid-el-amin|Khalid El-Amin]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 16.9 pts · 5.6 reb · 6.3 ast · 1.8 stl per 100 (2021-22).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.2σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.0σ)
+
+**Comparables:**
+
+- [[pooh-richardson|Pooh Richardson]] '98 (93% similar)
+- [[lionel-chalmers|Lionel Chalmers]] '05 (92% similar)
+- [[chris-quinn|Chris Quinn]] '10 (91% similar)
+- [[dee-brown|Dee Brown]] '00 (90% similar)
+- [[charles-r-jones|Charles R. Jones]] '00 (89% similar)
+- [[khalid-el-amin|Khalid El-Amin]] '01 (88% similar)
+
+**Career shape:** Charted 4 seasons (2020-21–2023-24). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

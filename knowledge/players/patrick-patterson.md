@@ -44,6 +44,32 @@ Closest career shapes in the era-normalized vector space:
 - [[dean-wade|Dean Wade]] — cosine 0.85
 - [[robbie-hummel|Robbie Hummel]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** PF · Three-Point Accuracy (Low Turnovers). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 12.1 pts · 7.8 reb · 1.6 ast · 0.8 stl per 100 (2018-19).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.4σ vs era)
+
+**Areas of concern:**
+
+- Scoring load well below era (−1.3σ)
+- Ball-hawking activity well below era (−1.2σ)
+
+**Comparables:**
+
+- [[pat-connaughton|Pat Connaughton]] '16 (89% similar)
+- [[dorian-finney-smith|Dorian Finney-Smith]] '26 (89% similar)
+- [[matt-bonner|Matt Bonner]] '12 (88% similar)
+- [[harvey-grant|Harvey Grant]] '97 (85% similar)
+- [[dean-wade|Dean Wade]] '25 (85% similar)
+- [[robbie-hummel|Robbie Hummel]] '14 (84% similar)
+
+**Career shape:** Charted 11 seasons (2010-11–2020-21). Entered as a Rim Protection + Offensive Glass profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

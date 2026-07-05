@@ -38,6 +38,34 @@ Closest career shapes in the era-normalized vector space:
 - [[josh-boone|Josh Boone]] — cosine 0.83
 - [[precious-achiuwa|Precious Achiuwa]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 13.3 pts · 15.4 reb · 1.6 ast · 1.1 blk per 100 (1998-99).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+4.0σ vs era)
+- Relentless on the offensive glass (+2.1σ vs era)
+- Rarely turns the ball over (−1.3σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.9σ)
+- Ball-hawking activity well below era (−1.4σ)
+
+**Comparables:**
+
+- [[t-j-leaf|T.J. Leaf]] '20 (89% similar)
+- [[chris-taft|Chris Taft]] '06 (86% similar)
+- [[art-long|Art Long]] '03 (84% similar)
+- [[othello-hunter|Othello Hunter]] '09 (84% similar)
+- [[josh-boone|Josh Boone]] '10 (83% similar)
+- [[precious-achiuwa|Precious Achiuwa]] '21 (82% similar)
+
+**Career shape:** Charted 5 seasons (1996-97–2000-01). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

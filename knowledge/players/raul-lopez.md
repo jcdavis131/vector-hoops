@@ -35,6 +35,34 @@ Closest career shapes in the era-normalized vector space:
 - [[mark-price|Mark Price]] — cosine 0.91
 - [[jameer-nelson|Jameer Nelson]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 16.3 pts · 3.9 reb · 12.4 ast · 2.2 stl per 100 (2004-05).
+
+**Strengths:**
+
+- High-volume table-setter (+3.0σ vs era)
+- Knockdown three-point shooter (+1.2σ vs era)
+- Strong net on-court impact (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.0σ)
+- Defensive rebounding well below era (−1.3σ)
+
+**Comparables:**
+
+- [[tremont-waters|Tremont Waters]] '21 (93% similar)
+- [[sergio-rodriguez|Sergio Rodriguez]] '09 (92% similar)
+- [[t-j-ford|T.J. Ford]] '07 (92% similar)
+- [[jamaal-tinsley|Jamaal Tinsley]] '04 (92% similar)
+- [[mark-price|Mark Price]] '98 (91% similar)
+- [[jameer-nelson|Jameer Nelson]] '09 (90% similar)
+
+**Career shape:** Charted 2 seasons (2003-04–2004-05). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

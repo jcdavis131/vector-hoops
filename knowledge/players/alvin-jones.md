@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[loren-woods|Loren Woods]] — cosine 0.87
 - [[sean-williams|Sean Williams]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 10.4 pts · 14.4 reb · 1.2 ast · 3.6 blk per 100 (2001-02).
+
+**Strengths:**
+
+- Elite rim protection (+2.2σ vs era)
+- Draws contact, gets to the line often (+1.4σ vs era)
+- Relentless on the offensive glass (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.8σ)
+- Free-throw touch well below era (−1.7σ)
+
+**Comparables:**
+
+- [[felton-spencer|Felton Spencer]] '01 (90% similar)
+- [[hilton-armstrong|Hilton Armstrong]] '11 (88% similar)
+- [[jerome-moiso|Jerome Moiso]] '01 (88% similar)
+- [[yinka-dare|Yinka Dare]] '97 (87% similar)
+- [[loren-woods|Loren Woods]] '06 (87% similar)
+- [[sean-williams|Sean Williams]] '10 (86% similar)
+
+**Career shape:** Charted 1 season (2001-02). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

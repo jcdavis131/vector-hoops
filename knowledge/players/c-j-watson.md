@@ -43,6 +43,34 @@ Closest career shapes in the era-normalized vector space:
 - [[anthony-johnson|Anthony Johnson]] — cosine 0.89
 - [[alvin-williams|Alvin Williams]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 19.3 pts · 4.5 reb · 8.8 ast · 2.6 stl per 100 (2010-11).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.7σ vs era)
+- High-volume table-setter (+1.6σ vs era)
+- Strong net on-court impact (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.3σ)
+- Defensive rebounding well below era (−1.1σ)
+
+**Comparables:**
+
+- [[travis-best|Travis Best]] '04 (92% similar)
+- [[mike-wilks|Mike Wilks]] '04 (92% similar)
+- [[derek-fisher|Derek Fisher]] '02 (90% similar)
+- [[david-wesley|David Wesley]] '07 (90% similar)
+- [[anthony-johnson|Anthony Johnson]] '02 (89% similar)
+- [[alvin-williams|Alvin Williams]] '01 (89% similar)
+
+**Career shape:** Charted 10 seasons (2007-08–2016-17). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Playmaking + Steals identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

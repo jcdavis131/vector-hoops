@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[viktor-khryapa|Viktor Khryapa]] — cosine 0.75
 - [[jae-sean-tate|Jae'Sean Tate]] — cosine 0.75
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass + Defensive Glass. Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 14.9 pts · 8.9 reb · 3.2 ast · 2.2 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Three-point volume well below era (−1.7σ)
+- Shot volume well below era (−1.4σ)
+
+**Comparables:**
+
+- [[derrick-brown|Derrick Brown]] '11 (81% similar)
+- [[mario-west|Mario West]] '09 (78% similar)
+- [[ronald-dupree|Ronald Dupree]] '06 (77% similar)
+- [[brandon-davies|Brandon Davies]] '15 (76% similar)
+- [[viktor-khryapa|Viktor Khryapa]] '05 (75% similar)
+- [[jae-sean-tate|Jae'Sean Tate]] '26 (75% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

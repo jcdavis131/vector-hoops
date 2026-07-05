@@ -41,6 +41,34 @@ Closest career shapes in the era-normalized vector space:
 - [[gary-neal|Gary Neal]] — cosine 0.91
 - [[chris-carr|Chris Carr]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** SG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 32.2 pts · 5.2 reb · 7.9 ast · 0.7 stl per 100 (2023-24).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+2.0σ vs era)
+- Featured, high-usage scoring role (+1.7σ vs era)
+- High-volume three-point shooter (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.5σ)
+- Ball-hawking activity well below era (−1.4σ)
+
+**Comparables:**
+
+- [[salim-stoudamire|Salim Stoudamire]] '08 (94% similar)
+- [[malik-monk|Malik Monk]] '18 (94% similar)
+- [[jaden-hardy|Jaden Hardy]] '26 (93% similar)
+- [[coby-white|Coby White]] '26 (93% similar)
+- [[gary-neal|Gary Neal]] '14 (91% similar)
+- [[chris-carr|Chris Carr]] '01 (91% similar)
+
+**Career shape:** Charted 8 seasons (2018-19–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

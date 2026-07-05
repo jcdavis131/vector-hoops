@@ -56,6 +56,33 @@ Closest career shapes in the era-normalized vector space:
 - [[james-harden|James Harden]] — cosine 0.91
 - [[kobe-bryant|Kobe Bryant]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** SF · Scoring Volume + Shot Volume. Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 39.4 pts · 9.6 reb · 11.4 ast · 2.2 stl per 100 (2009-10).
+
+**Strengths:**
+
+- Featured, high-usage scoring role (+3.5σ vs era)
+- Draws contact, gets to the line often (+3.4σ vs era)
+- High-volume table-setter (+2.7σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.0σ)
+
+**Comparables:**
+
+- [[luka-doncic|Luka Dončić]] '20 (96% similar)
+- [[dwyane-wade|Dwyane Wade]] '09 (93% similar)
+- [[russell-westbrook|Russell Westbrook]] '17 (91% similar)
+- [[tracy-mcgrady|Tracy McGrady]] '03 (91% similar)
+- [[james-harden|James Harden]] '19 (91% similar)
+- [[kobe-bryant|Kobe Bryant]] '06 (91% similar)
+
+**Career shape:** Charted 23 seasons (2003-04–2025-26). Consistent Scoring Volume + Shot Volume profile across his career.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

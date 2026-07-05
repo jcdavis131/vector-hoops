@@ -36,6 +36,33 @@ Closest career shapes in the era-normalized vector space:
 - [[jumaine-jones|Jumaine Jones]] — cosine 0.76
 - [[quentin-richardson|Quentin Richardson]] — cosine 0.76
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 25.1 pts · 8.2 reb · 2.3 ast · 1.2 stl per 100 (2022-23).
+
+**Strengths:**
+
+- High-volume three-point shooter (+3.0σ vs era)
+- Heavy shot volume, focal scoring option (+1.3σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.5σ)
+- Offensive-glass activity well below era (−1.2σ)
+
+**Comparables:**
+
+- [[jordan-hamilton|Jordan Hamilton]] '12 (86% similar)
+- [[mickael-pietrus|Mickael Pietrus]] '11 (77% similar)
+- [[nick-anderson|Nick Anderson]] '01 (77% similar)
+- [[marcus-landry|Marcus Landry]] '10 (76% similar)
+- [[jumaine-jones|Jumaine Jones]] '07 (76% similar)
+- [[quentin-richardson|Quentin Richardson]] '05 (76% similar)
+
+**Career shape:** Charted 3 seasons (2022-23–2024-25). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -39,6 +39,32 @@ Closest career shapes in the era-normalized vector space:
 - [[bogdan-bogdanovic|Bogdan Bogdanović]] — cosine 0.86
 - [[max-strus|Max Strus]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** PG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 21.5 pts · 6.6 reb · 6.8 ast · 1.2 stl per 100 (2021-22).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+2.0σ vs era)
+- High-volume three-point shooter (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.3σ)
+
+**Comparables:**
+
+- [[joe-dumars|Joe Dumars]] '98 (90% similar)
+- [[patty-mills|Patty Mills]] '14 (90% similar)
+- [[sam-merrill|Sam Merrill]] '24 (87% similar)
+- [[duncan-robinson|Duncan Robinson]] '20 (86% similar)
+- [[bogdan-bogdanovic|Bogdan Bogdanović]] '21 (86% similar)
+- [[max-strus|Max Strus]] '21 (85% similar)
+
+**Career shape:** Charted 6 seasons (2020-21–2025-26). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

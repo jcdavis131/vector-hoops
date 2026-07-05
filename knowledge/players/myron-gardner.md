@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[gui-santos|Gui Santos]] — cosine 0.72
 - [[matt-barnes|Matt Barnes]] — cosine 0.72
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 17.8 pts · 13.2 reb · 4.8 ast · 2.2 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Strong net on-court impact (+1.3σ vs era)
+- Strong presence on the defensive glass (+1.1σ vs era)
+- Relentless on the offensive glass (+1.0σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[robert-horry|Robert Horry]] '07 (78% similar)
+- [[john-konchar|John Konchar]] '20 (78% similar)
+- [[josh-harrellson|Josh Harrellson]] '14 (75% similar)
+- [[george-lynch|George Lynch]] '03 (75% similar)
+- [[gui-santos|Gui Santos]] '25 (72% similar)
+- [[matt-barnes|Matt Barnes]] '04 (72% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

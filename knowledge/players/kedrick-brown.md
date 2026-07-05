@@ -36,6 +36,33 @@ Closest career shapes in the era-normalized vector space:
 - [[jamir-watkins|Jamir Watkins]] — cosine 0.82
 - [[julian-washburn|Julian Washburn]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 12.7 pts · 10.1 reb · 3.0 ast · 3.6 stl per 100 (2001-02).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+3.0σ vs era)
+- Rarely turns the ball over (−1.6σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.0σ)
+- Scoring load well below era (−1.1σ)
+
+**Comparables:**
+
+- [[ime-udoka|Ime Udoka]] '11 (93% similar)
+- [[ish-wainright|Ish Wainright]] '22 (84% similar)
+- [[devyn-marble|Devyn Marble]] '16 (83% similar)
+- [[devean-george|Devean George]] '10 (82% similar)
+- [[jamir-watkins|Jamir Watkins]] '26 (82% similar)
+- [[julian-washburn|Julian Washburn]] '19 (81% similar)
+
+**Career shape:** Charted 3 seasons (2001-02–2003-04). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

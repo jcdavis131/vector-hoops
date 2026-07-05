@@ -39,6 +39,34 @@ Closest career shapes in the era-normalized vector space:
 - [[marco-belinelli|Marco Belinelli]] — cosine 0.94
 - [[tim-hardaway-jr|Tim Hardaway Jr.]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 25.0 pts · 4.1 reb · 3.8 ast · 0.8 stl per 100 (2013-14).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+1.2σ vs era)
+- Heavy shot volume, focal scoring option (+1.2σ vs era)
+- High-volume three-point shooter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.2σ)
+- Defensive rebounding well below era (−1.1σ)
+
+**Comparables:**
+
+- [[jared-mccain|Jared McCain]] '25 (95% similar)
+- [[eddie-johnson|Eddie Johnson]] '98 (95% similar)
+- [[salim-stoudamire|Salim Stoudamire]] '08 (95% similar)
+- [[andrew-goudelock|Andrew Goudelock]] '12 (94% similar)
+- [[marco-belinelli|Marco Belinelli]] '08 (94% similar)
+- [[tim-hardaway-jr|Tim Hardaway Jr.]] '15 (93% similar)
+
+**Career shape:** Charted 6 seasons (2010-11–2015-16). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

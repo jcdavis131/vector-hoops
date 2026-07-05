@@ -36,6 +36,33 @@ Closest career shapes in the era-normalized vector space:
 - [[anzejs-pasecniks|Anžejs Pasečņiks]] — cosine 0.83
 - [[zendon-hamilton|Zendon Hamilton]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 20.7 pts · 11.4 reb · 1.2 ast · 1.3 blk per 100 (2010-11).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+1.6σ vs era)
+- Draws contact, gets to the line often (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.4σ)
+- On-court net impact well below era (−1.4σ)
+
+**Comparables:**
+
+- [[obinna-ekezie|Obinna Ekezie]] '02 (87% similar)
+- [[rakeem-christmas|Rakeem Christmas]] '17 (85% similar)
+- [[george-zidek|George Zidek]] '97 (84% similar)
+- [[jason-caffey|Jason Caffey]] '97 (83% similar)
+- [[anzejs-pasecniks|Anžejs Pasečņiks]] '20 (83% similar)
+- [[zendon-hamilton|Zendon Hamilton]] '05 (83% similar)
+
+**Career shape:** Charted 3 seasons (2010-11–2012-13). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

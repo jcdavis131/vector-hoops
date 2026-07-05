@@ -42,6 +42,34 @@ Closest career shapes in the era-normalized vector space:
 - [[kosta-koufos|Kosta Koufos]] — cosine 0.94
 - [[josh-boone|Josh Boone]] — cosine 0.94
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 17.4 pts · 19.8 reb · 0.9 ast · 3.1 blk per 100 (2004-05).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+2.9σ vs era)
+- Strong presence on the defensive glass (+2.4σ vs era)
+- Elite rim protection (+1.8σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.5σ)
+- Three-point accuracy well below era (−1.3σ)
+
+**Comparables:**
+
+- [[clifford-rozier|Clifford Rozier]] '97 (96% similar)
+- [[precious-achiuwa|Precious Achiuwa]] '21 (96% similar)
+- [[moussa-cisse|Moussa Cisse]] '26 (95% similar)
+- [[lou-amundson|Lou Amundson]] '14 (95% similar)
+- [[kosta-koufos|Kosta Koufos]] '19 (94% similar)
+- [[josh-boone|Josh Boone]] '10 (94% similar)
+
+**Career shape:** Charted 9 seasons (2002-03–2010-11). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

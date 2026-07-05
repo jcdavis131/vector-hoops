@@ -42,6 +42,33 @@ Closest career shapes in the era-normalized vector space:
 - [[casey-jacobsen|Casey Jacobsen]] — cosine 0.91
 - [[dan-majerle|Dan Majerle]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 11.6 pts · 4.5 reb · 2.8 ast · 1.0 stl per 100 (2012-13).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.5σ vs era)
+- Rarely turns the ball over (−1.1σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.7σ)
+- Scoring load well below era (−1.3σ)
+
+**Comparables:**
+
+- [[daniel-gibson|Daniel Gibson]] '13 (93% similar)
+- [[reggie-bullock-jr|Reggie Bullock Jr.]] '24 (92% similar)
+- [[walter-mccarty|Walter McCarty]] '05 (91% similar)
+- [[charlie-bell|Charlie Bell]] '11 (91% similar)
+- [[casey-jacobsen|Casey Jacobsen]] '08 (91% similar)
+- [[dan-majerle|Dan Majerle]] '02 (91% similar)
+
+**Career shape:** Charted 9 seasons (2003-04–2012-13). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

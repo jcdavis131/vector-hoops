@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[brandon-williams|Brandon Williams]] — cosine 0.85
 - [[tyshawn-taylor|Tyshawn Taylor]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 20.7 pts · 5.1 reb · 7.2 ast · 2.2 stl per 100 (2016-17).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.1σ vs era)
+- High-volume table-setter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.1σ)
+- Offensive-glass activity well below era (−1.0σ)
+
+**Comparables:**
+
+- [[frank-mason-iii|Frank Mason III]] '19 (87% similar)
+- [[talen-horton-tucker|Talen Horton-Tucker]] '23 (87% similar)
+- [[dennis-smith-jr|Dennis Smith Jr.]] '20 (86% similar)
+- [[mike-taylor|Mike Taylor]] '09 (85% similar)
+- [[brandon-williams|Brandon Williams]] '22 (85% similar)
+- [[tyshawn-taylor|Tyshawn Taylor]] '14 (85% similar)
+
+**Career shape:** Charted 1 season (2016-17). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

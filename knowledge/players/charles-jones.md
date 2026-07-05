@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[greg-smith|Greg Smith]] — cosine 0.86
 - [[kj-martin|KJ Martin]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 5.6 pts · 9.0 reb · 1.9 ast · 2.2 blk per 100 (1997-98).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+4.0σ vs era)
+- Rarely turns the ball over (−1.6σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−2.8σ)
+- Scoring load well below era (−2.3σ)
+
+**Comparables:**
+
+- [[fabricio-oberto|Fabricio Oberto]] '10 (89% similar)
+- [[lorenzo-williams|Lorenzo Williams]] '97 (88% similar)
+- [[jericho-sims|Jericho Sims]] '22 (87% similar)
+- [[malik-hairston|Malik Hairston]] '10 (86% similar)
+- [[greg-smith|Greg Smith]] '16 (86% similar)
+- [[kj-martin|KJ Martin]] '25 (85% similar)
+
+**Career shape:** Charted 1 season (1997-98). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

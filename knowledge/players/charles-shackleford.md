@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[wendell-carter-jr|Wendell Carter Jr.]] — cosine 0.89
 - [[samaki-walker|Samaki Walker]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 15.1 pts · 18.2 reb · 1.8 ast · 1.8 blk per 100 (1998-99).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+2.5σ vs era)
+- Relentless on the offensive glass (+1.6σ vs era)
+- Efficient finisher inside the arc (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.4σ)
+- Three-point accuracy well below era (−1.1σ)
+
+**Comparables:**
+
+- [[omer-yurtseven|Omer Yurtseven]] '22 (93% similar)
+- [[jamal-sampson|Jamal Sampson]] '07 (92% similar)
+- [[dewayne-dedmon|Dewayne Dedmon]] '17 (90% similar)
+- [[will-perdue|Will Perdue]] '99 (90% similar)
+- [[wendell-carter-jr|Wendell Carter Jr.]] '19 (89% similar)
+- [[samaki-walker|Samaki Walker]] '02 (89% similar)
+
+**Career shape:** Charted 1 season (1998-99). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

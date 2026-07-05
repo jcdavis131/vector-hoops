@@ -38,6 +38,32 @@ Closest career shapes in the era-normalized vector space:
 - [[glen-rice|Glen Rice]] — cosine 0.83
 - [[kyle-korver|Kyle Korver]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 15.3 pts · 6.3 reb · 3.7 ast · 1.6 stl per 100 (1999-00).
+
+**Strengths:**
+
+- Strong net on-court impact (+1.7σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.5σ)
+- Offensive-glass activity well below era (−1.1σ)
+
+**Comparables:**
+
+- [[mike-dunleavy|Mike Dunleavy]] '09 (89% similar)
+- [[hedo-turkoglu|Hedo Turkoglu]] '14 (85% similar)
+- [[duncan-robinson|Duncan Robinson]] '20 (84% similar)
+- [[ryan-broekhoff|Ryan Broekhoff]] '19 (84% similar)
+- [[glen-rice|Glen Rice]] '97 (83% similar)
+- [[kyle-korver|Kyle Korver]] '04 (83% similar)
+
+**Career shape:** Charted 5 seasons (1996-97–2000-01). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

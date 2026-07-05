@@ -39,6 +39,34 @@ Closest career shapes in the era-normalized vector space:
 - [[pau-gasol|Pau Gasol]] — cosine 0.82
 - [[chris-bosh|Chris Bosh]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** PF · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 30.4 pts · 14.7 reb · 1.4 ast · 1.8 blk per 100 (2018-19).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+2.5σ vs era)
+- Strong presence on the defensive glass (+1.8σ vs era)
+- Featured, high-usage scoring role (+1.7σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.3σ)
+- Table-setting role well below era (−1.2σ)
+
+**Comparables:**
+
+- [[derrick-coleman|Derrick Coleman]] '00 (89% similar)
+- [[patrick-ewing|Patrick Ewing]] '98 (85% similar)
+- [[karl-anthony-towns|Karl-Anthony Towns]] '19 (83% similar)
+- [[yao-ming|Yao Ming]] '07 (82% similar)
+- [[pau-gasol|Pau Gasol]] '15 (82% similar)
+- [[chris-bosh|Chris Bosh]] '10 (82% similar)
+
+**Career shape:** Charted 6 seasons (2018-19–2023-24). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

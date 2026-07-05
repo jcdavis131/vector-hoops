@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[lawrence-moten|Lawrence Moten]] — cosine 0.88
 - [[theo-maledon|Theo Maledon]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** SG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 21.3 pts · 4.9 reb · 6.7 ast · 2.1 stl per 100 (2022-23).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.3σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.6σ)
+- Turnover rate well above era (+2.3σ)
+
+**Comparables:**
+
+- [[jonathan-gibson|Jonathan Gibson]] '17 (90% similar)
+- [[corey-benjamin|Corey Benjamin]] '00 (90% similar)
+- [[vonteego-cummings|Vonteego Cummings]] '01 (89% similar)
+- [[tyshawn-taylor|Tyshawn Taylor]] '14 (89% similar)
+- [[lawrence-moten|Lawrence Moten]] '97 (88% similar)
+- [[theo-maledon|Theo Maledon]] '21 (86% similar)
+
+**Career shape:** Charted 3 seasons (2021-22–2024-25). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Playmaking + Steals identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

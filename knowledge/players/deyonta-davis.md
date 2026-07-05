@@ -35,6 +35,33 @@ Closest career shapes in the era-normalized vector space:
 - [[etan-thomas|Etan Thomas]] — cosine 0.93
 - [[aaron-williams|Aaron Williams]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 12.1 pts · 12.6 reb · 0.4 ast · 3.6 blk per 100 (2016-17).
+
+**Strengths:**
+
+- Elite rim protection (+3.1σ vs era)
+- Relentless on the offensive glass (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.2σ)
+- Ball-hawking activity well below era (−1.6σ)
+
+**Comparables:**
+
+- [[bismack-biyombo|Bismack Biyombo]] '23 (96% similar)
+- [[yves-missi|Yves Missi]] '26 (95% similar)
+- [[robert-swift|Robert Swift]] '05 (93% similar)
+- [[brian-skinner|Brian Skinner]] '08 (93% similar)
+- [[etan-thomas|Etan Thomas]] '07 (93% similar)
+- [[aaron-williams|Aaron Williams]] '05 (93% similar)
+
+**Career shape:** Charted 2 seasons (2016-17–2017-18). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

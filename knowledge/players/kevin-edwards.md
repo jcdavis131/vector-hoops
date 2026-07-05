@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[rusty-larue|Rusty LaRue]] — cosine 0.84
 - [[keith-mcleod|Keith McLeod]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 19.3 pts · 4.4 reb · 5.8 ast · 1.7 stl per 100 (1996-97).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.7σ)
+- Finishing efficiency well below era (−1.1σ)
+
+**Comparables:**
+
+- [[sean-singletary|Sean Singletary]] '09 (88% similar)
+- [[bronny-james|Bronny James]] '25 (87% similar)
+- [[jiri-welsch|Jiri Welsch]] '03 (86% similar)
+- [[c-j-wilcox|C.J. Wilcox]] '17 (85% similar)
+- [[rusty-larue|Rusty LaRue]] '99 (84% similar)
+- [[keith-mcleod|Keith McLeod]] '04 (83% similar)
+
+**Career shape:** Charted 3 seasons (1996-97–2000-01). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

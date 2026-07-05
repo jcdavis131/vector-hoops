@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[justin-williams|Justin Williams]] — cosine 0.79
 - [[ronald-dupree|Ronald Dupree]] — cosine 0.79
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 13.4 pts · 12.5 reb · 0.0 ast · 1.9 stl per 100 (1996-97).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+1.8σ vs era)
+- Rarely turns the ball over (−1.8σ vs era)
+- Relentless on the offensive glass (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.3σ)
+- Table-setting role well below era (−1.5σ)
+
+**Comparables:**
+
+- [[shavlik-randolph|Shavlik Randolph]] '15 (87% similar)
+- [[lawrence-roberts|Lawrence Roberts]] '06 (85% similar)
+- [[devin-gray|Devin Gray]] '00 (85% similar)
+- [[olivier-maxence-prosper|Olivier-Maxence Prosper]] '25 (83% similar)
+- [[justin-williams|Justin Williams]] '07 (79% similar)
+- [[ronald-dupree|Ronald Dupree]] '06 (79% similar)
+
+**Career shape:** Charted 1 season (1996-97). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -38,6 +38,33 @@ Closest career shapes in the era-normalized vector space:
 - [[anthony-bowie|Anthony Bowie]] — cosine 0.68
 - [[calbert-cheaney|Calbert Cheaney]] — cosine 0.66
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass + Defensive Glass. Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 20.7 pts · 8.1 reb · 1.4 ast · 2.1 stl per 100 (1999-00).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+2.0σ vs era)
+- Rarely turns the ball over (−1.3σ vs era)
+- Strong net on-court impact (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.3σ)
+
+**Comparables:**
+
+- [[sam-jacobson|Sam Jacobson]] '00 (83% similar)
+- [[t-j-warren|T.J. Warren]] '18 (78% similar)
+- [[hassan-adams|Hassan Adams]] '07 (72% similar)
+- [[josh-childress|Josh Childress]] '12 (69% similar)
+- [[anthony-bowie|Anthony Bowie]] '98 (68% similar)
+- [[calbert-cheaney|Calbert Cheaney]] '00 (66% similar)
+
+**Career shape:** Charted 5 seasons (1999-00–2003-04). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

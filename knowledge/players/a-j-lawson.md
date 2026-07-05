@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[zaccharie-risacher|Zaccharie Risacher]] — cosine 0.75
 - [[rodney-carney|Rodney Carney]] — cosine 0.75
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 21.4 pts · 9.1 reb · 1.5 ast · 2.5 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.3σ vs era)
+- Rarely turns the ball over (−1.3σ vs era)
+
+**Areas of concern:**
+
+- Table-setting role well below era (−1.3σ)
+
+**Comparables:**
+
+- [[kelly-oubre-jr|Kelly Oubre Jr.]] '23 (83% similar)
+- [[cartier-martin|Cartier Martin]] '15 (79% similar)
+- [[demarre-carroll|DeMarre Carroll]] '16 (77% similar)
+- [[luguentz-dort|Luguentz Dort]] '25 (77% similar)
+- [[zaccharie-risacher|Zaccharie Risacher]] '26 (75% similar)
+- [[rodney-carney|Rodney Carney]] '09 (75% similar)
+
+**Career shape:** Charted 3 seasons (2023-24–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

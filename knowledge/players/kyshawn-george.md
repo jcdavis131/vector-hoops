@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[cory-carr|Cory Carr]] — cosine 0.78
 - [[aleksej-pokusevski|Aleksej Pokusevski]] — cosine 0.77
 
+## Scouting report
+
+**Play style:** SF · Playmaking + Steals. Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 23.7 pts · 8.1 reb · 7.1 ast · 1.6 stl per 100 (2025-26).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.6σ)
+- On-court net impact well below era (−1.5σ)
+
+**Comparables:**
+
+- [[elijah-hughes|Elijah Hughes]] '21 (84% similar)
+- [[keon-johnson|Keon Johnson]] '23 (83% similar)
+- [[theo-maledon|Theo Maledon]] '21 (82% similar)
+- [[frank-williams|Frank Williams]] '03 (79% similar)
+- [[cory-carr|Cory Carr]] '99 (78% similar)
+- [[aleksej-pokusevski|Aleksej Pokusevski]] '21 (77% similar)
+
+**Career shape:** Charted 2 seasons (2024-25–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Playmaking + Steals identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

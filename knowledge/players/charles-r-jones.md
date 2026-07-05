@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[dee-brown|Dee Brown]] — cosine 0.89
 - [[donald-whiteside|Donald Whiteside]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** Unlisted · Playmaking + Steals. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 13.9 pts · 4.6 reb · 7.0 ast · 2.2 stl per 100 (1999-00).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.1σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.1σ)
+- On-court net impact well below era (−1.9σ)
+
+**Comparables:**
+
+- [[chris-robinson|Chris Robinson]] '98 (91% similar)
+- [[lionel-chalmers|Lionel Chalmers]] '05 (90% similar)
+- [[malachi-flynn|Malachi Flynn]] '22 (89% similar)
+- [[taelon-peter|Taelon Peter]] '26 (89% similar)
+- [[dee-brown|Dee Brown]] '00 (89% similar)
+- [[donald-whiteside|Donald Whiteside]] '97 (89% similar)
+
+**Career shape:** Charted 2 seasons (1998-99–1999-00). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Playmaking + Steals identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/playmaking-steals|Playmaking + Steals]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

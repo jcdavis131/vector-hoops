@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[haywood-highsmith|Haywood Highsmith]] — cosine 0.88
 - [[duane-ferrell|Duane Ferrell]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass + Defensive Glass. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 8.3 pts · 4.6 reb · 3.2 ast · 2.8 stl per 100 (2024-25).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.9σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−4.0σ)
+- Scoring load well below era (−1.9σ)
+
+**Comparables:**
+
+- [[kris-murray|Kris Murray]] '25 (95% similar)
+- [[nigel-hayes-davis|Nigel Hayes-Davis]] '26 (91% similar)
+- [[cedric-bozeman|Cedric Bozeman]] '07 (90% similar)
+- [[johnny-davis|Johnny Davis]] '24 (88% similar)
+- [[haywood-highsmith|Haywood Highsmith]] '22 (88% similar)
+- [[duane-ferrell|Duane Ferrell]] '98 (88% similar)
+
+**Career shape:** Charted 2 seasons (2023-24–2024-25). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

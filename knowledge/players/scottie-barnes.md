@@ -38,6 +38,33 @@ Closest career shapes in the era-normalized vector space:
 - [[chris-webber|Chris Webber]] — cosine 0.81
 - [[demarcus-cousins|DeMarcus Cousins]] — cosine 0.80
 
+## Scouting report
+
+**Play style:** PF · Scoring Volume + Shot Volume. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 27.5 pts · 11.0 reb · 8.3 ast · 2.0 stl per 100 (2024-25).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+1.4σ vs era)
+- High-volume table-setter (+1.4σ vs era)
+- Draws contact, gets to the line often (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.3σ)
+
+**Comparables:**
+
+- [[alperen-sengun|Alperen Sengun]] '25 (88% similar)
+- [[nikola-jokic|Nikola Jokić]] '22 (86% similar)
+- [[giannis-antetokounmpo|Giannis Antetokounmpo]] '20 (81% similar)
+- [[russell-westbrook|Russell Westbrook]] '17 (81% similar)
+- [[chris-webber|Chris Webber]] '01 (81% similar)
+- [[demarcus-cousins|DeMarcus Cousins]] '15 (80% similar)
+
+**Career shape:** Charted 5 seasons (2021-22–2025-26). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

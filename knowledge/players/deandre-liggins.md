@@ -37,6 +37,33 @@ Closest career shapes in the era-normalized vector space:
 - [[dalen-terry|Dalen Terry]] — cosine 0.87
 - [[jahmai-mashack|Jahmai Mashack]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 15.1 pts · 6.8 reb · 2.3 ast · 2.7 stl per 100 (2011-12).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+1.9σ vs era)
+- Active hands, disrupts passing lanes (+1.8σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−3.9σ)
+- Free-throw touch well below era (−1.7σ)
+
+**Comparables:**
+
+- [[cody-martin|Cody Martin]] '21 (91% similar)
+- [[deandre-bembry|DeAndre' Bembry]] '17 (90% similar)
+- [[mario-west|Mario West]] '09 (89% similar)
+- [[sindarius-thornwell|Sindarius Thornwell]] '21 (88% similar)
+- [[dalen-terry|Dalen Terry]] '26 (87% similar)
+- [[jahmai-mashack|Jahmai Mashack]] '26 (87% similar)
+
+**Career shape:** Charted 4 seasons (2011-12–2017-18). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

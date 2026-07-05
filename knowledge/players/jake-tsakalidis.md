@@ -40,6 +40,34 @@ Closest career shapes in the era-normalized vector space:
 - [[bismack-biyombo|Bismack Biyombo]] — cosine 0.94
 - [[festus-ezeli|Festus Ezeli]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 19.2 pts · 15.8 reb · 1.0 ast · 2.4 blk per 100 (2005-06).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+2.5σ vs era)
+- Relentless on the offensive glass (+1.9σ vs era)
+- Strong net on-court impact (+1.7σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.3σ)
+- Table-setting role well below era (−1.1σ)
+
+**Comparables:**
+
+- [[etan-thomas|Etan Thomas]] '07 (95% similar)
+- [[brendan-haywood|Brendan Haywood]] '15 (95% similar)
+- [[erick-dampier|Erick Dampier]] '97 (94% similar)
+- [[jason-thompson|Jason Thompson]] '15 (94% similar)
+- [[bismack-biyombo|Bismack Biyombo]] '23 (94% similar)
+- [[festus-ezeli|Festus Ezeli]] '16 (93% similar)
+
+**Career shape:** Charted 7 seasons (2000-01–2006-07). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

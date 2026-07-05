@@ -37,6 +37,33 @@ Closest career shapes in the era-normalized vector space:
 - [[billy-thomas|Billy Thomas]] — cosine 0.87
 - [[jae-crowder|Jae Crowder]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 16.8 pts · 9.5 reb · 2.7 ast · 2.5 stl per 100 (1999-00).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.1σ vs era)
+- Rarely turns the ball over (−1.7σ vs era)
+- Active hands, disrupts passing lanes (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.3σ)
+
+**Comparables:**
+
+- [[devean-george|Devean George]] '10 (90% similar)
+- [[danny-green|Danny Green]] '19 (89% similar)
+- [[carlos-delfino|Carlos Delfino]] '13 (88% similar)
+- [[vladimir-radmanovic|Vladimir Radmanovic]] '13 (88% similar)
+- [[billy-thomas|Billy Thomas]] '06 (87% similar)
+- [[jae-crowder|Jae Crowder]] '22 (86% similar)
+
+**Career shape:** Charted 4 seasons (1996-97–1999-00). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

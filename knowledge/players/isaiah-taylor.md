@@ -34,6 +34,31 @@ Closest career shapes in the era-normalized vector space:
 - [[acie-law|Acie Law]] — cosine 0.81
 - [[isaiah-collier|Isaiah Collier]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 18.0 pts · 3.8 reb · 8.4 ast · 1.4 stl per 100 (2017-18).
+
+**Strengths:**
+
+- High-volume table-setter (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.4σ)
+
+**Comparables:**
+
+- [[ramon-sessions|Ramon Sessions]] '08 (85% similar)
+- [[rod-strickland|Rod Strickland]] '05 (84% similar)
+- [[god-shammgod|God Shammgod]] '98 (84% similar)
+- [[avery-johnson|Avery Johnson]] '99 (83% similar)
+- [[acie-law|Acie Law]] '10 (81% similar)
+- [[isaiah-collier|Isaiah Collier]] '26 (81% similar)
+
+**Career shape:** Charted 1 season (2017-18). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

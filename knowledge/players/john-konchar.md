@@ -40,6 +40,34 @@ Closest career shapes in the era-normalized vector space:
 - [[adrian-griffin|Adrian Griffin]] — cosine 0.87
 - [[ryan-bowen|Ryan Bowen]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass + Defensive Glass. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 13.8 pts · 12.0 reb · 5.6 ast · 1.8 stl per 100 (2019-20).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+2.4σ vs era)
+- Strong net on-court impact (+1.7σ vs era)
+- Knockdown three-point shooter (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.2σ)
+- Rim pressure (free-throw generation) well below era (−1.5σ)
+
+**Comparables:**
+
+- [[derrick-mckey|Derrick McKey]] '02 (93% similar)
+- [[thabo-sefolosha|Thabo Sefolosha]] '20 (89% similar)
+- [[eduardo-najera|Eduardo Najera]] '12 (89% similar)
+- [[george-lynch|George Lynch]] '03 (87% similar)
+- [[adrian-griffin|Adrian Griffin]] '04 (87% similar)
+- [[ryan-bowen|Ryan Bowen]] '09 (85% similar)
+
+**Career shape:** Charted 7 seasons (2019-20–2025-26). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

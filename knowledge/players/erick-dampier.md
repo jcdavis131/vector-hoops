@@ -48,6 +48,34 @@ Closest career shapes in the era-normalized vector space:
 - [[jake-tsakalidis|Jake Tsakalidis]] — cosine 0.94
 - [[jahidi-white|Jahidi White]] — cosine 0.94
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 18.3 pts · 14.5 reb · 2.1 ast · 3.6 blk per 100 (1996-97).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+4.0σ vs era)
+- Elite rim protection (+2.4σ vs era)
+- Strong presence on the defensive glass (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.1σ)
+- Three-point volume well below era (−1.0σ)
+
+**Comparables:**
+
+- [[alex-len|Alex Len]] '24 (97% similar)
+- [[brendan-haywood|Brendan Haywood]] '15 (96% similar)
+- [[etan-thomas|Etan Thomas]] '07 (96% similar)
+- [[festus-ezeli|Festus Ezeli]] '16 (96% similar)
+- [[jake-tsakalidis|Jake Tsakalidis]] '06 (94% similar)
+- [[jahidi-white|Jahidi White]] '05 (94% similar)
+
+**Career shape:** Charted 15 seasons (1996-97–2010-11). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

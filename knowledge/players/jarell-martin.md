@@ -37,6 +37,33 @@ Closest career shapes in the era-normalized vector space:
 - [[sean-rooks|Sean Rooks]] — cosine 0.82
 - [[tony-massenburg|Tony Massenburg]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 20.1 pts · 11.3 reb · 2.0 ast · 1.1 stl per 100 (2015-16).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+1.7σ vs era)
+- Draws contact, gets to the line often (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.9σ)
+- Three-point volume well below era (−1.3σ)
+
+**Comparables:**
+
+- [[jabari-walker|Jabari Walker]] '24 (88% similar)
+- [[noah-vonleh|Noah Vonleh]] '23 (86% similar)
+- [[alton-lister|Alton Lister]] '97 (84% similar)
+- [[todd-fuller|Todd Fuller]] '98 (84% similar)
+- [[sean-rooks|Sean Rooks]] '98 (82% similar)
+- [[tony-massenburg|Tony Massenburg]] '02 (82% similar)
+
+**Career shape:** Charted 4 seasons (2015-16–2018-19). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

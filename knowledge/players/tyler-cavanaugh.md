@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jeremiah-robinson-earl|Jeremiah Robinson-Earl]] — cosine 0.79
 - [[anthony-lamb|Anthony Lamb]] — cosine 0.79
 
+## Scouting report
+
+**Play style:** PF · Three-Point Accuracy (Low Turnovers). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 16.8 pts · 11.6 reb · 2.5 ast · 0.8 stl per 100 (2017-18).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.4σ vs era)
+- Relentless on the offensive glass (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.2σ)
+
+**Comparables:**
+
+- [[jonas-jerebko|Jonas Jerebko]] '17 (86% similar)
+- [[mike-scott|Mike Scott]] '13 (83% similar)
+- [[robbie-hummel|Robbie Hummel]] '14 (82% similar)
+- [[patrick-patterson|Patrick Patterson]] '19 (81% similar)
+- [[jeremiah-robinson-earl|Jeremiah Robinson-Earl]] '26 (79% similar)
+- [[anthony-lamb|Anthony Lamb]] '21 (79% similar)
+
+**Career shape:** Charted 1 season (2017-18). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

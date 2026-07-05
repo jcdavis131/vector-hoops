@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[keith-mcleod|Keith McLeod]] — cosine 0.79
 - [[brad-wanamaker|Brad Wanamaker]] — cosine 0.79
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 18.8 pts · 4.1 reb · 9.4 ast · 2.6 stl per 100 (1997-98).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+2.0σ vs era)
+- Draws contact, gets to the line often (+1.8σ vs era)
+- High-volume table-setter (+1.7σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.9σ)
+- Turnover rate well above era (+1.6σ)
+
+**Comparables:**
+
+- [[tyus-edney|Tyus Edney]] '01 (86% similar)
+- [[god-shammgod|God Shammgod]] '98 (85% similar)
+- [[andrew-harrison|Andrew Harrison]] '19 (84% similar)
+- [[dominique-jones|Dominique Jones]] '13 (81% similar)
+- [[keith-mcleod|Keith McLeod]] '04 (79% similar)
+- [[brad-wanamaker|Brad Wanamaker]] '22 (79% similar)
+
+**Career shape:** Charted 1 season (1997-98). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

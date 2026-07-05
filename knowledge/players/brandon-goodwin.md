@@ -36,6 +36,31 @@ Closest career shapes in the era-normalized vector space:
 - [[nico-mannion|Nico Mannion]] — cosine 0.90
 - [[tierre-brown|Tierre Brown]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** PG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 22.0 pts · 7.7 reb · 5.4 ast · 1.3 stl per 100 (2019-20).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+1.6σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.1σ)
+
+**Comparables:**
+
+- [[sebastian-telfair|Sebastian Telfair]] '10 (91% similar)
+- [[jay-williams|Jay Williams]] '03 (90% similar)
+- [[vonteego-cummings|Vonteego Cummings]] '01 (90% similar)
+- [[theo-maledon|Theo Maledon]] '21 (90% similar)
+- [[nico-mannion|Nico Mannion]] '21 (90% similar)
+- [[tierre-brown|Tierre Brown]] '02 (90% similar)
+
+**Career shape:** Charted 3 seasons (2019-20–2021-22). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

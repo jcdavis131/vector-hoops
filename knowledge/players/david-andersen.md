@@ -35,6 +35,31 @@ Closest career shapes in the era-normalized vector space:
 - [[carter-bryant|Carter Bryant]] — cosine 0.72
 - [[frank-kaminsky|Frank Kaminsky]] — cosine 0.71
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 18.0 pts · 11.3 reb · 1.7 ast · 1.2 blk per 100 (2010-11).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.3σ)
+
+**Comparables:**
+
+- [[trey-lyles|Trey Lyles]] '21 (82% similar)
+- [[jabari-smith-jr|Jabari Smith Jr.]] '23 (76% similar)
+- [[santi-aldama|Santi Aldama]] '22 (74% similar)
+- [[bobby-portis|Bobby Portis]] '23 (73% similar)
+- [[carter-bryant|Carter Bryant]] '26 (72% similar)
+- [[frank-kaminsky|Frank Kaminsky]] '21 (71% similar)
+
+**Career shape:** Charted 2 seasons (2009-10–2010-11). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -35,6 +35,33 @@ Closest career shapes in the era-normalized vector space:
 - [[johnny-davis|Johnny Davis]] — cosine 0.87
 - [[cherokee-parks|Cherokee Parks]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 11.2 pts · 8.7 reb · 1.2 ast · 2.7 blk per 100 (1997-98).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.6σ vs era)
+- Elite rim protection (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−4.0σ)
+- Scoring load well below era (−1.3σ)
+
+**Comparables:**
+
+- [[mickell-gladness|Mickell Gladness]] '12 (89% similar)
+- [[eric-montross|Eric Montross]] '97 (88% similar)
+- [[jt-thor|JT Thor]] '25 (87% similar)
+- [[andrew-lang|Andrew Lang]] '00 (87% similar)
+- [[johnny-davis|Johnny Davis]] '24 (87% similar)
+- [[cherokee-parks|Cherokee Parks]] '02 (87% similar)
+
+**Career shape:** Charted 2 seasons (1996-97–1997-98). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

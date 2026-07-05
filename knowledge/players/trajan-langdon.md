@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[grayson-allen|Grayson Allen]] — cosine 0.91
 - [[chris-whitney|Chris Whitney]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 21.7 pts · 5.8 reb · 6.2 ast · 1.4 stl per 100 (2001-02).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.6σ vs era)
+- Reliable touch from the free-throw line (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.4σ)
+
+**Comparables:**
+
+- [[randy-foye|Randy Foye]] '12 (92% similar)
+- [[sasha-danilovic|Sasha Danilovic]] '97 (91% similar)
+- [[jimmer-fredette|Jimmer Fredette]] '14 (91% similar)
+- [[dana-barros|Dana Barros]] '99 (91% similar)
+- [[grayson-allen|Grayson Allen]] '19 (91% similar)
+- [[chris-whitney|Chris Whitney]] '04 (90% similar)
+
+**Career shape:** Charted 2 seasons (2000-01–2001-02). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

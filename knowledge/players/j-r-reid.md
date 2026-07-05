@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[a-c-green|A.C. Green]] — cosine 0.78
 - [[adam-keefe|Adam Keefe]] — cosine 0.76
 
+## Scouting report
+
+**Play style:** PF · Three-Point Accuracy (Low Turnovers). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 12.8 pts · 10.0 reb · 1.5 ast · 1.6 stl per 100 (1999-00).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.3σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.2σ)
+- Scoring load well below era (−1.1σ)
+
+**Comparables:**
+
+- [[mark-hendrickson|Mark Hendrickson]] '98 (84% similar)
+- [[grant-long|Grant Long]] '03 (83% similar)
+- [[udonis-haslem|Udonis Haslem]] '13 (78% similar)
+- [[clar-weatherspoon|Clar. Weatherspoon]] '03 (78% similar)
+- [[a-c-green|A.C. Green]] '00 (78% similar)
+- [[adam-keefe|Adam Keefe]] '98 (76% similar)
+
+**Career shape:** Charted 3 seasons (1997-98–1999-00). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

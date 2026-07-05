@@ -47,6 +47,32 @@ Closest career shapes in the era-normalized vector space:
 - [[luke-walton|Luke Walton]] — cosine 0.67
 - [[dante-exum|Dante Exum]] — cosine 0.67
 
+## Scouting report
+
+**Play style:** PF · Three-Point Accuracy (Low Turnovers). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 15.6 pts · 7.0 reb · 7.7 ast · 0.8 blk per 100 (2006-07).
+
+**Strengths:**
+
+- High-volume table-setter (+1.3σ vs era)
+- Efficient finisher inside the arc (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.5σ)
+
+**Comparables:**
+
+- [[craig-porter-jr|Craig Porter Jr.]] '26 (70% similar)
+- [[ryan-nembhard|Ryan Nembhard]] '26 (69% similar)
+- [[joe-ingles|Joe Ingles]] '25 (68% similar)
+- [[davion-mitchell|Davion Mitchell]] '26 (67% similar)
+- [[luke-walton|Luke Walton]] '12 (67% similar)
+- [[dante-exum|Dante Exum]] '15 (67% similar)
+
+**Career shape:** Charted 14 seasons (2003-04–2016-17). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pf|PF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

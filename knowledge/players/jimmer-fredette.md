@@ -37,6 +37,34 @@ Closest career shapes in the era-normalized vector space:
 - [[kendrick-nunn|Kendrick Nunn]] — cosine 0.93
 - [[malik-monk|Malik Monk]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 26.3 pts · 5.0 reb · 6.2 ast · 1.4 stl per 100 (2013-14).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+1.3σ vs era)
+- Knockdown three-point shooter (+1.3σ vs era)
+- Reliable touch from the free-throw line (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.8σ)
+- Rim pressure (free-throw generation) well below era (−1.0σ)
+
+**Comparables:**
+
+- [[o-j-mayo|O.J. Mayo]] '14 (95% similar)
+- [[aaron-brooks|Aaron Brooks]] '11 (95% similar)
+- [[jamal-crawford|Jamal Crawford]] '14 (94% similar)
+- [[troy-hudson|Troy Hudson]] '06 (94% similar)
+- [[kendrick-nunn|Kendrick Nunn]] '20 (93% similar)
+- [[malik-monk|Malik Monk]] '18 (93% similar)
+
+**Career shape:** Charted 4 seasons (2011-12–2014-15). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

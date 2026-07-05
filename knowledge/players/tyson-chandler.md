@@ -52,6 +52,34 @@ Closest career shapes in the era-normalized vector space:
 - [[will-perdue|Will Perdue]] — cosine 0.94
 - [[omer-asik|Omer Asik]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 6.9 pts · 13.4 reb · 1.2 ast · 1.6 blk per 100 (2019-20).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+4.0σ vs era)
+- Relentless on the offensive glass (+1.8σ vs era)
+- Strong net on-court impact (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.7σ)
+- Shot volume well below era (−2.7σ)
+
+**Comparables:**
+
+- [[deandre-jordan|DeAndre Jordan]] '16 (97% similar)
+- [[ed-davis|Ed Davis]] '22 (95% similar)
+- [[buck-williams|Buck Williams]] '97 (94% similar)
+- [[tarik-black|Tarik Black]] '18 (94% similar)
+- [[will-perdue|Will Perdue]] '99 (94% similar)
+- [[omer-asik|Omer Asik]] '18 (93% similar)
+
+**Career shape:** Charted 19 seasons (2001-02–2019-20). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[chris-youngblood|Chris Youngblood]] — cosine 0.88
 - [[carsen-edwards|Carsen Edwards]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 14.4 pts · 4.1 reb · 3.1 ast · 1.3 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Rarely turns the ball over (−2.1σ vs era)
+- High-volume three-point shooter (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.0σ)
+- Defensive rebounding well below era (−1.5σ)
+
+**Comparables:**
+
+- [[ethan-thompson|Ethan Thompson]] '26 (91% similar)
+- [[matt-freije|Matt Freije]] '07 (90% similar)
+- [[alex-abrines|Alex Abrines]] '19 (89% similar)
+- [[langston-galloway|Langston Galloway]] '18 (89% similar)
+- [[chris-youngblood|Chris Youngblood]] '26 (88% similar)
+- [[carsen-edwards|Carsen Edwards]] '21 (88% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

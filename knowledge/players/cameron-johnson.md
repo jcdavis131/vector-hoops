@@ -40,6 +40,32 @@ Closest career shapes in the era-normalized vector space:
 - [[trey-murphy-iii|Trey Murphy III]] — cosine 0.91
 - [[kyle-korver|Kyle Korver]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 18.9 pts · 5.9 reb · 3.8 ast · 1.1 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Strong net on-court impact (+1.5σ vs era)
+- Rarely turns the ball over (−1.3σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[peja-stojakovic|Peja Stojakovic]] '04 (94% similar)
+- [[isaiah-joe|Isaiah Joe]] '25 (94% similar)
+- [[chase-budinger|Chase Budinger]] '10 (92% similar)
+- [[anthony-morrow|Anthony Morrow]] '17 (92% similar)
+- [[trey-murphy-iii|Trey Murphy III]] '24 (91% similar)
+- [[kyle-korver|Kyle Korver]] '04 (91% similar)
+
+**Career shape:** Charted 7 seasons (2019-20–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

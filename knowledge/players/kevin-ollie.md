@@ -45,6 +45,33 @@ Closest career shapes in the era-normalized vector space:
 - [[trent-forrest|Trent Forrest]] — cosine 0.82
 - [[tomas-satoransky|Tomas Satoransky]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** PG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 8.5 pts · 4.9 reb · 3.9 ast · 1.7 stl per 100 (2009-10).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+2.0σ vs era)
+- Rarely turns the ball over (−1.7σ vs era)
+
+**Areas of concern:**
+
+- Scoring load well below era (−1.9σ)
+- Shot volume well below era (−1.7σ)
+
+**Comparables:**
+
+- [[cory-joseph|Cory Joseph]] '24 (89% similar)
+- [[eric-snow|Eric Snow]] '08 (88% similar)
+- [[vincent-askew|Vincent Askew]] '98 (85% similar)
+- [[pooh-jeter|Pooh Jeter]] '11 (83% similar)
+- [[trent-forrest|Trent Forrest]] '23 (82% similar)
+- [[tomas-satoransky|Tomas Satoransky]] '22 (82% similar)
+
+**Career shape:** Charted 12 seasons (1997-98–2009-10). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -48,6 +48,33 @@ Closest career shapes in the era-normalized vector space:
 - [[lauri-markkanen|Lauri Markkanen]] — cosine 0.79
 - [[wally-szczerbiak|Wally Szczerbiak]] — cosine 0.79
 
+## Scouting report
+
+**Play style:** PF · Defensive Glass + Rim Pressure (Fts). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 28.7 pts · 10.0 reb · 5.2 ast · 1.3 stl per 100 (2020-21).
+
+**Strengths:**
+
+- Strong net on-court impact (+1.3σ vs era)
+- Featured, high-usage scoring role (+1.3σ vs era)
+- Heavy shot volume, focal scoring option (+1.2σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[dirk-nowitzki|Dirk Nowitzki]] '06 (91% similar)
+- [[luol-deng|Luol Deng]] '07 (82% similar)
+- [[michael-porter-jr|Michael Porter Jr.]] '26 (82% similar)
+- [[obi-toppin|Obi Toppin]] '26 (80% similar)
+- [[lauri-markkanen|Lauri Markkanen]] '23 (79% similar)
+- [[wally-szczerbiak|Wally Szczerbiak]] '07 (79% similar)
+
+**Career shape:** Charted 15 seasons (2011-12–2025-26). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

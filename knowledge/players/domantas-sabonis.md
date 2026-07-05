@@ -43,6 +43,34 @@ Closest career shapes in the era-normalized vector space:
 - [[bam-adebayo|Bam Adebayo]] — cosine 0.81
 - [[julius-randle|Julius Randle]] — cosine 0.80
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 26.2 pts · 18.4 reb · 11.1 ast · 1.2 stl per 100 (2023-24).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+2.9σ vs era)
+- High-volume table-setter (+2.4σ vs era)
+- Efficient finisher inside the arc (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.2σ)
+- Three-point volume well below era (−1.5σ)
+
+**Comparables:**
+
+- [[charles-barkley|Charles Barkley]] '97 (87% similar)
+- [[alperen-sengun|Alperen Sengun]] '25 (84% similar)
+- [[willy-hernangomez|Willy Hernangomez]] '23 (83% similar)
+- [[nikola-jokic|Nikola Jokić]] '22 (82% similar)
+- [[bam-adebayo|Bam Adebayo]] '22 (81% similar)
+- [[julius-randle|Julius Randle]] '24 (80% similar)
+
+**Career shape:** Charted 10 seasons (2016-17–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -45,6 +45,33 @@ Closest career shapes in the era-normalized vector space:
 - [[pau-gasol|Pau Gasol]] — cosine 0.74
 - [[boban-marjanovic|Boban Marjanovic]] — cosine 0.72
 
+## Scouting report
+
+**Play style:** PF · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 25.9 pts · 10.4 reb · 4.7 ast · 1.3 stl per 100 (2022-23).
+
+**Strengths:**
+
+- Strong net on-court impact (+2.1σ vs era)
+- Draws contact, gets to the line often (+1.2σ vs era)
+- Efficient finisher inside the arc (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.3σ)
+
+**Comparables:**
+
+- [[shaquille-o-neal|Shaquille O'Neal]] '98 (77% similar)
+- [[pascal-siakam|Pascal Siakam]] '17 (75% similar)
+- [[blake-griffin|Blake Griffin]] '14 (75% similar)
+- [[chris-bosh|Chris Bosh]] '10 (74% similar)
+- [[pau-gasol|Pau Gasol]] '15 (74% similar)
+- [[boban-marjanovic|Boban Marjanovic]] '18 (72% similar)
+
+**Career shape:** Charted 12 seasons (2014-15–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

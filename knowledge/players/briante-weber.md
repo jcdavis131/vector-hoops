@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[randy-brown|Randy Brown]] — cosine 0.82
 - [[wendell-moore-jr|Wendell Moore Jr.]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 10.0 pts · 7.0 reb · 4.4 ast · 3.6 stl per 100 (2017-18).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+3.3σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−3.0σ)
+- Shot volume well below era (−1.7σ)
+
+**Comparables:**
+
+- [[bernard-robinson|Bernard Robinson]] '07 (94% similar)
+- [[reece-beekman|Reece Beekman]] '25 (89% similar)
+- [[jamie-watson|Jamie Watson]] '97 (86% similar)
+- [[quinndary-weatherspoon|Quinndary Weatherspoon]] '21 (85% similar)
+- [[randy-brown|Randy Brown]] '03 (82% similar)
+- [[wendell-moore-jr|Wendell Moore Jr.]] '24 (82% similar)
+
+**Career shape:** Charted 2 seasons (2016-17–2017-18). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Playmaking + Steals identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

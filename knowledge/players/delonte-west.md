@@ -41,6 +41,32 @@ Closest career shapes in the era-normalized vector space:
 - [[charlie-ward|Charlie Ward]] — cosine 0.89
 - [[collin-gillespie|Collin Gillespie]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 18.5 pts · 5.0 reb · 5.6 ast · 2.3 stl per 100 (2008-09).
+
+**Strengths:**
+
+- Strong net on-court impact (+2.4σ vs era)
+- Active hands, disrupts passing lanes (+1.3σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[travis-best|Travis Best]] '04 (92% similar)
+- [[kirk-hinrich|Kirk Hinrich]] '04 (91% similar)
+- [[gary-grant|Gary Grant]] '98 (90% similar)
+- [[marcus-sasser|Marcus Sasser]] '26 (90% similar)
+- [[charlie-ward|Charlie Ward]] '02 (89% similar)
+- [[collin-gillespie|Collin Gillespie]] '24 (89% similar)
+
+**Career shape:** Charted 8 seasons (2004-05–2011-12). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

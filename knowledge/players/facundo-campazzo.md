@@ -35,6 +35,34 @@ Closest career shapes in the era-normalized vector space:
 - [[ron-baker|Ron Baker]] — cosine 0.91
 - [[jason-hart|Jason Hart]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 13.5 pts · 4.5 reb · 7.9 ast · 2.7 stl per 100 (2020-21).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.1σ vs era)
+- High-volume table-setter (+1.3σ vs era)
+- Reliable touch from the free-throw line (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.2σ)
+- Defensive rebounding well below era (−1.1σ)
+
+**Comparables:**
+
+- [[ronnie-price|Ronnie Price]] '14 (93% similar)
+- [[marko-jaric|Marko Jaric]] '03 (92% similar)
+- [[shane-larkin|Shane Larkin]] '16 (92% similar)
+- [[jerian-grant|Jerian Grant]] '19 (92% similar)
+- [[ron-baker|Ron Baker]] '18 (91% similar)
+- [[jason-hart|Jason Hart]] '09 (91% similar)
+
+**Career shape:** Charted 2 seasons (2020-21–2021-22). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -42,6 +42,33 @@ Closest career shapes in the era-normalized vector space:
 - [[quinn-cook|Quinn Cook]] — cosine 0.89
 - [[yogi-ferrell|Yogi Ferrell]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 20.5 pts · 3.9 reb · 8.4 ast · 0.9 stl per 100 (2004-05).
+
+**Strengths:**
+
+- High-volume table-setter (+1.6σ vs era)
+- Reliable touch from the free-throw line (+1.0σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.6σ)
+- Offensive-glass activity well below era (−1.3σ)
+
+**Comparables:**
+
+- [[brian-roberts|Brian Roberts]] '13 (93% similar)
+- [[dana-barros|Dana Barros]] '99 (91% similar)
+- [[b-j-armstrong|B.J. Armstrong]] '00 (90% similar)
+- [[anthony-goldwire|Anthony Goldwire]] '01 (90% similar)
+- [[quinn-cook|Quinn Cook]] '18 (89% similar)
+- [[yogi-ferrell|Yogi Ferrell]] '19 (88% similar)
+
+**Career shape:** Charted 9 seasons (2000-01–2008-09). Entered as a Playmaking + Steals profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

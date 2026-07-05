@@ -34,6 +34,31 @@ Closest career shapes in the era-normalized vector space:
 - [[pj-hairston|PJ Hairston]] — cosine 0.89
 - [[dennis-scott|Dennis Scott]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 18.1 pts · 7.8 reb · 3.1 ast · 1.6 stl per 100 (1997-98).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.0σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[langston-galloway|Langston Galloway]] '18 (90% similar)
+- [[wayne-ellington|Wayne Ellington]] '17 (90% similar)
+- [[jarvis-hayes|Jarvis Hayes]] '10 (89% similar)
+- [[daequan-cook|Daequan Cook]] '11 (89% similar)
+- [[pj-hairston|PJ Hairston]] '15 (89% similar)
+- [[dennis-scott|Dennis Scott]] '00 (89% similar)
+
+**Career shape:** Charted 1 season (1997-98). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

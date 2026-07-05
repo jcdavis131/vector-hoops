@@ -41,6 +41,33 @@ Closest career shapes in the era-normalized vector space:
 - [[sasha-vezenkov|Sasha Vezenkov]] — cosine 0.82
 - [[austin-daye|Austin Daye]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 14.2 pts · 8.1 reb · 0.4 ast · 1.8 stl per 100 (2006-07).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.5σ vs era)
+- Reliable touch from the free-throw line (+2.2σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.6σ)
+- Rim pressure (free-throw generation) well below era (−1.7σ)
+
+**Comparables:**
+
+- [[quentin-richardson|Quentin Richardson]] '05 (86% similar)
+- [[chris-morris|Chris Morris]] '99 (84% similar)
+- [[vladimir-radmanovic|Vladimir Radmanovic]] '13 (84% similar)
+- [[shawne-williams|Shawne Williams]] '12 (84% similar)
+- [[sasha-vezenkov|Sasha Vezenkov]] '24 (82% similar)
+- [[austin-daye|Austin Daye]] '14 (82% similar)
+
+**Career shape:** Charted 8 seasons (1999-00–2006-07). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

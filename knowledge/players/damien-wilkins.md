@@ -43,6 +43,32 @@ Closest career shapes in the era-normalized vector space:
 - [[markel-brown|Markel Brown]] — cosine 0.87
 - [[gary-harris|Gary Harris]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 10.5 pts · 5.1 reb · 2.9 ast · 0.6 stl per 100 (2017-18).
+
+**Strengths:**
+
+- Strong net on-court impact (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.7σ)
+- Scoring load well below era (−1.5σ)
+
+**Comparables:**
+
+- [[royal-ivey|Royal Ivey]] '12 (92% similar)
+- [[justin-edwards|Justin Edwards]] '26 (91% similar)
+- [[kim-english|Kim English]] '13 (91% similar)
+- [[cam-reddish|Cam Reddish]] '25 (89% similar)
+- [[markel-brown|Markel Brown]] '15 (87% similar)
+- [[gary-harris|Gary Harris]] '25 (86% similar)
+
+**Career shape:** Charted 10 seasons (2004-05–2017-18). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

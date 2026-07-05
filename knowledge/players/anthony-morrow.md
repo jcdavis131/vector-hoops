@@ -42,6 +42,34 @@ Closest career shapes in the era-normalized vector space:
 - [[langston-galloway|Langston Galloway]] — cosine 0.92
 - [[dale-ellis|Dale Ellis]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 18.2 pts · 2.1 reb · 1.7 ast · 1.6 stl per 100 (2016-17).
+
+**Strengths:**
+
+- Rarely turns the ball over (−2.2σ vs era)
+- Reliable touch from the free-throw line (+1.4σ vs era)
+- High-volume three-point shooter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−2.0σ)
+- Rim-protection impact well below era (−1.0σ)
+
+**Comparables:**
+
+- [[rodney-hood|Rodney Hood]] '22 (94% similar)
+- [[eric-piatkowski|Eric Piatkowski]] '06 (93% similar)
+- [[wayne-ellington|Wayne Ellington]] '17 (92% similar)
+- [[cameron-johnson|Cameron Johnson]] '26 (92% similar)
+- [[langston-galloway|Langston Galloway]] '18 (92% similar)
+- [[dale-ellis|Dale Ellis]] '00 (91% similar)
+
+**Career shape:** Charted 9 seasons (2008-09–2016-17). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

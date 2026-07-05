@@ -45,6 +45,33 @@ Closest career shapes in the era-normalized vector space:
 - [[jr-smith|JR Smith]] — cosine 0.84
 - [[cj-miles|CJ Miles]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** SG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 25.9 pts · 6.2 reb · 5.5 ast · 3.4 stl per 100 (1999-00).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.8σ vs era)
+- Featured, high-usage scoring role (+1.3σ vs era)
+- High-volume three-point shooter (+1.2σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[rudy-fernandez|Rudy Fernandez]] '11 (88% similar)
+- [[kerry-kittles|Kerry Kittles]] '03 (87% similar)
+- [[chris-mullin|Chris Mullin]] '00 (86% similar)
+- [[bobby-phills|Bobby Phills]] '00 (86% similar)
+- [[jr-smith|JR Smith]] '08 (84% similar)
+- [[cj-miles|CJ Miles]] '18 (84% similar)
+
+**Career shape:** Charted 12 seasons (1996-97–2007-08). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

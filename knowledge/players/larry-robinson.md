@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[carlos-delfino|Carlos Delfino]] — cosine 0.90
 - [[george-mccloud|George McCloud]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** PG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 15.9 pts · 6.9 reb · 2.9 ast · 2.2 stl per 100 (2000-01).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.5σ vs era)
+- Reliable touch from the free-throw line (+1.2σ vs era)
+- Rarely turns the ball over (−1.1σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.3σ)
+- Finishing efficiency well below era (−1.2σ)
+
+**Comparables:**
+
+- [[sam-mack|Sam Mack]] '00 (94% similar)
+- [[billy-thomas|Billy Thomas]] '06 (94% similar)
+- [[sasha-vujacic|Sasha Vujacic]] '05 (93% similar)
+- [[rj-hunter|RJ Hunter]] '16 (91% similar)
+- [[carlos-delfino|Carlos Delfino]] '13 (90% similar)
+- [[george-mccloud|George McCloud]] '98 (90% similar)
+
+**Career shape:** Charted 1 season (2000-01). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

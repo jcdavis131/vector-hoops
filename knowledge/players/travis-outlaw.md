@@ -43,6 +43,31 @@ Closest career shapes in the era-normalized vector space:
 - [[rodney-buford|Rodney Buford]] — cosine 0.69
 - [[kelly-oubre-jr|Kelly Oubre Jr.]] — cosine 0.69
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 18.0 pts · 8.5 reb · 1.5 ast · 2.1 blk per 100 (2005-06).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.3σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.9σ)
+
+**Comparables:**
+
+- [[rodney-carney|Rodney Carney]] '09 (79% similar)
+- [[kelenna-azubuike|Kelenna Azubuike]] '07 (78% similar)
+- [[keegan-murray|Keegan Murray]] '26 (71% similar)
+- [[predrag-drobnjak|Predrag Drobnjak]] '04 (71% similar)
+- [[rodney-buford|Rodney Buford]] '04 (69% similar)
+- [[kelly-oubre-jr|Kelly Oubre Jr.]] '23 (69% similar)
+
+**Career shape:** Charted 10 seasons (2004-05–2013-14). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

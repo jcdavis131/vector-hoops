@@ -38,6 +38,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jules-bernard|Jules Bernard]] — cosine 0.68
 - [[tornike-shengelia|Tornike Shengelia]] — cosine 0.66
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 14.7 pts · 10.0 reb · 3.1 ast · 1.8 stl per 100 (2016-17).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.9σ)
+- On-court net impact well below era (−1.7σ)
+
+**Comparables:**
+
+- [[rick-hughes|Rick Hughes]] '00 (77% similar)
+- [[art-long|Art Long]] '03 (75% similar)
+- [[brandon-hunter|Brandon Hunter]] '05 (73% similar)
+- [[olden-polynice|Olden Polynice]] '99 (72% similar)
+- [[jules-bernard|Jules Bernard]] '24 (68% similar)
+- [[tornike-shengelia|Tornike Shengelia]] '14 (66% similar)
+
+**Career shape:** Charted 5 seasons (2012-13–2016-17). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

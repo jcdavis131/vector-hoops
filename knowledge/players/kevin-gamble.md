@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[steve-novak|Steve Novak]] — cosine 0.86
 - [[matt-bullard|Matt Bullard]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 16.4 pts · 5.7 reb · 4.1 ast · 1.1 stl per 100 (1996-97).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.8σ vs era)
+- Knockdown three-point shooter (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−2.0σ)
+- Offensive-glass activity well below era (−1.2σ)
+
+**Comparables:**
+
+- [[wesley-person|Wesley Person]] '05 (89% similar)
+- [[tim-legler|Tim Legler]] '00 (89% similar)
+- [[rasual-butler|Rasual Butler]] '04 (88% similar)
+- [[allen-crabbe|Allen Crabbe]] '20 (87% similar)
+- [[steve-novak|Steve Novak]] '15 (86% similar)
+- [[matt-bullard|Matt Bullard]] '01 (86% similar)
+
+**Career shape:** Charted 1 season (1996-97). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

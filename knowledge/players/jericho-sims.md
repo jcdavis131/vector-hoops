@@ -38,6 +38,34 @@ Closest career shapes in the era-normalized vector space:
 - [[tyson-chandler|Tyson Chandler]] — cosine 0.91
 - [[oso-ighodaro|Oso Ighodaro]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** PF · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 7.9 pts · 14.7 reb · 1.8 ast · 1.9 blk per 100 (2021-22).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+3.3σ vs era)
+- Relentless on the offensive glass (+1.7σ vs era)
+- Strong net on-court impact (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−3.0σ)
+- Free-throw touch well below era (−2.7σ)
+
+**Comparables:**
+
+- [[fabricio-oberto|Fabricio Oberto]] '10 (96% similar)
+- [[nick-collison|Nick Collison]] '17 (95% similar)
+- [[cristiano-felicio|Cristiano Felicio]] '21 (92% similar)
+- [[greg-smith|Greg Smith]] '16 (92% similar)
+- [[tyson-chandler|Tyson Chandler]] '20 (91% similar)
+- [[oso-ighodaro|Oso Ighodaro]] '26 (91% similar)
+
+**Career shape:** Charted 5 seasons (2021-22–2025-26). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

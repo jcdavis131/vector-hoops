@@ -42,6 +42,34 @@ Closest career shapes in the era-normalized vector space:
 - [[keon-clark|Keon Clark]] — cosine 0.88
 - [[goga-bitadze|Goga Bitadze]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 15.0 pts · 15.7 reb · 1.0 ast · 5.9 blk per 100 (2000-01).
+
+**Strengths:**
+
+- Elite rim protection (+4.0σ vs era)
+- Strong presence on the defensive glass (+2.1σ vs era)
+- Strong net on-court impact (+1.8σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.1σ)
+- Table-setting role well below era (−1.1σ)
+
+**Comparables:**
+
+- [[theo-ratliff|Theo Ratliff]] '09 (92% similar)
+- [[kelvin-cato|Kelvin Cato]] '99 (89% similar)
+- [[khaman-maluach|Khaman Maluach]] '26 (89% similar)
+- [[chris-andersen|Chris Andersen]] '10 (89% similar)
+- [[keon-clark|Keon Clark]] '01 (88% similar)
+- [[goga-bitadze|Goga Bitadze]] '25 (88% similar)
+
+**Career shape:** Charted 9 seasons (1996-97–2004-05). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

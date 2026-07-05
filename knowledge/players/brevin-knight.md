@@ -45,6 +45,33 @@ Closest career shapes in the era-normalized vector space:
 - [[ricky-rubio|Ricky Rubio]] — cosine 0.90
 - [[t-j-mcconnell|T.J. McConnell]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 11.8 pts · 4.4 reb · 12.7 ast · 3.8 stl per 100 (2002-03).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+3.3σ vs era)
+- High-volume table-setter (+3.2σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.3σ)
+- Free-throw touch well below era (−1.7σ)
+
+**Comparables:**
+
+- [[speedy-claxton|Speedy Claxton]] '07 (93% similar)
+- [[anthony-carter|Anthony Carter]] '03 (92% similar)
+- [[kris-dunn|Kris Dunn]] '20 (91% similar)
+- [[moochie-norris|Moochie Norris]] '05 (91% similar)
+- [[ricky-rubio|Ricky Rubio]] '13 (90% similar)
+- [[t-j-mcconnell|T.J. McConnell]] '21 (89% similar)
+
+**Career shape:** Charted 12 seasons (1997-98–2008-09). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

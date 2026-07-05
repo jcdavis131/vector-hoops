@@ -37,6 +37,32 @@ Closest career shapes in the era-normalized vector space:
 - [[yogi-ferrell|Yogi Ferrell]] — cosine 0.85
 - [[roko-ukic|Roko Ukic]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 19.4 pts · 5.3 reb · 6.7 ast · 1.5 stl per 100 (2021-22).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.1σ)
+- Rim-protection impact well below era (−1.1σ)
+
+**Comparables:**
+
+- [[andre-barrett|Andre Barrett]] '06 (86% similar)
+- [[pooh-jeter|Pooh Jeter]] '11 (85% similar)
+- [[skylar-mays|Skylar Mays]] '24 (85% similar)
+- [[ty-jerome|Ty Jerome]] '25 (85% similar)
+- [[yogi-ferrell|Yogi Ferrell]] '19 (85% similar)
+- [[roko-ukic|Roko Ukic]] '09 (84% similar)
+
+**Career shape:** Charted 4 seasons (2020-21–2023-24). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

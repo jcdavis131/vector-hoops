@@ -44,6 +44,34 @@ Closest career shapes in the era-normalized vector space:
 - [[kenneth-faried|Kenneth Faried]] — cosine 0.89
 - [[drew-gooden|Drew Gooden]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 26.8 pts · 20.9 reb · 2.8 ast · 1.0 stl per 100 (2017-18).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+3.3σ vs era)
+- Strong presence on the defensive glass (+2.5σ vs era)
+- Efficient finisher inside the arc (+1.9σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.3σ)
+- Three-point volume well below era (−1.5σ)
+
+**Comparables:**
+
+- [[jonas-valanciunas|Jonas Valančiūnas]] '26 (94% similar)
+- [[willy-hernangomez|Willy Hernangomez]] '23 (92% similar)
+- [[matt-geiger|Matt Geiger]] '98 (90% similar)
+- [[boban-marjanovic|Boban Marjanovic]] '18 (90% similar)
+- [[kenneth-faried|Kenneth Faried]] '12 (89% similar)
+- [[drew-gooden|Drew Gooden]] '16 (88% similar)
+
+**Career shape:** Charted 11 seasons (2011-12–2021-22). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

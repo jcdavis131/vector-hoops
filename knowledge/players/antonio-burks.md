@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[walker-russell|Walker Russell]] — cosine 0.86
 - [[jerian-grant|Jerian Grant]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 10.5 pts · 3.5 reb · 7.1 ast · 1.9 stl per 100 (2005-06).
+
+**Strengths:**
+
+- High-volume table-setter (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.3σ)
+- Finishing efficiency well below era (−1.4σ)
+
+**Comparables:**
+
+- [[randy-brown|Randy Brown]] '03 (89% similar)
+- [[omar-cook|Omar Cook]] '04 (87% similar)
+- [[shane-larkin|Shane Larkin]] '16 (87% similar)
+- [[donell-taylor|Donell Taylor]] '07 (86% similar)
+- [[walker-russell|Walker Russell]] '12 (86% similar)
+- [[jerian-grant|Jerian Grant]] '19 (85% similar)
+
+**Career shape:** Charted 2 seasons (2004-05–2005-06). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

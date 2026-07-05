@@ -46,6 +46,32 @@ Closest career shapes in the era-normalized vector space:
 - [[kz-okpala|KZ Okpala]] — cosine 0.89
 - [[romeo-langford|Romeo Langford]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 6.8 pts · 5.9 reb · 1.7 ast · 1.3 stl per 100 (2009-10).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−4.0σ)
+- Scoring load well below era (−2.2σ)
+
+**Comparables:**
+
+- [[mark-madsen|Mark Madsen]] '09 (92% similar)
+- [[johnny-furphy|Johnny Furphy]] '26 (91% similar)
+- [[mark-pope|Mark Pope]] '01 (91% similar)
+- [[jared-jeffries|Jared Jeffries]] '11 (90% similar)
+- [[kz-okpala|KZ Okpala]] '21 (89% similar)
+- [[romeo-langford|Romeo Langford]] '20 (89% similar)
+
+**Career shape:** Charted 13 seasons (2001-02–2013-14). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

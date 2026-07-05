@@ -39,6 +39,34 @@ Closest career shapes in the era-normalized vector space:
 - [[speedy-claxton|Speedy Claxton]] — cosine 0.85
 - [[robert-pack|Robert Pack]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 25.2 pts · 6.3 reb · 12.8 ast · 2.6 stl per 100 (2021-22).
+
+**Strengths:**
+
+- High-volume table-setter (+3.1σ vs era)
+- Active hands, disrupts passing lanes (+1.8σ vs era)
+- Heavy shot volume, focal scoring option (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.6σ)
+- Three-point volume well below era (−1.2σ)
+
+**Comparables:**
+
+- [[t-j-mcconnell|T.J. McConnell]] '21 (91% similar)
+- [[pat-spencer|Pat Spencer]] '25 (89% similar)
+- [[t-j-ford|T.J. Ford]] '07 (87% similar)
+- [[brevin-knight|Brevin Knight]] '03 (86% similar)
+- [[speedy-claxton|Speedy Claxton]] '07 (85% similar)
+- [[robert-pack|Robert Pack]] '97 (85% similar)
+
+**Career shape:** Charted 6 seasons (2018-19–2024-25). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Playmaking + Steals identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

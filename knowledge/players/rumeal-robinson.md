@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[shabazz-napier|Shabazz Napier]] — cosine 0.91
 - [[jason-williams|Jason Williams]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 17.6 pts · 4.7 reb · 7.3 ast · 2.4 stl per 100 (1996-97).
+
+**Strengths:**
+
+- High-volume table-setter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Offensive-glass activity well below era (−1.3σ)
+- Turnover rate well above era (+1.1σ)
+
+**Comparables:**
+
+- [[marcus-sasser|Marcus Sasser]] '26 (92% similar)
+- [[jordan-farmar|Jordan Farmar]] '14 (92% similar)
+- [[raymond-felton|Raymond Felton]] '11 (91% similar)
+- [[rafer-alston|Rafer Alston]] '00 (91% similar)
+- [[shabazz-napier|Shabazz Napier]] '17 (91% similar)
+- [[jason-williams|Jason Williams]] '11 (91% similar)
+
+**Career shape:** Charted 1 season (1996-97). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

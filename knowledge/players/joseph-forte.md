@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[ben-saraf|Ben Saraf]] — cosine 0.84
 - [[nolan-smith|Nolan Smith]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** SG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 14.5 pts · 6.6 reb · 6.7 ast · 2.4 stl per 100 (2002-03).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+1.2σ vs era)
+- Active hands, disrupts passing lanes (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+3.4σ)
+- Finishing efficiency well below era (−2.7σ)
+
+**Comparables:**
+
+- [[kj-simpson|KJ Simpson]] '26 (91% similar)
+- [[kenny-satterfield|Kenny Satterfield]] '02 (90% similar)
+- [[mustafa-shakur|Mustafa Shakur]] '11 (88% similar)
+- [[jd-davison|JD Davison]] '25 (85% similar)
+- [[ben-saraf|Ben Saraf]] '26 (84% similar)
+- [[nolan-smith|Nolan Smith]] '13 (84% similar)
+
+**Career shape:** Charted 1 season (2002-03). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

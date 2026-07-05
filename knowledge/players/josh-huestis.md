@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[ryan-dunn|Ryan Dunn]] — cosine 0.83
 - [[yuta-watanabe|Yuta Watanabe]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 8.0 pts · 8.1 reb · 1.0 ast · 2.2 blk per 100 (2017-18).
+
+**Strengths:**
+
+- Elite rim protection (+1.3σ vs era)
+- Rarely turns the ball over (−1.3σ vs era)
+- Strong net on-court impact (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−3.6σ)
+- Scoring load well below era (−1.9σ)
+
+**Comparables:**
+
+- [[mark-pope|Mark Pope]] '01 (86% similar)
+- [[william-cunningham|William Cunningham]] '99 (85% similar)
+- [[haywood-highsmith|Haywood Highsmith]] '22 (85% similar)
+- [[cedric-bozeman|Cedric Bozeman]] '07 (83% similar)
+- [[ryan-dunn|Ryan Dunn]] '25 (83% similar)
+- [[yuta-watanabe|Yuta Watanabe]] '20 (82% similar)
+
+**Career shape:** Charted 1 season (2017-18). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

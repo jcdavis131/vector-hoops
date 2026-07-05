@@ -46,6 +46,34 @@ Closest career shapes in the era-normalized vector space:
 - [[branden-carlson|Branden Carlson]] — cosine 0.83
 - [[shawn-bradley|Shawn Bradley]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** PF · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 17.0 pts · 14.1 reb · 0.8 ast · 6.8 blk per 100 (2011-12).
+
+**Strengths:**
+
+- Elite rim protection (+4.0σ vs era)
+- Relentless on the offensive glass (+1.7σ vs era)
+- Efficient finisher inside the arc (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.1σ)
+- Three-point volume well below era (−1.1σ)
+
+**Comparables:**
+
+- [[myles-turner|Myles Turner]] '19 (87% similar)
+- [[khaman-maluach|Khaman Maluach]] '26 (86% similar)
+- [[chet-holmgren|Chet Holmgren]] '25 (85% similar)
+- [[pj-hall|PJ Hall]] '26 (84% similar)
+- [[branden-carlson|Branden Carlson]] '25 (83% similar)
+- [[shawn-bradley|Shawn Bradley]] '01 (83% similar)
+
+**Career shape:** Charted 13 seasons (2009-10–2021-22). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

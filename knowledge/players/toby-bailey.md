@@ -35,6 +35,31 @@ Closest career shapes in the era-normalized vector space:
 - [[ansu-sesay|Ansu Sesay]] — cosine 0.74
 - [[johnny-o-bryant-iii|Johnny O'Bryant III]] — cosine 0.73
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 16.1 pts · 11.2 reb · 2.7 ast · 1.9 stl per 100 (1998-99).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+1.1σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[dan-langhi|Dan Langhi]] '02 (78% similar)
+- [[awvee-storey|Awvee Storey]] '08 (78% similar)
+- [[romeo-langford|Romeo Langford]] '20 (74% similar)
+- [[tremaine-fowlkes|Tremaine Fowlkes]] '04 (74% similar)
+- [[ansu-sesay|Ansu Sesay]] '03 (74% similar)
+- [[johnny-o-bryant-iii|Johnny O'Bryant III]] '16 (73% similar)
+
+**Career shape:** Charted 2 seasons (1998-99–1999-00). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

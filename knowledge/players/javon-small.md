@@ -34,6 +34,31 @@ Closest career shapes in the era-normalized vector space:
 - [[tyrese-haliburton|Tyrese Haliburton]] — cosine 0.83
 - [[d-j-augustin|D.J. Augustin]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 22.0 pts · 7.1 reb · 8.4 ast · 1.9 stl per 100 (2025-26).
+
+**Strengths:**
+
+- High-volume table-setter (+1.4σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[jarrett-jack|Jarrett Jack]] '16 (87% similar)
+- [[luke-ridnour|Luke Ridnour]] '06 (86% similar)
+- [[darren-collison|Darren Collison]] '10 (85% similar)
+- [[dan-dickau|Dan Dickau]] '06 (85% similar)
+- [[tyrese-haliburton|Tyrese Haliburton]] '23 (83% similar)
+- [[d-j-augustin|D.J. Augustin]] '12 (82% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

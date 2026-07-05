@@ -46,6 +46,33 @@ Closest career shapes in the era-normalized vector space:
 - [[josh-howard|Josh Howard]] — cosine 0.82
 - [[rudy-gay|Rudy Gay]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** SF · Scoring Volume + Shot Volume. Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 39.8 pts · 10.4 reb · 7.2 ast · 2.7 stl per 100 (2019-20).
+
+**Strengths:**
+
+- Featured, high-usage scoring role (+3.0σ vs era)
+- Heavy shot volume, focal scoring option (+2.8σ vs era)
+- Draws contact, gets to the line often (+2.7σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.2σ)
+
+**Comparables:**
+
+- [[paul-george|Paul George]] '22 (86% similar)
+- [[michael-jordan|Michael Jordan]] '97 (85% similar)
+- [[jalen-williams|Jalen Williams]] '25 (83% similar)
+- [[jayson-tatum|Jayson Tatum]] '23 (82% similar)
+- [[josh-howard|Josh Howard]] '07 (82% similar)
+- [[rudy-gay|Rudy Gay]] '14 (82% similar)
+
+**Career shape:** Charted 13 seasons (2011-12–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

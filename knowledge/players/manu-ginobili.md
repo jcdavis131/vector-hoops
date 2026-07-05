@@ -49,6 +49,33 @@ Closest career shapes in the era-normalized vector space:
 - [[gilbert-arenas|Gilbert Arenas]] — cosine 0.87
 - [[toni-kukoc|Toni Kukoc]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** SG · Scoring Volume + Shot Volume. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 32.3 pts · 7.9 reb · 7.4 ast · 2.4 stl per 100 (2007-08).
+
+**Strengths:**
+
+- Featured, high-usage scoring role (+2.2σ vs era)
+- Draws contact, gets to the line often (+2.1σ vs era)
+- High-volume three-point shooter (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.9σ)
+
+**Comparables:**
+
+- [[clyde-drexler|Clyde Drexler]] '98 (92% similar)
+- [[paul-george|Paul George]] '22 (90% similar)
+- [[stephen-curry|Stephen Curry]] '16 (90% similar)
+- [[james-harden|James Harden]] '19 (87% similar)
+- [[gilbert-arenas|Gilbert Arenas]] '06 (87% similar)
+- [[toni-kukoc|Toni Kukoc]] '99 (86% similar)
+
+**Career shape:** Charted 16 seasons (2002-03–2017-18). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

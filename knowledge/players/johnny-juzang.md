@@ -37,6 +37,33 @@ Closest career shapes in the era-normalized vector space:
 - [[armoni-brooks|Armoni Brooks]] — cosine 0.88
 - [[adam-morrison|Adam Morrison]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 17.1 pts · 7.7 reb · 1.6 ast · 0.8 stl per 100 (2022-23).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.9σ vs era)
+- High-volume three-point shooter (+1.7σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.5σ)
+- Free-throw touch well below era (−2.2σ)
+
+**Comparables:**
+
+- [[tyler-dorsey|Tyler Dorsey]] '18 (91% similar)
+- [[kevin-knox-ii|Kevin Knox II]] '22 (90% similar)
+- [[damyean-dotson|Damyean Dotson]] '21 (90% similar)
+- [[dalton-knecht|Dalton Knecht]] '25 (89% similar)
+- [[armoni-brooks|Armoni Brooks]] '21 (88% similar)
+- [[adam-morrison|Adam Morrison]] '10 (86% similar)
+
+**Career shape:** Charted 4 seasons (2022-23–2025-26). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

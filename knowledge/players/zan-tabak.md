@@ -36,6 +36,34 @@ Closest career shapes in the era-normalized vector space:
 - [[miles-plumlee|Miles Plumlee]] — cosine 0.87
 - [[dan-gadzuric|Dan Gadzuric]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 15.1 pts · 13.0 reb · 1.6 ast · 3.7 blk per 100 (1999-00).
+
+**Strengths:**
+
+- Elite rim protection (+2.4σ vs era)
+- Relentless on the offensive glass (+2.2σ vs era)
+- Strong net on-court impact (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.6σ)
+- Three-point accuracy well below era (−1.3σ)
+
+**Comparables:**
+
+- [[georgios-papagiannis|Georgios Papagiannis]] '18 (93% similar)
+- [[kosta-koufos|Kosta Koufos]] '19 (89% similar)
+- [[jordan-bell|Jordan Bell]] '18 (87% similar)
+- [[kendrick-perkins|Kendrick Perkins]] '16 (87% similar)
+- [[miles-plumlee|Miles Plumlee]] '19 (87% similar)
+- [[dan-gadzuric|Dan Gadzuric]] '05 (87% similar)
+
+**Career shape:** Charted 3 seasons (1997-98–2000-01). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

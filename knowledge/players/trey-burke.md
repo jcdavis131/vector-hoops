@@ -42,6 +42,33 @@ Closest career shapes in the era-normalized vector space:
 - [[joe-johnson|Joe Johnson]] — cosine 0.91
 - [[john-lucas-iii|John Lucas III]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 28.7 pts · 4.4 reb · 10.6 ast · 1.5 stl per 100 (2017-18).
+
+**Strengths:**
+
+- High-volume table-setter (+2.4σ vs era)
+- Heavy shot volume, focal scoring option (+1.7σ vs era)
+- Featured, high-usage scoring role (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.1σ)
+
+**Comparables:**
+
+- [[earl-boykins|Earl Boykins]] '00 (94% similar)
+- [[mike-james|Mike James]] '06 (92% similar)
+- [[troy-hudson|Troy Hudson]] '06 (92% similar)
+- [[aaron-brooks|Aaron Brooks]] '11 (92% similar)
+- [[joe-johnson|Joe Johnson]] '07 (91% similar)
+- [[john-lucas-iii|John Lucas III]] '12 (91% similar)
+
+**Career shape:** Charted 9 seasons (2013-14–2021-22). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

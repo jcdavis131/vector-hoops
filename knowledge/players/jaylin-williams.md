@@ -37,6 +37,32 @@ Closest career shapes in the era-normalized vector space:
 - [[dennis-rodman|Dennis Rodman]] — cosine 0.71
 - [[matt-barnes|Matt Barnes]] — cosine 0.70
 
+## Scouting report
+
+**Play style:** PF · Three-Point Accuracy (Low Turnovers). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 16.6 pts · 15.7 reb · 7.2 ast · 1.7 blk per 100 (2024-25).
+
+**Strengths:**
+
+- Strong net on-court impact (+2.7σ vs era)
+- Strong presence on the defensive glass (+2.4σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[drew-peterson|Drew Peterson]] '25 (76% similar)
+- [[josh-hart|Josh Hart]] '23 (76% similar)
+- [[nemanja-bjelica|Nemanja Bjelica]] '22 (73% similar)
+- [[royce-o-neale|Royce O'Neale]] '21 (71% similar)
+- [[dennis-rodman|Dennis Rodman]] '97 (71% similar)
+- [[matt-barnes|Matt Barnes]] '04 (70% similar)
+
+**Career shape:** Charted 4 seasons (2022-23–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -43,6 +43,32 @@ Closest career shapes in the era-normalized vector space:
 - [[caleb-martin|Caleb Martin]] — cosine 0.86
 - [[haywood-highsmith|Haywood Highsmith]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 11.6 pts · 7.8 reb · 1.8 ast · 2.3 stl per 100 (2014-15).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.5σ)
+- Scoring load well below era (−1.3σ)
+
+**Comparables:**
+
+- [[eduardo-najera|Eduardo Najera]] '12 (89% similar)
+- [[ryan-bowen|Ryan Bowen]] '09 (89% similar)
+- [[luc-mbah-a-moute|Luc Mbah a Moute]] '16 (89% similar)
+- [[andre-roberson|Andre Roberson]] '18 (88% similar)
+- [[caleb-martin|Caleb Martin]] '26 (86% similar)
+- [[haywood-highsmith|Haywood Highsmith]] '22 (85% similar)
+
+**Career shape:** Charted 10 seasons (2012-13–2021-22). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

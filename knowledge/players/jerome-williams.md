@@ -42,6 +42,34 @@ Closest career shapes in the era-normalized vector space:
 - [[jeff-foster|Jeff Foster]] — cosine 0.89
 - [[andrew-declercq|Andrew DeClercq]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PF · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 16.1 pts · 18.4 reb · 1.6 ast · 2.2 stl per 100 (1999-00).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+2.3σ vs era)
+- Efficient finisher inside the arc (+2.3σ vs era)
+- Relentless on the offensive glass (+2.2σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.3σ)
+- Shot volume well below era (−1.3σ)
+
+**Comparables:**
+
+- [[anderson-varejao|Anderson Varejao]] '05 (91% similar)
+- [[lawrence-roberts|Lawrence Roberts]] '06 (90% similar)
+- [[jarred-vanderbilt|Jarred Vanderbilt]] '21 (90% similar)
+- [[anthony-miller|Anthony Miller]] '00 (90% similar)
+- [[jeff-foster|Jeff Foster]] '00 (89% similar)
+- [[andrew-declercq|Andrew DeClercq]] '01 (88% similar)
+
+**Career shape:** Charted 9 seasons (1996-97–2004-05). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -35,6 +35,34 @@ Closest career shapes in the era-normalized vector space:
 - [[adam-keefe|Adam Keefe]] — cosine 0.87
 - [[a-c-green|A.C. Green]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 10.4 pts · 14.4 reb · 1.1 ast · 1.0 stl per 100 (1997-98).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+1.5σ vs era)
+- Relentless on the offensive glass (+1.1σ vs era)
+- Strong net on-court impact (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.5σ)
+- Scoring load well below era (−1.5σ)
+
+**Comparables:**
+
+- [[mark-bradtke|Mark Bradtke]] '97 (93% similar)
+- [[joel-freeland|Joel Freeland]] '15 (91% similar)
+- [[udonis-haslem|Udonis Haslem]] '13 (90% similar)
+- [[jon-brockman|Jon Brockman]] '10 (89% similar)
+- [[adam-keefe|Adam Keefe]] '98 (87% similar)
+- [[a-c-green|A.C. Green]] '00 (87% similar)
+
+**Career shape:** Charted 2 seasons (1996-97–1997-98). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

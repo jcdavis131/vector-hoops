@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[sergey-karasev|Sergey Karasev]] — cosine 0.87
 - [[travis-wear|Travis Wear]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 8.1 pts · 4.9 reb · 1.3 ast · 1.0 blk per 100 (2018-19).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+2.4σ vs era)
+- Rarely turns the ball over (−1.0σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−2.1σ)
+- Finishing efficiency well below era (−2.1σ)
+
+**Comparables:**
+
+- [[sean-mcdermott|Sean McDermott]] '21 (92% similar)
+- [[anthony-brown|Anthony Brown]] '16 (88% similar)
+- [[max-christie|Max Christie]] '23 (88% similar)
+- [[anthony-lamb|Anthony Lamb]] '21 (87% similar)
+- [[sergey-karasev|Sergey Karasev]] '14 (87% similar)
+- [[travis-wear|Travis Wear]] '18 (86% similar)
+
+**Career shape:** Charted 1 season (2018-19). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -41,6 +41,34 @@ Closest career shapes in the era-normalized vector space:
 - [[jeff-foster|Jeff Foster]] — cosine 0.92
 - [[evan-eschmeyer|Evan Eschmeyer]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 12.1 pts · 14.2 reb · 1.8 ast · 1.4 stl per 100 (1997-98).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+2.3σ vs era)
+- Relentless on the offensive glass (+1.5σ vs era)
+- Strong presence on the defensive glass (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.8σ)
+- Shot volume well below era (−1.6σ)
+
+**Comparables:**
+
+- [[furkan-aldemir|Furkan Aldemir]] '15 (95% similar)
+- [[chuck-hayes|Chuck Hayes]] '09 (94% similar)
+- [[chris-richard|Chris Richard]] '10 (93% similar)
+- [[kevon-looney|Kevon Looney]] '23 (92% similar)
+- [[jeff-foster|Jeff Foster]] '00 (92% similar)
+- [[evan-eschmeyer|Evan Eschmeyer]] '03 (92% similar)
+
+**Career shape:** Charted 8 seasons (1996-97–2003-04). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

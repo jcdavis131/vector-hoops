@@ -37,6 +37,33 @@ Closest career shapes in the era-normalized vector space:
 - [[joffrey-lauvergne|Joffrey Lauvergne]] — cosine 0.87
 - [[james-wiseman|James Wiseman]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 26.3 pts · 14.1 reb · 2.8 ast · 1.4 blk per 100 (2023-24).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+2.0σ vs era)
+- Heavy shot volume, focal scoring option (+1.5σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.5σ)
+- Free-throw touch well below era (−1.6σ)
+
+**Comparables:**
+
+- [[jj-hickson|JJ Hickson]] '16 (91% similar)
+- [[mitch-mcgary|Mitch McGary]] '16 (91% similar)
+- [[thomas-robinson|Thomas Robinson]] '16 (90% similar)
+- [[donnell-harvey|Donnell Harvey]] '02 (89% similar)
+- [[joffrey-lauvergne|Joffrey Lauvergne]] '18 (87% similar)
+- [[james-wiseman|James Wiseman]] '24 (87% similar)
+
+**Career shape:** Charted 4 seasons (2018-19–2023-24). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

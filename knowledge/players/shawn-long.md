@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[willy-hernangomez|Willy Hernangomez]] — cosine 0.78
 - [[paul-millsap|Paul Millsap]] — cosine 0.78
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 30.3 pts · 17.4 reb · 2.7 ast · 1.8 stl per 100 (2016-17).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+3.6σ vs era)
+- Featured, high-usage scoring role (+1.7σ vs era)
+- Efficient finisher inside the arc (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.7σ)
+
+**Comparables:**
+
+- [[mario-bennett|Mario Bennett]] '98 (86% similar)
+- [[day-ron-sharpe|Day'Ron Sharpe]] '24 (82% similar)
+- [[kenneth-faried|Kenneth Faried]] '12 (79% similar)
+- [[luka-garza|Luka Garza]] '24 (78% similar)
+- [[willy-hernangomez|Willy Hernangomez]] '23 (78% similar)
+- [[paul-millsap|Paul Millsap]] '07 (78% similar)
+
+**Career shape:** Charted 1 season (2016-17). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

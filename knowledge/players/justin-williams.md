@@ -35,6 +35,34 @@ Closest career shapes in the era-normalized vector space:
 - [[lou-amundson|Lou Amundson]] — cosine 0.90
 - [[tristan-thompson|Tristan Thompson]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 19.4 pts · 17.1 reb · 0.3 ast · 2.4 blk per 100 (2006-07).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+3.0σ vs era)
+- Efficient finisher inside the arc (+2.5σ vs era)
+- Draws contact, gets to the line often (+1.7σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−3.0σ)
+- Ball-hawking activity well below era (−1.4σ)
+
+**Comparables:**
+
+- [[josh-boone|Josh Boone]] '10 (93% similar)
+- [[moses-brown|Moses Brown]] '23 (92% similar)
+- [[precious-achiuwa|Precious Achiuwa]] '21 (92% similar)
+- [[tarik-black|Tarik Black]] '18 (91% similar)
+- [[lou-amundson|Lou Amundson]] '14 (90% similar)
+- [[tristan-thompson|Tristan Thompson]] '25 (90% similar)
+
+**Career shape:** Charted 2 seasons (2006-07–2007-08). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

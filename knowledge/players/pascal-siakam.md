@@ -43,6 +43,32 @@ Closest career shapes in the era-normalized vector space:
 - [[chris-webber|Chris Webber]] — cosine 0.87
 - [[zion-williamson|Zion Williamson]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 13.2 pts · 10.7 reb · 1.0 ast · 2.6 blk per 100 (2016-17).
+
+**Strengths:**
+
+- Elite rim protection (+1.9σ vs era)
+
+**Areas of concern:**
+
+- Three-point volume well below era (−1.4σ)
+- Table-setting role well below era (−1.2σ)
+
+**Comparables:**
+
+- [[blake-griffin|Blake Griffin]] '14 (93% similar)
+- [[karl-malone|Karl Malone]] '97 (93% similar)
+- [[chris-bosh|Chris Bosh]] '10 (89% similar)
+- [[giannis-antetokounmpo|Giannis Antetokounmpo]] '20 (88% similar)
+- [[chris-webber|Chris Webber]] '01 (87% similar)
+- [[zion-williamson|Zion Williamson]] '25 (85% similar)
+
+**Career shape:** Charted 10 seasons (2016-17–2025-26). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

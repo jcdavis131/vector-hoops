@@ -35,6 +35,31 @@ Closest career shapes in the era-normalized vector space:
 - [[raul-lopez|Raul Lopez]] — cosine 0.87
 - [[jared-butler|Jared Butler]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 26.0 pts · 6.9 reb · 8.4 ast · 2.2 stl per 100 (2025-26).
+
+**Strengths:**
+
+- High-volume table-setter (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.5σ)
+
+**Comparables:**
+
+- [[jrue-holiday|Jrue Holiday]] '16 (92% similar)
+- [[rodrigue-beaubois|Rodrigue Beaubois]] '10 (90% similar)
+- [[scottie-pippen|Scottie Pippen]] '04 (90% similar)
+- [[anfernee-hardaway|Anfernee Hardaway]] '08 (89% similar)
+- [[raul-lopez|Raul Lopez]] '05 (87% similar)
+- [[jared-butler|Jared Butler]] '24 (87% similar)
+
+**Career shape:** Charted 2 seasons (2024-25–2025-26). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

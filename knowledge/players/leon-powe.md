@@ -38,6 +38,34 @@ Closest career shapes in the era-normalized vector space:
 - [[zendon-hamilton|Zendon Hamilton]] — cosine 0.89
 - [[jarnell-stokes|Jarnell Stokes]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 28.3 pts · 14.4 reb · 1.0 ast · 1.0 stl per 100 (2007-08).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+3.0σ vs era)
+- Relentless on the offensive glass (+1.9σ vs era)
+- Efficient finisher inside the arc (+1.9σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.4σ)
+- Table-setting role well below era (−1.1σ)
+
+**Comparables:**
+
+- [[reggie-slater|Reggie Slater]] '03 (96% similar)
+- [[tyler-hansbrough|Tyler Hansbrough]] '16 (93% similar)
+- [[nathan-knight|Nathan Knight]] '22 (92% similar)
+- [[obinna-ekezie|Obinna Ekezie]] '02 (90% similar)
+- [[zendon-hamilton|Zendon Hamilton]] '05 (89% similar)
+- [[jarnell-stokes|Jarnell Stokes]] '15 (87% similar)
+
+**Career shape:** Charted 5 seasons (2006-07–2010-11). Entered as a Rim Protection + Offensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

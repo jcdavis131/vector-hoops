@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[don-reid|Don Reid]] — cosine 0.95
 - [[brandan-wright|Brandan Wright]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 16.8 pts · 12.2 reb · 1.7 ast · 3.3 blk per 100 (2025-26).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+3.7σ vs era)
+- Elite rim protection (+2.9σ vs era)
+- Relentless on the offensive glass (+1.7σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.9σ)
+- Three-point volume well below era (−1.9σ)
+
+**Comparables:**
+
+- [[dereck-lively-ii|Dereck Lively II]] '25 (96% similar)
+- [[daniel-gafford|Daniel Gafford]] '25 (96% similar)
+- [[joan-beringer|Joan Beringer]] '26 (95% similar)
+- [[adem-bona|Adem Bona]] '25 (95% similar)
+- [[don-reid|Don Reid]] '01 (95% similar)
+- [[brandan-wright|Brandan Wright]] '18 (93% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

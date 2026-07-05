@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[deshawn-stevenson|DeShawn Stevenson]] — cosine 0.86
 - [[dajuan-summers|DaJuan Summers]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** Unlisted · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 16.6 pts · 4.8 reb · 1.8 ast · 1.0 stl per 100 (2013-14).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.3σ)
+- Defensive rebounding well below era (−1.1σ)
+
+**Comparables:**
+
+- [[ignas-brazdeikis|Ignas Brazdeikis]] '22 (90% similar)
+- [[antoine-wright|Antoine Wright]] '06 (88% similar)
+- [[hollis-thompson|Hollis Thompson]] '17 (87% similar)
+- [[james-white|James White]] '13 (87% similar)
+- [[deshawn-stevenson|DeShawn Stevenson]] '12 (86% similar)
+- [[dajuan-summers|DaJuan Summers]] '11 (86% similar)
+
+**Career shape:** Charted 3 seasons (2012-13–2014-15). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

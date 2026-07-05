@@ -41,6 +41,33 @@ Closest career shapes in the era-normalized vector space:
 - [[tom-hammonds|Tom Hammonds]] — cosine 0.85
 - [[tyler-zeller|Tyler Zeller]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 9.7 pts · 12.7 reb · 0.5 ast · 1.5 blk per 100 (2009-10).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+2.1σ vs era)
+- Rarely turns the ball over (−2.0σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−4.0σ)
+- Finishing efficiency well below era (−1.8σ)
+
+**Comparables:**
+
+- [[melvin-ely|Melvin Ely]] '11 (89% similar)
+- [[jason-maxiell|Jason Maxiell]] '06 (88% similar)
+- [[todd-fuller|Todd Fuller]] '98 (87% similar)
+- [[robert-sacre|Robert Sacre]] '13 (86% similar)
+- [[tom-hammonds|Tom Hammonds]] '00 (85% similar)
+- [[tyler-zeller|Tyler Zeller]] '17 (85% similar)
+
+**Career shape:** Charted 8 seasons (2001-02–2009-10). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -36,6 +36,33 @@ Closest career shapes in the era-normalized vector space:
 - [[kira-lewis-jr|Kira Lewis Jr.]] — cosine 0.85
 - [[ty-jerome|Ty Jerome]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 17.3 pts · 4.8 reb · 9.5 ast · 2.3 stl per 100 (2023-24).
+
+**Strengths:**
+
+- High-volume table-setter (+1.8σ vs era)
+- Active hands, disrupts passing lanes (+1.4σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.4σ)
+- Defensive rebounding well below era (−1.1σ)
+
+**Comparables:**
+
+- [[jason-hart|Jason Hart]] '09 (86% similar)
+- [[alvin-williams|Alvin Williams]] '01 (86% similar)
+- [[jacob-gilyard|Jacob Gilyard]] '24 (85% similar)
+- [[khalid-el-amin|Khalid El-Amin]] '01 (85% similar)
+- [[kira-lewis-jr|Kira Lewis Jr.]] '22 (85% similar)
+- [[ty-jerome|Ty Jerome]] '25 (84% similar)
+
+**Career shape:** Charted 3 seasons (2020-21–2023-24). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Playmaking + Steals identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

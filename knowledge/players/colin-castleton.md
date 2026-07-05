@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[khem-birch|Khem Birch]] — cosine 0.88
 - [[cristiano-felicio|Cristiano Felicio]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 13.4 pts · 13.3 reb · 3.1 ast · 1.1 blk per 100 (2024-25).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+2.1σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.8σ)
+- Three-point volume well below era (−1.5σ)
+
+**Comparables:**
+
+- [[rakeem-christmas|Rakeem Christmas]] '17 (95% similar)
+- [[jake-voskuhl|Jake Voskuhl]] '01 (94% similar)
+- [[nathan-jawai|Nathan Jawai]] '10 (92% similar)
+- [[joel-freeland|Joel Freeland]] '15 (90% similar)
+- [[khem-birch|Khem Birch]] '19 (88% similar)
+- [[cristiano-felicio|Cristiano Felicio]] '21 (88% similar)
+
+**Career shape:** Charted 1 season (2024-25). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

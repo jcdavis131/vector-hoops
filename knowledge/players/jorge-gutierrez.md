@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jonathan-mogbo|Jonathan Mogbo]] — cosine 0.69
 - [[j-r-giddens|J.R. Giddens]] — cosine 0.68
 
+## Scouting report
+
+**Play style:** PG · Offensive Glass (Low On-Court Impact). Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 15.1 pts · 7.1 reb · 6.3 ast · 1.7 stl per 100 (2014-15).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.8σ)
+- Shot volume well below era (−1.1σ)
+
+**Comparables:**
+
+- [[trent-forrest|Trent Forrest]] '23 (78% similar)
+- [[darrin-hancock|Darrin Hancock]] '97 (75% similar)
+- [[shaun-livingston|Shaun Livingston]] '19 (74% similar)
+- [[jaylen-hoard|Jaylen Hoard]] '21 (72% similar)
+- [[jonathan-mogbo|Jonathan Mogbo]] '26 (69% similar)
+- [[j-r-giddens|J.R. Giddens]] '10 (68% similar)
+
+**Career shape:** Charted 1 season (2014-15). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

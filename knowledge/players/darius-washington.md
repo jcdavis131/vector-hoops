@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[daishen-nix|Daishen Nix]] — cosine 0.75
 - [[darius-morris|Darius Morris]] — cosine 0.74
 
+## Scouting report
+
+**Play style:** SG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 17.5 pts · 6.6 reb · 5.0 ast · 1.7 stl per 100 (2007-08).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.0σ)
+- Free-throw touch well below era (−1.5σ)
+
+**Comparables:**
+
+- [[rob-dillingham|Rob Dillingham]] '25 (87% similar)
+- [[armon-johnson|Armon Johnson]] '11 (81% similar)
+- [[lance-stephenson|Lance Stephenson]] '12 (80% similar)
+- [[toure-murry|Toure' Murry]] '14 (80% similar)
+- [[daishen-nix|Daishen Nix]] '22 (75% similar)
+- [[darius-morris|Darius Morris]] '12 (74% similar)
+
+**Career shape:** Charted 1 season (2007-08). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

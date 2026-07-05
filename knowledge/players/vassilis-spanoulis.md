@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[andrew-harrison|Andrew Harrison]] — cosine 0.85
 - [[god-shammgod|God Shammgod]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** SG · Playmaking + Steals. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 15.8 pts · 4.1 reb · 5.2 ast · 1.3 stl per 100 (2006-07).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.5σ)
+- Finishing efficiency well below era (−2.0σ)
+
+**Comparables:**
+
+- [[ben-hansbrough|Ben Hansbrough]] '13 (93% similar)
+- [[taurean-green|Taurean Green]] '08 (88% similar)
+- [[luke-jackson|Luke Jackson]] '06 (87% similar)
+- [[josh-selby|Josh Selby]] '12 (87% similar)
+- [[andrew-harrison|Andrew Harrison]] '19 (85% similar)
+- [[god-shammgod|God Shammgod]] '98 (84% similar)
+
+**Career shape:** Charted 1 season (2006-07). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -47,6 +47,33 @@ Closest career shapes in the era-normalized vector space:
 - [[troy-hudson|Troy Hudson]] — cosine 0.92
 - [[earl-boykins|Earl Boykins]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 19.5 pts · 4.0 reb · 11.2 ast · 1.3 stl per 100 (2011-12).
+
+**Strengths:**
+
+- High-volume table-setter (+2.4σ vs era)
+- Reliable touch from the free-throw line (+1.1σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.8σ)
+- Defensive rebounding well below era (−1.3σ)
+
+**Comparables:**
+
+- [[jerryd-bayless|Jerryd Bayless]] '19 (95% similar)
+- [[sarunas-jasikevicius|Sarunas Jasikevicius]] '07 (94% similar)
+- [[john-crotty|John Crotty]] '98 (93% similar)
+- [[brian-roberts|Brian Roberts]] '13 (92% similar)
+- [[troy-hudson|Troy Hudson]] '06 (92% similar)
+- [[earl-boykins|Earl Boykins]] '00 (90% similar)
+
+**Career shape:** Charted 14 seasons (2008-09–2021-22). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Playmaking + Steals identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

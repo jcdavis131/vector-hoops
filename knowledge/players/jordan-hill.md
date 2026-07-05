@@ -40,6 +40,34 @@ Closest career shapes in the era-normalized vector space:
 - [[jayson-williams|Jayson Williams]] — cosine 0.92
 - [[lonny-baxter|Lonny Baxter]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** PF · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 21.2 pts · 18.2 reb · 1.4 ast · 2.1 blk per 100 (2012-13).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+3.6σ vs era)
+- Draws contact, gets to the line often (+1.1σ vs era)
+- Strong presence on the defensive glass (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.5σ)
+- Ball-hawking activity well below era (−1.1σ)
+
+**Comparables:**
+
+- [[emeka-okafor|Emeka Okafor]] '18 (94% similar)
+- [[kris-humphries|Kris Humphries]] '11 (93% similar)
+- [[omer-yurtseven|Omer Yurtseven]] '22 (93% similar)
+- [[mario-kasun|Mario Kasun]] '05 (93% similar)
+- [[jayson-williams|Jayson Williams]] '98 (92% similar)
+- [[lonny-baxter|Lonny Baxter]] '06 (92% similar)
+
+**Career shape:** Charted 7 seasons (2009-10–2015-16). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

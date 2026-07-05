@@ -35,6 +35,33 @@ Closest career shapes in the era-normalized vector space:
 - [[jay-huff|Jay Huff]] — cosine 0.80
 - [[mo-bamba|Mo Bamba]] — cosine 0.78
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 23.1 pts · 10.2 reb · 2.6 ast · 4.0 blk per 100 (2024-25).
+
+**Strengths:**
+
+- Elite rim protection (+3.5σ vs era)
+- High-volume three-point shooter (+1.5σ vs era)
+- Strong net on-court impact (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.2σ)
+
+**Comparables:**
+
+- [[raef-lafrentz|Raef LaFrentz]] '08 (93% similar)
+- [[eddie-griffin|Eddie Griffin]] '06 (90% similar)
+- [[myles-turner|Myles Turner]] '19 (84% similar)
+- [[serge-ibaka|Serge Ibaka]] '12 (83% similar)
+- [[jay-huff|Jay Huff]] '26 (80% similar)
+- [[mo-bamba|Mo Bamba]] '20 (78% similar)
+
+**Career shape:** Charted 2 seasons (2024-25–2025-26). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

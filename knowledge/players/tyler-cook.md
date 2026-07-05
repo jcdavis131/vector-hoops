@@ -35,6 +35,33 @@ Closest career shapes in the era-normalized vector space:
 - [[jaxson-hayes|Jaxson Hayes]] — cosine 0.86
 - [[steve-hamer|Steve Hamer]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** PF · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 15.9 pts · 12.6 reb · 0.7 ast · 0.9 stl per 100 (2021-22).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+1.8σ vs era)
+- Draws contact, gets to the line often (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−3.0σ)
+- Three-point volume well below era (−1.8σ)
+
+**Comparables:**
+
+- [[greg-smith|Greg Smith]] '16 (94% similar)
+- [[semih-erden|Semih Erden]] '12 (90% similar)
+- [[carlos-rogers|Carlos Rogers]] '01 (87% similar)
+- [[alan-henderson|Alan Henderson]] '02 (87% similar)
+- [[jaxson-hayes|Jaxson Hayes]] '26 (86% similar)
+- [[steve-hamer|Steve Hamer]] '97 (86% similar)
+
+**Career shape:** Charted 2 seasons (2020-21–2021-22). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

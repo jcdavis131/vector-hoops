@@ -46,6 +46,33 @@ Closest career shapes in the era-normalized vector space:
 - [[karl-anthony-towns|Karl-Anthony Towns]] — cosine 0.88
 - [[joel-embiid|Joel Embiid]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 33.8 pts · 15.3 reb · 3.3 ast · 1.4 blk per 100 (2009-10).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+2.8σ vs era)
+- Featured, high-usage scoring role (+2.5σ vs era)
+- Strong presence on the defensive glass (+1.9σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.0σ)
+
+**Comparables:**
+
+- [[amar-e-stoudemire|Amar'e Stoudemire]] '08 (91% similar)
+- [[yao-ming|Yao Ming]] '07 (90% similar)
+- [[pascal-siakam|Pascal Siakam]] '17 (89% similar)
+- [[karl-malone|Karl Malone]] '97 (89% similar)
+- [[karl-anthony-towns|Karl-Anthony Towns]] '19 (88% similar)
+- [[joel-embiid|Joel Embiid]] '17 (88% similar)
+
+**Career shape:** Charted 13 seasons (2003-04–2015-16). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

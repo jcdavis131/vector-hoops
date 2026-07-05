@@ -40,6 +40,33 @@ Closest career shapes in the era-normalized vector space:
 - [[miles-bridges|Miles Bridges]] — cosine 0.79
 - [[andrea-bargnani|Andrea Bargnani]] — cosine 0.79
 
+## Scouting report
+
+**Play style:** PF · Scoring Volume + Shot Volume. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 30.9 pts · 10.0 reb · 3.4 ast · 1.1 stl per 100 (1996-97).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+2.3σ vs era)
+- Featured, high-usage scoring role (+2.1σ vs era)
+- High-volume three-point shooter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[oleksiy-pecherov|Oleksiy Pecherov]] '09 (85% similar)
+- [[charlie-villanueva|Charlie Villanueva]] '14 (82% similar)
+- [[bobby-portis|Bobby Portis]] '23 (80% similar)
+- [[marreese-speights|Marreese Speights]] '18 (79% similar)
+- [[miles-bridges|Miles Bridges]] '25 (79% similar)
+- [[andrea-bargnani|Andrea Bargnani]] '15 (79% similar)
+
+**Career shape:** Charted 7 seasons (1996-97–2002-03). Consistent Scoring Volume + Shot Volume profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

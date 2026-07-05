@@ -39,6 +39,34 @@ Closest career shapes in the era-normalized vector space:
 - [[anthony-randolph|Anthony Randolph]] — cosine 0.82
 - [[bruno-fernando|Bruno Fernando]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 25.3 pts · 14.4 reb · 4.4 ast · 2.6 blk per 100 (2019-20).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+1.9σ vs era)
+- Elite rim protection (+1.7σ vs era)
+- Efficient finisher inside the arc (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.7σ)
+- Turnover rate well above era (+1.8σ)
+
+**Comparables:**
+
+- [[alexis-ajinca|Alexis Ajinca]] '15 (90% similar)
+- [[greg-monroe|Greg Monroe]] '18 (83% similar)
+- [[jalen-duren|Jalen Duren]] '26 (82% similar)
+- [[alan-williams|Alan Williams]] '17 (82% similar)
+- [[anthony-randolph|Anthony Randolph]] '13 (82% similar)
+- [[bruno-fernando|Bruno Fernando]] '22 (81% similar)
+
+**Career shape:** Charted 6 seasons (2018-19–2023-24). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Rim Protection + Offensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

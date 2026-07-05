@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[andrew-declercq|Andrew DeClercq]] — cosine 0.92
 - [[anthony-miller|Anthony Miller]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 15.8 pts · 12.5 reb · 0.9 ast · 1.7 stl per 100 (2011-12).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+1.6σ vs era)
+- Efficient finisher inside the arc (+1.1σ vs era)
+- Rarely turns the ball over (−1.0σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.5σ)
+- Three-point volume well below era (−1.1σ)
+
+**Comparables:**
+
+- [[vernon-macklin|Vernon Macklin]] '12 (95% similar)
+- [[khem-birch|Khem Birch]] '19 (94% similar)
+- [[buck-williams|Buck Williams]] '97 (93% similar)
+- [[scot-pollard|Scot Pollard]] '03 (92% similar)
+- [[andrew-declercq|Andrew DeClercq]] '01 (92% similar)
+- [[anthony-miller|Anthony Miller]] '00 (91% similar)
+
+**Career shape:** Charted 1 season (2011-12). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

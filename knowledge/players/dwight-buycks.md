@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[dennis-schroder|Dennis Schröder]] — cosine 0.87
 - [[talen-horton-tucker|Talen Horton-Tucker]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 24.9 pts · 4.8 reb · 6.8 ast · 2.2 stl per 100 (2017-18).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+1.5σ vs era)
+- Active hands, disrupts passing lanes (+1.1σ vs era)
+- Reliable touch from the free-throw line (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.8σ)
+- Defensive rebounding well below era (−1.2σ)
+
+**Comparables:**
+
+- [[monta-ellis|Monta Ellis]] '10 (91% similar)
+- [[darius-garland|Darius Garland]] '22 (90% similar)
+- [[will-bynum|Will Bynum]] '09 (89% similar)
+- [[jeremiah-fears|Jeremiah Fears]] '26 (87% similar)
+- [[dennis-schroder|Dennis Schröder]] '16 (87% similar)
+- [[talen-horton-tucker|Talen Horton-Tucker]] '23 (87% similar)
+
+**Career shape:** Charted 1 season (2017-18). Consistent Scoring Volume + Shot Volume profile across his career.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

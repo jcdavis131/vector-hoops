@@ -37,6 +37,34 @@ Closest career shapes in the era-normalized vector space:
 - [[jalen-duren|Jalen Duren]] — cosine 0.89
 - [[jj-hickson|JJ Hickson]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** Unlisted · Defensive Glass + Rim Pressure (Fts). Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 19.6 pts · 15.4 reb · 3.6 ast · 1.4 blk per 100 (2006-07).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+1.9σ vs era)
+- Draws contact, gets to the line often (+1.4σ vs era)
+- Strong presence on the defensive glass (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.5σ)
+- Free-throw touch well below era (−1.4σ)
+
+**Comparables:**
+
+- [[boban-marjanovic|Boban Marjanovic]] '18 (92% similar)
+- [[willy-hernangomez|Willy Hernangomez]] '23 (90% similar)
+- [[mario-kasun|Mario Kasun]] '05 (89% similar)
+- [[danny-fortson|Danny Fortson]] '05 (89% similar)
+- [[jalen-duren|Jalen Duren]] '26 (89% similar)
+- [[jj-hickson|JJ Hickson]] '16 (89% similar)
+
+**Career shape:** Charted 4 seasons (2003-04–2006-07). Entered as a Rim Protection + Offensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

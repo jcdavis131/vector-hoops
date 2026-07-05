@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[michael-ruffin|Michael Ruffin]] — cosine 0.83
 - [[lawrence-roberts|Lawrence Roberts]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 12.4 pts · 11.4 reb · 0.4 ast · 2.4 stl per 100 (2004-05).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.3σ)
+- Table-setting role well below era (−1.3σ)
+
+**Comparables:**
+
+- [[greg-anderson|Greg Anderson]] '98 (88% similar)
+- [[maurice-ndour|Maurice Ndour]] '17 (88% similar)
+- [[evan-eschmeyer|Evan Eschmeyer]] '03 (87% similar)
+- [[shavlik-randolph|Shavlik Randolph]] '15 (86% similar)
+- [[michael-ruffin|Michael Ruffin]] '07 (83% similar)
+- [[lawrence-roberts|Lawrence Roberts]] '06 (83% similar)
+
+**Career shape:** Charted 2 seasons (2004-05–2005-06). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

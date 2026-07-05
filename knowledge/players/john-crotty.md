@@ -39,6 +39,33 @@ Closest career shapes in the era-normalized vector space:
 - [[beno-udrih|Beno Udrih]] — cosine 0.88
 - [[jacque-vaughn|Jacque Vaughn]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 13.3 pts · 4.5 reb · 8.7 ast · 1.4 stl per 100 (1997-98).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+1.8σ vs era)
+- High-volume table-setter (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.7σ)
+- Finishing efficiency well below era (−2.1σ)
+
+**Comparables:**
+
+- [[d-j-augustin|D.J. Augustin]] '12 (93% similar)
+- [[sarunas-jasikevicius|Sarunas Jasikevicius]] '07 (92% similar)
+- [[howard-eisley|Howard Eisley]] '03 (89% similar)
+- [[rex-walters|Rex Walters]] '98 (88% similar)
+- [[beno-udrih|Beno Udrih]] '17 (88% similar)
+- [[jacque-vaughn|Jacque Vaughn]] '99 (88% similar)
+
+**Career shape:** Charted 6 seasons (1996-97–2001-02). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

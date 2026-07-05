@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[mike-taylor|Mike Taylor]] — cosine 0.78
 - [[tornike-shengelia|Tornike Shengelia]] — cosine 0.77
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 13.9 pts · 7.3 reb · 6.6 ast · 1.8 stl per 100 (2008-09).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.2σ)
+- Free-throw touch well below era (−1.2σ)
+
+**Comparables:**
+
+- [[blake-wesley|Blake Wesley]] '23 (91% similar)
+- [[daishen-nix|Daishen Nix]] '22 (86% similar)
+- [[isaiah-collier|Isaiah Collier]] '26 (80% similar)
+- [[milt-palacio|Milt Palacio]] '00 (79% similar)
+- [[mike-taylor|Mike Taylor]] '09 (78% similar)
+- [[tornike-shengelia|Tornike Shengelia]] '14 (77% similar)
+
+**Career shape:** Charted 2 seasons (2007-08–2008-09). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

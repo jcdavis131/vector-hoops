@@ -46,6 +46,33 @@ Closest career shapes in the era-normalized vector space:
 - [[damjan-rudez|Damjan Rudez]] — cosine 0.90
 - [[reece-gaines|Reece Gaines]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 8.1 pts · 5.5 reb · 2.2 ast · 1.0 stl per 100 (2011-12).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.8σ vs era)
+- High-volume three-point shooter (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.4σ)
+- Scoring load well below era (−1.8σ)
+
+**Comparables:**
+
+- [[doron-lamb|Doron Lamb]] '14 (94% similar)
+- [[antoine-wright|Antoine Wright]] '06 (92% similar)
+- [[jawad-williams|Jawad Williams]] '11 (91% similar)
+- [[austin-rivers|Austin Rivers]] '19 (91% similar)
+- [[damjan-rudez|Damjan Rudez]] '17 (90% similar)
+- [[reece-gaines|Reece Gaines]] '05 (90% similar)
+
+**Career shape:** Charted 13 seasons (2000-01–2012-13). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

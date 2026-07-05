@@ -42,6 +42,33 @@ Closest career shapes in the era-normalized vector space:
 - [[aj-green|AJ Green]] — cosine 0.94
 - [[wesley-person|Wesley Person]] — cosine 0.94
 
+## Scouting report
+
+**Play style:** PF · Three-Point Accuracy (Low Turnovers). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 15.0 pts · 5.3 reb · 2.6 ast · 0.5 blk per 100 (2014-15).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.0σ vs era)
+- Rarely turns the ball over (−1.6σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−4.0σ)
+- Ball-hawking activity well below era (−2.5σ)
+
+**Comparables:**
+
+- [[matt-bullard|Matt Bullard]] '01 (97% similar)
+- [[dennis-scott|Dennis Scott]] '00 (94% similar)
+- [[james-jones|James Jones]] '14 (94% similar)
+- [[richie-frahm|Richie Frahm]] '04 (94% similar)
+- [[aj-green|AJ Green]] '23 (94% similar)
+- [[wesley-person|Wesley Person]] '05 (94% similar)
+
+**Career shape:** Charted 9 seasons (2006-07–2014-15). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

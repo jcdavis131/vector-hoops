@@ -42,6 +42,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jeremiah-robinson-earl|Jeremiah Robinson-Earl]] — cosine 0.77
 - [[justin-champagnie|Justin Champagnie]] — cosine 0.77
 
+## Scouting report
+
+**Play style:** PF · Three-Point Accuracy (Low Turnovers). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 11.9 pts · 10.8 reb · 2.8 ast · 1.0 stl per 100 (2016-17).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.3σ)
+- Scoring load well below era (−1.2σ)
+
+**Comparables:**
+
+- [[tyler-cavanaugh|Tyler Cavanaugh]] '18 (86% similar)
+- [[quincy-acy|Quincy Acy]] '13 (81% similar)
+- [[robbie-hummel|Robbie Hummel]] '14 (80% similar)
+- [[marvin-williams|Marvin Williams]] '16 (79% similar)
+- [[jeremiah-robinson-earl|Jeremiah Robinson-Earl]] '26 (77% similar)
+- [[justin-champagnie|Justin Champagnie]] '22 (77% similar)
+
+**Career shape:** Charted 9 seasons (2009-10–2018-19). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[marcus-banks|Marcus Banks]] — cosine 0.82
 - [[nate-hinton|Nate Hinton]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 22.6 pts · 4.3 reb · 4.4 ast · 2.0 stl per 100 (2022-23).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.1σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.0σ)
+- Defensive rebounding well below era (−1.3σ)
+
+**Comparables:**
+
+- [[tyshawn-taylor|Tyshawn Taylor]] '14 (88% similar)
+- [[keon-johnson|Keon Johnson]] '23 (86% similar)
+- [[quinndary-weatherspoon|Quinndary Weatherspoon]] '21 (84% similar)
+- [[mike-taylor|Mike Taylor]] '09 (83% similar)
+- [[marcus-banks|Marcus Banks]] '09 (82% similar)
+- [[nate-hinton|Nate Hinton]] '21 (81% similar)
+
+**Career shape:** Charted 2 seasons (2021-22–2022-23). Entered as a Playmaking + Steals profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

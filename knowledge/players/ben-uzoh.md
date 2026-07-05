@@ -35,6 +35,33 @@ Closest career shapes in the era-normalized vector space:
 - [[pat-spencer|Pat Spencer]] — cosine 0.77
 - [[ish-smith|Ish Smith]] — cosine 0.77
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 11.7 pts · 9.6 reb · 8.8 ast · 2.4 stl per 100 (2011-12).
+
+**Strengths:**
+
+- High-volume table-setter (+1.6σ vs era)
+- Active hands, disrupts passing lanes (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.5σ)
+- Finishing efficiency well below era (−1.3σ)
+
+**Comparables:**
+
+- [[kennedy-chandler|Kennedy Chandler]] '23 (85% similar)
+- [[elfrid-payton|Elfrid Payton]] '25 (84% similar)
+- [[omar-cook|Omar Cook]] '04 (78% similar)
+- [[blake-wesley|Blake Wesley]] '23 (78% similar)
+- [[pat-spencer|Pat Spencer]] '25 (77% similar)
+- [[ish-smith|Ish Smith]] '23 (77% similar)
+
+**Career shape:** Charted 2 seasons (2010-11–2011-12). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Playmaking + Steals identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

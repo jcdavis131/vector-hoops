@@ -46,6 +46,32 @@ Closest career shapes in the era-normalized vector space:
 - [[gary-neal|Gary Neal]] — cosine 0.94
 - [[alan-anderson|Alan Anderson]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 18.3 pts · 2.7 reb · 2.9 ast · 1.0 stl per 100 (2007-08).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.7σ)
+- Rim pressure (free-throw generation) well below era (−1.3σ)
+
+**Comparables:**
+
+- [[grayson-allen|Grayson Allen]] '19 (97% similar)
+- [[rodney-hood|Rodney Hood]] '22 (95% similar)
+- [[rex-chapman|Rex Chapman]] '98 (95% similar)
+- [[bryn-forbes|Bryn Forbes]] '17 (95% similar)
+- [[gary-neal|Gary Neal]] '14 (94% similar)
+- [[alan-anderson|Alan Anderson]] '17 (93% similar)
+
+**Career shape:** Charted 13 seasons (2007-08–2019-20). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -34,6 +34,31 @@ Closest career shapes in the era-normalized vector space:
 - [[lance-thomas|Lance Thomas]] — cosine 0.82
 - [[dwayne-bacon|Dwayne Bacon]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 15.3 pts · 5.8 reb · 2.5 ast · 1.4 stl per 100 (2016-17).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.8σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.3σ)
+
+**Comparables:**
+
+- [[bryce-mcgowens|Bryce McGowens]] '26 (85% similar)
+- [[quincy-pondexter|Quincy Pondexter]] '18 (84% similar)
+- [[drake-powell|Drake Powell]] '26 (83% similar)
+- [[sean-mcdermott|Sean McDermott]] '21 (82% similar)
+- [[lance-thomas|Lance Thomas]] '13 (82% similar)
+- [[dwayne-bacon|Dwayne Bacon]] '18 (81% similar)
+
+**Career shape:** Charted 1 season (2016-17). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

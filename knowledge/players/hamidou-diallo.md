@@ -38,6 +38,34 @@ Closest career shapes in the era-normalized vector space:
 - [[ausar-thompson|Ausar Thompson]] — cosine 0.75
 - [[gerald-wallace|Gerald Wallace]] — cosine 0.75
 
+## Scouting report
+
+**Play style:** SF · Defensive Glass + Rim Pressure (Fts). Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 24.4 pts · 9.1 reb · 2.6 ast · 2.5 stl per 100 (2022-23).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.0σ vs era)
+- Efficient finisher inside the arc (+1.2σ vs era)
+- Draws contact, gets to the line often (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Three-point volume well below era (−1.5σ)
+- Free-throw touch well below era (−1.5σ)
+
+**Comparables:**
+
+- [[ronald-dupree|Ronald Dupree]] '06 (79% similar)
+- [[eugene-omoruyi|Eugene Omoruyi]] '24 (78% similar)
+- [[ruben-patterson|Ruben Patterson]] '08 (77% similar)
+- [[glen-davis|Glen Davis]] '08 (76% similar)
+- [[ausar-thompson|Ausar Thompson]] '26 (75% similar)
+- [[gerald-wallace|Gerald Wallace]] '15 (75% similar)
+
+**Career shape:** Charted 5 seasons (2018-19–2022-23). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

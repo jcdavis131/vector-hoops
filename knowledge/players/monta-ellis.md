@@ -45,6 +45,34 @@ Closest career shapes in the era-normalized vector space:
 - [[allen-iverson|Allen Iverson]] — cosine 0.90
 - [[de-aaron-fox|De'Aaron Fox]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** SG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 29.0 pts · 4.5 reb · 6.0 ast · 2.5 stl per 100 (2009-10).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+2.1σ vs era)
+- Active hands, disrupts passing lanes (+1.9σ vs era)
+- Featured, high-usage scoring role (+1.7σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.7σ)
+- Defensive rebounding well below era (−1.1σ)
+
+**Comparables:**
+
+- [[victor-oladipo|Victor Oladipo]] '18 (92% similar)
+- [[dwight-buycks|Dwight Buycks]] '18 (91% similar)
+- [[larry-hughes|Larry Hughes]] '05 (91% similar)
+- [[caris-levert|Caris LeVert]] '20 (90% similar)
+- [[allen-iverson|Allen Iverson]] '02 (90% similar)
+- [[de-aaron-fox|De'Aaron Fox]] '21 (89% similar)
+
+**Career shape:** Charted 12 seasons (2005-06–2016-17). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

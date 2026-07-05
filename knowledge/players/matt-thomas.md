@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[bryn-forbes|Bryn Forbes]] — cosine 0.94
 - [[georges-niang|Georges Niang]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 16.5 pts · 5.1 reb · 2.0 ast · 0.8 stl per 100 (2021-22).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.6σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.2σ)
+- Offensive-glass activity well below era (−1.1σ)
+
+**Comparables:**
+
+- [[aj-green|AJ Green]] '23 (97% similar)
+- [[pat-garrity|Pat Garrity]] '02 (97% similar)
+- [[jason-kapono|Jason Kapono]] '11 (96% similar)
+- [[doug-mcdermott|Doug McDermott]] '25 (95% similar)
+- [[bryn-forbes|Bryn Forbes]] '17 (94% similar)
+- [[georges-niang|Georges Niang]] '17 (93% similar)
+
+**Career shape:** Charted 3 seasons (2019-20–2021-22). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

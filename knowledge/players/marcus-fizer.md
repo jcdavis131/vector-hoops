@@ -38,6 +38,33 @@ Closest career shapes in the era-normalized vector space:
 - [[hakim-warrick|Hakim Warrick]] — cosine 0.81
 - [[julius-randle|Julius Randle]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** PF · Defensive Glass + Rim Pressure (Fts). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 27.9 pts · 13.5 reb · 3.0 ast · 1.1 blk per 100 (2002-03).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+1.8σ vs era)
+- Featured, high-usage scoring role (+1.7σ vs era)
+- Draws contact, gets to the line often (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.1σ)
+
+**Comparables:**
+
+- [[chris-gatling|Chris Gatling]] '97 (85% similar)
+- [[maurice-taylor|Maurice Taylor]] '99 (83% similar)
+- [[zach-randolph|Zach Randolph]] '07 (82% similar)
+- [[zarko-cabarkapa|Zarko Cabarkapa]] '04 (82% similar)
+- [[hakim-warrick|Hakim Warrick]] '13 (81% similar)
+- [[julius-randle|Julius Randle]] '24 (81% similar)
+
+**Career shape:** Charted 5 seasons (2000-01–2004-05). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

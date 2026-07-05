@@ -40,6 +40,34 @@ Closest career shapes in the era-normalized vector space:
 - [[pat-garrity|Pat Garrity]] — cosine 0.92
 - [[raja-bell|Raja Bell]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 13.7 pts · 6.8 reb · 2.2 ast · 0.9 stl per 100 (2000-01).
+
+**Strengths:**
+
+- Strong net on-court impact (+2.2σ vs era)
+- Rarely turns the ball over (−1.6σ vs era)
+- Knockdown three-point shooter (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.7σ)
+- Ball-hawking activity well below era (−1.1σ)
+
+**Comparables:**
+
+- [[tony-snell|Tony Snell]] '21 (94% similar)
+- [[aj-green|AJ Green]] '23 (93% similar)
+- [[ryan-broekhoff|Ryan Broekhoff]] '19 (92% similar)
+- [[steve-kerr|Steve Kerr]] '97 (92% similar)
+- [[pat-garrity|Pat Garrity]] '02 (92% similar)
+- [[raja-bell|Raja Bell]] '07 (90% similar)
+
+**Career shape:** Charted 7 seasons (1996-97–2002-03). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

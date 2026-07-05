@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[isaac-bonga|Isaac Bonga]] — cosine 0.86
 - [[charlie-brown-jr|Charlie Brown Jr.]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 7.8 pts · 8.0 reb · 2.7 ast · 2.5 stl per 100 (2018-19).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.9σ vs era)
+- Rarely turns the ball over (−1.2σ vs era)
+
+**Areas of concern:**
+
+- Scoring load well below era (−2.0σ)
+- Finishing efficiency well below era (−1.7σ)
+
+**Comparables:**
+
+- [[adrian-griffin|Adrian Griffin]] '04 (88% similar)
+- [[ime-udoka|Ime Udoka]] '11 (87% similar)
+- [[micah-peavy|Micah Peavy]] '26 (87% similar)
+- [[patrick-mccaw|Patrick McCaw]] '19 (87% similar)
+- [[isaac-bonga|Isaac Bonga]] '19 (86% similar)
+- [[charlie-brown-jr|Charlie Brown Jr.]] '22 (85% similar)
+
+**Career shape:** Charted 1 season (2018-19). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

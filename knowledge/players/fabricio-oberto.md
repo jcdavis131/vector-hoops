@@ -38,6 +38,32 @@ Closest career shapes in the era-normalized vector space:
 - [[chris-richard|Chris Richard]] — cosine 0.89
 - [[terry-davis|Terry Davis]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 6.6 pts · 8.4 reb · 4.1 ast · 0.9 stl per 100 (2009-10).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+2.7σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−2.7σ)
+- Scoring load well below era (−2.2σ)
+
+**Comparables:**
+
+- [[jericho-sims|Jericho Sims]] '22 (96% similar)
+- [[nick-collison|Nick Collison]] '17 (95% similar)
+- [[charles-jones|Charles Jones]] '98 (89% similar)
+- [[lorenzo-williams|Lorenzo Williams]] '97 (89% similar)
+- [[chris-richard|Chris Richard]] '10 (89% similar)
+- [[terry-davis|Terry Davis]] '01 (87% similar)
+
+**Career shape:** Charted 5 seasons (2005-06–2009-10). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

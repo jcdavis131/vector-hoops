@@ -39,6 +39,32 @@ Closest career shapes in the era-normalized vector space:
 - [[julian-phillips|Julian Phillips]] — cosine 0.74
 - [[grant-williams|Grant Williams]] — cosine 0.73
 
+## Scouting report
+
+**Play style:** PF · Three-Point Accuracy (Low Turnovers). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 13.1 pts · 7.1 reb · 2.2 ast · 1.8 blk per 100 (2020-21).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.1σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.4σ)
+- Rim pressure (free-throw generation) well below era (−1.1σ)
+
+**Comparables:**
+
+- [[derrick-jones-jr|Derrick Jones Jr.]] '18 (78% similar)
+- [[maurice-harkless|Maurice Harkless]] '15 (77% similar)
+- [[shane-battier|Shane Battier]] '13 (76% similar)
+- [[isaac-okoro|Isaac Okoro]] '25 (76% similar)
+- [[julian-phillips|Julian Phillips]] '26 (74% similar)
+- [[grant-williams|Grant Williams]] '20 (73% similar)
+
+**Career shape:** Charted 6 seasons (2020-21–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

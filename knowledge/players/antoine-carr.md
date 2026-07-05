@@ -37,6 +37,32 @@ Closest career shapes in the era-normalized vector space:
 - [[chris-hunter|Chris Hunter]] — cosine 0.81
 - [[kevin-seraphin|Kevin Seraphin]] — cosine 0.79
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 15.5 pts · 7.3 reb · 1.6 ast · 1.4 blk per 100 (1999-00).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.9σ)
+- Ball-hawking activity well below era (−1.4σ)
+
+**Comparables:**
+
+- [[thurl-bailey|Thurl Bailey]] '99 (88% similar)
+- [[vernon-carey-jr|Vernon Carey Jr.]] '21 (86% similar)
+- [[jajuan-johnson|JaJuan Johnson]] '12 (84% similar)
+- [[jason-smith|Jason Smith]] '18 (82% similar)
+- [[chris-hunter|Chris Hunter]] '10 (81% similar)
+- [[kevin-seraphin|Kevin Seraphin]] '16 (79% similar)
+
+**Career shape:** Charted 4 seasons (1996-97–1999-00). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

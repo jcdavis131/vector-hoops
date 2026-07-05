@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[deshawn-stevenson|DeShawn Stevenson]] — cosine 0.87
 - [[anthony-brown|Anthony Brown]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 10.1 pts · 4.9 reb · 3.4 ast · 1.1 stl per 100 (2005-06).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.3σ)
+- Defensive rebounding well below era (−1.4σ)
+
+**Comparables:**
+
+- [[ethan-thompson|Ethan Thompson]] '26 (91% similar)
+- [[reece-gaines|Reece Gaines]] '05 (90% similar)
+- [[doron-lamb|Doron Lamb]] '14 (87% similar)
+- [[marlon-garnett|Marlon Garnett]] '99 (87% similar)
+- [[deshawn-stevenson|DeShawn Stevenson]] '12 (87% similar)
+- [[anthony-brown|Anthony Brown]] '16 (86% similar)
+
+**Career shape:** Charted 1 season (2005-06). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

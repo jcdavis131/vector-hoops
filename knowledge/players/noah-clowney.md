@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[duop-reath|Duop Reath]] — cosine 0.75
 - [[lazar-hayward|Lazar Hayward]] — cosine 0.75
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 19.8 pts · 8.5 reb · 1.9 ast · 1.1 stl per 100 (2024-25).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.4σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.6σ)
+- Finishing efficiency well below era (−1.4σ)
+
+**Comparables:**
+
+- [[kevin-knox-ii|Kevin Knox II]] '22 (81% similar)
+- [[mfiondu-kabengele|Mfiondu Kabengele]] '21 (80% similar)
+- [[donte-greene|Donte Greene]] '09 (76% similar)
+- [[justin-anderson|Justin Anderson]] '18 (76% similar)
+- [[duop-reath|Duop Reath]] '26 (75% similar)
+- [[lazar-hayward|Lazar Hayward]] '12 (75% similar)
+
+**Career shape:** Charted 3 seasons (2023-24–2025-26). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

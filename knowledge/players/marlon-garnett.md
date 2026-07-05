@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[yaroslav-korolev|Yaroslav Korolev]] — cosine 0.87
 - [[kiwane-garris|Kiwane Garris]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** PG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 11.8 pts · 4.9 reb · 4.2 ast · 1.2 stl per 100 (1998-99).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.3σ)
+- Scoring load well below era (−1.2σ)
+
+**Comparables:**
+
+- [[reece-gaines|Reece Gaines]] '05 (90% similar)
+- [[malachi-richardson|Malachi Richardson]] '19 (89% similar)
+- [[nik-stauskas|Nik Stauskas]] '15 (88% similar)
+- [[donald-whiteside|Donald Whiteside]] '97 (88% similar)
+- [[yaroslav-korolev|Yaroslav Korolev]] '06 (87% similar)
+- [[kiwane-garris|Kiwane Garris]] '98 (87% similar)
+
+**Career shape:** Charted 1 season (1998-99). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

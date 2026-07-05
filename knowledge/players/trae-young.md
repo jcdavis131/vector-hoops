@@ -40,6 +40,33 @@ Closest career shapes in the era-normalized vector space:
 - [[stephon-castle|Stephon Castle]] — cosine 0.92
 - [[james-harden|James Harden]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 38.3 pts · 5.5 reb · 12.1 ast · 1.4 stl per 100 (2019-20).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+3.3σ vs era)
+- High-volume table-setter (+3.0σ vs era)
+- Featured, high-usage scoring role (+2.8σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+3.5σ)
+
+**Comparables:**
+
+- [[ja-morant|Ja Morant]] '23 (96% similar)
+- [[steve-francis|Steve Francis]] '05 (96% similar)
+- [[cade-cunningham|Cade Cunningham]] '26 (94% similar)
+- [[stephon-marbury|Stephon Marbury]] '01 (93% similar)
+- [[stephon-castle|Stephon Castle]] '26 (92% similar)
+- [[james-harden|James Harden]] '19 (92% similar)
+
+**Career shape:** Charted 7 seasons (2018-19–2024-25). Consistent Scoring Volume + Shot Volume profile across his career.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

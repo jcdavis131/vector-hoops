@@ -41,6 +41,34 @@ Closest career shapes in the era-normalized vector space:
 - [[joakim-noah|Joakim Noah]] — cosine 0.90
 - [[steven-adams|Steven Adams]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 18.1 pts · 18.6 reb · 7.0 ast · 2.0 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+2.5σ vs era)
+- Relentless on the offensive glass (+2.3σ vs era)
+- Strong net on-court impact (+2.2σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.9σ)
+- Three-point volume well below era (−1.9σ)
+
+**Comparables:**
+
+- [[neemias-queta|Neemias Queta]] '24 (92% similar)
+- [[jakob-poeltl|Jakob Poeltl]] '22 (92% similar)
+- [[amir-johnson|Amir Johnson]] '08 (91% similar)
+- [[robert-williams-iii|Robert Williams III]] '19 (90% similar)
+- [[joakim-noah|Joakim Noah]] '17 (90% similar)
+- [[steven-adams|Steven Adams]] '23 (88% similar)
+
+**Career shape:** Charted 8 seasons (2018-19–2025-26). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

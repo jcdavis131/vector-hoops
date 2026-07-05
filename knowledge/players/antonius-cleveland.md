@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[alonzo-gee|Alonzo Gee]] — cosine 0.78
 - [[chris-singleton|Chris Singleton]] — cosine 0.76
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 8.9 pts · 5.5 reb · 0.8 ast · 2.7 stl per 100 (2017-18).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+3.3σ vs era)
+- Active hands, disrupts passing lanes (+1.9σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.5σ)
+- Shot volume well below era (−1.8σ)
+
+**Comparables:**
+
+- [[patrick-williams|Patrick Williams]] '22 (83% similar)
+- [[caleb-martin|Caleb Martin]] '26 (79% similar)
+- [[melvin-frazier-jr|Melvin Frazier Jr.]] '20 (79% similar)
+- [[kevin-duckworth|Kevin Duckworth]] '97 (78% similar)
+- [[alonzo-gee|Alonzo Gee]] '16 (78% similar)
+- [[chris-singleton|Chris Singleton]] '12 (76% similar)
+
+**Career shape:** Charted 1 season (2017-18). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

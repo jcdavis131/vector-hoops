@@ -49,6 +49,33 @@ Closest career shapes in the era-normalized vector space:
 - [[al-harrington|Al Harrington]] — cosine 0.79
 - [[don-maclean|Don MacLean]] — cosine 0.78
 
+## Scouting report
+
+**Play style:** SF · Defensive Glass + Rim Pressure (Fts). Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 30.0 pts · 10.5 reb · 2.4 ast · 1.7 stl per 100 (2000-01).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+2.4σ vs era)
+- Featured, high-usage scoring role (+2.1σ vs era)
+- Draws contact, gets to the line often (+1.3σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.1σ)
+
+**Comparables:**
+
+- [[cedric-ceballos|Cedric Ceballos]] '00 (89% similar)
+- [[keldon-johnson|Keldon Johnson]] '23 (88% similar)
+- [[lauri-markkanen|Lauri Markkanen]] '23 (83% similar)
+- [[josh-howard|Josh Howard]] '07 (79% similar)
+- [[al-harrington|Al Harrington]] '99 (79% similar)
+- [[don-maclean|Don MacLean]] '99 (78% similar)
+
+**Career shape:** Charted 16 seasons (1998-99–2013-14). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

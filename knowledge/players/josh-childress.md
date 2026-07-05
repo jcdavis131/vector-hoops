@@ -39,6 +39,32 @@ Closest career shapes in the era-normalized vector space:
 - [[anthony-gill|Anthony Gill]] — cosine 0.80
 - [[arnett-moultrie|Arnett Moultrie]] — cosine 0.79
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass + Defensive Glass. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 10.5 pts · 10.1 reb · 3.6 ast · 1.5 stl per 100 (2011-12).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.9σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−4.0σ)
+- Rim pressure (free-throw generation) well below era (−1.8σ)
+
+**Comparables:**
+
+- [[derrick-brown|Derrick Brown]] '11 (87% similar)
+- [[kj-martin|KJ Martin]] '25 (83% similar)
+- [[jae-sean-tate|Jae'Sean Tate]] '26 (80% similar)
+- [[david-nwaba|David Nwaba]] '17 (80% similar)
+- [[anthony-gill|Anthony Gill]] '22 (80% similar)
+- [[arnett-moultrie|Arnett Moultrie]] '13 (79% similar)
+
+**Career shape:** Charted 6 seasons (2004-05–2011-12). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

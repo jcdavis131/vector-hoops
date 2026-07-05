@@ -37,6 +37,32 @@ Closest career shapes in the era-normalized vector space:
 - [[haywood-highsmith|Haywood Highsmith]] — cosine 0.86
 - [[pete-nance|Pete Nance]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 14.1 pts · 7.9 reb · 1.2 ast · 0.7 blk per 100 (2021-22).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−4.0σ)
+- On-court net impact well below era (−1.8σ)
+
+**Comparables:**
+
+- [[alex-poythress|Alex Poythress]] '18 (94% similar)
+- [[t-j-leaf|T.J. Leaf]] '20 (90% similar)
+- [[tyler-lydon|Tyler Lydon]] '19 (89% similar)
+- [[ryan-dunn|Ryan Dunn]] '25 (86% similar)
+- [[haywood-highsmith|Haywood Highsmith]] '22 (86% similar)
+- [[pete-nance|Pete Nance]] '26 (84% similar)
+
+**Career shape:** Charted 4 seasons (2018-19–2021-22). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -35,6 +35,31 @@ Closest career shapes in the era-normalized vector space:
 - [[lazar-hayward|Lazar Hayward]] — cosine 0.85
 - [[joe-young|Joe Young]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 21.7 pts · 8.0 reb · 4.0 ast · 1.1 stl per 100 (2021-22).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.4σ)
+
+**Comparables:**
+
+- [[gerald-wilkins|Gerald Wilkins]] '98 (86% similar)
+- [[tyrese-martin|Tyrese Martin]] '26 (86% similar)
+- [[kyle-guy|Kyle Guy]] '22 (85% similar)
+- [[von-wafer|Von Wafer]] '06 (85% similar)
+- [[lazar-hayward|Lazar Hayward]] '12 (85% similar)
+- [[joe-young|Joe Young]] '17 (84% similar)
+
+**Career shape:** Charted 2 seasons (2021-22–2022-23). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

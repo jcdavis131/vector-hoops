@@ -47,6 +47,33 @@ Closest career shapes in the era-normalized vector space:
 - [[rj-barrett|RJ Barrett]] — cosine 0.82
 - [[moritz-wagner|Moritz Wagner]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** SF · Scoring Volume + Shot Volume. Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 30.3 pts · 9.0 reb · 3.5 ast · 1.0 stl per 100 (2005-06).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+3.4σ vs era)
+- Featured, high-usage scoring role (+1.9σ vs era)
+- Strong net on-court impact (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.5σ)
+
+**Comparables:**
+
+- [[bennedict-mathurin|Bennedict Mathurin]] '26 (94% similar)
+- [[paolo-banchero|Paolo Banchero]] '25 (88% similar)
+- [[shareef-abdur-rahim|Shareef Abdur-Rahim]] '99 (84% similar)
+- [[demar-derozan|DeMar DeRozan]] '17 (83% similar)
+- [[rj-barrett|RJ Barrett]] '25 (82% similar)
+- [[moritz-wagner|Moritz Wagner]] '25 (82% similar)
+
+**Career shape:** Charted 14 seasons (1999-00–2012-13). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -43,6 +43,33 @@ Closest career shapes in the era-normalized vector space:
 - [[johnny-furphy|Johnny Furphy]] — cosine 0.86
 - [[javonte-green|Javonte Green]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** PF · Three-Point Accuracy (Low Turnovers). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 9.1 pts · 6.8 reb · 1.2 ast · 1.7 stl per 100 (2015-16).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.4σ vs era)
+- Strong net on-court impact (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.8σ)
+- Free-throw touch well below era (−1.8σ)
+
+**Comparables:**
+
+- [[eduardo-najera|Eduardo Najera]] '12 (94% similar)
+- [[andre-roberson|Andre Roberson]] '18 (89% similar)
+- [[maurice-harkless|Maurice Harkless]] '15 (89% similar)
+- [[ryan-bowen|Ryan Bowen]] '09 (89% similar)
+- [[johnny-furphy|Johnny Furphy]] '26 (86% similar)
+- [[javonte-green|Javonte Green]] '26 (85% similar)
+
+**Career shape:** Charted 10 seasons (2008-09–2017-18). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -38,6 +38,32 @@ Closest career shapes in the era-normalized vector space:
 - [[sam-young|Sam Young]] — cosine 0.85
 - [[alonzo-gee|Alonzo Gee]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 14.8 pts · 6.9 reb · 3.2 ast · 1.7 stl per 100 (2023-24).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.8σ)
+- Finishing efficiency well below era (−1.6σ)
+
+**Comparables:**
+
+- [[chandler-hutchison|Chandler Hutchison]] '19 (87% similar)
+- [[brooks-barnhizer|Brooks Barnhizer]] '26 (87% similar)
+- [[chris-singleton|Chris Singleton]] '12 (86% similar)
+- [[vlatko-cancar|Vlatko Čančar]] '21 (85% similar)
+- [[sam-young|Sam Young]] '13 (85% similar)
+- [[alonzo-gee|Alonzo Gee]] '16 (85% similar)
+
+**Career shape:** Charted 5 seasons (2019-20–2023-24). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

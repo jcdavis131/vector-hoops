@@ -40,6 +40,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jaylin-williams|Jaylin Williams]] — cosine 0.73
 - [[jonas-jerebko|Jonas Jerebko]] — cosine 0.73
 
+## Scouting report
+
+**Play style:** C · Playmaking + Steals. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 18.3 pts · 12.4 reb · 6.7 ast · 1.7 stl per 100 (2021-22).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+1.2σ vs era)
+- Strong net on-court impact (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.2σ)
+
+**Comparables:**
+
+- [[matt-barnes|Matt Barnes]] '04 (87% similar)
+- [[royce-o-neale|Royce O'Neale]] '21 (78% similar)
+- [[josh-hart|Josh Hart]] '23 (77% similar)
+- [[josh-mcroberts|Josh McRoberts]] '15 (76% similar)
+- [[jaylin-williams|Jaylin Williams]] '25 (73% similar)
+- [[jonas-jerebko|Jonas Jerebko]] '17 (73% similar)
+
+**Career shape:** Charted 7 seasons (2015-16–2021-22). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Playmaking + Steals identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

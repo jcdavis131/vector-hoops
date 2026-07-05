@@ -39,6 +39,34 @@ Closest career shapes in the era-normalized vector space:
 - [[jordan-williams|Jordan Williams]] — cosine 0.91
 - [[tristan-thompson|Tristan Thompson]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 12.5 pts · 14.1 reb · 4.9 ast · 2.2 stl per 100 (2020-21).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+2.1σ vs era)
+- Relentless on the offensive glass (+2.0σ vs era)
+- Strong net on-court impact (+1.9σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.8σ)
+- Shot volume well below era (−2.0σ)
+
+**Comparables:**
+
+- [[gerard-king|Gerard King]] '99 (94% similar)
+- [[buck-williams|Buck Williams]] '97 (93% similar)
+- [[khem-birch|Khem Birch]] '19 (92% similar)
+- [[jericho-sims|Jericho Sims]] '22 (92% similar)
+- [[jordan-williams|Jordan Williams]] '12 (91% similar)
+- [[tristan-thompson|Tristan Thompson]] '25 (91% similar)
+
+**Career shape:** Charted 6 seasons (2015-16–2020-21). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

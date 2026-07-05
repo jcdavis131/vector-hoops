@@ -40,6 +40,34 @@ Closest career shapes in the era-normalized vector space:
 - [[seth-curry|Seth Curry]] — cosine 0.92
 - [[danny-ferry|Danny Ferry]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** PG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 18.2 pts · 3.6 reb · 4.8 ast · 1.8 stl per 100 (1996-97).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.9σ vs era)
+- Strong net on-court impact (+1.8σ vs era)
+- Efficient finisher inside the arc (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.4σ)
+- Defensive rebounding well below era (−1.3σ)
+
+**Comparables:**
+
+- [[raja-bell|Raja Bell]] '07 (97% similar)
+- [[luke-kennard|Luke Kennard]] '23 (93% similar)
+- [[mike-penberthy|Mike Penberthy]] '01 (93% similar)
+- [[sam-merrill|Sam Merrill]] '24 (93% similar)
+- [[seth-curry|Seth Curry]] '21 (92% similar)
+- [[danny-ferry|Danny Ferry]] '01 (92% similar)
+
+**Career shape:** Charted 7 seasons (1996-97–2002-03). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

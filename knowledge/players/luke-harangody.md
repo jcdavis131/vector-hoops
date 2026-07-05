@@ -35,6 +35,33 @@ Closest career shapes in the era-normalized vector space:
 - [[hunter-tyson|Hunter Tyson]] — cosine 0.80
 - [[nicolo-melli|Nicolo Melli]] — cosine 0.80
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 13.9 pts · 12.3 reb · 1.4 ast · 1.4 stl per 100 (2011-12).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.9σ vs era)
+- Relentless on the offensive glass (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.3σ)
+- On-court net impact well below era (−1.3σ)
+
+**Comparables:**
+
+- [[ed-o-bannon|Ed O'Bannon]] '97 (84% similar)
+- [[jeremiah-robinson-earl|Jeremiah Robinson-Earl]] '26 (84% similar)
+- [[pete-chilcutt|Pete Chilcutt]] '00 (82% similar)
+- [[gary-clark|Gary Clark]] '19 (82% similar)
+- [[hunter-tyson|Hunter Tyson]] '26 (80% similar)
+- [[nicolo-melli|Nicolo Melli]] '21 (80% similar)
+
+**Career shape:** Charted 2 seasons (2010-11–2011-12). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

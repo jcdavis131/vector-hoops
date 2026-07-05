@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[vassilis-spanoulis|Vassilis Spanoulis]] — cosine 0.85
 - [[malcolm-delaney|Malcolm Delaney]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 14.3 pts · 5.3 reb · 6.3 ast · 1.1 stl per 100 (2018-19).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+1.9σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.1σ)
+- Defensive rebounding well below era (−1.1σ)
+
+**Comparables:**
+
+- [[kadeem-allen|Kadeem Allen]] '18 (92% similar)
+- [[keith-mcleod|Keith McLeod]] '04 (91% similar)
+- [[ben-hansbrough|Ben Hansbrough]] '13 (87% similar)
+- [[walter-clayton-jr|Walter Clayton Jr.]] '26 (86% similar)
+- [[vassilis-spanoulis|Vassilis Spanoulis]] '07 (85% similar)
+- [[malcolm-delaney|Malcolm Delaney]] '17 (84% similar)
+
+**Career shape:** Charted 3 seasons (2016-17–2018-19). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -37,6 +37,31 @@ Closest career shapes in the era-normalized vector space:
 - [[lamar-patterson|Lamar Patterson]] — cosine 0.82
 - [[brian-scalabrine|Brian Scalabrine]] — cosine 0.80
 
+## Scouting report
+
+**Play style:** PF · Three-Point Accuracy (Low Turnovers). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 15.8 pts · 8.7 reb · 3.8 ast · 1.1 stl per 100 (2022-23).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[mohamed-diawara|Mohamed Diawara]] '26 (86% similar)
+- [[victor-claver|Victor Claver]] '13 (84% similar)
+- [[orlando-johnson|Orlando Johnson]] '14 (83% similar)
+- [[chuck-person|Chuck Person]] '00 (83% similar)
+- [[lamar-patterson|Lamar Patterson]] '16 (82% similar)
+- [[brian-scalabrine|Brian Scalabrine]] '11 (80% similar)
+
+**Career shape:** Charted 4 seasons (2022-23–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

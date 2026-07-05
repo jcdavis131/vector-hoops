@@ -35,6 +35,33 @@ Closest career shapes in the era-normalized vector space:
 - [[matt-thomas|Matt Thomas]] — cosine 0.92
 - [[timothe-luwawu-cabarrot|Timothe Luwawu-Cabarrot]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** PG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 13.7 pts · 4.8 reb · 1.0 ast · 0.8 stl per 100 (2021-22).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+2.0σ vs era)
+- High-volume three-point shooter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.9σ)
+- On-court net impact well below era (−1.5σ)
+
+**Comparables:**
+
+- [[allen-crabbe|Allen Crabbe]] '20 (95% similar)
+- [[matt-ryan|Matt Ryan]] '25 (93% similar)
+- [[simone-fontecchio|Simone Fontecchio]] '23 (93% similar)
+- [[jason-kapono|Jason Kapono]] '11 (92% similar)
+- [[matt-thomas|Matt Thomas]] '22 (92% similar)
+- [[timothe-luwawu-cabarrot|Timothe Luwawu-Cabarrot]] '19 (92% similar)
+
+**Career shape:** Charted 2 seasons (2020-21–2021-22). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -38,6 +38,33 @@ Closest career shapes in the era-normalized vector space:
 - [[scott-brooks|Scott Brooks]] — cosine 0.86
 - [[chris-mullin|Chris Mullin]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 17.3 pts · 6.7 reb · 4.4 ast · 3.0 stl per 100 (1997-98).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.8σ vs era)
+- Strong net on-court impact (+1.6σ vs era)
+- High-volume three-point shooter (+1.2σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[jon-barry|Jon Barry]] '98 (92% similar)
+- [[brian-cardinal|Brian Cardinal]] '12 (90% similar)
+- [[fred-hoiberg|Fred Hoiberg]] '05 (89% similar)
+- [[doug-christie|Doug Christie]] '03 (88% similar)
+- [[scott-brooks|Scott Brooks]] '97 (86% similar)
+- [[chris-mullin|Chris Mullin]] '00 (85% similar)
+
+**Career shape:** Charted 5 seasons (1996-97–2000-01). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

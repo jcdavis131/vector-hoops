@@ -44,6 +44,34 @@ Closest career shapes in the era-normalized vector space:
 - [[keith-closs|Keith Closs]] — cosine 0.93
 - [[desagana-diop|DeSagana Diop]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 10.7 pts · 12.6 reb · 1.9 ast · 5.0 blk per 100 (2006-07).
+
+**Strengths:**
+
+- Elite rim protection (+3.8σ vs era)
+- Efficient finisher inside the arc (+1.7σ vs era)
+- Relentless on the offensive glass (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.4σ)
+- Shot volume well below era (−1.7σ)
+
+**Comparables:**
+
+- [[bernard-james|Bernard James]] '13 (95% similar)
+- [[joel-przybilla|Joel Przybilla]] '01 (95% similar)
+- [[brian-skinner|Brian Skinner]] '08 (94% similar)
+- [[stojko-vrankovic|Stojko Vrankovic]] '97 (94% similar)
+- [[keith-closs|Keith Closs]] '98 (93% similar)
+- [[desagana-diop|DeSagana Diop]] '13 (92% similar)
+
+**Career shape:** Charted 11 seasons (1997-98–2007-08). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

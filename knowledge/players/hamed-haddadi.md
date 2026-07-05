@@ -38,6 +38,34 @@ Closest career shapes in the era-normalized vector space:
 - [[greg-oden|Greg Oden]] — cosine 0.90
 - [[roy-hibbert|Roy Hibbert]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 20.2 pts · 19.7 reb · 3.4 ast · 5.0 blk per 100 (2008-09).
+
+**Strengths:**
+
+- Elite rim protection (+3.5σ vs era)
+- Strong net on-court impact (+3.3σ vs era)
+- Draws contact, gets to the line often (+3.1σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.8σ)
+- Three-point accuracy well below era (−1.4σ)
+
+**Comparables:**
+
+- [[khaman-maluach|Khaman Maluach]] '26 (92% similar)
+- [[erick-dampier|Erick Dampier]] '97 (91% similar)
+- [[festus-ezeli|Festus Ezeli]] '16 (90% similar)
+- [[andrew-bynum|Andrew Bynum]] '08 (90% similar)
+- [[greg-oden|Greg Oden]] '10 (90% similar)
+- [[roy-hibbert|Roy Hibbert]] '13 (90% similar)
+
+**Career shape:** Charted 5 seasons (2008-09–2012-13). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

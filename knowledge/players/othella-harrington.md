@@ -45,6 +45,33 @@ Closest career shapes in the era-normalized vector space:
 - [[jason-caffey|Jason Caffey]] — cosine 0.88
 - [[nenad-krstic|Nenad Krstic]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** PF · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 23.3 pts · 14.3 reb · 0.9 ast · 1.5 blk per 100 (1998-99).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+1.6σ vs era)
+- Efficient finisher inside the arc (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.9σ)
+- Three-point accuracy well below era (−1.1σ)
+
+**Comparables:**
+
+- [[vitaly-potapenko|Vitaly Potapenko]] '06 (92% similar)
+- [[tyler-zeller|Tyler Zeller]] '17 (90% similar)
+- [[ante-zizic|Ante Zizic]] '18 (88% similar)
+- [[alton-ford|Alton Ford]] '02 (88% similar)
+- [[jason-caffey|Jason Caffey]] '97 (88% similar)
+- [[nenad-krstic|Nenad Krstic]] '07 (87% similar)
+
+**Career shape:** Charted 12 seasons (1996-97–2007-08). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

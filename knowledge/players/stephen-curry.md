@@ -49,6 +49,33 @@ Closest career shapes in the era-normalized vector space:
 - [[desmond-bane|Desmond Bane]] — cosine 0.92
 - [[paul-george|Paul George]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 41.1 pts · 7.5 reb · 9.1 ast · 2.9 stl per 100 (2015-16).
+
+**Strengths:**
+
+- Featured, high-usage scoring role (+3.7σ vs era)
+- High-volume three-point shooter (+3.2σ vs era)
+- Strong net on-court impact (+2.8σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.8σ)
+
+**Comparables:**
+
+- [[donovan-mitchell|Donovan Mitchell]] '21 (95% similar)
+- [[kyrie-irving|Kyrie Irving]] '20 (94% similar)
+- [[clyde-drexler|Clyde Drexler]] '98 (94% similar)
+- [[jamal-murray|Jamal Murray]] '26 (93% similar)
+- [[desmond-bane|Desmond Bane]] '24 (92% similar)
+- [[paul-george|Paul George]] '22 (91% similar)
+
+**Career shape:** Charted 16 seasons (2009-10–2025-26). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

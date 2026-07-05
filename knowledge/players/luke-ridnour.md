@@ -45,6 +45,33 @@ Closest career shapes in the era-normalized vector space:
 - [[travis-best|Travis Best]] — cosine 0.93
 - [[beno-udrih|Beno Udrih]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 17.6 pts · 4.5 reb · 10.6 ast · 2.4 stl per 100 (2005-06).
+
+**Strengths:**
+
+- High-volume table-setter (+2.6σ vs era)
+- Active hands, disrupts passing lanes (+1.4σ vs era)
+- Reliable touch from the free-throw line (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.1σ)
+
+**Comparables:**
+
+- [[howard-eisley|Howard Eisley]] '03 (94% similar)
+- [[ty-jerome|Ty Jerome]] '25 (93% similar)
+- [[andrew-nembhard|Andrew Nembhard]] '26 (93% similar)
+- [[raymond-felton|Raymond Felton]] '11 (93% similar)
+- [[travis-best|Travis Best]] '04 (93% similar)
+- [[beno-udrih|Beno Udrih]] '17 (93% similar)
+
+**Career shape:** Charted 12 seasons (2003-04–2014-15). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

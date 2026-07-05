@@ -34,6 +34,31 @@ Closest career shapes in the era-normalized vector space:
 - [[tony-wroten|Tony Wroten]] — cosine 0.88
 - [[dwight-buycks|Dwight Buycks]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 25.8 pts · 6.6 reb · 6.2 ast · 2.1 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.3σ)
+
+**Comparables:**
+
+- [[tyreke-evans|Tyreke Evans]] '16 (91% similar)
+- [[kevin-porter-jr|Kevin Porter Jr.]] '21 (90% similar)
+- [[will-bynum|Will Bynum]] '09 (88% similar)
+- [[talen-horton-tucker|Talen Horton-Tucker]] '23 (88% similar)
+- [[tony-wroten|Tony Wroten]] '15 (88% similar)
+- [[dwight-buycks|Dwight Buycks]] '18 (87% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Scoring Volume + Shot Volume profile across his career.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

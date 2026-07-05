@@ -39,6 +39,34 @@ Closest career shapes in the era-normalized vector space:
 - [[erick-dampier|Erick Dampier]] — cosine 0.90
 - [[karlo-matkovic|Karlo Matković]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 14.3 pts · 13.2 reb · 4.1 ast · 3.3 blk per 100 (2024-25).
+
+**Strengths:**
+
+- Elite rim protection (+2.7σ vs era)
+- Efficient finisher inside the arc (+1.3σ vs era)
+- Relentless on the offensive glass (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Three-point volume well below era (−1.5σ)
+- Shot volume well below era (−1.3σ)
+
+**Comparables:**
+
+- [[pj-hall|PJ Hall]] '26 (92% similar)
+- [[daniel-theis|Daniel Theis]] '20 (92% similar)
+- [[khaman-maluach|Khaman Maluach]] '26 (91% similar)
+- [[samuel-dalembert|Samuel Dalembert]] '13 (90% similar)
+- [[erick-dampier|Erick Dampier]] '97 (90% similar)
+- [[karlo-matkovic|Karlo Matković]] '26 (90% similar)
+
+**Career shape:** Charted 6 seasons (2020-21–2025-26). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

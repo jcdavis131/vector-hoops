@@ -38,6 +38,32 @@ Closest career shapes in the era-normalized vector space:
 - [[egor-demin|Egor Dëmin]] — cosine 0.86
 - [[terry-dehere|Terry Dehere]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** PG · Offensive Glass (Low On-Court Impact). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 15.2 pts · 4.0 reb · 4.4 ast · 1.5 stl per 100 (2001-02).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.5σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.8σ)
+- Turnover rate well above era (+2.1σ)
+
+**Comparables:**
+
+- [[dan-dickau|Dan Dickau]] '06 (93% similar)
+- [[sarunas-jasikevicius|Sarunas Jasikevicius]] '07 (92% similar)
+- [[howard-eisley|Howard Eisley]] '03 (89% similar)
+- [[khalid-reeves|Khalid Reeves]] '97 (88% similar)
+- [[egor-demin|Egor Dëmin]] '26 (86% similar)
+- [[terry-dehere|Terry Dehere]] '97 (86% similar)
+
+**Career shape:** Charted 5 seasons (1996-97–2001-02). Entered as a Playmaking + Steals profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

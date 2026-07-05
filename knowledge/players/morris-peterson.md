@@ -43,6 +43,32 @@ Closest career shapes in the era-normalized vector space:
 - [[gary-trent-jr|Gary Trent Jr.]] — cosine 0.92
 - [[jarvis-hayes|Jarvis Hayes]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 16.9 pts · 6.5 reb · 2.1 ast · 1.3 stl per 100 (2009-10).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.6σ vs era)
+- Rarely turns the ball over (−1.5σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.2σ)
+
+**Comparables:**
+
+- [[chase-budinger|Chase Budinger]] '10 (93% similar)
+- [[malik-beasley|Malik Beasley]] '25 (93% similar)
+- [[eric-piatkowski|Eric Piatkowski]] '06 (93% similar)
+- [[terrence-ross|Terrence Ross]] '19 (92% similar)
+- [[gary-trent-jr|Gary Trent Jr.]] '26 (92% similar)
+- [[jarvis-hayes|Jarvis Hayes]] '10 (91% similar)
+
+**Career shape:** Charted 10 seasons (2000-01–2009-10). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

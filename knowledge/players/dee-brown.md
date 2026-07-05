@@ -39,6 +39,32 @@ Closest career shapes in the era-normalized vector space:
 - [[j-r-bremer|J.R. Bremer]] — cosine 0.91
 - [[malachi-flynn|Malachi Flynn]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** PG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 19.4 pts · 4.0 reb · 6.3 ast · 1.8 stl per 100 (1999-00).
+
+**Strengths:**
+
+- High-volume three-point shooter (+3.9σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.6σ)
+- Finishing efficiency well below era (−1.5σ)
+
+**Comparables:**
+
+- [[jevon-carter|Jevon Carter]] '24 (93% similar)
+- [[lindsey-hunter|Lindsey Hunter]] '09 (92% similar)
+- [[shammond-williams|Shammond Williams]] '04 (92% similar)
+- [[chris-quinn|Chris Quinn]] '10 (91% similar)
+- [[j-r-bremer|J.R. Bremer]] '04 (91% similar)
+- [[malachi-flynn|Malachi Flynn]] '22 (90% similar)
+
+**Career shape:** Charted 6 seasons (1996-97–2008-09). Entered as a Playmaking + Steals profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

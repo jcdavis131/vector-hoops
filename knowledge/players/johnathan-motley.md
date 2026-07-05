@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[craig-smith|Craig Smith]] — cosine 0.84
 - [[chris-gatling|Chris Gatling]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** PF · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 29.5 pts · 14.7 reb · 3.2 ast · 1.4 stl per 100 (2018-19).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+3.2σ vs era)
+- Relentless on the offensive glass (+1.9σ vs era)
+- Featured, high-usage scoring role (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.8σ)
+- Turnover rate well above era (+2.1σ)
+
+**Comparables:**
+
+- [[rony-seikaly|Rony Seikaly]] '97 (89% similar)
+- [[greg-monroe|Greg Monroe]] '18 (88% similar)
+- [[reggie-slater|Reggie Slater]] '03 (87% similar)
+- [[jj-hickson|JJ Hickson]] '16 (86% similar)
+- [[craig-smith|Craig Smith]] '09 (84% similar)
+- [[chris-gatling|Chris Gatling]] '97 (84% similar)
+
+**Career shape:** Charted 1 season (2018-19). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

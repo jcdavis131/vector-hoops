@@ -34,6 +34,31 @@ Closest career shapes in the era-normalized vector space:
 - [[marquese-chriss|Marquese Chriss]] — cosine 0.82
 - [[adreian-payne|Adreian Payne]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 16.6 pts · 9.9 reb · 2.6 ast · 1.9 stl per 100 (2021-22).
+
+**Strengths:**
+
+- Elite rim protection (+1.0σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.5σ)
+
+**Comparables:**
+
+- [[bilal-coulibaly|Bilal Coulibaly]] '26 (91% similar)
+- [[isaiah-roby|Isaiah Roby]] '23 (87% similar)
+- [[lari-ketner|Lari Ketner]] '00 (85% similar)
+- [[ognjen-kuzmic|Ognjen Kuzmic]] '14 (83% similar)
+- [[marquese-chriss|Marquese Chriss]] '20 (82% similar)
+- [[adreian-payne|Adreian Payne]] '17 (81% similar)
+
+**Career shape:** Charted 1 season (2021-22). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

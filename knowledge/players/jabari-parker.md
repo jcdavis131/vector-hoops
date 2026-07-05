@@ -39,6 +39,31 @@ Closest career shapes in the era-normalized vector space:
 - [[marcus-fizer|Marcus Fizer]] — cosine 0.76
 - [[kenneth-lofton-jr|Kenneth Lofton Jr.]] — cosine 0.72
 
+## Scouting report
+
+**Play style:** PF · Defensive Glass + Rim Pressure (Fts). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 25.1 pts · 11.3 reb · 4.1 ast · 1.2 stl per 100 (2018-19).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.6σ)
+
+**Comparables:**
+
+- [[michael-beasley|Michael Beasley]] '16 (83% similar)
+- [[chris-gatling|Chris Gatling]] '97 (76% similar)
+- [[zach-randolph|Zach Randolph]] '07 (76% similar)
+- [[shareef-abdur-rahim|Shareef Abdur-Rahim]] '99 (76% similar)
+- [[marcus-fizer|Marcus Fizer]] '03 (76% similar)
+- [[kenneth-lofton-jr|Kenneth Lofton Jr.]] '23 (72% similar)
+
+**Career shape:** Charted 6 seasons (2014-15–2019-20). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

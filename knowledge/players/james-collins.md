@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[jerald-honeycutt|Jerald Honeycutt]] — cosine 0.78
 - [[jason-richardson|Jason Richardson]] — cosine 0.77
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 26.3 pts · 6.2 reb · 1.3 ast · 2.7 stl per 100 (1997-98).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.3σ vs era)
+- Heavy shot volume, focal scoring option (+2.0σ vs era)
+- Knockdown three-point shooter (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.3σ)
+- Defensive rebounding well below era (−1.1σ)
+
+**Comparables:**
+
+- [[rashad-mccants|Rashad McCants]] '08 (85% similar)
+- [[lamond-murray|Lamond Murray]] '04 (82% similar)
+- [[cam-whitmore|Cam Whitmore]] '24 (81% similar)
+- [[todd-day|Todd Day]] '01 (78% similar)
+- [[jerald-honeycutt|Jerald Honeycutt]] '98 (78% similar)
+- [[jason-richardson|Jason Richardson]] '06 (77% similar)
+
+**Career shape:** Charted 1 season (1997-98). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

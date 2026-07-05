@@ -39,6 +39,33 @@ Closest career shapes in the era-normalized vector space:
 - [[jalen-pickett|Jalen Pickett]] — cosine 0.89
 - [[haywoode-workman|Haywoode Workman]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 13.6 pts · 9.0 reb · 7.1 ast · 2.0 stl per 100 (2001-02).
+
+**Strengths:**
+
+- Strong net on-court impact (+1.5σ vs era)
+- High-volume three-point shooter (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.6σ)
+- Rim pressure (free-throw generation) well below era (−1.1σ)
+
+**Comparables:**
+
+- [[steve-blake|Steve Blake]] '16 (91% similar)
+- [[chris-duhon|Chris Duhon]] '13 (91% similar)
+- [[jaylen-adams|Jaylen Adams]] '19 (90% similar)
+- [[chris-herren|Chris Herren]] '01 (89% similar)
+- [[jalen-pickett|Jalen Pickett]] '25 (89% similar)
+- [[haywoode-workman|Haywoode Workman]] '00 (88% similar)
+
+**Career shape:** Charted 6 seasons (1996-97–2002-03). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

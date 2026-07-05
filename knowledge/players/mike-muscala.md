@@ -44,6 +44,33 @@ Closest career shapes in the era-normalized vector space:
 - [[marvin-williams|Marvin Williams]] — cosine 0.79
 - [[e-j-liddell|E.J. Liddell]] — cosine 0.79
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 17.1 pts · 11.7 reb · 1.6 ast · 2.2 blk per 100 (2013-14).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+2.0σ vs era)
+- Elite rim protection (+1.2σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.7σ)
+- Three-point accuracy well below era (−1.5σ)
+
+**Comparables:**
+
+- [[channing-frye|Channing Frye]] '19 (86% similar)
+- [[duop-reath|Duop Reath]] '26 (85% similar)
+- [[keegan-murray|Keegan Murray]] '26 (85% similar)
+- [[jabari-smith-jr|Jabari Smith Jr.]] '23 (83% similar)
+- [[marvin-williams|Marvin Williams]] '16 (79% similar)
+- [[e-j-liddell|E.J. Liddell]] '26 (79% similar)
+
+**Career shape:** Charted 11 seasons (2013-14–2023-24). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

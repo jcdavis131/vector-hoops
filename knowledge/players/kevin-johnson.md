@@ -35,6 +35,33 @@ Closest career shapes in the era-normalized vector space:
 - [[steve-nash|Steve Nash]] — cosine 0.85
 - [[ty-lawson|Ty Lawson]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 26.7 pts · 4.8 reb · 12.4 ast · 1.9 stl per 100 (1996-97).
+
+**Strengths:**
+
+- High-volume table-setter (+2.8σ vs era)
+- Draws contact, gets to the line often (+2.0σ vs era)
+- Featured, high-usage scoring role (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Offensive-glass activity well below era (−1.1σ)
+
+**Comparables:**
+
+- [[austin-reaves|Austin Reaves]] '26 (90% similar)
+- [[deron-williams|Deron Williams]] '12 (86% similar)
+- [[andre-miller|Andre Miller]] '02 (86% similar)
+- [[sam-cassell|Sam Cassell]] '04 (86% similar)
+- [[steve-nash|Steve Nash]] '07 (85% similar)
+- [[ty-lawson|Ty Lawson]] '14 (84% similar)
+
+**Career shape:** Charted 2 seasons (1996-97–1997-98). Consistent Scoring Volume + Shot Volume profile across his career.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

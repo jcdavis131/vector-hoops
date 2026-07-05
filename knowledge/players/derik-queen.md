@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[ike-austin|Ike Austin]] — cosine 0.76
 - [[chimezie-metu|Chimezie Metu]] — cosine 0.76
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 21.8 pts · 13.1 reb · 6.9 ast · 1.9 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.8σ)
+- Three-point volume well below era (−1.4σ)
+
+**Comparables:**
+
+- [[jusuf-nurkic|Jusuf Nurkić]] '16 (82% similar)
+- [[alperen-sengun|Alperen Sengun]] '25 (81% similar)
+- [[anthony-randolph|Anthony Randolph]] '13 (80% similar)
+- [[bam-adebayo|Bam Adebayo]] '22 (76% similar)
+- [[ike-austin|Ike Austin]] '02 (76% similar)
+- [[chimezie-metu|Chimezie Metu]] '20 (76% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -40,6 +40,32 @@ Closest career shapes in the era-normalized vector space:
 - [[isaac-okoro|Isaac Okoro]] — cosine 0.89
 - [[terrance-ferguson|Terrance Ferguson]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass + Defensive Glass. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 8.4 pts · 4.4 reb · 1.5 ast · 0.9 blk per 100 (2010-11).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.8σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.7σ)
+- Scoring load well below era (−1.8σ)
+
+**Comparables:**
+
+- [[romeo-langford|Romeo Langford]] '20 (92% similar)
+- [[kz-okpala|KZ Okpala]] '21 (91% similar)
+- [[doug-west|Doug West]] '98 (90% similar)
+- [[harvey-grant|Harvey Grant]] '97 (90% similar)
+- [[isaac-okoro|Isaac Okoro]] '25 (89% similar)
+- [[terrance-ferguson|Terrance Ferguson]] '20 (88% similar)
+
+**Career shape:** Charted 7 seasons (2004-05–2010-11). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

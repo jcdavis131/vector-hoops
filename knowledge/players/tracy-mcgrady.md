@@ -48,6 +48,33 @@ Closest career shapes in the era-normalized vector space:
 - [[donovan-mitchell|Donovan Mitchell]] — cosine 0.90
 - [[michael-jordan|Michael Jordan]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** SG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 41.0 pts · 8.4 reb · 7.0 ast · 2.1 stl per 100 (2002-03).
+
+**Strengths:**
+
+- Featured, high-usage scoring role (+3.9σ vs era)
+- Heavy shot volume, focal scoring option (+3.3σ vs era)
+- Draws contact, gets to the line often (+3.3σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[kobe-bryant|Kobe Bryant]] '06 (94% similar)
+- [[anthony-edwards|Anthony Edwards]] '25 (92% similar)
+- [[lebron-james|LeBron James]] '10 (91% similar)
+- [[luka-doncic|Luka Dončić]] '20 (90% similar)
+- [[donovan-mitchell|Donovan Mitchell]] '21 (90% similar)
+- [[michael-jordan|Michael Jordan]] '97 (90% similar)
+
+**Career shape:** Charted 15 seasons (1997-98–2011-12). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

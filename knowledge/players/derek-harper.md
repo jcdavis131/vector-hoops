@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[ty-jerome|Ty Jerome]] — cosine 0.91
 - [[anthony-johnson|Anthony Johnson]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 14.2 pts · 3.1 reb · 8.6 ast · 2.0 stl per 100 (1998-99).
+
+**Strengths:**
+
+- High-volume table-setter (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.5σ)
+- Rim pressure (free-throw generation) well below era (−1.4σ)
+
+**Comparables:**
+
+- [[alvin-williams|Alvin Williams]] '01 (94% similar)
+- [[chris-quinn|Chris Quinn]] '10 (92% similar)
+- [[kirk-hinrich|Kirk Hinrich]] '04 (92% similar)
+- [[shammond-williams|Shammond Williams]] '04 (92% similar)
+- [[ty-jerome|Ty Jerome]] '25 (91% similar)
+- [[anthony-johnson|Anthony Johnson]] '02 (91% similar)
+
+**Career shape:** Charted 3 seasons (1996-97–1998-99). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

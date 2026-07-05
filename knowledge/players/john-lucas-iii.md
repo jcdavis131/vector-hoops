@@ -38,6 +38,33 @@ Closest career shapes in the era-normalized vector space:
 - [[chucky-atkins|Chucky Atkins]] — cosine 0.90
 - [[tony-delk|Tony Delk]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** PG · Three-Point Volume + Three-Point Accuracy. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 27.2 pts · 5.6 reb · 8.0 ast · 1.4 stl per 100 (2011-12).
+
+**Strengths:**
+
+- Strong net on-court impact (+2.4σ vs era)
+- Heavy shot volume, focal scoring option (+2.2σ vs era)
+- High-volume three-point shooter (+1.9σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[john-starks|John Starks]] '00 (92% similar)
+- [[terry-rozier|Terry Rozier]] '16 (91% similar)
+- [[trey-burke|Trey Burke]] '18 (91% similar)
+- [[eddie-house|Eddie House]] '06 (90% similar)
+- [[chucky-atkins|Chucky Atkins]] '08 (90% similar)
+- [[tony-delk|Tony Delk]] '05 (90% similar)
+
+**Career shape:** Charted 5 seasons (2006-07–2014-15). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

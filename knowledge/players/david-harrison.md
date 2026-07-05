@@ -37,6 +37,33 @@ Closest career shapes in the era-normalized vector space:
 - [[ha-ha|Ha Ha]] — cosine 0.85
 - [[norvel-pelle|Norvel Pelle]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 17.8 pts · 10.6 reb · 1.5 ast · 3.0 blk per 100 (2006-07).
+
+**Strengths:**
+
+- Elite rim protection (+1.9σ vs era)
+- Efficient finisher inside the arc (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+3.7σ)
+- Free-throw touch well below era (−1.9σ)
+
+**Comparables:**
+
+- [[jerome-james|Jerome James]] '06 (92% similar)
+- [[patrick-o-bryant|Patrick O'Bryant]] '08 (88% similar)
+- [[john-henson|John Henson]] '16 (86% similar)
+- [[darius-miles|Darius Miles]] '05 (86% similar)
+- [[ha-ha|Ha Ha]] '06 (85% similar)
+- [[norvel-pelle|Norvel Pelle]] '20 (84% similar)
+
+**Career shape:** Charted 4 seasons (2004-05–2007-08). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -41,6 +41,32 @@ Closest career shapes in the era-normalized vector space:
 - [[chase-budinger|Chase Budinger]] — cosine 0.91
 - [[sam-merrill|Sam Merrill]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** PF · Three-Point Accuracy (Low Turnovers). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 10.8 pts · 8.7 reb · 2.6 ast · 1.5 stl per 100 (2016-17).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+2.1σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.9σ)
+- Three-point accuracy well below era (−1.6σ)
+
+**Comparables:**
+
+- [[pat-garrity|Pat Garrity]] '02 (96% similar)
+- [[aj-green|AJ Green]] '23 (95% similar)
+- [[duncan-robinson|Duncan Robinson]] '20 (94% similar)
+- [[matt-thomas|Matt Thomas]] '22 (93% similar)
+- [[chase-budinger|Chase Budinger]] '10 (91% similar)
+- [[sam-merrill|Sam Merrill]] '24 (90% similar)
+
+**Career shape:** Charted 8 seasons (2016-17–2024-25). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[kevin-knox-ii|Kevin Knox II]] — cosine 0.87
 - [[eric-washington|Eric Washington]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 19.4 pts · 5.5 reb · 2.3 ast · 1.3 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.1σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.4σ)
+- Defensive rebounding well below era (−1.1σ)
+
+**Comparables:**
+
+- [[jeremy-richardson|Jeremy Richardson]] '08 (90% similar)
+- [[timothe-luwawu-cabarrot|Timothe Luwawu-Cabarrot]] '19 (89% similar)
+- [[matt-ryan|Matt Ryan]] '25 (88% similar)
+- [[gradey-dick|Gradey Dick]] '24 (88% similar)
+- [[kevin-knox-ii|Kevin Knox II]] '22 (87% similar)
+- [[eric-washington|Eric Washington]] '98 (86% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

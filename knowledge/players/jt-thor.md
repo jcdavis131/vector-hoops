@@ -37,6 +37,32 @@ Closest career shapes in the era-normalized vector space:
 - [[herb-williams|Herb Williams]] — cosine 0.87
 - [[zeke-nnaji|Zeke Nnaji]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 13.8 pts · 9.3 reb · 1.2 ast · 1.7 blk per 100 (2024-25).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.4σ)
+- Table-setting role well below era (−1.4σ)
+
+**Comparables:**
+
+- [[michael-stewart|Michael Stewart]] '04 (91% similar)
+- [[william-cunningham|William Cunningham]] '99 (90% similar)
+- [[kz-okpala|KZ Okpala]] '21 (90% similar)
+- [[mark-pope|Mark Pope]] '01 (90% similar)
+- [[herb-williams|Herb Williams]] '98 (87% similar)
+- [[zeke-nnaji|Zeke Nnaji]] '24 (87% similar)
+
+**Career shape:** Charted 4 seasons (2021-22–2024-25). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

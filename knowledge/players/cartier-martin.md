@@ -40,6 +40,34 @@ Closest career shapes in the era-normalized vector space:
 - [[daequan-cook|Daequan Cook]] — cosine 0.89
 - [[lindy-waters-iii|Lindy Waters III]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 9.2 pts · 5.1 reb · 2.8 ast · 0.8 stl per 100 (2014-15).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.5σ vs era)
+- High-volume three-point shooter (+1.1σ vs era)
+- Strong net on-court impact (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−4.0σ)
+- Finishing efficiency well below era (−2.4σ)
+
+**Comparables:**
+
+- [[jaren-jackson|Jaren Jackson]] '01 (92% similar)
+- [[chuck-person|Chuck Person]] '00 (91% similar)
+- [[keith-bogans|Keith Bogans]] '13 (90% similar)
+- [[mickael-pietrus|Mickael Pietrus]] '11 (90% similar)
+- [[daequan-cook|Daequan Cook]] '11 (89% similar)
+- [[lindy-waters-iii|Lindy Waters III]] '23 (89% similar)
+
+**Career shape:** Charted 7 seasons (2008-09–2014-15). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

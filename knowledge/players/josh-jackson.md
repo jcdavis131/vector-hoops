@@ -38,6 +38,32 @@ Closest career shapes in the era-normalized vector space:
 - [[corey-benjamin|Corey Benjamin]] — cosine 0.80
 - [[jeremiah-fears|Jeremiah Fears]] — cosine 0.79
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 24.1 pts · 8.4 reb · 2.8 ast · 1.9 stl per 100 (2017-18).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+1.3σ vs era)
+- Draws contact, gets to the line often (+1.3σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.7σ)
+
+**Comparables:**
+
+- [[archie-goodwin|Archie Goodwin]] '15 (82% similar)
+- [[donnie-boyce|Donnie Boyce]] '97 (82% similar)
+- [[dalano-banton|Dalano Banton]] '23 (82% similar)
+- [[tony-wroten|Tony Wroten]] '15 (82% similar)
+- [[corey-benjamin|Corey Benjamin]] '00 (80% similar)
+- [[jeremiah-fears|Jeremiah Fears]] '26 (79% similar)
+
+**Career shape:** Charted 5 seasons (2017-18–2021-22). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

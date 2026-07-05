@@ -36,6 +36,33 @@ Closest career shapes in the era-normalized vector space:
 - [[david-robinson|David Robinson]] — cosine 0.85
 - [[serge-ibaka|Serge Ibaka]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 25.3 pts · 13.6 reb · 3.3 ast · 3.8 blk per 100 (2024-25).
+
+**Strengths:**
+
+- Elite rim protection (+3.3σ vs era)
+- Strong net on-court impact (+2.3σ vs era)
+- Strong presence on the defensive glass (+1.8σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[myles-turner|Myles Turner]] '19 (89% similar)
+- [[evan-mobley|Evan Mobley]] '25 (86% similar)
+- [[tim-duncan|Tim Duncan]] '04 (85% similar)
+- [[marc-gasol|Marc Gasol]] '16 (85% similar)
+- [[david-robinson|David Robinson]] '98 (85% similar)
+- [[serge-ibaka|Serge Ibaka]] '12 (85% similar)
+
+**Career shape:** Charted 3 seasons (2023-24–2025-26). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

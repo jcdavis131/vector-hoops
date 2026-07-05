@@ -42,6 +42,34 @@ Closest career shapes in the era-normalized vector space:
 - [[jay-huff|Jay Huff]] — cosine 0.81
 - [[mo-bamba|Mo Bamba]] — cosine 0.80
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 11.3 pts · 11.7 reb · 1.0 ast · 2.9 blk per 100 (2007-08).
+
+**Strengths:**
+
+- Elite rim protection (+1.7σ vs era)
+- Relentless on the offensive glass (+1.3σ vs era)
+- Rarely turns the ball over (−1.2σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.4σ)
+- Scoring load well below era (−1.3σ)
+
+**Comparables:**
+
+- [[branden-carlson|Branden Carlson]] '25 (93% similar)
+- [[eddie-griffin|Eddie Griffin]] '06 (89% similar)
+- [[luke-kornet|Luke Kornet]] '24 (83% similar)
+- [[serge-ibaka|Serge Ibaka]] '12 (82% similar)
+- [[jay-huff|Jay Huff]] '26 (81% similar)
+- [[mo-bamba|Mo Bamba]] '20 (80% similar)
+
+**Career shape:** Charted 9 seasons (1999-00–2007-08). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

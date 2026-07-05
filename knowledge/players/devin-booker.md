@@ -44,6 +44,33 @@ Closest career shapes in the era-normalized vector space:
 - [[kobe-bryant|Kobe Bryant]] — cosine 0.94
 - [[jerry-stackhouse|Jerry Stackhouse]] — cosine 0.94
 
+## Scouting report
+
+**Play style:** SG · Scoring Volume + Shot Volume. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 35.6 pts · 5.5 reb · 9.1 ast · 1.2 stl per 100 (2018-19).
+
+**Strengths:**
+
+- Featured, high-usage scoring role (+2.5σ vs era)
+- Draws contact, gets to the line often (+2.3σ vs era)
+- Heavy shot volume, focal scoring option (+2.3σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+3.0σ)
+
+**Comparables:**
+
+- [[damian-lillard|Damian Lillard]] '23 (95% similar)
+- [[bradley-beal|Bradley Beal]] '20 (95% similar)
+- [[brandon-ingram|Brandon Ingram]] '25 (94% similar)
+- [[isaiah-thomas|Isaiah Thomas]] '17 (94% similar)
+- [[kobe-bryant|Kobe Bryant]] '06 (94% similar)
+- [[jerry-stackhouse|Jerry Stackhouse]] '01 (94% similar)
+
+**Career shape:** Charted 11 seasons (2015-16–2025-26). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

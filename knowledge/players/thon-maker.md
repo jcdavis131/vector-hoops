@@ -37,6 +37,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jim-mcilvaine|Jim McIlvaine]] — cosine 0.81
 - [[aj-hammons|AJ Hammons]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 17.7 pts · 10.5 reb · 2.7 ast · 2.5 blk per 100 (2019-20).
+
+**Strengths:**
+
+- Elite rim protection (+1.6σ vs era)
+- Draws contact, gets to the line often (+1.2σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.4σ)
+
+**Comparables:**
+
+- [[roy-rogers|Roy Rogers]] '97 (91% similar)
+- [[zeke-nnaji|Zeke Nnaji]] '24 (86% similar)
+- [[keith-closs|Keith Closs]] '98 (85% similar)
+- [[peyton-watson|Peyton Watson]] '23 (84% similar)
+- [[jim-mcilvaine|Jim McIlvaine]] '00 (81% similar)
+- [[aj-hammons|AJ Hammons]] '17 (81% similar)
+
+**Career shape:** Charted 4 seasons (2016-17–2019-20). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

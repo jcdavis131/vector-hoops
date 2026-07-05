@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[isaiah-livers|Isaiah Livers]] — cosine 0.83
 - [[jeryl-sasser|Jeryl Sasser]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 11.7 pts · 7.9 reb · 4.1 ast · 1.6 stl per 100 (2006-07).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+1.1σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.7σ)
+- Finishing efficiency well below era (−1.2σ)
+
+**Comparables:**
+
+- [[vlatko-cancar|Vlatko Čančar]] '21 (86% similar)
+- [[javonte-smart|Javonte Smart]] '22 (86% similar)
+- [[rayan-rupert|Rayan Rupert]] '24 (86% similar)
+- [[nicolas-brussino|Nicolas Brussino]] '17 (84% similar)
+- [[isaiah-livers|Isaiah Livers]] '24 (83% similar)
+- [[jeryl-sasser|Jeryl Sasser]] '03 (82% similar)
+
+**Career shape:** Charted 1 season (2006-07). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

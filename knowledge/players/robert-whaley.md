@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[dalibor-bagaric|Dalibor Bagaric]] — cosine 0.81
 - [[amal-mccaskill|Amal McCaskill]] — cosine 0.80
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 12.2 pts · 10.7 reb · 4.2 ast · 2.0 blk per 100 (2005-06).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.8σ)
+- On-court net impact well below era (−1.5σ)
+
+**Comparables:**
+
+- [[carl-herrera|Carl Herrera]] '99 (85% similar)
+- [[jared-reiner|Jared Reiner]] '07 (85% similar)
+- [[colby-jones|Colby Jones]] '24 (84% similar)
+- [[dominic-mcguire|Dominic McGuire]] '10 (83% similar)
+- [[dalibor-bagaric|Dalibor Bagaric]] '01 (81% similar)
+- [[amal-mccaskill|Amal McCaskill]] '02 (80% similar)
+
+**Career shape:** Charted 1 season (2005-06). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

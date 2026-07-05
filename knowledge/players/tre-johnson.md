@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[andrew-goudelock|Andrew Goudelock]] — cosine 0.88
 - [[lonnie-walker-iv|Lonnie Walker IV]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 23.3 pts · 5.4 reb · 3.9 ast · 1.0 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+1.0σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.3σ)
+- Ball-hawking activity well below era (−1.0σ)
+
+**Comparables:**
+
+- [[nick-smith-jr|Nick Smith Jr.]] '25 (95% similar)
+- [[malaki-branham|Malaki Branham]] '24 (92% similar)
+- [[brice-sensabaugh|Brice Sensabaugh]] '24 (91% similar)
+- [[cole-swider|Cole Swider]] '24 (90% similar)
+- [[andrew-goudelock|Andrew Goudelock]] '12 (88% similar)
+- [[lonnie-walker-iv|Lonnie Walker IV]] '25 (87% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

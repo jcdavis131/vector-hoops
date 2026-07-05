@@ -44,6 +44,32 @@ Closest career shapes in the era-normalized vector space:
 - [[spencer-dinwiddie|Spencer Dinwiddie]] — cosine 0.85
 - [[will-bynum|Will Bynum]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 15.2 pts · 6.5 reb · 14.1 ast · 1.9 stl per 100 (2007-08).
+
+**Strengths:**
+
+- High-volume table-setter (+3.5σ vs era)
+- Knockdown three-point shooter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.3σ)
+
+**Comparables:**
+
+- [[frank-mason-iii|Frank Mason III]] '19 (88% similar)
+- [[rodney-stuckey|Rodney Stuckey]] '11 (88% similar)
+- [[brandon-williams|Brandon Williams]] '22 (87% similar)
+- [[rod-strickland|Rod Strickland]] '05 (87% similar)
+- [[spencer-dinwiddie|Spencer Dinwiddie]] '20 (85% similar)
+- [[will-bynum|Will Bynum]] '09 (85% similar)
+
+**Career shape:** Charted 11 seasons (2007-08–2017-18). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

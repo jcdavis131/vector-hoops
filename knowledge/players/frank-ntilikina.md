@@ -39,6 +39,33 @@ Closest career shapes in the era-normalized vector space:
 - [[malcolm-lee|Malcolm Lee]] — cosine 0.90
 - [[gerald-madkins|Gerald Madkins]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** PG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 13.4 pts · 4.7 reb · 2.9 ast · 2.7 stl per 100 (2020-21).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.1σ vs era)
+- Knockdown three-point shooter (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.8σ)
+- Finishing efficiency well below era (−1.3σ)
+
+**Comparables:**
+
+- [[garrett-temple|Garrett Temple]] '11 (94% similar)
+- [[ron-baker|Ron Baker]] '18 (92% similar)
+- [[donald-whiteside|Donald Whiteside]] '97 (92% similar)
+- [[daniel-ewing|Daniel Ewing]] '07 (92% similar)
+- [[malcolm-lee|Malcolm Lee]] '12 (90% similar)
+- [[gerald-madkins|Gerald Madkins]] '98 (90% similar)
+
+**Career shape:** Charted 6 seasons (2017-18–2022-23). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

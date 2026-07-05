@@ -45,6 +45,33 @@ Closest career shapes in the era-normalized vector space:
 - [[devean-george|Devean George]] — cosine 0.91
 - [[james-posey|James Posey]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** PF · Three-Point Accuracy (Low Turnovers). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 15.9 pts · 9.0 reb · 3.1 ast · 2.4 stl per 100 (2021-22).
+
+**Strengths:**
+
+- Strong net on-court impact (+1.7σ vs era)
+- Active hands, disrupts passing lanes (+1.5σ vs era)
+- Rarely turns the ball over (−1.0σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[bryon-russell|Bryon Russell]] '97 (94% similar)
+- [[tyrone-corbin|Tyrone Corbin]] '00 (92% similar)
+- [[jorge-garbajosa|Jorge Garbajosa]] '07 (91% similar)
+- [[dan-majerle|Dan Majerle]] '02 (91% similar)
+- [[devean-george|Devean George]] '10 (91% similar)
+- [[james-posey|James Posey]] '11 (90% similar)
+
+**Career shape:** Charted 12 seasons (2012-13–2023-24). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

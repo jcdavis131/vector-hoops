@@ -47,6 +47,33 @@ Closest career shapes in the era-normalized vector space:
 - [[andrew-nembhard|Andrew Nembhard]] — cosine 0.90
 - [[howard-eisley|Howard Eisley]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 19.5 pts · 5.0 reb · 14.3 ast · 1.8 stl per 100 (2007-08).
+
+**Strengths:**
+
+- High-volume table-setter (+3.6σ vs era)
+- Reliable touch from the free-throw line (+1.4σ vs era)
+- Knockdown three-point shooter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Offensive-glass activity well below era (−1.0σ)
+
+**Comparables:**
+
+- [[luke-ridnour|Luke Ridnour]] '06 (93% similar)
+- [[beno-udrih|Beno Udrih]] '17 (91% similar)
+- [[muggsy-bogues|Muggsy Bogues]] '97 (91% similar)
+- [[b-j-armstrong|B.J. Armstrong]] '00 (90% similar)
+- [[andrew-nembhard|Andrew Nembhard]] '26 (90% similar)
+- [[howard-eisley|Howard Eisley]] '03 (89% similar)
+
+**Career shape:** Charted 14 seasons (2005-06–2018-19). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

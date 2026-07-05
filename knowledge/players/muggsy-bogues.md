@@ -37,6 +37,33 @@ Closest career shapes in the era-normalized vector space:
 - [[anthony-johnson|Anthony Johnson]] — cosine 0.87
 - [[cory-joseph|Cory Joseph]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 15.0 pts · 4.0 reb · 13.4 ast · 2.4 stl per 100 (1996-97).
+
+**Strengths:**
+
+- High-volume table-setter (+3.2σ vs era)
+- Reliable touch from the free-throw line (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.4σ)
+- Offensive-glass activity well below era (−1.2σ)
+
+**Comparables:**
+
+- [[tyus-jones|Tyus Jones]] '18 (92% similar)
+- [[tomas-satoransky|Tomas Satoransky]] '22 (92% similar)
+- [[jose-calderon|Jose Calderon]] '08 (91% similar)
+- [[pooh-jeter|Pooh Jeter]] '11 (88% similar)
+- [[anthony-johnson|Anthony Johnson]] '02 (87% similar)
+- [[cory-joseph|Cory Joseph]] '24 (87% similar)
+
+**Career shape:** Charted 4 seasons (1996-97–1999-00). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

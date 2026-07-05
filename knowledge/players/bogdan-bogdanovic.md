@@ -42,6 +42,33 @@ Closest career shapes in the era-normalized vector space:
 - [[patty-mills|Patty Mills]] — cosine 0.93
 - [[jason-terry|Jason Terry]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 26.6 pts · 5.9 reb · 5.4 ast · 1.8 stl per 100 (2020-21).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.6σ vs era)
+- Reliable touch from the free-throw line (+1.3σ vs era)
+- Knockdown three-point shooter (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.1σ)
+
+**Comparables:**
+
+- [[john-starks|John Starks]] '00 (98% similar)
+- [[eddie-house|Eddie House]] '06 (97% similar)
+- [[kendrick-nunn|Kendrick Nunn]] '20 (94% similar)
+- [[voshon-lenard|Voshon Lenard]] '97 (94% similar)
+- [[patty-mills|Patty Mills]] '14 (93% similar)
+- [[jason-terry|Jason Terry]] '18 (93% similar)
+
+**Career shape:** Charted 9 seasons (2017-18–2025-26). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

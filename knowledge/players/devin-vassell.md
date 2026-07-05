@@ -39,6 +39,33 @@ Closest career shapes in the era-normalized vector space:
 - [[gary-trent-jr|Gary Trent Jr.]] — cosine 0.91
 - [[morris-peterson|Morris Peterson]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 27.6 pts · 5.8 reb · 5.3 ast · 1.7 stl per 100 (2022-23).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+1.5σ vs era)
+- High-volume three-point shooter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.7σ)
+- Offensive-glass activity well below era (−1.1σ)
+
+**Comparables:**
+
+- [[terrence-ross|Terrence Ross]] '19 (94% similar)
+- [[tony-delk|Tony Delk]] '05 (92% similar)
+- [[anthony-roberson|Anthony Roberson]] '09 (91% similar)
+- [[eddie-house|Eddie House]] '06 (91% similar)
+- [[gary-trent-jr|Gary Trent Jr.]] '26 (91% similar)
+- [[morris-peterson|Morris Peterson]] '10 (89% similar)
+
+**Career shape:** Charted 6 seasons (2020-21–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

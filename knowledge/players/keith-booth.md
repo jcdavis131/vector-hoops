@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jahmai-mashack|Jahmai Mashack]] — cosine 0.78
 - [[aleksej-pokusevski|Aleksej Pokusevski]] — cosine 0.76
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 14.3 pts · 11.1 reb · 4.5 ast · 2.6 stl per 100 (1998-99).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.1σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.5σ)
+- Finishing efficiency well below era (−1.8σ)
+
+**Comparables:**
+
+- [[adreian-payne|Adreian Payne]] '17 (86% similar)
+- [[jamison-brewer|Jamison Brewer]] '05 (81% similar)
+- [[dalibor-bagaric|Dalibor Bagaric]] '01 (79% similar)
+- [[bubba-wells|Bubba Wells]] '98 (78% similar)
+- [[jahmai-mashack|Jahmai Mashack]] '26 (78% similar)
+- [[aleksej-pokusevski|Aleksej Pokusevski]] '21 (76% similar)
+
+**Career shape:** Charted 1 season (1998-99). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

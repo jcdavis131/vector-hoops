@@ -37,6 +37,33 @@ Closest career shapes in the era-normalized vector space:
 - [[renaldo-balkman|Renaldo Balkman]] — cosine 0.70
 - [[thaddeus-young|Thaddeus Young]] — cosine 0.70
 
+## Scouting report
+
+**Play style:** PF · Defensive Glass + Rim Pressure (Fts). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 21.3 pts · 15.1 reb · 2.7 ast · 3.1 stl per 100 (2023-24).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.8σ vs era)
+- Strong presence on the defensive glass (+1.7σ vs era)
+- Strong net on-court impact (+1.4σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[paul-reed|Paul Reed]] '21 (80% similar)
+- [[brice-johnson|Brice Johnson]] '18 (78% similar)
+- [[mike-harris|Mike Harris]] '14 (73% similar)
+- [[shawn-marion|Shawn Marion]] '06 (72% similar)
+- [[renaldo-balkman|Renaldo Balkman]] '08 (70% similar)
+- [[thaddeus-young|Thaddeus Young]] '24 (70% similar)
+
+**Career shape:** Charted 4 seasons (2022-23–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -36,6 +36,34 @@ Closest career shapes in the era-normalized vector space:
 - [[ronny-turiaf|Ronny Turiaf]] — cosine 0.91
 - [[kendrick-perkins|Kendrick Perkins]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 15.3 pts · 12.1 reb · 5.9 ast · 3.3 blk per 100 (2017-18).
+
+**Strengths:**
+
+- Elite rim protection (+2.5σ vs era)
+- Efficient finisher inside the arc (+2.4σ vs era)
+- Strong net on-court impact (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.3σ)
+- Three-point volume well below era (−1.5σ)
+
+**Comparables:**
+
+- [[oliver-miller|Oliver Miller]] '00 (94% similar)
+- [[jakob-poeltl|Jakob Poeltl]] '22 (93% similar)
+- [[dereck-lively-ii|Dereck Lively II]] '25 (93% similar)
+- [[ariel-hukporti|Ariel Hukporti]] '25 (93% similar)
+- [[ronny-turiaf|Ronny Turiaf]] '14 (91% similar)
+- [[kendrick-perkins|Kendrick Perkins]] '16 (91% similar)
+
+**Career shape:** Charted 3 seasons (2017-18–2019-20). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

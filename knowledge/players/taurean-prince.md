@@ -43,6 +43,33 @@ Closest career shapes in the era-normalized vector space:
 - [[john-long|John Long]] — cosine 0.84
 - [[sam-mack|Sam Mack]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 18.8 pts · 6.4 reb · 3.6 ast · 1.3 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+2.1σ vs era)
+- High-volume three-point shooter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.5σ)
+- Offensive-glass activity well below era (−1.2σ)
+
+**Comparables:**
+
+- [[dermarr-johnson|DerMarr Johnson]] '07 (89% similar)
+- [[roger-mason-jr|Roger Mason Jr.]] '03 (86% similar)
+- [[ian-clark|Ian Clark]] '15 (86% similar)
+- [[matt-ryan|Matt Ryan]] '25 (84% similar)
+- [[john-long|John Long]] '97 (84% similar)
+- [[sam-mack|Sam Mack]] '00 (84% similar)
+
+**Career shape:** Charted 10 seasons (2016-17–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

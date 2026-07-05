@@ -37,6 +37,32 @@ Closest career shapes in the era-normalized vector space:
 - [[tom-hammonds|Tom Hammonds]] — cosine 0.82
 - [[marshall-plumlee|Marshall Plumlee]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 9.2 pts · 11.9 reb · 3.2 ast · 0.7 stl per 100 (1999-00).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.7σ)
+- Scoring load well below era (−1.7σ)
+
+**Comparables:**
+
+- [[melvin-ely|Melvin Ely]] '11 (84% similar)
+- [[kwame-brown|Kwame Brown]] '13 (83% similar)
+- [[eric-mobley|Eric Mobley]] '97 (82% similar)
+- [[jake-voskuhl|Jake Voskuhl]] '01 (82% similar)
+- [[tom-hammonds|Tom Hammonds]] '00 (82% similar)
+- [[marshall-plumlee|Marshall Plumlee]] '17 (81% similar)
+
+**Career shape:** Charted 4 seasons (1996-97–1999-00). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

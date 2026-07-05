@@ -41,6 +41,34 @@ Closest career shapes in the era-normalized vector space:
 - [[marty-conlon|Marty Conlon]] — cosine 0.81
 - [[alan-williams|Alan Williams]] — cosine 0.80
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 17.3 pts · 11.6 reb · 1.6 ast · 1.7 stl per 100 (2007-08).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+1.5σ vs era)
+- Draws contact, gets to the line often (+1.4σ vs era)
+- Strong net on-court impact (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.4σ)
+- Three-point volume well below era (−1.1σ)
+
+**Comparables:**
+
+- [[tyler-hansbrough|Tyler Hansbrough]] '16 (86% similar)
+- [[rondae-hollis-jefferson|Rondae Hollis-Jefferson]] '16 (81% similar)
+- [[dexter-pittman|Dexter Pittman]] '12 (81% similar)
+- [[leon-powe|Leon Powe]] '08 (81% similar)
+- [[marty-conlon|Marty Conlon]] '98 (81% similar)
+- [[alan-williams|Alan Williams]] '17 (80% similar)
+
+**Career shape:** Charted 8 seasons (2007-08–2014-15). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

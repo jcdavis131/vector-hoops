@@ -42,6 +42,34 @@ Closest career shapes in the era-normalized vector space:
 - [[kelvin-cato|Kelvin Cato]] — cosine 0.91
 - [[charles-bassey|Charles Bassey]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 14.7 pts · 18.8 reb · 1.7 ast · 2.3 blk per 100 (2016-17).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+2.6σ vs era)
+- Efficient finisher inside the arc (+2.5σ vs era)
+- Relentless on the offensive glass (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.2σ)
+- Three-point volume well below era (−1.5σ)
+
+**Comparables:**
+
+- [[samuel-dalembert|Samuel Dalembert]] '13 (98% similar)
+- [[dikembe-mutombo|Dikembe Mutombo]] '00 (92% similar)
+- [[cole-aldrich|Cole Aldrich]] '16 (92% similar)
+- [[marcin-gortat|Marcin Gortat]] '09 (92% similar)
+- [[kelvin-cato|Kelvin Cato]] '99 (91% similar)
+- [[charles-bassey|Charles Bassey]] '24 (91% similar)
+
+**Career shape:** Charted 9 seasons (2013-14–2022-23). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

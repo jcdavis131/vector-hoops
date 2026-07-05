@@ -40,6 +40,34 @@ Closest career shapes in the era-normalized vector space:
 - [[amir-johnson|Amir Johnson]] — cosine 0.93
 - [[goga-bitadze|Goga Bitadze]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 13.5 pts · 13.5 reb · 1.2 ast · 6.7 blk per 100 (2018-19).
+
+**Strengths:**
+
+- Elite rim protection (+4.0σ vs era)
+- Efficient finisher inside the arc (+3.5σ vs era)
+- Relentless on the offensive glass (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.8σ)
+- Shot volume well below era (−1.8σ)
+
+**Comparables:**
+
+- [[salah-mejri|Salah Mejri]] '18 (95% similar)
+- [[onyeka-okongwu|Onyeka Okongwu]] '22 (95% similar)
+- [[dereck-lively-ii|Dereck Lively II]] '25 (94% similar)
+- [[jakob-poeltl|Jakob Poeltl]] '22 (93% similar)
+- [[amir-johnson|Amir Johnson]] '08 (93% similar)
+- [[goga-bitadze|Goga Bitadze]] '25 (93% similar)
+
+**Career shape:** Charted 7 seasons (2018-19–2025-26). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -40,6 +40,34 @@ Closest career shapes in the era-normalized vector space:
 - [[voshon-lenard|Voshon Lenard]] — cosine 0.92
 - [[troy-daniels|Troy Daniels]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 24.8 pts · 5.8 reb · 2.1 ast · 1.2 stl per 100 (2001-02).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.9σ vs era)
+- Heavy shot volume, focal scoring option (+1.4σ vs era)
+- Featured, high-usage scoring role (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.1σ)
+- Rim pressure (free-throw generation) well below era (−1.1σ)
+
+**Comparables:**
+
+- [[gerald-green|Gerald Green]] '15 (93% similar)
+- [[buddy-hield|Buddy Hield]] '20 (93% similar)
+- [[terrence-ross|Terrence Ross]] '19 (92% similar)
+- [[sam-mack|Sam Mack]] '00 (92% similar)
+- [[voshon-lenard|Voshon Lenard]] '97 (92% similar)
+- [[troy-daniels|Troy Daniels]] '15 (92% similar)
+
+**Career shape:** Charted 7 seasons (1996-97–2002-03). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

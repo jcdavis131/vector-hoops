@@ -43,6 +43,34 @@ Closest career shapes in the era-normalized vector space:
 - [[andris-biedrins|Andris Biedrins]] — cosine 0.92
 - [[will-perdue|Will Perdue]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 9.7 pts · 15.0 reb · 0.8 ast · 1.7 blk per 100 (2004-05).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+4.0σ vs era)
+- Relentless on the offensive glass (+1.7σ vs era)
+- Efficient finisher inside the arc (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−2.0σ)
+- Scoring load well below era (−1.5σ)
+
+**Comparables:**
+
+- [[joel-przybilla|Joel Przybilla]] '01 (95% similar)
+- [[dean-garrett|Dean Garrett]] '02 (94% similar)
+- [[brian-skinner|Brian Skinner]] '08 (94% similar)
+- [[tony-battie|Tony Battie]] '12 (93% similar)
+- [[andris-biedrins|Andris Biedrins]] '13 (92% similar)
+- [[will-perdue|Will Perdue]] '99 (92% similar)
+
+**Career shape:** Charted 10 seasons (1996-97–2005-06). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -39,6 +39,33 @@ Closest career shapes in the era-normalized vector space:
 - [[viacheslav-kravtsov|Viacheslav Kravtsov]] — cosine 0.74
 - [[stephen-howard|Stephen Howard]] — cosine 0.73
 
+## Scouting report
+
+**Play style:** SF · Defensive Glass + Rim Pressure (Fts). Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 23.2 pts · 8.2 reb · 3.6 ast · 2.2 stl per 100 (1996-97).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+1.1σ vs era)
+- Draws contact, gets to the line often (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.4σ)
+- Turnover rate well above era (+1.4σ)
+
+**Comparables:**
+
+- [[ruben-patterson|Ruben Patterson]] '08 (79% similar)
+- [[craig-smith|Craig Smith]] '09 (79% similar)
+- [[jason-caffey|Jason Caffey]] '97 (77% similar)
+- [[alexander-johnson|Alexander Johnson]] '08 (76% similar)
+- [[viacheslav-kravtsov|Viacheslav Kravtsov]] '14 (74% similar)
+- [[stephen-howard|Stephen Howard]] '97 (73% similar)
+
+**Career shape:** Charted 6 seasons (1996-97–2002-03). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[kevin-pangos|Kevin Pangos]] — cosine 0.85
 - [[reece-gaines|Reece Gaines]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 12.4 pts · 4.6 reb · 4.2 ast · 0.8 stl per 100 (2024-25).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.9σ)
+- Ball-hawking activity well below era (−1.4σ)
+
+**Comparables:**
+
+- [[onuralp-bitim|Onuralp Bitim]] '24 (89% similar)
+- [[cody-williams|Cody Williams]] '25 (87% similar)
+- [[aj-johnson|AJ Johnson]] '25 (87% similar)
+- [[daquan-jeffries|DaQuan Jeffries]] '24 (86% similar)
+- [[kevin-pangos|Kevin Pangos]] '22 (85% similar)
+- [[reece-gaines|Reece Gaines]] '05 (84% similar)
+
+**Career shape:** Charted 1 season (2024-25). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

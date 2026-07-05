@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jared-reiner|Jared Reiner]] — cosine 0.75
 - [[rafael-araujo|Rafael Araujo]] — cosine 0.74
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 14.0 pts · 14.9 reb · 2.1 ast · 1.2 stl per 100 (1996-97).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+2.7σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.9σ)
+- Three-point accuracy well below era (−1.4σ)
+
+**Comparables:**
+
+- [[caleb-swanigan|Caleb Swanigan]] '20 (78% similar)
+- [[mitch-mcgary|Mitch McGary]] '16 (76% similar)
+- [[jamaal-magloire|Jamaal Magloire]] '08 (75% similar)
+- [[kenny-thomas|Kenny Thomas]] '08 (75% similar)
+- [[jared-reiner|Jared Reiner]] '07 (75% similar)
+- [[rafael-araujo|Rafael Araujo]] '06 (74% similar)
+
+**Career shape:** Charted 1 season (1996-97). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

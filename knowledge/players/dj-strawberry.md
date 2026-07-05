@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[pj-dozier|PJ Dozier]] — cosine 0.84
 - [[chris-garner|Chris Garner]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 13.0 pts · 5.0 reb · 5.4 ast · 2.1 stl per 100 (2007-08).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.0σ)
+- Finishing efficiency well below era (−2.0σ)
+
+**Comparables:**
+
+- [[tyty-washington-jr|TyTy Washington Jr.]] '26 (87% similar)
+- [[devyn-marble|Devyn Marble]] '16 (86% similar)
+- [[omar-cook|Omar Cook]] '04 (84% similar)
+- [[khyri-thomas|Khyri Thomas]] '19 (84% similar)
+- [[pj-dozier|PJ Dozier]] '22 (84% similar)
+- [[chris-garner|Chris Garner]] '98 (82% similar)
+
+**Career shape:** Charted 1 season (2007-08). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

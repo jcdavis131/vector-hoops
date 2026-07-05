@@ -39,6 +39,32 @@ Closest career shapes in the era-normalized vector space:
 - [[ed-davis|Ed Davis]] — cosine 0.88
 - [[lonny-baxter|Lonny Baxter]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 11.1 pts · 14.5 reb · 1.5 ast · 1.9 stl per 100 (2011-12).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+1.8σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.7σ)
+- Three-point accuracy well below era (−1.5σ)
+
+**Comparables:**
+
+- [[clar-weatherspoon|Clar. Weatherspoon]] '03 (91% similar)
+- [[jake-voskuhl|Jake Voskuhl]] '01 (90% similar)
+- [[tyrone-hill|Tyrone Hill]] '97 (88% similar)
+- [[jeff-adrien|Jeff Adrien]] '15 (88% similar)
+- [[ed-davis|Ed Davis]] '22 (88% similar)
+- [[lonny-baxter|Lonny Baxter]] '06 (88% similar)
+
+**Career shape:** Charted 6 seasons (2006-07–2011-12). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

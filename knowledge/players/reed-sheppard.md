@@ -35,6 +35,33 @@ Closest career shapes in the era-normalized vector space:
 - [[dee-brown|Dee Brown]] — cosine 0.83
 - [[jose-alvarado|Jose Alvarado]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 24.9 pts · 5.3 reb · 6.2 ast · 2.7 stl per 100 (2025-26).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.6σ vs era)
+- Active hands, disrupts passing lanes (+1.6σ vs era)
+- Strong net on-court impact (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Offensive-glass activity well below era (−1.0σ)
+
+**Comparables:**
+
+- [[lindsey-hunter|Lindsey Hunter]] '09 (91% similar)
+- [[toney-douglas|Toney Douglas]] '12 (87% similar)
+- [[mookie-blaylock|Mookie Blaylock]] '97 (85% similar)
+- [[rudy-fernandez|Rudy Fernandez]] '11 (84% similar)
+- [[dee-brown|Dee Brown]] '00 (83% similar)
+- [[jose-alvarado|Jose Alvarado]] '22 (83% similar)
+
+**Career shape:** Charted 2 seasons (2024-25–2025-26). Entered as a Playmaking + Steals profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

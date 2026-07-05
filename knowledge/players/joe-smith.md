@@ -47,6 +47,33 @@ Closest career shapes in the era-normalized vector space:
 - [[thomas-bryant|Thomas Bryant]] — cosine 0.82
 - [[aron-baynes|Aron Baynes]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 19.9 pts · 12.5 reb · 2.3 ast · 2.2 blk per 100 (1999-00).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+4.0σ vs era)
+- Relentless on the offensive glass (+1.2σ vs era)
+- Elite rim protection (+1.0σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[matt-geiger|Matt Geiger]] '98 (88% similar)
+- [[brandon-bass|Brandon Bass]] '17 (87% similar)
+- [[nenad-krstic|Nenad Krstic]] '07 (87% similar)
+- [[antonio-davis|Antonio Davis]] '01 (82% similar)
+- [[thomas-bryant|Thomas Bryant]] '23 (82% similar)
+- [[aron-baynes|Aron Baynes]] '17 (82% similar)
+
+**Career shape:** Charted 14 seasons (1996-97–2009-10). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

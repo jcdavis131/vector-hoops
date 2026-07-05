@@ -41,6 +41,32 @@ Closest career shapes in the era-normalized vector space:
 - [[michael-hawkins|Michael Hawkins]] — cosine 0.91
 - [[eric-maynor|Eric Maynor]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 10.0 pts · 2.8 reb · 8.7 ast · 1.5 stl per 100 (2022-23).
+
+**Strengths:**
+
+- High-volume table-setter (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.7σ)
+- Free-throw touch well below era (−1.6σ)
+
+**Comparables:**
+
+- [[chris-duhon|Chris Duhon]] '13 (95% similar)
+- [[steve-blake|Steve Blake]] '16 (94% similar)
+- [[chris-childs|Chris Childs]] '02 (93% similar)
+- [[jalen-pickett|Jalen Pickett]] '25 (92% similar)
+- [[michael-hawkins|Michael Hawkins]] '99 (91% similar)
+- [[eric-maynor|Eric Maynor]] '14 (90% similar)
+
+**Career shape:** Charted 8 seasons (2013-14–2022-23). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Playmaking + Steals identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -37,6 +37,34 @@ Closest career shapes in the era-normalized vector space:
 - [[keon-clark|Keon Clark]] — cosine 0.95
 - [[chris-andersen|Chris Andersen]] — cosine 0.95
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 14.6 pts · 16.8 reb · 2.4 ast · 4.6 blk per 100 (2017-18).
+
+**Strengths:**
+
+- Elite rim protection (+4.0σ vs era)
+- Efficient finisher inside the arc (+2.6σ vs era)
+- Relentless on the offensive glass (+2.3σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.3σ)
+- Shot volume well below era (−1.5σ)
+
+**Comparables:**
+
+- [[walker-kessler|Walker Kessler]] '23 (97% similar)
+- [[goga-bitadze|Goga Bitadze]] '25 (95% similar)
+- [[robert-williams-iii|Robert Williams III]] '19 (95% similar)
+- [[kelvin-cato|Kelvin Cato]] '99 (95% similar)
+- [[keon-clark|Keon Clark]] '01 (95% similar)
+- [[chris-andersen|Chris Andersen]] '10 (95% similar)
+
+**Career shape:** Charted 4 seasons (2015-16–2018-19). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -39,6 +39,33 @@ Closest career shapes in the era-normalized vector space:
 - [[nate-robinson|Nate Robinson]] — cosine 0.91
 - [[nick-van-exel|Nick Van Exel]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 27.8 pts · 4.6 reb · 11.7 ast · 2.6 stl per 100 (1996-97).
+
+**Strengths:**
+
+- High-volume table-setter (+2.6σ vs era)
+- High-volume three-point shooter (+2.1σ vs era)
+- Heavy shot volume, focal scoring option (+1.7σ vs era)
+
+**Areas of concern:**
+
+- Offensive-glass activity well below era (−1.2σ)
+
+**Comparables:**
+
+- [[toni-kukoc|Toni Kukoc]] '99 (93% similar)
+- [[brandon-jennings|Brandon Jennings]] '15 (92% similar)
+- [[damon-stoudamire|Damon Stoudamire]] '97 (92% similar)
+- [[mike-bibby|Mike Bibby]] '12 (92% similar)
+- [[nate-robinson|Nate Robinson]] '10 (91% similar)
+- [[nick-van-exel|Nick Van Exel]] '02 (91% similar)
+
+**Career shape:** Charted 6 seasons (1996-97–2001-02). Consistent Scoring Volume + Shot Volume profile across his career.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

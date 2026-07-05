@@ -35,6 +35,33 @@ Closest career shapes in the era-normalized vector space:
 - [[troy-hudson|Troy Hudson]] — cosine 0.93
 - [[anthony-goldwire|Anthony Goldwire]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 18.7 pts · 4.3 reb · 8.2 ast · 1.2 stl per 100 (1996-97).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.5σ vs era)
+- High-volume table-setter (+1.4σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.2σ)
+- Defensive rebounding well below era (−1.1σ)
+
+**Comparables:**
+
+- [[terry-dehere|Terry Dehere]] '97 (98% similar)
+- [[shammond-williams|Shammond Williams]] '04 (93% similar)
+- [[sebastian-telfair|Sebastian Telfair]] '10 (93% similar)
+- [[jerryd-bayless|Jerryd Bayless]] '19 (93% similar)
+- [[troy-hudson|Troy Hudson]] '06 (93% similar)
+- [[anthony-goldwire|Anthony Goldwire]] '01 (93% similar)
+
+**Career shape:** Charted 2 seasons (1996-97–1997-98). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

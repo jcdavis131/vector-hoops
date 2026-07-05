@@ -37,6 +37,33 @@ Closest career shapes in the era-normalized vector space:
 - [[tristan-da-silva|Tristan da Silva]] — cosine 0.92
 - [[jason-kapono|Jason Kapono]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 24.9 pts · 6.6 reb · 2.4 ast · 1.2 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+2.1σ vs era)
+- Knockdown three-point shooter (+1.7σ vs era)
+- High-volume three-point shooter (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.1σ)
+
+**Comparables:**
+
+- [[cam-reynolds|Cam Reynolds]] '19 (94% similar)
+- [[aj-green|AJ Green]] '23 (93% similar)
+- [[tony-snell|Tony Snell]] '21 (92% similar)
+- [[allen-crabbe|Allen Crabbe]] '20 (92% similar)
+- [[tristan-da-silva|Tristan da Silva]] '25 (92% similar)
+- [[jason-kapono|Jason Kapono]] '11 (91% similar)
+
+**Career shape:** Charted 4 seasons (2022-23–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

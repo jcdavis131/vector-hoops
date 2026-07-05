@@ -50,6 +50,33 @@ Closest career shapes in the era-normalized vector space:
 - [[kyle-lowry|Kyle Lowry]] — cosine 0.87
 - [[gary-grant|Gary Grant]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 25.4 pts · 8.6 reb · 12.1 ast · 3.0 stl per 100 (2002-03).
+
+**Strengths:**
+
+- High-volume table-setter (+2.9σ vs era)
+- Active hands, disrupts passing lanes (+2.1σ vs era)
+- Strong net on-court impact (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.2σ)
+
+**Comparables:**
+
+- [[ricky-rubio|Ricky Rubio]] '13 (90% similar)
+- [[charlie-ward|Charlie Ward]] '02 (90% similar)
+- [[jamaal-tinsley|Jamaal Tinsley]] '04 (89% similar)
+- [[scottie-pippen|Scottie Pippen]] '04 (89% similar)
+- [[kyle-lowry|Kyle Lowry]] '16 (87% similar)
+- [[gary-grant|Gary Grant]] '98 (87% similar)
+
+**Career shape:** Charted 17 seasons (1996-97–2012-13). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

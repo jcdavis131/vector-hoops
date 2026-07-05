@@ -38,6 +38,33 @@ Closest career shapes in the era-normalized vector space:
 - [[gilbert-arenas|Gilbert Arenas]] — cosine 0.91
 - [[brandon-jennings|Brandon Jennings]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 30.4 pts · 5.1 reb · 6.5 ast · 3.7 stl per 100 (2024-25).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+3.3σ vs era)
+- High-volume three-point shooter (+2.6σ vs era)
+- Heavy shot volume, focal scoring option (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.4σ)
+
+**Comparables:**
+
+- [[stephen-jackson|Stephen Jackson]] '02 (94% similar)
+- [[nate-robinson|Nate Robinson]] '10 (93% similar)
+- [[rodrigue-beaubois|Rodrigue Beaubois]] '10 (91% similar)
+- [[d-angelo-russell|D'Angelo Russell]] '19 (91% similar)
+- [[gilbert-arenas|Gilbert Arenas]] '06 (91% similar)
+- [[brandon-jennings|Brandon Jennings]] '15 (90% similar)
+
+**Career shape:** Charted 5 seasons (2021-22–2025-26). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

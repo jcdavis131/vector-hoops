@@ -37,6 +37,33 @@ Closest career shapes in the era-normalized vector space:
 - [[nick-smith-jr|Nick Smith Jr.]] — cosine 0.89
 - [[juan-carlos-navarro|Juan Carlos Navarro]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 20.3 pts · 2.8 reb · 4.5 ast · 1.6 stl per 100 (2017-18).
+
+**Strengths:**
+
+- High-volume three-point shooter (+3.1σ vs era)
+- Heavy shot volume, focal scoring option (+1.6σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−3.5σ)
+- Free-throw touch well below era (−2.0σ)
+
+**Comparables:**
+
+- [[caleb-love|Caleb Love]] '26 (93% similar)
+- [[james-robinson|James Robinson]] '98 (92% similar)
+- [[terry-dehere|Terry Dehere]] '97 (90% similar)
+- [[a-j-guyton|A.J. Guyton]] '02 (90% similar)
+- [[nick-smith-jr|Nick Smith Jr.]] '25 (89% similar)
+- [[juan-carlos-navarro|Juan Carlos Navarro]] '08 (88% similar)
+
+**Career shape:** Charted 4 seasons (2008-09–2017-18). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

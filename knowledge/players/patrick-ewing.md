@@ -39,6 +39,34 @@ Closest career shapes in the era-normalized vector space:
 - [[anthony-davis|Anthony Davis]] — cosine 0.87
 - [[alonzo-mourning|Alonzo Mourning]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 32.4 pts · 15.9 reb · 1.7 ast · 3.5 blk per 100 (1997-98).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+2.6σ vs era)
+- Draws contact, gets to the line often (+2.4σ vs era)
+- Featured, high-usage scoring role (+2.3σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.5σ)
+- Three-point accuracy well below era (−1.3σ)
+
+**Comparables:**
+
+- [[elden-campbell|Elden Campbell]] '02 (93% similar)
+- [[jermaine-o-neal|Jermaine O'Neal]] '05 (92% similar)
+- [[tim-duncan|Tim Duncan]] '04 (92% similar)
+- [[yao-ming|Yao Ming]] '07 (91% similar)
+- [[anthony-davis|Anthony Davis]] '15 (87% similar)
+- [[alonzo-mourning|Alonzo Mourning]] '00 (87% similar)
+
+**Career shape:** Charted 6 seasons (1996-97–2001-02). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

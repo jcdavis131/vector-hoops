@@ -37,6 +37,33 @@ Closest career shapes in the era-normalized vector space:
 - [[langston-galloway|Langston Galloway]] — cosine 0.95
 - [[richie-frahm|Richie Frahm]] — cosine 0.95
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 14.9 pts · 4.2 reb · 2.8 ast · 1.1 stl per 100 (1999-00).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.9σ vs era)
+- High-volume three-point shooter (+1.8σ vs era)
+
+**Areas of concern:**
+
+- Offensive-glass activity well below era (−1.2σ)
+- Finishing efficiency well below era (−1.2σ)
+
+**Comparables:**
+
+- [[wayne-ellington|Wayne Ellington]] '17 (98% similar)
+- [[daequan-cook|Daequan Cook]] '11 (96% similar)
+- [[matt-bullard|Matt Bullard]] '01 (96% similar)
+- [[roger-mason-jr|Roger Mason Jr.]] '03 (96% similar)
+- [[langston-galloway|Langston Galloway]] '18 (95% similar)
+- [[richie-frahm|Richie Frahm]] '04 (95% similar)
+
+**Career shape:** Charted 4 seasons (1996-97–1999-00). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

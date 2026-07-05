@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[justin-robinson|Justin Robinson]] — cosine 0.84
 - [[isaiah-briscoe|Isaiah Briscoe]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** SG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 12.1 pts · 4.5 reb · 8.9 ast · 1.3 stl per 100 (2025-26).
+
+**Strengths:**
+
+- High-volume table-setter (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.3σ)
+- Rim pressure (free-throw generation) well below era (−1.4σ)
+
+**Comparables:**
+
+- [[semaj-christon|Semaj Christon]] '17 (93% similar)
+- [[nate-wolters|Nate Wolters]] '15 (88% similar)
+- [[jacob-evans|Jacob Evans]] '19 (84% similar)
+- [[jerome-allen|Jerome Allen]] '97 (84% similar)
+- [[justin-robinson|Justin Robinson]] '22 (84% similar)
+- [[isaiah-briscoe|Isaiah Briscoe]] '19 (83% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

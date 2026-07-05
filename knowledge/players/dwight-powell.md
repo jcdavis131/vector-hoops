@@ -45,6 +45,34 @@ Closest career shapes in the era-normalized vector space:
 - [[onyeka-okongwu|Onyeka Okongwu]] — cosine 0.86
 - [[buck-williams|Buck Williams]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 17.1 pts · 10.6 reb · 2.3 ast · 1.6 stl per 100 (2022-23).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+3.2σ vs era)
+- Relentless on the offensive glass (+1.6σ vs era)
+- Strong net on-court impact (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.8σ)
+- Three-point volume well below era (−1.7σ)
+
+**Comparables:**
+
+- [[jaxson-hayes|Jaxson Hayes]] '26 (93% similar)
+- [[jeremy-evans|Jeremy Evans]] '12 (88% similar)
+- [[cody-zeller|Cody Zeller]] '22 (86% similar)
+- [[jordan-williams|Jordan Williams]] '12 (86% similar)
+- [[onyeka-okongwu|Onyeka Okongwu]] '22 (86% similar)
+- [[buck-williams|Buck Williams]] '97 (85% similar)
+
+**Career shape:** Charted 12 seasons (2014-15–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Rim Protection + Offensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

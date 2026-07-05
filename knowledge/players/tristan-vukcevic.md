@@ -35,6 +35,34 @@ Closest career shapes in the era-normalized vector space:
 - [[michael-beasley|Michael Beasley]] — cosine 0.75
 - [[moritz-wagner|Moritz Wagner]] — cosine 0.74
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 29.9 pts · 10.0 reb · 3.7 ast · 2.2 blk per 100 (2025-26).
+
+**Strengths:**
+
+- Elite rim protection (+1.5σ vs era)
+- Featured, high-usage scoring role (+1.3σ vs era)
+- Draws contact, gets to the line often (+1.3σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.9σ)
+- Turnover rate well above era (+1.6σ)
+
+**Comparables:**
+
+- [[christian-wood|Christian Wood]] '19 (78% similar)
+- [[alex-sarr|Alex Sarr]] '26 (78% similar)
+- [[gg-jackson|GG Jackson]] '24 (77% similar)
+- [[john-wallace|John Wallace]] '99 (76% similar)
+- [[michael-beasley|Michael Beasley]] '16 (75% similar)
+- [[moritz-wagner|Moritz Wagner]] '25 (74% similar)
+
+**Career shape:** Charted 2 seasons (2024-25–2025-26). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

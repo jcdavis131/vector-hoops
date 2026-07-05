@@ -44,6 +44,34 @@ Closest career shapes in the era-normalized vector space:
 - [[anthony-peeler|Anthony Peeler]] — cosine 0.93
 - [[anthony-roberson|Anthony Roberson]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** PG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 27.3 pts · 4.5 reb · 5.1 ast · 1.4 stl per 100 (2005-06).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.5σ vs era)
+- Heavy shot volume, focal scoring option (+2.3σ vs era)
+- Featured, high-usage scoring role (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.4σ)
+- Offensive-glass activity well below era (−1.2σ)
+
+**Comparables:**
+
+- [[bogdan-bogdanovic|Bogdan Bogdanović]] '21 (97% similar)
+- [[tony-delk|Tony Delk]] '05 (96% similar)
+- [[john-starks|John Starks]] '00 (95% similar)
+- [[dell-curry|Dell Curry]] '00 (93% similar)
+- [[anthony-peeler|Anthony Peeler]] '97 (93% similar)
+- [[anthony-roberson|Anthony Roberson]] '09 (93% similar)
+
+**Career shape:** Charted 11 seasons (2000-01–2010-11). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

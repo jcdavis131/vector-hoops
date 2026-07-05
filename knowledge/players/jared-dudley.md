@@ -46,6 +46,33 @@ Closest career shapes in the era-normalized vector space:
 - [[josh-green|Josh Green]] — cosine 0.85
 - [[darius-miller|Darius Miller]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** PF · Three-Point Accuracy (Low Turnovers). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 9.0 pts · 6.9 reb · 3.7 ast · 2.0 stl per 100 (2019-20).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+2.2σ vs era)
+- Rarely turns the ball over (−1.5σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.8σ)
+- Scoring load well below era (−1.7σ)
+
+**Comparables:**
+
+- [[greg-buckner|Greg Buckner]] '05 (94% similar)
+- [[anthony-parker|Anthony Parker]] '10 (88% similar)
+- [[derrick-walton-jr|Derrick Walton Jr.]] '20 (86% similar)
+- [[shane-battier|Shane Battier]] '13 (86% similar)
+- [[josh-green|Josh Green]] '26 (85% similar)
+- [[darius-miller|Darius Miller]] '21 (84% similar)
+
+**Career shape:** Charted 13 seasons (2007-08–2019-20). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

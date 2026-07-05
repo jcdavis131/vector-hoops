@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[neemias-queta|Neemias Queta]] — cosine 0.91
 - [[mark-williams|Mark Williams]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** PF · Rim Protection + Offensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 20.8 pts · 17.3 reb · 2.1 ast · 2.1 blk per 100 (2007-08).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+2.3σ vs era)
+- Strong presence on the defensive glass (+1.7σ vs era)
+- Efficient finisher inside the arc (+1.7σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.4σ)
+
+**Comparables:**
+
+- [[clint-capela|Clint Capela]] '21 (94% similar)
+- [[derrick-favors|Derrick Favors]] '21 (93% similar)
+- [[antonio-mcdyess|Antonio McDyess]] '01 (93% similar)
+- [[kenneth-faried|Kenneth Faried]] '12 (91% similar)
+- [[neemias-queta|Neemias Queta]] '24 (91% similar)
+- [[mark-williams|Mark Williams]] '26 (91% similar)
+
+**Career shape:** Charted 1 season (2007-08). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

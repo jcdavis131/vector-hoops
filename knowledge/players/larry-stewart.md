@@ -34,6 +34,31 @@ Closest career shapes in the era-normalized vector space:
 - [[jordan-walsh|Jordan Walsh]] — cosine 0.72
 - [[gui-santos|Gui Santos]] — cosine 0.71
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 15.5 pts · 8.9 reb · 2.7 ast · 1.6 stl per 100 (1996-97).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[grant-williams|Grant Williams]] '20 (74% similar)
+- [[okaro-white|Okaro White]] '17 (73% similar)
+- [[jared-jeffries|Jared Jeffries]] '11 (73% similar)
+- [[adam-keefe|Adam Keefe]] '98 (72% similar)
+- [[jordan-walsh|Jordan Walsh]] '25 (72% similar)
+- [[gui-santos|Gui Santos]] '25 (71% similar)
+
+**Career shape:** Charted 1 season (1996-97). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

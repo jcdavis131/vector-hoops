@@ -41,6 +41,32 @@ Closest career shapes in the era-normalized vector space:
 - [[tyson-chandler|Tyson Chandler]] — cosine 0.93
 - [[ed-davis|Ed Davis]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** Unlisted · Offensive Glass + Defensive Glass. Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 5.8 pts · 12.4 reb · 0.8 ast · 1.1 blk per 100 (2017-18).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−3.6σ)
+- Three-point accuracy well below era (−2.3σ)
+
+**Comparables:**
+
+- [[will-perdue|Will Perdue]] '99 (97% similar)
+- [[jamaal-magloire|Jamaal Magloire]] '08 (95% similar)
+- [[jamal-sampson|Jamal Sampson]] '07 (95% similar)
+- [[kwame-brown|Kwame Brown]] '13 (95% similar)
+- [[tyson-chandler|Tyson Chandler]] '20 (93% similar)
+- [[ed-davis|Ed Davis]] '22 (93% similar)
+
+**Career shape:** Charted 8 seasons (2010-11–2017-18). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

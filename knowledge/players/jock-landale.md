@@ -38,6 +38,33 @@ Closest career shapes in the era-normalized vector space:
 - [[jerome-jordan|Jerome Jordan]] — cosine 0.82
 - [[aron-baynes|Aron Baynes]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 16.8 pts · 10.6 reb · 4.0 ast · 2.0 blk per 100 (2023-24).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+1.8σ vs era)
+- Strong net on-court impact (+1.6σ vs era)
+- Elite rim protection (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Three-point volume well below era (−1.1σ)
+
+**Comparables:**
+
+- [[tony-bradley|Tony Bradley]] '20 (87% similar)
+- [[zach-edey|Zach Edey]] '25 (87% similar)
+- [[taj-gibson|Taj Gibson]] '21 (83% similar)
+- [[moussa-diabate|Moussa Diabaté]] '25 (83% similar)
+- [[jerome-jordan|Jerome Jordan]] '12 (82% similar)
+- [[aron-baynes|Aron Baynes]] '17 (82% similar)
+
+**Career shape:** Charted 5 seasons (2021-22–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

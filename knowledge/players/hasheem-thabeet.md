@@ -38,6 +38,34 @@ Closest career shapes in the era-normalized vector space:
 - [[joel-przybilla|Joel Przybilla]] — cosine 0.94
 - [[daniel-orton|Daniel Orton]] — cosine 0.94
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 13.0 pts · 15.5 reb · 0.0 ast · 3.7 blk per 100 (2011-12).
+
+**Strengths:**
+
+- Elite rim protection (+2.2σ vs era)
+- Relentless on the offensive glass (+1.9σ vs era)
+- Efficient finisher inside the arc (+1.3σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−4.0σ)
+- Ball-hawking activity well below era (−1.9σ)
+
+**Comparables:**
+
+- [[brian-skinner|Brian Skinner]] '08 (96% similar)
+- [[bernard-james|Bernard James]] '13 (95% similar)
+- [[bismack-biyombo|Bismack Biyombo]] '23 (95% similar)
+- [[ibou-badji|Ibou Badji]] '24 (95% similar)
+- [[joel-przybilla|Joel Przybilla]] '01 (94% similar)
+- [[daniel-orton|Daniel Orton]] '12 (94% similar)
+
+**Career shape:** Charted 5 seasons (2009-10–2013-14). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

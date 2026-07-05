@@ -40,6 +40,34 @@ Closest career shapes in the era-normalized vector space:
 - [[jalen-green|Jalen Green]] — cosine 0.83
 - [[carmelo-anthony|Carmelo Anthony]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** SF · Scoring Volume + Shot Volume. Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 30.6 pts · 9.1 reb · 7.9 ast · 1.2 stl per 100 (2024-25).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+1.7σ vs era)
+- Heavy shot volume, focal scoring option (+1.7σ vs era)
+- Featured, high-usage scoring role (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.5σ)
+- Free-throw touch well below era (−1.0σ)
+
+**Comparables:**
+
+- [[don-maclean|Don MacLean]] '99 (90% similar)
+- [[paolo-banchero|Paolo Banchero]] '25 (89% similar)
+- [[brandon-ingram|Brandon Ingram]] '25 (88% similar)
+- [[cam-thomas|Cam Thomas]] '25 (87% similar)
+- [[jalen-green|Jalen Green]] '26 (83% similar)
+- [[carmelo-anthony|Carmelo Anthony]] '13 (83% similar)
+
+**Career shape:** Charted 7 seasons (2019-20–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

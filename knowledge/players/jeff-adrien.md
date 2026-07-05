@@ -37,6 +37,34 @@ Closest career shapes in the era-normalized vector space:
 - [[samaki-walker|Samaki Walker]] — cosine 0.91
 - [[omer-asik|Omer Asik]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** PF · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 13.7 pts · 17.5 reb · 3.4 ast · 2.1 blk per 100 (2014-15).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+2.2σ vs era)
+- Draws contact, gets to the line often (+1.9σ vs era)
+- Relentless on the offensive glass (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.8σ)
+- Shot volume well below era (−1.5σ)
+
+**Comparables:**
+
+- [[tristan-thompson|Tristan Thompson]] '25 (93% similar)
+- [[jason-thompson|Jason Thompson]] '15 (92% similar)
+- [[kris-humphries|Kris Humphries]] '11 (92% similar)
+- [[moses-brown|Moses Brown]] '23 (92% similar)
+- [[samaki-walker|Samaki Walker]] '02 (91% similar)
+- [[omer-asik|Omer Asik]] '18 (91% similar)
+
+**Career shape:** Charted 4 seasons (2010-11–2014-15). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -38,6 +38,33 @@ Closest career shapes in the era-normalized vector space:
 - [[andrew-gaze|Andrew Gaze]] — cosine 0.79
 - [[mickael-pietrus|Mickael Pietrus]] — cosine 0.78
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 11.3 pts · 7.4 reb · 3.9 ast · 3.0 stl per 100 (2000-01).
+
+**Strengths:**
+
+- High-volume three-point shooter (+3.3σ vs era)
+- Active hands, disrupts passing lanes (+2.2σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−4.0σ)
+- Finishing efficiency well below era (−3.3σ)
+
+**Comparables:**
+
+- [[jordan-hamilton|Jordan Hamilton]] '12 (84% similar)
+- [[adam-flagler|Adam Flagler]] '25 (83% similar)
+- [[thomas-gardner|Thomas Gardner]] '09 (81% similar)
+- [[jaren-jackson|Jaren Jackson]] '01 (80% similar)
+- [[andrew-gaze|Andrew Gaze]] '99 (79% similar)
+- [[mickael-pietrus|Mickael Pietrus]] '11 (78% similar)
+
+**Career shape:** Charted 5 seasons (1996-97–2000-01). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

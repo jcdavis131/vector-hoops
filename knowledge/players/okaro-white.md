@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[travis-hansen|Travis Hansen]] — cosine 0.79
 - [[solomon-hill|Solomon Hill]] — cosine 0.78
 
+## Scouting report
+
+**Play style:** PF · Three-Point Accuracy (Low Turnovers). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 10.4 pts · 8.6 reb · 2.2 ast · 1.1 stl per 100 (2016-17).
+
+**Strengths:**
+
+- Strong net on-court impact (+1.3σ vs era)
+- Reliable touch from the free-throw line (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.6σ)
+- Scoring load well below era (−1.5σ)
+
+**Comparables:**
+
+- [[miye-oni|Miye Oni]] '21 (91% similar)
+- [[grant-williams|Grant Williams]] '20 (88% similar)
+- [[sion-james|Sion James]] '26 (85% similar)
+- [[maxi-kleber|Maxi Kleber]] '26 (80% similar)
+- [[travis-hansen|Travis Hansen]] '04 (79% similar)
+- [[solomon-hill|Solomon Hill]] '21 (78% similar)
+
+**Career shape:** Charted 1 season (2016-17). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

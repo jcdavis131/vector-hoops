@@ -40,6 +40,33 @@ Closest career shapes in the era-normalized vector space:
 - [[jalen-smith|Jalen Smith]] — cosine 0.86
 - [[kel-el-ware|Kel'el Ware]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 25.1 pts · 14.7 reb · 1.3 ast · 1.3 blk per 100 (2022-23).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+1.8σ vs era)
+- Strong presence on the defensive glass (+1.8σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.4σ)
+- Table-setting role well below era (−1.2σ)
+
+**Comparables:**
+
+- [[john-collins|John Collins]] '19 (91% similar)
+- [[pj-hall|PJ Hall]] '26 (89% similar)
+- [[richaun-holmes|Richaun Holmes]] '25 (86% similar)
+- [[marcin-gortat|Marcin Gortat]] '09 (86% similar)
+- [[jalen-smith|Jalen Smith]] '25 (86% similar)
+- [[kel-el-ware|Kel'el Ware]] '26 (85% similar)
+
+**Career shape:** Charted 7 seasons (2018-19–2025-26). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

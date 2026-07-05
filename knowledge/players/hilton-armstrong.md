@@ -38,6 +38,34 @@ Closest career shapes in the era-normalized vector space:
 - [[brian-skinner|Brian Skinner]] — cosine 0.91
 - [[bernard-james|Bernard James]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 9.4 pts · 13.4 reb · 1.4 ast · 2.1 blk per 100 (2010-11).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+1.4σ vs era)
+- Strong presence on the defensive glass (+1.1σ vs era)
+- Elite rim protection (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.8σ)
+- Free-throw touch well below era (−1.8σ)
+
+**Comparables:**
+
+- [[sasha-kaun|Sasha Kaun]] '16 (94% similar)
+- [[hasheem-thabeet|Hasheem Thabeet]] '12 (92% similar)
+- [[jerome-moiso|Jerome Moiso]] '01 (91% similar)
+- [[lou-amundson|Lou Amundson]] '14 (91% similar)
+- [[brian-skinner|Brian Skinner]] '08 (91% similar)
+- [[bernard-james|Bernard James]] '13 (90% similar)
+
+**Career shape:** Charted 5 seasons (2006-07–2010-11). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

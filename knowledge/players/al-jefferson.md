@@ -47,6 +47,34 @@ Closest career shapes in the era-normalized vector space:
 - [[lamarcus-aldridge|LaMarcus Aldridge]] — cosine 0.84
 - [[nikola-vucevic|Nikola Vučević]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 32.7 pts · 15.5 reb · 2.2 ast · 2.3 blk per 100 (2008-09).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+2.6σ vs era)
+- Featured, high-usage scoring role (+2.2σ vs era)
+- Strong presence on the defensive glass (+1.7σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.4σ)
+- Three-point volume well below era (−1.0σ)
+
+**Comparables:**
+
+- [[antonio-mcdyess|Antonio McDyess]] '01 (88% similar)
+- [[elton-brand|Elton Brand]] '07 (88% similar)
+- [[matt-geiger|Matt Geiger]] '98 (87% similar)
+- [[deandre-ayton|Deandre Ayton]] '26 (86% similar)
+- [[lamarcus-aldridge|LaMarcus Aldridge]] '18 (84% similar)
+- [[nikola-vucevic|Nikola Vučević]] '19 (84% similar)
+
+**Career shape:** Charted 14 seasons (2004-05–2017-18). Entered as a Rim Protection + Offensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

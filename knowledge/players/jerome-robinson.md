@@ -36,6 +36,33 @@ Closest career shapes in the era-normalized vector space:
 - [[yakhouba-diawara|Yakhouba Diawara]] — cosine 0.82
 - [[tony-dumas|Tony Dumas]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 17.3 pts · 3.4 reb · 2.8 ast · 1.7 blk per 100 (2023-24).
+
+**Strengths:**
+
+- Strong net on-court impact (+2.3σ vs era)
+- Rarely turns the ball over (−1.4σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.7σ)
+- Finishing efficiency well below era (−1.7σ)
+
+**Comparables:**
+
+- [[joe-wieskamp|Joe Wieskamp]] '22 (88% similar)
+- [[thomas-gardner|Thomas Gardner]] '09 (85% similar)
+- [[ethan-thompson|Ethan Thompson]] '26 (83% similar)
+- [[jake-layman|Jake Layman]] '18 (82% similar)
+- [[yakhouba-diawara|Yakhouba Diawara]] '09 (82% similar)
+- [[tony-dumas|Tony Dumas]] '97 (81% similar)
+
+**Career shape:** Charted 3 seasons (2018-19–2023-24). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

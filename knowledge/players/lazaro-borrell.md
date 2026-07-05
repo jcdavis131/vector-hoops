@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[cory-jefferson|Cory Jefferson]] — cosine 0.71
 - [[sam-dekker|Sam Dekker]] — cosine 0.71
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass + Defensive Glass. Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 18.1 pts · 11.7 reb · 2.9 ast · 1.8 stl per 100 (1999-00).
+
+**Strengths:**
+
+- Strong net on-court impact (+1.7σ vs era)
+- Rarely turns the ball over (−1.2σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.6σ)
+- Three-point accuracy well below era (−1.3σ)
+
+**Comparables:**
+
+- [[kevin-jones|Kevin Jones]] '13 (84% similar)
+- [[othello-hunter|Othello Hunter]] '09 (78% similar)
+- [[devontae-cacok|Devontae Cacok]] '21 (78% similar)
+- [[chris-taft|Chris Taft]] '06 (72% similar)
+- [[cory-jefferson|Cory Jefferson]] '15 (71% similar)
+- [[sam-dekker|Sam Dekker]] '19 (71% similar)
+
+**Career shape:** Charted 1 season (1999-00). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

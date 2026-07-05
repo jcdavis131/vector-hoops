@@ -38,6 +38,32 @@ Closest career shapes in the era-normalized vector space:
 - [[will-solomon|Will Solomon]] — cosine 0.90
 - [[tierre-brown|Tierre Brown]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 17.3 pts · 4.3 reb · 5.4 ast · 1.8 stl per 100 (2004-05).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Turnover rate well above era (+4.0σ)
+- On-court net impact well below era (−4.0σ)
+
+**Comparables:**
+
+- [[marcus-banks|Marcus Banks]] '09 (92% similar)
+- [[cory-alexander|Cory Alexander]] '01 (92% similar)
+- [[jay-williams|Jay Williams]] '03 (92% similar)
+- [[diante-garrett|Diante Garrett]] '13 (90% similar)
+- [[will-solomon|Will Solomon]] '02 (90% similar)
+- [[tierre-brown|Tierre Brown]] '02 (90% similar)
+
+**Career shape:** Charted 5 seasons (2002-03–2007-08). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

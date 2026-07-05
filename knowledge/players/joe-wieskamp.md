@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[rodney-mcgruder|Rodney McGruder]] — cosine 0.86
 - [[bruce-bowen|Bruce Bowen]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 14.2 pts · 3.2 reb · 2.1 ast · 0.9 stl per 100 (2021-22).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.9σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.7σ)
+- Defensive rebounding well below era (−1.7σ)
+
+**Comparables:**
+
+- [[yakhouba-diawara|Yakhouba Diawara]] '09 (93% similar)
+- [[james-young|James Young]] '16 (90% similar)
+- [[jerome-robinson|Jerome Robinson]] '24 (88% similar)
+- [[antoine-wright|Antoine Wright]] '06 (88% similar)
+- [[rodney-mcgruder|Rodney McGruder]] '18 (86% similar)
+- [[bruce-bowen|Bruce Bowen]] '99 (84% similar)
+
+**Career shape:** Charted 1 season (2021-22). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -42,6 +42,32 @@ Closest career shapes in the era-normalized vector space:
 - [[alonzo-mourning|Alonzo Mourning]] — cosine 0.88
 - [[hassan-whiteside|Hassan Whiteside]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 16.4 pts · 12.2 reb · 0.8 ast · 2.1 blk per 100 (2008-09).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+3.9σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.8σ)
+- Turnover rate well above era (+1.6σ)
+
+**Comparables:**
+
+- [[javale-mcgee|JaVale McGee]] '17 (91% similar)
+- [[isaiah-jackson|Isaiah Jackson]] '24 (90% similar)
+- [[anthony-randolph|Anthony Randolph]] '13 (90% similar)
+- [[elton-brand|Elton Brand]] '07 (89% similar)
+- [[alonzo-mourning|Alonzo Mourning]] '00 (88% similar)
+- [[hassan-whiteside|Hassan Whiteside]] '22 (88% similar)
+
+**Career shape:** Charted 9 seasons (2000-01–2008-09). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

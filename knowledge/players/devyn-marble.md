@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[robert-archibald|Robert Archibald]] — cosine 0.83
 - [[johnny-davis|Johnny Davis]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 11.5 pts · 7.3 reb · 2.3 ast · 2.5 stl per 100 (2015-16).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.6σ vs era)
+- Rarely turns the ball over (−1.4σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.7σ)
+- Finishing efficiency well below era (−2.2σ)
+
+**Comparables:**
+
+- [[aaron-harrison|Aaron Harrison]] '16 (95% similar)
+- [[james-young|James Young]] '16 (86% similar)
+- [[dj-strawberry|DJ Strawberry]] '08 (86% similar)
+- [[kedrick-brown|Kedrick Brown]] '02 (83% similar)
+- [[robert-archibald|Robert Archibald]] '04 (83% similar)
+- [[johnny-davis|Johnny Davis]] '24 (83% similar)
+
+**Career shape:** Charted 1 season (2015-16). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

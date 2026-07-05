@@ -36,6 +36,33 @@ Closest career shapes in the era-normalized vector space:
 - [[davis-bertans|Davis Bertans]] — cosine 0.95
 - [[steve-novak|Steve Novak]] — cosine 0.94
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 19.3 pts · 5.9 reb · 2.5 ast · 1.7 stl per 100 (2003-04).
+
+**Strengths:**
+
+- Rarely turns the ball over (−2.5σ vs era)
+- High-volume three-point shooter (+2.4σ vs era)
+- Strong net on-court impact (+1.6σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[james-jones|James Jones]] '14 (95% similar)
+- [[dennis-scott|Dennis Scott]] '00 (95% similar)
+- [[matt-bullard|Matt Bullard]] '01 (95% similar)
+- [[lindy-waters-iii|Lindy Waters III]] '23 (95% similar)
+- [[davis-bertans|Davis Bertans]] '24 (95% similar)
+- [[steve-novak|Steve Novak]] '15 (94% similar)
+
+**Career shape:** Charted 3 seasons (2003-04–2005-06). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[darnell-jackson|Darnell Jackson]] — cosine 0.80
 - [[john-edwards|John Edwards]] — cosine 0.79
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 13.4 pts · 8.0 reb · 2.1 ast · 0.8 stl per 100 (2023-24).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.3σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.2σ)
+- Shot volume well below era (−1.4σ)
+
+**Comparables:**
+
+- [[lance-thomas|Lance Thomas]] '13 (84% similar)
+- [[dequan-jones|DeQuan Jones]] '13 (84% similar)
+- [[bryce-mcgowens|Bryce McGowens]] '26 (83% similar)
+- [[olivier-maxence-prosper|Olivier-Maxence Prosper]] '25 (81% similar)
+- [[darnell-jackson|Darnell Jackson]] '10 (80% similar)
+- [[john-edwards|John Edwards]] '05 (79% similar)
+
+**Career shape:** Charted 2 seasons (2023-24–2024-25). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

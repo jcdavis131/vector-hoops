@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[ethan-thompson|Ethan Thompson]] — cosine 0.92
 - [[yakhouba-diawara|Yakhouba Diawara]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 12.4 pts · 5.1 reb · 2.5 ast · 1.1 stl per 100 (2015-16).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.7σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.3σ)
+- Scoring load well below era (−1.2σ)
+
+**Comparables:**
+
+- [[travis-hansen|Travis Hansen]] '04 (93% similar)
+- [[terrance-ferguson|Terrance Ferguson]] '20 (93% similar)
+- [[kyle-singler|Kyle Singler]] '17 (93% similar)
+- [[anthony-brown|Anthony Brown]] '16 (92% similar)
+- [[ethan-thompson|Ethan Thompson]] '26 (92% similar)
+- [[yakhouba-diawara|Yakhouba Diawara]] '09 (91% similar)
+
+**Career shape:** Charted 1 season (2015-16). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -36,6 +36,34 @@ Closest career shapes in the era-normalized vector space:
 - [[don-reid|Don Reid]] — cosine 0.82
 - [[jeremy-evans|Jeremy Evans]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 11.4 pts · 11.0 reb · 1.9 ast · 4.0 blk per 100 (2016-17).
+
+**Strengths:**
+
+- Elite rim protection (+3.6σ vs era)
+- Efficient finisher inside the arc (+3.0σ vs era)
+- Active hands, disrupts passing lanes (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−2.0σ)
+- Three-point volume well below era (−1.4σ)
+
+**Comparables:**
+
+- [[bo-outlaw|Bo Outlaw]] '00 (89% similar)
+- [[collin-murray-boyles|Collin Murray-Boyles]] '26 (85% similar)
+- [[robert-williams-iii|Robert Williams III]] '19 (85% similar)
+- [[amir-johnson|Amir Johnson]] '08 (84% similar)
+- [[don-reid|Don Reid]] '01 (82% similar)
+- [[jeremy-evans|Jeremy Evans]] '12 (82% similar)
+
+**Career shape:** Charted 3 seasons (2015-16–2017-18). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

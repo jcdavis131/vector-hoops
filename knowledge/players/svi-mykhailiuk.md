@@ -41,6 +41,34 @@ Closest career shapes in the era-normalized vector space:
 - [[kareem-rush|Kareem Rush]] — cosine 0.91
 - [[matt-maloney|Matt Maloney]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 19.1 pts · 6.0 reb · 4.1 ast · 1.3 stl per 100 (2023-24).
+
+**Strengths:**
+
+- Strong net on-court impact (+2.6σ vs era)
+- High-volume three-point shooter (+1.7σ vs era)
+- Rarely turns the ball over (−1.1σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.2σ)
+- Rim-protection impact well below era (−1.1σ)
+
+**Comparables:**
+
+- [[quentin-grimes|Quentin Grimes]] '24 (96% similar)
+- [[daniel-gibson|Daniel Gibson]] '13 (92% similar)
+- [[gabe-vincent|Gabe Vincent]] '26 (92% similar)
+- [[charlie-bell|Charlie Bell]] '11 (91% similar)
+- [[kareem-rush|Kareem Rush]] '09 (91% similar)
+- [[matt-maloney|Matt Maloney]] '00 (90% similar)
+
+**Career shape:** Charted 8 seasons (2018-19–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -40,6 +40,32 @@ Closest career shapes in the era-normalized vector space:
 - [[deyonta-davis|Deyonta Davis]] — cosine 0.89
 - [[ervin-johnson|Ervin Johnson]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 12.9 pts · 11.9 reb · 2.1 ast · 1.6 blk per 100 (2001-02).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.7σ)
+- On-court net impact well below era (−2.1σ)
+
+**Comparables:**
+
+- [[brian-skinner|Brian Skinner]] '08 (93% similar)
+- [[dean-garrett|Dean Garrett]] '02 (93% similar)
+- [[greg-anderson|Greg Anderson]] '98 (91% similar)
+- [[mickell-gladness|Mickell Gladness]] '12 (91% similar)
+- [[deyonta-davis|Deyonta Davis]] '17 (89% similar)
+- [[ervin-johnson|Ervin Johnson]] '05 (89% similar)
+
+**Career shape:** Charted 7 seasons (1996-97–2002-03). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

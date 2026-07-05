@@ -45,6 +45,33 @@ Closest career shapes in the era-normalized vector space:
 - [[sam-dekker|Sam Dekker]] — cosine 0.89
 - [[john-konchar|John Konchar]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** PF · Three-Point Accuracy (Low Turnovers). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 11.0 pts · 9.5 reb · 2.3 ast · 3.6 stl per 100 (2011-12).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+3.2σ vs era)
+- Rarely turns the ball over (−1.5σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.6σ)
+- Rim pressure (free-throw generation) well below era (−1.5σ)
+
+**Comparables:**
+
+- [[andre-roberson|Andre Roberson]] '18 (94% similar)
+- [[luc-mbah-a-moute|Luc Mbah a Moute]] '16 (94% similar)
+- [[ryan-bowen|Ryan Bowen]] '09 (89% similar)
+- [[maurice-harkless|Maurice Harkless]] '15 (89% similar)
+- [[sam-dekker|Sam Dekker]] '19 (89% similar)
+- [[john-konchar|John Konchar]] '20 (89% similar)
+
+**Career shape:** Charted 12 seasons (2000-01–2011-12). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

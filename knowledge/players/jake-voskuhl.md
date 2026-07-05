@@ -42,6 +42,32 @@ Closest career shapes in the era-normalized vector space:
 - [[ed-pinckney|Ed Pinckney]] — cosine 0.90
 - [[shelden-williams|Shelden Williams]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 10.9 pts · 12.4 reb · 1.8 ast · 2.2 blk per 100 (2000-01).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−3.5σ)
+- Turnover rate well above era (+1.6σ)
+
+**Comparables:**
+
+- [[colin-castleton|Colin Castleton]] '25 (94% similar)
+- [[jake-tsakalidis|Jake Tsakalidis]] '06 (91% similar)
+- [[chris-richard|Chris Richard]] '10 (91% similar)
+- [[trey-jemison-iii|Trey Jemison III]] '25 (90% similar)
+- [[ed-pinckney|Ed Pinckney]] '97 (90% similar)
+- [[shelden-williams|Shelden Williams]] '12 (90% similar)
+
+**Career shape:** Charted 9 seasons (2000-01–2008-09). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

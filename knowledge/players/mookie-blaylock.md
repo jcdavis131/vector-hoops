@@ -39,6 +39,33 @@ Closest career shapes in the era-normalized vector space:
 - [[rafer-alston|Rafer Alston]] — cosine 0.92
 - [[charlie-ward|Charlie Ward]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 24.2 pts · 7.3 reb · 8.3 ast · 3.8 stl per 100 (1996-97).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.9σ vs era)
+- High-volume three-point shooter (+2.3σ vs era)
+- Strong net on-court impact (+1.7σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[jose-alvarado|Jose Alvarado]] '22 (94% similar)
+- [[greg-anthony|Greg Anthony]] '99 (94% similar)
+- [[lindsey-hunter|Lindsey Hunter]] '09 (93% similar)
+- [[collin-gillespie|Collin Gillespie]] '24 (92% similar)
+- [[rafer-alston|Rafer Alston]] '00 (92% similar)
+- [[charlie-ward|Charlie Ward]] '02 (89% similar)
+
+**Career shape:** Charted 6 seasons (1996-97–2001-02). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

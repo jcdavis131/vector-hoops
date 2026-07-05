@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[darrun-hilliard|Darrun Hilliard]] — cosine 0.76
 - [[tony-dumas|Tony Dumas]] — cosine 0.76
 
+## Scouting report
+
+**Play style:** SG · Playmaking + Steals. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 18.6 pts · 4.8 reb · 5.3 ast · 1.6 stl per 100 (2014-15).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.5σ)
+- Finishing efficiency well below era (−1.2σ)
+
+**Comparables:**
+
+- [[lindell-wigginton|Lindell Wigginton]] '22 (80% similar)
+- [[jiri-welsch|Jiri Welsch]] '03 (79% similar)
+- [[brodric-thomas|Brodric Thomas]] '21 (78% similar)
+- [[rodrick-rhodes|Rodrick Rhodes]] '98 (77% similar)
+- [[darrun-hilliard|Darrun Hilliard]] '17 (76% similar)
+- [[tony-dumas|Tony Dumas]] '97 (76% similar)
+
+**Career shape:** Charted 2 seasons (2014-15–2015-16). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

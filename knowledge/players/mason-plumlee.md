@@ -46,6 +46,34 @@ Closest career shapes in the era-normalized vector space:
 - [[miles-plumlee|Miles Plumlee]] — cosine 0.89
 - [[rudy-gobert|Rudy Gobert]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 8.4 pts · 14.4 reb · 5.4 ast · 2.7 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+4.0σ vs era)
+- Active hands, disrupts passing lanes (+1.6σ vs era)
+- Strong presence on the defensive glass (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.9σ)
+- Shot volume well below era (−2.7σ)
+
+**Comparables:**
+
+- [[ian-mahinmi|Ian Mahinmi]] '10 (92% similar)
+- [[jalen-duren|Jalen Duren]] '26 (91% similar)
+- [[deandre-jordan|DeAndre Jordan]] '16 (91% similar)
+- [[tyson-chandler|Tyson Chandler]] '20 (89% similar)
+- [[miles-plumlee|Miles Plumlee]] '19 (89% similar)
+- [[rudy-gobert|Rudy Gobert]] '21 (89% similar)
+
+**Career shape:** Charted 13 seasons (2013-14–2025-26). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

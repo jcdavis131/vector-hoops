@@ -42,6 +42,34 @@ Closest career shapes in the era-normalized vector space:
 - [[dj-mbenga|DJ Mbenga]] — cosine 0.91
 - [[jerome-james|Jerome James]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 15.6 pts · 14.0 reb · 2.3 ast · 4.9 blk per 100 (2003-04).
+
+**Strengths:**
+
+- Elite rim protection (+3.3σ vs era)
+- Strong presence on the defensive glass (+1.7σ vs era)
+- Draws contact, gets to the line often (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−3.0σ)
+- On-court net impact well below era (−2.2σ)
+
+**Comparables:**
+
+- [[norvel-pelle|Norvel Pelle]] '20 (94% similar)
+- [[michael-olowokandi|Michael Olowokandi]] '04 (92% similar)
+- [[sean-williams|Sean Williams]] '10 (92% similar)
+- [[larry-sanders|Larry Sanders]] '12 (91% similar)
+- [[dj-mbenga|DJ Mbenga]] '06 (91% similar)
+- [[jerome-james|Jerome James]] '06 (89% similar)
+
+**Career shape:** Charted 9 seasons (2003-04–2011-12). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

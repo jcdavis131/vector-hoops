@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[nate-hinton|Nate Hinton]] — cosine 0.79
 - [[mark-davis|Mark Davis]] — cosine 0.79
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 17.6 pts · 4.2 reb · 3.1 ast · 3.1 stl per 100 (2020-21).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.8σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−3.1σ)
+- Defensive rebounding well below era (−1.4σ)
+
+**Comparables:**
+
+- [[briante-weber|Briante Weber]] '18 (85% similar)
+- [[josh-christopher|Josh Christopher]] '23 (84% similar)
+- [[bernard-robinson|Bernard Robinson]] '07 (81% similar)
+- [[bilal-coulibaly|Bilal Coulibaly]] '26 (80% similar)
+- [[nate-hinton|Nate Hinton]] '21 (79% similar)
+- [[mark-davis|Mark Davis]] '98 (79% similar)
+
+**Career shape:** Charted 1 season (2020-21). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

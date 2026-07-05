@@ -37,6 +37,33 @@ Closest career shapes in the era-normalized vector space:
 - [[ibou-badji|Ibou Badji]] — cosine 0.91
 - [[daniel-orton|Daniel Orton]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 10.5 pts · 11.3 reb · 2.3 ast · 1.5 stl per 100 (2014-15).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+4.0σ vs era)
+- Relentless on the offensive glass (+2.5σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.7σ)
+- Turnover rate well above era (+2.6σ)
+
+**Comparables:**
+
+- [[pervis-ellison|Pervis Ellison]] '98 (95% similar)
+- [[oliver-miller|Oliver Miller]] '00 (93% similar)
+- [[don-reid|Don Reid]] '01 (92% similar)
+- [[hasheem-thabeet|Hasheem Thabeet]] '12 (91% similar)
+- [[ibou-badji|Ibou Badji]] '24 (91% similar)
+- [[daniel-orton|Daniel Orton]] '12 (90% similar)
+
+**Career shape:** Charted 4 seasons (2011-12–2014-15). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[ben-mclemore|Ben McLemore]] — cosine 0.89
 - [[quincy-douby|Quincy Douby]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 21.0 pts · 4.4 reb · 2.4 ast · 1.2 stl per 100 (2020-21).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.2σ vs era)
+- High-volume three-point shooter (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.1σ)
+
+**Comparables:**
+
+- [[pj-hairston|PJ Hairston]] '15 (93% similar)
+- [[julian-strawther|Julian Strawther]] '24 (93% similar)
+- [[armoni-brooks|Armoni Brooks]] '21 (91% similar)
+- [[jawad-williams|Jawad Williams]] '11 (90% similar)
+- [[ben-mclemore|Ben McLemore]] '22 (89% similar)
+- [[quincy-douby|Quincy Douby]] '08 (89% similar)
+
+**Career shape:** Charted 2 seasons (2019-20–2020-21). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -40,6 +40,33 @@ Closest career shapes in the era-normalized vector space:
 - [[christian-laettner|Christian Laettner]] — cosine 0.64
 - [[slava-medvedenko|Slava Medvedenko]] — cosine 0.63
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 17.5 pts · 11.7 reb · 2.5 ast · 2.2 stl per 100 (2003-04).
+
+**Strengths:**
+
+- Strong net on-court impact (+1.2σ vs era)
+- Relentless on the offensive glass (+1.1σ vs era)
+- Efficient finisher inside the arc (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.4σ)
+
+**Comparables:**
+
+- [[wayne-simien|Wayne Simien]] '06 (82% similar)
+- [[hassan-adams|Hassan Adams]] '07 (68% similar)
+- [[mike-harris|Mike Harris]] '14 (68% similar)
+- [[tom-gugliotta|Tom Gugliotta]] '03 (65% similar)
+- [[christian-laettner|Christian Laettner]] '05 (64% similar)
+- [[slava-medvedenko|Slava Medvedenko]] '02 (63% similar)
+
+**Career shape:** Charted 7 seasons (2003-04–2009-10). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

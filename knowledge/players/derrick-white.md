@@ -42,6 +42,33 @@ Closest career shapes in the era-normalized vector space:
 - [[george-hill|George Hill]] — cosine 0.72
 - [[steven-smith|Steven Smith]] — cosine 0.70
 
+## Scouting report
+
+**Play style:** PG · Three-Point Accuracy (Low Turnovers). Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 18.4 pts · 8.8 reb · 3.1 ast · 1.4 stl per 100 (2017-18).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+2.3σ vs era)
+- Strong net on-court impact (+1.8σ vs era)
+- Draws contact, gets to the line often (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.1σ)
+
+**Comparables:**
+
+- [[terry-porter|Terry Porter]] '02 (80% similar)
+- [[jeff-hornacek|Jeff Hornacek]] '97 (76% similar)
+- [[fred-vanvleet|Fred VanVleet]] '23 (74% similar)
+- [[chauncey-billups|Chauncey Billups]] '06 (72% similar)
+- [[george-hill|George Hill]] '22 (72% similar)
+- [[steven-smith|Steven Smith]] '99 (70% similar)
+
+**Career shape:** Charted 9 seasons (2017-18–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

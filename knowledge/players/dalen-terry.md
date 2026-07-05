@@ -37,6 +37,31 @@ Closest career shapes in the era-normalized vector space:
 - [[ronnie-brewer|Ronnie Brewer]] — cosine 0.87
 - [[dyson-daniels|Dyson Daniels]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 14.7 pts · 7.2 reb · 5.5 ast · 2.4 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.0σ)
+
+**Comparables:**
+
+- [[cody-martin|Cody Martin]] '21 (94% similar)
+- [[sindarius-thornwell|Sindarius Thornwell]] '21 (89% similar)
+- [[brandon-paul|Brandon Paul]] '18 (87% similar)
+- [[deandre-liggins|DeAndre Liggins]] '12 (87% similar)
+- [[ronnie-brewer|Ronnie Brewer]] '14 (87% similar)
+- [[dyson-daniels|Dyson Daniels]] '25 (85% similar)
+
+**Career shape:** Charted 4 seasons (2022-23–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -39,6 +39,33 @@ Closest career shapes in the era-normalized vector space:
 - [[justin-edwards|Justin Edwards]] — cosine 0.84
 - [[garrett-temple|Garrett Temple]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 8.5 pts · 5.4 reb · 1.8 ast · 2.7 stl per 100 (2024-25).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.7σ vs era)
+- Rarely turns the ball over (−1.5σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.9σ)
+- Scoring load well below era (−1.8σ)
+
+**Comparables:**
+
+- [[markel-brown|Markel Brown]] '15 (92% similar)
+- [[damien-wilkins|Damien Wilkins]] '18 (89% similar)
+- [[kim-english|Kim English]] '13 (88% similar)
+- [[ziaire-williams|Ziaire Williams]] '26 (84% similar)
+- [[justin-edwards|Justin Edwards]] '26 (84% similar)
+- [[garrett-temple|Garrett Temple]] '11 (84% similar)
+
+**Career shape:** Charted 6 seasons (2019-20–2024-25). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

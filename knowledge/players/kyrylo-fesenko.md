@@ -36,6 +36,34 @@ Closest career shapes in the era-normalized vector space:
 - [[moussa-cisse|Moussa Cisse]] — cosine 0.88
 - [[greg-ostertag|Greg Ostertag]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 16.0 pts · 12.1 reb · 1.3 ast · 4.9 blk per 100 (2008-09).
+
+**Strengths:**
+
+- Elite rim protection (+3.4σ vs era)
+- Efficient finisher inside the arc (+2.0σ vs era)
+- Active hands, disrupts passing lanes (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−3.0σ)
+- Three-point accuracy well below era (−1.4σ)
+
+**Comparables:**
+
+- [[tacko-fall|Tacko Fall]] '21 (94% similar)
+- [[festus-ezeli|Festus Ezeli]] '16 (91% similar)
+- [[othello-hunter|Othello Hunter]] '09 (89% similar)
+- [[brendan-haywood|Brendan Haywood]] '15 (88% similar)
+- [[moussa-cisse|Moussa Cisse]] '26 (88% similar)
+- [[greg-ostertag|Greg Ostertag]] '99 (87% similar)
+
+**Career shape:** Charted 3 seasons (2008-09–2010-11). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

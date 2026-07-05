@@ -41,6 +41,33 @@ Closest career shapes in the era-normalized vector space:
 - [[dwight-howard|Dwight Howard]] — cosine 0.80
 - [[tim-duncan|Tim Duncan]] — cosine 0.80
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 19.4 pts · 13.7 reb · 5.7 ast · 3.4 blk per 100 (1996-97).
+
+**Strengths:**
+
+- Elite rim protection (+2.2σ vs era)
+- Strong presence on the defensive glass (+1.2σ vs era)
+- Relentless on the offensive glass (+1.0σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[evan-mobley|Evan Mobley]] '25 (87% similar)
+- [[isaiah-hartenstein|Isaiah Hartenstein]] '26 (86% similar)
+- [[marc-gasol|Marc Gasol]] '16 (85% similar)
+- [[jusuf-nurkic|Jusuf Nurkić]] '16 (81% similar)
+- [[dwight-howard|Dwight Howard]] '10 (80% similar)
+- [[tim-duncan|Tim Duncan]] '04 (80% similar)
+
+**Career shape:** Charted 8 seasons (1996-97–2003-04). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

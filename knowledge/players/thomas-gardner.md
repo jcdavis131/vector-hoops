@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[jaren-jackson|Jaren Jackson]] — cosine 0.84
 - [[furkan-korkmaz|Furkan Korkmaz]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 12.4 pts · 3.6 reb · 1.0 ast · 2.1 stl per 100 (2008-09).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.5σ vs era)
+- Rarely turns the ball over (−1.4σ vs era)
+- Strong net on-court impact (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−3.0σ)
+- Free-throw touch well below era (−1.8σ)
+
+**Comparables:**
+
+- [[adam-flagler|Adam Flagler]] '25 (93% similar)
+- [[cartier-martin|Cartier Martin]] '15 (86% similar)
+- [[jerome-robinson|Jerome Robinson]] '24 (85% similar)
+- [[craig-ehlo|Craig Ehlo]] '97 (84% similar)
+- [[jaren-jackson|Jaren Jackson]] '01 (84% similar)
+- [[furkan-korkmaz|Furkan Korkmaz]] '24 (81% similar)
+
+**Career shape:** Charted 1 season (2008-09). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

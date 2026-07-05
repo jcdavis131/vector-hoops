@@ -43,6 +43,32 @@ Closest career shapes in the era-normalized vector space:
 - [[mark-bradtke|Mark Bradtke]] — cosine 0.86
 - [[lavoy-allen|Lavoy Allen]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 11.4 pts · 9.8 reb · 1.4 ast · 2.0 stl per 100 (2007-08).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.8σ)
+- Rim pressure (free-throw generation) well below era (−1.8σ)
+
+**Comparables:**
+
+- [[joel-freeland|Joel Freeland]] '15 (90% similar)
+- [[scott-williams|Scott Williams]] '05 (89% similar)
+- [[andrew-lang|Andrew Lang]] '00 (87% similar)
+- [[malik-allen|Malik Allen]] '11 (86% similar)
+- [[mark-bradtke|Mark Bradtke]] '97 (86% similar)
+- [[lavoy-allen|Lavoy Allen]] '17 (86% similar)
+
+**Career shape:** Charted 10 seasons (1998-99–2007-08). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

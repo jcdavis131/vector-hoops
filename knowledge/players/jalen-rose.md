@@ -44,6 +44,34 @@ Closest career shapes in the era-normalized vector space:
 - [[bradley-beal|Bradley Beal]] — cosine 0.92
 - [[isaiah-thomas|Isaiah Thomas]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 21.9 pts · 4.6 reb · 3.2 ast · 1.0 stl per 100 (2006-07).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.9σ vs era)
+- Reliable touch from the free-throw line (+1.5σ vs era)
+- Rarely turns the ball over (−1.3σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.5σ)
+- Offensive-glass activity well below era (−1.1σ)
+
+**Comparables:**
+
+- [[latrell-sprewell|Latrell Sprewell]] '97 (95% similar)
+- [[ben-gordon|Ben Gordon]] '05 (95% similar)
+- [[zach-lavine|Zach LaVine]] '21 (95% similar)
+- [[mitch-richmond|Mitch Richmond]] '97 (93% similar)
+- [[bradley-beal|Bradley Beal]] '20 (92% similar)
+- [[isaiah-thomas|Isaiah Thomas]] '17 (91% similar)
+
+**Career shape:** Charted 11 seasons (1996-97–2006-07). Entered as a Playmaking + Steals profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

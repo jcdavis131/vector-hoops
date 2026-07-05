@@ -46,6 +46,32 @@ Closest career shapes in the era-normalized vector space:
 - [[david-robinson|David Robinson]] — cosine 0.85
 - [[vlade-divac|Vlade Divac]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 24.7 pts · 10.4 reb · 5.6 ast · 2.0 blk per 100 (2015-16).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+2.6σ vs era)
+- Draws contact, gets to the line often (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Three-point volume well below era (−1.3σ)
+
+**Comparables:**
+
+- [[tim-duncan|Tim Duncan]] '04 (89% similar)
+- [[pau-gasol|Pau Gasol]] '15 (88% similar)
+- [[evan-mobley|Evan Mobley]] '25 (88% similar)
+- [[arvydas-sabonis|Arvydas Sabonis]] '97 (88% similar)
+- [[david-robinson|David Robinson]] '98 (85% similar)
+- [[vlade-divac|Vlade Divac]] '97 (85% similar)
+
+**Career shape:** Charted 13 seasons (2008-09–2020-21). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

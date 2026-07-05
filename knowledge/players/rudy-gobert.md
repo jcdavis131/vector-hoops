@@ -46,6 +46,34 @@ Closest career shapes in the era-normalized vector space:
 - [[derrick-favors|Derrick Favors]] — cosine 0.93
 - [[ivica-zubac|Ivica Zubac]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 22.0 pts · 20.8 reb · 1.9 ast · 4.1 blk per 100 (2020-21).
+
+**Strengths:**
+
+- Elite rim protection (+3.4σ vs era)
+- Strong presence on the defensive glass (+3.4σ vs era)
+- Efficient finisher inside the arc (+2.9σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.8σ)
+- Three-point volume well below era (−1.8σ)
+
+**Comparables:**
+
+- [[jarrett-allen|Jarrett Allen]] '25 (96% similar)
+- [[greg-oden|Greg Oden]] '10 (94% similar)
+- [[clint-capela|Clint Capela]] '21 (94% similar)
+- [[deandre-jordan|DeAndre Jordan]] '16 (93% similar)
+- [[derrick-favors|Derrick Favors]] '21 (93% similar)
+- [[ivica-zubac|Ivica Zubac]] '20 (93% similar)
+
+**Career shape:** Charted 13 seasons (2013-14–2025-26). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

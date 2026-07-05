@@ -39,6 +39,33 @@ Closest career shapes in the era-normalized vector space:
 - [[ricky-rubio|Ricky Rubio]] — cosine 0.88
 - [[saben-lee|Saben Lee]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 11.0 pts · 4.0 reb · 9.2 ast · 3.6 stl per 100 (2006-07).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+3.6σ vs era)
+- High-volume table-setter (+1.9σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.8σ)
+- Free-throw touch well below era (−1.5σ)
+
+**Comparables:**
+
+- [[brevin-knight|Brevin Knight]] '03 (93% similar)
+- [[tyus-edney|Tyus Edney]] '01 (92% similar)
+- [[moochie-norris|Moochie Norris]] '05 (89% similar)
+- [[eric-murdock|Eric Murdock]] '00 (88% similar)
+- [[ricky-rubio|Ricky Rubio]] '13 (88% similar)
+- [[saben-lee|Saben Lee]] '24 (87% similar)
+
+**Career shape:** Charted 6 seasons (2001-02–2006-07). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

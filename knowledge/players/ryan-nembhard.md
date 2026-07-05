@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[greivis-vasquez|Greivis Vasquez]] — cosine 0.88
 - [[gal-mekel|Gal Mekel]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 15.9 pts · 5.3 reb · 12.7 ast · 1.0 stl per 100 (2025-26).
+
+**Strengths:**
+
+- High-volume table-setter (+3.0σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.2σ)
+- Offensive-glass activity well below era (−1.1σ)
+
+**Comparables:**
+
+- [[mark-jackson|Mark Jackson]] '03 (91% similar)
+- [[tyler-kolek|Tyler Kolek]] '25 (90% similar)
+- [[matthew-dellavedova|Matthew Dellavedova]] '23 (88% similar)
+- [[eric-maynor|Eric Maynor]] '14 (88% similar)
+- [[greivis-vasquez|Greivis Vasquez]] '13 (88% similar)
+- [[gal-mekel|Gal Mekel]] '14 (87% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -36,6 +36,33 @@ Closest career shapes in the era-normalized vector space:
 - [[jamaal-tinsley|Jamaal Tinsley]] — cosine 0.90
 - [[moochie-norris|Moochie Norris]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 12.3 pts · 5.0 reb · 12.0 ast · 2.9 stl per 100 (2015-16).
+
+**Strengths:**
+
+- High-volume table-setter (+2.9σ vs era)
+- Active hands, disrupts passing lanes (+2.3σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.6σ)
+- Free-throw touch well below era (−1.8σ)
+
+**Comparables:**
+
+- [[rick-brunson|Rick Brunson]] '99 (95% similar)
+- [[anthony-carter|Anthony Carter]] '03 (95% similar)
+- [[earl-watson|Earl Watson]] '14 (94% similar)
+- [[walker-russell|Walker Russell]] '12 (90% similar)
+- [[jamaal-tinsley|Jamaal Tinsley]] '04 (90% similar)
+- [[moochie-norris|Moochie Norris]] '05 (90% similar)
+
+**Career shape:** Charted 3 seasons (2013-14–2015-16). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

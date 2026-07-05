@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[ruben-boumtje-boumtje|Ruben Boumtje-Boumtje]] — cosine 0.85
 - [[nathan-jawai|Nathan Jawai]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 12.2 pts · 9.9 reb · 2.4 ast · 1.7 blk per 100 (1996-97).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+1.3σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.1σ)
+- Turnover rate well above era (+1.6σ)
+
+**Comparables:**
+
+- [[ognjen-kuzmic|Ognjen Kuzmic]] '14 (94% similar)
+- [[ha-ha|Ha Ha]] '06 (89% similar)
+- [[jordan-mickey|Jordan Mickey]] '17 (87% similar)
+- [[amal-mccaskill|Amal McCaskill]] '02 (86% similar)
+- [[ruben-boumtje-boumtje|Ruben Boumtje-Boumtje]] '02 (85% similar)
+- [[nathan-jawai|Nathan Jawai]] '10 (85% similar)
+
+**Career shape:** Charted 1 season (1996-97). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

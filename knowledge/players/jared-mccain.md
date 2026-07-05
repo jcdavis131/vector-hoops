@@ -35,6 +35,34 @@ Closest career shapes in the era-normalized vector space:
 - [[kendrick-nunn|Kendrick Nunn]] — cosine 0.93
 - [[joe-johnson|Joe Johnson]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 29.1 pts · 4.7 reb · 5.0 ast · 1.2 stl per 100 (2024-25).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+1.3σ vs era)
+- Featured, high-usage scoring role (+1.3σ vs era)
+- High-volume three-point shooter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Rim-protection impact well below era (−1.2σ)
+- Defensive rebounding well below era (−1.1σ)
+
+**Comparables:**
+
+- [[gary-neal|Gary Neal]] '14 (95% similar)
+- [[allan-houston|Allan Houston]] '03 (94% similar)
+- [[gordan-giricek|Gordan Giricek]] '06 (93% similar)
+- [[salim-stoudamire|Salim Stoudamire]] '08 (93% similar)
+- [[kendrick-nunn|Kendrick Nunn]] '20 (93% similar)
+- [[joe-johnson|Joe Johnson]] '07 (92% similar)
+
+**Career shape:** Charted 2 seasons (2024-25–2025-26). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

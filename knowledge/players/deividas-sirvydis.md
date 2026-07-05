@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[dragan-bender|Dragan Bender]] — cosine 0.81
 - [[dylan-windler|Dylan Windler]] — cosine 0.80
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 14.6 pts · 10.3 reb · 1.8 ast · 0.7 stl per 100 (2020-21).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.3σ)
+- Finishing efficiency well below era (−1.5σ)
+
+**Comparables:**
+
+- [[d-j-wilson|D.J. Wilson]] '18 (85% similar)
+- [[david-roddy|David Roddy]] '23 (84% similar)
+- [[tidjane-salaun|Tidjane Salaün]] '25 (84% similar)
+- [[admiral-schofield|Admiral Schofield]] '24 (82% similar)
+- [[dragan-bender|Dragan Bender]] '17 (81% similar)
+- [[dylan-windler|Dylan Windler]] '24 (80% similar)
+
+**Career shape:** Charted 1 season (2020-21). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -40,6 +40,31 @@ Closest career shapes in the era-normalized vector space:
 - [[myles-turner|Myles Turner]] — cosine 0.79
 - [[donyell-marshall|Donyell Marshall]] — cosine 0.78
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 26.9 pts · 11.0 reb · 2.5 ast · 2.6 blk per 100 (2020-21).
+
+**Strengths:**
+
+- Elite rim protection (+1.8σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.3σ)
+
+**Comparables:**
+
+- [[kristaps-porzingis|Kristaps Porziņģis]] '18 (86% similar)
+- [[victor-wembanyama|Victor Wembanyama]] '26 (85% similar)
+- [[jaren-jackson-jr|Jaren Jackson Jr.]] '23 (84% similar)
+- [[rasheed-wallace|Rasheed Wallace]] '13 (80% similar)
+- [[myles-turner|Myles Turner]] '19 (79% similar)
+- [[donyell-marshall|Donyell Marshall]] '09 (78% similar)
+
+**Career shape:** Charted 7 seasons (2019-20–2025-26). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

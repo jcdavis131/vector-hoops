@@ -44,6 +44,33 @@ Closest career shapes in the era-normalized vector space:
 - [[gary-neal|Gary Neal]] — cosine 0.90
 - [[rex-chapman|Rex Chapman]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** SG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 24.9 pts · 4.4 reb · 3.6 ast · 1.8 stl per 100 (2003-04).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+1.8σ vs era)
+- Featured, high-usage scoring role (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.3σ)
+- Turnover rate well above era (+1.1σ)
+
+**Comparables:**
+
+- [[michael-dickerson|Michael Dickerson]] '99 (93% similar)
+- [[lonnie-walker-iv|Lonnie Walker IV]] '25 (92% similar)
+- [[marco-belinelli|Marco Belinelli]] '08 (91% similar)
+- [[gordan-giricek|Gordan Giricek]] '06 (90% similar)
+- [[gary-neal|Gary Neal]] '14 (90% similar)
+- [[rex-chapman|Rex Chapman]] '98 (90% similar)
+
+**Career shape:** Charted 11 seasons (2003-04–2014-15). Consistent Scoring Volume + Shot Volume profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

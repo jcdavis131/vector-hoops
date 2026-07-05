@@ -37,6 +37,32 @@ Closest career shapes in the era-normalized vector space:
 - [[josh-green|Josh Green]] — cosine 0.86
 - [[rodney-mcgruder|Rodney McGruder]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 9.1 pts · 5.4 reb · 4.4 ast · 2.0 stl per 100 (1997-98).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.1σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.2σ)
+- Scoring load well below era (−1.7σ)
+
+**Comparables:**
+
+- [[bruce-bowen|Bruce Bowen]] '99 (89% similar)
+- [[austin-rivers|Austin Rivers]] '19 (89% similar)
+- [[juaquin-hawkins|Juaquin Hawkins]] '03 (88% similar)
+- [[david-wingate|David Wingate]] '99 (88% similar)
+- [[josh-green|Josh Green]] '26 (86% similar)
+- [[rodney-mcgruder|Rodney McGruder]] '18 (86% similar)
+
+**Career shape:** Charted 4 seasons (1996-97–2003-04). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

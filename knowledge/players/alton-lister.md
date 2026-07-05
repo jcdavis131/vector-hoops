@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[curtis-borchardt|Curtis Borchardt]] — cosine 0.87
 - [[travis-knight|Travis Knight]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 8.4 pts · 16.3 reb · 1.3 ast · 1.4 blk per 100 (1996-97).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+2.1σ vs era)
+- Strong presence on the defensive glass (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.9σ)
+- Scoring load well below era (−1.8σ)
+
+**Comparables:**
+
+- [[noah-vonleh|Noah Vonleh]] '23 (93% similar)
+- [[brett-szabo|Brett Szabo]] '97 (90% similar)
+- [[jake-voskuhl|Jake Voskuhl]] '01 (89% similar)
+- [[joel-freeland|Joel Freeland]] '15 (87% similar)
+- [[curtis-borchardt|Curtis Borchardt]] '05 (87% similar)
+- [[travis-knight|Travis Knight]] '01 (87% similar)
+
+**Career shape:** Charted 1 season (1996-97). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

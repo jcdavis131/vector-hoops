@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[josh-powell|Josh Powell]] — cosine 0.87
 - [[ruben-boumtje-boumtje|Ruben Boumtje-Boumtje]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 9.0 pts · 10.6 reb · 2.7 ast · 1.7 blk per 100 (2000-01).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.6σ)
+- Ball-hawking activity well below era (−1.6σ)
+
+**Comparables:**
+
+- [[nathan-mensah|Nathan Mensah]] '24 (91% similar)
+- [[brett-szabo|Brett Szabo]] '97 (90% similar)
+- [[curtis-borchardt|Curtis Borchardt]] '05 (88% similar)
+- [[john-edwards|John Edwards]] '05 (88% similar)
+- [[josh-powell|Josh Powell]] '07 (87% similar)
+- [[ruben-boumtje-boumtje|Ruben Boumtje-Boumtje]] '02 (86% similar)
+
+**Career shape:** Charted 1 season (2000-01). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

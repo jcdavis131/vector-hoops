@@ -38,6 +38,33 @@ Closest career shapes in the era-normalized vector space:
 - [[jason-terry|Jason Terry]] — cosine 0.83
 - [[trajan-langdon|Trajan Langdon]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 20.5 pts · 6.5 reb · 3.1 ast · 2.4 stl per 100 (1999-00).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.4σ vs era)
+- Reliable touch from the free-throw line (+1.5σ vs era)
+- Active hands, disrupts passing lanes (+1.2σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[brent-barry|Brent Barry]] '04 (89% similar)
+- [[eddie-jones|Eddie Jones]] '00 (86% similar)
+- [[hersey-hawkins|Hersey Hawkins]] '98 (85% similar)
+- [[jon-barry|Jon Barry]] '98 (84% similar)
+- [[jason-terry|Jason Terry]] '18 (83% similar)
+- [[trajan-langdon|Trajan Langdon]] '02 (83% similar)
+
+**Career shape:** Charted 5 seasons (1996-97–2000-01). Entered as a Playmaking + Steals profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

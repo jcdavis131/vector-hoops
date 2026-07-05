@@ -34,6 +34,31 @@ Closest career shapes in the era-normalized vector space:
 - [[kevin-knox-ii|Kevin Knox II]] — cosine 0.83
 - [[lazar-hayward|Lazar Hayward]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 18.5 pts · 6.3 reb · 3.3 ast · 0.9 stl per 100 (2021-22).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.1σ)
+
+**Comparables:**
+
+- [[jeffery-taylor|Jeffery Taylor]] '14 (90% similar)
+- [[admiral-schofield|Admiral Schofield]] '24 (84% similar)
+- [[johnny-juzang|Johnny Juzang]] '23 (84% similar)
+- [[damyean-dotson|Damyean Dotson]] '21 (83% similar)
+- [[kevin-knox-ii|Kevin Knox II]] '22 (83% similar)
+- [[lazar-hayward|Lazar Hayward]] '12 (83% similar)
+
+**Career shape:** Charted 1 season (2021-22). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

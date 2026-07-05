@@ -44,6 +44,32 @@ Closest career shapes in the era-normalized vector space:
 - [[charlie-bell|Charlie Bell]] — cosine 0.86
 - [[sasha-pavlovic|Sasha Pavlovic]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 14.5 pts · 3.8 reb · 3.9 ast · 1.1 stl per 100 (2018-19).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.1σ)
+- Defensive rebounding well below era (−1.3σ)
+
+**Comparables:**
+
+- [[deshawn-stevenson|DeShawn Stevenson]] '12 (91% similar)
+- [[mitchell-butler|Mitchell Butler]] '98 (89% similar)
+- [[doron-lamb|Doron Lamb]] '14 (88% similar)
+- [[jase-richardson|Jase Richardson]] '26 (87% similar)
+- [[charlie-bell|Charlie Bell]] '11 (86% similar)
+- [[sasha-pavlovic|Sasha Pavlovic]] '13 (86% similar)
+
+**Career shape:** Charted 11 seasons (2012-13–2022-23). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -37,6 +37,34 @@ Closest career shapes in the era-normalized vector space:
 - [[jahidi-white|Jahidi White]] — cosine 0.93
 - [[nazr-mohammed|Nazr Mohammed]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 24.8 pts · 22.2 reb · 0.6 ast · 2.2 blk per 100 (2022-23).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+4.0σ vs era)
+- Draws contact, gets to the line often (+2.8σ vs era)
+- Strong presence on the defensive glass (+2.7σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.8σ)
+- Free-throw touch well below era (−2.6σ)
+
+**Comparables:**
+
+- [[jj-hickson|JJ Hickson]] '16 (96% similar)
+- [[emeka-okafor|Emeka Okafor]] '18 (94% similar)
+- [[tristan-thompson|Tristan Thompson]] '25 (93% similar)
+- [[alan-williams|Alan Williams]] '17 (93% similar)
+- [[jahidi-white|Jahidi White]] '05 (93% similar)
+- [[nazr-mohammed|Nazr Mohammed]] '15 (93% similar)
+
+**Career shape:** Charted 4 seasons (2020-21–2023-24). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

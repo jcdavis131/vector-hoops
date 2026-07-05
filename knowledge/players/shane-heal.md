@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[damon-jones|Damon Jones]] — cosine 0.84
 - [[caleb-love|Caleb Love]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** PG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 15.1 pts · 3.6 reb · 6.6 ast · 0.6 stl per 100 (1996-97).
+
+**Strengths:**
+
+- High-volume three-point shooter (+3.0σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−3.0σ)
+- Rim pressure (free-throw generation) well below era (−1.8σ)
+
+**Comparables:**
+
+- [[aj-price|AJ Price]] '14 (87% similar)
+- [[j-r-bremer|J.R. Bremer]] '04 (86% similar)
+- [[chuck-person|Chuck Person]] '00 (86% similar)
+- [[jett-howard|Jett Howard]] '24 (84% similar)
+- [[damon-jones|Damon Jones]] '09 (84% similar)
+- [[caleb-love|Caleb Love]] '26 (82% similar)
+
+**Career shape:** Charted 1 season (1996-97). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

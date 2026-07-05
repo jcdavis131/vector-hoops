@@ -36,6 +36,34 @@ Closest career shapes in the era-normalized vector space:
 - [[melvin-ely|Melvin Ely]] — cosine 0.90
 - [[todd-fuller|Todd Fuller]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 18.5 pts · 13.8 reb · 1.0 ast · 2.5 blk per 100 (2013-14).
+
+**Strengths:**
+
+- Elite rim protection (+1.5σ vs era)
+- Relentless on the offensive glass (+1.3σ vs era)
+- Efficient finisher inside the arc (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.5σ)
+- Free-throw touch well below era (−1.4σ)
+
+**Comparables:**
+
+- [[nazr-mohammed|Nazr Mohammed]] '15 (93% similar)
+- [[mario-kasun|Mario Kasun]] '05 (91% similar)
+- [[michael-olowokandi|Michael Olowokandi]] '04 (90% similar)
+- [[chris-mihm|Chris Mihm]] '09 (90% similar)
+- [[melvin-ely|Melvin Ely]] '11 (90% similar)
+- [[todd-fuller|Todd Fuller]] '98 (90% similar)
+
+**Career shape:** Charted 3 seasons (2011-12–2013-14). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Rim Protection + Offensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

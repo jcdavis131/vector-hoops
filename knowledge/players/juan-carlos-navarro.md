@@ -34,6 +34,31 @@ Closest career shapes in the era-normalized vector space:
 - [[a-j-guyton|A.J. Guyton]] — cosine 0.91
 - [[isaiah-canaan|Isaiah Canaan]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 20.7 pts · 4.9 reb · 4.1 ast · 1.1 stl per 100 (2007-08).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.0σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[randy-foye|Randy Foye]] '12 (93% similar)
+- [[salim-stoudamire|Salim Stoudamire]] '08 (92% similar)
+- [[george-mccloud|George McCloud]] '98 (91% similar)
+- [[terry-dehere|Terry Dehere]] '97 (91% similar)
+- [[a-j-guyton|A.J. Guyton]] '02 (91% similar)
+- [[isaiah-canaan|Isaiah Canaan]] '16 (90% similar)
+
+**Career shape:** Charted 1 season (2007-08). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

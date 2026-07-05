@@ -44,6 +44,33 @@ Closest career shapes in the era-normalized vector space:
 - [[alex-abrines|Alex Abrines]] — cosine 0.93
 - [[keith-bogans|Keith Bogans]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 10.9 pts · 8.3 reb · 1.7 ast · 1.4 stl per 100 (2023-24).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+1.8σ vs era)
+- Rarely turns the ball over (−1.4σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.6σ)
+- Shot volume well below era (−1.4σ)
+
+**Comparables:**
+
+- [[ben-sheppard|Ben Sheppard]] '24 (96% similar)
+- [[allen-crabbe|Allen Crabbe]] '20 (95% similar)
+- [[tony-snell|Tony Snell]] '21 (94% similar)
+- [[cam-reynolds|Cam Reynolds]] '19 (93% similar)
+- [[alex-abrines|Alex Abrines]] '19 (93% similar)
+- [[keith-bogans|Keith Bogans]] '13 (92% similar)
+
+**Career shape:** Charted 11 seasons (2013-14–2023-24). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

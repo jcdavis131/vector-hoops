@@ -51,6 +51,34 @@ Closest career shapes in the era-normalized vector space:
 - [[miles-mcbride|Miles McBride]] — cosine 0.88
 - [[willie-warren|Willie Warren]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 20.2 pts · 3.8 reb · 4.7 ast · 1.7 stl per 100 (2001-02).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.1σ vs era)
+- Strong net on-court impact (+1.8σ vs era)
+- Rarely turns the ball over (−1.4σ vs era)
+
+**Areas of concern:**
+
+- Offensive-glass activity well below era (−1.3σ)
+- Defensive rebounding well below era (−1.2σ)
+
+**Comparables:**
+
+- [[aaron-holiday|Aaron Holiday]] '26 (93% similar)
+- [[george-hill|George Hill]] '22 (91% similar)
+- [[c-j-watson|C.J. Watson]] '11 (90% similar)
+- [[jon-barry|Jon Barry]] '98 (90% similar)
+- [[miles-mcbride|Miles McBride]] '22 (88% similar)
+- [[willie-warren|Willie Warren]] '11 (88% similar)
+
+**Career shape:** Charted 18 seasons (1996-97–2013-14). Entered as a Playmaking + Steals profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

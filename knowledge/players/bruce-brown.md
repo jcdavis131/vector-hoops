@@ -41,6 +41,32 @@ Closest career shapes in the era-normalized vector space:
 - [[caleb-martin|Caleb Martin]] — cosine 0.79
 - [[mario-west|Mario West]] — cosine 0.78
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 10.7 pts · 6.2 reb · 3.1 ast · 1.3 stl per 100 (2018-19).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.0σ vs era)
+
+**Areas of concern:**
+
+- Scoring load well below era (−1.5σ)
+- Shot volume well below era (−1.3σ)
+
+**Comparables:**
+
+- [[landry-fields|Landry Fields]] '15 (87% similar)
+- [[derrick-mckey|Derrick McKey]] '02 (83% similar)
+- [[patrick-mccaw|Patrick McCaw]] '19 (80% similar)
+- [[ryan-bowen|Ryan Bowen]] '09 (80% similar)
+- [[caleb-martin|Caleb Martin]] '26 (79% similar)
+- [[mario-west|Mario West]] '09 (78% similar)
+
+**Career shape:** Charted 8 seasons (2018-19–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

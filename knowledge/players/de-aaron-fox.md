@@ -42,6 +42,34 @@ Closest career shapes in the era-normalized vector space:
 - [[john-wall|John Wall]] — cosine 0.92
 - [[trae-young|Trae Young]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 33.8 pts · 4.7 reb · 9.7 ast · 2.0 stl per 100 (2020-21).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+2.5σ vs era)
+- Featured, high-usage scoring role (+2.1σ vs era)
+- High-volume table-setter (+2.0σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.5σ)
+- Defensive rebounding well below era (−1.1σ)
+
+**Comparables:**
+
+- [[tyreke-evans|Tyreke Evans]] '16 (95% similar)
+- [[allen-iverson|Allen Iverson]] '02 (95% similar)
+- [[ja-morant|Ja Morant]] '23 (94% similar)
+- [[dwyane-wade|Dwyane Wade]] '09 (93% similar)
+- [[john-wall|John Wall]] '17 (92% similar)
+- [[trae-young|Trae Young]] '20 (91% similar)
+
+**Career shape:** Charted 9 seasons (2017-18–2025-26). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

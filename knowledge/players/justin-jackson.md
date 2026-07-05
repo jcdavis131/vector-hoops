@@ -38,6 +38,33 @@ Closest career shapes in the era-normalized vector space:
 - [[tim-legler|Tim Legler]] — cosine 0.89
 - [[adam-harrington|Adam Harrington]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 9.0 pts · 7.6 reb · 4.0 ast · 1.8 stl per 100 (2022-23).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.6σ vs era)
+- Elite rim protection (+1.0σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−4.0σ)
+- Finishing efficiency well below era (−2.7σ)
+
+**Comparables:**
+
+- [[jawad-williams|Jawad Williams]] '11 (95% similar)
+- [[hollis-thompson|Hollis Thompson]] '17 (92% similar)
+- [[antoine-wright|Antoine Wright]] '06 (90% similar)
+- [[damyean-dotson|Damyean Dotson]] '21 (90% similar)
+- [[tim-legler|Tim Legler]] '00 (89% similar)
+- [[adam-harrington|Adam Harrington]] '03 (88% similar)
+
+**Career shape:** Charted 5 seasons (2017-18–2022-23). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

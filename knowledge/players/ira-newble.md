@@ -40,6 +40,33 @@ Closest career shapes in the era-normalized vector space:
 - [[ochai-agbaji|Ochai Agbaji]] — cosine 0.91
 - [[treveon-graham|Treveon Graham]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 14.9 pts · 9.7 reb · 1.7 ast · 1.1 blk per 100 (2000-01).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+1.2σ vs era)
+- Rarely turns the ball over (−1.2σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.7σ)
+- Free-throw touch well below era (−1.8σ)
+
+**Comparables:**
+
+- [[lance-thomas|Lance Thomas]] '13 (92% similar)
+- [[trenton-hassell|Trenton Hassell]] '04 (92% similar)
+- [[glenn-robinson-iii|Glenn Robinson III]] '21 (92% similar)
+- [[kessler-edwards|Kessler Edwards]] '25 (91% similar)
+- [[ochai-agbaji|Ochai Agbaji]] '23 (91% similar)
+- [[treveon-graham|Treveon Graham]] '17 (90% similar)
+
+**Career shape:** Charted 7 seasons (2000-01–2007-08). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

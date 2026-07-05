@@ -50,6 +50,32 @@ Closest career shapes in the era-normalized vector space:
 - [[isaiah-joe|Isaiah Joe]] — cosine 0.92
 - [[luke-kennard|Luke Kennard]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 19.4 pts · 6.6 reb · 2.4 ast · 1.5 stl per 100 (2003-04).
+
+**Strengths:**
+
+- High-volume three-point shooter (+3.2σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.5σ)
+- Finishing efficiency well below era (−1.4σ)
+
+**Comparables:**
+
+- [[duncan-robinson|Duncan Robinson]] '20 (95% similar)
+- [[sam-merrill|Sam Merrill]] '24 (94% similar)
+- [[mike-dunleavy|Mike Dunleavy]] '09 (93% similar)
+- [[davis-bertans|Davis Bertans]] '24 (92% similar)
+- [[isaiah-joe|Isaiah Joe]] '25 (92% similar)
+- [[luke-kennard|Luke Kennard]] '23 (91% similar)
+
+**Career shape:** Charted 17 seasons (2003-04–2019-20). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

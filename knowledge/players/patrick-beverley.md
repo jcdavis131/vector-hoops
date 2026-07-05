@@ -44,6 +44,33 @@ Closest career shapes in the era-normalized vector space:
 - [[willie-warren|Willie Warren]] — cosine 0.84
 - [[aaron-mckie|Aaron McKie]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 16.0 pts · 7.7 reb · 8.2 ast · 2.6 stl per 100 (2012-13).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.6σ vs era)
+- Strong net on-court impact (+1.5σ vs era)
+- High-volume table-setter (+1.4σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[nate-mcmillan|Nate McMillan]] '98 (94% similar)
+- [[ron-harper|Ron Harper]] '97 (93% similar)
+- [[nicolas-batum|Nicolas Batum]] '20 (84% similar)
+- [[iman-shumpert|Iman Shumpert]] '12 (84% similar)
+- [[willie-warren|Willie Warren]] '11 (84% similar)
+- [[aaron-mckie|Aaron McKie]] '05 (82% similar)
+
+**Career shape:** Charted 11 seasons (2012-13–2023-24). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

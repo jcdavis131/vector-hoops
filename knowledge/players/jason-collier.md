@@ -37,6 +37,34 @@ Closest career shapes in the era-normalized vector space:
 - [[al-thornton|Al Thornton]] — cosine 0.83
 - [[hanno-mottola|Hanno Mottola]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 21.9 pts · 10.0 reb · 1.0 ast · 0.8 stl per 100 (2004-05).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+1.1σ vs era)
+- Relentless on the offensive glass (+1.1σ vs era)
+- Heavy shot volume, focal scoring option (+1.0σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.8σ)
+- Ball-hawking activity well below era (−1.2σ)
+
+**Comparables:**
+
+- [[george-zidek|George Zidek]] '97 (89% similar)
+- [[tony-massenburg|Tony Massenburg]] '02 (85% similar)
+- [[josh-powell|Josh Powell]] '07 (84% similar)
+- [[bryant-reeves|Bryant Reeves]] '98 (83% similar)
+- [[al-thornton|Al Thornton]] '09 (83% similar)
+- [[hanno-mottola|Hanno Mottola]] '01 (81% similar)
+
+**Career shape:** Charted 4 seasons (2000-01–2004-05). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

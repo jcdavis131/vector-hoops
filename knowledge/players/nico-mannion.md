@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[junior-harrington|Junior Harrington]] — cosine 0.92
 - [[killian-hayes|Killian Hayes]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 15.9 pts · 6.0 reb · 9.0 ast · 2.1 stl per 100 (2020-21).
+
+**Strengths:**
+
+- High-volume table-setter (+1.7σ vs era)
+- Active hands, disrupts passing lanes (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.6σ)
+- Turnover rate well above era (+1.5σ)
+
+**Comparables:**
+
+- [[frank-williams|Frank Williams]] '03 (95% similar)
+- [[peyton-siva|Peyton Siva]] '14 (95% similar)
+- [[tierre-brown|Tierre Brown]] '02 (93% similar)
+- [[theo-maledon|Theo Maledon]] '21 (92% similar)
+- [[junior-harrington|Junior Harrington]] '03 (92% similar)
+- [[killian-hayes|Killian Hayes]] '21 (92% similar)
+
+**Career shape:** Charted 1 season (2020-21). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

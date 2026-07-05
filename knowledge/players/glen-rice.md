@@ -41,6 +41,33 @@ Closest career shapes in the era-normalized vector space:
 - [[reggie-miller|Reggie Miller]] — cosine 0.93
 - [[peja-stojakovic|Peja Stojakovic]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** SF · Scoring Volume + Shot Volume. Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 33.7 pts · 5.1 reb · 2.5 ast · 1.1 stl per 100 (1996-97).
+
+**Strengths:**
+
+- Featured, high-usage scoring role (+2.6σ vs era)
+- Heavy shot volume, focal scoring option (+1.9σ vs era)
+- Draws contact, gets to the line often (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Offensive-glass activity well below era (−1.0σ)
+
+**Comparables:**
+
+- [[jj-redick|JJ Redick]] '16 (97% similar)
+- [[eddie-johnson|Eddie Johnson]] '98 (95% similar)
+- [[tim-hardaway-jr|Tim Hardaway Jr.]] '15 (94% similar)
+- [[gary-neal|Gary Neal]] '14 (93% similar)
+- [[reggie-miller|Reggie Miller]] '98 (93% similar)
+- [[peja-stojakovic|Peja Stojakovic]] '04 (93% similar)
+
+**Career shape:** Charted 8 seasons (1996-97–2003-04). Consistent Scoring Volume + Shot Volume profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

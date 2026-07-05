@@ -41,6 +41,33 @@ Closest career shapes in the era-normalized vector space:
 - [[isaiah-taylor|Isaiah Taylor]] — cosine 0.83
 - [[eric-snow|Eric Snow]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 15.5 pts · 3.8 reb · 11.7 ast · 1.6 stl per 100 (1998-99).
+
+**Strengths:**
+
+- High-volume table-setter (+2.6σ vs era)
+- Strong net on-court impact (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.3σ)
+- Offensive-glass activity well below era (−1.2σ)
+
+**Comparables:**
+
+- [[andrew-nembhard|Andrew Nembhard]] '26 (88% similar)
+- [[sherman-douglas|Sherman Douglas]] '00 (85% similar)
+- [[carlos-arroyo|Carlos Arroyo]] '03 (84% similar)
+- [[shaun-livingston|Shaun Livingston]] '19 (83% similar)
+- [[isaiah-taylor|Isaiah Taylor]] '18 (83% similar)
+- [[eric-snow|Eric Snow]] '08 (82% similar)
+
+**Career shape:** Charted 8 seasons (1996-97–2003-04). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

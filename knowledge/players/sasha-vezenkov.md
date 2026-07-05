@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[maurice-evans|Maurice Evans]] — cosine 0.82
 - [[jumaine-jones|Jumaine Jones]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** PF · Three-Point Accuracy (Low Turnovers). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 20.7 pts · 8.9 reb · 1.7 ast · 1.8 stl per 100 (2023-24).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.4σ vs era)
+- High-volume three-point shooter (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Table-setting role well below era (−1.2σ)
+- Rim pressure (free-throw generation) well below era (−1.0σ)
+
+**Comparables:**
+
+- [[chris-morris|Chris Morris]] '99 (85% similar)
+- [[devean-george|Devean George]] '10 (84% similar)
+- [[morris-peterson|Morris Peterson]] '10 (83% similar)
+- [[bobby-simmons|Bobby Simmons]] '12 (82% similar)
+- [[maurice-evans|Maurice Evans]] '11 (82% similar)
+- [[jumaine-jones|Jumaine Jones]] '07 (82% similar)
+
+**Career shape:** Charted 1 season (2023-24). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

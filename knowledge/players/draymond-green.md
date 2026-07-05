@@ -47,6 +47,33 @@ Closest career shapes in the era-normalized vector space:
 - [[craig-porter-jr|Craig Porter Jr.]] — cosine 0.70
 - [[kyle-anderson|Kyle Anderson]] — cosine 0.69
 
+## Scouting report
+
+**Play style:** PF · Playmaking + Steals. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 10.3 pts · 10.4 reb · 13.0 ast · 2.4 stl per 100 (2020-21).
+
+**Strengths:**
+
+- High-volume table-setter (+3.2σ vs era)
+- Active hands, disrupts passing lanes (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.9σ)
+- Shot volume well below era (−1.6σ)
+
+**Comparables:**
+
+- [[rajon-rondo|Rajon Rondo]] '11 (75% similar)
+- [[andre-iguodala|Andre Iguodala]] '20 (74% similar)
+- [[jason-kidd|Jason Kidd]] '03 (72% similar)
+- [[ashton-hagans|Ashton Hagans]] '24 (70% similar)
+- [[craig-porter-jr|Craig Porter Jr.]] '26 (70% similar)
+- [[kyle-anderson|Kyle Anderson]] '15 (69% similar)
+
+**Career shape:** Charted 14 seasons (2012-13–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Playmaking + Steals identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

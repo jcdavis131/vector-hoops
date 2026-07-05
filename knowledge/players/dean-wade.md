@@ -39,6 +39,33 @@ Closest career shapes in the era-normalized vector space:
 - [[harvey-grant|Harvey Grant]] — cosine 0.88
 - [[royce-o-neale|Royce O'Neale]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PF · Three-Point Accuracy (Low Turnovers). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 12.1 pts · 9.4 reb · 2.9 ast · 1.6 stl per 100 (2024-25).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.7σ vs era)
+- Strong net on-court impact (+1.7σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.8σ)
+- Shot volume well below era (−1.3σ)
+
+**Comparables:**
+
+- [[keith-askins|Keith Askins]] '99 (93% similar)
+- [[bruce-bowen|Bruce Bowen]] '99 (91% similar)
+- [[jud-buechler|Jud Buechler]] '00 (89% similar)
+- [[dorian-finney-smith|Dorian Finney-Smith]] '26 (89% similar)
+- [[harvey-grant|Harvey Grant]] '97 (88% similar)
+- [[royce-o-neale|Royce O'Neale]] '21 (88% similar)
+
+**Career shape:** Charted 6 seasons (2020-21–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

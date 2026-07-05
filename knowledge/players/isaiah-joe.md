@@ -39,6 +39,33 @@ Closest career shapes in the era-normalized vector space:
 - [[duncan-robinson|Duncan Robinson]] — cosine 0.92
 - [[sam-merrill|Sam Merrill]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 22.1 pts · 5.7 reb · 3.5 ast · 1.4 stl per 100 (2024-25).
+
+**Strengths:**
+
+- Strong net on-court impact (+2.4σ vs era)
+- High-volume three-point shooter (+1.8σ vs era)
+- Rarely turns the ball over (−1.4σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.0σ)
+
+**Comparables:**
+
+- [[cameron-johnson|Cameron Johnson]] '26 (94% similar)
+- [[wesley-matthews|Wesley Matthews]] '20 (93% similar)
+- [[richie-frahm|Richie Frahm]] '04 (92% similar)
+- [[kyle-korver|Kyle Korver]] '04 (92% similar)
+- [[duncan-robinson|Duncan Robinson]] '20 (92% similar)
+- [[sam-merrill|Sam Merrill]] '24 (92% similar)
+
+**Career shape:** Charted 6 seasons (2020-21–2025-26). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

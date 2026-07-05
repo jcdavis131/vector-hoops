@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[gary-harris|Gary Harris]] — cosine 0.85
 - [[ja-kobe-walter|Ja'Kobe Walter]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 14.9 pts · 5.9 reb · 3.2 ast · 2.7 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.1σ)
+- Shot volume well below era (−1.0σ)
+
+**Comparables:**
+
+- [[greg-buckner|Greg Buckner]] '05 (88% similar)
+- [[c-j-williams|C.J. Williams]] '18 (88% similar)
+- [[patrick-mccaw|Patrick McCaw]] '19 (87% similar)
+- [[herbert-jones|Herbert Jones]] '22 (85% similar)
+- [[gary-harris|Gary Harris]] '25 (85% similar)
+- [[ja-kobe-walter|Ja'Kobe Walter]] '26 (85% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

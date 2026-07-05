@@ -47,6 +47,33 @@ Closest career shapes in the era-normalized vector space:
 - [[lebron-james|LeBron James]] — cosine 0.84
 - [[demar-derozan|DeMar DeRozan]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** SF · Scoring Volume + Shot Volume. Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 30.4 pts · 12.8 reb · 10.3 ast · 2.6 stl per 100 (1996-97).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+2.7σ vs era)
+- High-volume table-setter (+2.1σ vs era)
+- Featured, high-usage scoring role (+2.0σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.4σ)
+
+**Comparables:**
+
+- [[karl-malone|Karl Malone]] '97 (90% similar)
+- [[shai-gilgeous-alexander|Shai Gilgeous-Alexander]] '25 (89% similar)
+- [[jalen-williams|Jalen Williams]] '25 (88% similar)
+- [[dwyane-wade|Dwyane Wade]] '09 (85% similar)
+- [[lebron-james|LeBron James]] '10 (84% similar)
+- [[demar-derozan|DeMar DeRozan]] '17 (83% similar)
+
+**Career shape:** Charted 14 seasons (1996-97–2012-13). Consistent Scoring Volume + Shot Volume profile across his career.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -39,6 +39,33 @@ Closest career shapes in the era-normalized vector space:
 - [[dorian-finney-smith|Dorian Finney-Smith]] — cosine 0.91
 - [[antoine-wright|Antoine Wright]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 15.1 pts · 5.4 reb · 2.8 ast · 1.3 stl per 100 (2017-18).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.9σ vs era)
+- Strong net on-court impact (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.0σ)
+- Rim pressure (free-throw generation) well below era (−1.2σ)
+
+**Comparables:**
+
+- [[treveon-graham|Treveon Graham]] '17 (92% similar)
+- [[yakhouba-diawara|Yakhouba Diawara]] '09 (92% similar)
+- [[bruce-bowen|Bruce Bowen]] '99 (92% similar)
+- [[jud-buechler|Jud Buechler]] '00 (91% similar)
+- [[dorian-finney-smith|Dorian Finney-Smith]] '26 (91% similar)
+- [[antoine-wright|Antoine Wright]] '06 (89% similar)
+
+**Career shape:** Charted 6 seasons (2016-17–2022-23). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

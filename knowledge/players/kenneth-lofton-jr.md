@@ -35,6 +35,34 @@ Closest career shapes in the era-normalized vector space:
 - [[julius-randle|Julius Randle]] — cosine 0.76
 - [[zion-williamson|Zion Williamson]] — cosine 0.74
 
+## Scouting report
+
+**Play style:** PF · Defensive Glass + Rim Pressure (Fts). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 32.7 pts · 13.9 reb · 5.4 ast · 1.4 stl per 100 (2022-23).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+1.9σ vs era)
+- Relentless on the offensive glass (+1.8σ vs era)
+- Featured, high-usage scoring role (+1.7σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.9σ)
+- Free-throw touch well below era (−1.4σ)
+
+**Comparables:**
+
+- [[alperen-sengun|Alperen Sengun]] '25 (80% similar)
+- [[marcus-fizer|Marcus Fizer]] '03 (79% similar)
+- [[johnathan-motley|Johnathan Motley]] '19 (78% similar)
+- [[chris-gatling|Chris Gatling]] '97 (78% similar)
+- [[julius-randle|Julius Randle]] '24 (76% similar)
+- [[zion-williamson|Zion Williamson]] '25 (74% similar)
+
+**Career shape:** Charted 2 seasons (2022-23–2023-24). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

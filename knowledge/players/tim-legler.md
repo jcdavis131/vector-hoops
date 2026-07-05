@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jawad-williams|Jawad Williams]] — cosine 0.90
 - [[justin-jackson|Justin Jackson]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 12.9 pts · 3.9 reb · 4.0 ast · 0.7 stl per 100 (1999-00).
+
+**Strengths:**
+
+- Rarely turns the ball over (−2.1σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.0σ)
+- Finishing efficiency well below era (−1.5σ)
+
+**Comparables:**
+
+- [[hollis-thompson|Hollis Thompson]] '17 (91% similar)
+- [[doron-lamb|Doron Lamb]] '14 (91% similar)
+- [[damyean-dotson|Damyean Dotson]] '21 (91% similar)
+- [[antoine-wright|Antoine Wright]] '06 (90% similar)
+- [[jawad-williams|Jawad Williams]] '11 (90% similar)
+- [[justin-jackson|Justin Jackson]] '23 (89% similar)
+
+**Career shape:** Charted 2 seasons (1998-99–1999-00). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

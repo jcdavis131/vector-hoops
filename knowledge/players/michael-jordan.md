@@ -37,6 +37,33 @@ Closest career shapes in the era-normalized vector space:
 - [[shai-gilgeous-alexander|Shai Gilgeous-Alexander]] — cosine 0.89
 - [[jaylen-brown|Jaylen Brown]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** SG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 41.0 pts · 8.1 reb · 5.9 ast · 2.4 stl per 100 (1996-97).
+
+**Strengths:**
+
+- Featured, high-usage scoring role (+3.9σ vs era)
+- Heavy shot volume, focal scoring option (+3.7σ vs era)
+- Strong net on-court impact (+2.2σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[franz-wagner|Franz Wagner]] '25 (92% similar)
+- [[kobe-bryant|Kobe Bryant]] '06 (92% similar)
+- [[carmelo-anthony|Carmelo Anthony]] '13 (92% similar)
+- [[tracy-mcgrady|Tracy McGrady]] '03 (90% similar)
+- [[shai-gilgeous-alexander|Shai Gilgeous-Alexander]] '25 (89% similar)
+- [[jaylen-brown|Jaylen Brown]] '26 (88% similar)
+
+**Career shape:** Charted 4 seasons (1996-97–2002-03). Consistent Scoring Volume + Shot Volume profile across his career.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -35,6 +35,33 @@ Closest career shapes in the era-normalized vector space:
 - [[brice-johnson|Brice Johnson]] — cosine 0.77
 - [[ausar-thompson|Ausar Thompson]] — cosine 0.76
 
+## Scouting report
+
+**Play style:** PF · Three-Point Accuracy (Low Turnovers). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 18.4 pts · 7.2 reb · 1.1 ast · 3.5 stl per 100 (2013-14).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+3.0σ vs era)
+- Reliable touch from the free-throw line (+1.7σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.5σ)
+- Three-point volume well below era (−1.1σ)
+
+**Comparables:**
+
+- [[andrae-patterson|Andrae Patterson]] '99 (86% similar)
+- [[jerome-williams|Jerome Williams]] '00 (81% similar)
+- [[paul-reed|Paul Reed]] '21 (79% similar)
+- [[maurice-ndour|Maurice Ndour]] '17 (78% similar)
+- [[brice-johnson|Brice Johnson]] '18 (77% similar)
+- [[ausar-thompson|Ausar Thompson]] '26 (76% similar)
+
+**Career shape:** Charted 2 seasons (2007-08–2013-14). Entered as a Rim Protection + Offensive Glass profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

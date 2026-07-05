@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[sean-williams|Sean Williams]] — cosine 0.88
 - [[alvin-jones|Alvin Jones]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 8.8 pts · 12.7 reb · 0.5 ast · 4.3 blk per 100 (1996-97).
+
+**Strengths:**
+
+- Elite rim protection (+3.1σ vs era)
+- Relentless on the offensive glass (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Scoring load well below era (−1.8σ)
+- Free-throw touch well below era (−1.8σ)
+
+**Comparables:**
+
+- [[loren-woods|Loren Woods]] '06 (90% similar)
+- [[chris-dudley|Chris Dudley]] '00 (89% similar)
+- [[desagana-diop|DeSagana Diop]] '13 (89% similar)
+- [[jim-mcilvaine|Jim McIlvaine]] '00 (88% similar)
+- [[sean-williams|Sean Williams]] '10 (88% similar)
+- [[alvin-jones|Alvin Jones]] '02 (87% similar)
+
+**Career shape:** Charted 1 season (1996-97). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

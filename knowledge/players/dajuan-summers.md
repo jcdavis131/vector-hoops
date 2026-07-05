@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[wayne-selden|Wayne Selden]] — cosine 0.82
 - [[dariq-whitehead|Dariq Whitehead]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 19.2 pts · 3.1 reb · 0.5 ast · 0.8 stl per 100 (2010-11).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.0σ)
+- Defensive rebounding well below era (−1.5σ)
+
+**Comparables:**
+
+- [[maurice-ager|Maurice Ager]] '08 (88% similar)
+- [[jeffery-taylor|Jeffery Taylor]] '14 (86% similar)
+- [[gerald-wilkins|Gerald Wilkins]] '98 (84% similar)
+- [[lazar-hayward|Lazar Hayward]] '12 (83% similar)
+- [[wayne-selden|Wayne Selden]] '18 (82% similar)
+- [[dariq-whitehead|Dariq Whitehead]] '25 (82% similar)
+
+**Career shape:** Charted 2 seasons (2009-10–2010-11). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

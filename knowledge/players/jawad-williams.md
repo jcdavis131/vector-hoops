@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[allen-crabbe|Allen Crabbe]] — cosine 0.91
 - [[orlando-johnson|Orlando Johnson]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 13.4 pts · 6.2 reb · 2.8 ast · 1.2 stl per 100 (2010-11).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.0σ)
+- On-court net impact well below era (−1.5σ)
+
+**Comparables:**
+
+- [[justin-jackson|Justin Jackson]] '23 (95% similar)
+- [[deshawn-stevenson|DeShawn Stevenson]] '12 (91% similar)
+- [[adam-harrington|Adam Harrington]] '03 (91% similar)
+- [[mychal-mulder|Mychal Mulder]] '22 (91% similar)
+- [[allen-crabbe|Allen Crabbe]] '20 (91% similar)
+- [[orlando-johnson|Orlando Johnson]] '14 (91% similar)
+
+**Career shape:** Charted 2 seasons (2009-10–2010-11). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pg|PG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

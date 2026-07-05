@@ -35,6 +35,31 @@ Closest career shapes in the era-normalized vector space:
 - [[josh-green|Josh Green]] — cosine 0.73
 - [[sam-dekker|Sam Dekker]] — cosine 0.72
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass + Defensive Glass. Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 16.6 pts · 8.6 reb · 2.4 ast · 1.7 stl per 100 (2006-07).
+
+**Strengths:**
+
+- Strong net on-court impact (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.4σ)
+
+**Comparables:**
+
+- [[kevon-harris|Kevon Harris]] '23 (79% similar)
+- [[luc-mbah-a-moute|Luc Mbah a Moute]] '16 (77% similar)
+- [[marcus-georges-hunt|Marcus Georges-Hunt]] '18 (75% similar)
+- [[othyus-jeffers|Othyus Jeffers]] '11 (74% similar)
+- [[josh-green|Josh Green]] '26 (73% similar)
+- [[sam-dekker|Sam Dekker]] '19 (72% similar)
+
+**Career shape:** Charted 2 seasons (2006-07–2007-08). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

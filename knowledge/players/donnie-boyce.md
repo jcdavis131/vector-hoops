@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jarrett-culver|Jarrett Culver]] — cosine 0.80
 - [[devin-carter|Devin Carter]] — cosine 0.80
 
+## Scouting report
+
+**Play style:** SG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 17.1 pts · 4.7 reb · 4.0 ast · 3.1 stl per 100 (1996-97).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.0σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.9σ)
+- Free-throw touch well below era (−1.9σ)
+
+**Comparables:**
+
+- [[predrag-savovic|Predrag Savovic]] '03 (85% similar)
+- [[dalano-banton|Dalano Banton]] '23 (84% similar)
+- [[josh-jackson|Josh Jackson]] '18 (82% similar)
+- [[rodrick-rhodes|Rodrick Rhodes]] '98 (81% similar)
+- [[jarrett-culver|Jarrett Culver]] '22 (80% similar)
+- [[devin-carter|Devin Carter]] '25 (80% similar)
+
+**Career shape:** Charted 1 season (1996-97). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -41,6 +41,33 @@ Closest career shapes in the era-normalized vector space:
 - [[kobe-bryant|Kobe Bryant]] — cosine 0.91
 - [[carmelo-anthony|Carmelo Anthony]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** SF · Scoring Volume + Shot Volume. Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 39.2 pts · 11.5 reb · 6.0 ast · 1.4 stl per 100 (2022-23).
+
+**Strengths:**
+
+- Featured, high-usage scoring role (+2.7σ vs era)
+- Draws contact, gets to the line often (+2.6σ vs era)
+- Heavy shot volume, focal scoring option (+2.3σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.3σ)
+
+**Comparables:**
+
+- [[paul-pierce|Paul Pierce]] '03 (94% similar)
+- [[kevin-durant|Kevin Durant]] '14 (93% similar)
+- [[jaylen-brown|Jaylen Brown]] '26 (91% similar)
+- [[anthony-edwards|Anthony Edwards]] '25 (91% similar)
+- [[kobe-bryant|Kobe Bryant]] '06 (91% similar)
+- [[carmelo-anthony|Carmelo Anthony]] '13 (90% similar)
+
+**Career shape:** Charted 8 seasons (2017-18–2024-25). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

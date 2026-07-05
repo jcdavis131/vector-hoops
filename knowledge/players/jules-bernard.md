@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[marcus-landry|Marcus Landry]] — cosine 0.62
 - [[jaylon-tyson|Jaylon Tyson]] — cosine 0.60
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 22.4 pts · 7.8 reb · 4.8 ast · 0.9 stl per 100 (2023-24).
+
+**Strengths:**
+
+- Strong net on-court impact (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.4σ)
+- Ball-hawking activity well below era (−1.0σ)
+
+**Comparables:**
+
+- [[andrew-gaze|Andrew Gaze]] '99 (79% similar)
+- [[lester-quinones|Lester Quinones]] '24 (73% similar)
+- [[donatas-motiejunas|Donatas Motiejunas]] '17 (68% similar)
+- [[alex-acker|Alex Acker]] '09 (67% similar)
+- [[marcus-landry|Marcus Landry]] '10 (62% similar)
+- [[jaylon-tyson|Jaylon Tyson]] '25 (60% similar)
+
+**Career shape:** Charted 1 season (2023-24). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

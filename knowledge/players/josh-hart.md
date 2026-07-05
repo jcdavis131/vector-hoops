@@ -42,6 +42,31 @@ Closest career shapes in the era-normalized vector space:
 - [[dennis-rodman|Dennis Rodman]] — cosine 0.71
 - [[myron-gardner|Myron Gardner]] — cosine 0.70
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 14.6 pts · 11.7 reb · 5.7 ast · 1.7 stl per 100 (2022-23).
+
+**Strengths:**
+
+- Strong net on-court impact (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.2σ)
+
+**Comparables:**
+
+- [[charles-oakley|Charles Oakley]] '02 (78% similar)
+- [[nemanja-bjelica|Nemanja Bjelica]] '22 (77% similar)
+- [[jaylin-williams|Jaylin Williams]] '25 (76% similar)
+- [[royce-o-neale|Royce O'Neale]] '21 (74% similar)
+- [[dennis-rodman|Dennis Rodman]] '97 (71% similar)
+- [[myron-gardner|Myron Gardner]] '26 (70% similar)
+
+**Career shape:** Charted 9 seasons (2017-18–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

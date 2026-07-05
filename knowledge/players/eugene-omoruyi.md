@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[chris-porter|Chris Porter]] — cosine 0.73
 - [[ruben-patterson|Ruben Patterson]] — cosine 0.70
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 23.4 pts · 9.7 reb · 4.0 ast · 3.1 stl per 100 (2023-24).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.8σ vs era)
+- Relentless on the offensive glass (+1.0σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.0σ)
+
+**Comparables:**
+
+- [[hamidou-diallo|Hamidou Diallo]] '23 (78% similar)
+- [[andrae-patterson|Andrae Patterson]] '99 (75% similar)
+- [[troy-williams|Troy Williams]] '18 (75% similar)
+- [[nate-hinton|Nate Hinton]] '21 (74% similar)
+- [[chris-porter|Chris Porter]] '01 (73% similar)
+- [[ruben-patterson|Ruben Patterson]] '08 (70% similar)
+
+**Career shape:** Charted 2 seasons (2022-23–2023-24). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -45,6 +45,33 @@ Closest career shapes in the era-normalized vector space:
 - [[jim-mcilvaine|Jim McIlvaine]] — cosine 0.89
 - [[jared-reiner|Jared Reiner]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 3.6 pts · 11.3 reb · 2.9 ast · 3.6 blk per 100 (2012-13).
+
+**Strengths:**
+
+- Elite rim protection (+2.4σ vs era)
+- Rarely turns the ball over (−1.1σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−4.0σ)
+- Scoring load well below era (−2.7σ)
+
+**Comparables:**
+
+- [[chris-dudley|Chris Dudley]] '00 (93% similar)
+- [[adonal-foyle|Adonal Foyle]] '07 (92% similar)
+- [[eric-montross|Eric Montross]] '97 (91% similar)
+- [[mark-west|Mark West]] '99 (90% similar)
+- [[jim-mcilvaine|Jim McIlvaine]] '00 (89% similar)
+- [[jared-reiner|Jared Reiner]] '07 (89% similar)
+
+**Career shape:** Charted 12 seasons (2001-02–2012-13). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

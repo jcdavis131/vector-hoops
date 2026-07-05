@@ -51,6 +51,34 @@ Closest career shapes in the era-normalized vector space:
 - [[patrick-ewing|Patrick Ewing]] — cosine 0.92
 - [[zydrunas-ilgauskas|Zydrunas Ilgauskas]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** PF · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 37.3 pts · 13.6 reb · 2.9 ast · 3.1 blk per 100 (2004-05).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+3.3σ vs era)
+- Heavy shot volume, focal scoring option (+3.2σ vs era)
+- Featured, high-usage scoring role (+3.2σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.8σ)
+- Ball-hawking activity well below era (−1.1σ)
+
+**Comparables:**
+
+- [[elden-campbell|Elden Campbell]] '02 (95% similar)
+- [[alonzo-mourning|Alonzo Mourning]] '00 (94% similar)
+- [[stanley-roberts|Stanley Roberts]] '97 (93% similar)
+- [[andrew-bynum|Andrew Bynum]] '08 (93% similar)
+- [[patrick-ewing|Patrick Ewing]] '98 (92% similar)
+- [[zydrunas-ilgauskas|Zydrunas Ilgauskas]] '02 (92% similar)
+
+**Career shape:** Charted 18 seasons (1996-97–2013-14). Entered as a Rim Protection + Offensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

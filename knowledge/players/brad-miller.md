@@ -46,6 +46,33 @@ Closest career shapes in the era-normalized vector space:
 - [[marc-gasol|Marc Gasol]] — cosine 0.77
 - [[domantas-sabonis|Domantas Sabonis]] — cosine 0.76
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 26.2 pts · 12.9 reb · 2.4 ast · 2.0 blk per 100 (1998-99).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+2.3σ vs era)
+- Draws contact, gets to the line often (+2.2σ vs era)
+- Knockdown three-point shooter (+1.5σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[arvydas-sabonis|Arvydas Sabonis]] '97 (81% similar)
+- [[pau-gasol|Pau Gasol]] '15 (81% similar)
+- [[charles-barkley|Charles Barkley]] '97 (80% similar)
+- [[jonas-valanciunas|Jonas Valančiūnas]] '26 (79% similar)
+- [[marc-gasol|Marc Gasol]] '16 (77% similar)
+- [[domantas-sabonis|Domantas Sabonis]] '24 (76% similar)
+
+**Career shape:** Charted 13 seasons (1998-99–2010-11). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

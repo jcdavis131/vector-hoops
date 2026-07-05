@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[tyus-jones|Tyus Jones]] — cosine 0.86
 - [[josh-magette|Josh Magette]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 6.4 pts · 4.9 reb · 13.2 ast · 3.5 stl per 100 (2000-01).
+
+**Strengths:**
+
+- High-volume table-setter (+3.2σ vs era)
+- Active hands, disrupts passing lanes (+3.1σ vs era)
+- Reliable touch from the free-throw line (+2.1σ vs era)
+
+**Areas of concern:**
+
+- Scoring load well below era (−2.0σ)
+- Finishing efficiency well below era (−2.0σ)
+
+**Comparables:**
+
+- [[jason-hart|Jason Hart]] '09 (90% similar)
+- [[lorenzo-brown|Lorenzo Brown]] '19 (88% similar)
+- [[facundo-campazzo|Facundo Campazzo]] '21 (88% similar)
+- [[erick-barkley|Erick Barkley]] '02 (87% similar)
+- [[tyus-jones|Tyus Jones]] '18 (86% similar)
+- [[josh-magette|Josh Magette]] '18 (86% similar)
+
+**Career shape:** Charted 1 season (2000-01). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

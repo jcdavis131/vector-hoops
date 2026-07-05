@@ -43,6 +43,33 @@ Closest career shapes in the era-normalized vector space:
 - [[yao-ming|Yao Ming]] — cosine 0.89
 - [[kevin-durant|Kevin Durant]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 38.2 pts · 14.8 reb · 4.0 ast · 4.6 blk per 100 (2016-17).
+
+**Strengths:**
+
+- Elite rim protection (+4.0σ vs era)
+- Draws contact, gets to the line often (+4.0σ vs era)
+- Featured, high-usage scoring role (+2.9σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+4.0σ)
+
+**Comparables:**
+
+- [[giannis-antetokounmpo|Giannis Antetokounmpo]] '20 (94% similar)
+- [[karl-anthony-towns|Karl-Anthony Towns]] '19 (92% similar)
+- [[demarcus-cousins|DeMarcus Cousins]] '15 (92% similar)
+- [[karl-malone|Karl Malone]] '97 (91% similar)
+- [[yao-ming|Yao Ming]] '07 (89% similar)
+- [[kevin-durant|Kevin Durant]] '14 (89% similar)
+
+**Career shape:** Charted 10 seasons (2016-17–2025-26). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -37,6 +37,32 @@ Closest career shapes in the era-normalized vector space:
 - [[enes-freedom|Enes Freedom]] — cosine 0.81
 - [[jayson-williams|Jayson Williams]] — cosine 0.78
 
+## Scouting report
+
+**Play style:** PF · Defensive Glass + Rim Pressure (Fts). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 21.1 pts · 17.0 reb · 4.7 ast · 1.9 stl per 100 (2015-16).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+2.0σ vs era)
+- Relentless on the offensive glass (+1.6σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[drew-gooden|Drew Gooden]] '16 (85% similar)
+- [[matt-geiger|Matt Geiger]] '98 (83% similar)
+- [[bobby-portis|Bobby Portis]] '23 (83% similar)
+- [[nikola-vucevic|Nikola Vučević]] '19 (83% similar)
+- [[enes-freedom|Enes Freedom]] '18 (81% similar)
+- [[jayson-williams|Jayson Williams]] '98 (78% similar)
+
+**Career shape:** Charted 4 seasons (2012-13–2015-16). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

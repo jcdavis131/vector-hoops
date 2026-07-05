@@ -41,6 +41,31 @@ Closest career shapes in the era-normalized vector space:
 - [[jordan-mclaughlin|Jordan McLaughlin]] — cosine 0.87
 - [[jamie-watson|Jamie Watson]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 14.0 pts · 7.0 reb · 6.5 ast · 3.8 stl per 100 (2019-20).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+4.0σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[nick-calathes|Nick Calathes]] '15 (92% similar)
+- [[brevin-knight|Brevin Knight]] '03 (91% similar)
+- [[marko-jaric|Marko Jaric]] '03 (90% similar)
+- [[shane-larkin|Shane Larkin]] '16 (88% similar)
+- [[jordan-mclaughlin|Jordan McLaughlin]] '24 (87% similar)
+- [[jamie-watson|Jamie Watson]] '97 (87% similar)
+
+**Career shape:** Charted 8 seasons (2016-17–2025-26). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

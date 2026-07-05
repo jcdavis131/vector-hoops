@@ -39,6 +39,34 @@ Closest career shapes in the era-normalized vector space:
 - [[jason-caffey|Jason Caffey]] — cosine 0.88
 - [[ante-zizic|Ante Zizic]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PF · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 26.4 pts · 10.1 reb · 2.8 ast · 1.1 stl per 100 (2008-09).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+1.7σ vs era)
+- Draws contact, gets to the line often (+1.6σ vs era)
+- Featured, high-usage scoring role (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.4σ)
+- Three-point volume well below era (−1.1σ)
+
+**Comparables:**
+
+- [[chris-wilcox|Chris Wilcox]] '13 (94% similar)
+- [[gary-trent|Gary Trent]] '01 (91% similar)
+- [[ben-handlogten|Ben Handlogten]] '04 (90% similar)
+- [[jj-hickson|JJ Hickson]] '16 (89% similar)
+- [[jason-caffey|Jason Caffey]] '97 (88% similar)
+- [[ante-zizic|Ante Zizic]] '18 (88% similar)
+
+**Career shape:** Charted 6 seasons (2006-07–2011-12). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -36,6 +36,33 @@ Closest career shapes in the era-normalized vector space:
 - [[gerald-madkins|Gerald Madkins]] — cosine 0.81
 - [[isaiah-briscoe|Isaiah Briscoe]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 5.0 pts · 7.7 reb · 6.9 ast · 1.1 stl per 100 (2017-18).
+
+**Strengths:**
+
+- Strong net on-court impact (+1.7σ vs era)
+- Knockdown three-point shooter (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−2.8σ)
+- Scoring load well below era (−2.4σ)
+
+**Comparables:**
+
+- [[juan-toscano-anderson|Juan Toscano-Anderson]] '21 (87% similar)
+- [[ryan-arcidiacono|Ryan Arcidiacono]] '24 (84% similar)
+- [[luke-walton|Luke Walton]] '12 (84% similar)
+- [[josh-mcroberts|Josh McRoberts]] '15 (82% similar)
+- [[gerald-madkins|Gerald Madkins]] '98 (81% similar)
+- [[isaiah-briscoe|Isaiah Briscoe]] '19 (81% similar)
+
+**Career shape:** Charted 3 seasons (2011-12–2017-18). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

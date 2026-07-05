@@ -36,6 +36,34 @@ Closest career shapes in the era-normalized vector space:
 - [[linton-johnson|Linton Johnson]] — cosine 0.78
 - [[jonas-jerebko|Jonas Jerebko]] — cosine 0.77
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 13.8 pts · 12.3 reb · 1.9 ast · 1.4 stl per 100 (2021-22).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+2.3σ vs era)
+- Reliable touch from the free-throw line (+2.0σ vs era)
+- Strong net on-court impact (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.1σ)
+- Shot volume well below era (−1.1σ)
+
+**Comparables:**
+
+- [[james-singleton|James Singleton]] '10 (89% similar)
+- [[scott-williams|Scott Williams]] '05 (83% similar)
+- [[jamychal-green|JaMychal Green]] '15 (78% similar)
+- [[quincy-acy|Quincy Acy]] '13 (78% similar)
+- [[linton-johnson|Linton Johnson]] '04 (78% similar)
+- [[jonas-jerebko|Jonas Jerebko]] '17 (77% similar)
+
+**Career shape:** Charted 3 seasons (2021-22–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

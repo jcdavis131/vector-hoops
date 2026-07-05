@@ -38,6 +38,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jamal-shead|Jamal Shead]] — cosine 0.92
 - [[rick-brunson|Rick Brunson]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 13.1 pts · 4.5 reb · 12.6 ast · 1.9 stl per 100 (2019-20).
+
+**Strengths:**
+
+- High-volume table-setter (+3.2σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.2σ)
+- Defensive rebounding well below era (−1.3σ)
+
+**Comparables:**
+
+- [[marcelo-huertas|Marcelo Huertas]] '17 (95% similar)
+- [[earl-watson|Earl Watson]] '14 (94% similar)
+- [[anthony-carter|Anthony Carter]] '03 (93% similar)
+- [[bobby-hurley|Bobby Hurley]] '97 (93% similar)
+- [[jamal-shead|Jamal Shead]] '26 (92% similar)
+- [[rick-brunson|Rick Brunson]] '99 (91% similar)
+
+**Career shape:** Charted 5 seasons (2015-16–2019-20). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -35,6 +35,31 @@ Closest career shapes in the era-normalized vector space:
 - [[larry-johnson|Larry Johnson]] — cosine 0.62
 - [[josh-davis|Josh Davis]] — cosine 0.62
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 17.5 pts · 10.1 reb · 4.6 ast · 1.4 stl per 100 (2024-25).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[dontonio-wingfield|Dontonio Wingfield]] '97 (67% similar)
+- [[gui-santos|Gui Santos]] '25 (65% similar)
+- [[tyler-cavanaugh|Tyler Cavanaugh]] '18 (65% similar)
+- [[jonas-jerebko|Jonas Jerebko]] '17 (63% similar)
+- [[larry-johnson|Larry Johnson]] '98 (62% similar)
+- [[josh-davis|Josh Davis]] '05 (62% similar)
+
+**Career shape:** Charted 2 seasons (2024-25–2025-26). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

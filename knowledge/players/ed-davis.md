@@ -45,6 +45,34 @@ Closest career shapes in the era-normalized vector space:
 - [[jason-thompson|Jason Thompson]] — cosine 0.94
 - [[tristan-thompson|Tristan Thompson]] — cosine 0.94
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 6.9 pts · 15.7 reb · 1.7 ast · 2.2 blk per 100 (2021-22).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+2.8σ vs era)
+- Strong presence on the defensive glass (+2.1σ vs era)
+- Elite rim protection (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−3.0σ)
+- Shot volume well below era (−2.7σ)
+
+**Comparables:**
+
+- [[kosta-koufos|Kosta Koufos]] '19 (96% similar)
+- [[tyson-chandler|Tyson Chandler]] '20 (95% similar)
+- [[tarik-black|Tarik Black]] '18 (95% similar)
+- [[kevon-looney|Kevon Looney]] '23 (95% similar)
+- [[jason-thompson|Jason Thompson]] '15 (94% similar)
+- [[tristan-thompson|Tristan Thompson]] '25 (94% similar)
+
+**Career shape:** Charted 12 seasons (2010-11–2021-22). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

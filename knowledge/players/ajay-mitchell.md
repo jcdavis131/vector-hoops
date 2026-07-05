@@ -35,6 +35,31 @@ Closest career shapes in the era-normalized vector space:
 - [[jalen-williams|Jalen Williams]] — cosine 0.72
 - [[derek-fisher|Derek Fisher]] — cosine 0.72
 
+## Scouting report
+
+**Play style:** SG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 24.6 pts · 6.1 reb · 6.5 ast · 2.3 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Strong net on-court impact (+2.3σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[jeff-hornacek|Jeff Hornacek]] '97 (87% similar)
+- [[george-hill|George Hill]] '22 (84% similar)
+- [[raul-neto|Raul Neto]] '17 (83% similar)
+- [[bracey-wright|Bracey Wright]] '07 (75% similar)
+- [[jalen-williams|Jalen Williams]] '25 (72% similar)
+- [[derek-fisher|Derek Fisher]] '02 (72% similar)
+
+**Career shape:** Charted 2 seasons (2024-25–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

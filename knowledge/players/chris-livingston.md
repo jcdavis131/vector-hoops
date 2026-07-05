@@ -35,6 +35,34 @@ Closest career shapes in the era-normalized vector space:
 - [[mark-hendrickson|Mark Hendrickson]] — cosine 0.78
 - [[kornel-david|Kornel David]] — cosine 0.77
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass + Defensive Glass. Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 13.0 pts · 15.2 reb · 2.2 ast · 2.2 stl per 100 (2024-25).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+1.7σ vs era)
+- Draws contact, gets to the line often (+1.4σ vs era)
+- Relentless on the offensive glass (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.9σ)
+- Finishing efficiency well below era (−1.7σ)
+
+**Comparables:**
+
+- [[randolph-morris|Randolph Morris]] '08 (88% similar)
+- [[j-r-giddens|J.R. Giddens]] '10 (80% similar)
+- [[lari-ketner|Lari Ketner]] '00 (80% similar)
+- [[pape-sow|Pape Sow]] '05 (79% similar)
+- [[mark-hendrickson|Mark Hendrickson]] '98 (78% similar)
+- [[kornel-david|Kornel David]] '01 (77% similar)
+
+**Career shape:** Charted 2 seasons (2023-24–2024-25). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

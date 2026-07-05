@@ -43,6 +43,34 @@ Closest career shapes in the era-normalized vector space:
 - [[kevon-looney|Kevon Looney]] — cosine 0.90
 - [[michael-cage|Michael Cage]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 5.5 pts · 15.1 reb · 2.5 ast · 2.0 stl per 100 (2008-09).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+1.7σ vs era)
+- Rarely turns the ball over (−1.4σ vs era)
+- Relentless on the offensive glass (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.7σ)
+- Scoring load well below era (−2.3σ)
+
+**Comparables:**
+
+- [[corie-blount|Corie Blount]] '98 (94% similar)
+- [[evan-eschmeyer|Evan Eschmeyer]] '03 (91% similar)
+- [[jarred-vanderbilt|Jarred Vanderbilt]] '21 (90% similar)
+- [[scot-pollard|Scot Pollard]] '03 (90% similar)
+- [[kevon-looney|Kevon Looney]] '23 (90% similar)
+- [[michael-cage|Michael Cage]] '00 (88% similar)
+
+**Career shape:** Charted 10 seasons (2005-06–2014-15). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

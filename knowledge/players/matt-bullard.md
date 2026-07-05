@@ -39,6 +39,34 @@ Closest career shapes in the era-normalized vector space:
 - [[max-strus|Max Strus]] — cosine 0.95
 - [[richie-frahm|Richie Frahm]] — cosine 0.95
 
+## Scouting report
+
+**Play style:** PF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 18.3 pts · 6.7 reb · 2.2 ast · 0.5 stl per 100 (2000-01).
+
+**Strengths:**
+
+- High-volume three-point shooter (+3.1σ vs era)
+- Rarely turns the ball over (−2.6σ vs era)
+- Strong net on-court impact (+1.7σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.8σ)
+- Ball-hawking activity well below era (−1.8σ)
+
+**Comparables:**
+
+- [[lindy-waters-iii|Lindy Waters III]] '23 (97% similar)
+- [[steve-novak|Steve Novak]] '15 (97% similar)
+- [[daequan-cook|Daequan Cook]] '11 (97% similar)
+- [[dennis-scott|Dennis Scott]] '00 (96% similar)
+- [[max-strus|Max Strus]] '21 (95% similar)
+- [[richie-frahm|Richie Frahm]] '04 (95% similar)
+
+**Career shape:** Charted 6 seasons (1996-97–2001-02). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

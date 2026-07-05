@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[joey-dorsey|Joey Dorsey]] — cosine 0.87
 - [[adrian-caldwell|Adrian Caldwell]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 11.7 pts · 14.7 reb · 5.5 ast · 1.6 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+2.0σ vs era)
+- Strong presence on the defensive glass (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−3.4σ)
+- Three-point accuracy well below era (−2.0σ)
+
+**Comparables:**
+
+- [[marshall-plumlee|Marshall Plumlee]] '17 (90% similar)
+- [[amile-jefferson|Amile Jefferson]] '20 (88% similar)
+- [[shavlik-randolph|Shavlik Randolph]] '15 (88% similar)
+- [[lou-amundson|Lou Amundson]] '14 (88% similar)
+- [[joey-dorsey|Joey Dorsey]] '15 (87% similar)
+- [[adrian-caldwell|Adrian Caldwell]] '97 (86% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

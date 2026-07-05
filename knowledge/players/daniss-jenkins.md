@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[kyle-lowry|Kyle Lowry]] — cosine 0.87
 - [[ty-lawson|Ty Lawson]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 21.8 pts · 5.4 reb · 9.0 ast · 2.1 stl per 100 (2025-26).
+
+**Strengths:**
+
+- High-volume table-setter (+1.6σ vs era)
+- Strong net on-court impact (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.1σ)
+- Turnover rate well above era (+1.1σ)
+
+**Comparables:**
+
+- [[jeff-teague|Jeff Teague]] '15 (91% similar)
+- [[t-j-ford|T.J. Ford]] '07 (88% similar)
+- [[mike-conley|Mike Conley]] '13 (87% similar)
+- [[jrue-holiday|Jrue Holiday]] '16 (87% similar)
+- [[kyle-lowry|Kyle Lowry]] '16 (87% similar)
+- [[ty-lawson|Ty Lawson]] '14 (86% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

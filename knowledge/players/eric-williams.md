@@ -43,6 +43,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jiri-welsch|Jiri Welsch]] — cosine 0.78
 - [[garrison-mathews|Garrison Mathews]] — cosine 0.77
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 22.8 pts · 7.2 reb · 3.0 ast · 1.3 stl per 100 (2006-07).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.4σ vs era)
+- Knockdown three-point shooter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.3σ)
+
+**Comparables:**
+
+- [[xavier-henry|Xavier Henry]] '13 (84% similar)
+- [[johnny-newman|Johnny Newman]] '98 (79% similar)
+- [[dahntay-jones|Dahntay Jones]] '15 (78% similar)
+- [[donny-marshall|Donny Marshall]] '02 (78% similar)
+- [[jiri-welsch|Jiri Welsch]] '03 (78% similar)
+- [[garrison-mathews|Garrison Mathews]] '21 (77% similar)
+
+**Career shape:** Charted 10 seasons (1996-97–2006-07). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -45,6 +45,32 @@ Closest career shapes in the era-normalized vector space:
 - [[mikki-moore|Mikki Moore]] — cosine 0.92
 - [[nick-richards|Nick Richards]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 11.9 pts · 9.8 reb · 1.3 ast · 1.3 blk per 100 (2004-05).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+1.2σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−3.2σ)
+- Three-point accuracy well below era (−1.3σ)
+
+**Comparables:**
+
+- [[timofey-mozgov|Timofey Mozgov]] '13 (94% similar)
+- [[richaun-holmes|Richaun Holmes]] '25 (93% similar)
+- [[deyonta-davis|Deyonta Davis]] '17 (93% similar)
+- [[adem-bona|Adem Bona]] '25 (93% similar)
+- [[mikki-moore|Mikki Moore]] '00 (92% similar)
+- [[nick-richards|Nick Richards]] '23 (92% similar)
+
+**Career shape:** Charted 12 seasons (1996-97–2007-08). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

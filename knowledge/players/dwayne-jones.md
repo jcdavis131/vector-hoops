@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[josh-boone|Josh Boone]] — cosine 0.91
 - [[hasheem-thabeet|Hasheem Thabeet]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** PF · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 8.4 pts · 15.1 reb · 1.1 ast · 2.7 blk per 100 (2007-08).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+2.7σ vs era)
+- Elite rim protection (+1.5σ vs era)
+- Efficient finisher inside the arc (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−2.5σ)
+- Free-throw touch well below era (−1.9σ)
+
+**Comparables:**
+
+- [[brendan-haywood|Brendan Haywood]] '15 (92% similar)
+- [[furkan-aldemir|Furkan Aldemir]] '15 (92% similar)
+- [[bernard-james|Bernard James]] '13 (92% similar)
+- [[tarik-black|Tarik Black]] '18 (92% similar)
+- [[josh-boone|Josh Boone]] '10 (91% similar)
+- [[hasheem-thabeet|Hasheem Thabeet]] '12 (90% similar)
+
+**Career shape:** Charted 1 season (2007-08). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -37,6 +37,34 @@ Closest career shapes in the era-normalized vector space:
 - [[patrick-ewing|Patrick Ewing]] — cosine 0.83
 - [[tim-duncan|Tim Duncan]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 31.0 pts · 12.9 reb · 2.6 ast · 2.2 blk per 100 (1997-98).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+2.4σ vs era)
+- Featured, high-usage scoring role (+2.1σ vs era)
+- Strong net on-court impact (+1.9σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.3σ)
+- Ball-hawking activity well below era (−1.2σ)
+
+**Comparables:**
+
+- [[lamarcus-aldridge|LaMarcus Aldridge]] '18 (92% similar)
+- [[yao-ming|Yao Ming]] '07 (85% similar)
+- [[marreese-speights|Marreese Speights]] '18 (85% similar)
+- [[al-jefferson|Al Jefferson]] '09 (84% similar)
+- [[patrick-ewing|Patrick Ewing]] '98 (83% similar)
+- [[tim-duncan|Tim Duncan]] '04 (82% similar)
+
+**Career shape:** Charted 4 seasons (1996-97–1999-00). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

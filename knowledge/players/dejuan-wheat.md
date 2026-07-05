@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[will-solomon|Will Solomon]] — cosine 0.89
 - [[jordan-farmar|Jordan Farmar]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 18.7 pts · 4.1 reb · 9.1 ast · 2.3 stl per 100 (1998-99).
+
+**Strengths:**
+
+- High-volume table-setter (+1.7σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.3σ)
+- Turnover rate well above era (+1.1σ)
+
+**Comparables:**
+
+- [[khalid-reeves|Khalid Reeves]] '97 (92% similar)
+- [[shammond-williams|Shammond Williams]] '04 (91% similar)
+- [[rafer-alston|Rafer Alston]] '00 (90% similar)
+- [[sebastian-telfair|Sebastian Telfair]] '10 (89% similar)
+- [[will-solomon|Will Solomon]] '02 (89% similar)
+- [[jordan-farmar|Jordan Farmar]] '14 (88% similar)
+
+**Career shape:** Charted 2 seasons (1997-98–1998-99). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

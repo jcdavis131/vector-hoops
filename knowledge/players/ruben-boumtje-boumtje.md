@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[duane-causwell|Duane Causwell]] — cosine 0.89
 - [[jordan-mickey|Jordan Mickey]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 8.2 pts · 11.5 reb · 0.8 ast · 3.3 blk per 100 (2001-02).
+
+**Strengths:**
+
+- Elite rim protection (+1.9σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.7σ)
+- Shot volume well below era (−2.1σ)
+
+**Comparables:**
+
+- [[michael-stewart|Michael Stewart]] '04 (93% similar)
+- [[solomon-jones|Solomon Jones]] '08 (92% similar)
+- [[brett-szabo|Brett Szabo]] '97 (90% similar)
+- [[john-edwards|John Edwards]] '05 (90% similar)
+- [[duane-causwell|Duane Causwell]] '99 (89% similar)
+- [[jordan-mickey|Jordan Mickey]] '17 (89% similar)
+
+**Career shape:** Charted 1 season (2001-02). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

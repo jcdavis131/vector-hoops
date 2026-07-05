@@ -39,6 +39,33 @@ Closest career shapes in the era-normalized vector space:
 - [[robbie-hummel|Robbie Hummel]] — cosine 0.87
 - [[anthony-brown|Anthony Brown]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 13.7 pts · 7.8 reb · 2.4 ast · 1.5 stl per 100 (2022-23).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.3σ vs era)
+- Reliable touch from the free-throw line (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.2σ)
+- Scoring load well below era (−1.0σ)
+
+**Comparables:**
+
+- [[sterling-brown|Sterling Brown]] '22 (92% similar)
+- [[solomon-hill|Solomon Hill]] '21 (90% similar)
+- [[ben-sheppard|Ben Sheppard]] '24 (90% similar)
+- [[p-j-tucker|P.J. Tucker]] '24 (88% similar)
+- [[robbie-hummel|Robbie Hummel]] '14 (87% similar)
+- [[anthony-brown|Anthony Brown]] '16 (86% similar)
+
+**Career shape:** Charted 6 seasons (2018-19–2023-24). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

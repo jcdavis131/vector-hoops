@@ -40,6 +40,34 @@ Closest career shapes in the era-normalized vector space:
 - [[isaiah-jackson|Isaiah Jackson]] — cosine 0.79
 - [[josh-smith|Josh Smith]] — cosine 0.78
 
+## Scouting report
+
+**Play style:** PF · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 19.1 pts · 13.7 reb · 2.0 ast · 3.9 blk per 100 (2006-07).
+
+**Strengths:**
+
+- Elite rim protection (+2.7σ vs era)
+- Draws contact, gets to the line often (+1.5σ vs era)
+- Strong net on-court impact (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.9σ)
+- Three-point accuracy well below era (−1.4σ)
+
+**Comparables:**
+
+- [[anthony-randolph|Anthony Randolph]] '13 (93% similar)
+- [[stromile-swift|Stromile Swift]] '09 (87% similar)
+- [[hakeem-olajuwon|Hakeem Olajuwon]] '97 (81% similar)
+- [[andray-blatche|Andray Blatche]] '13 (79% similar)
+- [[isaiah-jackson|Isaiah Jackson]] '24 (79% similar)
+- [[josh-smith|Josh Smith]] '10 (78% similar)
+
+**Career shape:** Charted 7 seasons (2006-07–2012-13). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

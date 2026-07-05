@@ -39,6 +39,34 @@ Closest career shapes in the era-normalized vector space:
 - [[daniel-gafford|Daniel Gafford]] — cosine 0.93
 - [[taj-gibson|Taj Gibson]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 19.2 pts · 13.8 reb · 2.6 ast · 2.9 blk per 100 (2021-22).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+2.9σ vs era)
+- Elite rim protection (+2.4σ vs era)
+- Relentless on the offensive glass (+1.9σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−3.0σ)
+- Three-point volume well below era (−1.8σ)
+
+**Comparables:**
+
+- [[richaun-holmes|Richaun Holmes]] '25 (96% similar)
+- [[robert-williams-iii|Robert Williams III]] '19 (95% similar)
+- [[jarrett-allen|Jarrett Allen]] '25 (94% similar)
+- [[brandon-clarke|Brandon Clarke]] '25 (94% similar)
+- [[daniel-gafford|Daniel Gafford]] '25 (93% similar)
+- [[taj-gibson|Taj Gibson]] '21 (93% similar)
+
+**Career shape:** Charted 6 seasons (2020-21–2025-26). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[justin-edwards|Justin Edwards]] — cosine 0.86
 - [[courtney-lee|Courtney Lee]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 17.5 pts · 6.0 reb · 2.8 ast · 2.4 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.4σ vs era)
+- Active hands, disrupts passing lanes (+1.2σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[bobby-simmons|Bobby Simmons]] '12 (93% similar)
+- [[gary-harris|Gary Harris]] '25 (92% similar)
+- [[kentavious-caldwell-pope|Kentavious Caldwell-Pope]] '24 (90% similar)
+- [[lucious-harris|Lucious Harris]] '98 (87% similar)
+- [[justin-edwards|Justin Edwards]] '26 (86% similar)
+- [[courtney-lee|Courtney Lee]] '20 (86% similar)
+
+**Career shape:** Charted 2 seasons (2024-25–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

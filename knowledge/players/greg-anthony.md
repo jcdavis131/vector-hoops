@@ -39,6 +39,34 @@ Closest career shapes in the era-normalized vector space:
 - [[jose-alvarado|Jose Alvarado]] — cosine 0.91
 - [[jordan-farmar|Jordan Farmar]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 20.7 pts · 4.1 reb · 6.5 ast · 4.3 stl per 100 (1998-99).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+3.4σ vs era)
+- Strong net on-court impact (+1.9σ vs era)
+- High-volume three-point shooter (+1.9σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.2σ)
+- Offensive-glass activity well below era (−1.1σ)
+
+**Comparables:**
+
+- [[mookie-blaylock|Mookie Blaylock]] '97 (94% similar)
+- [[collin-gillespie|Collin Gillespie]] '24 (92% similar)
+- [[lindsey-hunter|Lindsey Hunter]] '09 (92% similar)
+- [[rafer-alston|Rafer Alston]] '00 (91% similar)
+- [[jose-alvarado|Jose Alvarado]] '22 (91% similar)
+- [[jordan-farmar|Jordan Farmar]] '14 (91% similar)
+
+**Career shape:** Charted 6 seasons (1996-97–2001-02). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

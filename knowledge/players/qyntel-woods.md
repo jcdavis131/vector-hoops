@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[art-long|Art Long]] — cosine 0.75
 - [[daniel-hamilton|Daniel Hamilton]] — cosine 0.71
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 19.1 pts · 7.9 reb · 1.8 ast · 2.2 stl per 100 (2002-03).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−3.3σ)
+- On-court net impact well below era (−1.7σ)
+
+**Comparables:**
+
+- [[jacob-toppin|Jacob Toppin]] '25 (80% similar)
+- [[erik-daniels|Erik Daniels]] '05 (79% similar)
+- [[isaiah-roby|Isaiah Roby]] '23 (78% similar)
+- [[kevin-mccullar-jr|Kevin McCullar Jr.]] '26 (77% similar)
+- [[art-long|Art Long]] '03 (75% similar)
+- [[daniel-hamilton|Daniel Hamilton]] '19 (71% similar)
+
+**Career shape:** Charted 3 seasons (2002-03–2005-06). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

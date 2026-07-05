@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[toure-murry|Toure' Murry]] — cosine 0.90
 - [[dennis-smith-jr|Dennis Smith Jr.]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 19.1 pts · 5.8 reb · 7.0 ast · 2.4 stl per 100 (2008-09).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.5σ vs era)
+- High-volume table-setter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.3σ)
+- On-court net impact well below era (−1.1σ)
+
+**Comparables:**
+
+- [[tyshawn-taylor|Tyshawn Taylor]] '14 (93% similar)
+- [[robert-pack|Robert Pack]] '97 (91% similar)
+- [[zoran-planinic|Zoran Planinic]] '05 (91% similar)
+- [[kevin-porter-jr|Kevin Porter Jr.]] '21 (91% similar)
+- [[toure-murry|Toure' Murry]] '14 (90% similar)
+- [[dennis-smith-jr|Dennis Smith Jr.]] '20 (89% similar)
+
+**Career shape:** Charted 1 season (2008-09). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

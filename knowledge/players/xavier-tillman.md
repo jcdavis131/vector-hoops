@@ -39,6 +39,33 @@ Closest career shapes in the era-normalized vector space:
 - [[gustavo-ayon|Gustavo Ayon]] — cosine 0.85
 - [[reggie-jordan|Reggie Jordan]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 11.7 pts · 11.5 reb · 3.5 ast · 2.4 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+1.6σ vs era)
+- Active hands, disrupts passing lanes (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−4.0σ)
+- Three-point accuracy well below era (−1.4σ)
+
+**Comparables:**
+
+- [[colby-jones|Colby Jones]] '24 (92% similar)
+- [[jan-vesely|Jan Vesely]] '14 (90% similar)
+- [[renaldo-balkman|Renaldo Balkman]] '08 (88% similar)
+- [[jarred-vanderbilt|Jarred Vanderbilt]] '21 (86% similar)
+- [[gustavo-ayon|Gustavo Ayon]] '14 (85% similar)
+- [[reggie-jordan|Reggie Jordan]] '97 (84% similar)
+
+**Career shape:** Charted 6 seasons (2020-21–2025-26). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

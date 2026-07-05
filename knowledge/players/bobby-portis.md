@@ -44,6 +44,32 @@ Closest career shapes in the era-normalized vector space:
 - [[donyell-marshall|Donyell Marshall]] — cosine 0.79
 - [[terry-cummings|Terry Cummings]] — cosine 0.79
 
+## Scouting report
+
+**Play style:** PF · Defensive Glass + Rim Pressure (Fts). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 25.4 pts · 17.3 reb · 2.7 ast · 0.7 stl per 100 (2022-23).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+2.7σ vs era)
+- Relentless on the offensive glass (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.4σ)
+
+**Comparables:**
+
+- [[nikola-vucevic|Nikola Vučević]] '19 (88% similar)
+- [[jared-sullinger|Jared Sullinger]] '16 (83% similar)
+- [[drew-gooden|Drew Gooden]] '16 (80% similar)
+- [[laphonso-ellis|LaPhonso Ellis]] '97 (80% similar)
+- [[donyell-marshall|Donyell Marshall]] '09 (79% similar)
+- [[terry-cummings|Terry Cummings]] '99 (79% similar)
+
+**Career shape:** Charted 11 seasons (2015-16–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

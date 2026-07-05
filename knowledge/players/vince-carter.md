@@ -55,6 +55,33 @@ Closest career shapes in the era-normalized vector space:
 - [[donovan-mitchell|Donovan Mitchell]] — cosine 0.90
 - [[kemba-walker|Kemba Walker]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** SF · Scoring Volume + Shot Volume. Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 35.9 pts · 7.3 reb · 5.1 ast · 2.0 stl per 100 (2000-01).
+
+**Strengths:**
+
+- Featured, high-usage scoring role (+3.1σ vs era)
+- Heavy shot volume, focal scoring option (+2.9σ vs era)
+- Draws contact, gets to the line often (+1.7σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[cj-mccollum|CJ McCollum]] '21 (92% similar)
+- [[michael-redd|Michael Redd]] '07 (91% similar)
+- [[tyrese-maxey|Tyrese Maxey]] '25 (91% similar)
+- [[mitch-richmond|Mitch Richmond]] '97 (90% similar)
+- [[donovan-mitchell|Donovan Mitchell]] '21 (90% similar)
+- [[kemba-walker|Kemba Walker]] '19 (90% similar)
+
+**Career shape:** Charted 22 seasons (1998-99–2019-20). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

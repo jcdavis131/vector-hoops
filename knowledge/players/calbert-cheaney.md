@@ -42,6 +42,32 @@ Closest career shapes in the era-normalized vector space:
 - [[perry-jones-iii|Perry Jones III]] — cosine 0.78
 - [[duane-ferrell|Duane Ferrell]] — cosine 0.78
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 10.2 pts · 5.3 reb · 3.1 ast · 1.7 stl per 100 (1999-00).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.2σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.6σ)
+- Rim pressure (free-throw generation) well below era (−1.8σ)
+
+**Comparables:**
+
+- [[quinton-ross|Quinton Ross]] '11 (86% similar)
+- [[doug-west|Doug West]] '98 (83% similar)
+- [[dante-cunningham|Dante Cunningham]] '19 (80% similar)
+- [[trenton-hassell|Trenton Hassell]] '04 (79% similar)
+- [[perry-jones-iii|Perry Jones III]] '13 (78% similar)
+- [[duane-ferrell|Duane Ferrell]] '98 (78% similar)
+
+**Career shape:** Charted 9 seasons (1996-97–2005-06). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -39,6 +39,33 @@ Closest career shapes in the era-normalized vector space:
 - [[sean-williams|Sean Williams]] — cosine 0.88
 - [[michael-olowokandi|Michael Olowokandi]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 17.4 pts · 11.6 reb · 1.5 ast · 2.9 blk per 100 (2005-06).
+
+**Strengths:**
+
+- Elite rim protection (+1.7σ vs era)
+- Relentless on the offensive glass (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+4.0σ)
+- On-court net impact well below era (−2.7σ)
+
+**Comparables:**
+
+- [[david-harrison|David Harrison]] '07 (92% similar)
+- [[patrick-o-bryant|Patrick O'Bryant]] '08 (90% similar)
+- [[darko-milicic|Darko Milicic]] '04 (89% similar)
+- [[norvel-pelle|Norvel Pelle]] '20 (89% similar)
+- [[sean-williams|Sean Williams]] '10 (88% similar)
+- [[michael-olowokandi|Michael Olowokandi]] '04 (88% similar)
+
+**Career shape:** Charted 6 seasons (2001-02–2006-07). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

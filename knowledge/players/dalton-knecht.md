@@ -35,6 +35,33 @@ Closest career shapes in the era-normalized vector space:
 - [[mychal-mulder|Mychal Mulder]] — cosine 0.89
 - [[matt-thomas|Matt Thomas]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 23.0 pts · 7.0 reb · 2.2 ast · 0.8 stl per 100 (2024-25).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.3σ vs era)
+- High-volume three-point shooter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.4σ)
+- Table-setting role well below era (−1.0σ)
+
+**Comparables:**
+
+- [[doug-mcdermott|Doug McDermott]] '25 (94% similar)
+- [[corey-kispert|Corey Kispert]] '23 (90% similar)
+- [[johnny-juzang|Johnny Juzang]] '23 (89% similar)
+- [[steve-novak|Steve Novak]] '15 (89% similar)
+- [[mychal-mulder|Mychal Mulder]] '22 (89% similar)
+- [[matt-thomas|Matt Thomas]] '22 (88% similar)
+
+**Career shape:** Charted 2 seasons (2024-25–2025-26). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

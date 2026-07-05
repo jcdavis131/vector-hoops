@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[bennedict-mathurin|Bennedict Mathurin]] — cosine 0.76
 - [[morris-almond|Morris Almond]] — cosine 0.74
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 20.2 pts · 5.6 reb · 1.5 ast · 1.1 stl per 100 (1996-97).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+1.8σ vs era)
+- Reliable touch from the free-throw line (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.8σ)
+
+**Comparables:**
+
+- [[lavor-postell|Lavor Postell]] '02 (80% similar)
+- [[jabari-brown|Jabari Brown]] '15 (78% similar)
+- [[alec-burks|Alec Burks]] '24 (78% similar)
+- [[sean-kilpatrick|Sean Kilpatrick]] '16 (77% similar)
+- [[bennedict-mathurin|Bennedict Mathurin]] '26 (76% similar)
+- [[morris-almond|Morris Almond]] '09 (74% similar)
+
+**Career shape:** Charted 1 season (1996-97). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

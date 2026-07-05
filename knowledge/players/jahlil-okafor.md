@@ -39,6 +39,33 @@ Closest career shapes in the era-normalized vector space:
 - [[nick-richards|Nick Richards]] — cosine 0.83
 - [[derrick-caracter|Derrick Caracter]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 24.6 pts · 11.8 reb · 1.7 ast · 2.5 blk per 100 (2017-18).
+
+**Strengths:**
+
+- Elite rim protection (+1.7σ vs era)
+- Efficient finisher inside the arc (+1.4σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−3.3σ)
+- Ball-hawking activity well below era (−1.8σ)
+
+**Comparables:**
+
+- [[james-wiseman|James Wiseman]] '24 (95% similar)
+- [[bryant-reeves|Bryant Reeves]] '98 (91% similar)
+- [[gary-trent|Gary Trent]] '01 (84% similar)
+- [[mark-strickland|Mark Strickland]] '97 (84% similar)
+- [[nick-richards|Nick Richards]] '23 (83% similar)
+- [[derrick-caracter|Derrick Caracter]] '11 (83% similar)
+
+**Career shape:** Charted 6 seasons (2015-16–2020-21). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

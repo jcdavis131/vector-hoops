@@ -37,6 +37,31 @@ Closest career shapes in the era-normalized vector space:
 - [[bryce-drew|Bryce Drew]] — cosine 0.92
 - [[chris-quinn|Chris Quinn]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** PG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 18.2 pts · 4.8 reb · 5.9 ast · 1.6 stl per 100 (2018-19).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+1.4σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[lynn-greer|Lynn Greer]] '07 (94% similar)
+- [[keyon-dooling|Keyon Dooling]] '10 (92% similar)
+- [[ty-jerome|Ty Jerome]] '25 (92% similar)
+- [[tyler-johnson|Tyler Johnson]] '21 (92% similar)
+- [[bryce-drew|Bryce Drew]] '99 (92% similar)
+- [[chris-quinn|Chris Quinn]] '10 (91% similar)
+
+**Career shape:** Charted 4 seasons (2016-17–2019-20). Entered as a Playmaking + Steals profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

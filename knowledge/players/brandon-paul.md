@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[juaquin-hawkins|Juaquin Hawkins]] — cosine 0.84
 - [[aaron-harrison|Aaron Harrison]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 12.3 pts · 5.7 reb · 3.1 ast · 2.1 stl per 100 (2017-18).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.9σ)
+- Shot volume well below era (−1.2σ)
+
+**Comparables:**
+
+- [[sindarius-thornwell|Sindarius Thornwell]] '21 (87% similar)
+- [[dalen-terry|Dalen Terry]] '26 (87% similar)
+- [[david-wingate|David Wingate]] '99 (87% similar)
+- [[deandre-liggins|DeAndre Liggins]] '12 (85% similar)
+- [[juaquin-hawkins|Juaquin Hawkins]] '03 (84% similar)
+- [[aaron-harrison|Aaron Harrison]] '16 (83% similar)
+
+**Career shape:** Charted 1 season (2017-18). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

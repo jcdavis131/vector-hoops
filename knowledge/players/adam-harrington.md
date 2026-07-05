@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[adam-morrison|Adam Morrison]] — cosine 0.85
 - [[deshawn-stevenson|DeShawn Stevenson]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 13.9 pts · 3.7 reb · 5.6 ast · 0.9 stl per 100 (2002-03).
+
+**Strengths:**
+
+- Rarely turns the ball over (−2.3σ vs era)
+- High-volume three-point shooter (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.5σ)
+- On-court net impact well below era (−2.5σ)
+
+**Comparables:**
+
+- [[jawad-williams|Jawad Williams]] '11 (91% similar)
+- [[justin-jackson|Justin Jackson]] '23 (88% similar)
+- [[erick-green|Erick Green]] '15 (86% similar)
+- [[sergei-monia|Sergei Monia]] '06 (85% similar)
+- [[adam-morrison|Adam Morrison]] '10 (85% similar)
+- [[deshawn-stevenson|DeShawn Stevenson]] '12 (84% similar)
+
+**Career shape:** Charted 1 season (2002-03). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

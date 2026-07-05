@@ -35,6 +35,34 @@ Closest career shapes in the era-normalized vector space:
 - [[neemias-queta|Neemias Queta]] — cosine 0.94
 - [[nic-claxton|Nic Claxton]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 18.0 pts · 15.5 reb · 4.9 ast · 3.2 blk per 100 (2024-25).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+3.1σ vs era)
+- Elite rim protection (+2.6σ vs era)
+- Relentless on the offensive glass (+2.2σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.9σ)
+- Three-point volume well below era (−1.9σ)
+
+**Comparables:**
+
+- [[jakob-poeltl|Jakob Poeltl]] '22 (96% similar)
+- [[ryan-kalkbrenner|Ryan Kalkbrenner]] '26 (96% similar)
+- [[daniel-gafford|Daniel Gafford]] '25 (95% similar)
+- [[robert-williams-iii|Robert Williams III]] '19 (94% similar)
+- [[neemias-queta|Neemias Queta]] '24 (94% similar)
+- [[nic-claxton|Nic Claxton]] '23 (93% similar)
+
+**Career shape:** Charted 2 seasons (2023-24–2024-25). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

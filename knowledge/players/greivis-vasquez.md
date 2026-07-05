@@ -39,6 +39,31 @@ Closest career shapes in the era-normalized vector space:
 - [[mark-price|Mark Price]] — cosine 0.92
 - [[damon-stoudamire|Damon Stoudamire]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 21.5 pts · 6.7 reb · 14.0 ast · 1.3 stl per 100 (2012-13).
+
+**Strengths:**
+
+- High-volume table-setter (+3.4σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.1σ)
+
+**Comparables:**
+
+- [[jameer-nelson|Jameer Nelson]] '09 (95% similar)
+- [[howard-eisley|Howard Eisley]] '03 (94% similar)
+- [[marcus-williams|Marcus Williams]] '07 (94% similar)
+- [[j-j-barea|J.J. Barea]] '19 (93% similar)
+- [[mark-price|Mark Price]] '98 (92% similar)
+- [[damon-stoudamire|Damon Stoudamire]] '97 (92% similar)
+
+**Career shape:** Charted 6 seasons (2010-11–2015-16). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

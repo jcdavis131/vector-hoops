@@ -36,6 +36,33 @@ Closest career shapes in the era-normalized vector space:
 - [[marco-belinelli|Marco Belinelli]] — cosine 0.88
 - [[evan-fournier|Evan Fournier]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 18.5 pts · 2.8 reb · 3.2 ast · 0.9 stl per 100 (1998-99).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+1.2σ vs era)
+- High-volume three-point shooter (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.7σ)
+- Ball-hawking activity well below era (−1.1σ)
+
+**Comparables:**
+
+- [[willie-green|Willie Green]] '04 (93% similar)
+- [[eric-gordon|Eric Gordon]] '13 (89% similar)
+- [[gary-neal|Gary Neal]] '14 (88% similar)
+- [[nick-young|Nick Young]] '15 (88% similar)
+- [[marco-belinelli|Marco Belinelli]] '08 (88% similar)
+- [[evan-fournier|Evan Fournier]] '24 (88% similar)
+
+**Career shape:** Charted 3 seasons (1998-99–2000-01). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

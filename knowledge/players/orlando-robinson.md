@@ -36,6 +36,33 @@ Closest career shapes in the era-normalized vector space:
 - [[moussa-diabate|Moussa Diabaté]] — cosine 0.86
 - [[daniel-oturu|Daniel Oturu]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 13.5 pts · 14.6 reb · 2.9 ast · 1.4 stl per 100 (2022-23).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+2.0σ vs era)
+- Strong presence on the defensive glass (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.8σ)
+- Three-point volume well below era (−1.6σ)
+
+**Comparables:**
+
+- [[cody-zeller|Cody Zeller]] '22 (90% similar)
+- [[colin-castleton|Colin Castleton]] '25 (87% similar)
+- [[tony-bradley|Tony Bradley]] '20 (86% similar)
+- [[kevon-looney|Kevon Looney]] '23 (86% similar)
+- [[moussa-diabate|Moussa Diabaté]] '25 (86% similar)
+- [[daniel-oturu|Daniel Oturu]] '21 (86% similar)
+
+**Career shape:** Charted 3 seasons (2022-23–2024-25). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

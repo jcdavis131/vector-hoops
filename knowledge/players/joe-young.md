@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[dajuan-wagner|Dajuan Wagner]] — cosine 0.85
 - [[kyle-guy|Kyle Guy]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** PG · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 23.7 pts · 5.9 reb · 5.2 ast · 1.4 stl per 100 (2016-17).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+1.9σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.9σ)
+- Finishing efficiency well below era (−1.3σ)
+
+**Comparables:**
+
+- [[maalik-wayns|Maalik Wayns]] '13 (90% similar)
+- [[bobby-brown|Bobby Brown]] '18 (87% similar)
+- [[brandon-goodwin|Brandon Goodwin]] '20 (86% similar)
+- [[tre-mann|Tre Mann]] '26 (86% similar)
+- [[dajuan-wagner|Dajuan Wagner]] '03 (85% similar)
+- [[kyle-guy|Kyle Guy]] '22 (85% similar)
+
+**Career shape:** Charted 3 seasons (2015-16–2017-18). Entered as a Playmaking + Steals profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

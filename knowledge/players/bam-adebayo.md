@@ -42,6 +42,34 @@ Closest career shapes in the era-normalized vector space:
 - [[carlos-boozer|Carlos Boozer]] — cosine 0.85
 - [[nene|Nene]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 28.9 pts · 15.3 reb · 5.1 ast · 2.2 stl per 100 (2021-22).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+2.2σ vs era)
+- Strong presence on the defensive glass (+1.9σ vs era)
+- Strong net on-court impact (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−3.0σ)
+- Three-point volume well below era (−1.8σ)
+
+**Comparables:**
+
+- [[greg-monroe|Greg Monroe]] '18 (89% similar)
+- [[jusuf-nurkic|Jusuf Nurkić]] '16 (88% similar)
+- [[boban-marjanovic|Boban Marjanovic]] '18 (88% similar)
+- [[alperen-sengun|Alperen Sengun]] '25 (87% similar)
+- [[carlos-boozer|Carlos Boozer]] '07 (85% similar)
+- [[nene|Nene]] '19 (85% similar)
+
+**Career shape:** Charted 9 seasons (2017-18–2025-26). Entered as a Rim Protection + Offensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

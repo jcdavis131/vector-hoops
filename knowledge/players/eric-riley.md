@@ -35,6 +35,34 @@ Closest career shapes in the era-normalized vector space:
 - [[cole-aldrich|Cole Aldrich]] — cosine 0.90
 - [[sean-williams|Sean Williams]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 11.9 pts · 15.1 reb · 2.0 ast · 4.0 blk per 100 (1998-99).
+
+**Strengths:**
+
+- Elite rim protection (+2.5σ vs era)
+- Efficient finisher inside the arc (+1.5σ vs era)
+- Relentless on the offensive glass (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.8σ)
+- Scoring load well below era (−1.2σ)
+
+**Comparables:**
+
+- [[samuel-dalembert|Samuel Dalembert]] '13 (93% similar)
+- [[theo-ratliff|Theo Ratliff]] '09 (92% similar)
+- [[dj-mbenga|DJ Mbenga]] '06 (92% similar)
+- [[khaman-maluach|Khaman Maluach]] '26 (91% similar)
+- [[cole-aldrich|Cole Aldrich]] '16 (90% similar)
+- [[sean-williams|Sean Williams]] '10 (90% similar)
+
+**Career shape:** Charted 2 seasons (1997-98–1998-99). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

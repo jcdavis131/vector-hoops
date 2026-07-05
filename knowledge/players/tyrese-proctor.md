@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[o-j-mayo|O.J. Mayo]] — cosine 0.90
 - [[nate-robinson|Nate Robinson]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 23.8 pts · 5.6 reb · 6.5 ast · 2.2 stl per 100 (2025-26).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.2σ vs era)
+- Reliable touch from the free-throw line (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Rim-protection impact well below era (−1.2σ)
+
+**Comparables:**
+
+- [[erick-strickland|Erick Strickland]] '01 (93% similar)
+- [[juan-dixon|Juan Dixon]] '09 (93% similar)
+- [[jannero-pargo|Jannero Pargo]] '14 (91% similar)
+- [[bones-hyland|Bones Hyland]] '25 (90% similar)
+- [[o-j-mayo|O.J. Mayo]] '14 (90% similar)
+- [[nate-robinson|Nate Robinson]] '10 (89% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

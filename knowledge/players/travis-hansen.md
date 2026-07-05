@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[semi-ojeleye|Semi Ojeleye]] — cosine 0.89
 - [[ochai-agbaji|Ochai Agbaji]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 12.1 pts · 6.8 reb · 1.9 ast · 1.0 stl per 100 (2003-04).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.6σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.3σ)
+- Scoring load well below era (−1.1σ)
+
+**Comparables:**
+
+- [[axel-toupane|Axel Toupane]] '16 (93% similar)
+- [[kyle-singler|Kyle Singler]] '17 (93% similar)
+- [[anthony-brown|Anthony Brown]] '16 (90% similar)
+- [[terrance-ferguson|Terrance Ferguson]] '20 (89% similar)
+- [[semi-ojeleye|Semi Ojeleye]] '18 (89% similar)
+- [[ochai-agbaji|Ochai Agbaji]] '23 (89% similar)
+
+**Career shape:** Charted 1 season (2003-04). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

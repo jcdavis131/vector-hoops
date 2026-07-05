@@ -35,6 +35,33 @@ Closest career shapes in the era-normalized vector space:
 - [[kj-simpson|KJ Simpson]] — cosine 0.93
 - [[kenny-satterfield|Kenny Satterfield]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 12.9 pts · 4.8 reb · 10.0 ast · 3.2 stl per 100 (2012-13).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.6σ vs era)
+- High-volume table-setter (+2.0σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.4σ)
+- On-court net impact well below era (−2.2σ)
+
+**Comparables:**
+
+- [[walker-russell|Walker Russell]] '12 (96% similar)
+- [[junior-harrington|Junior Harrington]] '03 (95% similar)
+- [[mardy-collins|Mardy Collins]] '10 (95% similar)
+- [[peyton-siva|Peyton Siva]] '14 (93% similar)
+- [[kj-simpson|KJ Simpson]] '26 (93% similar)
+- [[kenny-satterfield|Kenny Satterfield]] '02 (92% similar)
+
+**Career shape:** Charted 2 seasons (2012-13–2013-14). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

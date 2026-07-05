@@ -40,6 +40,34 @@ Closest career shapes in the era-normalized vector space:
 - [[keith-bogans|Keith Bogans]] — cosine 0.91
 - [[matt-maloney|Matt Maloney]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 13.3 pts · 5.2 reb · 3.5 ast · 1.4 stl per 100 (2009-10).
+
+**Strengths:**
+
+- Strong net on-court impact (+1.7σ vs era)
+- Rarely turns the ball over (−1.3σ vs era)
+- Knockdown three-point shooter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.3σ)
+- Scoring load well below era (−1.1σ)
+
+**Comparables:**
+
+- [[daniel-gibson|Daniel Gibson]] '13 (92% similar)
+- [[tyler-johnson|Tyler Johnson]] '21 (91% similar)
+- [[charlie-bell|Charlie Bell]] '11 (91% similar)
+- [[raja-bell|Raja Bell]] '07 (91% similar)
+- [[keith-bogans|Keith Bogans]] '13 (91% similar)
+- [[matt-maloney|Matt Maloney]] '00 (90% similar)
+
+**Career shape:** Charted 7 seasons (1997-98–2011-12). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

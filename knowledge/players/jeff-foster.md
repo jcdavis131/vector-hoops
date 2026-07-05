@@ -44,6 +44,34 @@ Closest career shapes in the era-normalized vector space:
 - [[scot-pollard|Scot Pollard]] — cosine 0.92
 - [[olumide-oyedeji|Olumide Oyedeji]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 21.7 pts · 16.2 reb · 2.5 ast · 2.5 stl per 100 (1999-00).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+3.3σ vs era)
+- Efficient finisher inside the arc (+2.3σ vs era)
+- Rarely turns the ball over (−2.1σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.3σ)
+- Shot volume well below era (−1.0σ)
+
+**Comparables:**
+
+- [[anderson-varejao|Anderson Varejao]] '05 (95% similar)
+- [[anthony-miller|Anthony Miller]] '00 (94% similar)
+- [[kevon-looney|Kevon Looney]] '23 (93% similar)
+- [[corie-blount|Corie Blount]] '98 (92% similar)
+- [[scot-pollard|Scot Pollard]] '03 (92% similar)
+- [[olumide-oyedeji|Olumide Oyedeji]] '03 (90% similar)
+
+**Career shape:** Charted 11 seasons (1999-00–2010-11). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

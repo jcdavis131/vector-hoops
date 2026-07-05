@@ -46,6 +46,33 @@ Closest career shapes in the era-normalized vector space:
 - [[michael-finley|Michael Finley]] — cosine 0.91
 - [[ray-allen|Ray Allen]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** SG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 32.5 pts · 4.8 reb · 4.3 ast · 1.7 stl per 100 (2014-15).
+
+**Strengths:**
+
+- Strong net on-court impact (+2.4σ vs era)
+- Featured, high-usage scoring role (+2.3σ vs era)
+- Heavy shot volume, focal scoring option (+2.0σ vs era)
+
+**Areas of concern:**
+
+- Offensive-glass activity well below era (−1.0σ)
+
+**Comparables:**
+
+- [[dell-curry|Dell Curry]] '00 (93% similar)
+- [[gerald-green|Gerald Green]] '15 (93% similar)
+- [[voshon-lenard|Voshon Lenard]] '97 (91% similar)
+- [[peja-stojakovic|Peja Stojakovic]] '04 (91% similar)
+- [[michael-finley|Michael Finley]] '03 (91% similar)
+- [[ray-allen|Ray Allen]] '06 (90% similar)
+
+**Career shape:** Charted 13 seasons (2011-12–2025-26). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

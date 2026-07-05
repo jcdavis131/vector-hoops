@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[ryan-gomes|Ryan Gomes]] — cosine 0.74
 - [[chris-mills|Chris Mills]] — cosine 0.74
 
+## Scouting report
+
+**Play style:** C · Three-Point Volume + Three-Point Accuracy. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 17.3 pts · 8.6 reb · 2.3 ast · 2.0 stl per 100 (2002-03).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.8σ vs era)
+- Knockdown three-point shooter (+1.6σ vs era)
+- Reliable touch from the free-throw line (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.7σ)
+
+**Comparables:**
+
+- [[ed-o-bannon|Ed O'Bannon]] '97 (86% similar)
+- [[brian-evans|Brian Evans]] '98 (84% similar)
+- [[bobby-simmons|Bobby Simmons]] '12 (81% similar)
+- [[tyrone-nesby|Tyrone Nesby]] '00 (81% similar)
+- [[ryan-gomes|Ryan Gomes]] '12 (74% similar)
+- [[chris-mills|Chris Mills]] '03 (74% similar)
+
+**Career shape:** Charted 1 season (2002-03). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[chris-robinson|Chris Robinson]] — cosine 0.86
 - [[corey-benjamin|Corey Benjamin]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** SG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 19.3 pts · 5.2 reb · 5.6 ast · 2.1 stl per 100 (1996-97).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.3σ)
+- Defensive rebounding well below era (−1.1σ)
+
+**Comparables:**
+
+- [[vonteego-cummings|Vonteego Cummings]] '01 (92% similar)
+- [[will-solomon|Will Solomon]] '02 (89% similar)
+- [[keon-johnson|Keon Johnson]] '23 (88% similar)
+- [[tamar-slay|Tamar Slay]] '04 (87% similar)
+- [[chris-robinson|Chris Robinson]] '98 (86% similar)
+- [[corey-benjamin|Corey Benjamin]] '00 (86% similar)
+
+**Career shape:** Charted 1 season (1996-97). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

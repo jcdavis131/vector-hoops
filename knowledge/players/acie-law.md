@@ -37,6 +37,33 @@ Closest career shapes in the era-normalized vector space:
 - [[moochie-norris|Moochie Norris]] — cosine 0.88
 - [[andrew-nembhard|Andrew Nembhard]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 23.7 pts · 3.5 reb · 5.5 ast · 2.3 stl per 100 (2009-10).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+2.2σ vs era)
+- Active hands, disrupts passing lanes (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.4σ)
+- Offensive-glass activity well below era (−1.1σ)
+
+**Comparables:**
+
+- [[keith-mcleod|Keith McLeod]] '04 (93% similar)
+- [[malcolm-delaney|Malcolm Delaney]] '17 (91% similar)
+- [[jacque-vaughn|Jacque Vaughn]] '99 (90% similar)
+- [[jerian-grant|Jerian Grant]] '19 (90% similar)
+- [[moochie-norris|Moochie Norris]] '05 (88% similar)
+- [[andrew-nembhard|Andrew Nembhard]] '26 (87% similar)
+
+**Career shape:** Charted 4 seasons (2007-08–2010-11). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -35,6 +35,31 @@ Closest career shapes in the era-normalized vector space:
 - [[ja-kobe-walter|Ja'Kobe Walter]] — cosine 0.86
 - [[c-j-williams|C.J. Williams]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 18.3 pts · 4.4 reb · 3.8 ast · 2.6 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.3σ)
+
+**Comparables:**
+
+- [[damien-wilkins|Damien Wilkins]] '18 (91% similar)
+- [[royal-ivey|Royal Ivey]] '12 (89% similar)
+- [[gary-harris|Gary Harris]] '25 (88% similar)
+- [[justin-holiday|Justin Holiday]] '23 (87% similar)
+- [[ja-kobe-walter|Ja'Kobe Walter]] '26 (86% similar)
+- [[c-j-williams|C.J. Williams]] '18 (86% similar)
+
+**Career shape:** Charted 2 seasons (2024-25–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

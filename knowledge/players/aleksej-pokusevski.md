@@ -37,6 +37,32 @@ Closest career shapes in the era-normalized vector space:
 - [[danny-wolf|Danny Wolf]] — cosine 0.77
 - [[kyshawn-george|Kyshawn George]] — cosine 0.77
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 15.5 pts · 9.0 reb · 4.1 ast · 1.8 blk per 100 (2020-21).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.2σ)
+- Turnover rate well above era (+1.7σ)
+
+**Comparables:**
+
+- [[zhou-qi|Zhou Qi]] '18 (85% similar)
+- [[mfiondu-kabengele|Mfiondu Kabengele]] '21 (85% similar)
+- [[vitor-faverani|Vitor Faverani]] '14 (80% similar)
+- [[darius-bazley|Darius Bazley]] '23 (78% similar)
+- [[danny-wolf|Danny Wolf]] '26 (77% similar)
+- [[kyshawn-george|Kyshawn George]] '26 (77% similar)
+
+**Career shape:** Charted 4 seasons (2020-21–2023-24). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

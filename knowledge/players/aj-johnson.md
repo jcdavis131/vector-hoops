@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[bimbo-coles|Bimbo Coles]] — cosine 0.82
 - [[javonte-smart|Javonte Smart]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 16.4 pts · 4.4 reb · 5.7 ast · 0.9 stl per 100 (2024-25).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.4σ)
+- Ball-hawking activity well below era (−1.2σ)
+
+**Comparables:**
+
+- [[keifer-sykes|Keifer Sykes]] '22 (90% similar)
+- [[nemanja-nedovic|Nemanja Nedovic]] '14 (89% similar)
+- [[trey-alexander|Trey Alexander]] '25 (87% similar)
+- [[doug-overton|Doug Overton]] '02 (83% similar)
+- [[bimbo-coles|Bimbo Coles]] '04 (82% similar)
+- [[javonte-smart|Javonte Smart]] '22 (82% similar)
+
+**Career shape:** Charted 2 seasons (2024-25–2025-26). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

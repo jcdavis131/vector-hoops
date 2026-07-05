@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[michael-sweetney|Michael Sweetney]] — cosine 0.81
 - [[ivica-zubac|Ivica Zubac]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 20.3 pts · 12.8 reb · 1.7 ast · 2.2 blk per 100 (2005-06).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+1.6σ vs era)
+- Strong net on-court impact (+1.5σ vs era)
+- Relentless on the offensive glass (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.6σ)
+- Three-point accuracy well below era (−1.3σ)
+
+**Comparables:**
+
+- [[greg-oden|Greg Oden]] '10 (86% similar)
+- [[neemias-queta|Neemias Queta]] '24 (84% similar)
+- [[robert-parish|Robert Parish]] '97 (83% similar)
+- [[tiago-splitter|Tiago Splitter]] '12 (82% similar)
+- [[michael-sweetney|Michael Sweetney]] '07 (81% similar)
+- [[ivica-zubac|Ivica Zubac]] '20 (81% similar)
+
+**Career shape:** Charted 1 season (2005-06). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

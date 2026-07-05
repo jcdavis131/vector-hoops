@@ -37,6 +37,34 @@ Closest career shapes in the era-normalized vector space:
 - [[jason-kapono|Jason Kapono]] — cosine 0.95
 - [[duncan-robinson|Duncan Robinson]] — cosine 0.94
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 20.7 pts · 6.0 reb · 3.0 ast · 0.8 stl per 100 (2022-23).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.2σ vs era)
+- Reliable touch from the free-throw line (+2.1σ vs era)
+- Rarely turns the ball over (−1.3σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.4σ)
+- Ball-hawking activity well below era (−1.2σ)
+
+**Comparables:**
+
+- [[pat-garrity|Pat Garrity]] '02 (98% similar)
+- [[matt-thomas|Matt Thomas]] '22 (97% similar)
+- [[wayne-ellington|Wayne Ellington]] '17 (95% similar)
+- [[georges-niang|Georges Niang]] '17 (95% similar)
+- [[jason-kapono|Jason Kapono]] '11 (95% similar)
+- [[duncan-robinson|Duncan Robinson]] '20 (94% similar)
+
+**Career shape:** Charted 4 seasons (2022-23–2025-26). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

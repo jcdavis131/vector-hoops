@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[sindarius-thornwell|Sindarius Thornwell]] — cosine 0.83
 - [[colby-jones|Colby Jones]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 6.6 pts · 10.7 reb · 2.7 ast · 2.9 stl per 100 (2003-04).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.9σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.8σ)
+- Free-throw touch well below era (−2.3σ)
+
+**Comparables:**
+
+- [[isaac-bonga|Isaac Bonga]] '19 (91% similar)
+- [[aaron-harrison|Aaron Harrison]] '16 (90% similar)
+- [[kyle-collinsworth|Kyle Collinsworth]] '18 (87% similar)
+- [[reggie-jordan|Reggie Jordan]] '97 (83% similar)
+- [[sindarius-thornwell|Sindarius Thornwell]] '21 (83% similar)
+- [[colby-jones|Colby Jones]] '24 (83% similar)
+
+**Career shape:** Charted 1 season (2003-04). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -37,6 +37,33 @@ Closest career shapes in the era-normalized vector space:
 - [[vinny-del-negro|Vinny Del Negro]] — cosine 0.88
 - [[brian-roberts|Brian Roberts]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** PG · Three-Point Volume + Three-Point Accuracy. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 18.0 pts · 4.2 reb · 6.9 ast · 0.6 stl per 100 (1999-00).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+1.3σ vs era)
+- Knockdown three-point shooter (+1.3σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.9σ)
+- Ball-hawking activity well below era (−1.6σ)
+
+**Comparables:**
+
+- [[tyronn-lue|Tyronn Lue]] '05 (90% similar)
+- [[jose-calderon|Jose Calderon]] '08 (90% similar)
+- [[ayo-dosunmu|Ayo Dosunmu]] '22 (89% similar)
+- [[jeff-mcinnis|Jeff McInnis]] '08 (89% similar)
+- [[vinny-del-negro|Vinny Del Negro]] '01 (88% similar)
+- [[brian-roberts|Brian Roberts]] '13 (86% similar)
+
+**Career shape:** Charted 4 seasons (1996-97–1999-00). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

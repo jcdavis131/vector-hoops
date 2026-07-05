@@ -44,6 +44,34 @@ Closest career shapes in the era-normalized vector space:
 - [[john-konchar|John Konchar]] — cosine 0.85
 - [[george-lynch|George Lynch]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 19.2 pts · 15.2 reb · 2.7 ast · 2.9 stl per 100 (2017-18).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.2σ vs era)
+- Relentless on the offensive glass (+2.1σ vs era)
+- Efficient finisher inside the arc (+1.7σ vs era)
+
+**Areas of concern:**
+
+- Three-point volume well below era (−1.4σ)
+- Three-point accuracy well below era (−1.0σ)
+
+**Comparables:**
+
+- [[jarred-vanderbilt|Jarred Vanderbilt]] '21 (93% similar)
+- [[renaldo-balkman|Renaldo Balkman]] '08 (92% similar)
+- [[gary-payton-ii|Gary Payton II]] '20 (86% similar)
+- [[julian-wright|Julian Wright]] '11 (85% similar)
+- [[john-konchar|John Konchar]] '20 (85% similar)
+- [[george-lynch|George Lynch]] '03 (84% similar)
+
+**Career shape:** Charted 11 seasons (2015-16–2025-26). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

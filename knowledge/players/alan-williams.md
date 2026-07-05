@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[emeka-okafor|Emeka Okafor]] — cosine 0.93
 - [[clint-capela|Clint Capela]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 22.9 pts · 19.3 reb · 1.5 ast · 2.1 blk per 100 (2016-17).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+2.4σ vs era)
+- Strong presence on the defensive glass (+2.4σ vs era)
+- Elite rim protection (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.2σ)
+- Three-point volume well below era (−1.5σ)
+
+**Comparables:**
+
+- [[derrick-favors|Derrick Favors]] '21 (95% similar)
+- [[antonio-mcdyess|Antonio McDyess]] '01 (95% similar)
+- [[andre-drummond|Andre Drummond]] '24 (94% similar)
+- [[moses-brown|Moses Brown]] '23 (93% similar)
+- [[emeka-okafor|Emeka Okafor]] '18 (93% similar)
+- [[clint-capela|Clint Capela]] '21 (93% similar)
+
+**Career shape:** Charted 1 season (2016-17). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

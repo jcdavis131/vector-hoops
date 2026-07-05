@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[antoine-carr|Antoine Carr]] — cosine 0.86
 - [[sean-rooks|Sean Rooks]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 19.3 pts · 11.3 reb · 0.8 ast · 2.1 blk per 100 (2020-21).
+
+**Strengths:**
+
+- Elite rim protection (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.9σ)
+- Three-point accuracy well below era (−1.6σ)
+
+**Comparables:**
+
+- [[brandon-bass|Brandon Bass]] '17 (91% similar)
+- [[zeljko-rebraca|Zeljko Rebraca]] '06 (90% similar)
+- [[tyler-zeller|Tyler Zeller]] '17 (88% similar)
+- [[antonio-davis|Antonio Davis]] '01 (86% similar)
+- [[antoine-carr|Antoine Carr]] '00 (86% similar)
+- [[sean-rooks|Sean Rooks]] '98 (86% similar)
+
+**Career shape:** Charted 1 season (2020-21). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

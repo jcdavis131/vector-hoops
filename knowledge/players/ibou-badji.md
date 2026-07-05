@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[stojko-vrankovic|Stojko Vrankovic]] — cosine 0.92
 - [[sean-williams|Sean Williams]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 7.2 pts · 10.9 reb · 2.8 ast · 4.3 blk per 100 (2023-24).
+
+**Strengths:**
+
+- Elite rim protection (+3.9σ vs era)
+- Efficient finisher inside the arc (+2.1σ vs era)
+- Relentless on the offensive glass (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.7σ)
+- On-court net impact well below era (−2.4σ)
+
+**Comparables:**
+
+- [[norvel-pelle|Norvel Pelle]] '20 (95% similar)
+- [[hasheem-thabeet|Hasheem Thabeet]] '12 (95% similar)
+- [[ariel-hukporti|Ariel Hukporti]] '25 (93% similar)
+- [[robert-swift|Robert Swift]] '05 (92% similar)
+- [[stojko-vrankovic|Stojko Vrankovic]] '97 (92% similar)
+- [[sean-williams|Sean Williams]] '10 (91% similar)
+
+**Career shape:** Charted 1 season (2023-24). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

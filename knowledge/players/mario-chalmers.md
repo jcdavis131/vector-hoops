@@ -42,6 +42,33 @@ Closest career shapes in the era-normalized vector space:
 - [[jose-alvarado|Jose Alvarado]] — cosine 0.91
 - [[marko-jaric|Marko Jaric]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 22.7 pts · 5.7 reb · 8.3 ast · 3.2 stl per 100 (2015-16).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.8σ vs era)
+- Draws contact, gets to the line often (+2.2σ vs era)
+- High-volume table-setter (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.3σ)
+
+**Comparables:**
+
+- [[marcus-smart|Marcus Smart]] '24 (96% similar)
+- [[doug-christie|Doug Christie]] '03 (93% similar)
+- [[darrell-armstrong|Darrell Armstrong]] '99 (92% similar)
+- [[shabazz-napier|Shabazz Napier]] '17 (91% similar)
+- [[jose-alvarado|Jose Alvarado]] '22 (91% similar)
+- [[marko-jaric|Marko Jaric]] '03 (91% similar)
+
+**Career shape:** Charted 9 seasons (2008-09–2017-18). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

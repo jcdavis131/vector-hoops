@@ -40,6 +40,34 @@ Closest career shapes in the era-normalized vector space:
 - [[jordan-clarkson|Jordan Clarkson]] — cosine 0.93
 - [[isaiah-thomas|Isaiah Thomas]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** SG · Scoring Volume + Shot Volume. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 32.1 pts · 4.7 reb · 7.0 ast · 2.0 stl per 100 (2024-25).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.0σ vs era)
+- Featured, high-usage scoring role (+1.7σ vs era)
+- Heavy shot volume, focal scoring option (+1.7σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.0σ)
+- On-court net impact well below era (−1.6σ)
+
+**Comparables:**
+
+- [[malik-monk|Malik Monk]] '18 (95% similar)
+- [[jamal-crawford|Jamal Crawford]] '14 (95% similar)
+- [[jordan-crawford|Jordan Crawford]] '11 (94% similar)
+- [[ben-gordon|Ben Gordon]] '05 (94% similar)
+- [[jordan-clarkson|Jordan Clarkson]] '21 (93% similar)
+- [[isaiah-thomas|Isaiah Thomas]] '17 (93% similar)
+
+**Career shape:** Charted 7 seasons (2019-20–2025-26). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

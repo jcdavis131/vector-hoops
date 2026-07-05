@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[taelon-peter|Taelon Peter]] — cosine 0.83
 - [[jamison-brewer|Jamison Brewer]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 17.0 pts · 8.0 reb · 4.5 ast · 2.3 stl per 100 (2003-04).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.5σ)
+- Free-throw touch well below era (−1.9σ)
+
+**Comparables:**
+
+- [[chris-robinson|Chris Robinson]] '98 (87% similar)
+- [[lawrence-moten|Lawrence Moten]] '97 (87% similar)
+- [[brandon-armstrong|Brandon Armstrong]] '04 (86% similar)
+- [[keon-johnson|Keon Johnson]] '23 (84% similar)
+- [[taelon-peter|Taelon Peter]] '26 (83% similar)
+- [[jamison-brewer|Jamison Brewer]] '05 (82% similar)
+
+**Career shape:** Charted 2 seasons (2002-03–2003-04). Entered as a Playmaking + Steals profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

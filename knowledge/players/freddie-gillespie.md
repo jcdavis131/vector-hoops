@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[daniel-orton|Daniel Orton]] — cosine 0.91
 - [[miles-plumlee|Miles Plumlee]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 13.5 pts · 11.8 reb · 1.1 ast · 2.4 blk per 100 (2020-21).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+1.8σ vs era)
+- Elite rim protection (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.8σ)
+- Three-point volume well below era (−1.8σ)
+
+**Comparables:**
+
+- [[khem-birch|Khem Birch]] '19 (92% similar)
+- [[trey-jemison-iii|Trey Jemison III]] '25 (92% similar)
+- [[dominick-barlow|Dominick Barlow]] '23 (92% similar)
+- [[yves-missi|Yves Missi]] '26 (92% similar)
+- [[daniel-orton|Daniel Orton]] '12 (91% similar)
+- [[miles-plumlee|Miles Plumlee]] '19 (90% similar)
+
+**Career shape:** Charted 1 season (2020-21). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

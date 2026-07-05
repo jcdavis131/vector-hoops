@@ -41,6 +41,32 @@ Closest career shapes in the era-normalized vector space:
 - [[chris-garner|Chris Garner]] — cosine 0.86
 - [[orien-greene|Orien Greene]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** PF · Playmaking + Steals. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 18.3 pts · 11.2 reb · 6.1 ast · 1.8 stl per 100 (2019-20).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.0σ)
+- Free-throw touch well below era (−1.6σ)
+
+**Comparables:**
+
+- [[garrett-temple|Garrett Temple]] '11 (89% similar)
+- [[ron-baker|Ron Baker]] '18 (87% similar)
+- [[rodions-kurucs|Rodions Kurucs]] '21 (87% similar)
+- [[kostas-papanikolaou|Kostas Papanikolaou]] '16 (87% similar)
+- [[chris-garner|Chris Garner]] '98 (86% similar)
+- [[orien-greene|Orien Greene]] '07 (86% similar)
+
+**Career shape:** Charted 8 seasons (2015-16–2022-23). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Playmaking + Steals identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

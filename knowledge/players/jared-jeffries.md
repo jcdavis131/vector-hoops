@@ -44,6 +44,34 @@ Closest career shapes in the era-normalized vector space:
 - [[luc-mbah-a-moute|Luc Mbah a Moute]] — cosine 0.85
 - [[andre-roberson|Andre Roberson]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 6.3 pts · 9.9 reb · 3.1 ast · 2.6 stl per 100 (2010-11).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.7σ vs era)
+- Strong net on-court impact (+1.6σ vs era)
+- Relentless on the offensive glass (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.3σ)
+- Scoring load well below era (−2.1σ)
+
+**Comparables:**
+
+- [[mark-madsen|Mark Madsen]] '09 (94% similar)
+- [[kris-murray|Kris Murray]] '25 (90% similar)
+- [[jason-collins|Jason Collins]] '10 (90% similar)
+- [[michael-ruffin|Michael Ruffin]] '07 (89% similar)
+- [[luc-mbah-a-moute|Luc Mbah a Moute]] '16 (85% similar)
+- [[andre-roberson|Andre Roberson]] '18 (85% similar)
+
+**Career shape:** Charted 11 seasons (2002-03–2012-13). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

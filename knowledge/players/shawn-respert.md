@@ -35,6 +35,31 @@ Closest career shapes in the era-normalized vector space:
 - [[quincy-douby|Quincy Douby]] — cosine 0.86
 - [[fred-jones|Fred Jones]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 18.6 pts · 5.5 reb · 3.3 ast · 1.9 stl per 100 (1997-98).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.6σ)
+
+**Comparables:**
+
+- [[antonio-reeves|Antonio Reeves]] '25 (89% similar)
+- [[jeremy-richardson|Jeremy Richardson]] '08 (88% similar)
+- [[bryant-stith|Bryant Stith]] '98 (88% similar)
+- [[rusty-larue|Rusty LaRue]] '99 (87% similar)
+- [[quincy-douby|Quincy Douby]] '08 (86% similar)
+- [[fred-jones|Fred Jones]] '03 (85% similar)
+
+**Career shape:** Charted 2 seasons (1996-97–1997-98). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

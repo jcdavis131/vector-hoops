@@ -38,6 +38,33 @@ Closest career shapes in the era-normalized vector space:
 - [[eric-washington|Eric Washington]] — cosine 0.82
 - [[jarvis-hayes|Jarvis Hayes]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 20.3 pts · 5.3 reb · 1.1 ast · 1.9 stl per 100 (2008-09).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.8σ vs era)
+- Rarely turns the ball over (−1.1σ vs era)
+
+**Areas of concern:**
+
+- Table-setting role well below era (−1.0σ)
+- Defensive rebounding well below era (−1.0σ)
+
+**Comparables:**
+
+- [[tyrone-nesby|Tyrone Nesby]] '00 (92% similar)
+- [[gary-trent-jr|Gary Trent Jr.]] '26 (86% similar)
+- [[morris-peterson|Morris Peterson]] '10 (85% similar)
+- [[ben-mclemore|Ben McLemore]] '22 (82% similar)
+- [[eric-washington|Eric Washington]] '98 (82% similar)
+- [[jarvis-hayes|Jarvis Hayes]] '10 (82% similar)
+
+**Career shape:** Charted 5 seasons (2006-07–2010-11). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

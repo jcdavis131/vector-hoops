@@ -35,6 +35,34 @@ Closest career shapes in the era-normalized vector space:
 - [[marlon-garnett|Marlon Garnett]] — cosine 0.77
 - [[jiri-welsch|Jiri Welsch]] — cosine 0.77
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 13.0 pts · 9.1 reb · 2.2 ast · 1.3 stl per 100 (2001-02).
+
+**Strengths:**
+
+- Rarely turns the ball over (−2.2σ vs era)
+- Knockdown three-point shooter (+1.4σ vs era)
+- Draws contact, gets to the line often (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−3.0σ)
+- Rim-protection impact well below era (−1.0σ)
+
+**Comparables:**
+
+- [[john-holland|John Holland]] '18 (85% similar)
+- [[jeryl-sasser|Jeryl Sasser]] '03 (83% similar)
+- [[eric-williams|Eric Williams]] '07 (78% similar)
+- [[mike-smith|Mike Smith]] '01 (77% similar)
+- [[marlon-garnett|Marlon Garnett]] '99 (77% similar)
+- [[jiri-welsch|Jiri Welsch]] '03 (77% similar)
+
+**Career shape:** Charted 2 seasons (1996-97–2001-02). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

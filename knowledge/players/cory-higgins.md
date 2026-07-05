@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jeremy-pargo|Jeremy Pargo]] — cosine 0.79
 - [[nolan-smith|Nolan Smith]] — cosine 0.79
 
+## Scouting report
+
+**Play style:** PG · Offensive Glass (Low On-Court Impact). Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 18.6 pts · 4.4 reb · 4.5 ast · 0.7 blk per 100 (2011-12).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+1.3σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.8σ)
+- Finishing efficiency well below era (−1.8σ)
+
+**Comparables:**
+
+- [[jalen-hood-schifino|Jalen Hood-Schifino]] '24 (83% similar)
+- [[archie-goodwin|Archie Goodwin]] '15 (82% similar)
+- [[lou-roe|Lou Roe]] '97 (81% similar)
+- [[allonzo-trier|Allonzo Trier]] '20 (79% similar)
+- [[jeremy-pargo|Jeremy Pargo]] '12 (79% similar)
+- [[nolan-smith|Nolan Smith]] '13 (79% similar)
+
+**Career shape:** Charted 1 season (2011-12). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

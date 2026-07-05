@@ -36,6 +36,34 @@ Closest career shapes in the era-normalized vector space:
 - [[jim-mcilvaine|Jim McIlvaine]] — cosine 0.90
 - [[yves-missi|Yves Missi]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 10.8 pts · 10.2 reb · 1.8 ast · 3.4 blk per 100 (2022-23).
+
+**Strengths:**
+
+- Elite rim protection (+3.0σ vs era)
+- Strong net on-court impact (+1.7σ vs era)
+- Relentless on the offensive glass (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.1σ)
+- Three-point volume well below era (−1.6σ)
+
+**Comparables:**
+
+- [[ekpe-udoh|Ekpe Udoh]] '19 (95% similar)
+- [[joel-anthony|Joel Anthony]] '16 (94% similar)
+- [[bernard-james|Bernard James]] '13 (94% similar)
+- [[don-reid|Don Reid]] '01 (90% similar)
+- [[jim-mcilvaine|Jim McIlvaine]] '00 (90% similar)
+- [[yves-missi|Yves Missi]] '26 (89% similar)
+
+**Career shape:** Charted 3 seasons (2022-23–2025-26). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

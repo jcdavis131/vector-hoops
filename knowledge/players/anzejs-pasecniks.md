@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jason-maxiell|Jason Maxiell]] — cosine 0.90
 - [[cristiano-felicio|Cristiano Felicio]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 16.4 pts · 11.2 reb · 1.9 ast · 1.3 blk per 100 (2019-20).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.7σ)
+- Three-point volume well below era (−1.7σ)
+
+**Comparables:**
+
+- [[dexter-pittman|Dexter Pittman]] '12 (93% similar)
+- [[melvin-ely|Melvin Ely]] '11 (92% similar)
+- [[johnathan-williams|Johnathan Williams]] '19 (92% similar)
+- [[trey-jemison-iii|Trey Jemison III]] '25 (92% similar)
+- [[jason-maxiell|Jason Maxiell]] '06 (90% similar)
+- [[cristiano-felicio|Cristiano Felicio]] '21 (90% similar)
+
+**Career shape:** Charted 1 season (2019-20). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

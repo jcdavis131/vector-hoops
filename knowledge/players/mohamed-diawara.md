@@ -34,6 +34,31 @@ Closest career shapes in the era-normalized vector space:
 - [[matt-thomas|Matt Thomas]] — cosine 0.87
 - [[georges-niang|Georges Niang]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 18.8 pts · 7.1 reb · 4.0 ast · 1.3 stl per 100 (2025-26).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[max-strus|Max Strus]] '21 (89% similar)
+- [[chuck-person|Chuck Person]] '00 (88% similar)
+- [[sam-hauser|Sam Hauser]] '22 (88% similar)
+- [[ryan-broekhoff|Ryan Broekhoff]] '19 (87% similar)
+- [[matt-thomas|Matt Thomas]] '22 (87% similar)
+- [[georges-niang|Georges Niang]] '17 (86% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

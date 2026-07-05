@@ -37,6 +37,31 @@ Closest career shapes in the era-normalized vector space:
 - [[matt-carroll|Matt Carroll]] — cosine 0.83
 - [[larry-robinson|Larry Robinson]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 21.0 pts · 6.0 reb · 2.6 ast · 1.6 stl per 100 (1999-00).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.2σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.9σ)
+
+**Comparables:**
+
+- [[rodney-carney|Rodney Carney]] '09 (92% similar)
+- [[gary-trent-jr|Gary Trent Jr.]] '26 (86% similar)
+- [[justin-edwards|Justin Edwards]] '26 (85% similar)
+- [[jarvis-hayes|Jarvis Hayes]] '10 (83% similar)
+- [[matt-carroll|Matt Carroll]] '10 (83% similar)
+- [[larry-robinson|Larry Robinson]] '01 (82% similar)
+
+**Career shape:** Charted 4 seasons (1998-99–2001-02). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -35,6 +35,34 @@ Closest career shapes in the era-normalized vector space:
 - [[bruno-fernando|Bruno Fernando]] — cosine 0.90
 - [[shawnelle-scott|Shawnelle Scott]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** PF · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 13.8 pts · 16.3 reb · 1.2 ast · 2.6 blk per 100 (1996-97).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+1.8σ vs era)
+- Strong presence on the defensive glass (+1.7σ vs era)
+- Elite rim protection (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.7σ)
+- Three-point accuracy well below era (−1.4σ)
+
+**Comparables:**
+
+- [[thomas-hamilton|Thomas Hamilton]] '00 (92% similar)
+- [[jerome-moiso|Jerome Moiso]] '01 (92% similar)
+- [[caleb-swanigan|Caleb Swanigan]] '20 (91% similar)
+- [[jordan-mickey|Jordan Mickey]] '17 (90% similar)
+- [[bruno-fernando|Bruno Fernando]] '22 (90% similar)
+- [[shawnelle-scott|Shawnelle Scott]] '01 (89% similar)
+
+**Career shape:** Charted 2 seasons (1996-97–1997-98). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

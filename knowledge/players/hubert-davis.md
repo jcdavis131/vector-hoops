@@ -41,6 +41,33 @@ Closest career shapes in the era-normalized vector space:
 - [[allen-crabbe|Allen Crabbe]] — cosine 0.92
 - [[cam-reynolds|Cam Reynolds]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 2.8 pts · 5.6 reb · 2.8 ast · 1.4 stl per 100 (2003-04).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+2.2σ vs era)
+- Strong net on-court impact (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−4.0σ)
+- Scoring load well below era (−2.8σ)
+
+**Comparables:**
+
+- [[jason-kapono|Jason Kapono]] '11 (95% similar)
+- [[tony-snell|Tony Snell]] '21 (95% similar)
+- [[raja-bell|Raja Bell]] '07 (93% similar)
+- [[aj-green|AJ Green]] '23 (93% similar)
+- [[allen-crabbe|Allen Crabbe]] '20 (92% similar)
+- [[cam-reynolds|Cam Reynolds]] '19 (92% similar)
+
+**Career shape:** Charted 8 seasons (1996-97–2003-04). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

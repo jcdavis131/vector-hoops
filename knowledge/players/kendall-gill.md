@@ -41,6 +41,31 @@ Closest career shapes in the era-normalized vector space:
 - [[erick-barkley|Erick Barkley]] — cosine 0.73
 - [[marquis-daniels|Marquis Daniels]] — cosine 0.72
 
+## Scouting report
+
+**Play style:** SF · Playmaking + Steals. Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 18.6 pts · 7.7 reb · 3.9 ast · 4.2 stl per 100 (1998-99).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+3.2σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[corey-brewer|Corey Brewer]] '19 (82% similar)
+- [[metta-world-peace|Metta World Peace]] '17 (74% similar)
+- [[shaquille-harrison|Shaquille Harrison]] '21 (73% similar)
+- [[brandon-boston|Brandon Boston]] '24 (73% similar)
+- [[erick-barkley|Erick Barkley]] '02 (73% similar)
+- [[marquis-daniels|Marquis Daniels]] '04 (72% similar)
+
+**Career shape:** Charted 8 seasons (1996-97–2003-04). Entered as a Scoring Volume + Shot Volume profile, peaked as a Playmaking + Steals identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

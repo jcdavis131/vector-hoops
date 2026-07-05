@@ -46,6 +46,16 @@ body{
   flex-direction: column;
 }
 
+/* Applied to <body> whenever the modal stack is non-empty (any modal or
+   sheet open) and removed once it's empty again — see pushModal/popModal
+   in game.js. Stops background scroll under an open overlay, including
+   the iOS Safari rubber-band bounce via overscroll-behavior. */
+body.vh-modal-open{
+  overflow: hidden;
+  touch-action: none;
+  overscroll-behavior: contain;
+}
+
 button, input{ font-family: inherit; }
 
 /* ---------- header / scoreboard strip ---------- */
@@ -56,6 +66,7 @@ button, input{ font-family: inherit; }
   gap: 12px;
   flex-wrap: wrap;
   padding: 12px 16px;
+  padding-top: calc(12px + env(safe-area-inset-top, 0));
   background: var(--surface);
   border-bottom: 2px solid var(--ink);
   position: sticky;
@@ -270,7 +281,7 @@ main{
   color: var(--ink);
   border-radius: 8px;
   padding: 12px 14px;
-  font-size: 15px;
+  font-size: 16px;
   min-height: 44px;
 }
 .vh-input::placeholder{ color: var(--ink-muted); }
@@ -283,7 +294,7 @@ main{
 
 .vh-suggestions{
   position: absolute;
-  z-index: 30;
+  z-index: 70;
   top: calc(100% + 6px);
   left: 0;
   right: 0;
@@ -592,21 +603,12 @@ main{
   list-style: none;
 }
 .vh-mapcard > summary::-webkit-details-marker{ display: none; }
-.vh-mapcard__label{
-  font-family: var(--mono);
-  font-size: 11px;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--ink);
-}
 .vh-mapcard__hint{
   text-transform: none;
   letter-spacing: normal;
   font-weight: 400;
   color: var(--ink-muted);
 }
-.vh-mapcard__body{ margin-top: 10px; }
 
 .vh-map-wrap{ position: relative; }
 .vh-map{
@@ -875,24 +877,6 @@ main{
   white-space: nowrap;
 }
 
-/* ---------- full scouting report expander ---------- */
-
-.vh-fullreport{ margin-top: 4px; }
-.vh-fullreport > summary{
-  cursor: pointer;
-  list-style: none;
-  font-family: var(--mono);
-  font-size: 11px;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--ink);
-  border-top: 1px solid var(--hairline);
-  padding-top: 12px;
-}
-.vh-fullreport > summary::-webkit-details-marker{ display: none; }
-.vh-fullreport__body{ margin-top: 4px; }
-
 .vh-guess__line--quick{
   font-weight: 700;
   color: var(--ink);
@@ -929,13 +913,6 @@ main{
   color: var(--ink);
   margin: 0 0 6px;
 }
-.vh-deadline__numbers{
-  font-family: var(--mono);
-  font-size: 13px;
-  color: var(--ink-soft);
-  margin: 0 0 14px;
-}
-
 .vh-deadline__final{ margin-top: 10px; }
 .vh-deadline__final-score{
   font-family: var(--mono);
@@ -1449,7 +1426,7 @@ main{
 }
 
 @media (max-width: 479px){
-  .vh-header{ padding: 8px 10px; gap: 8px; }
+  .vh-header{ padding: 8px 10px; padding-top: calc(8px + env(safe-area-inset-top, 0)); gap: 8px; }
   .vh-header__brand{ gap: 0; }
   .vh-tagline{ max-width: 150px; }
 }
@@ -1525,6 +1502,7 @@ main{
   border-radius: 16px 16px 0 0;
   box-shadow: 0 -6px 0 var(--ink);
   padding: 10px 16px 24px;
+  padding-bottom: calc(16px + env(safe-area-inset-bottom, 0));
   animation: vh-sheet-up 0.22s ease-out;
 }
 @keyframes vh-sheet-up{
@@ -1710,13 +1688,6 @@ main{
 .vh-arc-card__chips .vh-hint-chip{
   padding: 2px 7px;
   font-size: 9px;
-}
-
-.vh-arc-card__season{
-  font-family: var(--mono);
-  font-size: 11px;
-  font-weight: 800;
-  color: var(--ink-soft);
 }
 
 .vh-arc-controls{

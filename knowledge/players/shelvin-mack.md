@@ -41,6 +41,31 @@ Closest career shapes in the era-normalized vector space:
 - [[kendall-marshall|Kendall Marshall]] — cosine 0.92
 - [[norris-cole|Norris Cole]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 21.7 pts · 6.2 reb · 9.1 ast · 1.6 stl per 100 (2015-16).
+
+**Strengths:**
+
+- High-volume table-setter (+1.8σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.9σ)
+
+**Comparables:**
+
+- [[sergio-rodriguez|Sergio Rodriguez]] '09 (93% similar)
+- [[raymond-felton|Raymond Felton]] '11 (93% similar)
+- [[andrew-nembhard|Andrew Nembhard]] '26 (92% similar)
+- [[howard-eisley|Howard Eisley]] '03 (92% similar)
+- [[kendall-marshall|Kendall Marshall]] '14 (92% similar)
+- [[norris-cole|Norris Cole]] '14 (92% similar)
+
+**Career shape:** Charted 8 seasons (2011-12–2018-19). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

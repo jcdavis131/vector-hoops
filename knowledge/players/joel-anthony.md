@@ -43,6 +43,34 @@ Closest career shapes in the era-normalized vector space:
 - [[calvin-booth|Calvin Booth]] — cosine 0.92
 - [[jim-mcilvaine|Jim McIlvaine]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 9.4 pts · 11.0 reb · 0.5 ast · 6.3 blk per 100 (2015-16).
+
+**Strengths:**
+
+- Elite rim protection (+4.0σ vs era)
+- Efficient finisher inside the arc (+2.2σ vs era)
+- Rarely turns the ball over (−1.7σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−2.5σ)
+- Three-point accuracy well below era (−1.9σ)
+
+**Comparables:**
+
+- [[christian-koloko|Christian Koloko]] '23 (94% similar)
+- [[bernard-james|Bernard James]] '13 (94% similar)
+- [[ekpe-udoh|Ekpe Udoh]] '19 (93% similar)
+- [[don-reid|Don Reid]] '01 (92% similar)
+- [[calvin-booth|Calvin Booth]] '08 (92% similar)
+- [[jim-mcilvaine|Jim McIlvaine]] '00 (92% similar)
+
+**Career shape:** Charted 10 seasons (2007-08–2016-17). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

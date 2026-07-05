@@ -35,6 +35,31 @@ Closest career shapes in the era-normalized vector space:
 - [[branden-carlson|Branden Carlson]] — cosine 0.76
 - [[brook-lopez|Brook Lopez]] — cosine 0.74
 
+## Scouting report
+
+**Play style:** PF · Defensive Glass + Rim Pressure (Fts). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 25.6 pts · 9.2 reb · 3.2 ast · 2.4 blk per 100 (2025-26).
+
+**Strengths:**
+
+- Elite rim protection (+1.8σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[jonathan-bender|Jonathan Bender]] '04 (83% similar)
+- [[bol-bol|Bol Bol]] '21 (83% similar)
+- [[myles-turner|Myles Turner]] '19 (82% similar)
+- [[jay-huff|Jay Huff]] '26 (82% similar)
+- [[branden-carlson|Branden Carlson]] '25 (76% similar)
+- [[brook-lopez|Brook Lopez]] '13 (74% similar)
+
+**Career shape:** Charted 2 seasons (2024-25–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

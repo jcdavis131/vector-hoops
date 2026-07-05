@@ -47,6 +47,34 @@ Closest career shapes in the era-normalized vector space:
 - [[amar-e-stoudemire|Amar'e Stoudemire]] — cosine 0.87
 - [[joel-embiid|Joel Embiid]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** PF · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 34.8 pts · 14.6 reb · 3.1 ast · 4.2 blk per 100 (2014-15).
+
+**Strengths:**
+
+- Elite rim protection (+3.2σ vs era)
+- Featured, high-usage scoring role (+2.7σ vs era)
+- Draws contact, gets to the line often (+2.3σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.2σ)
+- Three-point volume well below era (−1.2σ)
+
+**Comparables:**
+
+- [[david-robinson|David Robinson]] '98 (90% similar)
+- [[tim-duncan|Tim Duncan]] '04 (90% similar)
+- [[hakeem-olajuwon|Hakeem Olajuwon]] '97 (87% similar)
+- [[patrick-ewing|Patrick Ewing]] '98 (87% similar)
+- [[amar-e-stoudemire|Amar'e Stoudemire]] '08 (87% similar)
+- [[joel-embiid|Joel Embiid]] '17 (86% similar)
+
+**Career shape:** Charted 14 seasons (2012-13–2025-26). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

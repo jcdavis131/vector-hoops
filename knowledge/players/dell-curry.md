@@ -39,6 +39,34 @@ Closest career shapes in the era-normalized vector space:
 - [[malik-beasley|Malik Beasley]] — cosine 0.92
 - [[rex-chapman|Rex Chapman]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 23.4 pts · 4.6 reb · 4.1 ast · 1.5 stl per 100 (1999-00).
+
+**Strengths:**
+
+- High-volume three-point shooter (+3.0σ vs era)
+- Rarely turns the ball over (−1.2σ vs era)
+- Heavy shot volume, focal scoring option (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.5σ)
+- Offensive-glass activity well below era (−1.3σ)
+
+**Comparables:**
+
+- [[voshon-lenard|Voshon Lenard]] '97 (96% similar)
+- [[eddie-house|Eddie House]] '06 (93% similar)
+- [[klay-thompson|Klay Thompson]] '15 (93% similar)
+- [[buddy-hield|Buddy Hield]] '20 (93% similar)
+- [[malik-beasley|Malik Beasley]] '25 (92% similar)
+- [[rex-chapman|Rex Chapman]] '98 (92% similar)
+
+**Career shape:** Charted 6 seasons (1996-97–2001-02). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -43,6 +43,32 @@ Closest career shapes in the era-normalized vector space:
 - [[howard-eisley|Howard Eisley]] — cosine 0.92
 - [[tierre-brown|Tierre Brown]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 16.4 pts · 3.6 reb · 9.9 ast · 1.9 stl per 100 (2009-10).
+
+**Strengths:**
+
+- High-volume table-setter (+2.1σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.3σ)
+- Defensive rebounding well below era (−1.3σ)
+
+**Comparables:**
+
+- [[dan-dickau|Dan Dickau]] '06 (95% similar)
+- [[jerryd-bayless|Jerryd Bayless]] '19 (94% similar)
+- [[khalid-reeves|Khalid Reeves]] '97 (93% similar)
+- [[will-solomon|Will Solomon]] '02 (92% similar)
+- [[howard-eisley|Howard Eisley]] '03 (92% similar)
+- [[tierre-brown|Tierre Brown]] '02 (92% similar)
+
+**Career shape:** Charted 10 seasons (2004-05–2014-15). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

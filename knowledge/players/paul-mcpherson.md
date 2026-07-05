@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jaime-jaquez-jr|Jaime Jaquez Jr.]] — cosine 0.65
 - [[nate-williams|Nate Williams]] — cosine 0.65
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 21.8 pts · 6.5 reb · 3.2 ast · 2.1 stl per 100 (2000-01).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.3σ)
+- Turnover rate well above era (+1.0σ)
+
+**Comparables:**
+
+- [[ruben-patterson|Ruben Patterson]] '08 (77% similar)
+- [[marko-milic|Marko Milic]] '98 (75% similar)
+- [[monty-williams|Monty Williams]] '97 (70% similar)
+- [[harold-ellis|Harold Ellis]] '98 (67% similar)
+- [[jaime-jaquez-jr|Jaime Jaquez Jr.]] '26 (65% similar)
+- [[nate-williams|Nate Williams]] '24 (65% similar)
+
+**Career shape:** Charted 1 season (2000-01). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

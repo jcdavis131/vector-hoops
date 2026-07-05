@@ -37,6 +37,32 @@ Closest career shapes in the era-normalized vector space:
 - [[shelvin-mack|Shelvin Mack]] — cosine 0.92
 - [[tyler-ulis|Tyler Ulis]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 25.4 pts · 4.3 reb · 11.5 ast · 1.3 stl per 100 (2025-26).
+
+**Strengths:**
+
+- High-volume table-setter (+2.6σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.2σ)
+- Defensive rebounding well below era (−1.1σ)
+
+**Comparables:**
+
+- [[carlos-arroyo|Carlos Arroyo]] '03 (96% similar)
+- [[luke-ridnour|Luke Ridnour]] '06 (93% similar)
+- [[beno-udrih|Beno Udrih]] '17 (93% similar)
+- [[jamal-shead|Jamal Shead]] '26 (92% similar)
+- [[shelvin-mack|Shelvin Mack]] '16 (92% similar)
+- [[tyler-ulis|Tyler Ulis]] '18 (92% similar)
+
+**Career shape:** Charted 4 seasons (2022-23–2025-26). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

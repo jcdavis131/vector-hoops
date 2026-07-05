@@ -46,6 +46,33 @@ Closest career shapes in the era-normalized vector space:
 - [[sam-cassell|Sam Cassell]] — cosine 0.89
 - [[damian-lillard|Damian Lillard]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** SF · Scoring Volume + Shot Volume. Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 33.0 pts · 8.1 reb · 5.2 ast · 1.5 stl per 100 (2016-17).
+
+**Strengths:**
+
+- Featured, high-usage scoring role (+2.1σ vs era)
+- Draws contact, gets to the line often (+1.9σ vs era)
+- Heavy shot volume, focal scoring option (+1.6σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[lou-williams|Lou Williams]] '19 (92% similar)
+- [[brandon-roy|Brandon Roy]] '09 (90% similar)
+- [[jalen-rose|Jalen Rose]] '07 (90% similar)
+- [[jalen-brunson|Jalen Brunson]] '24 (89% similar)
+- [[sam-cassell|Sam Cassell]] '04 (89% similar)
+- [[damian-lillard|Damian Lillard]] '23 (89% similar)
+
+**Career shape:** Charted 13 seasons (2010-11–2023-24). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

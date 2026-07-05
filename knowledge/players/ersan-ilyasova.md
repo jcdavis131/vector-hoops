@@ -46,6 +46,34 @@ Closest career shapes in the era-normalized vector space:
 - [[bobby-portis|Bobby Portis]] — cosine 0.76
 - [[scott-padgett|Scott Padgett]] — cosine 0.76
 
+## Scouting report
+
+**Play style:** PF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 21.7 pts · 9.6 reb · 1.3 ast · 3.3 stl per 100 (2020-21).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+3.2σ vs era)
+- Reliable touch from the free-throw line (+2.1σ vs era)
+- High-volume three-point shooter (+2.0σ vs era)
+
+**Areas of concern:**
+
+- Table-setting role well below era (−1.2σ)
+- Rim pressure (free-throw generation) well below era (−1.0σ)
+
+**Comparables:**
+
+- [[chris-morris|Chris Morris]] '99 (84% similar)
+- [[donyell-marshall|Donyell Marshall]] '09 (80% similar)
+- [[ryan-anderson|Ryan Anderson]] '14 (79% similar)
+- [[josh-davis|Josh Davis]] '05 (79% similar)
+- [[bobby-portis|Bobby Portis]] '23 (76% similar)
+- [[scott-padgett|Scott Padgett]] '07 (76% similar)
+
+**Career shape:** Charted 13 seasons (2006-07–2020-21). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

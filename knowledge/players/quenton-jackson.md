@@ -35,6 +35,31 @@ Closest career shapes in the era-normalized vector space:
 - [[kenny-anderson|Kenny Anderson]] — cosine 0.83
 - [[tyus-edney|Tyus Edney]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 19.7 pts · 5.3 reb · 6.4 ast · 2.6 stl per 100 (2024-25).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.1σ)
+
+**Comparables:**
+
+- [[darren-collison|Darren Collison]] '10 (86% similar)
+- [[acie-law|Acie Law]] '10 (85% similar)
+- [[ty-lawson|Ty Lawson]] '14 (84% similar)
+- [[travis-best|Travis Best]] '04 (83% similar)
+- [[kenny-anderson|Kenny Anderson]] '97 (83% similar)
+- [[tyus-edney|Tyus Edney]] '01 (82% similar)
+
+**Career shape:** Charted 2 seasons (2024-25–2025-26). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

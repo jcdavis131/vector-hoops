@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[lee-mayberry|Lee Mayberry]] — cosine 0.90
 - [[chris-duhon|Chris Duhon]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 11.3 pts · 6.3 reb · 6.8 ast · 1.5 stl per 100 (2018-19).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.5σ)
+- Rim pressure (free-throw generation) well below era (−1.4σ)
+
+**Comparables:**
+
+- [[donald-whiteside|Donald Whiteside]] '97 (92% similar)
+- [[michael-hawkins|Michael Hawkins]] '99 (91% similar)
+- [[chris-herren|Chris Herren]] '01 (90% similar)
+- [[brian-shaw|Brian Shaw]] '02 (90% similar)
+- [[lee-mayberry|Lee Mayberry]] '97 (90% similar)
+- [[chris-duhon|Chris Duhon]] '13 (87% similar)
+
+**Career shape:** Charted 1 season (2018-19). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

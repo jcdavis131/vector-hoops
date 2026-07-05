@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[michael-beasley|Michael Beasley]] — cosine 0.80
 - [[demar-derozan|DeMar DeRozan]] — cosine 0.79
 
+## Scouting report
+
+**Play style:** SF · Defensive Glass + Rim Pressure (Fts). Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 29.3 pts · 9.3 reb · 6.3 ast · 1.7 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+1.6σ vs era)
+- Featured, high-usage scoring role (+1.2σ vs era)
+- Draws contact, gets to the line often (+1.0σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[shareef-abdur-rahim|Shareef Abdur-Rahim]] '99 (83% similar)
+- [[paolo-banchero|Paolo Banchero]] '25 (81% similar)
+- [[brandon-ingram|Brandon Ingram]] '25 (80% similar)
+- [[michael-jordan|Michael Jordan]] '97 (80% similar)
+- [[michael-beasley|Michael Beasley]] '16 (80% similar)
+- [[demar-derozan|DeMar DeRozan]] '17 (79% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

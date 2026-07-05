@@ -36,6 +36,34 @@ Closest career shapes in the era-normalized vector space:
 - [[mario-west|Mario West]] — cosine 0.78
 - [[luc-mbah-a-moute|Luc Mbah a Moute]] — cosine 0.78
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 16.0 pts · 9.4 reb · 0.8 ast · 2.3 blk per 100 (2000-01).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+1.7σ vs era)
+- Knockdown three-point shooter (+1.6σ vs era)
+- Relentless on the offensive glass (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.2σ)
+- On-court net impact well below era (−1.2σ)
+
+**Comparables:**
+
+- [[alonzo-gee|Alonzo Gee]] '16 (81% similar)
+- [[ryan-bowen|Ryan Bowen]] '09 (79% similar)
+- [[malevy-leons|Malevy Leons]] '26 (79% similar)
+- [[spencer-jones|Spencer Jones]] '25 (79% similar)
+- [[mario-west|Mario West]] '09 (78% similar)
+- [[luc-mbah-a-moute|Luc Mbah a Moute]] '16 (78% similar)
+
+**Career shape:** Charted 3 seasons (1998-99–2000-01). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

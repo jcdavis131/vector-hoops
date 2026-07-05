@@ -45,6 +45,34 @@ Closest career shapes in the era-normalized vector space:
 - [[jusuf-nurkic|Jusuf Nurkić]] — cosine 0.79
 - [[anthony-davis|Anthony Davis]] — cosine 0.78
 
+## Scouting report
+
+**Play style:** PF · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 23.4 pts · 13.0 reb · 6.3 ast · 3.2 blk per 100 (2009-10).
+
+**Strengths:**
+
+- Elite rim protection (+2.1σ vs era)
+- Active hands, disrupts passing lanes (+1.7σ vs era)
+- Strong net on-court impact (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.5σ)
+- Three-point volume well below era (−1.1σ)
+
+**Comparables:**
+
+- [[victor-wembanyama|Victor Wembanyama]] '26 (87% similar)
+- [[hakeem-olajuwon|Hakeem Olajuwon]] '97 (86% similar)
+- [[anthony-randolph|Anthony Randolph]] '13 (81% similar)
+- [[demarcus-cousins|DeMarcus Cousins]] '15 (80% similar)
+- [[jusuf-nurkic|Jusuf Nurkić]] '16 (79% similar)
+- [[anthony-davis|Anthony Davis]] '15 (78% similar)
+
+**Career shape:** Charted 12 seasons (2004-05–2015-16). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

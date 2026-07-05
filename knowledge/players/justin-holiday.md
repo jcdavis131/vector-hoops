@@ -43,6 +43,32 @@ Closest career shapes in the era-normalized vector space:
 - [[gary-harris|Gary Harris]] — cosine 0.89
 - [[wesley-johnson|Wesley Johnson]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 13.3 pts · 3.5 reb · 2.7 ast · 1.2 stl per 100 (2022-23).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.1σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.4σ)
+- Defensive rebounding well below era (−1.3σ)
+
+**Comparables:**
+
+- [[rj-hunter|RJ Hunter]] '16 (96% similar)
+- [[jevon-carter|Jevon Carter]] '24 (92% similar)
+- [[francisco-garcia|Francisco Garcia]] '14 (90% similar)
+- [[billy-thomas|Billy Thomas]] '06 (90% similar)
+- [[gary-harris|Gary Harris]] '25 (89% similar)
+- [[wesley-johnson|Wesley Johnson]] '17 (89% similar)
+
+**Career shape:** Charted 10 seasons (2014-15–2023-24). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

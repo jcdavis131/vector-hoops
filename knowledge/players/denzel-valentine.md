@@ -38,6 +38,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jaren-jackson|Jaren Jackson]] — cosine 0.84
 - [[chuck-person|Chuck Person]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 14.8 pts · 9.0 reb · 2.4 ast · 1.7 stl per 100 (2021-22).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−4.0σ)
+- Rim pressure (free-throw generation) well below era (−1.7σ)
+
+**Comparables:**
+
+- [[armoni-brooks|Armoni Brooks]] '21 (86% similar)
+- [[vladimir-radmanovic|Vladimir Radmanovic]] '13 (86% similar)
+- [[carlos-delfino|Carlos Delfino]] '13 (85% similar)
+- [[chris-robinson|Chris Robinson]] '98 (85% similar)
+- [[jaren-jackson|Jaren Jackson]] '01 (84% similar)
+- [[chuck-person|Chuck Person]] '00 (83% similar)
+
+**Career shape:** Charted 5 seasons (2016-17–2021-22). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

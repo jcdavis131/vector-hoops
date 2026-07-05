@@ -45,6 +45,34 @@ Closest career shapes in the era-normalized vector space:
 - [[ivica-zubac|Ivica Zubac]] — cosine 0.90
 - [[jarrett-allen|Jarrett Allen]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PF · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 19.0 pts · 14.5 reb · 4.1 ast · 1.3 blk per 100 (2016-17).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+2.0σ vs era)
+- Strong net on-court impact (+1.8σ vs era)
+- Relentless on the offensive glass (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.2σ)
+- Three-point volume well below era (−1.5σ)
+
+**Comparables:**
+
+- [[jalen-duren|Jalen Duren]] '26 (94% similar)
+- [[deandre-ayton|Deandre Ayton]] '26 (93% similar)
+- [[carlos-boozer|Carlos Boozer]] '07 (90% similar)
+- [[luis-scola|Luis Scola]] '11 (90% similar)
+- [[ivica-zubac|Ivica Zubac]] '20 (90% similar)
+- [[jarrett-allen|Jarrett Allen]] '25 (88% similar)
+
+**Career shape:** Charted 12 seasons (2005-06–2016-17). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

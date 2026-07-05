@@ -40,6 +40,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jerome-williams|Jerome Williams]] — cosine 0.85
 - [[joey-dorsey|Joey Dorsey]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 12.8 pts · 11.9 reb · 2.3 ast · 1.7 stl per 100 (2015-16).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−3.0σ)
+- Three-point accuracy well below era (−1.9σ)
+
+**Comparables:**
+
+- [[thomas-robinson|Thomas Robinson]] '16 (92% similar)
+- [[oscar-tshiebwe|Oscar Tshiebwe]] '26 (90% similar)
+- [[kenny-thomas|Kenny Thomas]] '08 (87% similar)
+- [[gustavo-ayon|Gustavo Ayon]] '14 (86% similar)
+- [[jerome-williams|Jerome Williams]] '00 (85% similar)
+- [[joey-dorsey|Joey Dorsey]] '15 (85% similar)
+
+**Career shape:** Charted 7 seasons (2009-10–2015-16). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

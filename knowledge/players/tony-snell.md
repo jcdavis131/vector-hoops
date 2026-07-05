@@ -42,6 +42,34 @@ Closest career shapes in the era-normalized vector space:
 - [[max-christie|Max Christie]] — cosine 0.93
 - [[caleb-houstan|Caleb Houstan]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 12.1 pts · 5.5 reb · 2.9 ast · 0.6 stl per 100 (2020-21).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+2.2σ vs era)
+- Reliable touch from the free-throw line (+2.1σ vs era)
+- Rarely turns the ball over (−1.4σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.7σ)
+- Rim pressure (free-throw generation) well below era (−1.5σ)
+
+**Comparables:**
+
+- [[hubert-davis|Hubert Davis]] '04 (95% similar)
+- [[tristan-da-silva|Tristan da Silva]] '25 (94% similar)
+- [[reggie-bullock-jr|Reggie Bullock Jr.]] '24 (94% similar)
+- [[danny-ferry|Danny Ferry]] '01 (94% similar)
+- [[max-christie|Max Christie]] '23 (93% similar)
+- [[caleb-houstan|Caleb Houstan]] '26 (92% similar)
+
+**Career shape:** Charted 9 seasons (2013-14–2021-22). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

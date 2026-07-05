@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jamie-watson|Jamie Watson]] — cosine 0.76
 - [[myke-henry|Myke Henry]] — cosine 0.74
 
+## Scouting report
+
+**Play style:** PF · Playmaking + Steals. Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 11.0 pts · 8.2 reb · 3.5 ast · 3.2 stl per 100 (2020-21).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+3.0σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.1σ)
+- Finishing efficiency well below era (−1.6σ)
+
+**Comparables:**
+
+- [[kostas-papanikolaou|Kostas Papanikolaou]] '16 (88% similar)
+- [[stanley-johnson|Stanley Johnson]] '20 (87% similar)
+- [[orien-greene|Orien Greene]] '07 (84% similar)
+- [[laron-profit|Laron Profit]] '00 (80% similar)
+- [[jamie-watson|Jamie Watson]] '97 (76% similar)
+- [[myke-henry|Myke Henry]] '18 (74% similar)
+
+**Career shape:** Charted 3 seasons (2018-19–2020-21). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Playmaking + Steals identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -40,6 +40,34 @@ Closest career shapes in the era-normalized vector space:
 - [[chris-andersen|Chris Andersen]] — cosine 0.94
 - [[jeff-withey|Jeff Withey]] — cosine 0.94
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 17.6 pts · 16.2 reb · 4.8 ast · 3.4 blk per 100 (2024-25).
+
+**Strengths:**
+
+- Elite rim protection (+2.8σ vs era)
+- Relentless on the offensive glass (+2.1σ vs era)
+- Efficient finisher inside the arc (+1.9σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.9σ)
+- Three-point volume well below era (−1.6σ)
+
+**Comparables:**
+
+- [[salah-mejri|Salah Mejri]] '18 (95% similar)
+- [[john-henson|John Henson]] '16 (95% similar)
+- [[keon-clark|Keon Clark]] '01 (94% similar)
+- [[walker-kessler|Walker Kessler]] '23 (94% similar)
+- [[chris-andersen|Chris Andersen]] '10 (94% similar)
+- [[jeff-withey|Jeff Withey]] '17 (94% similar)
+
+**Career shape:** Charted 7 seasons (2019-20–2025-26). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

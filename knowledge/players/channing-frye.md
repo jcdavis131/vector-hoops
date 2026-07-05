@@ -46,6 +46,32 @@ Closest career shapes in the era-normalized vector space:
 - [[mike-muscala|Mike Muscala]] — cosine 0.86
 - [[quinten-post|Quinten Post]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 18.4 pts · 7.4 reb · 2.9 ast · 0.9 stl per 100 (2018-19).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.6σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−3.2σ)
+- Finishing efficiency well below era (−1.2σ)
+
+**Comparables:**
+
+- [[brian-cook|Brian Cook]] '09 (93% similar)
+- [[wilson-chandler|Wilson Chandler]] '20 (92% similar)
+- [[david-benoit|David Benoit]] '98 (88% similar)
+- [[terry-mills|Terry Mills]] '97 (88% similar)
+- [[mike-muscala|Mike Muscala]] '14 (86% similar)
+- [[quinten-post|Quinten Post]] '25 (85% similar)
+
+**Career shape:** Charted 13 seasons (2005-06–2018-19). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

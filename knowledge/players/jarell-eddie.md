@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[larry-robinson|Larry Robinson]] — cosine 0.86
 - [[lloyd-daniels|Lloyd Daniels]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 19.4 pts · 7.1 reb · 1.5 ast · 1.5 stl per 100 (2015-16).
+
+**Strengths:**
+
+- High-volume three-point shooter (+3.0σ vs era)
+- Rarely turns the ball over (−2.4σ vs era)
+- Reliable touch from the free-throw line (+2.1σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.1σ)
+- On-court net impact well below era (−1.4σ)
+
+**Comparables:**
+
+- [[pj-hairston|PJ Hairston]] '15 (93% similar)
+- [[sam-mack|Sam Mack]] '00 (91% similar)
+- [[brian-evans|Brian Evans]] '98 (88% similar)
+- [[daequan-cook|Daequan Cook]] '11 (86% similar)
+- [[larry-robinson|Larry Robinson]] '01 (86% similar)
+- [[lloyd-daniels|Lloyd Daniels]] '97 (86% similar)
+
+**Career shape:** Charted 1 season (2015-16). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

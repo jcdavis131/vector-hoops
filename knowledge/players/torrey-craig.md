@@ -41,6 +41,32 @@ Closest career shapes in the era-normalized vector space:
 - [[ira-newble|Ira Newble]] — cosine 0.84
 - [[kz-okpala|KZ Okpala]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 14.5 pts · 8.7 reb · 2.2 ast · 1.7 blk per 100 (2019-20).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.5σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.2σ)
+- On-court net impact well below era (−1.2σ)
+
+**Comparables:**
+
+- [[jt-thor|JT Thor]] '25 (86% similar)
+- [[kessler-edwards|Kessler Edwards]] '25 (84% similar)
+- [[pete-chilcutt|Pete Chilcutt]] '00 (84% similar)
+- [[jaron-blossomgame|Jaron Blossomgame]] '19 (84% similar)
+- [[ira-newble|Ira Newble]] '01 (84% similar)
+- [[kz-okpala|KZ Okpala]] '21 (83% similar)
+
+**Career shape:** Charted 8 seasons (2017-18–2024-25). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

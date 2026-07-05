@@ -43,6 +43,34 @@ Closest career shapes in the era-normalized vector space:
 - [[brian-cook|Brian Cook]] — cosine 0.80
 - [[miles-bridges|Miles Bridges]] — cosine 0.80
 
+## Scouting report
+
+**Play style:** PF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 25.6 pts · 9.5 reb · 1.7 ast · 1.4 blk per 100 (2013-14).
+
+**Strengths:**
+
+- High-volume three-point shooter (+3.3σ vs era)
+- Heavy shot volume, focal scoring option (+2.1σ vs era)
+- Featured, high-usage scoring role (+1.1σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.6σ)
+- Free-throw touch well below era (−1.2σ)
+
+**Comparables:**
+
+- [[donyell-marshall|Donyell Marshall]] '09 (84% similar)
+- [[laphonso-ellis|LaPhonso Ellis]] '97 (82% similar)
+- [[mirza-teletovic|Mirza Teletovic]] '17 (82% similar)
+- [[lauri-markkanen|Lauri Markkanen]] '23 (80% similar)
+- [[brian-cook|Brian Cook]] '09 (80% similar)
+- [[miles-bridges|Miles Bridges]] '25 (80% similar)
+
+**Career shape:** Charted 10 seasons (2005-06–2015-16). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

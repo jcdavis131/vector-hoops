@@ -39,6 +39,33 @@ Closest career shapes in the era-normalized vector space:
 - [[samaki-walker|Samaki Walker]] — cosine 0.86
 - [[richaun-holmes|Richaun Holmes]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 18.2 pts · 10.9 reb · 0.3 ast · 2.9 blk per 100 (1996-97).
+
+**Strengths:**
+
+- Elite rim protection (+1.7σ vs era)
+- Relentless on the offensive glass (+1.1σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.2σ)
+- Table-setting role well below era (−1.4σ)
+
+**Comparables:**
+
+- [[tony-massenburg|Tony Massenburg]] '02 (91% similar)
+- [[james-wiseman|James Wiseman]] '24 (89% similar)
+- [[deyonta-davis|Deyonta Davis]] '17 (88% similar)
+- [[jason-thompson|Jason Thompson]] '15 (87% similar)
+- [[samaki-walker|Samaki Walker]] '02 (86% similar)
+- [[richaun-holmes|Richaun Holmes]] '25 (86% similar)
+
+**Career shape:** Charted 6 seasons (1996-97–2001-02). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

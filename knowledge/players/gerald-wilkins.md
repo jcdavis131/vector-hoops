@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[kyle-guy|Kyle Guy]] — cosine 0.88
 - [[nick-smith-jr|Nick Smith Jr.]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 16.5 pts · 3.9 reb · 3.4 ast · 1.5 stl per 100 (1997-98).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.1σ)
+- Offensive-glass activity well below era (−1.2σ)
+
+**Comparables:**
+
+- [[von-wafer|Von Wafer]] '06 (91% similar)
+- [[dajuan-wagner|Dajuan Wagner]] '03 (90% similar)
+- [[wayne-selden|Wayne Selden]] '18 (88% similar)
+- [[kareem-rush|Kareem Rush]] '09 (88% similar)
+- [[kyle-guy|Kyle Guy]] '22 (88% similar)
+- [[nick-smith-jr|Nick Smith Jr.]] '25 (88% similar)
+
+**Career shape:** Charted 2 seasons (1996-97–1997-98). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

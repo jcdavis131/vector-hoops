@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[asa-newell|Asa Newell]] — cosine 0.78
 - [[alfonzo-mckinnie|Alfonzo McKinnie]] — cosine 0.77
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 14.9 pts · 6.2 reb · 4.1 ast · 1.3 stl per 100 (1996-97).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.4σ)
+- Defensive rebounding well below era (−1.3σ)
+
+**Comparables:**
+
+- [[alex-poythress|Alex Poythress]] '18 (85% similar)
+- [[tyler-lydon|Tyler Lydon]] '19 (84% similar)
+- [[juwan-morgan|Juwan Morgan]] '21 (80% similar)
+- [[haywood-highsmith|Haywood Highsmith]] '22 (79% similar)
+- [[asa-newell|Asa Newell]] '26 (78% similar)
+- [[alfonzo-mckinnie|Alfonzo McKinnie]] '22 (77% similar)
+
+**Career shape:** Charted 1 season (1996-97). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

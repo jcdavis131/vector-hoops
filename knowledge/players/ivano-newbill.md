@@ -35,6 +35,34 @@ Closest career shapes in the era-normalized vector space:
 - [[andre-jackson-jr|Andre Jackson Jr.]] — cosine 0.80
 - [[george-lynch|George Lynch]] — cosine 0.79
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 11.6 pts · 13.8 reb · 1.8 ast · 2.0 stl per 100 (1997-98).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+4.0σ vs era)
+- Strong presence on the defensive glass (+1.2σ vs era)
+- Relentless on the offensive glass (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.6σ)
+- Free-throw touch well below era (−1.3σ)
+
+**Comparables:**
+
+- [[jamie-feick|Jamie Feick]] '00 (87% similar)
+- [[noah-penda|Noah Penda]] '26 (83% similar)
+- [[johnny-furphy|Johnny Furphy]] '26 (82% similar)
+- [[jared-jeffries|Jared Jeffries]] '11 (81% similar)
+- [[andre-jackson-jr|Andre Jackson Jr.]] '25 (80% similar)
+- [[george-lynch|George Lynch]] '03 (79% similar)
+
+**Career shape:** Charted 2 seasons (1996-97–1997-98). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

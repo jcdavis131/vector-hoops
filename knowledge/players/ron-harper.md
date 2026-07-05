@@ -38,6 +38,33 @@ Closest career shapes in the era-normalized vector space:
 - [[bracey-wright|Bracey Wright]] — cosine 0.84
 - [[aaron-mckie|Aaron McKie]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** PG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 14.5 pts · 5.8 reb · 5.8 ast · 2.6 stl per 100 (1996-97).
+
+**Strengths:**
+
+- Strong net on-court impact (+2.0σ vs era)
+- Rarely turns the ball over (−1.7σ vs era)
+- Active hands, disrupts passing lanes (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.1σ)
+
+**Comparables:**
+
+- [[patrick-beverley|Patrick Beverley]] '13 (93% similar)
+- [[nate-mcmillan|Nate McMillan]] '98 (92% similar)
+- [[alex-caruso|Alex Caruso]] '25 (87% similar)
+- [[cason-wallace|Cason Wallace]] '26 (86% similar)
+- [[bracey-wright|Bracey Wright]] '07 (84% similar)
+- [[aaron-mckie|Aaron McKie]] '05 (82% similar)
+
+**Career shape:** Charted 5 seasons (1996-97–2000-01). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

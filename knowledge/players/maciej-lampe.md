@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[maxime-raynaud|Maxime Raynaud]] — cosine 0.75
 - [[jon-leuer|Jon Leuer]] — cosine 0.74
 
+## Scouting report
+
+**Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 21.3 pts · 9.8 reb · 2.0 ast · 0.7 stl per 100 (2003-04).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+1.1σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.8σ)
+- Ball-hawking activity well below era (−1.5σ)
+
+**Comparables:**
+
+- [[andrew-nicholson|Andrew Nicholson]] '17 (93% similar)
+- [[pat-burke|Pat Burke]] '07 (83% similar)
+- [[greg-foster|Greg Foster]] '03 (82% similar)
+- [[jason-collier|Jason Collier]] '05 (76% similar)
+- [[maxime-raynaud|Maxime Raynaud]] '26 (75% similar)
+- [[jon-leuer|Jon Leuer]] '13 (74% similar)
+
+**Career shape:** Charted 2 seasons (2003-04–2004-05). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

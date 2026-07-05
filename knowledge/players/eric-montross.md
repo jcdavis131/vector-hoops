@@ -39,6 +39,33 @@ Closest career shapes in the era-normalized vector space:
 - [[dominic-mcguire|Dominic McGuire]] — cosine 0.91
 - [[chris-dudley|Chris Dudley]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 9.8 pts · 14.9 reb · 1.7 ast · 2.1 blk per 100 (1996-97).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+1.5σ vs era)
+- Relentless on the offensive glass (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−3.3σ)
+- Scoring load well below era (−1.6σ)
+
+**Comparables:**
+
+- [[jared-reiner|Jared Reiner]] '07 (95% similar)
+- [[adrian-caldwell|Adrian Caldwell]] '97 (93% similar)
+- [[mark-west|Mark West]] '99 (93% similar)
+- [[desagana-diop|DeSagana Diop]] '13 (91% similar)
+- [[dominic-mcguire|Dominic McGuire]] '10 (91% similar)
+- [[chris-dudley|Chris Dudley]] '00 (91% similar)
+
+**Career shape:** Charted 6 seasons (1996-97–2001-02). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

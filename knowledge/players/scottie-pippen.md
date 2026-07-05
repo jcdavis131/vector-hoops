@@ -41,6 +41,32 @@ Closest career shapes in the era-normalized vector space:
 - [[toni-kukoc|Toni Kukoc]] — cosine 0.88
 - [[rodrigue-beaubois|Rodrigue Beaubois]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 16.5 pts · 8.2 reb · 6.1 ast · 2.6 stl per 100 (2003-04).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.5σ vs era)
+- High-volume three-point shooter (+1.0σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−3.4σ)
+
+**Comparables:**
+
+- [[baron-davis|Baron Davis]] '04 (91% similar)
+- [[ryan-rollins|Ryan Rollins]] '26 (90% similar)
+- [[jason-kidd|Jason Kidd]] '03 (89% similar)
+- [[jrue-holiday|Jrue Holiday]] '16 (89% similar)
+- [[toni-kukoc|Toni Kukoc]] '99 (88% similar)
+- [[rodrigue-beaubois|Rodrigue Beaubois]] '10 (86% similar)
+
+**Career shape:** Charted 8 seasons (1996-97–2003-04). Entered as a Scoring Volume + Shot Volume profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

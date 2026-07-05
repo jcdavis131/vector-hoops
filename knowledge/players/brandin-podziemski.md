@@ -36,6 +36,31 @@ Closest career shapes in the era-normalized vector space:
 - [[rick-fox|Rick Fox]] — cosine 0.67
 - [[collin-gillespie|Collin Gillespie]] — cosine 0.66
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 16.6 pts · 10.4 reb · 6.6 ast · 1.5 stl per 100 (2023-24).
+
+**Strengths:**
+
+- Strong net on-court impact (+1.1σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[willie-warren|Willie Warren]] '11 (73% similar)
+- [[nate-mcmillan|Nate McMillan]] '98 (72% similar)
+- [[donte-divincenzo|Donte DiVincenzo]] '24 (70% similar)
+- [[hedo-turkoglu|Hedo Turkoglu]] '14 (70% similar)
+- [[rick-fox|Rick Fox]] '04 (67% similar)
+- [[collin-gillespie|Collin Gillespie]] '24 (66% similar)
+
+**Career shape:** Charted 3 seasons (2023-24–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -45,6 +45,34 @@ Closest career shapes in the era-normalized vector space:
 - [[john-crotty|John Crotty]] — cosine 0.88
 - [[randy-livingston|Randy Livingston]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 24.2 pts · 6.0 reb · 6.6 ast · 2.7 stl per 100 (1998-99).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+3.0σ vs era)
+- Active hands, disrupts passing lanes (+1.3σ vs era)
+- Featured, high-usage scoring role (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+4.0σ)
+- On-court net impact well below era (−3.2σ)
+
+**Comparables:**
+
+- [[bobby-hurley|Bobby Hurley]] '97 (92% similar)
+- [[andrew-nembhard|Andrew Nembhard]] '26 (91% similar)
+- [[malcolm-delaney|Malcolm Delaney]] '17 (90% similar)
+- [[acie-law|Acie Law]] '10 (90% similar)
+- [[john-crotty|John Crotty]] '98 (88% similar)
+- [[randy-livingston|Randy Livingston]] '05 (88% similar)
+
+**Career shape:** Charted 12 seasons (1997-98–2008-09). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

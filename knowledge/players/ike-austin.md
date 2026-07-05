@@ -39,6 +39,34 @@ Closest career shapes in the era-normalized vector space:
 - [[harry-giles-iii|Harry Giles III]] — cosine 0.79
 - [[thomas-hamilton|Thomas Hamilton]] — cosine 0.79
 
+## Scouting report
+
+**Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 12.2 pts · 11.4 reb · 2.1 ast · 1.4 stl per 100 (2001-02).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+2.1σ vs era)
+- Strong presence on the defensive glass (+1.3σ vs era)
+- Rarely turns the ball over (−1.2σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.2σ)
+- Rim pressure (free-throw generation) well below era (−1.8σ)
+
+**Comparables:**
+
+- [[chris-kaman|Chris Kaman]] '08 (85% similar)
+- [[david-vaughn|David Vaughn]] '97 (83% similar)
+- [[dino-radja|Dino Radja]] '97 (81% similar)
+- [[caleb-swanigan|Caleb Swanigan]] '20 (80% similar)
+- [[harry-giles-iii|Harry Giles III]] '24 (79% similar)
+- [[thomas-hamilton|Thomas Hamilton]] '00 (79% similar)
+
+**Career shape:** Charted 6 seasons (1996-97–2001-02). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

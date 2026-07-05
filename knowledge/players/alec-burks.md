@@ -47,6 +47,34 @@ Closest career shapes in the era-normalized vector space:
 - [[michael-redd|Michael Redd]] — cosine 0.83
 - [[cam-thomas|Cam Thomas]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 27.1 pts · 5.8 reb · 3.5 ast · 1.1 stl per 100 (2023-24).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.8σ vs era)
+- Heavy shot volume, focal scoring option (+1.2σ vs era)
+- Draws contact, gets to the line often (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.3σ)
+- On-court net impact well below era (−1.2σ)
+
+**Comparables:**
+
+- [[kevin-martin|Kevin Martin]] '11 (93% similar)
+- [[danilo-gallinari|Danilo Gallinari]] '16 (86% similar)
+- [[jordan-mcrae|Jordan McRae]] '16 (86% similar)
+- [[mitch-richmond|Mitch Richmond]] '97 (85% similar)
+- [[michael-redd|Michael Redd]] '07 (83% similar)
+- [[cam-thomas|Cam Thomas]] '25 (82% similar)
+
+**Career shape:** Charted 14 seasons (2011-12–2024-25). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

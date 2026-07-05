@@ -50,6 +50,33 @@ Closest career shapes in the era-normalized vector space:
 - [[damian-lillard|Damian Lillard]] — cosine 0.93
 - [[gilbert-arenas|Gilbert Arenas]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** SG · Scoring Volume + Shot Volume. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 34.1 pts · 5.0 reb · 9.1 ast · 1.3 stl per 100 (2018-19).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+3.0σ vs era)
+- Featured, high-usage scoring role (+2.3σ vs era)
+- Heavy shot volume, focal scoring option (+2.2σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.6σ)
+
+**Comparables:**
+
+- [[isaiah-thomas|Isaiah Thomas]] '17 (96% similar)
+- [[jerry-stackhouse|Jerry Stackhouse]] '01 (94% similar)
+- [[kemba-walker|Kemba Walker]] '19 (94% similar)
+- [[allen-iverson|Allen Iverson]] '02 (93% similar)
+- [[damian-lillard|Damian Lillard]] '23 (93% similar)
+- [[gilbert-arenas|Gilbert Arenas]] '06 (92% similar)
+
+**Career shape:** Charted 17 seasons (2005-06–2021-22). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

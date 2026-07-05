@@ -41,6 +41,32 @@ Closest career shapes in the era-normalized vector space:
 - [[patty-mills|Patty Mills]] — cosine 0.86
 - [[donte-divincenzo|Donte DiVincenzo]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 11.0 pts · 6.1 reb · 5.9 ast · 1.7 stl per 100 (2003-04).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.3σ)
+- Scoring load well below era (−1.3σ)
+
+**Comparables:**
+
+- [[brent-barry|Brent Barry]] '04 (91% similar)
+- [[jon-barry|Jon Barry]] '98 (88% similar)
+- [[terry-porter|Terry Porter]] '02 (88% similar)
+- [[matt-maloney|Matt Maloney]] '00 (88% similar)
+- [[patty-mills|Patty Mills]] '14 (86% similar)
+- [[donte-divincenzo|Donte DiVincenzo]] '24 (86% similar)
+
+**Career shape:** Charted 8 seasons (1996-97–2003-04). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -47,6 +47,34 @@ Closest career shapes in the era-normalized vector space:
 - [[dennis-schroder|Dennis Schröder]] — cosine 0.92
 - [[aaron-brooks|Aaron Brooks]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 30.4 pts · 5.2 reb · 10.0 ast · 1.2 stl per 100 (2015-16).
+
+**Strengths:**
+
+- High-volume table-setter (+2.1σ vs era)
+- Heavy shot volume, focal scoring option (+2.1σ vs era)
+- Featured, high-usage scoring role (+1.9σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.9σ)
+- Defensive rebounding well below era (−1.0σ)
+
+**Comparables:**
+
+- [[mo-williams|Mo Williams]] '11 (96% similar)
+- [[darius-garland|Darius Garland]] '22 (94% similar)
+- [[j-j-barea|J.J. Barea]] '19 (94% similar)
+- [[damon-stoudamire|Damon Stoudamire]] '97 (94% similar)
+- [[dennis-schroder|Dennis Schröder]] '16 (92% similar)
+- [[aaron-brooks|Aaron Brooks]] '11 (91% similar)
+
+**Career shape:** Charted 14 seasons (2011-12–2024-25). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[leaky-black|Leaky Black]] — cosine 0.80
 - [[terance-mann|Terance Mann]] — cosine 0.77
 
+## Scouting report
+
+**Play style:** PF · Three-Point Accuracy (Low Turnovers). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 11.3 pts · 5.4 reb · 2.6 ast · 1.4 stl per 100 (1996-97).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.9σ vs era)
+- Efficient finisher inside the arc (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.9σ)
+- Scoring load well below era (−1.3σ)
+
+**Comparables:**
+
+- [[christian-braun|Christian Braun]] '25 (81% similar)
+- [[michael-curry|Michael Curry]] '05 (81% similar)
+- [[isaac-okoro|Isaac Okoro]] '25 (81% similar)
+- [[derrick-walton-jr|Derrick Walton Jr.]] '20 (80% similar)
+- [[leaky-black|Leaky Black]] '24 (80% similar)
+- [[terance-mann|Terance Mann]] '20 (77% similar)
+
+**Career shape:** Charted 1 season (1996-97). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

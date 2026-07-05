@@ -38,6 +38,32 @@ Closest career shapes in the era-normalized vector space:
 - [[ben-handlogten|Ben Handlogten]] — cosine 0.87
 - [[jericho-sims|Jericho Sims]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 11.0 pts · 11.6 reb · 2.3 ast · 1.0 stl per 100 (2000-01).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.4σ)
+- Rim pressure (free-throw generation) well below era (−1.3σ)
+
+**Comparables:**
+
+- [[vitaly-potapenko|Vitaly Potapenko]] '06 (91% similar)
+- [[ivan-rabb|Ivan Rabb]] '18 (91% similar)
+- [[chris-wilcox|Chris Wilcox]] '13 (89% similar)
+- [[cristiano-felicio|Cristiano Felicio]] '21 (87% similar)
+- [[ben-handlogten|Ben Handlogten]] '04 (87% similar)
+- [[jericho-sims|Jericho Sims]] '22 (87% similar)
+
+**Career shape:** Charted 5 seasons (1996-97–2000-01). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

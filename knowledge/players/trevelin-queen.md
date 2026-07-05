@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[erick-barkley|Erick Barkley]] — cosine 0.81
 - [[briante-weber|Briante Weber]] — cosine 0.80
 
+## Scouting report
+
+**Play style:** SG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 17.2 pts · 6.1 reb · 4.3 ast · 3.5 stl per 100 (2024-25).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+3.0σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.3σ)
+- On-court net impact well below era (−1.2σ)
+
+**Comparables:**
+
+- [[jaden-springer|Jaden Springer]] '24 (84% similar)
+- [[dru-smith|Dru Smith]] '26 (84% similar)
+- [[myke-henry|Myke Henry]] '18 (82% similar)
+- [[corey-brewer|Corey Brewer]] '19 (81% similar)
+- [[erick-barkley|Erick Barkley]] '02 (81% similar)
+- [[briante-weber|Briante Weber]] '18 (80% similar)
+
+**Career shape:** Charted 1 season (2024-25). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

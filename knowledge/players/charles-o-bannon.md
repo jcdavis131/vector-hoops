@@ -35,6 +35,34 @@ Closest career shapes in the era-normalized vector space:
 - [[slava-medvedenko|Slava Medvedenko]] — cosine 0.64
 - [[cassius-stanley|Cassius Stanley]] — cosine 0.64
 
+## Scouting report
+
+**Play style:** SG · Defensive Glass + Rim Pressure (Fts). Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 18.5 pts · 11.2 reb · 4.0 ast · 1.0 blk per 100 (1998-99).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+2.1σ vs era)
+- Relentless on the offensive glass (+1.6σ vs era)
+- Strong net on-court impact (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.4σ)
+- Three-point accuracy well below era (−1.1σ)
+
+**Comparables:**
+
+- [[dan-schayes|Dan Schayes]] '99 (71% similar)
+- [[kevin-jones|Kevin Jones]] '13 (70% similar)
+- [[greg-minor|Greg Minor]] '97 (69% similar)
+- [[donald-royal|Donald Royal]] '98 (66% similar)
+- [[slava-medvedenko|Slava Medvedenko]] '02 (64% similar)
+- [[cassius-stanley|Cassius Stanley]] '21 (64% similar)
+
+**Career shape:** Charted 2 seasons (1997-98–1998-99). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -35,6 +35,33 @@ Closest career shapes in the era-normalized vector space:
 - [[kyshawn-george|Kyshawn George]] — cosine 0.84
 - [[keljin-blevins|Keljin Blevins]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 22.0 pts · 6.4 reb · 4.3 ast · 0.7 stl per 100 (2020-21).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.7σ vs era)
+- Heavy shot volume, focal scoring option (+1.0σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−3.6σ)
+- Turnover rate well above era (+1.8σ)
+
+**Comparables:**
+
+- [[lazar-hayward|Lazar Hayward]] '12 (90% similar)
+- [[tyrese-martin|Tyrese Martin]] '26 (89% similar)
+- [[sergei-monia|Sergei Monia]] '06 (85% similar)
+- [[frank-brickowski|Frank Brickowski]] '97 (84% similar)
+- [[kyshawn-george|Kyshawn George]] '26 (84% similar)
+- [[keljin-blevins|Keljin Blevins]] '22 (83% similar)
+
+**Career shape:** Charted 2 seasons (2020-21–2021-22). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -39,6 +39,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jacque-vaughn|Jacque Vaughn]] — cosine 0.85
 - [[doug-overton|Doug Overton]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** PG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 11.4 pts · 3.8 reb · 5.7 ast · 1.2 stl per 100 (2014-15).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.5σ)
+- Finishing efficiency well below era (−1.4σ)
+
+**Comparables:**
+
+- [[davion-mitchell|Davion Mitchell]] '26 (87% similar)
+- [[matthew-dellavedova|Matthew Dellavedova]] '23 (86% similar)
+- [[john-crotty|John Crotty]] '98 (85% similar)
+- [[rex-walters|Rex Walters]] '98 (85% similar)
+- [[jacque-vaughn|Jacque Vaughn]] '99 (85% similar)
+- [[doug-overton|Doug Overton]] '02 (83% similar)
+
+**Career shape:** Charted 6 seasons (2014-15–2024-25). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

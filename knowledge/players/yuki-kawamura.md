@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[sean-elliott|Sean Elliott]] — cosine 0.71
 - [[hedo-turkoglu|Hedo Turkoglu]] — cosine 0.71
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 17.5 pts · 5.8 reb · 9.2 ast · 1.0 stl per 100 (2024-25).
+
+**Strengths:**
+
+- Strong net on-court impact (+2.0σ vs era)
+- High-volume table-setter (+1.7σ vs era)
+- High-volume three-point shooter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Offensive-glass activity well below era (−1.4σ)
+- Finishing efficiency well below era (−1.3σ)
+
+**Comparables:**
+
+- [[willie-warren|Willie Warren]] '11 (77% similar)
+- [[nikola-jovic|Nikola Jović]] '26 (77% similar)
+- [[terry-porter|Terry Porter]] '02 (77% similar)
+- [[milos-teodosic|Milos Teodosic]] '18 (72% similar)
+- [[sean-elliott|Sean Elliott]] '00 (71% similar)
+- [[hedo-turkoglu|Hedo Turkoglu]] '14 (71% similar)
+
+**Career shape:** Charted 1 season (2024-25). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

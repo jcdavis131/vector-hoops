@@ -38,6 +38,32 @@ Closest career shapes in the era-normalized vector space:
 - [[bobby-jones|Bobby Jones]] — cosine 0.70
 - [[kevin-jones|Kevin Jones]] — cosine 0.70
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 13.0 pts · 9.2 reb · 2.5 ast · 1.4 stl per 100 (2019-20).
+
+**Strengths:**
+
+- Strong net on-court impact (+2.1σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.3σ)
+- Scoring load well below era (−1.1σ)
+
+**Comparables:**
+
+- [[juancho-hernangomez|Juancho Hernangomez]] '23 (73% similar)
+- [[ben-davis|Ben Davis]] '97 (72% similar)
+- [[lawrence-roberts|Lawrence Roberts]] '06 (71% similar)
+- [[demarre-carroll|DeMarre Carroll]] '16 (71% similar)
+- [[bobby-jones|Bobby Jones]] '07 (70% similar)
+- [[kevin-jones|Kevin Jones]] '13 (70% similar)
+
+**Career shape:** Charted 5 seasons (2019-20–2023-24). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

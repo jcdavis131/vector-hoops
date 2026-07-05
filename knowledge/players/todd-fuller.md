@@ -37,6 +37,33 @@ Closest career shapes in the era-normalized vector space:
 - [[lonny-baxter|Lonny Baxter]] — cosine 0.89
 - [[tom-hammonds|Tom Hammonds]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 17.7 pts · 15.3 reb · 0.8 ast · 1.2 blk per 100 (1997-98).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+1.8σ vs era)
+- Relentless on the offensive glass (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.9σ)
+- Three-point accuracy well below era (−1.3σ)
+
+**Comparables:**
+
+- [[samaki-walker|Samaki Walker]] '02 (93% similar)
+- [[antonio-davis|Antonio Davis]] '01 (90% similar)
+- [[jeremy-tyler|Jeremy Tyler]] '14 (90% similar)
+- [[jason-thompson|Jason Thompson]] '15 (90% similar)
+- [[lonny-baxter|Lonny Baxter]] '06 (89% similar)
+- [[tom-hammonds|Tom Hammonds]] '00 (89% similar)
+
+**Career shape:** Charted 4 seasons (1996-97–1999-00). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

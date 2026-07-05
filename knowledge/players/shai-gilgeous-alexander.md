@@ -41,6 +41,33 @@ Closest career shapes in the era-normalized vector space:
 - [[franz-wagner|Franz Wagner]] — cosine 0.90
 - [[demar-derozan|DeMar DeRozan]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 45.0 pts · 6.9 reb · 8.8 ast · 2.4 stl per 100 (2024-25).
+
+**Strengths:**
+
+- Featured, high-usage scoring role (+3.7σ vs era)
+- Draws contact, gets to the line often (+3.6σ vs era)
+- Heavy shot volume, focal scoring option (+2.8σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[dwyane-wade|Dwyane Wade]] '09 (95% similar)
+- [[kobe-bryant|Kobe Bryant]] '06 (94% similar)
+- [[allen-iverson|Allen Iverson]] '02 (91% similar)
+- [[lebron-james|LeBron James]] '10 (90% similar)
+- [[franz-wagner|Franz Wagner]] '25 (90% similar)
+- [[demar-derozan|DeMar DeRozan]] '17 (90% similar)
+
+**Career shape:** Charted 8 seasons (2018-19–2025-26). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

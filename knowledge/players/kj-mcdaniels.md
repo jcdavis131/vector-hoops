@@ -36,6 +36,31 @@ Closest career shapes in the era-normalized vector space:
 - [[quincy-miller|Quincy Miller]] — cosine 0.59
 - [[jonathan-bender|Jonathan Bender]] — cosine 0.54
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 17.7 pts · 8.4 reb · 2.0 ast · 1.4 stl per 100 (2015-16).
+
+**Strengths:**
+
+- Strong net on-court impact (+2.4σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[mamadi-diakite|Mamadi Diakite]] '23 (65% similar)
+- [[antonis-fotsis|Antonis Fotsis]] '02 (61% similar)
+- [[joe-alexander|Joe Alexander]] '09 (61% similar)
+- [[bruno-caboclo|Bruno Caboclo]] '20 (61% similar)
+- [[quincy-miller|Quincy Miller]] '14 (59% similar)
+- [[jonathan-bender|Jonathan Bender]] '04 (54% similar)
+
+**Career shape:** Charted 3 seasons (2014-15–2016-17). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

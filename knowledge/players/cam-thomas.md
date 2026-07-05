@@ -38,6 +38,34 @@ Closest career shapes in the era-normalized vector space:
 - [[shaedon-sharpe|Shaedon Sharpe]] — cosine 0.89
 - [[collin-sexton|Collin Sexton]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** SG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 38.3 pts · 5.4 reb · 6.0 ast · 1.0 stl per 100 (2024-25).
+
+**Strengths:**
+
+- Featured, high-usage scoring role (+2.6σ vs era)
+- Heavy shot volume, focal scoring option (+2.6σ vs era)
+- Draws contact, gets to the line often (+2.6σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.3σ)
+- Rim-protection impact well below era (−1.1σ)
+
+**Comparables:**
+
+- [[zach-lavine|Zach LaVine]] '21 (93% similar)
+- [[jalen-green|Jalen Green]] '26 (93% similar)
+- [[devin-booker|Devin Booker]] '19 (91% similar)
+- [[jerry-stackhouse|Jerry Stackhouse]] '01 (89% similar)
+- [[shaedon-sharpe|Shaedon Sharpe]] '26 (89% similar)
+- [[collin-sexton|Collin Sexton]] '21 (89% similar)
+
+**Career shape:** Charted 5 seasons (2021-22–2025-26). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

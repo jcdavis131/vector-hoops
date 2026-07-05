@@ -34,6 +34,31 @@ Closest career shapes in the era-normalized vector space:
 - [[lance-stephenson|Lance Stephenson]] — cosine 0.77
 - [[mustafa-shakur|Mustafa Shakur]] — cosine 0.77
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 19.6 pts · 6.4 reb · 8.0 ast · 0.9 stl per 100 (2010-11).
+
+**Strengths:**
+
+- High-volume table-setter (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+3.9σ)
+
+**Comparables:**
+
+- [[darius-washington|Darius Washington]] '08 (81% similar)
+- [[rob-dillingham|Rob Dillingham]] '25 (81% similar)
+- [[emmanuel-mudiay|Emmanuel Mudiay]] '16 (80% similar)
+- [[scoot-henderson|Scoot Henderson]] '24 (78% similar)
+- [[lance-stephenson|Lance Stephenson]] '12 (77% similar)
+- [[mustafa-shakur|Mustafa Shakur]] '11 (77% similar)
+
+**Career shape:** Charted 1 season (2010-11). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

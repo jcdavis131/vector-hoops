@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[francisco-elson|Francisco Elson]] — cosine 0.90
 - [[evan-eschmeyer|Evan Eschmeyer]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 8.2 pts · 13.0 reb · 1.5 ast · 1.8 stl per 100 (2009-10).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Shot volume well below era (−2.3σ)
+- Scoring load well below era (−1.9σ)
+
+**Comparables:**
+
+- [[corie-blount|Corie Blount]] '98 (93% similar)
+- [[furkan-aldemir|Furkan Aldemir]] '15 (91% similar)
+- [[john-thomas|John Thomas]] '00 (91% similar)
+- [[jake-voskuhl|Jake Voskuhl]] '01 (91% similar)
+- [[francisco-elson|Francisco Elson]] '07 (90% similar)
+- [[evan-eschmeyer|Evan Eschmeyer]] '03 (90% similar)
+
+**Career shape:** Charted 2 seasons (2007-08–2009-10). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

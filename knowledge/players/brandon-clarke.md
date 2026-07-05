@@ -38,6 +38,34 @@ Closest career shapes in the era-normalized vector space:
 - [[dereck-lively-ii|Dereck Lively II]] — cosine 0.91
 - [[neemias-queta|Neemias Queta]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** PF · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 20.3 pts · 12.3 reb · 2.5 ast · 2.0 stl per 100 (2024-25).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+2.1σ vs era)
+- Relentless on the offensive glass (+1.5σ vs era)
+- Strong net on-court impact (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.4σ)
+- Three-point volume well below era (−1.8σ)
+
+**Comparables:**
+
+- [[brandan-wright|Brandan Wright]] '18 (94% similar)
+- [[onyeka-okongwu|Onyeka Okongwu]] '22 (94% similar)
+- [[jarrett-allen|Jarrett Allen]] '25 (91% similar)
+- [[todd-macculloch|Todd MacCulloch]] '01 (91% similar)
+- [[dereck-lively-ii|Dereck Lively II]] '25 (91% similar)
+- [[neemias-queta|Neemias Queta]] '24 (91% similar)
+
+**Career shape:** Charted 5 seasons (2019-20–2024-25). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Rim Protection + Offensive Glass identity.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

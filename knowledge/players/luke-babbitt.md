@@ -41,6 +41,32 @@ Closest career shapes in the era-normalized vector space:
 - [[chuck-person|Chuck Person]] — cosine 0.90
 - [[daequan-cook|Daequan Cook]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 12.7 pts · 10.6 reb · 2.1 ast · 0.7 stl per 100 (2010-11).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.9σ)
+- Finishing efficiency well below era (−2.8σ)
+
+**Comparables:**
+
+- [[matt-bullard|Matt Bullard]] '01 (92% similar)
+- [[shawne-williams|Shawne Williams]] '12 (92% similar)
+- [[rasual-butler|Rasual Butler]] '04 (91% similar)
+- [[anthony-tolliver|Anthony Tolliver]] '09 (91% similar)
+- [[chuck-person|Chuck Person]] '00 (90% similar)
+- [[daequan-cook|Daequan Cook]] '11 (90% similar)
+
+**Career shape:** Charted 8 seasons (2010-11–2017-18). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

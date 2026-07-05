@@ -39,6 +39,33 @@ Closest career shapes in the era-normalized vector space:
 - [[gary-trent|Gary Trent]] — cosine 0.88
 - [[jason-thompson|Jason Thompson]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 15.6 pts · 11.6 reb · 1.7 ast · 2.3 blk per 100 (2002-03).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.8σ vs era)
+- Elite rim protection (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−2.2σ)
+- Three-point accuracy well below era (−1.3σ)
+
+**Comparables:**
+
+- [[nenad-krstic|Nenad Krstic]] '07 (92% similar)
+- [[todd-macculloch|Todd MacCulloch]] '01 (91% similar)
+- [[tyler-zeller|Tyler Zeller]] '17 (90% similar)
+- [[ante-zizic|Ante Zizic]] '18 (88% similar)
+- [[gary-trent|Gary Trent]] '01 (88% similar)
+- [[jason-thompson|Jason Thompson]] '15 (88% similar)
+
+**Career shape:** Charted 6 seasons (1997-98–2002-03). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

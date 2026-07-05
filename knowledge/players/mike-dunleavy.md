@@ -48,6 +48,33 @@ Closest career shapes in the era-normalized vector space:
 - [[chase-budinger|Chase Budinger]] — cosine 0.90
 - [[joe-dumars|Joe Dumars]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 25.7 pts · 6.4 reb · 4.2 ast · 1.1 stl per 100 (2008-09).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.5σ vs era)
+- Heavy shot volume, focal scoring option (+1.3σ vs era)
+- Featured, high-usage scoring role (+1.1σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[kyle-korver|Kyle Korver]] '04 (93% similar)
+- [[duncan-robinson|Duncan Robinson]] '20 (92% similar)
+- [[luke-kennard|Luke Kennard]] '23 (90% similar)
+- [[grayson-allen|Grayson Allen]] '19 (90% similar)
+- [[chase-budinger|Chase Budinger]] '10 (90% similar)
+- [[joe-dumars|Joe Dumars]] '98 (90% similar)
+
+**Career shape:** Charted 15 seasons (2002-03–2016-17). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -38,6 +38,32 @@ Closest career shapes in the era-normalized vector space:
 - [[nikola-jokic|Nikola Jokić]] — cosine 0.74
 - [[john-wall|John Wall]] — cosine 0.72
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 24.4 pts · 11.9 reb · 13.1 ast · 1.5 stl per 100 (2025-26).
+
+**Strengths:**
+
+- High-volume table-setter (+3.2σ vs era)
+- Strong presence on the defensive glass (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.6σ)
+
+**Comparables:**
+
+- [[cole-anthony|Cole Anthony]] '26 (82% similar)
+- [[cade-cunningham|Cade Cunningham]] '26 (79% similar)
+- [[russell-westbrook|Russell Westbrook]] '17 (76% similar)
+- [[dejounte-murray|Dejounte Murray]] '22 (74% similar)
+- [[nikola-jokic|Nikola Jokić]] '22 (74% similar)
+- [[john-wall|John Wall]] '17 (72% similar)
+
+**Career shape:** Charted 5 seasons (2021-22–2025-26). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/pg|PG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

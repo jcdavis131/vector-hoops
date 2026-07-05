@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[matt-freije|Matt Freije]] — cosine 0.82
 - [[taelon-peter|Taelon Peter]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 14.6 pts · 6.5 reb · 1.4 ast · 1.9 stl per 100 (2017-18).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.4σ)
+- Table-setting role well below era (−1.1σ)
+
+**Comparables:**
+
+- [[khyri-thomas|Khyri Thomas]] '19 (86% similar)
+- [[mike-smith|Mike Smith]] '01 (86% similar)
+- [[donny-marshall|Donny Marshall]] '02 (85% similar)
+- [[chris-duarte|Chris Duarte]] '23 (83% similar)
+- [[matt-freije|Matt Freije]] '07 (82% similar)
+- [[taelon-peter|Taelon Peter]] '26 (82% similar)
+
+**Career shape:** Charted 1 season (2017-18). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

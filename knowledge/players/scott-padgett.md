@@ -41,6 +41,33 @@ Closest career shapes in the era-normalized vector space:
 - [[scott-burrell|Scott Burrell]] — cosine 0.77
 - [[matt-barnes|Matt Barnes]] — cosine 0.77
 
+## Scouting report
+
+**Play style:** PF · Three-Point Accuracy (Low Turnovers). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 10.2 pts · 11.9 reb · 1.8 ast · 1.1 stl per 100 (2006-07).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.2σ vs era)
+- Rarely turns the ball over (−1.1σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.4σ)
+- Free-throw touch well below era (−2.2σ)
+
+**Comparables:**
+
+- [[josh-davis|Josh Davis]] '05 (87% similar)
+- [[jumaine-jones|Jumaine Jones]] '07 (81% similar)
+- [[devean-george|Devean George]] '10 (80% similar)
+- [[chris-morris|Chris Morris]] '99 (79% similar)
+- [[scott-burrell|Scott Burrell]] '00 (77% similar)
+- [[matt-barnes|Matt Barnes]] '04 (77% similar)
+
+**Career shape:** Charted 8 seasons (1999-00–2006-07). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

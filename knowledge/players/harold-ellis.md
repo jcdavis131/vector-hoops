@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[monty-williams|Monty Williams]] — cosine 0.73
 - [[jarnell-stokes|Jarnell Stokes]] — cosine 0.70
 
+## Scouting report
+
+**Play style:** SF · Defensive Glass + Rim Pressure (Fts). Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 24.2 pts · 7.4 reb · 2.7 ast · 2.8 stl per 100 (1997-98).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+2.1σ vs era)
+- Draws contact, gets to the line often (+1.6σ vs era)
+- Active hands, disrupts passing lanes (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.3σ)
+- Defensive rebounding well below era (−1.0σ)
+
+**Comparables:**
+
+- [[ruben-patterson|Ruben Patterson]] '08 (85% similar)
+- [[stephen-howard|Stephen Howard]] '97 (83% similar)
+- [[craig-smith|Craig Smith]] '09 (76% similar)
+- [[hamidou-diallo|Hamidou Diallo]] '23 (74% similar)
+- [[monty-williams|Monty Williams]] '97 (73% similar)
+- [[jarnell-stokes|Jarnell Stokes]] '15 (70% similar)
+
+**Career shape:** Charted 1 season (1997-98). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -38,6 +38,33 @@ Closest career shapes in the era-normalized vector space:
 - [[chris-andersen|Chris Andersen]] — cosine 0.84
 - [[donovan-clingan|Donovan Clingan]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** PF · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 21.2 pts · 12.1 reb · 2.0 ast · 3.2 blk per 100 (2014-15).
+
+**Strengths:**
+
+- Elite rim protection (+2.2σ vs era)
+- Efficient finisher inside the arc (+1.2σ vs era)
+- Relentless on the offensive glass (+1.1σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[willie-reed|Willie Reed]] '16 (89% similar)
+- [[walker-kessler|Walker Kessler]] '23 (87% similar)
+- [[javale-mcgee|JaVale McGee]] '17 (86% similar)
+- [[hassan-whiteside|Hassan Whiteside]] '22 (85% similar)
+- [[chris-andersen|Chris Andersen]] '10 (84% similar)
+- [[donovan-clingan|Donovan Clingan]] '25 (82% similar)
+
+**Career shape:** Charted 5 seasons (2012-13–2016-17). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

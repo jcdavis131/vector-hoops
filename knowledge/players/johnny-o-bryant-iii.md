@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[pat-burke|Pat Burke]] — cosine 0.77
 - [[alex-poythress|Alex Poythress]] — cosine 0.76
 
+## Scouting report
+
+**Play style:** PF · Three-Point Accuracy (Low Turnovers). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 11.9 pts · 10.5 reb · 1.9 ast · 1.1 stl per 100 (2015-16).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+4.0σ vs era)
+
+**Areas of concern:**
+
+- Three-point volume well below era (−1.3σ)
+- Scoring load well below era (−1.3σ)
+
+**Comparables:**
+
+- [[richard-manning|Richard Manning]] '97 (85% similar)
+- [[darnell-jackson|Darnell Jackson]] '10 (81% similar)
+- [[erik-daniels|Erik Daniels]] '05 (77% similar)
+- [[greg-foster|Greg Foster]] '03 (77% similar)
+- [[pat-burke|Pat Burke]] '07 (77% similar)
+- [[alex-poythress|Alex Poythress]] '18 (76% similar)
+
+**Career shape:** Charted 3 seasons (2014-15–2017-18). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

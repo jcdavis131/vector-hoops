@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[furkan-aldemir|Furkan Aldemir]] — cosine 0.89
 - [[corie-blount|Corie Blount]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 8.6 pts · 14.2 reb · 1.0 ast · 1.4 stl per 100 (1996-97).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+1.3σ vs era)
+- Relentless on the offensive glass (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.6σ)
+- Shot volume well below era (−1.8σ)
+
+**Comparables:**
+
+- [[eric-montross|Eric Montross]] '97 (93% similar)
+- [[michael-ruffin|Michael Ruffin]] '07 (93% similar)
+- [[greg-anderson|Greg Anderson]] '98 (90% similar)
+- [[jared-reiner|Jared Reiner]] '07 (89% similar)
+- [[furkan-aldemir|Furkan Aldemir]] '15 (89% similar)
+- [[corie-blount|Corie Blount]] '98 (89% similar)
+
+**Career shape:** Charted 1 season (1996-97). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

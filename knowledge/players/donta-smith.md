@@ -35,6 +35,34 @@ Closest career shapes in the era-normalized vector space:
 - [[matisse-thybulle|Matisse Thybulle]] — cosine 0.79
 - [[melvin-frazier-jr|Melvin Frazier Jr.]] — cosine 0.79
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 14.0 pts · 5.2 reb · 3.3 ast · 3.0 stl per 100 (2005-06).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.3σ vs era)
+- Efficient finisher inside the arc (+1.8σ vs era)
+- Rarely turns the ball over (−1.5σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.8σ)
+- Shot volume well below era (−1.2σ)
+
+**Comparables:**
+
+- [[ronnie-brewer|Ronnie Brewer]] '14 (89% similar)
+- [[jaylen-clark|Jaylen Clark]] '25 (86% similar)
+- [[caleb-martin|Caleb Martin]] '26 (80% similar)
+- [[corey-brewer|Corey Brewer]] '19 (79% similar)
+- [[matisse-thybulle|Matisse Thybulle]] '21 (79% similar)
+- [[melvin-frazier-jr|Melvin Frazier Jr.]] '20 (79% similar)
+
+**Career shape:** Charted 2 seasons (2004-05–2005-06). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

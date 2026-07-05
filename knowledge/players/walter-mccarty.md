@@ -43,6 +43,32 @@ Closest career shapes in the era-normalized vector space:
 - [[chuck-person|Chuck Person]] — cosine 0.87
 - [[yakhouba-diawara|Yakhouba Diawara]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** PF · Three-Point Accuracy (Low Turnovers). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 14.1 pts · 7.5 reb · 2.0 ast · 1.4 stl per 100 (2004-05).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.8σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.7σ)
+- Rim pressure (free-throw generation) well below era (−1.3σ)
+
+**Comparables:**
+
+- [[keith-bogans|Keith Bogans]] '13 (91% similar)
+- [[rashad-vaughn|Rashad Vaughn]] '17 (90% similar)
+- [[cartier-martin|Cartier Martin]] '15 (87% similar)
+- [[sasha-pavlovic|Sasha Pavlovic]] '13 (87% similar)
+- [[chuck-person|Chuck Person]] '00 (87% similar)
+- [[yakhouba-diawara|Yakhouba Diawara]] '09 (86% similar)
+
+**Career shape:** Charted 10 seasons (1996-97–2005-06). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

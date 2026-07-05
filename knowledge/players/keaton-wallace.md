@@ -35,6 +35,34 @@ Closest career shapes in the era-normalized vector space:
 - [[anthony-johnson|Anthony Johnson]] — cosine 0.90
 - [[jason-hart|Jason Hart]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 15.6 pts · 4.7 reb · 7.5 ast · 2.6 stl per 100 (2024-25).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+2.0σ vs era)
+- Active hands, disrupts passing lanes (+1.5σ vs era)
+- High-volume table-setter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.3σ)
+- Offensive-glass activity well below era (−1.0σ)
+
+**Comparables:**
+
+- [[jacob-gilyard|Jacob Gilyard]] '24 (93% similar)
+- [[shane-larkin|Shane Larkin]] '16 (92% similar)
+- [[haywoode-workman|Haywoode Workman]] '00 (92% similar)
+- [[daniel-ewing|Daniel Ewing]] '07 (90% similar)
+- [[anthony-johnson|Anthony Johnson]] '02 (90% similar)
+- [[jason-hart|Jason Hart]] '09 (90% similar)
+
+**Career shape:** Charted 2 seasons (2024-25–2025-26). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

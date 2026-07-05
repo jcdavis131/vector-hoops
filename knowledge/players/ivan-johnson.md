@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[greg-monroe|Greg Monroe]] — cosine 0.76
 - [[paul-millsap|Paul Millsap]] — cosine 0.76
 
+## Scouting report
+
+**Play style:** PF · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 21.7 pts · 12.8 reb · 2.2 ast · 2.7 stl per 100 (2012-13).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.8σ vs era)
+- Efficient finisher inside the arc (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.0σ)
+
+**Comparables:**
+
+- [[nene|Nene]] '19 (82% similar)
+- [[gerald-wallace|Gerald Wallace]] '15 (78% similar)
+- [[amen-thompson|Amen Thompson]] '24 (77% similar)
+- [[ruben-patterson|Ruben Patterson]] '08 (76% similar)
+- [[greg-monroe|Greg Monroe]] '18 (76% similar)
+- [[paul-millsap|Paul Millsap]] '07 (76% similar)
+
+**Career shape:** Charted 2 seasons (2011-12–2012-13). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

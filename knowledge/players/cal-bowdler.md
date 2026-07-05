@@ -36,6 +36,33 @@ Closest career shapes in the era-normalized vector space:
 - [[keita-bates-diop|Keita Bates-Diop]] — cosine 0.80
 - [[michael-doleac|Michael Doleac]] — cosine 0.79
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass + Defensive Glass. Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 18.4 pts · 10.1 reb · 0.5 ast · 2.8 blk per 100 (2000-01).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.7σ vs era)
+- Elite rim protection (+1.5σ vs era)
+- Strong net on-court impact (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Table-setting role well below era (−1.3σ)
+
+**Comparables:**
+
+- [[scott-williams|Scott Williams]] '05 (81% similar)
+- [[andrew-lang|Andrew Lang]] '00 (81% similar)
+- [[michael-kidd-gilchrist|Michael Kidd-Gilchrist]] '20 (80% similar)
+- [[hot-rod-williams|Hot Rod Williams]] '99 (80% similar)
+- [[keita-bates-diop|Keita Bates-Diop]] '20 (80% similar)
+- [[michael-doleac|Michael Doleac]] '08 (79% similar)
+
+**Career shape:** Charted 3 seasons (1999-00–2001-02). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

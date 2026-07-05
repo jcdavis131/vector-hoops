@@ -45,6 +45,34 @@ Closest career shapes in the era-normalized vector space:
 - [[erick-dampier|Erick Dampier]] — cosine 0.93
 - [[greg-ostertag|Greg Ostertag]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 16.4 pts · 20.1 reb · 1.8 ast · 4.7 blk per 100 (1999-00).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+3.5σ vs era)
+- Elite rim protection (+3.3σ vs era)
+- Efficient finisher inside the arc (+2.2σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.7σ)
+- Shot volume well below era (−1.4σ)
+
+**Comparables:**
+
+- [[khaman-maluach|Khaman Maluach]] '26 (93% similar)
+- [[kelvin-cato|Kelvin Cato]] '99 (93% similar)
+- [[samuel-dalembert|Samuel Dalembert]] '13 (93% similar)
+- [[chris-andersen|Chris Andersen]] '10 (93% similar)
+- [[erick-dampier|Erick Dampier]] '97 (93% similar)
+- [[greg-ostertag|Greg Ostertag]] '99 (93% similar)
+
+**Career shape:** Charted 12 seasons (1996-97–2007-08). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

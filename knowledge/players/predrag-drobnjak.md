@@ -37,6 +37,31 @@ Closest career shapes in the era-normalized vector space:
 - [[maciej-lampe|Maciej Lampe]] — cosine 0.74
 - [[mike-batiste|Mike Batiste]] — cosine 0.73
 
+## Scouting report
+
+**Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 20.5 pts · 10.5 reb · 2.1 ast · 1.3 blk per 100 (2003-04).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.8σ)
+
+**Comparables:**
+
+- [[bill-wennington|Bill Wennington]] '99 (85% similar)
+- [[laphonso-ellis|LaPhonso Ellis]] '97 (78% similar)
+- [[andrew-nicholson|Andrew Nicholson]] '17 (75% similar)
+- [[richard-manning|Richard Manning]] '97 (74% similar)
+- [[maciej-lampe|Maciej Lampe]] '04 (74% similar)
+- [[mike-batiste|Mike Batiste]] '03 (73% similar)
+
+**Career shape:** Charted 4 seasons (2001-02–2004-05). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

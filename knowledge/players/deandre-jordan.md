@@ -50,6 +50,34 @@ Closest career shapes in the era-normalized vector space:
 - [[nic-claxton|Nic Claxton]] — cosine 0.93
 - [[jamal-sampson|Jamal Sampson]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 18.7 pts · 20.2 reb · 1.7 ast · 3.4 blk per 100 (2015-16).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+3.7σ vs era)
+- Draws contact, gets to the line often (+3.2σ vs era)
+- Strong presence on the defensive glass (+3.1σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.6σ)
+- Three-point accuracy well below era (−1.9σ)
+
+**Comparables:**
+
+- [[tyson-chandler|Tyson Chandler]] '20 (97% similar)
+- [[tarik-black|Tarik Black]] '18 (94% similar)
+- [[udoka-azubuike|Udoka Azubuike]] '23 (94% similar)
+- [[rudy-gobert|Rudy Gobert]] '21 (93% similar)
+- [[nic-claxton|Nic Claxton]] '23 (93% similar)
+- [[jamal-sampson|Jamal Sampson]] '07 (93% similar)
+
+**Career shape:** Charted 17 seasons (2008-09–2024-25). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

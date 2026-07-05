@@ -39,6 +39,32 @@ Closest career shapes in the era-normalized vector space:
 - [[eric-paschall|Eric Paschall]] — cosine 0.75
 - [[antonio-blakeney|Antonio Blakeney]] — cosine 0.69
 
+## Scouting report
+
+**Play style:** SF · Defensive Glass + Rim Pressure (Fts). Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 25.9 pts · 10.3 reb · 2.6 ast · 1.0 stl per 100 (2015-16).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+1.9σ vs era)
+- Featured, high-usage scoring role (+1.1σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[ricky-council-iv|Ricky Council IV]] '24 (84% similar)
+- [[keldon-johnson|Keldon Johnson]] '23 (79% similar)
+- [[shabazz-muhammad|Shabazz Muhammad]] '15 (76% similar)
+- [[don-maclean|Don MacLean]] '99 (75% similar)
+- [[eric-paschall|Eric Paschall]] '20 (75% similar)
+- [[antonio-blakeney|Antonio Blakeney]] '19 (69% similar)
+
+**Career shape:** Charted 6 seasons (2011-12–2016-17). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -44,6 +44,33 @@ Closest career shapes in the era-normalized vector space:
 - [[domantas-sabonis|Domantas Sabonis]] — cosine 0.82
 - [[chris-webber|Chris Webber]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** C · Scoring Volume + Shot Volume. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 39.0 pts · 19.8 reb · 11.4 ast · 2.1 stl per 100 (2021-22).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+3.4σ vs era)
+- Featured, high-usage scoring role (+2.9σ vs era)
+- High-volume table-setter (+2.6σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.9σ)
+
+**Comparables:**
+
+- [[scottie-barnes|Scottie Barnes]] '25 (86% similar)
+- [[giannis-antetokounmpo|Giannis Antetokounmpo]] '20 (86% similar)
+- [[lebron-james|LeBron James]] '10 (85% similar)
+- [[karl-malone|Karl Malone]] '97 (83% similar)
+- [[domantas-sabonis|Domantas Sabonis]] '24 (82% similar)
+- [[chris-webber|Chris Webber]] '01 (82% similar)
+
+**Career shape:** Charted 11 seasons (2015-16–2025-26). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

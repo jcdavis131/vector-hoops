@@ -45,6 +45,34 @@ Closest career shapes in the era-normalized vector space:
 - [[ed-davis|Ed Davis]] — cosine 0.91
 - [[jerome-williams|Jerome Williams]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** PF · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 16.2 pts · 15.7 reb · 1.6 ast · 2.5 stl per 100 (2004-05).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+2.3σ vs era)
+- Active hands, disrupts passing lanes (+1.5σ vs era)
+- Rarely turns the ball over (−1.4σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.5σ)
+- Three-point accuracy well below era (−1.3σ)
+
+**Comparables:**
+
+- [[jeff-foster|Jeff Foster]] '00 (95% similar)
+- [[anthony-miller|Anthony Miller]] '00 (94% similar)
+- [[kevon-looney|Kevon Looney]] '23 (92% similar)
+- [[scot-pollard|Scot Pollard]] '03 (92% similar)
+- [[ed-davis|Ed Davis]] '22 (91% similar)
+- [[jerome-williams|Jerome Williams]] '00 (91% similar)
+
+**Career shape:** Charted 12 seasons (2004-05–2015-16). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

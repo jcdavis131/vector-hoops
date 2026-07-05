@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[pooh-jeter|Pooh Jeter]] — cosine 0.81
 - [[marcelo-huertas|Marcelo Huertas]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 6.6 pts · 5.8 reb · 9.9 ast · 1.6 stl per 100 (2005-06).
+
+**Strengths:**
+
+- High-volume table-setter (+2.3σ vs era)
+- Reliable touch from the free-throw line (+2.3σ vs era)
+
+**Areas of concern:**
+
+- Scoring load well below era (−1.9σ)
+- Turnover rate well above era (+1.8σ)
+
+**Comparables:**
+
+- [[brad-wanamaker|Brad Wanamaker]] '22 (86% similar)
+- [[trent-forrest|Trent Forrest]] '23 (83% similar)
+- [[evan-turner|Evan Turner]] '20 (82% similar)
+- [[chris-childs|Chris Childs]] '02 (81% similar)
+- [[pooh-jeter|Pooh Jeter]] '11 (81% similar)
+- [[marcelo-huertas|Marcelo Huertas]] '17 (81% similar)
+
+**Career shape:** Charted 1 season (2005-06). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

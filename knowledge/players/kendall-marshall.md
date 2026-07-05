@@ -37,6 +37,32 @@ Closest career shapes in the era-normalized vector space:
 - [[bobby-hurley|Bobby Hurley]] — cosine 0.93
 - [[tyler-ennis|Tyler Ennis]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 13.1 pts · 4.8 reb · 14.5 ast · 1.5 stl per 100 (2013-14).
+
+**Strengths:**
+
+- High-volume table-setter (+3.7σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.8σ)
+- Free-throw touch well below era (−1.5σ)
+
+**Comparables:**
+
+- [[eric-maynor|Eric Maynor]] '14 (95% similar)
+- [[marcelo-huertas|Marcelo Huertas]] '17 (94% similar)
+- [[sergio-rodriguez|Sergio Rodriguez]] '09 (94% similar)
+- [[earl-watson|Earl Watson]] '14 (94% similar)
+- [[bobby-hurley|Bobby Hurley]] '97 (93% similar)
+- [[tyler-ennis|Tyler Ennis]] '15 (93% similar)
+
+**Career shape:** Charted 4 seasons (2012-13–2015-16). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

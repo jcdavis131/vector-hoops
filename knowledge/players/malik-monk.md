@@ -42,6 +42,33 @@ Closest career shapes in the era-normalized vector space:
 - [[aaron-brooks|Aaron Brooks]] — cosine 0.94
 - [[anfernee-simons|Anfernee Simons]] — cosine 0.94
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 23.2 pts · 3.6 reb · 5.0 ast · 1.1 stl per 100 (2017-18).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.3σ vs era)
+- Heavy shot volume, focal scoring option (+1.6σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.4σ)
+- Finishing efficiency well below era (−1.4σ)
+
+**Comparables:**
+
+- [[jamal-crawford|Jamal Crawford]] '14 (95% similar)
+- [[jordan-poole|Jordan Poole]] '25 (95% similar)
+- [[coby-white|Coby White]] '26 (95% similar)
+- [[jordan-crawford|Jordan Crawford]] '11 (95% similar)
+- [[aaron-brooks|Aaron Brooks]] '11 (94% similar)
+- [[anfernee-simons|Anfernee Simons]] '24 (94% similar)
+
+**Career shape:** Charted 9 seasons (2017-18–2025-26). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

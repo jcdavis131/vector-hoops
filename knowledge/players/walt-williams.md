@@ -40,6 +40,33 @@ Closest career shapes in the era-normalized vector space:
 - [[mike-dunleavy|Mike Dunleavy]] — cosine 0.88
 - [[buddy-hield|Buddy Hield]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 15.7 pts · 8.9 reb · 2.5 ast · 1.8 stl per 100 (2002-03).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.7σ vs era)
+- Rarely turns the ball over (−1.6σ vs era)
+- Strong net on-court impact (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.1σ)
+
+**Comparables:**
+
+- [[voshon-lenard|Voshon Lenard]] '97 (90% similar)
+- [[tracy-murray|Tracy Murray]] '02 (90% similar)
+- [[dell-curry|Dell Curry]] '00 (89% similar)
+- [[mirza-teletovic|Mirza Teletovic]] '17 (88% similar)
+- [[mike-dunleavy|Mike Dunleavy]] '09 (88% similar)
+- [[buddy-hield|Buddy Hield]] '20 (88% similar)
+
+**Career shape:** Charted 7 seasons (1996-97–2002-03). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

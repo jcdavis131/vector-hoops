@@ -37,6 +37,32 @@ Closest career shapes in the era-normalized vector space:
 - [[kadeem-allen|Kadeem Allen]] — cosine 0.90
 - [[jerian-grant|Jerian Grant]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 11.8 pts · 4.6 reb · 7.9 ast · 2.1 stl per 100 (2003-04).
+
+**Strengths:**
+
+- High-volume table-setter (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.8σ)
+- On-court net impact well below era (−1.2σ)
+
+**Comparables:**
+
+- [[malcolm-delaney|Malcolm Delaney]] '17 (94% similar)
+- [[acie-law|Acie Law]] '10 (93% similar)
+- [[peyton-siva|Peyton Siva]] '14 (93% similar)
+- [[andrew-harrison|Andrew Harrison]] '19 (91% similar)
+- [[kadeem-allen|Kadeem Allen]] '18 (90% similar)
+- [[jerian-grant|Jerian Grant]] '19 (90% similar)
+
+**Career shape:** Charted 4 seasons (2003-04–2006-07). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

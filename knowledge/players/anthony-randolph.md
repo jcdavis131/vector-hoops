@@ -39,6 +39,34 @@ Closest career shapes in the era-normalized vector space:
 - [[jusuf-nurkic|Jusuf Nurkić]] — cosine 0.83
 - [[elton-brand|Elton Brand]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** PF · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 20.4 pts · 13.5 reb · 1.7 ast · 3.0 blk per 100 (2012-13).
+
+**Strengths:**
+
+- Elite rim protection (+1.8σ vs era)
+- Active hands, disrupts passing lanes (+1.8σ vs era)
+- Strong presence on the defensive glass (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.5σ)
+- Three-point accuracy well below era (−1.5σ)
+
+**Comparables:**
+
+- [[tyrus-thomas|Tyrus Thomas]] '07 (93% similar)
+- [[stromile-swift|Stromile Swift]] '09 (90% similar)
+- [[andray-blatche|Andray Blatche]] '13 (89% similar)
+- [[hakeem-olajuwon|Hakeem Olajuwon]] '97 (84% similar)
+- [[jusuf-nurkic|Jusuf Nurkić]] '16 (83% similar)
+- [[elton-brand|Elton Brand]] '07 (82% similar)
+
+**Career shape:** Charted 6 seasons (2008-09–2013-14). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -35,6 +35,33 @@ Closest career shapes in the era-normalized vector space:
 - [[peyton-siva|Peyton Siva]] — cosine 0.90
 - [[mardy-collins|Mardy Collins]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 16.9 pts · 6.9 reb · 8.0 ast · 3.0 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.1σ vs era)
+- High-volume table-setter (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.1σ)
+- Finishing efficiency well below era (−1.6σ)
+
+**Comparables:**
+
+- [[kenny-satterfield|Kenny Satterfield]] '02 (95% similar)
+- [[diante-garrett|Diante Garrett]] '13 (93% similar)
+- [[joseph-forte|Joseph Forte]] '03 (91% similar)
+- [[walker-russell|Walker Russell]] '12 (90% similar)
+- [[peyton-siva|Peyton Siva]] '14 (90% similar)
+- [[mardy-collins|Mardy Collins]] '10 (88% similar)
+
+**Career shape:** Charted 2 seasons (2024-25–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Playmaking + Steals identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

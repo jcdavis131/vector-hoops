@@ -36,6 +36,31 @@ Closest career shapes in the era-normalized vector space:
 - [[davion-mitchell|Davion Mitchell]] — cosine 0.89
 - [[brian-shaw|Brian Shaw]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 14.5 pts · 5.1 reb · 7.7 ast · 1.4 stl per 100 (2024-25).
+
+**Strengths:**
+
+- High-volume table-setter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.4σ)
+
+**Comparables:**
+
+- [[steve-blake|Steve Blake]] '16 (94% similar)
+- [[chris-duhon|Chris Duhon]] '13 (94% similar)
+- [[matthew-dellavedova|Matthew Dellavedova]] '23 (92% similar)
+- [[joe-ingles|Joe Ingles]] '25 (90% similar)
+- [[davion-mitchell|Davion Mitchell]] '26 (89% similar)
+- [[brian-shaw|Brian Shaw]] '02 (89% similar)
+
+**Career shape:** Charted 3 seasons (2023-24–2025-26). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

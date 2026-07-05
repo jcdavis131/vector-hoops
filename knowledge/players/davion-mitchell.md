@@ -38,6 +38,32 @@ Closest career shapes in the era-normalized vector space:
 - [[chris-duhon|Chris Duhon]] — cosine 0.88
 - [[jeff-mcinnis|Jeff McInnis]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 15.1 pts · 4.3 reb · 10.4 ast · 1.6 stl per 100 (2025-26).
+
+**Strengths:**
+
+- High-volume table-setter (+2.1σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.1σ)
+- Rim pressure (free-throw generation) well below era (−1.1σ)
+
+**Comparables:**
+
+- [[tony-smith|Tony Smith]] '97 (89% similar)
+- [[cory-joseph|Cory Joseph]] '24 (89% similar)
+- [[jalen-pickett|Jalen Pickett]] '25 (89% similar)
+- [[ray-mccallum|Ray McCallum]] '14 (89% similar)
+- [[chris-duhon|Chris Duhon]] '13 (88% similar)
+- [[jeff-mcinnis|Jeff McInnis]] '08 (87% similar)
+
+**Career shape:** Charted 5 seasons (2021-22–2025-26). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

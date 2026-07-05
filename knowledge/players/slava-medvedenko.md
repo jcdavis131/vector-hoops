@@ -37,6 +37,33 @@ Closest career shapes in the era-normalized vector space:
 - [[juwan-howard|Juwan Howard]] — cosine 0.74
 - [[lawrence-funderburke|Lawrence Funderburke]] — cosine 0.74
 
+## Scouting report
+
+**Play style:** Unlisted · Defensive Glass + Rim Pressure (Fts). Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 23.1 pts · 11.0 reb · 3.0 ast · 2.0 stl per 100 (2001-02).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+1.7σ vs era)
+- Strong net on-court impact (+1.2σ vs era)
+- Heavy shot volume, focal scoring option (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.3σ)
+
+**Comparables:**
+
+- [[lee-nailon|Lee Nailon]] '03 (84% similar)
+- [[nenad-krstic|Nenad Krstic]] '07 (76% similar)
+- [[matt-geiger|Matt Geiger]] '98 (76% similar)
+- [[dexter-pittman|Dexter Pittman]] '12 (76% similar)
+- [[juwan-howard|Juwan Howard]] '12 (74% similar)
+- [[lawrence-funderburke|Lawrence Funderburke]] '03 (74% similar)
+
+**Career shape:** Charted 4 seasons (2001-02–2004-05). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

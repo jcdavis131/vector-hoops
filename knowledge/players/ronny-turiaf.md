@@ -42,6 +42,34 @@ Closest career shapes in the era-normalized vector space:
 - [[adem-bona|Adem Bona]] — cosine 0.92
 - [[jordan-bell|Jordan Bell]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 12.2 pts · 14.2 reb · 2.0 ast · 4.1 blk per 100 (2013-14).
+
+**Strengths:**
+
+- Elite rim protection (+3.2σ vs era)
+- Efficient finisher inside the arc (+2.3σ vs era)
+- Strong presence on the defensive glass (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.3σ)
+- Shot volume well below era (−1.6σ)
+
+**Comparables:**
+
+- [[don-reid|Don Reid]] '01 (93% similar)
+- [[joel-anthony|Joel Anthony]] '16 (92% similar)
+- [[bernard-james|Bernard James]] '13 (92% similar)
+- [[hasheem-thabeet|Hasheem Thabeet]] '12 (92% similar)
+- [[adem-bona|Adem Bona]] '25 (92% similar)
+- [[jordan-bell|Jordan Bell]] '18 (91% similar)
+
+**Career shape:** Charted 9 seasons (2005-06–2013-14). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

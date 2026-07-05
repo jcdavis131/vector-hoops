@@ -38,6 +38,32 @@ Closest career shapes in the era-normalized vector space:
 - [[keaton-wallace|Keaton Wallace]] — cosine 0.88
 - [[fred-jones|Fred Jones]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 12.0 pts · 4.8 reb · 4.4 ast · 1.8 stl per 100 (2001-02).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.5σ)
+- Rim pressure (free-throw generation) well below era (−1.5σ)
+
+**Comparables:**
+
+- [[donald-whiteside|Donald Whiteside]] '97 (91% similar)
+- [[dee-brown|Dee Brown]] '00 (89% similar)
+- [[rusty-larue|Rusty LaRue]] '99 (88% similar)
+- [[egor-demin|Egor Dëmin]] '26 (88% similar)
+- [[keaton-wallace|Keaton Wallace]] '25 (88% similar)
+- [[fred-jones|Fred Jones]] '03 (87% similar)
+
+**Career shape:** Charted 5 seasons (1997-98–2002-03). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Playmaking + Steals identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

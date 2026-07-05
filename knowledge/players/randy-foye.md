@@ -44,6 +44,31 @@ Closest career shapes in the era-normalized vector space:
 - [[juan-carlos-navarro|Juan Carlos Navarro]] — cosine 0.93
 - [[luther-head|Luther Head]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 22.2 pts · 4.3 reb · 4.5 ast · 1.4 stl per 100 (2011-12).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.9σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.2σ)
+
+**Comparables:**
+
+- [[terry-dehere|Terry Dehere]] '97 (96% similar)
+- [[chris-whitney|Chris Whitney]] '04 (95% similar)
+- [[troy-hudson|Troy Hudson]] '06 (94% similar)
+- [[isaiah-canaan|Isaiah Canaan]] '16 (93% similar)
+- [[juan-carlos-navarro|Juan Carlos Navarro]] '08 (93% similar)
+- [[luther-head|Luther Head]] '07 (92% similar)
+
+**Career shape:** Charted 11 seasons (2006-07–2016-17). Entered as a Playmaking + Steals profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

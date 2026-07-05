@@ -36,6 +36,31 @@ Closest career shapes in the era-normalized vector space:
 - [[jabari-walker|Jabari Walker]] — cosine 0.74
 - [[jabari-smith|Jabari Smith]] — cosine 0.73
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 16.0 pts · 10.0 reb · 3.2 ast · 2.1 stl per 100 (2024-25).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.4σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.0σ)
+
+**Comparables:**
+
+- [[ben-davis|Ben Davis]] '97 (83% similar)
+- [[tosan-evbuomwan|Tosan Evbuomwan]] '24 (81% similar)
+- [[anthony-bennett|Anthony Bennett]] '16 (76% similar)
+- [[keita-bates-diop|Keita Bates-Diop]] '20 (75% similar)
+- [[jabari-walker|Jabari Walker]] '24 (74% similar)
+- [[jabari-smith|Jabari Smith]] '04 (73% similar)
+
+**Career shape:** Charted 3 seasons (2023-24–2025-26). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

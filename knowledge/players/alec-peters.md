@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[pat-garrity|Pat Garrity]] — cosine 0.87
 - [[james-jones|James Jones]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** PF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 17.0 pts · 7.7 reb · 2.5 ast · 0.4 stl per 100 (2017-18).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.9σ vs era)
+- Rarely turns the ball over (−1.8σ vs era)
+- Strong net on-court impact (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.8σ)
+- Finishing efficiency well below era (−1.1σ)
+
+**Comparables:**
+
+- [[chris-youngblood|Chris Youngblood]] '26 (91% similar)
+- [[sam-hauser|Sam Hauser]] '22 (89% similar)
+- [[max-strus|Max Strus]] '21 (89% similar)
+- [[matt-bullard|Matt Bullard]] '01 (87% similar)
+- [[pat-garrity|Pat Garrity]] '02 (87% similar)
+- [[james-jones|James Jones]] '14 (86% similar)
+
+**Career shape:** Charted 1 season (2017-18). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

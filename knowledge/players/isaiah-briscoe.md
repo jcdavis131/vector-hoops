@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[semaj-christon|Semaj Christon]] — cosine 0.80
 - [[ryan-arcidiacono|Ryan Arcidiacono]] — cosine 0.78
 
+## Scouting report
+
+**Play style:** PG · Three-Point Accuracy (Low Turnovers). Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 11.7 pts · 6.3 reb · 7.5 ast · 0.9 stl per 100 (2018-19).
+
+**Strengths:**
+
+- High-volume table-setter (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.6σ)
+- Scoring load well below era (−1.4σ)
+
+**Comparables:**
+
+- [[nate-wolters|Nate Wolters]] '15 (84% similar)
+- [[kam-jones|Kam Jones]] '26 (83% similar)
+- [[luke-walton|Luke Walton]] '12 (83% similar)
+- [[julyan-stone|Julyan Stone]] '18 (81% similar)
+- [[semaj-christon|Semaj Christon]] '17 (80% similar)
+- [[ryan-arcidiacono|Ryan Arcidiacono]] '24 (78% similar)
+
+**Career shape:** Charted 1 season (2018-19). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

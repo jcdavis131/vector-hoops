@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[omar-cook|Omar Cook]] — cosine 0.82
 - [[erik-daniels|Erik Daniels]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 15.5 pts · 8.7 reb · 6.2 ast · 2.8 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.8σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−3.2σ)
+- On-court net impact well below era (−1.9σ)
+
+**Comparables:**
+
+- [[chris-garner|Chris Garner]] '98 (85% similar)
+- [[jahmai-mashack|Jahmai Mashack]] '26 (84% similar)
+- [[jarrett-culver|Jarrett Culver]] '22 (82% similar)
+- [[daniel-hamilton|Daniel Hamilton]] '19 (82% similar)
+- [[omar-cook|Omar Cook]] '04 (82% similar)
+- [[erik-daniels|Erik Daniels]] '05 (81% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

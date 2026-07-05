@@ -36,6 +36,33 @@ Closest career shapes in the era-normalized vector space:
 - [[tiago-splitter|Tiago Splitter]] — cosine 0.82
 - [[greg-monroe|Greg Monroe]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass + Defensive Glass. Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 20.0 pts · 13.8 reb · 5.5 ast · 2.6 stl per 100 (2023-24).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.9σ vs era)
+- Relentless on the offensive glass (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.6σ)
+- Three-point volume well below era (−1.3σ)
+
+**Comparables:**
+
+- [[nene|Nene]] '19 (89% similar)
+- [[bam-adebayo|Bam Adebayo]] '22 (84% similar)
+- [[isaiah-hartenstein|Isaiah Hartenstein]] '26 (84% similar)
+- [[ausar-thompson|Ausar Thompson]] '26 (82% similar)
+- [[tiago-splitter|Tiago Splitter]] '12 (82% similar)
+- [[greg-monroe|Greg Monroe]] '18 (82% similar)
+
+**Career shape:** Charted 3 seasons (2023-24–2025-26). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/sf|SF]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[mateen-cleaves|Mateen Cleaves]] — cosine 0.87
 - [[cory-carr|Cory Carr]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** SG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 17.1 pts · 4.7 reb · 6.6 ast · 1.1 stl per 100 (1998-99).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.0σ)
+- Turnover rate well above era (+1.5σ)
+
+**Comparables:**
+
+- [[jonny-flynn|Jonny Flynn]] '11 (91% similar)
+- [[nolan-smith|Nolan Smith]] '13 (90% similar)
+- [[bub-carrington|Bub Carrington]] '26 (88% similar)
+- [[jeremy-pargo|Jeremy Pargo]] '12 (88% similar)
+- [[mateen-cleaves|Mateen Cleaves]] '02 (87% similar)
+- [[cory-carr|Cory Carr]] '99 (87% similar)
+
+**Career shape:** Charted 1 season (1998-99). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

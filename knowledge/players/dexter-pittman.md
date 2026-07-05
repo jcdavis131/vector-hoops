@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[kosta-koufos|Kosta Koufos]] — cosine 0.89
 - [[buck-williams|Buck Williams]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 17.6 pts · 11.8 reb · 1.5 ast · 1.3 stl per 100 (2011-12).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.5σ)
+- Three-point volume well below era (−1.1σ)
+
+**Comparables:**
+
+- [[anzejs-pasecniks|Anžejs Pasečņiks]] '20 (93% similar)
+- [[johnathan-williams|Johnathan Williams]] '19 (93% similar)
+- [[tristan-thompson|Tristan Thompson]] '25 (89% similar)
+- [[steven-adams|Steven Adams]] '23 (89% similar)
+- [[kosta-koufos|Kosta Koufos]] '19 (89% similar)
+- [[buck-williams|Buck Williams]] '97 (88% similar)
+
+**Career shape:** Charted 1 season (2011-12). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

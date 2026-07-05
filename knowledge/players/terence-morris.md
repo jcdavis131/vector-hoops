@@ -36,6 +36,34 @@ Closest career shapes in the era-normalized vector space:
 - [[deng-adel|Deng Adel]] — cosine 0.81
 - [[harvey-grant|Harvey Grant]] — cosine 0.80
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 9.6 pts · 10.4 reb · 1.1 ast · 1.6 stl per 100 (2005-06).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+2.3σ vs era)
+- Rarely turns the ball over (−1.1σ vs era)
+- Strong presence on the defensive glass (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.8σ)
+- Rim pressure (free-throw generation) well below era (−1.7σ)
+
+**Comparables:**
+
+- [[jaron-blossomgame|Jaron Blossomgame]] '19 (88% similar)
+- [[joe-kleine|Joe Kleine]] '97 (86% similar)
+- [[gary-clark|Gary Clark]] '19 (86% similar)
+- [[malik-allen|Malik Allen]] '11 (82% similar)
+- [[deng-adel|Deng Adel]] '19 (81% similar)
+- [[harvey-grant|Harvey Grant]] '97 (80% similar)
+
+**Career shape:** Charted 3 seasons (2001-02–2005-06). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[adrian-caldwell|Adrian Caldwell]] — cosine 0.79
 - [[nigel-hayes-davis|Nigel Hayes-Davis]] — cosine 0.77
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 15.6 pts · 14.2 reb · 1.9 ast · 1.3 stl per 100 (2016-17).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−4.0σ)
+- On-court net impact well below era (−2.9σ)
+
+**Comparables:**
+
+- [[carl-herrera|Carl Herrera]] '99 (87% similar)
+- [[jared-reiner|Jared Reiner]] '07 (81% similar)
+- [[eric-montross|Eric Montross]] '97 (80% similar)
+- [[mitch-mcgary|Mitch McGary]] '16 (79% similar)
+- [[adrian-caldwell|Adrian Caldwell]] '97 (79% similar)
+- [[nigel-hayes-davis|Nigel Hayes-Davis]] '26 (77% similar)
+
+**Career shape:** Charted 1 season (2016-17). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

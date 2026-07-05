@@ -40,6 +40,34 @@ Closest career shapes in the era-normalized vector space:
 - [[james-johnson|James Johnson]] — cosine 0.76
 - [[jerome-james|Jerome James]] — cosine 0.76
 
+## Scouting report
+
+**Play style:** SF · Defensive Glass + Rim Pressure (Fts). Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 24.6 pts · 9.1 reb · 3.9 ast · 2.4 blk per 100 (2004-05).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+1.2σ vs era)
+- Active hands, disrupts passing lanes (+1.2σ vs era)
+- Elite rim protection (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.0σ)
+- Free-throw touch well below era (−1.0σ)
+
+**Comparables:**
+
+- [[david-harrison|David Harrison]] '07 (86% similar)
+- [[priest-lauderdale|Priest Lauderdale]] '97 (78% similar)
+- [[patrick-o-bryant|Patrick O'Bryant]] '08 (78% similar)
+- [[josh-smith|Josh Smith]] '10 (77% similar)
+- [[james-johnson|James Johnson]] '13 (76% similar)
+- [[jerome-james|Jerome James]] '06 (76% similar)
+
+**Career shape:** Charted 7 seasons (2000-01–2008-09). Entered as a Rim Protection + Offensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -37,6 +37,33 @@ Closest career shapes in the era-normalized vector space:
 - [[yi-jianlian|Yi Jianlian]] — cosine 0.74
 - [[devin-green|Devin Green]] — cosine 0.73
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 15.4 pts · 12.6 reb · 0.0 ast · 2.7 stl per 100 (2015-16).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.9σ vs era)
+- Reliable touch from the free-throw line (+1.3σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.3σ)
+- Finishing efficiency well below era (−2.2σ)
+
+**Comparables:**
+
+- [[omari-spellman|Omari Spellman]] '19 (79% similar)
+- [[olivier-maxence-prosper|Olivier-Maxence Prosper]] '25 (76% similar)
+- [[lari-ketner|Lari Ketner]] '00 (76% similar)
+- [[mirsad-turkcan|Mirsad Turkcan]] '00 (74% similar)
+- [[yi-jianlian|Yi Jianlian]] '12 (74% similar)
+- [[devin-green|Devin Green]] '06 (73% similar)
+
+**Career shape:** Charted 4 seasons (2013-14–2016-17). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -42,6 +42,34 @@ Closest career shapes in the era-normalized vector space:
 - [[willie-cauley-stein|Willie Cauley-Stein]] — cosine 0.92
 - [[brian-skinner|Brian Skinner]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 2.4 pts · 15.3 reb · 1.4 ast · 4.2 blk per 100 (2012-13).
+
+**Strengths:**
+
+- Elite rim protection (+3.0σ vs era)
+- Strong presence on the defensive glass (+2.0σ vs era)
+- Rarely turns the ball over (−1.5σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−3.2σ)
+- Free-throw touch well below era (−2.9σ)
+
+**Comparables:**
+
+- [[josh-boone|Josh Boone]] '10 (94% similar)
+- [[eric-moreland|Eric Moreland]] '18 (92% similar)
+- [[ervin-johnson|Ervin Johnson]] '05 (92% similar)
+- [[will-perdue|Will Perdue]] '99 (92% similar)
+- [[willie-cauley-stein|Willie Cauley-Stein]] '20 (92% similar)
+- [[brian-skinner|Brian Skinner]] '08 (92% similar)
+
+**Career shape:** Charted 9 seasons (2004-05–2012-13). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

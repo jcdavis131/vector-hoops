@@ -34,6 +34,31 @@ Closest career shapes in the era-normalized vector space:
 - [[jaylen-wells|Jaylen Wells]] — cosine 0.71
 - [[jared-mccain|Jared McCain]] — cosine 0.71
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 23.5 pts · 5.2 reb · 2.0 ast · 0.9 stl per 100 (2008-09).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.7σ)
+
+**Comparables:**
+
+- [[dillon-brooks|Dillon Brooks]] '22 (79% similar)
+- [[mindaugas-kuzminskas|Mindaugas Kuzminskas]] '17 (75% similar)
+- [[steven-smith|Steven Smith]] '99 (73% similar)
+- [[frank-jackson|Frank Jackson]] '22 (72% similar)
+- [[jaylen-wells|Jaylen Wells]] '25 (71% similar)
+- [[jared-mccain|Jared McCain]] '25 (71% similar)
+
+**Career shape:** Charted 1 season (2008-09). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -35,6 +35,34 @@ Closest career shapes in the era-normalized vector space:
 - [[keith-askins|Keith Askins]] — cosine 0.86
 - [[royce-o-neale|Royce O'Neale]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 14.8 pts · 9.4 reb · 4.0 ast · 1.5 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+1.3σ vs era)
+- Strong net on-court impact (+1.1σ vs era)
+- Rarely turns the ball over (−1.0σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.2σ)
+- Shot volume well below era (−1.0σ)
+
+**Comparables:**
+
+- [[tyrone-corbin|Tyrone Corbin]] '00 (93% similar)
+- [[sterling-brown|Sterling Brown]] '22 (89% similar)
+- [[dan-majerle|Dan Majerle]] '02 (89% similar)
+- [[jae-crowder|Jae Crowder]] '22 (87% similar)
+- [[keith-askins|Keith Askins]] '99 (86% similar)
+- [[royce-o-neale|Royce O'Neale]] '21 (86% similar)
+
+**Career shape:** Charted 2 seasons (2024-25–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

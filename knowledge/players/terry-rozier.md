@@ -43,6 +43,32 @@ Closest career shapes in the era-normalized vector space:
 - [[mike-james|Mike James]] — cosine 0.89
 - [[bogdan-bogdanovic|Bogdan Bogdanović]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PG · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 11.0 pts · 9.6 reb · 5.6 ast · 0.9 stl per 100 (2015-16).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.6σ)
+- Scoring load well below era (−1.4σ)
+
+**Comparables:**
+
+- [[will-barton|Will Barton]] '13 (92% similar)
+- [[john-lucas-iii|John Lucas III]] '12 (91% similar)
+- [[john-starks|John Starks]] '00 (91% similar)
+- [[joe-crispin|Joe Crispin]] '02 (90% similar)
+- [[mike-james|Mike James]] '06 (89% similar)
+- [[bogdan-bogdanovic|Bogdan Bogdanović]] '21 (88% similar)
+
+**Career shape:** Charted 10 seasons (2015-16–2024-25). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[gerald-wilkins|Gerald Wilkins]] — cosine 0.83
 - [[austin-rivers|Austin Rivers]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 15.1 pts · 2.8 reb · 4.4 ast · 1.8 stl per 100 (1996-97).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.7σ)
+- Defensive rebounding well below era (−1.5σ)
+
+**Comparables:**
+
+- [[lionel-chalmers|Lionel Chalmers]] '05 (90% similar)
+- [[deshawn-stevenson|DeShawn Stevenson]] '12 (86% similar)
+- [[kyle-guy|Kyle Guy]] '22 (85% similar)
+- [[malachi-flynn|Malachi Flynn]] '22 (83% similar)
+- [[gerald-wilkins|Gerald Wilkins]] '98 (83% similar)
+- [[austin-rivers|Austin Rivers]] '19 (82% similar)
+
+**Career shape:** Charted 1 season (1996-97). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

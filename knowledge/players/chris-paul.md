@@ -53,6 +53,33 @@ Closest career shapes in the era-normalized vector space:
 - [[kyle-lowry|Kyle Lowry]] — cosine 0.89
 - [[jrue-holiday|Jrue Holiday]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 31.8 pts · 7.7 reb · 15.4 ast · 3.9 stl per 100 (2008-09).
+
+**Strengths:**
+
+- High-volume table-setter (+4.0σ vs era)
+- Active hands, disrupts passing lanes (+4.0σ vs era)
+- Featured, high-usage scoring role (+2.1σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.5σ)
+
+**Comparables:**
+
+- [[terrell-brandon|Terrell Brandon]] '02 (93% similar)
+- [[john-stockton|John Stockton]] '01 (93% similar)
+- [[mike-conley|Mike Conley]] '13 (90% similar)
+- [[tyrese-haliburton|Tyrese Haliburton]] '23 (90% similar)
+- [[kyle-lowry|Kyle Lowry]] '16 (89% similar)
+- [[jrue-holiday|Jrue Holiday]] '16 (89% similar)
+
+**Career shape:** Charted 20 seasons (2005-06–2024-25). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

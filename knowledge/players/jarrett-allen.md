@@ -42,6 +42,34 @@ Closest career shapes in the era-normalized vector space:
 - [[onyeka-okongwu|Onyeka Okongwu]] — cosine 0.94
 - [[ante-zizic|Ante Zizic]] — cosine 0.94
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 22.7 pts · 16.5 reb · 3.3 ast · 1.6 stl per 100 (2024-25).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+3.2σ vs era)
+- Strong presence on the defensive glass (+2.1σ vs era)
+- Strong net on-court impact (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.9σ)
+- Three-point volume well below era (−1.9σ)
+
+**Comparables:**
+
+- [[ivica-zubac|Ivica Zubac]] '20 (96% similar)
+- [[rudy-gobert|Rudy Gobert]] '21 (96% similar)
+- [[jalen-duren|Jalen Duren]] '26 (95% similar)
+- [[derrick-favors|Derrick Favors]] '21 (94% similar)
+- [[onyeka-okongwu|Onyeka Okongwu]] '22 (94% similar)
+- [[ante-zizic|Ante Zizic]] '18 (94% similar)
+
+**Career shape:** Charted 9 seasons (2017-18–2025-26). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

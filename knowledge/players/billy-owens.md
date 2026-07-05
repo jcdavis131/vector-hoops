@@ -38,6 +38,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jacob-toppin|Jacob Toppin]] — cosine 0.75
 - [[johnny-o-bryant-iii|Johnny O'Bryant III]] — cosine 0.74
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 12.1 pts · 12.5 reb · 3.3 ast · 1.9 stl per 100 (2000-01).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.0σ)
+- Rim pressure (free-throw generation) well below era (−1.1σ)
+
+**Comparables:**
+
+- [[erik-daniels|Erik Daniels]] '05 (84% similar)
+- [[daniel-hamilton|Daniel Hamilton]] '19 (79% similar)
+- [[ivano-newbill|Ivano Newbill]] '98 (79% similar)
+- [[art-long|Art Long]] '03 (77% similar)
+- [[jacob-toppin|Jacob Toppin]] '25 (75% similar)
+- [[johnny-o-bryant-iii|Johnny O'Bryant III]] '16 (74% similar)
+
+**Career shape:** Charted 5 seasons (1996-97–2000-01). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

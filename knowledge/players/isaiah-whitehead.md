@@ -34,6 +34,31 @@ Closest career shapes in the era-normalized vector space:
 - [[gal-mekel|Gal Mekel]] — cosine 0.84
 - [[nicolas-laprovittola|Nicolas Laprovittola]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 15.6 pts · 5.3 reb · 5.5 ast · 1.2 stl per 100 (2016-17).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.5σ)
+
+**Comparables:**
+
+- [[josh-selby|Josh Selby]] '12 (92% similar)
+- [[marquis-teague|Marquis Teague]] '14 (88% similar)
+- [[vasilije-micic|Vasilije Micic]] '25 (86% similar)
+- [[mateen-cleaves|Mateen Cleaves]] '02 (85% similar)
+- [[gal-mekel|Gal Mekel]] '14 (84% similar)
+- [[nicolas-laprovittola|Nicolas Laprovittola]] '17 (83% similar)
+
+**Career shape:** Charted 1 season (2016-17). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

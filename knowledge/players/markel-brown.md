@@ -35,6 +35,31 @@ Closest career shapes in the era-normalized vector space:
 - [[fred-jones|Fred Jones]] — cosine 0.84
 - [[bryant-stith|Bryant Stith]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 13.8 pts · 6.8 reb · 2.5 ast · 2.0 stl per 100 (2014-15).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.1σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.2σ)
+
+**Comparables:**
+
+- [[cam-reddish|Cam Reddish]] '25 (92% similar)
+- [[kim-english|Kim English]] '13 (92% similar)
+- [[damien-wilkins|Damien Wilkins]] '18 (87% similar)
+- [[garrett-temple|Garrett Temple]] '11 (86% similar)
+- [[fred-jones|Fred Jones]] '03 (84% similar)
+- [[bryant-stith|Bryant Stith]] '98 (83% similar)
+
+**Career shape:** Charted 2 seasons (2014-15–2015-16). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

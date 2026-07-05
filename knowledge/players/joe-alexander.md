@@ -34,6 +34,31 @@ Closest career shapes in the era-normalized vector space:
 - [[sharone-wright|Sharone Wright]] — cosine 0.68
 - [[loren-meyer|Loren Meyer]] — cosine 0.64
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 19.1 pts · 7.9 reb · 2.9 ast · 2.0 blk per 100 (2008-09).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[jonathan-bender|Jonathan Bender]] '04 (82% similar)
+- [[randell-jackson|Randell Jackson]] '99 (76% similar)
+- [[aj-hammons|AJ Hammons]] '17 (70% similar)
+- [[ndudi-ebi|Ndudi Ebi]] '04 (68% similar)
+- [[sharone-wright|Sharone Wright]] '97 (68% similar)
+- [[loren-meyer|Loren Meyer]] '97 (64% similar)
+
+**Career shape:** Charted 1 season (2008-09). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

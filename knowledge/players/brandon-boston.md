@@ -37,6 +37,32 @@ Closest career shapes in the era-normalized vector space:
 - [[corey-benjamin|Corey Benjamin]] — cosine 0.77
 - [[will-riley|Will Riley]] — cosine 0.76
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 23.1 pts · 7.2 reb · 1.8 ast · 1.5 stl per 100 (2023-24).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+1.2σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.9σ)
+- Table-setting role well below era (−1.2σ)
+
+**Comparables:**
+
+- [[dion-glover|Dion Glover]] '00 (90% similar)
+- [[shannon-brown|Shannon Brown]] '08 (86% similar)
+- [[ed-gray|Ed Gray]] '99 (84% similar)
+- [[dajuan-wagner|Dajuan Wagner]] '03 (78% similar)
+- [[corey-benjamin|Corey Benjamin]] '00 (77% similar)
+- [[will-riley|Will Riley]] '26 (76% similar)
+
+**Career shape:** Charted 4 seasons (2021-22–2024-25). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

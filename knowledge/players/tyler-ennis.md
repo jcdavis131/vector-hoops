@@ -37,6 +37,33 @@ Closest career shapes in the era-normalized vector space:
 - [[sergio-rodriguez|Sergio Rodriguez]] — cosine 0.92
 - [[earl-watson|Earl Watson]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 14.5 pts · 4.2 reb · 8.7 ast · 2.2 stl per 100 (2014-15).
+
+**Strengths:**
+
+- High-volume table-setter (+1.6σ vs era)
+- Active hands, disrupts passing lanes (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.3σ)
+- Rim pressure (free-throw generation) well below era (−1.5σ)
+
+**Comparables:**
+
+- [[elliot-perry|Elliot Perry]] '99 (94% similar)
+- [[kendall-marshall|Kendall Marshall]] '14 (93% similar)
+- [[norris-cole|Norris Cole]] '14 (92% similar)
+- [[anthony-carter|Anthony Carter]] '03 (92% similar)
+- [[sergio-rodriguez|Sergio Rodriguez]] '09 (92% similar)
+- [[earl-watson|Earl Watson]] '14 (92% similar)
+
+**Career shape:** Charted 4 seasons (2014-15–2017-18). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

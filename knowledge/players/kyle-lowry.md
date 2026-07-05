@@ -51,6 +51,33 @@ Closest career shapes in the era-normalized vector space:
 - [[chris-paul|Chris Paul]] — cosine 0.89
 - [[brandon-jennings|Brandon Jennings]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 29.3 pts · 6.6 reb · 8.9 ast · 2.8 stl per 100 (2015-16).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.1σ vs era)
+- Draws contact, gets to the line often (+1.9σ vs era)
+- High-volume table-setter (+1.7σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.3σ)
+
+**Comparables:**
+
+- [[mike-conley|Mike Conley]] '13 (93% similar)
+- [[devin-harris|Devin Harris]] '09 (92% similar)
+- [[jeff-teague|Jeff Teague]] '15 (90% similar)
+- [[deron-williams|Deron Williams]] '12 (89% similar)
+- [[chris-paul|Chris Paul]] '09 (89% similar)
+- [[brandon-jennings|Brandon Jennings]] '15 (88% similar)
+
+**Career shape:** Charted 18 seasons (2007-08–2024-25). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

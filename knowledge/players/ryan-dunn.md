@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[yuta-watanabe|Yuta Watanabe]] — cosine 0.83
 - [[josh-huestis|Josh Huestis]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 17.7 pts · 9.3 reb · 2.0 ast · 1.5 stl per 100 (2024-25).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.1σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.2σ)
+- Table-setting role well below era (−1.1σ)
+
+**Comparables:**
+
+- [[haywood-highsmith|Haywood Highsmith]] '22 (89% similar)
+- [[kenrich-williams|Kenrich Williams]] '20 (86% similar)
+- [[alfonzo-mckinnie|Alfonzo McKinnie]] '22 (86% similar)
+- [[alex-poythress|Alex Poythress]] '18 (84% similar)
+- [[yuta-watanabe|Yuta Watanabe]] '20 (83% similar)
+- [[josh-huestis|Josh Huestis]] '18 (83% similar)
+
+**Career shape:** Charted 2 seasons (2024-25–2025-26). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

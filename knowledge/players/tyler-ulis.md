@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[sebastian-telfair|Sebastian Telfair]] — cosine 0.91
 - [[tierre-brown|Tierre Brown]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 15.9 pts · 3.7 reb · 8.9 ast · 2.0 stl per 100 (2017-18).
+
+**Strengths:**
+
+- High-volume table-setter (+1.7σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.3σ)
+- On-court net impact well below era (−1.2σ)
+
+**Comparables:**
+
+- [[roko-ukic|Roko Ukic]] '09 (94% similar)
+- [[andrew-nembhard|Andrew Nembhard]] '26 (92% similar)
+- [[robert-pack|Robert Pack]] '97 (92% similar)
+- [[tyler-ennis|Tyler Ennis]] '15 (92% similar)
+- [[sebastian-telfair|Sebastian Telfair]] '10 (91% similar)
+- [[tierre-brown|Tierre Brown]] '02 (91% similar)
+
+**Career shape:** Charted 2 seasons (2016-17–2017-18). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

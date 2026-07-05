@@ -43,6 +43,32 @@ Closest career shapes in the era-normalized vector space:
 - [[ronnie-brewer|Ronnie Brewer]] — cosine 0.75
 - [[antonio-burks|Antonio Burks]] — cosine 0.75
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 22.9 pts · 7.0 reb · 5.6 ast · 2.5 stl per 100 (2003-04).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.3σ vs era)
+- Efficient finisher inside the arc (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.1σ)
+
+**Comparables:**
+
+- [[corey-brewer|Corey Brewer]] '19 (82% similar)
+- [[randy-brown|Randy Brown]] '03 (78% similar)
+- [[erick-barkley|Erick Barkley]] '02 (78% similar)
+- [[herbert-jones|Herbert Jones]] '22 (76% similar)
+- [[ronnie-brewer|Ronnie Brewer]] '14 (75% similar)
+- [[antonio-burks|Antonio Burks]] '06 (75% similar)
+
+**Career shape:** Charted 10 seasons (2003-04–2012-13). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

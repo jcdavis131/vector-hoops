@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[curtis-borchardt|Curtis Borchardt]] — cosine 0.90
 - [[stojko-vrankovic|Stojko Vrankovic]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PF · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 9.7 pts · 12.9 reb · 3.2 ast · 3.2 blk per 100 (2025-26).
+
+**Strengths:**
+
+- Elite rim protection (+2.7σ vs era)
+- Strong presence on the defensive glass (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.9σ)
+- On-court net impact well below era (−2.4σ)
+
+**Comparables:**
+
+- [[norvel-pelle|Norvel Pelle]] '20 (92% similar)
+- [[jordan-mickey|Jordan Mickey]] '17 (92% similar)
+- [[brett-szabo|Brett Szabo]] '97 (91% similar)
+- [[ibou-badji|Ibou Badji]] '24 (90% similar)
+- [[curtis-borchardt|Curtis Borchardt]] '05 (90% similar)
+- [[stojko-vrankovic|Stojko Vrankovic]] '97 (88% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

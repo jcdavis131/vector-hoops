@@ -39,6 +39,33 @@ Closest career shapes in the era-normalized vector space:
 - [[chet-holmgren|Chet Holmgren]] — cosine 0.83
 - [[pau-gasol|Pau Gasol]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 27.0 pts · 15.9 reb · 4.3 ast · 2.4 blk per 100 (1996-97).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+2.6σ vs era)
+- Strong net on-court impact (+1.7σ vs era)
+- Draws contact, gets to the line often (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.2σ)
+
+**Comparables:**
+
+- [[kevin-garnett|Kevin Garnett]] '04 (92% similar)
+- [[tim-duncan|Tim Duncan]] '04 (89% similar)
+- [[marc-gasol|Marc Gasol]] '16 (88% similar)
+- [[karl-anthony-towns|Karl-Anthony Towns]] '19 (84% similar)
+- [[chet-holmgren|Chet Holmgren]] '25 (83% similar)
+- [[pau-gasol|Pau Gasol]] '15 (83% similar)
+
+**Career shape:** Charted 6 seasons (1996-97–2002-03). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

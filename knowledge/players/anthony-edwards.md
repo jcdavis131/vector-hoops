@@ -39,6 +39,33 @@ Closest career shapes in the era-normalized vector space:
 - [[tracy-mcgrady|Tracy McGrady]] — cosine 0.92
 - [[bradley-beal|Bradley Beal]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** SG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 37.0 pts · 7.6 reb · 6.1 ast · 1.5 stl per 100 (2024-25).
+
+**Strengths:**
+
+- Featured, high-usage scoring role (+2.4σ vs era)
+- Heavy shot volume, focal scoring option (+2.3σ vs era)
+- Draws contact, gets to the line often (+2.0σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.5σ)
+
+**Comparables:**
+
+- [[kobe-bryant|Kobe Bryant]] '06 (97% similar)
+- [[donovan-mitchell|Donovan Mitchell]] '21 (97% similar)
+- [[paul-pierce|Paul Pierce]] '03 (94% similar)
+- [[jaylen-brown|Jaylen Brown]] '26 (93% similar)
+- [[tracy-mcgrady|Tracy McGrady]] '03 (92% similar)
+- [[bradley-beal|Bradley Beal]] '20 (92% similar)
+
+**Career shape:** Charted 6 seasons (2020-21–2025-26). Consistent Scoring Volume + Shot Volume profile across his career.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

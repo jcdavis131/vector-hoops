@@ -40,6 +40,33 @@ Closest career shapes in the era-normalized vector space:
 - [[moses-brown|Moses Brown]] — cosine 0.93
 - [[brendan-haywood|Brendan Haywood]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 15.8 pts · 12.7 reb · 0.4 ast · 4.5 blk per 100 (2004-05).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+3.8σ vs era)
+- Elite rim protection (+3.0σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−3.0σ)
+- Three-point accuracy well below era (−1.3σ)
+
+**Comparables:**
+
+- [[etan-thomas|Etan Thomas]] '07 (96% similar)
+- [[erick-dampier|Erick Dampier]] '97 (94% similar)
+- [[alex-len|Alex Len]] '24 (94% similar)
+- [[jamaal-magloire|Jamaal Magloire]] '08 (94% similar)
+- [[moses-brown|Moses Brown]] '23 (93% similar)
+- [[brendan-haywood|Brendan Haywood]] '15 (93% similar)
+
+**Career shape:** Charted 7 seasons (1998-99–2004-05). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

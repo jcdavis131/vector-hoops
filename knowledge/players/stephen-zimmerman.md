@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[travis-knight|Travis Knight]] — cosine 0.87
 - [[jordan-mickey|Jordan Mickey]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 10.6 pts · 16.2 reb · 1.8 ast · 2.3 blk per 100 (2016-17).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+1.7σ vs era)
+- Strong presence on the defensive glass (+1.6σ vs era)
+- Elite rim protection (+1.6σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.7σ)
+- Three-point accuracy well below era (−2.2σ)
+
+**Comparables:**
+
+- [[boniface-ndong|Boniface Ndong]] '06 (90% similar)
+- [[andrew-lang|Andrew Lang]] '00 (89% similar)
+- [[earl-clark|Earl Clark]] '12 (87% similar)
+- [[michael-stewart|Michael Stewart]] '04 (87% similar)
+- [[travis-knight|Travis Knight]] '01 (87% similar)
+- [[jordan-mickey|Jordan Mickey]] '17 (86% similar)
+
+**Career shape:** Charted 1 season (2016-17). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

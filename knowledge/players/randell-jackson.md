@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[joe-alexander|Joe Alexander]] — cosine 0.76
 - [[uros-slokar|Uros Slokar]] — cosine 0.76
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 20.7 pts · 9.9 reb · 1.5 ast · 2.0 blk per 100 (1998-99).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.6σ)
+- Turnover rate well above era (+1.5σ)
+
+**Comparables:**
+
+- [[sharone-wright|Sharone Wright]] '97 (84% similar)
+- [[derrick-caracter|Derrick Caracter]] '11 (82% similar)
+- [[vin-baker|Vin Baker]] '05 (77% similar)
+- [[maurice-taylor|Maurice Taylor]] '99 (76% similar)
+- [[joe-alexander|Joe Alexander]] '09 (76% similar)
+- [[uros-slokar|Uros Slokar]] '07 (76% similar)
+
+**Career shape:** Charted 1 season (1998-99). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

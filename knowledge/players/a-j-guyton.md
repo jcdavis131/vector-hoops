@@ -35,6 +35,33 @@ Closest career shapes in the era-normalized vector space:
 - [[bobby-brown|Bobby Brown]] — cosine 0.90
 - [[terry-dehere|Terry Dehere]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** PG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 20.9 pts · 3.7 reb · 6.9 ast · 0.9 stl per 100 (2001-02).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.6σ vs era)
+- Heavy shot volume, focal scoring option (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.5σ)
+- Finishing efficiency well below era (−1.4σ)
+
+**Comparables:**
+
+- [[nick-smith-jr|Nick Smith Jr.]] '25 (92% similar)
+- [[randy-foye|Randy Foye]] '12 (92% similar)
+- [[kareem-rush|Kareem Rush]] '09 (91% similar)
+- [[juan-carlos-navarro|Juan Carlos Navarro]] '08 (91% similar)
+- [[bobby-brown|Bobby Brown]] '18 (90% similar)
+- [[terry-dehere|Terry Dehere]] '97 (89% similar)
+
+**Career shape:** Charted 2 seasons (2000-01–2001-02). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

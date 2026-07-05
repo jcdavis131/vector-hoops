@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[james-young|James Young]] — cosine 0.88
 - [[semaj-christon|Semaj Christon]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 6.5 pts · 5.8 reb · 2.3 ast · 1.3 stl per 100 (2006-07).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−3.2σ)
+- Finishing efficiency well below era (−2.5σ)
+
+**Comparables:**
+
+- [[britton-johnsen|Britton Johnsen]] '04 (90% similar)
+- [[justin-minaya|Justin Minaya]] '25 (90% similar)
+- [[ryan-arcidiacono|Ryan Arcidiacono]] '24 (89% similar)
+- [[jacob-evans|Jacob Evans]] '19 (88% similar)
+- [[james-young|James Young]] '16 (88% similar)
+- [[semaj-christon|Semaj Christon]] '17 (88% similar)
+
+**Career shape:** Charted 1 season (2006-07). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

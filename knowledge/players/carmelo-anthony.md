@@ -51,6 +51,33 @@ Closest career shapes in the era-normalized vector space:
 - [[anthony-edwards|Anthony Edwards]] — cosine 0.91
 - [[kevin-durant|Kevin Durant]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** PF · Scoring Volume + Shot Volume. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 40.9 pts · 9.8 reb · 3.6 ast · 1.1 stl per 100 (2012-13).
+
+**Strengths:**
+
+- Featured, high-usage scoring role (+3.8σ vs era)
+- Heavy shot volume, focal scoring option (+3.4σ vs era)
+- Draws contact, gets to the line often (+2.9σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[kobe-bryant|Kobe Bryant]] '06 (94% similar)
+- [[franz-wagner|Franz Wagner]] '25 (93% similar)
+- [[michael-jordan|Michael Jordan]] '97 (92% similar)
+- [[jaylen-brown|Jaylen Brown]] '26 (91% similar)
+- [[anthony-edwards|Anthony Edwards]] '25 (91% similar)
+- [[kevin-durant|Kevin Durant]] '14 (90% similar)
+
+**Career shape:** Charted 18 seasons (2003-04–2021-22). Consistent Scoring Volume + Shot Volume profile across his career.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

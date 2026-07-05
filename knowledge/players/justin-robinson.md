@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[charles-r-jones|Charles R. Jones]] — cosine 0.87
 - [[pj-dozier|PJ Dozier]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** PG · Offensive Glass (Low On-Court Impact). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 11.9 pts · 3.2 reb · 4.9 ast · 1.4 stl per 100 (2021-22).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.7σ)
+- Free-throw touch well below era (−2.0σ)
+
+**Comparables:**
+
+- [[keljin-blevins|Keljin Blevins]] '22 (92% similar)
+- [[jacob-evans|Jacob Evans]] '19 (90% similar)
+- [[jamison-brewer|Jamison Brewer]] '05 (89% similar)
+- [[britton-johnsen|Britton Johnsen]] '04 (88% similar)
+- [[charles-r-jones|Charles R. Jones]] '00 (87% similar)
+- [[pj-dozier|PJ Dozier]] '22 (87% similar)
+
+**Career shape:** Charted 1 season (2021-22). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

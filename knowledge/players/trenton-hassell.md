@@ -42,6 +42,33 @@ Closest career shapes in the era-normalized vector space:
 - [[mickael-gelabale|Mickael Gelabale]] — cosine 0.88
 - [[quinton-ross|Quinton Ross]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 9.4 pts · 6.0 reb · 3.1 ast · 1.3 blk per 100 (2003-04).
+
+**Strengths:**
+
+- Rarely turns the ball over (−2.1σ vs era)
+- Strong net on-court impact (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.6σ)
+- Scoring load well below era (−1.6σ)
+
+**Comparables:**
+
+- [[michael-curry|Michael Curry]] '05 (93% similar)
+- [[ira-newble|Ira Newble]] '01 (92% similar)
+- [[doug-west|Doug West]] '98 (90% similar)
+- [[lance-thomas|Lance Thomas]] '13 (88% similar)
+- [[mickael-gelabale|Mickael Gelabale]] '13 (88% similar)
+- [[quinton-ross|Quinton Ross]] '11 (87% similar)
+
+**Career shape:** Charted 9 seasons (2001-02–2009-10). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -42,6 +42,34 @@ Closest career shapes in the era-normalized vector space:
 - [[bostjan-nachbar|Bostjan Nachbar]] — cosine 0.76
 - [[larry-robinson|Larry Robinson]] — cosine 0.76
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 21.7 pts · 11.9 reb · 3.0 ast · 1.1 stl per 100 (2005-06).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+2.1σ vs era)
+- Knockdown three-point shooter (+1.5σ vs era)
+- Reliable touch from the free-throw line (+1.3σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−3.1σ)
+- Turnover rate well above era (+2.6σ)
+
+**Comparables:**
+
+- [[james-posey|James Posey]] '11 (83% similar)
+- [[austin-daye|Austin Daye]] '14 (81% similar)
+- [[channing-frye|Channing Frye]] '19 (80% similar)
+- [[jarell-eddie|Jarell Eddie]] '16 (79% similar)
+- [[bostjan-nachbar|Bostjan Nachbar]] '04 (76% similar)
+- [[larry-robinson|Larry Robinson]] '01 (76% similar)
+
+**Career shape:** Charted 9 seasons (2005-06–2014-15). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

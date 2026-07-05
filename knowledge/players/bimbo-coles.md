@@ -41,6 +41,32 @@ Closest career shapes in the era-normalized vector space:
 - [[doug-overton|Doug Overton]] — cosine 0.89
 - [[elie-okobo|Elie Okobo]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PG · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 8.8 pts · 3.1 reb · 4.7 ast · 0.9 stl per 100 (2003-04).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.3σ)
+- Scoring load well below era (−1.7σ)
+
+**Comparables:**
+
+- [[pooh-jeter|Pooh Jeter]] '11 (92% similar)
+- [[jeff-mcinnis|Jeff McInnis]] '08 (91% similar)
+- [[kevin-pangos|Kevin Pangos]] '22 (91% similar)
+- [[donald-sloan|Donald Sloan]] '12 (89% similar)
+- [[doug-overton|Doug Overton]] '02 (89% similar)
+- [[elie-okobo|Elie Okobo]] '19 (88% similar)
+
+**Career shape:** Charted 8 seasons (1996-97–2003-04). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

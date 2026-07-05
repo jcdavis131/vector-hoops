@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jay-williams|Jay Williams]] — cosine 0.92
 - [[brooks-thompson|Brooks Thompson]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 18.6 pts · 3.9 reb · 5.3 ast · 2.0 stl per 100 (2001-02).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.2σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.8σ)
+- Defensive rebounding well below era (−1.3σ)
+
+**Comparables:**
+
+- [[vonteego-cummings|Vonteego Cummings]] '01 (92% similar)
+- [[khalid-reeves|Khalid Reeves]] '97 (92% similar)
+- [[sebastian-telfair|Sebastian Telfair]] '10 (92% similar)
+- [[william-avery|William Avery]] '00 (92% similar)
+- [[jay-williams|Jay Williams]] '03 (92% similar)
+- [[brooks-thompson|Brooks Thompson]] '98 (91% similar)
+
+**Career shape:** Charted 2 seasons (2001-02–2008-09). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

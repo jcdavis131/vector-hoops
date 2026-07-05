@@ -37,6 +37,34 @@ Closest career shapes in the era-normalized vector space:
 - [[mike-batiste|Mike Batiste]] — cosine 0.73
 - [[austin-daye|Austin Daye]] — cosine 0.73
 
+## Scouting report
+
+**Play style:** SF · Scoring Volume + Shot Volume. Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 28.4 pts · 10.0 reb · 1.2 ast · 2.8 stl per 100 (2020-21).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.3σ vs era)
+- Heavy shot volume, focal scoring option (+1.3σ vs era)
+- Featured, high-usage scoring role (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.5σ)
+- Table-setting role well below era (−1.2σ)
+
+**Comparables:**
+
+- [[lamond-murray|Lamond Murray]] '04 (87% similar)
+- [[brice-sensabaugh|Brice Sensabaugh]] '24 (82% similar)
+- [[markieff-morris|Markieff Morris]] '24 (81% similar)
+- [[rodney-white|Rodney White]] '03 (75% similar)
+- [[mike-batiste|Mike Batiste]] '03 (73% similar)
+- [[austin-daye|Austin Daye]] '14 (73% similar)
+
+**Career shape:** Charted 4 seasons (2020-21–2023-24). Consistent Scoring Volume + Shot Volume profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

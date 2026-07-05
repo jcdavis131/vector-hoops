@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jacob-gilyard|Jacob Gilyard]] — cosine 0.66
 - [[alex-ducas|Alex Ducas]] — cosine 0.64
 
+## Scouting report
+
+**Play style:** PF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 21.3 pts · 9.0 reb · 5.0 ast · 2.3 stl per 100 (2020-21).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+2.1σ vs era)
+- Active hands, disrupts passing lanes (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.4σ)
+
+**Comparables:**
+
+- [[willie-anderson|Willie Anderson]] '97 (72% similar)
+- [[rusty-larue|Rusty LaRue]] '99 (68% similar)
+- [[blue-edwards|Blue Edwards]] '99 (67% similar)
+- [[chris-mullin|Chris Mullin]] '00 (66% similar)
+- [[jacob-gilyard|Jacob Gilyard]] '24 (66% similar)
+- [[alex-ducas|Alex Ducas]] '25 (64% similar)
+
+**Career shape:** Charted 1 season (2020-21). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

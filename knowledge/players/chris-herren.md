@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jerome-allen|Jerome Allen]] — cosine 0.91
 - [[jaylen-adams|Jaylen Adams]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** PG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 10.2 pts · 2.6 reb · 6.9 ast · 1.7 stl per 100 (2000-01).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.3σ)
+- Defensive rebounding well below era (−1.7σ)
+
+**Comparables:**
+
+- [[donald-whiteside|Donald Whiteside]] '97 (95% similar)
+- [[chris-duhon|Chris Duhon]] '13 (95% similar)
+- [[steve-blake|Steve Blake]] '16 (93% similar)
+- [[lee-mayberry|Lee Mayberry]] '97 (93% similar)
+- [[jerome-allen|Jerome Allen]] '97 (91% similar)
+- [[jaylen-adams|Jaylen Adams]] '19 (90% similar)
+
+**Career shape:** Charted 2 seasons (1999-00–2000-01). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

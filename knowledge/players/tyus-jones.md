@@ -44,6 +44,34 @@ Closest career shapes in the era-normalized vector space:
 - [[muggsy-bogues|Muggsy Bogues]] — cosine 0.92
 - [[kenny-anderson|Kenny Anderson]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 13.9 pts · 4.4 reb · 7.8 ast · 3.2 stl per 100 (2017-18).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.7σ vs era)
+- High-volume table-setter (+1.3σ vs era)
+- Strong net on-court impact (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.1σ)
+- Defensive rebounding well below era (−1.0σ)
+
+**Comparables:**
+
+- [[alvin-williams|Alvin Williams]] '01 (96% similar)
+- [[anthony-johnson|Anthony Johnson]] '02 (93% similar)
+- [[jordan-mclaughlin|Jordan McLaughlin]] '24 (93% similar)
+- [[jason-hart|Jason Hart]] '09 (93% similar)
+- [[muggsy-bogues|Muggsy Bogues]] '97 (92% similar)
+- [[kenny-anderson|Kenny Anderson]] '97 (91% similar)
+
+**Career shape:** Charted 11 seasons (2015-16–2025-26). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

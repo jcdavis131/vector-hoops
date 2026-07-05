@@ -45,6 +45,32 @@ Closest career shapes in the era-normalized vector space:
 - [[gabe-vincent|Gabe Vincent]] — cosine 0.84
 - [[justin-edwards|Justin Edwards]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** PG · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 15.7 pts · 5.1 reb · 3.6 ast · 2.7 stl per 100 (2010-11).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.9σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.4σ)
+- Turnover rate well above era (+2.0σ)
+
+**Comparables:**
+
+- [[ian-clark|Ian Clark]] '15 (89% similar)
+- [[e-twaun-moore|E'Twaun Moore]] '12 (88% similar)
+- [[gary-harris|Gary Harris]] '25 (85% similar)
+- [[willie-green|Willie Green]] '04 (85% similar)
+- [[gabe-vincent|Gabe Vincent]] '26 (84% similar)
+- [[justin-edwards|Justin Edwards]] '26 (83% similar)
+
+**Career shape:** Charted 12 seasons (2010-11–2021-22). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

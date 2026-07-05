@@ -41,6 +41,33 @@ Closest career shapes in the era-normalized vector space:
 - [[p-j-brown|P.J. Brown]] — cosine 0.87
 - [[andrew-lang|Andrew Lang]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 11.2 pts · 10.2 reb · 2.7 ast · 2.0 blk per 100 (2004-05).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+1.4σ vs era)
+- Rarely turns the ball over (−1.3σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.6σ)
+- Three-point accuracy well below era (−1.3σ)
+
+**Comparables:**
+
+- [[joel-freeland|Joel Freeland]] '15 (90% similar)
+- [[michael-doleac|Michael Doleac]] '08 (89% similar)
+- [[tony-battie|Tony Battie]] '12 (88% similar)
+- [[lavoy-allen|Lavoy Allen]] '17 (87% similar)
+- [[p-j-brown|P.J. Brown]] '08 (87% similar)
+- [[andrew-lang|Andrew Lang]] '00 (86% similar)
+
+**Career shape:** Charted 8 seasons (1996-97–2004-05). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -37,6 +37,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jared-cunningham|Jared Cunningham]] — cosine 0.76
 - [[felipe-lopez|Felipe Lopez]] — cosine 0.75
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 16.3 pts · 7.6 reb · 1.1 ast · 1.3 stl per 100 (2012-13).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+1.5σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.7σ)
+- Table-setting role well below era (−1.1σ)
+
+**Comparables:**
+
+- [[dahntay-jones|Dahntay Jones]] '15 (84% similar)
+- [[eric-williams|Eric Williams]] '07 (84% similar)
+- [[j-r-henderson|J.R. Henderson]] '99 (79% similar)
+- [[lindell-wigginton|Lindell Wigginton]] '22 (76% similar)
+- [[jared-cunningham|Jared Cunningham]] '15 (76% similar)
+- [[felipe-lopez|Felipe Lopez]] '00 (75% similar)
+
+**Career shape:** Charted 4 seasons (2010-11–2013-14). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

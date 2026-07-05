@@ -39,6 +39,33 @@ Closest career shapes in the era-normalized vector space:
 - [[patty-mills|Patty Mills]] — cosine 0.91
 - [[randy-foye|Randy Foye]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 14.7 pts · 4.1 reb · 3.1 ast · 2.3 stl per 100 (2014-15).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+2.1σ vs era)
+- Active hands, disrupts passing lanes (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.4σ)
+- Defensive rebounding well below era (−1.3σ)
+
+**Comparables:**
+
+- [[c-j-wilcox|C.J. Wilcox]] '17 (93% similar)
+- [[luther-head|Luther Head]] '07 (91% similar)
+- [[rusty-larue|Rusty LaRue]] '99 (91% similar)
+- [[quincy-douby|Quincy Douby]] '08 (91% similar)
+- [[patty-mills|Patty Mills]] '14 (91% similar)
+- [[randy-foye|Randy Foye]] '12 (90% similar)
+
+**Career shape:** Charted 6 seasons (2013-14–2018-19). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

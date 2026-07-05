@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[carlos-rogers|Carlos Rogers]] — cosine 0.91
 - [[josh-boone|Josh Boone]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 10.9 pts · 10.6 reb · 1.5 ast · 1.0 stl per 100 (2015-16).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+1.7σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.8σ)
+- Free-throw touch well below era (−2.7σ)
+
+**Comparables:**
+
+- [[semih-erden|Semih Erden]] '12 (94% similar)
+- [[tyler-cook|Tyler Cook]] '22 (94% similar)
+- [[jericho-sims|Jericho Sims]] '22 (92% similar)
+- [[steve-hamer|Steve Hamer]] '97 (92% similar)
+- [[carlos-rogers|Carlos Rogers]] '01 (91% similar)
+- [[josh-boone|Josh Boone]] '10 (91% similar)
+
+**Career shape:** Charted 3 seasons (2012-13–2015-16). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

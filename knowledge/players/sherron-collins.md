@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[cory-carr|Cory Carr]] — cosine 0.86
 - [[maalik-wayns|Maalik Wayns]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 13.2 pts · 3.9 reb · 6.2 ast · 1.6 stl per 100 (2010-11).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+2.0σ vs era)
+- High-volume three-point shooter (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.7σ)
+- On-court net impact well below era (−1.7σ)
+
+**Comparables:**
+
+- [[theo-pinson|Theo Pinson]] '20 (93% similar)
+- [[rusty-larue|Rusty LaRue]] '99 (91% similar)
+- [[c-j-wilcox|C.J. Wilcox]] '17 (90% similar)
+- [[keifer-sykes|Keifer Sykes]] '22 (88% similar)
+- [[cory-carr|Cory Carr]] '99 (86% similar)
+- [[maalik-wayns|Maalik Wayns]] '13 (86% similar)
+
+**Career shape:** Charted 1 season (2010-11). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

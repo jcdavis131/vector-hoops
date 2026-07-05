@@ -44,6 +44,33 @@ Closest career shapes in the era-normalized vector space:
 - [[michael-redd|Michael Redd]] — cosine 0.87
 - [[allan-houston|Allan Houston]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** SG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 32.1 pts · 4.7 reb · 3.1 ast · 1.8 stl per 100 (2024-25).
+
+**Strengths:**
+
+- Featured, high-usage scoring role (+1.7σ vs era)
+- Heavy shot volume, focal scoring option (+1.4σ vs era)
+- Strong net on-court impact (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Offensive-glass activity well below era (−1.1σ)
+
+**Comparables:**
+
+- [[cuttino-mobley|Cuttino Mobley]] '02 (93% similar)
+- [[mitch-richmond|Mitch Richmond]] '97 (91% similar)
+- [[kevin-martin|Kevin Martin]] '11 (90% similar)
+- [[ray-allen|Ray Allen]] '06 (87% similar)
+- [[michael-redd|Michael Redd]] '07 (87% similar)
+- [[allan-houston|Allan Houston]] '03 (87% similar)
+
+**Career shape:** Charted 11 seasons (2015-16–2025-26). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

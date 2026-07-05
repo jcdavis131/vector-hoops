@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[axel-toupane|Axel Toupane]] — cosine 0.93
 - [[isaiah-livers|Isaiah Livers]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 8.6 pts · 2.9 reb · 2.0 ast · 1.1 stl per 100 (2019-20).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.4σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.8σ)
+- Scoring load well below era (−1.8σ)
+
+**Comparables:**
+
+- [[kyle-singler|Kyle Singler]] '17 (97% similar)
+- [[ochai-agbaji|Ochai Agbaji]] '23 (94% similar)
+- [[ben-sheppard|Ben Sheppard]] '24 (93% similar)
+- [[quincy-pondexter|Quincy Pondexter]] '18 (93% similar)
+- [[axel-toupane|Axel Toupane]] '16 (93% similar)
+- [[isaiah-livers|Isaiah Livers]] '24 (92% similar)
+
+**Career shape:** Charted 3 seasons (2017-18–2019-20). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

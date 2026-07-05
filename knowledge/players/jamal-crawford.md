@@ -52,6 +52,33 @@ Closest career shapes in the era-normalized vector space:
 - [[joe-crispin|Joe Crispin]] — cosine 0.94
 - [[jordan-crawford|Jordan Crawford]] — cosine 0.94
 
+## Scouting report
+
+**Play style:** SG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 29.9 pts · 3.7 reb · 5.2 ast · 1.4 stl per 100 (2013-14).
+
+**Strengths:**
+
+- Featured, high-usage scoring role (+1.8σ vs era)
+- High-volume three-point shooter (+1.8σ vs era)
+- Heavy shot volume, focal scoring option (+1.7σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.4σ)
+
+**Comparables:**
+
+- [[malik-monk|Malik Monk]] '18 (95% similar)
+- [[jordan-poole|Jordan Poole]] '25 (95% similar)
+- [[o-j-mayo|O.J. Mayo]] '14 (95% similar)
+- [[jimmer-fredette|Jimmer Fredette]] '14 (94% similar)
+- [[joe-crispin|Joe Crispin]] '02 (94% similar)
+- [[jordan-crawford|Jordan Crawford]] '11 (94% similar)
+
+**Career shape:** Charted 19 seasons (2000-01–2018-19). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

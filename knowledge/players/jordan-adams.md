@@ -34,6 +34,31 @@ Closest career shapes in the era-normalized vector space:
 - [[matisse-thybulle|Matisse Thybulle]] — cosine 0.79
 - [[tony-allen|Tony Allen]] — cosine 0.79
 
+## Scouting report
+
+**Play style:** SG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 18.9 pts · 5.6 reb · 3.2 ast · 3.2 stl per 100 (2014-15).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.6σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.1σ)
+
+**Comparables:**
+
+- [[metta-world-peace|Metta World Peace]] '17 (87% similar)
+- [[myke-henry|Myke Henry]] '18 (83% similar)
+- [[corey-brewer|Corey Brewer]] '19 (82% similar)
+- [[de-anthony-melton|De'Anthony Melton]] '19 (80% similar)
+- [[matisse-thybulle|Matisse Thybulle]] '21 (79% similar)
+- [[tony-allen|Tony Allen]] '15 (79% similar)
+
+**Career shape:** Charted 1 season (2014-15). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

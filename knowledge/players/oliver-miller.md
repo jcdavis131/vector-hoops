@@ -37,6 +37,33 @@ Closest career shapes in the era-normalized vector space:
 - [[robert-williams-iii|Robert Williams III]] — cosine 0.91
 - [[charles-bassey|Charles Bassey]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 14.6 pts · 11.8 reb · 3.1 ast · 3.6 blk per 100 (1999-00).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+2.7σ vs era)
+- Elite rim protection (+2.3σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.3σ)
+- Shot volume well below era (−1.3σ)
+
+**Comparables:**
+
+- [[jordan-bell|Jordan Bell]] '18 (94% similar)
+- [[greg-stiemsma|Greg Stiemsma]] '15 (93% similar)
+- [[eric-moreland|Eric Moreland]] '18 (91% similar)
+- [[cole-aldrich|Cole Aldrich]] '16 (91% similar)
+- [[robert-williams-iii|Robert Williams III]] '19 (91% similar)
+- [[charles-bassey|Charles Bassey]] '24 (90% similar)
+
+**Career shape:** Charted 4 seasons (1996-97–2003-04). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

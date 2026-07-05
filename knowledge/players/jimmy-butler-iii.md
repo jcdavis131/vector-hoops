@@ -48,6 +48,33 @@ Closest career shapes in the era-normalized vector space:
 - [[kawhi-leonard|Kawhi Leonard]] — cosine 0.74
 - [[grant-hill|Grant Hill]] — cosine 0.74
 
+## Scouting report
+
+**Play style:** SF · Scoring Volume + Shot Volume. Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 31.4 pts · 10.1 reb · 10.4 ast · 3.0 stl per 100 (2020-21).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+3.4σ vs era)
+- Active hands, disrupts passing lanes (+2.6σ vs era)
+- High-volume table-setter (+2.3σ vs era)
+
+**Areas of concern:**
+
+- Three-point volume well below era (−1.0σ)
+
+**Comparables:**
+
+- [[shai-gilgeous-alexander|Shai Gilgeous-Alexander]] '25 (84% similar)
+- [[shayne-whittington|Shayne Whittington]] '15 (81% similar)
+- [[demar-derozan|DeMar DeRozan]] '17 (77% similar)
+- [[dwyane-wade|Dwyane Wade]] '09 (75% similar)
+- [[kawhi-leonard|Kawhi Leonard]] '20 (74% similar)
+- [[grant-hill|Grant Hill]] '97 (74% similar)
+
+**Career shape:** Charted 15 seasons (2011-12–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

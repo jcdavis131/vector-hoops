@@ -34,6 +34,31 @@ Closest career shapes in the era-normalized vector space:
 - [[john-lucas-iii|John Lucas III]] — cosine 0.81
 - [[john-starks|John Starks]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 21.8 pts · 7.7 reb · 5.7 ast · 1.9 stl per 100 (2025-26).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[bobby-jackson|Bobby Jackson]] '04 (85% similar)
+- [[toney-douglas|Toney Douglas]] '12 (85% similar)
+- [[eddie-house|Eddie House]] '06 (83% similar)
+- [[fred-vanvleet|Fred VanVleet]] '23 (83% similar)
+- [[john-lucas-iii|John Lucas III]] '12 (81% similar)
+- [[john-starks|John Starks]] '00 (81% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

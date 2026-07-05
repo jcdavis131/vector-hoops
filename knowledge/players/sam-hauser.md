@@ -38,6 +38,34 @@ Closest career shapes in the era-normalized vector space:
 - [[sam-perkins|Sam Perkins]] — cosine 0.90
 - [[richie-frahm|Richie Frahm]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 19.5 pts · 8.7 reb · 3.0 ast · 0.6 blk per 100 (2021-22).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.8σ vs era)
+- Rarely turns the ball over (−1.8σ vs era)
+- Knockdown three-point shooter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−4.0σ)
+- Ball-hawking activity well below era (−2.0σ)
+
+**Comparables:**
+
+- [[matt-bonner|Matt Bonner]] '12 (96% similar)
+- [[terry-mills|Terry Mills]] '97 (91% similar)
+- [[ryan-broekhoff|Ryan Broekhoff]] '19 (91% similar)
+- [[matt-bullard|Matt Bullard]] '01 (90% similar)
+- [[sam-perkins|Sam Perkins]] '01 (90% similar)
+- [[richie-frahm|Richie Frahm]] '04 (89% similar)
+
+**Career shape:** Charted 5 seasons (2021-22–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

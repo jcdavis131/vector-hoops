@@ -37,6 +37,32 @@ Closest career shapes in the era-normalized vector space:
 - [[junior-harrington|Junior Harrington]] — cosine 0.92
 - [[laron-profit|Laron Profit]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** SG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 12.1 pts · 5.4 reb · 4.8 ast · 2.5 stl per 100 (2009-10).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.9σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.7σ)
+- Finishing efficiency well below era (−1.4σ)
+
+**Comparables:**
+
+- [[walker-russell|Walker Russell]] '12 (96% similar)
+- [[chris-garner|Chris Garner]] '98 (95% similar)
+- [[diante-garrett|Diante Garrett]] '13 (95% similar)
+- [[daishen-nix|Daishen Nix]] '22 (93% similar)
+- [[junior-harrington|Junior Harrington]] '03 (92% similar)
+- [[laron-profit|Laron Profit]] '00 (91% similar)
+
+**Career shape:** Charted 4 seasons (2006-07–2009-10). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

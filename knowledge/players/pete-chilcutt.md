@@ -37,6 +37,33 @@ Closest career shapes in the era-normalized vector space:
 - [[johnny-taylor|Johnny Taylor]] — cosine 0.83
 - [[luke-harangody|Luke Harangody]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** PF · Three-Point Accuracy (Low Turnovers). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 9.8 pts · 10.6 reb · 2.2 ast · 1.2 stl per 100 (1999-00).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+2.4σ vs era)
+- Rarely turns the ball over (−1.4σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.8σ)
+- On-court net impact well below era (−1.7σ)
+
+**Comparables:**
+
+- [[kessler-edwards|Kessler Edwards]] '25 (88% similar)
+- [[gary-clark|Gary Clark]] '19 (84% similar)
+- [[torrey-craig|Torrey Craig]] '20 (84% similar)
+- [[chuma-okeke|Chuma Okeke]] '24 (84% similar)
+- [[johnny-taylor|Johnny Taylor]] '99 (83% similar)
+- [[luke-harangody|Luke Harangody]] '12 (82% similar)
+
+**Career shape:** Charted 4 seasons (1996-97–1999-00). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

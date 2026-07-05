@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[romeo-langford|Romeo Langford]] — cosine 0.84
 - [[jt-thor|JT Thor]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 11.0 pts · 8.6 reb · 2.7 ast · 1.6 stl per 100 (2002-03).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.7σ)
+- Free-throw touch well below era (−1.4σ)
+
+**Comparables:**
+
+- [[kris-murray|Kris Murray]] '25 (88% similar)
+- [[duane-ferrell|Duane Ferrell]] '98 (88% similar)
+- [[nigel-hayes-davis|Nigel Hayes-Davis]] '26 (86% similar)
+- [[justin-minaya|Justin Minaya]] '25 (85% similar)
+- [[romeo-langford|Romeo Langford]] '20 (84% similar)
+- [[jt-thor|JT Thor]] '25 (83% similar)
+
+**Career shape:** Charted 2 seasons (2002-03–2003-04). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

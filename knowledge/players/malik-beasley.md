@@ -42,6 +42,33 @@ Closest career shapes in the era-normalized vector space:
 - [[dell-curry|Dell Curry]] — cosine 0.92
 - [[rex-chapman|Rex Chapman]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 27.3 pts · 4.4 reb · 2.8 ast · 1.5 stl per 100 (2024-25).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.3σ vs era)
+- Heavy shot volume, focal scoring option (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.2σ)
+- Rim-protection impact well below era (−1.1σ)
+
+**Comparables:**
+
+- [[dale-ellis|Dale Ellis]] '00 (96% similar)
+- [[terrence-ross|Terrence Ross]] '19 (93% similar)
+- [[morris-peterson|Morris Peterson]] '10 (93% similar)
+- [[chase-budinger|Chase Budinger]] '10 (93% similar)
+- [[dell-curry|Dell Curry]] '00 (92% similar)
+- [[rex-chapman|Rex Chapman]] '98 (92% similar)
+
+**Career shape:** Charted 9 seasons (2016-17–2024-25). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

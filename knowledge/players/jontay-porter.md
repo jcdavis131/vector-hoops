@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[dru-smith|Dru Smith]] — cosine 0.64
 - [[jamie-watson|Jamie Watson]] — cosine 0.63
 
+## Scouting report
+
+**Play style:** PF · Playmaking + Steals. Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 14.8 pts · 10.5 reb · 7.7 ast · 2.6 stl per 100 (2023-24).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.9σ vs era)
+- Elite rim protection (+1.9σ vs era)
+- High-volume table-setter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.1σ)
+- Finishing efficiency well below era (−1.1σ)
+
+**Comparables:**
+
+- [[jordan-goodwin|Jordan Goodwin]] '26 (69% similar)
+- [[lorenzo-brown|Lorenzo Brown]] '19 (67% similar)
+- [[trevelin-queen|Trevelin Queen]] '25 (67% similar)
+- [[bruno-caboclo|Bruno Caboclo]] '20 (67% similar)
+- [[dru-smith|Dru Smith]] '26 (64% similar)
+- [[jamie-watson|Jamie Watson]] '97 (63% similar)
+
+**Career shape:** Charted 1 season (2023-24). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

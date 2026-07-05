@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[david-roddy|David Roddy]] — cosine 0.77
 - [[guerschon-yabusele|Guerschon Yabusele]] — cosine 0.76
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 13.9 pts · 11.1 reb · 2.9 ast · 1.1 stl per 100 (2024-25).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.7σ)
+- On-court net impact well below era (−1.6σ)
+
+**Comparables:**
+
+- [[deividas-sirvydis|Deividas Sirvydis]] '21 (84% similar)
+- [[juancho-hernangomez|Juancho Hernangomez]] '23 (82% similar)
+- [[d-j-wilson|D.J. Wilson]] '18 (82% similar)
+- [[trey-lyles|Trey Lyles]] '21 (82% similar)
+- [[david-roddy|David Roddy]] '23 (77% similar)
+- [[guerschon-yabusele|Guerschon Yabusele]] '26 (76% similar)
+
+**Career shape:** Charted 2 seasons (2024-25–2025-26). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

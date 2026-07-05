@@ -47,6 +47,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jameer-nelson|Jameer Nelson]] — cosine 0.93
 - [[luke-ridnour|Luke Ridnour]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** SG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 20.8 pts · 4.9 reb · 11.2 ast · 2.2 stl per 100 (2010-11).
+
+**Strengths:**
+
+- High-volume table-setter (+2.4σ vs era)
+- Active hands, disrupts passing lanes (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.2σ)
+
+**Comparables:**
+
+- [[cameron-payne|Cameron Payne]] '26 (96% similar)
+- [[marcus-sasser|Marcus Sasser]] '26 (96% similar)
+- [[howard-eisley|Howard Eisley]] '03 (94% similar)
+- [[dan-dickau|Dan Dickau]] '06 (94% similar)
+- [[jameer-nelson|Jameer Nelson]] '09 (93% similar)
+- [[luke-ridnour|Luke Ridnour]] '06 (93% similar)
+
+**Career shape:** Charted 14 seasons (2005-06–2018-19). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

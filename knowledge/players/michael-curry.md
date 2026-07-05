@@ -42,6 +42,32 @@ Closest career shapes in the era-normalized vector space:
 - [[glenn-robinson-iii|Glenn Robinson III]] — cosine 0.89
 - [[quincy-pondexter|Quincy Pondexter]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass + Defensive Glass. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 6.2 pts · 5.6 reb · 3.1 ast · 1.0 stl per 100 (2004-05).
+
+**Strengths:**
+
+- Rarely turns the ball over (−2.0σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−2.2σ)
+- Scoring load well below era (−2.1σ)
+
+**Comparables:**
+
+- [[derrick-walton-jr|Derrick Walton Jr.]] '20 (94% similar)
+- [[trenton-hassell|Trenton Hassell]] '04 (93% similar)
+- [[amir-coffey|Amir Coffey]] '23 (91% similar)
+- [[doug-west|Doug West]] '98 (89% similar)
+- [[glenn-robinson-iii|Glenn Robinson III]] '21 (89% similar)
+- [[quincy-pondexter|Quincy Pondexter]] '18 (88% similar)
+
+**Career shape:** Charted 9 seasons (1996-97–2004-05). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

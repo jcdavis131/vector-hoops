@@ -35,6 +35,34 @@ Closest career shapes in the era-normalized vector space:
 - [[donte-divincenzo|Donte DiVincenzo]] — cosine 0.85
 - [[jon-barry|Jon Barry]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** SG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 12.2 pts · 7.8 reb · 10.8 ast · 2.7 stl per 100 (1997-98).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+2.3σ vs era)
+- High-volume table-setter (+2.2σ vs era)
+- Strong net on-court impact (+2.1σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−2.1σ)
+- Finishing efficiency well below era (−1.8σ)
+
+**Comparables:**
+
+- [[patrick-beverley|Patrick Beverley]] '13 (94% similar)
+- [[ron-harper|Ron Harper]] '97 (92% similar)
+- [[aaron-mckie|Aaron McKie]] '05 (87% similar)
+- [[willie-warren|Willie Warren]] '11 (86% similar)
+- [[donte-divincenzo|Donte DiVincenzo]] '24 (85% similar)
+- [[jon-barry|Jon Barry]] '98 (83% similar)
+
+**Career shape:** Charted 2 seasons (1996-97–1997-98). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Playmaking + Steals identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

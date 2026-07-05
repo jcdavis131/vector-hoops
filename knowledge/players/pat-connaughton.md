@@ -44,6 +44,32 @@ Closest career shapes in the era-normalized vector space:
 - [[miye-oni|Miye Oni]] — cosine 0.89
 - [[tony-snell|Tony Snell]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 12.0 pts · 10.7 reb · 3.3 ast · 0.7 stl per 100 (2015-16).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+2.1σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.7σ)
+- Ball-hawking activity well below era (−1.4σ)
+
+**Comparables:**
+
+- [[anthony-tolliver|Anthony Tolliver]] '09 (92% similar)
+- [[reggie-bullock-jr|Reggie Bullock Jr.]] '24 (90% similar)
+- [[sterling-brown|Sterling Brown]] '22 (90% similar)
+- [[patrick-patterson|Patrick Patterson]] '19 (89% similar)
+- [[miye-oni|Miye Oni]] '21 (89% similar)
+- [[tony-snell|Tony Snell]] '21 (89% similar)
+
+**Career shape:** Charted 11 seasons (2015-16–2025-26). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

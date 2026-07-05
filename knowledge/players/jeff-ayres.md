@@ -39,6 +39,33 @@ Closest career shapes in the era-normalized vector space:
 - [[clar-weatherspoon|Clar. Weatherspoon]] — cosine 0.88
 - [[cheick-diallo|Cheick Diallo]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 13.4 pts · 9.8 reb · 2.2 ast · 1.3 blk per 100 (2015-16).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+2.1σ vs era)
+- Efficient finisher inside the arc (+1.1σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.9σ)
+- Ball-hawking activity well below era (−2.6σ)
+
+**Comparables:**
+
+- [[mikki-moore|Mikki Moore]] '00 (93% similar)
+- [[brian-grant|Brian Grant]] '99 (92% similar)
+- [[aaron-williams|Aaron Williams]] '05 (90% similar)
+- [[nick-collison|Nick Collison]] '17 (88% similar)
+- [[clar-weatherspoon|Clar. Weatherspoon]] '03 (88% similar)
+- [[cheick-diallo|Cheick Diallo]] '17 (88% similar)
+
+**Career shape:** Charted 6 seasons (2009-10–2015-16). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

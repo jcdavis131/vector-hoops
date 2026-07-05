@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[toby-bailey|Toby Bailey]] — cosine 0.78
 - [[perry-jones-iii|Perry Jones III]] — cosine 0.78
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 13.0 pts · 8.2 reb · 1.7 ast · 1.0 stl per 100 (2001-02).
+
+**Strengths:**
+
+- Rarely turns the ball over (−2.0σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.9σ)
+- Rim pressure (free-throw generation) well below era (−1.5σ)
+
+**Comparables:**
+
+- [[rodney-buford|Rodney Buford]] '04 (84% similar)
+- [[johnny-davis|Johnny Davis]] '24 (81% similar)
+- [[dwayne-bacon|Dwayne Bacon]] '18 (81% similar)
+- [[richard-manning|Richard Manning]] '97 (79% similar)
+- [[toby-bailey|Toby Bailey]] '99 (78% similar)
+- [[perry-jones-iii|Perry Jones III]] '13 (78% similar)
+
+**Career shape:** Charted 3 seasons (2000-01–2002-03). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

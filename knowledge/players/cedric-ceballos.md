@@ -37,6 +37,33 @@ Closest career shapes in the era-normalized vector space:
 - [[michael-porter-jr|Michael Porter Jr.]] — cosine 0.85
 - [[carmelo-anthony|Carmelo Anthony]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** SF · Defensive Glass + Rim Pressure (Fts). Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 27.3 pts · 11.0 reb · 2.1 ast · 1.3 stl per 100 (1999-00).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+1.9σ vs era)
+- Featured, high-usage scoring role (+1.6σ vs era)
+- Reliable touch from the free-throw line (+1.0σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[keith-van-horn|Keith Van Horn]] '99 (95% similar)
+- [[antawn-jamison|Antawn Jamison]] '01 (89% similar)
+- [[lauri-markkanen|Lauri Markkanen]] '23 (88% similar)
+- [[al-harrington|Al Harrington]] '99 (87% similar)
+- [[michael-porter-jr|Michael Porter Jr.]] '26 (85% similar)
+- [[carmelo-anthony|Carmelo Anthony]] '13 (85% similar)
+
+**Career shape:** Charted 4 seasons (1996-97–2000-01). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[pervis-ellison|Pervis Ellison]] — cosine 0.76
 - [[david-duke-jr|David Duke Jr.]] — cosine 0.75
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 14.6 pts · 9.3 reb · 4.0 ast · 2.5 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+1.7σ vs era)
+- Active hands, disrupts passing lanes (+1.3σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.6σ)
+- Three-point volume well below era (−1.2σ)
+
+**Comparables:**
+
+- [[paul-davis|Paul Davis]] '08 (81% similar)
+- [[brandon-davies|Brandon Davies]] '15 (81% similar)
+- [[bill-curley|Bill Curley]] '01 (79% similar)
+- [[chaney-johnson|Chaney Johnson]] '26 (79% similar)
+- [[pervis-ellison|Pervis Ellison]] '98 (76% similar)
+- [[david-duke-jr|David Duke Jr.]] '23 (75% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

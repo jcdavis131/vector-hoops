@@ -40,6 +40,34 @@ Closest career shapes in the era-normalized vector space:
 - [[tony-battie|Tony Battie]] — cosine 0.89
 - [[hot-rod-williams|Hot Rod Williams]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 13.7 pts · 13.2 reb · 2.2 ast · 2.3 blk per 100 (2006-07).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+1.5σ vs era)
+- Elite rim protection (+1.2σ vs era)
+- Strong net on-court impact (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.4σ)
+- Shot volume well below era (−1.1σ)
+
+**Comparables:**
+
+- [[evan-eschmeyer|Evan Eschmeyer]] '03 (92% similar)
+- [[ervin-johnson|Ervin Johnson]] '05 (91% similar)
+- [[michael-cage|Michael Cage]] '00 (91% similar)
+- [[chris-richard|Chris Richard]] '10 (90% similar)
+- [[tony-battie|Tony Battie]] '12 (89% similar)
+- [[hot-rod-williams|Hot Rod Williams]] '99 (89% similar)
+
+**Career shape:** Charted 7 seasons (2003-04–2010-11). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

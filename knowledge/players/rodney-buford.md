@@ -38,6 +38,32 @@ Closest career shapes in the era-normalized vector space:
 - [[carsen-edwards|Carsen Edwards]] — cosine 0.81
 - [[dwayne-bacon|Dwayne Bacon]] — cosine 0.80
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 14.3 pts · 5.2 reb · 2.4 ast · 2.1 stl per 100 (2003-04).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.7σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−4.0σ)
+- Free-throw touch well below era (−1.9σ)
+
+**Comparables:**
+
+- [[dan-langhi|Dan Langhi]] '02 (84% similar)
+- [[erick-green|Erick Green]] '15 (84% similar)
+- [[damyean-dotson|Damyean Dotson]] '21 (83% similar)
+- [[justin-jackson|Justin Jackson]] '23 (81% similar)
+- [[carsen-edwards|Carsen Edwards]] '21 (81% similar)
+- [[dwayne-bacon|Dwayne Bacon]] '18 (80% similar)
+
+**Career shape:** Charted 5 seasons (1999-00–2004-05). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

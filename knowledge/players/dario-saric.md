@@ -40,6 +40,31 @@ Closest career shapes in the era-normalized vector space:
 - [[kon-knueppel|Kon Knueppel]] — cosine 0.71
 - [[markieff-morris|Markieff Morris]] — cosine 0.71
 
+## Scouting report
+
+**Play style:** C · Three-Point Volume + Three-Point Accuracy. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 23.8 pts · 10.3 reb · 3.5 ast · 1.6 stl per 100 (2020-21).
+
+**Strengths:**
+
+- Strong net on-court impact (+1.9σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[cedric-coward|Cedric Coward]] '26 (85% similar)
+- [[austin-croshere|Austin Croshere]] '99 (79% similar)
+- [[kevin-love|Kevin Love]] '19 (78% similar)
+- [[keith-van-horn|Keith Van Horn]] '99 (76% similar)
+- [[kon-knueppel|Kon Knueppel]] '26 (71% similar)
+- [[markieff-morris|Markieff Morris]] '24 (71% similar)
+
+**Career shape:** Charted 7 seasons (2016-17–2023-24). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

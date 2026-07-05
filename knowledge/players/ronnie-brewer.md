@@ -41,6 +41,32 @@ Closest career shapes in the era-normalized vector space:
 - [[ryan-bowen|Ryan Bowen]] — cosine 0.82
 - [[matisse-thybulle|Matisse Thybulle]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 2.1 pts · 4.2 reb · 3.0 ast · 1.8 stl per 100 (2013-14).
+
+**Strengths:**
+
+- Rarely turns the ball over (−2.3σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−4.0σ)
+- Finishing efficiency well below era (−3.7σ)
+
+**Comparables:**
+
+- [[jaylen-clark|Jaylen Clark]] '25 (90% similar)
+- [[donta-smith|Donta Smith]] '06 (89% similar)
+- [[dalen-terry|Dalen Terry]] '26 (87% similar)
+- [[jerome-kersey|Jerome Kersey]] '01 (82% similar)
+- [[ryan-bowen|Ryan Bowen]] '09 (82% similar)
+- [[matisse-thybulle|Matisse Thybulle]] '21 (81% similar)
+
+**Career shape:** Charted 8 seasons (2006-07–2013-14). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

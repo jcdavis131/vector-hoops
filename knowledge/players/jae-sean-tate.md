@@ -39,6 +39,32 @@ Closest career shapes in the era-normalized vector space:
 - [[john-thomas|John Thomas]] — cosine 0.80
 - [[josh-childress|Josh Childress]] — cosine 0.80
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass + Defensive Glass. Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 15.7 pts · 8.9 reb · 3.0 ast · 1.2 stl per 100 (2025-26).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.2σ)
+- Free-throw touch well below era (−1.1σ)
+
+**Comparables:**
+
+- [[mario-west|Mario West]] '09 (83% similar)
+- [[james-augustine|James Augustine]] '08 (83% similar)
+- [[luc-mbah-a-moute|Luc Mbah a Moute]] '16 (82% similar)
+- [[jared-jeffries|Jared Jeffries]] '11 (80% similar)
+- [[john-thomas|John Thomas]] '00 (80% similar)
+- [[josh-childress|Josh Childress]] '12 (80% similar)
+
+**Career shape:** Charted 6 seasons (2020-21–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -37,6 +37,33 @@ Closest career shapes in the era-normalized vector space:
 - [[royal-ivey|Royal Ivey]] — cosine 0.88
 - [[will-richard|Will Richard]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 8.8 pts · 5.7 reb · 3.4 ast · 2.7 stl per 100 (2018-19).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.3σ vs era)
+- Reliable touch from the free-throw line (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−2.0σ)
+- Scoring load well below era (−1.8σ)
+
+**Comparables:**
+
+- [[sedale-threatt|Sedale Threatt]] '97 (89% similar)
+- [[c-j-williams|C.J. Williams]] '18 (89% similar)
+- [[solomon-hill|Solomon Hill]] '21 (88% similar)
+- [[greg-buckner|Greg Buckner]] '05 (88% similar)
+- [[royal-ivey|Royal Ivey]] '12 (88% similar)
+- [[will-richard|Will Richard]] '26 (87% similar)
+
+**Career shape:** Charted 4 seasons (2016-17–2019-20). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

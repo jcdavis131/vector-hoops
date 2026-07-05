@@ -36,6 +36,31 @@ Closest career shapes in the era-normalized vector space:
 - [[bol-bol|Bol Bol]] — cosine 0.77
 - [[shawn-bradley|Shawn Bradley]] — cosine 0.71
 
+## Scouting report
+
+**Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 21.3 pts · 8.8 reb · 3.3 ast · 4.2 blk per 100 (2025-26).
+
+**Strengths:**
+
+- Elite rim protection (+4.0σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[myles-turner|Myles Turner]] '19 (82% similar)
+- [[matas-buzelis|Matas Buzelis]] '26 (82% similar)
+- [[raef-lafrentz|Raef LaFrentz]] '08 (81% similar)
+- [[branden-carlson|Branden Carlson]] '25 (80% similar)
+- [[bol-bol|Bol Bol]] '21 (77% similar)
+- [[shawn-bradley|Shawn Bradley]] '01 (71% similar)
+
+**Career shape:** Charted 3 seasons (2023-24–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

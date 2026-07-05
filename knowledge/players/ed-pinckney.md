@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[pervis-ellison|Pervis Ellison]] — cosine 0.86
 - [[timofey-mozgov|Timofey Mozgov]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 12.8 pts · 12.7 reb · 1.2 ast · 1.8 blk per 100 (1996-97).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+1.5σ vs era)
+- Relentless on the offensive glass (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.7σ)
+- Three-point accuracy well below era (−1.4σ)
+
+**Comparables:**
+
+- [[aaron-williams|Aaron Williams]] '05 (90% similar)
+- [[jake-voskuhl|Jake Voskuhl]] '01 (90% similar)
+- [[lorenzo-williams|Lorenzo Williams]] '97 (89% similar)
+- [[greg-stiemsma|Greg Stiemsma]] '15 (87% similar)
+- [[pervis-ellison|Pervis Ellison]] '98 (86% similar)
+- [[timofey-mozgov|Timofey Mozgov]] '13 (85% similar)
+
+**Career shape:** Charted 1 season (1996-97). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

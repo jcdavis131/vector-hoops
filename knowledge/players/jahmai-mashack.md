@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[deandre-liggins|DeAndre Liggins]] — cosine 0.87
 - [[mardy-collins|Mardy Collins]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 13.2 pts · 5.6 reb · 4.7 ast · 2.5 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.9σ)
+- On-court net impact well below era (−1.8σ)
+
+**Comparables:**
+
+- [[chris-garner|Chris Garner]] '98 (92% similar)
+- [[jamison-brewer|Jamison Brewer]] '05 (90% similar)
+- [[omar-cook|Omar Cook]] '04 (89% similar)
+- [[deandre-bembry|DeAndre' Bembry]] '17 (87% similar)
+- [[deandre-liggins|DeAndre Liggins]] '12 (87% similar)
+- [[mardy-collins|Mardy Collins]] '10 (86% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

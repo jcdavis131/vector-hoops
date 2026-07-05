@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[ivan-rabb|Ivan Rabb]] — cosine 0.90
 - [[cristiano-felicio|Cristiano Felicio]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 21.6 pts · 18.3 reb · 3.3 ast · 1.6 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+3.2σ vs era)
+- Efficient finisher inside the arc (+2.1σ vs era)
+- Strong presence on the defensive glass (+1.7σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.9σ)
+- Three-point volume well below era (−2.0σ)
+
+**Comparables:**
+
+- [[ben-handlogten|Ben Handlogten]] '04 (93% similar)
+- [[tristan-thompson|Tristan Thompson]] '25 (93% similar)
+- [[chris-wilcox|Chris Wilcox]] '13 (91% similar)
+- [[dejuan-blair|DeJuan Blair]] '16 (90% similar)
+- [[ivan-rabb|Ivan Rabb]] '18 (90% similar)
+- [[cristiano-felicio|Cristiano Felicio]] '21 (90% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

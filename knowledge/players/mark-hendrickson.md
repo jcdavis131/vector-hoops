@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jaron-blossomgame|Jaron Blossomgame]] — cosine 0.85
 - [[jeremiah-robinson-earl|Jeremiah Robinson-Earl]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 11.0 pts · 9.6 reb · 2.8 ast · 1.8 stl per 100 (1997-98).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.0σ vs era)
+
+**Areas of concern:**
+
+- Scoring load well below era (−1.4σ)
+- Shot volume well below era (−1.3σ)
+
+**Comparables:**
+
+- [[grant-long|Grant Long]] '03 (92% similar)
+- [[tremaine-fowlkes|Tremaine Fowlkes]] '04 (90% similar)
+- [[a-c-green|A.C. Green]] '00 (86% similar)
+- [[wes-iwundu|Wes Iwundu]] '21 (85% similar)
+- [[jaron-blossomgame|Jaron Blossomgame]] '19 (85% similar)
+- [[jeremiah-robinson-earl|Jeremiah Robinson-Earl]] '26 (85% similar)
+
+**Career shape:** Charted 3 seasons (1996-97–1998-99). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

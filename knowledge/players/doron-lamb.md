@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[damjan-rudez|Damjan Rudez]] — cosine 0.90
 - [[casey-jacobsen|Casey Jacobsen]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 14.1 pts · 3.6 reb · 3.2 ast · 0.8 stl per 100 (2013-14).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.4σ)
+- Ball-hawking activity well below era (−1.2σ)
+
+**Comparables:**
+
+- [[deshawn-stevenson|DeShawn Stevenson]] '12 (94% similar)
+- [[tim-legler|Tim Legler]] '00 (91% similar)
+- [[antoine-wright|Antoine Wright]] '06 (91% similar)
+- [[amir-coffey|Amir Coffey]] '23 (90% similar)
+- [[damjan-rudez|Damjan Rudez]] '17 (90% similar)
+- [[casey-jacobsen|Casey Jacobsen]] '08 (90% similar)
+
+**Career shape:** Charted 2 seasons (2012-13–2013-14). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[alex-abrines|Alex Abrines]] — cosine 0.90
 - [[pat-garrity|Pat Garrity]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 18.8 pts · 9.7 reb · 2.6 ast · 1.3 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Strong net on-court impact (+1.8σ vs era)
+- Rarely turns the ball over (−1.2σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[davis-bertans|Davis Bertans]] '24 (93% similar)
+- [[sam-perkins|Sam Perkins]] '01 (92% similar)
+- [[aaron-nesmith|Aaron Nesmith]] '25 (92% similar)
+- [[james-jones|James Jones]] '14 (90% similar)
+- [[alex-abrines|Alex Abrines]] '19 (90% similar)
+- [[pat-garrity|Pat Garrity]] '02 (89% similar)
+
+**Career shape:** Charted 3 seasons (2023-24–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

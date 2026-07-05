@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[obinna-ekezie|Obinna Ekezie]] — cosine 0.74
 - [[olivier-maxence-prosper|Olivier-Maxence Prosper]] — cosine 0.72
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass + Defensive Glass. Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 18.5 pts · 9.5 reb · 1.9 ast · 1.9 stl per 100 (1999-00).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+2.6σ vs era)
+- Rarely turns the ball over (−1.6σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.3σ)
+
+**Comparables:**
+
+- [[tyler-hansbrough|Tyler Hansbrough]] '16 (86% similar)
+- [[ben-davis|Ben Davis]] '97 (85% similar)
+- [[leon-powe|Leon Powe]] '08 (77% similar)
+- [[tony-farmer|Tony Farmer]] '98 (74% similar)
+- [[obinna-ekezie|Obinna Ekezie]] '02 (74% similar)
+- [[olivier-maxence-prosper|Olivier-Maxence Prosper]] '25 (72% similar)
+
+**Career shape:** Charted 1 season (1999-00). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

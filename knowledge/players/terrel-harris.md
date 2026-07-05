@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[nemanja-nedovic|Nemanja Nedovic]] — cosine 0.78
 - [[marquis-teague|Marquis Teague]] — cosine 0.78
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 5.8 pts · 10.0 reb · 3.5 ast · 1.2 blk per 100 (2012-13).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−4.0σ)
+- Turnover rate well above era (+3.7σ)
+
+**Comparables:**
+
+- [[yang-hansen|Yang Hansen]] '26 (80% similar)
+- [[cleanthony-early|Cleanthony Early]] '16 (79% similar)
+- [[nick-johnson|Nick Johnson]] '15 (79% similar)
+- [[vince-williams-jr|Vince Williams Jr.]] '26 (79% similar)
+- [[nemanja-nedovic|Nemanja Nedovic]] '14 (78% similar)
+- [[marquis-teague|Marquis Teague]] '14 (78% similar)
+
+**Career shape:** Charted 2 seasons (2011-12–2012-13). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

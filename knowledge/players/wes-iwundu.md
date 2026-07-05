@@ -37,6 +37,32 @@ Closest career shapes in the era-normalized vector space:
 - [[lance-thomas|Lance Thomas]] — cosine 0.87
 - [[romeo-langford|Romeo Langford]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 8.6 pts · 7.8 reb · 1.6 ast · 1.3 stl per 100 (2020-21).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Scoring load well below era (−1.8σ)
+- Three-point accuracy well below era (−1.8σ)
+
+**Comparables:**
+
+- [[donald-royal|Donald Royal]] '98 (89% similar)
+- [[doug-west|Doug West]] '98 (88% similar)
+- [[sion-james|Sion James]] '26 (87% similar)
+- [[quinton-ross|Quinton Ross]] '11 (87% similar)
+- [[lance-thomas|Lance Thomas]] '13 (87% similar)
+- [[romeo-langford|Romeo Langford]] '20 (86% similar)
+
+**Career shape:** Charted 4 seasons (2017-18–2020-21). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -38,6 +38,32 @@ Closest career shapes in the era-normalized vector space:
 - [[pat-garrity|Pat Garrity]] — cosine 0.93
 - [[aj-green|AJ Green]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 22.7 pts · 4.0 reb · 2.3 ast · 1.1 stl per 100 (2020-21).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.1σ vs era)
+- Rarely turns the ball over (−1.6σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.2σ)
+
+**Comparables:**
+
+- [[duncan-robinson|Duncan Robinson]] '20 (97% similar)
+- [[matt-bullard|Matt Bullard]] '01 (95% similar)
+- [[richie-frahm|Richie Frahm]] '04 (94% similar)
+- [[dennis-scott|Dennis Scott]] '00 (93% similar)
+- [[pat-garrity|Pat Garrity]] '02 (93% similar)
+- [[aj-green|AJ Green]] '23 (93% similar)
+
+**Career shape:** Charted 5 seasons (2020-21–2024-25). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

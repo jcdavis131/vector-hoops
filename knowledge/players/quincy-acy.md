@@ -39,6 +39,34 @@ Closest career shapes in the era-normalized vector space:
 - [[torrey-craig|Torrey Craig]] — cosine 0.78
 - [[micah-potter|Micah Potter]] — cosine 0.77
 
+## Scouting report
+
+**Play style:** PF · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 17.8 pts · 11.8 reb · 1.7 ast · 2.3 blk per 100 (2012-13).
+
+**Strengths:**
+
+- Strong net on-court impact (+2.5σ vs era)
+- Efficient finisher inside the arc (+1.7σ vs era)
+- Knockdown three-point shooter (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.1σ)
+- Three-point volume well below era (−1.1σ)
+
+**Comparables:**
+
+- [[james-singleton|James Singleton]] '10 (84% similar)
+- [[jamie-feick|Jamie Feick]] '00 (81% similar)
+- [[jonas-jerebko|Jonas Jerebko]] '17 (81% similar)
+- [[justin-champagnie|Justin Champagnie]] '22 (78% similar)
+- [[torrey-craig|Torrey Craig]] '20 (78% similar)
+- [[micah-potter|Micah Potter]] '25 (77% similar)
+
+**Career shape:** Charted 6 seasons (2012-13–2017-18). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[lionel-simmons|Lionel Simmons]] — cosine 0.85
 - [[marlon-garnett|Marlon Garnett]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 8.5 pts · 4.9 reb · 4.3 ast · 0.3 blk per 100 (2013-14).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−3.6σ)
+- On-court net impact well below era (−2.9σ)
+
+**Comparables:**
+
+- [[aj-johnson|AJ Johnson]] '25 (89% similar)
+- [[javonte-smart|Javonte Smart]] '22 (87% similar)
+- [[maxwell-lewis|Maxwell Lewis]] '24 (87% similar)
+- [[cleanthony-early|Cleanthony Early]] '16 (86% similar)
+- [[lionel-simmons|Lionel Simmons]] '97 (85% similar)
+- [[marlon-garnett|Marlon Garnett]] '99 (83% similar)
+
+**Career shape:** Charted 1 season (2013-14). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

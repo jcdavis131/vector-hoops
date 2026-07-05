@@ -38,6 +38,32 @@ Closest career shapes in the era-normalized vector space:
 - [[sean-marks|Sean Marks]] — cosine 0.75
 - [[laphonso-ellis|LaPhonso Ellis]] — cosine 0.75
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 14.4 pts · 8.8 reb · 1.4 ast · 2.3 stl per 100 (2016-17).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.3σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.7σ)
+- Table-setting role well below era (−1.0σ)
+
+**Comparables:**
+
+- [[maciej-lampe|Maciej Lampe]] '04 (93% similar)
+- [[pat-burke|Pat Burke]] '07 (85% similar)
+- [[trey-thompkins|Trey Thompkins]] '12 (79% similar)
+- [[byron-mullens|Byron Mullens]] '14 (78% similar)
+- [[sean-marks|Sean Marks]] '11 (75% similar)
+- [[laphonso-ellis|LaPhonso Ellis]] '97 (75% similar)
+
+**Career shape:** Charted 5 seasons (2012-13–2016-17). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -42,6 +42,34 @@ Closest career shapes in the era-normalized vector space:
 - [[randy-foye|Randy Foye]] — cosine 0.90
 - [[derek-anderson|Derek Anderson]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** PG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 9.9 pts · 2.6 reb · 7.7 ast · 2.2 stl per 100 (2007-08).
+
+**Strengths:**
+
+- Strong net on-court impact (+2.7σ vs era)
+- Rarely turns the ball over (−2.6σ vs era)
+- High-volume table-setter (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−3.2σ)
+- Defensive rebounding well below era (−2.0σ)
+
+**Comparables:**
+
+- [[devonte-graham|Devonte' Graham]] '20 (94% similar)
+- [[david-wesley|David Wesley]] '07 (92% similar)
+- [[mike-james|Mike James]] '06 (92% similar)
+- [[chucky-atkins|Chucky Atkins]] '08 (91% similar)
+- [[randy-foye|Randy Foye]] '12 (90% similar)
+- [[derek-anderson|Derek Anderson]] '01 (90% similar)
+
+**Career shape:** Charted 9 seasons (1996-97–2007-08). Entered as a Scoring Volume + Shot Volume profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

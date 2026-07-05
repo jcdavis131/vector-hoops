@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jonas-valanciunas|Jonas Valančiūnas]] — cosine 0.85
 - [[amar-e-stoudemire|Amar'e Stoudemire]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 23.7 pts · 12.6 reb · 3.3 ast · 1.8 stl per 100 (1998-99).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.9σ)
+- Three-point accuracy well below era (−1.1σ)
+
+**Comparables:**
+
+- [[carlos-boozer|Carlos Boozer]] '07 (86% similar)
+- [[boban-marjanovic|Boban Marjanovic]] '18 (86% similar)
+- [[david-west|David West]] '18 (85% similar)
+- [[luis-scola|Luis Scola]] '11 (85% similar)
+- [[jonas-valanciunas|Jonas Valančiūnas]] '26 (85% similar)
+- [[amar-e-stoudemire|Amar'e Stoudemire]] '08 (82% similar)
+
+**Career shape:** Charted 2 seasons (1997-98–1998-99). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -38,6 +38,32 @@ Closest career shapes in the era-normalized vector space:
 - [[alvin-williams|Alvin Williams]] — cosine 0.91
 - [[gerald-madkins|Gerald Madkins]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** PG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 18.9 pts · 6.0 reb · 6.4 ast · 1.1 stl per 100 (2003-04).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+2.2σ vs era)
+- Strong net on-court impact (+1.4σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[anthony-johnson|Anthony Johnson]] '02 (97% similar)
+- [[cory-joseph|Cory Joseph]] '24 (93% similar)
+- [[jerian-grant|Jerian Grant]] '19 (92% similar)
+- [[c-j-watson|C.J. Watson]] '11 (92% similar)
+- [[alvin-williams|Alvin Williams]] '01 (91% similar)
+- [[gerald-madkins|Gerald Madkins]] '98 (91% similar)
+
+**Career shape:** Charted 5 seasons (2002-03–2006-07). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

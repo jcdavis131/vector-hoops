@@ -47,6 +47,33 @@ Closest career shapes in the era-normalized vector space:
 - [[steven-smith|Steven Smith]] — cosine 0.84
 - [[danny-granger|Danny Granger]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** SF · Scoring Volume + Shot Volume. Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 27.8 pts · 7.5 reb · 3.6 ast · 1.1 stl per 100 (2015-16).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+3.1σ vs era)
+- Featured, high-usage scoring role (+1.4σ vs era)
+- Reliable touch from the free-throw line (+1.0σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[kevin-martin|Kevin Martin]] '11 (87% similar)
+- [[alec-burks|Alec Burks]] '24 (86% similar)
+- [[reggie-miller|Reggie Miller]] '98 (86% similar)
+- [[glen-rice|Glen Rice]] '97 (86% similar)
+- [[steven-smith|Steven Smith]] '99 (84% similar)
+- [[danny-granger|Danny Granger]] '09 (83% similar)
+
+**Career shape:** Charted 14 seasons (2008-09–2023-24). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

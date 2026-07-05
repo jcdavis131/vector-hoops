@@ -39,6 +39,34 @@ Closest career shapes in the era-normalized vector space:
 - [[cason-wallace|Cason Wallace]] — cosine 0.85
 - [[javonte-green|Javonte Green]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 9.3 pts · 4.5 reb · 2.3 ast · 3.8 stl per 100 (2020-21).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+4.0σ vs era)
+- Elite rim protection (+1.8σ vs era)
+- Rarely turns the ball over (−1.2σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.8σ)
+- Scoring load well below era (−1.7σ)
+
+**Comparables:**
+
+- [[keon-ellis|Keon Ellis]] '25 (93% similar)
+- [[myke-henry|Myke Henry]] '18 (90% similar)
+- [[herbert-jones|Herbert Jones]] '22 (89% similar)
+- [[thabo-sefolosha|Thabo Sefolosha]] '20 (85% similar)
+- [[cason-wallace|Cason Wallace]] '26 (85% similar)
+- [[javonte-green|Javonte Green]] '26 (85% similar)
+
+**Career shape:** Charted 6 seasons (2019-20–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -35,6 +35,33 @@ Closest career shapes in the era-normalized vector space:
 - [[kasparas-jakucionis|Kasparas Jakučionis]] — cosine 0.80
 - [[monte-morris|Monte Morris]] — cosine 0.80
 
+## Scouting report
+
+**Play style:** SG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 21.9 pts · 5.0 reb · 11.0 ast · 1.4 stl per 100 (2025-26).
+
+**Strengths:**
+
+- High-volume table-setter (+2.4σ vs era)
+- Reliable touch from the free-throw line (+1.6σ vs era)
+- Knockdown three-point shooter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.0σ)
+
+**Comparables:**
+
+- [[yogi-ferrell|Yogi Ferrell]] '19 (85% similar)
+- [[george-hill|George Hill]] '22 (82% similar)
+- [[brian-roberts|Brian Roberts]] '13 (81% similar)
+- [[d-j-augustin|D.J. Augustin]] '12 (81% similar)
+- [[kasparas-jakucionis|Kasparas Jakučionis]] '26 (80% similar)
+- [[monte-morris|Monte Morris]] '24 (80% similar)
+
+**Career shape:** Charted 2 seasons (2024-25–2025-26). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Playmaking + Steals identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

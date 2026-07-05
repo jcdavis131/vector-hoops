@@ -41,6 +41,33 @@ Closest career shapes in the era-normalized vector space:
 - [[david-benoit|David Benoit]] — cosine 0.88
 - [[kelan-martin|Kelan Martin]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** PF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 21.1 pts · 9.1 reb · 1.4 ast · 0.9 stl per 100 (2008-09).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.5σ vs era)
+- Heavy shot volume, focal scoring option (+1.3σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.8σ)
+- Finishing efficiency well below era (−1.2σ)
+
+**Comparables:**
+
+- [[channing-frye|Channing Frye]] '19 (93% similar)
+- [[quinten-post|Quinten Post]] '25 (92% similar)
+- [[wilson-chandler|Wilson Chandler]] '20 (89% similar)
+- [[mirza-teletovic|Mirza Teletovic]] '17 (89% similar)
+- [[david-benoit|David Benoit]] '98 (88% similar)
+- [[kelan-martin|Kelan Martin]] '21 (87% similar)
+
+**Career shape:** Charted 8 seasons (2003-04–2011-12). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

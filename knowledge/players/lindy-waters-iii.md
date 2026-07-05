@@ -38,6 +38,33 @@ Closest career shapes in the era-normalized vector space:
 - [[james-jones|James Jones]] — cosine 0.93
 - [[davis-bertans|Davis Bertans]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 18.6 pts · 6.5 reb · 2.4 ast · 1.2 stl per 100 (2022-23).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.2σ vs era)
+- Strong net on-court impact (+2.1σ vs era)
+- Rarely turns the ball over (−1.6σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.0σ)
+
+**Comparables:**
+
+- [[matt-bullard|Matt Bullard]] '01 (97% similar)
+- [[daequan-cook|Daequan Cook]] '11 (96% similar)
+- [[richie-frahm|Richie Frahm]] '04 (95% similar)
+- [[dennis-scott|Dennis Scott]] '00 (95% similar)
+- [[james-jones|James Jones]] '14 (93% similar)
+- [[davis-bertans|Davis Bertans]] '24 (93% similar)
+
+**Career shape:** Charted 5 seasons (2021-22–2025-26). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

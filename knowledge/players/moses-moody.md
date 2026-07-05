@@ -38,6 +38,31 @@ Closest career shapes in the era-normalized vector space:
 - [[maurice-evans|Maurice Evans]] — cosine 0.89
 - [[jaylen-wells|Jaylen Wells]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 17.8 pts · 6.2 reb · 1.8 ast · 0.8 blk per 100 (2021-22).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.4σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.7σ)
+
+**Comparables:**
+
+- [[james-jones|James Jones]] '14 (92% similar)
+- [[luguentz-dort|Luguentz Dort]] '25 (91% similar)
+- [[landry-shamet|Landry Shamet]] '20 (90% similar)
+- [[aaron-nesmith|Aaron Nesmith]] '25 (90% similar)
+- [[maurice-evans|Maurice Evans]] '11 (89% similar)
+- [[jaylen-wells|Jaylen Wells]] '25 (88% similar)
+
+**Career shape:** Charted 5 seasons (2021-22–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

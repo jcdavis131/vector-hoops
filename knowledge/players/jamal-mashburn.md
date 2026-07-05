@@ -41,6 +41,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jayson-tatum|Jayson Tatum]] — cosine 0.88
 - [[isaiah-rider|Isaiah Rider]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 28.4 pts · 8.4 reb · 3.4 ast · 1.0 stl per 100 (2003-04).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+2.8σ vs era)
+- Featured, high-usage scoring role (+1.8σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.0σ)
+
+**Comparables:**
+
+- [[tyler-herro|Tyler Herro]] '22 (94% similar)
+- [[desmond-bane|Desmond Bane]] '24 (90% similar)
+- [[latrell-sprewell|Latrell Sprewell]] '97 (89% similar)
+- [[jamal-murray|Jamal Murray]] '26 (88% similar)
+- [[jayson-tatum|Jayson Tatum]] '23 (88% similar)
+- [[isaiah-rider|Isaiah Rider]] '00 (88% similar)
+
+**Career shape:** Charted 8 seasons (1996-97–2003-04). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

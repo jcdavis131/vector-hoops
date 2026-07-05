@@ -37,6 +37,32 @@ Closest career shapes in the era-normalized vector space:
 - [[kevin-ollie|Kevin Ollie]] — cosine 0.79
 - [[trent-forrest|Trent Forrest]] — cosine 0.77
 
+## Scouting report
+
+**Play style:** PG · Offensive Glass (Low On-Court Impact). Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 8.6 pts · 6.6 reb · 6.1 ast · 1.0 stl per 100 (2005-06).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+1.1σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−4.0σ)
+- Shot volume well below era (−2.0σ)
+
+**Comparables:**
+
+- [[mckinley-wright-iv|McKinley Wright IV]] '23 (85% similar)
+- [[elie-okobo|Elie Okobo]] '19 (84% similar)
+- [[bimbo-coles|Bimbo Coles]] '04 (80% similar)
+- [[charles-jenkins|Charles Jenkins]] '12 (80% similar)
+- [[kevin-ollie|Kevin Ollie]] '10 (79% similar)
+- [[trent-forrest|Trent Forrest]] '23 (77% similar)
+
+**Career shape:** Charted 4 seasons (2001-02–2005-06). Entered as a Playmaking + Steals profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

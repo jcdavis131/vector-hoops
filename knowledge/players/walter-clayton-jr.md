@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[bobby-hurley|Bobby Hurley]] — cosine 0.88
 - [[sebastian-telfair|Sebastian Telfair]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 17.7 pts · 4.6 reb · 9.2 ast · 1.4 stl per 100 (2025-26).
+
+**Strengths:**
+
+- High-volume table-setter (+1.7σ vs era)
+- Reliable touch from the free-throw line (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.2σ)
+- On-court net impact well below era (−1.1σ)
+
+**Comparables:**
+
+- [[vasilije-micic|Vasilije Micic]] '25 (91% similar)
+- [[jonny-flynn|Jonny Flynn]] '11 (90% similar)
+- [[nicolas-laprovittola|Nicolas Laprovittola]] '17 (89% similar)
+- [[mateen-cleaves|Mateen Cleaves]] '02 (88% similar)
+- [[bobby-hurley|Bobby Hurley]] '97 (88% similar)
+- [[sebastian-telfair|Sebastian Telfair]] '10 (87% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

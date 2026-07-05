@@ -36,6 +36,34 @@ Closest career shapes in the era-normalized vector space:
 - [[quentin-richardson|Quentin Richardson]] — cosine 0.76
 - [[jason-richardson|Jason Richardson]] — cosine 0.76
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 22.2 pts · 11.9 reb · 3.9 ast · 0.8 stl per 100 (2011-12).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.6σ vs era)
+- Strong presence on the defensive glass (+1.3σ vs era)
+- Heavy shot volume, focal scoring option (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.3σ)
+- Rim pressure (free-throw generation) well below era (−1.4σ)
+
+**Comparables:**
+
+- [[patrick-baldwin-jr|Patrick Baldwin Jr.]] '23 (86% similar)
+- [[nick-anderson|Nick Anderson]] '01 (84% similar)
+- [[charlie-villanueva|Charlie Villanueva]] '14 (79% similar)
+- [[antoine-walker|Antoine Walker]] '01 (77% similar)
+- [[quentin-richardson|Quentin Richardson]] '05 (76% similar)
+- [[jason-richardson|Jason Richardson]] '06 (76% similar)
+
+**Career shape:** Charted 3 seasons (2011-12–2013-14). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -37,6 +37,32 @@ Closest career shapes in the era-normalized vector space:
 - [[eric-washington|Eric Washington]] — cosine 0.88
 - [[mychal-mulder|Mychal Mulder]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 14.1 pts · 5.8 reb · 2.0 ast · 1.1 stl per 100 (2008-09).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.9σ)
+- On-court net impact well below era (−1.5σ)
+
+**Comparables:**
+
+- [[pj-hairston|PJ Hairston]] '15 (91% similar)
+- [[kevin-knox-ii|Kevin Knox II]] '22 (90% similar)
+- [[jordan-hawkins|Jordan Hawkins]] '25 (89% similar)
+- [[armoni-brooks|Armoni Brooks]] '21 (88% similar)
+- [[eric-washington|Eric Washington]] '98 (88% similar)
+- [[mychal-mulder|Mychal Mulder]] '22 (86% similar)
+
+**Career shape:** Charted 4 seasons (2008-09–2011-12). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

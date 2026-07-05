@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jamal-shead|Jamal Shead]] — cosine 0.93
 - [[tim-frazier|Tim Frazier]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 11.2 pts · 3.0 reb · 11.4 ast · 2.1 stl per 100 (1996-97).
+
+**Strengths:**
+
+- High-volume table-setter (+2.5σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.5σ)
+- Shot volume well below era (−1.4σ)
+
+**Comparables:**
+
+- [[marcelo-huertas|Marcelo Huertas]] '17 (95% similar)
+- [[eric-maynor|Eric Maynor]] '14 (95% similar)
+- [[malcolm-delaney|Malcolm Delaney]] '17 (94% similar)
+- [[kendall-marshall|Kendall Marshall]] '14 (93% similar)
+- [[jamal-shead|Jamal Shead]] '26 (93% similar)
+- [[tim-frazier|Tim Frazier]] '20 (93% similar)
+
+**Career shape:** Charted 2 seasons (1996-97–1997-98). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

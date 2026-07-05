@@ -37,6 +37,32 @@ Closest career shapes in the era-normalized vector space:
 - [[brandon-goodwin|Brandon Goodwin]] — cosine 0.75
 - [[mike-taylor|Mike Taylor]] — cosine 0.75
 
+## Scouting report
+
+**Play style:** SG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 18.7 pts · 9.0 reb · 6.7 ast · 1.6 stl per 100 (2010-11).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Turnover rate well above era (+3.0σ)
+- On-court net impact well below era (−1.8σ)
+
+**Comparables:**
+
+- [[lance-stephenson|Lance Stephenson]] '12 (84% similar)
+- [[rob-dillingham|Rob Dillingham]] '25 (78% similar)
+- [[jay-williams|Jay Williams]] '03 (78% similar)
+- [[jeremy-pargo|Jeremy Pargo]] '12 (76% similar)
+- [[brandon-goodwin|Brandon Goodwin]] '20 (75% similar)
+- [[mike-taylor|Mike Taylor]] '09 (75% similar)
+
+**Career shape:** Charted 4 seasons (2009-10–2012-13). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Playmaking + Steals identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

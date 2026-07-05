@@ -50,6 +50,34 @@ Closest career shapes in the era-normalized vector space:
 - [[dan-gadzuric|Dan Gadzuric]] — cosine 0.93
 - [[jeremy-tyler|Jeremy Tyler]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 10.5 pts · 14.8 reb · 1.2 ast · 2.0 blk per 100 (2014-15).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+1.5σ vs era)
+- Relentless on the offensive glass (+1.1σ vs era)
+- Elite rim protection (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−3.1σ)
+- Three-point accuracy well below era (−1.8σ)
+
+**Comparables:**
+
+- [[emeka-okafor|Emeka Okafor]] '18 (95% similar)
+- [[precious-achiuwa|Precious Achiuwa]] '21 (95% similar)
+- [[kosta-koufos|Kosta Koufos]] '19 (95% similar)
+- [[moussa-cisse|Moussa Cisse]] '26 (94% similar)
+- [[dan-gadzuric|Dan Gadzuric]] '05 (93% similar)
+- [[jeremy-tyler|Jeremy Tyler]] '14 (93% similar)
+
+**Career shape:** Charted 17 seasons (1998-99–2014-15). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

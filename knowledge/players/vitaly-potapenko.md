@@ -43,6 +43,32 @@ Closest career shapes in the era-normalized vector space:
 - [[lonny-baxter|Lonny Baxter]] — cosine 0.89
 - [[dexter-pittman|Dexter Pittman]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 12.5 pts · 9.5 reb · 1.3 ast · 0.3 stl per 100 (2005-06).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.9σ)
+- Three-point accuracy well below era (−1.3σ)
+
+**Comparables:**
+
+- [[othella-harrington|Othella Harrington]] '99 (92% similar)
+- [[otis-thorpe|Otis Thorpe]] '01 (91% similar)
+- [[ivan-rabb|Ivan Rabb]] '18 (90% similar)
+- [[mario-kasun|Mario Kasun]] '05 (90% similar)
+- [[lonny-baxter|Lonny Baxter]] '06 (89% similar)
+- [[dexter-pittman|Dexter Pittman]] '12 (88% similar)
+
+**Career shape:** Charted 10 seasons (1996-97–2005-06). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

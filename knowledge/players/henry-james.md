@@ -35,6 +35,34 @@ Closest career shapes in the era-normalized vector space:
 - [[glen-rice|Glen Rice]] — cosine 0.91
 - [[bryn-forbes|Bryn Forbes]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** PF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 23.9 pts · 4.5 reb · 1.5 ast · 0.3 stl per 100 (1997-98).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+1.9σ vs era)
+- High-volume three-point shooter (+1.8σ vs era)
+- Knockdown three-point shooter (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−2.2σ)
+- Offensive-glass activity well below era (−1.3σ)
+
+**Comparables:**
+
+- [[lj-cryer|LJ Cryer]] '26 (97% similar)
+- [[eddie-johnson|Eddie Johnson]] '98 (94% similar)
+- [[andrew-goudelock|Andrew Goudelock]] '12 (93% similar)
+- [[duncan-robinson|Duncan Robinson]] '20 (91% similar)
+- [[glen-rice|Glen Rice]] '97 (91% similar)
+- [[bryn-forbes|Bryn Forbes]] '17 (91% similar)
+
+**Career shape:** Charted 2 seasons (1996-97–1997-98). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

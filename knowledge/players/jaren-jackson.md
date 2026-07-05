@@ -38,6 +38,33 @@ Closest career shapes in the era-normalized vector space:
 - [[lindy-waters-iii|Lindy Waters III]] — cosine 0.89
 - [[svi-mykhailiuk|Svi Mykhailiuk]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 17.0 pts · 5.2 reb · 3.1 ast · 2.2 stl per 100 (2000-01).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.9σ vs era)
+- Rarely turns the ball over (−1.9σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−4.0σ)
+- Rim pressure (free-throw generation) well below era (−1.7σ)
+
+**Comparables:**
+
+- [[cartier-martin|Cartier Martin]] '15 (92% similar)
+- [[kevin-huerter|Kevin Huerter]] '23 (92% similar)
+- [[keith-bogans|Keith Bogans]] '13 (90% similar)
+- [[quentin-grimes|Quentin Grimes]] '24 (89% similar)
+- [[lindy-waters-iii|Lindy Waters III]] '23 (89% similar)
+- [[svi-mykhailiuk|Svi Mykhailiuk]] '24 (89% similar)
+
+**Career shape:** Charted 5 seasons (1996-97–2000-01). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

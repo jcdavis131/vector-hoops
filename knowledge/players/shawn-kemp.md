@@ -40,6 +40,33 @@ Closest career shapes in the era-normalized vector space:
 - [[alperen-sengun|Alperen Sengun]] — cosine 0.84
 - [[malik-rose|Malik Rose]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 28.6 pts · 14.2 reb · 2.7 ast · 2.0 stl per 100 (1999-00).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+3.2σ vs era)
+- Featured, high-usage scoring role (+1.8σ vs era)
+- Heavy shot volume, focal scoring option (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.8σ)
+
+**Comparables:**
+
+- [[demarcus-cousins|DeMarcus Cousins]] '15 (94% similar)
+- [[joel-embiid|Joel Embiid]] '17 (89% similar)
+- [[chris-gatling|Chris Gatling]] '97 (88% similar)
+- [[giannis-antetokounmpo|Giannis Antetokounmpo]] '20 (85% similar)
+- [[alperen-sengun|Alperen Sengun]] '25 (84% similar)
+- [[malik-rose|Malik Rose]] '99 (84% similar)
+
+**Career shape:** Charted 7 seasons (1996-97–2002-03). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

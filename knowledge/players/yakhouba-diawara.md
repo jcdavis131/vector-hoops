@@ -36,6 +36,33 @@ Closest career shapes in the era-normalized vector space:
 - [[casey-jacobsen|Casey Jacobsen]] — cosine 0.91
 - [[keith-bogans|Keith Bogans]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 13.2 pts · 5.1 reb · 1.7 ast · 0.8 stl per 100 (2008-09).
+
+**Strengths:**
+
+- Rarely turns the ball over (−2.0σ vs era)
+- High-volume three-point shooter (+2.0σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.6σ)
+- Finishing efficiency well below era (−1.5σ)
+
+**Comparables:**
+
+- [[joe-wieskamp|Joe Wieskamp]] '22 (93% similar)
+- [[rodney-mcgruder|Rodney McGruder]] '18 (92% similar)
+- [[damjan-rudez|Damjan Rudez]] '17 (92% similar)
+- [[axel-toupane|Axel Toupane]] '16 (91% similar)
+- [[casey-jacobsen|Casey Jacobsen]] '08 (91% similar)
+- [[keith-bogans|Keith Bogans]] '13 (90% similar)
+
+**Career shape:** Charted 3 seasons (2006-07–2008-09). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

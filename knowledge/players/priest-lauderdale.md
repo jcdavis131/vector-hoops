@@ -35,6 +35,34 @@ Closest career shapes in the era-normalized vector space:
 - [[darius-miles|Darius Miles]] — cosine 0.78
 - [[jerome-james|Jerome James]] — cosine 0.77
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 25.9 pts · 10.0 reb · 2.8 ast · 2.1 blk per 100 (1996-97).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+1.8σ vs era)
+- Featured, high-usage scoring role (+1.2σ vs era)
+- Heavy shot volume, focal scoring option (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+4.0σ)
+- Ball-hawking activity well below era (−2.1σ)
+
+**Comparables:**
+
+- [[sharone-wright|Sharone Wright]] '97 (80% similar)
+- [[thomas-hamilton|Thomas Hamilton]] '00 (80% similar)
+- [[rony-seikaly|Rony Seikaly]] '97 (79% similar)
+- [[chris-kaman|Chris Kaman]] '08 (79% similar)
+- [[darius-miles|Darius Miles]] '05 (78% similar)
+- [[jerome-james|Jerome James]] '06 (77% similar)
+
+**Career shape:** Charted 2 seasons (1996-97–1997-98). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

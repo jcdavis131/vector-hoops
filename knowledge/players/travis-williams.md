@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[oscar-tshiebwe|Oscar Tshiebwe]] — cosine 0.77
 - [[thanasis-antetokounmpo|Thanasis Antetokounmpo]] — cosine 0.77
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass + Defensive Glass. Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 19.2 pts · 13.0 reb · 2.8 ast · 2.5 stl per 100 (1997-98).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+2.6σ vs era)
+- Active hands, disrupts passing lanes (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.7σ)
+- Three-point accuracy well below era (−1.3σ)
+
+**Comparables:**
+
+- [[thomas-robinson|Thomas Robinson]] '16 (86% similar)
+- [[dejuan-blair|DeJuan Blair]] '16 (84% similar)
+- [[brandon-hunter|Brandon Hunter]] '05 (80% similar)
+- [[andre-brown|Andre Brown]] '08 (78% similar)
+- [[oscar-tshiebwe|Oscar Tshiebwe]] '26 (77% similar)
+- [[thanasis-antetokounmpo|Thanasis Antetokounmpo]] '24 (77% similar)
+
+**Career shape:** Charted 1 season (1997-98). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -37,6 +37,33 @@ Closest career shapes in the era-normalized vector space:
 - [[ryan-rollins|Ryan Rollins]] — cosine 0.90
 - [[marcus-sasser|Marcus Sasser]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 27.6 pts · 5.4 reb · 5.1 ast · 2.0 stl per 100 (2009-10).
+
+**Strengths:**
+
+- Featured, high-usage scoring role (+1.4σ vs era)
+- High-volume three-point shooter (+1.2σ vs era)
+- Heavy shot volume, focal scoring option (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.1σ)
+
+**Comparables:**
+
+- [[jannero-pargo|Jannero Pargo]] '14 (91% similar)
+- [[bones-hyland|Bones Hyland]] '25 (91% similar)
+- [[tim-hardaway|Tim Hardaway]] '97 (90% similar)
+- [[jordan-farmar|Jordan Farmar]] '14 (90% similar)
+- [[ryan-rollins|Ryan Rollins]] '26 (90% similar)
+- [[marcus-sasser|Marcus Sasser]] '26 (89% similar)
+
+**Career shape:** Charted 4 seasons (2009-10–2012-13). Consistent Scoring Volume + Shot Volume profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

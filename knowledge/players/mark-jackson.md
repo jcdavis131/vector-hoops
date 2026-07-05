@@ -41,6 +41,31 @@ Closest career shapes in the era-normalized vector space:
 - [[chris-chiozza|Chris Chiozza]] — cosine 0.89
 - [[greivis-vasquez|Greivis Vasquez]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 13.5 pts · 6.2 reb · 13.3 ast · 1.7 stl per 100 (2002-03).
+
+**Strengths:**
+
+- High-volume table-setter (+3.4σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.6σ)
+
+**Comparables:**
+
+- [[tyler-kolek|Tyler Kolek]] '25 (92% similar)
+- [[chris-childs|Chris Childs]] '02 (92% similar)
+- [[ryan-nembhard|Ryan Nembhard]] '26 (91% similar)
+- [[tim-frazier|Tim Frazier]] '20 (90% similar)
+- [[chris-chiozza|Chris Chiozza]] '22 (89% similar)
+- [[greivis-vasquez|Greivis Vasquez]] '13 (88% similar)
+
+**Career shape:** Charted 8 seasons (1996-97–2003-04). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

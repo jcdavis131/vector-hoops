@@ -38,6 +38,33 @@ Closest career shapes in the era-normalized vector space:
 - [[kedrick-brown|Kedrick Brown]] — cosine 0.80
 - [[gary-payton-ii|Gary Payton II]] — cosine 0.80
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass + Defensive Glass. Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 14.8 pts · 9.2 reb · 3.1 ast · 2.9 stl per 100 (2000-01).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.1σ vs era)
+- Rarely turns the ball over (−2.0σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.8σ)
+- Three-point accuracy well below era (−1.4σ)
+
+**Comparables:**
+
+- [[xavier-tillman|Xavier Tillman]] '26 (83% similar)
+- [[dyson-daniels|Dyson Daniels]] '25 (82% similar)
+- [[adrian-griffin|Adrian Griffin]] '04 (82% similar)
+- [[ronnie-brewer|Ronnie Brewer]] '14 (82% similar)
+- [[kedrick-brown|Kedrick Brown]] '02 (80% similar)
+- [[gary-payton-ii|Gary Payton II]] '20 (80% similar)
+
+**Career shape:** Charted 5 seasons (1996-97–2000-01). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

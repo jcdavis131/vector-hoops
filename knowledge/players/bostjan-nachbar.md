@@ -38,6 +38,32 @@ Closest career shapes in the era-normalized vector space:
 - [[dermarr-johnson|DerMarr Johnson]] — cosine 0.87
 - [[george-mccloud|George McCloud]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 14.2 pts · 7.2 reb · 3.1 ast · 1.4 stl per 100 (2003-04).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.3σ)
+- Offensive-glass activity well below era (−1.1σ)
+
+**Comparables:**
+
+- [[daequan-cook|Daequan Cook]] '11 (90% similar)
+- [[martell-webster|Martell Webster]] '15 (89% similar)
+- [[walt-williams|Walt Williams]] '03 (88% similar)
+- [[tracy-murray|Tracy Murray]] '02 (87% similar)
+- [[dermarr-johnson|DerMarr Johnson]] '07 (87% similar)
+- [[george-mccloud|George McCloud]] '98 (86% similar)
+
+**Career shape:** Charted 5 seasons (2003-04–2007-08). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

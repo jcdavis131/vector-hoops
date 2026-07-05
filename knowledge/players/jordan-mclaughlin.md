@@ -40,6 +40,34 @@ Closest career shapes in the era-normalized vector space:
 - [[anthony-johnson|Anthony Johnson]] — cosine 0.91
 - [[gerald-madkins|Gerald Madkins]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** PG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 14.9 pts · 5.5 reb · 8.4 ast · 2.7 stl per 100 (2023-24).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.1σ vs era)
+- Strong net on-court impact (+1.8σ vs era)
+- High-volume table-setter (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.1σ)
+- Rim pressure (free-throw generation) well below era (−1.0σ)
+
+**Comparables:**
+
+- [[shane-larkin|Shane Larkin]] '16 (94% similar)
+- [[tyus-jones|Tyus Jones]] '18 (93% similar)
+- [[pablo-prigioni|Pablo Prigioni]] '16 (93% similar)
+- [[marko-jaric|Marko Jaric]] '03 (92% similar)
+- [[anthony-johnson|Anthony Johnson]] '02 (91% similar)
+- [[gerald-madkins|Gerald Madkins]] '98 (91% similar)
+
+**Career shape:** Charted 7 seasons (2019-20–2025-26). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

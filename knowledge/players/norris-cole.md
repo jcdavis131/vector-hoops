@@ -38,6 +38,32 @@ Closest career shapes in the era-normalized vector space:
 - [[andrew-nembhard|Andrew Nembhard]] — cosine 0.88
 - [[elliot-perry|Elliot Perry]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 13.6 pts · 4.1 reb · 6.4 ast · 2.0 stl per 100 (2013-14).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Offensive-glass activity well below era (−1.1σ)
+- Rim pressure (free-throw generation) well below era (−1.1σ)
+
+**Comparables:**
+
+- [[tyler-ennis|Tyler Ennis]] '15 (92% similar)
+- [[anthony-johnson|Anthony Johnson]] '02 (92% similar)
+- [[shelvin-mack|Shelvin Mack]] '16 (92% similar)
+- [[howard-eisley|Howard Eisley]] '03 (88% similar)
+- [[andrew-nembhard|Andrew Nembhard]] '26 (88% similar)
+- [[elliot-perry|Elliot Perry]] '99 (88% similar)
+
+**Career shape:** Charted 5 seasons (2011-12–2015-16). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

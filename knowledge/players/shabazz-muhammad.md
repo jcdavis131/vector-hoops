@@ -38,6 +38,33 @@ Closest career shapes in the era-normalized vector space:
 - [[derrick-williams|Derrick Williams]] — cosine 0.76
 - [[chris-crawford|Chris Crawford]] — cosine 0.74
 
+## Scouting report
+
+**Play style:** SG · Defensive Glass + Rim Pressure (Fts). Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 29.1 pts · 8.8 reb · 2.5 ast · 1.0 stl per 100 (2014-15).
+
+**Strengths:**
+
+- Featured, high-usage scoring role (+1.7σ vs era)
+- Draws contact, gets to the line often (+1.7σ vs era)
+- Heavy shot volume, focal scoring option (+1.4σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.1σ)
+
+**Comparables:**
+
+- [[al-thornton|Al Thornton]] '09 (88% similar)
+- [[eric-paschall|Eric Paschall]] '20 (87% similar)
+- [[keldon-johnson|Keldon Johnson]] '23 (87% similar)
+- [[don-maclean|Don MacLean]] '99 (77% similar)
+- [[derrick-williams|Derrick Williams]] '16 (76% similar)
+- [[chris-crawford|Chris Crawford]] '98 (74% similar)
+
+**Career shape:** Charted 5 seasons (2013-14–2017-18). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

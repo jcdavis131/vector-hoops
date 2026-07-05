@@ -46,6 +46,33 @@ Closest career shapes in the era-normalized vector space:
 - [[rony-seikaly|Rony Seikaly]] — cosine 0.88
 - [[anthony-davis|Anthony Davis]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 36.5 pts · 13.2 reb · 2.2 ast · 3.0 blk per 100 (2007-08).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+3.2σ vs era)
+- Featured, high-usage scoring role (+2.9σ vs era)
+- Efficient finisher inside the arc (+2.2σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[yao-ming|Yao Ming]] '07 (93% similar)
+- [[shaquille-o-neal|Shaquille O'Neal]] '98 (92% similar)
+- [[chris-bosh|Chris Bosh]] '10 (91% similar)
+- [[boban-marjanovic|Boban Marjanovic]] '18 (90% similar)
+- [[rony-seikaly|Rony Seikaly]] '97 (88% similar)
+- [[anthony-davis|Anthony Davis]] '15 (87% similar)
+
+**Career shape:** Charted 13 seasons (2002-03–2015-16). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

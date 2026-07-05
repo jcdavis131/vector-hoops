@@ -36,6 +36,31 @@ Closest career shapes in the era-normalized vector space:
 - [[voshon-lenard|Voshon Lenard]] — cosine 0.87
 - [[walt-williams|Walt Williams]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 19.4 pts · 5.5 reb · 4.1 ast · 1.5 stl per 100 (2000-01).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.7σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.1σ)
+
+**Comparables:**
+
+- [[jr-smith|JR Smith]] '08 (93% similar)
+- [[cj-miles|CJ Miles]] '18 (92% similar)
+- [[vernon-maxwell|Vernon Maxwell]] '00 (92% similar)
+- [[marcus-brown|Marcus Brown]] '97 (89% similar)
+- [[voshon-lenard|Voshon Lenard]] '97 (87% similar)
+- [[walt-williams|Walt Williams]] '03 (86% similar)
+
+**Career shape:** Charted 3 seasons (1996-97–2000-01). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

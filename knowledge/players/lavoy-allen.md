@@ -39,6 +39,32 @@ Closest career shapes in the era-normalized vector space:
 - [[horace-grant|Horace Grant]] — cosine 0.89
 - [[p-j-brown|P.J. Brown]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 9.9 pts · 12.3 reb · 3.2 ast · 1.3 blk per 100 (2016-17).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+2.2σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.2σ)
+- Scoring load well below era (−1.6σ)
+
+**Comparables:**
+
+- [[joel-freeland|Joel Freeland]] '15 (98% similar)
+- [[mark-bradtke|Mark Bradtke]] '97 (92% similar)
+- [[dale-davis|Dale Davis]] '06 (90% similar)
+- [[kevon-looney|Kevon Looney]] '23 (90% similar)
+- [[horace-grant|Horace Grant]] '01 (89% similar)
+- [[p-j-brown|P.J. Brown]] '08 (89% similar)
+
+**Career shape:** Charted 6 seasons (2011-12–2016-17). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

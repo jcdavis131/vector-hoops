@@ -36,6 +36,33 @@ Closest career shapes in the era-normalized vector space:
 - [[samaki-walker|Samaki Walker]] — cosine 0.91
 - [[mitch-mcgary|Mitch McGary]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 16.6 pts · 13.9 reb · 2.3 ast · 1.5 blk per 100 (2001-02).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+1.2σ vs era)
+- Efficient finisher inside the arc (+1.1σ vs era)
+- Strong presence on the defensive glass (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.3σ)
+
+**Comparables:**
+
+- [[jj-hickson|JJ Hickson]] '16 (93% similar)
+- [[jason-thompson|Jason Thompson]] '15 (93% similar)
+- [[moses-brown|Moses Brown]] '23 (92% similar)
+- [[tony-massenburg|Tony Massenburg]] '02 (91% similar)
+- [[samaki-walker|Samaki Walker]] '02 (91% similar)
+- [[mitch-mcgary|Mitch McGary]] '16 (91% similar)
+
+**Career shape:** Charted 3 seasons (2001-02–2003-04). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

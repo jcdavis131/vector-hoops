@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[isaac-bonga|Isaac Bonga]] — cosine 0.84
 - [[cameron-bairstow|Cameron Bairstow]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 7.9 pts · 8.5 reb · 1.6 ast · 2.6 stl per 100 (2021-22).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.8σ vs era)
+- Reliable touch from the free-throw line (+1.2σ vs era)
+- Rarely turns the ball over (−1.1σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.6σ)
+- Three-point accuracy well below era (−2.2σ)
+
+**Comparables:**
+
+- [[tremaine-fowlkes|Tremaine Fowlkes]] '04 (86% similar)
+- [[anthony-avent|Anthony Avent]] '00 (86% similar)
+- [[julian-washburn|Julian Washburn]] '19 (85% similar)
+- [[david-duke-jr|David Duke Jr.]] '23 (84% similar)
+- [[isaac-bonga|Isaac Bonga]] '19 (84% similar)
+- [[cameron-bairstow|Cameron Bairstow]] '15 (82% similar)
+
+**Career shape:** Charted 1 season (2021-22). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -37,6 +37,34 @@ Closest career shapes in the era-normalized vector space:
 - [[trevor-booker|Trevor Booker]] — cosine 0.94
 - [[tristan-thompson|Tristan Thompson]] — cosine 0.94
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 15.8 pts · 14.3 reb · 1.1 ast · 2.6 blk per 100 (2017-18).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+2.1σ vs era)
+- Efficient finisher inside the arc (+1.9σ vs era)
+- Elite rim protection (+1.8σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.3σ)
+- Three-point accuracy well below era (−1.6σ)
+
+**Comparables:**
+
+- [[josh-boone|Josh Boone]] '10 (96% similar)
+- [[ed-davis|Ed Davis]] '22 (95% similar)
+- [[deandre-jordan|DeAndre Jordan]] '16 (94% similar)
+- [[precious-achiuwa|Precious Achiuwa]] '21 (94% similar)
+- [[trevor-booker|Trevor Booker]] '13 (94% similar)
+- [[tristan-thompson|Tristan Thompson]] '25 (94% similar)
+
+**Career shape:** Charted 4 seasons (2014-15–2017-18). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

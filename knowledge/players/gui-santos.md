@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[popeye-jones|Popeye Jones]] — cosine 0.64
 - [[dennis-rodman|Dennis Rodman]] — cosine 0.61
 
+## Scouting report
+
+**Play style:** PF · Three-Point Accuracy (Low Turnovers). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 14.3 pts · 10.9 reb · 5.1 ast · 1.6 stl per 100 (2024-25).
+
+**Strengths:**
+
+- Strong net on-court impact (+1.6σ vs era)
+- Relentless on the offensive glass (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.1σ)
+
+**Comparables:**
+
+- [[myron-gardner|Myron Gardner]] '26 (72% similar)
+- [[larry-stewart|Larry Stewart]] '97 (71% similar)
+- [[drew-peterson|Drew Peterson]] '25 (69% similar)
+- [[jaylon-tyson|Jaylon Tyson]] '25 (65% similar)
+- [[popeye-jones|Popeye Jones]] '03 (64% similar)
+- [[dennis-rodman|Dennis Rodman]] '97 (61% similar)
+
+**Career shape:** Charted 3 seasons (2023-24–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -38,6 +38,33 @@ Closest career shapes in the era-normalized vector space:
 - [[deron-williams|Deron Williams]] — cosine 0.90
 - [[jrue-holiday|Jrue Holiday]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 29.1 pts · 5.1 reb · 14.7 ast · 2.3 stl per 100 (2022-23).
+
+**Strengths:**
+
+- High-volume table-setter (+3.8σ vs era)
+- Active hands, disrupts passing lanes (+1.7σ vs era)
+- Featured, high-usage scoring role (+1.2σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[terrell-brandon|Terrell Brandon]] '02 (91% similar)
+- [[mike-conley|Mike Conley]] '13 (90% similar)
+- [[chris-paul|Chris Paul]] '09 (90% similar)
+- [[gary-payton|Gary Payton]] '99 (90% similar)
+- [[deron-williams|Deron Williams]] '12 (90% similar)
+- [[jrue-holiday|Jrue Holiday]] '16 (90% similar)
+
+**Career shape:** Charted 5 seasons (2020-21–2024-25). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

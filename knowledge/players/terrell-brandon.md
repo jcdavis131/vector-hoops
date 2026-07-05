@@ -39,6 +39,33 @@ Closest career shapes in the era-normalized vector space:
 - [[jrue-holiday|Jrue Holiday]] — cosine 0.89
 - [[anfernee-hardaway|Anfernee Hardaway]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 20.8 pts · 4.9 reb · 13.8 ast · 2.7 stl per 100 (2001-02).
+
+**Strengths:**
+
+- High-volume table-setter (+3.2σ vs era)
+- Reliable touch from the free-throw line (+2.0σ vs era)
+- Active hands, disrupts passing lanes (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Offensive-glass activity well below era (−1.1σ)
+
+**Comparables:**
+
+- [[chris-paul|Chris Paul]] '09 (93% similar)
+- [[tyrese-haliburton|Tyrese Haliburton]] '23 (91% similar)
+- [[mike-conley|Mike Conley]] '13 (91% similar)
+- [[gary-payton|Gary Payton]] '99 (90% similar)
+- [[jrue-holiday|Jrue Holiday]] '16 (89% similar)
+- [[anfernee-hardaway|Anfernee Hardaway]] '08 (88% similar)
+
+**Career shape:** Charted 6 seasons (1996-97–2001-02). Entered as a Scoring Volume + Shot Volume profile, peaked as a Playmaking + Steals identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

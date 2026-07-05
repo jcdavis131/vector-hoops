@@ -34,6 +34,31 @@ Closest career shapes in the era-normalized vector space:
 - [[herbert-jones|Herbert Jones]] — cosine 0.86
 - [[trevelin-queen|Trevelin Queen]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** SG · Playmaking + Steals. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 15.5 pts · 6.8 reb · 7.1 ast · 3.9 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+3.5σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[shaquille-harrison|Shaquille Harrison]] '21 (93% similar)
+- [[delon-wright|Delon Wright]] '23 (93% similar)
+- [[jaden-springer|Jaden Springer]] '24 (91% similar)
+- [[erick-barkley|Erick Barkley]] '02 (90% similar)
+- [[herbert-jones|Herbert Jones]] '22 (86% similar)
+- [[trevelin-queen|Trevelin Queen]] '25 (84% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -36,6 +36,33 @@ Closest career shapes in the era-normalized vector space:
 - [[dajuan-wagner|Dajuan Wagner]] — cosine 0.89
 - [[juan-carlos-navarro|Juan Carlos Navarro]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** PG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 22.1 pts · 4.5 reb · 5.5 ast · 1.5 stl per 100 (1997-98).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.4σ vs era)
+- Heavy shot volume, focal scoring option (+1.0σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.5σ)
+- Defensive rebounding well below era (−1.2σ)
+
+**Comparables:**
+
+- [[bobby-brown|Bobby Brown]] '18 (92% similar)
+- [[caleb-love|Caleb Love]] '26 (92% similar)
+- [[vernon-maxwell|Vernon Maxwell]] '00 (90% similar)
+- [[markus-howard|Markus Howard]] '22 (89% similar)
+- [[dajuan-wagner|Dajuan Wagner]] '03 (89% similar)
+- [[juan-carlos-navarro|Juan Carlos Navarro]] '08 (89% similar)
+
+**Career shape:** Charted 3 seasons (1996-97–1998-99). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

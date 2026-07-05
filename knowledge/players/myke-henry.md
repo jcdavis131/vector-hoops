@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[melvin-frazier-jr|Melvin Frazier Jr.]] — cosine 0.83
 - [[trevelin-queen|Trevelin Queen]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 13.7 pts · 4.9 reb · 2.8 ast · 4.0 stl per 100 (2017-18).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+4.0σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.2σ)
+- Free-throw touch well below era (−1.2σ)
+
+**Comparables:**
+
+- [[corey-brewer|Corey Brewer]] '19 (90% similar)
+- [[matisse-thybulle|Matisse Thybulle]] '21 (90% similar)
+- [[trevor-ariza|Trevor Ariza]] '22 (85% similar)
+- [[jordan-adams|Jordan Adams]] '15 (83% similar)
+- [[melvin-frazier-jr|Melvin Frazier Jr.]] '20 (83% similar)
+- [[trevelin-queen|Trevelin Queen]] '25 (82% similar)
+
+**Career shape:** Charted 1 season (2017-18). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

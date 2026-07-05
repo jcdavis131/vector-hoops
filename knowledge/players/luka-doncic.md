@@ -41,6 +41,33 @@ Closest career shapes in the era-normalized vector space:
 - [[ja-morant|Ja Morant]] — cosine 0.90
 - [[kobe-bryant|Kobe Bryant]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 40.6 pts · 13.2 reb · 12.4 ast · 1.4 stl per 100 (2019-20).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+3.8σ vs era)
+- Featured, high-usage scoring role (+3.2σ vs era)
+- High-volume table-setter (+3.1σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+3.3σ)
+
+**Comparables:**
+
+- [[lebron-james|LeBron James]] '10 (96% similar)
+- [[james-harden|James Harden]] '19 (94% similar)
+- [[russell-westbrook|Russell Westbrook]] '17 (91% similar)
+- [[tracy-mcgrady|Tracy McGrady]] '03 (90% similar)
+- [[ja-morant|Ja Morant]] '23 (90% similar)
+- [[kobe-bryant|Kobe Bryant]] '06 (89% similar)
+
+**Career shape:** Charted 8 seasons (2018-19–2025-26). Consistent Scoring Volume + Shot Volume profile across his career.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[shane-larkin|Shane Larkin]] — cosine 0.84
 - [[pablo-prigioni|Pablo Prigioni]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** SF · Playmaking + Steals. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 12.5 pts · 7.6 reb · 5.3 ast · 3.5 stl per 100 (1996-97).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.5σ vs era)
+
+**Areas of concern:**
+
+- Scoring load well below era (−1.1σ)
+- Rim pressure (free-throw generation) well below era (−1.1σ)
+
+**Comparables:**
+
+- [[kris-dunn|Kris Dunn]] '20 (87% similar)
+- [[briante-weber|Briante Weber]] '18 (86% similar)
+- [[orien-greene|Orien Greene]] '07 (86% similar)
+- [[dru-smith|Dru Smith]] '26 (84% similar)
+- [[shane-larkin|Shane Larkin]] '16 (84% similar)
+- [[pablo-prigioni|Pablo Prigioni]] '16 (83% similar)
+
+**Career shape:** Charted 1 season (1996-97). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

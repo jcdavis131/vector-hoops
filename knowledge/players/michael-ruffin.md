@@ -40,6 +40,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jared-jeffries|Jared Jeffries]] — cosine 0.89
 - [[greg-anderson|Greg Anderson]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 3.2 pts · 11.7 reb · 1.1 ast · 1.5 blk per 100 (2006-07).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+2.4σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.9σ)
+- On-court net impact well below era (−2.9σ)
+
+**Comparables:**
+
+- [[furkan-aldemir|Furkan Aldemir]] '15 (93% similar)
+- [[adrian-caldwell|Adrian Caldwell]] '97 (93% similar)
+- [[evan-eschmeyer|Evan Eschmeyer]] '03 (90% similar)
+- [[chris-dudley|Chris Dudley]] '00 (89% similar)
+- [[jared-jeffries|Jared Jeffries]] '11 (89% similar)
+- [[greg-anderson|Greg Anderson]] '98 (89% similar)
+
+**Career shape:** Charted 7 seasons (1999-00–2007-08). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

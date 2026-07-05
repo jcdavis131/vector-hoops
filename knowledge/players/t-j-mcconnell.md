@@ -44,6 +44,34 @@ Closest career shapes in the era-normalized vector space:
 - [[pat-spencer|Pat Spencer]] — cosine 0.83
 - [[elliot-perry|Elliot Perry]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 15.4 pts · 6.6 reb · 11.8 ast · 3.3 stl per 100 (2020-21).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+3.2σ vs era)
+- High-volume table-setter (+2.8σ vs era)
+- Efficient finisher inside the arc (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Three-point volume well below era (−1.5σ)
+- Rim pressure (free-throw generation) well below era (−1.2σ)
+
+**Comparables:**
+
+- [[markelle-fultz|Markelle Fultz]] '22 (91% similar)
+- [[brevin-knight|Brevin Knight]] '03 (89% similar)
+- [[rajon-rondo|Rajon Rondo]] '11 (88% similar)
+- [[kris-dunn|Kris Dunn]] '20 (87% similar)
+- [[pat-spencer|Pat Spencer]] '25 (83% similar)
+- [[elliot-perry|Elliot Perry]] '99 (83% similar)
+
+**Career shape:** Charted 11 seasons (2015-16–2025-26). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

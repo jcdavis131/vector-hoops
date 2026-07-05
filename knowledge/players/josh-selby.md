@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[nolan-traore|Nolan Traore]] — cosine 0.90
 - [[vasilije-micic|Vasilije Micic]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 13.2 pts · 3.1 reb · 6.3 ast · 1.5 stl per 100 (2011-12).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Turnover rate well above era (+3.0σ)
+- Defensive rebounding well below era (−1.5σ)
+
+**Comparables:**
+
+- [[nolan-smith|Nolan Smith]] '13 (92% similar)
+- [[ben-saraf|Ben Saraf]] '26 (92% similar)
+- [[isaiah-whitehead|Isaiah Whitehead]] '17 (92% similar)
+- [[mateen-cleaves|Mateen Cleaves]] '02 (91% similar)
+- [[nolan-traore|Nolan Traore]] '26 (90% similar)
+- [[vasilije-micic|Vasilije Micic]] '25 (89% similar)
+
+**Career shape:** Charted 1 season (2011-12). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

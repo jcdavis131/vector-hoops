@@ -42,6 +42,32 @@ Closest career shapes in the era-normalized vector space:
 - [[justin-holiday|Justin Holiday]] — cosine 0.89
 - [[shawne-williams|Shawne Williams]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 11.1 pts · 10.9 reb · 1.4 ast · 1.8 blk per 100 (2016-17).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.5σ vs era)
+
+**Areas of concern:**
+
+- Scoring load well below era (−1.4σ)
+- Rim pressure (free-throw generation) well below era (−1.3σ)
+
+**Comparables:**
+
+- [[rashad-vaughn|Rashad Vaughn]] '17 (92% similar)
+- [[johnny-taylor|Johnny Taylor]] '99 (92% similar)
+- [[kessler-edwards|Kessler Edwards]] '25 (89% similar)
+- [[brandon-rush|Brandon Rush]] '15 (89% similar)
+- [[justin-holiday|Justin Holiday]] '23 (89% similar)
+- [[shawne-williams|Shawne Williams]] '12 (88% similar)
+
+**Career shape:** Charted 9 seasons (2010-11–2018-19). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

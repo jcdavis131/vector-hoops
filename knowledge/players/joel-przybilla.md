@@ -45,6 +45,33 @@ Closest career shapes in the era-normalized vector space:
 - [[hasheem-thabeet|Hasheem Thabeet]] — cosine 0.94
 - [[will-perdue|Will Perdue]] — cosine 0.94
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 5.1 pts · 13.5 reb · 0.4 ast · 5.7 blk per 100 (2000-01).
+
+**Strengths:**
+
+- Elite rim protection (+4.0σ vs era)
+- Relentless on the offensive glass (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−3.5σ)
+- Scoring load well below era (−2.3σ)
+
+**Comparables:**
+
+- [[bernard-james|Bernard James]] '13 (96% similar)
+- [[brian-skinner|Brian Skinner]] '08 (95% similar)
+- [[ervin-johnson|Ervin Johnson]] '05 (95% similar)
+- [[adonal-foyle|Adonal Foyle]] '07 (95% similar)
+- [[hasheem-thabeet|Hasheem Thabeet]] '12 (94% similar)
+- [[will-perdue|Will Perdue]] '99 (94% similar)
+
+**Career shape:** Charted 12 seasons (2000-01–2011-12). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

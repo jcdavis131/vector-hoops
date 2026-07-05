@@ -42,6 +42,33 @@ Closest career shapes in the era-normalized vector space:
 - [[russell-westbrook|Russell Westbrook]] — cosine 0.77
 - [[allen-iverson|Allen Iverson]] — cosine 0.75
 
+## Scouting report
+
+**Play style:** SF · Scoring Volume + Shot Volume. Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 26.3 pts · 8.2 reb · 4.4 ast · 3.1 stl per 100 (1999-00).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.3σ vs era)
+- Featured, high-usage scoring role (+1.4σ vs era)
+- Heavy shot volume, focal scoring option (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.5σ)
+
+**Comparables:**
+
+- [[dwyane-wade|Dwyane Wade]] '09 (81% similar)
+- [[victor-oladipo|Victor Oladipo]] '18 (80% similar)
+- [[paul-george|Paul George]] '22 (78% similar)
+- [[eric-bledsoe|Eric Bledsoe]] '17 (77% similar)
+- [[russell-westbrook|Russell Westbrook]] '17 (77% similar)
+- [[allen-iverson|Allen Iverson]] '02 (75% similar)
+
+**Career shape:** Charted 9 seasons (1999-00–2007-08). Consistent Scoring Volume + Shot Volume profile across his career.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

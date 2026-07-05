@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[antoine-wright|Antoine Wright]] — cosine 0.89
 - [[rodney-mcgruder|Rodney McGruder]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 7.0 pts · 6.3 reb · 2.2 ast · 1.4 stl per 100 (2015-16).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.5σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−4.0σ)
+- Scoring load well below era (−2.1σ)
+
+**Comparables:**
+
+- [[yuta-watanabe|Yuta Watanabe]] '20 (90% similar)
+- [[joe-wieskamp|Joe Wieskamp]] '22 (90% similar)
+- [[rashad-vaughn|Rashad Vaughn]] '17 (90% similar)
+- [[haywood-highsmith|Haywood Highsmith]] '22 (89% similar)
+- [[antoine-wright|Antoine Wright]] '06 (89% similar)
+- [[rodney-mcgruder|Rodney McGruder]] '18 (89% similar)
+
+**Career shape:** Charted 3 seasons (2014-15–2016-17). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

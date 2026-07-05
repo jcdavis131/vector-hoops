@@ -40,6 +40,32 @@ Closest career shapes in the era-normalized vector space:
 - [[joe-smith|Joe Smith]] — cosine 0.77
 - [[drew-gooden|Drew Gooden]] — cosine 0.77
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 20.7 pts · 11.0 reb · 1.8 ast · 1.5 blk per 100 (2002-03).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+4.0σ vs era)
+- Draws contact, gets to the line often (+1.1σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[ike-diogu|Ike Diogu]] '09 (87% similar)
+- [[carl-landry|Carl Landry]] '08 (80% similar)
+- [[hakim-warrick|Hakim Warrick]] '13 (77% similar)
+- [[george-zidek|George Zidek]] '97 (77% similar)
+- [[joe-smith|Joe Smith]] '00 (77% similar)
+- [[drew-gooden|Drew Gooden]] '16 (77% similar)
+
+**Career shape:** Charted 7 seasons (2000-01–2006-07). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

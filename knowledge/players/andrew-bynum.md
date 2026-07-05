@@ -41,6 +41,34 @@ Closest career shapes in the era-normalized vector space:
 - [[jermaine-o-neal|Jermaine O'Neal]] — cosine 0.93
 - [[javale-mcgee|JaVale McGee]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 22.1 pts · 17.2 reb · 2.9 ast · 3.5 blk per 100 (2007-08).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+2.9σ vs era)
+- Strong presence on the defensive glass (+2.3σ vs era)
+- Elite rim protection (+2.3σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.5σ)
+- Three-point accuracy well below era (−1.4σ)
+
+**Comparables:**
+
+- [[gheorghe-muresan|Gheorghe Muresan]] '97 (94% similar)
+- [[hassan-whiteside|Hassan Whiteside]] '22 (94% similar)
+- [[greg-oden|Greg Oden]] '10 (94% similar)
+- [[emeka-okafor|Emeka Okafor]] '18 (93% similar)
+- [[jermaine-o-neal|Jermaine O'Neal]] '05 (93% similar)
+- [[javale-mcgee|JaVale McGee]] '17 (93% similar)
+
+**Career shape:** Charted 8 seasons (2005-06–2013-14). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[johnathan-williams|Johnathan Williams]] — cosine 0.87
 - [[steven-adams|Steven Adams]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 16.8 pts · 10.4 reb · 2.4 ast · 2.4 blk per 100 (2017-18).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+1.8σ vs era)
+- Strong net on-court impact (+1.7σ vs era)
+- Rarely turns the ball over (−1.7σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.3σ)
+- Free-throw touch well below era (−1.6σ)
+
+**Comparables:**
+
+- [[devontae-cacok|Devontae Cacok]] '21 (88% similar)
+- [[vernon-macklin|Vernon Macklin]] '12 (88% similar)
+- [[mitchell-robinson|Mitchell Robinson]] '26 (87% similar)
+- [[jordan-williams|Jordan Williams]] '12 (87% similar)
+- [[johnathan-williams|Johnathan Williams]] '19 (87% similar)
+- [[steven-adams|Steven Adams]] '23 (86% similar)
+
+**Career shape:** Charted 1 season (2017-18). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -38,6 +38,31 @@ Closest career shapes in the era-normalized vector space:
 - [[arron-afflalo|Arron Afflalo]] — cosine 0.73
 - [[obi-toppin|Obi Toppin]] — cosine 0.73
 
+## Scouting report
+
+**Play style:** SF · Defensive Glass + Rim Pressure (Fts). Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 24.3 pts · 8.9 reb · 3.3 ast · 0.9 stl per 100 (1997-98).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.3σ)
+
+**Comparables:**
+
+- [[harrison-barnes|Harrison Barnes]] '16 (84% similar)
+- [[wally-szczerbiak|Wally Szczerbiak]] '07 (82% similar)
+- [[ryan-broekhoff|Ryan Broekhoff]] '19 (75% similar)
+- [[tayshaun-prince|Tayshaun Prince]] '16 (74% similar)
+- [[arron-afflalo|Arron Afflalo]] '18 (73% similar)
+- [[obi-toppin|Obi Toppin]] '26 (73% similar)
+
+**Career shape:** Charted 5 seasons (1996-97–2000-01). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

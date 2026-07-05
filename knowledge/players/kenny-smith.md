@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[troy-hudson|Troy Hudson]] — cosine 0.89
 - [[juan-carlos-navarro|Juan Carlos Navarro]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 19.6 pts · 2.9 reb · 7.6 ast · 1.2 stl per 100 (1996-97).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.7σ vs era)
+- Reliable touch from the free-throw line (+1.3σ vs era)
+- High-volume table-setter (+1.2σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.8σ)
+- Offensive-glass activity well below era (−1.5σ)
+
+**Comparables:**
+
+- [[terry-dehere|Terry Dehere]] '97 (93% similar)
+- [[khalid-reeves|Khalid Reeves]] '97 (93% similar)
+- [[egor-demin|Egor Dëmin]] '26 (90% similar)
+- [[nicolas-laprovittola|Nicolas Laprovittola]] '17 (89% similar)
+- [[troy-hudson|Troy Hudson]] '06 (89% similar)
+- [[juan-carlos-navarro|Juan Carlos Navarro]] '08 (88% similar)
+
+**Career shape:** Charted 1 season (1996-97). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

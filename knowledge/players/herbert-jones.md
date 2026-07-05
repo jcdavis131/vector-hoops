@@ -38,6 +38,31 @@ Closest career shapes in the era-normalized vector space:
 - [[keon-ellis|Keon Ellis]] — cosine 0.87
 - [[scott-brooks|Scott Brooks]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** PF · Three-Point Accuracy (Low Turnovers). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 15.5 pts · 6.1 reb · 3.5 ast · 2.7 stl per 100 (2021-22).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.0σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[cason-wallace|Cason Wallace]] '26 (91% similar)
+- [[matisse-thybulle|Matisse Thybulle]] '21 (89% similar)
+- [[alex-caruso|Alex Caruso]] '25 (89% similar)
+- [[delon-wright|Delon Wright]] '23 (88% similar)
+- [[keon-ellis|Keon Ellis]] '25 (87% similar)
+- [[scott-brooks|Scott Brooks]] '97 (86% similar)
+
+**Career shape:** Charted 5 seasons (2021-22–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

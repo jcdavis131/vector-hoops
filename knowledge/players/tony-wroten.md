@@ -36,6 +36,34 @@ Closest career shapes in the era-normalized vector space:
 - [[emmanuel-mudiay|Emmanuel Mudiay]] — cosine 0.90
 - [[zoran-planinic|Zoran Planinic]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 27.9 pts · 4.7 reb · 8.7 ast · 2.6 stl per 100 (2014-15).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+2.4σ vs era)
+- Heavy shot volume, focal scoring option (+1.7σ vs era)
+- Active hands, disrupts passing lanes (+1.7σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+3.5σ)
+- On-court net impact well below era (−1.6σ)
+
+**Comparables:**
+
+- [[kevin-porter-jr|Kevin Porter Jr.]] '21 (92% similar)
+- [[brandon-williams|Brandon Williams]] '22 (92% similar)
+- [[jaden-ivey|Jaden Ivey]] '23 (92% similar)
+- [[scoot-henderson|Scoot Henderson]] '24 (90% similar)
+- [[emmanuel-mudiay|Emmanuel Mudiay]] '16 (90% similar)
+- [[zoran-planinic|Zoran Planinic]] '05 (88% similar)
+
+**Career shape:** Charted 3 seasons (2012-13–2014-15). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

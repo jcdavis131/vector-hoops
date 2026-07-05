@@ -37,6 +37,31 @@ Closest career shapes in the era-normalized vector space:
 - [[alex-poythress|Alex Poythress]] — cosine 0.76
 - [[tidjane-salaun|Tidjane Salaün]] — cosine 0.76
 
+## Scouting report
+
+**Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 17.1 pts · 10.8 reb · 2.9 ast · 1.2 stl per 100 (2025-26).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[juancho-hernangomez|Juancho Hernangomez]] '23 (80% similar)
+- [[jabari-walker|Jabari Walker]] '24 (78% similar)
+- [[torrey-craig|Torrey Craig]] '20 (78% similar)
+- [[jamie-feick|Jamie Feick]] '00 (78% similar)
+- [[alex-poythress|Alex Poythress]] '18 (76% similar)
+- [[tidjane-salaun|Tidjane Salaün]] '25 (76% similar)
+
+**Career shape:** Charted 4 seasons (2017-18–2025-26). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

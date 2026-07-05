@@ -42,6 +42,33 @@ Closest career shapes in the era-normalized vector space:
 - [[wesley-johnson|Wesley Johnson]] — cosine 0.84
 - [[dennis-scott|Dennis Scott]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 14.0 pts · 5.4 reb · 2.8 ast · 1.5 blk per 100 (2013-14).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.6σ vs era)
+- High-volume three-point shooter (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.5σ)
+- Free-throw touch well below era (−1.5σ)
+
+**Comparables:**
+
+- [[justin-holiday|Justin Holiday]] '23 (90% similar)
+- [[johnny-taylor|Johnny Taylor]] '99 (86% similar)
+- [[dermarr-johnson|DerMarr Johnson]] '07 (85% similar)
+- [[rj-hunter|RJ Hunter]] '16 (85% similar)
+- [[wesley-johnson|Wesley Johnson]] '17 (84% similar)
+- [[dennis-scott|Dennis Scott]] '00 (81% similar)
+
+**Career shape:** Charted 9 seasons (2005-06–2013-14). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

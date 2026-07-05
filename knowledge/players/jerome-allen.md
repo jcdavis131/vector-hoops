@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[lee-mayberry|Lee Mayberry]] — cosine 0.87
 - [[donald-whiteside|Donald Whiteside]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** SG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 12.1 pts · 5.2 reb · 8.1 ast · 1.7 stl per 100 (1996-97).
+
+**Strengths:**
+
+- High-volume table-setter (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.6σ)
+- Scoring load well below era (−1.2σ)
+
+**Comparables:**
+
+- [[chris-herren|Chris Herren]] '01 (91% similar)
+- [[lionel-chalmers|Lionel Chalmers]] '05 (90% similar)
+- [[eric-maynor|Eric Maynor]] '14 (89% similar)
+- [[chris-duhon|Chris Duhon]] '13 (87% similar)
+- [[lee-mayberry|Lee Mayberry]] '97 (87% similar)
+- [[donald-whiteside|Donald Whiteside]] '97 (87% similar)
+
+**Career shape:** Charted 1 season (1996-97). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -36,6 +36,33 @@ Closest career shapes in the era-normalized vector space:
 - [[justin-williams|Justin Williams]] — cosine 0.88
 - [[lachlan-olbrich|Lachlan Olbrich]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 9.1 pts · 14.5 reb · 1.5 ast · 1.9 stl per 100 (2014-15).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+2.1σ vs era)
+- Rarely turns the ball over (−1.7σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.7σ)
+- Three-point accuracy well below era (−1.8σ)
+
+**Comparables:**
+
+- [[lawrence-roberts|Lawrence Roberts]] '06 (95% similar)
+- [[lou-amundson|Lou Amundson]] '14 (89% similar)
+- [[joey-dorsey|Joey Dorsey]] '15 (89% similar)
+- [[jeff-foster|Jeff Foster]] '00 (89% similar)
+- [[justin-williams|Justin Williams]] '07 (88% similar)
+- [[lachlan-olbrich|Lachlan Olbrich]] '26 (88% similar)
+
+**Career shape:** Charted 3 seasons (2005-06–2014-15). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

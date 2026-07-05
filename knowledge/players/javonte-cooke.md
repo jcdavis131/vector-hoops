@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[wade-baldwin-iv|Wade Baldwin IV]] — cosine 0.77
 - [[theo-maledon|Theo Maledon]] — cosine 0.76
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 11.0 pts · 9.0 reb · 3.3 ast · 2.9 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+2.1σ vs era)
+- Active hands, disrupts passing lanes (+1.9σ vs era)
+- High-volume three-point shooter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−3.6σ)
+- Finishing efficiency well below era (−3.2σ)
+
+**Comparables:**
+
+- [[mario-hezonja|Mario Hezonja]] '17 (88% similar)
+- [[damien-inglis|Damien Inglis]] '16 (82% similar)
+- [[sherron-collins|Sherron Collins]] '11 (80% similar)
+- [[theo-pinson|Theo Pinson]] '20 (79% similar)
+- [[wade-baldwin-iv|Wade Baldwin IV]] '17 (77% similar)
+- [[theo-maledon|Theo Maledon]] '21 (76% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

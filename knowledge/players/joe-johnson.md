@@ -50,6 +50,33 @@ Closest career shapes in the era-normalized vector space:
 - [[trey-burke|Trey Burke]] — cosine 0.91
 - [[gary-neal|Gary Neal]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** SG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 32.1 pts · 5.4 reb · 5.6 ast · 1.3 stl per 100 (2006-07).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+2.2σ vs era)
+- Featured, high-usage scoring role (+2.2σ vs era)
+- High-volume three-point shooter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.1σ)
+
+**Comparables:**
+
+- [[cj-mccollum|CJ McCollum]] '21 (92% similar)
+- [[jared-mccain|Jared McCain]] '25 (92% similar)
+- [[allan-houston|Allan Houston]] '03 (91% similar)
+- [[coby-white|Coby White]] '26 (91% similar)
+- [[trey-burke|Trey Burke]] '18 (91% similar)
+- [[gary-neal|Gary Neal]] '14 (91% similar)
+
+**Career shape:** Charted 17 seasons (2001-02–2017-18). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[jarell-eddie|Jarell Eddie]] — cosine 0.81
 - [[bobby-simmons|Bobby Simmons]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 14.5 pts · 9.1 reb · 2.4 ast · 1.8 stl per 100 (1996-97).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.9σ vs era)
+- Reliable touch from the free-throw line (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.9σ)
+- Rim pressure (free-throw generation) well below era (−1.2σ)
+
+**Comparables:**
+
+- [[efthimios-rentzias|Efthimios Rentzias]] '03 (86% similar)
+- [[luke-harangody|Luke Harangody]] '12 (84% similar)
+- [[brian-evans|Brian Evans]] '98 (84% similar)
+- [[matt-freije|Matt Freije]] '07 (83% similar)
+- [[jarell-eddie|Jarell Eddie]] '16 (81% similar)
+- [[bobby-simmons|Bobby Simmons]] '12 (81% similar)
+
+**Career shape:** Charted 1 season (1996-97). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

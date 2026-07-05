@@ -44,6 +44,33 @@ Closest career shapes in the era-normalized vector space:
 - [[tacko-fall|Tacko Fall]] — cosine 0.87
 - [[georgios-papagiannis|Georgios Papagiannis]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 19.4 pts · 10.6 reb · 3.0 ast · 2.0 blk per 100 (2009-10).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+1.4σ vs era)
+- Relentless on the offensive glass (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−3.9σ)
+- On-court net impact well below era (−1.9σ)
+
+**Comparables:**
+
+- [[dale-davis|Dale Davis]] '06 (88% similar)
+- [[chris-taft|Chris Taft]] '06 (87% similar)
+- [[kosta-koufos|Kosta Koufos]] '19 (87% similar)
+- [[othello-hunter|Othello Hunter]] '09 (87% similar)
+- [[tacko-fall|Tacko Fall]] '21 (87% similar)
+- [[georgios-papagiannis|Georgios Papagiannis]] '18 (86% similar)
+
+**Career shape:** Charted 11 seasons (1999-00–2009-10). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

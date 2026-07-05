@@ -37,6 +37,32 @@ Closest career shapes in the era-normalized vector space:
 - [[alec-burks|Alec Burks]] — cosine 0.80
 - [[lavor-postell|Lavor Postell]] — cosine 0.80
 
+## Scouting report
+
+**Play style:** SF · Scoring Volume + Shot Volume. Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 27.8 pts · 8.6 reb · 3.8 ast · 1.3 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+2.3σ vs era)
+- Featured, high-usage scoring role (+1.0σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[corey-maggette|Corey Maggette]] '06 (94% similar)
+- [[cam-thomas|Cam Thomas]] '25 (86% similar)
+- [[kevin-martin|Kevin Martin]] '11 (82% similar)
+- [[rj-barrett|RJ Barrett]] '25 (81% similar)
+- [[alec-burks|Alec Burks]] '24 (80% similar)
+- [[lavor-postell|Lavor Postell]] '02 (80% similar)
+
+**Career shape:** Charted 4 seasons (2022-23–2025-26). Consistent Scoring Volume + Shot Volume profile across his career.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

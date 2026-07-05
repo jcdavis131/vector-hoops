@@ -51,6 +51,34 @@ Closest career shapes in the era-normalized vector space:
 - [[ricky-pierce|Ricky Pierce]] — cosine 0.83
 - [[henry-james|Henry James]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** PF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 18.6 pts · 6.9 reb · 2.2 ast · 0.6 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+2.1σ vs era)
+- Rarely turns the ball over (−1.5σ vs era)
+- High-volume three-point shooter (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.6σ)
+- Finishing efficiency well below era (−1.3σ)
+
+**Comparables:**
+
+- [[de-andre-hunter|De'Andre Hunter]] '25 (89% similar)
+- [[arron-afflalo|Arron Afflalo]] '18 (85% similar)
+- [[corey-kispert|Corey Kispert]] '23 (85% similar)
+- [[john-jenkins|John Jenkins]] '19 (84% similar)
+- [[ricky-pierce|Ricky Pierce]] '98 (83% similar)
+- [[henry-james|Henry James]] '98 (83% similar)
+
+**Career shape:** Charted 18 seasons (2007-08–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

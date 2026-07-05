@@ -37,6 +37,33 @@ Closest career shapes in the era-normalized vector space:
 - [[aaron-gray|Aaron Gray]] — cosine 0.91
 - [[jamaal-magloire|Jamaal Magloire]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 11.9 pts · 14.3 reb · 1.0 ast · 1.4 blk per 100 (2000-01).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+1.8σ vs era)
+- Strong presence on the defensive glass (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+3.4σ)
+- Free-throw touch well below era (−2.4σ)
+
+**Comparables:**
+
+- [[jamal-sampson|Jamal Sampson]] '07 (92% similar)
+- [[david-vaughn|David Vaughn]] '97 (92% similar)
+- [[hilton-armstrong|Hilton Armstrong]] '11 (91% similar)
+- [[bruno-fernando|Bruno Fernando]] '22 (91% similar)
+- [[aaron-gray|Aaron Gray]] '11 (91% similar)
+- [[jamaal-magloire|Jamaal Magloire]] '08 (90% similar)
+
+**Career shape:** Charted 4 seasons (2000-01–2004-05). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

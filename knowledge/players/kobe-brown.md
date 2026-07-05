@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[juwan-morgan|Juwan Morgan]] — cosine 0.86
 - [[ira-newble|Ira Newble]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** PF · Three-Point Accuracy (Low Turnovers). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 10.8 pts · 7.5 reb · 3.0 ast · 1.5 stl per 100 (2023-24).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.4σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.8σ)
+- Rim pressure (free-throw generation) well below era (−1.5σ)
+
+**Comparables:**
+
+- [[brooks-barnhizer|Brooks Barnhizer]] '26 (91% similar)
+- [[dominic-mcguire|Dominic McGuire]] '10 (87% similar)
+- [[joe-wolf|Joe Wolf]] '98 (87% similar)
+- [[joe-kleine|Joe Kleine]] '97 (87% similar)
+- [[juwan-morgan|Juwan Morgan]] '21 (86% similar)
+- [[ira-newble|Ira Newble]] '01 (86% similar)
+
+**Career shape:** Charted 3 seasons (2023-24–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

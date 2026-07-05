@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[frank-ntilikina|Frank Ntilikina]] — cosine 0.88
 - [[fred-jones|Fred Jones]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 10.6 pts · 3.7 reb · 6.1 ast · 2.3 stl per 100 (1996-97).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.2σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.7σ)
+- Scoring load well below era (−1.4σ)
+
+**Comparables:**
+
+- [[royal-ivey|Royal Ivey]] '12 (93% similar)
+- [[john-salmons|John Salmons]] '15 (92% similar)
+- [[gerald-madkins|Gerald Madkins]] '98 (91% similar)
+- [[patrick-mccaw|Patrick McCaw]] '19 (89% similar)
+- [[frank-ntilikina|Frank Ntilikina]] '21 (88% similar)
+- [[fred-jones|Fred Jones]] '03 (88% similar)
+
+**Career shape:** Charted 1 season (1996-97). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

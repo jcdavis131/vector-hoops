@@ -34,6 +34,31 @@ Closest career shapes in the era-normalized vector space:
 - [[todd-macculloch|Todd MacCulloch]] — cosine 0.79
 - [[marcin-gortat|Marcin Gortat]] — cosine 0.79
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 22.5 pts · 11.3 reb · 2.5 ast · 1.1 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+1.1σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[jon-leuer|Jon Leuer]] '13 (87% similar)
+- [[lawrence-funderburke|Lawrence Funderburke]] '03 (83% similar)
+- [[thomas-bryant|Thomas Bryant]] '23 (81% similar)
+- [[maxime-raynaud|Maxime Raynaud]] '26 (80% similar)
+- [[todd-macculloch|Todd MacCulloch]] '01 (79% similar)
+- [[marcin-gortat|Marcin Gortat]] '09 (79% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -43,6 +43,33 @@ Closest career shapes in the era-normalized vector space:
 - [[monta-ellis|Monta Ellis]] — cosine 0.90
 - [[de-aaron-fox|De'Aaron Fox]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** SG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 29.7 pts · 6.6 reb · 7.0 ast · 1.9 stl per 100 (2019-20).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+2.0σ vs era)
+- Featured, high-usage scoring role (+1.5σ vs era)
+- Draws contact, gets to the line often (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.6σ)
+
+**Comparables:**
+
+- [[flip-murray|Flip Murray]] '08 (93% similar)
+- [[baron-davis|Baron Davis]] '04 (92% similar)
+- [[brandon-jennings|Brandon Jennings]] '15 (91% similar)
+- [[talen-horton-tucker|Talen Horton-Tucker]] '23 (91% similar)
+- [[monta-ellis|Monta Ellis]] '10 (90% similar)
+- [[de-aaron-fox|De'Aaron Fox]] '21 (90% similar)
+
+**Career shape:** Charted 10 seasons (2016-17–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

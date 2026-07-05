@@ -39,6 +39,33 @@ Closest career shapes in the era-normalized vector space:
 - [[mitch-richmond|Mitch Richmond]] — cosine 0.92
 - [[bradley-beal|Bradley Beal]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 34.0 pts · 4.4 reb · 7.9 ast · 2.3 stl per 100 (2024-25).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+2.2σ vs era)
+- Featured, high-usage scoring role (+2.0σ vs era)
+- Draws contact, gets to the line often (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Offensive-glass activity well below era (−1.2σ)
+
+**Comparables:**
+
+- [[brandon-roy|Brandon Roy]] '09 (96% similar)
+- [[latrell-sprewell|Latrell Sprewell]] '97 (94% similar)
+- [[kemba-walker|Kemba Walker]] '19 (92% similar)
+- [[kyrie-irving|Kyrie Irving]] '20 (92% similar)
+- [[mitch-richmond|Mitch Richmond]] '97 (92% similar)
+- [[bradley-beal|Bradley Beal]] '20 (92% similar)
+
+**Career shape:** Charted 6 seasons (2020-21–2025-26). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

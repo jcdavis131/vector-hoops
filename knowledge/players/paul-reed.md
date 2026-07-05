@@ -39,6 +39,34 @@ Closest career shapes in the era-normalized vector space:
 - [[renaldo-balkman|Renaldo Balkman]] — cosine 0.85
 - [[mitchell-robinson|Mitchell Robinson]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** PF · Rim Protection + Offensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 23.5 pts · 16.3 reb · 3.2 ast · 3.5 blk per 100 (2020-21).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+3.6σ vs era)
+- Elite rim protection (+2.7σ vs era)
+- Active hands, disrupts passing lanes (+2.1σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.8σ)
+- Free-throw touch well below era (−2.3σ)
+
+**Comparables:**
+
+- [[robert-traylor|Robert Traylor]] '02 (91% similar)
+- [[ausar-thompson|Ausar Thompson]] '26 (89% similar)
+- [[nerlens-noel|Nerlens Noel]] '21 (87% similar)
+- [[brice-johnson|Brice Johnson]] '18 (86% similar)
+- [[renaldo-balkman|Renaldo Balkman]] '08 (85% similar)
+- [[mitchell-robinson|Mitchell Robinson]] '26 (82% similar)
+
+**Career shape:** Charted 6 seasons (2020-21–2025-26). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

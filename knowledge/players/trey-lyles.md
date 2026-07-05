@@ -43,6 +43,33 @@ Closest career shapes in the era-normalized vector space:
 - [[tidjane-salaun|Tidjane Salaün]] — cosine 0.82
 - [[santi-aldama|Santi Aldama]] — cosine 0.79
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 15.5 pts · 11.6 reb · 1.9 ast · 0.8 stl per 100 (2020-21).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.6σ vs era)
+- Strong presence on the defensive glass (+1.4σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.9σ)
+- Ball-hawking activity well below era (−1.2σ)
+
+**Comparables:**
+
+- [[jabari-smith-jr|Jabari Smith Jr.]] '23 (88% similar)
+- [[troy-murphy|Troy Murphy]] '09 (84% similar)
+- [[carter-bryant|Carter Bryant]] '26 (83% similar)
+- [[david-andersen|David Andersen]] '11 (82% similar)
+- [[tidjane-salaun|Tidjane Salaün]] '25 (82% similar)
+- [[santi-aldama|Santi Aldama]] '22 (79% similar)
+
+**Career shape:** Charted 10 seasons (2015-16–2024-25). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

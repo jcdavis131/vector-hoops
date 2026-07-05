@@ -40,6 +40,33 @@ Closest career shapes in the era-normalized vector space:
 - [[metta-world-peace|Metta World Peace]] — cosine 0.86
 - [[ronnie-price|Ronnie Price]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 11.9 pts · 6.4 reb · 7.6 ast · 3.2 stl per 100 (2018-19).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+3.2σ vs era)
+- High-volume table-setter (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Scoring load well below era (−1.3σ)
+- Rim pressure (free-throw generation) well below era (−1.2σ)
+
+**Comparables:**
+
+- [[jose-alvarado|Jose Alvarado]] '22 (91% similar)
+- [[marcus-smart|Marcus Smart]] '24 (88% similar)
+- [[doug-christie|Doug Christie]] '03 (88% similar)
+- [[mario-chalmers|Mario Chalmers]] '16 (87% similar)
+- [[metta-world-peace|Metta World Peace]] '17 (86% similar)
+- [[ronnie-price|Ronnie Price]] '14 (84% similar)
+
+**Career shape:** Charted 7 seasons (2018-19–2025-26). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

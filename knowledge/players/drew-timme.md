@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jacob-toppin|Jacob Toppin]] — cosine 0.72
 - [[qyntel-woods|Qyntel Woods]] — cosine 0.70
 
+## Scouting report
+
+**Play style:** PF · Three-Point Accuracy (Low Turnovers). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 19.0 pts · 6.9 reb · 4.8 ast · 1.2 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.8σ)
+- Rim-protection impact well below era (−1.2σ)
+
+**Comparables:**
+
+- [[tyler-lydon|Tyler Lydon]] '19 (83% similar)
+- [[pete-nance|Pete Nance]] '26 (77% similar)
+- [[jeff-grayer|Jeff Grayer]] '97 (75% similar)
+- [[juwan-morgan|Juwan Morgan]] '21 (74% similar)
+- [[jacob-toppin|Jacob Toppin]] '25 (72% similar)
+- [[qyntel-woods|Qyntel Woods]] '03 (70% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -34,6 +34,31 @@ Closest career shapes in the era-normalized vector space:
 - [[maxwell-lewis|Maxwell Lewis]] — cosine 0.86
 - [[javonte-smart|Javonte Smart]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 16.4 pts · 7.2 reb · 4.6 ast · 1.7 stl per 100 (2025-26).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[jacob-evans|Jacob Evans]] '19 (89% similar)
+- [[rayan-rupert|Rayan Rupert]] '24 (89% similar)
+- [[pj-dozier|PJ Dozier]] '22 (86% similar)
+- [[reece-gaines|Reece Gaines]] '05 (86% similar)
+- [[maxwell-lewis|Maxwell Lewis]] '24 (86% similar)
+- [[javonte-smart|Javonte Smart]] '22 (85% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

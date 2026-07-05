@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[devin-green|Devin Green]] — cosine 0.76
 - [[nick-johnson|Nick Johnson]] — cosine 0.76
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 11.7 pts · 8.0 reb · 3.8 ast · 0.5 stl per 100 (2020-21).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.3σ)
+- Finishing efficiency well below era (−2.1σ)
+
+**Comparables:**
+
+- [[britton-johnsen|Britton Johnsen]] '04 (82% similar)
+- [[jalen-hood-schifino|Jalen Hood-Schifino]] '24 (81% similar)
+- [[john-amaechi|John Amaechi]] '02 (81% similar)
+- [[sekou-doumbouya|Sekou Doumbouya]] '20 (76% similar)
+- [[devin-green|Devin Green]] '06 (76% similar)
+- [[nick-johnson|Nick Johnson]] '15 (76% similar)
+
+**Career shape:** Charted 1 season (2020-21). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

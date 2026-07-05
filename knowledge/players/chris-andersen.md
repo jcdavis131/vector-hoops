@@ -46,6 +46,34 @@ Closest career shapes in the era-normalized vector space:
 - [[dikembe-mutombo|Dikembe Mutombo]] — cosine 0.93
 - [[greg-ostertag|Greg Ostertag]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** PF · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 13.1 pts · 14.1 reb · 1.0 ast · 4.2 blk per 100 (2009-10).
+
+**Strengths:**
+
+- Elite rim protection (+3.1σ vs era)
+- Strong net on-court impact (+1.8σ vs era)
+- Efficient finisher inside the arc (+1.8σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−2.0σ)
+- Three-point accuracy well below era (−1.5σ)
+
+**Comparables:**
+
+- [[kelvin-cato|Kelvin Cato]] '99 (97% similar)
+- [[salah-mejri|Salah Mejri]] '18 (95% similar)
+- [[goga-bitadze|Goga Bitadze]] '25 (94% similar)
+- [[jeff-withey|Jeff Withey]] '17 (94% similar)
+- [[dikembe-mutombo|Dikembe Mutombo]] '00 (93% similar)
+- [[greg-ostertag|Greg Ostertag]] '99 (92% similar)
+
+**Career shape:** Charted 13 seasons (2001-02–2015-16). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

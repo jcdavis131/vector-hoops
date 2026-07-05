@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[tierre-brown|Tierre Brown]] — cosine 0.87
 - [[jonathan-gibson|Jonathan Gibson]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 16.4 pts · 2.8 reb · 6.6 ast · 2.2 stl per 100 (2013-14).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.0σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−3.2σ)
+- Turnover rate well above era (+2.9σ)
+
+**Comparables:**
+
+- [[mike-taylor|Mike Taylor]] '09 (93% similar)
+- [[zoran-planinic|Zoran Planinic]] '05 (90% similar)
+- [[keon-johnson|Keon Johnson]] '23 (89% similar)
+- [[josh-christopher|Josh Christopher]] '23 (88% similar)
+- [[tierre-brown|Tierre Brown]] '02 (87% similar)
+- [[jonathan-gibson|Jonathan Gibson]] '17 (86% similar)
+
+**Career shape:** Charted 2 seasons (2012-13–2013-14). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

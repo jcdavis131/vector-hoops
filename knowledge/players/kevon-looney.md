@@ -43,6 +43,34 @@ Closest career shapes in the era-normalized vector space:
 - [[corie-blount|Corie Blount]] — cosine 0.92
 - [[scot-pollard|Scot Pollard]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 13.8 pts · 18.2 reb · 5.0 ast · 1.2 stl per 100 (2022-23).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+2.6σ vs era)
+- Strong presence on the defensive glass (+2.1σ vs era)
+- Efficient finisher inside the arc (+1.9σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.8σ)
+- Three-point volume well below era (−1.8σ)
+
+**Comparables:**
+
+- [[ed-davis|Ed Davis]] '22 (95% similar)
+- [[khem-birch|Khem Birch]] '19 (93% similar)
+- [[jeff-foster|Jeff Foster]] '00 (93% similar)
+- [[dale-davis|Dale Davis]] '06 (93% similar)
+- [[corie-blount|Corie Blount]] '98 (92% similar)
+- [[scot-pollard|Scot Pollard]] '03 (92% similar)
+
+**Career shape:** Charted 10 seasons (2016-17–2025-26). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

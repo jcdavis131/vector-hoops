@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[r-j-hampton|R.J. Hampton]] — cosine 0.86
 - [[sekou-doumbouya|Sekou Doumbouya]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 13.3 pts · 5.7 reb · 1.4 ast · 1.1 stl per 100 (2011-12).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.8σ)
+- Finishing efficiency well below era (−1.5σ)
+
+**Comparables:**
+
+- [[sergei-monia|Sergei Monia]] '06 (90% similar)
+- [[elijah-hughes|Elijah Hughes]] '21 (90% similar)
+- [[kevin-knox-ii|Kevin Knox II]] '22 (90% similar)
+- [[keljin-blevins|Keljin Blevins]] '22 (89% similar)
+- [[r-j-hampton|R.J. Hampton]] '22 (86% similar)
+- [[sekou-doumbouya|Sekou Doumbouya]] '20 (85% similar)
+
+**Career shape:** Charted 2 seasons (2010-11–2011-12). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

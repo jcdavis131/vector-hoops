@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[nico-mannion|Nico Mannion]] — cosine 0.92
 - [[rick-brunson|Rick Brunson]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 10.9 pts · 6.5 reb · 7.2 ast · 2.1 stl per 100 (2002-03).
+
+**Strengths:**
+
+- High-volume table-setter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.3σ)
+- Scoring load well below era (−1.3σ)
+
+**Comparables:**
+
+- [[walker-russell|Walker Russell]] '12 (96% similar)
+- [[diante-garrett|Diante Garrett]] '13 (95% similar)
+- [[killian-hayes|Killian Hayes]] '21 (94% similar)
+- [[mardy-collins|Mardy Collins]] '10 (92% similar)
+- [[nico-mannion|Nico Mannion]] '21 (92% similar)
+- [[rick-brunson|Rick Brunson]] '99 (92% similar)
+
+**Career shape:** Charted 3 seasons (2002-03–2006-07). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

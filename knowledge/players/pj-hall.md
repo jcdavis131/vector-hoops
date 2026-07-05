@@ -35,6 +35,34 @@ Closest career shapes in the era-normalized vector space:
 - [[donovan-clingan|Donovan Clingan]] — cosine 0.86
 - [[zach-edey|Zach Edey]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 19.1 pts · 16.6 reb · 2.2 ast · 2.2 blk per 100 (2025-26).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+2.8σ vs era)
+- Knockdown three-point shooter (+2.4σ vs era)
+- Elite rim protection (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Three-point volume well below era (−1.7σ)
+- Ball-hawking activity well below era (−1.5σ)
+
+**Comparables:**
+
+- [[isaiah-stewart|Isaiah Stewart]] '25 (92% similar)
+- [[skal-labissiere|Skal Labissiere]] '20 (90% similar)
+- [[thomas-bryant|Thomas Bryant]] '23 (89% similar)
+- [[jalen-smith|Jalen Smith]] '25 (88% similar)
+- [[donovan-clingan|Donovan Clingan]] '25 (86% similar)
+- [[zach-edey|Zach Edey]] '25 (86% similar)
+
+**Career shape:** Charted 2 seasons (2024-25–2025-26). Entered as a Rim Protection + Offensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

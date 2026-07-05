@@ -43,6 +43,34 @@ Closest career shapes in the era-normalized vector space:
 - [[anderson-varejao|Anderson Varejao]] — cosine 0.92
 - [[khem-birch|Khem Birch]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 15.8 pts · 16.3 reb · 0.9 ast · 2.3 blk per 100 (2002-03).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+2.6σ vs era)
+- Strong net on-court impact (+2.5σ vs era)
+- Strong presence on the defensive glass (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.3σ)
+- Table-setting role well below era (−1.2σ)
+
+**Comparables:**
+
+- [[dale-davis|Dale Davis]] '06 (93% similar)
+- [[kevon-looney|Kevon Looney]] '23 (92% similar)
+- [[jordan-williams|Jordan Williams]] '12 (92% similar)
+- [[jeff-foster|Jeff Foster]] '00 (92% similar)
+- [[anderson-varejao|Anderson Varejao]] '05 (92% similar)
+- [[khem-birch|Khem Birch]] '19 (91% similar)
+
+**Career shape:** Charted 10 seasons (1997-98–2007-08). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

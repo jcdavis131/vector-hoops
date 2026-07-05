@@ -38,6 +38,34 @@ Closest career shapes in the era-normalized vector space:
 - [[ekpe-udoh|Ekpe Udoh]] — cosine 0.91
 - [[christian-koloko|Christian Koloko]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 7.5 pts · 11.0 reb · 1.7 ast · 5.6 blk per 100 (1999-00).
+
+**Strengths:**
+
+- Elite rim protection (+4.0σ vs era)
+- Relentless on the offensive glass (+1.4σ vs era)
+- Rarely turns the ball over (−1.2σ vs era)
+
+**Areas of concern:**
+
+- Scoring load well below era (−2.0σ)
+- Shot volume well below era (−2.0σ)
+
+**Comparables:**
+
+- [[calvin-booth|Calvin Booth]] '08 (95% similar)
+- [[dj-mbenga|DJ Mbenga]] '06 (95% similar)
+- [[joel-anthony|Joel Anthony]] '16 (92% similar)
+- [[adonal-foyle|Adonal Foyle]] '07 (92% similar)
+- [[ekpe-udoh|Ekpe Udoh]] '19 (91% similar)
+- [[christian-koloko|Christian Koloko]] '23 (90% similar)
+
+**Career shape:** Charted 5 seasons (1996-97–2000-01). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

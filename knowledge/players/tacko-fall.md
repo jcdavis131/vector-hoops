@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[festus-ezeli|Festus Ezeli]] — cosine 0.93
 - [[deandre-jordan|DeAndre Jordan]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 15.9 pts · 17.6 reb · 1.0 ast · 6.8 blk per 100 (2020-21).
+
+**Strengths:**
+
+- Elite rim protection (+4.0σ vs era)
+- Efficient finisher inside the arc (+3.6σ vs era)
+- Strong presence on the defensive glass (+2.1σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−3.8σ)
+- Three-point accuracy well below era (−2.8σ)
+
+**Comparables:**
+
+- [[kyrylo-fesenko|Kyrylo Fesenko]] '09 (94% similar)
+- [[nic-claxton|Nic Claxton]] '23 (94% similar)
+- [[dereck-lively-ii|Dereck Lively II]] '25 (93% similar)
+- [[brendan-haywood|Brendan Haywood]] '15 (93% similar)
+- [[festus-ezeli|Festus Ezeli]] '16 (93% similar)
+- [[deandre-jordan|DeAndre Jordan]] '16 (93% similar)
+
+**Career shape:** Charted 1 season (2020-21). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

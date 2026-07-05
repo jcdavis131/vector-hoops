@@ -38,6 +38,33 @@ Closest career shapes in the era-normalized vector space:
 - [[dirk-nowitzki|Dirk Nowitzki]] — cosine 0.77
 - [[austin-croshere|Austin Croshere]] — cosine 0.77
 
+## Scouting report
+
+**Play style:** PF · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 25.6 pts · 12.4 reb · 3.0 ast · 1.7 stl per 100 (2014-15).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+1.9σ vs era)
+- Strong presence on the defensive glass (+1.5σ vs era)
+- High-volume three-point shooter (+1.4σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[michael-porter-jr|Michael Porter Jr.]] '26 (82% similar)
+- [[rasheed-wallace|Rasheed Wallace]] '13 (80% similar)
+- [[lauri-markkanen|Lauri Markkanen]] '23 (80% similar)
+- [[wang-zhi-zhi|Wang Zhi-zhi]] '02 (80% similar)
+- [[dirk-nowitzki|Dirk Nowitzki]] '06 (77% similar)
+- [[austin-croshere|Austin Croshere]] '99 (77% similar)
+
+**Career shape:** Charted 5 seasons (2014-15–2018-19). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

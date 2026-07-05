@@ -49,6 +49,34 @@ Closest career shapes in the era-normalized vector space:
 - [[clifford-rozier|Clifford Rozier]] — cosine 0.88
 - [[usman-garuba|Usman Garuba]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 9.6 pts · 21.3 reb · 2.3 ast · 4.4 blk per 100 (2002-03).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+4.0σ vs era)
+- Elite rim protection (+3.0σ vs era)
+- Relentless on the offensive glass (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.5σ)
+- Shot volume well below era (−1.7σ)
+
+**Comparables:**
+
+- [[eric-moreland|Eric Moreland]] '18 (92% similar)
+- [[andris-biedrins|Andris Biedrins]] '13 (90% similar)
+- [[evan-eschmeyer|Evan Eschmeyer]] '03 (89% similar)
+- [[dan-gadzuric|Dan Gadzuric]] '05 (88% similar)
+- [[clifford-rozier|Clifford Rozier]] '97 (88% similar)
+- [[usman-garuba|Usman Garuba]] '22 (87% similar)
+
+**Career shape:** Charted 16 seasons (1996-97–2011-12). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

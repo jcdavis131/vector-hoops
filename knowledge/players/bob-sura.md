@@ -42,6 +42,32 @@ Closest career shapes in the era-normalized vector space:
 - [[kyle-lowry|Kyle Lowry]] — cosine 0.84
 - [[ricky-rubio|Ricky Rubio]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** SG · Playmaking + Steals. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 14.7 pts · 5.2 reb · 9.4 ast · 2.4 stl per 100 (1997-98).
+
+**Strengths:**
+
+- High-volume table-setter (+1.7σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.0σ)
+- Free-throw touch well below era (−1.3σ)
+
+**Comparables:**
+
+- [[zoran-planinic|Zoran Planinic]] '05 (88% similar)
+- [[moochie-norris|Moochie Norris]] '05 (85% similar)
+- [[rick-brunson|Rick Brunson]] '99 (85% similar)
+- [[jeremy-lin|Jeremy Lin]] '12 (85% similar)
+- [[kyle-lowry|Kyle Lowry]] '16 (84% similar)
+- [[ricky-rubio|Ricky Rubio]] '13 (84% similar)
+
+**Career shape:** Charted 9 seasons (1996-97–2004-05). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

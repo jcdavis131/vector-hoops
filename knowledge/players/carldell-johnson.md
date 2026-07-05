@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[omar-cook|Omar Cook]] — cosine 0.85
 - [[nick-calathes|Nick Calathes]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 12.3 pts · 4.2 reb · 10.0 ast · 3.7 stl per 100 (2011-12).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+3.4σ vs era)
+- High-volume table-setter (+2.0σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.7σ)
+- Finishing efficiency well below era (−2.0σ)
+
+**Comparables:**
+
+- [[reggie-geary|Reggie Geary]] '97 (93% similar)
+- [[lonzo-ball|Lonzo Ball]] '26 (90% similar)
+- [[jose-alvarado|Jose Alvarado]] '22 (86% similar)
+- [[mookie-blaylock|Mookie Blaylock]] '97 (86% similar)
+- [[omar-cook|Omar Cook]] '04 (85% similar)
+- [[nick-calathes|Nick Calathes]] '15 (84% similar)
+
+**Career shape:** Charted 1 season (2011-12). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

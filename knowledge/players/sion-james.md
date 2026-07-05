@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[troy-brown-jr|Troy Brown Jr.]] — cosine 0.86
 - [[okaro-white|Okaro White]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 11.7 pts · 7.6 reb · 4.3 ast · 1.4 stl per 100 (2025-26).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.4σ)
+- Scoring load well below era (−1.4σ)
+
+**Comparables:**
+
+- [[solomon-hill|Solomon Hill]] '21 (94% similar)
+- [[anthony-brown|Anthony Brown]] '16 (91% similar)
+- [[miye-oni|Miye Oni]] '21 (89% similar)
+- [[wes-iwundu|Wes Iwundu]] '21 (87% similar)
+- [[troy-brown-jr|Troy Brown Jr.]] '23 (86% similar)
+- [[okaro-white|Okaro White]] '17 (85% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

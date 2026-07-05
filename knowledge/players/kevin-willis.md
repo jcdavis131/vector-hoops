@@ -42,6 +42,33 @@ Closest career shapes in the era-normalized vector space:
 - [[mario-kasun|Mario Kasun]] — cosine 0.88
 - [[joffrey-lauvergne|Joffrey Lauvergne]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** PF · Defensive Glass + Rim Pressure (Fts). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 19.5 pts · 18.5 reb · 0.9 ast · 1.5 stl per 100 (2001-02).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+2.3σ vs era)
+- Relentless on the offensive glass (+2.1σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.3σ)
+- Table-setting role well below era (−1.1σ)
+
+**Comparables:**
+
+- [[drew-gooden|Drew Gooden]] '16 (95% similar)
+- [[kris-humphries|Kris Humphries]] '11 (91% similar)
+- [[jordan-hill|Jordan Hill]] '13 (91% similar)
+- [[omer-yurtseven|Omer Yurtseven]] '22 (89% similar)
+- [[mario-kasun|Mario Kasun]] '05 (88% similar)
+- [[joffrey-lauvergne|Joffrey Lauvergne]] '18 (87% similar)
+
+**Career shape:** Charted 9 seasons (1996-97–2004-05). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

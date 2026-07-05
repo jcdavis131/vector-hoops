@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[ibou-badji|Ibou Badji]] — cosine 0.92
 - [[hasheem-thabeet|Hasheem Thabeet]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 10.9 pts · 3.6 reb · 1.5 ast · 5.1 blk per 100 (2004-05).
+
+**Strengths:**
+
+- Elite rim protection (+3.5σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−3.5σ)
+- Shot volume well below era (−1.8σ)
+
+**Comparables:**
+
+- [[stojko-vrankovic|Stojko Vrankovic]] '97 (95% similar)
+- [[keith-closs|Keith Closs]] '98 (94% similar)
+- [[mickell-gladness|Mickell Gladness]] '12 (93% similar)
+- [[deyonta-davis|Deyonta Davis]] '17 (93% similar)
+- [[ibou-badji|Ibou Badji]] '24 (92% similar)
+- [[hasheem-thabeet|Hasheem Thabeet]] '12 (92% similar)
+
+**Career shape:** Charted 3 seasons (2004-05–2008-09). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

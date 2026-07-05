@@ -37,6 +37,32 @@ Closest career shapes in the era-normalized vector space:
 - [[anthony-brown|Anthony Brown]] — cosine 0.91
 - [[ira-newble|Ira Newble]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 11.3 pts · 4.8 reb · 2.5 ast · 1.3 stl per 100 (2023-24).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.5σ)
+- Finishing efficiency well below era (−1.6σ)
+
+**Comparables:**
+
+- [[kessler-edwards|Kessler Edwards]] '25 (95% similar)
+- [[kyle-singler|Kyle Singler]] '17 (92% similar)
+- [[terrance-ferguson|Terrance Ferguson]] '20 (92% similar)
+- [[quincy-pondexter|Quincy Pondexter]] '18 (91% similar)
+- [[anthony-brown|Anthony Brown]] '16 (91% similar)
+- [[ira-newble|Ira Newble]] '01 (90% similar)
+
+**Career shape:** Charted 4 seasons (2021-22–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -51,6 +51,33 @@ Closest career shapes in the era-normalized vector space:
 - [[cade-cunningham|Cade Cunningham]] — cosine 0.93
 - [[stephon-castle|Stephon Castle]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 43.7 pts · 14.7 reb · 14.3 ast · 2.3 stl per 100 (2016-17).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+4.0σ vs era)
+- Featured, high-usage scoring role (+3.8σ vs era)
+- Heavy shot volume, focal scoring option (+3.7σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+4.0σ)
+
+**Comparables:**
+
+- [[ja-morant|Ja Morant]] '23 (94% similar)
+- [[tyreke-evans|Tyreke Evans]] '16 (93% similar)
+- [[john-wall|John Wall]] '17 (93% similar)
+- [[steve-francis|Steve Francis]] '05 (93% similar)
+- [[cade-cunningham|Cade Cunningham]] '26 (93% similar)
+- [[stephon-castle|Stephon Castle]] '26 (92% similar)
+
+**Career shape:** Charted 18 seasons (2008-09–2025-26). Consistent Scoring Volume + Shot Volume profile across his career.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

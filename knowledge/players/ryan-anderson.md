@@ -44,6 +44,34 @@ Closest career shapes in the era-normalized vector space:
 - [[david-benoit|David Benoit]] — cosine 0.81
 - [[eddie-johnson|Eddie Johnson]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** PF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 27.8 pts · 9.0 reb · 1.1 ast · 0.6 stl per 100 (2013-14).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.8σ vs era)
+- Reliable touch from the free-throw line (+1.6σ vs era)
+- Rarely turns the ball over (−1.6σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.5σ)
+- Table-setting role well below era (−1.1σ)
+
+**Comparables:**
+
+- [[josh-davis|Josh Davis]] '05 (87% similar)
+- [[linas-kleiza|Linas Kleiza]] '13 (87% similar)
+- [[walter-herrmann|Walter Herrmann]] '09 (85% similar)
+- [[mirza-teletovic|Mirza Teletovic]] '17 (83% similar)
+- [[david-benoit|David Benoit]] '98 (81% similar)
+- [[eddie-johnson|Eddie Johnson]] '98 (81% similar)
+
+**Career shape:** Charted 11 seasons (2008-09–2018-19). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

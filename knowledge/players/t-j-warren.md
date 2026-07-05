@@ -40,6 +40,32 @@ Closest career shapes in the era-normalized vector space:
 - [[courtney-alexander|Courtney Alexander]] — cosine 0.68
 - [[al-thornton|Al Thornton]] — cosine 0.65
 
+## Scouting report
+
+**Play style:** SF · Defensive Glass + Rim Pressure (Fts). Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 28.1 pts · 7.4 reb · 1.9 ast · 1.4 stl per 100 (2017-18).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+1.6σ vs era)
+- Featured, high-usage scoring role (+1.4σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.3σ)
+
+**Comparables:**
+
+- [[eddie-robinson|Eddie Robinson]] '00 (78% similar)
+- [[ron-mercer|Ron Mercer]] '05 (73% similar)
+- [[predrag-drobnjak|Predrag Drobnjak]] '04 (71% similar)
+- [[shabazz-muhammad|Shabazz Muhammad]] '15 (68% similar)
+- [[courtney-alexander|Courtney Alexander]] '01 (68% similar)
+- [[al-thornton|Al Thornton]] '09 (65% similar)
+
+**Career shape:** Charted 7 seasons (2014-15–2022-23). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

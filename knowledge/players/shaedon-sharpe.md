@@ -37,6 +37,32 @@ Closest career shapes in the era-normalized vector space:
 - [[zach-lavine|Zach LaVine]] — cosine 0.89
 - [[ed-gray|Ed Gray]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** SG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 32.8 pts · 6.8 reb · 4.2 ast · 2.2 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+2.3σ vs era)
+- Featured, high-usage scoring role (+1.8σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.0σ)
+
+**Comparables:**
+
+- [[jalen-green|Jalen Green]] '26 (92% similar)
+- [[jordan-clarkson|Jordan Clarkson]] '21 (90% similar)
+- [[jaden-hardy|Jaden Hardy]] '26 (89% similar)
+- [[cam-thomas|Cam Thomas]] '25 (89% similar)
+- [[zach-lavine|Zach LaVine]] '21 (89% similar)
+- [[ed-gray|Ed Gray]] '99 (88% similar)
+
+**Career shape:** Charted 4 seasons (2022-23–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

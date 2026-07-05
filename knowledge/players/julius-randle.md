@@ -44,6 +44,34 @@ Closest career shapes in the era-normalized vector space:
 - [[karl-anthony-towns|Karl-Anthony Towns]] — cosine 0.87
 - [[demarcus-cousins|DeMarcus Cousins]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** PF · Scoring Volume + Shot Volume. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 32.8 pts · 12.5 reb · 6.8 ast · 0.7 stl per 100 (2023-24).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+2.2σ vs era)
+- Featured, high-usage scoring role (+1.8σ vs era)
+- Heavy shot volume, focal scoring option (+1.8σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.4σ)
+- Ball-hawking activity well below era (−1.4σ)
+
+**Comparables:**
+
+- [[paolo-banchero|Paolo Banchero]] '25 (92% similar)
+- [[blake-griffin|Blake Griffin]] '14 (90% similar)
+- [[joel-embiid|Joel Embiid]] '17 (87% similar)
+- [[giannis-antetokounmpo|Giannis Antetokounmpo]] '20 (87% similar)
+- [[karl-anthony-towns|Karl-Anthony Towns]] '19 (87% similar)
+- [[demarcus-cousins|DeMarcus Cousins]] '15 (85% similar)
+
+**Career shape:** Charted 11 seasons (2015-16–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

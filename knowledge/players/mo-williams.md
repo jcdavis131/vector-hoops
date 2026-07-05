@@ -46,6 +46,34 @@ Closest career shapes in the era-normalized vector space:
 - [[damon-stoudamire|Damon Stoudamire]] — cosine 0.94
 - [[jameer-nelson|Jameer Nelson]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 22.9 pts · 4.3 reb · 10.7 ast · 1.5 stl per 100 (2010-11).
+
+**Strengths:**
+
+- High-volume table-setter (+2.3σ vs era)
+- High-volume three-point shooter (+1.0σ vs era)
+- Heavy shot volume, focal scoring option (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.0σ)
+- On-court net impact well below era (−1.3σ)
+
+**Comparables:**
+
+- [[reggie-jackson|Reggie Jackson]] '16 (96% similar)
+- [[darius-garland|Darius Garland]] '22 (95% similar)
+- [[mark-price|Mark Price]] '98 (95% similar)
+- [[aaron-brooks|Aaron Brooks]] '11 (94% similar)
+- [[damon-stoudamire|Damon Stoudamire]] '97 (94% similar)
+- [[jameer-nelson|Jameer Nelson]] '09 (93% similar)
+
+**Career shape:** Charted 13 seasons (2003-04–2015-16). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

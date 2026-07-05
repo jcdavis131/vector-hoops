@@ -44,6 +44,31 @@ Closest career shapes in the era-normalized vector space:
 - [[joe-johnson|Joe Johnson]] — cosine 0.85
 - [[malik-monk|Malik Monk]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 16.7 pts · 8.2 reb · 3.3 ast · 1.9 stl per 100 (2012-13).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.7σ)
+
+**Comparables:**
+
+- [[terry-rozier|Terry Rozier]] '16 (92% similar)
+- [[coby-white|Coby White]] '26 (88% similar)
+- [[john-starks|John Starks]] '00 (88% similar)
+- [[bogdan-bogdanovic|Bogdan Bogdanović]] '21 (88% similar)
+- [[joe-johnson|Joe Johnson]] '07 (85% similar)
+- [[malik-monk|Malik Monk]] '18 (85% similar)
+
+**Career shape:** Charted 11 seasons (2012-13–2022-23). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

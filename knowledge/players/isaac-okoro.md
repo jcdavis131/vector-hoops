@@ -39,6 +39,32 @@ Closest career shapes in the era-normalized vector space:
 - [[derrick-walton-jr|Derrick Walton Jr.]] — cosine 0.88
 - [[amir-coffey|Amir Coffey]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 15.4 pts · 5.9 reb · 3.1 ast · 1.5 stl per 100 (2024-25).
+
+**Strengths:**
+
+- Strong net on-court impact (+1.8σ vs era)
+- Rarely turns the ball over (−1.4σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.1σ)
+
+**Comparables:**
+
+- [[julian-phillips|Julian Phillips]] '26 (93% similar)
+- [[josh-green|Josh Green]] '26 (89% similar)
+- [[quinton-ross|Quinton Ross]] '11 (89% similar)
+- [[terrance-ferguson|Terrance Ferguson]] '20 (88% similar)
+- [[derrick-walton-jr|Derrick Walton Jr.]] '20 (88% similar)
+- [[amir-coffey|Amir Coffey]] '23 (88% similar)
+
+**Career shape:** Charted 6 seasons (2020-21–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

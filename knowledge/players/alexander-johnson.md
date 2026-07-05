@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jerome-moiso|Jerome Moiso]] — cosine 0.86
 - [[daniel-orton|Daniel Orton]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 17.3 pts · 9.1 reb · 1.3 ast · 1.3 stl per 100 (2007-08).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+1.3σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.5σ)
+- Turnover rate well above era (+1.4σ)
+
+**Comparables:**
+
+- [[semih-erden|Semih Erden]] '12 (89% similar)
+- [[ian-mahinmi|Ian Mahinmi]] '10 (89% similar)
+- [[ryan-hollins|Ryan Hollins]] '07 (88% similar)
+- [[nick-richards|Nick Richards]] '23 (86% similar)
+- [[jerome-moiso|Jerome Moiso]] '01 (86% similar)
+- [[daniel-orton|Daniel Orton]] '12 (86% similar)
+
+**Career shape:** Charted 2 seasons (2006-07–2007-08). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

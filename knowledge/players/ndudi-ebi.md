@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[jermareo-davidson|Jermareo Davidson]] — cosine 0.70
 - [[randell-jackson|Randell Jackson]] — cosine 0.70
 
+## Scouting report
+
+**Play style:** SF · Rim Protection + Offensive Glass. Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 19.7 pts · 4.5 reb · 4.5 ast · 6.1 blk per 100 (2003-04).
+
+**Strengths:**
+
+- Elite rim protection (+4.0σ vs era)
+- Heavy shot volume, focal scoring option (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−4.0σ)
+- Ball-hawking activity well below era (−2.6σ)
+
+**Comparables:**
+
+- [[sharone-wright|Sharone Wright]] '97 (84% similar)
+- [[darko-milicic|Darko Milicic]] '04 (73% similar)
+- [[david-harrison|David Harrison]] '07 (71% similar)
+- [[darius-miles|Darius Miles]] '05 (71% similar)
+- [[jermareo-davidson|Jermareo Davidson]] '08 (70% similar)
+- [[randell-jackson|Randell Jackson]] '99 (70% similar)
+
+**Career shape:** Charted 1 season (2003-04). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

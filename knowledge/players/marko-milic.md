@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[kelly-olynyk|Kelly Olynyk]] — cosine 0.58
 - [[scotty-pippen-jr|Scotty Pippen Jr.]] — cosine 0.58
 
+## Scouting report
+
+**Play style:** SF · Scoring Volume + Shot Volume. Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 25.6 pts · 7.0 reb · 3.3 ast · 2.8 stl per 100 (1997-98).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+3.0σ vs era)
+- Knockdown three-point shooter (+1.6σ vs era)
+- Active hands, disrupts passing lanes (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.7σ)
+
+**Comparables:**
+
+- [[paul-mcpherson|Paul McPherson]] '01 (75% similar)
+- [[bonzi-wells|Bonzi Wells]] '00 (71% similar)
+- [[ryan-rollins|Ryan Rollins]] '26 (60% similar)
+- [[ruben-patterson|Ruben Patterson]] '08 (59% similar)
+- [[kelly-olynyk|Kelly Olynyk]] '24 (58% similar)
+- [[scotty-pippen-jr|Scotty Pippen Jr.]] '24 (58% similar)
+
+**Career shape:** Charted 1 season (1997-98). Consistent Scoring Volume + Shot Volume profile across his career.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

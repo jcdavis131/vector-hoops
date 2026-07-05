@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[ricky-ledo|Ricky Ledo]] — cosine 0.84
 - [[emmanuel-mudiay|Emmanuel Mudiay]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** SG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 21.8 pts · 5.7 reb · 4.7 ast · 2.3 stl per 100 (1996-97).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Turnover rate well above era (+4.0σ)
+- Finishing efficiency well below era (−1.2σ)
+
+**Comparables:**
+
+- [[scoot-henderson|Scoot Henderson]] '24 (89% similar)
+- [[luke-jackson|Luke Jackson]] '06 (87% similar)
+- [[tony-wroten|Tony Wroten]] '15 (86% similar)
+- [[jaden-ivey|Jaden Ivey]] '23 (86% similar)
+- [[ricky-ledo|Ricky Ledo]] '15 (84% similar)
+- [[emmanuel-mudiay|Emmanuel Mudiay]] '16 (82% similar)
+
+**Career shape:** Charted 1 season (1996-97). Consistent Scoring Volume + Shot Volume profile across his career.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

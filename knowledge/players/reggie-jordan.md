@@ -37,6 +37,33 @@ Closest career shapes in the era-normalized vector space:
 - [[dalen-terry|Dalen Terry]] — cosine 0.83
 - [[isaac-bonga|Isaac Bonga]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass + Defensive Glass. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 15.0 pts · 10.1 reb · 4.5 ast · 2.6 stl per 100 (1996-97).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+2.9σ vs era)
+- Active hands, disrupts passing lanes (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.1σ)
+- Shot volume well below era (−1.4σ)
+
+**Comparables:**
+
+- [[kyle-collinsworth|Kyle Collinsworth]] '18 (87% similar)
+- [[colby-jones|Colby Jones]] '24 (85% similar)
+- [[xavier-tillman|Xavier Tillman]] '26 (84% similar)
+- [[robert-archibald|Robert Archibald]] '04 (83% similar)
+- [[dalen-terry|Dalen Terry]] '26 (83% similar)
+- [[isaac-bonga|Isaac Bonga]] '19 (82% similar)
+
+**Career shape:** Charted 4 seasons (1996-97–1999-00). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

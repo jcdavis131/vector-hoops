@@ -38,6 +38,33 @@ Closest career shapes in the era-normalized vector space:
 - [[jordan-poole|Jordan Poole]] — cosine 0.92
 - [[brandon-miller|Brandon Miller]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** SG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 32.9 pts · 6.7 reb · 5.3 ast · 2.0 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+2.8σ vs era)
+- Featured, high-usage scoring role (+1.8σ vs era)
+- High-volume three-point shooter (+1.7σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.6σ)
+
+**Comparables:**
+
+- [[zach-lavine|Zach LaVine]] '21 (93% similar)
+- [[cam-thomas|Cam Thomas]] '25 (93% similar)
+- [[jordan-clarkson|Jordan Clarkson]] '21 (93% similar)
+- [[shaedon-sharpe|Shaedon Sharpe]] '26 (92% similar)
+- [[jordan-poole|Jordan Poole]] '25 (92% similar)
+- [[brandon-miller|Brandon Miller]] '26 (91% similar)
+
+**Career shape:** Charted 5 seasons (2021-22–2025-26). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -40,6 +40,33 @@ Closest career shapes in the era-normalized vector space:
 - [[mike-taylor|Mike Taylor]] — cosine 0.91
 - [[isaiah-collier|Isaiah Collier]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 21.5 pts · 4.1 reb · 12.6 ast · 2.6 stl per 100 (1996-97).
+
+**Strengths:**
+
+- High-volume table-setter (+2.9σ vs era)
+- Active hands, disrupts passing lanes (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.8σ)
+- Offensive-glass activity well below era (−1.2σ)
+
+**Comparables:**
+
+- [[t-j-ford|T.J. Ford]] '07 (93% similar)
+- [[tyler-ulis|Tyler Ulis]] '18 (92% similar)
+- [[will-bynum|Will Bynum]] '09 (91% similar)
+- [[tyus-edney|Tyus Edney]] '01 (91% similar)
+- [[mike-taylor|Mike Taylor]] '09 (91% similar)
+- [[isaiah-collier|Isaiah Collier]] '26 (90% similar)
+
+**Career shape:** Charted 7 seasons (1996-97–2003-04). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

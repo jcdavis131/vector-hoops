@@ -36,6 +36,33 @@ Closest career shapes in the era-normalized vector space:
 - [[reggie-perry|Reggie Perry]] — cosine 0.79
 - [[mouhamed-sene|Mouhamed Sene]] — cosine 0.79
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 22.6 pts · 14.4 reb · 3.3 ast · 1.5 stl per 100 (1999-00).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+1.4σ vs era)
+- Draws contact, gets to the line often (+1.2σ vs era)
+- Relentless on the offensive glass (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.1σ)
+
+**Comparables:**
+
+- [[adreian-payne|Adreian Payne]] '17 (85% similar)
+- [[marquese-chriss|Marquese Chriss]] '20 (85% similar)
+- [[pops-mensah-bonsu|Pops Mensah-Bonsu]] '10 (83% similar)
+- [[anthony-randolph|Anthony Randolph]] '13 (79% similar)
+- [[reggie-perry|Reggie Perry]] '21 (79% similar)
+- [[mouhamed-sene|Mouhamed Sene]] '07 (79% similar)
+
+**Career shape:** Charted 3 seasons (1997-98–1999-00). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

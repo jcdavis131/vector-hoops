@@ -41,6 +41,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jake-tsakalidis|Jake Tsakalidis]] — cosine 0.94
 - [[donnell-harvey|Donnell Harvey]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 12.3 pts · 13.3 reb · 2.1 ast · 1.4 blk per 100 (2014-15).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.8σ)
+- Shot volume well below era (−1.3σ)
+
+**Comparables:**
+
+- [[tristan-thompson|Tristan Thompson]] '25 (96% similar)
+- [[samaki-walker|Samaki Walker]] '02 (95% similar)
+- [[ed-davis|Ed Davis]] '22 (94% similar)
+- [[lonny-baxter|Lonny Baxter]] '06 (94% similar)
+- [[jake-tsakalidis|Jake Tsakalidis]] '06 (94% similar)
+- [[donnell-harvey|Donnell Harvey]] '02 (93% similar)
+
+**Career shape:** Charted 8 seasons (2008-09–2015-16). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

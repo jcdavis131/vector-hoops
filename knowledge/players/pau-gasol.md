@@ -51,6 +51,34 @@ Closest career shapes in the era-normalized vector space:
 - [[marc-gasol|Marc Gasol]] — cosine 0.88
 - [[david-west|David West]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** PF · Defensive Glass + Rim Pressure (Fts). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 27.2 pts · 17.2 reb · 3.9 ast · 2.8 blk per 100 (2014-15).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+2.5σ vs era)
+- Elite rim protection (+1.8σ vs era)
+- Featured, high-usage scoring role (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.7σ)
+- Three-point volume well below era (−1.1σ)
+
+**Comparables:**
+
+- [[yao-ming|Yao Ming]] '07 (93% similar)
+- [[tim-duncan|Tim Duncan]] '04 (91% similar)
+- [[evan-mobley|Evan Mobley]] '25 (89% similar)
+- [[jonas-valanciunas|Jonas Valančiūnas]] '26 (89% similar)
+- [[marc-gasol|Marc Gasol]] '16 (88% similar)
+- [[david-west|David West]] '18 (86% similar)
+
+**Career shape:** Charted 18 seasons (2001-02–2018-19). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

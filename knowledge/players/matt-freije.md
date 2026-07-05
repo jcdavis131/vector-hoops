@@ -35,6 +35,33 @@ Closest career shapes in the era-normalized vector space:
 - [[pj-hairston|PJ Hairston]] — cosine 0.88
 - [[lloyd-daniels|Lloyd Daniels]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** PF · Three-Point Accuracy (Low Turnovers). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 13.2 pts · 7.9 reb · 2.3 ast · 1.0 stl per 100 (2006-07).
+
+**Strengths:**
+
+- Rarely turns the ball over (−2.1σ vs era)
+- High-volume three-point shooter (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.3σ)
+- Rim pressure (free-throw generation) well below era (−1.2σ)
+
+**Comparables:**
+
+- [[chaz-lanier|Chaz Lanier]] '26 (90% similar)
+- [[jawad-williams|Jawad Williams]] '11 (90% similar)
+- [[nicolo-melli|Nicolo Melli]] '21 (89% similar)
+- [[pacome-dadiet|Pacôme Dadiet]] '26 (89% similar)
+- [[pj-hairston|PJ Hairston]] '15 (88% similar)
+- [[lloyd-daniels|Lloyd Daniels]] '97 (87% similar)
+
+**Career shape:** Charted 2 seasons (2004-05–2006-07). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

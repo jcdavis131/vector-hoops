@@ -40,6 +40,34 @@ Closest career shapes in the era-normalized vector space:
 - [[cam-thomas|Cam Thomas]] — cosine 0.89
 - [[isaiah-thomas|Isaiah Thomas]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** SG · Scoring Volume + Shot Volume. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 33.3 pts · 4.2 reb · 6.0 ast · 1.4 stl per 100 (2020-21).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+2.1σ vs era)
+- Featured, high-usage scoring role (+2.0σ vs era)
+- Heavy shot volume, focal scoring option (+1.9σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.5σ)
+- Turnover rate well above era (+1.3σ)
+
+**Comparables:**
+
+- [[zach-lavine|Zach LaVine]] '21 (92% similar)
+- [[devin-booker|Devin Booker]] '19 (90% similar)
+- [[marshon-brooks|MarShon Brooks]] '14 (89% similar)
+- [[bradley-beal|Bradley Beal]] '20 (89% similar)
+- [[cam-thomas|Cam Thomas]] '25 (89% similar)
+- [[isaiah-thomas|Isaiah Thomas]] '17 (88% similar)
+
+**Career shape:** Charted 7 seasons (2018-19–2025-26). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -35,6 +35,33 @@ Closest career shapes in the era-normalized vector space:
 - [[gilbert-arenas|Gilbert Arenas]] — cosine 0.90
 - [[toni-kukoc|Toni Kukoc]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** SG · Scoring Volume + Shot Volume. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 26.7 pts · 7.2 reb · 7.9 ast · 2.6 stl per 100 (1997-98).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.6σ vs era)
+- Featured, high-usage scoring role (+1.4σ vs era)
+- Heavy shot volume, focal scoring option (+1.4σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[stephen-curry|Stephen Curry]] '16 (94% similar)
+- [[manu-ginobili|Manu Ginobili]] '08 (92% similar)
+- [[paul-george|Paul George]] '22 (91% similar)
+- [[donovan-mitchell|Donovan Mitchell]] '21 (90% similar)
+- [[gilbert-arenas|Gilbert Arenas]] '06 (90% similar)
+- [[toni-kukoc|Toni Kukoc]] '99 (89% similar)
+
+**Career shape:** Charted 2 seasons (1996-97–1997-98). Consistent Scoring Volume + Shot Volume profile across his career.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

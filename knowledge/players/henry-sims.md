@@ -35,6 +35,33 @@ Closest career shapes in the era-normalized vector space:
 - [[jj-hickson|JJ Hickson]] — cosine 0.85
 - [[donnell-harvey|Donnell Harvey]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 19.7 pts · 13.4 reb · 2.9 ast · 1.6 stl per 100 (2013-14).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+2.0σ vs era)
+- Draws contact, gets to the line often (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.5σ)
+- Three-point volume well below era (−1.2σ)
+
+**Comparables:**
+
+- [[ivan-rabb|Ivan Rabb]] '18 (90% similar)
+- [[kevin-willis|Kevin Willis]] '02 (87% similar)
+- [[alize-johnson|Alize Johnson]] '22 (86% similar)
+- [[jordan-hill|Jordan Hill]] '13 (86% similar)
+- [[jj-hickson|JJ Hickson]] '16 (85% similar)
+- [[donnell-harvey|Donnell Harvey]] '02 (85% similar)
+
+**Career shape:** Charted 2 seasons (2013-14–2014-15). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

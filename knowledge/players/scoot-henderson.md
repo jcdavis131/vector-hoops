@@ -36,6 +36,33 @@ Closest career shapes in the era-normalized vector space:
 - [[tony-wroten|Tony Wroten]] — cosine 0.90
 - [[goran-dragic|Goran Dragic]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 23.9 pts · 5.4 reb · 9.2 ast · 1.3 stl per 100 (2023-24).
+
+**Strengths:**
+
+- High-volume table-setter (+1.7σ vs era)
+- Heavy shot volume, focal scoring option (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+3.5σ)
+- On-court net impact well below era (−1.7σ)
+
+**Comparables:**
+
+- [[emmanuel-mudiay|Emmanuel Mudiay]] '16 (96% similar)
+- [[jaden-ivey|Jaden Ivey]] '23 (94% similar)
+- [[dennis-schroder|Dennis Schröder]] '16 (93% similar)
+- [[trae-young|Trae Young]] '20 (90% similar)
+- [[tony-wroten|Tony Wroten]] '15 (90% similar)
+- [[goran-dragic|Goran Dragic]] '17 (90% similar)
+
+**Career shape:** Charted 3 seasons (2023-24–2025-26). Consistent Scoring Volume + Shot Volume profile across his career.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

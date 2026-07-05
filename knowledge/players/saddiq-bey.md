@@ -38,6 +38,31 @@ Closest career shapes in the era-normalized vector space:
 - [[nick-young|Nick Young]] — cosine 0.81
 - [[matt-carroll|Matt Carroll]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 23.6 pts · 7.9 reb · 4.2 ast · 1.3 stl per 100 (2021-22).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.2σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.2σ)
+
+**Comparables:**
+
+- [[jarell-eddie|Jarell Eddie]] '16 (85% similar)
+- [[trey-murphy-iii|Trey Murphy III]] '24 (84% similar)
+- [[chris-mills|Chris Mills]] '03 (84% similar)
+- [[marcus-morris-sr|Marcus Morris Sr.]] '12 (83% similar)
+- [[nick-young|Nick Young]] '15 (81% similar)
+- [[matt-carroll|Matt Carroll]] '10 (81% similar)
+
+**Career shape:** Charted 5 seasons (2020-21–2025-26). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

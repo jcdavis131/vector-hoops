@@ -43,6 +43,32 @@ Closest career shapes in the era-normalized vector space:
 - [[carlos-arroyo|Carlos Arroyo]] — cosine 0.91
 - [[mike-conley|Mike Conley]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 22.7 pts · 4.6 reb · 10.4 ast · 1.9 stl per 100 (2009-10).
+
+**Strengths:**
+
+- High-volume table-setter (+2.3σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.2σ)
+- Defensive rebounding well below era (−1.1σ)
+
+**Comparables:**
+
+- [[ty-lawson|Ty Lawson]] '14 (94% similar)
+- [[jeff-teague|Jeff Teague]] '15 (93% similar)
+- [[travis-best|Travis Best]] '04 (93% similar)
+- [[beno-udrih|Beno Udrih]] '17 (91% similar)
+- [[carlos-arroyo|Carlos Arroyo]] '03 (91% similar)
+- [[mike-conley|Mike Conley]] '13 (91% similar)
+
+**Career shape:** Charted 10 seasons (2009-10–2018-19). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

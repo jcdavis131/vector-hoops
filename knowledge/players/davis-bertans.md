@@ -41,6 +41,33 @@ Closest career shapes in the era-normalized vector space:
 - [[matt-bullard|Matt Bullard]] — cosine 0.93
 - [[lindy-waters-iii|Lindy Waters III]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** PF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 20.8 pts · 4.3 reb · 2.5 ast · 1.9 stl per 100 (2023-24).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.1σ vs era)
+- Rarely turns the ball over (−1.2σ vs era)
+- Reliable touch from the free-throw line (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.1σ)
+
+**Comparables:**
+
+- [[james-jones|James Jones]] '14 (95% similar)
+- [[richie-frahm|Richie Frahm]] '04 (95% similar)
+- [[pat-garrity|Pat Garrity]] '02 (94% similar)
+- [[dennis-scott|Dennis Scott]] '00 (93% similar)
+- [[matt-bullard|Matt Bullard]] '01 (93% similar)
+- [[lindy-waters-iii|Lindy Waters III]] '23 (93% similar)
+
+**Career shape:** Charted 8 seasons (2016-17–2023-24). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

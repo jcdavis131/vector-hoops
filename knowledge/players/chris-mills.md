@@ -39,6 +39,32 @@ Closest career shapes in the era-normalized vector space:
 - [[saddiq-bey|Saddiq Bey]] — cosine 0.84
 - [[chase-budinger|Chase Budinger]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** PF · Three-Point Volume + Three-Point Accuracy. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 19.4 pts · 9.7 reb · 4.2 ast · 1.3 stl per 100 (2002-03).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+1.4σ vs era)
+- Rarely turns the ball over (−1.2σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.2σ)
+
+**Comparables:**
+
+- [[walter-herrmann|Walter Herrmann]] '09 (86% similar)
+- [[eddie-johnson|Eddie Johnson]] '98 (86% similar)
+- [[marcus-morris-sr|Marcus Morris Sr.]] '12 (85% similar)
+- [[brian-evans|Brian Evans]] '98 (85% similar)
+- [[saddiq-bey|Saddiq Bey]] '22 (84% similar)
+- [[chase-budinger|Chase Budinger]] '10 (84% similar)
+
+**Career shape:** Charted 6 seasons (1996-97–2002-03). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

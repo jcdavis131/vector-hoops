@@ -42,6 +42,34 @@ Closest career shapes in the era-normalized vector space:
 - [[delonte-west|Delonte West]] — cosine 0.92
 - [[mike-conley|Mike Conley]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** PG · Three-Point Accuracy (Low Turnovers). Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 11.2 pts · 4.4 reb · 7.3 ast · 2.0 stl per 100 (2003-04).
+
+**Strengths:**
+
+- Strong net on-court impact (+1.5σ vs era)
+- High-volume table-setter (+1.2σ vs era)
+- Reliable touch from the free-throw line (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.3σ)
+- Scoring load well below era (−1.3σ)
+
+**Comparables:**
+
+- [[kenny-anderson|Kenny Anderson]] '97 (96% similar)
+- [[luke-ridnour|Luke Ridnour]] '06 (93% similar)
+- [[darren-collison|Darren Collison]] '10 (93% similar)
+- [[c-j-watson|C.J. Watson]] '11 (92% similar)
+- [[delonte-west|Delonte West]] '09 (92% similar)
+- [[mike-conley|Mike Conley]] '13 (91% similar)
+
+**Career shape:** Charted 9 seasons (1996-97–2004-05). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

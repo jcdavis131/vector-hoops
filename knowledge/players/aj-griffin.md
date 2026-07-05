@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[simone-fontecchio|Simone Fontecchio]] — cosine 0.90
 - [[tristan-da-silva|Tristan da Silva]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 12.6 pts · 4.7 reb · 1.3 ast · 0.5 blk per 100 (2023-24).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+1.8σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.3σ)
+- Ball-hawking activity well below era (−2.1σ)
+
+**Comparables:**
+
+- [[matt-ryan|Matt Ryan]] '25 (96% similar)
+- [[timothe-luwawu-cabarrot|Timothe Luwawu-Cabarrot]] '19 (91% similar)
+- [[jordan-hawkins|Jordan Hawkins]] '25 (91% similar)
+- [[mychal-mulder|Mychal Mulder]] '22 (91% similar)
+- [[simone-fontecchio|Simone Fontecchio]] '23 (90% similar)
+- [[tristan-da-silva|Tristan da Silva]] '25 (89% similar)
+
+**Career shape:** Charted 2 seasons (2022-23–2023-24). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

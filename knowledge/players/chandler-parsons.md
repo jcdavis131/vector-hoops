@@ -41,6 +41,32 @@ Closest career shapes in the era-normalized vector space:
 - [[malik-beasley|Malik Beasley]] — cosine 0.88
 - [[dell-curry|Dell Curry]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 18.1 pts · 6.8 reb · 4.2 ast · 1.8 stl per 100 (2018-19).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.1σ)
+- Offensive-glass activity well below era (−1.0σ)
+
+**Comparables:**
+
+- [[kevin-huerter|Kevin Huerter]] '23 (91% similar)
+- [[jaren-jackson|Jaren Jackson]] '01 (88% similar)
+- [[voshon-lenard|Voshon Lenard]] '97 (88% similar)
+- [[luther-head|Luther Head]] '07 (88% similar)
+- [[malik-beasley|Malik Beasley]] '25 (88% similar)
+- [[dell-curry|Dell Curry]] '00 (87% similar)
+
+**Career shape:** Charted 8 seasons (2011-12–2018-19). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

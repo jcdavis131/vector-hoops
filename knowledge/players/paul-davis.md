@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[malevy-leons|Malevy Leons]] — cosine 0.81
 - [[ryan-humphrey|Ryan Humphrey]] — cosine 0.80
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 14.4 pts · 12.5 reb · 2.7 ast · 1.6 stl per 100 (2007-08).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+2.3σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.9σ)
+- Three-point accuracy well below era (−1.4σ)
+
+**Comparables:**
+
+- [[nathan-jawai|Nathan Jawai]] '10 (85% similar)
+- [[stephen-zimmerman|Stephen Zimmerman]] '17 (84% similar)
+- [[boniface-ndong|Boniface Ndong]] '06 (84% similar)
+- [[earl-barron|Earl Barron]] '07 (83% similar)
+- [[malevy-leons|Malevy Leons]] '26 (81% similar)
+- [[ryan-humphrey|Ryan Humphrey]] '05 (80% similar)
+
+**Career shape:** Charted 3 seasons (2006-07–2008-09). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

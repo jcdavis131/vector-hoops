@@ -39,6 +39,33 @@ Closest career shapes in the era-normalized vector space:
 - [[jaren-jackson|Jaren Jackson]] — cosine 0.88
 - [[jorge-garbajosa|Jorge Garbajosa]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 13.0 pts · 7.6 reb · 3.9 ast · 2.1 stl per 100 (2001-02).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.5σ vs era)
+- Rarely turns the ball over (−1.5σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.8σ)
+- Rim pressure (free-throw generation) well below era (−1.3σ)
+
+**Comparables:**
+
+- [[jae-crowder|Jae Crowder]] '22 (91% similar)
+- [[keith-bogans|Keith Bogans]] '13 (91% similar)
+- [[baylor-scheierman|Baylor Scheierman]] '26 (89% similar)
+- [[james-posey|James Posey]] '11 (88% similar)
+- [[jaren-jackson|Jaren Jackson]] '01 (88% similar)
+- [[jorge-garbajosa|Jorge Garbajosa]] '07 (87% similar)
+
+**Career shape:** Charted 6 seasons (1996-97–2001-02). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

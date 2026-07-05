@@ -38,6 +38,34 @@ Closest career shapes in the era-normalized vector space:
 - [[chris-copeland|Chris Copeland]] — cosine 0.90
 - [[salim-stoudamire|Salim Stoudamire]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 26.3 pts · 6.8 reb · 1.7 ast · 0.6 stl per 100 (2000-01).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+2.0σ vs era)
+- Featured, high-usage scoring role (+1.4σ vs era)
+- Knockdown three-point shooter (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.6σ)
+- On-court net impact well below era (−1.3σ)
+
+**Comparables:**
+
+- [[sean-kilpatrick|Sean Kilpatrick]] '16 (93% similar)
+- [[bojan-bogdanovic|Bojan Bogdanovic]] '20 (93% similar)
+- [[anfernee-simons|Anfernee Simons]] '24 (91% similar)
+- [[jaden-hardy|Jaden Hardy]] '26 (90% similar)
+- [[chris-copeland|Chris Copeland]] '16 (90% similar)
+- [[salim-stoudamire|Salim Stoudamire]] '08 (90% similar)
+
+**Career shape:** Charted 5 seasons (1996-97–2000-01). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

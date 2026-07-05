@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[damian-jones|Damian Jones]] — cosine 0.86
 - [[salah-mejri|Salah Mejri]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** PF · Rim Protection + Offensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 18.1 pts · 11.8 reb · 2.6 ast · 2.8 blk per 100 (2025-26).
+
+**Strengths:**
+
+- Elite rim protection (+2.3σ vs era)
+- Efficient finisher inside the arc (+1.7σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[daniel-theis|Daniel Theis]] '20 (91% similar)
+- [[isaiah-stewart|Isaiah Stewart]] '25 (90% similar)
+- [[walker-kessler|Walker Kessler]] '23 (89% similar)
+- [[drew-eubanks|Drew Eubanks]] '20 (88% similar)
+- [[damian-jones|Damian Jones]] '19 (86% similar)
+- [[salah-mejri|Salah Mejri]] '18 (85% similar)
+
+**Career shape:** Charted 2 seasons (2024-25–2025-26). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

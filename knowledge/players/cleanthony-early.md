@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[lasalle-thompson|LaSalle Thompson]] — cosine 0.84
 - [[marlon-garnett|Marlon Garnett]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 10.2 pts · 8.5 reb · 2.0 ast · 1.0 blk per 100 (2015-16).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.2σ)
+- Scoring load well below era (−1.6σ)
+
+**Comparables:**
+
+- [[paul-zipser|Paul Zipser]] '18 (92% similar)
+- [[javonte-smart|Javonte Smart]] '22 (90% similar)
+- [[nemanja-nedovic|Nemanja Nedovic]] '14 (86% similar)
+- [[nikoloz-tskitishvili|Nikoloz Tskitishvili]] '05 (84% similar)
+- [[lasalle-thompson|LaSalle Thompson]] '97 (84% similar)
+- [[marlon-garnett|Marlon Garnett]] '99 (83% similar)
+
+**Career shape:** Charted 2 seasons (2014-15–2015-16). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

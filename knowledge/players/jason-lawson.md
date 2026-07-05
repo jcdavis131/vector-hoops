@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[brandon-clarke|Brandon Clarke]] — cosine 0.81
 - [[robert-williams-iii|Robert Williams III]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 16.4 pts · 16.9 reb · 3.1 ast · 2.5 stl per 100 (1997-98).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+2.8σ vs era)
+- Strong presence on the defensive glass (+2.4σ vs era)
+- Rarely turns the ball over (−1.8σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.5σ)
+- Three-point accuracy well below era (−1.3σ)
+
+**Comparables:**
+
+- [[anderson-varejao|Anderson Varejao]] '05 (84% similar)
+- [[neemias-queta|Neemias Queta]] '24 (83% similar)
+- [[jeremy-evans|Jeremy Evans]] '12 (82% similar)
+- [[onyeka-okongwu|Onyeka Okongwu]] '22 (82% similar)
+- [[brandon-clarke|Brandon Clarke]] '25 (81% similar)
+- [[robert-williams-iii|Robert Williams III]] '19 (81% similar)
+
+**Career shape:** Charted 1 season (1997-98). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[spencer-jones|Spencer Jones]] — cosine 0.81
 - [[stacey-augmon|Stacey Augmon]] — cosine 0.80
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 11.0 pts · 8.2 reb · 2.1 ast · 2.1 stl per 100 (1996-97).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Scoring load well below era (−1.4σ)
+- Three-point accuracy well below era (−1.4σ)
+
+**Comparables:**
+
+- [[isaac-bonga|Isaac Bonga]] '19 (83% similar)
+- [[christian-koloko|Christian Koloko]] '23 (82% similar)
+- [[maurice-ndour|Maurice Ndour]] '17 (82% similar)
+- [[ekpe-udoh|Ekpe Udoh]] '19 (81% similar)
+- [[spencer-jones|Spencer Jones]] '25 (81% similar)
+- [[stacey-augmon|Stacey Augmon]] '99 (80% similar)
+
+**Career shape:** Charted 1 season (1996-97). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[rayan-rupert|Rayan Rupert]] — cosine 0.83
 - [[donny-marshall|Donny Marshall]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 9.7 pts · 9.2 reb · 3.2 ast · 2.2 stl per 100 (2002-03).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.2σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.3σ)
+- On-court net impact well below era (−1.9σ)
+
+**Comparables:**
+
+- [[chris-singleton|Chris Singleton]] '12 (91% similar)
+- [[davon-reed|Davon Reed]] '18 (89% similar)
+- [[chuma-okeke|Chuma Okeke]] '24 (88% similar)
+- [[cj-elleby|CJ Elleby]] '22 (85% similar)
+- [[rayan-rupert|Rayan Rupert]] '24 (83% similar)
+- [[donny-marshall|Donny Marshall]] '02 (83% similar)
+
+**Career shape:** Charted 1 season (2002-03). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[deshawn-stevenson|DeShawn Stevenson]] — cosine 0.81
 - [[tony-dumas|Tony Dumas]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 13.9 pts · 6.0 reb · 2.7 ast · 1.4 stl per 100 (2000-01).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.2σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.0σ)
+- Defensive rebounding well below era (−1.2σ)
+
+**Comparables:**
+
+- [[khyri-thomas|Khyri Thomas]] '19 (91% similar)
+- [[matt-freije|Matt Freije]] '07 (86% similar)
+- [[john-holland|John Holland]] '18 (86% similar)
+- [[joe-wieskamp|Joe Wieskamp]] '22 (84% similar)
+- [[deshawn-stevenson|DeShawn Stevenson]] '12 (81% similar)
+- [[tony-dumas|Tony Dumas]] '97 (81% similar)
+
+**Career shape:** Charted 1 season (2000-01). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

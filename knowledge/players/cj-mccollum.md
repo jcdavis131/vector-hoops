@@ -46,6 +46,33 @@ Closest career shapes in the era-normalized vector space:
 - [[desmond-bane|Desmond Bane]] — cosine 0.90
 - [[jordan-clarkson|Jordan Clarkson]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** SG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 32.6 pts · 5.6 reb · 6.7 ast · 1.3 stl per 100 (2020-21).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+2.1σ vs era)
+- Featured, high-usage scoring role (+1.9σ vs era)
+- High-volume three-point shooter (+1.7σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[joe-johnson|Joe Johnson]] '07 (92% similar)
+- [[vince-carter|Vince Carter]] '01 (92% similar)
+- [[latrell-sprewell|Latrell Sprewell]] '97 (91% similar)
+- [[klay-thompson|Klay Thompson]] '15 (90% similar)
+- [[desmond-bane|Desmond Bane]] '24 (90% similar)
+- [[jordan-clarkson|Jordan Clarkson]] '21 (90% similar)
+
+**Career shape:** Charted 13 seasons (2013-14–2025-26). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

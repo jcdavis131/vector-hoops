@@ -42,6 +42,33 @@ Closest career shapes in the era-normalized vector space:
 - [[enes-freedom|Enes Freedom]] — cosine 0.83
 - [[marvin-bagley-iii|Marvin Bagley III]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** PF · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 29.8 pts · 14.9 reb · 3.0 ast · 1.0 blk per 100 (2018-19).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+2.1σ vs era)
+- Featured, high-usage scoring role (+1.6σ vs era)
+- Efficient finisher inside the arc (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.5σ)
+
+**Comparables:**
+
+- [[thomas-bryant|Thomas Bryant]] '23 (91% similar)
+- [[jonas-valanciunas|Jonas Valančiūnas]] '26 (89% similar)
+- [[pj-hall|PJ Hall]] '26 (84% similar)
+- [[marreese-speights|Marreese Speights]] '18 (84% similar)
+- [[enes-freedom|Enes Freedom]] '18 (83% similar)
+- [[marvin-bagley-iii|Marvin Bagley III]] '26 (83% similar)
+
+**Career shape:** Charted 9 seasons (2017-18–2025-26). Entered as a Rim Protection + Offensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

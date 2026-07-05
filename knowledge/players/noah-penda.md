@@ -34,6 +34,31 @@ Closest career shapes in the era-normalized vector space:
 - [[george-lynch|George Lynch]] — cosine 0.83
 - [[jared-jeffries|Jared Jeffries]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 14.2 pts · 11.7 reb · 4.4 ast · 1.9 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Scoring load well below era (−1.0σ)
+
+**Comparables:**
+
+- [[michael-ruffin|Michael Ruffin]] '07 (88% similar)
+- [[usman-garuba|Usman Garuba]] '22 (88% similar)
+- [[kyle-collinsworth|Kyle Collinsworth]] '18 (83% similar)
+- [[ivano-newbill|Ivano Newbill]] '98 (83% similar)
+- [[george-lynch|George Lynch]] '03 (83% similar)
+- [[jared-jeffries|Jared Jeffries]] '11 (82% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

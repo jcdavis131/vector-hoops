@@ -35,6 +35,34 @@ Closest career shapes in the era-normalized vector space:
 - [[gheorghe-muresan|Gheorghe Muresan]] — cosine 0.89
 - [[hassan-whiteside|Hassan Whiteside]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 24.1 pts · 12.8 reb · 1.3 ast · 3.2 blk per 100 (1996-97).
+
+**Strengths:**
+
+- Elite rim protection (+2.0σ vs era)
+- Draws contact, gets to the line often (+1.7σ vs era)
+- Strong presence on the defensive glass (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.4σ)
+- Three-point volume well below era (−1.0σ)
+
+**Comparables:**
+
+- [[jermaine-o-neal|Jermaine O'Neal]] '05 (93% similar)
+- [[andrew-bynum|Andrew Bynum]] '08 (91% similar)
+- [[elden-campbell|Elden Campbell]] '02 (90% similar)
+- [[emeka-okafor|Emeka Okafor]] '18 (89% similar)
+- [[gheorghe-muresan|Gheorghe Muresan]] '97 (89% similar)
+- [[hassan-whiteside|Hassan Whiteside]] '22 (89% similar)
+
+**Career shape:** Charted 2 seasons (1996-97–1997-98). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

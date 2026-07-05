@@ -38,6 +38,34 @@ Closest career shapes in the era-normalized vector space:
 - [[marcus-banks|Marcus Banks]] — cosine 0.89
 - [[delonte-west|Delonte West]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 16.0 pts · 5.5 reb · 7.7 ast · 3.3 stl per 100 (1998-99).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.1σ vs era)
+- High-volume table-setter (+1.2σ vs era)
+- Knockdown three-point shooter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.3σ)
+- On-court net impact well below era (−1.2σ)
+
+**Comparables:**
+
+- [[tyler-ennis|Tyler Ennis]] '15 (94% similar)
+- [[randy-livingston|Randy Livingston]] '05 (92% similar)
+- [[kenny-anderson|Kenny Anderson]] '97 (91% similar)
+- [[shane-larkin|Shane Larkin]] '16 (91% similar)
+- [[marcus-banks|Marcus Banks]] '09 (89% similar)
+- [[delonte-west|Delonte West]] '09 (88% similar)
+
+**Career shape:** Charted 5 seasons (1996-97–2000-01). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

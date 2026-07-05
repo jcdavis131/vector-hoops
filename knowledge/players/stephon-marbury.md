@@ -46,6 +46,34 @@ Closest career shapes in the era-normalized vector space:
 - [[darius-garland|Darius Garland]] — cosine 0.92
 - [[d-angelo-russell|D'Angelo Russell]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 31.5 pts · 4.0 reb · 10.0 ast · 1.6 stl per 100 (2000-01).
+
+**Strengths:**
+
+- Featured, high-usage scoring role (+2.3σ vs era)
+- Heavy shot volume, focal scoring option (+2.1σ vs era)
+- High-volume table-setter (+2.1σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.3σ)
+- Turnover rate well above era (+1.0σ)
+
+**Comparables:**
+
+- [[deron-williams|Deron Williams]] '12 (95% similar)
+- [[goran-dragic|Goran Dragic]] '17 (95% similar)
+- [[dennis-schroder|Dennis Schröder]] '16 (94% similar)
+- [[trae-young|Trae Young]] '20 (93% similar)
+- [[darius-garland|Darius Garland]] '22 (92% similar)
+- [[d-angelo-russell|D'Angelo Russell]] '19 (92% similar)
+
+**Career shape:** Charted 13 seasons (1996-97–2008-09). Consistent Scoring Volume + Shot Volume profile across his career.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -42,6 +42,33 @@ Closest career shapes in the era-normalized vector space:
 - [[fred-hoiberg|Fred Hoiberg]] — cosine 0.84
 - [[jon-barry|Jon Barry]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 7.5 pts · 5.9 reb · 2.8 ast · 1.4 stl per 100 (2011-12).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.4σ vs era)
+- Rarely turns the ball over (−1.4σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.9σ)
+- Scoring load well below era (−1.9σ)
+
+**Comparables:**
+
+- [[hersey-hawkins|Hersey Hawkins]] '98 (90% similar)
+- [[iman-shumpert|Iman Shumpert]] '12 (89% similar)
+- [[billy-thomas|Billy Thomas]] '06 (87% similar)
+- [[james-posey|James Posey]] '11 (86% similar)
+- [[fred-hoiberg|Fred Hoiberg]] '05 (84% similar)
+- [[jon-barry|Jon Barry]] '98 (84% similar)
+
+**Career shape:** Charted 9 seasons (2003-04–2011-12). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

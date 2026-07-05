@@ -48,6 +48,34 @@ Closest career shapes in the era-normalized vector space:
 - [[ben-gordon|Ben Gordon]] — cosine 0.92
 - [[jordan-poole|Jordan Poole]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** SG · Scoring Volume + Shot Volume. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 36.7 pts · 4.8 reb · 6.3 ast · 1.5 stl per 100 (2000-01).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+3.4σ vs era)
+- Featured, high-usage scoring role (+3.3σ vs era)
+- Heavy shot volume, focal scoring option (+3.1σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.2σ)
+- Defensive rebounding well below era (−1.2σ)
+
+**Comparables:**
+
+- [[isaiah-thomas|Isaiah Thomas]] '17 (95% similar)
+- [[lou-williams|Lou Williams]] '19 (94% similar)
+- [[devin-booker|Devin Booker]] '19 (94% similar)
+- [[damian-lillard|Damian Lillard]] '23 (92% similar)
+- [[ben-gordon|Ben Gordon]] '05 (92% similar)
+- [[jordan-poole|Jordan Poole]] '25 (92% similar)
+
+**Career shape:** Charted 15 seasons (1996-97–2012-13). Consistent Scoring Volume + Shot Volume profile across his career.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -37,6 +37,33 @@ Closest career shapes in the era-normalized vector space:
 - [[moochie-norris|Moochie Norris]] — cosine 0.91
 - [[anthony-johnson|Anthony Johnson]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 12.7 pts · 5.0 reb · 8.0 ast · 2.2 stl per 100 (2018-19).
+
+**Strengths:**
+
+- High-volume table-setter (+1.4σ vs era)
+- Active hands, disrupts passing lanes (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Scoring load well below era (−1.2σ)
+- Shot volume well below era (−1.2σ)
+
+**Comparables:**
+
+- [[shane-larkin|Shane Larkin]] '16 (94% similar)
+- [[facundo-campazzo|Facundo Campazzo]] '21 (92% similar)
+- [[mike-wilks|Mike Wilks]] '04 (92% similar)
+- [[jason-hart|Jason Hart]] '09 (92% similar)
+- [[moochie-norris|Moochie Norris]] '05 (91% similar)
+- [[anthony-johnson|Anthony Johnson]] '02 (91% similar)
+
+**Career shape:** Charted 4 seasons (2015-16–2018-19). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

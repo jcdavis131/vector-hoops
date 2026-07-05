@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[marshall-plumlee|Marshall Plumlee]] — cosine 0.86
 - [[lou-amundson|Lou Amundson]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 9.4 pts · 11.0 reb · 1.4 ast · 1.5 stl per 100 (2005-06).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.0σ)
+- Shot volume well below era (−1.5σ)
+
+**Comparables:**
+
+- [[esteban-batista|Esteban Batista]] '06 (92% similar)
+- [[hilton-armstrong|Hilton Armstrong]] '11 (87% similar)
+- [[felton-spencer|Felton Spencer]] '01 (86% similar)
+- [[rafael-araujo|Rafael Araujo]] '06 (86% similar)
+- [[marshall-plumlee|Marshall Plumlee]] '17 (86% similar)
+- [[lou-amundson|Lou Amundson]] '14 (86% similar)
+
+**Career shape:** Charted 2 seasons (2004-05–2005-06). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

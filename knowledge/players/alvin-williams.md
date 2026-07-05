@@ -40,6 +40,32 @@ Closest career shapes in the era-normalized vector space:
 - [[kenny-anderson|Kenny Anderson]] — cosine 0.91
 - [[travis-best|Travis Best]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** SG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 17.2 pts · 4.6 reb · 8.7 ast · 2.6 stl per 100 (2000-01).
+
+**Strengths:**
+
+- High-volume table-setter (+1.6σ vs era)
+- Active hands, disrupts passing lanes (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.1σ)
+
+**Comparables:**
+
+- [[tyus-jones|Tyus Jones]] '18 (96% similar)
+- [[anthony-johnson|Anthony Johnson]] '02 (94% similar)
+- [[derek-harper|Derek Harper]] '99 (94% similar)
+- [[mike-wilks|Mike Wilks]] '04 (91% similar)
+- [[kenny-anderson|Kenny Anderson]] '97 (91% similar)
+- [[travis-best|Travis Best]] '04 (91% similar)
+
+**Career shape:** Charted 7 seasons (1997-98–2003-04). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Playmaking + Steals identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

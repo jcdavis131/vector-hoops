@@ -40,6 +40,33 @@ Closest career shapes in the era-normalized vector space:
 - [[khaman-maluach|Khaman Maluach]] — cosine 0.83
 - [[bol-bol|Bol Bol]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 18.1 pts · 16.5 reb · 2.3 ast · 4.7 blk per 100 (2019-20).
+
+**Strengths:**
+
+- Elite rim protection (+4.0σ vs era)
+- Relentless on the offensive glass (+2.1σ vs era)
+- Strong presence on the defensive glass (+1.6σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[marcus-camby|Marcus Camby]] '11 (88% similar)
+- [[donovan-clingan|Donovan Clingan]] '25 (88% similar)
+- [[samuel-dalembert|Samuel Dalembert]] '13 (86% similar)
+- [[isaiah-stewart|Isaiah Stewart]] '25 (86% similar)
+- [[khaman-maluach|Khaman Maluach]] '26 (83% similar)
+- [[bol-bol|Bol Bol]] '21 (83% similar)
+
+**Career shape:** Charted 7 seasons (2018-19–2024-25). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

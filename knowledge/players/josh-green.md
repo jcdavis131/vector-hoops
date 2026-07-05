@@ -39,6 +39,33 @@ Closest career shapes in the era-normalized vector space:
 - [[luc-mbah-a-moute|Luc Mbah a Moute]] — cosine 0.85
 - [[jared-dudley|Jared Dudley]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 13.5 pts · 5.5 reb · 2.5 ast · 1.9 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Strong net on-court impact (+1.7σ vs era)
+- Reliable touch from the free-throw line (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.4σ)
+- Defensive rebounding well below era (−1.3σ)
+
+**Comparables:**
+
+- [[isaac-okoro|Isaac Okoro]] '25 (89% similar)
+- [[david-wingate|David Wingate]] '99 (88% similar)
+- [[mitchell-butler|Mitchell Butler]] '98 (86% similar)
+- [[landry-fields|Landry Fields]] '15 (86% similar)
+- [[luc-mbah-a-moute|Luc Mbah a Moute]] '16 (85% similar)
+- [[jared-dudley|Jared Dudley]] '20 (85% similar)
+
+**Career shape:** Charted 6 seasons (2020-21–2025-26). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

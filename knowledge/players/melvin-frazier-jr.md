@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[alonzo-gee|Alonzo Gee]] — cosine 0.79
 - [[caleb-martin|Caleb Martin]] — cosine 0.79
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 14.5 pts · 3.6 reb · 1.1 ast · 3.3 stl per 100 (2019-20).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+3.1σ vs era)
+- Knockdown three-point shooter (+1.5σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.2σ)
+- Free-throw touch well below era (−2.2σ)
+
+**Comparables:**
+
+- [[troy-williams|Troy Williams]] '18 (92% similar)
+- [[deandre-liggins|DeAndre Liggins]] '12 (86% similar)
+- [[myke-henry|Myke Henry]] '18 (83% similar)
+- [[justin-edwards|Justin Edwards]] '26 (80% similar)
+- [[alonzo-gee|Alonzo Gee]] '16 (79% similar)
+- [[caleb-martin|Caleb Martin]] '26 (79% similar)
+
+**Career shape:** Charted 1 season (2019-20). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

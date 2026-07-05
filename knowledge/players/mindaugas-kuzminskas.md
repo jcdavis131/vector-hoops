@@ -34,6 +34,31 @@ Closest career shapes in the era-normalized vector space:
 - [[marco-belinelli|Marco Belinelli]] — cosine 0.83
 - [[jaylen-wells|Jaylen Wells]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 20.4 pts · 6.1 reb · 3.3 ast · 1.4 stl per 100 (2016-17).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.1σ)
+
+**Comparables:**
+
+- [[patty-mills|Patty Mills]] '14 (85% similar)
+- [[allan-ray|Allan Ray]] '07 (84% similar)
+- [[malik-beasley|Malik Beasley]] '25 (84% similar)
+- [[anthony-morrow|Anthony Morrow]] '17 (84% similar)
+- [[marco-belinelli|Marco Belinelli]] '08 (83% similar)
+- [[jaylen-wells|Jaylen Wells]] '25 (83% similar)
+
+**Career shape:** Charted 1 season (2016-17). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

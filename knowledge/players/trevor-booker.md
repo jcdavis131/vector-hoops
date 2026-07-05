@@ -41,6 +41,33 @@ Closest career shapes in the era-normalized vector space:
 - [[ed-davis|Ed Davis]] — cosine 0.91
 - [[willie-cauley-stein|Willie Cauley-Stein]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 14.8 pts · 13.9 reb · 2.3 ast · 1.8 stl per 100 (2012-13).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+1.8σ vs era)
+- Rarely turns the ball over (−1.1σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.5σ)
+- On-court net impact well below era (−1.2σ)
+
+**Comparables:**
+
+- [[tarik-black|Tarik Black]] '18 (94% similar)
+- [[moussa-diabate|Moussa Diabaté]] '25 (94% similar)
+- [[tony-bradley|Tony Bradley]] '20 (91% similar)
+- [[andrew-declercq|Andrew DeClercq]] '01 (91% similar)
+- [[ed-davis|Ed Davis]] '22 (91% similar)
+- [[willie-cauley-stein|Willie Cauley-Stein]] '20 (90% similar)
+
+**Career shape:** Charted 8 seasons (2010-11–2017-18). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

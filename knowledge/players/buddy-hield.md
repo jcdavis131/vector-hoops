@@ -43,6 +43,33 @@ Closest career shapes in the era-normalized vector space:
 - [[gerald-green|Gerald Green]] — cosine 0.93
 - [[eddie-house|Eddie House]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 29.6 pts · 7.0 reb · 4.6 ast · 1.4 stl per 100 (2019-20).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.5σ vs era)
+- Heavy shot volume, focal scoring option (+1.9σ vs era)
+- Featured, high-usage scoring role (+1.5σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[bogdan-bogdanovic|Bogdan Bogdanović]] '21 (93% similar)
+- [[tracy-murray|Tracy Murray]] '02 (93% similar)
+- [[dell-curry|Dell Curry]] '00 (93% similar)
+- [[voshon-lenard|Voshon Lenard]] '97 (93% similar)
+- [[gerald-green|Gerald Green]] '15 (93% similar)
+- [[eddie-house|Eddie House]] '06 (91% similar)
+
+**Career shape:** Charted 10 seasons (2016-17–2025-26). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

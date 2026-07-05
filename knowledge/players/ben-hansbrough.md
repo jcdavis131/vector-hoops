@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[peyton-siva|Peyton Siva]] — cosine 0.83
 - [[theo-maledon|Theo Maledon]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 13.8 pts · 4.4 reb · 5.1 ast · 1.7 stl per 100 (2012-13).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.6σ)
+- Turnover rate well above era (+1.6σ)
+
+**Comparables:**
+
+- [[vassilis-spanoulis|Vassilis Spanoulis]] '07 (93% similar)
+- [[kadeem-allen|Kadeem Allen]] '18 (88% similar)
+- [[andrew-harrison|Andrew Harrison]] '19 (87% similar)
+- [[keith-mcleod|Keith McLeod]] '04 (83% similar)
+- [[peyton-siva|Peyton Siva]] '14 (83% similar)
+- [[theo-maledon|Theo Maledon]] '21 (83% similar)
+
+**Career shape:** Charted 1 season (2012-13). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

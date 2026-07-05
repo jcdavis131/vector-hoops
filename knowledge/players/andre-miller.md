@@ -50,6 +50,32 @@ Closest career shapes in the era-normalized vector space:
 - [[john-stockton|John Stockton]] — cosine 0.89
 - [[carlos-arroyo|Carlos Arroyo]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 23.1 pts · 6.6 reb · 15.3 ast · 2.2 stl per 100 (2001-02).
+
+**Strengths:**
+
+- High-volume table-setter (+3.7σ vs era)
+- Draws contact, gets to the line often (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.4σ)
+
+**Comparables:**
+
+- [[rod-strickland|Rod Strickland]] '05 (94% similar)
+- [[t-j-ford|T.J. Ford]] '07 (93% similar)
+- [[ty-lawson|Ty Lawson]] '14 (92% similar)
+- [[jeff-teague|Jeff Teague]] '15 (92% similar)
+- [[john-stockton|John Stockton]] '01 (89% similar)
+- [[carlos-arroyo|Carlos Arroyo]] '03 (86% similar)
+
+**Career shape:** Charted 17 seasons (1999-00–2015-16). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -36,6 +36,34 @@ Closest career shapes in the era-normalized vector space:
 - [[vit-krejci|Vít Krejčí]] — cosine 0.84
 - [[paul-watson|Paul Watson]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 18.9 pts · 7.0 reb · 4.4 ast · 0.9 stl per 100 (2023-24).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.6σ vs era)
+- High-volume three-point shooter (+1.5σ vs era)
+- Knockdown three-point shooter (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−4.0σ)
+- Rim pressure (free-throw generation) well below era (−1.6σ)
+
+**Comparables:**
+
+- [[jud-buechler|Jud Buechler]] '00 (89% similar)
+- [[james-young|James Young]] '16 (86% similar)
+- [[rodney-mcgruder|Rodney McGruder]] '18 (86% similar)
+- [[haywood-highsmith|Haywood Highsmith]] '22 (86% similar)
+- [[vit-krejci|Vít Krejčí]] '23 (84% similar)
+- [[paul-watson|Paul Watson]] '21 (84% similar)
+
+**Career shape:** Charted 3 seasons (2020-21–2023-24). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

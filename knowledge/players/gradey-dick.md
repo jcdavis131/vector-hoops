@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[timothe-luwawu-cabarrot|Timothe Luwawu-Cabarrot]] — cosine 0.89
 - [[julian-strawther|Julian Strawther]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 18.9 pts · 4.9 reb · 2.5 ast · 1.3 stl per 100 (2023-24).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.7σ)
+- Rim-protection impact well below era (−1.1σ)
+
+**Comparables:**
+
+- [[matt-carroll|Matt Carroll]] '10 (94% similar)
+- [[matt-ryan|Matt Ryan]] '25 (90% similar)
+- [[chris-duarte|Chris Duarte]] '23 (90% similar)
+- [[alan-anderson|Alan Anderson]] '17 (90% similar)
+- [[timothe-luwawu-cabarrot|Timothe Luwawu-Cabarrot]] '19 (89% similar)
+- [[julian-strawther|Julian Strawther]] '24 (88% similar)
+
+**Career shape:** Charted 3 seasons (2023-24–2025-26). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

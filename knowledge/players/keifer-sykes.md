@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[bimbo-coles|Bimbo Coles]] — cosine 0.86
 - [[marko-guduric|Marko Guduric]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** PG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 15.5 pts · 3.9 reb · 5.3 ast · 1.0 stl per 100 (2021-22).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.3σ)
+- Finishing efficiency well below era (−1.2σ)
+
+**Comparables:**
+
+- [[doug-overton|Doug Overton]] '02 (96% similar)
+- [[aj-johnson|AJ Johnson]] '25 (90% similar)
+- [[sherron-collins|Sherron Collins]] '11 (88% similar)
+- [[c-j-wilcox|C.J. Wilcox]] '17 (87% similar)
+- [[bimbo-coles|Bimbo Coles]] '04 (86% similar)
+- [[marko-guduric|Marko Guduric]] '20 (85% similar)
+
+**Career shape:** Charted 1 season (2021-22). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

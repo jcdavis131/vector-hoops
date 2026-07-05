@@ -38,6 +38,32 @@ Closest career shapes in the era-normalized vector space:
 - [[tyler-ulis|Tyler Ulis]] — cosine 0.91
 - [[diante-garrett|Diante Garrett]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 12.5 pts · 4.9 reb · 9.8 ast · 1.9 stl per 100 (2020-21).
+
+**Strengths:**
+
+- High-volume table-setter (+2.0σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+3.3σ)
+- Finishing efficiency well below era (−1.5σ)
+
+**Comparables:**
+
+- [[junior-harrington|Junior Harrington]] '03 (94% similar)
+- [[anthony-carter|Anthony Carter]] '03 (93% similar)
+- [[nico-mannion|Nico Mannion]] '21 (92% similar)
+- [[marcelo-huertas|Marcelo Huertas]] '17 (91% similar)
+- [[tyler-ulis|Tyler Ulis]] '18 (91% similar)
+- [[diante-garrett|Diante Garrett]] '13 (91% similar)
+
+**Career shape:** Charted 5 seasons (2020-21–2025-26). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

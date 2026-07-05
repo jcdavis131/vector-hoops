@@ -38,6 +38,34 @@ Closest career shapes in the era-normalized vector space:
 - [[bam-adebayo|Bam Adebayo]] — cosine 0.87
 - [[domantas-sabonis|Domantas Sabonis]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 29.1 pts · 15.8 reb · 7.5 ast · 1.7 stl per 100 (2024-25).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+2.1σ vs era)
+- Relentless on the offensive glass (+1.8σ vs era)
+- Strong presence on the defensive glass (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Three-point volume well below era (−1.4σ)
+- Turnover rate well above era (+1.2σ)
+
+**Comparables:**
+
+- [[jusuf-nurkic|Jusuf Nurkić]] '16 (89% similar)
+- [[scottie-barnes|Scottie Barnes]] '25 (88% similar)
+- [[demarcus-cousins|DeMarcus Cousins]] '15 (88% similar)
+- [[giannis-antetokounmpo|Giannis Antetokounmpo]] '20 (88% similar)
+- [[bam-adebayo|Bam Adebayo]] '22 (87% similar)
+- [[domantas-sabonis|Domantas Sabonis]] '24 (84% similar)
+
+**Career shape:** Charted 5 seasons (2021-22–2025-26). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

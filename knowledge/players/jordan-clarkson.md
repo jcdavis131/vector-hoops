@@ -45,6 +45,33 @@ Closest career shapes in the era-normalized vector space:
 - [[bradley-beal|Bradley Beal]] — cosine 0.92
 - [[latrell-sprewell|Latrell Sprewell]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** SG · Scoring Volume + Shot Volume. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 32.7 pts · 7.1 reb · 4.4 ast · 1.6 stl per 100 (2020-21).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.5σ vs era)
+- Heavy shot volume, focal scoring option (+2.5σ vs era)
+- Featured, high-usage scoring role (+1.9σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[jordan-crawford|Jordan Crawford]] '11 (96% similar)
+- [[ben-gordon|Ben Gordon]] '05 (95% similar)
+- [[jordan-poole|Jordan Poole]] '25 (93% similar)
+- [[jalen-green|Jalen Green]] '26 (93% similar)
+- [[bradley-beal|Bradley Beal]] '20 (92% similar)
+- [[latrell-sprewell|Latrell Sprewell]] '97 (92% similar)
+
+**Career shape:** Charted 12 seasons (2014-15–2025-26). Consistent Scoring Volume + Shot Volume profile across his career.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

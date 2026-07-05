@@ -37,6 +37,32 @@ Closest career shapes in the era-normalized vector space:
 - [[semi-ojeleye|Semi Ojeleye]] — cosine 0.89
 - [[isaiah-livers|Isaiah Livers]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 18.0 pts · 4.7 reb · 2.6 ast · 0.6 stl per 100 (2022-23).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.6σ)
+- Defensive rebounding well below era (−1.4σ)
+
+**Comparables:**
+
+- [[kyle-singler|Kyle Singler]] '17 (95% similar)
+- [[terrance-ferguson|Terrance Ferguson]] '20 (94% similar)
+- [[glenn-robinson-iii|Glenn Robinson III]] '21 (91% similar)
+- [[ira-newble|Ira Newble]] '01 (91% similar)
+- [[semi-ojeleye|Semi Ojeleye]] '18 (89% similar)
+- [[isaiah-livers|Isaiah Livers]] '24 (89% similar)
+
+**Career shape:** Charted 4 seasons (2022-23–2025-26). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -37,6 +37,32 @@ Closest career shapes in the era-normalized vector space:
 - [[spencer-hawes|Spencer Hawes]] — cosine 0.81
 - [[duane-causwell|Duane Causwell]] — cosine 0.78
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 18.4 pts · 6.4 reb · 1.9 ast · 2.7 blk per 100 (2020-21).
+
+**Strengths:**
+
+- Elite rim protection (+1.9σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.9σ)
+- Offensive-glass activity well below era (−1.2σ)
+
+**Comparables:**
+
+- [[mo-bamba|Mo Bamba]] '20 (83% similar)
+- [[matas-buzelis|Matas Buzelis]] '26 (83% similar)
+- [[karlo-matkovic|Karlo Matković]] '26 (81% similar)
+- [[myles-turner|Myles Turner]] '19 (81% similar)
+- [[spencer-hawes|Spencer Hawes]] '12 (81% similar)
+- [[duane-causwell|Duane Causwell]] '99 (78% similar)
+
+**Career shape:** Charted 4 seasons (2020-21–2024-25). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

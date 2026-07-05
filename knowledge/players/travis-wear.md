@@ -35,6 +35,34 @@ Closest career shapes in the era-normalized vector space:
 - [[tony-snell|Tony Snell]] — cosine 0.86
 - [[georges-niang|Georges Niang]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 15.6 pts · 7.9 reb · 1.5 ast · 1.0 blk per 100 (2017-18).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+2.1σ vs era)
+- Rarely turns the ball over (−1.3σ vs era)
+- High-volume three-point shooter (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.5σ)
+- Offensive-glass activity well below era (−1.3σ)
+
+**Comparables:**
+
+- [[tristan-da-silva|Tristan da Silva]] '25 (90% similar)
+- [[aj-griffin|AJ Griffin]] '24 (88% similar)
+- [[max-christie|Max Christie]] '23 (88% similar)
+- [[deng-adel|Deng Adel]] '19 (86% similar)
+- [[tony-snell|Tony Snell]] '21 (86% similar)
+- [[georges-niang|Georges Niang]] '17 (85% similar)
+
+**Career shape:** Charted 2 seasons (2014-15–2017-18). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

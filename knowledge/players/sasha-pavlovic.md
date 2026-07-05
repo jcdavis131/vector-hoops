@@ -43,6 +43,33 @@ Closest career shapes in the era-normalized vector space:
 - [[walter-mccarty|Walter McCarty]] — cosine 0.87
 - [[antoine-wright|Antoine Wright]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 10.0 pts · 5.5 reb · 3.1 ast · 2.3 stl per 100 (2012-13).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.5σ vs era)
+- Active hands, disrupts passing lanes (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−3.9σ)
+- Rim pressure (free-throw generation) well below era (−1.7σ)
+
+**Comparables:**
+
+- [[rashad-vaughn|Rashad Vaughn]] '17 (91% similar)
+- [[juaquin-hawkins|Juaquin Hawkins]] '03 (87% similar)
+- [[james-young|James Young]] '16 (87% similar)
+- [[damjan-rudez|Damjan Rudez]] '17 (87% similar)
+- [[walter-mccarty|Walter McCarty]] '05 (87% similar)
+- [[antoine-wright|Antoine Wright]] '06 (86% similar)
+
+**Career shape:** Charted 10 seasons (2003-04–2012-13). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

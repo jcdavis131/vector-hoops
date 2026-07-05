@@ -39,6 +39,34 @@ Closest career shapes in the era-normalized vector space:
 - [[sam-merrill|Sam Merrill]] — cosine 0.84
 - [[georges-niang|Georges Niang]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** SG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 26.1 pts · 6.2 reb · 3.5 ast · 1.9 stl per 100 (2024-25).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+1.6σ vs era)
+- Heavy shot volume, focal scoring option (+1.4σ vs era)
+- Strong net on-court impact (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.3σ)
+- Rim-protection impact well below era (−1.2σ)
+
+**Comparables:**
+
+- [[ledell-eackles|Ledell Eackles]] '98 (90% similar)
+- [[jodie-meeks|Jodie Meeks]] '12 (88% similar)
+- [[rodney-hood|Rodney Hood]] '22 (86% similar)
+- [[matt-carroll|Matt Carroll]] '10 (84% similar)
+- [[sam-merrill|Sam Merrill]] '24 (84% similar)
+- [[georges-niang|Georges Niang]] '17 (83% similar)
+
+**Career shape:** Charted 6 seasons (2018-19–2024-25). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

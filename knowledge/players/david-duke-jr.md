@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[mark-davis|Mark Davis]] — cosine 0.75
 - [[paul-davis|Paul Davis]] — cosine 0.75
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 17.6 pts · 6.0 reb · 4.3 ast · 2.1 stl per 100 (2022-23).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.1σ)
+- Turnover rate well above era (+1.2σ)
+
+**Comparables:**
+
+- [[charlie-brown-jr|Charlie Brown Jr.]] '22 (84% similar)
+- [[reece-beekman|Reece Beekman]] '25 (79% similar)
+- [[jaden-springer|Jaden Springer]] '24 (76% similar)
+- [[colby-jones|Colby Jones]] '24 (75% similar)
+- [[mark-davis|Mark Davis]] '98 (75% similar)
+- [[paul-davis|Paul Davis]] '08 (75% similar)
+
+**Career shape:** Charted 2 seasons (2021-22–2022-23). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

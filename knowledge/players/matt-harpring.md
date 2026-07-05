@@ -43,6 +43,33 @@ Closest career shapes in the era-normalized vector space:
 - [[zach-randolph|Zach Randolph]] — cosine 0.72
 - [[jonathan-kuminga|Jonathan Kuminga]] — cosine 0.71
 
+## Scouting report
+
+**Play style:** SF · Defensive Glass + Rim Pressure (Fts). Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 28.0 pts · 10.5 reb · 2.7 ast · 1.5 stl per 100 (2002-03).
+
+**Strengths:**
+
+- Featured, high-usage scoring role (+1.7σ vs era)
+- Efficient finisher inside the arc (+1.4σ vs era)
+- Strong net on-court impact (+1.1σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[corliss-williamson|Corliss Williamson]] '06 (83% similar)
+- [[carl-landry|Carl Landry]] '08 (79% similar)
+- [[luka-garza|Luka Garza]] '24 (77% similar)
+- [[zion-williamson|Zion Williamson]] '25 (73% similar)
+- [[zach-randolph|Zach Randolph]] '07 (72% similar)
+- [[jonathan-kuminga|Jonathan Kuminga]] '25 (71% similar)
+
+**Career shape:** Charted 10 seasons (1998-99–2008-09). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

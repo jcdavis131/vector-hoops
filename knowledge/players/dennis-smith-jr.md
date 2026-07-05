@@ -40,6 +40,33 @@ Closest career shapes in the era-normalized vector space:
 - [[phil-pressey|Phil Pressey]] — cosine 0.88
 - [[kj-simpson|KJ Simpson]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 16.5 pts · 6.9 reb · 8.7 ast · 2.5 stl per 100 (2019-20).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.8σ vs era)
+- High-volume table-setter (+1.7σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.7σ)
+- Turnover rate well above era (+2.4σ)
+
+**Comparables:**
+
+- [[michael-carter-williams|Michael Carter-Williams]] '15 (91% similar)
+- [[donell-taylor|Donell Taylor]] '07 (90% similar)
+- [[mike-taylor|Mike Taylor]] '09 (89% similar)
+- [[elfrid-payton|Elfrid Payton]] '25 (88% similar)
+- [[phil-pressey|Phil Pressey]] '16 (88% similar)
+- [[kj-simpson|KJ Simpson]] '26 (87% similar)
+
+**Career shape:** Charted 7 seasons (2017-18–2023-24). Entered as a Scoring Volume + Shot Volume profile, peaked as a Playmaking + Steals identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[elijah-hughes|Elijah Hughes]] — cosine 0.85
 - [[nicolas-brussino|Nicolas Brussino]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 11.8 pts · 8.0 reb · 2.9 ast · 1.1 stl per 100 (2005-06).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.2σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−3.3σ)
+- Finishing efficiency well below era (−1.7σ)
+
+**Comparables:**
+
+- [[lazar-hayward|Lazar Hayward]] '12 (90% similar)
+- [[justin-jackson|Justin Jackson]] '23 (87% similar)
+- [[adam-harrington|Adam Harrington]] '03 (85% similar)
+- [[keljin-blevins|Keljin Blevins]] '22 (85% similar)
+- [[elijah-hughes|Elijah Hughes]] '21 (85% similar)
+- [[nicolas-brussino|Nicolas Brussino]] '17 (85% similar)
+
+**Career shape:** Charted 1 season (2005-06). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

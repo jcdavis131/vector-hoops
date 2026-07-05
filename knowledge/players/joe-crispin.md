@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[nate-robinson|Nate Robinson]] — cosine 0.91
 - [[aaron-brooks|Aaron Brooks]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** PG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 25.4 pts · 3.5 reb · 8.4 ast · 1.6 stl per 100 (2001-02).
+
+**Strengths:**
+
+- High-volume three-point shooter (+3.3σ vs era)
+- Reliable touch from the free-throw line (+1.5σ vs era)
+- High-volume table-setter (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.4σ)
+- Offensive-glass activity well below era (−1.2σ)
+
+**Comparables:**
+
+- [[jamal-crawford|Jamal Crawford]] '14 (94% similar)
+- [[bogdan-bogdanovic|Bogdan Bogdanović]] '21 (93% similar)
+- [[malik-monk|Malik Monk]] '18 (92% similar)
+- [[john-starks|John Starks]] '00 (92% similar)
+- [[nate-robinson|Nate Robinson]] '10 (91% similar)
+- [[aaron-brooks|Aaron Brooks]] '11 (91% similar)
+
+**Career shape:** Charted 1 season (2001-02). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -36,6 +36,31 @@ Closest career shapes in the era-normalized vector space:
 - [[chris-singleton|Chris Singleton]] — cosine 0.76
 - [[taelon-peter|Taelon Peter]] — cosine 0.76
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 20.6 pts · 9.7 reb · 2.5 ast · 3.1 stl per 100 (2017-18).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.5σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[melvin-frazier-jr|Melvin Frazier Jr.]] '20 (92% similar)
+- [[jamir-watkins|Jamir Watkins]] '26 (87% similar)
+- [[deandre-liggins|DeAndre Liggins]] '12 (85% similar)
+- [[myke-henry|Myke Henry]] '18 (82% similar)
+- [[chris-singleton|Chris Singleton]] '12 (76% similar)
+- [[taelon-peter|Taelon Peter]] '26 (76% similar)
+
+**Career shape:** Charted 3 seasons (2016-17–2018-19). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

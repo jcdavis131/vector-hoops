@@ -38,6 +38,33 @@ Closest career shapes in the era-normalized vector space:
 - [[chris-kaman|Chris Kaman]] — cosine 0.75
 - [[kendrick-perkins|Kendrick Perkins]] — cosine 0.74
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 8.9 pts · 12.0 reb · 1.3 ast · 1.6 blk per 100 (2000-01).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+1.2σ vs era)
+- Strong net on-court impact (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.8σ)
+- Finishing efficiency well below era (−1.8σ)
+
+**Comparables:**
+
+- [[aron-baynes|Aron Baynes]] '17 (84% similar)
+- [[jackie-butler|Jackie Butler]] '06 (80% similar)
+- [[robert-parish|Robert Parish]] '97 (79% similar)
+- [[hamed-haddadi|Hamed Haddadi]] '09 (76% similar)
+- [[chris-kaman|Chris Kaman]] '08 (75% similar)
+- [[kendrick-perkins|Kendrick Perkins]] '16 (74% similar)
+
+**Career shape:** Charted 5 seasons (1996-97–2000-01). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

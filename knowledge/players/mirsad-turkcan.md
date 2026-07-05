@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[marquese-chriss|Marquese Chriss]] — cosine 0.77
 - [[keith-booth|Keith Booth]] — cosine 0.75
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 19.3 pts · 19.3 reb · 2.9 ast · 1.8 stl per 100 (1999-00).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+2.8σ vs era)
+- Strong presence on the defensive glass (+2.2σ vs era)
+- Heavy shot volume, focal scoring option (+1.5σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−3.6σ)
+- Turnover rate well above era (+1.8σ)
+
+**Comparables:**
+
+- [[reggie-perry|Reggie Perry]] '21 (82% similar)
+- [[joffrey-lauvergne|Joffrey Lauvergne]] '18 (79% similar)
+- [[chris-anstey|Chris Anstey]] '00 (77% similar)
+- [[harry-giles-iii|Harry Giles III]] '24 (77% similar)
+- [[marquese-chriss|Marquese Chriss]] '20 (77% similar)
+- [[keith-booth|Keith Booth]] '99 (75% similar)
+
+**Career shape:** Charted 1 season (1999-00). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

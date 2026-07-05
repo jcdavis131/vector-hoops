@@ -37,6 +37,32 @@ Closest career shapes in the era-normalized vector space:
 - [[matisse-thybulle|Matisse Thybulle]] — cosine 0.83
 - [[herbert-jones|Herbert Jones]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 10.3 pts · 6.8 reb · 3.5 ast · 2.4 stl per 100 (2020-21).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.7σ)
+- Scoring load well below era (−1.6σ)
+
+**Comparables:**
+
+- [[dru-smith|Dru Smith]] '26 (93% similar)
+- [[jaden-springer|Jaden Springer]] '24 (89% similar)
+- [[delon-wright|Delon Wright]] '23 (87% similar)
+- [[corey-brewer|Corey Brewer]] '19 (84% similar)
+- [[matisse-thybulle|Matisse Thybulle]] '21 (83% similar)
+- [[herbert-jones|Herbert Jones]] '22 (83% similar)
+
+**Career shape:** Charted 4 seasons (2017-18–2020-21). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[lamar-patterson|Lamar Patterson]] — cosine 0.82
 - [[trent-forrest|Trent Forrest]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 7.4 pts · 7.6 reb · 4.2 ast · 2.1 stl per 100 (1997-98).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Shot volume well below era (−2.3σ)
+- Scoring load well below era (−2.0σ)
+
+**Comparables:**
+
+- [[leandro-bolmaro|Leandro Bolmaro]] '22 (85% similar)
+- [[kevin-ollie|Kevin Ollie]] '10 (85% similar)
+- [[wes-iwundu|Wes Iwundu]] '21 (83% similar)
+- [[sergey-karasev|Sergey Karasev]] '14 (82% similar)
+- [[lamar-patterson|Lamar Patterson]] '16 (82% similar)
+- [[trent-forrest|Trent Forrest]] '23 (82% similar)
+
+**Career shape:** Charted 2 seasons (1996-97–1997-98). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

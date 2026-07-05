@@ -38,6 +38,31 @@ Closest career shapes in the era-normalized vector space:
 - [[pj-hall|PJ Hall]] — cosine 0.74
 - [[tyler-cavanaugh|Tyler Cavanaugh]] — cosine 0.74
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 18.0 pts · 9.6 reb · 2.6 ast · 1.1 stl per 100 (2021-22).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+1.0σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.4σ)
+
+**Comparables:**
+
+- [[jalen-smith|Jalen Smith]] '25 (81% similar)
+- [[jamychal-green|JaMychal Green]] '15 (76% similar)
+- [[troy-murphy|Troy Murphy]] '09 (75% similar)
+- [[jayson-williams|Jayson Williams]] '98 (75% similar)
+- [[pj-hall|PJ Hall]] '26 (74% similar)
+- [[tyler-cavanaugh|Tyler Cavanaugh]] '18 (74% similar)
+
+**Career shape:** Charted 5 seasons (2021-22–2025-26). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

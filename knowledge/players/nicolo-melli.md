@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[semi-ojeleye|Semi Ojeleye]] — cosine 0.85
 - [[orlando-johnson|Orlando Johnson]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** PF · Three-Point Accuracy (Low Turnovers). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 11.7 pts · 10.6 reb · 3.8 ast · 1.2 stl per 100 (2020-21).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.4σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.8σ)
+- Scoring load well below era (−1.4σ)
+
+**Comparables:**
+
+- [[pacome-dadiet|Pacôme Dadiet]] '26 (91% similar)
+- [[matt-freije|Matt Freije]] '07 (89% similar)
+- [[anthony-brown|Anthony Brown]] '16 (88% similar)
+- [[gary-clark|Gary Clark]] '19 (87% similar)
+- [[semi-ojeleye|Semi Ojeleye]] '18 (85% similar)
+- [[orlando-johnson|Orlando Johnson]] '14 (85% similar)
+
+**Career shape:** Charted 2 seasons (2019-20–2020-21). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

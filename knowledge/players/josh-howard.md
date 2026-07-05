@@ -42,6 +42,33 @@ Closest career shapes in the era-normalized vector space:
 - [[rudy-gay|Rudy Gay]] — cosine 0.78
 - [[dirk-nowitzki|Dirk Nowitzki]] — cosine 0.76
 
+## Scouting report
+
+**Play style:** SF · Scoring Volume + Shot Volume. Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 28.4 pts · 10.2 reb · 2.7 ast · 1.8 stl per 100 (2006-07).
+
+**Strengths:**
+
+- Strong net on-court impact (+2.0σ vs era)
+- Heavy shot volume, focal scoring option (+1.7σ vs era)
+- Featured, high-usage scoring role (+1.6σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[luol-deng|Luol Deng]] '07 (90% similar)
+- [[kawhi-leonard|Kawhi Leonard]] '20 (82% similar)
+- [[michael-jordan|Michael Jordan]] '97 (80% similar)
+- [[antawn-jamison|Antawn Jamison]] '01 (79% similar)
+- [[rudy-gay|Rudy Gay]] '14 (78% similar)
+- [[dirk-nowitzki|Dirk Nowitzki]] '06 (76% similar)
+
+**Career shape:** Charted 9 seasons (2003-04–2011-12). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

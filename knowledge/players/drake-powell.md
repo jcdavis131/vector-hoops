@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[javonte-smart|Javonte Smart]] — cosine 0.86
 - [[cody-williams|Cody Williams]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 15.1 pts · 4.1 reb · 3.4 ast · 1.3 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+1.2σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.1σ)
+- Defensive rebounding well below era (−1.3σ)
+
+**Comparables:**
+
+- [[sean-mcdermott|Sean McDermott]] '21 (91% similar)
+- [[jeremy-richardson|Jeremy Richardson]] '08 (87% similar)
+- [[kobi-simmons|Kobi Simmons]] '18 (86% similar)
+- [[vlatko-cancar|Vlatko Čančar]] '21 (86% similar)
+- [[javonte-smart|Javonte Smart]] '22 (86% similar)
+- [[cody-williams|Cody Williams]] '25 (84% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

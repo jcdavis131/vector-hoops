@@ -37,6 +37,33 @@ Closest career shapes in the era-normalized vector space:
 - [[jorge-garbajosa|Jorge Garbajosa]] — cosine 0.79
 - [[kessler-edwards|Kessler Edwards]] — cosine 0.77
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 12.2 pts · 7.9 reb · 2.5 ast · 1.6 blk per 100 (2010-11).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.7σ vs era)
+- Reliable touch from the free-throw line (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.6σ)
+- Scoring load well below era (−1.1σ)
+
+**Comparables:**
+
+- [[shane-battier|Shane Battier]] '13 (81% similar)
+- [[dean-wade|Dean Wade]] '25 (80% similar)
+- [[otto-porter-jr|Otto Porter Jr.]] '17 (79% similar)
+- [[marvin-williams|Marvin Williams]] '16 (79% similar)
+- [[jorge-garbajosa|Jorge Garbajosa]] '07 (79% similar)
+- [[kessler-edwards|Kessler Edwards]] '25 (77% similar)
+
+**Career shape:** Charted 4 seasons (2007-08–2010-11). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -47,6 +47,33 @@ Closest career shapes in the era-normalized vector space:
 - [[walt-williams|Walt Williams]] — cosine 0.81
 - [[marcus-brown|Marcus Brown]] — cosine 0.80
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 14.5 pts · 11.2 reb · 4.2 ast · 2.4 stl per 100 (2013-14).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.3σ vs era)
+- Strong presence on the defensive glass (+1.3σ vs era)
+- Knockdown three-point shooter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.7σ)
+
+**Comparables:**
+
+- [[terry-porter|Terry Porter]] '02 (87% similar)
+- [[sean-elliott|Sean Elliott]] '00 (85% similar)
+- [[mike-dunleavy|Mike Dunleavy]] '09 (83% similar)
+- [[chandler-parsons|Chandler Parsons]] '19 (83% similar)
+- [[walt-williams|Walt Williams]] '03 (81% similar)
+- [[marcus-brown|Marcus Brown]] '97 (80% similar)
+
+**Career shape:** Charted 14 seasons (2000-01–2014-15). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

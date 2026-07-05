@@ -38,6 +38,34 @@ Closest career shapes in the era-normalized vector space:
 - [[lonnie-walker-iv|Lonnie Walker IV]] — cosine 0.87
 - [[allan-ray|Allan Ray]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 14.0 pts · 5.6 reb · 2.8 ast · 2.1 stl per 100 (2005-06).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.9σ vs era)
+- Rarely turns the ball over (−2.4σ vs era)
+- Heavy shot volume, focal scoring option (+2.4σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−4.0σ)
+- On-court net impact well below era (−2.6σ)
+
+**Comparables:**
+
+- [[gerald-wilkins|Gerald Wilkins]] '98 (91% similar)
+- [[vernon-maxwell|Vernon Maxwell]] '00 (90% similar)
+- [[dajuan-wagner|Dajuan Wagner]] '03 (89% similar)
+- [[carsen-edwards|Carsen Edwards]] '21 (88% similar)
+- [[lonnie-walker-iv|Lonnie Walker IV]] '25 (87% similar)
+- [[allan-ray|Allan Ray]] '07 (86% similar)
+
+**Career shape:** Charted 5 seasons (2005-06–2011-12). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

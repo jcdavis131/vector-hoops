@@ -42,6 +42,33 @@ Closest career shapes in the era-normalized vector space:
 - [[mike-bibby|Mike Bibby]] — cosine 0.86
 - [[rodrigue-beaubois|Rodrigue Beaubois]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 25.7 pts · 5.4 reb · 9.5 ast · 2.4 stl per 100 (2022-23).
+
+**Strengths:**
+
+- High-volume table-setter (+1.9σ vs era)
+- Active hands, disrupts passing lanes (+1.9σ vs era)
+- High-volume three-point shooter (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.0σ)
+
+**Comparables:**
+
+- [[mike-conley|Mike Conley]] '13 (93% similar)
+- [[tim-hardaway|Tim Hardaway]] '97 (89% similar)
+- [[kyle-lowry|Kyle Lowry]] '16 (87% similar)
+- [[bobby-jackson|Bobby Jackson]] '04 (87% similar)
+- [[mike-bibby|Mike Bibby]] '12 (86% similar)
+- [[rodrigue-beaubois|Rodrigue Beaubois]] '10 (86% similar)
+
+**Career shape:** Charted 9 seasons (2016-17–2024-25). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

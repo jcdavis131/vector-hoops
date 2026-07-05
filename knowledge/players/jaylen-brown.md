@@ -43,6 +43,33 @@ Closest career shapes in the era-normalized vector space:
 - [[donovan-mitchell|Donovan Mitchell]] — cosine 0.91
 - [[paul-pierce|Paul Pierce]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** SF · Scoring Volume + Shot Volume. Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 41.0 pts · 9.9 reb · 7.3 ast · 1.4 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+3.1σ vs era)
+- Featured, high-usage scoring role (+3.0σ vs era)
+- Draws contact, gets to the line often (+2.6σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.6σ)
+
+**Comparables:**
+
+- [[anthony-edwards|Anthony Edwards]] '25 (93% similar)
+- [[carmelo-anthony|Carmelo Anthony]] '13 (91% similar)
+- [[jayson-tatum|Jayson Tatum]] '23 (91% similar)
+- [[kobe-bryant|Kobe Bryant]] '06 (91% similar)
+- [[donovan-mitchell|Donovan Mitchell]] '21 (91% similar)
+- [[paul-pierce|Paul Pierce]] '03 (89% similar)
+
+**Career shape:** Charted 10 seasons (2016-17–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

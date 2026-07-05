@@ -41,6 +41,33 @@ Closest career shapes in the era-normalized vector space:
 - [[cameron-payne|Cameron Payne]] — cosine 0.93
 - [[rumeal-robinson|Rumeal Robinson]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 21.5 pts · 5.3 reb · 10.3 ast · 2.0 stl per 100 (2013-14).
+
+**Strengths:**
+
+- High-volume table-setter (+2.2σ vs era)
+- High-volume three-point shooter (+1.2σ vs era)
+- Knockdown three-point shooter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.1σ)
+
+**Comparables:**
+
+- [[jason-williams|Jason Williams]] '11 (96% similar)
+- [[shammond-williams|Shammond Williams]] '04 (94% similar)
+- [[marcus-sasser|Marcus Sasser]] '26 (94% similar)
+- [[rafer-alston|Rafer Alston]] '00 (93% similar)
+- [[cameron-payne|Cameron Payne]] '26 (93% similar)
+- [[rumeal-robinson|Rumeal Robinson]] '97 (92% similar)
+
+**Career shape:** Charted 8 seasons (2006-07–2014-15). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

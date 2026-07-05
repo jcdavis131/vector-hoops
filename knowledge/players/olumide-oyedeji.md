@@ -36,6 +36,33 @@ Closest career shapes in the era-normalized vector space:
 - [[anderson-varejao|Anderson Varejao]] — cosine 0.89
 - [[corie-blount|Corie Blount]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 9.6 pts · 17.9 reb · 1.8 ast · 1.8 stl per 100 (2002-03).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+3.4σ vs era)
+- Rarely turns the ball over (−1.3σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.8σ)
+- On-court net impact well below era (−1.6σ)
+
+**Comparables:**
+
+- [[omer-asik|Omer Asik]] '18 (91% similar)
+- [[jeff-foster|Jeff Foster]] '00 (90% similar)
+- [[will-perdue|Will Perdue]] '99 (90% similar)
+- [[tyrone-hill|Tyrone Hill]] '97 (90% similar)
+- [[anderson-varejao|Anderson Varejao]] '05 (89% similar)
+- [[corie-blount|Corie Blount]] '98 (89% similar)
+
+**Career shape:** Charted 3 seasons (2000-01–2002-03). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

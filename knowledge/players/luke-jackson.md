@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[ricky-ledo|Ricky Ledo]] — cosine 0.83
 - [[sean-singletary|Sean Singletary]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** SF · Playmaking + Steals. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 15.5 pts · 6.5 reb · 4.0 ast · 1.8 stl per 100 (2005-06).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.3σ)
+- Finishing efficiency well below era (−1.6σ)
+
+**Comparables:**
+
+- [[vassilis-spanoulis|Vassilis Spanoulis]] '07 (87% similar)
+- [[sarunas-marciulionis|Sarunas Marciulionis]] '97 (87% similar)
+- [[randolph-childress|Randolph Childress]] '97 (85% similar)
+- [[brent-price|Brent Price]] '02 (84% similar)
+- [[ricky-ledo|Ricky Ledo]] '15 (83% similar)
+- [[sean-singletary|Sean Singletary]] '09 (83% similar)
+
+**Career shape:** Charted 1 season (2005-06). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

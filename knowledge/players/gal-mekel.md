@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[marcelo-huertas|Marcelo Huertas]] — cosine 0.88
 - [[ryan-nembhard|Ryan Nembhard]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 11.9 pts · 4.4 reb · 10.3 ast · 0.7 stl per 100 (2013-14).
+
+**Strengths:**
+
+- High-volume table-setter (+2.2σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.2σ)
+- Finishing efficiency well below era (−1.5σ)
+
+**Comparables:**
+
+- [[marquis-teague|Marquis Teague]] '14 (93% similar)
+- [[vasilije-micic|Vasilije Micic]] '25 (91% similar)
+- [[eric-maynor|Eric Maynor]] '14 (91% similar)
+- [[bobby-hurley|Bobby Hurley]] '97 (88% similar)
+- [[marcelo-huertas|Marcelo Huertas]] '17 (88% similar)
+- [[ryan-nembhard|Ryan Nembhard]] '26 (87% similar)
+
+**Career shape:** Charted 1 season (2013-14). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

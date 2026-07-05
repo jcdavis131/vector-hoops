@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[ronnie-price|Ronnie Price]] — cosine 0.87
 - [[rumeal-robinson|Rumeal Robinson]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 12.7 pts · 1.9 reb · 5.6 ast · 2.9 stl per 100 (1996-97).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.7σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.6σ)
+- Defensive rebounding well below era (−1.7σ)
+
+**Comparables:**
+
+- [[peyton-siva|Peyton Siva]] '14 (90% similar)
+- [[smush-parker|Smush Parker]] '05 (89% similar)
+- [[cory-alexander|Cory Alexander]] '01 (89% similar)
+- [[diante-garrett|Diante Garrett]] '13 (88% similar)
+- [[ronnie-price|Ronnie Price]] '14 (87% similar)
+- [[rumeal-robinson|Rumeal Robinson]] '97 (86% similar)
+
+**Career shape:** Charted 1 season (1996-97). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[quincy-pondexter|Quincy Pondexter]] — cosine 0.89
 - [[ochai-agbaji|Ochai Agbaji]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 14.8 pts · 5.2 reb · 1.1 ast · 2.3 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.4σ vs era)
+
+**Areas of concern:**
+
+- Table-setting role well below era (−1.5σ)
+- Defensive rebounding well below era (−1.5σ)
+
+**Comparables:**
+
+- [[isaac-okoro|Isaac Okoro]] '25 (93% similar)
+- [[kyle-singler|Kyle Singler]] '17 (91% similar)
+- [[terrance-ferguson|Terrance Ferguson]] '20 (91% similar)
+- [[romeo-langford|Romeo Langford]] '20 (89% similar)
+- [[quincy-pondexter|Quincy Pondexter]] '18 (89% similar)
+- [[ochai-agbaji|Ochai Agbaji]] '23 (88% similar)
+
+**Career shape:** Charted 3 seasons (2023-24–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

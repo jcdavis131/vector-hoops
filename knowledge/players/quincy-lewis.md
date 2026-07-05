@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[tony-smith|Tony Smith]] — cosine 0.82
 - [[gary-harris|Gary Harris]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** SG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 15.2 pts · 4.6 reb · 3.8 ast · 2.4 stl per 100 (2001-02).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.2σ)
+- Rim pressure (free-throw generation) well below era (−1.1σ)
+
+**Comparables:**
+
+- [[e-twaun-moore|E'Twaun Moore]] '12 (87% similar)
+- [[mitchell-butler|Mitchell Butler]] '98 (84% similar)
+- [[avery-bradley|Avery Bradley]] '11 (83% similar)
+- [[jake-layman|Jake Layman]] '18 (83% similar)
+- [[tony-smith|Tony Smith]] '97 (82% similar)
+- [[gary-harris|Gary Harris]] '25 (81% similar)
+
+**Career shape:** Charted 3 seasons (1999-00–2001-02). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Playmaking + Steals identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

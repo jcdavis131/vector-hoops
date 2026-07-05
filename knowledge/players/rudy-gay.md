@@ -50,6 +50,33 @@ Closest career shapes in the era-normalized vector space:
 - [[michael-jordan|Michael Jordan]] — cosine 0.87
 - [[anthony-edwards|Anthony Edwards]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** SF · Scoring Volume + Shot Volume. Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 29.1 pts · 8.8 reb · 4.2 ast · 1.9 stl per 100 (2013-14).
+
+**Strengths:**
+
+- Featured, high-usage scoring role (+1.7σ vs era)
+- Heavy shot volume, focal scoring option (+1.7σ vs era)
+- Draws contact, gets to the line often (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.7σ)
+
+**Comparables:**
+
+- [[glenn-robinson|Glenn Robinson]] '03 (92% similar)
+- [[carmelo-anthony|Carmelo Anthony]] '13 (89% similar)
+- [[jayson-tatum|Jayson Tatum]] '23 (88% similar)
+- [[keith-van-horn|Keith Van Horn]] '99 (87% similar)
+- [[michael-jordan|Michael Jordan]] '97 (87% similar)
+- [[anthony-edwards|Anthony Edwards]] '25 (86% similar)
+
+**Career shape:** Charted 17 seasons (2006-07–2022-23). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

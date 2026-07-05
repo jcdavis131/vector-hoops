@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[chris-chiozza|Chris Chiozza]] — cosine 0.88
 - [[keaton-wallace|Keaton Wallace]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 15.3 pts · 4.4 reb · 9.1 ast · 1.8 stl per 100 (2005-06).
+
+**Strengths:**
+
+- High-volume table-setter (+2.0σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.5σ)
+- Finishing efficiency well below era (−1.2σ)
+
+**Comparables:**
+
+- [[jamal-shead|Jamal Shead]] '26 (91% similar)
+- [[anthony-johnson|Anthony Johnson]] '02 (89% similar)
+- [[roko-ukic|Roko Ukic]] '09 (89% similar)
+- [[pooh-richardson|Pooh Richardson]] '98 (89% similar)
+- [[chris-chiozza|Chris Chiozza]] '22 (88% similar)
+- [[keaton-wallace|Keaton Wallace]] '25 (88% similar)
+
+**Career shape:** Charted 2 seasons (2004-05–2005-06). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

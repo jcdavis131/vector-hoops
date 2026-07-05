@@ -34,6 +34,31 @@ Closest career shapes in the era-normalized vector space:
 - [[kessler-edwards|Kessler Edwards]] — cosine 0.87
 - [[kyle-singler|Kyle Singler]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 15.8 pts · 7.7 reb · 1.8 ast · 1.5 stl per 100 (2021-22).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.7σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.1σ)
+
+**Comparables:**
+
+- [[glenn-robinson-iii|Glenn Robinson III]] '21 (89% similar)
+- [[james-ennis-iii|James Ennis III]] '16 (89% similar)
+- [[quincy-pondexter|Quincy Pondexter]] '18 (89% similar)
+- [[treveon-graham|Treveon Graham]] '17 (88% similar)
+- [[kessler-edwards|Kessler Edwards]] '25 (87% similar)
+- [[kyle-singler|Kyle Singler]] '17 (86% similar)
+
+**Career shape:** Charted 1 season (2021-22). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

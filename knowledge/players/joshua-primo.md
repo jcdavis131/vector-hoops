@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[nick-johnson|Nick Johnson]] — cosine 0.82
 - [[daquan-jeffries|DaQuan Jeffries]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 14.1 pts · 5.6 reb · 4.0 ast · 1.1 blk per 100 (2021-22).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.1σ)
+- Defensive rebounding well below era (−1.0σ)
+
+**Comparables:**
+
+- [[maxwell-lewis|Maxwell Lewis]] '24 (83% similar)
+- [[javonte-smart|Javonte Smart]] '22 (83% similar)
+- [[nemanja-nedovic|Nemanja Nedovic]] '14 (82% similar)
+- [[yaroslav-korolev|Yaroslav Korolev]] '06 (82% similar)
+- [[nick-johnson|Nick Johnson]] '15 (82% similar)
+- [[daquan-jeffries|DaQuan Jeffries]] '24 (81% similar)
+
+**Career shape:** Charted 1 season (2021-22). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[donald-whiteside|Donald Whiteside]] — cosine 0.90
 - [[jerome-allen|Jerome Allen]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 14.0 pts · 3.9 reb · 6.4 ast · 1.6 stl per 100 (2004-05).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.8σ)
+- Offensive-glass activity well below era (−1.3σ)
+
+**Comparables:**
+
+- [[kyle-guy|Kyle Guy]] '22 (93% similar)
+- [[malachi-flynn|Malachi Flynn]] '22 (92% similar)
+- [[chris-herren|Chris Herren]] '01 (90% similar)
+- [[charles-r-jones|Charles R. Jones]] '00 (90% similar)
+- [[donald-whiteside|Donald Whiteside]] '97 (90% similar)
+- [[jerome-allen|Jerome Allen]] '97 (90% similar)
+
+**Career shape:** Charted 1 season (2004-05). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

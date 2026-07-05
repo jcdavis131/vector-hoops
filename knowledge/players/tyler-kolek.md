@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[ryan-nembhard|Ryan Nembhard]] — cosine 0.90
 - [[matthew-dellavedova|Matthew Dellavedova]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 12.8 pts · 4.3 reb · 11.1 ast · 1.9 stl per 100 (2024-25).
+
+**Strengths:**
+
+- High-volume table-setter (+2.5σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.8σ)
+- Defensive rebounding well below era (−1.3σ)
+
+**Comparables:**
+
+- [[jamal-shead|Jamal Shead]] '26 (95% similar)
+- [[chris-chiozza|Chris Chiozza]] '22 (94% similar)
+- [[mark-jackson|Mark Jackson]] '03 (92% similar)
+- [[eric-maynor|Eric Maynor]] '14 (92% similar)
+- [[ryan-nembhard|Ryan Nembhard]] '26 (90% similar)
+- [[matthew-dellavedova|Matthew Dellavedova]] '23 (89% similar)
+
+**Career shape:** Charted 2 seasons (2024-25–2025-26). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

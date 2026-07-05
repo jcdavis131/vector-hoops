@@ -42,6 +42,34 @@ Closest career shapes in the era-normalized vector space:
 - [[anthony-morrow|Anthony Morrow]] — cosine 0.91
 - [[grayson-allen|Grayson Allen]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 20.6 pts · 4.0 reb · 4.5 ast · 1.3 stl per 100 (2020-21).
+
+**Strengths:**
+
+- Strong net on-court impact (+1.5σ vs era)
+- Reliable touch from the free-throw line (+1.2σ vs era)
+- Knockdown three-point shooter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.2σ)
+- Offensive-glass activity well below era (−1.1σ)
+
+**Comparables:**
+
+- [[luke-kennard|Luke Kennard]] '23 (94% similar)
+- [[steve-kerr|Steve Kerr]] '97 (92% similar)
+- [[raja-bell|Raja Bell]] '07 (92% similar)
+- [[marco-belinelli|Marco Belinelli]] '08 (92% similar)
+- [[anthony-morrow|Anthony Morrow]] '17 (91% similar)
+- [[grayson-allen|Grayson Allen]] '19 (91% similar)
+
+**Career shape:** Charted 9 seasons (2015-16–2024-25). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

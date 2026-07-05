@@ -34,6 +34,31 @@ Closest career shapes in the era-normalized vector space:
 - [[karl-anthony-towns|Karl-Anthony Towns]] — cosine 0.78
 - [[dirk-nowitzki|Dirk Nowitzki]] — cosine 0.77
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 24.2 pts · 10.5 reb · 4.9 ast · 1.2 stl per 100 (2025-26).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[dario-saric|Dario Saric]] '21 (85% similar)
+- [[kevin-love|Kevin Love]] '19 (82% similar)
+- [[keith-van-horn|Keith Van Horn]] '99 (81% similar)
+- [[mehmet-okur|Mehmet Okur]] '12 (79% similar)
+- [[karl-anthony-towns|Karl-Anthony Towns]] '19 (78% similar)
+- [[dirk-nowitzki|Dirk Nowitzki]] '06 (77% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

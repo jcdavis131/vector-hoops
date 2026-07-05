@@ -39,6 +39,33 @@ Closest career shapes in the era-normalized vector space:
 - [[bryant-stith|Bryant Stith]] — cosine 0.88
 - [[jodie-meeks|Jodie Meeks]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 15.4 pts · 3.8 reb · 1.1 ast · 1.3 stl per 100 (2020-21).
+
+**Strengths:**
+
+- Rarely turns the ball over (−2.0σ vs era)
+- Reliable touch from the free-throw line (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.4σ)
+- Shot volume well below era (−1.3σ)
+
+**Comparables:**
+
+- [[timothe-luwawu-cabarrot|Timothe Luwawu-Cabarrot]] '19 (90% similar)
+- [[alex-abrines|Alex Abrines]] '19 (90% similar)
+- [[wesley-matthews|Wesley Matthews]] '20 (90% similar)
+- [[martell-webster|Martell Webster]] '15 (89% similar)
+- [[bryant-stith|Bryant Stith]] '98 (88% similar)
+- [[jodie-meeks|Jodie Meeks]] '12 (88% similar)
+
+**Career shape:** Charted 6 seasons (2019-20–2024-25). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

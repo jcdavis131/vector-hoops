@@ -49,6 +49,32 @@ Closest career shapes in the era-normalized vector space:
 - [[othella-harrington|Othella Harrington]] — cosine 0.78
 - [[vitaly-potapenko|Vitaly Potapenko]] — cosine 0.78
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 11.1 pts · 12.3 reb · 2.6 ast · 1.1 stl per 100 (2011-12).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.2σ)
+- Finishing efficiency well below era (−2.0σ)
+
+**Comparables:**
+
+- [[armen-gilliam|Armen Gilliam]] '00 (83% similar)
+- [[lee-nailon|Lee Nailon]] '03 (81% similar)
+- [[maurice-taylor|Maurice Taylor]] '99 (80% similar)
+- [[bryant-reeves|Bryant Reeves]] '98 (80% similar)
+- [[othella-harrington|Othella Harrington]] '99 (78% similar)
+- [[vitaly-potapenko|Vitaly Potapenko]] '06 (78% similar)
+
+**Career shape:** Charted 16 seasons (1996-97–2011-12). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

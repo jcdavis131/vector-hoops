@@ -42,6 +42,34 @@ Closest career shapes in the era-normalized vector space:
 - [[todd-macculloch|Todd MacCulloch]] — cosine 0.93
 - [[onyeka-okongwu|Onyeka Okongwu]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** PF · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 17.9 pts · 12.2 reb · 1.7 ast · 3.3 blk per 100 (2017-18).
+
+**Strengths:**
+
+- Elite rim protection (+2.5σ vs era)
+- Efficient finisher inside the arc (+1.7σ vs era)
+- Rarely turns the ball over (−1.6σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.3σ)
+- Three-point volume well below era (−1.5σ)
+
+**Comparables:**
+
+- [[joan-beringer|Joan Beringer]] '26 (96% similar)
+- [[brandon-clarke|Brandon Clarke]] '25 (94% similar)
+- [[daniel-gafford|Daniel Gafford]] '25 (93% similar)
+- [[ryan-kalkbrenner|Ryan Kalkbrenner]] '26 (93% similar)
+- [[todd-macculloch|Todd MacCulloch]] '01 (93% similar)
+- [[onyeka-okongwu|Onyeka Okongwu]] '22 (92% similar)
+
+**Career shape:** Charted 9 seasons (2007-08–2017-18). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

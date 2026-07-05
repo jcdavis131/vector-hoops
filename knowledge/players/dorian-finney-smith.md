@@ -43,6 +43,32 @@ Closest career shapes in the era-normalized vector space:
 - [[p-j-tucker|P.J. Tucker]] — cosine 0.89
 - [[dean-wade|Dean Wade]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** PF · Three-Point Accuracy (Low Turnovers). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 9.6 pts · 7.2 reb · 2.8 ast · 1.3 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.7σ)
+- Scoring load well below era (−1.7σ)
+
+**Comparables:**
+
+- [[keith-askins|Keith Askins]] '99 (93% similar)
+- [[kyle-singler|Kyle Singler]] '17 (92% similar)
+- [[rodney-mcgruder|Rodney McGruder]] '18 (91% similar)
+- [[miye-oni|Miye Oni]] '21 (90% similar)
+- [[p-j-tucker|P.J. Tucker]] '24 (89% similar)
+- [[dean-wade|Dean Wade]] '25 (89% similar)
+
+**Career shape:** Charted 10 seasons (2016-17–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

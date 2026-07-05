@@ -38,6 +38,32 @@ Closest career shapes in the era-normalized vector space:
 - [[mario-west|Mario West]] — cosine 0.86
 - [[dyson-daniels|Dyson Daniels]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass + Defensive Glass. Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 11.7 pts · 9.2 reb · 4.9 ast · 2.1 stl per 100 (2020-21).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.6σ)
+- Scoring load well below era (−1.4σ)
+
+**Comparables:**
+
+- [[dalen-terry|Dalen Terry]] '26 (94% similar)
+- [[deandre-liggins|DeAndre Liggins]] '12 (91% similar)
+- [[sindarius-thornwell|Sindarius Thornwell]] '21 (91% similar)
+- [[deandre-bembry|DeAndre' Bembry]] '17 (88% similar)
+- [[mario-west|Mario West]] '09 (86% similar)
+- [[dyson-daniels|Dyson Daniels]] '25 (86% similar)
+
+**Career shape:** Charted 5 seasons (2019-20–2024-25). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

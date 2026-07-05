@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[baylor-scheierman|Baylor Scheierman]] — cosine 0.85
 - [[ime-udoka|Ime Udoka]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** PF · Three-Point Accuracy (Low Turnovers). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 15.2 pts · 8.9 reb · 3.4 ast · 2.1 stl per 100 (2006-07).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.4σ vs era)
+- Active hands, disrupts passing lanes (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.2σ)
+
+**Comparables:**
+
+- [[jae-crowder|Jae Crowder]] '22 (91% similar)
+- [[tyrone-corbin|Tyrone Corbin]] '00 (88% similar)
+- [[dan-majerle|Dan Majerle]] '02 (87% similar)
+- [[otto-porter-jr|Otto Porter Jr.]] '17 (86% similar)
+- [[baylor-scheierman|Baylor Scheierman]] '26 (85% similar)
+- [[ime-udoka|Ime Udoka]] '11 (85% similar)
+
+**Career shape:** Charted 1 season (2006-07). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

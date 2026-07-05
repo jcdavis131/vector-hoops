@@ -40,6 +40,31 @@ Closest career shapes in the era-normalized vector space:
 - [[doug-overton|Doug Overton]] — cosine 0.85
 - [[aaron-holiday|Aaron Holiday]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 15.1 pts · 6.1 reb · 3.1 ast · 1.4 stl per 100 (2018-19).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.6σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.3σ)
+
+**Comparables:**
+
+- [[brian-roberts|Brian Roberts]] '13 (88% similar)
+- [[tyronn-lue|Tyronn Lue]] '05 (87% similar)
+- [[yogi-ferrell|Yogi Ferrell]] '19 (86% similar)
+- [[keyon-dooling|Keyon Dooling]] '10 (85% similar)
+- [[doug-overton|Doug Overton]] '02 (85% similar)
+- [[aaron-holiday|Aaron Holiday]] '26 (84% similar)
+
+**Career shape:** Charted 7 seasons (2018-19–2024-25). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

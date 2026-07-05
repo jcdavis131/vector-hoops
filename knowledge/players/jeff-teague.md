@@ -45,6 +45,34 @@ Closest career shapes in the era-normalized vector space:
 - [[devin-harris|Devin Harris]] — cosine 0.92
 - [[andre-miller|Andre Miller]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 25.9 pts · 4.1 reb · 11.4 ast · 2.8 stl per 100 (2014-15).
+
+**Strengths:**
+
+- High-volume table-setter (+2.6σ vs era)
+- Active hands, disrupts passing lanes (+2.0σ vs era)
+- Strong net on-court impact (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.9σ)
+- Defensive rebounding well below era (−1.2σ)
+
+**Comparables:**
+
+- [[jeremy-lin|Jeremy Lin]] '12 (95% similar)
+- [[t-j-ford|T.J. Ford]] '07 (94% similar)
+- [[ty-lawson|Ty Lawson]] '14 (94% similar)
+- [[darren-collison|Darren Collison]] '10 (93% similar)
+- [[devin-harris|Devin Harris]] '09 (92% similar)
+- [[andre-miller|Andre Miller]] '02 (92% similar)
+
+**Career shape:** Charted 12 seasons (2009-10–2020-21). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[ryan-stack|Ryan Stack]] — cosine 0.84
 - [[dalibor-bagaric|Dalibor Bagaric]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 8.3 pts · 8.3 reb · 0.8 ast · 5.3 blk per 100 (2017-18).
+
+**Strengths:**
+
+- Elite rim protection (+4.0σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−3.7σ)
+- On-court net impact well below era (−3.7σ)
+
+**Comparables:**
+
+- [[mfiondu-kabengele|Mfiondu Kabengele]] '21 (91% similar)
+- [[amal-mccaskill|Amal McCaskill]] '02 (85% similar)
+- [[stanley-umude|Stanley Umude]] '25 (85% similar)
+- [[aleksej-pokusevski|Aleksej Pokusevski]] '21 (85% similar)
+- [[ryan-stack|Ryan Stack]] '99 (84% similar)
+- [[dalibor-bagaric|Dalibor Bagaric]] '01 (83% similar)
+
+**Career shape:** Charted 1 season (2017-18). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

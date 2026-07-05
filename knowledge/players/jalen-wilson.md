@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[onuralp-bitim|Onuralp Bitim]] — cosine 0.83
 - [[dwayne-bacon|Dwayne Bacon]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 19.4 pts · 6.5 reb · 2.8 ast · 1.2 stl per 100 (2025-26).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.3σ)
+- Rim-protection impact well below era (−1.1σ)
+
+**Comparables:**
+
+- [[malachi-richardson|Malachi Richardson]] '19 (88% similar)
+- [[timothe-luwawu-cabarrot|Timothe Luwawu-Cabarrot]] '19 (86% similar)
+- [[dionte-christmas|Dionte Christmas]] '14 (84% similar)
+- [[semi-ojeleye|Semi Ojeleye]] '18 (84% similar)
+- [[onuralp-bitim|Onuralp Bitim]] '24 (83% similar)
+- [[dwayne-bacon|Dwayne Bacon]] '18 (83% similar)
+
+**Career shape:** Charted 3 seasons (2023-24–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

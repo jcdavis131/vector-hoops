@@ -37,6 +37,32 @@ Closest career shapes in the era-normalized vector space:
 - [[damyean-dotson|Damyean Dotson]] — cosine 0.82
 - [[ryan-gomes|Ryan Gomes]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 11.6 pts · 8.2 reb · 2.5 ast · 1.1 stl per 100 (2017-18).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.1σ vs era)
+
+**Areas of concern:**
+
+- Scoring load well below era (−1.3σ)
+- Finishing efficiency well below era (−1.1σ)
+
+**Comparables:**
+
+- [[jawad-williams|Jawad Williams]] '11 (84% similar)
+- [[justin-jackson|Justin Jackson]] '23 (83% similar)
+- [[bryce-mcgowens|Bryce McGowens]] '26 (83% similar)
+- [[jalen-wilson|Jalen Wilson]] '26 (83% similar)
+- [[damyean-dotson|Damyean Dotson]] '21 (82% similar)
+- [[ryan-gomes|Ryan Gomes]] '12 (82% similar)
+
+**Career shape:** Charted 4 seasons (2017-18–2020-21). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

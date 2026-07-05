@@ -49,6 +49,34 @@ Closest career shapes in the era-normalized vector space:
 - [[sasha-danilovic|Sasha Danilovic]] — cosine 0.91
 - [[jared-mccain|Jared McCain]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** SG · Scoring Volume + Shot Volume. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 29.2 pts · 3.1 reb · 5.6 ast · 1.8 stl per 100 (2012-13).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+2.1σ vs era)
+- Featured, high-usage scoring role (+1.8σ vs era)
+- Heavy shot volume, focal scoring option (+1.7σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.0σ)
+- Defensive rebounding well below era (−1.4σ)
+
+**Comparables:**
+
+- [[evan-fournier|Evan Fournier]] '24 (93% similar)
+- [[jamal-crawford|Jamal Crawford]] '14 (93% similar)
+- [[salim-stoudamire|Salim Stoudamire]] '08 (93% similar)
+- [[cuttino-mobley|Cuttino Mobley]] '02 (91% similar)
+- [[sasha-danilovic|Sasha Danilovic]] '97 (91% similar)
+- [[jared-mccain|Jared McCain]] '25 (89% similar)
+
+**Career shape:** Charted 16 seasons (2008-09–2024-25). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

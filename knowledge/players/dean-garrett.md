@@ -39,6 +39,33 @@ Closest career shapes in the era-normalized vector space:
 - [[brian-skinner|Brian Skinner]] — cosine 0.92
 - [[adonal-foyle|Adonal Foyle]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 9.5 pts · 15.0 reb · 1.3 ast · 2.6 blk per 100 (2001-02).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+1.8σ vs era)
+- Elite rim protection (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−4.0σ)
+- Finishing efficiency well below era (−2.0σ)
+
+**Comparables:**
+
+- [[tony-battie|Tony Battie]] '12 (94% similar)
+- [[ervin-johnson|Ervin Johnson]] '05 (94% similar)
+- [[cherokee-parks|Cherokee Parks]] '02 (93% similar)
+- [[andrew-lang|Andrew Lang]] '00 (92% similar)
+- [[brian-skinner|Brian Skinner]] '08 (92% similar)
+- [[adonal-foyle|Adonal Foyle]] '07 (91% similar)
+
+**Career shape:** Charted 6 seasons (1996-97–2001-02). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

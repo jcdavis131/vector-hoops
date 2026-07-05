@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[mardy-collins|Mardy Collins]] — cosine 0.86
 - [[orien-greene|Orien Greene]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 17.3 pts · 7.3 reb · 6.2 ast · 2.3 stl per 100 (2006-07).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.3σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.0σ)
+- Free-throw touch well below era (−1.7σ)
+
+**Comparables:**
+
+- [[dennis-smith-jr|Dennis Smith Jr.]] '20 (90% similar)
+- [[kj-simpson|KJ Simpson]] '26 (87% similar)
+- [[antonio-burks|Antonio Burks]] '06 (86% similar)
+- [[omar-cook|Omar Cook]] '04 (86% similar)
+- [[mardy-collins|Mardy Collins]] '10 (86% similar)
+- [[orien-greene|Orien Greene]] '07 (86% similar)
+
+**Career shape:** Charted 2 seasons (2005-06–2006-07). Entered as a Playmaking + Steals profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -44,6 +44,33 @@ Closest career shapes in the era-normalized vector space:
 - [[emeka-okafor|Emeka Okafor]] — cosine 0.93
 - [[miles-plumlee|Miles Plumlee]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 14.2 pts · 16.1 reb · 3.3 ast · 1.6 blk per 100 (2018-19).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+1.7σ vs era)
+- Relentless on the offensive glass (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−3.2σ)
+- Three-point accuracy well below era (−2.8σ)
+
+**Comparables:**
+
+- [[ed-davis|Ed Davis]] '22 (96% similar)
+- [[nazr-mohammed|Nazr Mohammed]] '15 (95% similar)
+- [[clint-capela|Clint Capela]] '21 (94% similar)
+- [[dan-gadzuric|Dan Gadzuric]] '05 (94% similar)
+- [[emeka-okafor|Emeka Okafor]] '18 (93% similar)
+- [[miles-plumlee|Miles Plumlee]] '19 (93% similar)
+
+**Career shape:** Charted 11 seasons (2008-09–2018-19). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

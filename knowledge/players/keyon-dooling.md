@@ -44,6 +44,33 @@ Closest career shapes in the era-normalized vector space:
 - [[mike-james|Mike James]] — cosine 0.90
 - [[darrick-martin|Darrick Martin]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 19.5 pts · 2.9 reb · 7.2 ast · 1.8 stl per 100 (2009-10).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.5σ vs era)
+- High-volume table-setter (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.5σ)
+- Offensive-glass activity well below era (−1.2σ)
+
+**Comparables:**
+
+- [[david-wesley|David Wesley]] '07 (95% similar)
+- [[yogi-ferrell|Yogi Ferrell]] '19 (92% similar)
+- [[jerryd-bayless|Jerryd Bayless]] '19 (90% similar)
+- [[ty-jerome|Ty Jerome]] '25 (90% similar)
+- [[mike-james|Mike James]] '06 (90% similar)
+- [[darrick-martin|Darrick Martin]] '08 (90% similar)
+
+**Career shape:** Charted 11 seasons (2000-01–2011-12). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

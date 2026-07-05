@@ -48,6 +48,32 @@ Closest career shapes in the era-normalized vector space:
 - [[cam-reynolds|Cam Reynolds]] — cosine 0.80
 - [[mike-muscala|Mike Muscala]] — cosine 0.79
 
+## Scouting report
+
+**Play style:** PF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 20.2 pts · 11.1 reb · 2.3 ast · 1.6 blk per 100 (2015-16).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.4σ vs era)
+- High-volume three-point shooter (+1.0σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[robbie-hummel|Robbie Hummel]] '14 (87% similar)
+- [[julian-champagnie|Julian Champagnie]] '26 (83% similar)
+- [[aaron-nesmith|Aaron Nesmith]] '25 (83% similar)
+- [[keegan-murray|Keegan Murray]] '26 (81% similar)
+- [[cam-reynolds|Cam Reynolds]] '19 (80% similar)
+- [[mike-muscala|Mike Muscala]] '14 (79% similar)
+
+**Career shape:** Charted 15 seasons (2005-06–2019-20). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

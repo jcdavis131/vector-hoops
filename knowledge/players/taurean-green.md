@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[vince-williams-jr|Vince Williams Jr.]] — cosine 0.77
 - [[sarunas-marciulionis|Sarunas Marciulionis]] — cosine 0.77
 
+## Scouting report
+
+**Play style:** SG · Playmaking + Steals. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 17.4 pts · 6.5 reb · 7.1 ast · 1.3 stl per 100 (2007-08).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+1.5σ vs era)
+- Draws contact, gets to the line often (+1.2σ vs era)
+- High-volume three-point shooter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+3.3σ)
+- Finishing efficiency well below era (−2.5σ)
+
+**Comparables:**
+
+- [[vassilis-spanoulis|Vassilis Spanoulis]] '07 (88% similar)
+- [[scoot-henderson|Scoot Henderson]] '24 (79% similar)
+- [[luke-jackson|Luke Jackson]] '06 (78% similar)
+- [[god-shammgod|God Shammgod]] '98 (78% similar)
+- [[vince-williams-jr|Vince Williams Jr.]] '26 (77% similar)
+- [[sarunas-marciulionis|Sarunas Marciulionis]] '97 (77% similar)
+
+**Career shape:** Charted 1 season (2007-08). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

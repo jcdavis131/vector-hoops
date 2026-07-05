@@ -40,6 +40,32 @@ Closest career shapes in the era-normalized vector space:
 - [[david-benoit|David Benoit]] — cosine 0.85
 - [[lj-cryer|LJ Cryer]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 21.2 pts · 7.4 reb · 2.3 ast · 0.6 stl per 100 (2012-13).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.6σ)
+- Ball-hawking activity well below era (−1.6σ)
+
+**Comparables:**
+
+- [[marcus-morris-sr|Marcus Morris Sr.]] '12 (92% similar)
+- [[eddie-johnson|Eddie Johnson]] '98 (88% similar)
+- [[walter-herrmann|Walter Herrmann]] '09 (87% similar)
+- [[ryan-anderson|Ryan Anderson]] '14 (87% similar)
+- [[david-benoit|David Benoit]] '98 (85% similar)
+- [[lj-cryer|LJ Cryer]] '26 (85% similar)
+
+**Career shape:** Charted 7 seasons (2005-06–2012-13). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -46,6 +46,33 @@ Closest career shapes in the era-normalized vector space:
 - [[paolo-banchero|Paolo Banchero]] — cosine 0.89
 - [[joel-embiid|Joel Embiid]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PF · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 33.4 pts · 13.1 reb · 5.3 ast · 1.6 stl per 100 (2013-14).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+3.1σ vs era)
+- Featured, high-usage scoring role (+2.4σ vs era)
+- Heavy shot volume, focal scoring option (+1.7σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.1σ)
+
+**Comparables:**
+
+- [[pascal-siakam|Pascal Siakam]] '17 (93% similar)
+- [[karl-malone|Karl Malone]] '97 (93% similar)
+- [[giannis-antetokounmpo|Giannis Antetokounmpo]] '20 (92% similar)
+- [[julius-randle|Julius Randle]] '24 (90% similar)
+- [[paolo-banchero|Paolo Banchero]] '25 (89% similar)
+- [[joel-embiid|Joel Embiid]] '17 (88% similar)
+
+**Career shape:** Charted 13 seasons (2010-11–2022-23). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

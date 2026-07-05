@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[solomon-hill|Solomon Hill]] — cosine 0.83
 - [[paul-zipser|Paul Zipser]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 11.8 pts · 7.5 reb · 2.7 ast · 1.6 stl per 100 (2012-13).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.8σ)
+- Scoring load well below era (−1.3σ)
+
+**Comparables:**
+
+- [[brian-scalabrine|Brian Scalabrine]] '11 (92% similar)
+- [[lamar-patterson|Lamar Patterson]] '16 (86% similar)
+- [[ousmane-dieng|Ousmane Dieng]] '23 (84% similar)
+- [[miye-oni|Miye Oni]] '21 (84% similar)
+- [[solomon-hill|Solomon Hill]] '21 (83% similar)
+- [[paul-zipser|Paul Zipser]] '18 (81% similar)
+
+**Career shape:** Charted 2 seasons (2012-13–2013-14). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

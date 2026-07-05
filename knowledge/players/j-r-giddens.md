@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[viktor-khryapa|Viktor Khryapa]] — cosine 0.81
 - [[mark-davis|Mark Davis]] — cosine 0.80
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 14.1 pts · 10.4 reb · 2.7 ast · 1.8 stl per 100 (2009-10).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.1σ)
+- Three-point accuracy well below era (−1.5σ)
+
+**Comparables:**
+
+- [[ognjen-kuzmic|Ognjen Kuzmic]] '14 (86% similar)
+- [[lari-ketner|Lari Ketner]] '00 (86% similar)
+- [[thanasis-antetokounmpo|Thanasis Antetokounmpo]] '24 (85% similar)
+- [[brandon-davies|Brandon Davies]] '15 (83% similar)
+- [[viktor-khryapa|Viktor Khryapa]] '05 (81% similar)
+- [[mark-davis|Mark Davis]] '98 (80% similar)
+
+**Career shape:** Charted 1 season (2009-10). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

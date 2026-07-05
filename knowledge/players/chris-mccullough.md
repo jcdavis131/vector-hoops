@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[ray-owes|Ray Owes]] — cosine 0.74
 - [[mouhamed-sene|Mouhamed Sene]] — cosine 0.73
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 15.1 pts · 9.2 reb · 1.2 ast · 3.8 stl per 100 (2015-16).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+3.7σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.2σ)
+- Free-throw touch well below era (−2.2σ)
+
+**Comparables:**
+
+- [[jack-white|Jack White]] '23 (79% similar)
+- [[greg-brown-iii|Greg Brown III]] '22 (77% similar)
+- [[cedric-simmons|Cedric Simmons]] '09 (76% similar)
+- [[marquese-chriss|Marquese Chriss]] '20 (75% similar)
+- [[ray-owes|Ray Owes]] '97 (74% similar)
+- [[mouhamed-sene|Mouhamed Sene]] '07 (73% similar)
+
+**Career shape:** Charted 2 seasons (2015-16–2017-18). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

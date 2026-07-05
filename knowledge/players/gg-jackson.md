@@ -36,6 +36,33 @@ Closest career shapes in the era-normalized vector space:
 - [[dominique-wilkins|Dominique Wilkins]] — cosine 0.81
 - [[shaedon-sharpe|Shaedon Sharpe]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** PF · Three-Point Volume + Three-Point Accuracy. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 27.3 pts · 7.7 reb · 2.3 ast · 1.1 stl per 100 (2023-24).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.3σ vs era)
+- Heavy shot volume, focal scoring option (+1.2σ vs era)
+- Featured, high-usage scoring role (+1.0σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[don-maclean|Don MacLean]] '99 (87% similar)
+- [[kyle-kuzma|Kyle Kuzma]] '24 (85% similar)
+- [[cam-whitmore|Cam Whitmore]] '24 (82% similar)
+- [[andrea-bargnani|Andrea Bargnani]] '15 (81% similar)
+- [[dominique-wilkins|Dominique Wilkins]] '97 (81% similar)
+- [[shaedon-sharpe|Shaedon Sharpe]] '26 (81% similar)
+
+**Career shape:** Charted 3 seasons (2023-24–2025-26). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

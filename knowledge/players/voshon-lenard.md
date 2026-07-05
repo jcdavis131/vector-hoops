@@ -41,6 +41,33 @@ Closest career shapes in the era-normalized vector space:
 - [[jr-smith|JR Smith]] — cosine 0.93
 - [[john-starks|John Starks]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 22.4 pts · 5.4 reb · 4.0 ast · 1.2 stl per 100 (1996-97).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.4σ vs era)
+- Strong net on-court impact (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Offensive-glass activity well below era (−1.1σ)
+- Rim pressure (free-throw generation) well below era (−1.1σ)
+
+**Comparables:**
+
+- [[dell-curry|Dell Curry]] '00 (96% similar)
+- [[rex-chapman|Rex Chapman]] '98 (95% similar)
+- [[vernon-maxwell|Vernon Maxwell]] '00 (94% similar)
+- [[bogdan-bogdanovic|Bogdan Bogdanović]] '21 (94% similar)
+- [[jr-smith|JR Smith]] '08 (93% similar)
+- [[john-starks|John Starks]] '00 (93% similar)
+
+**Career shape:** Charted 8 seasons (1996-97–2005-06). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

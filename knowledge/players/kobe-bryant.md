@@ -52,6 +52,33 @@ Closest career shapes in the era-normalized vector space:
 - [[paul-pierce|Paul Pierce]] — cosine 0.94
 - [[tracy-mcgrady|Tracy McGrady]] — cosine 0.94
 
+## Scouting report
+
+**Play style:** SG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 44.5 pts · 6.7 reb · 5.7 ast · 2.3 stl per 100 (2005-06).
+
+**Strengths:**
+
+- Featured, high-usage scoring role (+4.0σ vs era)
+- Heavy shot volume, focal scoring option (+4.0σ vs era)
+- Draws contact, gets to the line often (+3.1σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.1σ)
+
+**Comparables:**
+
+- [[anthony-edwards|Anthony Edwards]] '25 (97% similar)
+- [[donovan-mitchell|Donovan Mitchell]] '21 (96% similar)
+- [[allen-iverson|Allen Iverson]] '02 (95% similar)
+- [[carmelo-anthony|Carmelo Anthony]] '13 (94% similar)
+- [[paul-pierce|Paul Pierce]] '03 (94% similar)
+- [[tracy-mcgrady|Tracy McGrady]] '03 (94% similar)
+
+**Career shape:** Charted 19 seasons (1996-97–2015-16). Consistent Scoring Volume + Shot Volume profile across his career.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

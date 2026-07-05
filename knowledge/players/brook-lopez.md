@@ -49,6 +49,34 @@ Closest career shapes in the era-normalized vector space:
 - [[alonzo-mourning|Alonzo Mourning]] — cosine 0.83
 - [[kristaps-porzingis|Kristaps Porziņģis]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 33.7 pts · 12.0 reb · 1.6 ast · 3.6 blk per 100 (2012-13).
+
+**Strengths:**
+
+- Featured, high-usage scoring role (+2.5σ vs era)
+- Elite rim protection (+2.4σ vs era)
+- Draws contact, gets to the line often (+2.2σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.5σ)
+- Ball-hawking activity well below era (−1.3σ)
+
+**Comparables:**
+
+- [[myles-turner|Myles Turner]] '19 (87% similar)
+- [[zydrunas-ilgauskas|Zydrunas Ilgauskas]] '02 (85% similar)
+- [[roy-hibbert|Roy Hibbert]] '13 (84% similar)
+- [[jermaine-o-neal|Jermaine O'Neal]] '05 (83% similar)
+- [[alonzo-mourning|Alonzo Mourning]] '00 (83% similar)
+- [[kristaps-porzingis|Kristaps Porziņģis]] '18 (82% similar)
+
+**Career shape:** Charted 16 seasons (2008-09–2025-26). Entered as a Rim Protection + Offensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

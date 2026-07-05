@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[art-long|Art Long]] — cosine 0.79
 - [[joel-przybilla|Joel Przybilla]] — cosine 0.79
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 14.7 pts · 11.7 reb · 2.8 ast · 2.8 blk per 100 (2018-19).
+
+**Strengths:**
+
+- Elite rim protection (+2.0σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.5σ)
+- Shot volume well below era (−1.1σ)
+
+**Comparables:**
+
+- [[desagana-diop|DeSagana Diop]] '13 (85% similar)
+- [[adonal-foyle|Adonal Foyle]] '07 (83% similar)
+- [[olden-polynice|Olden Polynice]] '99 (81% similar)
+- [[dylan-cardwell|Dylan Cardwell]] '26 (80% similar)
+- [[art-long|Art Long]] '03 (79% similar)
+- [[joel-przybilla|Joel Przybilla]] '01 (79% similar)
+
+**Career shape:** Charted 1 season (2018-19). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

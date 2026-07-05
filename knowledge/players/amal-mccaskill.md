@@ -36,6 +36,34 @@ Closest career shapes in the era-normalized vector space:
 - [[ruben-boumtje-boumtje|Ruben Boumtje-Boumtje]] — cosine 0.89
 - [[eric-mobley|Eric Mobley]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 16.4 pts · 11.3 reb · 1.3 ast · 3.2 blk per 100 (2001-02).
+
+**Strengths:**
+
+- Elite rim protection (+1.8σ vs era)
+- Draws contact, gets to the line often (+1.5σ vs era)
+- Relentless on the offensive glass (+1.2σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.8σ)
+- Free-throw touch well below era (−2.0σ)
+
+**Comparables:**
+
+- [[dalibor-bagaric|Dalibor Bagaric]] '01 (97% similar)
+- [[jordan-mickey|Jordan Mickey]] '17 (91% similar)
+- [[ognjen-kuzmic|Ognjen Kuzmic]] '14 (90% similar)
+- [[mouhamed-sene|Mouhamed Sene]] '07 (90% similar)
+- [[ruben-boumtje-boumtje|Ruben Boumtje-Boumtje]] '02 (89% similar)
+- [[eric-mobley|Eric Mobley]] '97 (86% similar)
+
+**Career shape:** Charted 3 seasons (1996-97–2003-04). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

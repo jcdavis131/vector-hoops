@@ -38,6 +38,32 @@ Closest career shapes in the era-normalized vector space:
 - [[isaiah-livers|Isaiah Livers]] — cosine 0.90
 - [[antoine-wright|Antoine Wright]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** PF · Three-Point Accuracy (Low Turnovers). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 8.3 pts · 6.9 reb · 0.9 ast · 0.9 stl per 100 (2017-18).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.5σ vs era)
+
+**Areas of concern:**
+
+- Scoring load well below era (−1.8σ)
+- Shot volume well below era (−1.8σ)
+
+**Comparables:**
+
+- [[treveon-graham|Treveon Graham]] '17 (95% similar)
+- [[kyle-singler|Kyle Singler]] '17 (94% similar)
+- [[quincy-pondexter|Quincy Pondexter]] '18 (92% similar)
+- [[axel-toupane|Axel Toupane]] '16 (90% similar)
+- [[isaiah-livers|Isaiah Livers]] '24 (90% similar)
+- [[antoine-wright|Antoine Wright]] '06 (90% similar)
+
+**Career shape:** Charted 5 seasons (2017-18–2021-22). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

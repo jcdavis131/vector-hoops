@@ -39,6 +39,33 @@ Closest career shapes in the era-normalized vector space:
 - [[nick-van-exel|Nick Van Exel]] — cosine 0.88
 - [[j-r-bremer|J.R. Bremer]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 20.9 pts · 4.8 reb · 6.2 ast · 0.5 stl per 100 (2013-14).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.8σ vs era)
+- Heavy shot volume, focal scoring option (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−4.0σ)
+- Ball-hawking activity well below era (−1.6σ)
+
+**Comparables:**
+
+- [[chucky-atkins|Chucky Atkins]] '08 (92% similar)
+- [[devonte-graham|Devonte' Graham]] '20 (90% similar)
+- [[caleb-love|Caleb Love]] '26 (89% similar)
+- [[nickeil-alexander-walker|Nickeil Alexander-Walker]] '20 (88% similar)
+- [[nick-van-exel|Nick Van Exel]] '02 (88% similar)
+- [[j-r-bremer|J.R. Bremer]] '04 (88% similar)
+
+**Career shape:** Charted 6 seasons (2009-10–2014-15). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

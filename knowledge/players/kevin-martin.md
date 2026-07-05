@@ -45,6 +45,33 @@ Closest career shapes in the era-normalized vector space:
 - [[danilo-gallinari|Danilo Gallinari]] — cosine 0.87
 - [[cam-thomas|Cam Thomas]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** SG · Scoring Volume + Shot Volume. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 35.8 pts · 4.9 reb · 3.8 ast · 1.5 stl per 100 (2010-11).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+3.4σ vs era)
+- Featured, high-usage scoring role (+2.8σ vs era)
+- Heavy shot volume, focal scoring option (+1.8σ vs era)
+
+**Areas of concern:**
+
+- Offensive-glass activity well below era (−1.1σ)
+
+**Comparables:**
+
+- [[alec-burks|Alec Burks]] '24 (93% similar)
+- [[mitch-richmond|Mitch Richmond]] '97 (91% similar)
+- [[michael-redd|Michael Redd]] '07 (91% similar)
+- [[norman-powell|Norman Powell]] '25 (90% similar)
+- [[danilo-gallinari|Danilo Gallinari]] '16 (87% similar)
+- [[cam-thomas|Cam Thomas]] '25 (86% similar)
+
+**Career shape:** Charted 12 seasons (2004-05–2015-16). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

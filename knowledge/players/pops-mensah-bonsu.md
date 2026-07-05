@@ -35,6 +35,34 @@ Closest career shapes in the era-normalized vector space:
 - [[nazr-mohammed|Nazr Mohammed]] — cosine 0.83
 - [[ryan-humphrey|Ryan Humphrey]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** PF · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 15.7 pts · 14.0 reb · 1.2 ast · 3.6 blk per 100 (2009-10).
+
+**Strengths:**
+
+- Elite rim protection (+2.5σ vs era)
+- Relentless on the offensive glass (+2.3σ vs era)
+- Draws contact, gets to the line often (+1.9σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.2σ)
+- Three-point accuracy well below era (−1.5σ)
+
+**Comparables:**
+
+- [[vladimir-stepania|Vladimir Stepania]] '00 (90% similar)
+- [[shawnelle-scott|Shawnelle Scott]] '01 (85% similar)
+- [[thomas-robinson|Thomas Robinson]] '16 (84% similar)
+- [[moses-brown|Moses Brown]] '23 (83% similar)
+- [[nazr-mohammed|Nazr Mohammed]] '15 (83% similar)
+- [[ryan-humphrey|Ryan Humphrey]] '05 (83% similar)
+
+**Career shape:** Charted 2 seasons (2008-09–2009-10). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Rim Protection + Offensive Glass identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

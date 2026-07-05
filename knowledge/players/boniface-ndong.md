@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[ray-owes|Ray Owes]] — cosine 0.80
 - [[sean-marks|Sean Marks]] — cosine 0.79
 
+## Scouting report
+
+**Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 16.8 pts · 12.5 reb · 2.4 ast · 1.7 blk per 100 (2005-06).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+1.5σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.1σ)
+- Three-point accuracy well below era (−1.3σ)
+
+**Comparables:**
+
+- [[stephen-zimmerman|Stephen Zimmerman]] '17 (90% similar)
+- [[paul-davis|Paul Davis]] '08 (84% similar)
+- [[jermareo-davidson|Jermareo Davidson]] '08 (84% similar)
+- [[jajuan-johnson|JaJuan Johnson]] '12 (80% similar)
+- [[ray-owes|Ray Owes]] '97 (80% similar)
+- [[sean-marks|Sean Marks]] '11 (79% similar)
+
+**Career shape:** Charted 1 season (2005-06). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

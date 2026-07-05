@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[antonio-burks|Antonio Burks]] — cosine 0.87
 - [[donell-taylor|Donell Taylor]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 5.3 pts · 2.2 reb · 9.0 ast · 3.8 stl per 100 (2003-04).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+3.3σ vs era)
+- High-volume table-setter (+1.8σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−4.0σ)
+- Finishing efficiency well below era (−3.0σ)
+
+**Comparables:**
+
+- [[chris-garner|Chris Garner]] '98 (93% similar)
+- [[jahmai-mashack|Jahmai Mashack]] '26 (89% similar)
+- [[mardy-collins|Mardy Collins]] '10 (89% similar)
+- [[kennedy-chandler|Kennedy Chandler]] '23 (88% similar)
+- [[antonio-burks|Antonio Burks]] '06 (87% similar)
+- [[donell-taylor|Donell Taylor]] '07 (86% similar)
+
+**Career shape:** Charted 1 season (2003-04). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

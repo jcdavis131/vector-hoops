@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[marjon-beauchamp|MarJon Beauchamp]] — cosine 0.60
 - [[antoine-walker|Antoine Walker]] — cosine 0.58
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 19.1 pts · 12.4 reb · 4.1 ast · 1.3 stl per 100 (1996-97).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+1.7σ vs era)
+- High-volume three-point shooter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.2σ)
+
+**Comparables:**
+
+- [[jaylon-tyson|Jaylon Tyson]] '25 (67% similar)
+- [[jerald-honeycutt|Jerald Honeycutt]] '98 (62% similar)
+- [[josh-davis|Josh Davis]] '05 (62% similar)
+- [[dario-saric|Dario Saric]] '21 (62% similar)
+- [[marjon-beauchamp|MarJon Beauchamp]] '25 (60% similar)
+- [[antoine-walker|Antoine Walker]] '01 (58% similar)
+
+**Career shape:** Charted 1 season (1996-97). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[sean-marks|Sean Marks]] — cosine 0.79
 - [[yi-jianlian|Yi Jianlian]] — cosine 0.78
 
+## Scouting report
+
+**Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 17.8 pts · 14.0 reb · 1.5 ast · 0.9 stl per 100 (2006-07).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+1.7σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.4σ)
+- On-court net impact well below era (−1.3σ)
+
+**Comparables:**
+
+- [[byron-mullens|Byron Mullens]] '14 (86% similar)
+- [[andrew-nicholson|Andrew Nicholson]] '17 (85% similar)
+- [[maciej-lampe|Maciej Lampe]] '04 (83% similar)
+- [[earl-clark|Earl Clark]] '12 (81% similar)
+- [[sean-marks|Sean Marks]] '11 (79% similar)
+- [[yi-jianlian|Yi Jianlian]] '12 (78% similar)
+
+**Career shape:** Charted 3 seasons (2002-03–2006-07). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

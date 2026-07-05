@@ -41,6 +41,34 @@ Closest career shapes in the era-normalized vector space:
 - [[kris-humphries|Kris Humphries]] — cosine 0.92
 - [[lonny-baxter|Lonny Baxter]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** PF · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 14.4 pts · 15.0 reb · 2.0 ast · 2.8 blk per 100 (2001-02).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+1.9σ vs era)
+- Elite rim protection (+1.5σ vs era)
+- Efficient finisher inside the arc (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.3σ)
+- Shot volume well below era (−1.1σ)
+
+**Comparables:**
+
+- [[jason-thompson|Jason Thompson]] '15 (95% similar)
+- [[etan-thomas|Etan Thomas]] '07 (93% similar)
+- [[todd-fuller|Todd Fuller]] '98 (93% similar)
+- [[emeka-okafor|Emeka Okafor]] '18 (92% similar)
+- [[kris-humphries|Kris Humphries]] '11 (92% similar)
+- [[lonny-baxter|Lonny Baxter]] '06 (92% similar)
+
+**Career shape:** Charted 8 seasons (1996-97–2003-04). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Rim Protection + Offensive Glass identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

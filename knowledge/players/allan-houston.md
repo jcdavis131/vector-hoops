@@ -42,6 +42,34 @@ Closest career shapes in the era-normalized vector space:
 - [[isaiah-rider|Isaiah Rider]] — cosine 0.91
 - [[cuttino-mobley|Cuttino Mobley]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 30.6 pts · 3.8 reb · 3.6 ast · 0.9 stl per 100 (2002-03).
+
+**Strengths:**
+
+- Featured, high-usage scoring role (+2.1σ vs era)
+- Heavy shot volume, focal scoring option (+1.9σ vs era)
+- High-volume three-point shooter (+1.7σ vs era)
+
+**Areas of concern:**
+
+- Offensive-glass activity well below era (−1.4σ)
+- Defensive rebounding well below era (−1.2σ)
+
+**Comparables:**
+
+- [[bojan-bogdanovic|Bojan Bogdanovic]] '20 (94% similar)
+- [[jared-mccain|Jared McCain]] '25 (94% similar)
+- [[gary-neal|Gary Neal]] '14 (93% similar)
+- [[joe-johnson|Joe Johnson]] '07 (91% similar)
+- [[isaiah-rider|Isaiah Rider]] '00 (91% similar)
+- [[cuttino-mobley|Cuttino Mobley]] '02 (91% similar)
+
+**Career shape:** Charted 9 seasons (1996-97–2004-05). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

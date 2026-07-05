@@ -39,6 +39,32 @@ Closest career shapes in the era-normalized vector space:
 - [[dan-dickau|Dan Dickau]] — cosine 0.90
 - [[marcus-smart|Marcus Smart]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 21.2 pts · 5.9 reb · 6.5 ast · 3.1 stl per 100 (2016-17).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.7σ vs era)
+- High-volume three-point shooter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.4σ)
+
+**Comparables:**
+
+- [[darrell-armstrong|Darrell Armstrong]] '99 (96% similar)
+- [[cory-alexander|Cory Alexander]] '01 (93% similar)
+- [[mario-chalmers|Mario Chalmers]] '16 (91% similar)
+- [[rumeal-robinson|Rumeal Robinson]] '97 (91% similar)
+- [[dan-dickau|Dan Dickau]] '06 (90% similar)
+- [[marcus-smart|Marcus Smart]] '24 (90% similar)
+
+**Career shape:** Charted 6 seasons (2014-15–2019-20). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

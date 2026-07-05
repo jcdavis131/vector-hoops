@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[tyrese-martin|Tyrese Martin]] — cosine 0.84
 - [[kareem-rush|Kareem Rush]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 21.6 pts · 5.5 reb · 2.3 ast · 1.1 stl per 100 (2024-25).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.9σ vs era)
+- Knockdown three-point shooter (+1.2σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.5σ)
+- Rim pressure (free-throw generation) well below era (−1.3σ)
+
+**Comparables:**
+
+- [[cedi-osman|Cedi Osman]] '23 (87% similar)
+- [[troy-daniels|Troy Daniels]] '15 (85% similar)
+- [[armoni-brooks|Armoni Brooks]] '21 (85% similar)
+- [[johnny-juzang|Johnny Juzang]] '23 (84% similar)
+- [[tyrese-martin|Tyrese Martin]] '26 (84% similar)
+- [[kareem-rush|Kareem Rush]] '09 (83% similar)
+
+**Career shape:** Charted 1 season (2024-25). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

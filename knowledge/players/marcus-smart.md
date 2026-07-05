@@ -45,6 +45,33 @@ Closest career shapes in the era-normalized vector space:
 - [[marko-jaric|Marko Jaric]] — cosine 0.90
 - [[darrell-armstrong|Darrell Armstrong]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 22.4 pts · 4.1 reb · 6.7 ast · 3.2 stl per 100 (2023-24).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+3.0σ vs era)
+- High-volume three-point shooter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.5σ)
+- Defensive rebounding well below era (−1.1σ)
+
+**Comparables:**
+
+- [[mario-chalmers|Mario Chalmers]] '16 (96% similar)
+- [[jose-alvarado|Jose Alvarado]] '22 (93% similar)
+- [[ronnie-price|Ronnie Price]] '14 (92% similar)
+- [[shabazz-napier|Shabazz Napier]] '17 (90% similar)
+- [[marko-jaric|Marko Jaric]] '03 (90% similar)
+- [[darrell-armstrong|Darrell Armstrong]] '99 (89% similar)
+
+**Career shape:** Charted 12 seasons (2014-15–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Playmaking + Steals identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

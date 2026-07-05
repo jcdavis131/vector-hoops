@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[dennis-smith-jr|Dennis Smith Jr.]] — cosine 0.85
 - [[mike-taylor|Mike Taylor]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 24.6 pts · 6.1 reb · 8.9 ast · 3.3 stl per 100 (2023-24).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+3.2σ vs era)
+- High-volume table-setter (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.8σ)
+
+**Comparables:**
+
+- [[eric-bledsoe|Eric Bledsoe]] '17 (91% similar)
+- [[eric-murdock|Eric Murdock]] '00 (89% similar)
+- [[jeremy-lin|Jeremy Lin]] '12 (86% similar)
+- [[tremont-waters|Tremont Waters]] '21 (85% similar)
+- [[dennis-smith-jr|Dennis Smith Jr.]] '20 (85% similar)
+- [[mike-taylor|Mike Taylor]] '09 (85% similar)
+
+**Career shape:** Charted 2 seasons (2023-24–2024-25). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

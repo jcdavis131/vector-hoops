@@ -37,6 +37,33 @@ Closest career shapes in the era-normalized vector space:
 - [[david-vanterpool|David Vanterpool]] — cosine 0.81
 - [[ricky-rubio|Ricky Rubio]] — cosine 0.80
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 18.1 pts · 7.9 reb · 7.6 ast · 1.8 stl per 100 (2023-24).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+2.6σ vs era)
+- High-volume table-setter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.7σ)
+- Finishing efficiency well below era (−1.3σ)
+
+**Comparables:**
+
+- [[speedy-claxton|Speedy Claxton]] '07 (87% similar)
+- [[tyus-edney|Tyus Edney]] '01 (84% similar)
+- [[brevin-knight|Brevin Knight]] '03 (83% similar)
+- [[michael-carter-williams|Michael Carter-Williams]] '15 (83% similar)
+- [[david-vanterpool|David Vanterpool]] '01 (81% similar)
+- [[ricky-rubio|Ricky Rubio]] '13 (80% similar)
+
+**Career shape:** Charted 4 seasons (2020-21–2023-24). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

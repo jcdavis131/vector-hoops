@@ -43,6 +43,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jon-brockman|Jon Brockman]] — cosine 0.85
 - [[terry-davis|Terry Davis]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 6.3 pts · 11.5 reb · 1.1 ast · 0.6 blk per 100 (2009-10).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.4σ)
+- Shot volume well below era (−2.4σ)
+
+**Comparables:**
+
+- [[enrique-freeman|Enrique Freeman]] '25 (95% similar)
+- [[mark-madsen|Mark Madsen]] '09 (86% similar)
+- [[rakeem-christmas|Rakeem Christmas]] '17 (86% similar)
+- [[mark-bryant|Mark Bryant]] '03 (85% similar)
+- [[jon-brockman|Jon Brockman]] '10 (85% similar)
+- [[terry-davis|Terry Davis]] '01 (84% similar)
+
+**Career shape:** Charted 10 seasons (2001-02–2010-11). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

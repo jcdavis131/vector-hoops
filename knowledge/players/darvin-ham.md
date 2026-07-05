@@ -41,6 +41,32 @@ Closest career shapes in the era-normalized vector space:
 - [[wenyen-gabriel|Wenyen Gabriel]] — cosine 0.85
 - [[greg-smith|Greg Smith]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass + Defensive Glass. Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 8.8 pts · 6.7 reb · 1.0 ast · 1.3 blk per 100 (2004-05).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.5σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.7σ)
+- On-court net impact well below era (−2.2σ)
+
+**Comparables:**
+
+- [[john-thomas|John Thomas]] '00 (89% similar)
+- [[dwayne-jones|Dwayne Jones]] '08 (88% similar)
+- [[sasha-kaun|Sasha Kaun]] '16 (86% similar)
+- [[jan-vesely|Jan Vesely]] '14 (85% similar)
+- [[wenyen-gabriel|Wenyen Gabriel]] '23 (85% similar)
+- [[greg-smith|Greg Smith]] '16 (84% similar)
+
+**Career shape:** Charted 8 seasons (1996-97–2004-05). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

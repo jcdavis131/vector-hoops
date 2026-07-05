@@ -37,6 +37,31 @@ Closest career shapes in the era-normalized vector space:
 - [[chris-crawford|Chris Crawford]] — cosine 0.80
 - [[john-wallace|John Wallace]] — cosine 0.77
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 23.2 pts · 7.2 reb · 2.0 ast · 1.2 blk per 100 (2008-09).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+1.0σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.5σ)
+
+**Comparables:**
+
+- [[shabazz-muhammad|Shabazz Muhammad]] '15 (88% similar)
+- [[eric-paschall|Eric Paschall]] '20 (87% similar)
+- [[jason-collier|Jason Collier]] '05 (83% similar)
+- [[gerald-henderson|Gerald Henderson]] '13 (80% similar)
+- [[chris-crawford|Chris Crawford]] '98 (80% similar)
+- [[john-wallace|John Wallace]] '99 (77% similar)
+
+**Career shape:** Charted 4 seasons (2007-08–2010-11). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

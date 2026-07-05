@@ -39,6 +39,32 @@ Closest career shapes in the era-normalized vector space:
 - [[colby-jones|Colby Jones]] — cosine 0.84
 - [[mark-davis|Mark Davis]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 9.7 pts · 3.9 reb · 5.2 ast · 2.1 stl per 100 (2023-24).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−4.0σ)
+- Three-point accuracy well below era (−2.7σ)
+
+**Comparables:**
+
+- [[jaylen-hoard|Jaylen Hoard]] '21 (86% similar)
+- [[jan-vesely|Jan Vesely]] '14 (85% similar)
+- [[j-r-giddens|J.R. Giddens]] '10 (85% similar)
+- [[sasha-kaun|Sasha Kaun]] '16 (85% similar)
+- [[colby-jones|Colby Jones]] '24 (84% similar)
+- [[mark-davis|Mark Davis]] '98 (84% similar)
+
+**Career shape:** Charted 6 seasons (2019-20–2025-26). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

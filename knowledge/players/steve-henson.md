@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[steven-smith|Steven Smith]] — cosine 0.83
 - [[wally-szczerbiak|Wally Szczerbiak]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** PG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 27.1 pts · 1.5 reb · 3.0 ast · 0.8 stl per 100 (1997-98).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+2.3σ vs era)
+- Featured, high-usage scoring role (+1.4σ vs era)
+- Strong net on-court impact (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.8σ)
+- Offensive-glass activity well below era (−1.6σ)
+
+**Comparables:**
+
+- [[allan-houston|Allan Houston]] '03 (87% similar)
+- [[bojan-bogdanovic|Bojan Bogdanovic]] '20 (85% similar)
+- [[gordan-giricek|Gordan Giricek]] '06 (85% similar)
+- [[jared-mccain|Jared McCain]] '25 (85% similar)
+- [[steven-smith|Steven Smith]] '99 (83% similar)
+- [[wally-szczerbiak|Wally Szczerbiak]] '07 (83% similar)
+
+**Career shape:** Charted 1 season (1997-98). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

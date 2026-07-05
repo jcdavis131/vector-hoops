@@ -39,6 +39,33 @@ Closest career shapes in the era-normalized vector space:
 - [[svi-mykhailiuk|Svi Mykhailiuk]] — cosine 0.91
 - [[nick-smith-jr|Nick Smith Jr.]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 13.2 pts · 3.7 reb · 3.7 ast · 1.2 stl per 100 (2008-09).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+1.9σ vs era)
+- High-volume three-point shooter (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.6σ)
+- Rim pressure (free-throw generation) well below era (−1.5σ)
+
+**Comparables:**
+
+- [[troy-daniels|Troy Daniels]] '15 (93% similar)
+- [[ben-mclemore|Ben McLemore]] '22 (92% similar)
+- [[quincy-douby|Quincy Douby]] '08 (91% similar)
+- [[a-j-guyton|A.J. Guyton]] '02 (91% similar)
+- [[svi-mykhailiuk|Svi Mykhailiuk]] '24 (91% similar)
+- [[nick-smith-jr|Nick Smith Jr.]] '25 (90% similar)
+
+**Career shape:** Charted 6 seasons (2002-03–2008-09). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

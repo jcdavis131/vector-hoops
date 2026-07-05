@@ -34,6 +34,31 @@ Closest career shapes in the era-normalized vector space:
 - [[ricky-ledo|Ricky Ledo]] — cosine 0.72
 - [[ike-austin|Ike Austin]] — cosine 0.71
 
+## Scouting report
+
+**Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 17.6 pts · 12.2 reb · 2.8 ast · 1.3 stl per 100 (2001-02).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.3σ)
+
+**Comparables:**
+
+- [[loren-meyer|Loren Meyer]] '97 (78% similar)
+- [[sean-may|Sean May]] '09 (76% similar)
+- [[zarko-cabarkapa|Zarko Cabarkapa]] '04 (76% similar)
+- [[damir-markota|Damir Markota]] '07 (74% similar)
+- [[ricky-ledo|Ricky Ledo]] '15 (72% similar)
+- [[ike-austin|Ike Austin]] '02 (71% similar)
+
+**Career shape:** Charted 1 season (2001-02). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

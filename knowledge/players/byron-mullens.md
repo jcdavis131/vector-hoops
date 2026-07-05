@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[oleksiy-pecherov|Oleksiy Pecherov]] — cosine 0.77
 - [[charlie-villanueva|Charlie Villanueva]] — cosine 0.76
 
+## Scouting report
+
+**Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 21.8 pts · 10.7 reb · 1.6 ast · 1.7 stl per 100 (2013-14).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.7σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.1σ)
+- Free-throw touch well below era (−1.7σ)
+
+**Comparables:**
+
+- [[trey-thompkins|Trey Thompkins]] '12 (92% similar)
+- [[pat-burke|Pat Burke]] '07 (86% similar)
+- [[andrew-nicholson|Andrew Nicholson]] '17 (78% similar)
+- [[laphonso-ellis|LaPhonso Ellis]] '97 (77% similar)
+- [[oleksiy-pecherov|Oleksiy Pecherov]] '09 (77% similar)
+- [[charlie-villanueva|Charlie Villanueva]] '14 (76% similar)
+
+**Career shape:** Charted 3 seasons (2011-12–2013-14). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -37,6 +37,32 @@ Closest career shapes in the era-normalized vector space:
 - [[junior-harrington|Junior Harrington]] — cosine 0.89
 - [[orien-greene|Orien Greene]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** SG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 10.7 pts · 5.7 reb · 5.5 ast · 1.5 stl per 100 (1999-00).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.9σ)
+- Finishing efficiency well below era (−1.5σ)
+
+**Comparables:**
+
+- [[diante-garrett|Diante Garrett]] '13 (92% similar)
+- [[daishen-nix|Daishen Nix]] '22 (92% similar)
+- [[mardy-collins|Mardy Collins]] '10 (91% similar)
+- [[chris-garner|Chris Garner]] '98 (90% similar)
+- [[junior-harrington|Junior Harrington]] '03 (89% similar)
+- [[orien-greene|Orien Greene]] '07 (89% similar)
+
+**Career shape:** Charted 4 seasons (1999-00–2005-06). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

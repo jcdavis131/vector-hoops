@@ -43,6 +43,34 @@ Closest career shapes in the era-normalized vector space:
 - [[p-j-brown|P.J. Brown]] — cosine 0.90
 - [[cheick-diallo|Cheick Diallo]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** PF · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 19.3 pts · 16.5 reb · 2.4 ast · 1.2 blk per 100 (1998-99).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+1.7σ vs era)
+- Strong presence on the defensive glass (+1.7σ vs era)
+- Strong net on-court impact (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.4σ)
+- Three-point accuracy well below era (−1.1σ)
+
+**Comparables:**
+
+- [[clar-weatherspoon|Clar. Weatherspoon]] '03 (94% similar)
+- [[jeff-ayres|Jeff Ayres]] '16 (92% similar)
+- [[udonis-haslem|Udonis Haslem]] '13 (91% similar)
+- [[aron-baynes|Aron Baynes]] '17 (90% similar)
+- [[p-j-brown|P.J. Brown]] '08 (90% similar)
+- [[cheick-diallo|Cheick Diallo]] '17 (90% similar)
+
+**Career shape:** Charted 10 seasons (1996-97–2005-06). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

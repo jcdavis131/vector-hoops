@@ -43,6 +43,34 @@ Closest career shapes in the era-normalized vector space:
 - [[timofey-mozgov|Timofey Mozgov]] — cosine 0.91
 - [[jake-tsakalidis|Jake Tsakalidis]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 23.4 pts · 11.5 reb · 1.7 ast · 3.2 blk per 100 (1999-00).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+3.3σ vs era)
+- Strong net on-court impact (+2.2σ vs era)
+- Elite rim protection (+1.9σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.3σ)
+- Ball-hawking activity well below era (−1.1σ)
+
+**Comparables:**
+
+- [[jeff-ayres|Jeff Ayres]] '16 (93% similar)
+- [[aaron-williams|Aaron Williams]] '05 (92% similar)
+- [[ryan-kalkbrenner|Ryan Kalkbrenner]] '26 (92% similar)
+- [[jericho-sims|Jericho Sims]] '22 (91% similar)
+- [[timofey-mozgov|Timofey Mozgov]] '13 (91% similar)
+- [[jake-tsakalidis|Jake Tsakalidis]] '06 (90% similar)
+
+**Career shape:** Charted 10 seasons (1999-00–2009-10). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

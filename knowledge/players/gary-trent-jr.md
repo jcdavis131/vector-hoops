@@ -40,6 +40,33 @@ Closest career shapes in the era-normalized vector space:
 - [[devin-vassell|Devin Vassell]] — cosine 0.91
 - [[anthony-morrow|Anthony Morrow]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 18.5 pts · 2.4 reb · 2.8 ast · 1.2 stl per 100 (2025-26).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.4σ vs era)
+- Rarely turns the ball over (−1.2σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.8σ)
+- On-court net impact well below era (−1.5σ)
+
+**Comparables:**
+
+- [[terrence-ross|Terrence Ross]] '19 (94% similar)
+- [[jodie-meeks|Jodie Meeks]] '12 (92% similar)
+- [[morris-peterson|Morris Peterson]] '10 (92% similar)
+- [[langston-galloway|Langston Galloway]] '18 (91% similar)
+- [[devin-vassell|Devin Vassell]] '23 (91% similar)
+- [[anthony-morrow|Anthony Morrow]] '17 (90% similar)
+
+**Career shape:** Charted 7 seasons (2019-20–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

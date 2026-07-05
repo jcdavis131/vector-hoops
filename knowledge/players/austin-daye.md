@@ -39,6 +39,33 @@ Closest career shapes in the era-normalized vector space:
 - [[jumaine-jones|Jumaine Jones]] — cosine 0.82
 - [[donte-greene|Donte Greene]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 21.6 pts · 8.8 reb · 2.6 ast · 1.3 stl per 100 (2013-14).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.3σ vs era)
+- Heavy shot volume, focal scoring option (+1.4σ vs era)
+- Rarely turns the ball over (−1.3σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.4σ)
+
+**Comparables:**
+
+- [[brian-cook|Brian Cook]] '09 (86% similar)
+- [[mirza-teletovic|Mirza Teletovic]] '17 (84% similar)
+- [[bostjan-nachbar|Bostjan Nachbar]] '04 (83% similar)
+- [[pj-hairston|PJ Hairston]] '15 (82% similar)
+- [[jumaine-jones|Jumaine Jones]] '07 (82% similar)
+- [[donte-greene|Donte Greene]] '09 (81% similar)
+
+**Career shape:** Charted 6 seasons (2009-10–2014-15). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

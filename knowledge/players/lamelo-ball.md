@@ -39,6 +39,33 @@ Closest career shapes in the era-normalized vector space:
 - [[bones-hyland|Bones Hyland]] — cosine 0.89
 - [[stephen-curry|Stephen Curry]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 37.3 pts · 7.3 reb · 10.9 ast · 1.7 stl per 100 (2024-25).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+3.2σ vs era)
+- High-volume three-point shooter (+2.6σ vs era)
+- Featured, high-usage scoring role (+2.5σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.6σ)
+
+**Comparables:**
+
+- [[d-angelo-russell|D'Angelo Russell]] '19 (94% similar)
+- [[cade-cunningham|Cade Cunningham]] '26 (91% similar)
+- [[tyreke-evans|Tyreke Evans]] '16 (90% similar)
+- [[gilbert-arenas|Gilbert Arenas]] '06 (90% similar)
+- [[bones-hyland|Bones Hyland]] '25 (89% similar)
+- [[stephen-curry|Stephen Curry]] '16 (88% similar)
+
+**Career shape:** Charted 6 seasons (2020-21–2025-26). Consistent Scoring Volume + Shot Volume profile across his career.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

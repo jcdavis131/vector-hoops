@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[michael-curry|Michael Curry]] — cosine 0.77
 - [[glenn-robinson-iii|Glenn Robinson III]] — cosine 0.77
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 19.8 pts · 7.2 reb · 3.1 ast · 1.3 stl per 100 (1996-97).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+1.3σ vs era)
+- Rarely turns the ball over (−1.2σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[doug-west|Doug West]] '98 (83% similar)
+- [[ben-sheppard|Ben Sheppard]] '24 (80% similar)
+- [[christian-braun|Christian Braun]] '25 (78% similar)
+- [[tristan-da-silva|Tristan da Silva]] '25 (77% similar)
+- [[michael-curry|Michael Curry]] '05 (77% similar)
+- [[glenn-robinson-iii|Glenn Robinson III]] '21 (77% similar)
+
+**Career shape:** Charted 3 seasons (1996-97–1998-99). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

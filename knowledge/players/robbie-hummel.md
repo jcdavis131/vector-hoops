@@ -35,6 +35,33 @@ Closest career shapes in the era-normalized vector space:
 - [[reggie-bullock-jr|Reggie Bullock Jr.]] — cosine 0.88
 - [[sterling-brown|Sterling Brown]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 13.5 pts · 9.8 reb · 1.7 ast · 1.2 stl per 100 (2013-14).
+
+**Strengths:**
+
+- Rarely turns the ball over (−2.2σ vs era)
+- Reliable touch from the free-throw line (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.4σ)
+- Finishing efficiency well below era (−1.0σ)
+
+**Comparables:**
+
+- [[tristan-da-silva|Tristan da Silva]] '25 (91% similar)
+- [[ben-sheppard|Ben Sheppard]] '24 (89% similar)
+- [[tony-snell|Tony Snell]] '21 (88% similar)
+- [[pat-connaughton|Pat Connaughton]] '16 (88% similar)
+- [[reggie-bullock-jr|Reggie Bullock Jr.]] '24 (88% similar)
+- [[sterling-brown|Sterling Brown]] '22 (88% similar)
+
+**Career shape:** Charted 2 seasons (2013-14–2014-15). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

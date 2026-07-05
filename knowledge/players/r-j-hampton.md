@@ -36,6 +36,31 @@ Closest career shapes in the era-normalized vector space:
 - [[justin-robinson|Justin Robinson]] — cosine 0.83
 - [[frank-brickowski|Frank Brickowski]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 16.5 pts · 6.6 reb · 5.3 ast · 1.4 stl per 100 (2021-22).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.0σ)
+
+**Comparables:**
+
+- [[lazar-hayward|Lazar Hayward]] '12 (86% similar)
+- [[keljin-blevins|Keljin Blevins]] '22 (86% similar)
+- [[bubba-wells|Bubba Wells]] '98 (84% similar)
+- [[manny-harris|Manny Harris]] '11 (83% similar)
+- [[justin-robinson|Justin Robinson]] '22 (83% similar)
+- [[frank-brickowski|Frank Brickowski]] '97 (82% similar)
+
+**Career shape:** Charted 3 seasons (2020-21–2022-23). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[eric-mobley|Eric Mobley]] — cosine 0.73
 - [[andre-jackson-jr|Andre Jackson Jr.]] — cosine 0.72
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass + Defensive Glass. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 9.1 pts · 5.1 reb · 4.4 ast · 0.9 stl per 100 (2013-14).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.6σ)
+- Scoring load well below era (−1.6σ)
+
+**Comparables:**
+
+- [[sidy-cissoko|Sidy Cissoko]] '25 (83% similar)
+- [[dickey-simpkins|Dickey Simpkins]] '00 (78% similar)
+- [[javaris-crittenton|Javaris Crittenton]] '09 (77% similar)
+- [[ha-ha|Ha Ha]] '06 (73% similar)
+- [[eric-mobley|Eric Mobley]] '97 (73% similar)
+- [[andre-jackson-jr|Andre Jackson Jr.]] '25 (72% similar)
+
+**Career shape:** Charted 2 seasons (2012-13–2013-14). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

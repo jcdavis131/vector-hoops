@@ -45,6 +45,32 @@ Closest career shapes in the era-normalized vector space:
 - [[mitchell-butler|Mitchell Butler]] — cosine 0.89
 - [[juaquin-hawkins|Juaquin Hawkins]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 7.2 pts · 5.3 reb · 2.9 ast · 2.1 stl per 100 (1998-99).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.8σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.6σ)
+- Scoring load well below era (−2.1σ)
+
+**Comparables:**
+
+- [[jud-buechler|Jud Buechler]] '00 (93% similar)
+- [[rodney-mcgruder|Rodney McGruder]] '18 (92% similar)
+- [[keith-askins|Keith Askins]] '99 (91% similar)
+- [[dean-wade|Dean Wade]] '25 (91% similar)
+- [[mitchell-butler|Mitchell Butler]] '98 (89% similar)
+- [[juaquin-hawkins|Juaquin Hawkins]] '03 (89% similar)
+
+**Career shape:** Charted 12 seasons (1997-98–2008-09). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

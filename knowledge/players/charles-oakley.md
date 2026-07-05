@@ -40,6 +40,32 @@ Closest career shapes in the era-normalized vector space:
 - [[derrick-mckey|Derrick McKey]] — cosine 0.72
 - [[francisco-elson|Francisco Elson]] — cosine 0.71
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 8.3 pts · 13.2 reb · 4.4 ast · 1.9 stl per 100 (2001-02).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+1.7σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.9σ)
+- Scoring load well below era (−1.8σ)
+
+**Comparables:**
+
+- [[josh-hart|Josh Hart]] '23 (78% similar)
+- [[al-farouq-aminu|Al-Farouq Aminu]] '20 (75% similar)
+- [[grant-long|Grant Long]] '03 (74% similar)
+- [[dennis-rodman|Dennis Rodman]] '97 (73% similar)
+- [[derrick-mckey|Derrick McKey]] '02 (72% similar)
+- [[francisco-elson|Francisco Elson]] '07 (71% similar)
+
+**Career shape:** Charted 7 seasons (1996-97–2002-03). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

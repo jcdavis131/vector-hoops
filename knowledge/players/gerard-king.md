@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[buck-williams|Buck Williams]] — cosine 0.87
 - [[anzejs-pasecniks|Anžejs Pasečņiks]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass + Defensive Glass. Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 16.8 pts · 10.2 reb · 2.9 ast · 1.5 stl per 100 (1998-99).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+2.9σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.4σ)
+- Three-point accuracy well below era (−1.1σ)
+
+**Comparables:**
+
+- [[cristiano-felicio|Cristiano Felicio]] '21 (94% similar)
+- [[tom-hammonds|Tom Hammonds]] '00 (89% similar)
+- [[semih-erden|Semih Erden]] '12 (88% similar)
+- [[greg-smith|Greg Smith]] '16 (87% similar)
+- [[buck-williams|Buck Williams]] '97 (87% similar)
+- [[anzejs-pasecniks|Anžejs Pasečņiks]] '20 (87% similar)
+
+**Career shape:** Charted 3 seasons (1998-99–2000-01). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

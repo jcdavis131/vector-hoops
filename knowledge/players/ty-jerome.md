@@ -38,6 +38,33 @@ Closest career shapes in the era-normalized vector space:
 - [[shammond-williams|Shammond Williams]] — cosine 0.92
 - [[yogi-ferrell|Yogi Ferrell]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** SG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 29.7 pts · 5.9 reb · 8.0 ast · 2.6 stl per 100 (2024-25).
+
+**Strengths:**
+
+- Strong net on-court impact (+1.6σ vs era)
+- Active hands, disrupts passing lanes (+1.5σ vs era)
+- Featured, high-usage scoring role (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Rim-protection impact well below era (−1.1σ)
+
+**Comparables:**
+
+- [[anthony-goldwire|Anthony Goldwire]] '01 (94% similar)
+- [[luke-ridnour|Luke Ridnour]] '06 (93% similar)
+- [[mike-james|Mike James]] '06 (93% similar)
+- [[cameron-payne|Cameron Payne]] '26 (92% similar)
+- [[shammond-williams|Shammond Williams]] '04 (92% similar)
+- [[yogi-ferrell|Yogi Ferrell]] '19 (92% similar)
+
+**Career shape:** Charted 5 seasons (2019-20–2024-25). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

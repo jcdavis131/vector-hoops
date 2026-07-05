@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[britton-johnsen|Britton Johnsen]] — cosine 0.86
 - [[r-j-hampton|R.J. Hampton]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 13.0 pts · 6.2 reb · 2.6 ast · 1.8 stl per 100 (2021-22).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−4.0σ)
+- Finishing efficiency well below era (−1.9σ)
+
+**Comparables:**
+
+- [[justin-robinson|Justin Robinson]] '22 (92% similar)
+- [[lazar-hayward|Lazar Hayward]] '12 (89% similar)
+- [[jamison-brewer|Jamison Brewer]] '05 (88% similar)
+- [[sekou-doumbouya|Sekou Doumbouya]] '20 (87% similar)
+- [[britton-johnsen|Britton Johnsen]] '04 (86% similar)
+- [[r-j-hampton|R.J. Hampton]] '22 (86% similar)
+
+**Career shape:** Charted 1 season (2021-22). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

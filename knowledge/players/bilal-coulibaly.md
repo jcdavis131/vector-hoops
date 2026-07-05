@@ -36,6 +36,31 @@ Closest career shapes in the era-normalized vector space:
 - [[briante-weber|Briante Weber]] — cosine 0.77
 - [[jahmai-mashack|Jahmai Mashack]] — cosine 0.77
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 20.6 pts · 7.6 reb · 4.5 ast · 2.4 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.2σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.6σ)
+
+**Comparables:**
+
+- [[greg-brown-iii|Greg Brown III]] '22 (91% similar)
+- [[quinndary-weatherspoon|Quinndary Weatherspoon]] '21 (80% similar)
+- [[r-j-hampton|R.J. Hampton]] '22 (78% similar)
+- [[bubba-wells|Bubba Wells]] '98 (78% similar)
+- [[briante-weber|Briante Weber]] '18 (77% similar)
+- [[jahmai-mashack|Jahmai Mashack]] '26 (77% similar)
+
+**Career shape:** Charted 3 seasons (2023-24–2025-26). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

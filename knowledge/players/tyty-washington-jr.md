@@ -35,6 +35,33 @@ Closest career shapes in the era-normalized vector space:
 - [[antonio-burks|Antonio Burks]] — cosine 0.81
 - [[dalen-terry|Dalen Terry]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 12.0 pts · 3.5 reb · 9.7 ast · 3.4 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.7σ vs era)
+- High-volume table-setter (+1.9σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−4.0σ)
+- On-court net impact well below era (−2.9σ)
+
+**Comparables:**
+
+- [[dj-strawberry|DJ Strawberry]] '08 (87% similar)
+- [[chris-garner|Chris Garner]] '98 (86% similar)
+- [[omar-cook|Omar Cook]] '04 (85% similar)
+- [[jahmai-mashack|Jahmai Mashack]] '26 (83% similar)
+- [[antonio-burks|Antonio Burks]] '06 (81% similar)
+- [[dalen-terry|Dalen Terry]] '26 (81% similar)
+
+**Career shape:** Charted 2 seasons (2022-23–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Playmaking + Steals identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -42,6 +42,32 @@ Closest career shapes in the era-normalized vector space:
 - [[maurice-evans|Maurice Evans]] — cosine 0.91
 - [[tyler-johnson|Tyler Johnson]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 14.3 pts · 3.9 reb · 3.1 ast · 3.1 stl per 100 (1997-98).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.9σ vs era)
+- Rarely turns the ball over (−1.5σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.4σ)
+
+**Comparables:**
+
+- [[kentavious-caldwell-pope|Kentavious Caldwell-Pope]] '24 (94% similar)
+- [[langston-galloway|Langston Galloway]] '18 (93% similar)
+- [[wesley-matthews|Wesley Matthews]] '20 (92% similar)
+- [[courtney-lee|Courtney Lee]] '20 (92% similar)
+- [[maurice-evans|Maurice Evans]] '11 (91% similar)
+- [[tyler-johnson|Tyler Johnson]] '21 (90% similar)
+
+**Career shape:** Charted 9 seasons (1996-97–2004-05). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

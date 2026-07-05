@@ -40,6 +40,32 @@ Closest career shapes in the era-normalized vector space:
 - [[cody-martin|Cody Martin]] — cosine 0.78
 - [[dillon-jones|Dillon Jones]] — cosine 0.78
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 16.1 pts · 10.7 reb · 4.5 ast · 1.4 stl per 100 (2020-21).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.7σ)
+- Finishing efficiency well below era (−1.5σ)
+
+**Comparables:**
+
+- [[kyle-collinsworth|Kyle Collinsworth]] '18 (84% similar)
+- [[omar-cook|Omar Cook]] '04 (80% similar)
+- [[daniel-hamilton|Daniel Hamilton]] '19 (80% similar)
+- [[nate-wolters|Nate Wolters]] '15 (79% similar)
+- [[cody-martin|Cody Martin]] '21 (78% similar)
+- [[dillon-jones|Dillon Jones]] '25 (78% similar)
+
+**Career shape:** Charted 7 seasons (2015-16–2022-23). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

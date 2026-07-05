@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[darrin-hancock|Darrin Hancock]] — cosine 0.84
 - [[nigel-hayes-davis|Nigel Hayes-Davis]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass + Defensive Glass. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 10.0 pts · 6.7 reb · 3.3 ast · 2.8 stl per 100 (2023-24).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.3σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−4.0σ)
+- Three-point accuracy well below era (−2.7σ)
+
+**Comparables:**
+
+- [[deandre-bembry|DeAndre' Bembry]] '17 (86% similar)
+- [[cody-martin|Cody Martin]] '21 (86% similar)
+- [[jahmai-mashack|Jahmai Mashack]] '26 (85% similar)
+- [[deandre-liggins|DeAndre Liggins]] '12 (84% similar)
+- [[darrin-hancock|Darrin Hancock]] '97 (84% similar)
+- [[nigel-hayes-davis|Nigel Hayes-Davis]] '26 (83% similar)
+
+**Career shape:** Charted 3 seasons (2022-23–2024-25). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

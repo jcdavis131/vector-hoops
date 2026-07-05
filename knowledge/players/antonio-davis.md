@@ -43,6 +43,34 @@ Closest career shapes in the era-normalized vector space:
 - [[jason-thompson|Jason Thompson]] — cosine 0.90
 - [[lonny-baxter|Lonny Baxter]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 20.4 pts · 15.0 reb · 2.0 ast · 2.9 blk per 100 (2000-01).
+
+**Strengths:**
+
+- Elite rim protection (+1.6σ vs era)
+- Relentless on the offensive glass (+1.5σ vs era)
+- Draws contact, gets to the line often (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−2.0σ)
+- Three-point accuracy well below era (−1.4σ)
+
+**Comparables:**
+
+- [[tyler-zeller|Tyler Zeller]] '17 (91% similar)
+- [[jeff-adrien|Jeff Adrien]] '15 (91% similar)
+- [[todd-fuller|Todd Fuller]] '98 (90% similar)
+- [[kris-humphries|Kris Humphries]] '11 (90% similar)
+- [[jason-thompson|Jason Thompson]] '15 (90% similar)
+- [[lonny-baxter|Lonny Baxter]] '06 (90% similar)
+
+**Career shape:** Charted 10 seasons (1996-97–2005-06). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

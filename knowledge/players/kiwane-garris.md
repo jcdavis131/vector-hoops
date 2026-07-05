@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[bub-carrington|Bub Carrington]] — cosine 0.85
 - [[reece-gaines|Reece Gaines]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** Unlisted · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 14.8 pts · 4.2 reb · 6.1 ast · 1.5 stl per 100 (1997-98).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.9σ)
+- Finishing efficiency well below era (−1.9σ)
+
+**Comparables:**
+
+- [[chasson-randle|Chasson Randle]] '21 (90% similar)
+- [[marlon-garnett|Marlon Garnett]] '99 (87% similar)
+- [[kyle-guy|Kyle Guy]] '22 (86% similar)
+- [[elie-okobo|Elie Okobo]] '19 (85% similar)
+- [[bub-carrington|Bub Carrington]] '26 (85% similar)
+- [[reece-gaines|Reece Gaines]] '05 (85% similar)
+
+**Career shape:** Charted 1 season (1997-98). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

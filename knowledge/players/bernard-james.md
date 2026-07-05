@@ -35,6 +35,34 @@ Closest career shapes in the era-normalized vector space:
 - [[bismack-biyombo|Bismack Biyombo]] — cosine 0.94
 - [[brian-skinner|Brian Skinner]] — cosine 0.94
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 13.8 pts · 13.8 reb · 0.6 ast · 4.0 blk per 100 (2012-13).
+
+**Strengths:**
+
+- Elite rim protection (+2.8σ vs era)
+- Relentless on the offensive glass (+1.7σ vs era)
+- Efficient finisher inside the arc (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.5σ)
+- Table-setting role well below era (−1.3σ)
+
+**Comparables:**
+
+- [[joel-przybilla|Joel Przybilla]] '01 (96% similar)
+- [[brendan-haywood|Brendan Haywood]] '15 (95% similar)
+- [[hasheem-thabeet|Hasheem Thabeet]] '12 (95% similar)
+- [[adonal-foyle|Adonal Foyle]] '07 (95% similar)
+- [[bismack-biyombo|Bismack Biyombo]] '23 (94% similar)
+- [[brian-skinner|Brian Skinner]] '08 (94% similar)
+
+**Career shape:** Charted 2 seasons (2012-13–2013-14). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

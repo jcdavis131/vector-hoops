@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[diante-garrett|Diante Garrett]] — cosine 0.90
 - [[vonteego-cummings|Vonteego Cummings]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** SG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 16.5 pts · 4.8 reb · 5.9 ast · 2.4 stl per 100 (2024-25).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.2σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.5σ)
+- Finishing efficiency well below era (−2.0σ)
+
+**Comparables:**
+
+- [[ky-bowman|Ky Bowman]] '20 (93% similar)
+- [[vincent-yarbrough|Vincent Yarbrough]] '03 (91% similar)
+- [[cory-carr|Cory Carr]] '99 (90% similar)
+- [[sean-singletary|Sean Singletary]] '09 (90% similar)
+- [[diante-garrett|Diante Garrett]] '13 (90% similar)
+- [[vonteego-cummings|Vonteego Cummings]] '01 (89% similar)
+
+**Career shape:** Charted 2 seasons (2024-25–2025-26). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[erick-dampier|Erick Dampier]] — cosine 0.92
 - [[theo-ratliff|Theo Ratliff]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 16.3 pts · 15.7 reb · 0.7 ast · 3.9 blk per 100 (2025-26).
+
+**Strengths:**
+
+- Elite rim protection (+3.6σ vs era)
+- Relentless on the offensive glass (+2.0σ vs era)
+- Strong presence on the defensive glass (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.6σ)
+- Table-setting role well below era (−1.6σ)
+
+**Comparables:**
+
+- [[greg-ostertag|Greg Ostertag]] '99 (94% similar)
+- [[dikembe-mutombo|Dikembe Mutombo]] '00 (93% similar)
+- [[samuel-dalembert|Samuel Dalembert]] '13 (93% similar)
+- [[keon-clark|Keon Clark]] '01 (93% similar)
+- [[erick-dampier|Erick Dampier]] '97 (92% similar)
+- [[theo-ratliff|Theo Ratliff]] '09 (92% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

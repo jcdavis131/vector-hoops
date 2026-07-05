@@ -39,6 +39,34 @@ Closest career shapes in the era-normalized vector space:
 - [[samuel-dalembert|Samuel Dalembert]] — cosine 0.88
 - [[ivica-zubac|Ivica Zubac]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 24.1 pts · 17.2 reb · 2.6 ast · 2.8 blk per 100 (2014-15).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+1.9σ vs era)
+- Strong presence on the defensive glass (+1.9σ vs era)
+- Elite rim protection (+1.8σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.8σ)
+- Three-point volume well below era (−1.3σ)
+
+**Comparables:**
+
+- [[chimezie-metu|Chimezie Metu]] '20 (90% similar)
+- [[chris-kaman|Chris Kaman]] '08 (90% similar)
+- [[elton-brand|Elton Brand]] '07 (89% similar)
+- [[emeka-okafor|Emeka Okafor]] '18 (88% similar)
+- [[samuel-dalembert|Samuel Dalembert]] '13 (88% similar)
+- [[ivica-zubac|Ivica Zubac]] '20 (87% similar)
+
+**Career shape:** Charted 6 seasons (2008-09–2016-17). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Rim Protection + Offensive Glass identity.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

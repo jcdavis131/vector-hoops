@@ -35,6 +35,34 @@ Closest career shapes in the era-normalized vector space:
 - [[steven-adams|Steven Adams]] — cosine 0.90
 - [[jarred-vanderbilt|Jarred Vanderbilt]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 10.4 pts · 15.7 reb · 1.4 ast · 2.3 stl per 100 (2014-15).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+1.9σ vs era)
+- Efficient finisher inside the arc (+1.6σ vs era)
+- Strong presence on the defensive glass (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−3.4σ)
+- Shot volume well below era (−1.9σ)
+
+**Comparables:**
+
+- [[gustavo-ayon|Gustavo Ayon]] '14 (93% similar)
+- [[sasha-kaun|Sasha Kaun]] '16 (92% similar)
+- [[andrew-declercq|Andrew DeClercq]] '01 (92% similar)
+- [[marshall-plumlee|Marshall Plumlee]] '17 (90% similar)
+- [[steven-adams|Steven Adams]] '23 (90% similar)
+- [[jarred-vanderbilt|Jarred Vanderbilt]] '21 (90% similar)
+
+**Career shape:** Charted 2 seasons (2010-11–2014-15). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

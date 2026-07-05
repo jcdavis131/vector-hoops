@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[mike-smith|Mike Smith]] — cosine 0.80
 - [[khyri-thomas|Khyri Thomas]] — cosine 0.79
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 15.4 pts · 6.4 reb · 2.8 ast · 1.9 stl per 100 (2024-25).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.7σ vs era)
+- Rarely turns the ball over (−1.6σ vs era)
+- Heavy shot volume, focal scoring option (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.7σ)
+- Free-throw touch well below era (−2.1σ)
+
+**Comparables:**
+
+- [[thomas-gardner|Thomas Gardner]] '09 (93% similar)
+- [[nick-anderson|Nick Anderson]] '01 (83% similar)
+- [[cartier-martin|Cartier Martin]] '15 (81% similar)
+- [[matt-freije|Matt Freije]] '07 (81% similar)
+- [[mike-smith|Mike Smith]] '01 (80% similar)
+- [[khyri-thomas|Khyri Thomas]] '19 (79% similar)
+
+**Career shape:** Charted 1 season (2024-25). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

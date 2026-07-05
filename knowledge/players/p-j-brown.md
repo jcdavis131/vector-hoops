@@ -45,6 +45,33 @@ Closest career shapes in the era-normalized vector space:
 - [[lavoy-allen|Lavoy Allen]] — cosine 0.89
 - [[udonis-haslem|Udonis Haslem]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 9.8 pts · 17.1 reb · 2.5 ast · 2.0 blk per 100 (2007-08).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+2.6σ vs era)
+- Strong presence on the defensive glass (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.6σ)
+- Scoring load well below era (−1.5σ)
+
+**Comparables:**
+
+- [[joel-freeland|Joel Freeland]] '15 (92% similar)
+- [[clar-weatherspoon|Clar. Weatherspoon]] '03 (91% similar)
+- [[brian-grant|Brian Grant]] '99 (90% similar)
+- [[scot-pollard|Scot Pollard]] '03 (89% similar)
+- [[lavoy-allen|Lavoy Allen]] '17 (89% similar)
+- [[udonis-haslem|Udonis Haslem]] '13 (88% similar)
+
+**Career shape:** Charted 12 seasons (1996-97–2007-08). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

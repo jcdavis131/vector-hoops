@@ -39,6 +39,32 @@ Closest career shapes in the era-normalized vector space:
 - [[george-zidek|George Zidek]] — cosine 0.86
 - [[tony-massenburg|Tony Massenburg]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 15.3 pts · 11.6 reb · 2.8 ast · 1.6 blk per 100 (2006-07).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.7σ)
+- Ball-hawking activity well below era (−1.4σ)
+
+**Comparables:**
+
+- [[hanno-mottola|Hanno Mottola]] '01 (90% similar)
+- [[dragan-tarlac|Dragan Tarlac]] '01 (87% similar)
+- [[nathan-jawai|Nathan Jawai]] '10 (87% similar)
+- [[isaiah-hicks|Isaiah Hicks]] '18 (86% similar)
+- [[george-zidek|George Zidek]] '97 (86% similar)
+- [[tony-massenburg|Tony Massenburg]] '02 (85% similar)
+
+**Career shape:** Charted 6 seasons (2005-06–2010-11). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

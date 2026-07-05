@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[reggie-bullock-jr|Reggie Bullock Jr.]] — cosine 0.93
 - [[tony-snell|Tony Snell]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** Unlisted · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 17.3 pts · 5.6 reb · 2.4 ast · 1.1 stl per 100 (2018-19).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.7σ vs era)
+- Reliable touch from the free-throw line (+1.3σ vs era)
+- High-volume three-point shooter (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.1σ)
+
+**Comparables:**
+
+- [[allen-crabbe|Allen Crabbe]] '20 (95% similar)
+- [[caleb-houstan|Caleb Houstan]] '26 (94% similar)
+- [[wayne-ellington|Wayne Ellington]] '17 (94% similar)
+- [[aj-green|AJ Green]] '23 (93% similar)
+- [[reggie-bullock-jr|Reggie Bullock Jr.]] '24 (93% similar)
+- [[tony-snell|Tony Snell]] '21 (92% similar)
+
+**Career shape:** Charted 1 season (2018-19). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

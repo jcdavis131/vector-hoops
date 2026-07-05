@@ -38,6 +38,33 @@ Closest career shapes in the era-normalized vector space:
 - [[carlos-rogers|Carlos Rogers]] — cosine 0.85
 - [[zeke-nnaji|Zeke Nnaji]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 14.3 pts · 6.6 reb · 2.5 ast · 1.1 blk per 100 (2024-25).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.2σ vs era)
+- Efficient finisher inside the arc (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.3σ)
+- Ball-hawking activity well below era (−1.2σ)
+
+**Comparables:**
+
+- [[juwan-morgan|Juwan Morgan]] '21 (89% similar)
+- [[jakarr-sampson|JaKarr Sampson]] '18 (89% similar)
+- [[anthony-gill|Anthony Gill]] '22 (88% similar)
+- [[malik-hairston|Malik Hairston]] '10 (87% similar)
+- [[carlos-rogers|Carlos Rogers]] '01 (85% similar)
+- [[zeke-nnaji|Zeke Nnaji]] '24 (85% similar)
+
+**Career shape:** Charted 5 seasons (2020-21–2024-25). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

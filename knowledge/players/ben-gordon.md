@@ -44,6 +44,33 @@ Closest career shapes in the era-normalized vector space:
 - [[jordan-poole|Jordan Poole]] — cosine 0.94
 - [[zach-lavine|Zach LaVine]] — cosine 0.94
 
+## Scouting report
+
+**Play style:** SG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 30.9 pts · 5.4 reb · 4.1 ast · 1.3 stl per 100 (2004-05).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+2.4σ vs era)
+- Featured, high-usage scoring role (+2.1σ vs era)
+- High-volume three-point shooter (+1.8σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.9σ)
+
+**Comparables:**
+
+- [[jordan-clarkson|Jordan Clarkson]] '21 (95% similar)
+- [[latrell-sprewell|Latrell Sprewell]] '97 (95% similar)
+- [[jalen-rose|Jalen Rose]] '07 (95% similar)
+- [[jordan-crawford|Jordan Crawford]] '11 (94% similar)
+- [[jordan-poole|Jordan Poole]] '25 (94% similar)
+- [[zach-lavine|Zach LaVine]] '21 (94% similar)
+
+**Career shape:** Charted 11 seasons (2004-05–2014-15). Consistent Scoring Volume + Shot Volume profile across his career.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

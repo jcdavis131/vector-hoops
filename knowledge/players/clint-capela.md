@@ -44,6 +44,34 @@ Closest career shapes in the era-normalized vector space:
 - [[jakob-poeltl|Jakob Poeltl]] — cosine 0.94
 - [[antonio-mcdyess|Antonio McDyess]] — cosine 0.94
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 24.3 pts · 23.0 reb · 1.2 ast · 3.3 blk per 100 (2020-21).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+3.3σ vs era)
+- Strong presence on the defensive glass (+3.3σ vs era)
+- Elite rim protection (+2.5σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.8σ)
+- Three-point volume well below era (−1.8σ)
+
+**Comparables:**
+
+- [[derrick-favors|Derrick Favors]] '21 (98% similar)
+- [[emeka-okafor|Emeka Okafor]] '18 (96% similar)
+- [[kosta-koufos|Kosta Koufos]] '19 (94% similar)
+- [[nick-fazekas|Nick Fazekas]] '08 (94% similar)
+- [[jakob-poeltl|Jakob Poeltl]] '22 (94% similar)
+- [[antonio-mcdyess|Antonio McDyess]] '01 (94% similar)
+
+**Career shape:** Charted 11 seasons (2015-16–2025-26). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

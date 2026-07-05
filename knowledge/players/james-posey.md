@@ -45,6 +45,33 @@ Closest career shapes in the era-normalized vector space:
 - [[larry-robinson|Larry Robinson]] — cosine 0.88
 - [[sasha-vujacic|Sasha Vujacic]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 14.3 pts · 8.7 reb · 2.0 ast · 1.4 stl per 100 (2010-11).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.8σ vs era)
+- Rarely turns the ball over (−1.4σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.8σ)
+- Rim pressure (free-throw generation) well below era (−1.5σ)
+
+**Comparables:**
+
+- [[carlos-delfino|Carlos Delfino]] '13 (90% similar)
+- [[jae-crowder|Jae Crowder]] '22 (90% similar)
+- [[dan-majerle|Dan Majerle]] '02 (88% similar)
+- [[fred-hoiberg|Fred Hoiberg]] '05 (88% similar)
+- [[larry-robinson|Larry Robinson]] '01 (88% similar)
+- [[sasha-vujacic|Sasha Vujacic]] '05 (87% similar)
+
+**Career shape:** Charted 12 seasons (1999-00–2010-11). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -37,6 +37,33 @@ Closest career shapes in the era-normalized vector space:
 - [[pete-chilcutt|Pete Chilcutt]] — cosine 0.88
 - [[harvey-grant|Harvey Grant]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 12.9 pts · 8.8 reb · 3.2 ast · 1.5 stl per 100 (2024-25).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+1.4σ vs era)
+- Rarely turns the ball over (−1.3σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.5σ)
+- Shot volume well below era (−1.3σ)
+
+**Comparables:**
+
+- [[isaiah-livers|Isaiah Livers]] '24 (95% similar)
+- [[ira-newble|Ira Newble]] '01 (91% similar)
+- [[kyle-singler|Kyle Singler]] '17 (89% similar)
+- [[wesley-johnson|Wesley Johnson]] '17 (89% similar)
+- [[pete-chilcutt|Pete Chilcutt]] '00 (88% similar)
+- [[harvey-grant|Harvey Grant]] '97 (88% similar)
+
+**Career shape:** Charted 4 seasons (2021-22–2024-25). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

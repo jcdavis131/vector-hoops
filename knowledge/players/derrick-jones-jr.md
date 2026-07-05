@@ -43,6 +43,34 @@ Closest career shapes in the era-normalized vector space:
 - [[joel-anthony|Joel Anthony]] — cosine 0.80
 - [[dominick-barlow|Dominick Barlow]] — cosine 0.80
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass + Defensive Glass. Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 12.3 pts · 7.7 reb · 1.8 ast · 2.6 blk per 100 (2017-18).
+
+**Strengths:**
+
+- Elite rim protection (+1.8σ vs era)
+- Relentless on the offensive glass (+1.4σ vs era)
+- Rarely turns the ball over (−1.2σ vs era)
+
+**Areas of concern:**
+
+- Scoring load well below era (−1.2σ)
+- Defensive rebounding well below era (−1.2σ)
+
+**Comparables:**
+
+- [[nae-qwan-tomlin|Nae'Qwan Tomlin]] '26 (84% similar)
+- [[david-nwaba|David Nwaba]] '17 (82% similar)
+- [[zeke-nnaji|Zeke Nnaji]] '24 (82% similar)
+- [[luc-mbah-a-moute|Luc Mbah a Moute]] '16 (80% similar)
+- [[joel-anthony|Joel Anthony]] '16 (80% similar)
+- [[dominick-barlow|Dominick Barlow]] '23 (80% similar)
+
+**Career shape:** Charted 10 seasons (2016-17–2025-26). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

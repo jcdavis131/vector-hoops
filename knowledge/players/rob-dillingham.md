@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[mike-taylor|Mike Taylor]] — cosine 0.85
 - [[mustafa-shakur|Mustafa Shakur]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 20.0 pts · 4.6 reb · 8.9 ast · 1.8 stl per 100 (2024-25).
+
+**Strengths:**
+
+- High-volume table-setter (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.1σ)
+- Free-throw touch well below era (−1.8σ)
+
+**Comparables:**
+
+- [[darius-washington|Darius Washington]] '08 (87% similar)
+- [[lance-stephenson|Lance Stephenson]] '12 (87% similar)
+- [[sergio-rodriguez|Sergio Rodriguez]] '09 (86% similar)
+- [[kenny-satterfield|Kenny Satterfield]] '02 (85% similar)
+- [[mike-taylor|Mike Taylor]] '09 (85% similar)
+- [[mustafa-shakur|Mustafa Shakur]] '11 (84% similar)
+
+**Career shape:** Charted 2 seasons (2024-25–2025-26). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

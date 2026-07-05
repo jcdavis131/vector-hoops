@@ -42,6 +42,32 @@ Closest career shapes in the era-normalized vector space:
 - [[pat-spencer|Pat Spencer]] — cosine 0.88
 - [[blake-wesley|Blake Wesley]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 7.9 pts · 7.3 reb · 15.4 ast · 2.2 stl per 100 (2024-25).
+
+**Strengths:**
+
+- High-volume table-setter (+4.0σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.8σ)
+- Scoring load well below era (−1.9σ)
+
+**Comparables:**
+
+- [[rajon-rondo|Rajon Rondo]] '11 (91% similar)
+- [[ish-smith|Ish Smith]] '23 (89% similar)
+- [[isaiah-collier|Isaiah Collier]] '26 (89% similar)
+- [[dennis-smith-jr|Dennis Smith Jr.]] '20 (88% similar)
+- [[pat-spencer|Pat Spencer]] '25 (88% similar)
+- [[blake-wesley|Blake Wesley]] '23 (87% similar)
+
+**Career shape:** Charted 9 seasons (2014-15–2024-25). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

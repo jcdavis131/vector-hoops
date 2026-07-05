@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[day-ron-sharpe|Day'Ron Sharpe]] — cosine 0.89
 - [[greg-oden|Greg Oden]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 19.8 pts · 17.8 reb · 2.1 ast · 2.8 blk per 100 (2024-25).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+3.1σ vs era)
+- Elite rim protection (+2.1σ vs era)
+- Efficient finisher inside the arc (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Three-point volume well below era (−1.5σ)
+- Table-setting role well below era (−1.1σ)
+
+**Comparables:**
+
+- [[donovan-clingan|Donovan Clingan]] '25 (94% similar)
+- [[tony-bradley|Tony Bradley]] '20 (91% similar)
+- [[daniel-theis|Daniel Theis]] '20 (90% similar)
+- [[amir-johnson|Amir Johnson]] '08 (89% similar)
+- [[day-ron-sharpe|Day'Ron Sharpe]] '24 (89% similar)
+- [[greg-oden|Greg Oden]] '10 (88% similar)
+
+**Career shape:** Charted 1 season (2024-25). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

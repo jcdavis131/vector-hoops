@@ -41,6 +41,32 @@ Closest career shapes in the era-normalized vector space:
 - [[primoz-brezec|Primoz Brezec]] — cosine 0.89
 - [[bismack-biyombo|Bismack Biyombo]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 9.3 pts · 10.1 reb · 1.9 ast · 1.5 blk per 100 (2010-11).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−2.0σ)
+- Scoring load well below era (−1.6σ)
+
+**Comparables:**
+
+- [[anzejs-pasecniks|Anžejs Pasečņiks]] '20 (92% similar)
+- [[trey-jemison-iii|Trey Jemison III]] '25 (91% similar)
+- [[jeremy-tyler|Jeremy Tyler]] '14 (90% similar)
+- [[jake-tsakalidis|Jake Tsakalidis]] '06 (89% similar)
+- [[primoz-brezec|Primoz Brezec]] '10 (89% similar)
+- [[bismack-biyombo|Bismack Biyombo]] '23 (87% similar)
+
+**Career shape:** Charted 8 seasons (2002-03–2010-11). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

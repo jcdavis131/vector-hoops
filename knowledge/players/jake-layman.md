@@ -39,6 +39,32 @@ Closest career shapes in the era-normalized vector space:
 - [[ochai-agbaji|Ochai Agbaji]] — cosine 0.84
 - [[micah-peavy|Micah Peavy]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 10.0 pts · 4.7 reb · 3.2 ast · 1.8 stl per 100 (2017-18).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.1σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.2σ)
+- Scoring load well below era (−1.6σ)
+
+**Comparables:**
+
+- [[julian-phillips|Julian Phillips]] '26 (87% similar)
+- [[terrance-ferguson|Terrance Ferguson]] '20 (87% similar)
+- [[rashad-vaughn|Rashad Vaughn]] '17 (87% similar)
+- [[khyri-thomas|Khyri Thomas]] '19 (85% similar)
+- [[ochai-agbaji|Ochai Agbaji]] '23 (84% similar)
+- [[micah-peavy|Micah Peavy]] '26 (84% similar)
+
+**Career shape:** Charted 6 seasons (2016-17–2021-22). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

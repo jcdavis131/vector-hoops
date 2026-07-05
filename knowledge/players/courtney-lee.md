@@ -45,6 +45,34 @@ Closest career shapes in the era-normalized vector space:
 - [[anthony-parker|Anthony Parker]] — cosine 0.89
 - [[tyler-johnson|Tyler Johnson]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 14.8 pts · 4.4 reb · 1.7 ast · 2.5 stl per 100 (2019-20).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.8σ vs era)
+- Rarely turns the ball over (−1.1σ vs era)
+- Knockdown three-point shooter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.3σ)
+- Defensive rebounding well below era (−1.3σ)
+
+**Comparables:**
+
+- [[kentavious-caldwell-pope|Kentavious Caldwell-Pope]] '24 (95% similar)
+- [[gary-harris|Gary Harris]] '25 (94% similar)
+- [[lucious-harris|Lucious Harris]] '98 (92% similar)
+- [[mikal-bridges|Mikal Bridges]] '19 (90% similar)
+- [[anthony-parker|Anthony Parker]] '10 (89% similar)
+- [[tyler-johnson|Tyler Johnson]] '21 (88% similar)
+
+**Career shape:** Charted 12 seasons (2008-09–2019-20). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

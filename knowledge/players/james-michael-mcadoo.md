@@ -35,6 +35,34 @@ Closest career shapes in the era-normalized vector space:
 - [[dylan-cardwell|Dylan Cardwell]] — cosine 0.76
 - [[justin-williams|Justin Williams]] — cosine 0.75
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 21.1 pts · 10.4 reb · 3.1 ast · 1.8 stl per 100 (2015-16).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+1.9σ vs era)
+- Relentless on the offensive glass (+1.9σ vs era)
+- Knockdown three-point shooter (+1.5σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.2σ)
+- Free-throw touch well below era (−1.8σ)
+
+**Comparables:**
+
+- [[trayce-jackson-davis|Trayce Jackson-Davis]] '26 (81% similar)
+- [[robert-traylor|Robert Traylor]] '02 (80% similar)
+- [[derrick-brown|Derrick Brown]] '11 (79% similar)
+- [[collin-murray-boyles|Collin Murray-Boyles]] '26 (79% similar)
+- [[dylan-cardwell|Dylan Cardwell]] '26 (76% similar)
+- [[justin-williams|Justin Williams]] '07 (75% similar)
+
+**Career shape:** Charted 2 seasons (2015-16–2016-17). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

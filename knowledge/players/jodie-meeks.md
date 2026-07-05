@@ -41,6 +41,33 @@ Closest career shapes in the era-normalized vector space:
 - [[gary-trent-jr|Gary Trent Jr.]] — cosine 0.92
 - [[marco-belinelli|Marco Belinelli]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 17.4 pts · 5.0 reb · 1.7 ast · 1.3 stl per 100 (2011-12).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.9σ vs era)
+- High-volume three-point shooter (+1.3σ vs era)
+- Reliable touch from the free-throw line (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Offensive-glass activity well below era (−1.1σ)
+
+**Comparables:**
+
+- [[matt-carroll|Matt Carroll]] '10 (95% similar)
+- [[grayson-allen|Grayson Allen]] '19 (94% similar)
+- [[rodney-hood|Rodney Hood]] '22 (93% similar)
+- [[langston-galloway|Langston Galloway]] '18 (93% similar)
+- [[gary-trent-jr|Gary Trent Jr.]] '26 (92% similar)
+- [[marco-belinelli|Marco Belinelli]] '08 (92% similar)
+
+**Career shape:** Charted 8 seasons (2009-10–2017-18). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

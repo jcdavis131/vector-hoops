@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[michael-kidd-gilchrist|Michael Kidd-Gilchrist]] — cosine 0.87
 - [[lavoy-allen|Lavoy Allen]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 16.2 pts · 10.1 reb · 2.2 ast · 2.1 blk per 100 (2009-10).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.1σ vs era)
+- Elite rim protection (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.5σ)
+- Ball-hawking activity well below era (−1.2σ)
+
+**Comparables:**
+
+- [[sean-rooks|Sean Rooks]] '98 (89% similar)
+- [[jake-tsakalidis|Jake Tsakalidis]] '06 (88% similar)
+- [[deyonta-davis|Deyonta Davis]] '17 (88% similar)
+- [[jerome-jordan|Jerome Jordan]] '12 (87% similar)
+- [[michael-kidd-gilchrist|Michael Kidd-Gilchrist]] '20 (87% similar)
+- [[lavoy-allen|Lavoy Allen]] '17 (87% similar)
+
+**Career shape:** Charted 1 season (2009-10). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

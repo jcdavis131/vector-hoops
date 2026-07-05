@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[briante-weber|Briante Weber]] — cosine 0.81
 - [[quinndary-weatherspoon|Quinndary Weatherspoon]] — cosine 0.79
 
+## Scouting report
+
+**Play style:** SF · Playmaking + Steals. Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 13.8 pts · 5.9 reb · 3.9 ast · 3.0 stl per 100 (1996-97).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.8σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.4σ)
+- Three-point volume well below era (−1.0σ)
+
+**Comparables:**
+
+- [[randy-brown|Randy Brown]] '03 (84% similar)
+- [[wendell-moore-jr|Wendell Moore Jr.]] '24 (84% similar)
+- [[bernard-robinson|Bernard Robinson]] '07 (82% similar)
+- [[reece-beekman|Reece Beekman]] '25 (82% similar)
+- [[briante-weber|Briante Weber]] '18 (81% similar)
+- [[quinndary-weatherspoon|Quinndary Weatherspoon]] '21 (79% similar)
+
+**Career shape:** Charted 1 season (1996-97). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

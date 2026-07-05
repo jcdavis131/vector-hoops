@@ -41,6 +41,34 @@ Closest career shapes in the era-normalized vector space:
 - [[bruno-fernando|Bruno Fernando]] — cosine 0.87
 - [[eric-riley|Eric Riley]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 20.1 pts · 17.8 reb · 4.7 ast · 4.2 blk per 100 (2016-17).
+
+**Strengths:**
+
+- Elite rim protection (+3.8σ vs era)
+- Relentless on the offensive glass (+2.5σ vs era)
+- Strong presence on the defensive glass (+1.7σ vs era)
+
+**Areas of concern:**
+
+- Three-point volume well below era (−1.3σ)
+- Three-point accuracy well below era (−1.3σ)
+
+**Comparables:**
+
+- [[charles-bassey|Charles Bassey]] '24 (93% similar)
+- [[samuel-dalembert|Samuel Dalembert]] '13 (92% similar)
+- [[marcus-camby|Marcus Camby]] '11 (88% similar)
+- [[dewayne-dedmon|Dewayne Dedmon]] '17 (88% similar)
+- [[bruno-fernando|Bruno Fernando]] '22 (87% similar)
+- [[eric-riley|Eric Riley]] '99 (87% similar)
+
+**Career shape:** Charted 8 seasons (2012-13–2019-20). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

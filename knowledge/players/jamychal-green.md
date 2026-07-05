@@ -42,6 +42,33 @@ Closest career shapes in the era-normalized vector space:
 - [[dewayne-dedmon|Dewayne Dedmon]] — cosine 0.78
 - [[wendell-carter-jr|Wendell Carter Jr.]] — cosine 0.77
 
+## Scouting report
+
+**Play style:** PF · Rim Protection + Offensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 18.3 pts · 13.3 reb · 1.2 ast · 1.5 stl per 100 (2014-15).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+1.9σ vs era)
+- Relentless on the offensive glass (+1.8σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.8σ)
+- Turnover rate well above era (+1.4σ)
+
+**Comparables:**
+
+- [[noah-vonleh|Noah Vonleh]] '23 (83% similar)
+- [[james-singleton|James Singleton]] '10 (81% similar)
+- [[charles-shackleford|Charles Shackleford]] '99 (79% similar)
+- [[justin-champagnie|Justin Champagnie]] '22 (78% similar)
+- [[dewayne-dedmon|Dewayne Dedmon]] '17 (78% similar)
+- [[wendell-carter-jr|Wendell Carter Jr.]] '19 (77% similar)
+
+**Career shape:** Charted 9 seasons (2014-15–2022-23). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

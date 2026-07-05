@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[frank-mason-iii|Frank Mason III]] — cosine 0.87
 - [[emmanuel-mudiay|Emmanuel Mudiay]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 18.9 pts · 2.2 reb · 11.2 ast · 2.2 stl per 100 (1997-98).
+
+**Strengths:**
+
+- High-volume table-setter (+2.3σ vs era)
+- Draws contact, gets to the line often (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+3.4σ)
+- Finishing efficiency well below era (−2.0σ)
+
+**Comparables:**
+
+- [[dominique-jones|Dominique Jones]] '13 (91% similar)
+- [[talen-horton-tucker|Talen Horton-Tucker]] '23 (89% similar)
+- [[scoot-henderson|Scoot Henderson]] '24 (88% similar)
+- [[ben-saraf|Ben Saraf]] '26 (88% similar)
+- [[frank-mason-iii|Frank Mason III]] '19 (87% similar)
+- [[emmanuel-mudiay|Emmanuel Mudiay]] '16 (86% similar)
+
+**Career shape:** Charted 1 season (1997-98). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

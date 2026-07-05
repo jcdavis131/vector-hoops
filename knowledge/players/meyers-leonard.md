@@ -41,6 +41,34 @@ Closest career shapes in the era-normalized vector space:
 - [[jonas-jerebko|Jonas Jerebko]] — cosine 0.74
 - [[trey-lyles|Trey Lyles]] — cosine 0.73
 
+## Scouting report
+
+**Play style:** C · Three-Point Volume + Three-Point Accuracy. Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 19.2 pts · 14.7 reb · 1.9 ast · 0.8 blk per 100 (2014-15).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+2.0σ vs era)
+- Reliable touch from the free-throw line (+1.6σ vs era)
+- Knockdown three-point shooter (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.6σ)
+- Rim pressure (free-throw generation) well below era (−1.1σ)
+
+**Comparables:**
+
+- [[micah-potter|Micah Potter]] '25 (87% similar)
+- [[e-j-liddell|E.J. Liddell]] '26 (79% similar)
+- [[troy-murphy|Troy Murphy]] '09 (77% similar)
+- [[greg-foster|Greg Foster]] '03 (74% similar)
+- [[jonas-jerebko|Jonas Jerebko]] '17 (74% similar)
+- [[trey-lyles|Trey Lyles]] '21 (73% similar)
+
+**Career shape:** Charted 8 seasons (2012-13–2019-20). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

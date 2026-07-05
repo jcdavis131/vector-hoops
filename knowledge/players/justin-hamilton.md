@@ -35,6 +35,31 @@ Closest career shapes in the era-normalized vector space:
 - [[torrey-craig|Torrey Craig]] — cosine 0.78
 - [[pete-chilcutt|Pete Chilcutt]] — cosine 0.76
 
+## Scouting report
+
+**Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 15.7 pts · 9.6 reb · 2.6 ast · 2.2 blk per 100 (2014-15).
+
+**Strengths:**
+
+- Elite rim protection (+1.2σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.6σ)
+
+**Comparables:**
+
+- [[taylor-hendricks|Taylor Hendricks]] '24 (83% similar)
+- [[zeke-nnaji|Zeke Nnaji]] '24 (80% similar)
+- [[rob-kurz|Rob Kurz]] '09 (80% similar)
+- [[omari-spellman|Omari Spellman]] '19 (80% similar)
+- [[torrey-craig|Torrey Craig]] '20 (78% similar)
+- [[pete-chilcutt|Pete Chilcutt]] '00 (76% similar)
+
+**Career shape:** Charted 2 seasons (2014-15–2016-17). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

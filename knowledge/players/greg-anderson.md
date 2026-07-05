@@ -35,6 +35,34 @@ Closest career shapes in the era-normalized vector space:
 - [[adrian-caldwell|Adrian Caldwell]] — cosine 0.90
 - [[evan-eschmeyer|Evan Eschmeyer]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 10.9 pts · 14.5 reb · 1.8 ast · 2.3 stl per 100 (1997-98).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+1.5σ vs era)
+- Relentless on the offensive glass (+1.1σ vs era)
+- Rarely turns the ball over (−1.0σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.7σ)
+- Scoring load well below era (−1.4σ)
+
+**Comparables:**
+
+- [[furkan-aldemir|Furkan Aldemir]] '15 (92% similar)
+- [[cherokee-parks|Cherokee Parks]] '02 (91% similar)
+- [[brian-skinner|Brian Skinner]] '08 (90% similar)
+- [[michael-smith|Michael Smith]] '01 (90% similar)
+- [[adrian-caldwell|Adrian Caldwell]] '97 (90% similar)
+- [[evan-eschmeyer|Evan Eschmeyer]] '03 (89% similar)
+
+**Career shape:** Charted 2 seasons (1996-97–1997-98). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

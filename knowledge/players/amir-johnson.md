@@ -45,6 +45,34 @@ Closest career shapes in the era-normalized vector space:
 - [[salah-mejri|Salah Mejri]] — cosine 0.93
 - [[tony-bradley|Tony Bradley]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** PF · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 14.9 pts · 15.9 reb · 2.0 ast · 5.5 blk per 100 (2007-08).
+
+**Strengths:**
+
+- Elite rim protection (+4.0σ vs era)
+- Strong net on-court impact (+1.9σ vs era)
+- Relentless on the offensive glass (+1.9σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.4σ)
+- Shot volume well below era (−1.1σ)
+
+**Comparables:**
+
+- [[daniel-theis|Daniel Theis]] '20 (94% similar)
+- [[robert-williams-iii|Robert Williams III]] '19 (93% similar)
+- [[onyeka-okongwu|Onyeka Okongwu]] '22 (93% similar)
+- [[jakob-poeltl|Jakob Poeltl]] '22 (93% similar)
+- [[salah-mejri|Salah Mejri]] '18 (93% similar)
+- [[tony-bradley|Tony Bradley]] '20 (92% similar)
+
+**Career shape:** Charted 12 seasons (2007-08–2018-19). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

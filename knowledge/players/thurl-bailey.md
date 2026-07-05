@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[robin-lopez|Robin Lopez]] — cosine 0.81
 - [[joan-beringer|Joan Beringer]] — cosine 0.80
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 17.9 pts · 9.3 reb · 2.6 ast · 2.8 blk per 100 (1998-99).
+
+**Strengths:**
+
+- Elite rim protection (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.1σ)
+- Ball-hawking activity well below era (−1.1σ)
+
+**Comparables:**
+
+- [[antoine-carr|Antoine Carr]] '00 (88% similar)
+- [[chris-hunter|Chris Hunter]] '10 (85% similar)
+- [[jajuan-johnson|JaJuan Johnson]] '12 (84% similar)
+- [[jason-smith|Jason Smith]] '18 (81% similar)
+- [[robin-lopez|Robin Lopez]] '14 (81% similar)
+- [[joan-beringer|Joan Beringer]] '26 (80% similar)
+
+**Career shape:** Charted 1 season (1998-99). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

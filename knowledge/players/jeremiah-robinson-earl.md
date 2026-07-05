@@ -38,6 +38,34 @@ Closest career shapes in the era-normalized vector space:
 - [[pete-chilcutt|Pete Chilcutt]] — cosine 0.82
 - [[micah-potter|Micah Potter]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 12.9 pts · 13.1 reb · 1.9 ast · 1.1 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+1.6σ vs era)
+- Relentless on the offensive glass (+1.3σ vs era)
+- Rarely turns the ball over (−1.1σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.3σ)
+- Finishing efficiency well below era (−1.3σ)
+
+**Comparables:**
+
+- [[mark-hendrickson|Mark Hendrickson]] '98 (85% similar)
+- [[jaron-blossomgame|Jaron Blossomgame]] '19 (85% similar)
+- [[joe-kleine|Joe Kleine]] '97 (85% similar)
+- [[luke-harangody|Luke Harangody]] '12 (84% similar)
+- [[pete-chilcutt|Pete Chilcutt]] '00 (82% similar)
+- [[micah-potter|Micah Potter]] '25 (81% similar)
+
+**Career shape:** Charted 5 seasons (2021-22–2025-26). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

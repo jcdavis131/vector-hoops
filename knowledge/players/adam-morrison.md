@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[onuralp-bitim|Onuralp Bitim]] — cosine 0.87
 - [[johnny-juzang|Johnny Juzang]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 15.4 pts · 6.7 reb · 3.7 ast · 0.6 stl per 100 (2009-10).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.6σ)
+- Finishing efficiency well below era (−1.3σ)
+
+**Comparables:**
+
+- [[tyler-dorsey|Tyler Dorsey]] '18 (89% similar)
+- [[jawad-williams|Jawad Williams]] '11 (89% similar)
+- [[deshawn-stevenson|DeShawn Stevenson]] '12 (88% similar)
+- [[nick-smith-jr|Nick Smith Jr.]] '25 (87% similar)
+- [[onuralp-bitim|Onuralp Bitim]] '24 (87% similar)
+- [[johnny-juzang|Johnny Juzang]] '23 (86% similar)
+
+**Career shape:** Charted 3 seasons (2006-07–2009-10). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

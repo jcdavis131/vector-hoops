@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[ryan-humphrey|Ryan Humphrey]] — cosine 0.85
 - [[alvin-jones|Alvin Jones]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 9.1 pts · 10.9 reb · 1.9 ast · 3.1 blk per 100 (2000-01).
+
+**Strengths:**
+
+- Elite rim protection (+1.8σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−3.0σ)
+- Free-throw touch well below era (−2.0σ)
+
+**Comparables:**
+
+- [[amal-mccaskill|Amal McCaskill]] '02 (97% similar)
+- [[mouhamed-sene|Mouhamed Sene]] '07 (87% similar)
+- [[ognjen-kuzmic|Ognjen Kuzmic]] '14 (87% similar)
+- [[adreian-payne|Adreian Payne]] '17 (87% similar)
+- [[ryan-humphrey|Ryan Humphrey]] '05 (85% similar)
+- [[alvin-jones|Alvin Jones]] '02 (84% similar)
+
+**Career shape:** Charted 2 seasons (2000-01–2001-02). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

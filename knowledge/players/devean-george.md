@@ -43,6 +43,33 @@ Closest career shapes in the era-normalized vector space:
 - [[cartier-martin|Cartier Martin]] — cosine 0.86
 - [[tyrone-corbin|Tyrone Corbin]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 15.0 pts · 7.1 reb · 2.0 ast · 2.5 stl per 100 (2009-10).
+
+**Strengths:**
+
+- Rarely turns the ball over (−2.1σ vs era)
+- Active hands, disrupts passing lanes (+1.9σ vs era)
+- High-volume three-point shooter (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.3σ)
+
+**Comparables:**
+
+- [[jae-crowder|Jae Crowder]] '22 (91% similar)
+- [[scott-burrell|Scott Burrell]] '00 (90% similar)
+- [[keith-askins|Keith Askins]] '99 (87% similar)
+- [[dan-majerle|Dan Majerle]] '02 (87% similar)
+- [[cartier-martin|Cartier Martin]] '15 (86% similar)
+- [[tyrone-corbin|Tyrone Corbin]] '00 (85% similar)
+
+**Career shape:** Charted 10 seasons (1999-00–2009-10). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

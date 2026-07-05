@@ -37,6 +37,33 @@ Closest career shapes in the era-normalized vector space:
 - [[joan-beringer|Joan Beringer]] — cosine 0.92
 - [[jarrett-allen|Jarrett Allen]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 21.6 pts · 13.9 reb · 0.8 ast · 1.6 blk per 100 (2000-01).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+2.7σ vs era)
+- Relentless on the offensive glass (+1.7σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.6σ)
+- Three-point accuracy well below era (−1.4σ)
+
+**Comparables:**
+
+- [[brandan-wright|Brandan Wright]] '18 (93% similar)
+- [[gheorghe-muresan|Gheorghe Muresan]] '97 (93% similar)
+- [[willie-reed|Willie Reed]] '16 (93% similar)
+- [[dereck-lively-ii|Dereck Lively II]] '25 (92% similar)
+- [[joan-beringer|Joan Beringer]] '26 (92% similar)
+- [[jarrett-allen|Jarrett Allen]] '25 (92% similar)
+
+**Career shape:** Charted 4 seasons (1999-00–2002-03). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

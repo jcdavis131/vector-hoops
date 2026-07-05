@@ -39,6 +39,34 @@ Closest career shapes in the era-normalized vector space:
 - [[bismack-biyombo|Bismack Biyombo]] — cosine 0.91
 - [[jerome-moiso|Jerome Moiso]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 26.0 pts · 16.2 reb · 2.1 ast · 3.3 blk per 100 (2021-22).
+
+**Strengths:**
+
+- Elite rim protection (+2.9σ vs era)
+- Efficient finisher inside the arc (+2.4σ vs era)
+- Relentless on the offensive glass (+1.7σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−2.0σ)
+- Three-point volume well below era (−1.6σ)
+
+**Comparables:**
+
+- [[alex-len|Alex Len]] '24 (94% similar)
+- [[chris-silva|Chris Silva]] '20 (93% similar)
+- [[timofey-mozgov|Timofey Mozgov]] '13 (92% similar)
+- [[charles-bassey|Charles Bassey]] '24 (91% similar)
+- [[bismack-biyombo|Bismack Biyombo]] '23 (91% similar)
+- [[jerome-moiso|Jerome Moiso]] '01 (91% similar)
+
+**Career shape:** Charted 6 seasons (2019-20–2024-25). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

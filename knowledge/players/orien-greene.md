@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[donell-taylor|Donell Taylor]] — cosine 0.86
 - [[diante-garrett|Diante Garrett]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** SG · Playmaking + Steals. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 12.1 pts · 8.5 reb · 4.2 ast · 3.3 stl per 100 (2006-07).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+3.0σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.5σ)
+- On-court net impact well below era (−1.6σ)
+
+**Comparables:**
+
+- [[laron-profit|Laron Profit]] '00 (89% similar)
+- [[daishen-nix|Daishen Nix]] '22 (87% similar)
+- [[jamie-watson|Jamie Watson]] '97 (86% similar)
+- [[stanley-johnson|Stanley Johnson]] '20 (86% similar)
+- [[donell-taylor|Donell Taylor]] '07 (86% similar)
+- [[diante-garrett|Diante Garrett]] '13 (85% similar)
+
+**Career shape:** Charted 2 seasons (2005-06–2006-07). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

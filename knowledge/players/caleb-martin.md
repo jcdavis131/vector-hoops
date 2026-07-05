@@ -40,6 +40,32 @@ Closest career shapes in the era-normalized vector space:
 - [[juaquin-hawkins|Juaquin Hawkins]] — cosine 0.84
 - [[patrick-mccaw|Patrick McCaw]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 12.2 pts · 7.7 reb · 4.3 ast · 2.1 stl per 100 (2025-26).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.4σ)
+- Free-throw touch well below era (−1.3σ)
+
+**Comparables:**
+
+- [[sindarius-thornwell|Sindarius Thornwell]] '21 (88% similar)
+- [[maurice-harkless|Maurice Harkless]] '15 (86% similar)
+- [[derrick-mckey|Derrick McKey]] '02 (86% similar)
+- [[jaylen-clark|Jaylen Clark]] '25 (85% similar)
+- [[juaquin-hawkins|Juaquin Hawkins]] '03 (84% similar)
+- [[patrick-mccaw|Patrick McCaw]] '19 (84% similar)
+
+**Career shape:** Charted 7 seasons (2019-20–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

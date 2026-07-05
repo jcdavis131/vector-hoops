@@ -37,6 +37,32 @@ Closest career shapes in the era-normalized vector space:
 - [[marcus-brown|Marcus Brown]] — cosine 0.86
 - [[collin-gillespie|Collin Gillespie]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 22.5 pts · 4.2 reb · 4.7 ast · 2.4 stl per 100 (1999-00).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.3σ)
+- Offensive-glass activity well below era (−1.0σ)
+
+**Comparables:**
+
+- [[jason-terry|Jason Terry]] '18 (91% similar)
+- [[david-wesley|David Wesley]] '07 (88% similar)
+- [[leandro-barbosa|Leandro Barbosa]] '04 (88% similar)
+- [[eddie-jones|Eddie Jones]] '00 (86% similar)
+- [[marcus-brown|Marcus Brown]] '97 (86% similar)
+- [[collin-gillespie|Collin Gillespie]] '24 (85% similar)
+
+**Career shape:** Charted 4 seasons (1996-97–1999-00). Entered as a Playmaking + Steals profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

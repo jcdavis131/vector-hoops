@@ -48,6 +48,34 @@ Closest career shapes in the era-normalized vector space:
 - [[walker-kessler|Walker Kessler]] — cosine 0.93
 - [[andrew-bynum|Andrew Bynum]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 29.4 pts · 15.2 reb · 1.1 ast · 4.2 blk per 100 (2016-17).
+
+**Strengths:**
+
+- Elite rim protection (+3.8σ vs era)
+- Strong net on-court impact (+3.3σ vs era)
+- Efficient finisher inside the arc (+2.9σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.2σ)
+- Free-throw touch well below era (−2.0σ)
+
+**Comparables:**
+
+- [[hassan-whiteside|Hassan Whiteside]] '22 (96% similar)
+- [[john-henson|John Henson]] '16 (96% similar)
+- [[greg-oden|Greg Oden]] '10 (94% similar)
+- [[keon-clark|Keon Clark]] '01 (94% similar)
+- [[walker-kessler|Walker Kessler]] '23 (93% similar)
+- [[andrew-bynum|Andrew Bynum]] '08 (93% similar)
+
+**Career shape:** Charted 15 seasons (2008-09–2023-24). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

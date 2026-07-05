@@ -35,6 +35,33 @@ Closest career shapes in the era-normalized vector space:
 - [[josh-hall|Josh Hall]] — cosine 0.74
 - [[eric-leckner|Eric Leckner]] — cosine 0.72
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 20.4 pts · 11.7 reb · 2.2 ast · 0.8 blk per 100 (2023-24).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+1.1σ vs era)
+- Strong presence on the defensive glass (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.5σ)
+- Finishing efficiency well below era (−1.1σ)
+
+**Comparables:**
+
+- [[john-amaechi|John Amaechi]] '02 (78% similar)
+- [[todd-fuller|Todd Fuller]] '98 (77% similar)
+- [[sharone-wright|Sharone Wright]] '97 (75% similar)
+- [[jeremy-tyler|Jeremy Tyler]] '14 (75% similar)
+- [[josh-hall|Josh Hall]] '21 (74% similar)
+- [[eric-leckner|Eric Leckner]] '97 (72% similar)
+
+**Career shape:** Charted 2 seasons (2020-21–2023-24). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

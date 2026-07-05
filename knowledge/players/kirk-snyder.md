@@ -37,6 +37,32 @@ Closest career shapes in the era-normalized vector space:
 - [[oscar-torres|Oscar Torres]] — cosine 0.75
 - [[jerami-grant|Jerami Grant]] — cosine 0.70
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 19.9 pts · 7.1 reb · 2.1 ast · 1.5 stl per 100 (2004-05).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.2σ)
+- On-court net impact well below era (−1.0σ)
+
+**Comparables:**
+
+- [[jabari-brown|Jabari Brown]] '15 (83% similar)
+- [[dajuan-summers|DaJuan Summers]] '11 (81% similar)
+- [[allonzo-trier|Allonzo Trier]] '20 (81% similar)
+- [[wayne-selden|Wayne Selden]] '18 (75% similar)
+- [[oscar-torres|Oscar Torres]] '03 (75% similar)
+- [[jerami-grant|Jerami Grant]] '21 (70% similar)
+
+**Career shape:** Charted 4 seasons (2004-05–2007-08). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -37,6 +37,34 @@ Closest career shapes in the era-normalized vector space:
 - [[kessler-edwards|Kessler Edwards]] — cosine 0.87
 - [[robbie-hummel|Robbie Hummel]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** PF · Three-Point Accuracy (Low Turnovers). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 11.1 pts · 8.7 reb · 1.4 ast · 2.0 blk per 100 (2018-19).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+2.4σ vs era)
+- Rarely turns the ball over (−2.1σ vs era)
+- High-volume three-point shooter (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.7σ)
+- Rim pressure (free-throw generation) well below era (−1.6σ)
+
+**Comparables:**
+
+- [[anthony-brown|Anthony Brown]] '16 (89% similar)
+- [[travis-hansen|Travis Hansen]] '04 (88% similar)
+- [[isaiah-livers|Isaiah Livers]] '24 (88% similar)
+- [[nicolo-melli|Nicolo Melli]] '21 (87% similar)
+- [[kessler-edwards|Kessler Edwards]] '25 (87% similar)
+- [[robbie-hummel|Robbie Hummel]] '14 (87% similar)
+
+**Career shape:** Charted 4 seasons (2018-19–2021-22). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

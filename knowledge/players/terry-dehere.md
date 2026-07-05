@@ -36,6 +36,33 @@ Closest career shapes in the era-normalized vector space:
 - [[troy-hudson|Troy Hudson]] — cosine 0.94
 - [[kenny-smith|Kenny Smith]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 23.2 pts · 4.6 reb · 7.8 ast · 1.3 stl per 100 (1996-97).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.4σ vs era)
+- High-volume table-setter (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.4σ)
+- Offensive-glass activity well below era (−1.2σ)
+
+**Comparables:**
+
+- [[khalid-reeves|Khalid Reeves]] '97 (98% similar)
+- [[randy-foye|Randy Foye]] '12 (96% similar)
+- [[isaiah-canaan|Isaiah Canaan]] '16 (94% similar)
+- [[egor-demin|Egor Dëmin]] '26 (94% similar)
+- [[troy-hudson|Troy Hudson]] '06 (94% similar)
+- [[kenny-smith|Kenny Smith]] '97 (93% similar)
+
+**Career shape:** Charted 3 seasons (1996-97–1998-99). Consistent Scoring Volume + Shot Volume profile across his career.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

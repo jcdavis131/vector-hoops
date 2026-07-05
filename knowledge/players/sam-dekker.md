@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[dante-cunningham|Dante Cunningham]] — cosine 0.86
 - [[andre-roberson|Andre Roberson]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** PF · Three-Point Accuracy (Low Turnovers). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 17.0 pts · 8.7 reb · 2.7 ast · 2.3 stl per 100 (2018-19).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.5σ vs era)
+- Rarely turns the ball over (−1.2σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.3σ)
+
+**Comparables:**
+
+- [[eduardo-najera|Eduardo Najera]] '12 (89% similar)
+- [[james-augustine|James Augustine]] '08 (87% similar)
+- [[t-j-leaf|T.J. Leaf]] '20 (86% similar)
+- [[kenrich-williams|Kenrich Williams]] '20 (86% similar)
+- [[dante-cunningham|Dante Cunningham]] '19 (86% similar)
+- [[andre-roberson|Andre Roberson]] '18 (84% similar)
+
+**Career shape:** Charted 3 seasons (2016-17–2018-19). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

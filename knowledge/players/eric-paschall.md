@@ -36,6 +36,31 @@ Closest career shapes in the era-normalized vector space:
 - [[allonzo-trier|Allonzo Trier]] — cosine 0.78
 - [[keldon-johnson|Keldon Johnson]] — cosine 0.76
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 23.8 pts · 7.8 reb · 3.6 ast · 0.9 stl per 100 (2019-20).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.7σ)
+
+**Comparables:**
+
+- [[al-thornton|Al Thornton]] '09 (87% similar)
+- [[shabazz-muhammad|Shabazz Muhammad]] '15 (87% similar)
+- [[hakim-warrick|Hakim Warrick]] '13 (80% similar)
+- [[jason-collier|Jason Collier]] '05 (78% similar)
+- [[allonzo-trier|Allonzo Trier]] '20 (78% similar)
+- [[keldon-johnson|Keldon Johnson]] '23 (76% similar)
+
+**Career shape:** Charted 3 seasons (2019-20–2021-22). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -39,6 +39,31 @@ Closest career shapes in the era-normalized vector space:
 - [[anthony-bowie|Anthony Bowie]] — cosine 0.68
 - [[larry-johnson|Larry Johnson]] — cosine 0.68
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 21.3 pts · 10.4 reb · 2.3 ast · 0.5 stl per 100 (2007-08).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+2.5σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.6σ)
+
+**Comparables:**
+
+- [[stephen-graham|Stephen Graham]] '11 (81% similar)
+- [[rui-hachimura|Rui Hachimura]] '26 (76% similar)
+- [[terrence-shannon-jr|Terrence Shannon Jr.]] '26 (74% similar)
+- [[harrison-barnes|Harrison Barnes]] '16 (71% similar)
+- [[anthony-bowie|Anthony Bowie]] '98 (68% similar)
+- [[larry-johnson|Larry Johnson]] '98 (68% similar)
+
+**Career shape:** Charted 6 seasons (2005-06–2010-11). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

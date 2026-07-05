@@ -37,6 +37,32 @@ Closest career shapes in the era-normalized vector space:
 - [[kris-murray|Kris Murray]] — cosine 0.89
 - [[justin-minaya|Justin Minaya]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 12.6 pts · 7.6 reb · 1.8 ast · 0.9 blk per 100 (2021-22).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.5σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.9σ)
+- Ball-hawking activity well below era (−1.5σ)
+
+**Comparables:**
+
+- [[yuta-watanabe|Yuta Watanabe]] '20 (96% similar)
+- [[jud-buechler|Jud Buechler]] '00 (90% similar)
+- [[james-young|James Young]] '16 (89% similar)
+- [[ryan-dunn|Ryan Dunn]] '25 (89% similar)
+- [[kris-murray|Kris Murray]] '25 (89% similar)
+- [[justin-minaya|Justin Minaya]] '25 (88% similar)
+
+**Career shape:** Charted 4 seasons (2021-22–2024-25). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

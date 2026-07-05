@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[justin-edwards|Justin Edwards]] — cosine 0.86
 - [[justin-holiday|Justin Holiday]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 14.2 pts · 3.8 reb · 2.9 ast · 2.1 stl per 100 (2017-18).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.2σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.3σ)
+- Rim pressure (free-throw generation) well below era (−1.3σ)
+
+**Comparables:**
+
+- [[gary-harris|Gary Harris]] '25 (90% similar)
+- [[patrick-mccaw|Patrick McCaw]] '19 (89% similar)
+- [[will-richard|Will Richard]] '26 (88% similar)
+- [[courtney-lee|Courtney Lee]] '20 (86% similar)
+- [[justin-edwards|Justin Edwards]] '26 (86% similar)
+- [[justin-holiday|Justin Holiday]] '23 (86% similar)
+
+**Career shape:** Charted 1 season (2017-18). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

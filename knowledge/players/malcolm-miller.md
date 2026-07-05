@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[mitchell-butler|Mitchell Butler]] — cosine 0.79
 - [[david-wingate|David Wingate]] — cosine 0.78
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 9.9 pts · 4.6 reb · 3.1 ast · 1.4 stl per 100 (2019-20).
+
+**Strengths:**
+
+- Strong net on-court impact (+3.0σ vs era)
+- Rarely turns the ball over (−1.5σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−3.3σ)
+- Shot volume well below era (−1.7σ)
+
+**Comparables:**
+
+- [[bruce-bowen|Bruce Bowen]] '99 (87% similar)
+- [[hugo-gonzalez|Hugo González]] '26 (82% similar)
+- [[juaquin-hawkins|Juaquin Hawkins]] '03 (81% similar)
+- [[josh-huestis|Josh Huestis]] '18 (80% similar)
+- [[mitchell-butler|Mitchell Butler]] '98 (79% similar)
+- [[david-wingate|David Wingate]] '99 (78% similar)
+
+**Career shape:** Charted 1 season (2019-20). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

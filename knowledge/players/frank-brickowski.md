@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[sergei-monia|Sergei Monia]] — cosine 0.81
 - [[lazar-hayward|Lazar Hayward]] — cosine 0.80
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 15.9 pts · 6.7 reb · 2.9 ast · 1.0 stl per 100 (1996-97).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−3.2σ)
+- Rim pressure (free-throw generation) well below era (−1.0σ)
+
+**Comparables:**
+
+- [[cassius-winston|Cassius Winston]] '21 (88% similar)
+- [[elijah-hughes|Elijah Hughes]] '21 (84% similar)
+- [[bub-carrington|Bub Carrington]] '26 (83% similar)
+- [[r-j-hampton|R.J. Hampton]] '22 (82% similar)
+- [[sergei-monia|Sergei Monia]] '06 (81% similar)
+- [[lazar-hayward|Lazar Hayward]] '12 (80% similar)
+
+**Career shape:** Charted 1 season (1996-97). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

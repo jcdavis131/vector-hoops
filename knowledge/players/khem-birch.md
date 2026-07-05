@@ -39,6 +39,34 @@ Closest career shapes in the era-normalized vector space:
 - [[cristiano-felicio|Cristiano Felicio]] — cosine 0.92
 - [[buck-williams|Buck Williams]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 17.7 pts · 14.0 reb · 2.8 ast · 2.1 blk per 100 (2018-19).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+2.3σ vs era)
+- Efficient finisher inside the arc (+2.1σ vs era)
+- Elite rim protection (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.8σ)
+- Three-point volume well below era (−1.7σ)
+
+**Comparables:**
+
+- [[dominick-barlow|Dominick Barlow]] '23 (94% similar)
+- [[jordan-williams|Jordan Williams]] '12 (94% similar)
+- [[kevon-looney|Kevon Looney]] '23 (93% similar)
+- [[freddie-gillespie|Freddie Gillespie]] '21 (92% similar)
+- [[cristiano-felicio|Cristiano Felicio]] '21 (92% similar)
+- [[buck-williams|Buck Williams]] '97 (92% similar)
+
+**Career shape:** Charted 6 seasons (2017-18–2022-23). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

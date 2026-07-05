@@ -44,6 +44,32 @@ Closest career shapes in the era-normalized vector space:
 - [[terrence-shannon-jr|Terrence Shannon Jr.]] — cosine 0.89
 - [[jason-kapono|Jason Kapono]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 12.9 pts · 4.8 reb · 2.2 ast · 0.6 blk per 100 (2017-18).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.1σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.9σ)
+- Offensive-glass activity well below era (−1.1σ)
+
+**Comparables:**
+
+- [[john-jenkins|John Jenkins]] '19 (94% similar)
+- [[corey-kispert|Corey Kispert]] '23 (93% similar)
+- [[bryn-forbes|Bryn Forbes]] '17 (92% similar)
+- [[doug-mcdermott|Doug McDermott]] '25 (91% similar)
+- [[terrence-shannon-jr|Terrence Shannon Jr.]] '26 (89% similar)
+- [[jason-kapono|Jason Kapono]] '11 (89% similar)
+
+**Career shape:** Charted 11 seasons (2007-08–2017-18). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

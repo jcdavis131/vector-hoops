@@ -39,6 +39,33 @@ Closest career shapes in the era-normalized vector space:
 - [[cedric-ceballos|Cedric Ceballos]] — cosine 0.81
 - [[derrick-williams|Derrick Williams]] — cosine 0.79
 
+## Scouting report
+
+**Play style:** SF · Scoring Volume + Shot Volume. Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 31.7 pts · 7.3 reb · 4.2 ast · 1.1 stl per 100 (2022-23).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+1.9σ vs era)
+- Featured, high-usage scoring role (+1.6σ vs era)
+- Draws contact, gets to the line often (+1.3σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.6σ)
+
+**Comparables:**
+
+- [[antawn-jamison|Antawn Jamison]] '01 (88% similar)
+- [[don-maclean|Don MacLean]] '99 (87% similar)
+- [[shabazz-muhammad|Shabazz Muhammad]] '15 (87% similar)
+- [[lauri-markkanen|Lauri Markkanen]] '23 (82% similar)
+- [[cedric-ceballos|Cedric Ceballos]] '00 (81% similar)
+- [[derrick-williams|Derrick Williams]] '16 (79% similar)
+
+**Career shape:** Charted 6 seasons (2020-21–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

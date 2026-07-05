@@ -45,6 +45,33 @@ Closest career shapes in the era-normalized vector space:
 - [[trey-murphy-iii|Trey Murphy III]] — cosine 0.92
 - [[klay-thompson|Klay Thompson]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 30.4 pts · 7.9 reb · 2.7 ast · 1.7 stl per 100 (2003-04).
+
+**Strengths:**
+
+- Featured, high-usage scoring role (+2.1σ vs era)
+- High-volume three-point shooter (+2.0σ vs era)
+- Reliable touch from the free-throw line (+1.6σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[cameron-johnson|Cameron Johnson]] '26 (94% similar)
+- [[glen-rice|Glen Rice]] '97 (93% similar)
+- [[michael-finley|Michael Finley]] '03 (92% similar)
+- [[reggie-miller|Reggie Miller]] '98 (92% similar)
+- [[trey-murphy-iii|Trey Murphy III]] '24 (92% similar)
+- [[klay-thompson|Klay Thompson]] '15 (91% similar)
+
+**Career shape:** Charted 12 seasons (1998-99–2010-11). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

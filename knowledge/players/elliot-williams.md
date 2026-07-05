@@ -35,6 +35,34 @@ Closest career shapes in the era-normalized vector space:
 - [[jahmi-us-ramsey|Jahmi'us Ramsey]] — cosine 0.68
 - [[jeffery-taylor|Jeffery Taylor]] — cosine 0.68
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 28.1 pts · 6.0 reb · 1.9 ast · 1.9 stl per 100 (2011-12).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+1.6σ vs era)
+- Featured, high-usage scoring role (+1.6σ vs era)
+- High-volume three-point shooter (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.7σ)
+- Defensive rebounding well below era (−1.1σ)
+
+**Comparables:**
+
+- [[justin-james|Justin James]] '20 (75% similar)
+- [[cedi-osman|Cedi Osman]] '23 (71% similar)
+- [[dajuan-summers|DaJuan Summers]] '11 (71% similar)
+- [[ignas-brazdeikis|Ignas Brazdeikis]] '22 (69% similar)
+- [[jahmi-us-ramsey|Jahmi'us Ramsey]] '22 (68% similar)
+- [[jeffery-taylor|Jeffery Taylor]] '14 (68% similar)
+
+**Career shape:** Charted 2 seasons (2011-12–2013-14). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -34,6 +34,31 @@ Closest career shapes in the era-normalized vector space:
 - [[reggie-geary|Reggie Geary]] — cosine 0.69
 - [[jose-alvarado|Jose Alvarado]] — cosine 0.68
 
+## Scouting report
+
+**Play style:** PG · Three-Point Accuracy (Low Turnovers). Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 20.2 pts · 6.3 reb · 6.3 ast · 2.2 stl per 100 (2025-26).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[carldell-johnson|Carldell Johnson]] '12 (75% similar)
+- [[marquis-daniels|Marquis Daniels]] '04 (73% similar)
+- [[antonio-burks|Antonio Burks]] '06 (71% similar)
+- [[ron-harper|Ron Harper]] '97 (69% similar)
+- [[reggie-geary|Reggie Geary]] '97 (69% similar)
+- [[jose-alvarado|Jose Alvarado]] '22 (68% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

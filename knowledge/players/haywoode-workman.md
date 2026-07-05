@@ -35,6 +35,34 @@ Closest career shapes in the era-normalized vector space:
 - [[jerian-grant|Jerian Grant]] — cosine 0.91
 - [[shane-larkin|Shane Larkin]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 12.2 pts · 3.6 reb · 8.6 ast · 2.8 stl per 100 (1999-00).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.9σ vs era)
+- High-volume table-setter (+1.6σ vs era)
+- High-volume three-point shooter (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.8σ)
+- Offensive-glass activity well below era (−1.5σ)
+
+**Comparables:**
+
+- [[gerald-madkins|Gerald Madkins]] '98 (94% similar)
+- [[anthony-johnson|Anthony Johnson]] '02 (93% similar)
+- [[keaton-wallace|Keaton Wallace]] '25 (92% similar)
+- [[chris-duhon|Chris Duhon]] '13 (92% similar)
+- [[jerian-grant|Jerian Grant]] '19 (91% similar)
+- [[shane-larkin|Shane Larkin]] '16 (91% similar)
+
+**Career shape:** Charted 2 seasons (1998-99–1999-00). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

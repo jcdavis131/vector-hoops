@@ -40,6 +40,32 @@ Closest career shapes in the era-normalized vector space:
 - [[ben-sheppard|Ben Sheppard]] — cosine 0.90
 - [[isaiah-livers|Isaiah Livers]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** PF · Three-Point Accuracy (Low Turnovers). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 10.1 pts · 6.8 reb · 2.4 ast · 1.6 stl per 100 (2020-21).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.2σ vs era)
+
+**Areas of concern:**
+
+- Scoring load well below era (−1.6σ)
+- Shot volume well below era (−1.5σ)
+
+**Comparables:**
+
+- [[sion-james|Sion James]] '26 (94% similar)
+- [[p-j-tucker|P.J. Tucker]] '24 (92% similar)
+- [[anthony-brown|Anthony Brown]] '16 (92% similar)
+- [[troy-brown-jr|Troy Brown Jr.]] '23 (90% similar)
+- [[ben-sheppard|Ben Sheppard]] '24 (90% similar)
+- [[isaiah-livers|Isaiah Livers]] '24 (90% similar)
+
+**Career shape:** Charted 7 seasons (2013-14–2020-21). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

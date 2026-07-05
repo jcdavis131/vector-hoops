@@ -37,6 +37,31 @@ Closest career shapes in the era-normalized vector space:
 - [[bradley-beal|Bradley Beal]] — cosine 0.85
 - [[zach-lavine|Zach LaVine]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** SG · Scoring Volume + Shot Volume. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 23.6 pts · 8.0 reb · 3.7 ast · 2.1 stl per 100 (2013-14).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+1.6σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[collin-sexton|Collin Sexton]] '21 (89% similar)
+- [[gary-forbes|Gary Forbes]] '12 (87% similar)
+- [[shaedon-sharpe|Shaedon Sharpe]] '26 (86% similar)
+- [[rodney-white|Rodney White]] '03 (86% similar)
+- [[bradley-beal|Bradley Beal]] '20 (85% similar)
+- [[zach-lavine|Zach LaVine]] '21 (84% similar)
+
+**Career shape:** Charted 4 seasons (2011-12–2018-19). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

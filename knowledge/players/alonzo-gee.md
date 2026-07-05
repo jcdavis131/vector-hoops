@@ -39,6 +39,33 @@ Closest career shapes in the era-normalized vector space:
 - [[caleb-martin|Caleb Martin]] — cosine 0.81
 - [[mario-west|Mario West]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 9.7 pts · 7.3 reb · 2.1 ast · 1.9 stl per 100 (2015-16).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.1σ vs era)
+- Efficient finisher inside the arc (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.9σ)
+- Scoring load well below era (−1.6σ)
+
+**Comparables:**
+
+- [[damien-wilkins|Damien Wilkins]] '18 (86% similar)
+- [[jalen-mcdaniels|Jalen McDaniels]] '24 (85% similar)
+- [[sam-young|Sam Young]] '13 (83% similar)
+- [[jake-laravia|Jake LaRavia]] '23 (82% similar)
+- [[caleb-martin|Caleb Martin]] '26 (81% similar)
+- [[mario-west|Mario West]] '09 (81% similar)
+
+**Career shape:** Charted 6 seasons (2010-11–2015-16). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

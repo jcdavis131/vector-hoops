@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[caleb-swanigan|Caleb Swanigan]] — cosine 0.87
 - [[zan-tabak|Zan Tabak]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 15.2 pts · 16.8 reb · 2.8 ast · 2.6 blk per 100 (1999-00).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+1.9σ vs era)
+- Relentless on the offensive glass (+1.8σ vs era)
+- Elite rim protection (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.3σ)
+- Free-throw touch well below era (−1.8σ)
+
+**Comparables:**
+
+- [[david-vaughn|David Vaughn]] '97 (92% similar)
+- [[michael-olowokandi|Michael Olowokandi]] '04 (88% similar)
+- [[bruno-fernando|Bruno Fernando]] '22 (87% similar)
+- [[jeremy-tyler|Jeremy Tyler]] '14 (87% similar)
+- [[caleb-swanigan|Caleb Swanigan]] '20 (87% similar)
+- [[zan-tabak|Zan Tabak]] '00 (87% similar)
+
+**Career shape:** Charted 1 season (1999-00). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

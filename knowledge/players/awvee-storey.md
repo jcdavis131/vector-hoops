@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[ronald-dupree|Ronald Dupree]] — cosine 0.73
 - [[rick-hughes|Rick Hughes]] — cosine 0.73
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 18.0 pts · 10.6 reb · 3.1 ast · 1.4 stl per 100 (2007-08).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+2.0σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.9σ)
+- On-court net impact well below era (−1.4σ)
+
+**Comparables:**
+
+- [[alfonzo-mckinnie|Alfonzo McKinnie]] '22 (79% similar)
+- [[ben-davis|Ben Davis]] '97 (79% similar)
+- [[toby-bailey|Toby Bailey]] '99 (78% similar)
+- [[t-j-leaf|T.J. Leaf]] '20 (76% similar)
+- [[ronald-dupree|Ronald Dupree]] '06 (73% similar)
+- [[rick-hughes|Rick Hughes]] '00 (73% similar)
+
+**Career shape:** Charted 2 seasons (2005-06–2007-08). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[toure-murry|Toure' Murry]] — cosine 0.72
 - [[flip-murray|Flip Murray]] — cosine 0.70
 
+## Scouting report
+
+**Play style:** SG · Playmaking + Steals. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 21.9 pts · 5.9 reb · 5.1 ast · 2.0 stl per 100 (2024-25).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.2σ)
+- Rim-protection impact well below era (−1.2σ)
+
+**Comparables:**
+
+- [[gary-forbes|Gary Forbes]] '12 (78% similar)
+- [[rodrick-rhodes|Rodrick Rhodes]] '98 (75% similar)
+- [[rodney-stuckey|Rodney Stuckey]] '11 (74% similar)
+- [[marshon-brooks|MarShon Brooks]] '14 (72% similar)
+- [[toure-murry|Toure' Murry]] '14 (72% similar)
+- [[flip-murray|Flip Murray]] '08 (70% similar)
+
+**Career shape:** Charted 1 season (2024-25). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

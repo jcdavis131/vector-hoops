@@ -35,6 +35,33 @@ Closest career shapes in the era-normalized vector space:
 - [[luke-harangody|Luke Harangody]] — cosine 0.80
 - [[jalen-wilson|Jalen Wilson]] — cosine 0.80
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 13.8 pts · 10.8 reb · 5.1 ast · 0.6 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+1.4σ vs era)
+- Rarely turns the ball over (−1.1σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.6σ)
+- Ball-hawking activity well below era (−1.6σ)
+
+**Comparables:**
+
+- [[pacome-dadiet|Pacôme Dadiet]] '26 (94% similar)
+- [[orlando-johnson|Orlando Johnson]] '14 (84% similar)
+- [[ryan-kelly|Ryan Kelly]] '15 (83% similar)
+- [[nicolo-melli|Nicolo Melli]] '21 (82% similar)
+- [[luke-harangody|Luke Harangody]] '12 (80% similar)
+- [[jalen-wilson|Jalen Wilson]] '26 (80% similar)
+
+**Career shape:** Charted 2 seasons (2024-25–2025-26). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

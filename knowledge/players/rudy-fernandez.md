@@ -37,6 +37,33 @@ Closest career shapes in the era-normalized vector space:
 - [[donte-divincenzo|Donte DiVincenzo]] — cosine 0.88
 - [[eddie-jones|Eddie Jones]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 19.2 pts · 5.0 reb · 5.5 ast · 2.5 stl per 100 (2010-11).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.1σ vs era)
+- Active hands, disrupts passing lanes (+1.6σ vs era)
+- Reliable touch from the free-throw line (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.3σ)
+
+**Comparables:**
+
+- [[toney-douglas|Toney Douglas]] '12 (92% similar)
+- [[patty-mills|Patty Mills]] '14 (90% similar)
+- [[jon-barry|Jon Barry]] '98 (88% similar)
+- [[jason-terry|Jason Terry]] '18 (88% similar)
+- [[donte-divincenzo|Donte DiVincenzo]] '24 (88% similar)
+- [[eddie-jones|Eddie Jones]] '00 (88% similar)
+
+**Career shape:** Charted 4 seasons (2008-09–2011-12). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

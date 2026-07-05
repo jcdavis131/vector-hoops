@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[pj-dozier|PJ Dozier]] — cosine 0.88
 - [[cedric-bozeman|Cedric Bozeman]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PG · Three-Point Accuracy (Low Turnovers). Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 9.3 pts · 4.5 reb · 6.6 ast · 1.4 stl per 100 (2016-17).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Scoring load well below era (−1.6σ)
+- Free-throw touch well below era (−1.6σ)
+
+**Comparables:**
+
+- [[nate-wolters|Nate Wolters]] '15 (93% similar)
+- [[kam-jones|Kam Jones]] '26 (93% similar)
+- [[ryan-arcidiacono|Ryan Arcidiacono]] '24 (91% similar)
+- [[jacob-evans|Jacob Evans]] '19 (91% similar)
+- [[pj-dozier|PJ Dozier]] '22 (88% similar)
+- [[cedric-bozeman|Cedric Bozeman]] '07 (88% similar)
+
+**Career shape:** Charted 1 season (2016-17). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

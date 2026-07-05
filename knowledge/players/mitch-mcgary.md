@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jj-hickson|JJ Hickson]] — cosine 0.88
 - [[ben-handlogten|Ben Handlogten]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 15.6 pts · 10.8 reb · 1.8 ast · 1.2 blk per 100 (2015-16).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−4.0σ)
+- Free-throw touch well below era (−2.8σ)
+
+**Comparables:**
+
+- [[andre-brown|Andre Brown]] '08 (92% similar)
+- [[jordan-mickey|Jordan Mickey]] '17 (91% similar)
+- [[harry-giles-iii|Harry Giles III]] '24 (91% similar)
+- [[donnell-harvey|Donnell Harvey]] '02 (91% similar)
+- [[jj-hickson|JJ Hickson]] '16 (88% similar)
+- [[ben-handlogten|Ben Handlogten]] '04 (88% similar)
+
+**Career shape:** Charted 2 seasons (2014-15–2015-16). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

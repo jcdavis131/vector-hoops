@@ -35,6 +35,31 @@ Closest career shapes in the era-normalized vector space:
 - [[tony-allen|Tony Allen]] — cosine 0.67
 - [[andrae-patterson|Andrae Patterson]] — cosine 0.66
 
+## Scouting report
+
+**Play style:** Unlisted · Three-Point Accuracy (Low Turnovers). Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 19.6 pts · 9.6 reb · 2.9 ast · 2.8 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.8σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[eddie-basden|Eddie Basden]] '06 (78% similar)
+- [[jaden-springer|Jaden Springer]] '24 (71% similar)
+- [[darrin-hancock|Darrin Hancock]] '97 (68% similar)
+- [[mike-harris|Mike Harris]] '14 (68% similar)
+- [[tony-allen|Tony Allen]] '15 (67% similar)
+- [[andrae-patterson|Andrae Patterson]] '99 (66% similar)
+
+**Career shape:** Charted 2 seasons (2024-25–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

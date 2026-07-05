@@ -50,6 +50,32 @@ Closest career shapes in the era-normalized vector space:
 - [[terry-mills|Terry Mills]] — cosine 0.80
 - [[max-strus|Max Strus]] — cosine 0.80
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 8.1 pts · 6.8 reb · 5.1 ast · 1.7 stl per 100 (2015-16).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−4.0σ)
+- Scoring load well below era (−1.9σ)
+
+**Comparables:**
+
+- [[damon-jones|Damon Jones]] '09 (83% similar)
+- [[mike-dunleavy|Mike Dunleavy]] '09 (82% similar)
+- [[joe-harris|Joe Harris]] '15 (81% similar)
+- [[chandler-parsons|Chandler Parsons]] '19 (81% similar)
+- [[terry-mills|Terry Mills]] '97 (80% similar)
+- [[max-strus|Max Strus]] '21 (80% similar)
+
+**Career shape:** Charted 17 seasons (2000-01–2016-17). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

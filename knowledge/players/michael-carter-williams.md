@@ -41,6 +41,33 @@ Closest career shapes in the era-normalized vector space:
 - [[ricky-rubio|Ricky Rubio]] — cosine 0.82
 - [[speedy-claxton|Speedy Claxton]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 22.4 pts · 8.2 reb · 10.2 ast · 2.6 stl per 100 (2014-15).
+
+**Strengths:**
+
+- High-volume table-setter (+2.2σ vs era)
+- Active hands, disrupts passing lanes (+1.7σ vs era)
+- Heavy shot volume, focal scoring option (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+3.2σ)
+
+**Comparables:**
+
+- [[dennis-smith-jr|Dennis Smith Jr.]] '20 (91% similar)
+- [[dominique-jones|Dominique Jones]] '13 (85% similar)
+- [[kay-felder|Kay Felder]] '17 (83% similar)
+- [[saben-lee|Saben Lee]] '24 (83% similar)
+- [[ricky-rubio|Ricky Rubio]] '13 (82% similar)
+- [[speedy-claxton|Speedy Claxton]] '07 (82% similar)
+
+**Career shape:** Charted 8 seasons (2013-14–2020-21). Consistent Scoring Volume + Shot Volume profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

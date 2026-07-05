@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[zoran-planinic|Zoran Planinic]] — cosine 0.76
 - [[lou-roe|Lou Roe]] — cosine 0.75
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 23.0 pts · 7.6 reb · 5.8 ast · 1.0 stl per 100 (2020-21).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+2.1σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.6σ)
+- Turnover rate well above era (+1.5σ)
+
+**Comparables:**
+
+- [[lindell-wigginton|Lindell Wigginton]] '22 (84% similar)
+- [[archie-goodwin|Archie Goodwin]] '15 (79% similar)
+- [[jonathan-gibson|Jonathan Gibson]] '17 (77% similar)
+- [[allonzo-trier|Allonzo Trier]] '20 (77% similar)
+- [[zoran-planinic|Zoran Planinic]] '05 (76% similar)
+- [[lou-roe|Lou Roe]] '97 (75% similar)
+
+**Career shape:** Charted 1 season (2020-21). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

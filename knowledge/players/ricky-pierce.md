@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[malaki-branham|Malaki Branham]] — cosine 0.82
 - [[nick-young|Nick Young]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 17.9 pts · 5.3 reb · 4.0 ast · 1.1 stl per 100 (1997-98).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.8σ)
+- Finishing efficiency well below era (−1.4σ)
+
+**Comparables:**
+
+- [[courtney-alexander|Courtney Alexander]] '01 (93% similar)
+- [[gerald-henderson|Gerald Henderson]] '13 (89% similar)
+- [[chris-crawford|Chris Crawford]] '98 (85% similar)
+- [[jeff-green|Jeff Green]] '26 (83% similar)
+- [[malaki-branham|Malaki Branham]] '24 (82% similar)
+- [[nick-young|Nick Young]] '15 (82% similar)
+
+**Career shape:** Charted 2 seasons (1996-97–1997-98). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

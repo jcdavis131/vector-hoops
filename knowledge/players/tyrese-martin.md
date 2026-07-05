@@ -35,6 +35,31 @@ Closest career shapes in the era-normalized vector space:
 - [[keljin-blevins|Keljin Blevins]] — cosine 0.85
 - [[charles-r-jones|Charles R. Jones]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 18.4 pts · 7.4 reb · 4.9 ast · 1.6 stl per 100 (2025-26).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.4σ)
+
+**Comparables:**
+
+- [[elijah-hughes|Elijah Hughes]] '21 (89% similar)
+- [[armoni-brooks|Armoni Brooks]] '21 (88% similar)
+- [[james-bouknight|James Bouknight]] '22 (86% similar)
+- [[kyle-guy|Kyle Guy]] '22 (85% similar)
+- [[keljin-blevins|Keljin Blevins]] '22 (85% similar)
+- [[charles-r-jones|Charles R. Jones]] '00 (85% similar)
+
+**Career shape:** Charted 2 seasons (2024-25–2025-26). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

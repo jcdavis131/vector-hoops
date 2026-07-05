@@ -37,6 +37,33 @@ Closest career shapes in the era-normalized vector space:
 - [[a-c-green|A.C. Green]] — cosine 0.80
 - [[lorenzen-wright|Lorenzen Wright]] — cosine 0.78
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 14.3 pts · 16.5 reb · 1.2 ast · 1.7 stl per 100 (1998-99).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+2.5σ vs era)
+- Rarely turns the ball over (−1.2σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.4σ)
+- Three-point accuracy well below era (−1.1σ)
+
+**Comparables:**
+
+- [[michael-doleac|Michael Doleac]] '08 (85% similar)
+- [[udonis-haslem|Udonis Haslem]] '13 (83% similar)
+- [[scott-williams|Scott Williams]] '05 (83% similar)
+- [[johan-petro|Johan Petro]] '12 (81% similar)
+- [[a-c-green|A.C. Green]] '00 (80% similar)
+- [[lorenzen-wright|Lorenzen Wright]] '08 (78% similar)
+
+**Career shape:** Charted 4 seasons (1996-97–2000-01). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

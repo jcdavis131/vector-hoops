@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[justise-winslow|Justise Winslow]] — cosine 0.80
 - [[billy-owens|Billy Owens]] — cosine 0.79
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 12.9 pts · 10.7 reb · 5.0 ast · 1.4 stl per 100 (2018-19).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.4σ)
+- Rim pressure (free-throw generation) well below era (−1.2σ)
+
+**Comparables:**
+
+- [[erik-daniels|Erik Daniels]] '05 (91% similar)
+- [[jacob-toppin|Jacob Toppin]] '25 (83% similar)
+- [[kevin-mccullar-jr|Kevin McCullar Jr.]] '26 (82% similar)
+- [[andre-jackson-jr|Andre Jackson Jr.]] '25 (82% similar)
+- [[justise-winslow|Justise Winslow]] '21 (80% similar)
+- [[billy-owens|Billy Owens]] '01 (79% similar)
+
+**Career shape:** Charted 1 season (2018-19). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

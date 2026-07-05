@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[j-r-giddens|J.R. Giddens]] — cosine 0.86
 - [[amal-mccaskill|Amal McCaskill]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 12.3 pts · 12.2 reb · 0.4 ast · 1.4 stl per 100 (1999-00).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−3.8σ)
+- Table-setting role well below era (−1.3σ)
+
+**Comparables:**
+
+- [[ognjen-kuzmic|Ognjen Kuzmic]] '14 (89% similar)
+- [[darnell-jackson|Darnell Jackson]] '10 (87% similar)
+- [[john-edwards|John Edwards]] '05 (87% similar)
+- [[dragan-tarlac|Dragan Tarlac]] '01 (86% similar)
+- [[j-r-giddens|J.R. Giddens]] '10 (86% similar)
+- [[amal-mccaskill|Amal McCaskill]] '02 (85% similar)
+
+**Career shape:** Charted 1 season (1999-00). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

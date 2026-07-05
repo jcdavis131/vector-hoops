@@ -39,6 +39,33 @@ Closest career shapes in the era-normalized vector space:
 - [[serge-ibaka|Serge Ibaka]] — cosine 0.83
 - [[sandro-mamukelashvili|Sandro Mamukelashvili]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 24.7 pts · 16.8 reb · 3.1 ast · 2.1 blk per 100 (2024-25).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+2.4σ vs era)
+- Elite rim protection (+1.3σ vs era)
+- Relentless on the offensive glass (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.4σ)
+
+**Comparables:**
+
+- [[pj-hall|PJ Hall]] '26 (88% similar)
+- [[thomas-bryant|Thomas Bryant]] '23 (86% similar)
+- [[kel-el-ware|Kel'el Ware]] '26 (85% similar)
+- [[chris-boucher|Chris Boucher]] '19 (83% similar)
+- [[serge-ibaka|Serge Ibaka]] '12 (83% similar)
+- [[sandro-mamukelashvili|Sandro Mamukelashvili]] '22 (81% similar)
+
+**Career shape:** Charted 6 seasons (2020-21–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

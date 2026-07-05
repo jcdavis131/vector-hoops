@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[lou-amundson|Lou Amundson]] — cosine 0.82
 - [[kyrylo-fesenko|Kyrylo Fesenko]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 9.4 pts · 14.4 reb · 2.5 ast · 1.9 blk per 100 (2019-20).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+2.6σ vs era)
+- Strong net on-court impact (+2.0σ vs era)
+- Draws contact, gets to the line often (+2.0σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−3.4σ)
+- Three-point accuracy well below era (−2.7σ)
+
+**Comparables:**
+
+- [[lachlan-olbrich|Lachlan Olbrich]] '26 (88% similar)
+- [[cory-jefferson|Cory Jefferson]] '15 (84% similar)
+- [[felton-spencer|Felton Spencer]] '01 (83% similar)
+- [[chris-dudley|Chris Dudley]] '00 (82% similar)
+- [[lou-amundson|Lou Amundson]] '14 (82% similar)
+- [[kyrylo-fesenko|Kyrylo Fesenko]] '09 (82% similar)
+
+**Career shape:** Charted 1 season (2019-20). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

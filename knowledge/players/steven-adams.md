@@ -45,6 +45,34 @@ Closest career shapes in the era-normalized vector space:
 - [[mitchell-robinson|Mitchell Robinson]] — cosine 0.91
 - [[tarik-black|Tarik Black]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 15.1 pts · 20.2 reb · 4.0 ast · 1.9 blk per 100 (2022-23).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+3.9σ vs era)
+- Strong presence on the defensive glass (+1.9σ vs era)
+- Strong net on-court impact (+1.8σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−3.4σ)
+- Three-point accuracy well below era (−2.8σ)
+
+**Comparables:**
+
+- [[marshall-plumlee|Marshall Plumlee]] '17 (93% similar)
+- [[johnathan-williams|Johnathan Williams]] '19 (92% similar)
+- [[jakob-poeltl|Jakob Poeltl]] '22 (92% similar)
+- [[andrew-declercq|Andrew DeClercq]] '01 (91% similar)
+- [[mitchell-robinson|Mitchell Robinson]] '26 (91% similar)
+- [[tarik-black|Tarik Black]] '18 (91% similar)
+
+**Career shape:** Charted 12 seasons (2013-14–2025-26). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

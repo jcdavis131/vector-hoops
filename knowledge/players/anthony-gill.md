@@ -39,6 +39,34 @@ Closest career shapes in the era-normalized vector space:
 - [[tyler-cook|Tyler Cook]] — cosine 0.80
 - [[josh-childress|Josh Childress]] — cosine 0.80
 
+## Scouting report
+
+**Play style:** PF · Three-Point Accuracy (Low Turnovers). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 18.5 pts · 8.7 reb · 2.8 ast · 1.1 blk per 100 (2021-22).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+2.1σ vs era)
+- Efficient finisher inside the arc (+1.4σ vs era)
+- Strong net on-court impact (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.7σ)
+- Shot volume well below era (−1.1σ)
+
+**Comparables:**
+
+- [[kj-martin|KJ Martin]] '25 (88% similar)
+- [[terry-davis|Terry Davis]] '01 (83% similar)
+- [[terry-taylor|Terry Taylor]] '23 (83% similar)
+- [[dominick-barlow|Dominick Barlow]] '23 (80% similar)
+- [[tyler-cook|Tyler Cook]] '22 (80% similar)
+- [[josh-childress|Josh Childress]] '12 (80% similar)
+
+**Career shape:** Charted 6 seasons (2020-21–2025-26). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -41,6 +41,33 @@ Closest career shapes in the era-normalized vector space:
 - [[anthony-morrow|Anthony Morrow]] — cosine 0.94
 - [[jodie-meeks|Jodie Meeks]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 11.0 pts · 5.2 reb · 2.6 ast · 1.0 stl per 100 (2021-22).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.7σ vs era)
+- Reliable touch from the free-throw line (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Scoring load well below era (−1.5σ)
+- Shot volume well below era (−1.3σ)
+
+**Comparables:**
+
+- [[langston-galloway|Langston Galloway]] '18 (96% similar)
+- [[marco-belinelli|Marco Belinelli]] '08 (95% similar)
+- [[bryn-forbes|Bryn Forbes]] '17 (95% similar)
+- [[wayne-ellington|Wayne Ellington]] '17 (95% similar)
+- [[anthony-morrow|Anthony Morrow]] '17 (94% similar)
+- [[jodie-meeks|Jodie Meeks]] '12 (93% similar)
+
+**Career shape:** Charted 8 seasons (2014-15–2021-22). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

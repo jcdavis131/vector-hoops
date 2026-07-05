@@ -42,6 +42,33 @@ Closest career shapes in the era-normalized vector space:
 - [[tyrese-maxey|Tyrese Maxey]] — cosine 0.92
 - [[sam-cassell|Sam Cassell]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 34.4 pts · 6.0 reb · 9.7 ast · 1.2 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Featured, high-usage scoring role (+2.0σ vs era)
+- High-volume table-setter (+1.9σ vs era)
+- Heavy shot volume, focal scoring option (+1.7σ vs era)
+
+**Areas of concern:**
+
+- Offensive-glass activity well below era (−1.0σ)
+
+**Comparables:**
+
+- [[desmond-bane|Desmond Bane]] '24 (95% similar)
+- [[kyrie-irving|Kyrie Irving]] '20 (95% similar)
+- [[stephen-curry|Stephen Curry]] '16 (93% similar)
+- [[khris-middleton|Khris Middleton]] '20 (93% similar)
+- [[tyrese-maxey|Tyrese Maxey]] '25 (92% similar)
+- [[sam-cassell|Sam Cassell]] '04 (92% similar)
+
+**Career shape:** Charted 9 seasons (2016-17–2025-26). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

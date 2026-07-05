@@ -43,6 +43,32 @@ Closest career shapes in the era-normalized vector space:
 - [[grayson-allen|Grayson Allen]] — cosine 0.93
 - [[chase-budinger|Chase Budinger]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 12.7 pts · 5.0 reb · 2.8 ast · 1.3 stl per 100 (2005-06).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.6σ)
+- Rim pressure (free-throw generation) well below era (−1.6σ)
+
+**Comparables:**
+
+- [[dale-ellis|Dale Ellis]] '00 (96% similar)
+- [[wayne-ellington|Wayne Ellington]] '17 (94% similar)
+- [[dennis-scott|Dennis Scott]] '00 (94% similar)
+- [[anthony-morrow|Anthony Morrow]] '17 (93% similar)
+- [[grayson-allen|Grayson Allen]] '19 (93% similar)
+- [[chase-budinger|Chase Budinger]] '10 (93% similar)
+
+**Career shape:** Charted 10 seasons (1996-97–2005-06). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

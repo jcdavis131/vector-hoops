@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[j-r-giddens|J.R. Giddens]] — cosine 0.81
 - [[lari-ketner|Lari Ketner]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 12.9 pts · 10.3 reb · 2.4 ast · 1.9 stl per 100 (2004-05).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.6σ)
+- Free-throw touch well below era (−1.4σ)
+
+**Comparables:**
+
+- [[brandon-davies|Brandon Davies]] '15 (90% similar)
+- [[isaiah-roby|Isaiah Roby]] '23 (84% similar)
+- [[noah-penda|Noah Penda]] '26 (81% similar)
+- [[dominic-mcguire|Dominic McGuire]] '10 (81% similar)
+- [[j-r-giddens|J.R. Giddens]] '10 (81% similar)
+- [[lari-ketner|Lari Ketner]] '00 (81% similar)
+
+**Career shape:** Charted 3 seasons (2004-05–2006-07). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

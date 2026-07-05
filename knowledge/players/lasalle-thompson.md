@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[cleanthony-early|Cleanthony Early]] — cosine 0.84
 - [[brooks-barnhizer|Brooks Barnhizer]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 3.5 pts · 11.8 reb · 0.7 ast · 2.1 blk per 100 (1996-97).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−4.0σ)
+- Scoring load well below era (−2.7σ)
+
+**Comparables:**
+
+- [[anthony-avent|Anthony Avent]] '00 (89% similar)
+- [[john-salley|John Salley]] '00 (86% similar)
+- [[cameron-bairstow|Cameron Bairstow]] '15 (85% similar)
+- [[stanley-umude|Stanley Umude]] '25 (84% similar)
+- [[cleanthony-early|Cleanthony Early]] '16 (84% similar)
+- [[brooks-barnhizer|Brooks Barnhizer]] '26 (84% similar)
+
+**Career shape:** Charted 1 season (1996-97). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -41,6 +41,33 @@ Closest career shapes in the era-normalized vector space:
 - [[julius-randle|Julius Randle]] — cosine 0.80
 - [[christian-wood|Christian Wood]] — cosine 0.78
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 32.9 pts · 12.6 reb · 3.6 ast · 2.0 stl per 100 (2024-25).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+2.4σ vs era)
+- Featured, high-usage scoring role (+1.8σ vs era)
+- Efficient finisher inside the arc (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.5σ)
+
+**Comparables:**
+
+- [[shareef-abdur-rahim|Shareef Abdur-Rahim]] '99 (90% similar)
+- [[chris-gatling|Chris Gatling]] '97 (84% similar)
+- [[corey-maggette|Corey Maggette]] '06 (82% similar)
+- [[shawn-kemp|Shawn Kemp]] '00 (80% similar)
+- [[julius-randle|Julius Randle]] '24 (80% similar)
+- [[christian-wood|Christian Wood]] '19 (78% similar)
+
+**Career shape:** Charted 8 seasons (2018-19–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

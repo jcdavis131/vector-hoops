@@ -37,6 +37,34 @@ Closest career shapes in the era-normalized vector space:
 - [[shane-larkin|Shane Larkin]] — cosine 0.89
 - [[daniel-ewing|Daniel Ewing]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 8.7 pts · 6.9 reb · 7.8 ast · 3.2 stl per 100 (2015-16).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.8σ vs era)
+- High-volume table-setter (+1.3σ vs era)
+- Reliable touch from the free-throw line (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Scoring load well below era (−1.8σ)
+- Rim pressure (free-throw generation) well below era (−1.7σ)
+
+**Comparables:**
+
+- [[jordan-mclaughlin|Jordan McLaughlin]] '24 (93% similar)
+- [[scott-brooks|Scott Brooks]] '97 (91% similar)
+- [[willie-anderson|Willie Anderson]] '97 (91% similar)
+- [[aaron-mckie|Aaron McKie]] '05 (90% similar)
+- [[shane-larkin|Shane Larkin]] '16 (89% similar)
+- [[daniel-ewing|Daniel Ewing]] '07 (89% similar)
+
+**Career shape:** Charted 4 seasons (2012-13–2015-16). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

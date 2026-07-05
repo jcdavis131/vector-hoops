@@ -40,6 +40,32 @@ Closest career shapes in the era-normalized vector space:
 - [[aj-price|AJ Price]] — cosine 0.88
 - [[mike-james|Mike James]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** SG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 20.8 pts · 6.5 reb · 6.9 ast · 1.3 stl per 100 (2019-20).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.6σ)
+- Finishing efficiency well below era (−1.2σ)
+
+**Comparables:**
+
+- [[john-starks|John Starks]] '00 (91% similar)
+- [[marcus-brown|Marcus Brown]] '97 (91% similar)
+- [[jordan-farmar|Jordan Farmar]] '14 (89% similar)
+- [[o-j-mayo|O.J. Mayo]] '14 (88% similar)
+- [[aj-price|AJ Price]] '14 (88% similar)
+- [[mike-james|Mike James]] '06 (88% similar)
+
+**Career shape:** Charted 7 seasons (2019-20–2025-26). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

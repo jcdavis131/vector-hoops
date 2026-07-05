@@ -36,6 +36,34 @@ Closest career shapes in the era-normalized vector space:
 - [[erick-dampier|Erick Dampier]] — cosine 0.93
 - [[javale-mcgee|JaVale McGee]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 18.9 pts · 17.3 reb · 1.9 ast · 4.8 blk per 100 (2022-23).
+
+**Strengths:**
+
+- Elite rim protection (+4.0σ vs era)
+- Efficient finisher inside the arc (+3.0σ vs era)
+- Relentless on the offensive glass (+2.5σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.1σ)
+- Three-point volume well below era (−1.8σ)
+
+**Comparables:**
+
+- [[salah-mejri|Salah Mejri]] '18 (97% similar)
+- [[keon-clark|Keon Clark]] '01 (95% similar)
+- [[willie-reed|Willie Reed]] '16 (94% similar)
+- [[goga-bitadze|Goga Bitadze]] '25 (94% similar)
+- [[erick-dampier|Erick Dampier]] '97 (93% similar)
+- [[javale-mcgee|JaVale McGee]] '17 (93% similar)
+
+**Career shape:** Charted 3 seasons (2022-23–2024-25). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

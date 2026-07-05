@@ -38,6 +38,32 @@ Closest career shapes in the era-normalized vector space:
 - [[cj-mccollum|CJ McCollum]] — cosine 0.90
 - [[coby-white|Coby White]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** SG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 28.3 pts · 6.3 reb · 5.4 ast · 1.0 stl per 100 (1999-00).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+2.4σ vs era)
+- Featured, high-usage scoring role (+1.8σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.1σ)
+
+**Comparables:**
+
+- [[tyler-herro|Tyler Herro]] '22 (94% similar)
+- [[ben-gordon|Ben Gordon]] '05 (93% similar)
+- [[jordan-clarkson|Jordan Clarkson]] '21 (92% similar)
+- [[allan-houston|Allan Houston]] '03 (91% similar)
+- [[cj-mccollum|CJ McCollum]] '21 (90% similar)
+- [[coby-white|Coby White]] '26 (89% similar)
+
+**Career shape:** Charted 5 seasons (1996-97–2000-01). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

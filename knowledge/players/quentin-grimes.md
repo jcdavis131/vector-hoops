@@ -38,6 +38,32 @@ Closest career shapes in the era-normalized vector space:
 - [[wayne-ellington|Wayne Ellington]] — cosine 0.91
 - [[landry-shamet|Landry Shamet]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 17.3 pts · 4.8 reb · 3.2 ast · 1.7 stl per 100 (2023-24).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.4σ vs era)
+- Rarely turns the ball over (−1.2σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.2σ)
+
+**Comparables:**
+
+- [[svi-mykhailiuk|Svi Mykhailiuk]] '24 (96% similar)
+- [[ben-mclemore|Ben McLemore]] '22 (94% similar)
+- [[daniel-gibson|Daniel Gibson]] '13 (93% similar)
+- [[wesley-matthews|Wesley Matthews]] '20 (92% similar)
+- [[wayne-ellington|Wayne Ellington]] '17 (91% similar)
+- [[landry-shamet|Landry Shamet]] '20 (91% similar)
+
+**Career shape:** Charted 5 seasons (2021-22–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

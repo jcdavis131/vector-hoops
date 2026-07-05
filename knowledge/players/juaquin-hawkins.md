@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jud-buechler|Jud Buechler]] — cosine 0.86
 - [[reggie-geary|Reggie Geary]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 10.4 pts · 6.0 reb · 3.6 ast · 2.2 stl per 100 (2002-03).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.0σ)
+- Rim pressure (free-throw generation) well below era (−1.4σ)
+
+**Comparables:**
+
+- [[david-wingate|David Wingate]] '99 (91% similar)
+- [[bruce-bowen|Bruce Bowen]] '99 (89% similar)
+- [[mitchell-butler|Mitchell Butler]] '98 (88% similar)
+- [[sasha-pavlovic|Sasha Pavlovic]] '13 (87% similar)
+- [[jud-buechler|Jud Buechler]] '00 (86% similar)
+- [[reggie-geary|Reggie Geary]] '97 (86% similar)
+
+**Career shape:** Charted 1 season (2002-03). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

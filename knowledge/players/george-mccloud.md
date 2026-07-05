@@ -39,6 +39,31 @@ Closest career shapes in the era-normalized vector space:
 - [[juan-carlos-navarro|Juan Carlos Navarro]] — cosine 0.91
 - [[randy-foye|Randy Foye]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 18.9 pts · 9.1 reb · 3.5 ast · 2.2 stl per 100 (1997-98).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.2σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.3σ)
+
+**Comparables:**
+
+- [[sam-mack|Sam Mack]] '00 (96% similar)
+- [[luther-head|Luther Head]] '07 (93% similar)
+- [[chris-whitney|Chris Whitney]] '04 (92% similar)
+- [[roger-mason-jr|Roger Mason Jr.]] '03 (92% similar)
+- [[juan-carlos-navarro|Juan Carlos Navarro]] '08 (91% similar)
+- [[randy-foye|Randy Foye]] '12 (91% similar)
+
+**Career shape:** Charted 6 seasons (1996-97–2001-02). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

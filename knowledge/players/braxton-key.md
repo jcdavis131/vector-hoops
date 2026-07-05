@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[anthony-mason|Anthony Mason]] — cosine 0.56
 - [[ashraf-amaya|Ashraf Amaya]] — cosine 0.56
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 16.5 pts · 13.6 reb · 6.8 ast · 1.5 stl per 100 (2023-24).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+1.9σ vs era)
+- Rarely turns the ball over (−1.7σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[troy-murphy|Troy Murphy]] '09 (66% similar)
+- [[jamie-feick|Jamie Feick]] '00 (57% similar)
+- [[ryan-kelly|Ryan Kelly]] '15 (57% similar)
+- [[josh-hart|Josh Hart]] '23 (57% similar)
+- [[anthony-mason|Anthony Mason]] '02 (56% similar)
+- [[ashraf-amaya|Ashraf Amaya]] '97 (56% similar)
+
+**Career shape:** Charted 1 season (2023-24). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

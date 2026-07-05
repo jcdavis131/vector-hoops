@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[gary-grant|Gary Grant]] — cosine 0.90
 - [[howard-eisley|Howard Eisley]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 8.8 pts · 4.8 reb · 8.6 ast · 1.7 stl per 100 (2021-22).
+
+**Strengths:**
+
+- High-volume table-setter (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.1σ)
+- Scoring load well below era (−1.8σ)
+
+**Comparables:**
+
+- [[tyler-kolek|Tyler Kolek]] '25 (94% similar)
+- [[jamal-shead|Jamal Shead]] '26 (94% similar)
+- [[earl-watson|Earl Watson]] '14 (92% similar)
+- [[chris-childs|Chris Childs]] '02 (90% similar)
+- [[gary-grant|Gary Grant]] '98 (90% similar)
+- [[howard-eisley|Howard Eisley]] '03 (89% similar)
+
+**Career shape:** Charted 3 seasons (2019-20–2021-22). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

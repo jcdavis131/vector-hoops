@@ -41,6 +41,33 @@ Closest career shapes in the era-normalized vector space:
 - [[d-angelo-russell|D'Angelo Russell]] — cosine 0.91
 - [[malik-monk|Malik Monk]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** SG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 19.2 pts · 4.3 reb · 7.2 ast · 1.0 stl per 100 (2019-20).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.2σ vs era)
+- High-volume table-setter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.4σ)
+- Finishing efficiency well below era (−1.4σ)
+
+**Comparables:**
+
+- [[jordan-crawford|Jordan Crawford]] '11 (95% similar)
+- [[aaron-brooks|Aaron Brooks]] '11 (93% similar)
+- [[jordan-poole|Jordan Poole]] '25 (92% similar)
+- [[keyonte-george|Keyonte George]] '26 (92% similar)
+- [[d-angelo-russell|D'Angelo Russell]] '19 (91% similar)
+- [[malik-monk|Malik Monk]] '18 (90% similar)
+
+**Career shape:** Charted 8 seasons (2011-12–2019-20). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Playmaking + Steals identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

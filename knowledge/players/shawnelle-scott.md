@@ -36,6 +36,34 @@ Closest career shapes in the era-normalized vector space:
 - [[thomas-robinson|Thomas Robinson]] — cosine 0.91
 - [[nazr-mohammed|Nazr Mohammed]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 15.4 pts · 17.8 reb · 1.4 ast · 2.1 blk per 100 (2000-01).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+3.2σ vs era)
+- Draws contact, gets to the line often (+1.4σ vs era)
+- Strong presence on the defensive glass (+1.3σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−3.4σ)
+- Free-throw touch well below era (−2.5σ)
+
+**Comparables:**
+
+- [[precious-achiuwa|Precious Achiuwa]] '21 (92% similar)
+- [[jayson-williams|Jayson Williams]] '98 (92% similar)
+- [[tristan-thompson|Tristan Thompson]] '25 (92% similar)
+- [[aaron-gray|Aaron Gray]] '11 (91% similar)
+- [[thomas-robinson|Thomas Robinson]] '16 (91% similar)
+- [[nazr-mohammed|Nazr Mohammed]] '15 (91% similar)
+
+**Career shape:** Charted 3 seasons (1997-98–2001-02). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[sherron-collins|Sherron Collins]] — cosine 0.86
 - [[theo-maledon|Theo Maledon]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** SG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 14.4 pts · 4.1 reb · 5.5 ast · 1.8 stl per 100 (1998-99).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.8σ)
+- Finishing efficiency well below era (−1.7σ)
+
+**Comparables:**
+
+- [[bronny-james|Bronny James]] '25 (90% similar)
+- [[dean-oliver|Dean Oliver]] '02 (88% similar)
+- [[gerald-brown|Gerald Brown]] '99 (87% similar)
+- [[javonte-smart|Javonte Smart]] '22 (87% similar)
+- [[sherron-collins|Sherron Collins]] '11 (86% similar)
+- [[theo-maledon|Theo Maledon]] '21 (86% similar)
+
+**Career shape:** Charted 1 season (1998-99). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

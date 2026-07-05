@@ -34,6 +34,31 @@ Closest career shapes in the era-normalized vector space:
 - [[cal-bowdler|Cal Bowdler]] — cosine 0.78
 - [[kevin-jones|Kevin Jones]] — cosine 0.77
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 17.6 pts · 8.8 reb · 2.5 ast · 1.9 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.2σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[derrick-jones-jr|Derrick Jones Jr.]] '18 (84% similar)
+- [[maurice-ndour|Maurice Ndour]] '17 (81% similar)
+- [[scot-pollard|Scot Pollard]] '03 (79% similar)
+- [[christian-koloko|Christian Koloko]] '23 (79% similar)
+- [[cal-bowdler|Cal Bowdler]] '01 (78% similar)
+- [[kevin-jones|Kevin Jones]] '13 (77% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

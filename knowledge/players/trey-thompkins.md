@@ -34,6 +34,31 @@ Closest career shapes in the era-normalized vector space:
 - [[mike-batiste|Mike Batiste]] — cosine 0.75
 - [[pat-burke|Pat Burke]] — cosine 0.75
 
+## Scouting report
+
+**Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 23.1 pts · 9.7 reb · 1.2 ast · 1.2 stl per 100 (2011-12).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+1.8σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−3.0σ)
+
+**Comparables:**
+
+- [[byron-mullens|Byron Mullens]] '14 (92% similar)
+- [[ace-bailey|Ace Bailey]] '26 (80% similar)
+- [[andrew-nicholson|Andrew Nicholson]] '17 (79% similar)
+- [[elijah-hughes|Elijah Hughes]] '21 (76% similar)
+- [[mike-batiste|Mike Batiste]] '03 (75% similar)
+- [[pat-burke|Pat Burke]] '07 (75% similar)
+
+**Career shape:** Charted 1 season (2011-12). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

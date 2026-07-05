@@ -44,6 +44,31 @@ Closest career shapes in the era-normalized vector space:
 - [[nikola-pekovic|Nikola Pekovic]] — cosine 0.78
 - [[vin-baker|Vin Baker]] — cosine 0.78
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 17.5 pts · 9.3 reb · 1.9 ast · 1.0 stl per 100 (2005-06).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+4.0σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.5σ)
+
+**Comparables:**
+
+- [[amar-e-stoudemire|Amar'e Stoudemire]] '08 (84% similar)
+- [[matt-harpring|Matt Harpring]] '03 (83% similar)
+- [[zion-williamson|Zion Williamson]] '25 (83% similar)
+- [[jonathan-kuminga|Jonathan Kuminga]] '25 (82% similar)
+- [[nikola-pekovic|Nikola Pekovic]] '12 (78% similar)
+- [[vin-baker|Vin Baker]] '05 (78% similar)
+
+**Career shape:** Charted 11 seasons (1996-97–2006-07). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -49,6 +49,33 @@ Closest career shapes in the era-normalized vector space:
 - [[matt-geiger|Matt Geiger]] — cosine 0.85
 - [[al-jefferson|Al Jefferson]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 35.0 pts · 12.9 reb · 3.1 ast · 1.8 blk per 100 (2017-18).
+
+**Strengths:**
+
+- Featured, high-usage scoring role (+2.5σ vs era)
+- Heavy shot volume, focal scoring option (+2.4σ vs era)
+- Draws contact, gets to the line often (+1.9σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[rik-smits|Rik Smits]] '98 (92% similar)
+- [[marreese-speights|Marreese Speights]] '18 (89% similar)
+- [[chris-bosh|Chris Bosh]] '10 (87% similar)
+- [[david-west|David West]] '18 (86% similar)
+- [[matt-geiger|Matt Geiger]] '98 (85% similar)
+- [[al-jefferson|Al Jefferson]] '09 (84% similar)
+
+**Career shape:** Charted 16 seasons (2006-07–2021-22). Entered as a Rim Protection + Offensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

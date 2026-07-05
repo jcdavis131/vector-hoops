@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[vernon-macklin|Vernon Macklin]] — cosine 0.86
 - [[hassan-adams|Hassan Adams]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 15.3 pts · 11.1 reb · 1.7 ast · 1.4 stl per 100 (2001-02).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+2.2σ vs era)
+- Efficient finisher inside the arc (+1.4σ vs era)
+- Rarely turns the ball over (−1.3σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.3σ)
+
+**Comparables:**
+
+- [[terry-taylor|Terry Taylor]] '23 (92% similar)
+- [[arnett-moultrie|Arnett Moultrie]] '13 (91% similar)
+- [[jordan-williams|Jordan Williams]] '12 (87% similar)
+- [[james-augustine|James Augustine]] '08 (86% similar)
+- [[vernon-macklin|Vernon Macklin]] '12 (86% similar)
+- [[hassan-adams|Hassan Adams]] '07 (86% similar)
+
+**Career shape:** Charted 1 season (2001-02). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

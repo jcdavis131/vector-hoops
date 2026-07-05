@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[brandon-goodwin|Brandon Goodwin]] — cosine 0.90
 - [[keon-johnson|Keon Johnson]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 16.1 pts · 4.6 reb · 7.6 ast · 2.2 stl per 100 (2000-01).
+
+**Strengths:**
+
+- High-volume table-setter (+1.2σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.8σ)
+- Finishing efficiency well below era (−1.6σ)
+
+**Comparables:**
+
+- [[khalid-el-amin|Khalid El-Amin]] '01 (95% similar)
+- [[will-solomon|Will Solomon]] '02 (92% similar)
+- [[lawrence-moten|Lawrence Moten]] '97 (92% similar)
+- [[sebastian-telfair|Sebastian Telfair]] '10 (91% similar)
+- [[brandon-goodwin|Brandon Goodwin]] '20 (90% similar)
+- [[keon-johnson|Keon Johnson]] '23 (89% similar)
+
+**Career shape:** Charted 3 seasons (1999-00–2001-02). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

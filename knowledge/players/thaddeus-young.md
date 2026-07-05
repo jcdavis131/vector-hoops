@@ -50,6 +50,34 @@ Closest career shapes in the era-normalized vector space:
 - [[tony-allen|Tony Allen]] — cosine 0.76
 - [[larry-nance-jr|Larry Nance Jr.]] — cosine 0.75
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 15.2 pts · 11.4 reb · 6.3 ast · 2.5 stl per 100 (2023-24).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.8σ vs era)
+- Efficient finisher inside the arc (+1.7σ vs era)
+- Relentless on the offensive glass (+1.7σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.6σ)
+- Three-point volume well below era (−1.6σ)
+
+**Comparables:**
+
+- [[gary-payton-ii|Gary Payton II]] '20 (87% similar)
+- [[julian-wright|Julian Wright]] '11 (81% similar)
+- [[ausar-thompson|Ausar Thompson]] '26 (78% similar)
+- [[renaldo-balkman|Renaldo Balkman]] '08 (77% similar)
+- [[tony-allen|Tony Allen]] '15 (76% similar)
+- [[larry-nance-jr|Larry Nance Jr.]] '18 (75% similar)
+
+**Career shape:** Charted 17 seasons (2007-08–2023-24). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

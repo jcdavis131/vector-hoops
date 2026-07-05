@@ -40,6 +40,33 @@ Closest career shapes in the era-normalized vector space:
 - [[nate-robinson|Nate Robinson]] — cosine 0.91
 - [[tre-mann|Tre Mann]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 16.2 pts · 4.2 reb · 7.3 ast · 2.2 stl per 100 (2008-09).
+
+**Strengths:**
+
+- High-volume table-setter (+1.2σ vs era)
+- Active hands, disrupts passing lanes (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.7σ)
+- Offensive-glass activity well below era (−1.1σ)
+
+**Comparables:**
+
+- [[o-j-mayo|O.J. Mayo]] '14 (97% similar)
+- [[jannero-pargo|Jannero Pargo]] '14 (94% similar)
+- [[tyrese-proctor|Tyrese Proctor]] '26 (93% similar)
+- [[jimmer-fredette|Jimmer Fredette]] '14 (91% similar)
+- [[nate-robinson|Nate Robinson]] '10 (91% similar)
+- [[tre-mann|Tre Mann]] '26 (91% similar)
+
+**Career shape:** Charted 7 seasons (2002-03–2008-09). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Playmaking + Steals identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

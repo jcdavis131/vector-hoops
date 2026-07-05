@@ -39,6 +39,32 @@ Closest career shapes in the era-normalized vector space:
 - [[dale-ellis|Dale Ellis]] — cosine 0.91
 - [[daequan-cook|Daequan Cook]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 21.8 pts · 4.1 reb · 2.7 ast · 0.7 stl per 100 (2014-15).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.8σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.4σ)
+- Defensive rebounding well below era (−1.3σ)
+
+**Comparables:**
+
+- [[ben-mclemore|Ben McLemore]] '22 (95% similar)
+- [[kareem-rush|Kareem Rush]] '09 (93% similar)
+- [[eric-piatkowski|Eric Piatkowski]] '06 (92% similar)
+- [[tracy-murray|Tracy Murray]] '02 (92% similar)
+- [[dale-ellis|Dale Ellis]] '00 (91% similar)
+- [[daequan-cook|Daequan Cook]] '11 (91% similar)
+
+**Career shape:** Charted 6 seasons (2014-15–2019-20). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

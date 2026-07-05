@@ -35,6 +35,34 @@ Closest career shapes in the era-normalized vector space:
 - [[jerald-honeycutt|Jerald Honeycutt]] — cosine 0.72
 - [[mickael-pietrus|Mickael Pietrus]] — cosine 0.72
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 20.4 pts · 7.0 reb · 1.7 ast · 1.7 blk per 100 (2003-04).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.5σ vs era)
+- Strong net on-court impact (+1.3σ vs era)
+- Knockdown three-point shooter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.8σ)
+- Ball-hawking activity well below era (−1.0σ)
+
+**Comparables:**
+
+- [[marcus-landry|Marcus Landry]] '10 (76% similar)
+- [[dariq-whitehead|Dariq Whitehead]] '25 (74% similar)
+- [[dermarr-johnson|DerMarr Johnson]] '07 (73% similar)
+- [[allan-ray|Allan Ray]] '07 (72% similar)
+- [[jerald-honeycutt|Jerald Honeycutt]] '98 (72% similar)
+- [[mickael-pietrus|Mickael Pietrus]] '11 (72% similar)
+
+**Career shape:** Charted 2 seasons (2002-03–2003-04). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

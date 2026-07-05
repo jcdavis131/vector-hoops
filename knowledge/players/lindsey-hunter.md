@@ -46,6 +46,34 @@ Closest career shapes in the era-normalized vector space:
 - [[toney-douglas|Toney Douglas]] — cosine 0.92
 - [[reed-sheppard|Reed Sheppard]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 14.2 pts · 2.3 reb · 7.2 ast · 3.9 stl per 100 (2008-09).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+4.0σ vs era)
+- High-volume three-point shooter (+1.7σ vs era)
+- High-volume table-setter (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.8σ)
+- Defensive rebounding well below era (−1.8σ)
+
+**Comparables:**
+
+- [[mookie-blaylock|Mookie Blaylock]] '97 (93% similar)
+- [[jose-alvarado|Jose Alvarado]] '22 (92% similar)
+- [[dee-brown|Dee Brown]] '00 (92% similar)
+- [[greg-anthony|Greg Anthony]] '99 (92% similar)
+- [[toney-douglas|Toney Douglas]] '12 (92% similar)
+- [[reed-sheppard|Reed Sheppard]] '26 (91% similar)
+
+**Career shape:** Charted 13 seasons (1996-97–2008-09). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Playmaking + Steals identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

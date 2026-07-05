@@ -38,6 +38,34 @@ Closest career shapes in the era-normalized vector space:
 - [[maurice-harkless|Maurice Harkless]] — cosine 0.88
 - [[johnny-furphy|Johnny Furphy]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass + Defensive Glass. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 9.3 pts · 8.9 reb · 2.2 ast · 2.2 stl per 100 (2017-18).
+
+**Strengths:**
+
+- Strong net on-court impact (+1.6σ vs era)
+- Rarely turns the ball over (−1.2σ vs era)
+- Efficient finisher inside the arc (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−3.5σ)
+- Shot volume well below era (−1.8σ)
+
+**Comparables:**
+
+- [[eduardo-najera|Eduardo Najera]] '12 (94% similar)
+- [[luc-mbah-a-moute|Luc Mbah a Moute]] '16 (89% similar)
+- [[hugo-gonzalez|Hugo González]] '26 (89% similar)
+- [[jordan-walsh|Jordan Walsh]] '25 (89% similar)
+- [[maurice-harkless|Maurice Harkless]] '15 (88% similar)
+- [[johnny-furphy|Johnny Furphy]] '26 (85% similar)
+
+**Career shape:** Charted 5 seasons (2013-14–2017-18). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -39,6 +39,33 @@ Closest career shapes in the era-normalized vector space:
 - [[anthony-peeler|Anthony Peeler]] — cosine 0.93
 - [[chris-whitney|Chris Whitney]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 20.1 pts · 5.8 reb · 4.5 ast · 1.8 stl per 100 (2006-07).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.8σ vs era)
+- Knockdown three-point shooter (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Offensive-glass activity well below era (−1.1σ)
+- Rim pressure (free-throw generation) well below era (−1.1σ)
+
+**Comparables:**
+
+- [[shammond-williams|Shammond Williams]] '04 (96% similar)
+- [[matt-maloney|Matt Maloney]] '00 (94% similar)
+- [[chucky-atkins|Chucky Atkins]] '08 (93% similar)
+- [[dana-barros|Dana Barros]] '99 (93% similar)
+- [[anthony-peeler|Anthony Peeler]] '97 (93% similar)
+- [[chris-whitney|Chris Whitney]] '04 (93% similar)
+
+**Career shape:** Charted 6 seasons (2005-06–2010-11). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

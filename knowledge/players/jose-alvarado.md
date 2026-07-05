@@ -38,6 +38,33 @@ Closest career shapes in the era-normalized vector space:
 - [[mario-chalmers|Mario Chalmers]] — cosine 0.91
 - [[collin-gillespie|Collin Gillespie]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 18.8 pts · 5.7 reb · 8.7 ast · 4.0 stl per 100 (2021-22).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+4.0σ vs era)
+- High-volume table-setter (+1.6σ vs era)
+- Strong net on-court impact (+1.4σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[mookie-blaylock|Mookie Blaylock]] '97 (94% similar)
+- [[marcus-smart|Marcus Smart]] '24 (93% similar)
+- [[lindsey-hunter|Lindsey Hunter]] '09 (92% similar)
+- [[greg-anthony|Greg Anthony]] '99 (91% similar)
+- [[mario-chalmers|Mario Chalmers]] '16 (91% similar)
+- [[collin-gillespie|Collin Gillespie]] '24 (91% similar)
+
+**Career shape:** Charted 5 seasons (2021-22–2025-26). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

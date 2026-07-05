@@ -35,6 +35,33 @@ Closest career shapes in the era-normalized vector space:
 - [[marcus-landry|Marcus Landry]] — cosine 0.76
 - [[ryan-broekhoff|Ryan Broekhoff]] — cosine 0.75
 
+## Scouting report
+
+**Play style:** C · Three-Point Accuracy (Low Turnovers). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 16.8 pts · 8.9 reb · 2.3 ast · 0.9 stl per 100 (2014-15).
+
+**Strengths:**
+
+- Strong net on-court impact (+1.3σ vs era)
+- High-volume three-point shooter (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.2σ)
+- Ball-hawking activity well below era (−1.1σ)
+
+**Comparables:**
+
+- [[alec-peters|Alec Peters]] '18 (83% similar)
+- [[lester-quinones|Lester Quinones]] '24 (83% similar)
+- [[josh-davis|Josh Davis]] '05 (81% similar)
+- [[drew-peterson|Drew Peterson]] '25 (77% similar)
+- [[marcus-landry|Marcus Landry]] '10 (76% similar)
+- [[ryan-broekhoff|Ryan Broekhoff]] '19 (75% similar)
+
+**Career shape:** Charted 2 seasons (2013-14–2014-15). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

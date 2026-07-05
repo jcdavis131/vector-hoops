@@ -40,6 +40,34 @@ Closest career shapes in the era-normalized vector space:
 - [[jakob-poeltl|Jakob Poeltl]] — cosine 0.91
 - [[trevor-booker|Trevor Booker]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 16.9 pts · 13.7 reb · 3.0 ast · 2.7 blk per 100 (2019-20).
+
+**Strengths:**
+
+- Elite rim protection (+1.8σ vs era)
+- Efficient finisher inside the arc (+1.5σ vs era)
+- Strong presence on the defensive glass (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.7σ)
+- Three-point volume well below era (−1.8σ)
+
+**Comparables:**
+
+- [[andris-biedrins|Andris Biedrins]] '13 (92% similar)
+- [[nic-claxton|Nic Claxton]] '23 (92% similar)
+- [[tarik-black|Tarik Black]] '18 (92% similar)
+- [[mitchell-robinson|Mitchell Robinson]] '26 (91% similar)
+- [[jakob-poeltl|Jakob Poeltl]] '22 (91% similar)
+- [[trevor-booker|Trevor Booker]] '13 (90% similar)
+
+**Career shape:** Charted 7 seasons (2015-16–2021-22). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

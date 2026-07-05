@@ -37,6 +37,33 @@ Closest career shapes in the era-normalized vector space:
 - [[loren-meyer|Loren Meyer]] — cosine 0.75
 - [[terry-cummings|Terry Cummings]] — cosine 0.73
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 16.7 pts · 12.4 reb · 1.8 ast · 0.9 stl per 100 (2008-09).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+3.9σ vs era)
+- Strong presence on the defensive glass (+1.0σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.3σ)
+- Turnover rate well above era (+2.1σ)
+
+**Comparables:**
+
+- [[andray-blatche|Andray Blatche]] '13 (81% similar)
+- [[shawn-kemp|Shawn Kemp]] '00 (78% similar)
+- [[mengke-bateer|Mengke Bateer]] '02 (76% similar)
+- [[malik-rose|Malik Rose]] '99 (75% similar)
+- [[loren-meyer|Loren Meyer]] '97 (75% similar)
+- [[terry-cummings|Terry Cummings]] '99 (73% similar)
+
+**Career shape:** Charted 4 seasons (2005-06–2009-10). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

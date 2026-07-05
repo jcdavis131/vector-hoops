@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[damir-markota|Damir Markota]] — cosine 0.82
 - [[jaden-ivey|Jaden Ivey]] — cosine 0.78
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 18.3 pts · 7.4 reb · 3.9 ast · 1.2 stl per 100 (2014-15).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.6σ)
+- Finishing efficiency well below era (−1.6σ)
+
+**Comparables:**
+
+- [[nolan-smith|Nolan Smith]] '13 (86% similar)
+- [[sarunas-marciulionis|Sarunas Marciulionis]] '97 (84% similar)
+- [[luke-jackson|Luke Jackson]] '06 (83% similar)
+- [[jeremy-pargo|Jeremy Pargo]] '12 (83% similar)
+- [[damir-markota|Damir Markota]] '07 (82% similar)
+- [[jaden-ivey|Jaden Ivey]] '23 (78% similar)
+
+**Career shape:** Charted 1 season (2014-15). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

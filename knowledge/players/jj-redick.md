@@ -48,6 +48,34 @@ Closest career shapes in the era-normalized vector space:
 - [[marco-belinelli|Marco Belinelli]] — cosine 0.92
 - [[tim-hardaway-jr|Tim Hardaway Jr.]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 28.6 pts · 3.2 reb · 2.5 ast · 1.0 stl per 100 (2015-16).
+
+**Strengths:**
+
+- Strong net on-court impact (+2.0σ vs era)
+- Featured, high-usage scoring role (+1.6σ vs era)
+- High-volume three-point shooter (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.4σ)
+- Offensive-glass activity well below era (−1.2σ)
+
+**Comparables:**
+
+- [[glen-rice|Glen Rice]] '97 (97% similar)
+- [[steven-smith|Steven Smith]] '99 (95% similar)
+- [[reggie-miller|Reggie Miller]] '98 (95% similar)
+- [[joe-dumars|Joe Dumars]] '98 (93% similar)
+- [[marco-belinelli|Marco Belinelli]] '08 (92% similar)
+- [[tim-hardaway-jr|Tim Hardaway Jr.]] '15 (92% similar)
+
+**Career shape:** Charted 15 seasons (2006-07–2020-21). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

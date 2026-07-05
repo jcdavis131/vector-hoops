@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[manny-harris|Manny Harris]] — cosine 0.87
 - [[corey-benjamin|Corey Benjamin]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 22.4 pts · 4.6 reb · 5.5 ast · 1.7 stl per 100 (2016-17).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.3σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.6σ)
+- Turnover rate well above era (+1.8σ)
+
+**Comparables:**
+
+- [[keon-johnson|Keon Johnson]] '23 (90% similar)
+- [[brandon-knight|Brandon Knight]] '20 (89% similar)
+- [[zoran-planinic|Zoran Planinic]] '05 (88% similar)
+- [[jeremy-pargo|Jeremy Pargo]] '12 (88% similar)
+- [[manny-harris|Manny Harris]] '11 (87% similar)
+- [[corey-benjamin|Corey Benjamin]] '00 (87% similar)
+
+**Career shape:** Charted 1 season (2016-17). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

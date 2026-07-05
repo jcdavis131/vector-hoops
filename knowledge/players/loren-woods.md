@@ -38,6 +38,34 @@ Closest career shapes in the era-normalized vector space:
 - [[clifford-rozier|Clifford Rozier]] — cosine 0.91
 - [[brian-skinner|Brian Skinner]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 9.9 pts · 17.7 reb · 0.6 ast · 3.7 blk per 100 (2005-06).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+2.6σ vs era)
+- Elite rim protection (+2.5σ vs era)
+- Strong presence on the defensive glass (+1.8σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.3σ)
+- Scoring load well below era (−1.4σ)
+
+**Comparables:**
+
+- [[bernard-james|Bernard James]] '13 (93% similar)
+- [[travis-knight|Travis Knight]] '01 (93% similar)
+- [[joel-przybilla|Joel Przybilla]] '01 (92% similar)
+- [[chris-dudley|Chris Dudley]] '00 (92% similar)
+- [[clifford-rozier|Clifford Rozier]] '97 (91% similar)
+- [[brian-skinner|Brian Skinner]] '08 (90% similar)
+
+**Career shape:** Charted 5 seasons (2001-02–2005-06). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

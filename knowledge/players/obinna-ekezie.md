@@ -37,6 +37,32 @@ Closest career shapes in the era-normalized vector space:
 - [[samardo-samuels|Samardo Samuels]] — cosine 0.87
 - [[nathan-knight|Nathan Knight]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** PF · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 18.5 pts · 11.6 reb · 1.0 ast · 2.1 blk per 100 (2001-02).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+3.9σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.9σ)
+- Ball-hawking activity well below era (−1.4σ)
+
+**Comparables:**
+
+- [[zendon-hamilton|Zendon Hamilton]] '05 (94% similar)
+- [[leon-powe|Leon Powe]] '08 (90% similar)
+- [[tyler-hansbrough|Tyler Hansbrough]] '16 (88% similar)
+- [[tim-young|Tim Young]] '00 (88% similar)
+- [[samardo-samuels|Samardo Samuels]] '11 (87% similar)
+- [[nathan-knight|Nathan Knight]] '22 (87% similar)
+
+**Career shape:** Charted 4 seasons (1999-00–2004-05). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[mike-harris|Mike Harris]] — cosine 0.77
 - [[renaldo-balkman|Renaldo Balkman]] — cosine 0.77
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 19.9 pts · 14.4 reb · 0.9 ast · 4.2 stl per 100 (2017-18).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+4.0σ vs era)
+- Elite rim protection (+2.0σ vs era)
+- Relentless on the offensive glass (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.3σ)
+- Three-point volume well below era (−1.4σ)
+
+**Comparables:**
+
+- [[paul-reed|Paul Reed]] '21 (86% similar)
+- [[ausar-thompson|Ausar Thompson]] '26 (86% similar)
+- [[nerlens-noel|Nerlens Noel]] '21 (83% similar)
+- [[tari-eason|Tari Eason]] '24 (78% similar)
+- [[mike-harris|Mike Harris]] '14 (77% similar)
+- [[renaldo-balkman|Renaldo Balkman]] '08 (77% similar)
+
+**Career shape:** Charted 1 season (2017-18). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -45,6 +45,34 @@ Closest career shapes in the era-normalized vector space:
 - [[shane-battier|Shane Battier]] — cosine 0.78
 - [[danny-green|Danny Green]] — cosine 0.78
 
+## Scouting report
+
+**Play style:** PF · Three-Point Accuracy (Low Turnovers). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 12.4 pts · 10.6 reb · 3.6 ast · 2.1 stl per 100 (2006-07).
+
+**Strengths:**
+
+- Strong net on-court impact (+1.7σ vs era)
+- High-volume three-point shooter (+1.1σ vs era)
+- Rarely turns the ball over (−1.1σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.4σ)
+- Scoring load well below era (−1.1σ)
+
+**Comparables:**
+
+- [[matt-barnes|Matt Barnes]] '04 (80% similar)
+- [[patrick-beverley|Patrick Beverley]] '13 (80% similar)
+- [[josh-harrellson|Josh Harrellson]] '14 (80% similar)
+- [[myron-gardner|Myron Gardner]] '26 (78% similar)
+- [[shane-battier|Shane Battier]] '13 (78% similar)
+- [[danny-green|Danny Green]] '19 (78% similar)
+
+**Career shape:** Charted 12 seasons (1996-97–2007-08). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

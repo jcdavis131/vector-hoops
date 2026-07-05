@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[kobe-brown|Kobe Brown]] — cosine 0.87
 - [[ira-newble|Ira Newble]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** C · Three-Point Accuracy (Low Turnovers). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 9.9 pts · 11.9 reb · 2.1 ast · 1.1 blk per 100 (1996-97).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+2.3σ vs era)
+
+**Areas of concern:**
+
+- Scoring load well below era (−1.6σ)
+- Shot volume well below era (−1.3σ)
+
+**Comparables:**
+
+- [[jaron-blossomgame|Jaron Blossomgame]] '19 (90% similar)
+- [[brooks-barnhizer|Brooks Barnhizer]] '26 (89% similar)
+- [[greg-foster|Greg Foster]] '03 (88% similar)
+- [[xavier-mcdaniel|Xavier McDaniel]] '98 (87% similar)
+- [[kobe-brown|Kobe Brown]] '24 (87% similar)
+- [[ira-newble|Ira Newble]] '01 (87% similar)
+
+**Career shape:** Charted 3 seasons (1996-97–1998-99). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

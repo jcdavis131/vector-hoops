@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[lou-roe|Lou Roe]] — cosine 0.81
 - [[josh-jackson|Josh Jackson]] — cosine 0.80
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 22.2 pts · 5.3 reb · 3.2 ast · 1.9 stl per 100 (1999-00).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.5σ)
+- On-court net impact well below era (−1.3σ)
+
+**Comparables:**
+
+- [[keon-johnson|Keon Johnson]] '23 (90% similar)
+- [[jermaine-taylor|Jermaine Taylor]] '10 (88% similar)
+- [[jonathan-gibson|Jonathan Gibson]] '17 (87% similar)
+- [[lawrence-moten|Lawrence Moten]] '97 (86% similar)
+- [[lou-roe|Lou Roe]] '97 (81% similar)
+- [[josh-jackson|Josh Jackson]] '18 (80% similar)
+
+**Career shape:** Charted 3 seasons (1998-99–2000-01). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -47,6 +47,32 @@ Closest career shapes in the era-normalized vector space:
 - [[pat-spencer|Pat Spencer]] — cosine 0.86
 - [[tim-frazier|Tim Frazier]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 12.8 pts · 6.4 reb · 11.9 ast · 0.9 stl per 100 (2022-23).
+
+**Strengths:**
+
+- High-volume table-setter (+2.8σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.7σ)
+- Free-throw touch well below era (−2.2σ)
+
+**Comparables:**
+
+- [[elfrid-payton|Elfrid Payton]] '25 (89% similar)
+- [[marcelo-huertas|Marcelo Huertas]] '17 (87% similar)
+- [[eric-maynor|Eric Maynor]] '14 (86% similar)
+- [[kendall-marshall|Kendall Marshall]] '14 (86% similar)
+- [[pat-spencer|Pat Spencer]] '25 (86% similar)
+- [[tim-frazier|Tim Frazier]] '20 (85% similar)
+
+**Career shape:** Charted 14 seasons (2010-11–2023-24). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

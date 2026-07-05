@@ -36,6 +36,31 @@ Closest career shapes in the era-normalized vector space:
 - [[bob-sura|Bob Sura]] — cosine 0.88
 - [[tony-wroten|Tony Wroten]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 22.5 pts · 7.2 reb · 4.6 ast · 2.6 stl per 100 (2004-05).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.7σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.5σ)
+
+**Comparables:**
+
+- [[mike-taylor|Mike Taylor]] '09 (91% similar)
+- [[tyshawn-taylor|Tyshawn Taylor]] '14 (90% similar)
+- [[jay-williams|Jay Williams]] '03 (89% similar)
+- [[jonathan-gibson|Jonathan Gibson]] '17 (88% similar)
+- [[bob-sura|Bob Sura]] '98 (88% similar)
+- [[tony-wroten|Tony Wroten]] '15 (88% similar)
+
+**Career shape:** Charted 3 seasons (2003-04–2005-06). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

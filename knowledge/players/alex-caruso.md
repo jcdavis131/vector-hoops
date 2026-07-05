@@ -42,6 +42,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jordan-mclaughlin|Jordan McLaughlin]] — cosine 0.86
 - [[aaron-mckie|Aaron McKie]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 17.2 pts · 7.1 reb · 6.2 ast · 3.9 stl per 100 (2024-25).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+3.7σ vs era)
+- Strong net on-court impact (+2.2σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[delon-wright|Delon Wright]] '23 (93% similar)
+- [[herbert-jones|Herbert Jones]] '22 (89% similar)
+- [[ron-harper|Ron Harper]] '97 (87% similar)
+- [[cason-wallace|Cason Wallace]] '26 (86% similar)
+- [[jordan-mclaughlin|Jordan McLaughlin]] '24 (86% similar)
+- [[aaron-mckie|Aaron McKie]] '05 (86% similar)
+
+**Career shape:** Charted 9 seasons (2017-18–2025-26). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

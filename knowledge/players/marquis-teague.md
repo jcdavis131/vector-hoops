@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[marcelo-huertas|Marcelo Huertas]] — cosine 0.87
 - [[eric-maynor|Eric Maynor]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** SG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 12.4 pts · 4.6 reb · 6.7 ast · 1.2 stl per 100 (2013-14).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.9σ)
+- Turnover rate well above era (+1.7σ)
+
+**Comparables:**
+
+- [[gal-mekel|Gal Mekel]] '14 (93% similar)
+- [[isaiah-whitehead|Isaiah Whitehead]] '17 (88% similar)
+- [[bobby-hurley|Bobby Hurley]] '97 (88% similar)
+- [[josh-selby|Josh Selby]] '12 (88% similar)
+- [[marcelo-huertas|Marcelo Huertas]] '17 (87% similar)
+- [[eric-maynor|Eric Maynor]] '14 (86% similar)
+
+**Career shape:** Charted 2 seasons (2012-13–2013-14). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -40,6 +40,33 @@ Closest career shapes in the era-normalized vector space:
 - [[rafer-alston|Rafer Alston]] — cosine 0.83
 - [[reggie-geary|Reggie Geary]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 10.0 pts · 8.7 reb · 8.5 ast · 2.8 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.8σ vs era)
+- High-volume table-setter (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.1σ)
+- Scoring load well below era (−1.7σ)
+
+**Comparables:**
+
+- [[carldell-johnson|Carldell Johnson]] '12 (90% similar)
+- [[phil-pressey|Phil Pressey]] '16 (87% similar)
+- [[mookie-blaylock|Mookie Blaylock]] '97 (86% similar)
+- [[charlie-ward|Charlie Ward]] '02 (84% similar)
+- [[rafer-alston|Rafer Alston]] '00 (83% similar)
+- [[reggie-geary|Reggie Geary]] '97 (83% similar)
+
+**Career shape:** Charted 7 seasons (2017-18–2025-26). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

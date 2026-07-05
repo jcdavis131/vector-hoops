@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[kwame-brown|Kwame Brown]] — cosine 0.91
 - [[joey-dorsey|Joey Dorsey]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 11.6 pts · 14.8 reb · 2.9 ast · 1.2 stl per 100 (2016-17).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+2.6σ vs era)
+- Efficient finisher inside the arc (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.7σ)
+- Three-point accuracy well below era (−2.2σ)
+
+**Comparables:**
+
+- [[sasha-kaun|Sasha Kaun]] '16 (93% similar)
+- [[steven-adams|Steven Adams]] '23 (93% similar)
+- [[aaron-gray|Aaron Gray]] '11 (92% similar)
+- [[lou-amundson|Lou Amundson]] '14 (91% similar)
+- [[kwame-brown|Kwame Brown]] '13 (91% similar)
+- [[joey-dorsey|Joey Dorsey]] '15 (90% similar)
+
+**Career shape:** Charted 1 season (2016-17). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

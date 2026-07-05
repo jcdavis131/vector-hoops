@@ -38,6 +38,33 @@ Closest career shapes in the era-normalized vector space:
 - [[arvydas-sabonis|Arvydas Sabonis]] — cosine 0.73
 - [[jusuf-nurkic|Jusuf Nurkić]] — cosine 0.73
 
+## Scouting report
+
+**Play style:** SF · Scoring Volume + Shot Volume. Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 29.6 pts · 13.5 reb · 10.4 ast · 1.6 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+2.3σ vs era)
+- High-volume table-setter (+2.1σ vs era)
+- Heavy shot volume, focal scoring option (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.9σ)
+
+**Comparables:**
+
+- [[lamar-odom|Lamar Odom]] '13 (80% similar)
+- [[kevin-garnett|Kevin Garnett]] '04 (79% similar)
+- [[domantas-sabonis|Domantas Sabonis]] '24 (77% similar)
+- [[carlos-boozer|Carlos Boozer]] '07 (76% similar)
+- [[arvydas-sabonis|Arvydas Sabonis]] '97 (73% similar)
+- [[jusuf-nurkic|Jusuf Nurkić]] '16 (73% similar)
+
+**Career shape:** Charted 5 seasons (2021-22–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[cody-williams|Cody Williams]] — cosine 0.86
 - [[darnell-jackson|Darnell Jackson]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 11.0 pts · 7.2 reb · 1.1 ast · 1.5 blk per 100 (2004-05).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−3.8σ)
+- Free-throw touch well below era (−1.8σ)
+
+**Comparables:**
+
+- [[ruben-boumtje-boumtje|Ruben Boumtje-Boumtje]] '02 (90% similar)
+- [[nathan-mensah|Nathan Mensah]] '24 (89% similar)
+- [[dragan-tarlac|Dragan Tarlac]] '01 (88% similar)
+- [[lari-ketner|Lari Ketner]] '00 (87% similar)
+- [[cody-williams|Cody Williams]] '25 (86% similar)
+- [[darnell-jackson|Darnell Jackson]] '10 (85% similar)
+
+**Career shape:** Charted 2 seasons (2004-05–2005-06). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

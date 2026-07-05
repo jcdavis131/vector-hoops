@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[haywood-highsmith|Haywood Highsmith]] — cosine 0.70
 - [[jordan-walsh|Jordan Walsh]] — cosine 0.69
 
+## Scouting report
+
+**Play style:** PF · Three-Point Accuracy (Low Turnovers). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 17.4 pts · 9.1 reb · 1.2 ast · 1.6 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Strong net on-court impact (+1.1σ vs era)
+- Relentless on the offensive glass (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.8σ)
+- Table-setting role well below era (−1.4σ)
+
+**Comparables:**
+
+- [[josh-huestis|Josh Huestis]] '18 (82% similar)
+- [[ryan-dunn|Ryan Dunn]] '25 (78% similar)
+- [[hugo-gonzalez|Hugo González]] '26 (71% similar)
+- [[josh-harrellson|Josh Harrellson]] '14 (71% similar)
+- [[haywood-highsmith|Haywood Highsmith]] '22 (70% similar)
+- [[jordan-walsh|Jordan Walsh]] '25 (69% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

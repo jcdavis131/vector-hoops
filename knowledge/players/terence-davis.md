@@ -37,6 +37,32 @@ Closest career shapes in the era-normalized vector space:
 - [[rashard-lewis|Rashard Lewis]] — cosine 0.82
 - [[stephen-jackson|Stephen Jackson]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 23.8 pts · 7.7 reb · 3.7 ast · 2.4 stl per 100 (2022-23).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.0σ vs era)
+- Active hands, disrupts passing lanes (+1.9σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[jr-smith|JR Smith]] '08 (87% similar)
+- [[buddy-hield|Buddy Hield]] '20 (84% similar)
+- [[bobby-jackson|Bobby Jackson]] '04 (83% similar)
+- [[todd-day|Todd Day]] '01 (83% similar)
+- [[rashard-lewis|Rashard Lewis]] '99 (82% similar)
+- [[stephen-jackson|Stephen Jackson]] '02 (82% similar)
+
+**Career shape:** Charted 4 seasons (2019-20–2022-23). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

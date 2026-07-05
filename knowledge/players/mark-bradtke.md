@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[horace-grant|Horace Grant]] — cosine 0.91
 - [[jaron-blossomgame|Jaron Blossomgame]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 10.9 pts · 12.5 reb · 1.3 ast · 0.9 stl per 100 (1996-97).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.5σ vs era)
+- Relentless on the offensive glass (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Scoring load well below era (−1.4σ)
+- Three-point accuracy well below era (−1.4σ)
+
+**Comparables:**
+
+- [[rick-mahorn|Rick Mahorn]] '98 (93% similar)
+- [[a-c-green|A.C. Green]] '00 (93% similar)
+- [[joel-freeland|Joel Freeland]] '15 (92% similar)
+- [[lavoy-allen|Lavoy Allen]] '17 (92% similar)
+- [[horace-grant|Horace Grant]] '01 (91% similar)
+- [[jaron-blossomgame|Jaron Blossomgame]] '19 (90% similar)
+
+**Career shape:** Charted 1 season (1996-97). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

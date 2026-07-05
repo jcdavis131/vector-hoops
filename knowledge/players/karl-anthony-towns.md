@@ -44,6 +44,33 @@ Closest career shapes in the era-normalized vector space:
 - [[derrick-coleman|Derrick Coleman]] — cosine 0.87
 - [[giannis-antetokounmpo|Giannis Antetokounmpo]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 35.1 pts · 17.8 reb · 4.8 ast · 2.3 blk per 100 (2018-19).
+
+**Strengths:**
+
+- Featured, high-usage scoring role (+2.4σ vs era)
+- Strong presence on the defensive glass (+2.3σ vs era)
+- Draws contact, gets to the line often (+1.9σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.0σ)
+
+**Comparables:**
+
+- [[joel-embiid|Joel Embiid]] '17 (92% similar)
+- [[yao-ming|Yao Ming]] '07 (90% similar)
+- [[chris-bosh|Chris Bosh]] '10 (88% similar)
+- [[julius-randle|Julius Randle]] '24 (87% similar)
+- [[derrick-coleman|Derrick Coleman]] '00 (87% similar)
+- [[giannis-antetokounmpo|Giannis Antetokounmpo]] '20 (86% similar)
+
+**Career shape:** Charted 11 seasons (2015-16–2025-26). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

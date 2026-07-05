@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[alonzo-gee|Alonzo Gee]] — cosine 0.73
 - [[courtney-lee|Courtney Lee]] — cosine 0.72
 
+## Scouting report
+
+**Play style:** PG · Three-Point Accuracy (Low Turnovers). Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 17.8 pts · 4.9 reb · 2.2 ast · 2.1 stl per 100 (1999-00).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.3σ)
+- On-court net impact well below era (−1.0σ)
+
+**Comparables:**
+
+- [[eddie-robinson|Eddie Robinson]] '00 (83% similar)
+- [[justin-edwards|Justin Edwards]] '26 (81% similar)
+- [[anthony-bowie|Anthony Bowie]] '98 (77% similar)
+- [[ayo-dosunmu|Ayo Dosunmu]] '22 (73% similar)
+- [[alonzo-gee|Alonzo Gee]] '16 (73% similar)
+- [[courtney-lee|Courtney Lee]] '20 (72% similar)
+
+**Career shape:** Charted 1 season (1999-00). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

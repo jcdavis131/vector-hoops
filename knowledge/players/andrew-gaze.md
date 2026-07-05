@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[shane-heal|Shane Heal]] — cosine 0.75
 - [[jaren-jackson|Jaren Jackson]] — cosine 0.73
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 17.5 pts · 4.2 reb · 5.0 ast · 1.7 stl per 100 (1998-99).
+
+**Strengths:**
+
+- Strong net on-court impact (+4.0σ vs era)
+- High-volume three-point shooter (+3.6σ vs era)
+- Heavy shot volume, focal scoring option (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−4.0σ)
+- Rim pressure (free-throw generation) well below era (−2.0σ)
+
+**Comparables:**
+
+- [[craig-ehlo|Craig Ehlo]] '97 (80% similar)
+- [[jules-bernard|Jules Bernard]] '24 (79% similar)
+- [[nick-anderson|Nick Anderson]] '01 (79% similar)
+- [[thomas-gardner|Thomas Gardner]] '09 (76% similar)
+- [[shane-heal|Shane Heal]] '97 (75% similar)
+- [[jaren-jackson|Jaren Jackson]] '01 (73% similar)
+
+**Career shape:** Charted 1 season (1998-99). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

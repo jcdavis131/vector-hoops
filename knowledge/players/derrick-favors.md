@@ -45,6 +45,34 @@ Closest career shapes in the era-normalized vector space:
 - [[kenneth-faried|Kenneth Faried]] — cosine 0.95
 - [[jarrett-allen|Jarrett Allen]] — cosine 0.94
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 16.9 pts · 17.2 reb · 2.0 ast · 3.1 blk per 100 (2020-21).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+2.6σ vs era)
+- Efficient finisher inside the arc (+2.4σ vs era)
+- Elite rim protection (+2.3σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.8σ)
+- Three-point volume well below era (−1.8σ)
+
+**Comparables:**
+
+- [[clint-capela|Clint Capela]] '21 (98% similar)
+- [[emeka-okafor|Emeka Okafor]] '18 (97% similar)
+- [[alan-williams|Alan Williams]] '17 (95% similar)
+- [[mark-williams|Mark Williams]] '26 (95% similar)
+- [[kenneth-faried|Kenneth Faried]] '12 (95% similar)
+- [[jarrett-allen|Jarrett Allen]] '25 (94% similar)
+
+**Career shape:** Charted 12 seasons (2010-11–2021-22). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

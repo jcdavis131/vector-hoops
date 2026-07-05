@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[jalen-duren|Jalen Duren]] — cosine 0.87
 - [[greg-oden|Greg Oden]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** PF · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 18.0 pts · 17.0 reb · 3.1 ast · 2.8 blk per 100 (2019-20).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+3.7σ vs era)
+- Efficient finisher inside the arc (+2.0σ vs era)
+- Elite rim protection (+1.9σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.7σ)
+- Three-point volume well below era (−1.7σ)
+
+**Comparables:**
+
+- [[bruno-fernando|Bruno Fernando]] '22 (93% similar)
+- [[alex-len|Alex Len]] '24 (88% similar)
+- [[moses-brown|Moses Brown]] '23 (88% similar)
+- [[timofey-mozgov|Timofey Mozgov]] '13 (88% similar)
+- [[jalen-duren|Jalen Duren]] '26 (87% similar)
+- [[greg-oden|Greg Oden]] '10 (87% similar)
+
+**Career shape:** Charted 1 season (2019-20). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

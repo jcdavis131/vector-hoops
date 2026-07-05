@@ -40,6 +40,34 @@ Closest career shapes in the era-normalized vector space:
 - [[jeff-withey|Jeff Withey]] — cosine 0.90
 - [[theo-ratliff|Theo Ratliff]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 16.9 pts · 12.7 reb · 4.0 ast · 4.4 blk per 100 (2018-19).
+
+**Strengths:**
+
+- Elite rim protection (+3.7σ vs era)
+- Efficient finisher inside the arc (+3.3σ vs era)
+- Relentless on the offensive glass (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.8σ)
+- Three-point volume well below era (−1.8σ)
+
+**Comparables:**
+
+- [[christian-koloko|Christian Koloko]] '23 (95% similar)
+- [[joel-anthony|Joel Anthony]] '16 (93% similar)
+- [[dj-mbenga|DJ Mbenga]] '06 (92% similar)
+- [[jim-mcilvaine|Jim McIlvaine]] '00 (91% similar)
+- [[jeff-withey|Jeff Withey]] '17 (90% similar)
+- [[theo-ratliff|Theo Ratliff]] '09 (90% similar)
+
+**Career shape:** Charted 7 seasons (2010-11–2018-19). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

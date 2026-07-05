@@ -45,6 +45,33 @@ Closest career shapes in the era-normalized vector space:
 - [[jordan-mcrae|Jordan McRae]] — cosine 0.77
 - [[cam-thomas|Cam Thomas]] — cosine 0.76
 
+## Scouting report
+
+**Play style:** SF · Scoring Volume + Shot Volume. Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 31.5 pts · 5.4 reb · 3.1 ast · 1.3 stl per 100 (2016-17).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+2.0σ vs era)
+- Draws contact, gets to the line often (+1.9σ vs era)
+- Featured, high-usage scoring role (+1.9σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.1σ)
+
+**Comparables:**
+
+- [[carmelo-anthony|Carmelo Anthony]] '13 (82% similar)
+- [[michael-redd|Michael Redd]] '07 (79% similar)
+- [[don-maclean|Don MacLean]] '99 (79% similar)
+- [[marshon-brooks|MarShon Brooks]] '14 (78% similar)
+- [[jordan-mcrae|Jordan McRae]] '16 (77% similar)
+- [[cam-thomas|Cam Thomas]] '25 (76% similar)
+
+**Career shape:** Charted 12 seasons (2014-15–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -36,6 +36,34 @@ Closest career shapes in the era-normalized vector space:
 - [[jon-brockman|Jon Brockman]] — cosine 0.81
 - [[popeye-jones|Popeye Jones]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 8.5 pts · 24.2 reb · 4.7 ast · 0.9 stl per 100 (1996-97).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+3.7σ vs era)
+- Relentless on the offensive glass (+3.5σ vs era)
+- Strong net on-court impact (+2.5σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.8σ)
+- Scoring load well below era (−1.8σ)
+
+**Comparables:**
+
+- [[olumide-oyedeji|Olumide Oyedeji]] '03 (85% similar)
+- [[jamie-feick|Jamie Feick]] '00 (83% similar)
+- [[rick-mahorn|Rick Mahorn]] '98 (82% similar)
+- [[chris-dudley|Chris Dudley]] '00 (81% similar)
+- [[jon-brockman|Jon Brockman]] '10 (81% similar)
+- [[popeye-jones|Popeye Jones]] '03 (81% similar)
+
+**Career shape:** Charted 3 seasons (1996-97–1998-99). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

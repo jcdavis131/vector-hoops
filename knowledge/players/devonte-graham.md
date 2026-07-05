@@ -39,6 +39,34 @@ Closest career shapes in the era-normalized vector space:
 - [[chris-whitney|Chris Whitney]] — cosine 0.90
 - [[dedric-willoughby|Dedric Willoughby]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 25.5 pts · 4.7 reb · 10.5 ast · 1.4 stl per 100 (2019-20).
+
+**Strengths:**
+
+- High-volume table-setter (+2.4σ vs era)
+- High-volume three-point shooter (+2.0σ vs era)
+- Heavy shot volume, focal scoring option (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.4σ)
+- Defensive rebounding well below era (−1.1σ)
+
+**Comparables:**
+
+- [[darrick-martin|Darrick Martin]] '08 (94% similar)
+- [[chucky-atkins|Chucky Atkins]] '08 (92% similar)
+- [[mike-james|Mike James]] '06 (92% similar)
+- [[shammond-williams|Shammond Williams]] '04 (91% similar)
+- [[chris-whitney|Chris Whitney]] '04 (90% similar)
+- [[dedric-willoughby|Dedric Willoughby]] '00 (90% similar)
+
+**Career shape:** Charted 6 seasons (2018-19–2023-24). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

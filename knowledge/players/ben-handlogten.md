@@ -35,6 +35,34 @@ Closest career shapes in the era-normalized vector space:
 - [[tristan-thompson|Tristan Thompson]] — cosine 0.92
 - [[moses-brown|Moses Brown]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 21.5 pts · 17.4 reb · 1.9 ast · 1.3 blk per 100 (2003-04).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+2.5σ vs era)
+- Efficient finisher inside the arc (+1.8σ vs era)
+- Strong presence on the defensive glass (+1.7σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.4σ)
+- Ball-hawking activity well below era (−1.2σ)
+
+**Comparables:**
+
+- [[chris-wilcox|Chris Wilcox]] '13 (96% similar)
+- [[andre-brown|Andre Brown]] '08 (94% similar)
+- [[jj-hickson|JJ Hickson]] '16 (94% similar)
+- [[oscar-tshiebwe|Oscar Tshiebwe]] '26 (93% similar)
+- [[tristan-thompson|Tristan Thompson]] '25 (92% similar)
+- [[moses-brown|Moses Brown]] '23 (92% similar)
+
+**Career shape:** Charted 2 seasons (2003-04–2004-05). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -43,6 +43,34 @@ Closest career shapes in the era-normalized vector space:
 - [[marcus-thornton|Marcus Thornton]] — cosine 0.81
 - [[cj-miles|CJ Miles]] — cosine 0.80
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 24.6 pts · 6.2 reb · 1.7 ast · 0.7 stl per 100 (2012-13).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+2.0σ vs era)
+- High-volume three-point shooter (+1.8σ vs era)
+- Heavy shot volume, focal scoring option (+1.6σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.3σ)
+- Ball-hawking activity well below era (−1.5σ)
+
+**Comparables:**
+
+- [[trey-murphy-iii|Trey Murphy III]] '24 (91% similar)
+- [[devin-vassell|Devin Vassell]] '23 (84% similar)
+- [[peja-stojakovic|Peja Stojakovic]] '04 (84% similar)
+- [[danny-granger|Danny Granger]] '09 (82% similar)
+- [[marcus-thornton|Marcus Thornton]] '13 (81% similar)
+- [[cj-miles|CJ Miles]] '18 (80% similar)
+
+**Career shape:** Charted 10 seasons (2012-13–2021-22). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

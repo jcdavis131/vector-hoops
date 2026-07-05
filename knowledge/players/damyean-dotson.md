@@ -37,6 +37,32 @@ Closest career shapes in the era-normalized vector space:
 - [[justin-jackson|Justin Jackson]] — cosine 0.90
 - [[deshawn-stevenson|DeShawn Stevenson]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 16.3 pts · 4.9 reb · 4.8 ast · 0.8 stl per 100 (2020-21).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.5σ)
+- Ball-hawking activity well below era (−1.2σ)
+
+**Comparables:**
+
+- [[cedi-osman|Cedi Osman]] '23 (93% similar)
+- [[tim-legler|Tim Legler]] '00 (91% similar)
+- [[jawad-williams|Jawad Williams]] '11 (90% similar)
+- [[johnny-juzang|Johnny Juzang]] '23 (90% similar)
+- [[justin-jackson|Justin Jackson]] '23 (90% similar)
+- [[deshawn-stevenson|DeShawn Stevenson]] '12 (89% similar)
+
+**Career shape:** Charted 4 seasons (2017-18–2020-21). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

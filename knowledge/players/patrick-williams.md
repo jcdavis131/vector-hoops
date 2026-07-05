@@ -39,6 +39,32 @@ Closest career shapes in the era-normalized vector space:
 - [[antonius-cleveland|Antonius Cleveland]] — cosine 0.83
 - [[dequan-jones|DeQuan Jones]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 17.5 pts · 7.9 reb · 1.7 ast · 1.0 stl per 100 (2021-22).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+1.9σ vs era)
+
+**Areas of concern:**
+
+- Table-setting role well below era (−1.0σ)
+- Shot volume well below era (−1.0σ)
+
+**Comparables:**
+
+- [[abdel-nader|Abdel Nader]] '18 (90% similar)
+- [[ira-newble|Ira Newble]] '01 (84% similar)
+- [[kessler-edwards|Kessler Edwards]] '25 (83% similar)
+- [[isaiah-livers|Isaiah Livers]] '24 (83% similar)
+- [[antonius-cleveland|Antonius Cleveland]] '18 (83% similar)
+- [[dequan-jones|DeQuan Jones]] '13 (82% similar)
+
+**Career shape:** Charted 6 seasons (2020-21–2025-26). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

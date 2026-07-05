@@ -35,6 +35,33 @@ Closest career shapes in the era-normalized vector space:
 - [[rick-brunson|Rick Brunson]] — cosine 0.66
 - [[andre-iguodala|Andre Iguodala]] — cosine 0.63
 
+## Scouting report
+
+**Play style:** PG · Three-Point Accuracy (Low Turnovers). Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 13.3 pts · 8.3 reb · 5.9 ast · 2.7 stl per 100 (1998-99).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+4.0σ vs era)
+- Active hands, disrupts passing lanes (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.3σ)
+- Shot volume well below era (−1.1σ)
+
+**Comparables:**
+
+- [[randy-livingston|Randy Livingston]] '05 (74% similar)
+- [[craig-porter-jr|Craig Porter Jr.]] '26 (71% similar)
+- [[toure-murry|Toure' Murry]] '14 (67% similar)
+- [[melvin-sanders|Melvin Sanders]] '06 (67% similar)
+- [[rick-brunson|Rick Brunson]] '99 (66% similar)
+- [[andre-iguodala|Andre Iguodala]] '20 (63% similar)
+
+**Career shape:** Charted 2 seasons (1997-98–1998-99). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

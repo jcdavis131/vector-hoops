@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[kyle-weaver|Kyle Weaver]] — cosine 0.80
 - [[kenrich-williams|Kenrich Williams]] — cosine 0.80
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass + Defensive Glass. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 8.1 pts · 4.6 reb · 2.9 ast · 2.3 stl per 100 (1998-99).
+
+**Strengths:**
+
+- Strong net on-court impact (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−4.0σ)
+- Rim pressure (free-throw generation) well below era (−2.0σ)
+
+**Comparables:**
+
+- [[juaquin-hawkins|Juaquin Hawkins]] '03 (91% similar)
+- [[josh-green|Josh Green]] '26 (88% similar)
+- [[mitchell-butler|Mitchell Butler]] '98 (88% similar)
+- [[brandon-paul|Brandon Paul]] '18 (87% similar)
+- [[kyle-weaver|Kyle Weaver]] '09 (80% similar)
+- [[kenrich-williams|Kenrich Williams]] '20 (80% similar)
+
+**Career shape:** Charted 3 seasons (1996-97–1998-99). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

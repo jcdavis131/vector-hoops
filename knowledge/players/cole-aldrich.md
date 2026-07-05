@@ -41,6 +41,34 @@ Closest career shapes in the era-normalized vector space:
 - [[nerlens-noel|Nerlens Noel]] — cosine 0.91
 - [[oliver-miller|Oliver Miller]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 20.4 pts · 18.0 reb · 3.1 ast · 4.2 blk per 100 (2015-16).
+
+**Strengths:**
+
+- Elite rim protection (+3.2σ vs era)
+- Active hands, disrupts passing lanes (+2.3σ vs era)
+- Strong presence on the defensive glass (+2.2σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.9σ)
+- Three-point volume well below era (−1.4σ)
+
+**Comparables:**
+
+- [[charles-bassey|Charles Bassey]] '24 (93% similar)
+- [[kelvin-cato|Kelvin Cato]] '99 (92% similar)
+- [[dewayne-dedmon|Dewayne Dedmon]] '17 (92% similar)
+- [[samuel-dalembert|Samuel Dalembert]] '13 (91% similar)
+- [[nerlens-noel|Nerlens Noel]] '21 (91% similar)
+- [[oliver-miller|Oliver Miller]] '00 (91% similar)
+
+**Career shape:** Charted 8 seasons (2010-11–2017-18). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

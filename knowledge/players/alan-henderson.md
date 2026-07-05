@@ -43,6 +43,32 @@ Closest career shapes in the era-normalized vector space:
 - [[justin-williams|Justin Williams]] — cosine 0.89
 - [[ben-handlogten|Ben Handlogten]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PF · Three-Point Accuracy (Low Turnovers). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 17.1 pts · 11.6 reb · 1.3 ast · 1.8 blk per 100 (2001-02).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+4.0σ vs era)
+- Efficient finisher inside the arc (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.5σ)
+
+**Comparables:**
+
+- [[lonny-baxter|Lonny Baxter]] '06 (92% similar)
+- [[tristan-thompson|Tristan Thompson]] '25 (91% similar)
+- [[tarik-black|Tarik Black]] '18 (91% similar)
+- [[trevor-booker|Trevor Booker]] '13 (89% similar)
+- [[justin-williams|Justin Williams]] '07 (89% similar)
+- [[ben-handlogten|Ben Handlogten]] '04 (88% similar)
+
+**Career shape:** Charted 10 seasons (1996-97–2006-07). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

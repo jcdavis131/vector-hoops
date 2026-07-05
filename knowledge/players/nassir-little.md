@@ -38,6 +38,31 @@ Closest career shapes in the era-normalized vector space:
 - [[semi-ojeleye|Semi Ojeleye]] — cosine 0.85
 - [[chucky-brown|Chucky Brown]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 13.9 pts · 8.7 reb · 1.8 ast · 1.1 stl per 100 (2019-20).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.4σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[jaron-blossomgame|Jaron Blossomgame]] '19 (89% similar)
+- [[dequan-jones|DeQuan Jones]] '13 (86% similar)
+- [[perry-jones-iii|Perry Jones III]] '13 (85% similar)
+- [[ira-newble|Ira Newble]] '01 (85% similar)
+- [[semi-ojeleye|Semi Ojeleye]] '18 (85% similar)
+- [[chucky-brown|Chucky Brown]] '02 (84% similar)
+
+**Career shape:** Charted 5 seasons (2019-20–2023-24). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

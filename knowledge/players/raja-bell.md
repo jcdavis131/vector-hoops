@@ -43,6 +43,34 @@ Closest career shapes in the era-normalized vector space:
 - [[aj-green|AJ Green]] — cosine 0.93
 - [[rodney-hood|Rodney Hood]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 19.3 pts · 4.2 reb · 3.3 ast · 0.8 stl per 100 (2006-07).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.7σ vs era)
+- Strong net on-court impact (+1.7σ vs era)
+- High-volume three-point shooter (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.2σ)
+- Defensive rebounding well below era (−1.1σ)
+
+**Comparables:**
+
+- [[steve-kerr|Steve Kerr]] '97 (97% similar)
+- [[jason-kapono|Jason Kapono]] '11 (96% similar)
+- [[landry-shamet|Landry Shamet]] '20 (95% similar)
+- [[hubert-davis|Hubert Davis]] '04 (93% similar)
+- [[aj-green|AJ Green]] '23 (93% similar)
+- [[rodney-hood|Rodney Hood]] '22 (92% similar)
+
+**Career shape:** Charted 10 seasons (2001-02–2011-12). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

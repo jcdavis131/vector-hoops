@@ -39,6 +39,34 @@ Closest career shapes in the era-normalized vector space:
 - [[joel-przybilla|Joel Przybilla]] — cosine 0.90
 - [[travis-knight|Travis Knight]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 6.2 pts · 15.3 reb · 0.6 ast · 2.4 blk per 100 (1999-00).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+2.5σ vs era)
+- Elite rim protection (+1.2σ vs era)
+- Rarely turns the ball over (−1.0σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−3.5σ)
+- Scoring load well below era (−2.3σ)
+
+**Comparables:**
+
+- [[mark-west|Mark West]] '99 (94% similar)
+- [[desagana-diop|DeSagana Diop]] '13 (93% similar)
+- [[loren-woods|Loren Woods]] '06 (92% similar)
+- [[eric-montross|Eric Montross]] '97 (91% similar)
+- [[joel-przybilla|Joel Przybilla]] '01 (90% similar)
+- [[travis-knight|Travis Knight]] '01 (90% similar)
+
+**Career shape:** Charted 6 seasons (1996-97–2001-02). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

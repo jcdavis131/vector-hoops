@@ -34,6 +34,31 @@ Closest career shapes in the era-normalized vector space:
 - [[blue-edwards|Blue Edwards]] — cosine 0.86
 - [[jacob-gilyard|Jacob Gilyard]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** SG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 15.2 pts · 6.0 reb · 4.9 ast · 2.1 stl per 100 (2002-03).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.0σ)
+
+**Comparables:**
+
+- [[bronny-james|Bronny James]] '25 (91% similar)
+- [[keaton-wallace|Keaton Wallace]] '25 (90% similar)
+- [[ky-bowman|Ky Bowman]] '20 (88% similar)
+- [[rusty-larue|Rusty LaRue]] '99 (86% similar)
+- [[blue-edwards|Blue Edwards]] '99 (86% similar)
+- [[jacob-gilyard|Jacob Gilyard]] '24 (85% similar)
+
+**Career shape:** Charted 1 season (2002-03). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

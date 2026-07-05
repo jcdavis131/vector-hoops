@@ -39,6 +39,33 @@ Closest career shapes in the era-normalized vector space:
 - [[aj-green|AJ Green]] — cosine 0.90
 - [[moses-moody|Moses Moody]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 22.8 pts · 7.5 reb · 2.3 ast · 1.5 stl per 100 (2024-25).
+
+**Strengths:**
+
+- Strong net on-court impact (+1.3σ vs era)
+- Reliable touch from the free-throw line (+1.3σ vs era)
+- Knockdown three-point shooter (+1.0σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[pat-garrity|Pat Garrity]] '02 (92% similar)
+- [[julian-champagnie|Julian Champagnie]] '26 (92% similar)
+- [[caleb-houstan|Caleb Houstan]] '26 (91% similar)
+- [[alex-abrines|Alex Abrines]] '19 (91% similar)
+- [[aj-green|AJ Green]] '23 (90% similar)
+- [[moses-moody|Moses Moody]] '22 (90% similar)
+
+**Career shape:** Charted 6 seasons (2020-21–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

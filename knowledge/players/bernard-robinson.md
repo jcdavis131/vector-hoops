@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[randy-brown|Randy Brown]] — cosine 0.81
 - [[jamie-watson|Jamie Watson]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 10.9 pts · 8.6 reb · 3.4 ast · 3.0 stl per 100 (2006-07).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.5σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.1σ)
+- On-court net impact well below era (−1.9σ)
+
+**Comparables:**
+
+- [[briante-weber|Briante Weber]] '18 (94% similar)
+- [[reece-beekman|Reece Beekman]] '25 (91% similar)
+- [[darrin-hancock|Darrin Hancock]] '97 (82% similar)
+- [[quinndary-weatherspoon|Quinndary Weatherspoon]] '21 (81% similar)
+- [[randy-brown|Randy Brown]] '03 (81% similar)
+- [[jamie-watson|Jamie Watson]] '97 (81% similar)
+
+**Career shape:** Charted 3 seasons (2004-05–2006-07). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

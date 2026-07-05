@@ -51,6 +51,32 @@ Closest career shapes in the era-normalized vector space:
 - [[ime-udoka|Ime Udoka]] — cosine 0.83
 - [[brian-cardinal|Brian Cardinal]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 10.1 pts · 8.5 reb · 2.8 ast · 1.4 stl per 100 (2021-22).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.2σ vs era)
+
+**Areas of concern:**
+
+- Scoring load well below era (−1.6σ)
+- Finishing efficiency well below era (−1.6σ)
+
+**Comparables:**
+
+- [[iman-shumpert|Iman Shumpert]] '12 (88% similar)
+- [[thabo-sefolosha|Thabo Sefolosha]] '20 (86% similar)
+- [[corey-brewer|Corey Brewer]] '19 (85% similar)
+- [[myke-henry|Myke Henry]] '18 (85% similar)
+- [[ime-udoka|Ime Udoka]] '11 (83% similar)
+- [[brian-cardinal|Brian Cardinal]] '12 (81% similar)
+
+**Career shape:** Charted 18 seasons (2004-05–2021-22). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

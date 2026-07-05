@@ -47,6 +47,33 @@ Closest career shapes in the era-normalized vector space:
 - [[malik-beasley|Malik Beasley]] — cosine 0.92
 - [[tony-delk|Tony Delk]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 24.9 pts · 5.4 reb · 2.0 ast · 1.3 stl per 100 (2017-18).
+
+**Strengths:**
+
+- High-volume three-point shooter (+3.1σ vs era)
+- Strong net on-court impact (+1.7σ vs era)
+- Rarely turns the ball over (−1.2σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.1σ)
+
+**Comparables:**
+
+- [[terrence-ross|Terrence Ross]] '19 (94% similar)
+- [[voshon-lenard|Voshon Lenard]] '97 (93% similar)
+- [[jr-smith|JR Smith]] '08 (93% similar)
+- [[todd-day|Todd Day]] '01 (92% similar)
+- [[malik-beasley|Malik Beasley]] '25 (92% similar)
+- [[tony-delk|Tony Delk]] '05 (91% similar)
+
+**Career shape:** Charted 14 seasons (2005-06–2018-19). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[charles-jenkins|Charles Jenkins]] — cosine 0.78
 - [[damien-wilkins|Damien Wilkins]] — cosine 0.78
 
+## Scouting report
+
+**Play style:** PG · Three-Point Accuracy (Low Turnovers). Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 11.7 pts · 4.5 reb · 6.0 ast · 1.7 stl per 100 (2022-23).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.5σ vs era)
+
+**Areas of concern:**
+
+- Scoring load well below era (−1.3σ)
+- Defensive rebounding well below era (−1.2σ)
+
+**Comparables:**
+
+- [[royal-ivey|Royal Ivey]] '12 (82% similar)
+- [[derrick-walton-jr|Derrick Walton Jr.]] '20 (80% similar)
+- [[sedale-threatt|Sedale Threatt]] '97 (80% similar)
+- [[quinton-ross|Quinton Ross]] '11 (80% similar)
+- [[charles-jenkins|Charles Jenkins]] '12 (78% similar)
+- [[damien-wilkins|Damien Wilkins]] '18 (78% similar)
+
+**Career shape:** Charted 2 seasons (2022-23–2024-25). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

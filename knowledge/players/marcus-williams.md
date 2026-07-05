@@ -36,6 +36,31 @@ Closest career shapes in the era-normalized vector space:
 - [[frank-williams|Frank Williams]] — cosine 0.91
 - [[sebastian-telfair|Sebastian Telfair]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 20.3 pts · 6.2 reb · 9.9 ast · 1.1 stl per 100 (2006-07).
+
+**Strengths:**
+
+- High-volume table-setter (+2.1σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.5σ)
+
+**Comparables:**
+
+- [[jonny-flynn|Jonny Flynn]] '11 (94% similar)
+- [[greivis-vasquez|Greivis Vasquez]] '13 (94% similar)
+- [[vasilije-micic|Vasilije Micic]] '25 (91% similar)
+- [[sergio-rodriguez|Sergio Rodriguez]] '09 (91% similar)
+- [[frank-williams|Frank Williams]] '03 (91% similar)
+- [[sebastian-telfair|Sebastian Telfair]] '10 (90% similar)
+
+**Career shape:** Charted 3 seasons (2006-07–2009-10). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

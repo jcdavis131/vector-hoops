@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[jt-thor|JT Thor]] — cosine 0.76
 - [[keita-bates-diop|Keita Bates-Diop]] — cosine 0.76
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 11.8 pts · 8.1 reb · 4.1 ast · 1.9 blk per 100 (2023-24).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.5σ vs era)
+- Knockdown three-point shooter (+1.1σ vs era)
+- Elite rim protection (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.5σ)
+- Scoring load well below era (−1.3σ)
+
+**Comparables:**
+
+- [[david-wood|David Wood]] '97 (80% similar)
+- [[kz-okpala|KZ Okpala]] '21 (77% similar)
+- [[greg-dreiling|Greg Dreiling]] '97 (77% similar)
+- [[mark-pope|Mark Pope]] '01 (76% similar)
+- [[jt-thor|JT Thor]] '25 (76% similar)
+- [[keita-bates-diop|Keita Bates-Diop]] '20 (76% similar)
+
+**Career shape:** Charted 1 season (2023-24). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

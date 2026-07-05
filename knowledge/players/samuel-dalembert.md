@@ -46,6 +46,34 @@ Closest career shapes in the era-normalized vector space:
 - [[salah-mejri|Salah Mejri]] — cosine 0.93
 - [[khaman-maluach|Khaman Maluach]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 20.1 pts · 17.7 reb · 1.3 ast · 3.4 blk per 100 (2012-13).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+4.0σ vs era)
+- Relentless on the offensive glass (+2.3σ vs era)
+- Elite rim protection (+2.2σ vs era)
+
+**Areas of concern:**
+
+- Three-point volume well below era (−1.1σ)
+- Table-setting role well below era (−1.0σ)
+
+**Comparables:**
+
+- [[dewayne-dedmon|Dewayne Dedmon]] '17 (98% similar)
+- [[keon-clark|Keon Clark]] '01 (94% similar)
+- [[alex-len|Alex Len]] '24 (94% similar)
+- [[charles-bassey|Charles Bassey]] '24 (94% similar)
+- [[salah-mejri|Salah Mejri]] '18 (93% similar)
+- [[khaman-maluach|Khaman Maluach]] '26 (93% similar)
+
+**Career shape:** Charted 13 seasons (2001-02–2014-15). Entered as a Rim Protection + Offensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

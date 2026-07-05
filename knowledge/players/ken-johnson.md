@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[herb-williams|Herb Williams]] — cosine 0.85
 - [[adonal-foyle|Adonal Foyle]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 10.7 pts · 10.7 reb · 0.0 ast · 4.0 blk per 100 (2002-03).
+
+**Strengths:**
+
+- Elite rim protection (+2.6σ vs era)
+- Strong presence on the defensive glass (+1.3σ vs era)
+- Rarely turns the ball over (−1.1σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−3.5σ)
+- Ball-hawking activity well below era (−2.0σ)
+
+**Comparables:**
+
+- [[mickell-gladness|Mickell Gladness]] '12 (89% similar)
+- [[eric-montross|Eric Montross]] '97 (88% similar)
+- [[desagana-diop|DeSagana Diop]] '13 (85% similar)
+- [[mark-west|Mark West]] '99 (85% similar)
+- [[herb-williams|Herb Williams]] '98 (85% similar)
+- [[adonal-foyle|Adonal Foyle]] '07 (83% similar)
+
+**Career shape:** Charted 1 season (2002-03). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

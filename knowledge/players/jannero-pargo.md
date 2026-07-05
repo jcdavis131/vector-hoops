@@ -43,6 +43,34 @@ Closest career shapes in the era-normalized vector space:
 - [[jimmer-fredette|Jimmer Fredette]] — cosine 0.92
 - [[rodrigue-beaubois|Rodrigue Beaubois]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 28.3 pts · 4.2 reb · 10.8 ast · 2.9 stl per 100 (2013-14).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.4σ vs era)
+- High-volume table-setter (+2.4σ vs era)
+- Active hands, disrupts passing lanes (+2.1σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.6σ)
+- On-court net impact well below era (−1.3σ)
+
+**Comparables:**
+
+- [[juan-dixon|Juan Dixon]] '09 (94% similar)
+- [[o-j-mayo|O.J. Mayo]] '14 (94% similar)
+- [[aaron-brooks|Aaron Brooks]] '11 (93% similar)
+- [[mo-williams|Mo Williams]] '11 (93% similar)
+- [[jimmer-fredette|Jimmer Fredette]] '14 (92% similar)
+- [[rodrigue-beaubois|Rodrigue Beaubois]] '10 (91% similar)
+
+**Career shape:** Charted 10 seasons (2002-03–2013-14). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

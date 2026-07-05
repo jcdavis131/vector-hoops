@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[tosan-evbuomwan|Tosan Evbuomwan]] — cosine 0.84
 - [[jt-thor|JT Thor]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 14.5 pts · 6.6 reb · 1.0 ast · 1.4 blk per 100 (2012-13).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.6σ)
+- Table-setting role well below era (−1.1σ)
+
+**Comparables:**
+
+- [[nassir-little|Nassir Little]] '20 (86% similar)
+- [[cody-williams|Cody Williams]] '25 (86% similar)
+- [[john-edwards|John Edwards]] '05 (85% similar)
+- [[keita-bates-diop|Keita Bates-Diop]] '20 (84% similar)
+- [[tosan-evbuomwan|Tosan Evbuomwan]] '24 (84% similar)
+- [[jt-thor|JT Thor]] '25 (84% similar)
+
+**Career shape:** Charted 1 season (2012-13). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

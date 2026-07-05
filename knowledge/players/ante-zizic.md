@@ -36,6 +36,34 @@ Closest career shapes in the era-normalized vector space:
 - [[chris-wilcox|Chris Wilcox]] — cosine 0.93
 - [[todd-macculloch|Todd MacCulloch]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 26.3 pts · 13.2 reb · 1.1 ast · 2.9 blk per 100 (2017-18).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+3.8σ vs era)
+- Elite rim protection (+2.1σ vs era)
+- Relentless on the offensive glass (+2.0σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.3σ)
+- Ball-hawking activity well below era (−1.8σ)
+
+**Comparables:**
+
+- [[ivica-zubac|Ivica Zubac]] '20 (95% similar)
+- [[tyler-zeller|Tyler Zeller]] '17 (94% similar)
+- [[jalen-duren|Jalen Duren]] '26 (94% similar)
+- [[jarrett-allen|Jarrett Allen]] '25 (94% similar)
+- [[chris-wilcox|Chris Wilcox]] '13 (93% similar)
+- [[todd-macculloch|Todd MacCulloch]] '01 (91% similar)
+
+**Career shape:** Charted 3 seasons (2017-18–2019-20). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

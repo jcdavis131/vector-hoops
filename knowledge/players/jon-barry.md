@@ -43,6 +43,34 @@ Closest career shapes in the era-normalized vector space:
 - [[collin-gillespie|Collin Gillespie]] — cosine 0.89
 - [[rudy-fernandez|Rudy Fernandez]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** SG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 14.8 pts · 4.5 reb · 6.2 ast · 2.9 stl per 100 (1997-98).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.8σ vs era)
+- Reliable touch from the free-throw line (+1.7σ vs era)
+- Active hands, disrupts passing lanes (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.4σ)
+- Offensive-glass activity well below era (−1.0σ)
+
+**Comparables:**
+
+- [[brent-barry|Brent Barry]] '04 (92% similar)
+- [[hersey-hawkins|Hersey Hawkins]] '98 (92% similar)
+- [[doug-christie|Doug Christie]] '03 (91% similar)
+- [[derek-fisher|Derek Fisher]] '02 (90% similar)
+- [[collin-gillespie|Collin Gillespie]] '24 (89% similar)
+- [[rudy-fernandez|Rudy Fernandez]] '11 (88% similar)
+
+**Career shape:** Charted 10 seasons (1996-97–2005-06). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

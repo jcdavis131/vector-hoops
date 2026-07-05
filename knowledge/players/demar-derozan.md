@@ -50,6 +50,33 @@ Closest career shapes in the era-normalized vector space:
 - [[devin-booker|Devin Booker]] — cosine 0.84
 - [[grant-hill|Grant Hill]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** SG · Scoring Volume + Shot Volume. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 38.3 pts · 7.3 reb · 5.5 ast · 1.5 stl per 100 (2016-17).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+3.4σ vs era)
+- Featured, high-usage scoring role (+2.9σ vs era)
+- Heavy shot volume, focal scoring option (+2.8σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[franz-wagner|Franz Wagner]] '25 (92% similar)
+- [[shai-gilgeous-alexander|Shai Gilgeous-Alexander]] '25 (90% similar)
+- [[rodney-stuckey|Rodney Stuckey]] '11 (85% similar)
+- [[brandon-roy|Brandon Roy]] '09 (85% similar)
+- [[devin-booker|Devin Booker]] '19 (84% similar)
+- [[grant-hill|Grant Hill]] '97 (83% similar)
+
+**Career shape:** Charted 17 seasons (2009-10–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

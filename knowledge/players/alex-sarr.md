@@ -35,6 +35,33 @@ Closest career shapes in the era-normalized vector space:
 - [[jermareo-davidson|Jermareo Davidson]] — cosine 0.74
 - [[mouhamed-sene|Mouhamed Sene]] — cosine 0.73
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 27.9 pts · 12.6 reb · 4.6 ast · 3.4 blk per 100 (2025-26).
+
+**Strengths:**
+
+- Elite rim protection (+3.0σ vs era)
+- Heavy shot volume, focal scoring option (+1.5σ vs era)
+- Strong presence on the defensive glass (+1.1σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.5σ)
+
+**Comparables:**
+
+- [[mo-bamba|Mo Bamba]] '20 (79% similar)
+- [[tristan-vukcevic|Tristan Vukcevic]] '26 (78% similar)
+- [[marquese-chriss|Marquese Chriss]] '20 (75% similar)
+- [[vitor-faverani|Vitor Faverani]] '14 (74% similar)
+- [[jermareo-davidson|Jermareo Davidson]] '08 (74% similar)
+- [[mouhamed-sene|Mouhamed Sene]] '07 (73% similar)
+
+**Career shape:** Charted 2 seasons (2024-25–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

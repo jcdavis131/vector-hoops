@@ -43,6 +43,33 @@ Closest career shapes in the era-normalized vector space:
 - [[o-j-mayo|O.J. Mayo]] — cosine 0.91
 - [[joe-crispin|Joe Crispin]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** PG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 25.4 pts · 5.0 reb · 7.3 ast · 2.2 stl per 100 (2009-10).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.0σ vs era)
+- Heavy shot volume, focal scoring option (+1.4σ vs era)
+- Active hands, disrupts passing lanes (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.1σ)
+
+**Comparables:**
+
+- [[bobby-jackson|Bobby Jackson]] '04 (95% similar)
+- [[bones-hyland|Bones Hyland]] '25 (93% similar)
+- [[jamal-crawford|Jamal Crawford]] '14 (93% similar)
+- [[brandon-jennings|Brandon Jennings]] '15 (92% similar)
+- [[o-j-mayo|O.J. Mayo]] '14 (91% similar)
+- [[joe-crispin|Joe Crispin]] '02 (91% similar)
+
+**Career shape:** Charted 10 seasons (2005-06–2014-15). Entered as a Playmaking + Steals profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -34,6 +34,31 @@ Closest career shapes in the era-normalized vector space:
 - [[cam-spencer|Cam Spencer]] — cosine 0.80
 - [[matthew-dellavedova|Matthew Dellavedova]] — cosine 0.80
 
+## Scouting report
+
+**Play style:** PG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 15.6 pts · 6.5 reb · 6.5 ast · 1.6 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.1σ)
+
+**Comparables:**
+
+- [[mario-elie|Mario Elie]] '01 (86% similar)
+- [[michael-hawkins|Michael Hawkins]] '99 (82% similar)
+- [[josh-magette|Josh Magette]] '18 (82% similar)
+- [[cory-joseph|Cory Joseph]] '24 (81% similar)
+- [[cam-spencer|Cam Spencer]] '26 (80% similar)
+- [[matthew-dellavedova|Matthew Dellavedova]] '23 (80% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

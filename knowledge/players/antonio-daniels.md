@@ -45,6 +45,31 @@ Closest career shapes in the era-normalized vector space:
 - [[mike-wilks|Mike Wilks]] — cosine 0.82
 - [[carlos-arroyo|Carlos Arroyo]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 19.8 pts · 4.9 reb · 10.3 ast · 1.6 stl per 100 (2003-04).
+
+**Strengths:**
+
+- High-volume table-setter (+2.3σ vs era)
+
+**Areas of concern:**
+
+- Offensive-glass activity well below era (−1.1σ)
+
+**Comparables:**
+
+- [[travis-best|Travis Best]] '04 (85% similar)
+- [[george-hill|George Hill]] '22 (85% similar)
+- [[monte-morris|Monte Morris]] '24 (83% similar)
+- [[andrew-nembhard|Andrew Nembhard]] '26 (82% similar)
+- [[mike-wilks|Mike Wilks]] '04 (82% similar)
+- [[carlos-arroyo|Carlos Arroyo]] '03 (82% similar)
+
+**Career shape:** Charted 12 seasons (1997-98–2008-09). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

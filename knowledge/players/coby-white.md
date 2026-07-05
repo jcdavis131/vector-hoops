@@ -40,6 +40,34 @@ Closest career shapes in the era-normalized vector space:
 - [[joe-johnson|Joe Johnson]] — cosine 0.91
 - [[ben-gordon|Ben Gordon]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** SG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 32.7 pts · 6.4 reb · 7.5 ast · 0.9 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+2.0σ vs era)
+- Featured, high-usage scoring role (+1.7σ vs era)
+- Heavy shot volume, focal scoring option (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.2σ)
+- Ball-hawking activity well below era (−1.2σ)
+
+**Comparables:**
+
+- [[malik-monk|Malik Monk]] '18 (95% similar)
+- [[tyler-herro|Tyler Herro]] '22 (93% similar)
+- [[anfernee-simons|Anfernee Simons]] '24 (93% similar)
+- [[jamal-crawford|Jamal Crawford]] '14 (91% similar)
+- [[joe-johnson|Joe Johnson]] '07 (91% similar)
+- [[ben-gordon|Ben Gordon]] '05 (91% similar)
+
+**Career shape:** Charted 7 seasons (2019-20–2025-26). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

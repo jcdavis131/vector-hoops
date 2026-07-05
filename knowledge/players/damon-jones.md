@@ -44,6 +44,32 @@ Closest career shapes in the era-normalized vector space:
 - [[kevin-huerter|Kevin Huerter]] — cosine 0.90
 - [[chucky-atkins|Chucky Atkins]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** PG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 15.1 pts · 2.8 reb · 3.2 ast · 1.4 stl per 100 (2008-09).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.8σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−4.0σ)
+- Finishing efficiency well below era (−1.9σ)
+
+**Comparables:**
+
+- [[daniel-gibson|Daniel Gibson]] '13 (93% similar)
+- [[matt-maloney|Matt Maloney]] '00 (92% similar)
+- [[travis-diener|Travis Diener]] '06 (91% similar)
+- [[max-strus|Max Strus]] '21 (91% similar)
+- [[kevin-huerter|Kevin Huerter]] '23 (90% similar)
+- [[chucky-atkins|Chucky Atkins]] '08 (90% similar)
+
+**Career shape:** Charted 11 seasons (1998-99–2008-09). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

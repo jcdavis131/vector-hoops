@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[justin-minaya|Justin Minaya]] — cosine 0.80
 - [[ronald-dupree|Ronald Dupree]] — cosine 0.80
 
+## Scouting report
+
+**Play style:** SG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 17.9 pts · 6.6 reb · 4.5 ast · 2.8 stl per 100 (2021-22).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.1σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.3σ)
+- Finishing efficiency well below era (−1.0σ)
+
+**Comparables:**
+
+- [[jahmai-mashack|Jahmai Mashack]] '26 (83% similar)
+- [[kevin-mccullar-jr|Kevin McCullar Jr.]] '26 (82% similar)
+- [[colby-jones|Colby Jones]] '24 (81% similar)
+- [[donnie-boyce|Donnie Boyce]] '97 (80% similar)
+- [[justin-minaya|Justin Minaya]] '25 (80% similar)
+- [[ronald-dupree|Ronald Dupree]] '06 (80% similar)
+
+**Career shape:** Charted 3 seasons (2019-20–2021-22). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Playmaking + Steals identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

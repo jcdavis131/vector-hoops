@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jeremiah-fears|Jeremiah Fears]] — cosine 0.87
 - [[ramon-sessions|Ramon Sessions]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 23.0 pts · 5.5 reb · 7.0 ast · 1.8 stl per 100 (2021-22).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+1.4σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.9σ)
+- Turnover rate well above era (+1.7σ)
+
+**Comparables:**
+
+- [[tony-wroten|Tony Wroten]] '15 (92% similar)
+- [[will-bynum|Will Bynum]] '09 (91% similar)
+- [[frank-mason-iii|Frank Mason III]] '19 (90% similar)
+- [[kevin-porter-jr|Kevin Porter Jr.]] '21 (88% similar)
+- [[jeremiah-fears|Jeremiah Fears]] '26 (87% similar)
+- [[ramon-sessions|Ramon Sessions]] '08 (87% similar)
+
+**Career shape:** Charted 3 seasons (2021-22–2025-26). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

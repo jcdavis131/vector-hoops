@@ -42,6 +42,34 @@ Closest career shapes in the era-normalized vector space:
 - [[michael-kidd-gilchrist|Michael Kidd-Gilchrist]] — cosine 0.89
 - [[jason-thompson|Jason Thompson]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 13.4 pts · 15.4 reb · 1.7 ast · 1.8 stl per 100 (2002-03).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+1.6σ vs era)
+- Strong presence on the defensive glass (+1.5σ vs era)
+- Rarely turns the ball over (−1.5σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.3σ)
+- Shot volume well below era (−1.2σ)
+
+**Comparables:**
+
+- [[brian-grant|Brian Grant]] '99 (94% similar)
+- [[udonis-haslem|Udonis Haslem]] '13 (92% similar)
+- [[p-j-brown|P.J. Brown]] '08 (91% similar)
+- [[shelden-williams|Shelden Williams]] '12 (91% similar)
+- [[michael-kidd-gilchrist|Michael Kidd-Gilchrist]] '20 (89% similar)
+- [[jason-thompson|Jason Thompson]] '15 (88% similar)
+
+**Career shape:** Charted 9 seasons (1996-97–2004-05). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

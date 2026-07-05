@@ -39,6 +39,33 @@ Closest career shapes in the era-normalized vector space:
 - [[kj-martin|KJ Martin]] — cosine 0.85
 - [[robert-swift|Robert Swift]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 15.8 pts · 10.6 reb · 2.7 ast · 3.2 blk per 100 (2023-24).
+
+**Strengths:**
+
+- Elite rim protection (+2.6σ vs era)
+- Relentless on the offensive glass (+1.7σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.8σ)
+- Three-point volume well below era (−1.3σ)
+
+**Comparables:**
+
+- [[jakarr-sampson|JaKarr Sampson]] '18 (91% similar)
+- [[jt-thor|JT Thor]] '25 (87% similar)
+- [[thon-maker|Thon Maker]] '20 (86% similar)
+- [[michael-stewart|Michael Stewart]] '04 (85% similar)
+- [[kj-martin|KJ Martin]] '25 (85% similar)
+- [[robert-swift|Robert Swift]] '05 (85% similar)
+
+**Career shape:** Charted 6 seasons (2020-21–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[chris-quinn|Chris Quinn]] — cosine 0.88
 - [[malachi-flynn|Malachi Flynn]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 13.8 pts · 4.3 reb · 6.0 ast · 2.1 stl per 100 (2003-04).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.0σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.8σ)
+- Defensive rebounding well below era (−1.4σ)
+
+**Comparables:**
+
+- [[dee-brown|Dee Brown]] '00 (91% similar)
+- [[lionel-chalmers|Lionel Chalmers]] '05 (89% similar)
+- [[charles-r-jones|Charles R. Jones]] '00 (89% similar)
+- [[devonte-graham|Devonte' Graham]] '20 (88% similar)
+- [[chris-quinn|Chris Quinn]] '10 (88% similar)
+- [[malachi-flynn|Malachi Flynn]] '22 (88% similar)
+
+**Career shape:** Charted 2 seasons (2002-03–2003-04). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Playmaking + Steals identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

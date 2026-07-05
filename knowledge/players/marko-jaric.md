@@ -40,6 +40,33 @@ Closest career shapes in the era-normalized vector space:
 - [[daniel-ewing|Daniel Ewing]] — cosine 0.91
 - [[earl-watson|Earl Watson]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** SF · Playmaking + Steals. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 18.4 pts · 6.0 reb · 7.2 ast · 3.6 stl per 100 (2002-03).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+3.0σ vs era)
+- High-volume three-point shooter (+1.2σ vs era)
+- High-volume table-setter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[ronnie-price|Ronnie Price]] '14 (96% similar)
+- [[shane-larkin|Shane Larkin]] '16 (94% similar)
+- [[facundo-campazzo|Facundo Campazzo]] '21 (92% similar)
+- [[jordan-mclaughlin|Jordan McLaughlin]] '24 (92% similar)
+- [[daniel-ewing|Daniel Ewing]] '07 (91% similar)
+- [[earl-watson|Earl Watson]] '14 (91% similar)
+
+**Career shape:** Charted 7 seasons (2002-03–2008-09). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

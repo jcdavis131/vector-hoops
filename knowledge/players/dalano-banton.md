@@ -37,6 +37,33 @@ Closest career shapes in the era-normalized vector space:
 - [[jalen-suggs|Jalen Suggs]] — cosine 0.81
 - [[dennis-smith-jr|Dennis Smith Jr.]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 24.1 pts · 7.7 reb · 6.1 ast · 2.2 stl per 100 (2022-23).
+
+**Strengths:**
+
+- Elite rim protection (+1.5σ vs era)
+- Active hands, disrupts passing lanes (+1.5σ vs era)
+- Heavy shot volume, focal scoring option (+1.2σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[donnie-boyce|Donnie Boyce]] '97 (84% similar)
+- [[talen-horton-tucker|Talen Horton-Tucker]] '23 (82% similar)
+- [[josh-jackson|Josh Jackson]] '18 (82% similar)
+- [[tony-wroten|Tony Wroten]] '15 (82% similar)
+- [[jalen-suggs|Jalen Suggs]] '25 (81% similar)
+- [[dennis-smith-jr|Dennis Smith Jr.]] '20 (81% similar)
+
+**Career shape:** Charted 4 seasons (2021-22–2024-25). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

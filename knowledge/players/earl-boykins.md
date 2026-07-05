@@ -44,6 +44,34 @@ Closest career shapes in the era-normalized vector space:
 - [[d-j-augustin|D.J. Augustin]] — cosine 0.90
 - [[brian-roberts|Brian Roberts]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 26.5 pts · 5.0 reb · 9.2 ast · 2.3 stl per 100 (1999-00).
+
+**Strengths:**
+
+- High-volume table-setter (+1.8σ vs era)
+- Heavy shot volume, focal scoring option (+1.5σ vs era)
+- Featured, high-usage scoring role (+1.5σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.7σ)
+- Defensive rebounding well below era (−1.4σ)
+
+**Comparables:**
+
+- [[trey-burke|Trey Burke]] '18 (94% similar)
+- [[jerryd-bayless|Jerryd Bayless]] '19 (91% similar)
+- [[mo-williams|Mo Williams]] '11 (91% similar)
+- [[troy-hudson|Troy Hudson]] '06 (90% similar)
+- [[d-j-augustin|D.J. Augustin]] '12 (90% similar)
+- [[brian-roberts|Brian Roberts]] '13 (90% similar)
+
+**Career shape:** Charted 11 seasons (1998-99–2010-11). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

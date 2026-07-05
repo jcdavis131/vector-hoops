@@ -36,6 +36,31 @@ Closest career shapes in the era-normalized vector space:
 - [[tony-snell|Tony Snell]] — cosine 0.91
 - [[tristan-da-silva|Tristan da Silva]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 14.3 pts · 5.0 reb · 3.0 ast · 1.9 stl per 100 (2023-24).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.7σ vs era)
+
+**Areas of concern:**
+
+- Rim-protection impact well below era (−1.1σ)
+
+**Comparables:**
+
+- [[reggie-bullock-jr|Reggie Bullock Jr.]] '24 (96% similar)
+- [[terrance-ferguson|Terrance Ferguson]] '20 (93% similar)
+- [[kyle-singler|Kyle Singler]] '17 (93% similar)
+- [[anthony-brown|Anthony Brown]] '16 (92% similar)
+- [[tony-snell|Tony Snell]] '21 (91% similar)
+- [[tristan-da-silva|Tristan da Silva]] '25 (91% similar)
+
+**Career shape:** Charted 3 seasons (2023-24–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

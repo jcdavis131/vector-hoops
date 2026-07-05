@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[tony-snell|Tony Snell]] — cosine 0.75
 - [[marko-guduric|Marko Guduric]] — cosine 0.74
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 12.1 pts · 7.1 reb · 1.9 ast · 1.2 stl per 100 (2013-14).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+2.0σ vs era)
+- Knockdown three-point shooter (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.6σ)
+- Scoring load well below era (−1.1σ)
+
+**Comparables:**
+
+- [[kobe-sanders|Kobe Sanders]] '26 (83% similar)
+- [[travis-wear|Travis Wear]] '18 (78% similar)
+- [[okaro-white|Okaro White]] '17 (77% similar)
+- [[tristan-da-silva|Tristan da Silva]] '25 (75% similar)
+- [[tony-snell|Tony Snell]] '21 (75% similar)
+- [[marko-guduric|Marko Guduric]] '20 (74% similar)
+
+**Career shape:** Charted 1 season (2013-14). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

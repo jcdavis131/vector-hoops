@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[gerald-henderson|Gerald Henderson]] — cosine 0.79
 - [[marcus-morris-sr|Marcus Morris Sr.]] — cosine 0.78
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 24.0 pts · 6.1 reb · 2.4 ast · 0.7 stl per 100 (2018-19).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.4σ)
+- On-court net impact well below era (−1.2σ)
+
+**Comparables:**
+
+- [[frank-jackson|Frank Jackson]] '22 (83% similar)
+- [[jordan-mcrae|Jordan McRae]] '16 (82% similar)
+- [[lonnie-walker-iv|Lonnie Walker IV]] '25 (82% similar)
+- [[nick-young|Nick Young]] '15 (80% similar)
+- [[gerald-henderson|Gerald Henderson]] '13 (79% similar)
+- [[marcus-morris-sr|Marcus Morris Sr.]] '12 (78% similar)
+
+**Career shape:** Charted 2 seasons (2017-18–2018-19). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

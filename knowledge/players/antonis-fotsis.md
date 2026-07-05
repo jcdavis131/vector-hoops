@@ -34,6 +34,31 @@ Closest career shapes in the era-normalized vector space:
 - [[oleksiy-pecherov|Oleksiy Pecherov]] — cosine 0.67
 - [[markieff-morris|Markieff Morris]] — cosine 0.66
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 17.1 pts · 9.9 reb · 1.6 ast · 1.7 blk per 100 (2001-02).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[duop-reath|Duop Reath]] '26 (75% similar)
+- [[mamadi-diakite|Mamadi Diakite]] '23 (75% similar)
+- [[theron-smith|Theron Smith]] '05 (73% similar)
+- [[bruno-caboclo|Bruno Caboclo]] '20 (71% similar)
+- [[oleksiy-pecherov|Oleksiy Pecherov]] '09 (67% similar)
+- [[markieff-morris|Markieff Morris]] '24 (66% similar)
+
+**Career shape:** Charted 1 season (2001-02). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

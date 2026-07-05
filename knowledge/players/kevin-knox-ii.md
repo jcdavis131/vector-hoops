@@ -39,6 +39,32 @@ Closest career shapes in the era-normalized vector space:
 - [[daeqwon-plowden|Daeqwon Plowden]] — cosine 0.87
 - [[pj-hairston|PJ Hairston]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 19.5 pts · 9.2 reb · 2.1 ast · 0.8 stl per 100 (2021-22).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.3σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.0σ)
+- Finishing efficiency well below era (−1.2σ)
+
+**Comparables:**
+
+- [[donte-greene|Donte Greene]] '09 (90% similar)
+- [[lazar-hayward|Lazar Hayward]] '12 (90% similar)
+- [[johnny-juzang|Johnny Juzang]] '23 (90% similar)
+- [[jordan-hawkins|Jordan Hawkins]] '25 (89% similar)
+- [[daeqwon-plowden|Daeqwon Plowden]] '26 (87% similar)
+- [[pj-hairston|PJ Hairston]] '15 (85% similar)
+
+**Career shape:** Charted 6 seasons (2018-19–2023-24). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

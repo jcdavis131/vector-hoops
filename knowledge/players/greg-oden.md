@@ -36,6 +36,34 @@ Closest career shapes in the era-normalized vector space:
 - [[derrick-favors|Derrick Favors]] — cosine 0.93
 - [[isaiah-jackson|Isaiah Jackson]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 25.7 pts · 19.7 reb · 2.1 ast · 5.3 blk per 100 (2009-10).
+
+**Strengths:**
+
+- Elite rim protection (+4.0σ vs era)
+- Relentless on the offensive glass (+2.7σ vs era)
+- Strong presence on the defensive glass (+2.5σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.7σ)
+- Three-point accuracy well below era (−1.5σ)
+
+**Comparables:**
+
+- [[rudy-gobert|Rudy Gobert]] '21 (94% similar)
+- [[javale-mcgee|JaVale McGee]] '17 (94% similar)
+- [[hassan-whiteside|Hassan Whiteside]] '22 (94% similar)
+- [[andrew-bynum|Andrew Bynum]] '08 (94% similar)
+- [[derrick-favors|Derrick Favors]] '21 (93% similar)
+- [[isaiah-jackson|Isaiah Jackson]] '24 (92% similar)
+
+**Career shape:** Charted 3 seasons (2008-09–2013-14). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

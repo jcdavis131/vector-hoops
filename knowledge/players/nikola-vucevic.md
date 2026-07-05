@@ -48,6 +48,33 @@ Closest career shapes in the era-normalized vector space:
 - [[kevin-garnett|Kevin Garnett]] — cosine 0.80
 - [[zach-randolph|Zach Randolph]] — cosine 0.80
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 32.1 pts · 18.5 reb · 5.9 ast · 1.7 blk per 100 (2018-19).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+2.7σ vs era)
+- Heavy shot volume, focal scoring option (+2.2σ vs era)
+- Featured, high-usage scoring role (+2.0σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[bobby-portis|Bobby Portis]] '23 (88% similar)
+- [[al-jefferson|Al Jefferson]] '09 (84% similar)
+- [[drew-gooden|Drew Gooden]] '16 (83% similar)
+- [[jared-sullinger|Jared Sullinger]] '16 (83% similar)
+- [[kevin-garnett|Kevin Garnett]] '04 (80% similar)
+- [[zach-randolph|Zach Randolph]] '07 (80% similar)
+
+**Career shape:** Charted 15 seasons (2011-12–2025-26). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

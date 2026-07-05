@@ -37,6 +37,33 @@ Closest career shapes in the era-normalized vector space:
 - [[ray-owes|Ray Owes]] — cosine 0.82
 - [[lonny-baxter|Lonny Baxter]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 18.3 pts · 14.5 reb · 2.0 ast · 1.2 stl per 100 (2023-24).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+1.5σ vs era)
+- Relentless on the offensive glass (+1.2σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.1σ)
+- Table-setting role well below era (−1.1σ)
+
+**Comparables:**
+
+- [[jarell-martin|Jarell Martin]] '16 (88% similar)
+- [[noah-vonleh|Noah Vonleh]] '23 (88% similar)
+- [[jamie-feick|Jamie Feick]] '00 (84% similar)
+- [[popeye-jones|Popeye Jones]] '03 (84% similar)
+- [[ray-owes|Ray Owes]] '97 (82% similar)
+- [[lonny-baxter|Lonny Baxter]] '06 (81% similar)
+
+**Career shape:** Charted 4 seasons (2022-23–2025-26). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

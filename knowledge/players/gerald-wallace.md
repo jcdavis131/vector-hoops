@@ -47,6 +47,32 @@ Closest career shapes in the era-normalized vector space:
 - [[horacio-llamas|Horacio Llamas]] — cosine 0.76
 - [[hamidou-diallo|Hamidou Diallo]] — cosine 0.75
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass + Defensive Glass. Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 6.1 pts · 10.0 reb · 1.9 ast · 2.6 stl per 100 (2014-15).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.7σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.6σ)
+- Shot volume well below era (−2.4σ)
+
+**Comparables:**
+
+- [[ausar-thompson|Ausar Thompson]] '26 (85% similar)
+- [[tony-allen|Tony Allen]] '15 (83% similar)
+- [[renaldo-balkman|Renaldo Balkman]] '08 (78% similar)
+- [[ivan-johnson|Ivan Johnson]] '13 (78% similar)
+- [[horacio-llamas|Horacio Llamas]] '97 (76% similar)
+- [[hamidou-diallo|Hamidou Diallo]] '23 (75% similar)
+
+**Career shape:** Charted 14 seasons (2001-02–2014-15). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

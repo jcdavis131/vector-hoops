@@ -38,6 +38,31 @@ Closest career shapes in the era-normalized vector space:
 - [[davion-mitchell|Davion Mitchell]] — cosine 0.81
 - [[e-twaun-moore|E'Twaun Moore]] — cosine 0.80
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 15.4 pts · 4.8 reb · 5.8 ast · 1.4 stl per 100 (2021-22).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[b-j-armstrong|B.J. Armstrong]] '00 (89% similar)
+- [[vinny-del-negro|Vinny Del Negro]] '01 (87% similar)
+- [[jeff-mcinnis|Jeff McInnis]] '08 (85% similar)
+- [[charles-jenkins|Charles Jenkins]] '12 (84% similar)
+- [[davion-mitchell|Davion Mitchell]] '26 (81% similar)
+- [[e-twaun-moore|E'Twaun Moore]] '12 (80% similar)
+
+**Career shape:** Charted 5 seasons (2021-22–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

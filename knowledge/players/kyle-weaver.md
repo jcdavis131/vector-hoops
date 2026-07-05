@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[garrett-temple|Garrett Temple]] — cosine 0.80
 - [[royal-ivey|Royal Ivey]] — cosine 0.79
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 12.6 pts · 5.5 reb · 4.3 ast · 2.0 stl per 100 (2008-09).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.3σ)
+- Scoring load well below era (−1.1σ)
+
+**Comparables:**
+
+- [[gerald-madkins|Gerald Madkins]] '98 (87% similar)
+- [[patrick-mccaw|Patrick McCaw]] '19 (84% similar)
+- [[david-wingate|David Wingate]] '99 (80% similar)
+- [[ron-baker|Ron Baker]] '18 (80% similar)
+- [[garrett-temple|Garrett Temple]] '11 (80% similar)
+- [[royal-ivey|Royal Ivey]] '12 (79% similar)
+
+**Career shape:** Charted 1 season (2008-09). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

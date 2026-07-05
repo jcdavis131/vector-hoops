@@ -34,6 +34,31 @@ Closest career shapes in the era-normalized vector space:
 - [[grant-williams|Grant Williams]] — cosine 0.79
 - [[pat-connaughton|Pat Connaughton]] — cosine 0.78
 
+## Scouting report
+
+**Play style:** PF · Three-Point Accuracy (Low Turnovers). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 14.4 pts · 10.7 reb · 3.5 ast · 1.3 stl per 100 (2024-25).
+
+**Strengths:**
+
+- Strong net on-court impact (+1.9σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.2σ)
+
+**Comparables:**
+
+- [[royce-o-neale|Royce O'Neale]] '21 (83% similar)
+- [[miye-oni|Miye Oni]] '21 (83% similar)
+- [[matt-barnes|Matt Barnes]] '04 (82% similar)
+- [[baylor-scheierman|Baylor Scheierman]] '26 (80% similar)
+- [[grant-williams|Grant Williams]] '20 (79% similar)
+- [[pat-connaughton|Pat Connaughton]] '16 (78% similar)
+
+**Career shape:** Charted 1 season (2024-25). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

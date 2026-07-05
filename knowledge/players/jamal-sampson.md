@@ -35,6 +35,34 @@ Closest career shapes in the era-normalized vector space:
 - [[charles-shackleford|Charles Shackleford]] — cosine 0.92
 - [[kwame-brown|Kwame Brown]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 9.3 pts · 18.5 reb · 1.9 ast · 2.7 blk per 100 (2006-07).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+2.9σ vs era)
+- Strong presence on the defensive glass (+2.6σ vs era)
+- Relentless on the offensive glass (+1.9σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.5σ)
+- Shot volume well below era (−2.4σ)
+
+**Comparables:**
+
+- [[will-perdue|Will Perdue]] '99 (98% similar)
+- [[omer-asik|Omer Asik]] '18 (95% similar)
+- [[joel-przybilla|Joel Przybilla]] '01 (94% similar)
+- [[deandre-jordan|DeAndre Jordan]] '16 (93% similar)
+- [[charles-shackleford|Charles Shackleford]] '99 (92% similar)
+- [[kwame-brown|Kwame Brown]] '13 (92% similar)
+
+**Career shape:** Charted 2 seasons (2004-05–2006-07). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -37,6 +37,32 @@ Closest career shapes in the era-normalized vector space:
 - [[keith-bogans|Keith Bogans]] — cosine 0.91
 - [[yakhouba-diawara|Yakhouba Diawara]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 9.3 pts · 5.6 reb · 1.7 ast · 0.4 stl per 100 (2007-08).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.5σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.8σ)
+- Finishing efficiency well below era (−1.6σ)
+
+**Comparables:**
+
+- [[james-anderson|James Anderson]] '11 (94% similar)
+- [[danuel-house-jr|Danuel House Jr.]] '19 (93% similar)
+- [[landry-shamet|Landry Shamet]] '20 (92% similar)
+- [[ethan-thompson|Ethan Thompson]] '26 (92% similar)
+- [[keith-bogans|Keith Bogans]] '13 (91% similar)
+- [[yakhouba-diawara|Yakhouba Diawara]] '09 (91% similar)
+
+**Career shape:** Charted 4 seasons (2002-03–2007-08). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

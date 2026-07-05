@@ -36,6 +36,31 @@ Closest career shapes in the era-normalized vector space:
 - [[kyshawn-george|Kyshawn George]] — cosine 0.70
 - [[davon-reed|Davon Reed]] — cosine 0.69
 
+## Scouting report
+
+**Play style:** PF · Three-Point Accuracy (Low Turnovers). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 16.2 pts · 8.5 reb · 5.4 ast · 2.0 stl per 100 (2023-24).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.1σ)
+
+**Comparables:**
+
+- [[mario-hezonja|Mario Hezonja]] '17 (74% similar)
+- [[damien-inglis|Damien Inglis]] '16 (74% similar)
+- [[stanley-johnson|Stanley Johnson]] '20 (72% similar)
+- [[emanual-davis|Emanual Davis]] '02 (72% similar)
+- [[kyshawn-george|Kyshawn George]] '26 (70% similar)
+- [[davon-reed|Davon Reed]] '18 (69% similar)
+
+**Career shape:** Charted 3 seasons (2023-24–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

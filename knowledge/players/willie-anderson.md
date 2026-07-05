@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jamie-watson|Jamie Watson]] — cosine 0.80
 - [[brian-cardinal|Brian Cardinal]] — cosine 0.79
 
+## Scouting report
+
+**Play style:** SG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 14.8 pts · 7.5 reb · 6.0 ast · 2.5 stl per 100 (1996-97).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+1.2σ vs era)
+- Active hands, disrupts passing lanes (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.0σ)
+
+**Comparables:**
+
+- [[scott-brooks|Scott Brooks]] '97 (93% similar)
+- [[pablo-prigioni|Pablo Prigioni]] '16 (91% similar)
+- [[jacob-gilyard|Jacob Gilyard]] '24 (83% similar)
+- [[nando-de-colo|Nando De Colo]] '13 (82% similar)
+- [[jamie-watson|Jamie Watson]] '97 (80% similar)
+- [[brian-cardinal|Brian Cardinal]] '12 (79% similar)
+
+**Career shape:** Charted 1 season (1996-97). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

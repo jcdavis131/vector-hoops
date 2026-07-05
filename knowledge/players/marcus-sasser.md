@@ -36,6 +36,34 @@ Closest career shapes in the era-normalized vector space:
 - [[jordan-farmar|Jordan Farmar]] — cosine 0.94
 - [[damon-stoudamire|Damon Stoudamire]] — cosine 0.94
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 20.5 pts · 4.0 reb · 7.8 ast · 2.1 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Strong net on-court impact (+1.8σ vs era)
+- High-volume table-setter (+1.1σ vs era)
+- High-volume three-point shooter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.3σ)
+- Finishing efficiency well below era (−1.0σ)
+
+**Comparables:**
+
+- [[raymond-felton|Raymond Felton]] '11 (96% similar)
+- [[mike-bibby|Mike Bibby]] '12 (95% similar)
+- [[kirk-hinrich|Kirk Hinrich]] '04 (94% similar)
+- [[dan-dickau|Dan Dickau]] '06 (94% similar)
+- [[jordan-farmar|Jordan Farmar]] '14 (94% similar)
+- [[damon-stoudamire|Damon Stoudamire]] '97 (94% similar)
+
+**Career shape:** Charted 3 seasons (2023-24–2025-26). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

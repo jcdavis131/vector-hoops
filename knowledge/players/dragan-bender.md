@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[admiral-schofield|Admiral Schofield]] — cosine 0.85
 - [[brandon-rush|Brandon Rush]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 12.3 pts · 8.6 reb · 1.9 ast · 1.8 blk per 100 (2016-17).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−3.1σ)
+- Finishing efficiency well below era (−1.4σ)
+
+**Comparables:**
+
+- [[daquan-jeffries|DaQuan Jeffries]] '24 (89% similar)
+- [[erik-murphy|Erik Murphy]] '14 (88% similar)
+- [[d-j-wilson|D.J. Wilson]] '18 (88% similar)
+- [[william-cunningham|William Cunningham]] '99 (87% similar)
+- [[admiral-schofield|Admiral Schofield]] '24 (85% similar)
+- [[brandon-rush|Brandon Rush]] '15 (84% similar)
+
+**Career shape:** Charted 3 seasons (2016-17–2018-19). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

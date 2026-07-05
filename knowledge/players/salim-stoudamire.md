@@ -36,6 +36,33 @@ Closest career shapes in the era-normalized vector space:
 - [[jared-mccain|Jared McCain]] — cosine 0.93
 - [[lonnie-walker-iv|Lonnie Walker IV]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** PG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 24.9 pts · 3.0 reb · 3.5 ast · 0.9 stl per 100 (2007-08).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.1σ vs era)
+- Heavy shot volume, focal scoring option (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.6σ)
+- Finishing efficiency well below era (−1.3σ)
+
+**Comparables:**
+
+- [[nick-young|Nick Young]] '15 (95% similar)
+- [[gary-neal|Gary Neal]] '14 (95% similar)
+- [[anfernee-simons|Anfernee Simons]] '24 (94% similar)
+- [[gerald-green|Gerald Green]] '15 (93% similar)
+- [[jared-mccain|Jared McCain]] '25 (93% similar)
+- [[lonnie-walker-iv|Lonnie Walker IV]] '25 (93% similar)
+
+**Career shape:** Charted 3 seasons (2005-06–2007-08). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

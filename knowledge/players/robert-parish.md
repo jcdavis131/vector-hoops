@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[thurl-bailey|Thurl Bailey]] — cosine 0.79
 - [[andrew-bynum|Andrew Bynum]] — cosine 0.76
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 20.9 pts · 11.5 reb · 2.8 ast · 2.5 blk per 100 (1996-97).
+
+**Strengths:**
+
+- Strong net on-court impact (+2.2σ vs era)
+- Relentless on the offensive glass (+1.5σ vs era)
+- Elite rim protection (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.4σ)
+- Ball-hawking activity well below era (−1.3σ)
+
+**Comparables:**
+
+- [[jackie-butler|Jackie Butler]] '06 (83% similar)
+- [[neemias-queta|Neemias Queta]] '24 (81% similar)
+- [[gheorghe-muresan|Gheorghe Muresan]] '97 (80% similar)
+- [[luc-longley|Luc Longley]] '01 (79% similar)
+- [[thurl-bailey|Thurl Bailey]] '99 (79% similar)
+- [[andrew-bynum|Andrew Bynum]] '08 (76% similar)
+
+**Career shape:** Charted 1 season (1996-97). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

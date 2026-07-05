@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[greg-dreiling|Greg Dreiling]] — cosine 0.65
 - [[antonius-cleveland|Antonius Cleveland]] — cosine 0.65
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 12.8 pts · 16.6 reb · 1.0 ast · 2.2 stl per 100 (1996-97).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+4.0σ vs era)
+- Relentless on the offensive glass (+1.9σ vs era)
+- Strong presence on the defensive glass (+1.8σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.4σ)
+- On-court net impact well below era (−1.7σ)
+
+**Comparables:**
+
+- [[ivano-newbill|Ivano Newbill]] '98 (75% similar)
+- [[tony-mitchell|Tony Mitchell]] '14 (72% similar)
+- [[j-r-henderson|J.R. Henderson]] '99 (71% similar)
+- [[jamie-feick|Jamie Feick]] '00 (66% similar)
+- [[greg-dreiling|Greg Dreiling]] '97 (65% similar)
+- [[antonius-cleveland|Antonius Cleveland]] '18 (65% similar)
+
+**Career shape:** Charted 1 season (1996-97). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

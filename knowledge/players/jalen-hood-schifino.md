@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[archie-goodwin|Archie Goodwin]] — cosine 0.79
 - [[brodric-thomas|Brodric Thomas]] — cosine 0.77
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 14.5 pts · 5.6 reb · 3.4 ast · 1.3 stl per 100 (2023-24).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+2.0σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−3.1σ)
+- On-court net impact well below era (−3.0σ)
+
+**Comparables:**
+
+- [[lou-roe|Lou Roe]] '97 (86% similar)
+- [[cory-higgins|Cory Higgins]] '12 (83% similar)
+- [[josh-hall|Josh Hall]] '21 (81% similar)
+- [[john-amaechi|John Amaechi]] '02 (81% similar)
+- [[archie-goodwin|Archie Goodwin]] '15 (79% similar)
+- [[brodric-thomas|Brodric Thomas]] '21 (77% similar)
+
+**Career shape:** Charted 1 season (2023-24). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

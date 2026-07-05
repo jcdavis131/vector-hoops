@@ -40,6 +40,34 @@ Closest career shapes in the era-normalized vector space:
 - [[zarko-cabarkapa|Zarko Cabarkapa]] — cosine 0.78
 - [[marcus-fizer|Marcus Fizer]] — cosine 0.78
 
+## Scouting report
+
+**Play style:** SF · Defensive Glass + Rim Pressure (Fts). Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 26.3 pts · 11.0 reb · 2.9 ast · 2.8 blk per 100 (1998-99).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+1.6σ vs era)
+- Heavy shot volume, focal scoring option (+1.5σ vs era)
+- Elite rim protection (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.3σ)
+- Ball-hawking activity well below era (−1.2σ)
+
+**Comparables:**
+
+- [[michael-beasley|Michael Beasley]] '16 (86% similar)
+- [[maurice-taylor|Maurice Taylor]] '99 (82% similar)
+- [[eddy-curry|Eddy Curry]] '07 (80% similar)
+- [[shareef-abdur-rahim|Shareef Abdur-Rahim]] '99 (79% similar)
+- [[zarko-cabarkapa|Zarko Cabarkapa]] '04 (78% similar)
+- [[marcus-fizer|Marcus Fizer]] '03 (78% similar)
+
+**Career shape:** Charted 7 seasons (1996-97–2003-04). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

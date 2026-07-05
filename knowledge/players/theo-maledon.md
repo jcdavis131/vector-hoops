@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jonny-flynn|Jonny Flynn]] — cosine 0.88
 - [[frank-williams|Frank Williams]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 17.2 pts · 5.6 reb · 5.9 ast · 1.5 stl per 100 (2020-21).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.2σ)
+- Finishing efficiency well below era (−1.3σ)
+
+**Comparables:**
+
+- [[nico-mannion|Nico Mannion]] '21 (92% similar)
+- [[wade-baldwin-iv|Wade Baldwin IV]] '17 (91% similar)
+- [[brandon-goodwin|Brandon Goodwin]] '20 (90% similar)
+- [[tierre-brown|Tierre Brown]] '02 (90% similar)
+- [[jonny-flynn|Jonny Flynn]] '11 (88% similar)
+- [[frank-williams|Frank Williams]] '03 (88% similar)
+
+**Career shape:** Charted 3 seasons (2020-21–2022-23). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

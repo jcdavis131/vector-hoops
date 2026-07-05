@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[anthony-lamb|Anthony Lamb]] — cosine 0.82
 - [[sheldon-mac|Sheldon Mac]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 11.4 pts · 5.6 reb · 1.2 ast · 0.9 blk per 100 (2020-21).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+2.1σ vs era)
+- Rarely turns the ball over (−1.2σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.2σ)
+- Ball-hawking activity well below era (−1.5σ)
+
+**Comparables:**
+
+- [[deng-adel|Deng Adel]] '19 (92% similar)
+- [[drake-powell|Drake Powell]] '26 (91% similar)
+- [[lance-thomas|Lance Thomas]] '13 (87% similar)
+- [[vlatko-cancar|Vlatko Čančar]] '21 (83% similar)
+- [[anthony-lamb|Anthony Lamb]] '21 (82% similar)
+- [[sheldon-mac|Sheldon Mac]] '17 (82% similar)
+
+**Career shape:** Charted 1 season (2020-21). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

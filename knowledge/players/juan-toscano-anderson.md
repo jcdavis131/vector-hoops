@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[deandre-bembry|DeAndre' Bembry]] — cosine 0.77
 - [[cody-martin|Cody Martin]] — cosine 0.76
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 12.5 pts · 9.8 reb · 6.2 ast · 1.7 stl per 100 (2020-21).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.6σ)
+- Scoring load well below era (−1.2σ)
+
+**Comparables:**
+
+- [[julyan-stone|Julyan Stone]] '18 (87% similar)
+- [[josh-mcroberts|Josh McRoberts]] '15 (80% similar)
+- [[kyle-anderson|Kyle Anderson]] '15 (79% similar)
+- [[landry-fields|Landry Fields]] '15 (79% similar)
+- [[deandre-bembry|DeAndre' Bembry]] '17 (77% similar)
+- [[cody-martin|Cody Martin]] '21 (76% similar)
+
+**Career shape:** Charted 3 seasons (2020-21–2022-23). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -45,6 +45,34 @@ Closest career shapes in the era-normalized vector space:
 - [[sam-cassell|Sam Cassell]] — cosine 0.93
 - [[trae-young|Trae Young]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 30.2 pts · 4.8 reb · 12.6 ast · 1.8 stl per 100 (2011-12).
+
+**Strengths:**
+
+- High-volume table-setter (+2.8σ vs era)
+- Featured, high-usage scoring role (+1.9σ vs era)
+- Heavy shot volume, focal scoring option (+1.9σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.6σ)
+- Offensive-glass activity well below era (−1.1σ)
+
+**Comparables:**
+
+- [[goran-dragic|Goran Dragic]] '17 (96% similar)
+- [[stephon-marbury|Stephon Marbury]] '01 (95% similar)
+- [[darius-garland|Darius Garland]] '22 (95% similar)
+- [[dennis-schroder|Dennis Schröder]] '16 (94% similar)
+- [[sam-cassell|Sam Cassell]] '04 (93% similar)
+- [[trae-young|Trae Young]] '20 (91% similar)
+
+**Career shape:** Charted 12 seasons (2005-06–2016-17). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

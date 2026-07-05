@@ -44,6 +44,33 @@ Closest career shapes in the era-normalized vector space:
 - [[killian-hayes|Killian Hayes]] — cosine 0.93
 - [[tyler-ennis|Tyler Ennis]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 11.2 pts · 4.7 reb · 11.4 ast · 2.5 stl per 100 (2002-03).
+
+**Strengths:**
+
+- High-volume table-setter (+2.7σ vs era)
+- Active hands, disrupts passing lanes (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.8σ)
+- Finishing efficiency well below era (−1.4σ)
+
+**Comparables:**
+
+- [[earl-watson|Earl Watson]] '14 (96% similar)
+- [[phil-pressey|Phil Pressey]] '16 (95% similar)
+- [[marcelo-huertas|Marcelo Huertas]] '17 (94% similar)
+- [[tim-frazier|Tim Frazier]] '20 (93% similar)
+- [[killian-hayes|Killian Hayes]] '21 (93% similar)
+- [[tyler-ennis|Tyler Ennis]] '15 (92% similar)
+
+**Career shape:** Charted 11 seasons (1999-00–2011-12). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

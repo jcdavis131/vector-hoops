@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[treveon-graham|Treveon Graham]] — cosine 0.85
 - [[vit-krejci|Vít Krejčí]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 11.3 pts · 6.2 reb · 4.5 ast · 0.8 stl per 100 (1998-99).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.1σ vs era)
+
+**Areas of concern:**
+
+- Scoring load well below era (−1.3σ)
+- Ball-hawking activity well below era (−1.2σ)
+
+**Comparables:**
+
+- [[doron-lamb|Doron Lamb]] '14 (89% similar)
+- [[antoine-wright|Antoine Wright]] '06 (87% similar)
+- [[semi-ojeleye|Semi Ojeleye]] '18 (87% similar)
+- [[rodney-mcgruder|Rodney McGruder]] '18 (86% similar)
+- [[treveon-graham|Treveon Graham]] '17 (85% similar)
+- [[vit-krejci|Vít Krejčí]] '23 (85% similar)
+
+**Career shape:** Charted 1 season (1998-99). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

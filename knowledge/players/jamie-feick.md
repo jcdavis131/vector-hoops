@@ -37,6 +37,34 @@ Closest career shapes in the era-normalized vector space:
 - [[james-singleton|James Singleton]] — cosine 0.83
 - [[dennis-rodman|Dennis Rodman]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** C · Three-Point Accuracy (Low Turnovers). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 10.3 pts · 16.9 reb · 1.5 ast · 1.0 stl per 100 (1999-00).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+4.0σ vs era)
+- Strong presence on the defensive glass (+1.9σ vs era)
+- Relentless on the offensive glass (+1.8σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.5σ)
+- Scoring load well below era (−1.5σ)
+
+**Comparables:**
+
+- [[usman-garuba|Usman Garuba]] '22 (88% similar)
+- [[ivano-newbill|Ivano Newbill]] '98 (87% similar)
+- [[noah-vonleh|Noah Vonleh]] '23 (86% similar)
+- [[jabari-walker|Jabari Walker]] '24 (84% similar)
+- [[james-singleton|James Singleton]] '10 (83% similar)
+- [[dennis-rodman|Dennis Rodman]] '97 (83% similar)
+
+**Career shape:** Charted 4 seasons (1996-97–1999-00). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

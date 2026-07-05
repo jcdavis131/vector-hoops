@@ -34,6 +34,31 @@ Closest career shapes in the era-normalized vector space:
 - [[j-r-giddens|J.R. Giddens]] — cosine 0.79
 - [[keith-booth|Keith Booth]] — cosine 0.78
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 16.3 pts · 8.7 reb · 4.3 ast · 1.9 stl per 100 (1997-98).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.8σ)
+
+**Comparables:**
+
+- [[javon-freeman-liberty|Javon Freeman-Liberty]] '24 (84% similar)
+- [[r-j-hampton|R.J. Hampton]] '22 (84% similar)
+- [[lari-ketner|Lari Ketner]] '00 (84% similar)
+- [[wade-baldwin-iv|Wade Baldwin IV]] '17 (82% similar)
+- [[j-r-giddens|J.R. Giddens]] '10 (79% similar)
+- [[keith-booth|Keith Booth]] '99 (78% similar)
+
+**Career shape:** Charted 1 season (1997-98). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -37,6 +37,34 @@ Closest career shapes in the era-normalized vector space:
 - [[latrell-sprewell|Latrell Sprewell]] — cosine 0.85
 - [[kevin-martin|Kevin Martin]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 25.8 pts · 5.2 reb · 6.5 ast · 0.8 stl per 100 (2015-16).
+
+**Strengths:**
+
+- Strong net on-court impact (+1.9σ vs era)
+- Draws contact, gets to the line often (+1.2σ vs era)
+- Knockdown three-point shooter (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.2σ)
+- Turnover rate well above era (+1.2σ)
+
+**Comparables:**
+
+- [[cam-thomas|Cam Thomas]] '25 (88% similar)
+- [[allan-houston|Allan Houston]] '03 (87% similar)
+- [[jalen-rose|Jalen Rose]] '07 (86% similar)
+- [[alec-burks|Alec Burks]] '24 (86% similar)
+- [[latrell-sprewell|Latrell Sprewell]] '97 (85% similar)
+- [[kevin-martin|Kevin Martin]] '11 (85% similar)
+
+**Career shape:** Charted 4 seasons (2015-16–2019-20). Consistent Scoring Volume + Shot Volume profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

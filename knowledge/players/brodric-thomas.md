@@ -34,6 +34,31 @@ Closest career shapes in the era-normalized vector space:
 - [[jared-cunningham|Jared Cunningham]] — cosine 0.78
 - [[robert-archibald|Robert Archibald]] — cosine 0.77
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 15.0 pts · 6.4 reb · 3.6 ast · 1.8 stl per 100 (2020-21).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.4σ)
+
+**Comparables:**
+
+- [[jamison-brewer|Jamison Brewer]] '05 (82% similar)
+- [[aaron-harrison|Aaron Harrison]] '16 (81% similar)
+- [[sindarius-thornwell|Sindarius Thornwell]] '21 (79% similar)
+- [[rawle-marshall|Rawle Marshall]] '07 (79% similar)
+- [[jared-cunningham|Jared Cunningham]] '15 (78% similar)
+- [[robert-archibald|Robert Archibald]] '04 (77% similar)
+
+**Career shape:** Charted 1 season (2020-21). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

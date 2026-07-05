@@ -38,6 +38,33 @@ Closest career shapes in the era-normalized vector space:
 - [[ben-gordon|Ben Gordon]] — cosine 0.94
 - [[jamal-crawford|Jamal Crawford]] — cosine 0.94
 
+## Scouting report
+
+**Play style:** SG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 23.9 pts · 5.1 reb · 5.7 ast · 1.9 stl per 100 (2010-11).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+1.9σ vs era)
+- Reliable touch from the free-throw line (+1.1σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.5σ)
+- Turnover rate well above era (+1.3σ)
+
+**Comparables:**
+
+- [[jordan-clarkson|Jordan Clarkson]] '21 (96% similar)
+- [[malik-monk|Malik Monk]] '18 (95% similar)
+- [[brandon-knight|Brandon Knight]] '20 (95% similar)
+- [[jordan-poole|Jordan Poole]] '25 (94% similar)
+- [[ben-gordon|Ben Gordon]] '05 (94% similar)
+- [[jamal-crawford|Jamal Crawford]] '14 (94% similar)
+
+**Career shape:** Charted 5 seasons (2010-11–2016-17). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

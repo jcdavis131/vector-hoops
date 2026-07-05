@@ -37,6 +37,33 @@ Closest career shapes in the era-normalized vector space:
 - [[ron-harper-jr|Ron Harper Jr.]] — cosine 0.83
 - [[duop-reath|Duop Reath]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 19.3 pts · 8.0 reb · 2.3 ast · 2.2 blk per 100 (2025-26).
+
+**Strengths:**
+
+- Elite rim protection (+1.5σ vs era)
+- Rarely turns the ball over (−1.0σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.2σ)
+- Table-setting role well below era (−1.0σ)
+
+**Comparables:**
+
+- [[shawne-williams|Shawne Williams]] '12 (87% similar)
+- [[kelan-martin|Kelan Martin]] '21 (85% similar)
+- [[mike-muscala|Mike Muscala]] '14 (85% similar)
+- [[rasual-butler|Rasual Butler]] '04 (84% similar)
+- [[ron-harper-jr|Ron Harper Jr.]] '26 (83% similar)
+- [[duop-reath|Duop Reath]] '26 (83% similar)
+
+**Career shape:** Charted 4 seasons (2022-23–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

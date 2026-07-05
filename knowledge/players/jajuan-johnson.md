@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[antoine-carr|Antoine Carr]] — cosine 0.84
 - [[jason-smith|Jason Smith]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 19.8 pts · 10.1 reb · 1.0 ast · 2.4 blk per 100 (2011-12).
+
+**Strengths:**
+
+- Elite rim protection (+1.1σ vs era)
+- Heavy shot volume, focal scoring option (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.5σ)
+- Rim pressure (free-throw generation) well below era (−1.2σ)
+
+**Comparables:**
+
+- [[kevin-seraphin|Kevin Seraphin]] '16 (87% similar)
+- [[wayman-tisdale|Wayman Tisdale]] '97 (86% similar)
+- [[jermareo-davidson|Jermareo Davidson]] '08 (86% similar)
+- [[thurl-bailey|Thurl Bailey]] '99 (84% similar)
+- [[antoine-carr|Antoine Carr]] '00 (84% similar)
+- [[jason-smith|Jason Smith]] '18 (81% similar)
+
+**Career shape:** Charted 1 season (2011-12). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

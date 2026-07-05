@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[charlie-brown-jr|Charlie Brown Jr.]] — cosine 0.84
 - [[antonio-lang|Antonio Lang]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** PG · Offensive Glass + Defensive Glass. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 7.2 pts · 9.5 reb · 5.7 ast · 3.4 stl per 100 (2018-19).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+3.5σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−4.0σ)
+- Three-point accuracy well below era (−2.8σ)
+
+**Comparables:**
+
+- [[robert-archibald|Robert Archibald]] '04 (91% similar)
+- [[sindarius-thornwell|Sindarius Thornwell]] '21 (89% similar)
+- [[julian-washburn|Julian Washburn]] '19 (86% similar)
+- [[cody-martin|Cody Martin]] '21 (85% similar)
+- [[charlie-brown-jr|Charlie Brown Jr.]] '22 (84% similar)
+- [[antonio-lang|Antonio Lang]] '97 (83% similar)
+
+**Career shape:** Charted 3 seasons (2018-19–2020-21). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/sf|SF]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

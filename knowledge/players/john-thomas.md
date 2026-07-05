@@ -38,6 +38,32 @@ Closest career shapes in the era-normalized vector space:
 - [[khem-birch|Khem Birch]] — cosine 0.88
 - [[mark-madsen|Mark Madsen]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 11.6 pts · 7.7 reb · 0.9 ast · 1.4 blk per 100 (1999-00).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.7σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−3.0σ)
+- Three-point accuracy well below era (−1.3σ)
+
+**Comparables:**
+
+- [[james-augustine|James Augustine]] '08 (93% similar)
+- [[chris-richard|Chris Richard]] '10 (91% similar)
+- [[darvin-ham|Darvin Ham]] '05 (89% similar)
+- [[corie-blount|Corie Blount]] '98 (88% similar)
+- [[khem-birch|Khem Birch]] '19 (88% similar)
+- [[mark-madsen|Mark Madsen]] '09 (88% similar)
+
+**Career shape:** Charted 5 seasons (1997-98–2005-06). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

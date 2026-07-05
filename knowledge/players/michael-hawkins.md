@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[chris-childs|Chris Childs]] — cosine 0.88
 - [[chris-duhon|Chris Duhon]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** PG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 8.9 pts · 6.2 reb · 6.7 ast · 0.7 stl per 100 (1998-99).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+2.1σ vs era)
+
+**Areas of concern:**
+
+- Scoring load well below era (−1.8σ)
+- Rim pressure (free-throw generation) well below era (−1.7σ)
+
+**Comparables:**
+
+- [[rex-walters|Rex Walters]] '98 (91% similar)
+- [[matthew-dellavedova|Matthew Dellavedova]] '23 (91% similar)
+- [[jaylen-adams|Jaylen Adams]] '19 (91% similar)
+- [[steve-blake|Steve Blake]] '16 (89% similar)
+- [[chris-childs|Chris Childs]] '02 (88% similar)
+- [[chris-duhon|Chris Duhon]] '13 (87% similar)
+
+**Career shape:** Charted 2 seasons (1996-97–1998-99). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -40,6 +40,33 @@ Closest career shapes in the era-normalized vector space:
 - [[mike-taylor|Mike Taylor]] — cosine 0.88
 - [[cory-alexander|Cory Alexander]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 13.9 pts · 4.4 reb · 6.9 ast · 2.7 stl per 100 (2008-09).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.0σ vs era)
+- High-volume table-setter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−3.0σ)
+- Offensive-glass activity well below era (−1.3σ)
+
+**Comparables:**
+
+- [[smush-parker|Smush Parker]] '05 (92% similar)
+- [[elliot-perry|Elliot Perry]] '99 (89% similar)
+- [[robert-pack|Robert Pack]] '97 (88% similar)
+- [[eric-murdock|Eric Murdock]] '00 (88% similar)
+- [[mike-taylor|Mike Taylor]] '09 (88% similar)
+- [[cory-alexander|Cory Alexander]] '01 (87% similar)
+
+**Career shape:** Charted 7 seasons (2003-04–2009-10). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -41,6 +41,34 @@ Closest career shapes in the era-normalized vector space:
 - [[kenny-anderson|Kenny Anderson]] — cosine 0.84
 - [[anthony-johnson|Anthony Johnson]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** PG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 14.3 pts · 4.3 reb · 4.9 ast · 3.0 stl per 100 (2016-17).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.5σ vs era)
+- Strong net on-court impact (+2.1σ vs era)
+- Reliable touch from the free-throw line (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.2σ)
+- Defensive rebounding well below era (−1.1σ)
+
+**Comparables:**
+
+- [[travis-best|Travis Best]] '04 (89% similar)
+- [[delonte-west|Delonte West]] '09 (85% similar)
+- [[willie-warren|Willie Warren]] '11 (85% similar)
+- [[george-hill|George Hill]] '22 (84% similar)
+- [[kenny-anderson|Kenny Anderson]] '97 (84% similar)
+- [[anthony-johnson|Anthony Johnson]] '02 (84% similar)
+
+**Career shape:** Charted 8 seasons (2015-16–2022-23). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

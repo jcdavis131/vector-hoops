@@ -42,6 +42,33 @@ Closest career shapes in the era-normalized vector space:
 - [[reggie-jackson|Reggie Jackson]] — cosine 0.90
 - [[gordon-hayward|Gordon Hayward]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PG · Scoring Volume + Shot Volume. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 26.0 pts · 7.6 reb · 11.1 ast · 1.0 stl per 100 (2019-20).
+
+**Strengths:**
+
+- High-volume table-setter (+2.6σ vs era)
+- Reliable touch from the free-throw line (+1.2σ vs era)
+- Heavy shot volume, focal scoring option (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.2σ)
+
+**Comparables:**
+
+- [[sam-cassell|Sam Cassell]] '04 (94% similar)
+- [[jalen-brunson|Jalen Brunson]] '24 (92% similar)
+- [[jamal-murray|Jamal Murray]] '26 (90% similar)
+- [[derrick-rose|Derrick Rose]] '11 (90% similar)
+- [[reggie-jackson|Reggie Jackson]] '16 (90% similar)
+- [[gordon-hayward|Gordon Hayward]] '17 (88% similar)
+
+**Career shape:** Charted 9 seasons (2016-17–2024-25). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

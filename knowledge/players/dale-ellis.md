@@ -37,6 +37,34 @@ Closest career shapes in the era-normalized vector space:
 - [[max-strus|Max Strus]] — cosine 0.93
 - [[anthony-morrow|Anthony Morrow]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 15.9 pts · 5.0 reb · 1.3 ast · 1.2 stl per 100 (1999-00).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.2σ vs era)
+- Rarely turns the ball over (−1.2σ vs era)
+- Strong net on-court impact (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.6σ)
+- Defensive rebounding well below era (−1.0σ)
+
+**Comparables:**
+
+- [[malik-beasley|Malik Beasley]] '25 (96% similar)
+- [[eric-piatkowski|Eric Piatkowski]] '06 (96% similar)
+- [[duncan-robinson|Duncan Robinson]] '20 (94% similar)
+- [[chase-budinger|Chase Budinger]] '10 (93% similar)
+- [[max-strus|Max Strus]] '21 (93% similar)
+- [[anthony-morrow|Anthony Morrow]] '17 (91% similar)
+
+**Career shape:** Charted 4 seasons (1996-97–1999-00). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

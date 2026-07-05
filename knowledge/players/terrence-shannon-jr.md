@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[sam-mitchell|Sam Mitchell]] — cosine 0.83
 - [[harrison-barnes|Harrison Barnes]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 20.8 pts · 4.3 reb · 3.3 ast · 1.2 stl per 100 (2025-26).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.2σ)
+- Rim-protection impact well below era (−1.1σ)
+
+**Comparables:**
+
+- [[amir-coffey|Amir Coffey]] '23 (90% similar)
+- [[arron-afflalo|Arron Afflalo]] '18 (89% similar)
+- [[chris-douglas-roberts|Chris Douglas-Roberts]] '10 (86% similar)
+- [[bryce-mcgowens|Bryce McGowens]] '26 (85% similar)
+- [[sam-mitchell|Sam Mitchell]] '00 (83% similar)
+- [[harrison-barnes|Harrison Barnes]] '16 (82% similar)
+
+**Career shape:** Charted 2 seasons (2024-25–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

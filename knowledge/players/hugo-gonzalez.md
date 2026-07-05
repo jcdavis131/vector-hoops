@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[eduardo-najera|Eduardo Najera]] — cosine 0.83
 - [[johnny-furphy|Johnny Furphy]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass + Defensive Glass. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 13.1 pts · 11.2 reb · 1.8 ast · 1.9 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Strong net on-court impact (+1.7σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.3σ)
+- Rim pressure (free-throw generation) well below era (−1.2σ)
+
+**Comparables:**
+
+- [[andre-roberson|Andre Roberson]] '18 (89% similar)
+- [[kenrich-williams|Kenrich Williams]] '20 (88% similar)
+- [[jordan-walsh|Jordan Walsh]] '25 (84% similar)
+- [[othello-hunter|Othello Hunter]] '09 (83% similar)
+- [[eduardo-najera|Eduardo Najera]] '12 (83% similar)
+- [[johnny-furphy|Johnny Furphy]] '26 (82% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -44,6 +44,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jj-hickson|JJ Hickson]] — cosine 0.91
 - [[udoka-azubuike|Udoka Azubuike]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 15.6 pts · 10.8 reb · 1.3 ast · 1.9 stl per 100 (2012-13).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+4.0σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.6σ)
+- Three-point accuracy well below era (−1.5σ)
+
+**Comparables:**
+
+- [[ben-handlogten|Ben Handlogten]] '04 (96% similar)
+- [[craig-smith|Craig Smith]] '09 (94% similar)
+- [[ante-zizic|Ante Zizic]] '18 (93% similar)
+- [[jalen-duren|Jalen Duren]] '26 (92% similar)
+- [[jj-hickson|JJ Hickson]] '16 (91% similar)
+- [[udoka-azubuike|Udoka Azubuike]] '23 (91% similar)
+
+**Career shape:** Charted 11 seasons (2002-03–2012-13). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

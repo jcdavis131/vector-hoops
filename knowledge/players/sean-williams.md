@@ -36,6 +36,33 @@ Closest career shapes in the era-normalized vector space:
 - [[adonal-foyle|Adonal Foyle]] — cosine 0.92
 - [[ibou-badji|Ibou Badji]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 11.3 pts · 10.0 reb · 0.2 ast · 4.1 blk per 100 (2009-10).
+
+**Strengths:**
+
+- Elite rim protection (+3.0σ vs era)
+- Relentless on the offensive glass (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.7σ)
+- Three-point accuracy well below era (−1.5σ)
+
+**Comparables:**
+
+- [[dj-mbenga|DJ Mbenga]] '06 (96% similar)
+- [[norvel-pelle|Norvel Pelle]] '20 (93% similar)
+- [[bernard-james|Bernard James]] '13 (93% similar)
+- [[darko-milicic|Darko Milicic]] '04 (92% similar)
+- [[adonal-foyle|Adonal Foyle]] '07 (92% similar)
+- [[ibou-badji|Ibou Badji]] '24 (91% similar)
+
+**Career shape:** Charted 3 seasons (2007-08–2009-10). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

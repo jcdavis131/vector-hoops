@@ -46,6 +46,31 @@ Closest career shapes in the era-normalized vector space:
 - [[cory-joseph|Cory Joseph]] — cosine 0.93
 - [[haywoode-workman|Haywoode Workman]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** SG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 13.6 pts · 4.1 reb · 6.9 ast · 4.5 stl per 100 (2001-02).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+4.0σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.5σ)
+
+**Comparables:**
+
+- [[mike-wilks|Mike Wilks]] '04 (97% similar)
+- [[alvin-williams|Alvin Williams]] '01 (94% similar)
+- [[shane-larkin|Shane Larkin]] '16 (94% similar)
+- [[tyus-jones|Tyus Jones]] '18 (93% similar)
+- [[cory-joseph|Cory Joseph]] '24 (93% similar)
+- [[haywoode-workman|Haywoode Workman]] '00 (93% similar)
+
+**Career shape:** Charted 13 seasons (1997-98–2009-10). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Playmaking + Steals identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

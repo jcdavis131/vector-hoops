@@ -34,6 +34,31 @@ Closest career shapes in the era-normalized vector space:
 - [[leandro-bolmaro|Leandro Bolmaro]] — cosine 0.77
 - [[cameron-bairstow|Cameron Bairstow]] — cosine 0.76
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 16.0 pts · 8.1 reb · 3.2 ast · 1.6 stl per 100 (2025-26).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.1σ)
+
+**Comparables:**
+
+- [[donald-royal|Donald Royal]] '98 (83% similar)
+- [[wes-iwundu|Wes Iwundu]] '21 (81% similar)
+- [[devin-green|Devin Green]] '06 (78% similar)
+- [[tremaine-fowlkes|Tremaine Fowlkes]] '04 (78% similar)
+- [[leandro-bolmaro|Leandro Bolmaro]] '22 (77% similar)
+- [[cameron-bairstow|Cameron Bairstow]] '15 (76% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

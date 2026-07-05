@@ -37,6 +37,32 @@ Closest career shapes in the era-normalized vector space:
 - [[marcelo-huertas|Marcelo Huertas]] — cosine 0.91
 - [[shelvin-mack|Shelvin Mack]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** PG · Offensive Glass (Low On-Court Impact). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 12.6 pts · 6.0 reb · 8.0 ast · 1.4 stl per 100 (2013-14).
+
+**Strengths:**
+
+- High-volume table-setter (+1.4σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−3.4σ)
+- Finishing efficiency well below era (−2.0σ)
+
+**Comparables:**
+
+- [[kendall-marshall|Kendall Marshall]] '14 (95% similar)
+- [[bobby-hurley|Bobby Hurley]] '97 (95% similar)
+- [[jamal-shead|Jamal Shead]] '26 (92% similar)
+- [[tyler-kolek|Tyler Kolek]] '25 (92% similar)
+- [[marcelo-huertas|Marcelo Huertas]] '17 (91% similar)
+- [[shelvin-mack|Shelvin Mack]] '16 (91% similar)
+
+**Career shape:** Charted 4 seasons (2009-10–2013-14). Entered as a Playmaking + Steals profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

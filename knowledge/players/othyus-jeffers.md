@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jarred-vanderbilt|Jarred Vanderbilt]] — cosine 0.76
 - [[jaylen-clark|Jaylen Clark]] — cosine 0.75
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 14.2 pts · 10.2 reb · 3.1 ast · 2.6 stl per 100 (2010-11).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.7σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.3σ)
+- Rim-protection impact well below era (−1.1σ)
+
+**Comparables:**
+
+- [[mario-west|Mario West]] '09 (81% similar)
+- [[javonte-green|Javonte Green]] '26 (77% similar)
+- [[jerome-williams|Jerome Williams]] '00 (77% similar)
+- [[luc-mbah-a-moute|Luc Mbah a Moute]] '16 (76% similar)
+- [[jarred-vanderbilt|Jarred Vanderbilt]] '21 (76% similar)
+- [[jaylen-clark|Jaylen Clark]] '25 (75% similar)
+
+**Career shape:** Charted 1 season (2010-11). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

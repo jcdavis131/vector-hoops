@@ -41,6 +41,33 @@ Closest career shapes in the era-normalized vector space:
 - [[evan-fournier|Evan Fournier]] — cosine 0.94
 - [[aaron-brooks|Aaron Brooks]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 22.9 pts · 4.7 reb · 4.3 ast · 1.1 stl per 100 (2013-14).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.3σ vs era)
+- Heavy shot volume, focal scoring option (+1.0σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.7σ)
+- Defensive rebounding well below era (−1.1σ)
+
+**Comparables:**
+
+- [[juan-dixon|Juan Dixon]] '09 (97% similar)
+- [[jimmer-fredette|Jimmer Fredette]] '14 (95% similar)
+- [[jamal-crawford|Jamal Crawford]] '14 (95% similar)
+- [[jannero-pargo|Jannero Pargo]] '14 (94% similar)
+- [[evan-fournier|Evan Fournier]] '24 (94% similar)
+- [[aaron-brooks|Aaron Brooks]] '11 (93% similar)
+
+**Career shape:** Charted 8 seasons (2008-09–2015-16). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -37,6 +37,31 @@ Closest career shapes in the era-normalized vector space:
 - [[allen-crabbe|Allen Crabbe]] — cosine 0.91
 - [[jawad-williams|Jawad Williams]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 13.3 pts · 7.2 reb · 2.3 ast · 1.3 stl per 100 (2016-17).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.9σ vs era)
+
+**Areas of concern:**
+
+- Scoring load well below era (−1.0σ)
+
+**Comparables:**
+
+- [[treveon-graham|Treveon Graham]] '17 (92% similar)
+- [[justin-jackson|Justin Jackson]] '23 (92% similar)
+- [[tim-legler|Tim Legler]] '00 (91% similar)
+- [[antoine-wright|Antoine Wright]] '06 (91% similar)
+- [[allen-crabbe|Allen Crabbe]] '20 (91% similar)
+- [[jawad-williams|Jawad Williams]] '11 (89% similar)
+
+**Career shape:** Charted 4 seasons (2013-14–2016-17). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

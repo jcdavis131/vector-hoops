@@ -40,6 +40,34 @@ Closest career shapes in the era-normalized vector space:
 - [[shawnelle-scott|Shawnelle Scott]] — cosine 0.91
 - [[omer-asik|Omer Asik]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 12.9 pts · 17.1 reb · 1.6 ast · 1.2 blk per 100 (2010-11).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+1.9σ vs era)
+- Strong presence on the defensive glass (+1.9σ vs era)
+- Efficient finisher inside the arc (+1.7σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.7σ)
+- Three-point accuracy well below era (−1.4σ)
+
+**Comparables:**
+
+- [[kenny-thomas|Kenny Thomas]] '08 (97% similar)
+- [[andre-brown|Andre Brown]] '08 (94% similar)
+- [[marshall-plumlee|Marshall Plumlee]] '17 (92% similar)
+- [[tristan-thompson|Tristan Thompson]] '25 (92% similar)
+- [[shawnelle-scott|Shawnelle Scott]] '01 (91% similar)
+- [[omer-asik|Omer Asik]] '18 (91% similar)
+
+**Career shape:** Charted 7 seasons (2007-08–2013-14). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Rim Protection + Offensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

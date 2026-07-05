@@ -36,6 +36,34 @@ Closest career shapes in the era-normalized vector space:
 - [[shane-larkin|Shane Larkin]] — cosine 0.89
 - [[rick-brunson|Rick Brunson]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 14.5 pts · 2.7 reb · 10.2 ast · 2.7 stl per 100 (2004-05).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+2.3σ vs era)
+- High-volume table-setter (+2.2σ vs era)
+- Active hands, disrupts passing lanes (+1.8σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.8σ)
+- Offensive-glass activity well below era (−1.2σ)
+
+**Comparables:**
+
+- [[elliot-perry|Elliot Perry]] '99 (92% similar)
+- [[tyler-ennis|Tyler Ennis]] '15 (91% similar)
+- [[earl-watson|Earl Watson]] '14 (90% similar)
+- [[nando-de-colo|Nando De Colo]] '13 (90% similar)
+- [[shane-larkin|Shane Larkin]] '16 (89% similar)
+- [[rick-brunson|Rick Brunson]] '99 (89% similar)
+
+**Career shape:** Charted 3 seasons (1996-97–2004-05). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

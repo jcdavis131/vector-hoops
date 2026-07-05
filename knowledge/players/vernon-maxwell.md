@@ -38,6 +38,34 @@ Closest career shapes in the era-normalized vector space:
 - [[allan-ray|Allan Ray]] — cosine 0.92
 - [[todd-day|Todd Day]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 25.5 pts · 3.9 reb · 3.7 ast · 1.9 stl per 100 (1999-00).
+
+**Strengths:**
+
+- High-volume three-point shooter (+3.0σ vs era)
+- Heavy shot volume, focal scoring option (+2.0σ vs era)
+- Featured, high-usage scoring role (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.8σ)
+- Defensive rebounding well below era (−1.3σ)
+
+**Comparables:**
+
+- [[voshon-lenard|Voshon Lenard]] '97 (94% similar)
+- [[markus-howard|Markus Howard]] '22 (92% similar)
+- [[john-starks|John Starks]] '00 (92% similar)
+- [[jr-smith|JR Smith]] '08 (92% similar)
+- [[allan-ray|Allan Ray]] '07 (92% similar)
+- [[todd-day|Todd Day]] '01 (92% similar)
+
+**Career shape:** Charted 5 seasons (1996-97–2000-01). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

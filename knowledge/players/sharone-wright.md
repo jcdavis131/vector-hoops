@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[priest-lauderdale|Priest Lauderdale]] — cosine 0.80
 - [[jeremy-tyler|Jeremy Tyler]] — cosine 0.80
 
+## Scouting report
+
+**Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 20.5 pts · 9.8 reb · 1.5 ast · 2.6 blk per 100 (1996-97).
+
+**Strengths:**
+
+- Elite rim protection (+1.5σ vs era)
+- Heavy shot volume, focal scoring option (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.8σ)
+- Turnover rate well above era (+1.6σ)
+
+**Comparables:**
+
+- [[ndudi-ebi|Ndudi Ebi]] '04 (84% similar)
+- [[randell-jackson|Randell Jackson]] '99 (84% similar)
+- [[jermareo-davidson|Jermareo Davidson]] '08 (83% similar)
+- [[acie-earl|Acie Earl]] '97 (83% similar)
+- [[priest-lauderdale|Priest Lauderdale]] '97 (80% similar)
+- [[jeremy-tyler|Jeremy Tyler]] '14 (80% similar)
+
+**Career shape:** Charted 1 season (1996-97). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

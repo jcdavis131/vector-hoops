@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[shawnelle-scott|Shawnelle Scott]] — cosine 0.81
 - [[jared-reiner|Jared Reiner]] — cosine 0.80
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass + Defensive Glass. Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 17.1 pts · 14.6 reb · 1.0 ast · 1.7 stl per 100 (2004-05).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+3.3σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.9σ)
+- Three-point accuracy well below era (−1.3σ)
+
+**Comparables:**
+
+- [[dalibor-bagaric|Dalibor Bagaric]] '01 (85% similar)
+- [[jackson-vroman|Jackson Vroman]] '06 (84% similar)
+- [[pops-mensah-bonsu|Pops Mensah-Bonsu]] '10 (83% similar)
+- [[nathan-jawai|Nathan Jawai]] '10 (81% similar)
+- [[shawnelle-scott|Shawnelle Scott]] '01 (81% similar)
+- [[jared-reiner|Jared Reiner]] '07 (80% similar)
+
+**Career shape:** Charted 2 seasons (2002-03–2004-05). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

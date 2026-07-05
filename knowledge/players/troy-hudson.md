@@ -42,6 +42,34 @@ Closest career shapes in the era-normalized vector space:
 - [[jimmer-fredette|Jimmer Fredette]] — cosine 0.94
 - [[nick-van-exel|Nick Van Exel]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** PG · Three-Point Volume + Three-Point Accuracy. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 22.9 pts · 2.9 reb · 7.1 ast · 0.8 stl per 100 (2005-06).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+1.6σ vs era)
+- Heavy shot volume, focal scoring option (+1.4σ vs era)
+- High-volume table-setter (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.7σ)
+- Offensive-glass activity well below era (−1.2σ)
+
+**Comparables:**
+
+- [[aaron-brooks|Aaron Brooks]] '11 (97% similar)
+- [[terry-dehere|Terry Dehere]] '97 (94% similar)
+- [[mike-james|Mike James]] '06 (94% similar)
+- [[randy-foye|Randy Foye]] '12 (94% similar)
+- [[jimmer-fredette|Jimmer Fredette]] '14 (94% similar)
+- [[nick-van-exel|Nick Van Exel]] '02 (93% similar)
+
+**Career shape:** Charted 9 seasons (1998-99–2006-07). Entered as a Playmaking + Steals profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

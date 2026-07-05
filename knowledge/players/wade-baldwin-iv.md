@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[dominique-jones|Dominique Jones]] — cosine 0.87
 - [[junior-harrington|Junior Harrington]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 12.9 pts · 5.6 reb · 7.4 ast · 2.2 stl per 100 (2016-17).
+
+**Strengths:**
+
+- High-volume table-setter (+1.2σ vs era)
+- Active hands, disrupts passing lanes (+1.1σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.5σ)
+- Turnover rate well above era (+2.1σ)
+
+**Comparables:**
+
+- [[ben-saraf|Ben Saraf]] '26 (92% similar)
+- [[theo-maledon|Theo Maledon]] '21 (91% similar)
+- [[kadeem-allen|Kadeem Allen]] '18 (89% similar)
+- [[killian-hayes|Killian Hayes]] '21 (88% similar)
+- [[dominique-jones|Dominique Jones]] '13 (87% similar)
+- [[junior-harrington|Junior Harrington]] '03 (83% similar)
+
+**Career shape:** Charted 1 season (2016-17). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

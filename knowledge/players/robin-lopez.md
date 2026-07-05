@@ -48,6 +48,34 @@ Closest career shapes in the era-normalized vector space:
 - [[joan-beringer|Joan Beringer]] — cosine 0.89
 - [[mikki-moore|Mikki Moore]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 17.4 pts · 13.5 reb · 1.4 ast · 2.7 blk per 100 (2013-14).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+2.2σ vs era)
+- Elite rim protection (+1.7σ vs era)
+- Efficient finisher inside the arc (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.6σ)
+- Three-point accuracy well below era (−1.5σ)
+
+**Comparables:**
+
+- [[tyler-zeller|Tyler Zeller]] '17 (91% similar)
+- [[timofey-mozgov|Timofey Mozgov]] '13 (91% similar)
+- [[jerome-jordan|Jerome Jordan]] '12 (90% similar)
+- [[taj-gibson|Taj Gibson]] '21 (89% similar)
+- [[joan-beringer|Joan Beringer]] '26 (89% similar)
+- [[mikki-moore|Mikki Moore]] '00 (88% similar)
+
+**Career shape:** Charted 15 seasons (2008-09–2022-23). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

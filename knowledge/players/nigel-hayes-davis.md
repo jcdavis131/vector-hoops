@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[sekou-doumbouya|Sekou Doumbouya]] — cosine 0.87
 - [[carl-herrera|Carl Herrera]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 8.4 pts · 8.2 reb · 1.7 ast · 2.0 stl per 100 (2025-26).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.3σ)
+- On-court net impact well below era (−2.2σ)
+
+**Comparables:**
+
+- [[britton-johnsen|Britton Johnsen]] '04 (93% similar)
+- [[justin-minaya|Justin Minaya]] '25 (91% similar)
+- [[cj-elleby|CJ Elleby]] '22 (88% similar)
+- [[johnny-davis|Johnny Davis]] '24 (88% similar)
+- [[sekou-doumbouya|Sekou Doumbouya]] '20 (87% similar)
+- [[carl-herrera|Carl Herrera]] '99 (86% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

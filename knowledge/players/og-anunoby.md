@@ -42,6 +42,32 @@ Closest career shapes in the era-normalized vector space:
 - [[bryon-russell|Bryon Russell]] — cosine 0.77
 - [[keon-ellis|Keon Ellis]] — cosine 0.75
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 14.3 pts · 6.0 reb · 1.8 ast · 1.7 stl per 100 (2017-18).
+
+**Strengths:**
+
+- Strong net on-court impact (+1.7σ vs era)
+- Rarely turns the ball over (−1.1σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.1σ)
+
+**Comparables:**
+
+- [[cason-wallace|Cason Wallace]] '26 (81% similar)
+- [[bracey-wright|Bracey Wright]] '07 (81% similar)
+- [[aaron-wiggins|Aaron Wiggins]] '25 (80% similar)
+- [[danny-green|Danny Green]] '19 (79% similar)
+- [[bryon-russell|Bryon Russell]] '97 (77% similar)
+- [[keon-ellis|Keon Ellis]] '25 (75% similar)
+
+**Career shape:** Charted 9 seasons (2017-18–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

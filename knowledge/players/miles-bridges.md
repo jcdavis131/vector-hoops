@@ -40,6 +40,33 @@ Closest career shapes in the era-normalized vector space:
 - [[laphonso-ellis|LaPhonso Ellis]] — cosine 0.79
 - [[tobias-harris|Tobias Harris]] — cosine 0.78
 
+## Scouting report
+
+**Play style:** PF · Scoring Volume + Shot Volume. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 30.7 pts · 11.3 reb · 5.9 ast · 1.1 blk per 100 (2024-25).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+1.9σ vs era)
+- Featured, high-usage scoring role (+1.5σ vs era)
+- Strong presence on the defensive glass (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.0σ)
+
+**Comparables:**
+
+- [[andrea-bargnani|Andrea Bargnani]] '15 (90% similar)
+- [[andres-nocioni|Andres Nocioni]] '08 (87% similar)
+- [[lauri-markkanen|Lauri Markkanen]] '23 (86% similar)
+- [[charlie-villanueva|Charlie Villanueva]] '14 (80% similar)
+- [[laphonso-ellis|LaPhonso Ellis]] '97 (79% similar)
+- [[tobias-harris|Tobias Harris]] '21 (78% similar)
+
+**Career shape:** Charted 7 seasons (2018-19–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

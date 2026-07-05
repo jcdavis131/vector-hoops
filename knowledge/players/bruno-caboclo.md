@@ -35,6 +35,34 @@ Closest career shapes in the era-normalized vector space:
 - [[antonis-fotsis|Antonis Fotsis]] — cosine 0.71
 - [[jay-huff|Jay Huff]] — cosine 0.69
 
+## Scouting report
+
+**Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 16.4 pts · 10.9 reb · 2.2 ast · 3.1 blk per 100 (2019-20).
+
+**Strengths:**
+
+- Elite rim protection (+2.3σ vs era)
+- Active hands, disrupts passing lanes (+2.1σ vs era)
+- Relentless on the offensive glass (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.2σ)
+- Rim pressure (free-throw generation) well below era (−1.1σ)
+
+**Comparables:**
+
+- [[mamadi-diakite|Mamadi Diakite]] '23 (79% similar)
+- [[chris-johnson|Chris Johnson]] '13 (76% similar)
+- [[jonathan-isaac|Jonathan Isaac]] '24 (76% similar)
+- [[darrell-arthur|Darrell Arthur]] '18 (74% similar)
+- [[antonis-fotsis|Antonis Fotsis]] '02 (71% similar)
+- [[jay-huff|Jay Huff]] '26 (69% similar)
+
+**Career shape:** Charted 2 seasons (2018-19–2019-20). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -35,6 +35,33 @@ Closest career shapes in the era-normalized vector space:
 - [[lonnie-walker-iv|Lonnie Walker IV]] — cosine 0.90
 - [[evan-fournier|Evan Fournier]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 22.7 pts · 2.9 reb · 4.7 ast · 1.4 stl per 100 (2002-03).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+1.3σ vs era)
+- High-volume three-point shooter (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.8σ)
+- On-court net impact well below era (−1.4σ)
+
+**Comparables:**
+
+- [[markus-howard|Markus Howard]] '22 (91% similar)
+- [[ed-gray|Ed Gray]] '99 (90% similar)
+- [[gerald-wilkins|Gerald Wilkins]] '98 (90% similar)
+- [[dion-glover|Dion Glover]] '00 (90% similar)
+- [[lonnie-walker-iv|Lonnie Walker IV]] '25 (90% similar)
+- [[evan-fournier|Evan Fournier]] '24 (89% similar)
+
+**Career shape:** Charted 2 seasons (2002-03–2003-04). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

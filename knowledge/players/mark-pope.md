@@ -36,6 +36,33 @@ Closest career shapes in the era-normalized vector space:
 - [[harvey-grant|Harvey Grant]] — cosine 0.89
 - [[maxi-kleber|Maxi Kleber]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PF · Three-Point Accuracy (Low Turnovers). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 8.0 pts · 7.8 reb · 2.0 ast · 1.4 blk per 100 (2000-01).
+
+**Strengths:**
+
+- Rarely turns the ball over (−2.3σ vs era)
+- Strong net on-court impact (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.9σ)
+- Scoring load well below era (−1.8σ)
+
+**Comparables:**
+
+- [[kz-okpala|KZ Okpala]] '21 (97% similar)
+- [[jason-collins|Jason Collins]] '10 (91% similar)
+- [[romeo-langford|Romeo Langford]] '20 (90% similar)
+- [[jt-thor|JT Thor]] '25 (90% similar)
+- [[harvey-grant|Harvey Grant]] '97 (89% similar)
+- [[maxi-kleber|Maxi Kleber]] '26 (88% similar)
+
+**Career shape:** Charted 3 seasons (1997-98–2001-02). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

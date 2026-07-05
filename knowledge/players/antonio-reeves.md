@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[daeqwon-plowden|Daeqwon Plowden]] — cosine 0.86
 - [[frank-jackson|Frank Jackson]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 22.0 pts · 4.5 reb · 2.8 ast · 1.5 stl per 100 (2024-25).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.4σ)
+- Defensive rebounding well below era (−1.3σ)
+
+**Comparables:**
+
+- [[shawn-respert|Shawn Respert]] '98 (89% similar)
+- [[malaki-branham|Malaki Branham]] '24 (87% similar)
+- [[ben-mclemore|Ben McLemore]] '22 (87% similar)
+- [[jeremy-richardson|Jeremy Richardson]] '08 (86% similar)
+- [[daeqwon-plowden|Daeqwon Plowden]] '26 (86% similar)
+- [[frank-jackson|Frank Jackson]] '22 (85% similar)
+
+**Career shape:** Charted 1 season (2024-25). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

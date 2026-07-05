@@ -51,6 +51,32 @@ Closest career shapes in the era-normalized vector space:
 - [[matt-barnes|Matt Barnes]] — cosine 0.83
 - [[baylor-scheierman|Baylor Scheierman]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 7.7 pts · 9.7 reb · 6.5 ast · 1.7 stl per 100 (2019-20).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Scoring load well below era (−1.9σ)
+- Shot volume well below era (−1.8σ)
+
+**Comparables:**
+
+- [[royce-o-neale|Royce O'Neale]] '21 (88% similar)
+- [[dan-majerle|Dan Majerle]] '02 (87% similar)
+- [[darius-miller|Darius Miller]] '21 (86% similar)
+- [[patrick-beverley|Patrick Beverley]] '13 (84% similar)
+- [[matt-barnes|Matt Barnes]] '04 (83% similar)
+- [[baylor-scheierman|Baylor Scheierman]] '26 (83% similar)
+
+**Career shape:** Charted 18 seasons (2008-09–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

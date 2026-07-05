@@ -37,6 +37,32 @@ Closest career shapes in the era-normalized vector space:
 - [[steve-blake|Steve Blake]] — cosine 0.88
 - [[john-crotty|John Crotty]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** SG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 15.9 pts · 4.8 reb · 7.0 ast · 1.6 stl per 100 (1997-98).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+1.7σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.3σ)
+- On-court net impact well below era (−1.6σ)
+
+**Comparables:**
+
+- [[michael-hawkins|Michael Hawkins]] '99 (91% similar)
+- [[doug-overton|Doug Overton]] '02 (91% similar)
+- [[melvin-booker|Melvin Booker]] '97 (88% similar)
+- [[matthew-dellavedova|Matthew Dellavedova]] '23 (88% similar)
+- [[steve-blake|Steve Blake]] '16 (88% similar)
+- [[john-crotty|John Crotty]] '98 (88% similar)
+
+**Career shape:** Charted 4 seasons (1996-97–1999-00). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Playmaking + Steals identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -38,6 +38,33 @@ Closest career shapes in the era-normalized vector space:
 - [[aaron-williams|Aaron Williams]] — cosine 0.88
 - [[mikki-moore|Mikki Moore]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 16.4 pts · 7.8 reb · 1.1 ast · 2.3 blk per 100 (2005-06).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+1.5σ vs era)
+- Elite rim protection (+1.2σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.1σ)
+- Ball-hawking activity well below era (−1.4σ)
+
+**Comparables:**
+
+- [[vernon-carey-jr|Vernon Carey Jr.]] '21 (90% similar)
+- [[timofey-mozgov|Timofey Mozgov]] '13 (89% similar)
+- [[yanic-konan-niederhauser|Yanic Konan Niederhäuser]] '26 (88% similar)
+- [[ante-zizic|Ante Zizic]] '18 (88% similar)
+- [[aaron-williams|Aaron Williams]] '05 (88% similar)
+- [[mikki-moore|Mikki Moore]] '00 (88% similar)
+
+**Career shape:** Charted 5 seasons (2001-02–2005-06). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

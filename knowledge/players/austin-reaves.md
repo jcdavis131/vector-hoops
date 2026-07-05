@@ -38,6 +38,33 @@ Closest career shapes in the era-normalized vector space:
 - [[malcolm-brogdon|Malcolm Brogdon]] — cosine 0.81
 - [[steven-smith|Steven Smith]] — cosine 0.79
 
+## Scouting report
+
+**Play style:** SG · Scoring Volume + Shot Volume. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 32.2 pts · 6.5 reb · 7.6 ast · 1.5 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+2.4σ vs era)
+- Featured, high-usage scoring role (+1.7σ vs era)
+- High-volume table-setter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.5σ)
+
+**Comparables:**
+
+- [[kevin-johnson|Kevin Johnson]] '97 (90% similar)
+- [[gordon-hayward|Gordon Hayward]] '17 (86% similar)
+- [[chauncey-billups|Chauncey Billups]] '06 (83% similar)
+- [[jalen-brunson|Jalen Brunson]] '24 (82% similar)
+- [[malcolm-brogdon|Malcolm Brogdon]] '20 (81% similar)
+- [[steven-smith|Steven Smith]] '99 (79% similar)
+
+**Career shape:** Charted 5 seasons (2021-22–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

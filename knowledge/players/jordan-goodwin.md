@@ -37,6 +37,32 @@ Closest career shapes in the era-normalized vector space:
 - [[george-lynch|George Lynch]] — cosine 0.78
 - [[trevelin-queen|Trevelin Queen]] — cosine 0.78
 
+## Scouting report
+
+**Play style:** PG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 18.8 pts · 10.6 reb · 4.7 ast · 3.3 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.6σ vs era)
+- Relentless on the offensive glass (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.0σ)
+
+**Comparables:**
+
+- [[adrian-griffin|Adrian Griffin]] '04 (84% similar)
+- [[dru-smith|Dru Smith]] '26 (82% similar)
+- [[jamie-watson|Jamie Watson]] '97 (82% similar)
+- [[myke-henry|Myke Henry]] '18 (80% similar)
+- [[george-lynch|George Lynch]] '03 (78% similar)
+- [[trevelin-queen|Trevelin Queen]] '25 (78% similar)
+
+**Career shape:** Charted 4 seasons (2022-23–2025-26). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

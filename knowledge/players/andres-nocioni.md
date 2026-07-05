@@ -40,6 +40,33 @@ Closest career shapes in the era-normalized vector space:
 - [[austin-croshere|Austin Croshere]] — cosine 0.80
 - [[mirza-teletovic|Mirza Teletovic]] — cosine 0.80
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 26.8 pts · 8.5 reb · 2.4 ast · 1.1 blk per 100 (2007-08).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.5σ vs era)
+- Heavy shot volume, focal scoring option (+1.3σ vs era)
+- Featured, high-usage scoring role (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.5σ)
+
+**Comparables:**
+
+- [[miles-bridges|Miles Bridges]] '25 (87% similar)
+- [[chris-carr|Chris Carr]] '01 (84% similar)
+- [[david-benoit|David Benoit]] '98 (83% similar)
+- [[lauri-markkanen|Lauri Markkanen]] '23 (82% similar)
+- [[austin-croshere|Austin Croshere]] '99 (80% similar)
+- [[mirza-teletovic|Mirza Teletovic]] '17 (80% similar)
+
+**Career shape:** Charted 7 seasons (2004-05–2010-11). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

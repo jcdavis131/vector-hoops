@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[chasson-randle|Chasson Randle]] — cosine 0.82
 - [[jiri-welsch|Jiri Welsch]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** PG · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 17.5 pts · 5.3 reb · 2.0 ast · 1.3 stl per 100 (2005-06).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.6σ)
+- Finishing efficiency well below era (−1.2σ)
+
+**Comparables:**
+
+- [[kyle-guy|Kyle Guy]] '22 (89% similar)
+- [[gerald-wilkins|Gerald Wilkins]] '98 (87% similar)
+- [[wayne-selden|Wayne Selden]] '18 (85% similar)
+- [[lionel-chalmers|Lionel Chalmers]] '05 (83% similar)
+- [[chasson-randle|Chasson Randle]] '21 (82% similar)
+- [[jiri-welsch|Jiri Welsch]] '03 (81% similar)
+
+**Career shape:** Charted 2 seasons (2005-06–2007-08). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

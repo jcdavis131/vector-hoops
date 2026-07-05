@@ -46,6 +46,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jonas-valanciunas|Jonas Valančiūnas]] — cosine 0.85
 - [[zach-randolph|Zach Randolph]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 12.7 pts · 13.1 reb · 2.0 ast · 1.7 blk per 100 (2015-16).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.9σ)
+- On-court net impact well below era (−1.8σ)
+
+**Comparables:**
+
+- [[kevin-willis|Kevin Willis]] '02 (95% similar)
+- [[matt-geiger|Matt Geiger]] '98 (89% similar)
+- [[enes-freedom|Enes Freedom]] '18 (88% similar)
+- [[jared-sullinger|Jared Sullinger]] '16 (85% similar)
+- [[jonas-valanciunas|Jonas Valančiūnas]] '26 (85% similar)
+- [[zach-randolph|Zach Randolph]] '07 (85% similar)
+
+**Career shape:** Charted 13 seasons (2002-03–2015-16). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

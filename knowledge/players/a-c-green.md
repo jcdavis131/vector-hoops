@@ -38,6 +38,33 @@ Closest career shapes in the era-normalized vector space:
 - [[michael-cage|Michael Cage]] — cosine 0.89
 - [[jon-brockman|Jon Brockman]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 11.0 pts · 12.8 reb · 2.1 ast · 1.4 stl per 100 (1999-00).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.7σ vs era)
+- Strong net on-court impact (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Scoring load well below era (−1.4σ)
+- Shot volume well below era (−1.3σ)
+
+**Comparables:**
+
+- [[mark-bradtke|Mark Bradtke]] '97 (93% similar)
+- [[terry-davis|Terry Davis]] '01 (90% similar)
+- [[udonis-haslem|Udonis Haslem]] '13 (90% similar)
+- [[horace-grant|Horace Grant]] '01 (90% similar)
+- [[michael-cage|Michael Cage]] '00 (89% similar)
+- [[jon-brockman|Jon Brockman]] '10 (87% similar)
+
+**Career shape:** Charted 5 seasons (1996-97–2000-01). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

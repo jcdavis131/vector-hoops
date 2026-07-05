@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[jason-hart|Jason Hart]] — cosine 0.88
 - [[facundo-campazzo|Facundo Campazzo]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 13.6 pts · 4.3 reb · 8.0 ast · 4.0 stl per 100 (2001-02).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+3.6σ vs era)
+- Reliable touch from the free-throw line (+1.3σ vs era)
+- High-volume table-setter (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.6σ)
+- Defensive rebounding well below era (−1.4σ)
+
+**Comparables:**
+
+- [[dru-smith|Dru Smith]] '26 (90% similar)
+- [[ronnie-price|Ronnie Price]] '14 (89% similar)
+- [[kevin-burleson|Kevin Burleson]] '06 (89% similar)
+- [[lorenzo-brown|Lorenzo Brown]] '19 (88% similar)
+- [[jason-hart|Jason Hart]] '09 (88% similar)
+- [[facundo-campazzo|Facundo Campazzo]] '21 (87% similar)
+
+**Career shape:** Charted 1 season (2001-02). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jeremy-pargo|Jeremy Pargo]] — cosine 0.85
 - [[dean-oliver|Dean Oliver]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 22.3 pts · 3.8 reb · 4.5 ast · 1.2 stl per 100 (2017-18).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.4σ)
+- Turnover rate well above era (+1.1σ)
+
+**Comparables:**
+
+- [[malaki-branham|Malaki Branham]] '24 (88% similar)
+- [[gerald-wilkins|Gerald Wilkins]] '98 (88% similar)
+- [[nick-smith-jr|Nick Smith Jr.]] '25 (86% similar)
+- [[andre-owens|Andre Owens]] '06 (85% similar)
+- [[jeremy-pargo|Jeremy Pargo]] '12 (85% similar)
+- [[dean-oliver|Dean Oliver]] '02 (85% similar)
+
+**Career shape:** Charted 2 seasons (2017-18–2018-19). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

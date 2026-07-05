@@ -37,6 +37,33 @@ Closest career shapes in the era-normalized vector space:
 - [[hollis-thompson|Hollis Thompson]] — cosine 0.92
 - [[rodney-mcgruder|Rodney McGruder]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 15.1 pts · 5.8 reb · 1.6 ast · 1.6 stl per 100 (2016-17).
+
+**Strengths:**
+
+- Knockdown three-point shooter (+2.3σ vs era)
+- Rarely turns the ball over (−1.8σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.4σ)
+- Shot volume well below era (−1.3σ)
+
+**Comparables:**
+
+- [[quincy-pondexter|Quincy Pondexter]] '18 (96% similar)
+- [[semi-ojeleye|Semi Ojeleye]] '18 (95% similar)
+- [[glenn-robinson-iii|Glenn Robinson III]] '21 (94% similar)
+- [[kyle-singler|Kyle Singler]] '17 (93% similar)
+- [[hollis-thompson|Hollis Thompson]] '17 (92% similar)
+- [[rodney-mcgruder|Rodney McGruder]] '18 (92% similar)
+
+**Career shape:** Charted 4 seasons (2016-17–2019-20). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

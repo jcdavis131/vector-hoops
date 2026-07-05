@@ -39,6 +39,33 @@ Closest career shapes in the era-normalized vector space:
 - [[keita-bates-diop|Keita Bates-Diop]] — cosine 0.81
 - [[maurice-harkless|Maurice Harkless]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass + Defensive Glass. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 14.5 pts · 7.7 reb · 1.7 ast · 1.6 stl per 100 (2016-17).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+1.9σ vs era)
+- Rarely turns the ball over (−1.3σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.4σ)
+- Three-point volume well below era (−1.3σ)
+
+**Comparables:**
+
+- [[luc-mbah-a-moute|Luc Mbah a Moute]] '16 (84% similar)
+- [[javonte-green|Javonte Green]] '26 (83% similar)
+- [[derrick-jones-jr|Derrick Jones Jr.]] '18 (82% similar)
+- [[derrick-brown|Derrick Brown]] '11 (81% similar)
+- [[keita-bates-diop|Keita Bates-Diop]] '20 (81% similar)
+- [[maurice-harkless|Maurice Harkless]] '15 (81% similar)
+
+**Career shape:** Charted 6 seasons (2016-17–2021-22). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

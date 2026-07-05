@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[rodney-white|Rodney White]] — cosine 0.77
 - [[stephen-jackson|Stephen Jackson]] — cosine 0.76
 
+## Scouting report
+
+**Play style:** PF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 22.8 pts · 8.6 reb · 3.1 ast · 1.9 stl per 100 (1997-98).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.7σ vs era)
+- Heavy shot volume, focal scoring option (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.5σ)
+
+**Comparables:**
+
+- [[antoine-walker|Antoine Walker]] '01 (87% similar)
+- [[rodney-rogers|Rodney Rogers]] '00 (86% similar)
+- [[al-harrington|Al Harrington]] '99 (78% similar)
+- [[james-collins|James Collins]] '98 (78% similar)
+- [[rodney-white|Rodney White]] '03 (77% similar)
+- [[stephen-jackson|Stephen Jackson]] '02 (76% similar)
+
+**Career shape:** Charted 1 season (1997-98). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

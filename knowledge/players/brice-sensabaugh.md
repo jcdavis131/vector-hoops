@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[malaki-branham|Malaki Branham]] — cosine 0.85
 - [[chris-carr|Chris Carr]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 19.5 pts · 8.3 reb · 4.4 ast · 1.1 stl per 100 (2023-24).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+1.1σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.7σ)
+- Turnover rate well above era (+1.4σ)
+
+**Comparables:**
+
+- [[tre-johnson|Tre Johnson]] '26 (91% similar)
+- [[sean-kilpatrick|Sean Kilpatrick]] '16 (90% similar)
+- [[cole-swider|Cole Swider]] '24 (90% similar)
+- [[juan-carlos-navarro|Juan Carlos Navarro]] '08 (86% similar)
+- [[malaki-branham|Malaki Branham]] '24 (85% similar)
+- [[chris-carr|Chris Carr]] '01 (85% similar)
+
+**Career shape:** Charted 3 seasons (2023-24–2025-26). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

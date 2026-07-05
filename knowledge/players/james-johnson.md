@@ -47,6 +47,33 @@ Closest career shapes in the era-normalized vector space:
 - [[stephane-lasme|Stephane Lasme]] — cosine 0.68
 - [[deandre-bembry|DeAndre' Bembry]] — cosine 0.68
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 16.1 pts · 8.5 reb · 3.4 ast · 2.9 blk per 100 (2012-13).
+
+**Strengths:**
+
+- Elite rim protection (+1.7σ vs era)
+- Active hands, disrupts passing lanes (+1.3σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.4σ)
+- Turnover rate well above era (+1.2σ)
+
+**Comparables:**
+
+- [[darius-miles|Darius Miles]] '05 (76% similar)
+- [[patrick-o-bryant|Patrick O'Bryant]] '08 (74% similar)
+- [[dj-mbenga|DJ Mbenga]] '06 (69% similar)
+- [[david-harrison|David Harrison]] '07 (68% similar)
+- [[stephane-lasme|Stephane Lasme]] '08 (68% similar)
+- [[deandre-bembry|DeAndre' Bembry]] '17 (68% similar)
+
+**Career shape:** Charted 14 seasons (2009-10–2022-23). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

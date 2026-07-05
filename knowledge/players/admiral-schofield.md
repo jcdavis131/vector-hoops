@@ -37,6 +37,32 @@ Closest career shapes in the era-normalized vector space:
 - [[brandon-rush|Brandon Rush]] — cosine 0.88
 - [[onuralp-bitim|Onuralp Bitim]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 14.7 pts · 9.6 reb · 4.0 ast · 0.6 stl per 100 (2023-24).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−4.0σ)
+- Ball-hawking activity well below era (−1.5σ)
+
+**Comparables:**
+
+- [[david-roddy|David Roddy]] '23 (94% similar)
+- [[daquan-jeffries|DaQuan Jeffries]] '24 (92% similar)
+- [[antoine-wright|Antoine Wright]] '06 (90% similar)
+- [[justin-jackson|Justin Jackson]] '23 (88% similar)
+- [[brandon-rush|Brandon Rush]] '15 (88% similar)
+- [[onuralp-bitim|Onuralp Bitim]] '24 (87% similar)
+
+**Career shape:** Charted 4 seasons (2019-20–2023-24). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[collin-sexton|Collin Sexton]] — cosine 0.79
 - [[eric-paschall|Eric Paschall]] — cosine 0.78
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 25.1 pts · 4.7 reb · 4.5 ast · 0.6 blk per 100 (2019-20).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+1.2σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.8σ)
+- Ball-hawking activity well below era (−1.7σ)
+
+**Comparables:**
+
+- [[jabari-brown|Jabari Brown]] '15 (83% similar)
+- [[kirk-snyder|Kirk Snyder]] '05 (81% similar)
+- [[keyonte-george|Keyonte George]] '26 (80% similar)
+- [[cory-higgins|Cory Higgins]] '12 (79% similar)
+- [[collin-sexton|Collin Sexton]] '21 (79% similar)
+- [[eric-paschall|Eric Paschall]] '20 (78% similar)
+
+**Career shape:** Charted 2 seasons (2018-19–2019-20). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

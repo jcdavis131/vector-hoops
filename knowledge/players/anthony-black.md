@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[toure-murry|Toure' Murry]] — cosine 0.78
 - [[david-vanterpool|David Vanterpool]] — cosine 0.77
 
+## Scouting report
+
+**Play style:** PG · Three-Point Accuracy (Low Turnovers). Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 13.0 pts · 5.8 reb · 3.8 ast · 1.4 stl per 100 (2023-24).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.2σ)
+- Scoring load well below era (−1.1σ)
+
+**Comparables:**
+
+- [[rodrick-rhodes|Rodrick Rhodes]] '98 (91% similar)
+- [[edmond-sumner|Edmond Sumner]] '19 (82% similar)
+- [[blake-wesley|Blake Wesley]] '23 (78% similar)
+- [[walker-russell|Walker Russell]] '12 (78% similar)
+- [[toure-murry|Toure' Murry]] '14 (78% similar)
+- [[david-vanterpool|David Vanterpool]] '01 (77% similar)
+
+**Career shape:** Charted 3 seasons (2023-24–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

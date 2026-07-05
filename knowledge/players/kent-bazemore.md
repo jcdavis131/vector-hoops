@@ -43,6 +43,33 @@ Closest career shapes in the era-normalized vector space:
 - [[cory-alexander|Cory Alexander]] — cosine 0.80
 - [[ronnie-price|Ronnie Price]] — cosine 0.78
 
+## Scouting report
+
+**Play style:** SG · Playmaking + Steals. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 22.0 pts · 3.9 reb · 3.9 ast · 3.0 stl per 100 (2012-13).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.3σ vs era)
+- Draws contact, gets to the line often (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.3σ)
+- Finishing efficiency well below era (−1.1σ)
+
+**Comparables:**
+
+- [[eddie-gill|Eddie Gill]] '06 (86% similar)
+- [[eric-murdock|Eric Murdock]] '00 (85% similar)
+- [[metta-world-peace|Metta World Peace]] '17 (81% similar)
+- [[myke-henry|Myke Henry]] '18 (81% similar)
+- [[cory-alexander|Cory Alexander]] '01 (80% similar)
+- [[ronnie-price|Ronnie Price]] '14 (78% similar)
+
+**Career shape:** Charted 10 seasons (2012-13–2021-22). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -35,6 +35,34 @@ Closest career shapes in the era-normalized vector space:
 - [[luke-babbitt|Luke Babbitt]] — cosine 0.89
 - [[dalton-knecht|Dalton Knecht]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 18.9 pts · 7.1 reb · 2.4 ast · 0.8 stl per 100 (2024-25).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.3σ vs era)
+- High-volume three-point shooter (+1.3σ vs era)
+- Reliable touch from the free-throw line (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.4σ)
+- Rim pressure (free-throw generation) well below era (−1.4σ)
+
+**Comparables:**
+
+- [[matt-thomas|Matt Thomas]] '22 (92% similar)
+- [[doug-mcdermott|Doug McDermott]] '25 (91% similar)
+- [[mike-scott|Mike Scott]] '13 (90% similar)
+- [[joe-harris|Joe Harris]] '15 (89% similar)
+- [[luke-babbitt|Luke Babbitt]] '11 (89% similar)
+- [[dalton-knecht|Dalton Knecht]] '25 (88% similar)
+
+**Career shape:** Charted 2 seasons (2024-25–2025-26). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

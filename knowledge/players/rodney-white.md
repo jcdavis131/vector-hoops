@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[brandon-miller|Brandon Miller]] — cosine 0.82
 - [[rodney-rogers|Rodney Rogers]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 21.2 pts · 6.9 reb · 3.9 ast · 1.5 stl per 100 (2002-03).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.3σ)
+- On-court net impact well below era (−1.5σ)
+
+**Comparables:**
+
+- [[rashad-mccants|Rashad McCants]] '08 (87% similar)
+- [[marshon-brooks|MarShon Brooks]] '14 (86% similar)
+- [[lamond-murray|Lamond Murray]] '04 (84% similar)
+- [[shaedon-sharpe|Shaedon Sharpe]] '26 (83% similar)
+- [[brandon-miller|Brandon Miller]] '26 (82% similar)
+- [[rodney-rogers|Rodney Rogers]] '00 (81% similar)
+
+**Career shape:** Charted 3 seasons (2002-03–2004-05). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

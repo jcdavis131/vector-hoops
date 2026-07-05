@@ -42,6 +42,34 @@ Closest career shapes in the era-normalized vector space:
 - [[precious-achiuwa|Precious Achiuwa]] — cosine 0.91
 - [[marshall-plumlee|Marshall Plumlee]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** PF · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 10.4 pts · 15.1 reb · 1.6 ast · 3.0 blk per 100 (2013-14).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+3.0σ vs era)
+- Elite rim protection (+2.0σ vs era)
+- Active hands, disrupts passing lanes (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−3.6σ)
+- Shot volume well below era (−1.6σ)
+
+**Comparables:**
+
+- [[dan-gadzuric|Dan Gadzuric]] '05 (95% similar)
+- [[sasha-kaun|Sasha Kaun]] '16 (93% similar)
+- [[jason-maxiell|Jason Maxiell]] '06 (93% similar)
+- [[moussa-cisse|Moussa Cisse]] '26 (92% similar)
+- [[precious-achiuwa|Precious Achiuwa]] '21 (91% similar)
+- [[marshall-plumlee|Marshall Plumlee]] '17 (91% similar)
+
+**Career shape:** Charted 9 seasons (2007-08–2015-16). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

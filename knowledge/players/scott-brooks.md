@@ -35,6 +35,33 @@ Closest career shapes in the era-normalized vector space:
 - [[herbert-jones|Herbert Jones]] — cosine 0.86
 - [[hersey-hawkins|Hersey Hawkins]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 11.3 pts · 3.6 reb · 5.8 ast · 4.2 stl per 100 (1996-97).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+3.5σ vs era)
+- Reliable touch from the free-throw line (+1.9σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.8σ)
+- Defensive rebounding well below era (−1.4σ)
+
+**Comparables:**
+
+- [[willie-anderson|Willie Anderson]] '97 (93% similar)
+- [[pablo-prigioni|Pablo Prigioni]] '16 (91% similar)
+- [[aaron-mckie|Aaron McKie]] '05 (90% similar)
+- [[jordan-mclaughlin|Jordan McLaughlin]] '24 (88% similar)
+- [[herbert-jones|Herbert Jones]] '22 (86% similar)
+- [[hersey-hawkins|Hersey Hawkins]] '98 (86% similar)
+
+**Career shape:** Charted 2 seasons (1996-97–1997-98). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

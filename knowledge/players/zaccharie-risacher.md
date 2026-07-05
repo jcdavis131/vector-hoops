@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[dalton-knecht|Dalton Knecht]] — cosine 0.74
 - [[mickael-pietrus|Mickael Pietrus]] — cosine 0.73
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 19.5 pts · 7.9 reb · 2.3 ast · 1.8 stl per 100 (2025-26).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.0σ)
+- Table-setting role well below era (−1.0σ)
+
+**Comparables:**
+
+- [[alex-acker|Alex Acker]] '09 (80% similar)
+- [[rodney-carney|Rodney Carney]] '09 (78% similar)
+- [[a-j-lawson|A.J. Lawson]] '26 (75% similar)
+- [[moses-moody|Moses Moody]] '22 (74% similar)
+- [[dalton-knecht|Dalton Knecht]] '25 (74% similar)
+- [[mickael-pietrus|Mickael Pietrus]] '11 (73% similar)
+
+**Career shape:** Charted 2 seasons (2024-25–2025-26). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

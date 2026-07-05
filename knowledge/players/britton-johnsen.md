@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[cj-elleby|CJ Elleby]] — cosine 0.88
 - [[erik-murphy|Erik Murphy]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 7.7 pts · 8.2 reb · 2.2 ast · 1.3 stl per 100 (2003-04).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.5σ)
+- Finishing efficiency well below era (−2.5σ)
+
+**Comparables:**
+
+- [[nigel-hayes-davis|Nigel Hayes-Davis]] '26 (93% similar)
+- [[sekou-doumbouya|Sekou Doumbouya]] '20 (91% similar)
+- [[cedric-bozeman|Cedric Bozeman]] '07 (90% similar)
+- [[jacob-evans|Jacob Evans]] '19 (90% similar)
+- [[cj-elleby|CJ Elleby]] '22 (88% similar)
+- [[erik-murphy|Erik Murphy]] '14 (88% similar)
+
+**Career shape:** Charted 1 season (2003-04). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

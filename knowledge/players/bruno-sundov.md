@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[pat-burke|Pat Burke]] — cosine 0.77
 - [[tamar-slay|Tamar Slay]] — cosine 0.76
 
+## Scouting report
+
+**Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 11.1 pts · 9.8 reb · 2.4 ast · 2.1 stl per 100 (2002-03).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−4.0σ)
+- On-court net impact well below era (−4.0σ)
+
+**Comparables:**
+
+- [[kevin-murphy|Kevin Murphy]] '13 (87% similar)
+- [[ken-norman|Ken Norman]] '97 (83% similar)
+- [[nikoloz-tskitishvili|Nikoloz Tskitishvili]] '05 (81% similar)
+- [[kobe-bufkin|Kobe Bufkin]] '24 (78% similar)
+- [[pat-burke|Pat Burke]] '07 (77% similar)
+- [[tamar-slay|Tamar Slay]] '04 (76% similar)
+
+**Career shape:** Charted 3 seasons (2001-02–2004-05). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

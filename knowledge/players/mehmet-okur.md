@@ -42,6 +42,32 @@ Closest career shapes in the era-normalized vector space:
 - [[keith-van-horn|Keith Van Horn]] — cosine 0.81
 - [[marreese-speights|Marreese Speights]] — cosine 0.80
 
+## Scouting report
+
+**Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 15.6 pts · 9.7 reb · 3.6 ast · 1.1 stl per 100 (2011-12).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.4σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.9σ)
+- Rim pressure (free-throw generation) well below era (−1.6σ)
+
+**Comparables:**
+
+- [[kevin-love|Kevin Love]] '19 (85% similar)
+- [[derrick-coleman|Derrick Coleman]] '00 (84% similar)
+- [[michael-porter-jr|Michael Porter Jr.]] '26 (82% similar)
+- [[karl-anthony-towns|Karl-Anthony Towns]] '19 (81% similar)
+- [[keith-van-horn|Keith Van Horn]] '99 (81% similar)
+- [[marreese-speights|Marreese Speights]] '18 (80% similar)
+
+**Career shape:** Charted 9 seasons (2002-03–2011-12). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -39,6 +39,32 @@ Closest career shapes in the era-normalized vector space:
 - [[orlando-robinson|Orlando Robinson]] — cosine 0.83
 - [[noah-vonleh|Noah Vonleh]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 12.0 pts · 13.4 reb · 1.8 ast · 1.1 stl per 100 (2002-03).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+2.3σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.4σ)
+- On-court net impact well below era (−1.4σ)
+
+**Comparables:**
+
+- [[jon-brockman|Jon Brockman]] '10 (87% similar)
+- [[rick-mahorn|Rick Mahorn]] '98 (85% similar)
+- [[jabari-walker|Jabari Walker]] '24 (84% similar)
+- [[mark-bradtke|Mark Bradtke]] '97 (84% similar)
+- [[orlando-robinson|Orlando Robinson]] '23 (83% similar)
+- [[noah-vonleh|Noah Vonleh]] '23 (82% similar)
+
+**Career shape:** Charted 6 seasons (1996-97–2002-03). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

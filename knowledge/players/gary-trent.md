@@ -40,6 +40,33 @@ Closest career shapes in the era-normalized vector space:
 - [[nikola-pekovic|Nikola Pekovic]] — cosine 0.89
 - [[chris-wilcox|Chris Wilcox]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 20.9 pts · 14.4 reb · 1.6 ast · 2.0 stl per 100 (2000-01).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+2.0σ vs era)
+- Heavy shot volume, focal scoring option (+1.0σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.7σ)
+- Free-throw touch well below era (−1.5σ)
+
+**Comparables:**
+
+- [[jj-hickson|JJ Hickson]] '16 (92% similar)
+- [[craig-smith|Craig Smith]] '09 (91% similar)
+- [[ben-handlogten|Ben Handlogten]] '04 (91% similar)
+- [[marvin-bagley-iii|Marvin Bagley III]] '26 (90% similar)
+- [[nikola-pekovic|Nikola Pekovic]] '12 (89% similar)
+- [[chris-wilcox|Chris Wilcox]] '13 (89% similar)
+
+**Career shape:** Charted 7 seasons (1996-97–2003-04). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[blake-wesley|Blake Wesley]] — cosine 0.83
 - [[jahmai-mashack|Jahmai Mashack]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 13.0 pts · 6.3 reb · 9.6 ast · 2.0 stl per 100 (2022-23).
+
+**Strengths:**
+
+- High-volume table-setter (+1.9σ vs era)
+- Active hands, disrupts passing lanes (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.6σ)
+- Three-point accuracy well below era (−1.7σ)
+
+**Comparables:**
+
+- [[omar-cook|Omar Cook]] '04 (88% similar)
+- [[nate-wolters|Nate Wolters]] '15 (85% similar)
+- [[ben-uzoh|Ben Uzoh]] '12 (85% similar)
+- [[elfrid-payton|Elfrid Payton]] '25 (83% similar)
+- [[blake-wesley|Blake Wesley]] '23 (83% similar)
+- [[jahmai-mashack|Jahmai Mashack]] '26 (81% similar)
+
+**Career shape:** Charted 1 season (2022-23). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

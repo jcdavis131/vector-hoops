@@ -35,6 +35,33 @@ Closest career shapes in the era-normalized vector space:
 - [[kurt-thomas|Kurt Thomas]] — cosine 0.86
 - [[jalen-smith|Jalen Smith]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 22.8 pts · 18.6 reb · 1.5 ast · 2.3 blk per 100 (2025-26).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+2.7σ vs era)
+- Relentless on the offensive glass (+2.0σ vs era)
+- Elite rim protection (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Table-setting role well below era (−1.3σ)
+
+**Comparables:**
+
+- [[dewayne-dedmon|Dewayne Dedmon]] '17 (88% similar)
+- [[marcus-camby|Marcus Camby]] '11 (87% similar)
+- [[donovan-clingan|Donovan Clingan]] '25 (87% similar)
+- [[marcin-gortat|Marcin Gortat]] '09 (87% similar)
+- [[kurt-thomas|Kurt Thomas]] '13 (86% similar)
+- [[jalen-smith|Jalen Smith]] '25 (85% similar)
+
+**Career shape:** Charted 2 seasons (2024-25–2025-26). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

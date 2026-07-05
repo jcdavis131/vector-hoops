@@ -42,6 +42,33 @@ Closest career shapes in the era-normalized vector space:
 - [[ben-sheppard|Ben Sheppard]] — cosine 0.86
 - [[alex-ducas|Alex Ducas]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 9.9 pts · 6.8 reb · 1.4 ast · 1.9 stl per 100 (2011-12).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.6σ vs era)
+- High-volume three-point shooter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.0σ)
+- Scoring load well below era (−1.5σ)
+
+**Comparables:**
+
+- [[ja-kobe-walter|Ja'Kobe Walter]] '26 (93% similar)
+- [[maurice-evans|Maurice Evans]] '11 (87% similar)
+- [[alex-abrines|Alex Abrines]] '19 (87% similar)
+- [[lucious-harris|Lucious Harris]] '98 (86% similar)
+- [[ben-sheppard|Ben Sheppard]] '24 (86% similar)
+- [[alex-ducas|Alex Ducas]] '25 (86% similar)
+
+**Career shape:** Charted 9 seasons (2001-02–2011-12). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

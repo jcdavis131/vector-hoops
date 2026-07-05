@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[jerian-grant|Jerian Grant]] — cosine 0.87
 - [[bronny-james|Bronny James]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 17.5 pts · 4.5 reb · 8.1 ast · 2.7 stl per 100 (2000-01).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.8σ vs era)
+- High-volume table-setter (+1.4σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.4σ)
+- Defensive rebounding well below era (−1.2σ)
+
+**Comparables:**
+
+- [[vonteego-cummings|Vonteego Cummings]] '01 (95% similar)
+- [[ty-jerome|Ty Jerome]] '25 (90% similar)
+- [[malachi-flynn|Malachi Flynn]] '22 (88% similar)
+- [[sebastian-telfair|Sebastian Telfair]] '10 (87% similar)
+- [[jerian-grant|Jerian Grant]] '19 (87% similar)
+- [[bronny-james|Bronny James]] '25 (86% similar)
+
+**Career shape:** Charted 1 season (2000-01). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

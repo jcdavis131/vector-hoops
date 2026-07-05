@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[arnett-moultrie|Arnett Moultrie]] — cosine 0.83
 - [[anthony-gill|Anthony Gill]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 15.5 pts · 8.2 reb · 1.7 ast · 1.0 blk per 100 (2022-23).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.9σ)
+- Ball-hawking activity well below era (−1.8σ)
+
+**Comparables:**
+
+- [[harold-jamison|Harold Jamison]] '02 (92% similar)
+- [[james-augustine|James Augustine]] '08 (86% similar)
+- [[john-thomas|John Thomas]] '00 (85% similar)
+- [[terry-davis|Terry Davis]] '01 (84% similar)
+- [[arnett-moultrie|Arnett Moultrie]] '13 (83% similar)
+- [[anthony-gill|Anthony Gill]] '22 (83% similar)
+
+**Career shape:** Charted 3 seasons (2021-22–2023-24). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

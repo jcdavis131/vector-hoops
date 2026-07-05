@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[dean-oliver|Dean Oliver]] — cosine 0.88
 - [[gerald-wilkins|Gerald Wilkins]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 18.4 pts · 4.2 reb · 4.2 ast · 1.7 stl per 100 (2021-22).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.6σ)
+- Defensive rebounding well below era (−1.3σ)
+
+**Comparables:**
+
+- [[lionel-chalmers|Lionel Chalmers]] '05 (93% similar)
+- [[andre-owens|Andre Owens]] '06 (89% similar)
+- [[william-avery|William Avery]] '00 (89% similar)
+- [[isaiah-canaan|Isaiah Canaan]] '16 (88% similar)
+- [[dean-oliver|Dean Oliver]] '02 (88% similar)
+- [[gerald-wilkins|Gerald Wilkins]] '98 (88% similar)
+
+**Career shape:** Charted 2 seasons (2020-21–2021-22). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

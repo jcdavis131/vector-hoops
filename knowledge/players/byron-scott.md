@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[kyle-korver|Kyle Korver]] — cosine 0.87
 - [[landry-shamet|Landry Shamet]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 18.5 pts · 4.1 reb · 3.5 ast · 1.6 stl per 100 (1996-97).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.3σ vs era)
+- Strong net on-court impact (+1.2σ vs era)
+- Reliable touch from the free-throw line (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Offensive-glass activity well below era (−1.2σ)
+- Defensive rebounding well below era (−1.0σ)
+
+**Comparables:**
+
+- [[wesley-matthews|Wesley Matthews]] '20 (90% similar)
+- [[isaiah-joe|Isaiah Joe]] '25 (90% similar)
+- [[steve-kerr|Steve Kerr]] '97 (89% similar)
+- [[cameron-johnson|Cameron Johnson]] '26 (88% similar)
+- [[kyle-korver|Kyle Korver]] '04 (87% similar)
+- [[landry-shamet|Landry Shamet]] '20 (86% similar)
+
+**Career shape:** Charted 1 season (1996-97). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

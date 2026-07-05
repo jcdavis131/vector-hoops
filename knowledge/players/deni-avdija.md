@@ -39,6 +39,33 @@ Closest career shapes in the era-normalized vector space:
 - [[domantas-sabonis|Domantas Sabonis]] — cosine 0.67
 - [[mason-jones|Mason Jones]] — cosine 0.66
 
+## Scouting report
+
+**Play style:** SF · Scoring Volume + Shot Volume. Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 33.9 pts · 9.7 reb · 9.4 ast · 1.1 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+3.5σ vs era)
+- Featured, high-usage scoring role (+1.9σ vs era)
+- High-volume table-setter (+1.8σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.8σ)
+
+**Comparables:**
+
+- [[julius-randle|Julius Randle]] '24 (77% similar)
+- [[paolo-banchero|Paolo Banchero]] '25 (75% similar)
+- [[lamar-odom|Lamar Odom]] '13 (74% similar)
+- [[jalen-johnson|Jalen Johnson]] '26 (71% similar)
+- [[domantas-sabonis|Domantas Sabonis]] '24 (67% similar)
+- [[mason-jones|Mason Jones]] '21 (66% similar)
+
+**Career shape:** Charted 6 seasons (2020-21–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

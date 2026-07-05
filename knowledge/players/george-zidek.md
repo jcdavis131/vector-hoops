@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[kornel-david|Kornel David]] — cosine 0.81
 - [[hanno-mottola|Hanno Mottola]] — cosine 0.79
 
+## Scouting report
+
+**Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 18.5 pts · 11.1 reb · 1.8 ast · 0.6 stl per 100 (1996-97).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+1.0σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.0σ)
+- Ball-hawking activity well below era (−1.6σ)
+
+**Comparables:**
+
+- [[jason-collier|Jason Collier]] '05 (89% similar)
+- [[josh-powell|Josh Powell]] '07 (86% similar)
+- [[samardo-samuels|Samardo Samuels]] '11 (84% similar)
+- [[hakim-warrick|Hakim Warrick]] '13 (81% similar)
+- [[kornel-david|Kornel David]] '01 (81% similar)
+- [[hanno-mottola|Hanno Mottola]] '01 (79% similar)
+
+**Career shape:** Charted 1 season (1996-97). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -49,6 +49,33 @@ Closest career shapes in the era-normalized vector space:
 - [[corey-brewer|Corey Brewer]] — cosine 0.81
 - [[jose-alvarado|Jose Alvarado]] — cosine 0.80
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 17.4 pts · 6.1 reb · 3.4 ast · 3.0 stl per 100 (2016-17).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.5σ vs era)
+- High-volume three-point shooter (+1.9σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.6σ)
+- Finishing efficiency well below era (−2.5σ)
+
+**Comparables:**
+
+- [[jordan-adams|Jordan Adams]] '15 (87% similar)
+- [[de-anthony-melton|De'Anthony Melton]] '19 (86% similar)
+- [[kent-bazemore|Kent Bazemore]] '13 (81% similar)
+- [[greg-graham|Greg Graham]] '97 (81% similar)
+- [[corey-brewer|Corey Brewer]] '19 (81% similar)
+- [[jose-alvarado|Jose Alvarado]] '22 (80% similar)
+
+**Career shape:** Charted 16 seasons (1999-00–2016-17). Entered as a Playmaking + Steals profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

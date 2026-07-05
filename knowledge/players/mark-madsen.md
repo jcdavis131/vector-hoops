@@ -42,6 +42,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jon-brockman|Jon Brockman]] — cosine 0.88
 - [[john-thomas|John Thomas]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 2.5 pts · 7.5 reb · 1.7 ast · 0.4 stl per 100 (2008-09).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.6σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−4.0σ)
+- Finishing efficiency well below era (−3.6σ)
+
+**Comparables:**
+
+- [[jared-jeffries|Jared Jeffries]] '11 (94% similar)
+- [[jason-collins|Jason Collins]] '10 (92% similar)
+- [[michael-ruffin|Michael Ruffin]] '07 (89% similar)
+- [[chris-dudley|Chris Dudley]] '00 (88% similar)
+- [[jon-brockman|Jon Brockman]] '10 (88% similar)
+- [[john-thomas|John Thomas]] '00 (88% similar)
+
+**Career shape:** Charted 9 seasons (2000-01–2008-09). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

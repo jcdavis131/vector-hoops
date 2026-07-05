@@ -38,6 +38,31 @@ Closest career shapes in the era-normalized vector space:
 - [[dalton-knecht|Dalton Knecht]] — cosine 0.90
 - [[matt-thomas|Matt Thomas]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 18.7 pts · 4.8 reb · 2.0 ast · 0.7 stl per 100 (2022-23).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.2σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.4σ)
+
+**Comparables:**
+
+- [[john-jenkins|John Jenkins]] '19 (98% similar)
+- [[doug-mcdermott|Doug McDermott]] '25 (97% similar)
+- [[bryn-forbes|Bryn Forbes]] '17 (93% similar)
+- [[arron-afflalo|Arron Afflalo]] '18 (93% similar)
+- [[dalton-knecht|Dalton Knecht]] '25 (90% similar)
+- [[matt-thomas|Matt Thomas]] '22 (90% similar)
+
+**Career shape:** Charted 5 seasons (2021-22–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

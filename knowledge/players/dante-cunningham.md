@@ -43,6 +43,33 @@ Closest career shapes in the era-normalized vector space:
 - [[keita-bates-diop|Keita Bates-Diop]] — cosine 0.85
 - [[eduardo-najera|Eduardo Najera]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** PF · Three-Point Accuracy (Low Turnovers). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 10.0 pts · 9.7 reb · 2.6 ast · 1.4 stl per 100 (2018-19).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.5σ vs era)
+- Knockdown three-point shooter (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.9σ)
+- Scoring load well below era (−1.6σ)
+
+**Comparables:**
+
+- [[michael-cage|Michael Cage]] '00 (89% similar)
+- [[a-c-green|A.C. Green]] '00 (86% similar)
+- [[cherokee-parks|Cherokee Parks]] '02 (86% similar)
+- [[sam-dekker|Sam Dekker]] '19 (86% similar)
+- [[keita-bates-diop|Keita Bates-Diop]] '20 (85% similar)
+- [[eduardo-najera|Eduardo Najera]] '12 (85% similar)
+
+**Career shape:** Charted 10 seasons (2009-10–2018-19). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

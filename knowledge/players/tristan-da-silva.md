@@ -35,6 +35,31 @@ Closest career shapes in the era-normalized vector space:
 - [[robbie-hummel|Robbie Hummel]] — cosine 0.91
 - [[ben-sheppard|Ben Sheppard]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 16.2 pts · 7.4 reb · 3.4 ast · 1.0 stl per 100 (2024-25).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.0σ)
+
+**Comparables:**
+
+- [[tony-snell|Tony Snell]] '21 (94% similar)
+- [[caleb-houstan|Caleb Houstan]] '26 (92% similar)
+- [[cam-reynolds|Cam Reynolds]] '19 (92% similar)
+- [[reggie-bullock-jr|Reggie Bullock Jr.]] '24 (91% similar)
+- [[robbie-hummel|Robbie Hummel]] '14 (91% similar)
+- [[ben-sheppard|Ben Sheppard]] '24 (91% similar)
+
+**Career shape:** Charted 2 seasons (2024-25–2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

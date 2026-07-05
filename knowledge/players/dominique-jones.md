@@ -36,6 +36,33 @@ Closest career shapes in the era-normalized vector space:
 - [[isaiah-collier|Isaiah Collier]] — cosine 0.85
 - [[kadeem-allen|Kadeem Allen]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 17.3 pts · 6.7 reb · 12.4 ast · 2.1 stl per 100 (2012-13).
+
+**Strengths:**
+
+- High-volume table-setter (+2.9σ vs era)
+- Draws contact, gets to the line often (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.9σ)
+- Finishing efficiency well below era (−1.1σ)
+
+**Comparables:**
+
+- [[god-shammgod|God Shammgod]] '98 (91% similar)
+- [[ben-saraf|Ben Saraf]] '26 (88% similar)
+- [[wade-baldwin-iv|Wade Baldwin IV]] '17 (87% similar)
+- [[michael-carter-williams|Michael Carter-Williams]] '15 (85% similar)
+- [[isaiah-collier|Isaiah Collier]] '26 (85% similar)
+- [[kadeem-allen|Kadeem Allen]] '18 (84% similar)
+
+**Career shape:** Charted 3 seasons (2010-11–2012-13). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Playmaking + Steals identity.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

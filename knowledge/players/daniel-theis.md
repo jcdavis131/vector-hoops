@@ -40,6 +40,33 @@ Closest career shapes in the era-normalized vector space:
 - [[karlo-matkovic|Karlo Matković]] — cosine 0.91
 - [[walker-kessler|Walker Kessler]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 18.5 pts · 13.1 reb · 3.4 ast · 2.6 blk per 100 (2019-20).
+
+**Strengths:**
+
+- Elite rim protection (+1.7σ vs era)
+- Efficient finisher inside the arc (+1.4σ vs era)
+- Relentless on the offensive glass (+1.3σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[amir-johnson|Amir Johnson]] '08 (94% similar)
+- [[taj-gibson|Taj Gibson]] '21 (92% similar)
+- [[isaiah-stewart|Isaiah Stewart]] '25 (92% similar)
+- [[tony-bradley|Tony Bradley]] '20 (91% similar)
+- [[karlo-matkovic|Karlo Matković]] '26 (91% similar)
+- [[walker-kessler|Walker Kessler]] '23 (91% similar)
+
+**Career shape:** Charted 7 seasons (2017-18–2024-25). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

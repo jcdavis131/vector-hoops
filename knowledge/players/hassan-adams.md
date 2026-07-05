@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[vernon-macklin|Vernon Macklin]] — cosine 0.80
 - [[jordan-williams|Jordan Williams]] — cosine 0.78
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass + Defensive Glass. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 17.6 pts · 7.7 reb · 1.3 ast · 1.7 stl per 100 (2006-07).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.4σ)
+- Three-point volume well below era (−1.0σ)
+
+**Comparables:**
+
+- [[james-augustine|James Augustine]] '08 (87% similar)
+- [[harold-jamison|Harold Jamison]] '02 (86% similar)
+- [[arnett-moultrie|Arnett Moultrie]] '13 (83% similar)
+- [[john-thomas|John Thomas]] '00 (81% similar)
+- [[vernon-macklin|Vernon Macklin]] '12 (80% similar)
+- [[jordan-williams|Jordan Williams]] '12 (78% similar)
+
+**Career shape:** Charted 1 season (2006-07). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

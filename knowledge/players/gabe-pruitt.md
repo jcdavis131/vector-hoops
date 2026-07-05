@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jevon-carter|Jevon Carter]] — cosine 0.85
 - [[daniel-ewing|Daniel Ewing]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 13.0 pts · 6.0 reb · 5.4 ast · 2.1 stl per 100 (2008-09).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.2σ)
+- Scoring load well below era (−1.0σ)
+
+**Comparables:**
+
+- [[kevin-burleson|Kevin Burleson]] '06 (91% similar)
+- [[donald-whiteside|Donald Whiteside]] '97 (87% similar)
+- [[frank-ntilikina|Frank Ntilikina]] '21 (86% similar)
+- [[iman-shumpert|Iman Shumpert]] '12 (86% similar)
+- [[jevon-carter|Jevon Carter]] '24 (85% similar)
+- [[daniel-ewing|Daniel Ewing]] '07 (84% similar)
+
+**Career shape:** Charted 1 season (2008-09). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

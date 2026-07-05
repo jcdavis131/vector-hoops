@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[luke-schenscher|Luke Schenscher]] — cosine 0.86
 - [[tacko-fall|Tacko Fall]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 12.2 pts · 13.3 reb · 0.6 ast · 2.8 blk per 100 (2008-09).
+
+**Strengths:**
+
+- Strong net on-court impact (+2.1σ vs era)
+- Rarely turns the ball over (−1.9σ vs era)
+- Efficient finisher inside the arc (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−4.0σ)
+- Three-point accuracy well below era (−1.4σ)
+
+**Comparables:**
+
+- [[chris-taft|Chris Taft]] '06 (92% similar)
+- [[kyrylo-fesenko|Kyrylo Fesenko]] '09 (89% similar)
+- [[andris-biedrins|Andris Biedrins]] '13 (87% similar)
+- [[rasho-nesterovic|Rasho Nesterovic]] '10 (87% similar)
+- [[luke-schenscher|Luke Schenscher]] '06 (86% similar)
+- [[tacko-fall|Tacko Fall]] '21 (85% similar)
+
+**Career shape:** Charted 1 season (2008-09). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -35,6 +35,31 @@ Closest career shapes in the era-normalized vector space:
 - [[nigel-hayes-davis|Nigel Hayes-Davis]] — cosine 0.81
 - [[malevy-leons|Malevy Leons]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 16.3 pts · 9.6 reb · 3.4 ast · 2.1 stl per 100 (2014-15).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+1.1σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.4σ)
+
+**Comparables:**
+
+- [[viktor-khryapa|Viktor Khryapa]] '05 (90% similar)
+- [[ognjen-kuzmic|Ognjen Kuzmic]] '14 (86% similar)
+- [[j-r-giddens|J.R. Giddens]] '10 (83% similar)
+- [[deandre-liggins|DeAndre Liggins]] '12 (81% similar)
+- [[nigel-hayes-davis|Nigel Hayes-Davis]] '26 (81% similar)
+- [[malevy-leons|Malevy Leons]] '26 (81% similar)
+
+**Career shape:** Charted 2 seasons (2013-14–2014-15). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

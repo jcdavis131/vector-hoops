@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[khem-birch|Khem Birch]] — cosine 0.89
 - [[dominick-barlow|Dominick Barlow]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** C · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 16.5 pts · 12.2 reb · 1.8 ast · 1.4 stl per 100 (2011-12).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.7σ vs era)
+- Efficient finisher inside the arc (+1.6σ vs era)
+- Relentless on the offensive glass (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.5σ)
+- Three-point volume well below era (−1.1σ)
+
+**Comparables:**
+
+- [[jordan-williams|Jordan Williams]] '12 (95% similar)
+- [[anthony-miller|Anthony Miller]] '00 (90% similar)
+- [[greg-smith|Greg Smith]] '16 (90% similar)
+- [[dale-davis|Dale Davis]] '06 (90% similar)
+- [[khem-birch|Khem Birch]] '19 (89% similar)
+- [[dominick-barlow|Dominick Barlow]] '23 (89% similar)
+
+**Career shape:** Charted 1 season (2011-12). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

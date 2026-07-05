@@ -35,6 +35,33 @@ Closest career shapes in the era-normalized vector space:
 - [[gg-jackson|GG Jackson]] — cosine 0.81
 - [[keith-van-horn|Keith Van Horn]] — cosine 0.80
 
+## Scouting report
+
+**Play style:** SF · Scoring Volume + Shot Volume. Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 31.6 pts · 11.1 reb · 3.3 ast · 1.1 stl per 100 (1996-97).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+2.4σ vs era)
+- Featured, high-usage scoring role (+2.2σ vs era)
+- Draws contact, gets to the line often (+2.0σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.4σ)
+
+**Comparables:**
+
+- [[carmelo-anthony|Carmelo Anthony]] '13 (85% similar)
+- [[cedric-ceballos|Cedric Ceballos]] '00 (84% similar)
+- [[don-maclean|Don MacLean]] '99 (84% similar)
+- [[al-harrington|Al Harrington]] '99 (82% similar)
+- [[gg-jackson|GG Jackson]] '24 (81% similar)
+- [[keith-van-horn|Keith Van Horn]] '99 (80% similar)
+
+**Career shape:** Charted 2 seasons (1996-97–1998-99). Consistent Scoring Volume + Shot Volume profile across his career.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

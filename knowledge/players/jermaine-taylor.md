@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[josh-christopher|Josh Christopher]] — cosine 0.80
 - [[archie-goodwin|Archie Goodwin]] — cosine 0.80
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 20.6 pts · 7.4 reb · 2.6 ast · 1.6 stl per 100 (2009-10).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+1.0σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.9σ)
+- Finishing efficiency well below era (−1.3σ)
+
+**Comparables:**
+
+- [[corey-benjamin|Corey Benjamin]] '00 (88% similar)
+- [[keon-johnson|Keon Johnson]] '23 (84% similar)
+- [[will-riley|Will Riley]] '26 (84% similar)
+- [[jonathan-gibson|Jonathan Gibson]] '17 (82% similar)
+- [[josh-christopher|Josh Christopher]] '23 (80% similar)
+- [[archie-goodwin|Archie Goodwin]] '15 (80% similar)
+
+**Career shape:** Charted 2 seasons (2009-10–2010-11). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

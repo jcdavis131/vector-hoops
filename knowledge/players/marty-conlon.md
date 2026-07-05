@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[tiago-splitter|Tiago Splitter]] — cosine 0.79
 - [[armen-gilliam|Armen Gilliam]] — cosine 0.79
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 20.8 pts · 10.9 reb · 2.8 ast · 2.1 stl per 100 (1997-98).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+2.1σ vs era)
+- Strong net on-court impact (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.3σ)
+
+**Comparables:**
+
+- [[tyler-hansbrough|Tyler Hansbrough]] '16 (87% similar)
+- [[leon-powe|Leon Powe]] '08 (83% similar)
+- [[glen-davis|Glen Davis]] '08 (81% similar)
+- [[zaza-pachulia|Zaza Pachulia]] '17 (80% similar)
+- [[tiago-splitter|Tiago Splitter]] '12 (79% similar)
+- [[armen-gilliam|Armen Gilliam]] '00 (79% similar)
+
+**Career shape:** Charted 2 seasons (1996-97–1997-98). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

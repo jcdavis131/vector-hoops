@@ -43,6 +43,34 @@ Closest career shapes in the era-normalized vector space:
 - [[keon-ellis|Keon Ellis]] — cosine 0.76
 - [[josh-minott|Josh Minott]] — cosine 0.76
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 12.7 pts · 9.7 reb · 2.4 ast · 3.9 stl per 100 (2023-24).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+4.0σ vs era)
+- Strong net on-court impact (+1.6σ vs era)
+- Rarely turns the ball over (−1.4σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.3σ)
+- Scoring load well below era (−1.1σ)
+
+**Comparables:**
+
+- [[scott-burrell|Scott Burrell]] '00 (82% similar)
+- [[trevor-ariza|Trevor Ariza]] '22 (80% similar)
+- [[danny-green|Danny Green]] '19 (77% similar)
+- [[de-anthony-melton|De'Anthony Melton]] '19 (76% similar)
+- [[keon-ellis|Keon Ellis]] '25 (76% similar)
+- [[josh-minott|Josh Minott]] '24 (76% similar)
+
+**Career shape:** Charted 10 seasons (2014-15–2023-24). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

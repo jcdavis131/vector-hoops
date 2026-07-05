@@ -53,6 +53,33 @@ Closest career shapes in the era-normalized vector space:
 - [[hakeem-olajuwon|Hakeem Olajuwon]] — cosine 0.84
 - [[nikola-jokic|Nikola Jokić]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** PF · Defensive Glass + Rim Pressure (Fts). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 32.3 pts · 18.5 reb · 6.7 ast · 2.9 blk per 100 (2003-04).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+3.4σ vs era)
+- Featured, high-usage scoring role (+2.5σ vs era)
+- Heavy shot volume, focal scoring option (+2.2σ vs era)
+
+**Areas of concern:**
+
+- No glaring statistical weakness at his peak.
+
+**Comparables:**
+
+- [[arvydas-sabonis|Arvydas Sabonis]] '97 (92% similar)
+- [[david-west|David West]] '18 (88% similar)
+- [[chris-webber|Chris Webber]] '01 (87% similar)
+- [[tim-duncan|Tim Duncan]] '04 (86% similar)
+- [[hakeem-olajuwon|Hakeem Olajuwon]] '97 (84% similar)
+- [[nikola-jokic|Nikola Jokić]] '22 (82% similar)
+
+**Career shape:** Charted 20 seasons (1996-97–2015-16). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

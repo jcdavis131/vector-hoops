@@ -38,6 +38,34 @@ Closest career shapes in the era-normalized vector space:
 - [[scot-pollard|Scot Pollard]] — cosine 0.89
 - [[khem-birch|Khem Birch]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass + Defensive Glass. Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 16.0 pts · 11.3 reb · 2.3 ast · 1.3 stl per 100 (1997-98).
+
+**Strengths:**
+
+- Strong net on-court impact (+1.9σ vs era)
+- Efficient finisher inside the arc (+1.7σ vs era)
+- Rarely turns the ball over (−1.3σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.3σ)
+- Shot volume well below era (−1.1σ)
+
+**Comparables:**
+
+- [[nick-collison|Nick Collison]] '17 (91% similar)
+- [[buck-williams|Buck Williams]] '97 (91% similar)
+- [[jon-brockman|Jon Brockman]] '10 (91% similar)
+- [[jake-voskuhl|Jake Voskuhl]] '01 (89% similar)
+- [[scot-pollard|Scot Pollard]] '03 (89% similar)
+- [[khem-birch|Khem Birch]] '19 (89% similar)
+
+**Career shape:** Charted 5 seasons (1996-97–2000-01). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

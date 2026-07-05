@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[quincy-acy|Quincy Acy]] — cosine 0.77
 - [[joe-kleine|Joe Kleine]] — cosine 0.76
 
+## Scouting report
+
+**Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 10.9 pts · 11.0 reb · 2.1 ast · 0.9 stl per 100 (2024-25).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.6σ)
+- Scoring load well below era (−1.5σ)
+
+**Comparables:**
+
+- [[meyers-leonard|Meyers Leonard]] '15 (87% similar)
+- [[jeremiah-robinson-earl|Jeremiah Robinson-Earl]] '26 (81% similar)
+- [[jaron-blossomgame|Jaron Blossomgame]] '19 (79% similar)
+- [[e-j-liddell|E.J. Liddell]] '26 (78% similar)
+- [[quincy-acy|Quincy Acy]] '13 (77% similar)
+- [[joe-kleine|Joe Kleine]] '97 (76% similar)
+
+**Career shape:** Charted 2 seasons (2024-25–2025-26). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

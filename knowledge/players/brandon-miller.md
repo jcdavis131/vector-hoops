@@ -36,6 +36,33 @@ Closest career shapes in the era-normalized vector space:
 - [[malik-monk|Malik Monk]] — cosine 0.89
 - [[gerald-green|Gerald Green]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** SF · Scoring Volume + Shot Volume. Plays as a balanced-diet wing: no single shot zone dominates his shot chart.
+
+**Signature-season stat line:** 32.4 pts · 7.8 reb · 5.4 ast · 1.6 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+2.0σ vs era)
+- High-volume three-point shooter (+1.7σ vs era)
+- Featured, high-usage scoring role (+1.7σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+1.4σ)
+
+**Comparables:**
+
+- [[jalen-green|Jalen Green]] '26 (91% similar)
+- [[jordan-clarkson|Jordan Clarkson]] '21 (90% similar)
+- [[ben-gordon|Ben Gordon]] '05 (90% similar)
+- [[jordan-poole|Jordan Poole]] '25 (90% similar)
+- [[malik-monk|Malik Monk]] '18 (89% similar)
+- [[gerald-green|Gerald Green]] '15 (88% similar)
+
+**Career shape:** Charted 3 seasons (2023-24–2025-26). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

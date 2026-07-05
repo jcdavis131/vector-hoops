@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[john-butler-jr|John Butler Jr.]] — cosine 0.86
 - [[jake-layman|Jake Layman]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 14.9 pts · 4.9 reb · 2.0 ast · 1.7 stl per 100 (2018-19).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.6σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.9σ)
+- On-court net impact well below era (−1.1σ)
+
+**Comparables:**
+
+- [[rashad-vaughn|Rashad Vaughn]] '17 (91% similar)
+- [[mike-smith|Mike Smith]] '01 (91% similar)
+- [[john-holland|John Holland]] '18 (86% similar)
+- [[johnny-davis|Johnny Davis]] '24 (86% similar)
+- [[john-butler-jr|John Butler Jr.]] '23 (86% similar)
+- [[jake-layman|Jake Layman]] '18 (85% similar)
+
+**Career shape:** Charted 1 season (2018-19). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -41,6 +41,32 @@ Closest career shapes in the era-normalized vector space:
 - [[gabe-vincent|Gabe Vincent]] — cosine 0.90
 - [[lindsey-hunter|Lindsey Hunter]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** PG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 17.2 pts · 2.9 reb · 4.5 ast · 1.8 stl per 100 (2023-24).
+
+**Strengths:**
+
+- High-volume three-point shooter (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.6σ)
+- Rim pressure (free-throw generation) well below era (−1.5σ)
+
+**Comparables:**
+
+- [[charlie-bell|Charlie Bell]] '11 (95% similar)
+- [[dee-brown|Dee Brown]] '00 (93% similar)
+- [[justin-holiday|Justin Holiday]] '23 (92% similar)
+- [[kevin-huerter|Kevin Huerter]] '23 (91% similar)
+- [[gabe-vincent|Gabe Vincent]] '26 (90% similar)
+- [[lindsey-hunter|Lindsey Hunter]] '09 (90% similar)
+
+**Career shape:** Charted 8 seasons (2018-19–2025-26). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

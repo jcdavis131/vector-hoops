@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[malachi-richardson|Malachi Richardson]] — cosine 0.77
 - [[tre-johnson|Tre Johnson]] — cosine 0.75
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 18.1 pts · 7.1 reb · 1.4 ast · 0.8 stl per 100 (2008-09).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.1σ)
+- On-court net impact well below era (−1.0σ)
+
+**Comparables:**
+
+- [[kevin-knox-ii|Kevin Knox II]] '22 (78% similar)
+- [[nemanja-nedovic|Nemanja Nedovic]] '14 (78% similar)
+- [[john-long|John Long]] '97 (77% similar)
+- [[malaki-branham|Malaki Branham]] '24 (77% similar)
+- [[malachi-richardson|Malachi Richardson]] '19 (77% similar)
+- [[tre-johnson|Tre Johnson]] '26 (75% similar)
+
+**Career shape:** Charted 1 season (2008-09). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

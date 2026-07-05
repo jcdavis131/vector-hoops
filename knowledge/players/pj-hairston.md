@@ -35,6 +35,33 @@ Closest career shapes in the era-normalized vector space:
 - [[daequan-cook|Daequan Cook]] — cosine 0.91
 - [[donte-greene|Donte Greene]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 18.3 pts · 6.7 reb · 1.5 ast · 1.5 stl per 100 (2014-15).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.1σ vs era)
+- Rarely turns the ball over (−1.2σ vs era)
+- Reliable touch from the free-throw line (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.8σ)
+
+**Comparables:**
+
+- [[jarell-eddie|Jarell Eddie]] '16 (93% similar)
+- [[carsen-edwards|Carsen Edwards]] '21 (93% similar)
+- [[jordan-hawkins|Jordan Hawkins]] '25 (92% similar)
+- [[simone-fontecchio|Simone Fontecchio]] '23 (91% similar)
+- [[daequan-cook|Daequan Cook]] '11 (91% similar)
+- [[donte-greene|Donte Greene]] '09 (91% similar)
+
+**Career shape:** Charted 2 seasons (2014-15–2015-16). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

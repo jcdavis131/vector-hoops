@@ -36,6 +36,33 @@ Closest career shapes in the era-normalized vector space:
 - [[steve-hamer|Steve Hamer]] — cosine 0.88
 - [[mark-bryant|Mark Bryant]] — cosine 0.88
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 7.2 pts · 11.5 reb · 1.5 ast · 0.2 stl per 100 (2000-01).
+
+**Strengths:**
+
+- Rarely turns the ball over (−2.1σ vs era)
+- Relentless on the offensive glass (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.5σ)
+- Shot volume well below era (−2.3σ)
+
+**Comparables:**
+
+- [[a-c-green|A.C. Green]] '00 (90% similar)
+- [[jon-brockman|Jon Brockman]] '10 (90% similar)
+- [[greg-smith|Greg Smith]] '16 (90% similar)
+- [[tom-hammonds|Tom Hammonds]] '00 (90% similar)
+- [[steve-hamer|Steve Hamer]] '97 (88% similar)
+- [[mark-bryant|Mark Bryant]] '03 (88% similar)
+
+**Career shape:** Charted 3 seasons (1997-98–2000-01). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

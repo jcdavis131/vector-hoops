@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[jaylen-adams|Jaylen Adams]] — cosine 0.85
 - [[laron-profit|Laron Profit]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 11.5 pts · 6.9 reb · 2.8 ast · 2.2 stl per 100 (2015-16).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Scoring load well below era (−1.3σ)
+- Finishing efficiency well below era (−1.2σ)
+
+**Comparables:**
+
+- [[rodions-kurucs|Rodions Kurucs]] '21 (88% similar)
+- [[stanley-johnson|Stanley Johnson]] '20 (87% similar)
+- [[frank-ntilikina|Frank Ntilikina]] '21 (87% similar)
+- [[garrett-temple|Garrett Temple]] '11 (86% similar)
+- [[jaylen-adams|Jaylen Adams]] '19 (85% similar)
+- [[laron-profit|Laron Profit]] '00 (83% similar)
+
+**Career shape:** Charted 2 seasons (2014-15–2015-16). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

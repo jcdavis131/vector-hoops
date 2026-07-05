@@ -34,6 +34,31 @@ Closest career shapes in the era-normalized vector space:
 - [[damian-jones|Damian Jones]] — cosine 0.73
 - [[arnett-moultrie|Arnett Moultrie]] — cosine 0.73
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 19.1 pts · 10.8 reb · 4.9 ast · 2.1 stl per 100 (2025-26).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+1.2σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−1.3σ)
+
+**Comparables:**
+
+- [[ed-pinckney|Ed Pinckney]] '97 (79% similar)
+- [[malevy-leons|Malevy Leons]] '26 (79% similar)
+- [[pervis-ellison|Pervis Ellison]] '98 (78% similar)
+- [[henry-sims|Henry Sims]] '14 (75% similar)
+- [[damian-jones|Damian Jones]] '19 (73% similar)
+- [[arnett-moultrie|Arnett Moultrie]] '13 (73% similar)
+
+**Career shape:** Charted 1 season (2025-26). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

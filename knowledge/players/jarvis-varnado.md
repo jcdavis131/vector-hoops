@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[hasheem-thabeet|Hasheem Thabeet]] — cosine 0.86
 - [[jeremy-evans|Jeremy Evans]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** PF · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 14.0 pts · 8.9 reb · 1.8 ast · 4.1 blk per 100 (2013-14).
+
+**Strengths:**
+
+- Elite rim protection (+3.2σ vs era)
+- Efficient finisher inside the arc (+2.3σ vs era)
+- Rarely turns the ball over (−1.5σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.7σ)
+- On-court net impact well below era (−1.6σ)
+
+**Comparables:**
+
+- [[daniel-orton|Daniel Orton]] '12 (90% similar)
+- [[steven-hunter|Steven Hunter]] '04 (88% similar)
+- [[ronny-turiaf|Ronny Turiaf]] '14 (88% similar)
+- [[robert-swift|Robert Swift]] '05 (88% similar)
+- [[hasheem-thabeet|Hasheem Thabeet]] '12 (86% similar)
+- [[jeremy-evans|Jeremy Evans]] '12 (86% similar)
+
+**Career shape:** Charted 1 season (2013-14). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

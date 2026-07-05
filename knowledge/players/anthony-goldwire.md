@@ -37,6 +37,34 @@ Closest career shapes in the era-normalized vector space:
 - [[khalid-reeves|Khalid Reeves]] — cosine 0.93
 - [[derek-harper|Derek Harper]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** PG · Playmaking + Steals. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 20.7 pts · 3.1 reb · 8.6 ast · 2.3 stl per 100 (2000-01).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.2σ vs era)
+- High-volume table-setter (+1.6σ vs era)
+- Active hands, disrupts passing lanes (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.4σ)
+- Offensive-glass activity well below era (−1.4σ)
+
+**Comparables:**
+
+- [[chris-quinn|Chris Quinn]] '10 (96% similar)
+- [[chris-whitney|Chris Whitney]] '04 (95% similar)
+- [[shammond-williams|Shammond Williams]] '04 (95% similar)
+- [[ty-jerome|Ty Jerome]] '25 (94% similar)
+- [[khalid-reeves|Khalid Reeves]] '97 (93% similar)
+- [[derek-harper|Derek Harper]] '99 (91% similar)
+
+**Career shape:** Charted 4 seasons (1996-97–2004-05). Consistent Playmaking + Steals profile across his career.
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

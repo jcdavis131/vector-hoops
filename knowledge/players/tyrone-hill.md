@@ -40,6 +40,34 @@ Closest career shapes in the era-normalized vector space:
 - [[anderson-varejao|Anderson Varejao]] — cosine 0.91
 - [[jamaal-magloire|Jamaal Magloire]] — cosine 0.90
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 21.2 pts · 16.3 reb · 2.0 ast · 1.4 stl per 100 (1996-97).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+2.6σ vs era)
+- Strong presence on the defensive glass (+1.8σ vs era)
+- Relentless on the offensive glass (+1.7σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.4σ)
+- Three-point volume well below era (−1.0σ)
+
+**Comparables:**
+
+- [[omer-asik|Omer Asik]] '18 (93% similar)
+- [[tristan-thompson|Tristan Thompson]] '25 (92% similar)
+- [[kenny-thomas|Kenny Thomas]] '08 (91% similar)
+- [[anthony-miller|Anthony Miller]] '00 (91% similar)
+- [[anderson-varejao|Anderson Varejao]] '05 (91% similar)
+- [[jamaal-magloire|Jamaal Magloire]] '08 (90% similar)
+
+**Career shape:** Charted 7 seasons (1996-97–2002-03). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

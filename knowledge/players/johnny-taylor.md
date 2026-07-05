@@ -34,6 +34,31 @@ Closest career shapes in the era-normalized vector space:
 - [[francisco-garcia|Francisco Garcia]] — cosine 0.86
 - [[hollis-thompson|Hollis Thompson]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 14.9 pts · 7.3 reb · 1.7 ast · 2.0 stl per 100 (1998-99).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Rim pressure (free-throw generation) well below era (−1.3σ)
+
+**Comparables:**
+
+- [[wesley-johnson|Wesley Johnson]] '17 (92% similar)
+- [[justin-holiday|Justin Holiday]] '23 (88% similar)
+- [[eric-washington|Eric Washington]] '98 (87% similar)
+- [[kessler-edwards|Kessler Edwards]] '25 (87% similar)
+- [[francisco-garcia|Francisco Garcia]] '14 (86% similar)
+- [[hollis-thompson|Hollis Thompson]] '17 (85% similar)
+
+**Career shape:** Charted 1 season (1998-99). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

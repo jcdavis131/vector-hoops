@@ -43,6 +43,32 @@ Closest career shapes in the era-normalized vector space:
 - [[josh-boone|Josh Boone]] — cosine 0.93
 - [[brendan-haywood|Brendan Haywood]] — cosine 0.93
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 17.3 pts · 8.1 reb · 0.9 ast · 1.4 blk per 100 (2005-06).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+2.8σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−4.0σ)
+- Free-throw touch well below era (−3.1σ)
+
+**Comparables:**
+
+- [[yves-missi|Yves Missi]] '26 (94% similar)
+- [[bismack-biyombo|Bismack Biyombo]] '23 (93% similar)
+- [[lou-amundson|Lou Amundson]] '14 (93% similar)
+- [[steven-hunter|Steven Hunter]] '04 (93% similar)
+- [[josh-boone|Josh Boone]] '10 (93% similar)
+- [[brendan-haywood|Brendan Haywood]] '15 (93% similar)
+
+**Career shape:** Charted 10 seasons (2005-06–2014-15). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

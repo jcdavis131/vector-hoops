@@ -39,6 +39,34 @@ Closest career shapes in the era-normalized vector space:
 - [[gg-jackson|GG Jackson]] — cosine 0.74
 - [[daron-holmes-ii|DaRon Holmes II]] — cosine 0.69
 
+## Scouting report
+
+**Play style:** SF · Scoring Volume + Shot Volume. Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 29.0 pts · 7.9 reb · 1.8 ast · 2.2 blk per 100 (2003-04).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+2.0σ vs era)
+- Featured, high-usage scoring role (+1.9σ vs era)
+- Knockdown three-point shooter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+3.9σ)
+- Ball-hawking activity well below era (−1.0σ)
+
+**Comparables:**
+
+- [[matas-buzelis|Matas Buzelis]] '26 (83% similar)
+- [[joe-alexander|Joe Alexander]] '09 (82% similar)
+- [[andrea-bargnani|Andrea Bargnani]] '15 (77% similar)
+- [[jerami-grant|Jerami Grant]] '21 (74% similar)
+- [[gg-jackson|GG Jackson]] '24 (74% similar)
+- [[daron-holmes-ii|DaRon Holmes II]] '26 (69% similar)
+
+**Career shape:** Charted 6 seasons (1999-00–2009-10). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

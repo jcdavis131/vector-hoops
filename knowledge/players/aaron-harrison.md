@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[brodric-thomas|Brodric Thomas]] — cosine 0.81
 - [[deandre-liggins|DeAndre Liggins]] — cosine 0.81
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble.
+
+**Signature-season stat line:** 8.7 pts · 7.2 reb · 1.0 ast · 2.9 stl per 100 (2015-16).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.3σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.7σ)
+- Free-throw touch well below era (−2.7σ)
+
+**Comparables:**
+
+- [[devyn-marble|Devyn Marble]] '16 (95% similar)
+- [[robert-archibald|Robert Archibald]] '04 (90% similar)
+- [[sindarius-thornwell|Sindarius Thornwell]] '21 (86% similar)
+- [[brandon-paul|Brandon Paul]] '18 (83% similar)
+- [[brodric-thomas|Brodric Thomas]] '21 (81% similar)
+- [[deandre-liggins|DeAndre Liggins]] '12 (81% similar)
+
+**Career shape:** Charted 1 season (2015-16). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

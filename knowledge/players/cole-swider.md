@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[chris-copeland|Chris Copeland]] — cosine 0.84
 - [[nick-smith-jr|Nick Smith Jr.]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 23.3 pts · 3.9 reb · 2.8 ast · 0.6 stl per 100 (2023-24).
+
+**Strengths:**
+
+- High-volume three-point shooter (+2.8σ vs era)
+- Reliable touch from the free-throw line (+1.8σ vs era)
+
+**Areas of concern:**
+
+- Turnover rate well above era (+2.1σ)
+- Ball-hawking activity well below era (−1.5σ)
+
+**Comparables:**
+
+- [[brice-sensabaugh|Brice Sensabaugh]] '24 (90% similar)
+- [[tre-johnson|Tre Johnson]] '26 (90% similar)
+- [[juan-carlos-navarro|Juan Carlos Navarro]] '08 (88% similar)
+- [[chris-clemons|Chris Clemons]] '20 (88% similar)
+- [[chris-copeland|Chris Copeland]] '16 (84% similar)
+- [[nick-smith-jr|Nick Smith Jr.]] '25 (84% similar)
+
+**Career shape:** Charted 1 season (2023-24). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

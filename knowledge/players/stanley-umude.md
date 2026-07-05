@@ -35,6 +35,33 @@ Closest career shapes in the era-normalized vector space:
 - [[earl-clark|Earl Clark]] — cosine 0.82
 - [[mfiondu-kabengele|Mfiondu Kabengele]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 7.7 pts · 8.8 reb · 2.1 ast · 3.1 blk per 100 (2024-25).
+
+**Strengths:**
+
+- Elite rim protection (+2.5σ vs era)
+- Rarely turns the ball over (−1.0σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−3.5σ)
+- Free-throw touch well below era (−2.1σ)
+
+**Comparables:**
+
+- [[quincy-miller|Quincy Miller]] '14 (90% similar)
+- [[zhou-qi|Zhou Qi]] '18 (85% similar)
+- [[lasalle-thompson|LaSalle Thompson]] '97 (84% similar)
+- [[william-cunningham|William Cunningham]] '99 (83% similar)
+- [[earl-clark|Earl Clark]] '12 (82% similar)
+- [[mfiondu-kabengele|Mfiondu Kabengele]] '21 (82% similar)
+
+**Career shape:** Charted 2 seasons (2023-24–2024-25). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

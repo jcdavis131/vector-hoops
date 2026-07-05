@@ -34,6 +34,32 @@ Closest career shapes in the era-normalized vector space:
 - [[vitaly-potapenko|Vitaly Potapenko]] — cosine 0.83
 - [[bryant-reeves|Bryant Reeves]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 18.4 pts · 12.0 reb · 0.8 ast · 0.8 blk per 100 (2001-02).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+1.5σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.4σ)
+- On-court net impact well below era (−1.3σ)
+
+**Comparables:**
+
+- [[othella-harrington|Othella Harrington]] '99 (88% similar)
+- [[nick-richards|Nick Richards]] '23 (87% similar)
+- [[james-wiseman|James Wiseman]] '24 (86% similar)
+- [[tony-massenburg|Tony Massenburg]] '02 (86% similar)
+- [[vitaly-potapenko|Vitaly Potapenko]] '06 (83% similar)
+- [[bryant-reeves|Bryant Reeves]] '98 (83% similar)
+
+**Career shape:** Charted 1 season (2001-02). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

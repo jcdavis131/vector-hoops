@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[caleb-martin|Caleb Martin]] — cosine 0.88
 - [[brandon-paul|Brandon Paul]] — cosine 0.87
 
+## Scouting report
+
+**Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 9.0 pts · 4.0 reb · 4.6 ast · 2.9 stl per 100 (2020-21).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+2.5σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.3σ)
+- Finishing efficiency well below era (−1.8σ)
+
+**Comparables:**
+
+- [[cody-martin|Cody Martin]] '21 (91% similar)
+- [[dalen-terry|Dalen Terry]] '26 (89% similar)
+- [[isaac-bonga|Isaac Bonga]] '19 (89% similar)
+- [[deandre-liggins|DeAndre Liggins]] '12 (88% similar)
+- [[caleb-martin|Caleb Martin]] '26 (88% similar)
+- [[brandon-paul|Brandon Paul]] '18 (87% similar)
+
+**Career shape:** Charted 3 seasons (2017-18–2020-21). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

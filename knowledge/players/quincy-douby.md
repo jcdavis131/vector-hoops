@@ -36,6 +36,31 @@ Closest career shapes in the era-normalized vector space:
 - [[ian-clark|Ian Clark]] — cosine 0.91
 - [[matt-ryan|Matt Ryan]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** PG · Three-Point Volume + Three-Point Accuracy. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep.
+
+**Signature-season stat line:** 19.5 pts · 4.5 reb · 2.9 ast · 1.6 stl per 100 (2007-08).
+
+**Strengths:**
+
+- Reliable touch from the free-throw line (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.1σ)
+
+**Comparables:**
+
+- [[sam-mack|Sam Mack]] '00 (93% similar)
+- [[anthony-roberson|Anthony Roberson]] '09 (92% similar)
+- [[c-j-wilcox|C.J. Wilcox]] '17 (92% similar)
+- [[kareem-rush|Kareem Rush]] '09 (91% similar)
+- [[ian-clark|Ian Clark]] '15 (91% similar)
+- [[matt-ryan|Matt Ryan]] '25 (91% similar)
+
+**Career shape:** Charted 3 seasons (2006-07–2008-09). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

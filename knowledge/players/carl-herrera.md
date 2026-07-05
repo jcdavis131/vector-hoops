@@ -36,6 +36,32 @@ Closest career shapes in the era-normalized vector space:
 - [[eric-montross|Eric Montross]] — cosine 0.84
 - [[herb-williams|Herb Williams]] — cosine 0.83
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 11.0 pts · 10.4 reb · 0.7 ast · 2.0 stl per 100 (1998-99).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.8σ)
+- Scoring load well below era (−1.4σ)
+
+**Comparables:**
+
+- [[daniel-ochefu|Daniel Ochefu]] '17 (87% similar)
+- [[jared-reiner|Jared Reiner]] '07 (87% similar)
+- [[nigel-hayes-davis|Nigel Hayes-Davis]] '26 (86% similar)
+- [[robert-whaley|Robert Whaley]] '06 (85% similar)
+- [[eric-montross|Eric Montross]] '97 (84% similar)
+- [[herb-williams|Herb Williams]] '98 (83% similar)
+
+**Career shape:** Charted 3 seasons (1996-97–1998-99). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

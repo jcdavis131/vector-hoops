@@ -46,6 +46,32 @@ Closest career shapes in the era-normalized vector space:
 - [[brian-cook|Brian Cook]] — cosine 0.75
 - [[dario-saric|Dario Saric]] — cosine 0.71
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 13.8 pts · 8.1 reb · 3.3 ast · 1.0 stl per 100 (2023-24).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−1.6σ)
+- On-court net impact well below era (−1.5σ)
+
+**Comparables:**
+
+- [[jordan-nwora|Jordan Nwora]] '21 (81% similar)
+- [[david-benoit|David Benoit]] '98 (79% similar)
+- [[andres-nocioni|Andres Nocioni]] '08 (76% similar)
+- [[austin-croshere|Austin Croshere]] '99 (76% similar)
+- [[brian-cook|Brian Cook]] '09 (75% similar)
+- [[dario-saric|Dario Saric]] '21 (71% similar)
+
+**Career shape:** Charted 13 seasons (2011-12–2023-24). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

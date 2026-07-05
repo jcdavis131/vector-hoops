@@ -43,6 +43,33 @@ Closest career shapes in the era-normalized vector space:
 - [[vincent-poirier|Vincent Poirier]] — cosine 0.78
 - [[isaiah-stewart|Isaiah Stewart]] — cosine 0.77
 
+## Scouting report
+
+**Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 19.8 pts · 15.1 reb · 5.5 ast · 2.7 blk per 100 (2011-12).
+
+**Strengths:**
+
+- Strong presence on the defensive glass (+1.7σ vs era)
+- Elite rim protection (+1.4σ vs era)
+- Relentless on the offensive glass (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Ball-hawking activity well below era (−1.1σ)
+
+**Comparables:**
+
+- [[pj-hall|PJ Hall]] '26 (81% similar)
+- [[mo-bamba|Mo Bamba]] '20 (81% similar)
+- [[bol-bol|Bol Bol]] '21 (81% similar)
+- [[zach-collins|Zach Collins]] '22 (79% similar)
+- [[vincent-poirier|Vincent Poirier]] '20 (78% similar)
+- [[isaiah-stewart|Isaiah Stewart]] '25 (77% similar)
+
+**Career shape:** Charted 10 seasons (2007-08–2016-17). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

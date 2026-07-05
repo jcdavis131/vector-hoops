@@ -37,6 +37,33 @@ Closest career shapes in the era-normalized vector space:
 - [[deyonta-davis|Deyonta Davis]] — cosine 0.89
 - [[yves-missi|Yves Missi]] — cosine 0.89
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 12.4 pts · 11.5 reb · 2.7 ast · 2.1 blk per 100 (2022-23).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+1.8σ vs era)
+- Elite rim protection (+1.4σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−2.8σ)
+- On-court net impact well below era (−1.8σ)
+
+**Comparables:**
+
+- [[khem-birch|Khem Birch]] '19 (94% similar)
+- [[freddie-gillespie|Freddie Gillespie]] '21 (92% similar)
+- [[taj-gibson|Taj Gibson]] '21 (90% similar)
+- [[dwayne-jones|Dwayne Jones]] '08 (90% similar)
+- [[deyonta-davis|Deyonta Davis]] '17 (89% similar)
+- [[yves-missi|Yves Missi]] '26 (89% similar)
+
+**Career shape:** Charted 4 seasons (2022-23–2025-26). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

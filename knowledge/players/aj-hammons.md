@@ -34,6 +34,33 @@ Closest career shapes in the era-normalized vector space:
 - [[yinka-dare|Yinka Dare]] — cosine 0.76
 - [[mo-bamba|Mo Bamba]] — cosine 0.74
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 14.7 pts · 11.0 reb · 1.2 ast · 4.0 blk per 100 (2016-17).
+
+**Strengths:**
+
+- Elite rim protection (+3.6σ vs era)
+- Knockdown three-point shooter (+1.6σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.4σ)
+- Ball-hawking activity well below era (−2.1σ)
+
+**Comparables:**
+
+- [[peyton-watson|Peyton Watson]] '23 (88% similar)
+- [[roy-rogers|Roy Rogers]] '97 (88% similar)
+- [[thon-maker|Thon Maker]] '20 (81% similar)
+- [[jonah-bolden|Jonah Bolden]] '19 (76% similar)
+- [[yinka-dare|Yinka Dare]] '97 (76% similar)
+- [[mo-bamba|Mo Bamba]] '20 (74% similar)
+
+**Career shape:** Charted 1 season (2016-17). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

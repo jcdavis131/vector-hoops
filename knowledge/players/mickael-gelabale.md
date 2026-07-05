@@ -36,6 +36,34 @@ Closest career shapes in the era-normalized vector space:
 - [[michael-curry|Michael Curry]] — cosine 0.86
 - [[robbie-hummel|Robbie Hummel]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 14.4 pts · 7.8 reb · 2.1 ast · 1.3 stl per 100 (2012-13).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.6σ vs era)
+- Reliable touch from the free-throw line (+1.1σ vs era)
+- Efficient finisher inside the arc (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−1.2σ)
+- Rim pressure (free-throw generation) well below era (−1.1σ)
+
+**Comparables:**
+
+- [[tony-snell|Tony Snell]] '21 (90% similar)
+- [[glenn-robinson-iii|Glenn Robinson III]] '21 (88% similar)
+- [[trenton-hassell|Trenton Hassell]] '04 (88% similar)
+- [[ira-newble|Ira Newble]] '01 (87% similar)
+- [[michael-curry|Michael Curry]] '05 (86% similar)
+- [[robbie-hummel|Robbie Hummel]] '14 (85% similar)
+
+**Career shape:** Charted 3 seasons (2006-07–2012-13). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

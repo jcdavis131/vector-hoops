@@ -40,6 +40,32 @@ Closest career shapes in the era-normalized vector space:
 - [[mark-pope|Mark Pope]] — cosine 0.83
 - [[anthony-tolliver|Anthony Tolliver]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a stretch big: lives beyond the arc, unusual range for the position.
+
+**Signature-season stat line:** 9.6 pts · 9.7 reb · 2.0 ast · 1.3 stl per 100 (2022-23).
+
+**Strengths:**
+
+- Rarely turns the ball over (−1.3σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−1.7σ)
+- Scoring load well below era (−1.6σ)
+
+**Comparables:**
+
+- [[yuta-watanabe|Yuta Watanabe]] '20 (88% similar)
+- [[semi-ojeleye|Semi Ojeleye]] '18 (87% similar)
+- [[johnny-furphy|Johnny Furphy]] '26 (85% similar)
+- [[dean-wade|Dean Wade]] '25 (85% similar)
+- [[mark-pope|Mark Pope]] '01 (83% similar)
+- [[anthony-tolliver|Anthony Tolliver]] '09 (82% similar)
+
+**Career shape:** Charted 7 seasons (2016-17–2022-23). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

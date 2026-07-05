@@ -40,6 +40,33 @@ Closest career shapes in the era-normalized vector space:
 - [[kevon-harris|Kevon Harris]] — cosine 0.82
 - [[julian-phillips|Julian Phillips]] — cosine 0.82
 
+## Scouting report
+
+**Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 24.1 pts · 6.4 reb · 3.2 ast · 2.4 stl per 100 (2015-16).
+
+**Strengths:**
+
+- Active hands, disrupts passing lanes (+1.4σ vs era)
+- High-volume three-point shooter (+1.3σ vs era)
+- Knockdown three-point shooter (+1.1σ vs era)
+
+**Areas of concern:**
+
+- Defensive rebounding well below era (−1.4σ)
+
+**Comparables:**
+
+- [[malcolm-hill|Malcolm Hill]] '22 (89% similar)
+- [[jamal-cain|Jamal Cain]] '23 (86% similar)
+- [[quincy-pondexter|Quincy Pondexter]] '18 (85% similar)
+- [[glenn-robinson-iii|Glenn Robinson III]] '21 (84% similar)
+- [[kevon-harris|Kevon Harris]] '23 (82% similar)
+- [[julian-phillips|Julian Phillips]] '26 (82% similar)
+
+**Career shape:** Charted 7 seasons (2014-15–2020-21). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

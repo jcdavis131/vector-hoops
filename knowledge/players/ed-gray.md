@@ -35,6 +35,33 @@ Closest career shapes in the era-normalized vector space:
 - [[jalen-green|Jalen Green]] — cosine 0.85
 - [[rashad-mccants|Rashad McCants]] — cosine 0.85
 
+## Scouting report
+
+**Play style:** SG · Three-Point Volume + Three-Point Accuracy. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots.
+
+**Signature-season stat line:** 23.1 pts · 4.4 reb · 1.9 ast · 1.9 stl per 100 (1998-99).
+
+**Strengths:**
+
+- Heavy shot volume, focal scoring option (+2.9σ vs era)
+- High-volume three-point shooter (+1.3σ vs era)
+
+**Areas of concern:**
+
+- Finishing efficiency well below era (−2.4σ)
+- On-court net impact well below era (−1.4σ)
+
+**Comparables:**
+
+- [[dajuan-wagner|Dajuan Wagner]] '03 (90% similar)
+- [[shaedon-sharpe|Shaedon Sharpe]] '26 (88% similar)
+- [[markus-howard|Markus Howard]] '22 (88% similar)
+- [[dion-glover|Dion Glover]] '00 (86% similar)
+- [[jalen-green|Jalen Green]] '26 (85% similar)
+- [[rashad-mccants|Rashad McCants]] '08 (85% similar)
+
+**Career shape:** Charted 2 seasons (1997-98–1998-99). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -34,6 +34,34 @@ Closest career shapes in the era-normalized vector space:
 - [[kevon-looney|Kevon Looney]] — cosine 0.92
 - [[dwayne-jones|Dwayne Jones]] — cosine 0.92
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 8.6 pts · 16.3 reb · 2.6 ast · 1.6 stl per 100 (2014-15).
+
+**Strengths:**
+
+- Relentless on the offensive glass (+2.7σ vs era)
+- Rarely turns the ball over (−1.2σ vs era)
+- Efficient finisher inside the arc (+1.0σ vs era)
+
+**Areas of concern:**
+
+- Shot volume well below era (−2.1σ)
+- Free-throw touch well below era (−1.9σ)
+
+**Comparables:**
+
+- [[corie-blount|Corie Blount]] '98 (95% similar)
+- [[michael-ruffin|Michael Ruffin]] '07 (93% similar)
+- [[greg-anderson|Greg Anderson]] '98 (92% similar)
+- [[michael-smith|Michael Smith]] '01 (92% similar)
+- [[kevon-looney|Kevon Looney]] '23 (92% similar)
+- [[dwayne-jones|Dwayne Jones]] '08 (92% similar)
+
+**Career shape:** Charted 1 season (2014-15). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

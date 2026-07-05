@@ -40,6 +40,33 @@ Closest career shapes in the era-normalized vector space:
 - [[tony-battie|Tony Battie]] — cosine 0.86
 - [[udonis-haslem|Udonis Haslem]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** PF · Offensive Glass + Defensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look.
+
+**Signature-season stat line:** 14.2 pts · 11.8 reb · 2.6 ast · 1.3 blk per 100 (2000-01).
+
+**Strengths:**
+
+- Rarely turns the ball over (−2.2σ vs era)
+- Strong net on-court impact (+1.3σ vs era)
+- Relentless on the offensive glass (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Three-point accuracy well below era (−1.4σ)
+
+**Comparables:**
+
+- [[mark-bradtke|Mark Bradtke]] '97 (91% similar)
+- [[a-c-green|A.C. Green]] '00 (90% similar)
+- [[lavoy-allen|Lavoy Allen]] '17 (89% similar)
+- [[p-j-brown|P.J. Brown]] '08 (87% similar)
+- [[tony-battie|Tony Battie]] '12 (86% similar)
+- [[udonis-haslem|Udonis Haslem]] '13 (86% similar)
+
+**Career shape:** Charted 7 seasons (1996-97–2003-04). Consistent Offensive Glass + Defensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

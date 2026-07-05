@@ -35,6 +35,32 @@ Closest career shapes in the era-normalized vector space:
 - [[william-cunningham|William Cunningham]] — cosine 0.85
 - [[dragan-bender|Dragan Bender]] — cosine 0.84
 
+## Scouting report
+
+**Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others.
+
+**Signature-season stat line:** 13.2 pts · 7.3 reb · 2.2 ast · 1.3 blk per 100 (2019-20).
+
+**Strengths:**
+
+- No standout statistical trait clears +1.0σ at his peak.
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.0σ)
+- Free-throw touch well below era (−1.6σ)
+
+**Comparables:**
+
+- [[daquan-jeffries|DaQuan Jeffries]] '24 (91% similar)
+- [[erik-murphy|Erik Murphy]] '14 (88% similar)
+- [[perry-jones-iii|Perry Jones III]] '13 (86% similar)
+- [[cedric-bozeman|Cedric Bozeman]] '07 (86% similar)
+- [[william-cunningham|William Cunningham]] '99 (85% similar)
+- [[dragan-bender|Dragan Bender]] '17 (84% similar)
+
+**Career shape:** Charted 2 seasons (2018-19–2019-20). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

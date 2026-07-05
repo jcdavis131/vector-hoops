@@ -35,6 +35,33 @@ Closest career shapes in the era-normalized vector space:
 - [[mitch-mcgary|Mitch McGary]] — cosine 0.86
 - [[hilton-armstrong|Hilton Armstrong]] — cosine 0.86
 
+## Scouting report
+
+**Play style:** Unlisted · Offensive Glass + Defensive Glass. Plays as a slashing wing: lives at the free-throw line, attacks closeouts.
+
+**Signature-season stat line:** 11.0 pts · 12.2 reb · 0.2 ast · 2.0 blk per 100 (2005-06).
+
+**Strengths:**
+
+- Efficient finisher inside the arc (+2.1σ vs era)
+- Strong presence on the defensive glass (+1.0σ vs era)
+
+**Areas of concern:**
+
+- On-court net impact well below era (−2.0σ)
+- Free-throw touch well below era (−2.0σ)
+
+**Comparables:**
+
+- [[eric-mobley|Eric Mobley]] '97 (89% similar)
+- [[ariel-hukporti|Ariel Hukporti]] '25 (89% similar)
+- [[duane-causwell|Duane Causwell]] '99 (87% similar)
+- [[ibou-badji|Ibou Badji]] '24 (86% similar)
+- [[mitch-mcgary|Mitch McGary]] '16 (86% similar)
+- [[hilton-armstrong|Hilton Armstrong]] '11 (86% similar)
+
+**Career shape:** Charted 2 seasons (2004-05–2005-06). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Offensive Glass + Defensive Glass identity.
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -41,6 +41,34 @@ Closest career shapes in the era-normalized vector space:
 - [[jalen-duren|Jalen Duren]] — cosine 0.92
 - [[chris-wilcox|Chris Wilcox]] — cosine 0.91
 
+## Scouting report
+
+**Play style:** C · Rim Protection + Offensive Glass. Plays as a rim-pressure big: lives at the line, never shoots threes.
+
+**Signature-season stat line:** 22.5 pts · 14.5 reb · 2.5 ast · 1.6 stl per 100 (2015-16).
+
+**Strengths:**
+
+- Draws contact, gets to the line often (+2.9σ vs era)
+- Strong presence on the defensive glass (+1.3σ vs era)
+- Relentless on the offensive glass (+1.2σ vs era)
+
+**Areas of concern:**
+
+- Free-throw touch well below era (−2.4σ)
+- Three-point accuracy well below era (−1.9σ)
+
+**Comparables:**
+
+- [[moses-brown|Moses Brown]] '23 (96% similar)
+- [[ben-handlogten|Ben Handlogten]] '04 (94% similar)
+- [[donnell-harvey|Donnell Harvey]] '02 (93% similar)
+- [[gary-trent|Gary Trent]] '01 (92% similar)
+- [[jalen-duren|Jalen Duren]] '26 (92% similar)
+- [[chris-wilcox|Chris Wilcox]] '13 (91% similar)
+
+**Career shape:** Charted 8 seasons (2008-09–2015-16). Consistent Rim Protection + Offensive Glass profile across his career.
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->
