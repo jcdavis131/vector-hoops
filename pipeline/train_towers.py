@@ -73,15 +73,17 @@ def family_slices(manifest) -> dict[str, list[int]]:
     return dict(fams)
 
 
-def adjacent_season_pairs(pids, seasons) -> list[tuple[int, int]]:
-    """(i, j) where the same PLAYER_ID appears in consecutive seasons."""
+def adjacent_season_pairs(pids, seasons, names=None) -> list[tuple[int, int]]:
+    """(i, j) where the same player appears in consecutive seasons."""
     def season_start(s: str) -> int:
         return int(s[:4])
-    by_pid: dict[int, list[tuple[int, int]]] = defaultdict(list)
+
+    by_key: dict[str | int, list[tuple[int, int]]] = defaultdict(list)
     for i, (pid, s) in enumerate(zip(pids, seasons)):
-        by_pid[int(pid)].append((season_start(str(s)), i))
+        key: str | int = str(names[i]) if names is not None else int(pid)
+        by_key[key].append((season_start(str(s)), i))
     pairs = []
-    for rows in by_pid.values():
+    for rows in by_key.values():
         rows.sort()
         for (y1, i1), (y2, i2) in zip(rows, rows[1:]):
             if y2 - y1 == 1:
@@ -176,7 +178,7 @@ def main() -> None:
     print(f"{len(Z)} rows, {Z.shape[1]} features, "
           f"{len(fams)} towers: { {k: len(v) for k, v in fams.items()} }")
 
-    pairs = adjacent_season_pairs(pids, seasons)
+    pairs = adjacent_season_pairs(pids, seasons, names)
     print(f"{len(pairs)} same-player adjacent-season positive pairs")
 
     sal_j = manifest["features"].index("SALARY_LOG")

@@ -51,6 +51,12 @@ V4_FEATURES: dict[str, str] = {
   # market (VH-108)
   "SALARY_LOG": "market",
   "SALARY_CAP_PCT": "market",
+  # team env (VH-107) — joined via roster_context teamId
+  "TM_PACE": "team",
+  "TM_OFF_RTG": "team",
+  "TM_DEF_RTG": "team",
+  "TM_NET_RTG": "team",
+  "TM_WIN_PCT": "team",
 }
 
 
@@ -129,6 +135,21 @@ def load_salary_log() -> dict[tuple[str, str], float]:
     return out
 
 
+def load_team_season_index() -> dict[tuple[str, int], dict]:
+    """(season, TEAM_ID) -> merged team_season row."""
+    out: dict[tuple[str, int], dict] = {}
+    for path in sorted(DATA_DIR.glob("team_season_*.json")):
+        if path.name == "team_season_manifest.json":
+            continue
+        season = path.stem.replace("team_season_", "")
+        rows = json.loads(path.read_text(encoding="utf-8"))
+        if not isinstance(rows, list):
+            continue
+        for row in rows:
+            out[(season, int(row["TEAM_ID"]))] = row
+    return out
+
+
 def era_z_append(
     Z: np.ndarray,
     M: np.ndarray,
@@ -190,6 +211,7 @@ def build_row_values(
     competition: dict,
     salary_cap: dict,
     salary_log: dict,
+    team_index: dict[tuple[str, int], dict],
 ) -> list[dict[str, float | None]]:
     rows: list[dict[str, float | None]] = []
     for name, season in zip(names, seasons):
@@ -198,6 +220,7 @@ def build_row_values(
         r = roster.get(key, {})
         c = career.get(key, {})
         comp = competition.get(key, {})
+        team_row = team_index.get((str(season), int(r["teamId"]))) if r.get("teamId") else {}
         rows.append({
             "ROSTER_MIN_RANK": r.get("ROSTER_MIN_RANK"),
             "ROSTER_USAGE_CROWD": r.get("ROSTER_USAGE_CROWD"),
@@ -215,6 +238,11 @@ def build_row_values(
             "CONF_STRENGTH": comp.get("CONF_STRENGTH"),
             "SALARY_CAP_PCT": salary_cap.get(nkey),
             "SALARY_LOG": salary_log.get(nkey),
+            "TM_PACE": team_row.get("PACE"),
+            "TM_OFF_RTG": team_row.get("OFF_RATING"),
+            "TM_DEF_RTG": team_row.get("DEF_RATING"),
+            "TM_NET_RTG": team_row.get("NET_RATING"),
+            "TM_WIN_PCT": team_row.get("WIN_PCT"),
         })
     return rows
 
@@ -242,13 +270,15 @@ def main() -> None:
     competition = load_competition_by_player_season()
     salary_cap = load_salary_cap_pct()
     salary_log = load_salary_log()
+    team_index = load_team_season_index()
 
     print(f"artifacts: roster={len(roster)} career={len(career)} "
           f"competition={len(competition)} salary_cap={len(salary_cap)} "
-          f"salary_log={len(salary_log)}")
+          f"salary_log={len(salary_log)} team_season={len(team_index)}")
 
     row_vals = build_row_values(
-        names, seasons, roster, career, competition, salary_cap, salary_log)
+        names, seasons, roster, career, competition,
+        salary_cap, salary_log, team_index)
     Z2, M2, man2 = era_z_append(Z, M, manifest, names, seasons, row_vals)
     covered = int((M2[:, Z.shape[1]:] > 0).any(axis=1).sum()) if Z2.shape[1] > Z.shape[1] else 0
     print(f"context merge: {Z.shape[1]} -> {Z2.shape[1]} features; "

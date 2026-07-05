@@ -225,6 +225,33 @@ def info_nce(za, zb, temp=0.08):
 # Evaluation
 # ---------------------------------------------------------------------------
 
+def season_start_year(season: str) -> int:
+    return int(str(season)[:4])
+
+
+def eval_split(season: str) -> str:
+    """Held-out split for adjacent-season pairs (target = next season)."""
+    y = season_start_year(season)
+    if y <= 2021:
+        return "train"
+    if y <= 2023:
+        return "val"
+    return "test"
+
+
+def filter_pairs_by_split(
+    pairs: np.ndarray, seasons: np.ndarray, split: str,
+) -> np.ndarray:
+    """Keep pairs whose target row (index b) falls in split."""
+    if len(pairs) == 0:
+        return pairs
+    keep = []
+    for a, b in pairs:
+        if eval_split(str(seasons[b])) == split:
+            keep.append((int(a), int(b)))
+    return np.array(keep, dtype=int) if keep else np.zeros((0, 2), int)
+
+
 def recall_at_k(E: np.ndarray, pairs: np.ndarray, k: int = 10) -> float | None:
     if len(pairs) == 0:
         return None
@@ -236,6 +263,14 @@ def recall_at_k(E: np.ndarray, pairs: np.ndarray, k: int = 10) -> float | None:
         top = np.argpartition(-sims, k)[:k]
         hits += int(b in top)
     return hits / len(sample)
+
+
+def transparent_baseline_embeddings(Z: np.ndarray, game_cols: list[int]) -> np.ndarray:
+    """L2-normalized 14-d game profile vectors for held-out baseline."""
+    G = Z[:, game_cols].astype(np.float64)
+    norms = np.linalg.norm(G, axis=1, keepdims=True)
+    G = G / np.maximum(norms, 1e-8)
+    return G.astype(np.float32)
 
 
 def classification_acc(logits: np.ndarray, labels: np.ndarray,
@@ -396,6 +431,16 @@ def main() -> None:
     pos_acc = classification_acc(pos_logits, positions, positions >= 0)
     purity = cross_era_archetype_purity(E, clusters, seasons)
 
+    G_base = transparent_baseline_embeddings(Z, game_cols)
+    held_out = {}
+    for split in ("train", "val", "test", "all"):
+        sub = pair_arr if split == "all" else filter_pairs_by_split(pair_arr, seasons, split)
+        held_out[split] = {
+            "pairs": int(len(sub)),
+            "recall_at_10_mtnn": recall_at_k(E, sub, k=10),
+            "recall_at_10_transparent_14d": recall_at_k(G_base, sub, k=10),
+        }
+
     report = {
         "trained": time.strftime("%Y-%m-%d %H:%M"),
         "model": "mtnn_v3",
@@ -406,12 +451,13 @@ def main() -> None:
         "position_labeled": int((positions >= 0).sum()),
         "final_loss": history[-1] if history else None,
         "recall_at_10_same_player_next_season": recall,
+        "held_out_recall": held_out,
         "archetype_top1_acc": arch_acc,
         "position_top1_acc": pos_acc,
         "cross_era_archetype_neighbor_purity_at_20": purity,
         "promotion_gate": (
-            "Promote only if recall@10 beats transparent 14-d baseline AND "
-            "archetype_top1_acc >= 0.55 on held-out sanity (not auto-promoted)."
+            "Promote only if held-out val/test recall@10 beats transparent 14-d "
+            "baseline by >=0.05 AND archetype_top1_acc >= 0.55 (not auto-promoted)."
         ),
     }
     (DATA_DIR / "mtnn_report.json").write_text(
