@@ -250,6 +250,16 @@ main{
   color: var(--data-orange);
 }
 
+/* donor name shown openly in tiles 1 + 2 — the mystery is now the closest
+   real match (the target tile's "?"), not the donors themselves. */
+.vh-equation__tile-name{
+  font-weight: 800;
+  font-size: 14px;
+  color: var(--ink);
+  margin-bottom: 4px;
+  line-height: 1.3;
+}
+
 @media (max-width: 479px){
   .vh-equation{ flex-direction: column; align-items: stretch; }
   .vh-equation__op{ padding: 2px 0; }
@@ -342,6 +352,157 @@ main{
   color: var(--warm);
 }
 
+/* ---------- typeahead obviousness: glyph + chevron + focus hint + kbd caption ---------- */
+
+.vh-input--search{ padding-left: 36px; padding-right: 32px; }
+
+.vh-autocomplete__glyph{
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 15px;
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.vh-autocomplete__chevron{
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%) rotate(0deg);
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--ink-muted);
+  pointer-events: none;
+  transition: opacity 0.12s ease;
+}
+.vh-autocomplete.has-value .vh-autocomplete__chevron{ opacity: 0; }
+
+.vh-autocomplete__hint{
+  margin: 6px 0 0;
+  font-size: 12px;
+  font-style: italic;
+  color: var(--ink-muted);
+}
+
+.vh-autocomplete__kbd{
+  margin: 4px 0 0;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: var(--ink-muted);
+  display: none;
+  flex: 1 1 100%;
+}
+@media (hover: hover) and (pointer: fine){
+  .vh-autocomplete__kbd{ display: block; }
+}
+
+/* richer suggestion rows: bold name + season + position chip, so the
+   panel reads as a menu of real player-seasons, not a bare list of text. */
+.vh-suggestions__row{
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+.vh-suggestions__name{ font-weight: 800; flex: 1 1 auto; }
+.vh-suggestions__season{
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+.vh-suggestions li.active .vh-suggestions__season,
+.vh-suggestions li:hover .vh-suggestions__season{ color: var(--paper); opacity: 0.85; }
+.vh-suggestions__chip{
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  color: var(--ink-soft);
+  background: var(--paper);
+  border: 1px solid var(--hairline);
+  border-radius: 4px;
+  padding: 1px 6px;
+  white-space: nowrap;
+}
+.vh-suggestions li.active .vh-suggestions__chip,
+.vh-suggestions li:hover .vh-suggestions__chip{
+  background: transparent;
+  border-color: rgba(250,250,248,0.4);
+  color: var(--paper);
+}
+
+/* ---------- Build-a-Chimera donor picker (Free Play) ---------- */
+
+.vh-picker-card{ display: flex; flex-direction: column; gap: 12px; }
+
+.vh-slots-row{
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+@media (min-width: 600px){
+  .vh-slots-row{ flex-direction: row; align-items: stretch; }
+}
+
+.vh-slot-card{
+  flex: 1 1 260px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.vh-slot-card__head{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.vh-slot-card__title{
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ink);
+}
+.vh-slot-card__badge{
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #6b5200;
+  background: var(--identified);
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+  padding: 2px 8px;
+}
+
+.vh-picker-error{
+  margin: 0;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--cold);
+}
+
+/* ---------- honest state-migration note (v3 bump) ---------- */
+
+.vh-reset-note{
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  background: var(--paper);
+  border: 2px dashed var(--hairline);
+  border-radius: var(--radius);
+  padding: 10px 14px;
+  margin: 0;
+}
+
 .vh-btn{
   appearance: none;
   border: 2px solid var(--ink);
@@ -372,6 +533,37 @@ main{
 }
 
 /* ---------- result card (scoreboard + courts + breakdown) ---------- */
+
+.vh-result__top{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.vh-map-thumb-btn{
+  appearance: none;
+  border: 2px solid var(--ink);
+  background: var(--panel-dark);
+  border-radius: 8px;
+  padding: 0;
+  width: 120px;
+  height: 120px;
+  min-width: 44px;
+  min-height: 44px;
+  cursor: pointer;
+  box-shadow: var(--shadow-block-sm);
+  overflow: hidden;
+  flex: 0 0 auto;
+}
+.vh-map-thumb-btn:hover{ transform: translate(-1px, -1px); box-shadow: 4px 4px 0 var(--ink); }
+.vh-map-thumb-btn:active{ transform: translate(2px, 2px); box-shadow: none; }
+.vh-map-thumb{
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+}
 
 .vh-scoreboard{
   text-align: center;
@@ -567,6 +759,16 @@ main{
   line-height: 1.5;
 }
 .vh-guess__line b{ color: var(--ink); font-weight: 700; }
+
+/* secondary, per-half read on each guess row in history — kept for context,
+   subordinate to the primary full-blend % (and the Triangulation block,
+   which shows this same read for the latest guess only). */
+.vh-guess__row-halves{
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--ink-muted);
+  margin: 4px 0 0;
+}
 
 /* ---------- reveal ---------- */
 
@@ -880,6 +1082,63 @@ main{
 .vh-guess__line--quick{
   font-weight: 700;
   color: var(--ink);
+}
+
+/* ---------- triangulation block (3D-map anchors, mirrored as numbers) ----------
+   Same three glyphs as the map: solid square (stats donor), hollow square
+   (shooting donor), diamond (the mashup) — map and card read as one system.
+   Percentages here are the exact same cosines used everywhere else
+   (entry.halves.stats / entry.halves.shooting / entry.sim) — one source
+   of truth, never recomputed differently for the map vs. the card. */
+
+.vh-triangulation{
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px 4px;
+  border-top: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--hairline);
+  margin-bottom: 4px;
+}
+.vh-triangulation__row{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.vh-triangulation__label{
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ink-soft);
+  flex: 1 1 auto;
+}
+.vh-triangulation__pct{
+  font-family: var(--mono);
+  font-weight: 800;
+  font-size: 13px;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.vh-tri-icon{
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  flex: 0 0 auto;
+}
+.vh-tri-icon--stats{
+  background: var(--data-orange);
+  border: 1.5px solid var(--ink);
+}
+.vh-tri-icon--shooting{
+  background: transparent;
+  border: 1.5px solid var(--data-orange);
+}
+.vh-tri-icon--blend{
+  background: var(--data-orange);
+  border: 1.5px solid var(--ink);
+  transform: rotate(45deg);
+  width: 8px;
+  height: 8px;
 }
 
 /* ---------- the deadline mode ---------- */

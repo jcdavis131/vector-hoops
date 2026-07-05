@@ -52,7 +52,7 @@
     </div>
     <div class="vh-stat">
       <span class="vh-stat__num" id="guesses-left-num">6</span>
-      <span class="vh-stat__label">left</span>
+      <span class="vh-stat__label" id="guesses-left-label">left</span>
     </div>
   </div>
   <button class="vh-help-btn" id="stats-btn" type="button" aria-haspopup="dialog" aria-controls="stats-modal" title="Stats">📊</button>
@@ -85,7 +85,78 @@
 
     <div class="vh-practice-banner" id="chimera-practice-banner" hidden>
       <span class="vh-practice-banner__text">PRACTICE &mdash; doesn't touch your daily streak</span>
-      <button class="vh-btn vh-btn--accent" id="chimera-new-btn" type="button">New chimera</button>
+      <button class="vh-btn vh-btn--accent" id="chimera-new-btn" type="button">Change donors</button>
+    </div>
+
+    <p class="vh-reset-note" id="reset-note" hidden></p>
+
+    <div class="vh-card vh-picker-card" id="picker-card" hidden>
+      <div class="vh-prompt__eyebrow">Build-a-Chimera &mdash; pick two donors</div>
+      <p class="vh-prompt__text">Pick a Stats Player (counting stats: scoring &middot; boards &middot; dimes &middot; defense)
+        and a Shooting Player (shooting &amp; impact). We'll fuse them into a blend, then you guess the real
+        player-season that plays closest to it.</p>
+
+      <div class="vh-slots-row">
+        <div class="vh-card vh-slot-card" id="picker-card-stats" data-slot="stats">
+          <div class="vh-slot-card__head">
+            <span class="vh-slot-card__title">Pick your Stats Player</span>
+            <span class="vh-slot-card__badge" id="picker-badge-stats" hidden>Picked</span>
+          </div>
+          <div class="vh-autocomplete" id="picker-stats-autocomplete">
+            <span class="vh-autocomplete__glyph" aria-hidden="true">&#128269;</span>
+            <input
+              type="text"
+              id="picker-stats-input"
+              class="vh-input vh-input--search"
+              placeholder="Start typing any player&hellip;"
+              autocomplete="off"
+              autocorrect="off"
+              autocapitalize="off"
+              spellcheck="false"
+              aria-autocomplete="list"
+              aria-controls="picker-stats-suggestions"
+              aria-expanded="false"
+              disabled
+            >
+            <span class="vh-autocomplete__chevron" aria-hidden="true">&#8964;</span>
+            <ul class="vh-suggestions" id="picker-stats-suggestions" role="listbox" hidden></ul>
+            <p class="vh-autocomplete__hint" id="picker-stats-focus-hint" hidden>e.g. Nikola Joki&#263; &mdash; then pick a season</p>
+          </div>
+          <p class="vh-autocomplete__kbd">&uarr;&darr; to browse &middot; Enter to pick</p>
+        </div>
+
+        <div class="vh-card vh-slot-card" id="picker-card-shooting" data-slot="shooting">
+          <div class="vh-slot-card__head">
+            <span class="vh-slot-card__title">Pick your Shooting Player</span>
+            <span class="vh-slot-card__badge" id="picker-badge-shooting" hidden>Picked</span>
+          </div>
+          <div class="vh-autocomplete" id="picker-shooting-autocomplete">
+            <span class="vh-autocomplete__glyph" aria-hidden="true">&#128269;</span>
+            <input
+              type="text"
+              id="picker-shooting-input"
+              class="vh-input vh-input--search"
+              placeholder="Start typing any player&hellip;"
+              autocomplete="off"
+              autocorrect="off"
+              autocapitalize="off"
+              spellcheck="false"
+              aria-autocomplete="list"
+              aria-controls="picker-shooting-suggestions"
+              aria-expanded="false"
+              disabled
+            >
+            <span class="vh-autocomplete__chevron" aria-hidden="true">&#8964;</span>
+            <ul class="vh-suggestions" id="picker-shooting-suggestions" role="listbox" hidden></ul>
+            <p class="vh-autocomplete__hint" id="picker-shooting-focus-hint" hidden>e.g. Nikola Joki&#263; &mdash; then pick a season</p>
+          </div>
+          <p class="vh-autocomplete__kbd">&uarr;&darr; to browse &middot; Enter to pick</p>
+        </div>
+      </div>
+
+      <p class="vh-picker-error" id="picker-error" role="status" hidden></p>
+
+      <button class="vh-btn vh-btn--accent" id="picker-randomize-btn" type="button" disabled>Randomize</button>
     </div>
 
     <div class="vh-play-col" id="chimera-play-col">
@@ -100,11 +171,13 @@
       <div class="vh-card vh-prompt" id="prompt-card" hidden>
         <div class="vh-prompt__eyebrow" id="puzzle-number">Vector Hoops #—</div>
         <div class="vh-equation" id="equation-row">
-          <div class="vh-equation__tile">
+          <div class="vh-equation__tile" id="equation-tile-a">
+            <div class="vh-equation__tile-name" id="equation-name-a">&mdash;</div>
             <div class="vh-equation__tile-label">counting stats: scoring &middot; boards &middot; dimes &middot; defense</div>
           </div>
           <div class="vh-equation__op" aria-hidden="true">+</div>
-          <div class="vh-equation__tile">
+          <div class="vh-equation__tile" id="equation-tile-b">
+            <div class="vh-equation__tile-name" id="equation-name-b">&mdash;</div>
             <div class="vh-equation__tile-label">shooting &amp; impact</div>
           </div>
           <div class="vh-equation__op" aria-hidden="true">=</div>
@@ -113,7 +186,7 @@
           </div>
         </div>
         <button type="button" class="vh-equation-chip" id="equation-chip" hidden>
-          <span id="equation-chip-text">Counting + Shooting/Impact = ?</span>
+          <span id="equation-chip-text">&mdash; + &mdash; = ?</span>
           <span class="vh-equation-chip__hint">tap to expand</span>
         </button>
         <p class="vh-prompt__text vh-visually-hidden" id="prompt-text">Loading today's Chimera&hellip;</p>
@@ -123,11 +196,12 @@
 
       <div class="vh-card vh-guessbar" id="guessbar-card" hidden>
         <div class="vh-autocomplete" id="chimera-autocomplete">
+          <span class="vh-autocomplete__glyph" aria-hidden="true">&#128269;</span>
           <input
             type="text"
             id="chimera-input"
-            class="vh-input"
-            placeholder="Type a player-season, e.g. Kobe Bryant (2005-06)"
+            class="vh-input vh-input--search"
+            placeholder="Start typing any player&hellip;"
             autocomplete="off"
             autocorrect="off"
             autocapitalize="off"
@@ -137,9 +211,12 @@
             aria-expanded="false"
             disabled
           >
+          <span class="vh-autocomplete__chevron" aria-hidden="true">&#8964;</span>
           <ul class="vh-suggestions" id="chimera-suggestions" role="listbox" hidden></ul>
+          <p class="vh-autocomplete__hint" id="chimera-focus-hint" hidden>e.g. Nikola Joki&#263; &mdash; then pick a season</p>
         </div>
         <button class="vh-btn vh-btn--primary" id="chimera-submit" disabled>Guess</button>
+        <p class="vh-autocomplete__kbd">&uarr;&darr; to browse &middot; Enter to pick</p>
         <p class="vh-duplicate-warning" id="duplicate-warning" role="status" hidden></p>
       </div>
 
@@ -149,10 +226,35 @@
       </div>
 
       <div class="vh-card vh-result" id="result-card" hidden>
-        <div class="vh-scoreboard" id="scoreboard">
-          <div class="vh-scoreboard__pct" id="scoreboard-pct">0%</div>
-          <div class="vh-scoreboard__sub">match on last guess</div>
+        <div class="vh-result__top">
+          <div class="vh-scoreboard" id="scoreboard">
+            <div class="vh-scoreboard__pct" id="scoreboard-pct">0%</div>
+            <div class="vh-scoreboard__sub">match on last guess</div>
+          </div>
+
+          <button type="button" class="vh-map-thumb-btn" id="map-thumb-btn" title="Open the 3D triangulation map" hidden>
+            <canvas id="map-thumb" class="vh-map-thumb" width="120" height="120" aria-hidden="true"></canvas>
+          </button>
         </div>
+
+        <div class="vh-triangulation" id="triangulation-block" hidden>
+          <div class="vh-triangulation__row">
+            <span class="vh-tri-icon vh-tri-icon--stats" aria-hidden="true"></span>
+            <span class="vh-triangulation__label">vs Stats Donor</span>
+            <span class="vh-triangulation__pct" id="tri-stats-pct">&mdash;</span>
+          </div>
+          <div class="vh-triangulation__row">
+            <span class="vh-tri-icon vh-tri-icon--shooting" aria-hidden="true"></span>
+            <span class="vh-triangulation__label">vs Shooting Donor</span>
+            <span class="vh-triangulation__pct" id="tri-shooting-pct">&mdash;</span>
+          </div>
+          <div class="vh-triangulation__row">
+            <span class="vh-tri-icon vh-tri-icon--blend" aria-hidden="true"></span>
+            <span class="vh-triangulation__label">vs The Mashup</span>
+            <span class="vh-triangulation__pct" id="tri-blend-pct">&mdash;</span>
+          </div>
+        </div>
+        <p class="vh-visually-hidden" id="triangulation-sr-summary"></p>
 
         <p class="vh-story" id="story-caption"></p>
         <p class="vh-guess__line vh-guess__line--quick" id="quick-coaching-line"></p>
@@ -223,7 +325,7 @@
         </div>
         <div class="vh-sheet__body">
           <div class="vh-map-wrap">
-            <canvas id="hoops-map" class="vh-map" width="600" height="600" aria-label="3D starfield of all player-seasons colored by position, with the Chimera target marker and your guesses pinned"></canvas>
+            <canvas id="hoops-map" class="vh-map" width="600" height="600" aria-label="3D starfield of all player-seasons colored by position, with the Stats Donor (solid square), Shooting Donor (hollow square), the Chimera blend (diamond), your guesses pinned, and triangulation lines from your latest guess to all three"></canvas>
             <button class="vh-map-pause" id="map-pause-btn" type="button" title="Pause rotation">Pause</button>
             <button class="vh-map-color" id="map-color-btn" type="button" title="Toggle dot coloring">Color: position</button>
             <div class="vh-map-axes" id="map-axes">PC1 / PC2 / PC3 of the era-normalized stat space</div>
@@ -420,11 +522,11 @@
   <div class="vh-modal" id="help-modal" role="dialog" aria-modal="true" aria-labelledby="help-title">
     <h2 id="help-title">How to play</h2>
     <ol class="vh-modal__list">
-      <li>Every day we fuse two real player-seasons: one donates the counting stats, the other the shooting &amp; impact profile. Name the real season that plays most like the blend.</li>
-      <li>Guess any player-season; you get a % match, a court comparison, and directional coaching in sigmas.</li>
-      <li>92%+ match &mdash; or naming either component &mdash; wins. 6 guesses. New chimera at midnight UTC.</li>
-      <li>Hints arrive on guesses 3 and 5 (Daily): a position-group chip, then an archetype-name chip. Free Play reveals both immediately &mdash; it's practice.</li>
-      <li>Free Play (all four modes) is unlimited practice: it never touches your daily streaks or stats.</li>
+      <li>Every day we fuse two real player-seasons, shown right in the equation: one donates the counting stats, the other the shooting &amp; impact profile. Your job is to guess the real player-season that plays <i>closest</i> to that blend &mdash; the donors are given, the closest match is the mystery.</li>
+      <li>Guess any player-season; you get a % match, a court comparison, and directional coaching in sigmas (plus a secondary read on how you matched each half).</li>
+      <li>Guessing the single closest real match in the whole player pool (excluding the two donors) is a PERFECT MATCH. Any guess at 92%+ also wins &mdash; close enough to call. 6 guesses. New chimera at midnight UTC.</li>
+      <li>Hints arrive on guesses 3 and 5 (Daily): a position-group chip, then an archetype-name chip &mdash; both about the true closest match, not the donors (you already know those). Free Play reveals both immediately &mdash; it's practice.</li>
+      <li>Free Play (Chimera) is <b>Build-a-Chimera</b>: pick your own Stats Player and Shooting Player (or hit Randomize), then guess the closest real match with unlimited attempts. Other modes' Free Play is unlimited practice too &mdash; none of it touches your daily streaks or stats.</li>
       <li><b>The Deadline:</b> a real midseason mover's per-36/plus-minus swing is shown; call Thrived or Cratered. 5 rounds a day.</li>
       <li><b>Fader or Finisher:</b> a real player-season's first-half per-36 rate is shown; call FINISHED STRONGER or FADED for the second half. 5 rounds a day.</li>
       <li><b>Career Arc:</b> one player's charted seasons appear as unlabeled sigma-bar cards, no years shown. Tap them in the order you think they happened, oldest to newest, then submit &mdash; score is how many landed in the right slot.</li>
