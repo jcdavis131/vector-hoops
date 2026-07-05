@@ -17,6 +17,7 @@
   var DEADLINE_URL = 'assets/deadline.json';
   var FADERFINISHER_URL = 'assets/faderfinisher.json';
   var CHEMISTRY_URL = 'assets/chemistry.json';
+  var PIVOTS_URL = 'assets/pivots.json';
   var ARCHETYPE_TIME_URL = 'assets/archetypes_time.json';
   var EPOCH_DATE = '2026-07-01'; // puzzle #1
   // v4: THREE-PART ANSWERS. The equation itself is three simultaneous
@@ -43,6 +44,9 @@
   var LS_KEY_CHEM_COUNTER = 'vectorHoops.chem.counter';
   var LS_KEY_CHEM_DAILY = 'vectorHoops.chem.daily.v1';
   var LS_KEY_CHEM_PRACTICE = 'vectorHoops.chem.practice';
+  var LS_KEY_PIVOT_COUNTER = 'vectorHoops.pivot.counter';
+  var LS_KEY_PIVOT_DAILY = 'vectorHoops.pivot.daily.v1';
+  var LS_KEY_PIVOT_PRACTICE = 'vectorHoops.pivot.practice';
   var LS_KEY_SEEN_HELP = 'vectorHoops.seenHelp';
   var LS_KEY_LB_PREFIX = 'vectorHoops.lbSubmitted.'; // + game + '.' + day
   var LS_KEY_LB_LAST_GAME = 'vectorHoops.lastPlayedGame';
@@ -51,6 +55,7 @@
   var ARC_CARD_COUNT = 5;
   var ARC_MIN_SEASONS = 5;
   var CHEM_ROUNDS_PER_RUN = 5;
+  var PIVOT_ROUNDS_PER_RUN = 5;
   var A_COUNT = 7; // first 7 dims come from player A, last 7 from player B
   // GitHub repo/branch + dossier markdown fetch/render now live in
   // assets/dossier.js (shared with wiki.html) — aliased below.
@@ -388,7 +393,7 @@
     if (ch.score) {
       parts.push('scored <b>' + escapeHtml(String(ch.score)) + '</b>');
     }
-    var modeNames = { ch: 'Chimera', dl: 'Deadline', ff: 'Fader or Finisher', arc: 'Career Arc', cm: 'Best Teammate' };
+    var modeNames = { ch: 'Chimera', dl: 'Deadline', ff: 'Fader or Finisher', arc: 'Career Arc', cm: 'Best Teammate', pv: 'The Pivot' };
     var modeLabel = modeNames[ch.mode] || 'Vector Hoops';
     els.challengeBannerText.innerHTML =
       (parts.length ? parts.join(' ') + ' on ' : '') + escapeHtml(modeLabel) +
@@ -447,11 +452,16 @@
       switchMode('chem');
       chemRuns.daily = null;
       switchChemMode('daily');
+    } else if (ch.mode === 'pv' && PIVOT_POOL) {
+      if (ch.date && ch.date !== TODAY) CHALLENGE_PLAY_DATE = ch.date;
+      switchMode('pivot');
+      pivotRuns.daily = null;
+      switchPivotMode('daily');
     }
   }
 
   function applyDeepLinkMode(ch) {
-    var map = { dl: 'deadline', ff: 'fader', arc: 'arc', cm: 'chem', wi: 'whatif' };
+    var map = { dl: 'deadline', ff: 'fader', arc: 'arc', cm: 'chem', wi: 'whatif', pv: 'pivot' };
     var panel = map[ch.mode];
     if (!panel) return;
     switchMode(panel);
@@ -478,6 +488,7 @@
     if (ch.mode === 'arc') return !!ARC_INDEX;
     if (ch.mode === 'cm') return !!(CHEM_POOL && CHEM_POOL.length);
     if (ch.mode === 'wi') return !!DATA;
+    if (ch.mode === 'pv') return !!(PIVOT_POOL && PIVOT_POOL.length);
     return false;
   }
 
@@ -4886,14 +4897,421 @@
 
   var whatifInitialized = false;
 
+  // ---------------------------------------------------------------------
+  // THE PIVOT: a real current-roster team-season + "who has the most
+  // measured upside in an ADJACENT role" — every candidate's own path
+  // carries the REAL historical mean PLUS_MINUS-z swing for players who
+  // made that exact archetype-to-archetype pivot (assets/pivots.json's
+  // `paths`, n>=8 shown), plus a name+seasons example ("the receipts").
+  // Structurally the same 5-round Daily Set / Free Play shape as
+  // Chemistry, but a ranked pick (2/1/0 pts against the full candidate
+  // order) instead of a 4-way multiple choice. Unranked v1: the
+  // leaderboard's game enum doesn't include "pivot" yet, so results never
+  // post — same doctrine as Chemistry/What-If Lab at launch.
+  //
+  // Ranking rule: sort a team-season's candidates by path.meanDPMz
+  // descending, ties kept in the JSON's own order. This always reproduces
+  // pivots.json's own `answer` field (independently re-derived here, not
+  // trusted blind — verified against all 90 shipped team-seasons at
+  // authoring time: zero mismatches).
+  // ---------------------------------------------------------------------
+
+  var PIVOTS = null;                  // parsed pivots.json
+  var PIVOT_POOL = null;              // pivots.json's teams array (90 team-seasons)
+  var PIVOT_ADJ_BY_ARCHETYPE = null;  // { archetype: [{archetype,similarity} x3] } from pivots.json's adjacency
+  var activePivotMode = 'daily';      // 'daily' | 'free'
+  var pivotRuns = { daily: null, free: null }; // { rounds, idx, score }
+  var PIVOT_STATE = null;             // persisted Daily Set streak/history — LS_KEY_PIVOT_DAILY
+  var PIVOT_PRACTICE_STATS = null;    // persisted Free Play casual stats — LS_KEY_PIVOT_PRACTICE
+
+  function buildPivotAdjacencyIndex() {
+    var idx = {};
+    (PIVOTS.adjacency || []).forEach(function (entry) { idx[entry.archetype] = entry.adjacent; });
+    PIVOT_ADJ_BY_ARCHETYPE = idx;
+  }
+
+  function loadPivotCounter() {
+    var n = 0;
+    try {
+      var raw = localStorage.getItem(LS_KEY_PIVOT_COUNTER);
+      n = raw ? (parseInt(raw, 10) || 0) : 0;
+    } catch (e) { n = 0; }
+    return n;
+  }
+
+  function savePivotCounter(n) {
+    try { localStorage.setItem(LS_KEY_PIVOT_COUNTER, String(n)); } catch (e) { /* storage unavailable */ }
+  }
+
+  function loadPivotDailyState() {
+    var raw = null;
+    try { raw = localStorage.getItem(LS_KEY_PIVOT_DAILY); } catch (e) { raw = null; }
+    var s = { streak: 0, lastPlayDate: null, days: {}, totalSets: 0, totalScoreSum: 0 };
+    if (raw) {
+      try {
+        var parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === 'object') {
+          s.streak = parsed.streak || 0;
+          s.lastPlayDate = parsed.lastPlayDate || null;
+          s.days = parsed.days || {};
+          s.totalSets = parsed.totalSets || 0;
+          s.totalScoreSum = parsed.totalScoreSum || 0;
+        }
+      } catch (e) { /* corrupt, fall back to default */ }
+    }
+    if (!s.days[TODAY]) s.days[TODAY] = { done: false, score: null };
+    return s;
+  }
+
+  function savePivotDailyState() {
+    try { localStorage.setItem(LS_KEY_PIVOT_DAILY, JSON.stringify(PIVOT_STATE)); } catch (e) { /* storage unavailable */ }
+  }
+
+  function pivotDailyToday() {
+    return PIVOT_STATE.days[TODAY];
+  }
+
+  function computePivotDailyStats() {
+    return {
+      streak: PIVOT_STATE.streak,
+      totalSets: PIVOT_STATE.totalSets,
+      avgScore: PIVOT_STATE.totalSets ? (PIVOT_STATE.totalScoreSum / PIVOT_STATE.totalSets) : 0
+    };
+  }
+
+  function loadPivotPracticeStats() {
+    var raw = null;
+    try { raw = localStorage.getItem(LS_KEY_PIVOT_PRACTICE); } catch (e) { raw = null; }
+    var s = { played: 0, totalScoreSum: 0 };
+    if (raw) {
+      try {
+        var parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === 'object') {
+          s.played = parsed.played || 0;
+          s.totalScoreSum = parsed.totalScoreSum || 0;
+        }
+      } catch (e) { /* corrupt, fall back to default */ }
+    }
+    return s;
+  }
+
+  function savePivotPracticeStats() {
+    try { localStorage.setItem(LS_KEY_PIVOT_PRACTICE, JSON.stringify(PIVOT_PRACTICE_STATS)); } catch (e) { /* storage unavailable */ }
+  }
+
+  // { origIdx -> 0-based rank } for one team-season's candidates, sorted by
+  // path.meanDPMz descending (ties keep the JSON's own order). Rank 0 is
+  // "the answer" — the correct pick.
+  function rankPivotCandidates(teamEntry) {
+    var withIdx = teamEntry.candidates.map(function (c, i) { return { c: c, i: i }; });
+    withIdx.sort(function (x, y) {
+      var d = y.c.path.meanDPMz - x.c.path.meanDPMz;
+      return d !== 0 ? d : (x.i - y.i);
+    });
+    var rankByIdx = {};
+    withIdx.forEach(function (entry, rank) { rankByIdx[entry.i] = rank; });
+    return rankByIdx;
+  }
+
+  function buildPivotRound(rng) {
+    var idx = Math.floor(rng() * PIVOT_POOL.length);
+    var teamEntry = PIVOT_POOL[idx];
+    var rankByIdx = rankPivotCandidates(teamEntry);
+    var displayOrder = seededShuffle(rng, teamEntry.candidates.map(function (_, i) { return i; }));
+    return {
+      teamEntry: teamEntry,
+      rankByIdx: rankByIdx,
+      displayOrder: displayOrder,
+      answered: false,
+      pickedIdx: null,
+      points: 0
+    };
+  }
+
+  function buildPivotDailyRounds() {
+    var rng = seededRng('vector-hoops:pivot-daily:' + playDate());
+    var rounds = [];
+    for (var i = 0; i < PIVOT_ROUNDS_PER_RUN; i++) rounds.push(buildPivotRound(rng));
+    return rounds;
+  }
+
+  function buildPivotFreeRounds() {
+    var counter = loadPivotCounter();
+    var rounds = [];
+    for (var i = 0; i < PIVOT_ROUNDS_PER_RUN; i++) {
+      rounds.push(buildPivotRound(seededRng('vector-hoops:pivot:' + counter)));
+      counter++;
+    }
+    savePivotCounter(counter);
+    return rounds;
+  }
+
+  function activePivotRun() {
+    return pivotRuns[activePivotMode];
+  }
+
+  function startPivotRun(mode) {
+    activePivotMode = mode;
+    if (mode === 'daily') {
+      pivotRuns.daily = { rounds: buildPivotDailyRounds(), idx: 0, score: 0 };
+    } else {
+      pivotRuns.free = { rounds: buildPivotFreeRounds(), idx: 0, score: 0 };
+    }
+    els.pivotFinal.hidden = true;
+    renderPivotRound();
+  }
+
+  function renderPivotHeader() {
+    var isDaily = activePivotMode === 'daily';
+    els.pivotEyebrow.textContent = isDaily
+      ? 'The Pivot — Daily Set #' + puzzleNumber(TODAY)
+      : 'The Pivot — Free Play (practice)';
+    els.pivotStreakWrap.hidden = !isDaily;
+    if (isDaily) els.pivotStreakNum.textContent = String(PIVOT_STATE.streak);
+    els.pivotPracticeBanner.hidden = isDaily;
+  }
+
+  function pivotArchetypeChipHtml(label) {
+    return '<span class="vh-hint-chip vh-pivot-row__chip">' + escapeHtml(label) + '</span>';
+  }
+
+  function renderPivotRound() {
+    var run = activePivotRun();
+    var round = run.rounds[run.idx];
+    var team = round.teamEntry;
+    els.pivotRoundNum.textContent = String(run.idx + 1);
+    els.pivotScoreNum.textContent = String(run.score);
+    els.pivotTeamLabel.textContent = team.season + ' ' + team.team;
+    els.pivotVerdictWrap.hidden = true;
+    els.pivotRows.innerHTML = '';
+    round.displayOrder.forEach(function (origIdx) {
+      var c = team.candidates[origIdx];
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'vh-pivot-row';
+      btn.innerHTML = '<span class="vh-pivot-row__name">' + escapeHtml(c.name) + '</span>' + pivotArchetypeChipHtml(c.current);
+      btn.addEventListener('click', function () { pickPivotCandidate(origIdx); });
+      els.pivotRows.appendChild(btn);
+    });
+    renderPivotHeader();
+    track('vh-pivot-round', { round: run.idx + 1, mode: activePivotMode });
+  }
+
+  function pivotSignedSigma(v) {
+    return (v >= 0 ? '+' : '') + v.toFixed(2) + 'σ';
+  }
+
+  // "His neighborhood": the current archetype's 3 nearest archetypes by
+  // cosine (pivots.json's `adjacency`) — the one this candidate's own path
+  // actually uses (`adjacent`) is marked distinctly among the three.
+  function pivotNeighborhoodHtml(current, usedAdjacent) {
+    var adj = PIVOT_ADJ_BY_ARCHETYPE[current];
+    if (!adj || !adj.length) return '';
+    var chips = adj.map(function (a) {
+      var used = a.archetype === usedAdjacent;
+      return '<span class="vh-hint-chip vh-pivot-row__chip--adj' + (used ? ' is-used' : '') + '">' +
+        escapeHtml(a.archetype) + ' ' + Math.round(a.similarity * 100) + '%</span>';
+    }).join('');
+    return '<div class="vh-pivot-row__neighborhood"><span class="vh-pivot-row__neighborhood-label">His neighborhood:</span>' + chips + '</div>';
+  }
+
+  // Post-reveal: same on-screen order as the pick stage (no re-sort, so the
+  // list doesn't jump), each row annotated with its true rank and expandable
+  // (native <details>) into the receipts. Correct row (rank 0) gold; the
+  // player's own pick gets a distinct "Your pick" badge (which can coexist
+  // with gold, when they got it exactly right).
+  function renderPivotReveal(round) {
+    var team = round.teamEntry;
+    els.pivotRows.innerHTML = '';
+    round.displayOrder.forEach(function (origIdx) {
+      var c = team.candidates[origIdx];
+      var rank = round.rankByIdx[origIdx];
+      var isCorrect = rank === 0;
+      var isPicked = origIdx === round.pickedIdx;
+
+      var details = document.createElement('details');
+      details.className = 'vh-pivot-row vh-pivot-row--reveal' +
+        (isCorrect ? ' is-correct' : '') + (isPicked ? ' is-picked' : '');
+      if (isCorrect || isPicked) details.open = true;
+
+      var summary = document.createElement('summary');
+      summary.innerHTML =
+        '<span class="vh-pivot-row__rank">#' + (rank + 1) + '</span>' +
+        '<span class="vh-pivot-row__name">' + escapeHtml(c.name) + '</span>' +
+        pivotArchetypeChipHtml(c.current) +
+        (isPicked ? '<span class="vh-pivot-row__your-pick">Your pick</span>' : '') +
+        (isCorrect ? '<span class="vh-pivot-row__mark" aria-hidden="true">★</span>' : '');
+      details.appendChild(summary);
+
+      var detail = document.createElement('div');
+      detail.className = 'vh-pivot-row__detail';
+      detail.innerHTML =
+        '<p class="vh-pivot-row__pivot">&rarr; <b>' + escapeHtml(c.adjacent) + '</b> &middot; pivot distance ' + c.pivotDistance.toFixed(2) + '</p>' +
+        '<p class="vh-pivot-row__receipts">Players who made this exact pivot: <b>' + pivotSignedSigma(c.path.meanDPMz) +
+          '</b> impact on average (n=' + c.path.n + ') &mdash; e.g. ' + escapeHtml(c.path.example.name) + ' ' +
+          escapeHtml(c.path.example.seasons) + '.</p>' +
+        pivotNeighborhoodHtml(c.current, c.adjacent);
+      details.appendChild(detail);
+
+      els.pivotRows.appendChild(details);
+    });
+  }
+
+  function pickPivotCandidate(origIdx) {
+    var run = activePivotRun();
+    var round = run.rounds[run.idx];
+    if (round.answered) return;
+    round.answered = true;
+    round.pickedIdx = origIdx;
+
+    var team = round.teamEntry;
+    var rank = round.rankByIdx[origIdx];
+    var points = rank === 0 ? 2 : (rank <= 2 ? 1 : 0);
+    round.points = points;
+    run.score += points;
+
+    var answerOrigIdx = origIdx;
+    Object.keys(round.rankByIdx).forEach(function (k) {
+      if (round.rankByIdx[k] === 0) answerOrigIdx = parseInt(k, 10);
+    });
+    var answerCandidate = team.candidates[answerOrigIdx];
+
+    renderPivotReveal(round);
+
+    els.pivotVerdictWrap.hidden = false;
+    els.pivotVerdict.innerHTML = '';
+    var prefix, suffix;
+    if (points === 2) {
+      prefix = '+2 pts — exact. ';
+      suffix = ' had the most measured upside on the ' + team.season + ' ' + team.team + '.';
+    } else if (points === 1) {
+      prefix = '+1 pt — top 3 (rank #' + (rank + 1) + '), but ';
+      suffix = ' had the most measured upside instead.';
+    } else {
+      prefix = '+0 pts — rank #' + (rank + 1) + '. ';
+      suffix = ' had the most measured upside instead.';
+    }
+    els.pivotVerdict.appendChild(document.createTextNode(prefix));
+    var nameSpan = document.createElement('span');
+    els.pivotVerdict.appendChild(nameSpan);
+    els.pivotVerdict.appendChild(document.createTextNode(suffix));
+    tryLinkMoverName(nameSpan, answerCandidate.name);
+
+    els.pivotScoreNum.textContent = String(run.score);
+    els.pivotNextBtn.textContent = (run.idx + 1 >= PIVOT_ROUNDS_PER_RUN) ? 'See results' : 'Next round';
+  }
+
+  function buildPivotShareText() {
+    var run = pivotRuns.daily;
+    var rows = run.rounds.map(function (r) {
+      return r.points === 2 ? '🟩' : (r.points === 1 ? '🟨' : '⬜');
+    }).join('');
+    return 'Vector Hoops — The Pivot #' + puzzleNumber(TODAY) + ' ' + run.score + '/' + (PIVOT_ROUNDS_PER_RUN * 2) +
+      '\n' + rows;
+  }
+
+  function showPivotFinal() {
+    var run = activePivotRun();
+    els.pivotFinal.hidden = false;
+    els.pivotVerdictWrap.hidden = true;
+    els.pivotFinalScore.textContent = 'You scored ' + run.score + '/' + (PIVOT_ROUNDS_PER_RUN * 2) + '.';
+
+    if (activePivotMode === 'daily') {
+      var rec = pivotDailyToday();
+      if (!rec.done) {
+        rec.done = true;
+        rec.score = run.score;
+        var yesterday = utcDateString(new Date(Date.now() - 86400000));
+        PIVOT_STATE.streak = (PIVOT_STATE.lastPlayDate === yesterday) ? PIVOT_STATE.streak + 1 : 1;
+        PIVOT_STATE.lastPlayDate = TODAY;
+        PIVOT_STATE.totalSets++;
+        PIVOT_STATE.totalScoreSum += run.score;
+        savePivotDailyState();
+        track('vh-pivot-done', { score: run.score, mode: 'daily' });
+      }
+      els.pivotAgainBtn.hidden = true;
+      els.pivotShareBtn.hidden = false;
+      els.pivotComeback.hidden = false;
+      els.pivotShareCopied.hidden = true;
+    } else {
+      PIVOT_PRACTICE_STATS.played++;
+      PIVOT_PRACTICE_STATS.totalScoreSum += run.score;
+      savePivotPracticeStats();
+      els.pivotAgainBtn.hidden = false;
+      els.pivotShareBtn.hidden = true;
+      els.pivotComeback.hidden = true;
+      track('vh-pivot-done', { score: run.score, mode: 'free' });
+    }
+    renderPivotHeader();
+  }
+
+  function nextPivotRound() {
+    var run = activePivotRun();
+    var round = run.rounds[run.idx];
+    if (!round.answered) return;
+    run.idx++;
+    if (run.idx >= PIVOT_ROUNDS_PER_RUN) {
+      showPivotFinal();
+    } else {
+      renderPivotRound();
+    }
+  }
+
+  function switchPivotMode(mode) {
+    activePivotMode = mode;
+    els.pivotSubDaily.classList.toggle('is-active', mode === 'daily');
+    els.pivotSubFree.classList.toggle('is-active', mode === 'free');
+    els.pivotSubDaily.setAttribute('aria-selected', String(mode === 'daily'));
+    els.pivotSubFree.setAttribute('aria-selected', String(mode === 'free'));
+
+    if (mode === 'daily' && pivotDailyToday().done && !pivotRuns.daily) {
+      var doneRec = pivotDailyToday();
+      pivotRuns.daily = { rounds: [], idx: PIVOT_ROUNDS_PER_RUN, score: doneRec.score || 0 };
+    }
+
+    var run = pivotRuns[mode];
+    if (!run) {
+      startPivotRun(mode);
+    } else if (run.idx >= PIVOT_ROUNDS_PER_RUN) {
+      showPivotFinal();
+    } else {
+      els.pivotFinal.hidden = true;
+      renderPivotRound();
+    }
+    renderPivotHeader();
+  }
+
+  function setupPivot() {
+    buildPivotAdjacencyIndex();
+    els.pivotNextBtn.addEventListener('click', nextPivotRound);
+    els.pivotAgainBtn.addEventListener('click', function () { startPivotRun('free'); });
+    els.pivotSubDaily.addEventListener('click', function () { switchPivotMode('daily'); });
+    els.pivotSubFree.addEventListener('click', function () { switchPivotMode('free'); });
+    els.pivotMethodBtn.addEventListener('click', function () { openMethods('pivot', els.pivotMethodBtn); });
+    els.pivotCaptionBtn.addEventListener('click', function () { openMethods('pivot', els.pivotCaptionBtn); });
+    els.pivotShareBtn.addEventListener('click', function () {
+      var run = pivotRuns.daily;
+      var text = buildPivotShareText();
+      shareChallengeResult(text, {
+        mode: 'pv',
+        date: playDate(),
+        score: run.score + '/' + (PIVOT_ROUNDS_PER_RUN * 2),
+        scoreLabel: run.score + '/' + (PIVOT_ROUNDS_PER_RUN * 2),
+        challenger: challengerName()
+      }, els.pivotShareCopied, 'pivot-daily-challenge');
+    });
+  }
+
+  var pivotInitialized = false;
+
   function switchMode(mode) {
     var panels = {
       chimera: els.panelChimera, deadline: els.panelDeadline, fader: els.panelFader, arc: els.panelArc,
-      chem: els.panelChem, whatif: els.panelWhatif
+      chem: els.panelChem, whatif: els.panelWhatif, pivot: els.panelPivot
     };
     var tabs = {
       chimera: els.tabChimera, deadline: els.tabDeadline, fader: els.tabFader, arc: els.tabArc,
-      chem: els.tabChem, whatif: els.tabWhatif
+      chem: els.tabChem, whatif: els.tabWhatif, pivot: els.tabPivot
     };
     Object.keys(panels).forEach(function (m) {
       panels[m].hidden = m !== mode;
@@ -4921,6 +5339,10 @@
       whatifInitialized = true;
       setupWhatif();
     }
+    if (mode === 'pivot' && !pivotInitialized && PIVOT_POOL) {
+      pivotInitialized = true;
+      switchPivotMode('daily');
+    }
     checkRollover();
   }
 
@@ -4931,6 +5353,7 @@
     els.tabArc.addEventListener('click', function () { switchMode('arc'); });
     els.tabChem.addEventListener('click', function () { switchMode('chem'); });
     els.tabWhatif.addEventListener('click', function () { switchMode('whatif'); });
+    els.tabPivot.addEventListener('click', function () { switchMode('pivot'); });
   }
 
   // ---------------------------------------------------------------------
@@ -5096,10 +5519,19 @@
       renderStatsTile(els.statsChemGrid, chem.streak, 'Streak');
     }
 
+    if (els.statsPivotGrid) {
+      var pivot = computePivotDailyStats();
+      els.statsPivotGrid.innerHTML = '';
+      renderStatsTile(els.statsPivotGrid, pivot.totalSets, 'Sets played');
+      renderStatsTile(els.statsPivotGrid, pivot.avgScore.toFixed(1), 'Avg score');
+      renderStatsTile(els.statsPivotGrid, pivot.streak, 'Streak');
+    }
+
     els.statsPracticeLine.textContent = 'Chimera: ' + PRACTICE_STATS.played + ' played, ' + PRACTICE_STATS.won + ' won. ' +
       'Fader or Finisher: ' + practiceSetSummary(FADER_PRACTICE_STATS) + '. ' +
       'Career Arc: ' + practiceSetSummary(ARC_PRACTICE_STATS) + '. ' +
       'Chemistry: ' + practiceSetSummary(CHEM_PRACTICE_STATS) + '. ' +
+      'The Pivot: ' + practiceSetSummary(PIVOT_PRACTICE_STATS) + '. ' +
       'Casual only — never counted toward your streaks or stats above.';
   }
 
@@ -5121,11 +5553,12 @@
   }
 
   function clearAllData() {
-    var ok = window.confirm('Clear all Vector Hoops data on this device? This removes every daily streak (Chimera, Deadline, Fader or Finisher, Career Arc, Chemistry) and all practice counters. This cannot be undone.');
+    var ok = window.confirm('Clear all Vector Hoops data on this device? This removes every daily streak (Chimera, Deadline, Fader or Finisher, Career Arc, Chemistry, The Pivot) and all practice counters. This cannot be undone.');
     if (!ok) return;
     [LS_KEY, LS_KEY_DEADLINE_DAILY, LS_KEY_PRACTICE_STATS, LS_KEY_DEADLINE_COUNTER,
      LS_KEY_FF_DAILY, LS_KEY_FF_PRACTICE, LS_KEY_ARC_DAILY, LS_KEY_ARC_PRACTICE,
-     LS_KEY_CHEM_DAILY, LS_KEY_CHEM_PRACTICE, LS_KEY_CHEM_COUNTER].forEach(function (key) {
+     LS_KEY_CHEM_DAILY, LS_KEY_CHEM_PRACTICE, LS_KEY_CHEM_COUNTER,
+     LS_KEY_PIVOT_DAILY, LS_KEY_PIVOT_PRACTICE, LS_KEY_PIVOT_COUNTER].forEach(function (key) {
       try { localStorage.removeItem(key); } catch (e) { /* storage unavailable */ }
     });
     window.location.reload();
@@ -5185,6 +5618,22 @@
         '<div class="vh-dossier__bullet">"Closest real-world analog" and the complementarity percentile are both computed against chemistry.json\'s top-800 ' +
           'measured pairs only — an elite, chemistry-selected subsample, not the full league. The percentile answers "where does this pairing rank among the ' +
           '800 best-measured pairs," not "among all possible pairs."</div>';
+      return;
+    }
+    if (which === 'pivot') {
+      els.methodsTitle.textContent = 'The Pivot — method & data sources';
+      els.methodsBody.innerHTML =
+        '<p class="vh-dossier__p">' + escapeHtml(PIVOTS && PIVOTS.method || '') + '</p>' +
+        '<h4 class="vh-dossier__h4">Data sources &amp; minimums</h4>' +
+        '<div class="vh-dossier__bullet">Adjacency: each archetype\'s 3 nearest other k-means centroids by cosine similarity, over the same 14-dim ' +
+          'era-z vectors as the rest of the site.</div>' +
+        '<div class="vh-dossier__bullet">Pivots: real players whose k-means archetype changed between two consecutive charted seasons, 1996&ndash;97 ' +
+          'through 2025&ndash;26. A path\'s mean/n only ships when at least 8 players made that exact directed pivot.</div>' +
+        '<div class="vh-dossier__bullet">Roster candidates: 2023&ndash;24 through 2025&ndash;26 rosters, &ge;1000 minutes that season.</div>' +
+        '<div class="vh-dossier__bullet">"Measured upside" is the historical mean PLUS_MINUS-z swing for the pool of players who made that team\'s ' +
+          'candidate\'s exact current-archetype&rarr;adjacent-archetype pivot before &mdash; observed precedent WITH selection effects (players who ' +
+          'pivoted are those whose games changed), not a prediction, projection, or simulation for this specific player.</div>' +
+        '<div class="vh-dossier__bullet">Unranked v1: the leaderboard\'s game enum doesn\'t include "pivot" yet, so results never post.</div>';
       return;
     }
     els.methodsTitle.textContent = 'Method & data sources';
@@ -5402,12 +5851,14 @@
     els.tabArc = document.getElementById('tab-arc');
     els.tabChem = document.getElementById('tab-chem');
     els.tabWhatif = document.getElementById('tab-whatif');
+    els.tabPivot = document.getElementById('tab-pivot');
     els.panelChimera = document.getElementById('panel-chimera');
     els.panelDeadline = document.getElementById('panel-deadline');
     els.panelFader = document.getElementById('panel-fader');
     els.panelArc = document.getElementById('panel-arc');
     els.panelChem = document.getElementById('panel-chem');
     els.panelWhatif = document.getElementById('panel-whatif');
+    els.panelPivot = document.getElementById('panel-pivot');
     els.deadlineRoundNum = document.getElementById('deadline-round-num');
     els.deadlineScoreNum = document.getElementById('deadline-score-num');
     els.deadlinePrompt = document.getElementById('deadline-prompt');
@@ -5597,8 +6048,32 @@
     els.whatifChangeBtn = document.getElementById('whatif-change-btn');
     els.whatifMethodBtn = document.getElementById('whatif-method-btn');
 
-    // Stats modal (Chemistry)
+    // The Pivot
+    els.pivotSubDaily = document.getElementById('pivot-sub-daily');
+    els.pivotSubFree = document.getElementById('pivot-sub-free');
+    els.pivotPracticeBanner = document.getElementById('pivot-practice-banner');
+    els.pivotEyebrow = document.getElementById('pivot-eyebrow');
+    els.pivotRoundNum = document.getElementById('pivot-round-num');
+    els.pivotScoreNum = document.getElementById('pivot-score-num');
+    els.pivotStreakWrap = document.getElementById('pivot-streak-wrap');
+    els.pivotStreakNum = document.getElementById('pivot-streak-num');
+    els.pivotTeamLabel = document.getElementById('pivot-team-label');
+    els.pivotCaptionBtn = document.getElementById('pivot-caption-btn');
+    els.pivotRows = document.getElementById('pivot-rows');
+    els.pivotVerdictWrap = document.getElementById('pivot-verdict-wrap');
+    els.pivotVerdict = document.getElementById('pivot-verdict');
+    els.pivotNextBtn = document.getElementById('pivot-next-btn');
+    els.pivotFinal = document.getElementById('pivot-final');
+    els.pivotFinalScore = document.getElementById('pivot-final-score');
+    els.pivotComeback = document.getElementById('pivot-comeback');
+    els.pivotShareBtn = document.getElementById('pivot-share-btn');
+    els.pivotShareCopied = document.getElementById('pivot-share-copied');
+    els.pivotAgainBtn = document.getElementById('pivot-again-btn');
+    els.pivotMethodBtn = document.getElementById('pivot-method-btn');
+
+    // Stats modal (Chemistry, The Pivot)
     els.statsChemGrid = document.getElementById('stats-chem-grid');
+    els.statsPivotGrid = document.getElementById('stats-pivot-grid');
   }
 
   // ---------------------------------------------------------------------
@@ -5894,6 +6369,8 @@
         ARC_INDEX = buildArcIndex();
         CHEM_STATE = loadChemDailyState();
         CHEM_PRACTICE_STATS = loadChemPracticeStats();
+        PIVOT_STATE = loadPivotDailyState();
+        PIVOT_PRACTICE_STATS = loadPivotPracticeStats();
         buildPlayerLookups();
 
         els.loadingBanner.hidden = true;
@@ -5979,6 +6456,22 @@
           .catch(function () {
             els.tabChem.disabled = true;
             els.tabChem.setAttribute('aria-disabled', 'true');
+          });
+
+        fetch(PIVOTS_URL)
+          .then(function (res) {
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+            return res.json();
+          })
+          .then(function (pj) {
+            PIVOTS = pj;
+            PIVOT_POOL = pj.teams || [];
+            setupPivot();
+            maybeApplyChallenge();
+          })
+          .catch(function () {
+            els.tabPivot.disabled = true;
+            els.tabPivot.setAttribute('aria-disabled', 'true');
           });
 
         if (todayRecord().guesses.length === 0 && !todayRecord().done) {

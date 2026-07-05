@@ -83,6 +83,9 @@
   <button class="vh-tab" id="tab-whatif" type="button" role="tab" aria-selected="false">
     <span class="vh-tab__icon" aria-hidden="true">🧪</span><span class="vh-tab__label"><span class="vh-tab__label-full">What-If Lab</span><span class="vh-tab__label-short">Lab</span></span>
   </button>
+  <button class="vh-tab" id="tab-pivot" type="button" role="tab" aria-selected="false">
+    <span class="vh-tab__icon" aria-hidden="true">🔀</span><span class="vh-tab__label"><span class="vh-tab__label-full">The Pivot</span><span class="vh-tab__label-short">Pivot</span></span>
+  </button>
 </nav>
 
 <main id="app">
@@ -741,6 +744,47 @@
 
   </section>
 
+  <section id="panel-pivot" class="vh-panel" hidden>
+
+    <div class="vh-subtabs" id="pivot-subtabs" role="tablist" aria-label="The Pivot play mode">
+      <button class="vh-subtab is-active" id="pivot-sub-daily" type="button" role="tab" aria-selected="true">Daily Set</button>
+      <button class="vh-subtab" id="pivot-sub-free" type="button" role="tab" aria-selected="false">Free Play</button>
+    </div>
+
+    <div class="vh-practice-banner" id="pivot-practice-banner" hidden>
+      <span class="vh-practice-banner__text">PRACTICE &mdash; doesn't touch your Pivot streak</span>
+    </div>
+
+    <div class="vh-card vh-prompt">
+      <div class="vh-prompt__eyebrow" id="pivot-eyebrow">The Pivot &mdash; Daily Set</div>
+      <p class="vh-prompt__text">Round <span id="pivot-round-num">1</span>/5 &middot; Score <span id="pivot-score-num">0</span>/10<span id="pivot-streak-wrap"> &middot; Streak <span id="pivot-streak-num">0</span></span></p>
+    </div>
+
+    <div class="vh-card vh-pivot-card">
+      <p class="vh-pivot__team" id="pivot-team-label">Loading a roster&hellip;</p>
+      <p class="vh-pivot__question">Who has the most measured upside in an ADJACENT role?</p>
+      <button type="button" class="vh-pivot__caption" id="pivot-caption-btn">Historical precedent with selection effects &mdash; not a prediction &rarr;</button>
+
+      <div class="vh-pivot-rows" id="pivot-rows"></div>
+
+      <div class="vh-pivot__verdict-wrap" id="pivot-verdict-wrap" hidden>
+        <p class="vh-deadline__verdict" id="pivot-verdict"></p>
+        <button class="vh-btn vh-btn--primary" id="pivot-next-btn" type="button">Next round</button>
+      </div>
+    </div>
+
+    <div class="vh-deadline__final" id="pivot-final" hidden>
+      <p class="vh-deadline__final-score" id="pivot-final-score"></p>
+      <p class="vh-deadline__comeback" id="pivot-comeback" hidden>Next Daily Set at UTC midnight.</p>
+      <button class="vh-btn vh-btn--accent" id="pivot-share-btn" type="button" hidden title="Text a challenge link — same puzzle, head-to-head">Text challenge</button>
+      <div class="vh-reveal__copied" id="pivot-share-copied" hidden>Opening Messages… link copied too.</div>
+      <button class="vh-btn vh-btn--accent" id="pivot-again-btn" type="button">Run again</button>
+    </div>
+
+    <p class="vh-deadline__method"><button type="button" class="vh-link-btn" id="pivot-method-btn">Method &amp; data sources &rarr;</button></p>
+
+  </section>
+
   <div class="vh-loading" id="loading-banner">Loading vectors&hellip;</div>
   <div class="vh-error" id="error-banner" hidden></div>
 
@@ -764,6 +808,7 @@
       <li><b>Career Arc:</b> one player's charted seasons appear as unlabeled sigma-bar cards, no years shown. Tap them in the order you think they happened, oldest to newest, then submit &mdash; score is how many landed in the right slot.</li>
       <li><b>Chemistry:</b> a real teammate pair (measured, same team-season) sets the question &mdash; "Who complemented {player} best on the {season} {team}?" Pick the true partner from 4 options; the reveal shows the measured complementarity, joint plus-minus, and a chemistry percentile, plus a one-line why. 5 rounds a day; unranked v1, doesn't touch the public leaderboard.</li>
       <li><b>What-If Lab:</b> pick any two player-seasons across any eras and get a full partnership report &mdash; complementarity, a dimensional coverage map, redundancy/shared-weakness warnings, a combined court diagram, and the closest real-world pair by measured complementarity. Pure sandbox: no daily puzzle, no streak.</li>
+      <li><b>The Pivot:</b> a real current-roster team &mdash; "Who has the most measured upside in an ADJACENT role?" Pick a player; the reveal ranks every candidate by the real historical mean plus-minus swing for players who made that exact archetype-to-archetype pivot before, with a name-and-seasons example ("the receipts") and each candidate's own nearby archetypes. Exact pick = 2 pts, anyone in the top 3 = 1 pt, 5 rounds a day (0&ndash;10). Historical precedent with selection effects &mdash; not a prediction. Unranked v1; doesn't touch the public leaderboard.</li>
     </ol>
     <p class="vh-modal__telemetry" id="telemetry-note">Anonymous play events help tune the game &mdash; a random id, no account, no ads.</p>
     <button class="vh-btn vh-btn--primary" id="help-close" type="button">Got it</button>
@@ -809,6 +854,11 @@
     <div class="vh-stats-section">
       <div class="vh-stats-section__label">Chemistry &mdash; Daily Set</div>
       <div class="vh-stats-grid" id="stats-chem-grid"></div>
+    </div>
+
+    <div class="vh-stats-section">
+      <div class="vh-stats-section__label">The Pivot &mdash; Daily Set</div>
+      <div class="vh-stats-grid" id="stats-pivot-grid"></div>
     </div>
 
     <div class="vh-stats-section vh-stats-section--practice">
