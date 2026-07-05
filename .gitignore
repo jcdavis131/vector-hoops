@@ -1,2 +1,3 @@
 pipeline/.venv/
 __pycache__/
+pipeline/data/
