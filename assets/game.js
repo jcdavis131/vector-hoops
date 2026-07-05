@@ -6113,7 +6113,7 @@
         '<div class="vh-dossier__bullet">Only the shipped top 5 candidates carry a real similarity number. A guess landing in that top 5 shows its exact ' +
           '% aligned; any other guess shows an honest lower bound off the 5th-place similarity rather than a fabricated number &mdash; warmth shows for ' +
           'near-misses, not for every possible guess.</div>' +
-        '<div class="vh-dossier__bullet">Daily-set scores post to the public leaderboard.'s game enum doesn\'t include "twin" yet, so results never post.</div>';
+        '<div class="vh-dossier__bullet">Daily-set scores post to the public leaderboard (anonymous session names).</div>';
       return;
     }
     els.methodsTitle.textContent = 'Method & data sources';
