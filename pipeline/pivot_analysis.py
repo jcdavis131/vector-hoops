@@ -9,8 +9,8 @@ Method (stated in the artifact):
   cluster CHANGED (real transitions, 1996->2026). For each directed
   pivot path A->B with n>=8: the mean observed change in on-court
   impact (PLUS_MINUS z) and scoring/impact dims, with n shown.
-- ROSTER UPSIDE (recent teams 2023-26, rosters from game logs, >=1000
-  min): each player's adjacent role + the historical path stats for
+- ROSTER UPSIDE (last season's teams only, rosters from game logs,
+  >=1000 min): each player's adjacent role + the historical path stats for
   that exact pivot; "upside" = the path's mean observed dPM_z — a
   precedent-weighted sensitivity, NOT a prediction or simulation.
 
@@ -93,9 +93,11 @@ def main() -> None:
     # recent rosters (2023-26) from game logs, >=1000 min, charted
     rosters = defaultdict(list)
     vindex = {(p["name"], p["season"]): p for p in data["players"]}
-    for f in sorted(HERE.glob("data/gamelogs_*.jsonl")):
+    all_logs = sorted(HERE.glob("data/gamelogs_*.jsonl"))
+    latest = all_logs[-1].stem.split("_")[1]
+    for f in all_logs:
         season = f.stem.split("_")[1]
-        if season < "2023-24":
+        if season != latest:
             continue
         mins = defaultdict(lambda: [0.0, ""])
         for line in f.read_text(encoding="utf-8").splitlines():
@@ -140,7 +142,7 @@ def main() -> None:
                    "directed pivot (n>=8 shown); roster upside = the "
                    "historical path mean for each player's adjacent "
                    "role — measured precedent WITH selection effects (players who pivoted are those whose games changed — precedent, not causation), NOT a prediction or "
-                   "simulation; rosters 2023-26, >=1000 min, charted"),
+                   "simulation; rosters = last season only, >=1000 min, charted"),
         "adjacency": adjacency,
         "paths": path_stats,
         "teams": team_cards,
