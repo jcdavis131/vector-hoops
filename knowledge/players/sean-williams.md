@@ -63,6 +63,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 3 seasons (2007-08–2009-10). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass + Defensive Glass identity.
 
+**Era twin:** [[yinka-dare|Yinka Dare]] '97 (92% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

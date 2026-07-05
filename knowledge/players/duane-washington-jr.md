@@ -63,6 +63,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 2 seasons (2021-22–2022-23). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
 
+**Era twin:** [[joe-johnson|Joe Johnson]] '07 (92% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

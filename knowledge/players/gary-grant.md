@@ -61,6 +61,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 2 seasons (1996-97–1997-98). Consistent Playmaking + Steals profile across his career.
 
+**Era twin:** [[jose-calderon|Jose Calderon]] '08 (93% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

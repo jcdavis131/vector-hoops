@@ -69,6 +69,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 8 seasons (1996-97–2003-04). Consistent Offensive Glass + Defensive Glass profile across his career.
 
+**Era twin:** [[michael-bradley|Michael Bradley]] '05 (91% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

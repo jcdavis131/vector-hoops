@@ -68,6 +68,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 7 seasons (2000-01–2008-09). Entered as a Rim Protection + Offensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
 
+**Era twin:** [[scottie-barnes|Scottie Barnes]] '25 (75% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

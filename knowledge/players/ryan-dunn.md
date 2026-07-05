@@ -61,6 +61,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 2 seasons (2024-25–2025-26). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
 
+**Era twin:** [[torrey-craig|Torrey Craig]] '20 (89% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

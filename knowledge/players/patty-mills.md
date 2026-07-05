@@ -74,6 +74,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 14 seasons (2010-11–2024-25). Entered as a Playmaking + Steals profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
 
+**Era twin:** [[bobby-jackson|Bobby Jackson]] '04 (85% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

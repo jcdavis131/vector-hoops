@@ -64,6 +64,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 4 seasons (2021-22–2024-25). Consistent Playmaking + Steals profile across his career.
 
+**Era twin:** [[chris-robinson|Chris Robinson]] '98 (85% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

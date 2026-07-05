@@ -63,6 +63,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 4 seasons (2020-21–2023-24). Entered as a Playmaking + Steals profile, peaked as a Offensive Glass + Defensive Glass identity.
 
+**Era twin:** [[evan-turner|Evan Turner]] '20 (76% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

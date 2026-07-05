@@ -64,6 +64,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 4 seasons (2000-01–2004-05). Consistent Offensive Glass + Defensive Glass profile across his career.
 
+**Era twin:** [[derik-queen|Derik Queen]] '26 (85% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

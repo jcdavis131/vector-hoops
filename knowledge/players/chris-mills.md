@@ -65,6 +65,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 6 seasons (1996-97–2002-03). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
 
+**Era twin:** [[jarell-eddie|Jarell Eddie]] '16 (86% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

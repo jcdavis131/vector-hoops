@@ -65,6 +65,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 5 seasons (2010-11–2014-15). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
 
+**Era twin:** [[kevin-ollie|Kevin Ollie]] '10 (89% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

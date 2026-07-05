@@ -62,6 +62,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 1 season (2020-21). Consistent Playmaking + Steals profile across his career.
 
+**Era twin:** [[sergio-rodriguez|Sergio Rodriguez]] '09 (96% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

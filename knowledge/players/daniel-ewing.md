@@ -60,6 +60,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 2 seasons (2005-06–2006-07). Consistent Playmaking + Steals profile across his career.
 
+**Era twin:** [[facundo-campazzo|Facundo Campazzo]] '21 (93% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

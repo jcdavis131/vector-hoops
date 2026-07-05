@@ -63,6 +63,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 4 seasons (1999-00–2002-03). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
 
+**Era twin:** [[samardo-samuels|Samardo Samuels]] '11 (80% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

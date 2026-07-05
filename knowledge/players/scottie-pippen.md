@@ -67,6 +67,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 8 seasons (1996-97–2003-04). Entered as a Scoring Volume + Shot Volume profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
 
+**Era twin:** [[keith-booth|Keith Booth]] '99 (80% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

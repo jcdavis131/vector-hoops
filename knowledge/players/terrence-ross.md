@@ -71,6 +71,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 11 seasons (2012-13–2022-23). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
 
+**Era twin:** [[cuttino-mobley|Cuttino Mobley]] '02 (91% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -78,6 +78,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 17 seasons (2004-05–2021-22). Consistent Rim Protection + Offensive Glass profile across his career.
 
+**Era twin:** [[boban-marjanovic|Boban Marjanovic]] '18 (89% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

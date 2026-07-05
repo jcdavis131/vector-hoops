@@ -74,6 +74,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 13 seasons (2009-10–2021-22). Consistent Rim Protection + Offensive Glass profile across his career.
 
+**Era twin:** [[khaman-maluach|Khaman Maluach]] '26 (95% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

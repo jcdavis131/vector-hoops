@@ -67,6 +67,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 7 seasons (2018-19–2025-26). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
 
+**Era twin:** [[kristaps-porzingis|Kristaps Porziņģis]] '18 (82% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

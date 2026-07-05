@@ -65,6 +65,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 5 seasons (1998-99–2002-03). Consistent Rim Protection + Offensive Glass profile across his career.
 
+**Era twin:** [[duane-causwell|Duane Causwell]] '99 (88% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

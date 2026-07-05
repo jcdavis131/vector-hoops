@@ -62,6 +62,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 3 seasons (2021-22–2023-24). Consistent Offensive Glass + Defensive Glass profile across his career.
 
+**Era twin:** [[jerome-jordan|Jerome Jordan]] '12 (84% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

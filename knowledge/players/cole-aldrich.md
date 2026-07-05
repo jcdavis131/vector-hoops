@@ -69,6 +69,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 8 seasons (2010-11–2017-18). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
 
+**Era twin:** [[goga-bitadze|Goga Bitadze]] '25 (89% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

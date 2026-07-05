@@ -73,6 +73,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 12 seasons (2004-05–2015-16). Consistent Rim Protection + Offensive Glass profile across his career.
 
+**Era twin:** [[steven-adams|Steven Adams]] '23 (89% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

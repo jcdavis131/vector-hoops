@@ -62,6 +62,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 3 seasons (2019-20–2021-22). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Playmaking + Steals identity.
 
+**Era twin:** [[qyntel-woods|Qyntel Woods]] '03 (79% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

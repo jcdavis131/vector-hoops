@@ -63,6 +63,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 4 seasons (1996-97–1999-00). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Playmaking + Steals identity.
 
+**Era twin:** [[sarunas-jasikevicius|Sarunas Jasikevicius]] '07 (79% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

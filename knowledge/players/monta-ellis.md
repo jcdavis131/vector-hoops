@@ -73,6 +73,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 12 seasons (2005-06–2016-17). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
 
+**Era twin:** [[tyrese-maxey|Tyrese Maxey]] '25 (95% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -61,6 +61,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 3 seasons (2020-21–2022-23). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
 
+**Era twin:** [[jj-redick|JJ Redick]] '16 (77% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

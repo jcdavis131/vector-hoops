@@ -68,6 +68,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 7 seasons (2000-01–2006-07). Consistent Rim Protection + Offensive Glass profile across his career.
 
+**Era twin:** [[david-lee|David Lee]] '17 (95% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

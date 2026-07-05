@@ -71,6 +71,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 10 seasons (1996-97–2005-06). Consistent Playmaking + Steals profile across his career.
 
+**Era twin:** [[dana-barros|Dana Barros]] '99 (93% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

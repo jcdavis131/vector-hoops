@@ -63,6 +63,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 4 seasons (1999-00–2005-06). Consistent Playmaking + Steals profile across his career.
 
+**Era twin:** [[garrett-temple|Garrett Temple]] '11 (84% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

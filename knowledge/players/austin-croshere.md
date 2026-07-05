@@ -71,6 +71,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 11 seasons (1997-98–2007-08). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
 
+**Era twin:** [[dorell-wright|Dorell Wright]] '06 (65% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

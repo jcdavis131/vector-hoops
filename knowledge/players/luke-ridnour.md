@@ -72,6 +72,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 12 seasons (2003-04–2014-15). Consistent Playmaking + Steals profile across his career.
 
+**Era twin:** [[tyrese-haliburton|Tyrese Haliburton]] '23 (84% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -61,6 +61,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 2 seasons (2023-24–2024-25). Consistent Playmaking + Steals profile across his career.
 
+**Era twin:** [[michael-carter-williams|Michael Carter-Williams]] '15 (89% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

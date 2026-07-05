@@ -68,6 +68,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 8 seasons (2016-17–2023-24). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
 
+**Era twin:** [[anthony-roberson|Anthony Roberson]] '09 (91% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -62,6 +62,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 3 seasons (2019-20–2021-22). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
 
+**Era twin:** [[shawn-marion|Shawn Marion]] '06 (77% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

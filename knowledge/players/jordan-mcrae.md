@@ -65,6 +65,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 4 seasons (2015-16–2019-20). Consistent Scoring Volume + Shot Volume profile across his career.
 
+**Era twin:** [[brandon-roy|Brandon Roy]] '09 (85% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

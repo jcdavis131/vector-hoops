@@ -69,6 +69,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 11 seasons (2007-08–2018-19). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
 
+**Era twin:** [[delon-wright|Delon Wright]] '23 (90% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

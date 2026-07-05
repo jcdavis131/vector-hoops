@@ -73,6 +73,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 12 seasons (2004-05–2015-16). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
 
+**Era twin:** [[richie-frahm|Richie Frahm]] '04 (88% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

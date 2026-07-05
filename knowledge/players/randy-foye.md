@@ -69,6 +69,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 11 seasons (2006-07–2016-17). Entered as a Playmaking + Steals profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
 
+**Era twin:** [[rex-chapman|Rex Chapman]] '98 (92% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

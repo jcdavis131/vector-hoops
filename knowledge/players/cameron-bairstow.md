@@ -61,6 +61,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 2 seasons (2014-15–2015-16). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
 
+**Era twin:** [[yaroslav-korolev|Yaroslav Korolev]] '06 (87% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

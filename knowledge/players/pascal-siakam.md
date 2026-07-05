@@ -69,6 +69,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 10 seasons (2016-17–2025-26). Consistent Offensive Glass + Defensive Glass profile across his career.
 
+**Era twin:** [[theo-ratliff|Theo Ratliff]] '09 (90% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -60,6 +60,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 2 seasons (2024-25–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Scoring Volume + Shot Volume identity.
 
+**Era twin:** [[mike-conley|Mike Conley]] '13 (85% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -61,6 +61,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 1 season (1997-98). Consistent Scoring Volume + Shot Volume profile across his career.
 
+**Era twin:** [[jordan-hamilton|Jordan Hamilton]] '12 (67% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

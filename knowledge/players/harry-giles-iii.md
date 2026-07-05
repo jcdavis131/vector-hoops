@@ -64,6 +64,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 4 seasons (2018-19–2023-24). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
 
+**Era twin:** [[boniface-ndong|Boniface Ndong]] '06 (84% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

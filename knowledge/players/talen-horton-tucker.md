@@ -64,6 +64,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 5 seasons (2020-21–2024-25). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
 
+**Era twin:** [[dennis-schroder|Dennis Schröder]] '16 (91% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

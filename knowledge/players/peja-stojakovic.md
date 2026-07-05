@@ -72,6 +72,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 12 seasons (1998-99–2010-11). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
 
+**Era twin:** [[cj-miles|CJ Miles]] '18 (88% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

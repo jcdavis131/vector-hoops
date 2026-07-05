@@ -70,6 +70,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 9 seasons (1996-97–2004-05). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
 
+**Era twin:** [[donnell-harvey|Donnell Harvey]] '02 (86% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

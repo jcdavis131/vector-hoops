@@ -66,6 +66,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 7 seasons (2011-12–2018-19). Consistent Offensive Glass + Defensive Glass profile across his career.
 
+**Era twin:** [[jae-sean-tate|Jae'Sean Tate]] '26 (79% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

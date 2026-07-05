@@ -70,6 +70,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 9 seasons (2002-03–2017-18). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
 
+**Era twin:** [[duane-washington-jr|Duane Washington Jr.]] '23 (91% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

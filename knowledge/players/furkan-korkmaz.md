@@ -65,6 +65,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 6 seasons (2018-19–2023-24). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
 
+**Era twin:** [[lucious-harris|Lucious Harris]] '98 (89% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

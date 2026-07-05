@@ -69,6 +69,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 9 seasons (2016-17–2024-25). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
 
+**Era twin:** [[tony-parker|Tony Parker]] '09 (89% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

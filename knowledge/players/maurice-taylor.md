@@ -68,6 +68,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 8 seasons (1997-98–2005-06). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
 
+**Era twin:** [[andrea-bargnani|Andrea Bargnani]] '15 (93% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

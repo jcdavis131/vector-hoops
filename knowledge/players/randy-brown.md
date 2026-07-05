@@ -66,6 +66,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 6 seasons (1996-97–2002-03). Consistent Playmaking + Steals profile across his career.
 
+**Era twin:** [[herbert-jones|Herbert Jones]] '22 (84% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

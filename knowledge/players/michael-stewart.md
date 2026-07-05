@@ -66,6 +66,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 6 seasons (1997-98–2003-04). Entered as a Rim Protection + Offensive Glass profile, peaked as a Offensive Glass + Defensive Glass identity.
 
+**Era twin:** [[mickell-gladness|Mickell Gladness]] '12 (84% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

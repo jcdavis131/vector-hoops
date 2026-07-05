@@ -72,6 +72,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 13 seasons (2001-02–2013-14). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass + Defensive Glass identity.
 
+**Era twin:** [[nate-wolters|Nate Wolters]] '15 (86% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

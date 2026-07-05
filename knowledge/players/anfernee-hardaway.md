@@ -70,6 +70,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 9 seasons (1996-97–2007-08). Entered as a Scoring Volume + Shot Volume profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
 
+**Era twin:** [[tyus-jones|Tyus Jones]] '18 (89% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -70,6 +70,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 10 seasons (2001-02–2012-13). Consistent Playmaking + Steals profile across his career.
 
+**Era twin:** [[willie-warren|Willie Warren]] '11 (90% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

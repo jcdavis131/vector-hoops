@@ -68,6 +68,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 8 seasons (1999-00–2006-07). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
 
+**Era twin:** [[david-benoit|David Benoit]] '98 (91% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

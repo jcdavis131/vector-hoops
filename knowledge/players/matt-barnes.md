@@ -73,6 +73,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 14 seasons (2003-04–2016-17). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
 
+**Era twin:** [[lari-ketner|Lari Ketner]] '00 (90% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

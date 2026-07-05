@@ -70,6 +70,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 9 seasons (2001-02–2011-12). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
 
+**Era twin:** [[isaiah-thomas|Isaiah Thomas]] '17 (95% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

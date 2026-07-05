@@ -70,6 +70,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 10 seasons (1996-97–2005-06). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
 
+**Era twin:** [[ryan-bowen|Ryan Bowen]] '09 (89% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

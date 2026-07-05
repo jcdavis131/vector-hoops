@@ -64,6 +64,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 4 seasons (2022-23–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
 
+**Era twin:** [[duncan-robinson|Duncan Robinson]] '20 (81% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

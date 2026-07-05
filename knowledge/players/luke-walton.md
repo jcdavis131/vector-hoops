@@ -69,6 +69,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 10 seasons (2003-04–2012-13). Entered as a Playmaking + Steals profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
 
+**Era twin:** [[jahmai-mashack|Jahmai Mashack]] '26 (82% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

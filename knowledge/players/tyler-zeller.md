@@ -66,6 +66,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 6 seasons (2012-13–2017-18). Consistent Offensive Glass + Defensive Glass profile across his career.
 
+**Era twin:** [[trey-jemison-iii|Trey Jemison III]] '25 (91% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

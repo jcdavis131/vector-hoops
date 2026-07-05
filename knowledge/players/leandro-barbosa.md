@@ -74,6 +74,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 14 seasons (2003-04–2016-17). Consistent Playmaking + Steals profile across his career.
 
+**Era twin:** [[randolph-childress|Randolph Childress]] '97 (92% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

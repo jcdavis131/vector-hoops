@@ -71,6 +71,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 11 seasons (2005-06–2015-16). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Playmaking + Steals identity.
 
+**Era twin:** [[dru-smith|Dru Smith]] '26 (88% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

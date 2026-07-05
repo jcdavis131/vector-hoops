@@ -71,6 +71,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 13 seasons (1997-98–2009-10). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Playmaking + Steals identity.
 
+**Era twin:** [[jose-alvarado|Jose Alvarado]] '22 (91% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -66,6 +66,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 8 seasons (2018-19–2025-26). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
 
+**Era twin:** [[wesley-matthews|Wesley Matthews]] '20 (82% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

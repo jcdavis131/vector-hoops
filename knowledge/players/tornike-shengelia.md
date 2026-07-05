@@ -61,6 +61,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 2 seasons (2012-13–2013-14). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass + Defensive Glass identity.
 
+**Era twin:** [[thanasis-antetokounmpo|Thanasis Antetokounmpo]] '24 (87% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

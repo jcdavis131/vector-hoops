@@ -60,6 +60,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 1 season (2018-19). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
 
+**Era twin:** [[kevin-mccullar-jr|Kevin McCullar Jr.]] '26 (91% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

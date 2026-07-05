@@ -69,6 +69,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 9 seasons (2017-18–2025-26). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
 
+**Era twin:** [[keith-van-horn|Keith Van Horn]] '99 (89% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

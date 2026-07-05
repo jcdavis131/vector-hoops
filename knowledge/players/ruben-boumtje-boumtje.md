@@ -60,6 +60,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 1 season (2001-02). Consistent Offensive Glass + Defensive Glass profile across his career.
 
+**Era twin:** [[hasheem-thabeet|Hasheem Thabeet]] '12 (88% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

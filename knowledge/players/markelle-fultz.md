@@ -67,6 +67,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 6 seasons (2018-19–2024-25). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Playmaking + Steals identity.
 
+**Era twin:** [[michael-carter-williams|Michael Carter-Williams]] '15 (92% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

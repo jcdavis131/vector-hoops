@@ -75,6 +75,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 16 seasons (1998-99–2013-14). Consistent Offensive Glass (Low On-Court Impact) profile across his career.
 
+**Era twin:** [[smush-parker|Smush Parker]] '05 (90% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

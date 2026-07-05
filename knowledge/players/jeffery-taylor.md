@@ -62,6 +62,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 3 seasons (2012-13–2014-15). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
 
+**Era twin:** [[maurice-ager|Maurice Ager]] '08 (85% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

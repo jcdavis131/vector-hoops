@@ -67,6 +67,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 6 seasons (2018-19–2023-24). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Rim Protection + Offensive Glass identity.
 
+**Era twin:** [[zan-tabak|Zan Tabak]] '00 (87% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

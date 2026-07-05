@@ -77,6 +77,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 18 seasons (2004-05–2021-22). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
 
+**Era twin:** [[hollis-thompson|Hollis Thompson]] '17 (89% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

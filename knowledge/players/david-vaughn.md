@@ -63,6 +63,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 2 seasons (1996-97–1997-98). Consistent Rim Protection + Offensive Glass profile across his career.
 
+**Era twin:** [[greg-monroe|Greg Monroe]] '18 (89% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

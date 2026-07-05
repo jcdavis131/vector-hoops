@@ -63,6 +63,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 5 seasons (2021-22–2025-26). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
 
+**Era twin:** [[marquis-daniels|Marquis Daniels]] '04 (74% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

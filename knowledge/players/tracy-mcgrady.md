@@ -75,6 +75,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 15 seasons (1997-98–2011-12). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Scoring Volume + Shot Volume identity.
 
+**Era twin:** [[mitch-richmond|Mitch Richmond]] '97 (93% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

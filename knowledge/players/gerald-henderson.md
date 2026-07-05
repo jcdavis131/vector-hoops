@@ -67,6 +67,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 8 seasons (2009-10–2016-17). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
 
+**Era twin:** [[de-andre-hunter|De'Andre Hunter]] '25 (80% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

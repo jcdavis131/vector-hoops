@@ -60,6 +60,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 1 season (1996-97). Consistent Three-Point Volume + Three-Point Accuracy profile across his career.
 
+**Era twin:** [[allan-ray|Allan Ray]] '07 (90% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

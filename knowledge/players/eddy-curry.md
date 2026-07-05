@@ -68,6 +68,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 7 seasons (2001-02–2007-08). Entered as a Rim Protection + Offensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
 
+**Era twin:** [[rj-barrett|RJ Barrett]] '25 (71% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

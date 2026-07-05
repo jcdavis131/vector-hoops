@@ -68,6 +68,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 9 seasons (2009-10–2018-19). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
 
+**Era twin:** [[juancho-hernangomez|Juancho Hernangomez]] '23 (87% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

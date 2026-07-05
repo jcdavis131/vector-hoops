@@ -69,6 +69,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 8 seasons (2018-19–2025-26). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Rim Protection + Offensive Glass identity.
 
+**Era twin:** [[anderson-varejao|Anderson Varejao]] '05 (85% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

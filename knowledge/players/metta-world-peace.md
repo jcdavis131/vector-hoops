@@ -76,6 +76,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 16 seasons (1999-00–2016-17). Entered as a Playmaking + Steals profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
 
+**Era twin:** [[nate-hinton|Nate Hinton]] '21 (93% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

@@ -67,6 +67,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 6 seasons (1996-97–2001-02). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass (Low On-Court Impact) identity.
 
+**Era twin:** [[justin-hamilton|Justin Hamilton]] '15 (86% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

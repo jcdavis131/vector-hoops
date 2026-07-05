@@ -67,6 +67,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 7 seasons (1998-99–2004-05). Consistent Rim Protection + Offensive Glass profile across his career.
 
+**Era twin:** [[festus-ezeli|Festus Ezeli]] '16 (84% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

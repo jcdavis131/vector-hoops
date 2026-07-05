@@ -61,6 +61,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 1 season (1996-97). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
 
+**Era twin:** [[hedo-turkoglu|Hedo Turkoglu]] '14 (77% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

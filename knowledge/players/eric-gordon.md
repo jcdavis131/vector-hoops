@@ -77,6 +77,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 16 seasons (2008-09–2024-25). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
 
+**Era twin:** [[cam-thomas|Cam Thomas]] '25 (93% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

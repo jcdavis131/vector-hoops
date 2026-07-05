@@ -80,6 +80,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 20 seasons (2005-06–2024-25). Entered as a Playmaking + Steals profile, peaked as a Scoring Volume + Shot Volume identity.
 
+**Era twin:** [[jeff-teague|Jeff Teague]] '15 (89% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

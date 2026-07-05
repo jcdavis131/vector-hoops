@@ -75,6 +75,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 15 seasons (2011-12–2025-26). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Scoring Volume + Shot Volume identity.
 
+**Era twin:** [[mario-chalmers|Mario Chalmers]] '16 (83% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

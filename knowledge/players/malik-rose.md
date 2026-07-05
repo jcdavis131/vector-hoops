@@ -74,6 +74,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 13 seasons (1996-97–2008-09). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Defensive Glass + Rim Pressure (Fts) identity.
 
+**Era twin:** [[bam-adebayo|Bam Adebayo]] '22 (84% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

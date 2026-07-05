@@ -74,6 +74,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 13 seasons (2013-14–2025-26). Consistent Rim Protection + Offensive Glass profile across his career.
 
+**Era twin:** [[deandre-jordan|DeAndre Jordan]] '16 (94% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

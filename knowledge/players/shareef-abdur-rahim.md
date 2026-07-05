@@ -72,6 +72,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 11 seasons (1996-97–2006-07). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Scoring Volume + Shot Volume identity.
 
+**Era twin:** [[jaylen-brown|Jaylen Brown]] '26 (91% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../positions/pf|PF]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

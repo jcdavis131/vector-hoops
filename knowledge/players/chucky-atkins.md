@@ -71,6 +71,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 11 seasons (1999-00–2009-10). Entered as a Playmaking + Steals profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
 
+**Era twin:** [[taelon-peter|Taelon Peter]] '26 (91% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/pg|PG]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

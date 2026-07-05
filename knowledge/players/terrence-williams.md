@@ -63,6 +63,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 4 seasons (2009-10–2012-13). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Playmaking + Steals identity.
 
+**Era twin:** [[ryan-rollins|Ryan Rollins]] '26 (86% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sf|SF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

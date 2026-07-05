@@ -73,6 +73,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 14 seasons (2003-04–2016-17). Entered as a Offensive Glass + Defensive Glass profile, peaked as a Three-Point Accuracy (Low Turnovers) identity.
 
+**Era twin:** [[ish-smith|Ish Smith]] '23 (79% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/pf|PF]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

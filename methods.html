@@ -26,6 +26,7 @@
     <a class="site-nav__link" href="/wiki">Wiki</a>
     <a class="site-nav__link is-active" href="/methods" aria-current="page">Methods</a>
     <a class="site-nav__link" href="/leaderboard">Leaderboard</a>
+    <a class="site-nav__link" href="/drift">Drift</a>
   </div>
 </nav>
 
@@ -117,6 +118,24 @@
       <li><b>Basketball-Reference</b> &mdash; per-season positions (99.7% coverage; unmatched seasons render as &mdash;) and current player contracts where salary history is unavailable elsewhere.</li>
       <li>Every season/endpoint response is cached locally; re-runs resume from cache. stats.nba.com throttles aggressively, so builds are deliberately incremental.</li>
     </ul>
+  </section>
+
+  <section class="methods-section" id="drift">
+    <h2>The League Drift</h2>
+    <p>
+      The <a href="/drift">Drift page</a> asks a different question than the rest of the
+      site: not "how good was this player" but "how much did the shape of the league's
+      14-dim vector space itself rotate, season to season." The method, quoted verbatim
+      from <code>assets/drift.json</code>:
+    </p>
+    <p style="font-family:var(--mono); font-size:12px; background:var(--paper); padding:10px 12px; border-radius:8px; border:1px solid var(--hairline); line-height:1.6; white-space:pre-wrap;">orthogonal Procrustes on consecutive-season shared players (&gt;=30); rotation = mean principal angle of Q vs identity; residual = normalized Frobenius after alignment; no scaling (z-spaces pre-normalized); chained transforms map any season into the 1996-97 root frame; axisDrift = 1-|Q_ii|, a stated proxy</p>
+    <p>
+      The chained root-frame transforms also power the wiki's <b>Era twin</b> line: each
+      player's signature-season vector is mapped into the 1996-97 frame and matched to
+      its nearest cosine neighbor from a different decade &mdash; a cross-era comparable
+      the raw z-space alone can't honestly produce, because it never accounts for the
+      league's own rotation.
+    </p>
   </section>
 
   <section class="methods-section" id="accuracy-harness">

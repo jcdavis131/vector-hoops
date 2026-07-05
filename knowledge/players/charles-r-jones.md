@@ -61,6 +61,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 2 seasons (1998-99–1999-00). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Playmaking + Steals identity.
 
+**Era twin:** [[vonteego-cummings|Vonteego Cummings]] '01 (88% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../archetypes/playmaking-steals|Playmaking + Steals]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

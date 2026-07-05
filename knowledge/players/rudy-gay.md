@@ -77,6 +77,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 17 seasons (2006-07–2022-23). Entered as a Offensive Glass (Low On-Court Impact) profile, peaked as a Scoring Volume + Shot Volume identity.
 
+**Era twin:** [[franz-wagner|Franz Wagner]] '25 (92% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sf|SF]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

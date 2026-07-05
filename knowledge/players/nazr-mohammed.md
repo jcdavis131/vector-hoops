@@ -78,6 +78,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 17 seasons (1998-99–2014-15). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Offensive Glass + Defensive Glass identity.
 
+**Era twin:** [[othello-hunter|Othello Hunter]] '09 (92% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

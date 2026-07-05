@@ -69,6 +69,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 9 seasons (1996-97–2005-06). Entered as a Defensive Glass + Rim Pressure (Fts) profile, peaked as a Three-Point Volume + Three-Point Accuracy identity.
 
+**Era twin:** [[jerald-honeycutt|Jerald Honeycutt]] '98 (80% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

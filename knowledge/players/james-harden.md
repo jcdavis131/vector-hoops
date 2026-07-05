@@ -77,6 +77,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 17 seasons (2009-10–2025-26). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
 
+**Era twin:** [[donovan-mitchell|Donovan Mitchell]] '21 (93% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/sg|SG]] · [[../positions/pg|PG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

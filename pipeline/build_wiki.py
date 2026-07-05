@@ -28,6 +28,7 @@ import numpy as np
 
 ROOT = Path(__file__).resolve().parent.parent
 VECTORS = ROOT / "assets" / "vectors.json"
+DRIFT = ROOT / "assets" / "drift.json"
 KNOW = ROOT / "knowledge"
 CACHE = ROOT / "pipeline" / "cache"
 
@@ -58,6 +59,30 @@ def top_traits(v, labels, n=3, sign=1):
 
 def wl(slug: str, name: str) -> str:
     return f"[[{slug}|{name}]]"
+
+
+def decade_of(season: str) -> int:
+    """1999-00 -> 1990, 2000-01 -> 2000, ... — the season's starting year,
+    floored to the decade, used to define "other-decade" for era twins."""
+    return int(season[:4]) // 10 * 10
+
+
+def root_frame_vector(v, season: str, chain_np: dict) -> np.ndarray:
+    """Map a season-space vector into the 1996-97 root frame using the
+    chained Procrustes transform from assets/drift.json.
+
+    Orientation check (see pipeline/procrustes_drift.py): each pair solves
+    Q minimizing ||X_new Q - Y_old||, i.e. v_old ~= v_new @ Q, and the
+    chain is accumulated as `chained = chained @ Q.T`. For 1-D vectors,
+    `M @ v` and `v @ M.T` are the same computation (both contract on the
+    shared index), so the root-frame vector is simply chain[season] @ v
+    -- verified numerically against direct re-derivation of Q from
+    vectors.json for both a single pair and a 3-step chain.
+    """
+    M = chain_np.get(season)
+    if M is None:
+        return np.array(v, float)
+    return M @ np.array(v, float)
 
 
 # ---------------------------------------------------------------------------
@@ -308,6 +333,30 @@ def main() -> None:
         idxs = np.argsort(-S[i])[:NEIGHBORS]
         careers[n]["neighbors"] = [(names[j], float(S[i, j])) for j in idxs]
 
+    # ---- era twins: nearest OTHER-DECADE player, in the root (1996-97)
+    #      Procrustes frame, on signature-season vectors ----
+    if DRIFT.exists():
+        drift = json.loads(DRIFT.read_text(encoding="utf-8"))
+        chain_np = {season: np.array(mat, float) for season, mat in drift["chainedToRoot"].items()}
+        decades = np.array([decade_of(careers[n]["sig_row"]["season"]) for n in names])
+        ERA = np.stack([
+            root_frame_vector(careers[n]["sig_row"]["v"], careers[n]["sig_row"]["season"], chain_np)
+            for n in names
+        ])
+        ERAn = ERA / np.maximum(np.linalg.norm(ERA, axis=1, keepdims=True), 1e-9)
+        ES = ERAn @ ERAn.T
+        for i, n in enumerate(names):
+            other_decade = decades != decades[i]
+            if not other_decade.any():
+                careers[n]["era_twin"] = None
+                continue
+            masked = np.where(other_decade, ES[i], -2.0)
+            j = int(np.argmax(masked))
+            careers[n]["era_twin"] = (names[j], careers[names[j]]["sig_row"]["season"], float(ES[i, j]))
+    else:
+        for n in names:
+            careers[n]["era_twin"] = None
+
     # ---- scouting reports: raw per-100 stat line for each signature season,
     #      fetched/cached per season (pipeline/cache/base_<season>.json) ----
     needed_seasons = sorted({c["sig_row"]["season"] for c in careers.values()})
@@ -430,6 +479,14 @@ def main() -> None:
         body.append("")
         body.append(f"**Career shape:** {career_shape_line(c, clusters)}")
         body.append("")
+        twin = c.get("era_twin")
+        if twin:
+            twin_name, twin_season, twin_cos = twin
+            twin_pct = round(max(0.0, twin_cos) * 100)
+            body.append(f"**Era twin:** {wl(careers[twin_name]['slug'], twin_name)} "
+                        f"{season_abbrev(twin_season)} ({twin_pct}% aligned similarity — "
+                        f"cross-era via Procrustes chaining).")
+            body.append("")
 
         hubs = [f"[[../archetypes/{slugify(a)}|{a}]]" for a in c["archetypes"][:2]]
         hubs += [f"[[../positions/{p.lower()}|{p}]]" for p in c["positions"][:2]]

@@ -62,6 +62,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 3 seasons (1999-00–2001-02). Entered as a Three-Point Accuracy (Low Turnovers) profile, peaked as a Playmaking + Steals identity.
 
+**Era twin:** [[jamaree-bouyea|Jamaree Bouyea]] '26 (80% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../archetypes/playmaking-steals|Playmaking + Steals]] · [[../positions/sg|SG]] · [[../positions/sf|SF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

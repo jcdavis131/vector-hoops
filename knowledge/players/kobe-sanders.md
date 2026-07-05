@@ -59,6 +59,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 1 season (2025-26). Consistent Three-Point Accuracy (Low Turnovers) profile across his career.
 
+**Era twin:** [[scott-brooks|Scott Brooks]] '97 (81% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/three-point-accuracy-low-turnovers|Three-Point Accuracy (Low Turnovers)]] · [[../positions/sg|SG]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

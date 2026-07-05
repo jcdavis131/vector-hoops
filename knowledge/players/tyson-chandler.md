@@ -80,6 +80,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 19 seasons (2001-02–2019-20). Consistent Rim Protection + Offensive Glass profile across his career.
 
+**Era twin:** [[jericho-sims|Jericho Sims]] '22 (94% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../positions/c|C]] · [[../positions/pf|PF]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

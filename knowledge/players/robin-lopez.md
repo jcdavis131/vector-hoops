@@ -76,6 +76,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 15 seasons (2008-09–2022-23). Consistent Rim Protection + Offensive Glass profile across his career.
 
+**Era twin:** [[colin-castleton|Colin Castleton]] '25 (87% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/rim-protection-offensive-glass|Rim Protection + Offensive Glass]] · [[../archetypes/offensive-glass-low-on-court-impact|Offensive Glass (Low On-Court Impact)]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

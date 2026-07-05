@@ -81,6 +81,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 21 seasons (1998-99–2018-19). Entered as a Three-Point Volume + Three-Point Accuracy profile, peaked as a Scoring Volume + Shot Volume identity.
 
+**Era twin:** [[keith-van-horn|Keith Van Horn]] '99 (87% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/scoring-volume-shot-volume|Scoring Volume + Shot Volume]] · [[../archetypes/three-point-volume-three-point-accuracy|Three-Point Volume + Three-Point Accuracy]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->

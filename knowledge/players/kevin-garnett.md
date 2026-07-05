@@ -80,6 +80,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Career shape:** Charted 20 seasons (1996-97–2015-16). Consistent Defensive Glass + Rim Pressure (Fts) profile across his career.
 
+**Era twin:** [[hakeem-olajuwon|Hakeem Olajuwon]] '97 (90% aligned similarity — cross-era via Procrustes chaining).
+
 **Hubs:** [[../archetypes/defensive-glass-rim-pressure-fts|Defensive Glass + Rim Pressure (Fts)]] · [[../archetypes/offensive-glass-defensive-glass|Offensive Glass + Defensive Glass]] · [[../positions/pf|PF]] · [[../positions/c|C]]
 
 <!-- okf:auto:end — curated layer below; humans and LLM agents extend the page here -->
