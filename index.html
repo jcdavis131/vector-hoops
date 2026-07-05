@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Vector Hoops — the daily player-season Chimera</title>
+<meta name="description" content="Guess the fused player-season built from two eras of stats. Era-honest, zero tracking, one puzzle a day.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>&#127936;</text></svg>">
+<link rel="stylesheet" href="assets/hoops.css">
+</head>
+<body>
+
+<header class="vh-header">
+  <div class="vh-header__brand">
+    <span class="vh-logo">VECTOR<span class="vh-logo__accent">HOOPS</span></span>
+  </div>
+  <nav class="vh-tabs" role="tablist" aria-label="Game mode">
+    <button class="vh-tab" id="tab-chimera" role="tab" aria-selected="true" aria-controls="panel-chimera">The Chimera</button>
+    <button class="vh-tab" id="tab-trade" role="tab" aria-selected="false" aria-controls="panel-trade">Trade Machine</button>
+  </nav>
+  <div class="vh-streak" id="streak-box" title="Current streak">
+    <span class="vh-streak__num" id="streak-num">0</span>
+    <span class="vh-streak__label">streak</span>
+  </div>
+</header>
+
+<main id="app">
+
+  <section id="panel-chimera" class="vh-panel" role="tabpanel" aria-labelledby="tab-chimera">
+
+    <div class="vh-card vh-prompt" id="prompt-card">
+      <div class="vh-prompt__eyebrow" id="puzzle-number">Vector Hoops #—</div>
+      <p class="vh-prompt__text" id="prompt-text">Loading today's Chimera&hellip;</p>
+    </div>
+
+    <div class="vh-card vh-guessbar">
+      <div class="vh-autocomplete" id="chimera-autocomplete">
+        <input
+          type="text"
+          id="chimera-input"
+          class="vh-input"
+          placeholder="Type a player-season, e.g. Kobe Bryant (2005-06)"
+          autocomplete="off"
+          aria-autocomplete="list"
+          aria-controls="chimera-suggestions"
+          aria-expanded="false"
+          disabled
+        >
+        <ul class="vh-suggestions" id="chimera-suggestions" role="listbox" hidden></ul>
+      </div>
+      <button class="vh-btn vh-btn--primary" id="chimera-submit" disabled>Guess</button>
+      <div class="vh-guess-counter" id="guess-counter">0 / 6</div>
+    </div>
+
+    <div class="vh-card vh-scoreboard" id="scoreboard" hidden>
+      <div class="vh-scoreboard__pct" id="scoreboard-pct">0%</div>
+      <div class="vh-scoreboard__sub">match on last guess</div>
+    </div>
+
+    <div class="vh-layout">
+      <div class="vh-col">
+        <ol class="vh-guesslist" id="guess-list" aria-live="polite"></ol>
+
+        <div class="vh-card vh-reveal" id="reveal-card" hidden>
+          <h2 class="vh-reveal__title" id="reveal-title">Revealed</h2>
+          <div class="vh-reveal__body" id="reveal-body"></div>
+          <button class="vh-btn vh-btn--accent" id="share-btn">Share result</button>
+          <div class="vh-reveal__copied" id="share-copied" hidden>Copied to clipboard.</div>
+        </div>
+      </div>
+
+      <div class="vh-col vh-col--map">
+        <div class="vh-card vh-mapcard">
+          <div class="vh-mapcard__label">League map</div>
+          <canvas id="hoops-map" class="vh-map" width="600" height="600" aria-label="Scatter map of all player-seasons colored by archetype, with your guesses pinned"></canvas>
+          <div class="vh-mapcard__legend" id="map-legend"></div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <section id="panel-trade" class="vh-panel" role="tabpanel" aria-labelledby="tab-trade" hidden>
+
+    <div class="vh-card vh-prompt">
+      <p class="vh-prompt__text">Pick any player-season. See its 8 nearest neighbors across every era, by full statistical-profile similarity. No daily limit &mdash; just the engine, as a toy.</p>
+    </div>
+
+    <div class="vh-card vh-guessbar">
+      <div class="vh-autocomplete" id="trade-autocomplete">
+        <input
+          type="text"
+          id="trade-input"
+          class="vh-input"
+          placeholder="Type a player-season, e.g. Nikola Jokic (2021-22)"
+          autocomplete="off"
+          aria-autocomplete="list"
+          aria-controls="trade-suggestions"
+          aria-expanded="false"
+          disabled
+        >
+        <ul class="vh-suggestions" id="trade-suggestions" role="listbox" hidden></ul>
+      </div>
+    </div>
+
+    <div class="vh-card vh-trade-anchor" id="trade-anchor" hidden></div>
+
+    <div class="vh-trade-results" id="trade-results"></div>
+
+  </section>
+
+  <div class="vh-loading" id="loading-banner">Loading vectors&hellip;</div>
+  <div class="vh-error" id="error-banner" hidden></div>
+
+</main>
+
+<footer class="vh-footer" id="footer">
+  Vectors: per-100-possession stats, z-scored within each season (era-honest) &middot; &mdash; &middot; built &mdash; &middot; no tracking
+</footer>
+
+<script src="assets/game.js" defer></script>
+</body>
+</html>
