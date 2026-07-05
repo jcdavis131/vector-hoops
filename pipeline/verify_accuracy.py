@@ -162,12 +162,45 @@ def v4_determinism(data: dict) -> None:
     print("  30/30 dates deterministic + constrained")
 
 
+def v5_procrustes(data: dict) -> None:
+    """drift.json integrity: every chained transform must be orthogonal
+    (rotation-only claim), every consecutive pair covered, and the
+    root-frame map must preserve norms (era-twin validity)."""
+    print("V5 procrustes drift integrity…")
+    dj = json.loads((ASSETS / "drift.json").read_text(encoding="utf-8"))
+    n = len(data["features"])
+    for season, M in dj["chainedToRoot"].items():
+        # orthogonality: M M^T = I within rounding tolerance
+        for i in range(n):
+            for j in range(n):
+                dot = sum(M[i][k] * M[j][k] for k in range(n))
+                want = 1.0 if i == j else 0.0
+                if abs(dot - want) > 5e-3:
+                    fail(f"{season}: chained transform not orthogonal "
+                         f"({i},{j})={dot:.4f}")
+                    break
+            else:
+                continue
+            break
+    seasons = sorted({p["season"] for p in data["players"]})
+    covered = {p["to"] for p in dj["pairs"]}
+    missing = [s for s in seasons[1:] if s not in covered]
+    if missing:
+        fail(f"pairs missing seasons: {missing}")
+    if len(dj["chainedToRoot"]) != len(seasons):
+        fail(f"chainedToRoot covers {len(dj['chainedToRoot'])} of "
+             f"{len(seasons)} seasons")
+    print(f"  {len(dj['pairs'])} pairs, {len(dj['chainedToRoot'])} "
+          "chained transforms, all orthogonal")
+
+
 if __name__ == "__main__":
     data = json.loads((ASSETS / "vectors.json").read_text(encoding="utf-8"))
     v1_vectors(data)
     v2_clusters(data)
     v3_deadline()
     v4_determinism(data)
+    v5_procrustes(data)
     if FAILS:
         print(f"\nACCURACY HARNESS: {len(FAILS)} FAILURES — do not ship")
         sys.exit(1)
