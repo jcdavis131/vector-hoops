@@ -6099,7 +6099,7 @@
         '<div class="vh-dossier__bullet">"Measured upside" is the historical mean PLUS_MINUS-z swing for the pool of players who made that team\'s ' +
           'candidate\'s exact current-archetype&rarr;adjacent-archetype pivot before &mdash; observed precedent WITH selection effects (players who ' +
           'pivoted are those whose games changed), not a prediction, projection, or simulation for this specific player.</div>' +
-        '<div class="vh-dossier__bullet">Daily-set scores post to the public leaderboard.'s game enum doesn\'t include "pivot" yet, so results never post.</div>';
+        '<div class="vh-dossier__bullet">Daily-set scores post to the public leaderboard (anonymous session names).</div>';
       return;
     }
     if (which === 'twin') {
