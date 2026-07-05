@@ -18,6 +18,7 @@
   var FADERFINISHER_URL = 'assets/faderfinisher.json';
   var CHEMISTRY_URL = 'assets/chemistry.json';
   var PIVOTS_URL = 'assets/pivots.json';
+  var ERATWINS_URL = 'assets/eratwins.json';
   var ARCHETYPE_TIME_URL = 'assets/archetypes_time.json';
   var EPOCH_DATE = '2026-07-01'; // puzzle #1
   // v4: THREE-PART ANSWERS. The equation itself is three simultaneous
@@ -47,6 +48,9 @@
   var LS_KEY_PIVOT_COUNTER = 'vectorHoops.pivot.counter';
   var LS_KEY_PIVOT_DAILY = 'vectorHoops.pivot.daily.v1';
   var LS_KEY_PIVOT_PRACTICE = 'vectorHoops.pivot.practice';
+  var LS_KEY_TWIN_COUNTER = 'vectorHoops.twin.counter';
+  var LS_KEY_TWIN_DAILY = 'vectorHoops.twin.daily.v1';
+  var LS_KEY_TWIN_PRACTICE = 'vectorHoops.twin.practice';
   var LS_KEY_SEEN_HELP = 'vectorHoops.seenHelp';
   var LS_KEY_LB_PREFIX = 'vectorHoops.lbSubmitted.'; // + game + '.' + day
   var LS_KEY_LB_LAST_GAME = 'vectorHoops.lastPlayedGame';
@@ -56,6 +60,8 @@
   var ARC_MIN_SEASONS = 5;
   var CHEM_ROUNDS_PER_RUN = 5;
   var PIVOT_ROUNDS_PER_RUN = 5;
+  var TWIN_ROUNDS_PER_RUN = 5;
+  var TWIN_MAX_ATTEMPTS = 2;
   var A_COUNT = 7; // first 7 dims come from player A, last 7 from player B
   // GitHub repo/branch + dossier markdown fetch/render now live in
   // assets/dossier.js (shared with wiki.html) — aliased below.
@@ -393,7 +399,7 @@
     if (ch.score) {
       parts.push('scored <b>' + escapeHtml(String(ch.score)) + '</b>');
     }
-    var modeNames = { ch: 'Chimera', dl: 'Deadline', ff: 'Fader or Finisher', arc: 'Career Arc', cm: 'Best Teammate', pv: 'The Pivot' };
+    var modeNames = { ch: 'Chimera', dl: 'Deadline', ff: 'Fader or Finisher', arc: 'Career Arc', cm: 'Best Teammate', pv: 'The Pivot', tw: 'Era Twin' };
     var modeLabel = modeNames[ch.mode] || 'Vector Hoops';
     els.challengeBannerText.innerHTML =
       (parts.length ? parts.join(' ') + ' on ' : '') + escapeHtml(modeLabel) +
@@ -457,11 +463,16 @@
       switchMode('pivot');
       pivotRuns.daily = null;
       switchPivotMode('daily');
+    } else if (ch.mode === 'tw' && TWIN_POOL) {
+      if (ch.date && ch.date !== TODAY) CHALLENGE_PLAY_DATE = ch.date;
+      switchMode('twin');
+      twinRuns.daily = null;
+      switchTwinMode('daily');
     }
   }
 
   function applyDeepLinkMode(ch) {
-    var map = { dl: 'deadline', ff: 'fader', arc: 'arc', cm: 'chem', wi: 'whatif', pv: 'pivot' };
+    var map = { dl: 'deadline', ff: 'fader', arc: 'arc', cm: 'chem', wi: 'whatif', pv: 'pivot', tw: 'twin' };
     var panel = map[ch.mode];
     if (!panel) return;
     switchMode(panel);
@@ -489,6 +500,7 @@
     if (ch.mode === 'cm') return !!(CHEM_POOL && CHEM_POOL.length);
     if (ch.mode === 'wi') return !!DATA;
     if (ch.mode === 'pv') return !!(PIVOT_POOL && PIVOT_POOL.length);
+    if (ch.mode === 'tw') return !!(TWIN_POOL && TWIN_POOL.length);
     return false;
   }
 
@@ -1203,12 +1215,18 @@
       return s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
     }
 
+    // `players` may be a static array (every existing call site) or a
+    // zero-arg function returning the CURRENT pool (Era Twin: the eligible
+    // guess pool changes every round — a live indirection here means one
+    // createAutocomplete() call/listener set can serve every round instead
+    // of re-registering handlers each time).
     function search(term) {
       term = foldTerm(term.trim());
       if (!term) { close(); return; }
+      var pool = typeof players === 'function' ? players() : players;
       var matches = [];
-      for (var i = 0; i < players.length && matches.length < 8; i++) {
-        var p = players[i];
+      for (var i = 0; i < pool.length && matches.length < 8; i++) {
+        var p = pool[i];
         if (p._k === undefined) p._k = foldTerm(playerKey(p));
         if (p._k.indexOf(term) !== -1) matches.push(p);
       }
@@ -5302,16 +5320,447 @@
     });
   }
 
+  // ---------------------------------------------------------------------
+  // ERA TWIN: every quiz-eligible player-season (assets/eratwins.json,
+  // 1,260 careers with >=4 charted seasons) has a real geometric double in
+  // ANOTHER decade — nearest OTHER-decade player by root-frame cosine
+  // (signature seasons chained-Procrustes-mapped to the 1996-97 root
+  // frame). Guess the twin from a typeahead restricted to other-decade
+  // quiz-eligible players only (2 attempts/round). Only the shipped top5
+  // carries a real similarity number, so a near-miss shows warmth ONLY
+  // when the guess lands in that top5 ("92% aligned — so close"); any
+  // other wrong guess gets an honest lower bound off top5[4].sim ("not in
+  // the top 5 — colder than 89%") rather than a fabricated number. Same
+  // 5-round Daily Set / Free Play shape as Chemistry/The Pivot; 2/1/0 pts
+  // per round (first try / second try / miss), 0-10 total. Unranked v1 —
+  // same doctrine as Chemistry/Pivot at launch, no leaderboard submission.
+  // ---------------------------------------------------------------------
+
+  var TWINS = null;              // parsed eratwins.json
+  var TWIN_POOL = null;          // eratwins.json's players array (1,260)
+  var TWIN_BY_DECADE = null;     // { decade: [indices into TWIN_POOL] }
+  var TWIN_DECADE_ORDER = ['1990s', '2000s', '2010s', '2020s'];
+  var activeTwinMode = 'daily';  // 'daily' | 'free'
+  var twinRuns = { daily: null, free: null }; // { rounds, idx, score }
+  var TWIN_STATE = null;             // persisted Daily Set streak/history — LS_KEY_TWIN_DAILY
+  var TWIN_PRACTICE_STATS = null;    // persisted Free Play casual stats — LS_KEY_TWIN_PRACTICE
+  var activeTwinCandidatePool = [];  // current round's other-decade guess pool (fed to createAutocomplete via a getter)
+
+  function buildTwinDecadeIndex() {
+    var byDecade = {};
+    TWIN_POOL.forEach(function (p, i) {
+      (byDecade[p.decade] = byDecade[p.decade] || []).push(i);
+    });
+    TWIN_BY_DECADE = byDecade;
+  }
+
+  function loadTwinCounter() {
+    var n = 0;
+    try {
+      var raw = localStorage.getItem(LS_KEY_TWIN_COUNTER);
+      n = raw ? (parseInt(raw, 10) || 0) : 0;
+    } catch (e) { n = 0; }
+    return n;
+  }
+
+  function saveTwinCounter(n) {
+    try { localStorage.setItem(LS_KEY_TWIN_COUNTER, String(n)); } catch (e) { /* storage unavailable */ }
+  }
+
+  function loadTwinDailyState() {
+    var raw = null;
+    try { raw = localStorage.getItem(LS_KEY_TWIN_DAILY); } catch (e) { raw = null; }
+    var s = { streak: 0, lastPlayDate: null, days: {}, totalSets: 0, totalScoreSum: 0 };
+    if (raw) {
+      try {
+        var parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === 'object') {
+          s.streak = parsed.streak || 0;
+          s.lastPlayDate = parsed.lastPlayDate || null;
+          s.days = parsed.days || {};
+          s.totalSets = parsed.totalSets || 0;
+          s.totalScoreSum = parsed.totalScoreSum || 0;
+        }
+      } catch (e) { /* corrupt, fall back to default */ }
+    }
+    if (!s.days[TODAY]) s.days[TODAY] = { done: false, score: null };
+    return s;
+  }
+
+  function saveTwinDailyState() {
+    try { localStorage.setItem(LS_KEY_TWIN_DAILY, JSON.stringify(TWIN_STATE)); } catch (e) { /* storage unavailable */ }
+  }
+
+  function twinDailyToday() {
+    return TWIN_STATE.days[TODAY];
+  }
+
+  function computeTwinDailyStats() {
+    return {
+      streak: TWIN_STATE.streak,
+      totalSets: TWIN_STATE.totalSets,
+      avgScore: TWIN_STATE.totalSets ? (TWIN_STATE.totalScoreSum / TWIN_STATE.totalSets) : 0
+    };
+  }
+
+  function loadTwinPracticeStats() {
+    var raw = null;
+    try { raw = localStorage.getItem(LS_KEY_TWIN_PRACTICE); } catch (e) { raw = null; }
+    var s = { played: 0, totalScoreSum: 0 };
+    if (raw) {
+      try {
+        var parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === 'object') {
+          s.played = parsed.played || 0;
+          s.totalScoreSum = parsed.totalScoreSum || 0;
+        }
+      } catch (e) { /* corrupt, fall back to default */ }
+    }
+    return s;
+  }
+
+  function saveTwinPracticeStats() {
+    try { localStorage.setItem(LS_KEY_TWIN_PRACTICE, JSON.stringify(TWIN_PRACTICE_STATS)); } catch (e) { /* storage unavailable */ }
+  }
+
+  // Every other-decade quiz-eligible player-season — the only pool a guess
+  // can ever be picked from, so a wrong guess is always a real,
+  // different-decade player-season, never a same-decade non-answer.
+  function twinCandidatePool(anchor) {
+    return TWIN_POOL.filter(function (p) { return p.decade !== anchor.decade; });
+  }
+
+  function buildTwinRound(anchor) {
+    return { anchor: anchor, attempts: 0, guesses: [], solved: false, points: 0, done: false };
+  }
+
+  // Daily Set: seed-pick one anchor per eligible decade bucket first (a
+  // mixed-decade set whenever the pool has enough distinct decades), then
+  // fill any remaining rounds with more seeded picks from the full pool —
+  // never repeating an anchor within the same set.
+  function buildTwinDailyRounds() {
+    var rng = seededRng('vector-hoops:twin-daily:' + playDate());
+    var rounds = [];
+    var usedIdx = {};
+    var decades = TWIN_DECADE_ORDER.filter(function (d) {
+      return TWIN_BY_DECADE[d] && TWIN_BY_DECADE[d].length;
+    });
+    decades.forEach(function (d) {
+      if (rounds.length >= TWIN_ROUNDS_PER_RUN) return;
+      var bucket = TWIN_BY_DECADE[d];
+      var pick = bucket[Math.floor(rng() * bucket.length)];
+      usedIdx[pick] = true;
+      rounds.push(buildTwinRound(TWIN_POOL[pick]));
+    });
+    var guard = 0;
+    while (rounds.length < TWIN_ROUNDS_PER_RUN && guard < 10000) {
+      guard++;
+      var idx = Math.floor(rng() * TWIN_POOL.length);
+      if (usedIdx[idx]) continue;
+      usedIdx[idx] = true;
+      rounds.push(buildTwinRound(TWIN_POOL[idx]));
+    }
+    return rounds;
+  }
+
+  function buildTwinFreeRounds() {
+    var counter = loadTwinCounter();
+    var rounds = [];
+    for (var i = 0; i < TWIN_ROUNDS_PER_RUN; i++) {
+      rounds.push(buildTwinRound(TWIN_POOL[Math.floor(seededRng('vector-hoops:twin:' + counter)() * TWIN_POOL.length)]));
+      counter++;
+    }
+    saveTwinCounter(counter);
+    return rounds;
+  }
+
+  function activeTwinRun() {
+    return twinRuns[activeTwinMode];
+  }
+
+  function startTwinRun(mode) {
+    activeTwinMode = mode;
+    if (mode === 'daily') {
+      twinRuns.daily = { rounds: buildTwinDailyRounds(), idx: 0, score: 0 };
+    } else {
+      twinRuns.free = { rounds: buildTwinFreeRounds(), idx: 0, score: 0 };
+    }
+    els.twinFinal.hidden = true;
+    renderTwinRound();
+  }
+
+  function renderTwinHeader() {
+    var isDaily = activeTwinMode === 'daily';
+    els.twinEyebrow.textContent = isDaily
+      ? 'Era Twin — Daily Set #' + puzzleNumber(TODAY)
+      : 'Era Twin — Free Play (practice)';
+    els.twinStreakWrap.hidden = !isDaily;
+    if (isDaily) els.twinStreakNum.textContent = String(TWIN_STATE.streak);
+    els.twinPracticeBanner.hidden = isDaily;
+  }
+
+  // vectors.json carries no decade/archetype field of its own — resolve an
+  // eratwins.json name+season back to its real 14-dim era-z vector via the
+  // same PLAYERS_BY_NAME_SEASON index Chemistry uses. Every eratwins.json
+  // entry (anchor, twin, and all top5) was independently verified resolvable
+  // at authoring time; still resolved defensively (null-checked below) so a
+  // future data drift fails soft (bars just don't render) rather than throws.
+  function resolveTwinVector(name, season) {
+    var p = PLAYERS_BY_NAME_SEASON ? PLAYERS_BY_NAME_SEASON[name + '|' + season] : null;
+    return p ? p.v : null;
+  }
+
+  function renderTwinAnchorCard(anchor) {
+    els.twinAnchorName.textContent = anchor.name + ' — ' + anchor.season;
+    els.twinAnchorDecadeChip.textContent = anchor.decade;
+    els.twinAnchorArchetypeChip.textContent = anchor.archetype;
+    var v = resolveTwinVector(anchor.name, anchor.season);
+    if (v && els.twinAnchorMinibars) {
+      els.twinAnchorMinibars.hidden = false;
+      renderMiniSigmaBars(els.twinAnchorMinibars, v);
+    } else if (els.twinAnchorMinibars) {
+      els.twinAnchorMinibars.hidden = true;
+    }
+  }
+
+  function renderTwinAttempts(round) {
+    if (round.done) {
+      els.twinAttempts.textContent = round.solved
+        ? 'Solved in ' + round.attempts + (round.attempts === 1 ? ' attempt.' : ' attempts.')
+        : 'Out of attempts.';
+    } else {
+      els.twinAttempts.textContent = 'Attempt ' + (round.attempts + 1) + ' of ' + TWIN_MAX_ATTEMPTS + '.';
+    }
+  }
+
+  // Warmth for a wrong guess: the shipped top5 is the ONLY source of a real
+  // similarity number for this anchor, so a guess landing in it shows that
+  // exact %; any other guess is honestly bounded by the top5's weakest
+  // (5th-place) entry rather than inventing a number nothing here can verify.
+  function twinGuessFeedback(anchor, picked) {
+    var top5 = anchor.top5;
+    for (var i = 0; i < top5.length; i++) {
+      if (top5[i].name === picked.name && top5[i].season === picked.season) {
+        return { warm: true, pct: Math.round(top5[i].sim * 100) };
+      }
+    }
+    return { warm: false, boundPct: Math.round(top5[top5.length - 1].sim * 100) };
+  }
+
+  function twinGuessFeedbackText(fb) {
+    return fb.warm
+      ? (fb.pct + '% aligned — so close.')
+      : ('not in the top 5 — colder than ' + fb.boundPct + '%.');
+  }
+
+  function renderTwinGuessList(round) {
+    els.twinGuesses.innerHTML = '';
+    round.guesses.forEach(function (g) {
+      var li = document.createElement('li');
+      li.className = 'vh-twin-guess';
+      li.textContent = g.name + ' (' + g.season + ') — ' + twinGuessFeedbackText(g.feedback);
+      els.twinGuesses.appendChild(li);
+    });
+  }
+
+  function renderTwinRound() {
+    var run = activeTwinRun();
+    var round = run.rounds[run.idx];
+    els.twinRoundNum.textContent = String(run.idx + 1);
+    els.twinScoreNum.textContent = String(run.score);
+    renderTwinAnchorCard(round.anchor);
+    renderTwinAttempts(round);
+    renderTwinGuessList(round);
+    els.twinVerdictWrap.hidden = true;
+    els.twinInput.value = '';
+    els.twinInput.disabled = false;
+    activeTwinCandidatePool = twinCandidatePool(round.anchor);
+    renderTwinHeader();
+    track('vh-twin-round', { round: run.idx + 1, mode: activeTwinMode });
+  }
+
+  function twinGapYears(anchor) {
+    return Math.abs(parseInt(anchor.twin.season.slice(0, 4), 10) - parseInt(anchor.season.slice(0, 4), 10));
+  }
+
+  function renderTwinReveal(round) {
+    var run = activeTwinRun();
+    var anchor = round.anchor, twin = anchor.twin;
+    els.twinVerdictWrap.hidden = false;
+    els.twinVerdict.innerHTML = '';
+    var prefix = round.solved
+      ? (round.attempts === 1 ? 'Correct on the first try — his era twin is ' : 'Correct — his era twin is ')
+      : 'Missed it — his real era twin is ';
+    els.twinVerdict.appendChild(document.createTextNode(prefix));
+    var nameSpan = document.createElement('span');
+    els.twinVerdict.appendChild(nameSpan);
+    els.twinVerdict.appendChild(document.createTextNode(' (' + twin.season + ').'));
+    tryLinkMoverName(nameSpan, twin.name);
+
+    els.twinRevealAnchorTitle.textContent = anchor.name + ' — ' + anchor.season;
+    els.twinRevealTwinTitle.textContent = twin.name + ' — ' + twin.season;
+    var av = resolveTwinVector(anchor.name, anchor.season);
+    var tv = resolveTwinVector(twin.name, twin.season);
+    if (av && els.twinRevealAnchorBars) renderMiniSigmaBars(els.twinRevealAnchorBars, av);
+    if (tv && els.twinRevealTwinBars) renderMiniSigmaBars(els.twinRevealTwinBars, tv);
+    els.twinRevealSimilarity.textContent = Math.round(twin.similarity * 100) + '% aligned — twins across ' +
+      twinGapYears(anchor) + ' years.';
+
+    els.twinNextBtn.textContent = (run.idx + 1 >= TWIN_ROUNDS_PER_RUN) ? 'See results' : 'Next round';
+  }
+
+  function answerTwinGuess(picked) {
+    var run = activeTwinRun();
+    var round = run.rounds[run.idx];
+    if (round.done) return;
+    round.attempts++;
+    var isCorrect = picked.name === round.anchor.twin.name && picked.season === round.anchor.twin.season;
+    if (isCorrect) {
+      round.solved = true;
+      round.points = round.attempts === 1 ? 2 : 1;
+      round.done = true;
+      run.score += round.points;
+    } else {
+      round.guesses.push({ name: picked.name, season: picked.season, feedback: twinGuessFeedback(round.anchor, picked) });
+      if (round.attempts >= TWIN_MAX_ATTEMPTS) round.done = true;
+    }
+    els.twinScoreNum.textContent = String(run.score);
+    renderTwinAttempts(round);
+    renderTwinGuessList(round);
+    els.twinInput.value = '';
+    if (round.done) {
+      els.twinInput.disabled = true;
+      renderTwinReveal(round);
+    }
+  }
+
+  function buildTwinShareText() {
+    var run = twinRuns.daily;
+    var rows = run.rounds.map(function (r) {
+      return r.points === 2 ? '🟩' : (r.points === 1 ? '🟨' : '⬜');
+    }).join('');
+    return 'Vector Hoops — Era Twin #' + puzzleNumber(TODAY) + ' ' + run.score + '/' + (TWIN_ROUNDS_PER_RUN * 2) +
+      '\n' + rows;
+  }
+
+  function showTwinFinal() {
+    var run = activeTwinRun();
+    els.twinFinal.hidden = false;
+    els.twinVerdictWrap.hidden = true;
+    els.twinFinalScore.textContent = 'You scored ' + run.score + '/' + (TWIN_ROUNDS_PER_RUN * 2) + '.';
+
+    if (activeTwinMode === 'daily') {
+      var rec = twinDailyToday();
+      if (!rec.done) {
+        rec.done = true;
+        rec.score = run.score;
+        var yesterday = utcDateString(new Date(Date.now() - 86400000));
+        TWIN_STATE.streak = (TWIN_STATE.lastPlayDate === yesterday) ? TWIN_STATE.streak + 1 : 1;
+        TWIN_STATE.lastPlayDate = TODAY;
+        TWIN_STATE.totalSets++;
+        TWIN_STATE.totalScoreSum += run.score;
+        saveTwinDailyState();
+        track('vh-twin-done', { score: run.score, mode: 'daily' });
+      }
+      els.twinAgainBtn.hidden = true;
+      els.twinShareBtn.hidden = false;
+      els.twinComeback.hidden = false;
+      els.twinShareCopied.hidden = true;
+    } else {
+      TWIN_PRACTICE_STATS.played++;
+      TWIN_PRACTICE_STATS.totalScoreSum += run.score;
+      saveTwinPracticeStats();
+      els.twinAgainBtn.hidden = false;
+      els.twinShareBtn.hidden = true;
+      els.twinComeback.hidden = true;
+      track('vh-twin-done', { score: run.score, mode: 'free' });
+    }
+    renderTwinHeader();
+  }
+
+  function nextTwinRound() {
+    var run = activeTwinRun();
+    var round = run.rounds[run.idx];
+    if (!round.done) return;
+    run.idx++;
+    if (run.idx >= TWIN_ROUNDS_PER_RUN) {
+      showTwinFinal();
+    } else {
+      renderTwinRound();
+    }
+  }
+
+  // Switching Daily Set <-> Free Play never restarts an in-progress run —
+  // each mode keeps its own state in twinRuns until you start a new one.
+  function switchTwinMode(mode) {
+    activeTwinMode = mode;
+    els.twinSubDaily.classList.toggle('is-active', mode === 'daily');
+    els.twinSubFree.classList.toggle('is-active', mode === 'free');
+    els.twinSubDaily.setAttribute('aria-selected', String(mode === 'daily'));
+    els.twinSubFree.setAttribute('aria-selected', String(mode === 'free'));
+
+    if (mode === 'daily' && twinDailyToday().done && !twinRuns.daily) {
+      var doneRec = twinDailyToday();
+      twinRuns.daily = { rounds: [], idx: TWIN_ROUNDS_PER_RUN, score: doneRec.score || 0 };
+    }
+
+    var run = twinRuns[mode];
+    if (!run) {
+      startTwinRun(mode);
+    } else if (run.idx >= TWIN_ROUNDS_PER_RUN) {
+      showTwinFinal();
+    } else {
+      els.twinFinal.hidden = true;
+      renderTwinRound();
+    }
+    renderTwinHeader();
+  }
+
+  // One createAutocomplete() call for the whole mode: the guess pool
+  // changes every round, so the `players` arg is a getter (see the
+  // function-or-array branch added to createAutocomplete's search()) that
+  // always reads the CURRENT round's other-decade candidates — no need to
+  // re-register input/keydown/focus/blur listeners per round.
+  function setupTwinInput() {
+    createAutocomplete(els.twinInput, els.twinSuggestions, function () {
+      return activeTwinCandidatePool;
+    }, function (p) {
+      answerTwinGuess(p);
+    }, { hintEl: els.twinFocusHint });
+  }
+
+  function setupTwin() {
+    buildTwinDecadeIndex();
+    setupTwinInput();
+    els.twinNextBtn.addEventListener('click', nextTwinRound);
+    els.twinAgainBtn.addEventListener('click', function () { startTwinRun('free'); });
+    els.twinSubDaily.addEventListener('click', function () { switchTwinMode('daily'); });
+    els.twinSubFree.addEventListener('click', function () { switchTwinMode('free'); });
+    els.twinMethodBtn.addEventListener('click', function () { openMethods('twin', els.twinMethodBtn); });
+    els.twinShareBtn.addEventListener('click', function () {
+      var run = twinRuns.daily;
+      var text = buildTwinShareText();
+      shareChallengeResult(text, {
+        mode: 'tw',
+        date: playDate(),
+        score: run.score + '/' + (TWIN_ROUNDS_PER_RUN * 2),
+        scoreLabel: run.score + '/' + (TWIN_ROUNDS_PER_RUN * 2),
+        challenger: challengerName()
+      }, els.twinShareCopied, 'twin-daily-challenge');
+    });
+  }
+
   var pivotInitialized = false;
+  var twinInitialized = false;
 
   function switchMode(mode) {
     var panels = {
       chimera: els.panelChimera, deadline: els.panelDeadline, fader: els.panelFader, arc: els.panelArc,
-      chem: els.panelChem, whatif: els.panelWhatif, pivot: els.panelPivot
+      chem: els.panelChem, whatif: els.panelWhatif, pivot: els.panelPivot, twin: els.panelTwin
     };
     var tabs = {
       chimera: els.tabChimera, deadline: els.tabDeadline, fader: els.tabFader, arc: els.tabArc,
-      chem: els.tabChem, whatif: els.tabWhatif, pivot: els.tabPivot
+      chem: els.tabChem, whatif: els.tabWhatif, pivot: els.tabPivot, twin: els.tabTwin
     };
     Object.keys(panels).forEach(function (m) {
       panels[m].hidden = m !== mode;
@@ -5343,6 +5792,10 @@
       pivotInitialized = true;
       switchPivotMode('daily');
     }
+    if (mode === 'twin' && !twinInitialized && TWIN_POOL) {
+      twinInitialized = true;
+      switchTwinMode('daily');
+    }
     checkRollover();
   }
 
@@ -5354,6 +5807,7 @@
     els.tabChem.addEventListener('click', function () { switchMode('chem'); });
     els.tabWhatif.addEventListener('click', function () { switchMode('whatif'); });
     els.tabPivot.addEventListener('click', function () { switchMode('pivot'); });
+    els.tabTwin.addEventListener('click', function () { switchMode('twin'); });
   }
 
   // ---------------------------------------------------------------------
@@ -5527,11 +5981,20 @@
       renderStatsTile(els.statsPivotGrid, pivot.streak, 'Streak');
     }
 
+    if (els.statsTwinGrid) {
+      var twin = computeTwinDailyStats();
+      els.statsTwinGrid.innerHTML = '';
+      renderStatsTile(els.statsTwinGrid, twin.totalSets, 'Sets played');
+      renderStatsTile(els.statsTwinGrid, twin.avgScore.toFixed(1), 'Avg score');
+      renderStatsTile(els.statsTwinGrid, twin.streak, 'Streak');
+    }
+
     els.statsPracticeLine.textContent = 'Chimera: ' + PRACTICE_STATS.played + ' played, ' + PRACTICE_STATS.won + ' won. ' +
       'Fader or Finisher: ' + practiceSetSummary(FADER_PRACTICE_STATS) + '. ' +
       'Career Arc: ' + practiceSetSummary(ARC_PRACTICE_STATS) + '. ' +
       'Chemistry: ' + practiceSetSummary(CHEM_PRACTICE_STATS) + '. ' +
       'The Pivot: ' + practiceSetSummary(PIVOT_PRACTICE_STATS) + '. ' +
+      'Era Twin: ' + practiceSetSummary(TWIN_PRACTICE_STATS) + '. ' +
       'Casual only — never counted toward your streaks or stats above.';
   }
 
@@ -5553,12 +6016,13 @@
   }
 
   function clearAllData() {
-    var ok = window.confirm('Clear all Vector Hoops data on this device? This removes every daily streak (Chimera, Deadline, Fader or Finisher, Career Arc, Chemistry, The Pivot) and all practice counters. This cannot be undone.');
+    var ok = window.confirm('Clear all Vector Hoops data on this device? This removes every daily streak (Chimera, Deadline, Fader or Finisher, Career Arc, Chemistry, The Pivot, Era Twin) and all practice counters. This cannot be undone.');
     if (!ok) return;
     [LS_KEY, LS_KEY_DEADLINE_DAILY, LS_KEY_PRACTICE_STATS, LS_KEY_DEADLINE_COUNTER,
      LS_KEY_FF_DAILY, LS_KEY_FF_PRACTICE, LS_KEY_ARC_DAILY, LS_KEY_ARC_PRACTICE,
      LS_KEY_CHEM_DAILY, LS_KEY_CHEM_PRACTICE, LS_KEY_CHEM_COUNTER,
-     LS_KEY_PIVOT_DAILY, LS_KEY_PIVOT_PRACTICE, LS_KEY_PIVOT_COUNTER].forEach(function (key) {
+     LS_KEY_PIVOT_DAILY, LS_KEY_PIVOT_PRACTICE, LS_KEY_PIVOT_COUNTER,
+     LS_KEY_TWIN_DAILY, LS_KEY_TWIN_PRACTICE, LS_KEY_TWIN_COUNTER].forEach(function (key) {
       try { localStorage.removeItem(key); } catch (e) { /* storage unavailable */ }
     });
     window.location.reload();
@@ -5634,6 +6098,20 @@
           'candidate\'s exact current-archetype&rarr;adjacent-archetype pivot before &mdash; observed precedent WITH selection effects (players who ' +
           'pivoted are those whose games changed), not a prediction, projection, or simulation for this specific player.</div>' +
         '<div class="vh-dossier__bullet">Unranked v1: the leaderboard\'s game enum doesn\'t include "pivot" yet, so results never post.</div>';
+      return;
+    }
+    if (which === 'twin') {
+      els.methodsTitle.textContent = 'Era Twin — method & data sources';
+      els.methodsBody.innerHTML =
+        '<p class="vh-dossier__p">' + escapeHtml(TWINS && TWINS.method || '') + '</p>' +
+        '<h4 class="vh-dossier__h4">Data sources &amp; minimums</h4>' +
+        '<div class="vh-dossier__bullet">Quiz pool: 1,260 player-seasons from careers with &ge;4 charted seasons, 1996&ndash;97 through 2025&ndash;26.</div>' +
+        '<div class="vh-dossier__bullet">A player\'s twin is always from a DIFFERENT decade by construction &mdash; nearest OTHER-decade player-season by ' +
+          'root-frame cosine, after chaining each decade\'s own Procrustes transform back to the shared 1996&ndash;97 root frame.</div>' +
+        '<div class="vh-dossier__bullet">Only the shipped top 5 candidates carry a real similarity number. A guess landing in that top 5 shows its exact ' +
+          '% aligned; any other guess shows an honest lower bound off the 5th-place similarity rather than a fabricated number &mdash; warmth shows for ' +
+          'near-misses, not for every possible guess.</div>' +
+        '<div class="vh-dossier__bullet">Unranked v1: the leaderboard\'s game enum doesn\'t include "twin" yet, so results never post.</div>';
       return;
     }
     els.methodsTitle.textContent = 'Method & data sources';
@@ -5852,6 +6330,7 @@
     els.tabChem = document.getElementById('tab-chem');
     els.tabWhatif = document.getElementById('tab-whatif');
     els.tabPivot = document.getElementById('tab-pivot');
+    els.tabTwin = document.getElementById('tab-twin');
     els.panelChimera = document.getElementById('panel-chimera');
     els.panelDeadline = document.getElementById('panel-deadline');
     els.panelFader = document.getElementById('panel-fader');
@@ -5859,6 +6338,7 @@
     els.panelChem = document.getElementById('panel-chem');
     els.panelWhatif = document.getElementById('panel-whatif');
     els.panelPivot = document.getElementById('panel-pivot');
+    els.panelTwin = document.getElementById('panel-twin');
     els.deadlineRoundNum = document.getElementById('deadline-round-num');
     els.deadlineScoreNum = document.getElementById('deadline-score-num');
     els.deadlinePrompt = document.getElementById('deadline-prompt');
@@ -6071,9 +6551,44 @@
     els.pivotAgainBtn = document.getElementById('pivot-again-btn');
     els.pivotMethodBtn = document.getElementById('pivot-method-btn');
 
-    // Stats modal (Chemistry, The Pivot)
+    // Era Twin
+    els.twinSubDaily = document.getElementById('twin-sub-daily');
+    els.twinSubFree = document.getElementById('twin-sub-free');
+    els.twinPracticeBanner = document.getElementById('twin-practice-banner');
+    els.twinEyebrow = document.getElementById('twin-eyebrow');
+    els.twinRoundNum = document.getElementById('twin-round-num');
+    els.twinScoreNum = document.getElementById('twin-score-num');
+    els.twinStreakWrap = document.getElementById('twin-streak-wrap');
+    els.twinStreakNum = document.getElementById('twin-streak-num');
+    els.twinAnchorName = document.getElementById('twin-anchor-name');
+    els.twinAnchorDecadeChip = document.getElementById('twin-anchor-decade-chip');
+    els.twinAnchorArchetypeChip = document.getElementById('twin-anchor-archetype-chip');
+    els.twinAnchorMinibars = document.getElementById('twin-anchor-minibars');
+    els.twinAttempts = document.getElementById('twin-attempts');
+    els.twinInput = document.getElementById('twin-input');
+    els.twinSuggestions = document.getElementById('twin-suggestions');
+    els.twinFocusHint = document.getElementById('twin-focus-hint');
+    els.twinGuesses = document.getElementById('twin-guesses');
+    els.twinVerdictWrap = document.getElementById('twin-verdict-wrap');
+    els.twinVerdict = document.getElementById('twin-verdict');
+    els.twinRevealAnchorTitle = document.getElementById('twin-reveal-anchor-title');
+    els.twinRevealAnchorBars = document.getElementById('twin-reveal-anchor-bars');
+    els.twinRevealTwinTitle = document.getElementById('twin-reveal-twin-title');
+    els.twinRevealTwinBars = document.getElementById('twin-reveal-twin-bars');
+    els.twinRevealSimilarity = document.getElementById('twin-reveal-similarity');
+    els.twinNextBtn = document.getElementById('twin-next-btn');
+    els.twinFinal = document.getElementById('twin-final');
+    els.twinFinalScore = document.getElementById('twin-final-score');
+    els.twinComeback = document.getElementById('twin-comeback');
+    els.twinShareBtn = document.getElementById('twin-share-btn');
+    els.twinShareCopied = document.getElementById('twin-share-copied');
+    els.twinAgainBtn = document.getElementById('twin-again-btn');
+    els.twinMethodBtn = document.getElementById('twin-method-btn');
+
+    // Stats modal (Chemistry, The Pivot, Era Twin)
     els.statsChemGrid = document.getElementById('stats-chem-grid');
     els.statsPivotGrid = document.getElementById('stats-pivot-grid');
+    els.statsTwinGrid = document.getElementById('stats-twin-grid');
   }
 
   // ---------------------------------------------------------------------
@@ -6371,6 +6886,8 @@
         CHEM_PRACTICE_STATS = loadChemPracticeStats();
         PIVOT_STATE = loadPivotDailyState();
         PIVOT_PRACTICE_STATS = loadPivotPracticeStats();
+        TWIN_STATE = loadTwinDailyState();
+        TWIN_PRACTICE_STATS = loadTwinPracticeStats();
         buildPlayerLookups();
 
         els.loadingBanner.hidden = true;
@@ -6472,6 +6989,22 @@
           .catch(function () {
             els.tabPivot.disabled = true;
             els.tabPivot.setAttribute('aria-disabled', 'true');
+          });
+
+        fetch(ERATWINS_URL)
+          .then(function (res) {
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+            return res.json();
+          })
+          .then(function (tj) {
+            TWINS = tj;
+            TWIN_POOL = tj.players || [];
+            setupTwin();
+            maybeApplyChallenge();
+          })
+          .catch(function () {
+            els.tabTwin.disabled = true;
+            els.tabTwin.setAttribute('aria-disabled', 'true');
           });
 
         if (todayRecord().guesses.length === 0 && !todayRecord().done) {

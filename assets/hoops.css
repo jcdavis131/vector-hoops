@@ -2357,3 +2357,61 @@ details.vh-pivot-row--reveal.is-picked:not(.is-correct){ border-color: var(--dat
 .vh-pivot-row__chip--adj.is-used{ opacity: 1; border-color: var(--hot); color: var(--hot); }
 
 .vh-pivot__verdict-wrap{ margin-top: 14px; }
+
+/* ---------- Era Twin: anchor card + typeahead + side-by-side reveal ---------- */
+
+.vh-twin-card{ display: flex; flex-direction: column; }
+
+.vh-twin-anchor{ margin-bottom: 10px; }
+.vh-twin-anchor__name{
+  font-family: var(--mono);
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--ink);
+  margin: 0 0 6px;
+}
+.vh-twin-anchor__chips{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.vh-twin-anchor .vh-arc-card__minibars{ max-width: 260px; }
+
+.vh-twin__attempts{
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin: 0 0 8px;
+}
+
+.vh-twin-guesses{
+  list-style: none;
+  margin: 10px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.vh-twin-guess{
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ink-soft);
+  padding: 6px 10px;
+  border: 1px solid var(--hairline);
+  border-radius: 6px;
+  background: var(--paper);
+}
+
+.vh-twin-reveal{ margin-top: 12px; }
+.vh-twin-reveal .vh-slot-card__title{ text-transform: none; letter-spacing: 0; font-size: 12px; }
+.vh-twin-reveal__similarity{
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--ink);
+  margin: 10px 0 0;
+}

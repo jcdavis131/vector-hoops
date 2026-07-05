@@ -86,6 +86,9 @@
   <button class="vh-tab" id="tab-pivot" type="button" role="tab" aria-selected="false">
     <span class="vh-tab__icon" aria-hidden="true">🔀</span><span class="vh-tab__label"><span class="vh-tab__label-full">The Pivot</span><span class="vh-tab__label-short">Pivot</span></span>
   </button>
+  <button class="vh-tab" id="tab-twin" type="button" role="tab" aria-selected="false">
+    <span class="vh-tab__icon" aria-hidden="true">👥</span><span class="vh-tab__label"><span class="vh-tab__label-full">Era Twin</span><span class="vh-tab__label-short">Twin</span></span>
+  </button>
 </nav>
 
 <main id="app">
@@ -785,6 +788,89 @@
 
   </section>
 
+  <section id="panel-twin" class="vh-panel" hidden>
+
+    <div class="vh-subtabs" id="twin-subtabs" role="tablist" aria-label="Era Twin play mode">
+      <button class="vh-subtab is-active" id="twin-sub-daily" type="button" role="tab" aria-selected="true">Daily Set</button>
+      <button class="vh-subtab" id="twin-sub-free" type="button" role="tab" aria-selected="false">Free Play</button>
+    </div>
+
+    <div class="vh-practice-banner" id="twin-practice-banner" hidden>
+      <span class="vh-practice-banner__text">PRACTICE &mdash; doesn't touch your Era Twin streak</span>
+    </div>
+
+    <div class="vh-card vh-prompt">
+      <div class="vh-prompt__eyebrow" id="twin-eyebrow">Era Twin &mdash; Daily Set</div>
+      <p class="vh-prompt__text">Round <span id="twin-round-num">1</span>/5 &middot; Score <span id="twin-score-num">0</span>/10<span id="twin-streak-wrap"> &middot; Streak <span id="twin-streak-num">0</span></span></p>
+    </div>
+
+    <div class="vh-card vh-twin-card">
+      <div class="vh-twin-anchor">
+        <p class="vh-twin-anchor__name" id="twin-anchor-name">Loading a player&hellip;</p>
+        <div class="vh-twin-anchor__chips">
+          <span class="vh-hint-chip" id="twin-anchor-decade-chip"></span>
+          <span class="vh-hint-chip" id="twin-anchor-archetype-chip"></span>
+        </div>
+        <div class="vh-arc-card__minibars" id="twin-anchor-minibars"></div>
+      </div>
+
+      <p class="vh-pivot__question">Who is his era twin? (a player from a DIFFERENT decade)</p>
+      <p class="vh-twin__attempts" id="twin-attempts">Attempt 1 of 2.</p>
+
+      <div class="vh-autocomplete" id="twin-autocomplete">
+        <span class="vh-autocomplete__glyph" aria-hidden="true">&#128269;</span>
+        <input
+          type="text"
+          id="twin-input"
+          class="vh-input vh-input--search"
+          placeholder="Start typing any other-decade player&hellip;"
+          autocomplete="off"
+          autocorrect="off"
+          autocapitalize="off"
+          spellcheck="false"
+          aria-autocomplete="list"
+          aria-controls="twin-suggestions"
+          aria-expanded="false"
+        >
+        <span class="vh-autocomplete__chevron" aria-hidden="true">&#8964;</span>
+        <ul class="vh-suggestions" id="twin-suggestions" role="listbox" hidden></ul>
+        <p class="vh-autocomplete__hint" id="twin-focus-hint" hidden>e.g. a player from a different decade &mdash; only other-decade players are eligible</p>
+      </div>
+      <p class="vh-autocomplete__kbd">&uarr;&darr; to browse &middot; Enter to pick</p>
+
+      <ul class="vh-twin-guesses" id="twin-guesses"></ul>
+
+      <div class="vh-pivot__verdict-wrap" id="twin-verdict-wrap" hidden>
+        <p class="vh-deadline__verdict" id="twin-verdict"></p>
+
+        <div class="vh-slots-row vh-twin-reveal" id="twin-reveal">
+          <div class="vh-card vh-slot-card" id="twin-reveal-anchor-card">
+            <div class="vh-slot-card__head"><span class="vh-slot-card__title" id="twin-reveal-anchor-title"></span></div>
+            <div class="vh-arc-card__minibars" id="twin-reveal-anchor-bars"></div>
+          </div>
+          <div class="vh-card vh-slot-card" id="twin-reveal-twin-card">
+            <div class="vh-slot-card__head"><span class="vh-slot-card__title" id="twin-reveal-twin-title"></span></div>
+            <div class="vh-arc-card__minibars" id="twin-reveal-twin-bars"></div>
+          </div>
+        </div>
+        <p class="vh-twin-reveal__similarity" id="twin-reveal-similarity"></p>
+
+        <button class="vh-btn vh-btn--primary" id="twin-next-btn" type="button">Next round</button>
+      </div>
+    </div>
+
+    <div class="vh-deadline__final" id="twin-final" hidden>
+      <p class="vh-deadline__final-score" id="twin-final-score"></p>
+      <p class="vh-deadline__comeback" id="twin-comeback" hidden>Next Daily Set at UTC midnight.</p>
+      <button class="vh-btn vh-btn--accent" id="twin-share-btn" type="button" hidden title="Text a challenge link — same puzzle, head-to-head">Text challenge</button>
+      <div class="vh-reveal__copied" id="twin-share-copied" hidden>Opening Messages… link copied too.</div>
+      <button class="vh-btn vh-btn--accent" id="twin-again-btn" type="button">Run again</button>
+    </div>
+
+    <p class="vh-deadline__method"><button type="button" class="vh-link-btn" id="twin-method-btn">Method &amp; data sources &rarr;</button></p>
+
+  </section>
+
   <div class="vh-loading" id="loading-banner">Loading vectors&hellip;</div>
   <div class="vh-error" id="error-banner" hidden></div>
 
@@ -809,6 +895,7 @@
       <li><b>Chemistry:</b> a real teammate pair (measured, same team-season) sets the question &mdash; "Who complemented {player} best on the {season} {team}?" Pick the true partner from 4 options; the reveal shows the measured complementarity, joint plus-minus, and a chemistry percentile, plus a one-line why. 5 rounds a day; unranked v1, doesn't touch the public leaderboard.</li>
       <li><b>What-If Lab:</b> pick any two player-seasons across any eras and get a full partnership report &mdash; complementarity, a dimensional coverage map, redundancy/shared-weakness warnings, a combined court diagram, and the closest real-world pair by measured complementarity. Pure sandbox: no daily puzzle, no streak.</li>
       <li><b>The Pivot:</b> a real current-roster team &mdash; "Who has the most measured upside in an ADJACENT role?" Pick a player; the reveal ranks every candidate by the real historical mean plus-minus swing for players who made that exact archetype-to-archetype pivot before, with a name-and-seasons example ("the receipts") and each candidate's own nearby archetypes. Exact pick = 2 pts, anyone in the top 3 = 1 pt, 5 rounds a day (0&ndash;10). Historical precedent with selection effects &mdash; not a prediction. Unranked v1; doesn't touch the public leaderboard.</li>
+      <li><b>Era Twin:</b> every player has a geometric double in another decade &mdash; find them. An anchor player-season's sigma profile is shown; guess their era twin from a typeahead limited to other-decade players only, 2 attempts. First try = 2 pts, second try = 1 pt, miss = 0, 5 rounds a day (0&ndash;10). Warmth shows for near-misses: a guess in the shipped top 5 shows its real similarity %; anything else gets an honest "colder than" bound off the 5th-place similarity, since only the top 5 carry a shipped number. The reveal shows both players' sigma profiles side by side, the measured similarity, and the age gap in years. Unranked v1; doesn't touch the public leaderboard.</li>
     </ol>
     <p class="vh-modal__telemetry" id="telemetry-note">Anonymous play events help tune the game &mdash; a random id, no account, no ads.</p>
     <button class="vh-btn vh-btn--primary" id="help-close" type="button">Got it</button>
@@ -859,6 +946,11 @@
     <div class="vh-stats-section">
       <div class="vh-stats-section__label">The Pivot &mdash; Daily Set</div>
       <div class="vh-stats-grid" id="stats-pivot-grid"></div>
+    </div>
+
+    <div class="vh-stats-section">
+      <div class="vh-stats-section__label">Era Twin &mdash; Daily Set</div>
+      <div class="vh-stats-grid" id="stats-twin-grid"></div>
     </div>
 
     <div class="vh-stats-section vh-stats-section--practice">
