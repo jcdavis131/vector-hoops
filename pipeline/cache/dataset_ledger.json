@@ -1,0 +1,32 @@
+[
+ {
+  "run": "2026-07-06 16:23 UTC",
+  "season_hint": null,
+  "steps": [
+   {
+    "step": "rebuild vectors (offline)",
+    "ok": false,
+    "seconds": 0.2
+   },
+   {
+    "step": "rebuild skills",
+    "ok": true,
+    "seconds": 0.4
+   },
+   {
+    "step": "skill gates",
+    "ok": true,
+    "seconds": 0.3
+   }
+  ],
+  "player_seasons": 12392,
+  "seasons": [
+   "1996-97",
+   "2025-26"
+  ],
+  "n_seasons": 30,
+  "skills": 12,
+  "badges": 14892,
+  "grade_sha1": "ad4e56119e56"
+ }
+]

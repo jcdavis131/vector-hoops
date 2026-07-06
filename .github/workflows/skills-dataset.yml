@@ -1,0 +1,41 @@
+# Skills Lens dataset refresh — weekly, best-effort fetch, honest fallback.
+#
+# stats.nba.com blocks most datacenter IPs, so the fetch step is expected
+# to no-op on GitHub runners more often than not; the run still rebuilds
+# skills deterministically from the committed cache/vectors, runs the
+# invariant gates, appends the growth ledger, and commits only when the
+# artifacts actually changed. Fresh season pulls happen on an operator
+# machine per docs/DATA_SOURCES_DEEP.md rate-limit policy.
+name: skills-dataset-refresh
+
+on:
+  schedule:
+    - cron: "0 9 * * 1" # Mondays 09:00 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install numpy
+      - name: Update dataset (fetch best-effort, rebuild, gate, ledger)
+        run: python pipeline/update_dataset.py
+      - name: Commit refreshed artifacts if changed
+        run: |
+          git add assets/skills.json assets/skill_probe.json \
+                  assets/vectors.json pipeline/cache/
+          if git diff --cached --quiet; then
+            echo "no dataset growth this run"
+          else
+            git config user.name "vector-hoops-bot"
+            git config user.email "actions@users.noreply.github.com"
+            git commit -m "Skills dataset refresh (scheduled)"
+            git push
+          fi
