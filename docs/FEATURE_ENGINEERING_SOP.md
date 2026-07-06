@@ -128,13 +128,31 @@ flowchart LR
 | `feature_inspect.py` | Coverage, corr, leakage |
 | `feature_stress.py` | Ablation + missingness stress |
 | `tower_ablation.py` | Drop-one-family harness |
+| `archetype_time.py` | Global prevalence + era-native K=8 |
+| `archetype_era_audit.py` | Separability, purity, K-sweep per era |
+| `career_trajectories.py` | Reinvention / migrator taxonomy |
+| `procrustes_drift.py` | Season-pair geometry drift |
 | `train_mtnn.py` | Train + held-out eval |
 | `mtnn_hill_climb.md` | Iteration targets |
+| `docs/ARCHETYPE_ERA_RESEARCH.md` | Archetype drift doctrine |
 | `DATA_EXPANSION_WORKFLOW.md` | Data source DAG |
 
 ---
 
-## 9. Current decisions (2026-07-05)
+## 9. Archetype rebuild (after `build_vectors.py`)
+
+```bash
+python pipeline/procrustes_drift.py
+python pipeline/archetype_time.py
+python pipeline/career_trajectories.py
+python pipeline/archetype_era_audit.py
+```
+
+Review `pipeline/data/archetype_era_audit.json` recommendations before MTNN retrain.
+
+---
+
+## 10. Current decisions (2026-07-05)
 
 | Feature | MTNN | Game UI |
 |---------|------|---------|
