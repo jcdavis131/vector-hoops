@@ -17,6 +17,40 @@ CACHE = HERE / "cache"
 DATA = HERE / "data"
 ASSETS = HERE.parent / "assets"
 
+# NBA brand colors (primary = offense/Chimera accent, secondary = guess/defense accent).
+TEAM_COLORS: dict[str, tuple[str, str]] = {
+    "ATL": ("#E03A3E", "#C1D32F"),
+    "BOS": ("#007A33", "#BA9653"),
+    "BKN": ("#000000", "#808080"),
+    "CHA": ("#1D1160", "#00788C"),
+    "CHI": ("#CE1141", "#000000"),
+    "CLE": ("#860038", "#FDBB30"),
+    "DAL": ("#00538C", "#002B5E"),
+    "DEN": ("#0E2240", "#FEC524"),
+    "DET": ("#C8102E", "#1D42BA"),
+    "GSW": ("#1D428A", "#FFC72C"),
+    "HOU": ("#CE1141", "#C4CED4"),
+    "IND": ("#002D62", "#FDBB30"),
+    "LAC": ("#C8102E", "#1D428A"),
+    "LAL": ("#552583", "#FDBB27"),
+    "MEM": ("#5D76A9", "#12173F"),
+    "MIA": ("#98002E", "#F9A01B"),
+    "MIL": ("#00471B", "#EEE1C6"),
+    "MIN": ("#0C2340", "#236192"),
+    "NOP": ("#0C2340", "#C8102E"),
+    "NYK": ("#006BB6", "#F58426"),
+    "OKC": ("#007AC1", "#EF3B24"),
+    "ORL": ("#0077C0", "#C4CED4"),
+    "PHI": ("#006BB6", "#ED174C"),
+    "PHX": ("#1D1160", "#E56020"),
+    "POR": ("#E03A3E", "#000000"),
+    "SAC": ("#5A2D81", "#63727A"),
+    "SAS": ("#C4CED4", "#000000"),
+    "TOR": ("#CE1141", "#000000"),
+    "UTA": ("#002B5C", "#F9A01B"),
+    "WAS": ("#002B5C", "#E31837"),
+}
+
 
 def abbr_from_gamelogs() -> dict[int, str]:
     """TEAM_ID -> most common TEAM_ABBREVIATION."""
@@ -57,6 +91,8 @@ def main() -> None:
             "id": tid,
             "abbr": abbr,
             "name": names[tid],
+            "primary": TEAM_COLORS.get(abbr, ("#eb6834", "#2a78d6"))[0],
+            "secondary": TEAM_COLORS.get(abbr, ("#eb6834", "#2a78d6"))[1],
         })
     teams.sort(key=lambda t: t["name"])
     payload = {

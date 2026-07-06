@@ -794,7 +794,49 @@ html{ scroll-behavior: smooth; }
   padding: 3px 9px;
   width: fit-content;
 }
-.vh-favorite-chip b{ color: var(--data-orange); font-weight: 800; }
+.vh-favorite-chip b{ color: var(--team-primary, var(--data-orange)); font-weight: 800; }
+
+/* Team theme — accent stripe + tinted surfaces when favorite team is set */
+body.vh-team-themed::before{
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    var(--team-primary, var(--data-orange)) 0%,
+    var(--team-primary, var(--data-orange)) 50%,
+    var(--team-secondary, var(--data-blue)) 50%,
+    var(--team-secondary, var(--data-blue)) 100%
+  );
+  z-index: 10000;
+  pointer-events: none;
+}
+body.vh-team-themed .site-nav,
+body.vh-team-themed .vh-header{
+  border-bottom-color: var(--team-primary, var(--data-orange));
+}
+body.vh-team-themed .vh-btn--primary{
+  background: var(--team-primary, var(--data-orange));
+  color: var(--paper);
+  border-color: var(--ink);
+}
+body.vh-team-themed .vh-btn--accent{
+  color: var(--team-secondary, var(--data-blue));
+  border-color: var(--team-secondary, var(--data-blue));
+}
+body.vh-team-themed .landing-hero__title-accent,
+body.vh-team-themed .site-nav__accent,
+body.vh-team-themed .vh-logo__accent{
+  color: var(--team-primary, var(--data-orange));
+}
+body.vh-team-themed .vh-favorite-picker__select:focus,
+body.vh-team-themed .landing-favorite__select:focus{
+  outline: 2px solid var(--team-primary, var(--data-orange));
+  outline-offset: 1px;
+}
 
 .vh-favorite-picker{
   display: flex;

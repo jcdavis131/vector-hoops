@@ -221,6 +221,10 @@ def v6_teams() -> None:
         ids.add(tid)
         if not name:
             fail(f"missing name for {ab}")
+        for color_key in ("primary", "secondary"):
+            c = t.get(color_key)
+            if not c or not isinstance(c, str) or len(c) != 7 or c[0] != "#":
+                fail(f"{ab}: bad {color_key} color {c!r}")
     print(f"  {len(teams)} teams, {len(abbrs)} unique abbreviations")
 
 

@@ -14,6 +14,7 @@
   'use strict';
 
   var DATA_URL = 'assets/vectors.json';
+  var PLAYER_META_URL = 'assets/player_meta.json';
   var DEADLINE_URL = 'assets/deadline.json';
   var FADERFINISHER_URL = 'assets/faderfinisher.json';
   var CHEMISTRY_URL = 'assets/chemistry.json';
@@ -78,6 +79,8 @@
   // and never persist separately — only the DAILY record needs isolation.
   var LS_KEY_POOL = 'vectorHoops.pool';
   var LS_KEY_CHIMERA_MODERN_DAILY = 'vectorHoops.v5.modern.daily';
+  var LS_KEY_CHIMERA_TEAM_DAILY = 'vectorHoops.v6.team.daily';
+  var LS_KEY_CHIMERA_COMP = 'vectorHoops.chimera.competition';
   var DEADLINE_ROUNDS_PER_RUN = 5;
   var FF_ROUNDS_PER_RUN = 5;
   var ARC_CARD_COUNT = 5;
@@ -182,7 +185,8 @@
   function loadPool() {
     var p = null;
     try { p = localStorage.getItem(LS_KEY_POOL); } catch (e) { p = null; }
-    return p === 'modern' ? 'modern' : 'all';
+    if (p === 'all') return 'all';
+    return 'modern';
   }
 
   function savePool(p) {
@@ -484,7 +488,9 @@
           PRACTICE_STAGE = 'playing';
           PRACTICE_TARGET = buildTargetFromPlayers(pa, pb);
           PRACTICE_REC = freshDayRecord(3);
-          els.chimeraSubDaily.classList.toggle('is-active', false);
+          els.chimeraSubModern.classList.toggle('is-active', false);
+          els.chimeraSubAlltime.classList.toggle('is-active', false);
+          els.chimeraSubTeam.classList.toggle('is-active', false);
           els.chimeraSubPractice.classList.toggle('is-active', true);
           refreshChimeraView();
           return;
@@ -496,9 +502,9 @@
         DAILY_TARGET = buildTargetFromRng(seededRng('vector-hoops:' + ch.date));
       }
       activeChimeraMode = 'daily';
+      activeDailyCompetition = 'alltime';
       TARGET = DAILY_TARGET;
-      els.chimeraSubDaily.classList.toggle('is-active', true);
-      els.chimeraSubPractice.classList.toggle('is-active', false);
+      syncChimeraSubtabUI();
       refreshChimeraView();
     } else if (ch.mode === 'dl' && DEADLINE_POOL) {
       if (ch.date && ch.date !== TODAY) CHALLENGE_PLAY_DATE = ch.date;
@@ -611,6 +617,7 @@
   // M0 state isolation: Free Play (Chimera) never touches STATE/LS_KEY above.
   // Its round record and casual counters live entirely separately.
   var activeChimeraMode = 'daily'; // 'daily' | 'practice'
+  var activeDailyCompetition = 'modern'; // 'modern' | 'alltime' | 'team' (daily only)
   var PRACTICE_REC = freshDayRecord(3); // Free Play skips Stats/Style — mashup-only from the start
   var PRACTICE_STATS = null; // { played, won } — loaded from LS_KEY_PRACTICE_STATS
 
@@ -621,7 +628,12 @@
   var ACTIVE_NAMES = null;     // { name: true } for every name charted in LATEST_SEASON
   var MODERN_DONOR_POOL = null; // DATA.players filtered to ANY season of an active name
   var STATE_MODERN = null;     // Chimera Modern Daily's own persisted streak/history
+  var STATE_TEAM = null;       // Chimera favorite-team Daily streak/history
   var DAILY_TARGET_MODERN = null; // Chimera Modern Daily's own seeded target
+  var DAILY_TARGET_TEAM = null;   // Chimera team Daily target
+  var TEAM_DONOR_POOL = null;
+  var ROSTER_TEAM_BY_KEY = null;  // "name|season" -> TEAM abbr
+  var POPULARITY_BY_NAME = null;  // name -> weight multiplier
 
   var els = {}; // cached DOM refs, filled in initDom()
 
@@ -705,6 +717,115 @@
     MODERN_DONOR_POOL = DATA.players.filter(function (p) { return ACTIVE_NAMES[p.name]; });
   }
 
+  function getFavoriteTeamAbbr() {
+    return (window.VHFavoriteTeam && window.VHFavoriteTeam.get()) || '';
+  }
+
+  function loadDailyCompetition() {
+    var c = null;
+    try { c = localStorage.getItem(LS_KEY_CHIMERA_COMP); } catch (e) { c = null; }
+    if (c === 'alltime' || c === 'team' || c === 'modern') return c;
+    return 'modern';
+  }
+
+  function saveDailyCompetition(c) {
+    try { localStorage.setItem(LS_KEY_CHIMERA_COMP, c); } catch (e) { /* storage unavailable */ }
+  }
+
+  function ingestPlayerMeta(meta) {
+    ROSTER_TEAM_BY_KEY = (meta && meta.roster) || {};
+    POPULARITY_BY_NAME = (meta && meta.popularity) || {};
+  }
+
+  function seasonSortKey(season) {
+    var parts = String(season).split('-');
+    var y = parseInt(parts[0], 10) || 0;
+    var y2 = parseInt(parts[1], 10) || 0;
+    return y * 100 + y2;
+  }
+
+  function popularityWeight(p) {
+    if (!POPULARITY_BY_NAME) return 1;
+    return POPULARITY_BY_NAME[p.name] || 1;
+  }
+
+  function pickWeightedIndex(rng, pool) {
+    var total = 0;
+    var i;
+    for (i = 0; i < pool.length; i++) total += popularityWeight(pool[i]);
+    if (total <= 0) return Math.floor(rng() * pool.length);
+    var r = rng() * total;
+    for (i = 0; i < pool.length; i++) {
+      r -= popularityWeight(pool[i]);
+      if (r <= 0) return i;
+    }
+    return pool.length - 1;
+  }
+
+  function buildTeamDonorPool(abbr) {
+    if (!abbr || !ROSTER_TEAM_BY_KEY || !MODERN_DONOR_POOL) return [];
+    var strict = MODERN_DONOR_POOL.filter(function (p) {
+      return ROSTER_TEAM_BY_KEY[p.name + '|' + p.season] === abbr;
+    });
+    if (strict.length >= 24) return strict;
+    var namesOnTeam = {};
+    var key;
+    for (key in ROSTER_TEAM_BY_KEY) {
+      if (ROSTER_TEAM_BY_KEY[key] === abbr) namesOnTeam[key.split('|')[0]] = true;
+    }
+    return MODERN_DONOR_POOL.filter(function (p) { return namesOnTeam[p.name]; });
+  }
+
+  function dailySeedForCompetition(comp, abbr) {
+    var d = playDate();
+    if (comp === 'alltime') return 'vector-hoops:' + d;
+    if (comp === 'team') return 'vector-hoops:team:' + (abbr || getFavoriteTeamAbbr()) + ':' + d;
+    return 'vector-hoops:modern:' + d;
+  }
+
+  function buildDailyTargetForCompetition(comp, abbr) {
+    var pool;
+    if (comp === 'alltime') pool = DATA.players;
+    else if (comp === 'team') pool = buildTeamDonorPool(abbr || getFavoriteTeamAbbr());
+    else pool = MODERN_DONOR_POOL;
+    if (!pool || pool.length < 2) return null;
+    return buildTargetFromRng(seededRng(dailySeedForCompetition(comp, abbr)), pool);
+  }
+
+  function rebuildChimeraDailyTargets() {
+    if (!DATA || !MODERN_DONOR_POOL) return;
+    DAILY_TARGET = buildDailyTargetForCompetition('alltime');
+    DAILY_TARGET_MODERN = buildDailyTargetForCompetition('modern');
+    var abbr = getFavoriteTeamAbbr();
+    TEAM_DONOR_POOL = abbr ? buildTeamDonorPool(abbr) : null;
+    DAILY_TARGET_TEAM = (TEAM_DONOR_POOL && TEAM_DONOR_POOL.length >= 10)
+      ? buildDailyTargetForCompetition('team', abbr) : null;
+    if (activeChimeraMode === 'daily') {
+      TARGET = activeChimeraDailyTarget() || DAILY_TARGET_MODERN;
+    }
+  }
+
+  function chimeraDailyState() {
+    if (activeDailyCompetition === 'alltime') return STATE;
+    if (activeDailyCompetition === 'team') return STATE_TEAM || STATE_MODERN;
+    return STATE_MODERN;
+  }
+
+  function activeChimeraDailyTarget() {
+    if (activeDailyCompetition === 'alltime') return DAILY_TARGET;
+    if (activeDailyCompetition === 'team') return DAILY_TARGET_TEAM || DAILY_TARGET_MODERN;
+    return DAILY_TARGET_MODERN;
+  }
+
+  function chimeraCompetitionLabel() {
+    if (activeDailyCompetition === 'alltime') return 'All-Time Daily (ranked)';
+    if (activeDailyCompetition === 'team') {
+      var abbr = getFavoriteTeamAbbr();
+      return abbr ? (abbr + ' Team Daily') : 'Team Daily';
+    }
+    return 'Modern Daily';
+  }
+
   // Repoints every other mode's "ACTIVE pool" var (DEADLINE_POOL, FF_POOL,
   // CHEM_POOL, ARC_INDEX, TWIN_ANCHOR_POOL) to whichever pool matches the
   // CURRENT POOL toggle — called once as each mode's own JSON finishes
@@ -782,8 +903,8 @@
     var players = pool || DATA.players;
     var a, b, tries = 0;
     do {
-      var ia = Math.floor(rng() * players.length);
-      var ib = Math.floor(rng() * players.length);
+      var ia = pickWeightedIndex(rng, players);
+      var ib = pickWeightedIndex(rng, players);
       a = players[ia];
       b = players[ib];
       tries++;
@@ -794,8 +915,6 @@
     return buildTargetFromPlayers(a, b, pool);
   }
 
-  // Same date seed for both pools — Modern's daily is a PARALLEL puzzle, not
-  // a reseed, so it draws from MODERN_DONOR_POOL instead of every player.
   function buildDailyTarget(pool) {
     return buildTargetFromRng(seededRng('vector-hoops:' + playDate()), pool);
   }
@@ -960,7 +1079,7 @@
         "closest to your blend. Unlimited attempts — doesn't affect your daily streak.";
     } else {
       els.puzzleNumber.textContent = 'Vector Hoops #' + puzzleNumber(playDate()) +
-        (isModern() ? ' — Modern Daily (unranked)' : '');
+        ' — ' + chimeraCompetitionLabel();
       els.promptText.textContent =
         'The equation IS the puzzle: all three cards show their full evidence now, but you ' +
         'name them in order — one guess for the Stats Player, one guess for the Style Player ' +
@@ -1390,9 +1509,31 @@
       if (!CHALLENGE_REC) CHALLENGE_REC = freshDayRecord();
       return CHALLENGE_REC;
     }
-    // MODERN MODE: Modern Daily is a parallel puzzle with its own record —
-    // STATE (all-time, ranked) is never touched while Modern is active.
-    return isModern() ? STATE_MODERN.days[playDate()] : STATE.days[playDate()];
+    // Chimera competition tabs: parallel dailies with separate streaks.
+    return chimeraDailyState().days[playDate()];
+  }
+
+  function loadTeamState() {
+    var s = defaultState();
+    var raw = null;
+    try { raw = localStorage.getItem(LS_KEY_CHIMERA_TEAM_DAILY); } catch (e) { raw = null; }
+    if (raw) {
+      try {
+        var parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === 'object') {
+          s.streak = parsed.streak || 0;
+          s.maxStreak = parsed.maxStreak || parsed.streak || 0;
+          s.lastWinDate = parsed.lastWinDate || null;
+          s.days = parsed.days || {};
+        }
+      } catch (e) { /* corrupt, fall back to default */ }
+    }
+    if (!isV5DayRecord(s.days[TODAY])) s.days[TODAY] = freshDayRecord();
+    return s;
+  }
+
+  function saveTeamState() {
+    try { localStorage.setItem(LS_KEY_CHIMERA_TEAM_DAILY, JSON.stringify(STATE_TEAM)); } catch (e) { /* storage unavailable */ }
   }
 
   function registerCompletion(won) {
@@ -1408,32 +1549,34 @@
       return; // Free Play never touches STATE/streak — state isolation (M0)
     }
     rec.points = computeFinalPoints(rec);
-    var st = isModern() ? STATE_MODERN : STATE;
+    var st = chimeraDailyState();
     if (won) {
       var yesterday = utcDateString(new Date(Date.now() - 86400000));
       st.streak = (st.lastWinDate === yesterday) ? st.streak + 1 : 1;
       st.lastWinDate = TODAY;
       st.maxStreak = Math.max(st.maxStreak || 0, st.streak);
-      track('vh-win', { turns: rec.mashupGuesses.length, mode: modeDetail, stage: 3, pool: POOL });
+      track('vh-win', { turns: rec.mashupGuesses.length, mode: modeDetail, stage: 3, pool: POOL, competition: activeDailyCompetition });
     } else {
       st.streak = 0;
-      track('vh-loss', { mode: modeDetail, stage: 3, pool: POOL });
+      track('vh-loss', { mode: modeDetail, stage: 3, pool: POOL, competition: activeDailyCompetition });
     }
-    // Chimera board = points exist whether the round was won or lost (the
-    // two donor multipliers always bank something) — submit either way,
-    // 0-2400 higher-better (see leaderboard.html note). Modern Daily is
-    // explicitly unranked — never posted (the all-time daily stays the one
-    // ranked puzzle).
-    if (isModern()) saveModernState();
-    else {
+    if (activeDailyCompetition === 'alltime') {
       submitLeaderboardScore('chimera', TODAY, rec.points);
       saveState();
+    } else if (activeDailyCompetition === 'team') {
+      saveTeamState();
+    } else {
+      saveModernState();
     }
     renderStreak();
   }
 
   function renderStreak() {
-    els.streakNum.textContent = String(isModern() ? STATE_MODERN.streak : STATE.streak);
+    if (activeChimeraMode === 'practice') {
+      els.streakNum.textContent = String(STATE_MODERN ? STATE_MODERN.streak : 0);
+      return;
+    }
+    els.streakNum.textContent = String(chimeraDailyState().streak);
   }
 
   // ---------------------------------------------------------------------
@@ -1496,6 +1639,37 @@
   // ---------------------------------------------------------------------
   // Autocomplete
   // ---------------------------------------------------------------------
+
+  function foldSearchTerm(s) {
+    return s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+  }
+
+  function fuzzySearchScore(term, key) {
+    if (!term || !key) return 0;
+    var idx = key.indexOf(term);
+    if (idx !== -1) return 200 - idx;
+    var ti = 0;
+    var gaps = 0;
+    for (var ki = 0; ki < key.length && ti < term.length; ki++) {
+      if (key[ki] === term[ti]) {
+        ti++;
+      } else if (ti > 0) {
+        gaps++;
+      }
+    }
+    if (ti < term.length) return 0;
+    return 80 - gaps * 3;
+  }
+
+  function enrichPlayerSearchKeys() {
+    if (!DATA || !DATA.players) return;
+    for (var i = 0; i < DATA.players.length; i++) {
+      var p = DATA.players[i];
+      p._sk = seasonSortKey(p.season);
+      p._nameFold = foldSearchTerm(p.name);
+      p._keyFold = foldSearchTerm(playerKey(p));
+    }
+  }
 
   // opts: { hintEl, wrapEl } — the "typeahead obviousness" affordances
   // (search glyph, chevron, empty-focus hint row, rich suggestion rows,
@@ -1593,7 +1767,7 @@
 
     // accent-insensitive: "jokic" finds "Jokić", "doncic" finds "Dončić"
     function foldTerm(s) {
-      return s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+      return foldSearchTerm(s);
     }
 
     // `players` may be a static array (every existing call site) or a
@@ -1605,12 +1779,22 @@
       term = foldTerm(term.trim());
       if (!term) { close(); return; }
       var pool = typeof players === 'function' ? players() : players;
-      var matches = [];
-      for (var i = 0; i < pool.length && matches.length < 8; i++) {
+      var scored = [];
+      var i;
+      for (i = 0; i < pool.length; i++) {
         var p = pool[i];
-        if (p._k === undefined) p._k = foldTerm(playerKey(p));
-        if (p._k.indexOf(term) !== -1) matches.push(p);
+        if (!p._nameFold) p._nameFold = foldTerm(p.name);
+        if (!p._keyFold) p._keyFold = foldTerm(playerKey(p));
+        if (!p._sk) p._sk = seasonSortKey(p.season);
+        var score = Math.max(fuzzySearchScore(term, p._nameFold), fuzzySearchScore(term, p._keyFold) - 4);
+        if (score > 0) scored.push({ p: p, score: score });
       }
+      scored.sort(function (a, b) {
+        if (b.score !== a.score) return b.score - a.score;
+        return (b.p._sk || 0) - (a.p._sk || 0);
+      });
+      var matches = [];
+      for (i = 0; i < scored.length && matches.length < 12; i++) matches.push(scored[i].p);
       open(matches);
     }
 
@@ -7144,7 +7328,9 @@
     els.deadlineMethodBtn = document.getElementById('deadline-method-btn');
 
     // M0: sub-mode segmented controls + practice banners
-    els.chimeraSubDaily = document.getElementById('chimera-sub-daily');
+    els.chimeraSubModern = document.getElementById('chimera-sub-modern');
+    els.chimeraSubAlltime = document.getElementById('chimera-sub-alltime');
+    els.chimeraSubTeam = document.getElementById('chimera-sub-team');
     els.chimeraSubPractice = document.getElementById('chimera-sub-practice');
     els.chimeraPracticeBanner = document.getElementById('chimera-practice-banner');
     els.chimeraNewBtn = document.getElementById('chimera-new-btn');
@@ -7442,7 +7628,7 @@
     }
     if (activeChimeraMode === 'practice') ensurePracticeTarget();
     showPlayingStage();
-    TARGET = activeChimeraMode === 'practice' ? PRACTICE_TARGET : (isModern() ? DAILY_TARGET_MODERN : DAILY_TARGET);
+    TARGET = activeChimeraMode === 'practice' ? PRACTICE_TARGET : activeChimeraDailyTarget();
     renderPrompt();
     renderScoutingLine();
     renderGuesses();
@@ -7451,17 +7637,60 @@
     checkRollover();
   }
 
-  function switchChimeraSubMode(mode) {
-    if (mode === activeChimeraMode) return;
-    activeChimeraMode = mode;
+  function syncChimeraSubtabUI() {
+    var daily = activeChimeraMode === 'daily';
+    var comp = activeDailyCompetition;
+    if (els.chimeraSubModern) {
+      els.chimeraSubModern.classList.toggle('is-active', daily && comp === 'modern');
+      els.chimeraSubModern.setAttribute('aria-selected', String(daily && comp === 'modern'));
+    }
+    if (els.chimeraSubAlltime) {
+      els.chimeraSubAlltime.classList.toggle('is-active', daily && comp === 'alltime');
+      els.chimeraSubAlltime.setAttribute('aria-selected', String(daily && comp === 'alltime'));
+    }
+    if (els.chimeraSubTeam) {
+      var abbr = getFavoriteTeamAbbr();
+      els.chimeraSubTeam.hidden = !abbr || !DAILY_TARGET_TEAM;
+      if (abbr) els.chimeraSubTeam.textContent = abbr + ' Daily';
+      els.chimeraSubTeam.classList.toggle('is-active', daily && comp === 'team');
+      els.chimeraSubTeam.setAttribute('aria-selected', String(daily && comp === 'team'));
+    }
+    if (els.chimeraSubPractice) {
+      els.chimeraSubPractice.classList.toggle('is-active', !daily);
+      els.chimeraSubPractice.setAttribute('aria-selected', String(!daily));
+    }
+  }
+
+  function switchChimeraCompetition(comp) {
+    if (comp === 'practice') {
+      if (activeChimeraMode === 'practice') return;
+      activeChimeraMode = 'practice';
+      equationForceExpand = false;
+      resetClueForceExpand();
+      ensurePracticeTarget();
+      syncChimeraSubtabUI();
+      refreshChimeraView();
+      return;
+    }
+    if (comp === 'team' && (!getFavoriteTeamAbbr() || !DAILY_TARGET_TEAM)) {
+      comp = 'modern';
+    }
+    if (activeChimeraMode === 'daily' && activeDailyCompetition === comp) return;
+    activeChimeraMode = 'daily';
+    activeDailyCompetition = comp;
+    saveDailyCompetition(comp);
     equationForceExpand = false;
     resetClueForceExpand();
-    if (mode === 'practice') ensurePracticeTarget();
-    els.chimeraSubDaily.classList.toggle('is-active', mode === 'daily');
-    els.chimeraSubPractice.classList.toggle('is-active', mode === 'practice');
-    els.chimeraSubDaily.setAttribute('aria-selected', String(mode === 'daily'));
-    els.chimeraSubPractice.setAttribute('aria-selected', String(mode === 'practice'));
+    syncChimeraSubtabUI();
     refreshChimeraView();
+  }
+
+  function switchChimeraSubMode(mode) {
+    if (mode === 'practice') {
+      switchChimeraCompetition('practice');
+      return;
+    }
+    switchChimeraCompetition(mode === 'daily' ? activeDailyCompetition : mode);
   }
 
   function resetDonorPickerUI() {
@@ -7519,8 +7748,8 @@
     var players = chimeraDonorPool();
     var a, b, tries = 0;
     do {
-      a = players[Math.floor(rng() * players.length)];
-      b = players[Math.floor(rng() * players.length)];
+      a = players[pickWeightedIndex(rng, players)];
+      b = players[pickWeightedIndex(rng, players)];
       tries++;
     } while (tries < 2000 && (a === b || cosineSim(a.v, b.v) >= 0.3));
     if (els.pickerStatsInput) els.pickerStatsInput.value = playerKey(a);
@@ -7561,8 +7790,20 @@
   }
 
   function setupChimeraSubtabs() {
-    els.chimeraSubDaily.addEventListener('click', function () { switchChimeraSubMode('daily'); });
-    els.chimeraSubPractice.addEventListener('click', function () { switchChimeraSubMode('practice'); });
+    if (els.chimeraSubModern) els.chimeraSubModern.addEventListener('click', function () { switchChimeraCompetition('modern'); });
+    if (els.chimeraSubAlltime) els.chimeraSubAlltime.addEventListener('click', function () { switchChimeraCompetition('alltime'); });
+    if (els.chimeraSubTeam) els.chimeraSubTeam.addEventListener('click', function () { switchChimeraCompetition('team'); });
+    if (els.chimeraSubPractice) els.chimeraSubPractice.addEventListener('click', function () { switchChimeraCompetition('practice'); });
+    window.addEventListener('vh:favorite-team', function () {
+      rebuildChimeraDailyTargets();
+      if (activeDailyCompetition === 'team' && !DAILY_TARGET_TEAM) {
+        switchChimeraCompetition('modern');
+      } else {
+        syncChimeraSubtabUI();
+        if (activeChimeraMode === 'daily' && activeDailyCompetition === 'team') refreshChimeraView();
+      }
+    });
+    syncChimeraSubtabUI();
     // "Change donors" (visible once a Build-a-Chimera round is underway):
     // back to the picker, discarding the current blend.
     els.chimeraNewBtn.addEventListener('click', function () {
@@ -7666,23 +7907,36 @@
     setupSheets();
     setupArc();
     setupPoolToggle();
-    fetch(DATA_URL)
-      .then(function (res) {
+    activeDailyCompetition = loadDailyCompetition();
+    Promise.all([
+      fetch(DATA_URL).then(function (res) {
         if (!res.ok) throw new Error('HTTP ' + res.status);
         return res.json();
-      })
-      .then(function (json) {
+      }),
+      fetch(PLAYER_META_URL).then(function (res) {
+        if (!res.ok) return { roster: {}, popularity: {} };
+        return res.json();
+      }).catch(function () { return { roster: {}, popularity: {} }; })
+    ])
+      .then(function (pair) {
+        var json = pair[0];
+        var meta = pair[1];
         DATA = json;
+        ingestPlayerMeta(meta);
         var k = DATA.clusters.length;
         var dims = DATA.features.length;
         CENTROIDS = computeCentroids(DATA.players, k, dims);
         CLUSTER_XYZ = computeClusterXYZ(DATA.players, k);
         computeActivePools();
-        DAILY_TARGET = buildDailyTarget(DATA.players);
-        DAILY_TARGET_MODERN = buildDailyTarget(MODERN_DONOR_POOL);
-        TARGET = isModern() ? DAILY_TARGET_MODERN : DAILY_TARGET;
+        rebuildChimeraDailyTargets();
+        if (activeDailyCompetition === 'team' && !DAILY_TARGET_TEAM) {
+          activeDailyCompetition = 'modern';
+          saveDailyCompetition('modern');
+        }
+        TARGET = activeChimeraDailyTarget();
         STATE = loadState();
         STATE_MODERN = loadModernState();
+        STATE_TEAM = loadTeamState();
         if (shouldShowDailyResetNote() && els.resetNote) {
           els.resetNote.hidden = false;
           els.resetNote.textContent = 'Vector Hoops leveled up: Chimera is now a STAGED reveal with ' +
@@ -7709,6 +7963,7 @@
         TWIN_STATE = loadTwinDailyState();
         TWIN_PRACTICE_STATS = loadTwinPracticeStats();
         buildPlayerLookups();
+        enrichPlayerSearchKeys();
 
         els.loadingBanner.hidden = true;
         // First paint: reveal the real content only once data has actually

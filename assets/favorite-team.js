@@ -8,6 +8,7 @@
 
   var LS_KEY = 'vectorHoops.favoriteTeam';
   var teamsCache = null;
+  var THEME_VARS = ['--data-orange', '--data-blue', '--team-primary', '--team-secondary'];
 
   function get() {
     try {
@@ -58,6 +59,36 @@
     return t ? t.abbr + ' · ' + t.name : abbr;
   }
 
+  function applyTheme(abbr) {
+    var root = document.documentElement;
+    var body = document.body;
+    if (!abbr) {
+      THEME_VARS.forEach(function (key) {
+        root.style.removeProperty(key);
+      });
+      if (body) {
+        body.classList.remove('vh-team-themed');
+        body.removeAttribute('data-team');
+      }
+      return;
+    }
+    var t = teamByAbbr(abbr);
+    if (!t || !t.primary) {
+      applyTheme('');
+      return;
+    }
+    var primary = t.primary;
+    var secondary = t.secondary || t.primary;
+    root.style.setProperty('--data-orange', primary);
+    root.style.setProperty('--data-blue', secondary);
+    root.style.setProperty('--team-primary', primary);
+    root.style.setProperty('--team-secondary', secondary);
+    if (body) {
+      body.classList.add('vh-team-themed');
+      body.setAttribute('data-team', abbr);
+    }
+  }
+
   function fillSelect(selectEl) {
     if (!selectEl) return;
     var cur = get();
@@ -87,6 +118,8 @@
   }
 
   function syncUI() {
+    var abbr = get();
+    applyTheme(abbr);
     syncChip(
       document.getElementById('favorite-team-chip'),
       document.getElementById('favorite-team-label')
@@ -128,5 +161,6 @@
     loadTeams: loadTeams,
     labelFor: labelFor,
     syncUI: syncUI,
+    applyTheme: applyTheme,
   };
 })(typeof window !== 'undefined' ? window : globalThis);

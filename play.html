@@ -47,9 +47,9 @@
     <span class="vh-identity-chip" id="identity-chip" title="your anonymous session name — no account, tracked only on this device + the public board">You play as <b id="identity-name">&mdash;</b></span>
     <span class="vh-favorite-chip" id="favorite-team-chip" hidden title="your favorite NBA team — device only, not sent anywhere">Rooting for <b id="favorite-team-label">&mdash;</b></span>
   </div>
-  <div class="vh-subtabs vh-pool-toggle" id="pool-toggle" role="tablist" aria-label="Player pool">
-    <button class="vh-subtab is-active" id="pool-toggle-all" type="button" role="tab" aria-selected="true" title="Every charted player-season, 1996-97 through today">All-time</button>
-    <button class="vh-subtab" id="pool-toggle-modern" type="button" role="tab" aria-selected="false" title="Restrict puzzles to players active in the current NBA season">Modern</button>
+  <div class="vh-subtabs vh-pool-toggle" id="pool-toggle" role="tablist" aria-label="Player pool (other modes)" title="Applies to Deadline, Fader, Chemistry, and Arc — Chimera uses its own tabs below">
+    <button class="vh-subtab" id="pool-toggle-all" type="button" role="tab" aria-selected="false" title="Every charted player-season, 1996-97 through today">All-time</button>
+    <button class="vh-subtab is-active" id="pool-toggle-modern" type="button" role="tab" aria-selected="true" title="Restrict puzzles to players active in the current NBA season">Modern</button>
   </div>
   <div class="vh-stats" id="header-stats">
     <div class="vh-stat">
@@ -101,7 +101,9 @@
   <section id="panel-chimera" class="vh-panel">
 
     <div class="vh-subtabs" id="chimera-subtabs" role="tablist" aria-label="Chimera play mode">
-      <button class="vh-subtab is-active" id="chimera-sub-daily" type="button" role="tab" aria-selected="true">Daily</button>
+      <button class="vh-subtab is-active" id="chimera-sub-modern" type="button" role="tab" aria-selected="true">Modern</button>
+      <button class="vh-subtab" id="chimera-sub-alltime" type="button" role="tab" aria-selected="false">All-Time</button>
+      <button class="vh-subtab" id="chimera-sub-team" type="button" role="tab" aria-selected="false" hidden>My Team</button>
       <button class="vh-subtab" id="chimera-sub-practice" type="button" role="tab" aria-selected="false">Free Play</button>
     </div>
 
