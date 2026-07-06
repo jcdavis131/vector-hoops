@@ -84,3 +84,20 @@ Closest career shapes in the era-normalized vector space:
 <!-- Curated layer. Add scouting notes, history, film observations,
      corrections, and further [[wikilinks]] here. The generator never
      touches anything below the auto end marker. -->
+
+## Coming into the league
+
+Drafted 41st overall by Denver in 2014 — famously announced during a
+Taco Bell commercial break on the ESPN broadcast (widely reported;
+the moment became shorthand for how little draft-night expectation he
+carried). Pre-draft consensus (reported by DraftExpress-era scouting
+summaries) praised the touch, vision, and rebounding instincts but
+questioned foot speed and NBA-level athleticism — a stated second-round
+expectation the pedigree data records as `PED_EXPECT_SLOT 0.10` against
+a career that reached MVP. Denver was a 36-46 lottery team the season
+before the pick (`PED_TEAM_WINPCT 0.439`), and he stayed a draft-and-
+stash season in Serbia before arriving in 2015-16.
+
+This section is the exemplar for the `## Coming into the league`
+convention in [[../OKF|the OKF contract]] — structured pedigree facts
+live in the data pipeline (Track H); narrative belongs here, cited.

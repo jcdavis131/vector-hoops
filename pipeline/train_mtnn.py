@@ -1,4 +1,4 @@
-"""Vector Hoops MTNN v3 — multi-tower, multi-task player embedding.
+"""Vector Hoops MTNN v4 — multi-tower, multi-task player embedding.
 
 Builds on train_towers.py with:
   - Residual MLP towers + per-family missing masks
@@ -10,6 +10,19 @@ Builds on train_towers.py with:
       * position classification (PG/SG/SF/PF/C from enrich_vectors)
       * 14-dim game-profile reconstruction (transparent stats bridge)
       * salary regression (masked MSE on SALARY_LOG z)
+      * v4: skill-tower bank — one mini-tower per Skills Lens skill
+        (embedding -> grade/100, targets from build_skills.py), so the
+        embedding is skill-aware; per-skill held-out R2/MAE + a
+        skill-neighbor consistency metric land in mtnn_report.json
+      * v4: pedigree_expectation head — predict PED_PICK_QUALITY z from
+        the embedding (masked MSE; active only when the pedigree family
+        is merged in the matrix): measures how much of a player-season's
+        measured identity his draft slot explained
+      * v4: playoff_riser head — predict PO_PTS_DELTA z (postseason minus
+        regular-season scoring) from the embedding (masked MSE; active
+        when the playoffs family is merged): how much a player's
+        regular-season identity forecasts his playoff rise or fall. The
+        `playoffs` tower itself is auto-instantiated from the manifest.
 
 Outputs (pipeline/data/):
   embedding_v3.npz     — L2-normalized embeddings + archetype/position logits
@@ -114,6 +127,31 @@ def game_feature_cols(manifest) -> list[int]:
     return [manifest["features"].index(f) for f in game]
 
 
+def load_skill_labels(names, seasons) -> tuple[np.ndarray, np.ndarray, list[str]]:
+    """Join Skills Lens grades (0-1) by (name, season); mask=0 where absent.
+
+    Targets come from pipeline/data/skill_labels.npz (build_skills.py).
+    """
+    path = DATA_DIR / "skill_labels.npz"
+    if not path.exists():
+        return (np.zeros((len(names), 0), np.float32),
+                np.zeros(len(names), np.float32), [])
+    npz = np.load(path, allow_pickle=False)
+    keys = [str(k) for k in npz["keys"]]
+    lookup = {
+        (str(n), str(s)): g
+        for n, s, g in zip(npz["name"], npz["season"], npz["grades"])
+    }
+    G = np.zeros((len(names), len(keys)), dtype=np.float32)
+    M = np.zeros(len(names), dtype=np.float32)
+    for i, (n, s) in enumerate(zip(names, seasons)):
+        g = lookup.get((str(n), str(s)))
+        if g is not None:
+            G[i] = g
+            M[i] = 1.0
+    return G, M, keys
+
+
 # ---------------------------------------------------------------------------
 # Model
 # ---------------------------------------------------------------------------
@@ -162,9 +200,30 @@ class GatedFusion(nn.Module):
         return F.normalize(emb, dim=-1)
 
 
+class SkillTowers(nn.Module):
+    """Players→skills tower bank: one mini-tower per Skills Lens skill.
+
+    Each tower maps the fused embedding to that skill's grade/100, keeping
+    per-skill capacity separate so one skill cannot cannibalize another's
+    gradient (unlike a single shared linear head).
+    """
+
+    def __init__(self, d_emb: int, n_skills: int, d_hidden: int = 16):
+        super().__init__()
+        self.towers = nn.ModuleList([
+            nn.Sequential(nn.Linear(d_emb, d_hidden), nn.GELU(),
+                          nn.Linear(d_hidden, 1))
+            for _ in range(n_skills)
+        ])
+
+    def forward(self, emb: torch.Tensor) -> torch.Tensor:
+        return torch.cat([t(emb) for t in self.towers], dim=-1)
+
+
 class MTNN(nn.Module):
     def __init__(self, fam_dims: dict[str, int], n_seasons: int,
-                 d_tower: int = 24, d_emb: int = 48, n_game: int = 14):
+                 d_tower: int = 24, d_emb: int = 48, n_game: int = 14,
+                 n_skills: int = 0):
         super().__init__()
         self.families = sorted(fam_dims)
         self.towers = nn.ModuleDict({
@@ -175,6 +234,9 @@ class MTNN(nn.Module):
         self.position_head = nn.Linear(d_emb, len(POSITIONS))
         self.profile_head = nn.Linear(d_emb, n_game)
         self.salary_head = nn.Linear(d_emb, 1)
+        self.pedigree_head = nn.Linear(d_emb, 1)
+        self.playoff_head = nn.Linear(d_emb, 1)
+        self.skill_towers = SkillTowers(d_emb, n_skills) if n_skills else None
 
     def encode(self, xs, ms, season_ids):
         parts = torch.stack(
@@ -183,12 +245,17 @@ class MTNN(nn.Module):
 
     def forward(self, xs, ms, season_ids):
         emb = self.encode(xs, ms, season_ids)
-        return emb, {
+        out = {
             "archetype": self.archetype_head(emb),
             "position": self.position_head(emb),
             "profile": self.profile_head(emb),
             "salary": self.salary_head(emb).squeeze(-1),
+            "pedigree": self.pedigree_head(emb).squeeze(-1),
+            "playoff": self.playoff_head(emb).squeeze(-1),
         }
+        if self.skill_towers is not None:
+            out["skills"] = self.skill_towers(emb)
+        return emb, out
 
 
 # ---------------------------------------------------------------------------
@@ -306,6 +373,56 @@ def cross_era_archetype_purity(E: np.ndarray, clusters: np.ndarray,
     return float(np.mean(purities)) if purities else None
 
 
+def skill_holdout_metrics(pred: np.ndarray, target: np.ndarray,
+                          valid: np.ndarray, seasons: np.ndarray,
+                          keys: list[str]) -> dict:
+    """Per-skill R2 + MAE (grade points, 0-100) on held-out season splits."""
+    out: dict = {}
+    split_of = np.array([eval_split(str(s)) for s in seasons])
+    for split in ("val", "test"):
+        rows = np.where((valid > 0) & (split_of == split))[0]
+        if len(rows) == 0:
+            out[split] = None
+            continue
+        p, t = pred[rows], target[rows]
+        per = {}
+        for j, key in enumerate(keys):
+            resid = t[:, j] - p[:, j]
+            ss_res = float((resid ** 2).sum())
+            ss_tot = float(((t[:, j] - t[:, j].mean()) ** 2).sum())
+            per[key] = {
+                "r2": round(1.0 - ss_res / max(ss_tot, 1e-9), 4),
+                "mae_pts": round(float(np.abs(resid).mean()) * 100.0, 2),
+            }
+        out[split] = {
+            "rows": int(len(rows)),
+            "mean_r2": round(float(np.mean([v["r2"] for v in per.values()])), 4),
+            "per_skill": per,
+        }
+    return out
+
+
+def skill_neighbor_consistency(E: np.ndarray, grades: np.ndarray,
+                               valid: np.ndarray, k: int = 10,
+                               n_sample: int = 400) -> float | None:
+    """Mean |grade(self) − mean grade(top-k NN)| across skills, in grade
+    points — lower means neighbors in this space share craft."""
+    rows = np.where(valid > 0)[0]
+    if len(rows) < n_sample + k:
+        return None
+    rng = np.random.default_rng(7)
+    sample = rng.choice(rows, n_sample, replace=False)
+    valid_mask = valid > 0
+    gaps = []
+    for i in sample:
+        sims = E @ E[i]
+        sims[i] = -np.inf
+        sims[~valid_mask] = -np.inf
+        top = np.argpartition(-sims, k)[:k]
+        gaps.append(float(np.abs(grades[top].mean(0) - grades[i]).mean()) * 100.0)
+    return round(float(np.mean(gaps)), 2)
+
+
 # ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
@@ -348,14 +465,39 @@ def main() -> None:
         sal_j = manifest["features"].index("SALARY_LOG")
     sal_z = torch.tensor(Z[:, sal_j], device=device) if sal_j is not None else None
     sal_m = torch.tensor(M[:, sal_j], device=device) if sal_j is not None else None
+
+    ped_j = None
+    if "PED_PICK_QUALITY" in manifest["features"]:
+        ped_j = manifest["features"].index("PED_PICK_QUALITY")
+    ped_z = torch.tensor(Z[:, ped_j], device=device) if ped_j is not None else None
+    ped_m = torch.tensor(M[:, ped_j], device=device) if ped_j is not None else None
+    if ped_j is not None:
+        print(f"pedigree_expectation head active: "
+              f"{int(M[:, ped_j].sum())} rows with draft-slot labels")
+
+    po_j = None
+    if "PO_PTS_DELTA" in manifest["features"]:
+        po_j = manifest["features"].index("PO_PTS_DELTA")
+    po_z = torch.tensor(Z[:, po_j], device=device) if po_j is not None else None
+    po_m = torch.tensor(M[:, po_j], device=device) if po_j is not None else None
+    if po_j is not None:
+        print(f"playoff_riser head active: "
+              f"{int(M[:, po_j].sum())} rows with playoff scoring-delta labels")
     arch_t = torch.tensor(clusters, device=device)
     pos_t = torch.tensor(positions, device=device)
     pos_mask = pos_t >= 0
     seas_t = torch.tensor(season_ids, device=device)
 
+    skill_g, skill_m, skill_keys = load_skill_labels(names, seasons)
+    skill_t = torch.tensor(skill_g, device=device)
+    skillm_t = torch.tensor(skill_m, device=device)
+    print(f"{len(skill_keys)} skill towers, "
+          f"{int(skill_m.sum())} rows with Skills Lens labels")
+
     xs, ms = split_by_family(Z, M, fams, device)
     model = MTNN({f: len(c) for f, c in fams.items()}, n_seasons,
-                 d_emb=args.dim, n_game=len(game_cols)).to(device)
+                 d_emb=args.dim, n_game=len(game_cols),
+                 n_skills=len(skill_keys)).to(device)
     opt = torch.optim.AdamW(model.parameters(), lr=args.lr, weight_decay=1e-4)
     sched = torch.optim.lr_scheduler.CosineAnnealingLR(opt, T_max=args.epochs)
 
@@ -390,11 +532,26 @@ def main() -> None:
                 loss = loss + 0.2 * F.cross_entropy(
                     out_a["position"][pos_mask[idx_t]], pos_t[idx_t][pos_mask[idx_t]])
             loss = loss + 0.15 * F.mse_loss(out_a["profile"], game_z[idx_t])
+            if "skills" in out_a:
+                w = skillm_t[idx_t]
+                if w.sum() > 0:
+                    per_row = ((out_a["skills"] - skill_t[idx_t]) ** 2).mean(-1)
+                    loss = loss + 0.3 * (w * per_row).sum() / w.sum()
             if sal_z is not None and sal_m is not None:
                 w = sal_m[idx_t]
                 if w.sum() > 0:
                     sal_loss = (w * (out_a["salary"] - sal_z[idx_t]) ** 2).sum() / w.sum()
                     loss = loss + 0.2 * sal_loss
+            if ped_z is not None and ped_m is not None:
+                w = ped_m[idx_t]
+                if w.sum() > 0:
+                    ped_loss = (w * (out_a["pedigree"] - ped_z[idx_t]) ** 2).sum() / w.sum()
+                    loss = loss + 0.1 * ped_loss
+            if po_z is not None and po_m is not None:
+                w = po_m[idx_t]
+                if w.sum() > 0:
+                    po_loss = (w * (out_a["playoff"] - po_z[idx_t]) ** 2).sum() / w.sum()
+                    loss = loss + 0.1 * po_loss
 
             opt.zero_grad()
             loss.backward()
@@ -416,12 +573,15 @@ def main() -> None:
     E = emb.cpu().numpy().astype(np.float32)
     arch_logits = heads["archetype"].cpu().numpy().astype(np.float32)
     pos_logits = heads["position"].cpu().numpy().astype(np.float32)
+    skill_pred = (heads["skills"].cpu().numpy().astype(np.float32)
+                  if "skills" in heads else np.zeros((len(E), 0), np.float32))
 
     np.savez_compressed(
         DATA_DIR / "embedding_v3.npz",
         E=E, player_id=pids, season=seasons, name=names,
         cluster=clusters, position=positions,
         archetype_logits=arch_logits, position_logits=pos_logits,
+        skill_pred=skill_pred, skill_keys=np.array(skill_keys),
     )
 
     centroids = np.zeros((N_ARCHETYPES, E.shape[1]), dtype=np.float32)
@@ -438,6 +598,43 @@ def main() -> None:
     purity = cross_era_archetype_purity(E, clusters, seasons)
 
     G_base = transparent_baseline_embeddings(Z, game_cols)
+
+    split_of = np.array([eval_split(str(s)) for s in seasons])
+
+    def regression_head_report(head_key: str, col_j: int | None) -> dict | None:
+        """Held-out val/test R2 + MAE(z) for a masked single-target aux head."""
+        if col_j is None:
+            return None
+        pred = heads[head_key].cpu().numpy().astype(np.float32)
+        true, valid = Z[:, col_j], M[:, col_j]
+        out: dict = {}
+        for split in ("val", "test"):
+            rows = np.where((valid > 0) & (split_of == split))[0]
+            if len(rows) == 0:
+                out[split] = None
+                continue
+            resid = true[rows] - pred[rows]
+            ss_tot = float(((true[rows] - true[rows].mean()) ** 2).sum())
+            out[split] = {
+                "rows": int(len(rows)),
+                "mae_z": round(float(np.abs(resid).mean()), 4),
+                "r2": round(1.0 - float((resid ** 2).sum()) / max(ss_tot, 1e-9), 4),
+            }
+        return out
+
+    pedigree_report = regression_head_report("pedigree", ped_j)
+    playoff_report = regression_head_report("playoff", po_j)
+
+    skills_report = None
+    if skill_keys:
+        skills_report = {
+            "holdout": skill_holdout_metrics(
+                skill_pred, skill_g, skill_m, seasons, skill_keys),
+            "neighbor_consistency_pts_mtnn": skill_neighbor_consistency(
+                E, skill_g, skill_m),
+            "neighbor_consistency_pts_transparent_14d": skill_neighbor_consistency(
+                G_base, skill_g, skill_m),
+        }
     held_out = {}
     for split in ("train", "val", "test", "all"):
         sub = pair_arr if split == "all" else filter_pairs_by_split(pair_arr, seasons, split)
@@ -449,7 +646,7 @@ def main() -> None:
 
     report = {
         "trained": time.strftime("%Y-%m-%d %H:%M"),
-        "model": "mtnn_v3",
+        "model": "mtnn_v4_skills",
         "epochs": args.epochs,
         "dim": args.dim,
         "towers": {k: len(v) for k, v in fams.items()},
@@ -461,6 +658,9 @@ def main() -> None:
         "archetype_top1_acc": arch_acc,
         "position_top1_acc": pos_acc,
         "cross_era_archetype_neighbor_purity_at_20": purity,
+        "skills": skills_report,
+        "pedigree_expectation": pedigree_report,
+        "playoff_riser": playoff_report,
         "promotion_gate": (
             "Promote only if held-out val/test recall@10 beats transparent 14-d "
             "baseline by >=0.05 AND archetype_top1_acc >= 0.55 (not auto-promoted)."

@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Skills — Vector Hoops</title>
+<meta name="description" content="Every charted player-season graded 0-99 on twelve skills, era-normalized so a 90 in 1997 means the same as a 90 in 2026. Search any player, compare seasons, browse era-honest skill leaderboards.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Ctext%20y%3D%22.9em%22%20font-size%3D%2290%22%3E%26%23127936%3B%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Skills Lens — Vector Hoops">
+<meta property="og:description" content="12,392 player-seasons graded 0-99 on twelve skills, era-normalized. Who was actually good at what?">
+<meta property="og:image" content="/assets/og.svg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Skills Lens — Vector Hoops">
+<meta name="twitter:description" content="12,392 player-seasons graded 0-99 on twelve skills, era-normalized.">
+<meta name="twitter:image" content="/assets/og.svg">
+<link rel="stylesheet" href="assets/hoops.css">
+<link rel="stylesheet" href="assets/shell.css">
+</head>
+<body>
+
+<nav class="site-nav" aria-label="Vector Hoops site">
+  <a class="site-nav__brand" href="/">VECTOR<span class="site-nav__accent">HOOPS</span></a>
+  <div class="site-nav__links">
+    <a class="site-nav__link" href="/play">Play</a>
+    <a class="site-nav__link" href="/wiki">Wiki</a>
+    <a class="site-nav__link is-active" href="/skills" aria-current="page">Skills</a>
+    <a class="site-nav__link" href="/methods">Methods</a>
+    <a class="site-nav__link" href="/leaderboard">Leaderboard</a>
+    <a class="site-nav__link" href="/drift">Drift</a>
+  </div>
+</nav>
+
+<main class="skills-main">
+
+  <div class="skills-head">
+    <h1>Skills Lens</h1>
+    <p>Every charted player-season graded 0&ndash;99 on twelve skills &mdash; percentile within its own
+      season, so a 90 in 1997 means exactly what a 90 in 2026 means. Badges fire at 90+,
+      gold at 97+. Composites and caveats on the <a href="/methods#skills">methods page</a>.</p>
+  </div>
+
+  <div class="skills-columns">
+
+    <section class="skills-panel" aria-label="Player skill profile">
+      <h2>Player profile</h2>
+      <input class="wiki-search" id="skills-search" type="text"
+             placeholder="Search a player name&hellip;" autocomplete="off"
+             autocorrect="off" autocapitalize="off" spellcheck="false" disabled>
+      <ul class="skills-suggest" id="skills-suggest"></ul>
+      <div id="skills-profile" hidden>
+        <p class="skills-player-meta" id="skills-player-meta"></p>
+        <div class="skills-seasons" id="skills-seasons" role="tablist" aria-label="Season"></div>
+        <div class="vh-skill-badges" id="skills-badges"></div>
+        <ul class="skillbar-list" id="skills-bars"></ul>
+        <div class="skills-playoffs" id="skills-playoffs" hidden></div>
+      </div>
+      <p class="skills-hint" id="skills-empty">Pick a player to see their twelve-skill profile,
+        season by season. Try &ldquo;Curry&rdquo;, &ldquo;Rodman&rdquo;, or &ldquo;Jokić&rdquo;.</p>
+    </section>
+
+    <section class="skills-panel" aria-label="Skill leaderboards">
+      <h2>Leaderboard</h2>
+      <div class="skills-board-controls">
+        <select id="board-skill" aria-label="Skill" disabled></select>
+        <select id="board-season" aria-label="Season" disabled>
+          <option value="">All seasons</option>
+        </select>
+      </div>
+      <ol class="skills-board" id="skills-board"></ol>
+      <p class="skills-hint">Grades are era-normalized percentiles &mdash; an all-seasons board ranks
+        the raw composite against 30 years of charted seasons. Two-Way Impact is NBA.com on-court
+        plus-minus per 100 (small-minute seasons can spike).</p>
+    </section>
+
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="site-footer__links">
+    <a href="/methods">Methods</a>
+    <a href="/play">Play</a>
+    <a href="https://github.com/jcdavis131/vector-hoops" target="_blank" rel="noopener">GitHub</a>
+  </div>
+  <div class="site-footer__attribution">Every number recomputable from stats.nba.com &amp; Basketball-Reference source data &middot; part of the <a href="https://jcamd.com/arcade" target="_blank" rel="noopener">jcamd arcade</a></div>
+</footer>
+
+<script src="assets/dossier.js" defer></script>
+<script defer>
+(function () {
+  'use strict';
+
+  var POSITIONS = ['PG', 'SG', 'SF', 'PF', 'C'];
+  var MAX_SUGGEST = 8;
+  var BOARD_ROWS = 20;
+
+  var els = {};
+  var DATA = null;    // vectors.json
+  var SKILLS = null;  // skills.json
+  var INDEX = {};     // slug -> { name, rows: [{ i, season }] }
+  var ORDER = [];     // slugs sorted by name
+  var current = { slug: '', season: '' };
+
+  function esc(s) { return window.VHDossier.escapeHtml(s); }
+
+  function initDom() {
+    els.search = document.getElementById('skills-search');
+    els.suggest = document.getElementById('skills-suggest');
+    els.profile = document.getElementById('skills-profile');
+    els.meta = document.getElementById('skills-player-meta');
+    els.seasons = document.getElementById('skills-seasons');
+    els.badges = document.getElementById('skills-badges');
+    els.bars = document.getElementById('skills-bars');
+    els.playoffs = document.getElementById('skills-playoffs');
+    els.empty = document.getElementById('skills-empty');
+    els.boardSkill = document.getElementById('board-skill');
+    els.boardSeason = document.getElementById('board-season');
+    els.board = document.getElementById('skills-board');
+  }
+
+  function buildIndex() {
+    for (var i = 0; i < DATA.players.length; i++) {
+      var p = DATA.players[i];
+      var slug = window.VHDossier.playerSlug(p.name);
+      if (!INDEX[slug]) {
+        INDEX[slug] = { name: p.name, slug: slug, rows: [] };
+        ORDER.push(slug);
+      }
+      INDEX[slug].rows.push({ i: i, season: p.season });
+    }
+    ORDER.sort(function (a, b) { return INDEX[a].name.localeCompare(INDEX[b].name); });
+    Object.keys(INDEX).forEach(function (slug) {
+      INDEX[slug].rows.sort(function (a, b) { return a.season < b.season ? -1 : 1; });
+    });
+  }
+
+  function fillControls() {
+    SKILLS.skills.forEach(function (sk, j) {
+      var opt = document.createElement('option');
+      opt.value = String(j);
+      opt.textContent = sk.label;
+      els.boardSkill.appendChild(opt);
+    });
+    var seasons = {};
+    DATA.players.forEach(function (p) { seasons[p.season] = true; });
+    Object.keys(seasons).sort().reverse().forEach(function (s) {
+      var opt = document.createElement('option');
+      opt.value = s; opt.textContent = s;
+      els.boardSeason.appendChild(opt);
+    });
+  }
+
+  // ---- profile ----
+
+  function gradeClass(g) {
+    if (g >= SKILLS.badgeGrade) return ' is-elite';
+    if (g >= 75) return ' is-strong';
+    return '';
+  }
+
+  function renderProfile() {
+    var rec = INDEX[current.slug];
+    if (!rec) return;
+    var row = null;
+    for (var r = 0; r < rec.rows.length; r++) {
+      if (rec.rows[r].season === current.season) row = rec.rows[r];
+    }
+    if (!row) { row = rec.rows[rec.rows.length - 1]; current.season = row.season; }
+    var p = DATA.players[row.i];
+    var grades = SKILLS.grades[row.i];
+
+    var pos = typeof p.p === 'number' && POSITIONS[p.p] ? POSITIONS[p.p] : '?';
+    var arch = typeof p.c === 'number' && DATA.clusters[p.c] ? DATA.clusters[p.c] : '';
+    els.meta.innerHTML = '<b>' + esc(rec.name) + '</b> &middot; ' + esc(current.season) +
+      ' &middot; ' + esc(pos) + (arch ? ' &middot; ' + esc(arch) : '');
+
+    els.seasons.innerHTML = rec.rows.map(function (rr) {
+      return '<button type="button" role="tab" data-season="' + esc(rr.season) + '"' +
+        (rr.season === current.season ? ' class="is-active" aria-selected="true"' : ' aria-selected="false"') +
+        '>' + esc(rr.season.slice(2)) + '</button>';
+    }).join('');
+
+    var badges = [];
+    SKILLS.skills.forEach(function (sk, j) {
+      if (grades[j] >= SKILLS.badgeGrade) {
+        badges.push('<span class="vh-skill-badge' +
+          (grades[j] >= SKILLS.goldGrade ? ' vh-skill-badge--gold' : '') + '">' +
+          esc(sk.badge) + ' ' + grades[j] + '</span>');
+      }
+    });
+    els.badges.innerHTML = badges.length ? badges.join('') :
+      '<span class="vh-skill-badge vh-skill-badge--muted">No 90+ badges this season</span>';
+
+    els.bars.innerHTML = SKILLS.skills.map(function (sk, j) {
+      var g = grades[j];
+      return '<li class="skillbar" title="' + esc(sk.badge) + '">' +
+        '<span class="skillbar__label">' + esc(sk.label) + '</span>' +
+        '<span class="skillbar__track"><span class="skillbar__fill' + gradeClass(g) +
+        '" style="width:' + Math.max(g, 2) + '%"></span></span>' +
+        '<span class="skillbar__grade">' + g + '</span>' +
+        '</li>';
+    }).join('');
+
+    renderPlayoffs(rec.name, current.season);
+
+    els.profile.hidden = false;
+    els.empty.hidden = true;
+    var url = '/skills?p=' + encodeURIComponent(current.slug) +
+      '&s=' + encodeURIComponent(current.season);
+    history.replaceState(null, '', url);
+  }
+
+  // ---- Playoff Lens (transparent; dormant until assets/playoffs.json lands) ----
+  // PLAYOFFS is null until the fetch resolves; false if absent (dormant).
+  var PLAYOFFS = null;
+
+  function fmtDelta(v, digits) {
+    if (v === null || v === undefined) return '&mdash;';
+    var s = v >= 0 ? '+' : '';
+    return s + v.toFixed(digits === undefined ? 1 : digits);
+  }
+
+  function renderPlayoffs(name, season) {
+    var box = els.playoffs;
+    if (!box) return;
+    if (!PLAYOFFS) { box.hidden = true; return; }  // absent or not yet loaded
+    var s = PLAYOFFS.splits[name + '|' + season];
+    if (!s) {
+      box.hidden = false;
+      box.innerHTML = '<div class="vh-section-label">Playoffs</div>' +
+        '<p class="skills-hint">No postseason games this season.</p>';
+      return;
+    }
+    var d = s.pts_delta;
+    var verdict = d === null ? '' :
+      d >= 2 ? '<span class="po-tag po-tag--riser">Riser +' + d.toFixed(1) + '</span>' :
+      d <= -2 ? '<span class="po-tag po-tag--fader">Fader ' + d.toFixed(1) + '</span>' :
+      '<span class="po-tag po-tag--steady">Held serve</span>';
+    var rounds = ['missed', 'R1', 'R2', 'Conf finals', 'Finals'];
+    var runNote = (typeof s.rounds === 'number')
+      ? (s.wins + ' playoff win' + (s.wins === 1 ? '' : 's') +
+         ' &middot; ' + (rounds[s.rounds] || ('round ' + s.rounds)))
+      : '';
+    function line(label, po, rs, delta, digits) {
+      return '<li class="po-split">' +
+        '<span class="po-split__label">' + label + '</span>' +
+        '<span class="po-split__rs">RS ' + (rs === null || rs === undefined ? '&mdash;' : rs) + '</span>' +
+        '<span class="po-split__po">PO ' + (po === null || po === undefined ? '&mdash;' : po) + '</span>' +
+        '<span class="po-split__delta">' + fmtDelta(delta, digits) + '</span></li>';
+    }
+    box.hidden = false;
+    box.innerHTML =
+      '<div class="vh-section-label">Playoffs &middot; regular season vs postseason ' + verdict + '</div>' +
+      (runNote ? '<p class="skills-hint">' + runNote + '</p>' : '') +
+      '<ul class="po-splits">' +
+      line('Pts / 100', s.po.PTS100, s.rs.PTS100, s.pts_delta, 1) +
+      line('Minutes', s.po.MIN, s.rs.MIN, s.min_delta, 1) +
+      line('Usage %', s.po.USG, s.rs.USG, s.usg_delta, 1) +
+      line('True Shooting', s.po.TS, s.rs.TS,
+           (s.po.TS != null && s.rs.TS != null) ? +(s.po.TS - s.rs.TS).toFixed(3) : null, 3) +
+      '</ul>' +
+      '<p class="skills-hint">On-court plus-minus per 100 in the playoffs: ' +
+      fmtDelta(s.po.PLUS_MINUS, 1) + '. Splits from stats.nba.com.</p>';
+  }
+
+  function pickPlayer(slug, season) {
+    if (!INDEX[slug]) return;
+    current.slug = slug;
+    current.season = season || INDEX[slug].rows[INDEX[slug].rows.length - 1].season;
+    els.search.value = INDEX[slug].name;
+    els.suggest.innerHTML = '';
+    renderProfile();
+  }
+
+  // ---- search ----
+
+  function fold(s) {
+    return s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+  }
+
+  function renderSuggest() {
+    var q = fold(els.search.value.trim());
+    if (q.length < 2) { els.suggest.innerHTML = ''; return; }
+    var hits = [];
+    for (var k = 0; k < ORDER.length && hits.length < MAX_SUGGEST; k++) {
+      var rec = INDEX[ORDER[k]];
+      if (fold(rec.name).indexOf(q) !== -1) hits.push(rec);
+    }
+    els.suggest.innerHTML = hits.map(function (rec) {
+      var span = rec.rows.length > 1 ?
+        rec.rows[0].season + '&ndash;' + rec.rows[rec.rows.length - 1].season :
+        rec.rows[0].season;
+      return '<li><button type="button" data-slug="' + esc(rec.slug) + '">' +
+        '<span>' + esc(rec.name) + '</span>' +
+        '<span class="skills-suggest__meta">' + span + ' &middot; ' +
+        rec.rows.length + ' season' + (rec.rows.length === 1 ? '' : 's') + '</span>' +
+        '</button></li>';
+    }).join('');
+  }
+
+  // ---- leaderboard ----
+
+  // Boards sort by the era-z linear composite itself (weights ship in
+  // skills.json), so 99-grade ties rank honestly across eras instead of
+  // falling back to recency.
+  function renderBoard() {
+    var j = parseInt(els.boardSkill.value || '0', 10);
+    var season = els.boardSeason.value;
+    var rows = [];
+    for (var i = 0; i < DATA.players.length; i++) {
+      if (season && DATA.players[i].season !== season) continue;
+      rows.push(i);
+    }
+    var featIdx = {};
+    DATA.features.forEach(function (f, k) { featIdx[f] = k; });
+    var w = SKILLS.skills[j].w;
+    var score = {};
+    rows.forEach(function (i) {
+      var s = 0;
+      for (var f in w) s += w[f] * DATA.players[i].v[featIdx[f]];
+      score[i] = s;
+    });
+    rows.sort(function (a, b) { return score[b] - score[a]; });
+    els.board.innerHTML = rows.slice(0, BOARD_ROWS).map(function (i) {
+      var p = DATA.players[i];
+      var slug = window.VHDossier.playerSlug(p.name);
+      return '<li>' +
+        '<span class="skills-board__name" data-slug="' + esc(slug) +
+        '" data-season="' + esc(p.season) + '">' + esc(p.name) + '</span>' +
+        '<span class="skills-board__season">' + esc(p.season) + '</span>' +
+        '<span class="skills-board__grade">' + SKILLS.grades[i][j] + '</span>' +
+        '</li>';
+    }).join('');
+  }
+
+  // ---- wiring ----
+
+  function setupControls() {
+    els.search.addEventListener('input', renderSuggest);
+    els.suggest.addEventListener('click', function (ev) {
+      var btn = ev.target.closest('button[data-slug]');
+      if (btn) pickPlayer(btn.getAttribute('data-slug'));
+    });
+    els.seasons.addEventListener('click', function (ev) {
+      var btn = ev.target.closest('button[data-season]');
+      if (!btn) return;
+      current.season = btn.getAttribute('data-season');
+      renderProfile();
+    });
+    els.boardSkill.addEventListener('change', renderBoard);
+    els.boardSeason.addEventListener('change', renderBoard);
+    els.board.addEventListener('click', function (ev) {
+      var name = ev.target.closest('.skills-board__name');
+      if (name) pickPlayer(name.getAttribute('data-slug'), name.getAttribute('data-season'));
+    });
+  }
+
+  function applyDeepLink() {
+    var qp = new URLSearchParams(location.search);
+    var slug = qp.get('p');
+    if (slug && INDEX[slug]) pickPlayer(slug, qp.get('s') || '');
+  }
+
+  function init() {
+    initDom();
+    Promise.all([
+      fetch('assets/vectors.json').then(function (r) {
+        if (!r.ok) throw new Error('HTTP ' + r.status); return r.json();
+      }),
+      fetch('assets/skills.json').then(function (r) {
+        if (!r.ok) throw new Error('HTTP ' + r.status); return r.json();
+      })
+    ]).then(function (loaded) {
+      DATA = loaded[0];
+      SKILLS = loaded[1];
+      if (SKILLS.grades.length !== DATA.players.length) {
+        throw new Error('skills/vectors misaligned');
+      }
+      buildIndex();
+      fillControls();
+      setupControls();
+      els.search.disabled = false;
+      els.boardSkill.disabled = false;
+      els.boardSeason.disabled = false;
+      renderBoard();
+      applyDeepLink();
+      // Playoff Lens is optional — dormant until an operator commits
+      // assets/playoffs.json. Fetch once, fail soft to `false`.
+      fetch('assets/playoffs.json')
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (po) {
+          PLAYOFFS = po || false;
+          if (PLAYOFFS && current.slug) renderProfile();
+        })
+        .catch(function () { PLAYOFFS = false; });
+    }).catch(function (err) {
+      els.empty.textContent = 'Could not load the skills data (' + err.message + ').';
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
+</body>
+</html>

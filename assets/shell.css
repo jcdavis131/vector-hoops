@@ -1333,3 +1333,214 @@ body.vh-team-themed .landing-favorite__select:focus{
 }
 .trajectory-motif-item__gloss::before{ content: "— "; }
 .archetype-lineage__chain{ font-weight: 700; }
+
+/* ---- skills lens (skills.html + shared badge chips) ---- */
+.skills-main{
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 20px 16px 48px;
+  max-width: 960px;
+  margin: 0 auto;
+  width: 100%;
+}
+.skills-head{ display: flex; flex-direction: column; gap: 6px; }
+.skills-head h1{
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 26px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.skills-head p{ margin: 0; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+.skills-columns{
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+@media (max-width: 760px){
+  .skills-columns{ grid-template-columns: minmax(0, 1fr); }
+}
+.skills-panel{
+  background: var(--surface);
+  border: 2px solid var(--ink);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-block);
+  padding: 14px 16px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.skills-panel h2{
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.skills-hint{ margin: 0; font-size: 12px; color: var(--ink-muted); line-height: 1.5; }
+.skills-suggest{
+  list-style: none;
+  margin: 0; padding: 0;
+  border: 1px solid var(--hairline);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.skills-suggest:empty{ display: none; }
+.skills-suggest button{
+  display: flex; justify-content: space-between; gap: 10px;
+  width: 100%;
+  padding: 8px 10px;
+  border: 0; border-bottom: 1px solid var(--hairline);
+  background: var(--surface);
+  font: 13px var(--sans);
+  text-align: left;
+  cursor: pointer;
+}
+.skills-suggest li:last-child button{ border-bottom: 0; }
+.skills-suggest button:hover{ background: var(--paper); }
+.skills-suggest__meta{ color: var(--ink-muted); font-size: 11px; white-space: nowrap; }
+.skills-seasons{ display: flex; flex-wrap: wrap; gap: 6px; }
+.skills-seasons button{
+  font: 11px var(--mono);
+  padding: 4px 8px;
+  border: 1.5px solid var(--hairline);
+  border-radius: 999px;
+  background: var(--surface);
+  cursor: pointer;
+}
+.skills-seasons button.is-active{
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--paper);
+}
+.skills-player-meta{ font-size: 12px; color: var(--ink-soft); margin: 0; }
+.skillbar-list{ display: flex; flex-direction: column; gap: 7px; margin: 0; padding: 0; list-style: none; }
+.skillbar{
+  display: grid;
+  grid-template-columns: 132px minmax(0, 1fr) 30px;
+  align-items: center;
+  gap: 8px;
+}
+.skillbar__label{
+  font: 10px var(--mono);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.skillbar__track{
+  display: block;
+  height: 11px;
+  background: var(--paper);
+  border: 1px solid var(--hairline);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.skillbar__fill{
+  display: block;
+  height: 100%;
+  background: var(--data-blue);
+  border-radius: 5px;
+  transition: width 200ms ease;
+}
+.skillbar__fill.is-strong{ background: var(--data-orange); }
+.skillbar__fill.is-elite{ background: var(--identified); }
+.skillbar__grade{
+  font: 11px var(--mono);
+  text-align: right;
+  font-weight: 700;
+}
+.vh-skill-badges{ display: flex; flex-wrap: wrap; gap: 6px; }
+.vh-skill-badge{
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font: 10px var(--mono);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border: 1.5px solid var(--ink);
+  border-radius: 999px;
+  background: var(--identified-bg);
+  color: var(--ink);
+  white-space: nowrap;
+}
+.vh-skill-badge--gold{ background: var(--identified); }
+.vh-skill-badge--muted{
+  border-color: var(--hairline);
+  background: var(--paper);
+  color: var(--ink-muted);
+}
+.skills-board-controls{ display: flex; gap: 8px; flex-wrap: wrap; }
+.skills-board-controls select{
+  font: 12px var(--mono);
+  padding: 7px 9px;
+  border: 1.5px solid var(--ink);
+  border-radius: 8px;
+  background: var(--surface);
+}
+.skills-board{ list-style: none; margin: 0; padding: 0; counter-reset: boardrank; }
+.skills-board li{
+  counter-increment: boardrank;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 6px 2px;
+  border-bottom: 1px solid var(--hairline);
+  font-size: 13px;
+}
+.skills-board li::before{
+  content: counter(boardrank);
+  font: 11px var(--mono);
+  color: var(--ink-muted);
+  min-width: 20px;
+  text-align: right;
+}
+.skills-board li:last-child{ border-bottom: 0; }
+.skills-board__name{ flex: 1 1 auto; font-weight: 700; cursor: pointer; }
+.skills-board__name:hover{ text-decoration: underline; }
+.skills-board__season{ font: 11px var(--mono); color: var(--ink-soft); }
+.skills-board__grade{ font: 12px var(--mono); font-weight: 700; }
+
+/* ---- playoff lens (skills.html Playoff Lens; dormant until data lands) ---- */
+.skills-playoffs{
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px dashed var(--hairline);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.po-tag{
+  font: 10px var(--mono);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1.5px solid var(--ink);
+  margin-left: 6px;
+  white-space: nowrap;
+}
+.po-tag--riser{ background: var(--hot); color: #fff; border-color: var(--hot); }
+.po-tag--fader{ background: var(--cold); color: #fff; border-color: var(--cold); }
+.po-tag--steady{ background: var(--paper); color: var(--ink-soft); }
+.po-splits{ list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
+.po-split{
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) 1fr 1fr 46px;
+  align-items: baseline;
+  gap: 8px;
+  font: 12px var(--mono);
+  padding: 3px 0;
+  border-bottom: 1px solid var(--hairline);
+}
+.po-split:last-child{ border-bottom: 0; }
+.po-split__label{ color: var(--ink-soft); font-size: 11px; }
+.po-split__rs{ color: var(--ink-muted); }
+.po-split__po{ font-weight: 700; }
+.po-split__delta{ text-align: right; font-weight: 700; }

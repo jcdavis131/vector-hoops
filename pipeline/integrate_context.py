@@ -30,6 +30,8 @@ CAREER_JSON = DATA_DIR / "career_arc.json"
 COMPETITION_JSON = DATA_DIR / "competition.json"
 COMPETITION_JSON_LEGACY = DATA_DIR / "competition_context.json"
 SALARIES_JSON = CACHE_DIR / "salaries_merged.json"
+PEDIGREE_JSON = DATA_DIR / "pedigree.json"
+PLAYOFFS_JSON = DATA_DIR / "playoffs.json"
 
 V4_FEATURES: dict[str, str] = {
   # roster (VH-109)
@@ -65,7 +67,28 @@ V4_FEATURES: dict[str, str] = {
   "FORM_TD_RATE": "form",
   "FORM_GP": "form",
   "FORM_MIN_AVG": "form",
+  # pedigree (VH-115) — draft + entry expectations, leak-free by construction
+  "PED_PICK_QUALITY": "pedigree",
+  "PED_ROUND_ONE": "pedigree",
+  "PED_UNDRAFTED": "pedigree",
+  "PED_EXPECT_SLOT": "pedigree",
+  "PED_TEAM_WINPCT": "pedigree",
+  "PED_YEARS_SINCE": "pedigree",
+  "PED_PICK_DECAY": "pedigree",
+  # playoffs (VH-116) — postseason as a distinct regime; masked for
+  # player-seasons with no playoff appearance
+  "PO_GP": "playoffs",
+  "PO_MIN": "playoffs",
+  "PO_MIN_DELTA": "playoffs",
+  "PO_USG_DELTA": "playoffs",
+  "PO_PTS_DELTA": "playoffs",
+  "PO_EFF_DELTA": "playoffs",
+  "PO_PLUS_MINUS": "playoffs",
+  "PO_TEAM_WINS": "playoffs",
+  "PO_ROUNDS": "playoffs",
 }
+
+PO_FEATURES = [f for f, fam in V4_FEATURES.items() if fam == "playoffs"]
 
 
 def norm_name(name: str) -> str:
@@ -121,6 +144,25 @@ def load_competition_by_player_season() -> dict[tuple[str, str], dict]:
     if not path.exists():
         return {}
     data = json.loads(path.read_text(encoding="utf-8"))
+    return {(r["name"], r["season"]): r for r in data.get("players", [])}
+
+
+def load_pedigree_by_player_season() -> dict[tuple[str, str], dict]:
+    """(name, season) -> PED_* row from build_pedigree.py; rows without
+    coverage were omitted upstream, so absence here == masked family."""
+    if not PEDIGREE_JSON.exists():
+        return {}
+    data = json.loads(PEDIGREE_JSON.read_text(encoding="utf-8"))
+    return {(r["name"], r["season"]): r
+            for r in data.get("players", []) if "PED_UNDRAFTED" in r}
+
+
+def load_playoffs_by_player_season() -> dict[tuple[str, str], dict]:
+    """(name, season) -> PO_* row from build_playoffs.py; only postseason
+    appearances are present, so absence here == masked playoffs family."""
+    if not PLAYOFFS_JSON.exists():
+        return {}
+    data = json.loads(PLAYOFFS_JSON.read_text(encoding="utf-8"))
     return {(r["name"], r["season"]): r for r in data.get("players", [])}
 
 
@@ -228,6 +270,8 @@ def build_row_values(
     salary_log: dict,
     team_index: dict[tuple[str, int], dict],
     form: dict,
+    pedigree: dict,
+    playoffs: dict,
 ) -> list[dict[str, float | None]]:
     rows: list[dict[str, float | None]] = []
     for name, season in zip(names, seasons):
@@ -237,6 +281,8 @@ def build_row_values(
         c = career.get(key, {})
         comp = competition.get(key, {})
         form_row = form.get(key, {})
+        ped = pedigree.get(key, {})
+        po = playoffs.get(key, {})
         team_row = team_index.get((str(season), int(r["teamId"]))) if r.get("teamId") else {}
         rows.append({
             "ROSTER_MIN_RANK": r.get("ROSTER_MIN_RANK"),
@@ -266,6 +312,14 @@ def build_row_values(
             "FORM_TD_RATE": form_row.get("FORM_TD_RATE"),
             "FORM_GP": form_row.get("FORM_GP"),
             "FORM_MIN_AVG": form_row.get("FORM_MIN_AVG"),
+            "PED_PICK_QUALITY": ped.get("PED_PICK_QUALITY"),
+            "PED_ROUND_ONE": ped.get("PED_ROUND_ONE"),
+            "PED_UNDRAFTED": ped.get("PED_UNDRAFTED"),
+            "PED_EXPECT_SLOT": ped.get("PED_EXPECT_SLOT"),
+            "PED_TEAM_WINPCT": ped.get("PED_TEAM_WINPCT"),
+            "PED_YEARS_SINCE": ped.get("PED_YEARS_SINCE"),
+            "PED_PICK_DECAY": ped.get("PED_PICK_DECAY"),
+            **{f: po.get(f) for f in PO_FEATURES},
         })
     return rows
 
@@ -295,15 +349,17 @@ def main() -> None:
     salary_log = load_salary_log()
     team_index = load_team_season_index()
     form = load_form_by_player_season()
+    pedigree = load_pedigree_by_player_season()
+    playoffs = load_playoffs_by_player_season()
 
     print(f"artifacts: roster={len(roster)} career={len(career)} "
           f"competition={len(competition)} salary_cap={len(salary_cap)} "
           f"salary_log={len(salary_log)} team_season={len(team_index)} "
-          f"form={len(form)}")
+          f"form={len(form)} pedigree={len(pedigree)} playoffs={len(playoffs)}")
 
     row_vals = build_row_values(
         names, seasons, roster, career, competition,
-        salary_cap, salary_log, team_index, form)
+        salary_cap, salary_log, team_index, form, pedigree, playoffs)
     Z2, M2, man2 = era_z_append(Z, M, manifest, names, seasons, row_vals)
     covered = int((M2[:, Z.shape[1]:] > 0).any(axis=1).sum()) if Z2.shape[1] > Z.shape[1] else 0
     print(f"context merge: {Z.shape[1]} -> {Z2.shape[1]} features; "

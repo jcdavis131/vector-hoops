@@ -4,6 +4,33 @@ Daily NBA chimera puzzle over an era-honest player embedding space.
 12,392 player-seasons (1996-2026), per-100-possession, z-scored within
 season; PCA(3) map; 8 auto-named archetypes. Static, zero backend, free.
 
+## Skills Lens (`skills.html`, `docs/SKILLS_LENS.md`)
+
+Every charted player-season graded 0-99 on twelve skills — fixed linear
+composites of the era-z contract, percentile within season pool, badges
+at 90+. `pipeline/build_skills.py` emits `assets/skills.json` (grades,
+order-aligned with vectors.json), `assets/skill_probe.json` (weights +
+pooled quantile knots so the client grades the fused daily chimera), and
+MTNN training targets. `pipeline/test_skills.py` gates every rebuild;
+`pipeline/update_dataset.py` is the growth loop (fetch best-effort →
+rebuild → gate → ledger at `pipeline/cache/dataset_ledger.json`).
+`train_mtnn.py` (v4) adds a per-skill tower bank on the fused embedding
+with held-out per-skill R² in `mtnn_report.json` — research lane only;
+the site ships the transparent composites.
+
+Two dormant data tracks extend the MTNN with distinct tower families,
+each cache-ready and gated on a committed fixture until one operator
+fetch on a non-datacenter IP (stats.nba.com blocks this environment):
+
+- **Pedigree (Track H)** — draft slot, entry expectations, team-fit
+  prior + `pedigree_expectation` head. Activate: `bash
+  pipeline/operator_fetch_pedigree.sh`.
+- **Playoffs (Track I)** — postseason as a distinct regime:
+  playoff-vs-regular-season deltas (minutes, usage, scoring, efficiency)
+  + team wins/rounds + `playoff_riser` head, plus a transparent Playoff
+  Lens (RS vs PO splits + riser/fader) on `skills.html`. Activate: `bash
+  pipeline/operator_fetch_playoffs.sh`.
+
 ## OKF LLM-Wiki (`knowledge/`)
 
 One interlinked, machine-editable markdown page per charted player

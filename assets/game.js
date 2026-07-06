@@ -3017,6 +3017,90 @@
     });
   }
 
+  // ---- Skills Lens on the reveal (fail-soft, same contract as the
+  // archetype prevalence line): assets/skill_probe.json carries the 12x14
+  // composite weights + pooled all-era quantile knots from
+  // pipeline/build_skills.py, so ANY 14-dim era-z vector — including the
+  // fused chimera, which never existed as a real season — gets graded
+  // against 30 years of charted seasons. ----
+  var skillProbeCache = null; // null = not yet tried; false = failed; object = loaded
+  function loadSkillProbe(cb) {
+    if (skillProbeCache) { cb(skillProbeCache); return; }
+    if (skillProbeCache === false) return;
+    fetch('assets/skill_probe.json').then(function (res) {
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      return res.json();
+    }).then(function (data) {
+      skillProbeCache = data;
+      cb(data);
+    }).catch(function () {
+      skillProbeCache = false;
+    });
+  }
+
+  // grade(vec, skill j) = composite score interpolated through that skill's
+  // quantile knots (knot i sits at percentile i * 100/(n-1)); clamped 0-99.
+  function probeGrades(probe, vec) {
+    return probe.skills.map(function (_key, j) {
+      var s = 0;
+      for (var k = 0; k < probe.features.length; k++) s += probe.W[j][k] * vec[k];
+      var q = probe.quantiles[probe.skills[j]];
+      var step = 100 / (q.length - 1);
+      var grade;
+      if (s <= q[0]) grade = 0;
+      else if (s >= q[q.length - 1]) grade = 99;
+      else {
+        var i = 0;
+        while (i < q.length - 2 && q[i + 1] < s) i++;
+        var span = q[i + 1] - q[i];
+        grade = (i + (span > 0 ? (s - q[i]) / span : 0)) * step;
+      }
+      return {
+        badge: probe.badges[j],
+        label: probe.labels[j],
+        grade: Math.max(0, Math.min(99, Math.round(grade)))
+      };
+    });
+  }
+
+  function skillBadgeChips(graded, minGrade, maxChips) {
+    var top = graded.slice().sort(function (a, b) { return b.grade - a.grade; })
+      .filter(function (g) { return g.grade >= minGrade; }).slice(0, maxChips);
+    return top.map(function (g) {
+      return '<span class="vh-skill-badge' +
+        (skillProbeCache && g.grade >= skillProbeCache.goldGrade ? ' vh-skill-badge--gold' : '') +
+        '" title="' + g.label + '">' + g.badge + ' ' + g.grade + '</span>';
+    }).join('');
+  }
+
+  function skillsLensUrl(name, season) {
+    return '/skills?p=' + encodeURIComponent(playerSlug(name)) +
+      '&s=' + encodeURIComponent(season);
+  }
+
+  function appendSkillLensSection(target) {
+    loadSkillProbe(function (probe) {
+      if (!els.revealBody || !target || !target.vector) return;
+      var blend = skillBadgeChips(probeGrades(probe, target.vector), 75, 3);
+      var wrap = document.createElement('div');
+      wrap.className = 'vh-reveal__skills';
+      var html = '<div class="vh-section-label">Skill lens</div>';
+      html += blend ?
+        '<p class="vh-guess__line">The blend grades out as:</p>' +
+        '<div class="vh-skill-badges">' + blend + '</div>' :
+        '<p class="vh-guess__line">The blend has no standout skill — a true committee chimera.</p>';
+      [target.a, target.b].forEach(function (donor) {
+        var chips = skillBadgeChips(probeGrades(probe, donor.v), probe.badgeGrade, 3);
+        html += '<p class="vh-guess__line"><a href="' + skillsLensUrl(donor.name, donor.season) +
+          '">' + donor.name + ' ' + donor.season + '</a>: ' +
+          (chips ? '<span class="vh-skill-badges">' + chips + '</span>' : 'no 90+ badges that season') +
+          '</p>';
+      });
+      wrap.innerHTML = html;
+      els.revealBody.appendChild(wrap);
+    });
+  }
+
   // v5 FINAL points breakdown, stated verbatim so the multiplier math is
   // never a mystery: base mashup points (by which guess it solved on) times
   // both donor multipliers, or — if the mashup never solved — the
@@ -3070,6 +3154,7 @@
       '<a href="#" class="vh-dossier-link" data-slug="' + playerSlug(TARGET.b.name) + '" data-name="' +
         TARGET.b.name + '">' + TARGET.b.name + '</a></div>';
     els.shareCopied.hidden = true;
+    appendSkillLensSection(TARGET);
     appendArchetypePrevalenceLine(TARGET.clusterIdx);
   }
 
