@@ -157,6 +157,10 @@ operator machine per the rate-limit policy in `DATA_SOURCES_DEEP.md`.
 
 ## 7. Follow-ups
 
+- [x] Pedigree tower (Track H, 2026-07-06): draft slot / entry
+      expectations / team-fit prior + `pedigree_expectation` aux head —
+      see `DATA_SOURCES_DEEP.md` Track H; dormant until one operator run
+      of `fetch_draft_history.py`
 - [ ] `build_wiki.py`: emit badge line in AUTO block on next regen
 - [ ] Skill-based daily mode ("Badge Hunt": name the player from badges)
 - [ ] Wide-matrix skills (motor / post / transition) once caches land

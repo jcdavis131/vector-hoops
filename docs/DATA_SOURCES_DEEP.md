@@ -186,6 +186,33 @@ pipeline/data/bbref_advanced.json             # merged manifest (integrate_conte
 
 ---
 
+### Track H — Pedigree (draft + entry expectations)
+
+| Field | Detail |
+|-------|--------|
+| **Fetcher** | `pipeline/fetch_draft_history.py` → `pipeline/cache/draft_history.json` |
+| **Deriver** | `pipeline/build_pedigree.py` → `pipeline/data/pedigree.json` |
+| **Source URL** | stats.nba.com `drafthistory` via `nba_api` — **one call returns every draft 1947+** (pick, round, team) |
+| **Coverage** | All drafted players; undrafted inferred by absence **only when the cache is marked complete**; drafting-team context 1997+ drafts (needs prior-season `team_base_*` cache) |
+| **Fetch difficulty** | **Very low** — single endpoint hit, tiny payload, no per-season loop |
+| **Legal / terms** | NBA.com stats ToS, same as all Track 0 endpoints; attribute in Methods |
+| **Recommended features** | `PED_PICK_QUALITY` (61 − overall pick), `PED_ROUND_ONE`, `PED_UNDRAFTED`, `PED_EXPECT_SLOT` (stated CBA-rookie-scale-shaped curve, #1 = 1.0, relative not dollars), `PED_TEAM_WINPCT` (drafting team's W_PCT the season before the pick — the "team fit" prior), `PED_YEARS_SINCE`, `PED_PICK_DECAY` (pick quality × e^(−years/4) — expectations fade as evidence accumulates) |
+| **Mask strategy** | Whole family masked when player can't be matched and cache isn't complete; `PED_TEAM_WINPCT` masked for pre-1997 drafts; era-z within season at merge (relative pedigree of that season's league) |
+| **Leakage** | None by construction — every field is known before the player's first NBA game; decay features vary by season but only via elapsed time |
+| **MTNN tower family** | `pedigree` — auxiliary head `pedigree_expectation` (predict pick-quality z from the embedding: how much of a player's measured identity his draft slot explained) |
+| **Name collisions** | Cache stores a **list** per `norm_name`; deriver picks the draft record whose year best precedes the player's first charted season |
+| **Estimated LOC** | ~140 fetcher + ~220 deriver |
+| **Blocked-by** | One operator run of the fetcher (stats.nba.com blocks datacenter IPs); everything downstream ships dormant-until-cache, gated by `test_pedigree.py` on a committed fixture |
+
+**Narrative / scouting-report text is deliberately NOT a feature.** Entry
+narratives (scouting reports, expectations talk) are copyrighted prose and
+unverifiable as numbers — they live in the OKF wiki's **CURATED layer**
+under a stated `## Coming into the league` section (see `docs/OKF.md`),
+written by humans/LLM agents with citations, never by the generator. The
+tower stays recomputable; the story stays readable.
+
+---
+
 ## ROI-sorted build order
 
 Sorted by **impact ÷ effort** for MTNN v4 retrieval + game honesty. Ship top rows before Tier C.
@@ -201,6 +228,7 @@ Sorted by **impact ÷ effort** for MTNN v4 retrieval + game honesty. Ship top ro
 | 7 | **E — BBRef transactions** | Fills acquisition gaps | M | Track A policy | W5 |
 | 8 | **D — Injury Tier 2** | Optional precision; legal/UI gate | L | Operator | W6+ |
 | 9 | **G — Tier C on/off** | Highest fidelity; gated, heavy | XL | VH-114 + disk | W6+ |
+| — | **H — Pedigree** *(shipped dormant 2026-07-06)* | Entry expectations + team-fit prior; one fetch call | S | Operator fetch | done |
 
 **S** = small (~≤150 LOC), **M** = medium (~150–300), **L** = large (~300–500), **XL** = 500+.
 
@@ -266,6 +294,8 @@ fetch_injury_proxy.py    →  pipeline/data/context/injury_proxy.jsonl
 fetch_acquisition_meta.py→  pipeline/data/context/acquisition.jsonl
 tier_b_stint_parser.py   →  pipeline/data/chemistry_graph.jsonl
 tier_c_lineup_onoff.py   →  pipeline/data/lineup_pairs.jsonl  (gated)
+fetch_draft_history.py   →  pipeline/cache/draft_history.json
+build_pedigree.py        →  pipeline/data/pedigree.json
 
 integrate_context.py     →  train_matrix_v4.npz + feature_manifest_v4.json
 ```
@@ -281,6 +311,7 @@ See [`mtnn_v4_plan.md`](../pipeline/mtnn_v4_plan.md) for tower families and `bbr
 | VH-112 | BBRef advanced (`deep_bbref`) |
 | VH-113 | Tier B shared-game stints |
 | VH-114 | Tier C lineup on/off (gated) |
+| VH-115 | Pedigree (draft + entry expectations) |
 
 ---
 

@@ -34,7 +34,16 @@ duplicate name+season rows and the page likely folds two different humans
 - Add content **only below the auto end marker**.
 - Use `##`-level sections from this vocabulary where possible:
   `## Notes`, `## Scouting`, `## History`, `## Film`, `## Corrections`,
-  `## Links`. New section names are allowed but must be `##`-level.
+  `## Links`, `## Coming into the league`. New section names are allowed
+  but must be `##`-level.
+- `## Coming into the league` is the stated home for **entry narrative**:
+  pre-draft scouting consensus, expectations talk, draft-night context,
+  team fit at arrival. Narrative prose is deliberately kept OUT of the
+  data pipeline (copyrighted, unverifiable as numbers — see
+  `docs/DATA_SOURCES_DEEP.md` Track H); the pipeline carries only the
+  structured pedigree facts (pick, round, drafting team, stated
+  expectation curve). Every claim here follows the citation rule below;
+  quote sparingly, paraphrase with attribution.
 - Interlink aggressively with wikilinks: `[[slug|Display Name]]` for
   players (same directory), `[[../archetypes/slug|Name]]` and
   `[[../positions/pg|PG]]` across directories.

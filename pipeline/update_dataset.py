@@ -54,7 +54,14 @@ def snapshot() -> dict:
     sk = json.loads(SKILLS.read_text(encoding="utf-8"))
     grades_blob = json.dumps(sk["grades"], separators=(",", ":")).encode()
     n_badges = sum(1 for row in sk["grades"] for g in row if g >= sk["badgeGrade"])
+    ped_path = PIPELINE / "data" / "pedigree.json"
+    pedigree = None
+    if ped_path.exists():
+        ped = json.loads(ped_path.read_text(encoding="utf-8"))
+        pedigree = {"cache_complete": ped.get("cache_complete"),
+                    **ped.get("coverage", {})}
     return {
+        "pedigree": pedigree,
         "player_seasons": len(vec["players"]),
         "seasons": [vec["seasons"][0], vec["seasons"][-1]]
         if isinstance(vec.get("seasons"), list) else None,
@@ -79,6 +86,9 @@ def main() -> None:
         steps.append(run_step(
             "fetch+rebuild (stats.nba.com)",
             [sys.executable, "pipeline/build_vectors.py"], required=False))
+        steps.append(run_step(
+            "fetch draft history (Track H)",
+            [sys.executable, "pipeline/fetch_draft_history.py"], required=False))
     else:
         print("== fetch: skipped (--offline)\n")
 
@@ -96,6 +106,14 @@ def main() -> None:
     steps.append(run_step(
         "skill gates",
         [sys.executable, "pipeline/test_skills.py"], required=True))
+    # Pedigree derivation is dormant until the real draft cache exists;
+    # the gate itself always runs (fixture mode validates the logic).
+    steps.append(run_step(
+        "rebuild pedigree (Track H)",
+        [sys.executable, "pipeline/build_pedigree.py"], required=False))
+    steps.append(run_step(
+        "pedigree gates",
+        [sys.executable, "pipeline/test_pedigree.py"], required=True))
 
     entry = {
         "run": time.strftime("%Y-%m-%d %H:%M UTC", time.gmtime()),

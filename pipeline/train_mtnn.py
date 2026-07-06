@@ -14,6 +14,10 @@ Builds on train_towers.py with:
         (embedding -> grade/100, targets from build_skills.py), so the
         embedding is skill-aware; per-skill held-out R2/MAE + a
         skill-neighbor consistency metric land in mtnn_report.json
+      * v4: pedigree_expectation head — predict PED_PICK_QUALITY z from
+        the embedding (masked MSE; active only when the pedigree family
+        is merged in the matrix): measures how much of a player-season's
+        measured identity his draft slot explained
 
 Outputs (pipeline/data/):
   embedding_v3.npz     — L2-normalized embeddings + archetype/position logits
@@ -225,6 +229,7 @@ class MTNN(nn.Module):
         self.position_head = nn.Linear(d_emb, len(POSITIONS))
         self.profile_head = nn.Linear(d_emb, n_game)
         self.salary_head = nn.Linear(d_emb, 1)
+        self.pedigree_head = nn.Linear(d_emb, 1)
         self.skill_towers = SkillTowers(d_emb, n_skills) if n_skills else None
 
     def encode(self, xs, ms, season_ids):
@@ -239,6 +244,7 @@ class MTNN(nn.Module):
             "position": self.position_head(emb),
             "profile": self.profile_head(emb),
             "salary": self.salary_head(emb).squeeze(-1),
+            "pedigree": self.pedigree_head(emb).squeeze(-1),
         }
         if self.skill_towers is not None:
             out["skills"] = self.skill_towers(emb)
@@ -452,6 +458,15 @@ def main() -> None:
         sal_j = manifest["features"].index("SALARY_LOG")
     sal_z = torch.tensor(Z[:, sal_j], device=device) if sal_j is not None else None
     sal_m = torch.tensor(M[:, sal_j], device=device) if sal_j is not None else None
+
+    ped_j = None
+    if "PED_PICK_QUALITY" in manifest["features"]:
+        ped_j = manifest["features"].index("PED_PICK_QUALITY")
+    ped_z = torch.tensor(Z[:, ped_j], device=device) if ped_j is not None else None
+    ped_m = torch.tensor(M[:, ped_j], device=device) if ped_j is not None else None
+    if ped_j is not None:
+        print(f"pedigree_expectation head active: "
+              f"{int(M[:, ped_j].sum())} rows with draft-slot labels")
     arch_t = torch.tensor(clusters, device=device)
     pos_t = torch.tensor(positions, device=device)
     pos_mask = pos_t >= 0
@@ -511,6 +526,11 @@ def main() -> None:
                 if w.sum() > 0:
                     sal_loss = (w * (out_a["salary"] - sal_z[idx_t]) ** 2).sum() / w.sum()
                     loss = loss + 0.2 * sal_loss
+            if ped_z is not None and ped_m is not None:
+                w = ped_m[idx_t]
+                if w.sum() > 0:
+                    ped_loss = (w * (out_a["pedigree"] - ped_z[idx_t]) ** 2).sum() / w.sum()
+                    loss = loss + 0.1 * ped_loss
 
             opt.zero_grad()
             loss.backward()
@@ -558,6 +578,26 @@ def main() -> None:
 
     G_base = transparent_baseline_embeddings(Z, game_cols)
 
+    pedigree_report = None
+    if ped_j is not None:
+        ped_pred = heads["pedigree"].cpu().numpy().astype(np.float32)
+        ped_true = Z[:, ped_j]
+        ped_valid = M[:, ped_j]
+        split_of = np.array([eval_split(str(s)) for s in seasons])
+        pedigree_report = {}
+        for split in ("val", "test"):
+            rows = np.where((ped_valid > 0) & (split_of == split))[0]
+            if len(rows) == 0:
+                pedigree_report[split] = None
+                continue
+            resid = ped_true[rows] - ped_pred[rows]
+            ss_tot = float(((ped_true[rows] - ped_true[rows].mean()) ** 2).sum())
+            pedigree_report[split] = {
+                "rows": int(len(rows)),
+                "mae_z": round(float(np.abs(resid).mean()), 4),
+                "r2": round(1.0 - float((resid ** 2).sum()) / max(ss_tot, 1e-9), 4),
+            }
+
     skills_report = None
     if skill_keys:
         skills_report = {
@@ -592,6 +632,7 @@ def main() -> None:
         "position_top1_acc": pos_acc,
         "cross_era_archetype_neighbor_purity_at_20": purity,
         "skills": skills_report,
+        "pedigree_expectation": pedigree_report,
         "promotion_gate": (
             "Promote only if held-out val/test recall@10 beats transparent 14-d "
             "baseline by >=0.05 AND archetype_top1_acc >= 0.55 (not auto-promoted)."
