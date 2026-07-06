@@ -166,7 +166,14 @@ operator machine per the rate-limit policy in `DATA_SOURCES_DEEP.md`.
       efficiency) + team wins/rounds + `playoff_riser` aux head, plus a
       transparent Playoff Lens on `skills.html`; dormant until one
       operator run of `fetch_playoffs.py`
+- [x] Wide-matrix skills (Track J, 2026-07-06): post / transition / motor
+      as masked skills (2015-16+) — `build_wide_skills.py` →
+      `assets/skills_wide.json`, MTNN skill towers with a per-skill mask
+      matrix, Skills Lens bars + badges; dormant until
+      `fetch_wide_skills.py`
+- [x] Steals of the Draft (2026-07-06): draft expectation vs actual peak
+      skill grade, steals/busts boards on `skills.html`; dormant until
+      `assets/pedigree.json` (from the Track H operator fetch)
 - [ ] `build_wiki.py`: emit badge line in AUTO block on next regen
 - [ ] Skill-based daily mode ("Badge Hunt": name the player from badges)
-- [ ] Wide-matrix skills (motor / post / transition) once caches land
 - [ ] MTNN skill towers vs transparent probe ablation in `feature_stress.py`

@@ -1,0 +1,23 @@
+{
+  "built": "2026-07-06",
+  "source": "hand-checked fixture for test_wide_skills.py — NOT full coverage",
+  "complete": false,
+  "seasons": ["2015-16", "2022-23"],
+  "players": {
+    "2022-23": {
+      "nikola jokic": {"post_freq": 16.4, "post_ppp": 1.07, "trans_freq": 11.0, "trans_ppp": 1.18, "screen_ast": 4.6, "deflections": 1.5, "loose_balls": 0.9, "charges": 0.1, "box_outs": 2.7},
+      "joel embiid": {"post_freq": 24.8, "post_ppp": 1.02, "trans_freq": 6.8, "trans_ppp": 1.10, "screen_ast": 1.8, "deflections": 1.2, "loose_balls": 0.5, "charges": 0.1, "box_outs": 2.1},
+      "giannis antetokounmpo": {"post_freq": 7.1, "post_ppp": 0.96, "trans_freq": 22.4, "trans_ppp": 1.31, "screen_ast": 1.6, "deflections": 1.4, "loose_balls": 0.7, "charges": 0.2, "box_outs": 1.9},
+      "ja morant": {"post_freq": 3.2, "post_ppp": 0.88, "trans_freq": 19.8, "trans_ppp": 1.24, "screen_ast": 0.4, "deflections": 1.1, "loose_balls": 0.6, "charges": 0.1, "box_outs": 0.5},
+      "draymond green": {"post_freq": 5.4, "post_ppp": 0.94, "trans_freq": 12.1, "trans_ppp": 1.15, "screen_ast": 5.2, "deflections": 2.6, "loose_balls": 1.1, "charges": 0.5, "box_outs": 3.9},
+      "bam adebayo": {"post_freq": 12.7, "post_ppp": 0.99, "trans_freq": 10.4, "trans_ppp": 1.20, "screen_ast": 3.9, "deflections": 1.7, "loose_balls": 0.9, "charges": 0.3, "box_outs": 3.1}
+    },
+    "2015-16": {
+      "draymond green": {"post_freq": 6.1, "post_ppp": 0.92, "trans_freq": 13.0, "trans_ppp": 1.17, "screen_ast": 4.8, "deflections": 2.4, "loose_balls": 1.0, "charges": 0.4, "box_outs": 4.1},
+      "deandre jordan": {"post_freq": 9.8, "post_ppp": 0.88, "trans_freq": 8.2, "trans_ppp": 1.22, "screen_ast": 4.1, "deflections": 0.9, "loose_balls": 0.6, "charges": 0.1, "box_outs": 4.6},
+      "rudy gobert": {"post_freq": 7.2, "post_ppp": 0.90, "trans_freq": 7.9, "trans_ppp": 1.25, "screen_ast": 3.7, "deflections": 0.8, "loose_balls": 0.5, "charges": 0.2, "box_outs": 4.3},
+      "marcus smart": {"post_freq": 3.9, "post_ppp": 0.86, "trans_freq": 11.7, "trans_ppp": 1.05, "screen_ast": 1.1, "deflections": 3.1, "loose_balls": 1.4, "charges": 0.6, "box_outs": 1.2},
+      "hassan whiteside": {"post_freq": 14.1, "post_ppp": 0.95, "trans_freq": 6.1, "trans_ppp": 1.19, "screen_ast": 1.9, "deflections": 0.7, "loose_balls": 0.4, "charges": 0.1, "box_outs": 3.3}
+    }
+  }
+}

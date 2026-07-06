@@ -127,29 +127,45 @@ def game_feature_cols(manifest) -> list[int]:
     return [manifest["features"].index(f) for f in game]
 
 
-def load_skill_labels(names, seasons) -> tuple[np.ndarray, np.ndarray, list[str]]:
-    """Join Skills Lens grades (0-1) by (name, season); mask=0 where absent.
-
-    Targets come from pipeline/data/skill_labels.npz (build_skills.py).
-    """
-    path = DATA_DIR / "skill_labels.npz"
-    if not path.exists():
-        return (np.zeros((len(names), 0), np.float32),
-                np.zeros(len(names), np.float32), [])
+def _join_skill_npz(path, names, seasons) -> tuple[np.ndarray, np.ndarray, list[str]]:
+    """Join one skill-label npz by (name, season) -> (G, per-skill mask, keys)."""
     npz = np.load(path, allow_pickle=False)
     keys = [str(k) for k in npz["keys"]]
-    lookup = {
-        (str(n), str(s)): g
-        for n, s, g in zip(npz["name"], npz["season"], npz["grades"])
-    }
+    lookup = {(str(n), str(s)): g
+              for n, s, g in zip(npz["name"], npz["season"], npz["grades"])}
     G = np.zeros((len(names), len(keys)), dtype=np.float32)
-    M = np.zeros(len(names), dtype=np.float32)
+    M = np.zeros((len(names), len(keys)), dtype=np.float32)
     for i, (n, s) in enumerate(zip(names, seasons)):
         g = lookup.get((str(n), str(s)))
         if g is not None:
             G[i] = g
             M[i] = 1.0
     return G, M, keys
+
+
+def load_skill_labels(names, seasons) -> tuple[np.ndarray, np.ndarray, list[str], int]:
+    """Skill-tower targets with a PER-SKILL mask matrix.
+
+    Core skills (build_skills.py) cover every row; the optional Track J
+    wide skills (post/transition/motor, build_wide_skills.py) are masked
+    per row so the towers learn them only where tracking coverage exists.
+    Returns (grades[n,K], mask[n,K], keys, n_core).
+    """
+    core = DATA_DIR / "skill_labels.npz"
+    if not core.exists():
+        return (np.zeros((len(names), 0), np.float32),
+                np.zeros((len(names), 0), np.float32), [], 0)
+    G, M, keys = _join_skill_npz(core, names, seasons)
+    n_core = len(keys)
+    wide = DATA_DIR / "wide_skill_labels.npz"
+    if wide.exists():
+        Gw, Mw, kw = _join_skill_npz(wide, names, seasons)
+        G = np.concatenate([G, Gw], axis=1)
+        M = np.concatenate([M, Mw], axis=1)
+        keys = keys + kw
+        print(f"  wide skills joined: {kw} "
+              f"({int(Mw.any(axis=1).sum())} covered rows)")
+    return G, M, keys, n_core
 
 
 # ---------------------------------------------------------------------------
@@ -374,29 +390,33 @@ def cross_era_archetype_purity(E: np.ndarray, clusters: np.ndarray,
 
 
 def skill_holdout_metrics(pred: np.ndarray, target: np.ndarray,
-                          valid: np.ndarray, seasons: np.ndarray,
+                          mask: np.ndarray, seasons: np.ndarray,
                           keys: list[str]) -> dict:
-    """Per-skill R2 + MAE (grade points, 0-100) on held-out season splits."""
+    """Per-skill R2 + MAE (grade points, 0-100) on held-out season splits.
+
+    `mask` is the per-skill [n, K] coverage matrix — each skill scores only
+    over rows where that skill is present (wide skills are 2015-16+).
+    """
     out: dict = {}
     split_of = np.array([eval_split(str(s)) for s in seasons])
     for split in ("val", "test"):
-        rows = np.where((valid > 0) & (split_of == split))[0]
-        if len(rows) == 0:
-            out[split] = None
-            continue
-        p, t = pred[rows], target[rows]
+        in_split = split_of == split
         per = {}
         for j, key in enumerate(keys):
-            resid = t[:, j] - p[:, j]
-            ss_res = float((resid ** 2).sum())
-            ss_tot = float(((t[:, j] - t[:, j].mean()) ** 2).sum())
+            rows = np.where((mask[:, j] > 0) & in_split)[0]
+            if len(rows) < 5:
+                per[key] = {"r2": None, "mae_pts": None, "rows": int(len(rows))}
+                continue
+            resid = target[rows, j] - pred[rows, j]
+            ss_tot = float(((target[rows, j] - target[rows, j].mean()) ** 2).sum())
             per[key] = {
-                "r2": round(1.0 - ss_res / max(ss_tot, 1e-9), 4),
+                "r2": round(1.0 - float((resid ** 2).sum()) / max(ss_tot, 1e-9), 4),
                 "mae_pts": round(float(np.abs(resid).mean()) * 100.0, 2),
+                "rows": int(len(rows)),
             }
+        scored = [v["r2"] for v in per.values() if v["r2"] is not None]
         out[split] = {
-            "rows": int(len(rows)),
-            "mean_r2": round(float(np.mean([v["r2"] for v in per.values()])), 4),
+            "mean_r2": round(float(np.mean(scored)), 4) if scored else None,
             "per_skill": per,
         }
     return out
@@ -488,11 +508,11 @@ def main() -> None:
     pos_mask = pos_t >= 0
     seas_t = torch.tensor(season_ids, device=device)
 
-    skill_g, skill_m, skill_keys = load_skill_labels(names, seasons)
+    skill_g, skill_m, skill_keys, n_core = load_skill_labels(names, seasons)
     skill_t = torch.tensor(skill_g, device=device)
     skillm_t = torch.tensor(skill_m, device=device)
-    print(f"{len(skill_keys)} skill towers, "
-          f"{int(skill_m.sum())} rows with Skills Lens labels")
+    print(f"{len(skill_keys)} skill towers ({n_core} core + "
+          f"{len(skill_keys) - n_core} wide), per-skill masked")
 
     xs, ms = split_by_family(Z, M, fams, device)
     model = MTNN({f: len(c) for f, c in fams.items()}, n_seasons,
@@ -533,10 +553,10 @@ def main() -> None:
                     out_a["position"][pos_mask[idx_t]], pos_t[idx_t][pos_mask[idx_t]])
             loss = loss + 0.15 * F.mse_loss(out_a["profile"], game_z[idx_t])
             if "skills" in out_a:
-                w = skillm_t[idx_t]
-                if w.sum() > 0:
-                    per_row = ((out_a["skills"] - skill_t[idx_t]) ** 2).mean(-1)
-                    loss = loss + 0.3 * (w * per_row).sum() / w.sum()
+                wm = skillm_t[idx_t]  # [B, K] per-skill mask
+                if wm.sum() > 0:
+                    se = (out_a["skills"] - skill_t[idx_t]) ** 2
+                    loss = loss + 0.3 * (wm * se).sum() / wm.sum()
             if sal_z is not None and sal_m is not None:
                 w = sal_m[idx_t]
                 if w.sum() > 0:
@@ -627,13 +647,19 @@ def main() -> None:
 
     skills_report = None
     if skill_keys:
+        # Neighbor consistency uses the always-covered core skills only, so the
+        # metric isn't distorted by masked wide-skill rows.
+        core_g = skill_g[:, :n_core]
+        core_valid = (skill_m[:, :n_core] > 0).all(axis=1).astype(np.float32)
         skills_report = {
+            "core_skills": n_core,
+            "wide_skills": skill_keys[n_core:],
             "holdout": skill_holdout_metrics(
                 skill_pred, skill_g, skill_m, seasons, skill_keys),
             "neighbor_consistency_pts_mtnn": skill_neighbor_consistency(
-                E, skill_g, skill_m),
+                E, core_g, core_valid),
             "neighbor_consistency_pts_transparent_14d": skill_neighbor_consistency(
-                G_base, skill_g, skill_m),
+                G_base, core_g, core_valid),
         }
     held_out = {}
     for split in ("train", "val", "test", "all"):

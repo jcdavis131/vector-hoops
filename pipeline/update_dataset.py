@@ -99,6 +99,9 @@ def main() -> None:
         steps.append(run_step(
             "fetch playoffs (Track I)",
             [sys.executable, "pipeline/fetch_playoffs.py"], required=False))
+        steps.append(run_step(
+            "fetch wide skills (Track J)",
+            [sys.executable, "pipeline/fetch_wide_skills.py"], required=False))
     else:
         print("== fetch: skipped (--offline)\n")
 
@@ -132,6 +135,14 @@ def main() -> None:
     steps.append(run_step(
         "playoff gates",
         [sys.executable, "pipeline/test_playoffs.py"], required=True))
+    # Wide skills (Track J) — dormant until real synergy/hustle caches exist;
+    # the gate always runs (fixture mode validates the derivation logic).
+    steps.append(run_step(
+        "rebuild wide skills (Track J)",
+        [sys.executable, "pipeline/build_wide_skills.py"], required=False))
+    steps.append(run_step(
+        "wide-skill gates",
+        [sys.executable, "pipeline/test_wide_skills.py"], required=True))
 
     entry = {
         "run": time.strftime("%Y-%m-%d %H:%M UTC", time.gmtime()),

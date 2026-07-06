@@ -32,7 +32,9 @@ Hardaways); the record whose draft year is the latest one <= the player's
 first charted season year wins.
 
 Run:  python pipeline/build_pedigree.py [--cache PATH] [--fixture]
-Output: pipeline/data/pedigree.json (consumed by integrate_context.py)
+Output: pipeline/data/pedigree.json (consumed by integrate_context.py);
+        assets/pedigree.json (transparent per-player draft facts for the
+        Steals of the Draft surface) is written ONLY from a complete cache.
 """
 
 from __future__ import annotations
@@ -51,6 +53,7 @@ CACHE_DIR = ROOT / "pipeline" / "cache"
 DRAFT_CACHE = CACHE_DIR / "draft_history.json"
 DRAFT_FIXTURE = CACHE_DIR / "draft_history.example.json"
 OUT = ROOT / "pipeline" / "data" / "pedigree.json"
+ASSET_OUT = ROOT / "assets" / "pedigree.json"
 
 DECAY_YEARS = 4.0  # e-folding of entry expectations
 
@@ -207,11 +210,41 @@ def main() -> None:
         "players": entries,
     }, separators=(",", ":")), encoding="utf-8")
 
+    # Transparent per-player draft facts for game surfaces (Steals of the
+    # Draft) — ONLY from a complete cache, never the partial fixture.
+    if complete and n_drafted:
+        asset_players = {}
+        for name, rec in resolved.items():
+            if rec is None:
+                asset_players[name] = {
+                    "undrafted": True, "overall": None, "round": None,
+                    "pick": None, "expect_slot": EXPECT_UNDRAFTED,
+                    "draft_year": None, "team": None,
+                }
+            else:
+                asset_players[name] = {
+                    "undrafted": False, "overall": rec["overall"],
+                    "round": rec["round"], "pick": rec["pick"],
+                    "expect_slot": expect_slot(rec["overall"]),
+                    "draft_year": rec["year"], "team": rec.get("team_abbr") or None,
+                }
+        ASSET_OUT.write_text(json.dumps({
+            "built": time.strftime("%Y-%m-%d"),
+            "note": ("per-player draft pick + stated rookie-scale expectation "
+                     "slot (#1 = 1.0). Pairs with assets/skills.json for the "
+                     "Steals of the Draft surface. Source: stats.nba.com."),
+            "players": asset_players,
+        }, separators=(",", ":")), encoding="utf-8")
+        asset_msg = f"wrote {ASSET_OUT.relative_to(ROOT)} ({len(asset_players)} players)"
+    else:
+        asset_msg = ("assets/pedigree.json NOT written (partial cache — Steals "
+                     "of the Draft surface stays dormant)")
+
     print(f"pedigree: {n_drafted} drafted, {n_undrafted} undrafted, "
           f"{unmatched} unmatched (masked) of {len(first_year)} players; "
           f"{covered_rows}/{len(entries)} rows covered "
           f"(cache complete={complete})")
-    print(f"wrote {OUT.relative_to(ROOT)}")
+    print(f"wrote {OUT.relative_to(ROOT)}; {asset_msg}")
 
 
 if __name__ == "__main__":

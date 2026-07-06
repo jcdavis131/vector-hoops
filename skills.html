@@ -100,6 +100,8 @@
   var SKILLS = null;  // skills.json
   var INDEX = {};     // slug -> { name, rows: [{ i, season }] }
   var ORDER = [];     // slugs sorted by name
+  var PEDIGREE = null; // assets/pedigree.json (optional; false if absent)
+  var WIDE = null;     // assets/skills_wide.json (optional; false if absent)
   var current = { slug: '', season: '' };
 
   function esc(s) { return window.VHDossier.escapeHtml(s); }
@@ -151,6 +153,46 @@
     });
   }
 
+  // Prepend the Draft Steals/Busts board modes once pedigree data lands.
+  function addDraftBoardModes() {
+    if (!PEDIGREE || els.boardSkill.querySelector('option[value="steal"]')) return;
+    [['bust', '★ Draft Busts'], ['steal', '★ Draft Steals']].forEach(function (o) {
+      var opt = document.createElement('option');
+      opt.value = o[0]; opt.textContent = o[1];
+      els.boardSkill.insertBefore(opt, els.boardSkill.firstChild);
+    });
+    els.boardSkill.value = 'steal';
+    renderBoard();
+  }
+
+  // ---- wide (masked) skills: post / transition / motor, 2015-16+ ----
+  function wideGrades(name, season) {
+    if (!WIDE) return null;
+    return WIDE.grades[name + '|' + season] || null;
+  }
+
+  function wideBarsHtml(name, season) {
+    if (!WIDE) return '';
+    var wg = wideGrades(name, season);
+    var head = '<li class="skillbar skillbar--widehead"><span class="skillbar__label">' +
+      'Tracking skills</span><span></span><span></span></li>';
+    if (!wg) {
+      return head + '<li class="skillbar"><span class="skillbar__label">' +
+        'Post · Transition · Motor</span>' +
+        '<span class="skillbar__track"></span>' +
+        '<span class="skillbar__grade skillbar__grade--na" title="synergy + hustle tracking begins 2015-16">n/a</span></li>';
+    }
+    return head + WIDE.skills.map(function (sk) {
+      var g = wg[sk.key];
+      var cls = g >= WIDE.badgeGrade ? ' is-elite' : g >= 75 ? ' is-strong' : '';
+      return '<li class="skillbar" title="' + esc(sk.badge) + '">' +
+        '<span class="skillbar__label">' + esc(sk.label) + '</span>' +
+        '<span class="skillbar__track"><span class="skillbar__fill' + cls +
+        '" style="width:' + Math.max(g, 2) + '%"></span></span>' +
+        '<span class="skillbar__grade">' + g + '</span></li>';
+    }).join('');
+  }
+
   // ---- profile ----
 
   function gradeClass(g) {
@@ -189,10 +231,18 @@
           esc(sk.badge) + ' ' + grades[j] + '</span>');
       }
     });
+    var wg = wideGrades(rec.name, current.season);
+    if (wg) WIDE.skills.forEach(function (sk, j) {
+      if (wg[sk.key] >= WIDE.badgeGrade) {
+        badges.push('<span class="vh-skill-badge' +
+          (wg[sk.key] >= WIDE.goldGrade ? ' vh-skill-badge--gold' : '') + '">' +
+          esc(sk.badge) + ' ' + wg[sk.key] + '</span>');
+      }
+    });
     els.badges.innerHTML = badges.length ? badges.join('') :
       '<span class="vh-skill-badge vh-skill-badge--muted">No 90+ badges this season</span>';
 
-    els.bars.innerHTML = SKILLS.skills.map(function (sk, j) {
+    var barsHtml = SKILLS.skills.map(function (sk, j) {
       var g = grades[j];
       return '<li class="skillbar" title="' + esc(sk.badge) + '">' +
         '<span class="skillbar__label">' + esc(sk.label) + '</span>' +
@@ -201,6 +251,8 @@
         '<span class="skillbar__grade">' + g + '</span>' +
         '</li>';
     }).join('');
+    barsHtml += wideBarsHtml(rec.name, current.season);
+    els.bars.innerHTML = barsHtml;
 
     renderPlayoffs(rec.name, current.season);
 
@@ -304,8 +356,76 @@
   // Boards sort by the era-z linear composite itself (weights ship in
   // skills.json), so 99-grade ties rank honestly across eras instead of
   // falling back to recency.
+
+  // ---- Steals of the Draft: draft expectation vs actual career skill ----
+  // Career "overall" = a player's peak season mean of the 12 grades. Steal
+  // score = (actual percentile among drafted players) − (expected percentile
+  // from the stated rookie-scale slot). A late pick who became elite scores
+  // high positive (steal); an early pick who didn't scores negative (bust).
+  var DRAFT = null; // computed once when pedigree lands
+
+  function pctRank(values) {
+    var idx = values.map(function (v, i) { return i; })
+      .sort(function (a, b) { return values[a] - values[b]; });
+    var out = new Array(values.length);
+    for (var r = 0; r < idx.length; r++) out[idx[r]] = (r + 0.5) / idx.length * 100;
+    return out;
+  }
+
+  function computeDraft() {
+    if (DRAFT || !PEDIGREE) return DRAFT;
+    var names = [], overall = [], expect = [], meta = [];
+    ORDER.forEach(function (slug) {
+      var rec = INDEX[slug];
+      var ped = PEDIGREE.players[rec.name];
+      if (!ped || ped.undrafted) return; // undrafted or unknown → not a draft steal
+      var best = 0;
+      rec.rows.forEach(function (rr) {
+        var g = SKILLS.grades[rr.i];
+        var mean = g.reduce(function (a, b) { return a + b; }, 0) / g.length;
+        if (mean > best) best = mean;
+      });
+      names.push(rec.name); overall.push(best);
+      expect.push(ped.expect_slot); meta.push(ped);
+    });
+    var actualPct = pctRank(overall), expectPct = pctRank(expect);
+    DRAFT = names.map(function (name, i) {
+      return {
+        name: name, slug: window.VHDossier.playerSlug(name),
+        overall: Math.round(overall[i]), pick: meta[i].overall,
+        roundNo: meta[i].round, year: meta[i].draft_year, team: meta[i].team,
+        steal: Math.round(actualPct[i] - expectPct[i]),
+      };
+    });
+    return DRAFT;
+  }
+
+  function renderDraftBoard(mode) {
+    var d = computeDraft().slice();
+    d.sort(function (a, b) { return mode === 'steal' ? b.steal - a.steal : a.steal - b.steal; });
+    els.board.innerHTML = d.slice(0, BOARD_ROWS).map(function (r) {
+      var pickLbl = '#' + r.pick + (r.roundNo === 2 ? ' R2' : '') +
+        (r.year ? ' ’' + String(r.year).slice(2) : '');
+      var cls = r.steal >= 0 ? 'po-tag--riser' : 'po-tag--fader';
+      return '<li>' +
+        '<span class="skills-board__name" data-slug="' + esc(r.slug) +
+        '">' + esc(r.name) + '</span>' +
+        '<span class="skills-board__season">' + pickLbl + ' &middot; ovr ' + r.overall + '</span>' +
+        '<span class="skills-board__grade po-tag ' + cls + '">' +
+        (r.steal >= 0 ? '+' : '') + r.steal + '</span>' +
+        '</li>';
+    }).join('');
+  }
+
   function renderBoard() {
-    var j = parseInt(els.boardSkill.value || '0', 10);
+    var mode = els.boardSkill.value;
+    if (mode === 'steal' || mode === 'bust') {
+      els.boardSeason.disabled = true;
+      renderDraftBoard(mode);
+      return;
+    }
+    els.boardSeason.disabled = false;
+    var j = parseInt(mode || '0', 10);
     var season = els.boardSeason.value;
     var rows = [];
     for (var i = 0; i < DATA.players.length; i++) {
@@ -394,6 +514,23 @@
           if (PLAYOFFS && current.slug) renderProfile();
         })
         .catch(function () { PLAYOFFS = false; });
+      // Steals of the Draft is optional — dormant until an operator commits
+      // assets/pedigree.json. Adds two board modes when it lands.
+      fetch('assets/pedigree.json')
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (ped) {
+          PEDIGREE = ped || false;
+          if (PEDIGREE) addDraftBoardModes();
+        })
+        .catch(function () { PEDIGREE = false; });
+      // Wide (masked) skills — dormant until assets/skills_wide.json lands.
+      fetch('assets/skills_wide.json')
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (w) {
+          WIDE = w || false;
+          if (WIDE && current.slug) renderProfile();
+        })
+        .catch(function () { WIDE = false; });
     }).catch(function (err) {
       els.empty.textContent = 'Could not load the skills data (' + err.message + ').';
     });

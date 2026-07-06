@@ -30,6 +30,14 @@ fetch on a non-datacenter IP (stats.nba.com blocks this environment):
   + team wins/rounds + `playoff_riser` head, plus a transparent Playoff
   Lens (RS vs PO splits + riser/fader) on `skills.html`. Activate: `bash
   pipeline/operator_fetch_playoffs.sh`.
+- **Wide skills (Track J)** — post / transition / motor as masked skills
+  (2015-16+) from synergy + hustle feeds; Skills Lens bars + MTNN
+  skill-tower targets (per-skill mask matrix). Activate: `bash
+  pipeline/operator_fetch_wide_skills.sh`.
+
+The Skills Lens also carries a **Steals of the Draft** board (draft
+expectation vs actual peak skill grade) that lights up with the Track H
+draft data.
 
 ## OKF LLM-Wiki (`knowledge/`)
 
