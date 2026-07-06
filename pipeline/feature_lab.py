@@ -25,7 +25,7 @@ the vector? Honest ablation, no vibes. Method:
 from __future__ import annotations
 
 import json
-from collections import defaultdict
+from collections import Counter, defaultdict
 from pathlib import Path
 
 import numpy as np
@@ -33,6 +33,8 @@ import numpy as np
 HERE = Path(__file__).resolve().parent
 ASSETS = HERE.parent / "assets"
 RNG = np.random.default_rng(42)
+
+from role_features import compute_role_raw
 
 
 def zscore_by_season(vals: dict, seasons: dict) -> dict:
@@ -100,36 +102,10 @@ def main() -> None:
     data = json.loads((ASSETS / "vectors.json").read_text(encoding="utf-8"))
     vindex = {(p["name"], p["season"]): p for p in data["players"]}
 
-    # --- candidate features from game logs (2015-26) ---
-    min_share, usage_share, score_rank = {}, {}, {}
-    team_of = {}
-    for f in sorted(HERE.glob("data/gamelogs_*.jsonl")):
-        season = f.stem.split("_")[1]
-        team_tot = defaultdict(lambda: [0.0, 0.0])  # min, usage
-        agg = defaultdict(lambda: [0.0, 0.0, 0.0, ""])  # min, usage, pts
-        for line in f.read_text(encoding="utf-8").splitlines():
-            g = json.loads(line)
-            if not g.get("MIN"):
-                continue
-            u = g["FGA"] + 0.44 * g["FTA"] + g["TOV"]
-            k = (g["PLAYER_NAME"], season)
-            agg[k][0] += g["MIN"]
-            agg[k][1] += u
-            agg[k][2] += g["PTS"]
-            agg[k][3] = g["TEAM_ID"]
-            team_tot[(g["TEAM_ID"], season)][0] += g["MIN"]
-            team_tot[(g["TEAM_ID"], season)][1] += u
-        pts_by_team = defaultdict(list)
-        for k, (m, u, p, tid) in agg.items():
-            if k in vindex:
-                tt = team_tot[(tid, season)]
-                min_share[k] = m / (tt[0] or 1) * 5  # 5 on floor
-                usage_share[k] = (u / (tt[1] or 1)) / (m / (tt[0] or 1) or 1e-9)
-                pts_by_team[(tid, season)].append((p, k))
-                team_of[k] = tid
-        for lst in pts_by_team.values():
-            for rank, (_, k) in enumerate(sorted(lst, reverse=True), 1):
-                score_rank[k] = rank
+    role_rows, team_of = compute_role_raw(vindex)
+    min_share = {k: r["ROLE_MIN_SHARE"] for k, r in role_rows.items()}
+    usage_share = {k: r["ROLE_USAGE_SHARE"] for k, r in role_rows.items()}
+    score_rank = {k: -r["ROLE_SCORE_RANK"] for k, r in role_rows.items()}
 
     # tenure (all 30 years from vectors)
     first_season = {}

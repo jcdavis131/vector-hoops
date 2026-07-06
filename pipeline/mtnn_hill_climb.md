@@ -40,6 +40,23 @@ flowchart LR
 
 ---
 
+## Feature Lab track (transparent 14-d vs MTNN aux)
+
+`feature_lab.py` ablates **game-log role features** before they touch
+`vectors.json` (the player-facing contract stays 14-d):
+
+| Feature set | Gate | Verdict |
+|-------------|------|---------|
+| minShare, usageShare, scoreRank | C1 next-PMz R² + C2 silhouette + C3 position-NN | **PASS** → MTNN `role` tower |
+| leagueTenure, teamTenure | same | **FAIL** geometry — aux-only if ever used |
+| salary | excluded | already in `market` tower (separate sourcing) |
+| coach tenure | — | needs source (Track C) |
+
+Role tiers (leader / key / specialist / …) ship in `assets/roles.json` for
+game copy; not fused into cosine space.
+
+---
+
 ## Phase A — Fix the data ceiling (highest ROI)
 
 Training still uses a **bootstrap 14-d game core**. Context towers help, but wide game stats (Advanced, Scoring, Tracking, Form) are the biggest missing signal.

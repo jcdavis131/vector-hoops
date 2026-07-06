@@ -25,6 +25,7 @@ DATA_DIR = ROOT / "pipeline" / "data"
 CACHE_DIR = ROOT / "pipeline" / "cache"
 
 ROSTER_JSON = DATA_DIR / "roster_context.json"
+ROLE_JSON = DATA_DIR / "role_context.json"
 CAREER_JSON = DATA_DIR / "career_arc.json"
 COMPETITION_JSON = DATA_DIR / "competition.json"
 COMPETITION_JSON_LEGACY = DATA_DIR / "competition_context.json"
@@ -57,6 +58,10 @@ V4_FEATURES: dict[str, str] = {
   "TM_DEF_RTG": "team",
   "TM_NET_RTG": "team",
   "TM_WIN_PCT": "team",
+  # role standing (feature_lab PASS — game logs 2015-26)
+  "ROLE_MIN_SHARE": "role",
+  "ROLE_USAGE_SHARE": "role",
+  "ROLE_SCORE_RANK": "role",
 }
 
 
@@ -92,6 +97,13 @@ def load_roster_by_player_season() -> dict[tuple[str, str], dict]:
         if prev is None or (row.get("minutes") or 0) > (prev.get("minutes") or 0):
             best[key] = row
     return best
+
+
+def load_role_by_player_season() -> dict[tuple[str, str], dict]:
+    if not ROLE_JSON.exists():
+        return {}
+    data = json.loads(ROLE_JSON.read_text(encoding="utf-8"))
+    return {(r["name"], r["season"]): r for r in data.get("entries", [])}
 
 
 def load_career_by_player_season() -> dict[tuple[str, str], dict]:
@@ -212,6 +224,7 @@ def build_row_values(
     salary_cap: dict,
     salary_log: dict,
     team_index: dict[tuple[str, int], dict],
+    role: dict,
 ) -> list[dict[str, float | None]]:
     rows: list[dict[str, float | None]] = []
     for name, season in zip(names, seasons):
@@ -220,6 +233,7 @@ def build_row_values(
         r = roster.get(key, {})
         c = career.get(key, {})
         comp = competition.get(key, {})
+        role_row = role.get(key, {})
         team_row = team_index.get((str(season), int(r["teamId"]))) if r.get("teamId") else {}
         rows.append({
             "ROSTER_MIN_RANK": r.get("ROSTER_MIN_RANK"),
@@ -243,6 +257,9 @@ def build_row_values(
             "TM_DEF_RTG": team_row.get("DEF_RATING"),
             "TM_NET_RTG": team_row.get("NET_RATING"),
             "TM_WIN_PCT": team_row.get("WIN_PCT"),
+            "ROLE_MIN_SHARE": role_row.get("ROLE_MIN_SHARE"),
+            "ROLE_USAGE_SHARE": role_row.get("ROLE_USAGE_SHARE"),
+            "ROLE_SCORE_RANK": role_row.get("ROLE_SCORE_RANK"),
         })
     return rows
 
@@ -271,14 +288,16 @@ def main() -> None:
     salary_cap = load_salary_cap_pct()
     salary_log = load_salary_log()
     team_index = load_team_season_index()
+    role = load_role_by_player_season()
 
     print(f"artifacts: roster={len(roster)} career={len(career)} "
           f"competition={len(competition)} salary_cap={len(salary_cap)} "
-          f"salary_log={len(salary_log)} team_season={len(team_index)}")
+          f"salary_log={len(salary_log)} team_season={len(team_index)} "
+          f"role={len(role)}")
 
     row_vals = build_row_values(
         names, seasons, roster, career, competition,
-        salary_cap, salary_log, team_index)
+        salary_cap, salary_log, team_index, role)
     Z2, M2, man2 = era_z_append(Z, M, manifest, names, seasons, row_vals)
     covered = int((M2[:, Z.shape[1]:] > 0).any(axis=1).sum()) if Z2.shape[1] > Z.shape[1] else 0
     print(f"context merge: {Z.shape[1]} -> {Z2.shape[1]} features; "

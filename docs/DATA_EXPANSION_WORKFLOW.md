@@ -124,13 +124,14 @@ flowchart TB
 ## Phase 1 — Context towers (Week 2)
 
 ### 1.1 Roster composition `pipeline/roster_context.py` (VH-104 prep)
-| Step | Action | Output features |
-|------|--------|-----------------|
-| 1.1.1 | Minutes rank on team | `ROSTER_MIN_RANK` |
-| 1.1.2 | Top-5 minute HHI | `ROSTER_USAGE_CROWD` |
-| 1.1.3 | Mean mate complementarity | `ROSTER_COMPLEMENT` |
-| 1.1.4 | Distance from top-minute mate profile | `ROSTER_STAR_GAP` |
-| 1.1.5 | Rotation mate count ≥800 min | `ROSTER_MATES_N` |
+| Step | Action | Owner | Done when |
+|------|--------|-------|-----------|
+| 1.1.1 | Minutes rank on team | `ROSTER_MIN_RANK` | ✅ roster_context |
+| 1.1.2 | Top-5 minute HHI | `ROSTER_USAGE_CROWD` | ✅ |
+| 1.1.3 | Mean mate complementarity | `ROSTER_COMPLEMENT` | ✅ |
+| 1.1.4 | Distance from top-minute mate profile | `ROSTER_STAR_GAP` | ✅ |
+| 1.1.5 | Rotation mate count ≥800 min | `ROSTER_MATES_N` | ✅ |
+| 1.1.6 | **Feature lab role standing** (2015-26 logs) | `ROLE_MIN_SHARE`, `ROLE_USAGE_SHARE`, `ROLE_SCORE_RANK` | ✅ `role_features.py`; tiers in `assets/roles.json`; tenure **excluded** (geometry gate) |
 
 **Honesty:** Methods → "roster-season co-membership, not shared-floor minutes."
 
