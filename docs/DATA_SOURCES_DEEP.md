@@ -223,6 +223,40 @@ tower stays recomputable; the story stays readable.
 
 ---
 
+### Track I — Playoffs (postseason as a distinct regime)
+
+The whole charted space is **regular season**. Track I adds the postseason
+as its own signal so the model can represent "playoff riser/fader" as a
+distinct axis instead of blending it into regular-season stats. Every
+feature is a playoff-**versus**-regular-season contrast or a playoff-only
+role/availability fact, so the tower learns what *changes* in April–June.
+
+| Field | Detail |
+|-------|--------|
+| **Fetcher** | `pipeline/fetch_playoffs.py` → `pipeline/cache/playoffs_{season}.json` |
+| **Deriver** | `pipeline/build_playoffs.py` → `pipeline/data/playoffs.json` (+ transparent `assets/playoffs.json` when cache complete) |
+| **Source URL** | stats.nba.com `leaguedashplayerstats` with `SeasonType=Playoffs` **and** `Regular Season` (Base + Advanced for USG/MIN), `PerMode=Per100Possessions`; team playoff W/L + rounds from `leaguedashteamstats` / series records |
+| **Coverage** | Playoffs 1996-97+; ~50% of the league in any season (only playoff teams' rotation players); a season with no postseason yet (e.g. current 2025-26) is fully masked |
+| **Fetch difficulty** | **Low–Medium** — two season-type pulls per season (same endpoint), same throttle discipline as `build_vectors.py` |
+| **Legal / terms** | NBA.com stats ToS; attribute in Methods; same as Track 0 |
+| **Recommended features** (family `playoffs`) | `PO_GP` (playoff games played), `PO_MIN` (playoff MPG, raw role), `PO_MIN_DELTA` (PO − RS MPG), `PO_USG_DELTA` (PO − RS usage), `PO_PTS_DELTA` (PO − RS pts/100), `PO_EFF_DELTA` (PO − RS TS%), `PO_PLUS_MINUS` (PO on-court ± per 100), `PO_TEAM_WINS` (team playoff wins 0–16), `PO_ROUNDS` (rounds advanced 0–4) |
+| **Mask strategy** | Whole family **masked** when the player logged no playoff games that season (did not appear ≠ played badly); era-z within the **playoff pool** of that season; `PO_TEAM_WINS`/`PO_ROUNDS` join via `TEAM_ID` |
+| **Leakage** | Playoffs happen *after* the regular season, so PO_* legitimately describe season N's full record; the MTNN's same-player adjacent-season objective predicts N+1 from N and is unaffected. PO_* are **never** written into the frozen 14-d game contract. |
+| **MTNN tower family** | `playoffs` (auto-instantiated from the manifest by `family_slices()`) — auxiliary head `playoff_riser` predicts `PO_PTS_DELTA` z from the embedding: how much a player's regular-season identity forecasts his postseason rise or fall |
+| **Game surface** | Transparent **Playoff Lens** on `skills.html` — regular-season vs playoff splits + a stated riser/fader verdict — reads `assets/playoffs.json`, renders nothing until it lands (respects the promotion gate; no model output in the live game) |
+| **Estimated LOC** | ~200 fetcher + ~230 deriver |
+| **Blocked-by** | One operator run of `fetch_playoffs.py` (stats.nba.com blocks datacenter IPs); everything downstream ships dormant-until-cache, gated by `test_playoffs.py` on a committed fixture |
+
+**Operator activation (one-time):** on a machine that can reach
+stats.nba.com, run `bash pipeline/operator_fetch_playoffs.sh`. It fetches
+playoff + regular-season splits and team playoff records, rebuilds the
+`playoffs` family against real coverage, runs the full gates, writes the
+transparent `assets/playoffs.json` for the game's Playoff Lens, and prints
+the exact commit command. Until then the family ships masked and
+`test_playoffs.py` validates the logic against the committed fixture.
+
+---
+
 ## ROI-sorted build order
 
 Sorted by **impact ÷ effort** for MTNN v4 retrieval + game honesty. Ship top rows before Tier C.
@@ -239,6 +273,7 @@ Sorted by **impact ÷ effort** for MTNN v4 retrieval + game honesty. Ship top ro
 | 8 | **D — Injury Tier 2** | Optional precision; legal/UI gate | L | Operator | W6+ |
 | 9 | **G — Tier C on/off** | Highest fidelity; gated, heavy | XL | VH-114 + disk | W6+ |
 | — | **H — Pedigree** *(shipped dormant 2026-07-06)* | Entry expectations + team-fit prior; one fetch call | S | Operator fetch | done |
+| — | **I — Playoffs** *(shipped dormant 2026-07-06)* | Postseason as a distinct regime; riser/fader tower | M | Operator fetch | done |
 
 **S** = small (~≤150 LOC), **M** = medium (~150–300), **L** = large (~300–500), **XL** = 500+.
 
@@ -306,6 +341,8 @@ tier_b_stint_parser.py   →  pipeline/data/chemistry_graph.jsonl
 tier_c_lineup_onoff.py   →  pipeline/data/lineup_pairs.jsonl  (gated)
 fetch_draft_history.py   →  pipeline/cache/draft_history.json
 build_pedigree.py        →  pipeline/data/pedigree.json
+fetch_playoffs.py        →  pipeline/cache/playoffs_*.json
+build_playoffs.py        →  pipeline/data/playoffs.json (+ assets/playoffs.json)
 
 integrate_context.py     →  train_matrix_v4.npz + feature_manifest_v4.json
 ```
@@ -322,6 +359,7 @@ See [`mtnn_v4_plan.md`](../pipeline/mtnn_v4_plan.md) for tower families and `bbr
 | VH-113 | Tier B shared-game stints |
 | VH-114 | Tier C lineup on/off (gated) |
 | VH-115 | Pedigree (draft + entry expectations) |
+| VH-116 | Playoffs (postseason distinct regime) |
 
 ---
 

@@ -18,6 +18,19 @@ rebuild → gate → ledger at `pipeline/cache/dataset_ledger.json`).
 with held-out per-skill R² in `mtnn_report.json` — research lane only;
 the site ships the transparent composites.
 
+Two dormant data tracks extend the MTNN with distinct tower families,
+each cache-ready and gated on a committed fixture until one operator
+fetch on a non-datacenter IP (stats.nba.com blocks this environment):
+
+- **Pedigree (Track H)** — draft slot, entry expectations, team-fit
+  prior + `pedigree_expectation` head. Activate: `bash
+  pipeline/operator_fetch_pedigree.sh`.
+- **Playoffs (Track I)** — postseason as a distinct regime:
+  playoff-vs-regular-season deltas (minutes, usage, scoring, efficiency)
+  + team wins/rounds + `playoff_riser` head, plus a transparent Playoff
+  Lens (RS vs PO splits + riser/fader) on `skills.html`. Activate: `bash
+  pipeline/operator_fetch_playoffs.sh`.
+
 ## OKF LLM-Wiki (`knowledge/`)
 
 One interlinked, machine-editable markdown page per charted player

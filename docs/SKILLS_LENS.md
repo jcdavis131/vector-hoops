@@ -161,6 +161,11 @@ operator machine per the rate-limit policy in `DATA_SOURCES_DEEP.md`.
       expectations / team-fit prior + `pedigree_expectation` aux head —
       see `DATA_SOURCES_DEEP.md` Track H; dormant until one operator run
       of `fetch_draft_history.py`
+- [x] Playoffs tower (Track I, 2026-07-06): postseason as a distinct
+      regime — playoff-vs-regular-season deltas (minutes, usage, scoring,
+      efficiency) + team wins/rounds + `playoff_riser` aux head, plus a
+      transparent Playoff Lens on `skills.html`; dormant until one
+      operator run of `fetch_playoffs.py`
 - [ ] `build_wiki.py`: emit badge line in AUTO block on next regen
 - [ ] Skill-based daily mode ("Badge Hunt": name the player from badges)
 - [ ] Wide-matrix skills (motor / post / transition) once caches land

@@ -60,8 +60,15 @@ def snapshot() -> dict:
         ped = json.loads(ped_path.read_text(encoding="utf-8"))
         pedigree = {"cache_complete": ped.get("cache_complete"),
                     **ped.get("coverage", {})}
+    po_path = PIPELINE / "data" / "playoffs.json"
+    playoffs = None
+    if po_path.exists():
+        po = json.loads(po_path.read_text(encoding="utf-8"))
+        playoffs = {"cache_complete": po.get("cache_complete"),
+                    **po.get("coverage", {})}
     return {
         "pedigree": pedigree,
+        "playoffs": playoffs,
         "player_seasons": len(vec["players"]),
         "seasons": [vec["seasons"][0], vec["seasons"][-1]]
         if isinstance(vec.get("seasons"), list) else None,
@@ -89,6 +96,9 @@ def main() -> None:
         steps.append(run_step(
             "fetch draft history (Track H)",
             [sys.executable, "pipeline/fetch_draft_history.py"], required=False))
+        steps.append(run_step(
+            "fetch playoffs (Track I)",
+            [sys.executable, "pipeline/fetch_playoffs.py"], required=False))
     else:
         print("== fetch: skipped (--offline)\n")
 
@@ -114,6 +124,14 @@ def main() -> None:
     steps.append(run_step(
         "pedigree gates",
         [sys.executable, "pipeline/test_pedigree.py"], required=True))
+    # Playoffs (Track I) — dormant until real playoff caches exist; the
+    # gate always runs (fixture mode validates the derivation logic).
+    steps.append(run_step(
+        "rebuild playoffs (Track I)",
+        [sys.executable, "pipeline/build_playoffs.py"], required=False))
+    steps.append(run_step(
+        "playoff gates",
+        [sys.executable, "pipeline/test_playoffs.py"], required=True))
 
     entry = {
         "run": time.strftime("%Y-%m-%d %H:%M UTC", time.gmtime()),

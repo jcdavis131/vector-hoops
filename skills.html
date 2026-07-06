@@ -53,6 +53,7 @@
         <div class="skills-seasons" id="skills-seasons" role="tablist" aria-label="Season"></div>
         <div class="vh-skill-badges" id="skills-badges"></div>
         <ul class="skillbar-list" id="skills-bars"></ul>
+        <div class="skills-playoffs" id="skills-playoffs" hidden></div>
       </div>
       <p class="skills-hint" id="skills-empty">Pick a player to see their twelve-skill profile,
         season by season. Try &ldquo;Curry&rdquo;, &ldquo;Rodman&rdquo;, or &ldquo;Jokić&rdquo;.</p>
@@ -111,6 +112,7 @@
     els.seasons = document.getElementById('skills-seasons');
     els.badges = document.getElementById('skills-badges');
     els.bars = document.getElementById('skills-bars');
+    els.playoffs = document.getElementById('skills-playoffs');
     els.empty = document.getElementById('skills-empty');
     els.boardSkill = document.getElementById('board-skill');
     els.boardSeason = document.getElementById('board-season');
@@ -200,11 +202,66 @@
         '</li>';
     }).join('');
 
+    renderPlayoffs(rec.name, current.season);
+
     els.profile.hidden = false;
     els.empty.hidden = true;
     var url = '/skills?p=' + encodeURIComponent(current.slug) +
       '&s=' + encodeURIComponent(current.season);
     history.replaceState(null, '', url);
+  }
+
+  // ---- Playoff Lens (transparent; dormant until assets/playoffs.json lands) ----
+  // PLAYOFFS is null until the fetch resolves; false if absent (dormant).
+  var PLAYOFFS = null;
+
+  function fmtDelta(v, digits) {
+    if (v === null || v === undefined) return '&mdash;';
+    var s = v >= 0 ? '+' : '';
+    return s + v.toFixed(digits === undefined ? 1 : digits);
+  }
+
+  function renderPlayoffs(name, season) {
+    var box = els.playoffs;
+    if (!box) return;
+    if (!PLAYOFFS) { box.hidden = true; return; }  // absent or not yet loaded
+    var s = PLAYOFFS.splits[name + '|' + season];
+    if (!s) {
+      box.hidden = false;
+      box.innerHTML = '<div class="vh-section-label">Playoffs</div>' +
+        '<p class="skills-hint">No postseason games this season.</p>';
+      return;
+    }
+    var d = s.pts_delta;
+    var verdict = d === null ? '' :
+      d >= 2 ? '<span class="po-tag po-tag--riser">Riser +' + d.toFixed(1) + '</span>' :
+      d <= -2 ? '<span class="po-tag po-tag--fader">Fader ' + d.toFixed(1) + '</span>' :
+      '<span class="po-tag po-tag--steady">Held serve</span>';
+    var rounds = ['missed', 'R1', 'R2', 'Conf finals', 'Finals'];
+    var runNote = (typeof s.rounds === 'number')
+      ? (s.wins + ' playoff win' + (s.wins === 1 ? '' : 's') +
+         ' &middot; ' + (rounds[s.rounds] || ('round ' + s.rounds)))
+      : '';
+    function line(label, po, rs, delta, digits) {
+      return '<li class="po-split">' +
+        '<span class="po-split__label">' + label + '</span>' +
+        '<span class="po-split__rs">RS ' + (rs === null || rs === undefined ? '&mdash;' : rs) + '</span>' +
+        '<span class="po-split__po">PO ' + (po === null || po === undefined ? '&mdash;' : po) + '</span>' +
+        '<span class="po-split__delta">' + fmtDelta(delta, digits) + '</span></li>';
+    }
+    box.hidden = false;
+    box.innerHTML =
+      '<div class="vh-section-label">Playoffs &middot; regular season vs postseason ' + verdict + '</div>' +
+      (runNote ? '<p class="skills-hint">' + runNote + '</p>' : '') +
+      '<ul class="po-splits">' +
+      line('Pts / 100', s.po.PTS100, s.rs.PTS100, s.pts_delta, 1) +
+      line('Minutes', s.po.MIN, s.rs.MIN, s.min_delta, 1) +
+      line('Usage %', s.po.USG, s.rs.USG, s.usg_delta, 1) +
+      line('True Shooting', s.po.TS, s.rs.TS,
+           (s.po.TS != null && s.rs.TS != null) ? +(s.po.TS - s.rs.TS).toFixed(3) : null, 3) +
+      '</ul>' +
+      '<p class="skills-hint">On-court plus-minus per 100 in the playoffs: ' +
+      fmtDelta(s.po.PLUS_MINUS, 1) + '. Splits from stats.nba.com.</p>';
   }
 
   function pickPlayer(slug, season) {
@@ -328,6 +385,15 @@
       els.boardSeason.disabled = false;
       renderBoard();
       applyDeepLink();
+      // Playoff Lens is optional — dormant until an operator commits
+      // assets/playoffs.json. Fetch once, fail soft to `false`.
+      fetch('assets/playoffs.json')
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (po) {
+          PLAYOFFS = po || false;
+          if (PLAYOFFS && current.slug) renderProfile();
+        })
+        .catch(function () { PLAYOFFS = false; });
     }).catch(function (err) {
       els.empty.textContent = 'Could not load the skills data (' + err.message + ').';
     });
