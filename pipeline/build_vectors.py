@@ -301,7 +301,10 @@ def compute_form_features(season: str) -> dict[str, dict]:
                 continue
             if (g.get("MIN") or 0) <= 0:
                 continue
-            games.setdefault(int(g["PLAYER_ID"]), []).append(g)
+            pid = g.get("PLAYER_ID")
+            if pid is None:
+                continue
+            games.setdefault(int(pid), []).append(g)
 
     out: dict[str, dict] = {}
     for pid, rows in games.items():

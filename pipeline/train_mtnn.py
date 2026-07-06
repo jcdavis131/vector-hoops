@@ -317,6 +317,8 @@ def main() -> None:
     ap.add_argument("--batch", type=int, default=512)
     ap.add_argument("--lr", type=float, default=1.5e-3)
     ap.add_argument("--seed", type=int, default=7)
+    ap.add_argument("--exclude-families", type=str, default="",
+                    help="comma-separated tower families to drop (ablation)")
     args = ap.parse_args()
 
     torch.manual_seed(args.seed)
@@ -326,6 +328,10 @@ def main() -> None:
     (Z, M, names, seasons, pids, clusters, positions, season_ids,
      manifest) = load_bundle()
     fams = family_slices(manifest)
+    exclude = {s.strip() for s in args.exclude_families.split(",") if s.strip()}
+    if exclude:
+        fams = {k: v for k, v in fams.items() if k not in exclude}
+        print(f"excluded families: {sorted(exclude)} -> {len(fams)} towers")
     game_cols = game_feature_cols(manifest)
     game_z = torch.tensor(Z[:, game_cols], device=device)
     n_seasons = int(season_ids.max()) + 1

@@ -1,9 +1,8 @@
 """Team-standing role features from VH-101 game logs (2015-26).
 
 Computes minShare, usageShare, scoreRank per charted player-season.
-Used by feature_lab.py (ablation gate) and integrate_context.py (MTNN
-role tower). Tenure features stay out of the cosine space — see
-feature_lab verdict.
+Used by feature_lab.py (ablation gate). Role tiers ship in assets/roles.json
+for game copy — NOT merged into MTNN (tower ablation: drop_role beats full).
 
 Run:  python pipeline/role_features.py
 """

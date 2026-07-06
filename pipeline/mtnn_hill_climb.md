@@ -47,8 +47,9 @@ flowchart LR
 
 | Feature set | Gate | Verdict |
 |-------------|------|---------|
-| minShare, usageShare, scoreRank | C1 next-PMz R² + C2 silhouette + C3 position-NN | **PASS** → MTNN `role` tower |
+| minShare, usageShare, scoreRank | C1 next-PMz R² + C2 silhouette + C3 position-NN | **PASS** → `assets/roles.json` game copy only |
 | leagueTenure, teamTenure | same | **FAIL** geometry — aux-only if ever used |
+| role MTNN tower | drop-one ablation @25ep | **DROP** — redundant with roster; hurts test recall |
 | salary | excluded | already in `market` tower (separate sourcing) |
 | coach tenure | — | needs source (Track C) |
 
