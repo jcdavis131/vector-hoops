@@ -45,6 +45,7 @@
     <span class="vh-logo">VECTOR<span class="vh-logo__accent">HOOPS</span></span>
     <span class="vh-tagline" id="tagline">Whose season is the perfect combo of two other players?</span>
     <span class="vh-identity-chip" id="identity-chip" title="your anonymous session name — no account, tracked only on this device + the public board">You play as <b id="identity-name">&mdash;</b></span>
+    <span class="vh-favorite-chip" id="favorite-team-chip" hidden title="your favorite NBA team — device only, not sent anywhere">Rooting for <b id="favorite-team-label">&mdash;</b></span>
   </div>
   <div class="vh-subtabs vh-pool-toggle" id="pool-toggle" role="tablist" aria-label="Player pool">
     <button class="vh-subtab is-active" id="pool-toggle-all" type="button" role="tab" aria-selected="true" title="Every charted player-season, 1996-97 through today">All-time</button>
@@ -1022,6 +1023,14 @@
       <p class="vh-stats-modern-line" id="stats-twin-modern-line"></p>
     </div>
 
+    <div class="vh-stats-section" id="favorite-team-section">
+      <div class="vh-stats-section__label">Favorite team</div>
+      <label class="vh-favorite-picker" for="favorite-team-select">
+        <span class="vh-favorite-picker__hint">Pick your NBA team — saved on this device only, not tied to your play name.</span>
+        <select class="vh-favorite-picker__select" id="favorite-team-select" name="favorite-team"></select>
+      </label>
+    </div>
+
     <div class="vh-stats-section vh-stats-section--practice">
       <div class="vh-stats-section__label">Practice (casual, doesn't count toward streaks)</div>
       <p class="vh-stats-practice-line" id="stats-practice-line"></p>
@@ -1057,6 +1066,7 @@
 
 <script src="assets/dossier.js" defer></script>
 <script src="assets/leaderboard.js" defer></script>
+<script src="assets/favorite-team.js" defer></script>
 <script src="assets/game.js" defer></script>
 </body>
 </html>

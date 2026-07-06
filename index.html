@@ -55,6 +55,10 @@
         <h1 class="landing-hero__title">Mix two players.<br>Guess the <span class="landing-hero__title-accent">Chimera</span>.</h1>
         <p class="landing-tagline">Two real player-seasons fuse into one stat line. Your job: name the closest match in vector space.</p>
         <p class="landing-puzzle-line" id="puzzle-line">Today's puzzle #<b id="puzzle-num">—</b> · resets midnight UTC</p>
+        <div class="landing-favorite" id="landing-favorite">
+          <label class="landing-favorite__label" for="landing-favorite-select">Your team</label>
+          <select class="landing-favorite__select" id="landing-favorite-select" name="favorite-team" aria-label="Favorite NBA team"></select>
+        </div>
         <div class="landing-hero__actions">
           <a class="vh-btn vh-btn--primary landing-cta" href="/play">Play today's Chimera →</a>
           <a class="vh-btn vh-btn--accent landing-cta-secondary" href="#modes">Browse all modes</a>
@@ -231,5 +235,6 @@
     if (el) el.textContent = String(Math.max(days, 1));
   })();
 </script>
+<script src="assets/favorite-team.js" defer></script>
 </body>
 </html>

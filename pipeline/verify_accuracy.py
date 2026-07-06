@@ -194,6 +194,36 @@ def v5_procrustes(data: dict) -> None:
           "chained transforms, all orthogonal")
 
 
+def v6_teams() -> None:
+    print("V6 teams.json integrity…")
+    path = ASSETS / "teams.json"
+    if not path.exists():
+        fail("assets/teams.json missing — run pipeline/build_teams.py")
+        return
+    data = json.loads(path.read_text(encoding="utf-8"))
+    teams = data.get("teams")
+    if not teams or len(teams) < 28:
+        fail(f"teams.json has {len(teams or [])} teams — expected ~30")
+        return
+    abbrs = set()
+    ids = set()
+    for t in teams:
+        ab = t.get("abbr")
+        tid = t.get("id")
+        name = t.get("name")
+        if not ab or len(ab) != 3:
+            fail(f"bad abbr for team {t}")
+        if ab in abbrs:
+            fail(f"duplicate abbr {ab}")
+        abbrs.add(ab)
+        if tid in ids:
+            fail(f"duplicate TEAM_ID {tid}")
+        ids.add(tid)
+        if not name:
+            fail(f"missing name for {ab}")
+    print(f"  {len(teams)} teams, {len(abbrs)} unique abbreviations")
+
+
 if __name__ == "__main__":
     data = json.loads((ASSETS / "vectors.json").read_text(encoding="utf-8"))
     v1_vectors(data)
@@ -201,6 +231,7 @@ if __name__ == "__main__":
     v3_deadline()
     v4_determinism(data)
     v5_procrustes(data)
+    v6_teams()
     if FAILS:
         print(f"\nACCURACY HARNESS: {len(FAILS)} FAILURES — do not ship")
         sys.exit(1)
