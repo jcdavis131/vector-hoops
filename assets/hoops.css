@@ -552,6 +552,20 @@ main{
    typography as .vh-guess__line, just tighter above a small card. */
 .vh-guess-slot__feedback{ margin-top: 4px; min-height: 1.4em; }
 
+/* v5 staged flow: the masked donor name in each card's title ("? · Stats
+   Player") — fills in with the true donor once that stage resolves. */
+.vh-clue-card__mask{ color: var(--data-blue); }
+
+/* Lock note shown under a later stage's disabled input ("Solve the Stats
+   Player first.") — same italic/muted treatment as other secondary lines,
+   hidden once its gating stage resolves. */
+.vh-clue-card__lock-note{
+  margin: 6px 0 0;
+  font-size: 11px;
+  font-style: italic;
+  color: var(--ink-muted);
+}
+
 /* ---------- v5 clue cards ----------
    Each answer slot (Stats / Archetype / Mashup) is one self-contained
    .vh-card: a numbered head, its own evidence "clue zone" (mini sigma bars

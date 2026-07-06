@@ -106,7 +106,7 @@
   // ---------------------------------------------------------------------
 
   var GAMES = [
-    { id: 'chimera', label: 'Chimera', icon: '🧬', unit: 'guesses' },
+    { id: 'chimera', label: 'Chimera', icon: '🧬', unit: 'pts' },
     { id: 'deadline', label: 'Deadline', icon: '📉', unit: 'score' },
     { id: 'fader', label: 'Fader', icon: '🌡️', unit: 'score' },
     { id: 'arc', label: 'Arc', icon: '📈', unit: 'score' },
@@ -209,7 +209,7 @@
 
       renderChips();
       renderDateRow();
-      els.scoreHead.textContent = g.unit === 'guesses' ? 'Guesses' : 'Score';
+      els.scoreHead.textContent = g.unit === 'pts' ? 'Points' : 'Score';
       els.chimeraNote.hidden = g.id !== 'chimera';
       els.note.textContent = 'Loading…';
       els.players.textContent = '';
@@ -239,7 +239,7 @@
           if (data && data.you) {
             els.youLine.hidden = false;
             els.youLine.textContent = 'You: rank ' + data.you.rank + ', ' + data.you.score +
-              (g.unit === 'guesses' ? ' guesses' : ' score');
+              (g.unit === 'pts' ? ' pts' : ' score');
           }
         })
         .catch(function () {

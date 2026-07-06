@@ -5,8 +5,8 @@
 // JSON the client can render even on upstream failure.
 const BASE = "https://api-production-3dea.up.railway.app";
 const ALLOWED_GAMES = new Set(["chimera", "deadline", "fader", "arc", "pivot", "eratwin"]);
-// chimera = guesses used (1-6, lower better); everyone else = 0-5, higher better.
-const SCORE_RANGES = { chimera: [1, 9], deadline: [0, 5], fader: [0, 5], arc: [0, 5], pivot: [0, 10], eratwin: [0, 10] };
+// chimera = FINAL points (0-2400, higher better — base mashup points x both donor multipliers); everyone else = 0-5, higher better.
+const SCORE_RANGES = { chimera: [0, 2400], deadline: [0, 5], fader: [0, 5], arc: [0, 5], pivot: [0, 10], eratwin: [0, 10] };
 
 module.exports = async (req, res) => {
   const key = process.env.SYNTH_API_KEY;

@@ -22,15 +22,29 @@
   var ARCHETYPE_TIME_URL = 'assets/archetypes_time.json';
   var TRAJECTORIES_URL = 'assets/trajectories.json';
   var EPOCH_DATE = '2026-07-01'; // puzzle #1
-  // v4: THREE-PART ANSWERS. The equation itself is three simultaneous
-  // guessable slots — Stats Player + Archetype Player = Mashup Player —
-  // shared across a single 9-turn budget; any slot, any order, one
-  // submission per turn. Donors stay hidden until their own slot locks
-  // (exact id only); the Mashup slot locks on an exact true-nearest match
-  // (gold) or >=92% full-blend cosine ("close enough" — silver).
-  var MAX_TURNS = 9;
+  // v5: STAGED SEQUENTIAL FLOW + multiplier scoring. All three cards show
+  // their full evidence immediately (nothing hidden), but the GUESS ORDER
+  // is staged: one guess for the Stats Player, one guess for the Style
+  // Player (each always resolves, right or wrong, earning a multiplier),
+  // then the Mashup unlocks for up to MAX_MASHUP_GUESSES tries. The Mashup
+  // still locks on an exact true-nearest match (gold) or >=92% full-blend
+  // cosine ("close enough" — silver).
+  var MAX_MASHUP_GUESSES = 6;
   var WIN_SIMILARITY = 0.92;
-  var LS_KEY = 'vectorHoops.v4';
+  // Stage multiplier tiers (Stats/Style), by alignment (halfSims cosine)
+  // against that donor's own half of the blend — exact player-season beats
+  // every similarity tier regardless of how close a wrong guess measures.
+  var MULT_EXACT = 2.0;
+  var MULT_TIER_90 = 1.5;
+  var MULT_TIER_75 = 1.25;
+  var MULT_TIER_50 = 1.1;
+  var MULT_BASE = 1.0;
+  // Mashup base points by the guess number (1-6) it's solved on; unsolved
+  // scores 0 base (but the two donor multipliers still bank a consolation
+  // credit — see computeFinalPoints). Max FINAL = 600 * 2.0 * 2.0 = 2400.
+  var MASHUP_BASE_POINTS = [600, 500, 400, 300, 200, 100];
+  var LS_KEY = 'vectorHoops.v5';
+  var LS_KEY_LEGACY_V4 = 'vectorHoops.v4';
   var LS_KEY_LEGACY_V3 = 'vectorHoops.v3';
   var LS_KEY_LEGACY_V2 = 'vectorHoops.v2';
   var LS_KEY_USER_REF = 'vectorHoops.userRef';
@@ -38,7 +52,7 @@
   var LS_KEY_DEADLINE_DAILY = 'vectorHoops.deadline.daily.v1';
   var LS_KEY_PRACTICE_STATS = 'vectorHoops.v3.practice.chimera.stats';
   var LS_KEY_PRACTICE_STATS_LEGACY = 'vectorHoops.practice.chimera.stats';
-  var LS_KEY_RESET_NOTE_SEEN = 'vectorHoops.v3.resetNoteSeen';
+  var LS_KEY_RESET_NOTE_SEEN = 'vectorHoops.v5.resetNoteSeen';
   var LS_KEY_FF_DAILY = 'vectorHoops.ff.daily.v1';
   var LS_KEY_FF_PRACTICE = 'vectorHoops.ff.practice';
   var LS_KEY_ARC_DAILY = 'vectorHoops.arc.daily.v1';
@@ -68,12 +82,12 @@
   // assets/dossier.js (shared with wiki.html) — aliased below.
   var GITHUB_REPO = window.VHDossier.GITHUB_REPO;
   var GITHUB_BRANCH = window.VHDossier.GITHUB_BRANCH;
-  // M2 hint economy: Daily Chimera only, keyed off the shared turn count
-  // (not any one slot's guesses). Free Play (practice) gets both mashup
-  // hints immediately since it never counts toward anything.
-  var HINT_POSITION_AT_TURN = 4;   // position of one unsolved donor (seeded pick)
-  var HINT_ARCHETYPE_AT_TURN = 6;  // archetype of one unsolved slot's answer
-  var HINT_DECADE_AT_TURN = 8;     // decade of one unsolved slot's answer
+  // M2 hint economy: v5 hints are Mashup-stage only — Stats/Style donors
+  // are already revealed by the time the Mashup opens, so donor-position/
+  // decade hints no longer apply. Free Play (practice) gets both hints
+  // immediately since it never counts toward anything.
+  var HINT_POSITION_AT_MASHUP_GUESS = 3;   // position of the true nearest match
+  var HINT_ARCHETYPE_AT_MASHUP_GUESS = 5;  // archetype of the true nearest match
   var SLOT_KEYS = ['stats', 'archetype', 'mashup'];
   var DESKTOP_QUERY = '(min-width: 1000px)';
 
@@ -420,7 +434,7 @@
           activeChimeraMode = 'practice';
           PRACTICE_STAGE = 'playing';
           PRACTICE_TARGET = buildTargetFromPlayers(pa, pb);
-          PRACTICE_REC = freshDayRecord();
+          PRACTICE_REC = freshDayRecord(3);
           els.chimeraSubDaily.classList.toggle('is-active', false);
           els.chimeraSubPractice.classList.toggle('is-active', true);
           refreshChimeraView();
@@ -544,7 +558,7 @@
   // M0 state isolation: Free Play (Chimera) never touches STATE/LS_KEY above.
   // Its round record and casual counters live entirely separately.
   var activeChimeraMode = 'daily'; // 'daily' | 'practice'
-  var PRACTICE_REC = freshDayRecord();
+  var PRACTICE_REC = freshDayRecord(3); // Free Play skips Stats/Style — mashup-only from the start
   var PRACTICE_STATS = null; // { played, won } — loaded from LS_KEY_PRACTICE_STATS
 
   var els = {}; // cached DOM refs, filled in initDom()
@@ -700,78 +714,39 @@
 
   function slotLabel(key) {
     if (key === 'stats') return 'Stats';
-    if (key === 'archetype') return 'Archetype';
+    if (key === 'archetype') return 'Style';
     return 'Mashup';
   }
 
   // The true player-season a given slot is hunting — same three objects
-  // TARGET already carries, just named uniformly for hint lookups.
+  // TARGET already carries, just named uniformly for the loss-reveal recap.
   function slotTruePlayer(key) {
     if (key === 'stats') return TARGET.a;
     if (key === 'archetype') return TARGET.b;
     return nearestPlayer();
   }
 
-  function seasonDecade(season) {
-    var y = parseInt(String(season).slice(0, 4), 10);
-    if (!isFinite(y)) return null;
-    return (Math.floor(y / 10) * 10) + 's';
-  }
-
-  // Deterministic, shared across every player on the same date (same
-  // doctrine as the daily target itself) — which order hints work through
-  // the still-unsolved slots. Pure function of TODAY, so it never needs to
-  // be persisted in the day record.
-  function seededSlotHintOrder() {
-    return seededShuffle(seededRng('vector-hoops:chimera-hint:' + TODAY), SLOT_KEYS);
-  }
-
-  function firstUnsolvedSlot(rec, allowedKeys) {
-    var order = seededSlotHintOrder();
-    for (var i = 0; i < order.length; i++) {
-      var key = order[i];
-      if (allowedKeys.indexOf(key) === -1) continue;
-      if (!rec.slots[key].locked) return key;
-    }
-    return null;
-  }
-
+  // v5: hints are Mashup-stage only — both donors are already revealed by
+  // the time the Mashup opens (stage 3), so hinting them again would be
+  // redundant. Free Play still gets both immediately (unchanged).
   function renderHints() {
     if (!els.hintsRow) return;
     var chips = [];
     if (activeChimeraMode === 'practice') {
-      // Free Play: both mashup hints unlocked immediately, unchanged.
       var posHint = nearestPositionHint();
       if (posHint) chips.push('<span class="vh-hint-chip">Position: ' + escapeHtml(posHint) + '</span>');
       var archHint = nearestArchetypeHint();
       if (archHint) chips.push('<span class="vh-hint-chip">Archetype: ' + escapeHtml(archHint) + '</span>');
     } else {
       var rec = todayRecord();
-      var n = rec.guesses.length;
-      if (n >= HINT_POSITION_AT_TURN) {
-        var posKey = firstUnsolvedSlot(rec, ['stats', 'archetype']);
-        if (posKey) {
-          var posPlayer = slotTruePlayer(posKey);
-          var pos = (posPlayer && DATA.positions && typeof posPlayer.p === 'number' && posPlayer.p >= 0)
-            ? DATA.positions[posPlayer.p] : null;
-          if (pos) chips.push('<span class="vh-hint-chip">' + slotLabel(posKey) + ' donor position: ' + escapeHtml(pos) + '</span>');
-        }
+      var n = rec.mashupGuesses.length;
+      if (n >= HINT_POSITION_AT_MASHUP_GUESS) {
+        var pos = nearestPositionHint();
+        if (pos) chips.push('<span class="vh-hint-chip">Mashup position: ' + escapeHtml(pos) + '</span>');
       }
-      if (n >= HINT_ARCHETYPE_AT_TURN) {
-        var archKey = firstUnsolvedSlot(rec, SLOT_KEYS);
-        if (archKey) {
-          var archPlayer = slotTruePlayer(archKey);
-          var archName = archPlayer ? DATA.clusters[archPlayer.c] : null;
-          if (archName) chips.push('<span class="vh-hint-chip">' + slotLabel(archKey) + ' archetype: ' + escapeHtml(archName) + '</span>');
-        }
-      }
-      if (n >= HINT_DECADE_AT_TURN) {
-        var decKey = firstUnsolvedSlot(rec, SLOT_KEYS);
-        if (decKey) {
-          var decPlayer = slotTruePlayer(decKey);
-          var decade = decPlayer ? seasonDecade(decPlayer.season) : null;
-          if (decade) chips.push('<span class="vh-hint-chip">' + slotLabel(decKey) + ' decade: ' + escapeHtml(decade) + '</span>');
-        }
+      if (n >= HINT_ARCHETYPE_AT_MASHUP_GUESS) {
+        var arch = nearestArchetypeHint();
+        if (arch) chips.push('<span class="vh-hint-chip">Mashup archetype: ' + escapeHtml(arch) + '</span>');
       }
     }
     if (chips.length) {
@@ -874,10 +849,11 @@
     } else {
       els.puzzleNumber.textContent = 'Vector Hoops #' + puzzleNumber(playDate());
       els.promptText.textContent =
-        'The equation IS the puzzle: name the Stats Player, the Archetype Player, and the ' +
-        'Mashup Player closest to their blend — any slot, any order. ' + MAX_TURNS +
-        ' turns total, shared across all three. The true closest match in the whole player ' +
-        'pool is a PERFECT MATCH on Mashup; 92%+ also locks it.';
+        'The equation IS the puzzle: all three cards show their full evidence now, but you ' +
+        'name them in order — one guess for the Stats Player, one guess for the Style Player ' +
+        '(each earns a multiplier whether you\'re right or not), then up to ' + MAX_MASHUP_GUESSES +
+        ' guesses for the Mashup. The true closest match in the whole player pool is a PERFECT ' +
+        'MATCH on Mashup; 92%+ also locks it. FINAL score = mashup base points × both multipliers.';
     }
     renderEquationTiles();
     renderChimeraStatusLine();
@@ -924,12 +900,20 @@
     }
     var rec = todayRecord();
     if (rec.done) {
-      els.chimeraPhaseLabel.textContent = rec.won ? 'All three cracked.' : 'Round over — see the reveal.';
+      els.chimeraPhaseLabel.textContent = (rec.won ? 'Mashup solved — ' : 'Round over — ') + rec.points + ' pts.';
       return;
     }
-    var left = Math.max(0, MAX_TURNS - rec.guesses.length);
-    els.chimeraPhaseLabel.textContent = 'Guess any slot, in any order — ' +
-      left + ' turn' + (left === 1 ? '' : 's') + ' left.';
+    if (!rec.s1) {
+      els.chimeraPhaseLabel.textContent = 'Stage 1 of 3 — one guess: name the Stats Player.';
+      return;
+    }
+    if (!rec.s2) {
+      els.chimeraPhaseLabel.textContent = 'Stage 2 of 3 — one guess: name the Style Player.';
+      return;
+    }
+    var left = Math.max(0, MAX_MASHUP_GUESSES - rec.mashupGuesses.length);
+    els.chimeraPhaseLabel.textContent = 'Stage 3 of 3 — find the Mashup: ' +
+      left + ' guess' + (left === 1 ? '' : 'es') + ' left.';
   }
 
   function renderScoutingLine() {
@@ -980,7 +964,7 @@
     if (els[hintKey]) els[hintKey].textContent = collapsed ? 'tap to expand' : 'tap to collapse';
   }
 
-  // Stats/Archetype donor cards: bars + sentence + chips over that donor's
+  // Stats/Style donor cards: bars + sentence + chips over that donor's
   // own half of TARGET.vector — the exact STATS_DIMS/SHOOTING_DIMS split
   // halfSims() already scores guesses against, so the clue can never
   // mismatch the scoring.
@@ -1008,10 +992,30 @@
     applyClueCollapse('mashup', 'mashupClueZone', 'mashupClueHint');
   }
 
+  // v5: the masked header name ("? · Stats Player") + the multiplier badge,
+  // both driven by rec.slots[key] which now means "this stage has resolved"
+  // (set the instant the one guess is submitted, right or wrong) rather than
+  // "exact match found." The badge shows the multiplier earned; gold if the
+  // guess was the exact donor, silver otherwise (still a real multiplier).
+  function renderStageMaskAndBadge(key) {
+    var rec = todayRecord();
+    var slot = rec.slots[key];
+    var maskEl = key === 'stats' ? els.statsSlotMask : els.archetypeSlotMask;
+    if (maskEl) maskEl.textContent = slot.locked ? slot.name : '?';
+    var badgeEl = key === 'stats' ? els.chimeraStatsBadge : els.chimeraArchetypeBadge;
+    if (badgeEl) {
+      badgeEl.hidden = !slot.locked;
+      if (slot.locked) badgeEl.textContent = '×' + String(slot.mult);
+      badgeEl.classList.toggle('vh-slot-card__badge--silver', !!(slot.locked && slot.silver));
+    }
+  }
+
   function renderClueCards() {
     if (activeChimeraMode !== 'practice') {
       renderDonorClueZone('stats');
       renderDonorClueZone('archetype');
+      renderStageMaskAndBadge('stats');
+      renderStageMaskAndBadge('archetype');
     }
     renderMashupClueZone();
   }
@@ -1052,29 +1056,75 @@
     return { streak: 0, maxStreak: 0, lastWinDate: null, days: {} };
   }
 
-  // v4 day record: three independent slots (stats/archetype/mashup), each
-  // with its own lock state, sharing one guesses[] log and one MAX_TURNS
-  // budget. bestSim/attempts persist per slot purely for the loss reveal
-  // ("each slot's best attempt %") — never used to decide anything else.
+  // v5 day record: Stats + Style resolve one guess each (slot.locked = this
+  // stage has resolved, right or wrong; slot.silver = resolved but NOT the
+  // exact donor; slot.sim/mult = the alignment % and multiplier earned).
+  // The Mashup slot keeps the old v3/v4 lock semantics (exact true-nearest =
+  // gold, >=92% cosine = silver) over up to MAX_MASHUP_GUESSES tries.
+  // s1/s2/mashupGuesses/stage/points are the canonical persisted fields the
+  // rest of the app (scoring, share text, stats modal) reads; `slots` is a
+  // denormalized convenience view kept in sync at the same time, reused by
+  // the map/equation/triangulation rendering that predates the v5 bump.
   function freshSlotState() {
-    return { locked: false, silver: false, name: null, id: null, bestSim: 0, attempts: 0 };
+    return { locked: false, silver: false, name: null, id: null, sim: 0, mult: 1, bestSim: 0, attempts: 0 };
   }
 
-  function freshDayRecord() {
+  function freshDayRecord(startStage) {
     return {
-      guesses: [], done: false, won: false, v: 4,
+      v: 5,
+      stage: startStage || 1, // 1 = Stats, 2 = Style, 3 = Mashup
+      done: false, won: false, points: 0,
+      s1: null, s2: null, mashupGuesses: [],
       slots: { stats: freshSlotState(), archetype: freshSlotState(), mashup: freshSlotState() }
     };
   }
 
-  function isV4DayRecord(rec) {
-    return !!(rec && typeof rec === 'object' && rec.v === 4 &&
-      rec.slots && rec.slots.stats && rec.slots.archetype && rec.slots.mashup);
+  function isV5DayRecord(rec) {
+    return !!(rec && typeof rec === 'object' && rec.v === 5 &&
+      rec.slots && rec.slots.stats && rec.slots.archetype && rec.slots.mashup &&
+      Array.isArray(rec.mashupGuesses));
   }
 
   function isRoundWon(rec) {
-    if (activeChimeraMode === 'practice') return rec.slots.mashup.locked;
-    return rec.slots.stats.locked && rec.slots.archetype.locked && rec.slots.mashup.locked;
+    return rec.slots.mashup.locked;
+  }
+
+  // ---------------------------------------------------------------------
+  // v5 scoring: stage multipliers (Stats/Style) + Mashup base points + the
+  // consolation floor for an unsolved Mashup (so donor skill always counts).
+  // ---------------------------------------------------------------------
+
+  function stageMultiplier(sim, exact) {
+    if (exact) return MULT_EXACT;
+    if (sim >= 0.90) return MULT_TIER_90;
+    if (sim >= 0.75) return MULT_TIER_75;
+    if (sim >= 0.50) return MULT_TIER_50;
+    return MULT_BASE;
+  }
+
+  function fmtMult(m) {
+    return String(m);
+  }
+
+  // 1-based guess number the Mashup was solved on, or null if unsolved.
+  function mashupSolvedGuessIndex(rec) {
+    var mg = rec.mashupGuesses || [];
+    for (var i = 0; i < mg.length; i++) {
+      if (mg[i].locked) return i + 1;
+    }
+    return null;
+  }
+
+  // FINAL = round(base * m1 * m2) when the Mashup solves; otherwise a
+  // consolation floor of round(100 * (m1*m2 - 1)) so the donor multipliers
+  // always count for something, even off a losing Mashup. Max 2400
+  // (600 base * 2.0 * 2.0).
+  function computeFinalPoints(rec) {
+    var m1 = rec.s1 ? rec.s1.mult : MULT_BASE;
+    var m2 = rec.s2 ? rec.s2.mult : MULT_BASE;
+    var idx = mashupSolvedGuessIndex(rec);
+    if (idx) return Math.round(MASHUP_BASE_POINTS[idx - 1] * m1 * m2);
+    return Math.max(0, Math.round(100 * (m1 * m2 - 1)));
   }
 
   function donorWrongSeasonNote(guessPlayer, targetPlayer) {
@@ -1104,10 +1154,14 @@
         }
       } catch (e) { /* corrupt v4 state, fall back to default */ }
     } else {
-      // First run under v4: seed streak/history from v3 (then v2) so a
-      // returning player doesn't lose their streak over the schema bump.
+      // First run under v5: seed streak/history from v4, then v3, then v2 —
+      // whichever is the newest one present — so a returning player doesn't
+      // lose their streak over the schema bump.
       var legacyRaw = null;
-      try { legacyRaw = localStorage.getItem(LS_KEY_LEGACY_V3); } catch (e) { legacyRaw = null; }
+      try { legacyRaw = localStorage.getItem(LS_KEY_LEGACY_V4); } catch (e) { legacyRaw = null; }
+      if (!legacyRaw) {
+        try { legacyRaw = localStorage.getItem(LS_KEY_LEGACY_V3); } catch (e) { legacyRaw = null; }
+      }
       if (!legacyRaw) {
         try { legacyRaw = localStorage.getItem(LS_KEY_LEGACY_V2); } catch (e) { legacyRaw = null; }
       }
@@ -1123,10 +1177,14 @@
         } catch (e) { /* corrupt legacy state, ignore */ }
       }
     }
-    if (!isV4DayRecord(s.days[TODAY])) {
-      if (s.days[TODAY] && s.days[TODAY].guesses && s.days[TODAY].guesses.length > 0) {
-        dailyResetNoteNeeded = true;
-      }
+    if (!isV5DayRecord(s.days[TODAY])) {
+      var old = s.days[TODAY];
+      var hadOldProgress = !!old && (
+        (old.guesses && old.guesses.length > 0) ||
+        (old.mashupGuesses && old.mashupGuesses.length > 0) ||
+        old.s1 || old.s2
+      );
+      if (hadOldProgress) dailyResetNoteNeeded = true;
       s.days[TODAY] = freshDayRecord();
     }
     return s;
@@ -1205,22 +1263,24 @@
       PRACTICE_STATS.played++;
       if (won) PRACTICE_STATS.won++;
       savePracticeStats();
-      track(won ? 'vh-win' : 'vh-loss', { turns: rec.guesses.length, mode: modeDetail });
+      track(won ? 'vh-win' : 'vh-loss', { turns: rec.mashupGuesses.length, mode: modeDetail, stage: 3 });
       return; // Free Play never touches STATE/streak — state isolation (M0)
     }
+    rec.points = computeFinalPoints(rec);
     if (won) {
       var yesterday = utcDateString(new Date(Date.now() - 86400000));
       STATE.streak = (STATE.lastWinDate === yesterday) ? STATE.streak + 1 : 1;
       STATE.lastWinDate = TODAY;
       STATE.maxStreak = Math.max(STATE.maxStreak || 0, STATE.streak);
-      track('vh-win', { turns: rec.guesses.length, mode: modeDetail });
-      // Chimera board = finishers only: a win submits turns used (1-9,
-      // lower better); a loss submits nothing (see leaderboard.html note).
-      submitLeaderboardScore('chimera', TODAY, rec.guesses.length);
+      track('vh-win', { turns: rec.mashupGuesses.length, mode: modeDetail, stage: 3 });
     } else {
       STATE.streak = 0;
-      track('vh-loss', { mode: modeDetail });
+      track('vh-loss', { mode: modeDetail, stage: 3 });
     }
+    // Chimera board = points exist whether the round was won or lost (the
+    // two donor multipliers always bank something) — submit either way,
+    // 0-2400 higher-better (see leaderboard.html note).
+    submitLeaderboardScore('chimera', TODAY, rec.points);
     saveState();
     renderStreak();
   }
@@ -1230,21 +1290,42 @@
   }
 
   // ---------------------------------------------------------------------
-  // Stats (M1): played/win%/streak/maxStreak + guess-distribution histogram,
-  // all recomputed straight from the persisted Daily Chimera days map.
+  // Stats (M1): played/win%/streak/maxStreak + mashup guess-to-solve
+  // histogram + v5's points-based aggregates (total pts, best day, avg
+  // multiplier), all recomputed straight from the persisted Daily Chimera
+  // days map. Played/wins/streak stay readable for pre-v5 history (older
+  // day records still carry rec.done/rec.won); the points aggregates only
+  // ever sum days that actually carry v5's points/s1/s2 fields, so a mixed
+  // history never fabricates a multiplier or point total for an old round.
   // ---------------------------------------------------------------------
 
   function computeDailyChimeraStats() {
     var played = 0, wins = 0, dist = [];
-    for (var di = 0; di < MAX_TURNS; di++) dist.push(0);
+    var totalPts = 0, bestDay = 0, multSum = 0, multCount = 0;
+    for (var di = 0; di < MAX_MASHUP_GUESSES; di++) dist.push(0);
     Object.keys(STATE.days).forEach(function (d) {
       var rec = STATE.days[d];
       if (!rec || !rec.done) return;
       played++;
       if (rec.won) {
         wins++;
-        var n = Math.min(MAX_TURNS, rec.guesses.length) - 1;
+        // v5 records: mashupGuesses is already mashup-only. Older v4
+        // records mix all three slots into one guesses[] log — filter to
+        // slot==='mashup' so a donor-slot lock never gets mistaken for the
+        // mashup's solve position in the histogram.
+        var mg = rec.mashupGuesses || (rec.guesses || []).filter(function (g) { return g.slot === 'mashup'; });
+        var n = -1;
+        for (var i = 0; i < mg.length; i++) { if (mg[i].locked) { n = i; break; } }
+        if (n === -1) n = Math.min(MAX_MASHUP_GUESSES, mg.length) - 1;
         if (n >= 0 && n < dist.length) dist[n]++;
+      }
+      if (rec.v === 5 && typeof rec.points === 'number') {
+        totalPts += rec.points;
+        if (rec.points > bestDay) bestDay = rec.points;
+        if (rec.s1 && rec.s2) {
+          multSum += (rec.s1.mult * rec.s2.mult);
+          multCount++;
+        }
       }
     });
     return {
@@ -1253,7 +1334,10 @@
       winPct: played ? Math.round((wins / played) * 100) : 0,
       streak: STATE.streak,
       maxStreak: STATE.maxStreak || 0,
-      dist: dist
+      dist: dist,
+      totalPts: totalPts,
+      bestDay: bestDay,
+      avgMultiplier: multCount ? (multSum / multCount) : 0
     };
   }
 
@@ -2195,6 +2279,40 @@
     return null;
   }
 
+  // Unified history/map list: the Stats + Style stages each contribute at
+  // most one synthetic "guess" entry (once resolved), followed by every
+  // Mashup guess in order — the exact chronological order they happened in,
+  // and the same entry shape submitMashupGuess() has always produced, so
+  // renderGuessRow()/the map's guess pins/redrawCourtsIfVisible() all keep
+  // working unchanged over whichever stage(s) have resolved so far.
+  function unifiedGuessList(rec) {
+    var list = [];
+    if (rec.s1) {
+      var p1 = DATA.players[rec.s1.guess.id];
+      if (p1) {
+        list.push({
+          id: p1.id, name: rec.s1.guess.name, slot: 'stats',
+          halves: halfSims(p1.v), blendSim: cosineSim(TARGET.vector, p1.v),
+          sim: rec.s1.sim, locked: true, silver: !rec.s1.exact,
+          wrongSeasonNote: rec.s1.exact ? null : donorWrongSeasonNote(p1, TARGET.a)
+        });
+      }
+    }
+    if (rec.s2) {
+      var p2 = DATA.players[rec.s2.guess.id];
+      if (p2) {
+        list.push({
+          id: p2.id, name: rec.s2.guess.name, slot: 'archetype',
+          halves: halfSims(p2.v), blendSim: cosineSim(TARGET.vector, p2.v),
+          sim: rec.s2.sim, locked: true, silver: !rec.s2.exact,
+          wrongSeasonNote: rec.s2.exact ? null : donorWrongSeasonNote(p2, TARGET.b)
+        });
+      }
+    }
+    (rec.mashupGuesses || []).forEach(function (g) { list.push(g); });
+    return list;
+  }
+
   function renderGuessRow(entry, idx) {
     var li = document.createElement('li');
     li.className = 'vh-guess' + (entry.locked ? ' is-identified' : '') + (entry.silver ? ' is-silver' : '');
@@ -2232,44 +2350,39 @@
     return li;
   }
 
-  // Unified list, colored per slot glyph (vh-warmth__bar--stats/--archetype/
-  // --mashup) — every turn across all three slots, in the order played.
+  // Mashup-only now (Stats/Style are one-shot, no "warmth" to trail —
+  // their result shows in their own feedback line instead).
   function renderWarmth(rec) {
-    if (rec.guesses.length === 0) {
+    if (rec.mashupGuesses.length === 0) {
       els.warmthCard.hidden = true;
       return;
     }
     els.warmthCard.hidden = false;
 
     els.warmthBars.innerHTML = '';
-    rec.guesses.forEach(function (g) {
+    rec.mashupGuesses.forEach(function (g) {
       var bar = document.createElement('div');
-      bar.className = 'vh-warmth__bar vh-warmth__bar--' + g.slot;
+      bar.className = 'vh-warmth__bar vh-warmth__bar--mashup';
       var pct = Math.max(0, Math.round(g.sim * 100));
       bar.style.height = Math.max(3, Math.round(pct * 0.4)) + 'px';
       if (g.locked) bar.classList.add('is-best');
       if (g.silver) bar.classList.add('is-silver');
-      bar.title = slotLabel(g.slot) + ' — ' + g.name + ': ' + pct + '%';
+      bar.title = 'Mashup — ' + g.name + ': ' + pct + '%';
       els.warmthBars.appendChild(bar);
     });
 
-    var mashupGuesses = rec.guesses.filter(function (g) { return g.slot === 'mashup'; });
-    if (mashupGuesses.length) {
-      var bestIdx = 0, bestSim = -Infinity;
-      mashupGuesses.forEach(function (g, i) { if (g.sim > bestSim) { bestSim = g.sim; bestIdx = i; } });
-      var best = mashupGuesses[bestIdx];
-      els.warmthClosest.textContent = 'Closest mashup: ' + best.name + ' — ' + Math.round(best.sim * 100) + '%';
-    } else {
-      els.warmthClosest.textContent = 'No mashup guesses yet.';
-    }
+    var bestIdx = 0, bestSim = -Infinity;
+    rec.mashupGuesses.forEach(function (g, i) { if (g.sim > bestSim) { bestSim = g.sim; bestIdx = i; } });
+    var best = rec.mashupGuesses[bestIdx];
+    els.warmthClosest.textContent = 'Closest mashup: ' + best.name + ' — ' + Math.round(best.sim * 100) + '%';
   }
 
   // Redraws both court canvases at their current laid-out width, e.g. after
-  // a viewport resize/rotation, using the last submitted guess if any.
+  // a viewport resize/rotation, using the last submitted Mashup guess if any.
   function redrawCourtsIfVisible() {
     var rec = todayRecord();
-    if (!rec || rec.guesses.length === 0) return;
-    var last = rec.guesses[rec.guesses.length - 1];
+    var last = rec && lastMashupGuess(rec);
+    if (!last) return;
     var lastPlayer = DATA.players[last.id];
     if (!lastPlayer) return;
     renderCourt(els.courtTarget, TARGET.vector);
@@ -2277,33 +2390,29 @@
   }
 
   function lastMashupGuess(rec) {
-    for (var i = rec.guesses.length - 1; i >= 0; i--) {
-      if (rec.guesses[i].slot === 'mashup') return rec.guesses[i];
-    }
-    return null;
+    var mg = rec.mashupGuesses || [];
+    return mg.length ? mg[mg.length - 1] : null;
   }
 
-  // Per-slot feedback line under each of the two donor guess boxes (Daily
-  // only) + badge toggle. The Mashup slot's own feedback lives in the big
-  // result card below (scoreboard/triangulation/courts), so it doesn't need
-  // a duplicate line here — only its lock badges toggle in this function.
-  function renderSlotFeedback(rec, key, feedbackEl, badgeEl) {
+  // Per-stage feedback line under each of the two Daily donor guess boxes:
+  // once that stage resolves (right or wrong), names the true donor (with
+  // a dossier link), the alignment % earned, and the multiplier it's worth.
+  // The Mashup slot's own feedback lives in the big result card below
+  // (scoreboard/triangulation/courts), so it doesn't need a line here.
+  function renderSlotFeedback(rec, key, feedbackEl) {
     if (!feedbackEl) return;
     var slot = rec.slots[key];
-    if (badgeEl) badgeEl.hidden = !slot.locked;
-    if (slot.locked) {
-      feedbackEl.textContent = 'Locked — exact match.';
-      return;
-    }
-    var entries = rec.guesses.filter(function (g) { return g.slot === key; });
-    if (!entries.length) {
+    if (!slot.locked) {
       feedbackEl.textContent = '';
       return;
     }
-    var last = entries[entries.length - 1];
-    var text = Math.round(last.sim * 100) + '% match';
-    if (last.wrongSeasonNote) text += ' — ' + last.wrongSeasonNote;
-    feedbackEl.textContent = text;
+    var truePlayer = key === 'stats' ? TARGET.a : TARGET.b;
+    var pct = Math.round(slot.sim * 100);
+    var link = '<a href="#" class="vh-dossier-link" data-slug="' + playerSlug(truePlayer.name) +
+      '" data-name="' + escapeHtml(truePlayer.name) + '">' + escapeHtml(playerKey(truePlayer)) + '</a>';
+    var verdict = slot.silver ? '' : ' (exact match!)';
+    feedbackEl.innerHTML = 'Real ' + slotLabel(key) + ' donor: ' + link + '. Your guess aligned ' +
+      pct + '% &mdash; ×' + fmtMult(slot.mult) + ' multiplier' + verdict + '.';
   }
 
   function renderMashupBadges(rec) {
@@ -2313,19 +2422,27 @@
   }
 
   // Every render/enable-disable decision for the three guess inputs funnels
-  // through here — called after every guess AND on mode/round switches, so
-  // a slot that just locked (or a round that just ended) disables itself
-  // immediately regardless of the other two slots' state.
+  // through here — called after every guess AND on mode/round switches.
+  // v5 staging: Stats is open from the start (Daily); Style stays disabled
+  // (with a lock note) until Stats resolves; Mashup stays disabled until
+  // Style resolves. Free Play skips straight to an always-open Mashup input.
   function updateSlotInputAvailability() {
     var rec = todayRecord();
     var isPractice = activeChimeraMode === 'practice';
     var roundOver = rec.done;
-    var noTurnsLeft = !isPractice && rec.guesses.length >= MAX_TURNS;
     if (!isPractice) {
-      setSlotInputDisabled(els.chimeraStatsInput, els.chimeraStatsSubmit, roundOver || noTurnsLeft || rec.slots.stats.locked);
-      setSlotInputDisabled(els.chimeraArchetypeInput, els.chimeraArchetypeSubmit, roundOver || noTurnsLeft || rec.slots.archetype.locked);
+      var stage1Resolved = !!rec.s1;
+      var stage2Resolved = !!rec.s2;
+      setSlotInputDisabled(els.chimeraStatsInput, els.chimeraStatsSubmit, roundOver || stage1Resolved);
+      setSlotInputDisabled(els.chimeraArchetypeInput, els.chimeraArchetypeSubmit, roundOver || stage2Resolved || !stage1Resolved);
+      if (els.archetypeLockNote) els.archetypeLockNote.hidden = roundOver || stage1Resolved;
+      var mashupOver = roundOver || rec.slots.mashup.locked || rec.mashupGuesses.length >= MAX_MASHUP_GUESSES;
+      setSlotInputDisabled(els.chimeraInput, els.chimeraSubmit, mashupOver || !stage2Resolved);
+      if (els.mashupLockNote) els.mashupLockNote.hidden = roundOver || stage2Resolved;
+    } else {
+      setSlotInputDisabled(els.chimeraInput, els.chimeraSubmit, roundOver || rec.slots.mashup.locked);
+      if (els.mashupLockNote) els.mashupLockNote.hidden = true;
     }
-    setSlotInputDisabled(els.chimeraInput, els.chimeraSubmit, roundOver || noTurnsLeft || rec.slots.mashup.locked);
   }
 
   function setSlotInputDisabled(inputEl, submitEl, disabled) {
@@ -2348,6 +2465,32 @@
     updateSlotInputAvailability();
   }
 
+  // v5: the header stat tile repurposes "turns left" into whatever's most
+  // useful for the current stage — which stage you're on while Stats/Style
+  // are still ahead, mashup guesses left once both donors have resolved,
+  // and the FINAL points once the round is done.
+  function renderChimeraHeaderStat(rec, isPractice) {
+    if (!els.guessesLeftNum || !els.guessesLeftLabel) return;
+    if (isPractice) {
+      els.guessesLeftLabel.textContent = 'guesses used';
+      els.guessesLeftNum.textContent = String(rec.mashupGuesses.length);
+      return;
+    }
+    if (rec.done) {
+      els.guessesLeftLabel.textContent = 'points';
+      els.guessesLeftNum.textContent = String(rec.points);
+    } else if (!rec.s1) {
+      els.guessesLeftLabel.textContent = 'stage';
+      els.guessesLeftNum.textContent = '1/3';
+    } else if (!rec.s2) {
+      els.guessesLeftLabel.textContent = 'stage';
+      els.guessesLeftNum.textContent = '2/3';
+    } else {
+      els.guessesLeftLabel.textContent = 'mashup left';
+      els.guessesLeftNum.textContent = String(Math.max(0, MAX_MASHUP_GUESSES - rec.mashupGuesses.length));
+    }
+  }
+
   function renderGuesses() {
     var rec = todayRecord();
     var isPractice = activeChimeraMode === 'practice';
@@ -2358,21 +2501,19 @@
     renderClueCards();
     if (els.donorSlotsRow) els.donorSlotsRow.hidden = isPractice;
     if (!isPractice) {
-      renderSlotFeedback(rec, 'stats', els.chimeraStatsFeedback, els.chimeraStatsBadge);
-      renderSlotFeedback(rec, 'archetype', els.chimeraArchetypeFeedback, els.chimeraArchetypeBadge);
+      renderSlotFeedback(rec, 'stats', els.chimeraStatsFeedback);
+      renderSlotFeedback(rec, 'archetype', els.chimeraArchetypeFeedback);
     }
     renderMashupBadges(rec);
     updateSlotInputAvailability();
 
-    els.guessList.innerHTML = rec.guesses.length ? '' : '<li class="vh-guesslist__empty">No guesses yet.</li>';
-    rec.guesses.forEach(function (entry, idx) {
+    var unified = unifiedGuessList(rec);
+    els.guessList.innerHTML = unified.length ? '' : '<li class="vh-guesslist__empty">No guesses yet.</li>';
+    unified.forEach(function (entry, idx) {
       els.guessList.appendChild(renderGuessRow(entry, idx));
     });
-    if (els.historyCount) els.historyCount.textContent = String(rec.guesses.length);
-    if (els.guessesLeftLabel) els.guessesLeftLabel.textContent = isPractice ? 'turns used' : 'turns left';
-    els.guessesLeftNum.textContent = isPractice
-      ? String(rec.guesses.length)
-      : String(Math.max(0, MAX_TURNS - rec.guesses.length));
+    if (els.historyCount) els.historyCount.textContent = String(unified.length);
+    renderChimeraHeaderStat(rec, isPractice);
 
     renderWarmth(rec);
     renderMapLegend();
@@ -2394,7 +2535,7 @@
         if (els.triangulationSrSummary) {
           els.triangulationSrSummary.textContent = 'Triangulation for your latest mashup guess, ' + lastMashup.name + ': ' +
             'vs Stats Donor ' + Math.round(lastMashup.halves.stats * 100) + '%, ' +
-            'vs Archetype Donor ' + Math.round(lastMashup.halves.shooting * 100) + '%, ' +
+            'vs Style Donor ' + Math.round(lastMashup.halves.shooting * 100) + '%, ' +
             'vs the Chimera mashup ' + Math.round(lastMashup.sim * 100) + '%.';
         }
       }
@@ -2435,8 +2576,21 @@
     return '🟥';
   }
 
-  // M5 share v2: warmth trail — block glyphs from each guess's match %,
-  // same thresholds as the on-screen warmth bars (renderWarmth).
+  // v5: Stats/Style share emoji is keyed off the multiplier TIER earned —
+  // those stages always resolve regardless of accuracy, so "locked" (which
+  // shareEmojiRow uses for the Mashup's solved/not) doesn't mean "correct"
+  // here the way it does for a Mashup guess.
+  function stageShareEmoji(stageResult) {
+    if (!stageResult) return '⬜';
+    if (stageResult.exact) return '⭐';
+    if (stageResult.sim >= 0.90) return '🟩';
+    if (stageResult.sim >= 0.75) return '🟨';
+    if (stageResult.sim >= 0.50) return '🟧';
+    return '🟥';
+  }
+
+  // M5 share v2: warmth trail — block glyphs from each Mashup guess's match
+  // %, same thresholds as the on-screen warmth bars (renderWarmth).
   function warmthBlockFor(sim) {
     if (sim >= 0.85) return '█';
     if (sim >= 0.60) return '▅';
@@ -2445,38 +2599,38 @@
   }
 
   function warmthTrailLine(rec) {
-    return rec.guesses.map(function (g) { return warmthBlockFor(g.sim); }).join('');
+    return rec.mashupGuesses.map(function (g) { return warmthBlockFor(g.sim); }).join('');
   }
 
   // Only reachable once the round is over (the share button lives on the
   // reveal card, which only renders when rec.done) — safe to name the true
   // nearest match here (already public knowledge post-game); the donors
-  // were never secret in v3, so naming them isn't a spoiler either.
+  // were never secret, so naming them isn't a spoiler either.
   function buildShareText(rec) {
     var np = nearestPlayer();
     var nearestLabel = np ? playerKey(np) : '?';
     if (activeChimeraMode === 'practice') {
       // Free Play (Build-a-Chimera) is unchanged: a single mashup hunt, no
       // fixed denominator, donors already public knowledge (you built it).
-      var rows = rec.guesses.map(shareEmojiRow).join('');
+      var rows = rec.mashupGuesses.map(shareEmojiRow).join('');
       var trail = warmthTrailLine(rec);
       var equation = TARGET.a.name + ' + ' + TARGET.b.name + ' = ' + nearestLabel + '?';
-      var scorePart = rec.won ? 'solved in ' + rec.guesses.length : 'not solved (' + rec.guesses.length + ' guesses)';
+      var scorePart = rec.won ? 'solved in ' + rec.mashupGuesses.length : 'not solved (' + rec.mashupGuesses.length + ' guesses)';
       return 'Vector Hoops — Practice — ' + equation + ' ' + scorePart + '\n' + rows + '\n' + trail;
     }
     var n = puzzleNumber(playDate());
-    var headline = rec.won ? ('cracked all three in ' + rec.guesses.length) : ('X/' + MAX_TURNS);
-    var slotRows =
-      '🅰 Stats     ' + slotEmojiRow(rec, 'stats') + '\n' +
-      '🅱 Archetype ' + slotEmojiRow(rec, 'archetype') + '\n' +
-      '🟰 Mashup    ' + slotEmojiRow(rec, 'mashup');
-    return 'Vector Hoops #' + n + ' — ' + headline + '\n' + slotRows;
-  }
-
-  function slotEmojiRow(rec, slotKey) {
-    var entries = rec.guesses.filter(function (g) { return g.slot === slotKey; });
-    if (!entries.length) return '⬜';
-    return entries.map(shareEmojiRow).join('');
+    var m1 = rec.s1 ? rec.s1.mult : MULT_BASE;
+    var m2 = rec.s2 ? rec.s2.mult : MULT_BASE;
+    var solvedIdx = mashupSolvedGuessIndex(rec);
+    var kLabel = solvedIdx ? String(solvedIdx) : 'X';
+    var headline = 'Vector Hoops #' + n + ' — ' + rec.points + ' pts (x' + fmtMult(m1) +
+      ' x' + fmtMult(m2) + ', mashup in ' + kLabel + ')';
+    var mashupRow = rec.mashupGuesses.length ? rec.mashupGuesses.map(shareEmojiRow).join('') : '⬜';
+    var rows =
+      '🅰 Stats   ' + stageShareEmoji(rec.s1) + '\n' +
+      '🅱 Style   ' + stageShareEmoji(rec.s2) + '\n' +
+      '🟰 Mashup  ' + mashupRow;
+    return headline + '\n' + rows;
   }
 
   // Lazy-fetched, cached, fail-soft: the archetype-eras data only loads once
@@ -2527,6 +2681,27 @@
     });
   }
 
+  // v5 FINAL points breakdown, stated verbatim so the multiplier math is
+  // never a mystery: base mashup points (by which guess it solved on) times
+  // both donor multipliers, or — if the mashup never solved — the
+  // consolation floor off just the two donor multipliers (still 0 if
+  // neither donor guess beat the base x1.0 tier).
+  function pointsBreakdownLine(rec) {
+    var m1 = rec.s1 ? rec.s1.mult : MULT_BASE;
+    var m2 = rec.s2 ? rec.s2.mult : MULT_BASE;
+    var idx = mashupSolvedGuessIndex(rec);
+    if (idx) {
+      var base = MASHUP_BASE_POINTS[idx - 1];
+      return 'FINAL: ' + rec.points + ' pts = ' + base + ' base &times; ' + fmtMult(m1) +
+        ' Stats &times; ' + fmtMult(m2) + ' Style multiplier.';
+    }
+    if (rec.points > 0) {
+      return 'FINAL: ' + rec.points + ' pts — mashup unsolved; consolation credit for the donor ' +
+        'multipliers (&times;' + fmtMult(m1) + ' &times; ' + fmtMult(m2) + ').';
+    }
+    return 'FINAL: 0 pts — mashup unsolved and no donor multiplier above the base tier.';
+  }
+
   function showReveal(rec) {
     els.revealCard.hidden = false;
     var isPractice = activeChimeraMode === 'practice';
@@ -2542,8 +2717,9 @@
     }).join('');
 
     var recapHtml = isPractice ? '' :
-      '<div class="vh-section-label">Your three slots</div>' +
-      '<p class="vh-guess__line">' + slotRecapLine(rec) + '</p>';
+      '<div class="vh-section-label">Your three stages</div>' +
+      '<p class="vh-guess__line">' + slotRecapLine(rec) + '</p>' +
+      '<p class="vh-guess__line"><b>' + pointsBreakdownLine(rec) + '</b></p>';
 
     els.revealBody.innerHTML =
       'Fused from <b>' + playerKey(TARGET.a) + '</b> (' + traitList([0, 1, 2, 3, 4, 5, 6]).join(', ') + ') and <b>' +
@@ -2561,19 +2737,26 @@
     appendArchetypePrevalenceLine(TARGET.clusterIdx);
   }
 
-  // LOSS reveal doctrine: name all three true answers regardless of whether
-  // a slot ever locked, plus that slot's best attempt % (0 attempts reads
-  // honestly as "no attempts", never a fabricated 0%).
+  // Stats/Style always resolve by the time the round is done (they're
+  // one-shot gates ahead of the Mashup), so their recap is always a real
+  // alignment % + multiplier, never "no attempts." The Mashup keeps the old
+  // bestSim/attempts bookkeeping for its own honest "best guess reached X%"
+  // when it's the one that went unsolved.
   function slotRecapLine(rec) {
     return SLOT_KEYS.map(function (key) {
       var slot = rec.slots[key];
-      if (slot.locked) {
-        return '<b>' + slotLabel(key) + '</b>: ' + escapeHtml(slot.name) + (slot.silver ? ' (92%+ match)' : '');
+      if (key === 'mashup') {
+        if (slot.locked) {
+          return '<b>Mashup</b>: ' + escapeHtml(slot.name) + (slot.silver ? ' (92%+ match)' : ' (perfect match)');
+        }
+        var truePlayer = slotTruePlayer('mashup');
+        var trueLabel = truePlayer ? playerKey(truePlayer) : '?';
+        var attemptText = slot.attempts ? ('best guess reached ' + Math.round(slot.bestSim * 100) + '%') : 'no attempts';
+        return '<b>Mashup</b>: ' + escapeHtml(trueLabel) + ' — ' + attemptText;
       }
-      var truePlayer = slotTruePlayer(key);
-      var trueLabel = truePlayer ? playerKey(truePlayer) : '?';
-      var attemptText = slot.attempts ? ('best guess reached ' + Math.round(slot.bestSim * 100) + '%') : 'no attempts';
-      return '<b>' + slotLabel(key) + '</b>: ' + escapeHtml(trueLabel) + ' — ' + attemptText;
+      if (!slot.locked) return '<b>' + slotLabel(key) + '</b>: not attempted';
+      return '<b>' + slotLabel(key) + '</b>: ' + escapeHtml(slot.name) + ' — ' +
+        Math.round(slot.sim * 100) + '% (' + (slot.silver ? '×' : 'exact, ×') + fmtMult(slot.mult) + ')';
     }).join(' &middot; ');
   }
 
@@ -2592,17 +2775,66 @@
   // locks; a page reload simply loses the in-flight animation, which is fine.
   var lastLockEvent = null;
 
-  function submitSlotGuess(slotKey) {
-    var p = pendingSelections[slotKey];
+  // Stats/Style: ONE guess, Daily only — always resolves the instant it's
+  // submitted, right or wrong, earning a multiplier off the alignment %
+  // (halfSims, the exact math the clue card's own evidence is built from).
+  // No duplicate-guess guard needed (there's only ever one guess per stage).
+  function submitStageGuess(key) {
+    var p = pendingSelections[key];
+    if (!p) return;
+    if (activeChimeraMode === 'practice') return; // Free Play skips Stats/Style entirely
+    var rec = todayRecord();
+    if (rec.done) return;
+    if (key === 'stats' && rec.s1) return;
+    if (key === 'archetype' && (!rec.s1 || rec.s2)) return;
+
+    var truePlayer = key === 'stats' ? TARGET.a : TARGET.b;
+    var halves = halfSims(p.v);
+    var sim = key === 'stats' ? halves.stats : halves.shooting;
+    var exact = (p.id === truePlayer.id);
+    var mult = stageMultiplier(sim, exact);
+    var result = { guess: { id: p.id, name: playerKey(p) }, sim: sim, mult: mult, exact: exact };
+
+    if (key === 'stats') { rec.s1 = result; rec.stage = 2; }
+    else { rec.s2 = result; rec.stage = 3; }
+
+    var slotState = rec.slots[key];
+    slotState.locked = true;
+    slotState.silver = !exact;
+    slotState.name = playerKey(truePlayer);
+    slotState.id = truePlayer.id;
+    slotState.sim = sim;
+    slotState.mult = mult;
+    slotState.attempts = 1;
+    slotState.bestSim = sim;
+    lastLockEvent = { slot: key, at: Date.now() };
+
+    track('vh-guess', { turn: 1, slot: key, mode: 'daily', stage: key === 'stats' ? 1 : 2 });
+
+    pendingSelections[key] = null;
+    var inputEl = key === 'stats' ? els.chimeraStatsInput : els.chimeraArchetypeInput;
+    var submitEl = key === 'stats' ? els.chimeraStatsSubmit : els.chimeraArchetypeSubmit;
+    if (inputEl) inputEl.value = '';
+    if (submitEl) submitEl.disabled = true;
+
+    saveState();
+    renderGuesses();
+    renderMapOnce();
+  }
+
+  // Mashup: up to MAX_MASHUP_GUESSES tries, same lock semantics as v3/v4
+  // (exact true-nearest match = gold; >=92% full-blend cosine = silver).
+  function submitMashupGuess() {
+    var p = pendingSelections.mashup;
     if (!p) return;
     var rec = todayRecord();
     var isPractice = activeChimeraMode === 'practice';
     if (rec.done) return;
-    if (isPractice && slotKey !== 'mashup') return; // Free Play only ever hunts the mashup
-    if (rec.slots[slotKey].locked) return;
-    if (!isPractice && rec.guesses.length >= MAX_TURNS) return;
+    if (!isPractice && !rec.s2) return; // Style must resolve first
+    if (rec.slots.mashup.locked) return;
+    if (!isPractice && rec.mashupGuesses.length >= MAX_MASHUP_GUESSES) return;
 
-    var isDuplicate = rec.guesses.some(function (g) { return g.id === p.id && g.slot === slotKey; });
+    var isDuplicate = rec.mashupGuesses.some(function (g) { return g.id === p.id; });
     if (isDuplicate) {
       showDuplicateWarning(p);
       return;
@@ -2612,28 +2844,16 @@
     var halves = halfSims(p.v);
     var blendSim = cosineSim(TARGET.vector, p.v);
     var entry = {
-      id: p.id, name: playerKey(p), slot: slotKey,
+      id: p.id, name: playerKey(p), slot: 'mashup',
       halves: halves, blendSim: blendSim,
-      locked: false, silver: false, wrongSeasonNote: null, sim: 0
+      locked: false, silver: false, wrongSeasonNote: null, sim: blendSim
     };
+    var perfect = isPerfectMatchGuess(p);
+    entry.locked = perfect || blendSim >= WIN_SIMILARITY;
+    entry.silver = entry.locked && !perfect;
+    entry.wrongSeasonNote = entry.locked ? null : nearestWrongSeasonNote(p);
 
-    if (slotKey === 'stats') {
-      entry.sim = halves.stats;
-      entry.locked = (p.id === TARGET.a.id);
-      entry.wrongSeasonNote = entry.locked ? null : donorWrongSeasonNote(p, TARGET.a);
-    } else if (slotKey === 'archetype') {
-      entry.sim = halves.shooting;
-      entry.locked = (p.id === TARGET.b.id);
-      entry.wrongSeasonNote = entry.locked ? null : donorWrongSeasonNote(p, TARGET.b);
-    } else {
-      entry.sim = blendSim;
-      var perfect = isPerfectMatchGuess(p);
-      entry.locked = perfect || blendSim >= WIN_SIMILARITY;
-      entry.silver = entry.locked && !perfect;
-      entry.wrongSeasonNote = entry.locked ? null : nearestWrongSeasonNote(p);
-    }
-
-    var slotState = rec.slots[slotKey];
+    var slotState = rec.slots.mashup;
     slotState.attempts += 1;
     if (entry.sim > slotState.bestSim) slotState.bestSim = entry.sim;
     if (entry.locked) {
@@ -2641,24 +2861,22 @@
       slotState.silver = !!entry.silver;
       slotState.name = entry.name;
       slotState.id = entry.id;
-      lastLockEvent = { slot: slotKey, at: Date.now() };
+      lastLockEvent = { slot: 'mashup', at: Date.now() };
     }
 
-    rec.guesses.push(entry);
-    track('vh-guess', { turn: rec.guesses.length, slot: slotKey, mode: isPractice ? 'free' : 'daily' });
+    rec.mashupGuesses.push(entry);
+    track('vh-guess', { turn: rec.mashupGuesses.length, slot: 'mashup', mode: isPractice ? 'free' : 'daily', stage: 3 });
 
     var won = isRoundWon(rec);
-    if (won || (!isPractice && rec.guesses.length >= MAX_TURNS)) {
+    if (won || (!isPractice && rec.mashupGuesses.length >= MAX_MASHUP_GUESSES)) {
       registerCompletion(won);
     } else if (!isPractice) {
       saveState();
     }
 
-    pendingSelections[slotKey] = null;
-    var inputEl = slotKey === 'stats' ? els.chimeraStatsInput : (slotKey === 'archetype' ? els.chimeraArchetypeInput : els.chimeraInput);
-    var submitEl = slotKey === 'stats' ? els.chimeraStatsSubmit : (slotKey === 'archetype' ? els.chimeraArchetypeSubmit : els.chimeraSubmit);
-    if (inputEl) inputEl.value = '';
-    if (submitEl) submitEl.disabled = true;
+    pendingSelections.mashup = null;
+    els.chimeraInput.value = '';
+    els.chimeraSubmit.disabled = true;
 
     renderGuesses();
     renderMapOnce();
@@ -2924,8 +3142,9 @@
   }
 
   // Progressive triangulation's signature beat: a brief expanding/fading
-  // ring on the anchor that JUST locked (module-level lastLockEvent, set in
-  // submitSlotGuess). tNorm is 0 (just locked) -> 1 (highlight window over).
+  // ring on the anchor that JUST resolved (module-level lastLockEvent, set
+  // in submitStageGuess/submitMashupGuess). tNorm is 0 (just locked) -> 1
+  // (highlight window over).
   function drawLockHighlight(ctx, size, xyz, tNorm) {
     var pr = project3D(xyz.x, xyz.y, xyz.z, size, mapCam);
     var r = Math.max(7, 10 * pr.scale) + tNorm * 18;
@@ -2982,7 +3201,7 @@
     // the thing every slot is triangulating toward). Free Play already
     // knows both donors (the player picked them), so they show immediately
     // there, same as before v4.
-    //   Stats Donor / Archetype Donor: their OWN exact PCA(3) coordinates
+    //   Stats Donor / Style Donor: their OWN exact PCA(3) coordinates
     //     already carried on the player record (p.x/p.y/p.z in vectors.json)
     //     — no re-derivation, straight from source data.
     //   The Chimera (mashup): the 14-dim TARGET.vector run through the
@@ -2997,7 +3216,7 @@
 
     drawTargetMarker(ctx, size, chimeraXYZ, 'CHIMERA');
     if (showStats) drawSquareMarker(ctx, size, statsDonorXYZ, { filled: true, label: 'STATS · ' + shortName(TARGET.a.name) });
-    if (showArch) drawSquareMarker(ctx, size, archDonorXYZ, { filled: false, label: 'ARCHETYPE · ' + shortName(TARGET.b.name) });
+    if (showArch) drawSquareMarker(ctx, size, archDonorXYZ, { filled: false, label: 'STYLE · ' + shortName(TARGET.b.name) });
 
     // Brief highlight pulse on whichever anchor just locked (~1.6s window).
     if (!isPractice && lastLockEvent) {
@@ -3012,8 +3231,12 @@
     // numbered guess pins, always on top; the LATEST guess also gets
     // triangulation lines to whichever anchors are currently visible (older
     // pins stay, but only the newest carries lines — avoids spaghetti).
-    var lastGuessIdx = rec.guesses.length - 1;
-    rec.guesses.forEach(function (entry, gi) {
+    // Unified list: Stats/Style each contribute one synthetic pin (in the
+    // order they resolved), then every Mashup guess — correct chronological
+    // numbering regardless of which stage the round is currently in.
+    var allGuesses = unifiedGuessList(rec);
+    var lastGuessIdx = allGuesses.length - 1;
+    allGuesses.forEach(function (entry, gi) {
       var pl = players[entry.id];
       if (!pl) return;
       var pr = project3D(pl.x, pl.y, pl.z, size, mapCam);
@@ -3053,7 +3276,7 @@
     if (!els.mapThumb || !els.mapThumbBtn || !DATA) return;
     if (isDesktopWide()) { els.mapThumbBtn.hidden = true; return; }
     var rec = todayRecord();
-    if (!rec || rec.guesses.length === 0) { els.mapThumbBtn.hidden = true; return; }
+    if (!rec || unifiedGuessList(rec).length === 0) { els.mapThumbBtn.hidden = true; return; }
     els.mapThumbBtn.hidden = false;
     var r = resizeSquareCanvas(els.mapThumb);
     drawMapScene(r.ctx, r.size);
@@ -3090,7 +3313,7 @@
     var archLocked = isPractice || rec.slots.archetype.locked;
     var anchorHtml =
       anchorLegendRow('vh-tri-icon--stats', 'Stats donor', statsLocked, TARGET.a.name) +
-      anchorLegendRow('vh-tri-icon--shooting', 'Archetype donor', archLocked, TARGET.b.name) +
+      anchorLegendRow('vh-tri-icon--shooting', 'Style donor', archLocked, TARGET.b.name) +
       '<span><span class="vh-tri-icon vh-tri-icon--blend" aria-hidden="true"></span>The Chimera (mashup)</span>';
     els.mapLegend.innerHTML = anchorHtml + entries.map(function (e) {
       return '<span><span class="vh-legend-dot" style="background:' + e.color + '"></span>' + e.name + '</span>';
@@ -3279,15 +3502,14 @@
         spec.donorA = TARGET.a.id;
         spec.donorB = TARGET.b.id;
         spec.scoreLabel = rec.won
-          ? ('solved in ' + rec.guesses.length)
-          : (rec.guesses.length + ' guesses');
-        if (rec.won) spec.score = String(rec.guesses.length);
+          ? ('solved in ' + rec.mashupGuesses.length)
+          : (rec.mashupGuesses.length + ' guesses');
+        if (rec.won) spec.score = String(rec.mashupGuesses.length);
       } else {
         spec.date = chimeraActiveDate();
-        spec.scoreLabel = rec.won
-          ? ('cracked all three in ' + rec.guesses.length)
-          : ('X/' + MAX_TURNS);
-        if (rec.won) spec.score = String(rec.guesses.length);
+        var solvedIdx = mashupSolvedGuessIndex(rec);
+        spec.scoreLabel = rec.points + ' pts' + (solvedIdx ? (' (mashup in ' + solvedIdx + ')') : ' (mashup unsolved)');
+        spec.score = String(rec.points);
       }
       shareChallengeResult(
         text,
@@ -6167,6 +6389,9 @@
     renderStatsTile(els.statsDailyGrid, daily.winPct + '%', 'Win %');
     renderStatsTile(els.statsDailyGrid, daily.streak, 'Streak');
     renderStatsTile(els.statsDailyGrid, daily.maxStreak, 'Max streak');
+    renderStatsTile(els.statsDailyGrid, daily.totalPts, 'Total pts');
+    renderStatsTile(els.statsDailyGrid, daily.bestDay, 'Best day');
+    renderStatsTile(els.statsDailyGrid, daily.avgMultiplier ? ('×' + daily.avgMultiplier.toFixed(2)) : '—', 'Avg multiplier');
     renderHistogram(daily.dist);
 
     var dl = computeDeadlineDailyStats();
@@ -6452,9 +6677,9 @@
     els.mashupBadgeGold = document.getElementById('mashup-slot-badge');
     els.mashupBadgeSilver = document.getElementById('mashup-slot-badge-silver');
 
-    // v4 THREE-PART ANSWERS: Daily-only Stats + Archetype donor slots (the
-    // Mashup slot reuses els.chimeraInput/chimeraSubmit above — shared with
-    // Free Play, which only ever hunts the mashup).
+    // v5 STAGED FLOW: Daily-only Stats + Style donor slots (the Mashup slot
+    // reuses els.chimeraInput/chimeraSubmit above — shared with Free Play,
+    // which only ever hunts the mashup).
     els.donorSlotsRow = document.getElementById('donor-slots-row');
     els.chimeraStatsInput = document.getElementById('chimera-stats-input');
     els.chimeraStatsSuggestions = document.getElementById('chimera-stats-suggestions');
@@ -6462,12 +6687,16 @@
     els.chimeraStatsFocusHint = document.getElementById('chimera-stats-focus-hint');
     els.chimeraStatsBadge = document.getElementById('stats-slot-badge');
     els.chimeraStatsFeedback = document.getElementById('stats-slot-feedback');
+    els.statsSlotMask = document.getElementById('stats-slot-mask');
     els.chimeraArchetypeInput = document.getElementById('chimera-archetype-input');
     els.chimeraArchetypeSuggestions = document.getElementById('chimera-archetype-suggestions');
     els.chimeraArchetypeSubmit = document.getElementById('chimera-archetype-submit');
     els.chimeraArchetypeFocusHint = document.getElementById('chimera-archetype-focus-hint');
     els.chimeraArchetypeBadge = document.getElementById('archetype-slot-badge');
     els.chimeraArchetypeFeedback = document.getElementById('archetype-slot-feedback');
+    els.archetypeSlotMask = document.getElementById('archetype-slot-mask');
+    els.archetypeLockNote = document.getElementById('archetype-lock-note');
+    els.mashupLockNote = document.getElementById('mashup-lock-note');
     els.equationTileA = document.getElementById('equation-tile-a');
     els.equationTileB = document.getElementById('equation-tile-b');
     els.equationTileMashup = document.getElementById('equation-tile-mashup');
@@ -6875,7 +7104,7 @@
   function ensurePracticeTarget() {
     if (!PRACTICE_TARGET) {
       PRACTICE_TARGET = buildPracticeTarget();
-      PRACTICE_REC = freshDayRecord();
+      PRACTICE_REC = freshDayRecord(3);
     }
   }
 
@@ -6941,7 +7170,7 @@
       return;
     }
     PRACTICE_TARGET = buildTargetFromPlayers(donorPick.stats, donorPick.shooting);
-    PRACTICE_REC = freshDayRecord();
+    PRACTICE_REC = freshDayRecord(3);
     PRACTICE_STAGE = 'playing';
     equationForceExpand = false;
     resetClueForceExpand();
@@ -6986,7 +7215,8 @@
 
   function renderEquationCollapse() {
     var rec = todayRecord();
-    var collapsed = rec.guesses.length > 0 && !equationForceExpand;
+    var anyGuessMade = !!rec.s1 || !!rec.s2 || rec.mashupGuesses.length > 0;
+    var collapsed = anyGuessMade && !equationForceExpand;
     els.equationRow.hidden = collapsed;
     els.equationChip.hidden = !collapsed;
     if (collapsed && els.equationChipText) {
@@ -7036,7 +7266,10 @@
       submitEl.disabled = true;
       hideDuplicateWarning();
     });
-    submitEl.addEventListener('click', function () { submitSlotGuess(slotKey); });
+    submitEl.addEventListener('click', function () {
+      if (slotKey === 'mashup') submitMashupGuess();
+      else submitStageGuess(slotKey);
+    });
     inputEl.disabled = false;
   }
 
@@ -7121,10 +7354,12 @@
         STATE = loadState();
         if (shouldShowDailyResetNote() && els.resetNote) {
           els.resetNote.hidden = false;
-          els.resetNote.textContent = 'Vector Hoops leveled up: the Chimera is THREE-PART ANSWERS now — ' +
-            'Stats Player + Archetype Player = Mashup Player, all three guessable in any order, ' +
-            MAX_TURNS + ' shared turns. Today’s puzzle restarted once under the new rules — ' +
-            'your streak and history carried over.';
+          els.resetNote.textContent = 'Vector Hoops leveled up: Chimera is now a STAGED reveal with ' +
+            'scoring multipliers — one guess each for the Stats Player and the Style Player (always ' +
+            'resolves, right or wrong, and earns a multiplier), then up to ' + MAX_MASHUP_GUESSES +
+            ' guesses for the Mashup. FINAL score = mashup base points × both multipliers, posted to ' +
+            'the leaderboard whether you solve it or not. Today’s puzzle restarted once under the new ' +
+            'rules — your streak and history carried over.';
           markDailyResetNoteSeen();
         }
         PRACTICE_STATS = loadPracticeStats();
@@ -7259,7 +7494,7 @@
             els.tabTwin.setAttribute('aria-disabled', 'true');
           });
 
-        if (todayRecord().guesses.length === 0 && !todayRecord().done) {
+        if (!todayRecord().s1 && !todayRecord().done) {
           track('vh-start', { mode: 'daily' });
         }
         // Auto-open the how-to-play modal only on a player's true first-ever
