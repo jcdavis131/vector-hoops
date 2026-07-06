@@ -41,6 +41,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Play style:** PF · Offensive Glass (Low On-Court Impact). Plays as a rim-pressure big: lives at the line, never shoots threes — an archetype claiming 12.9% of the league in his signature season, 13.3% today.
 
+**Team standing (signature season):** key contributor — rule-based from minutes/usage share and team scoring rank (method in roles.json).
+
 **Signature-season stat line:** 18.3 pts · 14.5 reb · 2.0 ast · 1.2 stl per 100 (2023-24).
 
 **Strengths:**

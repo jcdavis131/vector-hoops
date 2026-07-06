@@ -40,6 +40,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep — an archetype claiming 20.6% of the league in his signature season, 20.7% today.
 
+**Team standing (signature season):** role player — rule-based from minutes/usage share and team scoring rank (method in roles.json).
+
 **Signature-season stat line:** 12.5 pts · 9.8 reb · 6.2 ast · 1.7 stl per 100 (2020-21).
 
 **Strengths:**

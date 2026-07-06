@@ -346,6 +346,17 @@ def main() -> None:
             print("trajectories.json failed to parse -- skipping career trajectory gloss")
             traj_index = {}
 
+    # ---- team-standing tiers (assets/roles.json, 2015-26 window; rule-
+    #      based, stated in that artifact) -- fails soft ----
+    roles_index: dict[str, str] = {}
+    roles_path = ROOT / "assets" / "roles.json"
+    if roles_path.exists():
+        try:
+            roles_index = json.loads(roles_path.read_text(encoding="utf-8")).get("tiers", {})
+        except Exception:
+            print("roles.json failed to parse -- skipping team-standing lines")
+            roles_index = {}
+
     # ---- group player-seasons by name (the dataset carries no person id;
     #      same-name players are flagged, see `ambiguous`) ----
     by_name: dict[str, list[dict]] = defaultdict(list)
@@ -502,6 +513,12 @@ def main() -> None:
                                 f"signature season, {y_pct:.1f}% today")
         body.append(f"**Play style:** {pos_label} · {clusters[s['c']]}. "
                     f"{style_sentence.rstrip('.')}{prevalence_note}.")
+        standing = roles_index.get(f"{name}|{s['season']}")
+        if standing:
+            body.append("")
+            body.append(f"**Team standing (signature season):** {standing} "
+                        f"— rule-based from minutes/usage share and team "
+                        f"scoring rank (method in roles.json).")
         body.append("")
         raw_rows = base_cache.get(s["season"])
         raw = raw_rows.get(name) if raw_rows else None

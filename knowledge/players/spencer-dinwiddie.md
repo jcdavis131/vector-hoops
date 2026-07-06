@@ -46,6 +46,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Play style:** PG · Scoring Volume + Shot Volume. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble — an archetype claiming 10.5% of the league in his signature season, 11.3% today.
 
+**Team standing (signature season):** key contributor — rule-based from minutes/usage share and team scoring rank (method in roles.json).
+
 **Signature-season stat line:** 31.2 pts · 5.3 reb · 10.2 ast · 0.9 stl per 100 (2019-20).
 
 **Strengths:**

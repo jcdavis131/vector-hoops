@@ -39,6 +39,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Play style:** PF · Three-Point Accuracy (Low Turnovers). Plays as a stretch big: lives beyond the arc, unusual range for the position — an archetype claiming 21.0% of the league in his signature season, 20.7% today.
 
+**Team standing (signature season):** specialist — rule-based from minutes/usage share and team scoring rank (method in roles.json).
+
 **Signature-season stat line:** 14.0 pts · 7.0 reb · 1.9 ast · 2.6 stl per 100 (2021-22).
 
 **Strengths:**

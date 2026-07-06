@@ -39,6 +39,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Play style:** SF · Offensive Glass (Low On-Court Impact). Plays as a stretch wing: lives beyond the arc, opens driving lanes for others — an archetype claiming 12.9% of the league in his signature season, 13.3% today.
 
+**Team standing (signature season):** specialist — rule-based from minutes/usage share and team scoring rank (method in roles.json).
+
 **Signature-season stat line:** 4.8 pts · 1.8 reb · 2.6 ast · 0.9 stl per 100 (2023-24).
 
 **Strengths:**

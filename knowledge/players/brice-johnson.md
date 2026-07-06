@@ -38,6 +38,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Play style:** PF · Offensive Glass + Defensive Glass. Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look — an archetype claiming 7.2% of the league in his signature season, 8.1% today.
 
+**Team standing (signature season):** specialist — rule-based from minutes/usage share and team scoring rank (method in roles.json).
+
 **Signature-season stat line:** 19.9 pts · 14.4 reb · 0.9 ast · 4.2 stl per 100 (2017-18).
 
 **Strengths:**

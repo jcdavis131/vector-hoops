@@ -38,6 +38,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Play style:** PF · Three-Point Accuracy (Low Turnovers). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look — an archetype claiming 20.7% of the league in his signature season, 20.7% today.
 
+**Team standing (signature season):** fringe — rule-based from minutes/usage share and team scoring rank (method in roles.json).
+
 **Signature-season stat line:** 19.0 pts · 6.9 reb · 4.8 ast · 1.2 stl per 100 (2025-26).
 
 **Strengths:**

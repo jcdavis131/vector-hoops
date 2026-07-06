@@ -41,6 +41,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Play style:** SG · Playmaking + Steals. Plays as a balanced-diet guard: even mix of rim, midrange, and three-point shots — an archetype claiming 11.8% of the league in his signature season, 11.6% today.
 
+**Team standing (signature season):** key contributor — rule-based from minutes/usage share and team scoring rank (method in roles.json).
+
 **Signature-season stat line:** 19.3 pts · 8.0 reb · 6.0 ast · 4.1 stl per 100 (2024-25).
 
 **Strengths:**

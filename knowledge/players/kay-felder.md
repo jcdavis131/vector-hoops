@@ -38,6 +38,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Play style:** PG · Playmaking + Steals. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble — an archetype claiming 14.8% of the league in his signature season, 11.6% today.
 
+**Team standing (signature season):** fringe — rule-based from minutes/usage share and team scoring rank (method in roles.json).
+
 **Signature-season stat line:** 20.7 pts · 5.1 reb · 7.2 ast · 2.2 stl per 100 (2016-17).
 
 **Strengths:**

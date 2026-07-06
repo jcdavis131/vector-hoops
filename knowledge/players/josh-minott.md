@@ -40,6 +40,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Play style:** SF · Three-Point Accuracy (Low Turnovers). Plays as a slashing wing: lives at the free-throw line, attacks closeouts — an archetype claiming 22.8% of the league in his signature season, 20.7% today.
 
+**Team standing (signature season):** specialist — rule-based from minutes/usage share and team scoring rank (method in roles.json).
+
 **Signature-season stat line:** 22.9 pts · 7.8 reb · 3.7 ast · 2.3 stl per 100 (2023-24).
 
 **Strengths:**

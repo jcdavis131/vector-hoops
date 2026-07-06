@@ -46,6 +46,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Play style:** PF · Playmaking + Steals. Plays as a stretch big: lives beyond the arc, unusual range for the position — an archetype claiming 13.5% of the league in his signature season, 11.6% today.
 
+**Team standing (signature season):** specialist — rule-based from minutes/usage share and team scoring rank (method in roles.json).
+
 **Signature-season stat line:** 17.7 pts · 4.9 reb · 3.0 ast · 2.6 stl per 100 (2017-18).
 
 **Strengths:**

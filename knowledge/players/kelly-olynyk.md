@@ -50,6 +50,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Play style:** C · Playmaking + Steals. Plays as a rim-pressure big: lives at the line, never shoots threes — an archetype claiming 10.8% of the league in his signature season, 11.6% today.
 
+**Team standing (signature season):** key contributor — rule-based from minutes/usage share and team scoring rank (method in roles.json).
+
 **Signature-season stat line:** 20.4 pts · 11.0 reb · 9.3 ast · 2.0 stl per 100 (2023-24).
 
 **Strengths:**

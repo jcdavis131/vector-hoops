@@ -41,6 +41,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Play style:** C · Offensive Glass (Low On-Court Impact). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look — an archetype claiming 12.9% of the league in his signature season, 13.3% today.
 
+**Team standing (signature season):** key contributor — rule-based from minutes/usage share and team scoring rank (method in roles.json).
+
 **Signature-season stat line:** 26.3 pts · 14.1 reb · 2.8 ast · 1.4 blk per 100 (2023-24).
 
 **Strengths:**

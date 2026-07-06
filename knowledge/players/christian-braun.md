@@ -41,6 +41,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Play style:** SG · Three-Point Accuracy (Low Turnovers). Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble — an archetype claiming 20.9% of the league in his signature season, 20.7% today.
 
+**Team standing (signature season):** key contributor — rule-based from minutes/usage share and team scoring rank (method in roles.json).
+
 **Signature-season stat line:** 21.6 pts · 7.2 reb · 3.6 ast · 1.5 stl per 100 (2024-25).
 
 **Strengths:**

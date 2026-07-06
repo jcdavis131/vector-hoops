@@ -38,6 +38,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Play style:** SF · Three-Point Volume + Three-Point Accuracy. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others — an archetype claiming 17.6% of the league in his signature season, 17.6% today.
 
+**Team standing (signature season):** fringe — rule-based from minutes/usage share and team scoring rank (method in roles.json).
+
 **Signature-season stat line:** 20.4 pts · 6.1 reb · 3.3 ast · 1.4 stl per 100 (2016-17).
 
 **Strengths:**

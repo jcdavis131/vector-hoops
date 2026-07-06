@@ -50,6 +50,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Play style:** SF · Scoring Volume + Shot Volume. Plays as a slashing wing: lives at the free-throw line, attacks closeouts — an archetype claiming 9.9% of the league in his signature season, 11.3% today.
 
+**Team standing (signature season):** leader — rule-based from minutes/usage share and team scoring rank (method in roles.json).
+
 **Signature-season stat line:** 33.0 pts · 8.1 reb · 5.2 ast · 1.5 stl per 100 (2016-17).
 
 **Strengths:**

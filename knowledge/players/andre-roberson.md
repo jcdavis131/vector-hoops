@@ -42,6 +42,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Play style:** SG · Offensive Glass + Defensive Glass. Plays as a downhill guard: lives at the free-throw line, pressures the rim off the dribble — an archetype claiming 7.2% of the league in his signature season, 8.1% today.
 
+**Team standing (signature season):** specialist — rule-based from minutes/usage share and team scoring rank (method in roles.json).
+
 **Signature-season stat line:** 9.3 pts · 8.9 reb · 2.2 ast · 2.2 stl per 100 (2017-18).
 
 **Strengths:**

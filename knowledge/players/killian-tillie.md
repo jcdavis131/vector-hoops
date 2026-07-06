@@ -39,6 +39,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Play style:** C · Three-Point Accuracy (Low Turnovers). Plays as a stretch big: lives beyond the arc, unusual range for the position — an archetype claiming 20.6% of the league in his signature season, 20.7% today.
 
+**Team standing (signature season):** specialist — rule-based from minutes/usage share and team scoring rank (method in roles.json).
+
 **Signature-season stat line:** 14.7 pts · 6.1 reb · 2.1 ast · 2.1 blk per 100 (2020-21).
 
 **Strengths:**

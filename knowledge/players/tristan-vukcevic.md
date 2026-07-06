@@ -39,6 +39,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Play style:** C · Defensive Glass + Rim Pressure (Fts). Plays as a balanced-diet big: works face-up and back-to-the-basket without over-relying on one look — an archetype claiming 9.2% of the league in his signature season, 9.2% today.
 
+**Team standing (signature season):** key contributor — rule-based from minutes/usage share and team scoring rank (method in roles.json).
+
 **Signature-season stat line:** 29.9 pts · 10.0 reb · 3.7 ast · 2.2 blk per 100 (2025-26).
 
 **Strengths:**

@@ -38,6 +38,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Play style:** SF · Offensive Glass + Defensive Glass. Plays as a stretch wing: lives beyond the arc, opens driving lanes for others — an archetype claiming 6.4% of the league in his signature season, 8.1% today.
 
+**Team standing (signature season):** fringe — rule-based from minutes/usage share and team scoring rank (method in roles.json).
+
 **Signature-season stat line:** 12.6 pts · 10.9 reb · 1.4 ast · 0.9 blk per 100 (2018-19).
 
 **Strengths:**

@@ -38,6 +38,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Play style:** SG · Offensive Glass (Low On-Court Impact). Plays as a movement shooter: lives beyond the arc, spaces the floor from deep — an archetype claiming 13.3% of the league in his signature season, 13.3% today.
 
+**Team standing (signature season):** specialist — rule-based from minutes/usage share and team scoring rank (method in roles.json).
+
 **Signature-season stat line:** 11.0 pts · 9.0 reb · 3.3 ast · 2.9 stl per 100 (2025-26).
 
 **Strengths:**

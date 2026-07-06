@@ -41,6 +41,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Play style:** PF · Three-Point Accuracy (Low Turnovers). Plays as a rim-pressure big: lives at the line, never shoots threes — an archetype claiming 21.0% of the league in his signature season, 20.7% today.
 
+**Team standing (signature season):** fringe — rule-based from minutes/usage share and team scoring rank (method in roles.json).
+
 **Signature-season stat line:** 19.2 pts · 10.1 reb · 2.3 ast · 2.2 stl per 100 (2022-23).
 
 **Strengths:**

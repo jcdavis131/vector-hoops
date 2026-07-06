@@ -43,6 +43,8 @@ Closest career shapes in the era-normalized vector space:
 
 **Play style:** PG · Scoring Volume + Shot Volume. Plays as a movement shooter: lives beyond the arc, spaces the floor from deep — an archetype claiming 10.5% of the league in his signature season, 11.3% today.
 
+**Team standing (signature season):** leader — rule-based from minutes/usage share and team scoring rank (method in roles.json).
+
 **Signature-season stat line:** 25.5 pts · 4.7 reb · 10.5 ast · 1.4 stl per 100 (2019-20).
 
 **Strengths:**
