@@ -1624,6 +1624,24 @@ main{
   color: #111111;
 }
 
+/* ---------- header pool toggle: All-time vs Modern ---------- */
+
+.vh-pool-toggle{
+  align-self: center;
+}
+.vh-pool-toggle .vh-subtab{
+  padding: 6px 11px;
+  font-size: 10px;
+  min-height: 32px;
+}
+.vh-pool-toggle .vh-subtab.is-active{
+  background: var(--ink);
+  color: var(--surface);
+}
+@media (max-width: 640px){
+  .vh-pool-toggle .vh-subtab{ padding: 5px 8px; font-size: 9px; }
+}
+
 /* ---------- practice banner (state isolation, always visible in Free Play) ---------- */
 
 .vh-practice-banner{
@@ -1765,6 +1783,15 @@ main{
   margin: 0;
   line-height: 1.5;
 }
+
+.vh-stats-modern-line{
+  font-size: 11px;
+  font-family: var(--mono);
+  color: var(--ink-soft);
+  margin: 6px 0 0;
+  line-height: 1.4;
+}
+.vh-stats-modern-line:empty{ display: none; }
 
 .vh-stats-actions{
   display: flex;

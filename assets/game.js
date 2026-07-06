@@ -69,6 +69,15 @@
   var LS_KEY_SEEN_HELP = 'vectorHoops.seenHelp';
   var LS_KEY_LB_PREFIX = 'vectorHoops.lbSubmitted.'; // + game + '.' + day
   var LS_KEY_LB_LAST_GAME = 'vectorHoops.lastPlayedGame';
+  // MODERN MODE: a global pool toggle (All-time vs Modern) restricting
+  // puzzles to players active in the latest charted season. Modern's own
+  // daily record for each mode lives under a SEPARATE key (never the same
+  // key as the all-time daily) so both dailies can be played the same day
+  // and neither ever overwrites the other. Free Play/practice pools are
+  // filtered live off ACTIVE_NAMES/MODERN_DONOR_POOL (see computeActivePools)
+  // and never persist separately — only the DAILY record needs isolation.
+  var LS_KEY_POOL = 'vectorHoops.pool';
+  var LS_KEY_CHIMERA_MODERN_DAILY = 'vectorHoops.v5.modern.daily';
   var DEADLINE_ROUNDS_PER_RUN = 5;
   var FF_ROUNDS_PER_RUN = 5;
   var ARC_CARD_COUNT = 5;
@@ -161,6 +170,46 @@
       }).catch(function () { /* fire-and-forget */ });
     } catch (e) { /* never block gameplay */ }
   }
+
+  // ---------------------------------------------------------------------
+  // MODERN MODE: a global pool toggle restricting every mode's puzzles to
+  // players active in the latest charted season (see computeActivePools(),
+  // called once DATA loads). Deep-linked challenge/deadline-replay puzzles
+  // always force POOL back to 'all' — a shared link must reproduce exactly
+  // for whoever opens it, regardless of the opener's own toggle state.
+  // ---------------------------------------------------------------------
+
+  function loadPool() {
+    var p = null;
+    try { p = localStorage.getItem(LS_KEY_POOL); } catch (e) { p = null; }
+    return p === 'modern' ? 'modern' : 'all';
+  }
+
+  function savePool(p) {
+    try { localStorage.setItem(LS_KEY_POOL, p); } catch (e) { /* storage unavailable */ }
+  }
+
+  function isModern() { return POOL === 'modern'; }
+
+  // Appends a `.modern` suffix to a Daily storage key when Modern is active —
+  // the ONLY thing this touches is each mode's own DAILY record key (streak +
+  // per-day completion). Counters/practice stats stay shared: Free Play never
+  // needed pool-level isolation, only the ranked Daily did (see CLAUDE-facing
+  // spec: "Streaks/stats: modern dailies tracked separately... never
+  // contaminate ranked aggregates").
+  function poolKey(base) { return isModern() ? (base + '.modern') : base; }
+
+  function isActiveName(name) { return !!(ACTIVE_NAMES && ACTIVE_NAMES[name]); }
+
+  function inLastTwoSeasons(season) {
+    return !!(LAST_TWO_SEASONS && LAST_TWO_SEASONS.indexOf(season) !== -1);
+  }
+
+  // The pool every Chimera donor draw (Daily + Free Play Randomize/pickers)
+  // and its Mashup-answer search (computeNearestExcludingDonors) reads from —
+  // "any season of an active player," so a young star's rookie year is a
+  // fair Modern donor even though the season itself is old.
+  function chimeraDonorPool() { return isModern() ? MODERN_DONOR_POOL : DATA.players; }
 
   // Feature indices (fixed by pipeline/build_vectors.py FEATURES order)
   var IDX = {
@@ -400,7 +449,7 @@
       copiedEl.textContent = openedSms ? 'Opening Messages…' : 'Share this result manually.';
       copiedEl.hidden = false;
     }
-    track('vh-share', { mode: trackMode || 'challenge' });
+    track('vh-share', { mode: trackMode || 'challenge', pool: POOL });
   }
 
   function showChallengeBanner(ch) {
@@ -522,6 +571,10 @@
   function maybeApplyChallenge() {
     if (!CHALLENGE || CHALLENGE_APPLIED) return;
     if (!challengeModeReady(CHALLENGE)) return;
+    // Challenge/deep-link puzzles always force the all-time pool — a shared
+    // link must reproduce EXACTLY for whoever opens it, regardless of the
+    // opener's own Modern toggle state.
+    if (POOL !== 'all') { POOL = 'all'; savePool(POOL); syncPoolToggleUI(); }
     if (CHALLENGE.challenger || CHALLENGE.score) {
       applyChallengeFromUrl(CHALLENGE);
     } else if (CHALLENGE.mode !== 'ch') {
@@ -560,6 +613,15 @@
   var activeChimeraMode = 'daily'; // 'daily' | 'practice'
   var PRACTICE_REC = freshDayRecord(3); // Free Play skips Stats/Style — mashup-only from the start
   var PRACTICE_STATS = null; // { played, won } — loaded from LS_KEY_PRACTICE_STATS
+
+  // MODERN MODE — see computeActivePools() (runs once DATA loads).
+  var POOL = loadPool();       // 'all' | 'modern' — persisted, restored on load
+  var LATEST_SEASON = null;    // the max season string present in vectors.json
+  var LAST_TWO_SEASONS = null; // [second-latest, latest] — Deadline/Fader/Chemistry filter
+  var ACTIVE_NAMES = null;     // { name: true } for every name charted in LATEST_SEASON
+  var MODERN_DONOR_POOL = null; // DATA.players filtered to ANY season of an active name
+  var STATE_MODERN = null;     // Chimera Modern Daily's own persisted streak/history
+  var DAILY_TARGET_MODERN = null; // Chimera Modern Daily's own seeded target
 
   var els = {}; // cached DOM refs, filled in initDom()
 
@@ -621,6 +683,46 @@
     return p.name + ' (' + p.season + ')';
   }
 
+  // MODERN MODE data prep — computed once, right after DATA.players is
+  // available. LATEST_SEASON = the max season string charted anywhere in
+  // vectors.json (a mid-season pipeline rebuild bumps this automatically, so
+  // "modern" always tracks whatever the newest built season is — no hardcoded
+  // year). ACTIVE_NAMES = every distinct name with an entry in that season.
+  // MODERN_DONOR_POOL = every player-SEASON (any year) belonging to an active
+  // name — deliberately NOT restricted to the latest season itself, so a
+  // young star's rookie year is a fair Modern donor.
+  function computeActivePools() {
+    var seasons = {};
+    var i;
+    for (i = 0; i < DATA.players.length; i++) seasons[DATA.players[i].season] = true;
+    var seasonList = Object.keys(seasons).sort();
+    LATEST_SEASON = seasonList[seasonList.length - 1];
+    LAST_TWO_SEASONS = seasonList.slice(-2);
+    ACTIVE_NAMES = {};
+    for (i = 0; i < DATA.players.length; i++) {
+      if (DATA.players[i].season === LATEST_SEASON) ACTIVE_NAMES[DATA.players[i].name] = true;
+    }
+    MODERN_DONOR_POOL = DATA.players.filter(function (p) { return ACTIVE_NAMES[p.name]; });
+  }
+
+  // Repoints every other mode's "ACTIVE pool" var (DEADLINE_POOL, FF_POOL,
+  // CHEM_POOL, ARC_INDEX, TWIN_ANCHOR_POOL) to whichever pool matches the
+  // CURRENT POOL toggle — called once as each mode's own JSON finishes
+  // loading (its _ALL/_MODERN pair may not exist yet, guarded below) AND
+  // again from the toggle handler once every pair already exists. Chimera
+  // doesn't need this: DAILY_TARGET/DAILY_TARGET_MODERN and STATE/STATE_MODERN
+  // are both built once and read directly by pool, never repointed.
+  function refreshPoolFilteredData() {
+    if (DEADLINE_POOL_ALL) DEADLINE_POOL = isModern() ? DEADLINE_POOL_MODERN : DEADLINE_POOL_ALL;
+    if (FF_POOL_ALL) FF_POOL = isModern() ? FF_POOL_MODERN : FF_POOL_ALL;
+    if (CHEM_POOL_ALL) CHEM_POOL = isModern() ? CHEM_POOL_MODERN : CHEM_POOL_ALL;
+    if (ARC_INDEX_ALL) ARC_INDEX = isModern() ? ARC_INDEX_MODERN : ARC_INDEX_ALL;
+    if (TWIN_POOL) {
+      TWIN_ANCHOR_POOL = isModern() ? TWIN_POOL.filter(function (p) { return isActiveName(p.name); }) : TWIN_POOL;
+      buildTwinDecadeIndex();
+    }
+  }
+
   // Slug rules shared with pipeline/build_wiki.py (OKF page filenames) —
   // extracted to assets/dossier.js so wiki.html builds identical links.
   var playerSlug = window.VHDossier.playerSlug;
@@ -634,8 +736,12 @@
   // half but aren't a "found" answer; the game wants the best real season
   // that plays like the WHOLE blend. Computed once per target (O(n) over the
   // full player pool, ~12k rows of a 14-dim dot product — trivial cost).
-  function computeNearestExcludingDonors(target) {
-    var players = DATA.players;
+  // `pool` defaults to every player-season; MODERN MODE passes
+  // MODERN_DONOR_POOL instead so the Mashup answer is an argmax over
+  // modern-pool player-seasons only (never an all-time answer a Modern
+  // player couldn't have guessed).
+  function computeNearestExcludingDonors(target, pool) {
+    var players = pool || DATA.players;
     var aId = target.a.id, bId = target.b.id;
     var scored = [];
     for (var i = 0; i < players.length; i++) {
@@ -650,26 +756,30 @@
   // Builds a target straight from two chosen donors — no rng, no distinctness
   // loop. Used by the seeded paths below (after they pick a/b) AND directly
   // by Build-a-Chimera (Free Play), where the player picks a/b by hand.
-  function buildTargetFromPlayers(a, b) {
+  // `pool` (see computeNearestExcludingDonors) defaults to the full player set.
+  function buildTargetFromPlayers(a, b, pool) {
     var vector = new Array(a.v.length);
     for (var i = 0; i < vector.length; i++) {
       vector[i] = i < A_COUNT ? a.v[i] : b.v[i];
     }
     var clusterIdx = nearestCentroidIdx(vector, CENTROIDS);
     var target = { a: a, b: b, vector: vector, clusterIdx: clusterIdx };
-    target.nearest = computeNearestExcludingDonors(target);
+    target.nearest = computeNearestExcludingDonors(target, pool);
     return target;
   }
 
   // Generalized: same distinct/sim<0.3 constraints regardless of seed source.
   // Daily uses a date seed (shared, deterministic); Randomize (Free Play) uses
   // a random nonce (crypto-sourced, unlimited, never repeats the daily puzzle).
+  // `pool` (default: every player-season) is also where the donors themselves
+  // are drawn from — MODERN MODE passes MODERN_DONOR_POOL so both donors are
+  // guaranteed to be a season of an active player.
   // NOTE for the accuracy harness: this a/b-picking loop is exactly what
   // pipeline/verify_accuracy.py V4 reimplements in Python to check daily
   // determinism — it never touches target.nearest, so that check is
   // unaffected by the v3 win-condition change.
-  function buildTargetFromRng(rng) {
-    var players = DATA.players;
+  function buildTargetFromRng(rng, pool) {
+    var players = pool || DATA.players;
     var a, b, tries = 0;
     do {
       var ia = Math.floor(rng() * players.length);
@@ -681,15 +791,17 @@
       tries < 2000 &&
       (a === b || cosineSim(a.v, b.v) >= 0.3)
     );
-    return buildTargetFromPlayers(a, b);
+    return buildTargetFromPlayers(a, b, pool);
   }
 
-  function buildDailyTarget() {
-    return buildTargetFromRng(seededRng('vector-hoops:' + playDate()));
+  // Same date seed for both pools — Modern's daily is a PARALLEL puzzle, not
+  // a reseed, so it draws from MODERN_DONOR_POOL instead of every player.
+  function buildDailyTarget(pool) {
+    return buildTargetFromRng(seededRng('vector-hoops:' + playDate()), pool);
   }
 
   function buildPracticeTarget() {
-    return buildTargetFromRng(seededRng('vector-hoops:practice:' + randomNonce()));
+    return buildTargetFromRng(seededRng('vector-hoops:practice:' + randomNonce()), chimeraDonorPool());
   }
 
   function nearestPlayer() {
@@ -847,7 +959,8 @@
         'You built it — now find its match. Guess the real player-season that plays ' +
         "closest to your blend. Unlimited attempts — doesn't affect your daily streak.";
     } else {
-      els.puzzleNumber.textContent = 'Vector Hoops #' + puzzleNumber(playDate());
+      els.puzzleNumber.textContent = 'Vector Hoops #' + puzzleNumber(playDate()) +
+        (isModern() ? ' — Modern Daily (unranked)' : '');
       els.promptText.textContent =
         'The equation IS the puzzle: all three cards show their full evidence now, but you ' +
         'name them in order — one guess for the Stats Player, one guess for the Style Player ' +
@@ -1194,6 +1307,32 @@
     try { localStorage.setItem(LS_KEY, JSON.stringify(STATE)); } catch (e) { /* storage unavailable */ }
   }
 
+  // Chimera Modern Daily's own streak/history — separate key
+  // (LS_KEY_CHIMERA_MODERN_DAILY), no legacy carry-over (Modern is new), so
+  // the shape is just defaultState() with TODAY always present.
+  function loadModernState() {
+    var s = defaultState();
+    var raw = null;
+    try { raw = localStorage.getItem(LS_KEY_CHIMERA_MODERN_DAILY); } catch (e) { raw = null; }
+    if (raw) {
+      try {
+        var parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === 'object') {
+          s.streak = parsed.streak || 0;
+          s.maxStreak = parsed.maxStreak || parsed.streak || 0;
+          s.lastWinDate = parsed.lastWinDate || null;
+          s.days = parsed.days || {};
+        }
+      } catch (e) { /* corrupt, fall back to default */ }
+    }
+    if (!isV5DayRecord(s.days[TODAY])) s.days[TODAY] = freshDayRecord();
+    return s;
+  }
+
+  function saveModernState() {
+    try { localStorage.setItem(LS_KEY_CHIMERA_MODERN_DAILY, JSON.stringify(STATE_MODERN)); } catch (e) { /* storage unavailable */ }
+  }
+
   function shouldShowDailyResetNote() {
     if (!dailyResetNoteNeeded) return false;
     var seen = false;
@@ -1251,7 +1390,9 @@
       if (!CHALLENGE_REC) CHALLENGE_REC = freshDayRecord();
       return CHALLENGE_REC;
     }
-    return STATE.days[playDate()];
+    // MODERN MODE: Modern Daily is a parallel puzzle with its own record —
+    // STATE (all-time, ranked) is never touched while Modern is active.
+    return isModern() ? STATE_MODERN.days[playDate()] : STATE.days[playDate()];
   }
 
   function registerCompletion(won) {
@@ -1263,30 +1404,36 @@
       PRACTICE_STATS.played++;
       if (won) PRACTICE_STATS.won++;
       savePracticeStats();
-      track(won ? 'vh-win' : 'vh-loss', { turns: rec.mashupGuesses.length, mode: modeDetail, stage: 3 });
+      track(won ? 'vh-win' : 'vh-loss', { turns: rec.mashupGuesses.length, mode: modeDetail, stage: 3, pool: POOL });
       return; // Free Play never touches STATE/streak — state isolation (M0)
     }
     rec.points = computeFinalPoints(rec);
+    var st = isModern() ? STATE_MODERN : STATE;
     if (won) {
       var yesterday = utcDateString(new Date(Date.now() - 86400000));
-      STATE.streak = (STATE.lastWinDate === yesterday) ? STATE.streak + 1 : 1;
-      STATE.lastWinDate = TODAY;
-      STATE.maxStreak = Math.max(STATE.maxStreak || 0, STATE.streak);
-      track('vh-win', { turns: rec.mashupGuesses.length, mode: modeDetail, stage: 3 });
+      st.streak = (st.lastWinDate === yesterday) ? st.streak + 1 : 1;
+      st.lastWinDate = TODAY;
+      st.maxStreak = Math.max(st.maxStreak || 0, st.streak);
+      track('vh-win', { turns: rec.mashupGuesses.length, mode: modeDetail, stage: 3, pool: POOL });
     } else {
-      STATE.streak = 0;
-      track('vh-loss', { mode: modeDetail, stage: 3 });
+      st.streak = 0;
+      track('vh-loss', { mode: modeDetail, stage: 3, pool: POOL });
     }
     // Chimera board = points exist whether the round was won or lost (the
     // two donor multipliers always bank something) — submit either way,
-    // 0-2400 higher-better (see leaderboard.html note).
-    submitLeaderboardScore('chimera', TODAY, rec.points);
-    saveState();
+    // 0-2400 higher-better (see leaderboard.html note). Modern Daily is
+    // explicitly unranked — never posted (the all-time daily stays the one
+    // ranked puzzle).
+    if (isModern()) saveModernState();
+    else {
+      submitLeaderboardScore('chimera', TODAY, rec.points);
+      saveState();
+    }
     renderStreak();
   }
 
   function renderStreak() {
-    els.streakNum.textContent = String(STATE.streak);
+    els.streakNum.textContent = String(isModern() ? STATE_MODERN.streak : STATE.streak);
   }
 
   // ---------------------------------------------------------------------
@@ -1299,12 +1446,17 @@
   // history never fabricates a multiplier or point total for an old round.
   // ---------------------------------------------------------------------
 
-  function computeDailyChimeraStats() {
+  // `state` defaults to STATE (all-time, ranked) — the primary stats-modal
+  // grid always reads the all-time record regardless of the current pool
+  // toggle. Modern Daily gets its own secondary "Modern (unranked)" line via
+  // computeDailyChimeraStats(STATE_MODERN) — the two never mix.
+  function computeDailyChimeraStats(state) {
+    var st = state || STATE;
     var played = 0, wins = 0, dist = [];
     var totalPts = 0, bestDay = 0, multSum = 0, multCount = 0;
     for (var di = 0; di < MAX_MASHUP_GUESSES; di++) dist.push(0);
-    Object.keys(STATE.days).forEach(function (d) {
-      var rec = STATE.days[d];
+    Object.keys(st.days).forEach(function (d) {
+      var rec = st.days[d];
       if (!rec || !rec.done) return;
       played++;
       if (rec.won) {
@@ -1332,8 +1484,8 @@
       played: played,
       wins: wins,
       winPct: played ? Math.round((wins / played) * 100) : 0,
-      streak: STATE.streak,
-      maxStreak: STATE.maxStreak || 0,
+      streak: st.streak,
+      maxStreak: st.maxStreak || 0,
       dist: dist,
       totalPts: totalPts,
       bestDay: bestDay,
@@ -2809,7 +2961,7 @@
     slotState.bestSim = sim;
     lastLockEvent = { slot: key, at: Date.now() };
 
-    track('vh-guess', { turn: 1, slot: key, mode: 'daily', stage: key === 'stats' ? 1 : 2 });
+    track('vh-guess', { turn: 1, slot: key, mode: 'daily', stage: key === 'stats' ? 1 : 2, pool: POOL });
 
     pendingSelections[key] = null;
     var inputEl = key === 'stats' ? els.chimeraStatsInput : els.chimeraArchetypeInput;
@@ -2865,7 +3017,7 @@
     }
 
     rec.mashupGuesses.push(entry);
-    track('vh-guess', { turn: rec.mashupGuesses.length, slot: 'mashup', mode: isPractice ? 'free' : 'daily', stage: 3 });
+    track('vh-guess', { turn: rec.mashupGuesses.length, slot: 'mashup', mode: isPractice ? 'free' : 'daily', stage: 3, pool: POOL });
 
     var won = isRoundWon(rec);
     if (won || (!isPractice && rec.mashupGuesses.length >= MAX_MASHUP_GUESSES)) {
@@ -3649,7 +3801,9 @@
   // ---------------------------------------------------------------------
 
   var DEADLINE = null;      // parsed deadline.json
-  var DEADLINE_POOL = null; // thrives + craters, tagged with type
+  var DEADLINE_POOL = null; // ACTIVE pool (mirrors POOL) — thrives + craters, tagged with type
+  var DEADLINE_POOL_ALL = null;    // every charted season
+  var DEADLINE_POOL_MODERN = null; // filtered to the last two charted seasons (MODERN MODE)
   // M0: Daily Set (5 fixed movers, shared, UTC-date-seeded) vs Free Play
   // (the original endless counter-seeded run, relabeled "practice"). Each
   // mode keeps its own in-memory run so switching tabs never loses progress.
@@ -3679,7 +3833,7 @@
   // from Free Play, which persists nothing but its endless draw counter.
   function loadDeadlineDailyState() {
     var raw = null;
-    try { raw = localStorage.getItem(LS_KEY_DEADLINE_DAILY); } catch (e) { raw = null; }
+    try { raw = localStorage.getItem(poolKey(LS_KEY_DEADLINE_DAILY)); } catch (e) { raw = null; }
     var s = { streak: 0, lastPlayDate: null, days: {}, totalSets: 0, totalScoreSum: 0 };
     if (raw) {
       try {
@@ -3698,19 +3852,20 @@
   }
 
   function saveDeadlineDailyState() {
-    try { localStorage.setItem(LS_KEY_DEADLINE_DAILY, JSON.stringify(DEADLINE_STATE)); } catch (e) { /* storage unavailable */ }
+    try { localStorage.setItem(poolKey(LS_KEY_DEADLINE_DAILY), JSON.stringify(DEADLINE_STATE)); } catch (e) { /* storage unavailable */ }
   }
 
   function deadlineDailyToday() {
     return DEADLINE_STATE.days[TODAY];
   }
 
+  // Stats-modal only: the primary/ranked grid always reads the all-time
+  // record straight from storage, regardless of which pool is currently
+  // toggled (DEADLINE_STATE mirrors the CURRENT pool for gameplay — see
+  // onPoolToggled — so it's the wrong source here). The Modern (unranked)
+  // line is rendered separately by renderModernLine().
   function computeDeadlineDailyStats() {
-    return {
-      streak: DEADLINE_STATE.streak,
-      totalSets: DEADLINE_STATE.totalSets,
-      avgScore: DEADLINE_STATE.totalSets ? (DEADLINE_STATE.totalScoreSum / DEADLINE_STATE.totalSets) : 0
-    };
+    return dailySetStatsFrom(loadDailyStateForPool(LS_KEY_DEADLINE_DAILY, 'all'));
   }
 
   function buildDeadlinePool() {
@@ -3777,7 +3932,7 @@
   function renderDeadlineHeader() {
     var isDaily = activeDeadlineMode === 'daily';
     els.deadlineEyebrow.textContent = isDaily
-      ? 'The Deadline — Daily Set #' + puzzleNumber(TODAY)
+      ? 'The Deadline — ' + (isModern() ? 'Modern Daily Set — unranked #' : 'Daily Set #') + puzzleNumber(TODAY)
       : 'The Deadline — Free Play (practice)';
     els.deadlineStreakWrap.hidden = !isDaily;
     if (isDaily) els.deadlineStreakNum.textContent = String(DEADLINE_STATE.streak);
@@ -3796,7 +3951,7 @@
     els.deadlineThrivedBtn.disabled = false;
     els.deadlineCraterBtn.disabled = false;
     renderDeadlineHeader();
-    track('vh-deadline-round', { round: run.idx + 1, mode: activeDeadlineMode });
+    track('vh-deadline-round', { round: run.idx + 1, mode: activeDeadlineMode, pool: POOL });
   }
 
   function deadlineOneLiner(m, correct) {
@@ -3898,8 +4053,8 @@
         DEADLINE_STATE.totalSets++;
         DEADLINE_STATE.totalScoreSum += run.score;
         saveDeadlineDailyState();
-        track('vh-deadline-done', { score: run.score, mode: 'daily' });
-        submitLeaderboardScore('deadline', TODAY, run.score);
+        track('vh-deadline-done', { score: run.score, mode: 'daily', pool: POOL });
+        if (!isModern()) submitLeaderboardScore('deadline', TODAY, run.score);
       }
       els.deadlineAgainBtn.hidden = true;
       els.deadlineShareBtn.hidden = false;
@@ -3909,7 +4064,7 @@
       els.deadlineAgainBtn.hidden = false;
       els.deadlineShareBtn.hidden = true;
       els.deadlineComeback.hidden = true;
-      track('vh-deadline-done', { score: run.score, mode: 'free' });
+      track('vh-deadline-done', { score: run.score, mode: 'free', pool: POOL });
     }
     renderDeadlineHeader();
   }
@@ -3990,7 +4145,9 @@
   // ---------------------------------------------------------------------
 
   var FADERFINISHER = null;   // parsed faderfinisher.json
-  var FF_POOL = null;         // .questions, as-is
+  var FF_POOL = null;         // ACTIVE pool (mirrors POOL) — .questions, as-is
+  var FF_POOL_ALL = null;
+  var FF_POOL_MODERN = null;  // filtered to the last two charted seasons (MODERN MODE)
   var activeFaderMode = 'daily'; // 'daily' | 'free'
   var faderRuns = { daily: null, free: null };
   var FADER_STATE = null;     // persisted LS_KEY_FF_DAILY
@@ -4002,7 +4159,7 @@
 
   function loadFaderDailyState() {
     var raw = null;
-    try { raw = localStorage.getItem(LS_KEY_FF_DAILY); } catch (e) { raw = null; }
+    try { raw = localStorage.getItem(poolKey(LS_KEY_FF_DAILY)); } catch (e) { raw = null; }
     var s = { streak: 0, lastPlayDate: null, days: {}, totalSets: 0, totalScoreSum: 0 };
     if (raw) {
       try {
@@ -4021,19 +4178,16 @@
   }
 
   function saveFaderDailyState() {
-    try { localStorage.setItem(LS_KEY_FF_DAILY, JSON.stringify(FADER_STATE)); } catch (e) { /* storage unavailable */ }
+    try { localStorage.setItem(poolKey(LS_KEY_FF_DAILY), JSON.stringify(FADER_STATE)); } catch (e) { /* storage unavailable */ }
   }
 
   function faderDailyToday() {
     return FADER_STATE.days[TODAY];
   }
 
+  // Stats-modal only — see computeDeadlineDailyStats() note.
   function computeFaderDailyStats() {
-    return {
-      streak: FADER_STATE.streak,
-      totalSets: FADER_STATE.totalSets,
-      avgScore: FADER_STATE.totalSets ? (FADER_STATE.totalScoreSum / FADER_STATE.totalSets) : 0
-    };
+    return dailySetStatsFrom(loadDailyStateForPool(LS_KEY_FF_DAILY, 'all'));
   }
 
   function loadFaderPracticeStats() {
@@ -4093,7 +4247,7 @@
   function renderFaderHeader() {
     var isDaily = activeFaderMode === 'daily';
     els.faderEyebrow.textContent = isDaily
-      ? 'Fader or Finisher — Daily Set #' + puzzleNumber(TODAY)
+      ? 'Fader or Finisher — ' + (isModern() ? 'Modern Daily Set — unranked #' : 'Daily Set #') + puzzleNumber(TODAY)
       : 'Fader or Finisher — Free Play (practice)';
     els.faderStreakWrap.hidden = !isDaily;
     if (isDaily) els.faderStreakNum.textContent = String(FADER_STATE.streak);
@@ -4112,7 +4266,7 @@
     els.faderFinishBtn.disabled = false;
     els.faderFadeBtn.disabled = false;
     renderFaderHeader();
-    track('vh-ff-round', { round: run.idx + 1, mode: activeFaderMode === 'daily' ? 'daily' : 'free' });
+    track('vh-ff-round', { round: run.idx + 1, mode: activeFaderMode === 'daily' ? 'daily' : 'free', pool: POOL });
   }
 
   function faderOneLiner(q, correct) {
@@ -4196,8 +4350,8 @@
         FADER_STATE.totalSets++;
         FADER_STATE.totalScoreSum += run.score;
         saveFaderDailyState();
-        track('vh-ff-done', { score: run.score, mode: 'daily' });
-        submitLeaderboardScore('fader', TODAY, run.score);
+        track('vh-ff-done', { score: run.score, mode: 'daily', pool: POOL });
+        if (!isModern()) submitLeaderboardScore('fader', TODAY, run.score);
       }
       els.faderAgainBtn.hidden = true;
       els.faderShareBtn.hidden = false;
@@ -4210,7 +4364,7 @@
       els.faderAgainBtn.hidden = false;
       els.faderShareBtn.hidden = true;
       els.faderComeback.hidden = true;
-      track('vh-ff-done', { score: run.score, mode: 'free' });
+      track('vh-ff-done', { score: run.score, mode: 'free', pool: POOL });
     }
     renderFaderHeader();
   }
@@ -4294,7 +4448,9 @@
   // ---------------------------------------------------------------------
 
   var CHEMISTRY = null;   // parsed chemistry.json
-  var CHEM_POOL = null;   // chemistry.json's pairs array (top 800)
+  var CHEM_POOL = null;   // ACTIVE pool (mirrors POOL) — chemistry.json's pairs array (top 800)
+  var CHEM_POOL_ALL = null;
+  var CHEM_POOL_MODERN = null; // filtered to pairs from the last two charted seasons (MODERN MODE)
   var activeChemMode = 'daily'; // 'daily' | 'free'
   var chemRuns = { daily: null, free: null }; // { rounds, idx, score }
   var CHEM_STATE = null;           // persisted Daily Set streak/history — LS_KEY_CHEM_DAILY
@@ -4350,7 +4506,7 @@
 
   function loadChemDailyState() {
     var raw = null;
-    try { raw = localStorage.getItem(LS_KEY_CHEM_DAILY); } catch (e) { raw = null; }
+    try { raw = localStorage.getItem(poolKey(LS_KEY_CHEM_DAILY)); } catch (e) { raw = null; }
     var s = { streak: 0, lastPlayDate: null, days: {}, totalSets: 0, totalScoreSum: 0 };
     if (raw) {
       try {
@@ -4369,19 +4525,16 @@
   }
 
   function saveChemDailyState() {
-    try { localStorage.setItem(LS_KEY_CHEM_DAILY, JSON.stringify(CHEM_STATE)); } catch (e) { /* storage unavailable */ }
+    try { localStorage.setItem(poolKey(LS_KEY_CHEM_DAILY), JSON.stringify(CHEM_STATE)); } catch (e) { /* storage unavailable */ }
   }
 
   function chemDailyToday() {
     return CHEM_STATE.days[TODAY];
   }
 
+  // Stats-modal only — see computeDeadlineDailyStats() note.
   function computeChemDailyStats() {
-    return {
-      streak: CHEM_STATE.streak,
-      totalSets: CHEM_STATE.totalSets,
-      avgScore: CHEM_STATE.totalSets ? (CHEM_STATE.totalScoreSum / CHEM_STATE.totalSets) : 0
-    };
+    return dailySetStatsFrom(loadDailyStateForPool(LS_KEY_CHEM_DAILY, 'all'));
   }
 
   function loadChemPracticeStats() {
@@ -4488,7 +4641,7 @@
   function renderChemHeader() {
     var isDaily = activeChemMode === 'daily';
     els.chemEyebrow.textContent = isDaily
-      ? 'Best Teammate — Daily Set #' + puzzleNumber(TODAY)
+      ? 'Best Teammate — ' + (isModern() ? 'Modern Daily Set — unranked #' : 'Daily Set #') + puzzleNumber(TODAY)
       : 'Best Teammate — Free Play (practice)';
     els.chemStreakWrap.hidden = !isDaily;
     if (isDaily) els.chemStreakNum.textContent = String(CHEM_STATE.streak);
@@ -4513,7 +4666,7 @@
       els.chemOptions.appendChild(btn);
     });
     renderChemHeader();
-    track('vh-chem-round', { round: run.idx + 1, mode: activeChemMode });
+    track('vh-chem-round', { round: run.idx + 1, mode: activeChemMode, pool: POOL });
   }
 
   // The two biggest-gap dimensions (A strongest relative to B, and vice
@@ -4596,7 +4749,7 @@
         CHEM_STATE.totalSets++;
         CHEM_STATE.totalScoreSum += run.score;
         saveChemDailyState();
-        track('vh-chem-done', { score: run.score, mode: 'daily' });
+        track('vh-chem-done', { score: run.score, mode: 'daily', pool: POOL });
       }
       els.chemAgainBtn.hidden = true;
       els.chemShareBtn.hidden = false;
@@ -4609,7 +4762,7 @@
       els.chemAgainBtn.hidden = false;
       els.chemShareBtn.hidden = true;
       els.chemComeback.hidden = true;
-      track('vh-chem-done', { score: run.score, mode: 'free' });
+      track('vh-chem-done', { score: run.score, mode: 'free', pool: POOL });
     }
     renderChemHeader();
   }
@@ -4678,7 +4831,9 @@
   // Scoring is exact-position count against the true chronological order.
   // ---------------------------------------------------------------------
 
-  var ARC_INDEX = null;             // { names:[qualifying names], byName:{name:[players asc by season]} }
+  var ARC_INDEX = null;             // ACTIVE index (mirrors POOL) — { names:[qualifying names], byName:{name:[players asc by season]} }
+  var ARC_INDEX_ALL = null;
+  var ARC_INDEX_MODERN = null;      // names restricted to active players w/ >=5 charted seasons (MODERN MODE)
   var activeArcMode = 'daily';      // 'daily' | 'practice'
   var ARC_DAILY_TARGET = null;      // { name, correct:[players asc], shuffled:[players, display order] }
   var ARC_PRACTICE_TARGET = null;
@@ -4687,7 +4842,11 @@
   var ARC_DAILY_REC = { selection: [], done: false, score: null };
   var ARC_PRACTICE_REC = { selection: [], done: false, score: null };
 
-  function buildArcIndex() {
+  // restrictToActive (MODERN MODE): also requires the name to be an active
+  // player (ACTIVE_NAMES) on top of the existing >=5-charted-seasons floor —
+  // "active players w/ >=5 charted seasons," counting every charted season,
+  // not just recent ones.
+  function buildArcIndex(restrictToActive) {
     var byName = {};
     for (var i = 0; i < DATA.players.length; i++) {
       var p = DATA.players[i];
@@ -4695,6 +4854,7 @@
     }
     var names = [];
     Object.keys(byName).forEach(function (name) {
+      if (restrictToActive && !isActiveName(name)) return;
       var arr = byName[name];
       if (arr.length >= ARC_MIN_SEASONS) {
         arr.sort(function (a, b) { return a.season < b.season ? -1 : (a.season > b.season ? 1 : 0); });
@@ -4750,7 +4910,7 @@
 
   function loadArcDailyState() {
     var raw = null;
-    try { raw = localStorage.getItem(LS_KEY_ARC_DAILY); } catch (e) { raw = null; }
+    try { raw = localStorage.getItem(poolKey(LS_KEY_ARC_DAILY)); } catch (e) { raw = null; }
     var s = { streak: 0, lastPlayDate: null, days: {}, totalSets: 0, totalScoreSum: 0 };
     if (raw) {
       try {
@@ -4769,19 +4929,16 @@
   }
 
   function saveArcDailyState() {
-    try { localStorage.setItem(LS_KEY_ARC_DAILY, JSON.stringify(ARC_STATE)); } catch (e) { /* storage unavailable */ }
+    try { localStorage.setItem(poolKey(LS_KEY_ARC_DAILY), JSON.stringify(ARC_STATE)); } catch (e) { /* storage unavailable */ }
   }
 
   function arcDailyToday() {
     return ARC_STATE.days[TODAY];
   }
 
+  // Stats-modal only — see computeDeadlineDailyStats() note.
   function computeArcDailyStats() {
-    return {
-      streak: ARC_STATE.streak,
-      totalSets: ARC_STATE.totalSets,
-      avgScore: ARC_STATE.totalSets ? (ARC_STATE.totalScoreSum / ARC_STATE.totalSets) : 0
-    };
+    return dailySetStatsFrom(loadDailyStateForPool(LS_KEY_ARC_DAILY, 'all'));
   }
 
   function loadArcPracticeStats() {
@@ -4806,7 +4963,9 @@
 
   function renderArcHeader() {
     var isDaily = activeArcMode === 'daily';
-    els.arcEyebrow.textContent = isDaily ? 'Career Arc — Daily #' + puzzleNumber(TODAY) : 'Career Arc — Free Play (practice)';
+    els.arcEyebrow.textContent = isDaily
+      ? 'Career Arc — ' + (isModern() ? 'Modern Daily — unranked #' : 'Daily #') + puzzleNumber(TODAY)
+      : 'Career Arc — Free Play (practice)';
     els.arcPracticeBanner.hidden = isDaily;
     var round = activeArcRound();
     els.arcInstructions.textContent = round
@@ -4898,7 +5057,7 @@
     renderArcCards();
 
     var modeDetail = activeArcMode === 'practice' ? 'free' : 'daily';
-    track('vh-arc-done', { score: rec.score, mode: modeDetail });
+    track('vh-arc-done', { score: rec.score, mode: modeDetail, pool: POOL });
 
     if (activeArcMode === 'daily') {
       var dayRec = arcDailyToday();
@@ -4911,7 +5070,7 @@
         ARC_STATE.totalSets++;
         ARC_STATE.totalScoreSum += rec.score;
         saveArcDailyState();
-        submitLeaderboardScore('arc', TODAY, rec.score);
+        if (!isModern()) submitLeaderboardScore('arc', TODAY, rec.score);
       }
     } else {
       ARC_PRACTICE_STATS.played++;
@@ -5081,7 +5240,7 @@
     els.arcResult.hidden = true;
     renderArcHeader();
     renderArcCards();
-    track('vh-arc-round', { mode: 'free' });
+    track('vh-arc-round', { mode: 'free', pool: POOL });
   }
 
   var arcRevealSheetTrigger = null;
@@ -5293,7 +5452,7 @@
   // valid (and informative) thing to sandbox.
   function randomizeWhatifPicks() {
     var rng = seededRng('vector-hoops:whatif:' + randomNonce());
-    var players = DATA.players;
+    var players = chimeraDonorPool();
     var a, b;
     do {
       a = players[Math.floor(rng() * players.length)];
@@ -5321,10 +5480,10 @@
   }
 
   function setupWhatifInputs() {
-    createAutocomplete(els.whatifAInput, els.whatifASuggestions, DATA.players, function (p) {
+    createAutocomplete(els.whatifAInput, els.whatifASuggestions, chimeraDonorPool, function (p) {
       setWhatifPick('a', p);
     }, { hintEl: els.whatifAFocusHint });
-    createAutocomplete(els.whatifBInput, els.whatifBSuggestions, DATA.players, function (p) {
+    createAutocomplete(els.whatifBInput, els.whatifBSuggestions, chimeraDonorPool, function (p) {
       setWhatifPick('b', p);
     }, { hintEl: els.whatifBFocusHint });
     els.whatifAInput.disabled = false;
@@ -5780,8 +5939,11 @@
   // ---------------------------------------------------------------------
 
   var TWINS = null;              // parsed eratwins.json
-  var TWIN_POOL = null;          // eratwins.json's players array (1,260)
-  var TWIN_BY_DECADE = null;     // { decade: [indices into TWIN_POOL] }
+  var TWIN_POOL = null;          // eratwins.json's players array (1,260) — the GUESS/candidate pool,
+                                  // always all-time (twins remain all-time cross-decade — that's the game)
+  var TWIN_ANCHOR_POOL = null;   // ACTIVE anchor-draw pool (mirrors POOL): TWIN_POOL, or filtered to
+                                  // active players only when MODERN MODE is on
+  var TWIN_BY_DECADE = null;     // { decade: [indices into TWIN_ANCHOR_POOL] }
   var TWIN_DECADE_ORDER = ['1990s', '2000s', '2010s', '2020s'];
   var activeTwinMode = 'daily';  // 'daily' | 'free'
   var twinRuns = { daily: null, free: null }; // { rounds, idx, score }
@@ -5791,7 +5953,7 @@
 
   function buildTwinDecadeIndex() {
     var byDecade = {};
-    TWIN_POOL.forEach(function (p, i) {
+    (TWIN_ANCHOR_POOL || TWIN_POOL).forEach(function (p, i) {
       (byDecade[p.decade] = byDecade[p.decade] || []).push(i);
     });
     TWIN_BY_DECADE = byDecade;
@@ -5812,7 +5974,7 @@
 
   function loadTwinDailyState() {
     var raw = null;
-    try { raw = localStorage.getItem(LS_KEY_TWIN_DAILY); } catch (e) { raw = null; }
+    try { raw = localStorage.getItem(poolKey(LS_KEY_TWIN_DAILY)); } catch (e) { raw = null; }
     var s = { streak: 0, lastPlayDate: null, days: {}, totalSets: 0, totalScoreSum: 0 };
     if (raw) {
       try {
@@ -5831,19 +5993,16 @@
   }
 
   function saveTwinDailyState() {
-    try { localStorage.setItem(LS_KEY_TWIN_DAILY, JSON.stringify(TWIN_STATE)); } catch (e) { /* storage unavailable */ }
+    try { localStorage.setItem(poolKey(LS_KEY_TWIN_DAILY), JSON.stringify(TWIN_STATE)); } catch (e) { /* storage unavailable */ }
   }
 
   function twinDailyToday() {
     return TWIN_STATE.days[TODAY];
   }
 
+  // Stats-modal only — see computeDeadlineDailyStats() note.
   function computeTwinDailyStats() {
-    return {
-      streak: TWIN_STATE.streak,
-      totalSets: TWIN_STATE.totalSets,
-      avgScore: TWIN_STATE.totalSets ? (TWIN_STATE.totalScoreSum / TWIN_STATE.totalSets) : 0
-    };
+    return dailySetStatsFrom(loadDailyStateForPool(LS_KEY_TWIN_DAILY, 'all'));
   }
 
   function loadTwinPracticeStats() {
@@ -5881,7 +6040,14 @@
   // mixed-decade set whenever the pool has enough distinct decades), then
   // fill any remaining rounds with more seeded picks from the full pool —
   // never repeating an anchor within the same set.
+  // Anchors are drawn from TWIN_ANCHOR_POOL (all-time, or MODERN MODE's
+  // active-players-only subset) — the guess/candidate pool a round then
+  // offers (twinCandidatePool, called by renderTwinRound) always stays
+  // TWIN_POOL, unfiltered: a player's twin is by definition all-time
+  // cross-decade, so Modern only restricts WHO gets anchored, never who a
+  // twin can be.
   function buildTwinDailyRounds() {
+    var pool = TWIN_ANCHOR_POOL || TWIN_POOL;
     var rng = seededRng('vector-hoops:twin-daily:' + playDate());
     var rounds = [];
     var usedIdx = {};
@@ -5893,24 +6059,25 @@
       var bucket = TWIN_BY_DECADE[d];
       var pick = bucket[Math.floor(rng() * bucket.length)];
       usedIdx[pick] = true;
-      rounds.push(buildTwinRound(TWIN_POOL[pick]));
+      rounds.push(buildTwinRound(pool[pick]));
     });
     var guard = 0;
     while (rounds.length < TWIN_ROUNDS_PER_RUN && guard < 10000) {
       guard++;
-      var idx = Math.floor(rng() * TWIN_POOL.length);
+      var idx = Math.floor(rng() * pool.length);
       if (usedIdx[idx]) continue;
       usedIdx[idx] = true;
-      rounds.push(buildTwinRound(TWIN_POOL[idx]));
+      rounds.push(buildTwinRound(pool[idx]));
     }
     return rounds;
   }
 
   function buildTwinFreeRounds() {
+    var pool = TWIN_ANCHOR_POOL || TWIN_POOL;
     var counter = loadTwinCounter();
     var rounds = [];
     for (var i = 0; i < TWIN_ROUNDS_PER_RUN; i++) {
-      rounds.push(buildTwinRound(TWIN_POOL[Math.floor(seededRng('vector-hoops:twin:' + counter)() * TWIN_POOL.length)]));
+      rounds.push(buildTwinRound(pool[Math.floor(seededRng('vector-hoops:twin:' + counter)() * pool.length)]));
       counter++;
     }
     saveTwinCounter(counter);
@@ -5935,7 +6102,7 @@
   function renderTwinHeader() {
     var isDaily = activeTwinMode === 'daily';
     els.twinEyebrow.textContent = isDaily
-      ? 'Era Twin — Daily Set #' + puzzleNumber(TODAY)
+      ? 'Era Twin — ' + (isModern() ? 'Modern Daily Set — unranked #' : 'Daily Set #') + puzzleNumber(TODAY)
       : 'Era Twin — Free Play (practice)';
     els.twinStreakWrap.hidden = !isDaily;
     if (isDaily) els.twinStreakNum.textContent = String(TWIN_STATE.streak);
@@ -6019,7 +6186,7 @@
     els.twinInput.disabled = false;
     activeTwinCandidatePool = twinCandidatePool(round.anchor);
     renderTwinHeader();
-    track('vh-twin-round', { round: run.idx + 1, mode: activeTwinMode });
+    track('vh-twin-round', { round: run.idx + 1, mode: activeTwinMode, pool: POOL });
   }
 
   function twinGapYears(anchor) {
@@ -6096,7 +6263,7 @@
       var rec = twinDailyToday();
       if (!rec.done) {
         rec.done = true;
-        submitLeaderboardScore('eratwin', TODAY, run.score);
+        if (!isModern()) submitLeaderboardScore('eratwin', TODAY, run.score);
         rec.score = run.score;
         var yesterday = utcDateString(new Date(Date.now() - 86400000));
         TWIN_STATE.streak = (TWIN_STATE.lastPlayDate === yesterday) ? TWIN_STATE.streak + 1 : 1;
@@ -6104,7 +6271,7 @@
         TWIN_STATE.totalSets++;
         TWIN_STATE.totalScoreSum += run.score;
         saveTwinDailyState();
-        track('vh-twin-done', { score: run.score, mode: 'daily' });
+        track('vh-twin-done', { score: run.score, mode: 'daily', pool: POOL });
       }
       els.twinAgainBtn.hidden = true;
       els.twinShareBtn.hidden = false;
@@ -6117,7 +6284,7 @@
       els.twinAgainBtn.hidden = false;
       els.twinShareBtn.hidden = true;
       els.twinComeback.hidden = true;
-      track('vh-twin-done', { score: run.score, mode: 'free' });
+      track('vh-twin-done', { score: run.score, mode: 'free', pool: POOL });
     }
     renderTwinHeader();
   }
@@ -6221,7 +6388,7 @@
     }
     if (mode === 'arc' && !arcInitialized && ARC_INDEX) {
       arcInitialized = true;
-      track('vh-arc-round', { mode: 'daily' });
+      track('vh-arc-round', { mode: 'daily', pool: POOL });
       switchArcSubMode('daily');
     }
     if (mode === 'chem' && !chemInitialized && CHEM_POOL) {
@@ -6252,6 +6419,89 @@
     els.tabWhatif.addEventListener('click', function () { switchMode('whatif'); });
     els.tabPivot.addEventListener('click', function () { switchMode('pivot'); });
     els.tabTwin.addEventListener('click', function () { switchMode('twin'); });
+  }
+
+  // ---------------------------------------------------------------------
+  // MODERN MODE toggle (header pill): restricts every mode's puzzles to
+  // players active in the latest charted season. Switching pools swaps
+  // WHICH daily record renders for the current tab — the other pool's
+  // daily/streak isn't touched (separate storage keys) and isn't lost.
+  // ---------------------------------------------------------------------
+
+  function syncPoolToggleUI() {
+    if (!els.poolToggleAll || !els.poolToggleModern) return;
+    var modern = isModern();
+    els.poolToggleAll.classList.toggle('is-active', !modern);
+    els.poolToggleAll.setAttribute('aria-selected', String(!modern));
+    els.poolToggleModern.classList.toggle('is-active', modern);
+    els.poolToggleModern.setAttribute('aria-selected', String(modern));
+  }
+
+  function onPoolToggled() {
+    savePool(POOL);
+    syncPoolToggleUI();
+    track('vh-pool-toggle', { pool: POOL });
+    // Before DATA (and every mode's own JSON) has loaded there's nothing yet
+    // to rebuild — the toggle just remembers the preference; every load path
+    // above (init()'s fetch chain) already reads POOL when it builds each
+    // mode's pools/targets for the first time.
+    if (!DATA) return;
+
+    // Chimera: TARGET/STATE are read pool-aware on every render already
+    // (see refreshChimeraView/todayRecord/renderStreak) — just repaint.
+    refreshChimeraView();
+    renderStreak();
+
+    // Every other Daily Set mode: repoint each mode's ACTIVE pool array,
+    // reload its persisted streak/history from the matching storage key, and
+    // discard the in-memory run so the next render rebuilds fresh rounds
+    // against the newly-active pool. Only modes the player has actually
+    // opened this session get rebuilt immediately; an untouched tab picks up
+    // the new pool the first time it's opened (DEADLINE_STATE etc. are
+    // reloaded from storage there regardless).
+    refreshPoolFilteredData();
+
+    DEADLINE_STATE = loadDeadlineDailyState();
+    deadlineRuns = { daily: null, free: null };
+    if (deadlineInitialized) switchDeadlineMode(activeDeadlineMode);
+
+    FADER_STATE = loadFaderDailyState();
+    faderRuns = { daily: null, free: null };
+    if (faderInitialized) switchFaderMode(activeFaderMode);
+
+    CHEM_STATE = loadChemDailyState();
+    chemRuns = { daily: null, free: null };
+    if (chemInitialized) switchChemMode(activeChemMode);
+
+    ARC_STATE = loadArcDailyState();
+    ARC_DAILY_TARGET = null;
+    ARC_PRACTICE_TARGET = null;
+    ARC_DAILY_REC = { selection: [], done: false, score: null };
+    ARC_PRACTICE_REC = { selection: [], done: false, score: null };
+    if (arcInitialized) switchArcSubMode(activeArcMode);
+
+    TWIN_STATE = loadTwinDailyState();
+    twinRuns = { daily: null, free: null };
+    if (twinInitialized) switchTwinMode(activeTwinMode);
+
+    // What-If Lab's pickers read chimeraDonorPool() live (a getter) — no
+    // rebuild needed. The Pivot is unaffected by MODERN MODE (already
+    // recent-scoped by data — see spec).
+    if (els.statsModal && !els.statsBackdrop.hidden) renderStatsModal();
+    checkRollover();
+  }
+
+  function setPool(next) {
+    if (next === POOL) return;
+    POOL = next;
+    onPoolToggled();
+  }
+
+  function setupPoolToggle() {
+    if (!els.poolToggleAll || !els.poolToggleModern) return;
+    syncPoolToggleUI();
+    els.poolToggleAll.addEventListener('click', function () { setPool('all'); });
+    els.poolToggleModern.addEventListener('click', function () { setPool('modern'); });
   }
 
   // ---------------------------------------------------------------------
@@ -6382,6 +6632,51 @@
     els.statsHistogram.innerHTML = html;
   }
 
+  // MODERN MODE stats-modal support: reads a Daily Set mode's persisted
+  // record straight from localStorage for a GIVEN pool, independent of
+  // whatever DEADLINE_STATE/FADER_STATE/etc. currently holds in memory (that
+  // module var mirrors whichever pool is toggled RIGHT NOW — see
+  // onPoolToggled). This is the only way the modal can show both an
+  // always-all-time ranked line and an always-modern unranked line at once.
+  function loadDailyStateForPool(baseKey, pool) {
+    var key = pool === 'modern' ? (baseKey + '.modern') : baseKey;
+    var s = { streak: 0, lastPlayDate: null, days: {}, totalSets: 0, totalScoreSum: 0 };
+    var raw = null;
+    try { raw = localStorage.getItem(key); } catch (e) { raw = null; }
+    if (raw) {
+      try {
+        var parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === 'object') {
+          s.streak = parsed.streak || 0;
+          s.lastPlayDate = parsed.lastPlayDate || null;
+          s.days = parsed.days || {};
+          s.totalSets = parsed.totalSets || 0;
+          s.totalScoreSum = parsed.totalScoreSum || 0;
+        }
+      } catch (e) { /* corrupt, ignore */ }
+    }
+    return s;
+  }
+
+  function dailySetStatsFrom(state) {
+    return {
+      streak: state.streak,
+      totalSets: state.totalSets,
+      avgScore: state.totalSets ? (state.totalScoreSum / state.totalSets) : 0
+    };
+  }
+
+  // Renders (or hides) the "Modern (unranked)" secondary line under a Daily
+  // Set section — 0 sets played yet just clears the line rather than
+  // claiming a false streak of 0.
+  function renderModernLine(lineEl, baseKey) {
+    if (!lineEl) return;
+    var s = dailySetStatsFrom(loadDailyStateForPool(baseKey, 'modern'));
+    lineEl.textContent = s.totalSets
+      ? 'Modern (unranked): ' + s.totalSets + ' played, ' + s.avgScore.toFixed(1) + ' avg score, streak ' + s.streak + '.'
+      : '';
+  }
+
   function renderStatsModal() {
     var daily = computeDailyChimeraStats();
     els.statsDailyGrid.innerHTML = '';
@@ -6393,24 +6688,35 @@
     renderStatsTile(els.statsDailyGrid, daily.bestDay, 'Best day');
     renderStatsTile(els.statsDailyGrid, daily.avgMultiplier ? ('×' + daily.avgMultiplier.toFixed(2)) : '—', 'Avg multiplier');
     renderHistogram(daily.dist);
+    // Chimera's Modern Daily is its own persisted object (STATE_MODERN), not
+    // a `.modern`-suffixed localStorage key — read it directly.
+    if (els.statsDailyModernLine) {
+      var modernChim = STATE_MODERN ? computeDailyChimeraStats(STATE_MODERN) : null;
+      els.statsDailyModernLine.textContent = (modernChim && modernChim.played)
+        ? 'Modern (unranked): ' + modernChim.played + ' played, ' + modernChim.winPct + '% win, streak ' + modernChim.streak + '.'
+        : '';
+    }
 
     var dl = computeDeadlineDailyStats();
     els.statsDeadlineGrid.innerHTML = '';
     renderStatsTile(els.statsDeadlineGrid, dl.totalSets, 'Sets played');
     renderStatsTile(els.statsDeadlineGrid, dl.avgScore.toFixed(1), 'Avg score');
     renderStatsTile(els.statsDeadlineGrid, dl.streak, 'Streak');
+    renderModernLine(els.statsDeadlineModernLine, LS_KEY_DEADLINE_DAILY);
 
     var ff = computeFaderDailyStats();
     els.statsFaderGrid.innerHTML = '';
     renderStatsTile(els.statsFaderGrid, ff.totalSets, 'Sets played');
     renderStatsTile(els.statsFaderGrid, ff.avgScore.toFixed(1), 'Avg score');
     renderStatsTile(els.statsFaderGrid, ff.streak, 'Streak');
+    renderModernLine(els.statsFaderModernLine, LS_KEY_FF_DAILY);
 
     var arc = computeArcDailyStats();
     els.statsArcGrid.innerHTML = '';
     renderStatsTile(els.statsArcGrid, arc.totalSets, 'Played');
     renderStatsTile(els.statsArcGrid, arc.avgScore.toFixed(1), 'Avg score');
     renderStatsTile(els.statsArcGrid, arc.streak, 'Streak');
+    renderModernLine(els.statsArcModernLine, LS_KEY_ARC_DAILY);
 
     if (els.statsChemGrid) {
       var chem = computeChemDailyStats();
@@ -6418,6 +6724,7 @@
       renderStatsTile(els.statsChemGrid, chem.totalSets, 'Sets played');
       renderStatsTile(els.statsChemGrid, chem.avgScore.toFixed(1), 'Avg score');
       renderStatsTile(els.statsChemGrid, chem.streak, 'Streak');
+      renderModernLine(els.statsChemModernLine, LS_KEY_CHEM_DAILY);
     }
 
     if (els.statsPivotGrid) {
@@ -6434,6 +6741,7 @@
       renderStatsTile(els.statsTwinGrid, twin.totalSets, 'Sets played');
       renderStatsTile(els.statsTwinGrid, twin.avgScore.toFixed(1), 'Avg score');
       renderStatsTile(els.statsTwinGrid, twin.streak, 'Streak');
+      renderModernLine(els.statsTwinModernLine, LS_KEY_TWIN_DAILY);
     }
 
     els.statsPracticeLine.textContent = 'Chimera: ' + PRACTICE_STATS.played + ' played, ' + PRACTICE_STATS.won + ' won. ' +
@@ -6469,7 +6777,12 @@
      LS_KEY_FF_DAILY, LS_KEY_FF_PRACTICE, LS_KEY_ARC_DAILY, LS_KEY_ARC_PRACTICE,
      LS_KEY_CHEM_DAILY, LS_KEY_CHEM_PRACTICE, LS_KEY_CHEM_COUNTER,
      LS_KEY_PIVOT_DAILY, LS_KEY_PIVOT_PRACTICE, LS_KEY_PIVOT_COUNTER,
-     LS_KEY_TWIN_DAILY, LS_KEY_TWIN_PRACTICE, LS_KEY_TWIN_COUNTER].forEach(function (key) {
+     LS_KEY_TWIN_DAILY, LS_KEY_TWIN_PRACTICE, LS_KEY_TWIN_COUNTER,
+     // MODERN MODE: the toggle itself + every mode's separate Modern Daily key
+     LS_KEY_POOL, LS_KEY_CHIMERA_MODERN_DAILY,
+     LS_KEY_DEADLINE_DAILY + '.modern', LS_KEY_FF_DAILY + '.modern',
+     LS_KEY_ARC_DAILY + '.modern', LS_KEY_CHEM_DAILY + '.modern',
+     LS_KEY_TWIN_DAILY + '.modern'].forEach(function (key) {
       try { localStorage.removeItem(key); } catch (e) { /* storage unavailable */ }
     });
     window.location.reload();
@@ -6788,6 +7101,8 @@
     els.quickCoachingLine = document.getElementById('quick-coaching-line');
 
     els.appHeader = document.getElementById('app-header');
+    els.poolToggleAll = document.getElementById('pool-toggle-all');
+    els.poolToggleModern = document.getElementById('pool-toggle-modern');
     els.tagline = document.getElementById('tagline');
     els.equationRow = document.getElementById('equation-row');
     els.equationChip = document.getElementById('equation-chip');
@@ -6877,6 +7192,16 @@
     els.statsFaderGrid = document.getElementById('stats-fader-grid');
     els.statsArcGrid = document.getElementById('stats-arc-grid');
     els.statsPracticeLine = document.getElementById('stats-practice-line');
+
+    // MODERN MODE: secondary "Modern (unranked)" lines in the stats modal —
+    // always read straight from storage (see computeModernDailyLine), never
+    // from whichever pool happens to be toggled right now.
+    els.statsDailyModernLine = document.getElementById('stats-daily-modern-line');
+    els.statsDeadlineModernLine = document.getElementById('stats-deadline-modern-line');
+    els.statsFaderModernLine = document.getElementById('stats-fader-modern-line');
+    els.statsArcModernLine = document.getElementById('stats-arc-modern-line');
+    els.statsChemModernLine = document.getElementById('stats-chem-modern-line');
+    els.statsTwinModernLine = document.getElementById('stats-twin-modern-line');
 
     // M7: methods modal
     els.methodsBackdrop = document.getElementById('methods-backdrop');
@@ -7117,7 +7442,7 @@
     }
     if (activeChimeraMode === 'practice') ensurePracticeTarget();
     showPlayingStage();
-    TARGET = activeChimeraMode === 'practice' ? PRACTICE_TARGET : DAILY_TARGET;
+    TARGET = activeChimeraMode === 'practice' ? PRACTICE_TARGET : (isModern() ? DAILY_TARGET_MODERN : DAILY_TARGET);
     renderPrompt();
     renderScoutingLine();
     renderGuesses();
@@ -7169,14 +7494,14 @@
       showPickerError('Pick two different player-seasons for the two donors.');
       return;
     }
-    PRACTICE_TARGET = buildTargetFromPlayers(donorPick.stats, donorPick.shooting);
+    PRACTICE_TARGET = buildTargetFromPlayers(donorPick.stats, donorPick.shooting, chimeraDonorPool());
     PRACTICE_REC = freshDayRecord(3);
     PRACTICE_STAGE = 'playing';
     equationForceExpand = false;
     resetClueForceExpand();
     resetDonorPickerUI();
     refreshChimeraView();
-    track('vh-start', { mode: 'free' });
+    track('vh-start', { mode: 'free', pool: POOL });
   }
 
   function setDonorPick(slot, player) {
@@ -7191,7 +7516,7 @@
   // low-overlap constraint the Daily target uses), then auto-builds.
   function randomizeDonorPicks() {
     var rng = seededRng('vector-hoops:practice:' + randomNonce());
-    var players = DATA.players;
+    var players = chimeraDonorPool();
     var a, b, tries = 0;
     do {
       a = players[Math.floor(rng() * players.length)];
@@ -7249,7 +7574,7 @@
       equationForceExpand = false;
       resetClueForceExpand();
       refreshChimeraView();
-      track('vh-start', { mode: 'free' });
+      track('vh-start', { mode: 'free', pool: POOL });
     });
   }
 
@@ -7257,7 +7582,9 @@
   // Daily + Free Play) plus the two Daily-only donor slots.
   function setupSlotAutocomplete(slotKey, inputEl, suggEl, submitEl, hintEl) {
     if (!inputEl || !suggEl || !submitEl) return;
-    createAutocomplete(inputEl, suggEl, DATA.players, function (p) {
+    // Getter (not a static array): MODERN MODE filters the guess pool live,
+    // so toggling mid-session never requires re-registering this listener.
+    createAutocomplete(inputEl, suggEl, chimeraDonorPool, function (p) {
       pendingSelections[slotKey] = p;
       submitEl.disabled = false;
     }, { hintEl: hintEl });
@@ -7280,10 +7607,10 @@
   }
 
   function setupPickerInputs() {
-    createAutocomplete(els.pickerStatsInput, els.pickerStatsSuggestions, DATA.players, function (p) {
+    createAutocomplete(els.pickerStatsInput, els.pickerStatsSuggestions, chimeraDonorPool, function (p) {
       setDonorPick('stats', p);
     }, { hintEl: els.pickerStatsFocusHint });
-    createAutocomplete(els.pickerShootingInput, els.pickerShootingSuggestions, DATA.players, function (p) {
+    createAutocomplete(els.pickerShootingInput, els.pickerShootingSuggestions, chimeraDonorPool, function (p) {
       setDonorPick('shooting', p);
     }, { hintEl: els.pickerShootingFocusHint });
     els.pickerStatsInput.disabled = false;
@@ -7338,6 +7665,7 @@
     setupClueCardTools();
     setupSheets();
     setupArc();
+    setupPoolToggle();
     fetch(DATA_URL)
       .then(function (res) {
         if (!res.ok) throw new Error('HTTP ' + res.status);
@@ -7349,9 +7677,12 @@
         var dims = DATA.features.length;
         CENTROIDS = computeCentroids(DATA.players, k, dims);
         CLUSTER_XYZ = computeClusterXYZ(DATA.players, k);
-        DAILY_TARGET = buildDailyTarget();
-        TARGET = DAILY_TARGET;
+        computeActivePools();
+        DAILY_TARGET = buildDailyTarget(DATA.players);
+        DAILY_TARGET_MODERN = buildDailyTarget(MODERN_DONOR_POOL);
+        TARGET = isModern() ? DAILY_TARGET_MODERN : DAILY_TARGET;
         STATE = loadState();
+        STATE_MODERN = loadModernState();
         if (shouldShowDailyResetNote() && els.resetNote) {
           els.resetNote.hidden = false;
           els.resetNote.textContent = 'Vector Hoops leveled up: Chimera is now a STAGED reveal with ' +
@@ -7368,7 +7699,9 @@
         FADER_PRACTICE_STATS = loadFaderPracticeStats();
         ARC_STATE = loadArcDailyState();
         ARC_PRACTICE_STATS = loadArcPracticeStats();
-        ARC_INDEX = buildArcIndex();
+        ARC_INDEX_ALL = buildArcIndex(false);
+        ARC_INDEX_MODERN = buildArcIndex(true);
+        ARC_INDEX = isModern() ? ARC_INDEX_MODERN : ARC_INDEX_ALL;
         CHEM_STATE = loadChemDailyState();
         CHEM_PRACTICE_STATS = loadChemPracticeStats();
         PIVOT_STATE = loadPivotDailyState();
@@ -7420,7 +7753,9 @@
           })
           .then(function (dj) {
             DEADLINE = dj;
-            DEADLINE_POOL = buildDeadlinePool();
+            DEADLINE_POOL_ALL = buildDeadlinePool();
+            DEADLINE_POOL_MODERN = DEADLINE_POOL_ALL.filter(function (m) { return inLastTwoSeasons(m.season); });
+            refreshPoolFilteredData();
             setupDeadline();
             renderDeadlineHeader();
             maybeApplyChallenge();
@@ -7437,7 +7772,9 @@
           })
           .then(function (fj) {
             FADERFINISHER = fj;
-            FF_POOL = FADERFINISHER.questions || [];
+            FF_POOL_ALL = FADERFINISHER.questions || [];
+            FF_POOL_MODERN = FF_POOL_ALL.filter(function (q) { return inLastTwoSeasons(q.season); });
+            refreshPoolFilteredData();
             setupFader();
             maybeApplyChallenge();
           })
@@ -7453,7 +7790,9 @@
           })
           .then(function (cj) {
             CHEMISTRY = cj;
-            CHEM_POOL = cj.pairs || [];
+            CHEM_POOL_ALL = cj.pairs || [];
+            CHEM_POOL_MODERN = CHEM_POOL_ALL.filter(function (pr) { return inLastTwoSeasons(pr.season); });
+            refreshPoolFilteredData();
             setupChem();
             maybeApplyChallenge();
           })
@@ -7486,6 +7825,7 @@
           .then(function (tj) {
             TWINS = tj;
             TWIN_POOL = tj.players || [];
+            refreshPoolFilteredData();
             setupTwin();
             maybeApplyChallenge();
           })
@@ -7495,7 +7835,7 @@
           });
 
         if (!todayRecord().s1 && !todayRecord().done) {
-          track('vh-start', { mode: 'daily' });
+          track('vh-start', { mode: 'daily', pool: POOL });
         }
         // Auto-open the how-to-play modal only on a player's true first-ever
         // visit (a dedicated flag, independent of daily guess state) — never
