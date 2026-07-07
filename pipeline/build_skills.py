@@ -78,19 +78,26 @@ def weight_matrix(features: list[str]) -> np.ndarray:
     return W
 
 
-def season_percentiles(scores: np.ndarray, season_idx: dict[str, np.ndarray]) -> np.ndarray:
-    """Grade 0-99 = within-season percentile rank of each composite score."""
+def season_percentiles(scores: np.ndarray, volume: np.ndarray,
+                       season_idx: dict[str, np.ndarray]) -> np.ndarray:
+    """Grade 0-99 = within-season percentile rank of each composite score.
+
+    Exact composite ties are broken by `volume` (a usage/volume proxy), so
+    the higher-volume player always outranks a same-score bystander — e.g.
+    two identical FT% seasons rank the one who carried more load above.
+    """
     grades = np.zeros(scores.shape, dtype=np.int64)
     for rows in season_idx.values():
         s = scores[rows]
-        order = np.argsort(s, axis=0, kind="stable")
-        ranks = np.empty_like(order)
+        vol = volume[rows]
         n = len(rows)
-        put = np.arange(n)
         for j in range(scores.shape[1]):
-            ranks[order[:, j], j] = put
-        pct = (ranks + 0.5) / n * 100.0
-        grades[rows] = np.clip(pct.astype(np.int64), 0, 99)
+            # lexsort: primary key = composite score, secondary = volume
+            order = np.lexsort((vol, s[:, j]))
+            ranks = np.empty(n, dtype=np.int64)
+            ranks[order] = np.arange(n)
+            pct = (ranks + 0.5) / n * 100.0
+            grades[rows, j] = np.clip(pct.astype(np.int64), 0, 99)
     return grades
 
 
@@ -118,10 +125,15 @@ def main() -> None:
     W = weight_matrix(features)
     scores = V @ W.T  # [n, n_skills]
 
+    # Volume/usage proxy for tie-breaking: era-z shot + free-throw + assist
+    # load. All era-z, so it's a within-season "how much did he carry" signal.
+    vol_cols = [features.index(f) for f in ("FGA", "FTA", "AST") if f in features]
+    volume = V[:, vol_cols].sum(axis=1)
+
     season_idx: dict[str, np.ndarray] = {
         s: np.where(seasons == s)[0] for s in sorted(set(seasons.tolist()))
     }
-    grades = season_percentiles(scores, season_idx)
+    grades = season_percentiles(scores, volume, season_idx)
 
     built = time.strftime("%Y-%m-%d")
     keys = [sk["key"] for sk in SKILLS]

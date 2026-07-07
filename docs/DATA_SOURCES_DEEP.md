@@ -257,6 +257,60 @@ the exact commit command. Until then the family ships masked and
 
 ---
 
+### Track J — Wide-matrix skills (post / transition / motor)
+
+The Skills Lens grades 12 skills over the frozen 14-dim contract. Track J
+adds three **masked** skills that need richer sources than box-score
+per-100 — they grade only where the tracking/synergy/hustle feeds exist
+(2015-16+), and render as "not tracked this era" before that.
+
+| Field | Detail |
+|-------|--------|
+| **Fetcher** | `pipeline/fetch_wide_skills.py` → `pipeline/cache/wide_skills_{season}.json` |
+| **Deriver** | `pipeline/build_wide_skills.py` → `assets/skills_wide.json` (game) + `pipeline/data/wide_skill_labels.npz` (MTNN) |
+| **Source URL** | stats.nba.com `synergyplaytypes` (Postup, Transition — frequency + points-per-possession) and `leaguehustlestatsplayer` (screen assists, deflections, loose balls, charges drawn, box-outs) |
+| **Coverage** | Synergy + hustle: **2015-16 onward** only. Pre-2015-16 rows carry no wide-skill grade (masked, shown as "not tracked") |
+| **Fetch difficulty** | **Medium** — two endpoints/season; standard throttle discipline |
+| **Legal / terms** | NBA.com stats ToS; attribute in Methods |
+| **New skills** | `post` (Post Hub — 0.6·postup freq-z + 0.4·postup PPP-z), `transition` (Sprinter — 0.6·transition freq-z + 0.4·transition PPP-z), `motor` (Motor — mean-z of screen assists, deflections, loose balls, charges, box-outs) |
+| **Grading** | Same as the core lens: era-z within the **covered-season pool**, then percentile grade 0-99; badges at 90+ |
+| **Mask strategy** | Grade emitted only for player-seasons with a synergy/hustle row; everything pre-2015-16 masked; the game shows an era note, never a fabricated grade |
+| **MTNN** | Added as three **masked skill-tower targets** (per-skill mask matrix, `train_mtnn.py`); the skill towers learn them where covered, ignore them elsewhere |
+| **Estimated LOC** | ~180 fetcher + ~200 deriver |
+| **Blocked-by** | One operator run of `fetch_wide_skills.py` (stats.nba.com blocks datacenter IPs); dormant-until-cache, gated by `test_wide_skills.py` on a committed fixture |
+
+**Operator activation (one-time):** on a machine that can reach
+stats.nba.com, run `bash pipeline/operator_fetch_wide_skills.sh`. It
+fetches synergy + hustle for the tracked seasons, rebuilds the three
+masked skills, writes `assets/skills_wide.json` (the Skills Lens shows
+Post / Transition / Motor bars from 2015-16 on), runs the gates, and
+prints the commit command. Until then the three skills render as
+"not tracked this era."
+
+---
+
+### Track K — Tracking proxies (gravity + navigation)
+
+Extends the wide-skills family with two skills derived from **player
+tracking** (`leaguedashptstats`). Both are **stated proxies from public
+tracking**, not Second Spectrum gravity or matchup-difficulty metrics —
+labeled as such in the UI, the same honesty rule as "Two-Way Impact ≠
+RAPM".
+
+| Field | Detail |
+|-------|--------|
+| **Fetcher** | folded into `pipeline/fetch_wide_skills.py` (adds `leaguedashptstats` CatchShoot + Defense) |
+| **Deriver** | `pipeline/build_wide_skills.py` (skills `gravity`, `navigation`) |
+| **Source** | stats.nba.com `leaguedashptstats` — PullUpShot (`PULL_UP_FG3A`) and Defense (`D_FG_PCT`); contested shots from the hustle feed; 3PA / 3P% / BLK from the box-score contract |
+| **Coverage** | Tracking 2013-14+, but fetched over the shared wide-skill window (2015-16+) so all five wide skills align |
+| **Skills** | `shooting_gravity` (Gravity Well — 0.40·pull-up-3PA + 0.35·3PA + 0.25·3P%; pull-up weighted so **movement shooters like Curry** top it, not spot-up specialists), `rim_gravity` (Rim Warden — 0.50·BLK + 0.30·contested − 0.20·opp-FG%; interior deterrence, topped by **rim protectors like Wembanyama**) |
+| **Honesty** | UI label states these are **tracking proxies**, not Second Spectrum gravity/matchup data; Methods carries the caveat |
+| **Mask / grading** | Same as Track J — era-z percentile within the covered-season pool, masked before coverage; volume tie-break |
+| **MTNN** | Two more masked skill-tower targets (17 total: 12 core + 5 wide) |
+| **Blocked-by** | Same operator run as Track J (`fetch_wide_skills.py` now pulls tracking too) |
+
+---
+
 ## ROI-sorted build order
 
 Sorted by **impact ÷ effort** for MTNN v4 retrieval + game honesty. Ship top rows before Tier C.
@@ -274,6 +328,8 @@ Sorted by **impact ÷ effort** for MTNN v4 retrieval + game honesty. Ship top ro
 | 9 | **G — Tier C on/off** | Highest fidelity; gated, heavy | XL | VH-114 + disk | W6+ |
 | — | **H — Pedigree** *(shipped dormant 2026-07-06)* | Entry expectations + team-fit prior; one fetch call | S | Operator fetch | done |
 | — | **I — Playoffs** *(shipped dormant 2026-07-06)* | Postseason as a distinct regime; riser/fader tower | M | Operator fetch | done |
+| — | **J — Wide skills** *(shipped dormant 2026-07-06)* | Post / transition / motor; masked skills 2015-16+ | M | Operator fetch | done |
+| — | **K — Tracking proxies** *(shipped dormant 2026-07-06)* | Shooting + rim gravity from tracking (Curry / Wemby examples) | S | Operator fetch (folded into J) | done |
 
 **S** = small (~≤150 LOC), **M** = medium (~150–300), **L** = large (~300–500), **XL** = 500+.
 
@@ -343,6 +399,8 @@ fetch_draft_history.py   →  pipeline/cache/draft_history.json
 build_pedigree.py        →  pipeline/data/pedigree.json
 fetch_playoffs.py        →  pipeline/cache/playoffs_*.json
 build_playoffs.py        →  pipeline/data/playoffs.json (+ assets/playoffs.json)
+fetch_wide_skills.py     →  pipeline/cache/wide_skills_*.json
+build_wide_skills.py     →  assets/skills_wide.json (+ wide_skill_labels.npz)
 
 integrate_context.py     →  train_matrix_v4.npz + feature_manifest_v4.json
 ```
@@ -360,6 +418,8 @@ See [`mtnn_v4_plan.md`](../pipeline/mtnn_v4_plan.md) for tower families and `bbr
 | VH-114 | Tier C lineup on/off (gated) |
 | VH-115 | Pedigree (draft + entry expectations) |
 | VH-116 | Playoffs (postseason distinct regime) |
+| VH-117 | Wide skills (post / transition / motor) |
+| VH-118 | Tracking proxies (gravity / navigation) |
 
 ---
 

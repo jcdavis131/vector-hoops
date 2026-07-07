@@ -43,6 +43,11 @@ Design notes:
   percentage so a 1-of-2 season can't grade as a Sniper; empirical-Bayes
   shrinkage of the percentages already happened upstream in
   `build_vectors.py`.
+- **Ties broken by volume.** When two seasons share the same composite,
+  the percentile rank (and every leaderboard) breaks the tie by a
+  usage/volume proxy (era-z FGA + FTA + AST), so the player who carried
+  more load always outranks a same-score bystander. Wide skills tie-break
+  by their own tracked volume (play frequency / total hustle events).
 - **Ball security is load-relative.** Raw low-TOV rewards bystanders;
   `security` credits players who carry usage without bleeding turnovers.
 - **No plus-minus laundering.** `impact` is NBA.com on-court PLUS_MINUS
@@ -166,7 +171,16 @@ operator machine per the rate-limit policy in `DATA_SOURCES_DEEP.md`.
       efficiency) + team wins/rounds + `playoff_riser` aux head, plus a
       transparent Playoff Lens on `skills.html`; dormant until one
       operator run of `fetch_playoffs.py`
+- [x] Wide-matrix skills (Track J + K, 2026-07-06): post / transition /
+      motor, plus two gravities (Track K) — **shooting gravity** (pull-up
+      3s + volume/accuracy; Curry tops) and **rim gravity** (blocks +
+      deterrence; Wembanyama tops) — as masked skills (2015-16+) →
+      `assets/skills_wide.json`, MTNN skill towers with a per-skill mask
+      matrix (17 = 12 core + 5 wide), Skills Lens bars + badges; dormant
+      until `fetch_wide_skills.py`
+- [x] Steals of the Draft (2026-07-06): draft expectation vs actual peak
+      skill grade, steals/busts boards on `skills.html`; dormant until
+      `assets/pedigree.json` (from the Track H operator fetch)
 - [ ] `build_wiki.py`: emit badge line in AUTO block on next regen
 - [ ] Skill-based daily mode ("Badge Hunt": name the player from badges)
-- [ ] Wide-matrix skills (motor / post / transition) once caches land
 - [ ] MTNN skill towers vs transparent probe ablation in `feature_stress.py`

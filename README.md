@@ -4,6 +4,10 @@ Daily NBA chimera puzzle over an era-honest player embedding space.
 12,392 player-seasons (1996-2026), per-100-possession, z-scored within
 season; PCA(3) map; 8 auto-named archetypes. Static, zero backend, free.
 
+> **Picking up in-progress work?** Start at **[`docs/HANDOFF.md`](docs/HANDOFF.md)** —
+> current branch state, the four dormant data tracks and how to activate
+> them, verification commands, and open follow-ups.
+
 ## Skills Lens (`skills.html`, `docs/SKILLS_LENS.md`)
 
 Every charted player-season graded 0-99 on twelve skills — fixed linear
@@ -30,6 +34,14 @@ fetch on a non-datacenter IP (stats.nba.com blocks this environment):
   + team wins/rounds + `playoff_riser` head, plus a transparent Playoff
   Lens (RS vs PO splits + riser/fader) on `skills.html`. Activate: `bash
   pipeline/operator_fetch_playoffs.sh`.
+- **Wide skills (Track J)** — post / transition / motor as masked skills
+  (2015-16+) from synergy + hustle feeds; Skills Lens bars + MTNN
+  skill-tower targets (per-skill mask matrix). Activate: `bash
+  pipeline/operator_fetch_wide_skills.sh`.
+
+The Skills Lens also carries a **Steals of the Draft** board (draft
+expectation vs actual peak skill grade) that lights up with the Track H
+draft data.
 
 ## OKF LLM-Wiki (`knowledge/`)
 

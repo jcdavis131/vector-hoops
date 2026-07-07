@@ -1544,3 +1544,13 @@ body.vh-team-themed .landing-favorite__select:focus{
 .po-split__rs{ color: var(--ink-muted); }
 .po-split__po{ font-weight: 700; }
 .po-split__delta{ text-align: right; font-weight: 700; }
+
+/* ---- wide (masked) tracking skills in the profile ---- */
+.skillbar--widehead .skillbar__label{
+  color: var(--ink-muted);
+  font-size: 9px;
+  padding-top: 4px;
+  border-top: 1px dashed var(--hairline);
+}
+.skillbar--widehead{ margin-top: 2px; }
+.skillbar__grade--na{ color: var(--ink-muted); font-weight: 400; }
