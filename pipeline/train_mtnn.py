@@ -20,19 +20,18 @@ Builds on train_towers.py with:
         measured identity his draft slot explained
       * v4: playoff_riser head — predict PO_PTS_DELTA z (postseason minus
         regular-season scoring) from the embedding (masked MSE; active
-        when the playoffs family is merged): how much a player's
-        regular-season identity forecasts his playoff rise or fall. The
-        `playoffs` tower itself is auto-instantiated from the manifest.
-
-Outputs (pipeline/data/):
-  embedding_v3.npz     — L2-normalized embeddings + archetype/position logits
-  mtnn_report.json     — losses + retrieval / classification sanity metrics
-  mtnn_centroids.npz   — archetype centroids in embedding space (Chimera axis)
-
-Promotion into assets/ is deliberate and separate — the game keeps the
-transparent 14-d profile until v3 beats baselines on the stated gates.
+        when the playoffs family is merged)
+      * v4: honors_recognition head — predict HON_ALL_NBA_VOTE_LAG z from
+        the embedding (masked MSE; active when the honors family is merged)
+      * Phase B: team_fit, roster_lift, form_recon, career_slope,
+        competition (+ bbref_bridge when cache exists); rebalanced loss
+        weights; same-position hard-negative InfoNCE; val recall trace +
+        best-checkpoint restore
 
 Run:  python pipeline/train_mtnn.py [--epochs 40] [--dim 48]
+       python pipeline/train_mtnn.py --lr-schedule onecycle --anneal-strategy linear
+       python pipeline/mtnn_hp_sweep.py --profile novel [--quick]
+       python pipeline/tower_ablation.py
 Requires: torch, numpy; pipeline/data/train_matrix.npz from build_vectors.py
 """
 
@@ -52,8 +51,38 @@ import torch.nn.functional as F
 ROOT = Path(__file__).resolve().parents[1]
 DATA_DIR = ROOT / "pipeline" / "data"
 VECTORS = ROOT / "assets" / "vectors.json"
+BEST_CKPT = DATA_DIR / "mtnn_best.pt"
 POSITIONS = ["PG", "SG", "SF", "PF", "C"]
 N_ARCHETYPES = 8
+
+# v4 auxiliary targets (must exist in feature_manifest.json when active)
+FORM_FEATURES = [
+    "FORM_VOL", "FORM_CEIL", "FORM_DD_RATE", "FORM_TD_RATE", "FORM_GP", "FORM_MIN_AVG",
+]
+TEAM_FIT_FEATURE = "TM_NET_RTG"
+ROSTER_LIFT_FEATURE = "ROSTER_COMPLEMENT"  # proxy until ROSTER_TOP2_VORP lands
+CAREER_SLOPE_FEATURE = "DELTA_NORM"        # proxy for CAREER_SLOPE_3Y
+COMPETITION_FEATURE = "SOS_NET_RTG"
+BBREF_FEATURES = ["WS48", "BPM"]
+HONORS_PRIMARY = "HON_ALL_NBA_VOTE_LAG"
+
+# Phase B rebalanced weights (mtnn_v4_plan.md + Skills Lens)
+DEFAULT_LOSS_WEIGHTS: dict[str, float] = {
+    "archetype": 0.25,
+    "position": 0.15,
+    "profile": 0.12,
+    "skills": 0.18,
+    "salary": 0.12,
+    "team_fit": 0.08,
+    "roster_lift": 0.08,
+    "form_recon": 0.10,
+    "career_slope": 0.05,
+    "competition": 0.05,
+    "pedigree": 0.08,
+    "playoff": 0.08,
+    "honors": 0.05,
+    "bbref": 0.10,
+}
 
 
 # ---------------------------------------------------------------------------
@@ -127,15 +156,8 @@ def game_feature_cols(manifest) -> list[int]:
     return [manifest["features"].index(f) for f in game]
 
 
-def load_skill_labels(names, seasons) -> tuple[np.ndarray, np.ndarray, list[str]]:
-    """Join Skills Lens grades (0-1) by (name, season); mask=0 where absent.
-
-    Targets come from pipeline/data/skill_labels.npz (build_skills.py).
-    """
-    path = DATA_DIR / "skill_labels.npz"
-    if not path.exists():
-        return (np.zeros((len(names), 0), np.float32),
-                np.zeros(len(names), np.float32), [])
+def _join_skill_npz(path, names, seasons) -> tuple[np.ndarray, np.ndarray, list[str]]:
+    """Join one skill-label npz by (name, season) -> (G, per-skill mask, keys)."""
     npz = np.load(path, allow_pickle=False)
     keys = [str(k) for k in npz["keys"]]
     lookup = {
@@ -143,13 +165,37 @@ def load_skill_labels(names, seasons) -> tuple[np.ndarray, np.ndarray, list[str]
         for n, s, g in zip(npz["name"], npz["season"], npz["grades"])
     }
     G = np.zeros((len(names), len(keys)), dtype=np.float32)
-    M = np.zeros(len(names), dtype=np.float32)
+    M = np.zeros((len(names), len(keys)), dtype=np.float32)
     for i, (n, s) in enumerate(zip(names, seasons)):
         g = lookup.get((str(n), str(s)))
         if g is not None:
             G[i] = g
             M[i] = 1.0
     return G, M, keys
+
+
+def load_skill_labels(names, seasons) -> tuple[np.ndarray, np.ndarray, list[str], int]:
+    """Skill-tower targets with a PER-SKILL mask matrix.
+
+    Core skills (build_skills.py) cover every row; optional wide skills
+    (build_wide_skills.py) are masked per row where tracking exists.
+    Returns (grades[n,K], mask[n,K], keys, n_core).
+    """
+    core = DATA_DIR / "skill_labels.npz"
+    if not core.exists():
+        return (np.zeros((len(names), 0), np.float32),
+                np.zeros((len(names), 0), np.float32), [], 0)
+    G, M, keys = _join_skill_npz(core, names, seasons)
+    n_core = len(keys)
+    wide = DATA_DIR / "wide_skill_labels.npz"
+    if wide.exists():
+        Gw, Mw, kw = _join_skill_npz(wide, names, seasons)
+        G = np.concatenate([G, Gw], axis=1)
+        M = np.concatenate([M, Mw], axis=1)
+        keys = keys + kw
+        print(f"  wide skills joined: {kw} "
+              f"({int(Mw.any(axis=1).sum())} covered rows)")
+    return G, M, keys, n_core
 
 
 # ---------------------------------------------------------------------------
@@ -200,6 +246,25 @@ class GatedFusion(nn.Module):
         return F.normalize(emb, dim=-1)
 
 
+class ConcatFusion(nn.Module):
+    """Flatten tower stack + season embedding (Brain2Qwerty conv ablation analogue)."""
+
+    def __init__(self, n_towers: int, d_tower: int, n_seasons: int,
+                 d_season: int = 12, d_emb: int = 48):
+        super().__init__()
+        self.season_emb = nn.Embedding(n_seasons, d_season)
+        d_in = n_towers * d_tower + d_season
+        self.fuse = nn.Sequential(
+            nn.Linear(d_in, 256), nn.GELU(), nn.LayerNorm(256),
+            nn.Linear(256, d_emb),
+        )
+
+    def forward(self, tower_stack: torch.Tensor, season_ids: torch.Tensor) -> torch.Tensor:
+        flat = tower_stack.reshape(tower_stack.size(0), -1)
+        s = self.season_emb(season_ids)
+        return F.normalize(self.fuse(torch.cat([flat, s], dim=-1)), dim=-1)
+
+
 class SkillTowers(nn.Module):
     """Players→skills tower bank: one mini-tower per Skills Lens skill.
 
@@ -221,21 +286,39 @@ class SkillTowers(nn.Module):
 
 
 class MTNN(nn.Module):
-    def __init__(self, fam_dims: dict[str, int], n_seasons: int,
-                 d_tower: int = 24, d_emb: int = 48, n_game: int = 14,
-                 n_skills: int = 0):
+    def __init__(
+        self,
+        fam_dims: dict[str, int],
+        n_seasons: int,
+        d_tower: int = 24,
+        d_emb: int = 48,
+        n_game: int = 14,
+        n_skills: int = 0,
+        n_form: int = 0,
+        n_bbref: int = 0,
+        fusion_mode: str = "gated",
+    ):
         super().__init__()
         self.families = sorted(fam_dims)
+        self.fusion_mode = fusion_mode
         self.towers = nn.ModuleDict({
             fam: ResidualTower(fam_dims[fam], d_tower) for fam in self.families
         })
-        self.fusion = GatedFusion(len(self.families), d_tower, n_seasons, d_emb=d_emb)
+        fusion_cls = ConcatFusion if fusion_mode == "concat" else GatedFusion
+        self.fusion = fusion_cls(len(self.families), d_tower, n_seasons, d_emb=d_emb)
         self.archetype_head = nn.Linear(d_emb, N_ARCHETYPES)
         self.position_head = nn.Linear(d_emb, len(POSITIONS))
         self.profile_head = nn.Linear(d_emb, n_game)
         self.salary_head = nn.Linear(d_emb, 1)
+        self.team_fit_head = nn.Linear(d_emb, 1)
+        self.roster_lift_head = nn.Linear(d_emb, 1)
+        self.form_recon_head = nn.Linear(d_emb, n_form) if n_form else None
+        self.career_slope_head = nn.Linear(d_emb, 1)
+        self.competition_head = nn.Linear(d_emb, 1)
+        self.bbref_bridge_head = nn.Linear(d_emb, n_bbref) if n_bbref else None
         self.pedigree_head = nn.Linear(d_emb, 1)
         self.playoff_head = nn.Linear(d_emb, 1)
+        self.honors_head = nn.Linear(d_emb, 1)
         self.skill_towers = SkillTowers(d_emb, n_skills) if n_skills else None
 
     def encode(self, xs, ms, season_ids):
@@ -250,9 +333,18 @@ class MTNN(nn.Module):
             "position": self.position_head(emb),
             "profile": self.profile_head(emb),
             "salary": self.salary_head(emb).squeeze(-1),
+            "team_fit": self.team_fit_head(emb).squeeze(-1),
+            "roster_lift": self.roster_lift_head(emb).squeeze(-1),
+            "career_slope": self.career_slope_head(emb).squeeze(-1),
+            "competition": self.competition_head(emb).squeeze(-1),
             "pedigree": self.pedigree_head(emb).squeeze(-1),
             "playoff": self.playoff_head(emb).squeeze(-1),
+            "honors": self.honors_head(emb).squeeze(-1),
         }
+        if self.form_recon_head is not None:
+            out["form_recon"] = self.form_recon_head(emb)
+        if self.bbref_bridge_head is not None:
+            out["bbref"] = self.bbref_bridge_head(emb)
         if self.skill_towers is not None:
             out["skills"] = self.skill_towers(emb)
         return emb, out
@@ -281,11 +373,169 @@ def batch_views(xs, ms, idx, drop_p=0.12):
     return out_x, out_m
 
 
-def info_nce(za, zb, temp=0.08):
+def feature_cols(manifest: dict, names: list[str]) -> list[int] | None:
+    feats = manifest["features"]
+    cols = [feats.index(n) for n in names if n in feats]
+    return cols if len(cols) == len(names) else None
+
+
+def tensor_col(Z: np.ndarray, M: np.ndarray, j: int, device: str) -> tuple:
+    return (
+        torch.tensor(Z[:, j], device=device),
+        torch.tensor(M[:, j], device=device),
+    )
+
+
+def tensor_cols(Z: np.ndarray, M: np.ndarray, cols: list[int], device: str) -> tuple:
+    z = torch.tensor(Z[:, cols], device=device)
+    m = torch.tensor(M[:, cols], device=device)
+    row_m = (m.sum(dim=-1) > 0).float()
+    return z, m, row_m
+
+
+def masked_scalar_mse(pred, target, row_mask) -> torch.Tensor:
+    w = row_mask
+    if w.sum() <= 0:
+        return pred.sum() * 0.0
+    return (w * (pred - target) ** 2).sum() / w.sum()
+
+
+def masked_vector_mse(pred, target, feat_mask, row_mask) -> torch.Tensor:
+    w = row_mask.unsqueeze(-1) * feat_mask
+    if w.sum() <= 0:
+        return pred.sum() * 0.0
+    return (w * (pred - target) ** 2).sum() / w.sum()
+
+
+def info_nce(
+    za,
+    zb,
+    temp: float = 0.08,
+    pos_a: torch.Tensor | None = None,
+    pos_b: torch.Tensor | None = None,
+    hard_neg_boost: float = 0.0,
+):
+    """Symmetric InfoNCE with optional same-position hard-negative boost."""
     logits = za @ zb.T / temp
+    if hard_neg_boost > 0 and pos_a is not None and pos_b is not None:
+        b = logits.shape[0]
+        idx = torch.arange(b, device=logits.device)
+        hard = (pos_a.unsqueeze(1) == pos_b.unsqueeze(0)) & (
+            idx.unsqueeze(0) != idx.unsqueeze(1))
+        logits = logits + hard.float() * hard_neg_boost
     target = torch.arange(len(za), device=za.device)
     return 0.5 * (F.cross_entropy(logits, target) +
                   F.cross_entropy(logits.T, target))
+
+
+def contrastive_loss(
+    za,
+    zb,
+    *,
+    mode: str,
+    temp: float,
+    pos_a: torch.Tensor | None = None,
+    pos_b: torch.Tensor | None = None,
+    hard_neg_boost: float = 0.0,
+    arch_labels: torch.Tensor | None = None,
+) -> torch.Tensor:
+    """InfoNCE (default) or archetype-supervised multi-positive NT-Xent."""
+    if mode == "infonce":
+        return info_nce(
+            za, zb, temp=temp,
+            pos_a=pos_a, pos_b=pos_b,
+            hard_neg_boost=hard_neg_boost,
+        )
+    if mode == "supcon-arch":
+        if arch_labels is None:
+            return info_nce(za, zb, temp=temp, pos_a=pos_a, pos_b=pos_b,
+                            hard_neg_boost=hard_neg_boost)
+        labels = arch_labels
+        logits = za @ zb.T / temp
+        pos = labels.unsqueeze(0) == labels.unsqueeze(1)
+        eye = torch.eye(len(za), device=za.device, dtype=torch.bool)
+        pos = pos & ~eye
+        log_denom = torch.logsumexp(logits, dim=1)
+        pos_logits = logits.masked_fill(~pos, -1e4)
+        log_num = torch.logsumexp(pos_logits, dim=1)
+        has_pos = pos.any(dim=1)
+        if not bool(has_pos.any()):
+            return info_nce(za, zb, temp=temp, pos_a=pos_a, pos_b=pos_b,
+                            hard_neg_boost=hard_neg_boost)
+        loss = -(log_num - log_denom)
+        return loss[has_pos].mean()
+    raise ValueError(f"unknown contrastive loss: {mode}")
+
+
+def adamw_param_groups(model: nn.Module, weight_decay: float) -> list[dict]:
+    """AdamW with no decay on biases and LayerNorm (LLM/embed convention)."""
+    decay, no_decay = [], []
+    for name, param in model.named_parameters():
+        if not param.requires_grad:
+            continue
+        if param.ndim == 1 or name.endswith(".bias"):
+            no_decay.append(param)
+        else:
+            decay.append(param)
+    return [
+        {"params": decay, "weight_decay": weight_decay},
+        {"params": no_decay, "weight_decay": 0.0},
+    ]
+
+
+def optimizer_steps_per_epoch(n_rows: int, batch: int, grad_accum: int) -> int:
+    batches = max(1, (n_rows + batch - 1) // batch)
+    return max(1, batches // grad_accum)
+
+
+def build_lr_scheduler(
+    opt: torch.optim.Optimizer,
+    *,
+    schedule: str,
+    total_steps: int,
+    epochs: int,
+    warmup_pct: float,
+    max_lr: float,
+    anneal_strategy: str,
+) -> tuple[torch.optim.lr_scheduler.LRScheduler, str]:
+    """Return (scheduler, step_mode) where step_mode is 'step' or 'epoch'."""
+    if schedule == "legacy-epoch-cosine":
+        return torch.optim.lr_scheduler.CosineAnnealingLR(opt, T_max=epochs), "epoch"
+
+    warmup_steps = max(1, int(warmup_pct * total_steps))
+    if schedule == "onecycle":
+        return (
+            torch.optim.lr_scheduler.OneCycleLR(
+                opt,
+                max_lr=max_lr,
+                total_steps=total_steps,
+                pct_start=warmup_pct,
+                anneal_strategy=anneal_strategy,
+                div_factor=25.0,
+                final_div_factor=1e4,
+            ),
+            "step",
+        )
+    if schedule == "warmup-cosine":
+        main_steps = max(1, total_steps - warmup_steps)
+        sched = torch.optim.lr_scheduler.SequentialLR(
+            opt,
+            schedulers=[
+                torch.optim.lr_scheduler.LinearLR(
+                    opt, start_factor=0.01, total_iters=warmup_steps),
+                torch.optim.lr_scheduler.CosineAnnealingLR(opt, T_max=main_steps),
+            ],
+            milestones=[warmup_steps],
+        )
+        return sched, "step"
+    raise ValueError(f"unknown lr schedule: {schedule}")
+
+
+@torch.no_grad()
+def embed_all(model: MTNN, xs, ms, seas_t) -> np.ndarray:
+    model.eval()
+    emb = model.encode(xs, ms, seas_t)
+    return emb.cpu().numpy().astype(np.float32)
 
 
 # ---------------------------------------------------------------------------
@@ -374,29 +624,33 @@ def cross_era_archetype_purity(E: np.ndarray, clusters: np.ndarray,
 
 
 def skill_holdout_metrics(pred: np.ndarray, target: np.ndarray,
-                          valid: np.ndarray, seasons: np.ndarray,
+                          mask: np.ndarray, seasons: np.ndarray,
                           keys: list[str]) -> dict:
-    """Per-skill R2 + MAE (grade points, 0-100) on held-out season splits."""
+    """Per-skill R2 + MAE (grade points, 0-100) on held-out season splits.
+
+    `mask` is the per-skill [n, K] coverage matrix — each skill scores only
+    over rows where that skill is present (wide skills are 2015-16+).
+    """
     out: dict = {}
     split_of = np.array([eval_split(str(s)) for s in seasons])
     for split in ("val", "test"):
-        rows = np.where((valid > 0) & (split_of == split))[0]
-        if len(rows) == 0:
-            out[split] = None
-            continue
-        p, t = pred[rows], target[rows]
+        in_split = split_of == split
         per = {}
         for j, key in enumerate(keys):
-            resid = t[:, j] - p[:, j]
-            ss_res = float((resid ** 2).sum())
-            ss_tot = float(((t[:, j] - t[:, j].mean()) ** 2).sum())
+            rows = np.where((mask[:, j] > 0) & in_split)[0]
+            if len(rows) < 5:
+                per[key] = {"r2": None, "mae_pts": None, "rows": int(len(rows))}
+                continue
+            resid = target[rows, j] - pred[rows, j]
+            ss_tot = float(((target[rows, j] - target[rows, j].mean()) ** 2).sum())
             per[key] = {
-                "r2": round(1.0 - ss_res / max(ss_tot, 1e-9), 4),
+                "r2": round(1.0 - float((resid ** 2).sum()) / max(ss_tot, 1e-9), 4),
                 "mae_pts": round(float(np.abs(resid).mean()) * 100.0, 2),
+                "rows": int(len(rows)),
             }
+        scored = [v["r2"] for v in per.values() if v["r2"] is not None]
         out[split] = {
-            "rows": int(len(rows)),
-            "mean_r2": round(float(np.mean([v["r2"] for v in per.values()])), 4),
+            "mean_r2": round(float(np.mean(scored)), 4) if scored else None,
             "per_skill": per,
         }
     return out
@@ -434,9 +688,41 @@ def main() -> None:
     ap.add_argument("--batch", type=int, default=512)
     ap.add_argument("--lr", type=float, default=1.5e-3)
     ap.add_argument("--seed", type=int, default=7)
+    ap.add_argument("--nce-temp", type=float, default=0.08)
+    ap.add_argument("--drop-p", type=float, default=0.12)
+    ap.add_argument("--hard-neg-boost", type=float, default=0.3,
+                    help="same-position in-batch negative boost (0=off)")
+    ap.add_argument("--lr-schedule", choices=(
+        "legacy-epoch-cosine", "onecycle", "warmup-cosine"),
+        default="legacy-epoch-cosine",
+        help="onecycle mirrors Brain2Qwerty (arXiv:2502.17480); warmup-cosine is embed SOTA")
+    ap.add_argument("--warmup-pct", type=float, default=0.1,
+                    help="warmup fraction of optimizer steps (Brain2Qwerty uses 0.1)")
+    ap.add_argument("--anneal-strategy", choices=("cos", "linear"), default="linear",
+                    help="OneCycleLR anneal; paper uses linear decay after warmup")
+    ap.add_argument("--weight-decay", type=float, default=1e-4)
+    ap.add_argument("--grad-accum", type=int, default=1,
+                    help="gradient accumulation steps (effective batch = batch * accum)")
+    ap.add_argument("--fusion", choices=("gated", "concat"), default="gated",
+                    help="tower fusion: gated attention (default) or concat MLP")
+    ap.add_argument("--nce-loss", choices=("infonce", "supcon-arch"), default="infonce",
+                    help="contrastive anchor: pairwise InfoNCE or archetype multi-positive")
+    ap.add_argument("--val-every", type=int, default=10,
+                    help="log held-out val recall every N epochs; 0=off")
+    ap.add_argument("--no-best-checkpoint", action="store_true",
+                    help="skip saving/restoring best-val checkpoint")
     ap.add_argument("--exclude-families", type=str, default="",
                     help="comma-separated tower families to drop (ablation)")
+    for key in DEFAULT_LOSS_WEIGHTS:
+        ap.add_argument(f"--w-{key.replace('_', '-')}", type=float, default=None,
+                        dest=f"w_{key}")
     args = ap.parse_args()
+
+    weights = dict(DEFAULT_LOSS_WEIGHTS)
+    for key in DEFAULT_LOSS_WEIGHTS:
+        val = getattr(args, f"w_{key}")
+        if val is not None:
+            weights[key] = val
 
     torch.manual_seed(args.seed)
     np.random.seed(args.seed)
@@ -456,63 +742,125 @@ def main() -> None:
     print(f"{len(Z)} rows, {Z.shape[1]} features, {len(fams)} towers, "
           f"{n_seasons} seasons, device={device}")
     print(f"tower widths: { {k: len(v) for k, v in fams.items()} }")
+    print(f"loss weights: {weights}")
 
     pairs = adjacent_season_pairs(pids, seasons, names)
     print(f"{len(pairs)} same-player adjacent-season pairs")
 
-    sal_j = None
-    if "SALARY_LOG" in manifest["features"]:
-        sal_j = manifest["features"].index("SALARY_LOG")
-    sal_z = torch.tensor(Z[:, sal_j], device=device) if sal_j is not None else None
-    sal_m = torch.tensor(M[:, sal_j], device=device) if sal_j is not None else None
+    feats = manifest["features"]
 
-    ped_j = None
-    if "PED_PICK_QUALITY" in manifest["features"]:
-        ped_j = manifest["features"].index("PED_PICK_QUALITY")
-    ped_z = torch.tensor(Z[:, ped_j], device=device) if ped_j is not None else None
-    ped_m = torch.tensor(M[:, ped_j], device=device) if ped_j is not None else None
+    def col_idx(name: str) -> int | None:
+        return feats.index(name) if name in feats else None
+
+    sal_j = col_idx("SALARY_LOG")
+    sal_z, sal_m = (tensor_col(Z, M, sal_j, device) if sal_j is not None else (None, None))
+
+    ped_j = col_idx("PED_PICK_QUALITY")
+    ped_z, ped_m = (tensor_col(Z, M, ped_j, device) if ped_j is not None else (None, None))
     if ped_j is not None:
-        print(f"pedigree_expectation head active: "
-              f"{int(M[:, ped_j].sum())} rows with draft-slot labels")
+        print(f"pedigree_expectation head: {int(M[:, ped_j].sum())} labeled rows")
 
-    po_j = None
-    if "PO_PTS_DELTA" in manifest["features"]:
-        po_j = manifest["features"].index("PO_PTS_DELTA")
-    po_z = torch.tensor(Z[:, po_j], device=device) if po_j is not None else None
-    po_m = torch.tensor(M[:, po_j], device=device) if po_j is not None else None
+    po_j = col_idx("PO_PTS_DELTA")
+    po_z, po_m = (tensor_col(Z, M, po_j, device) if po_j is not None else (None, None))
     if po_j is not None:
-        print(f"playoff_riser head active: "
-              f"{int(M[:, po_j].sum())} rows with playoff scoring-delta labels")
+        print(f"playoff_riser head: {int(M[:, po_j].sum())} labeled rows")
+
+    hon_j = col_idx(HONORS_PRIMARY)
+    hon_z, hon_m = (tensor_col(Z, M, hon_j, device) if hon_j is not None else (None, None))
+    if hon_j is not None:
+        print(f"honors_recognition head ({HONORS_PRIMARY}): "
+              f"{int(M[:, hon_j].sum())} labeled rows")
+
+    team_j = col_idx(TEAM_FIT_FEATURE)
+    team_z, team_m = (tensor_col(Z, M, team_j, device) if team_j is not None else (None, None))
+    if team_j is not None:
+        print(f"team_fit head: {int(M[:, team_j].sum())} labeled rows")
+
+    roster_j = col_idx(ROSTER_LIFT_FEATURE)
+    roster_z, roster_m = (
+        tensor_col(Z, M, roster_j, device) if roster_j is not None else (None, None))
+    if roster_j is not None:
+        print(f"roster_lift head ({ROSTER_LIFT_FEATURE}): "
+              f"{int(M[:, roster_j].sum())} labeled rows")
+
+    career_j = col_idx(CAREER_SLOPE_FEATURE)
+    career_z, career_m = (
+        tensor_col(Z, M, career_j, device) if career_j is not None else (None, None))
+
+    comp_j = col_idx(COMPETITION_FEATURE)
+    comp_z, comp_m = (tensor_col(Z, M, comp_j, device) if comp_j is not None else (None, None))
+
+    form_cols = feature_cols(manifest, FORM_FEATURES)
+    form_z, form_m, form_row_m = (
+        tensor_cols(Z, M, form_cols, device) if form_cols else (None, None, None))
+    if form_cols:
+        print(f"form_recon head: {int(form_row_m.sum())} labeled rows")
+
+    bbref_cols = feature_cols(manifest, BBREF_FEATURES)
+    bbref_z, bbref_m, bbref_row_m = (
+        tensor_cols(Z, M, bbref_cols, device) if bbref_cols else (None, None, None))
+    if bbref_cols:
+        print(f"bbref_bridge head: {int(bbref_row_m.sum())} labeled rows")
+
     arch_t = torch.tensor(clusters, device=device)
     pos_t = torch.tensor(positions, device=device)
     pos_mask = pos_t >= 0
     seas_t = torch.tensor(season_ids, device=device)
 
-    skill_g, skill_m, skill_keys = load_skill_labels(names, seasons)
+    skill_g, skill_m, skill_keys, n_core = load_skill_labels(names, seasons)
     skill_t = torch.tensor(skill_g, device=device)
     skillm_t = torch.tensor(skill_m, device=device)
-    print(f"{len(skill_keys)} skill towers, "
-          f"{int(skill_m.sum())} rows with Skills Lens labels")
-
-    xs, ms = split_by_family(Z, M, fams, device)
-    model = MTNN({f: len(c) for f, c in fams.items()}, n_seasons,
-                 d_emb=args.dim, n_game=len(game_cols),
-                 n_skills=len(skill_keys)).to(device)
-    opt = torch.optim.AdamW(model.parameters(), lr=args.lr, weight_decay=1e-4)
-    sched = torch.optim.lr_scheduler.CosineAnnealingLR(opt, T_max=args.epochs)
+    skill_row_mask = skill_m.any(axis=1) if skill_m.ndim == 2 else skill_m > 0
+    print(f"{len(skill_keys)} skill towers ({n_core} core + "
+          f"{len(skill_keys) - n_core} wide), per-skill masked")
 
     n = len(Z)
+    xs, ms = split_by_family(Z, M, fams, device)
+    model = MTNN(
+        {f: len(c) for f, c in fams.items()},
+        n_seasons,
+        d_emb=args.dim,
+        n_game=len(game_cols),
+        n_skills=len(skill_keys),
+        n_form=len(form_cols) if form_cols else 0,
+        n_bbref=len(bbref_cols) if bbref_cols else 0,
+        fusion_mode=args.fusion,
+    ).to(device)
+    opt = torch.optim.AdamW(
+        adamw_param_groups(model, args.weight_decay), lr=args.lr)
+    steps_per_epoch = optimizer_steps_per_epoch(n, args.batch, args.grad_accum)
+    total_steps = max(1, steps_per_epoch * args.epochs)
+    sched, sched_mode = build_lr_scheduler(
+        opt,
+        schedule=args.lr_schedule,
+        total_steps=total_steps,
+        epochs=args.epochs,
+        warmup_pct=args.warmup_pct,
+        max_lr=args.lr,
+        anneal_strategy=args.anneal_strategy,
+    )
+    print(f"lr schedule: {args.lr_schedule} ({sched_mode}-level), "
+          f"steps/epoch={steps_per_epoch}, total_steps={total_steps}, "
+          f"fusion={args.fusion}, nce_loss={args.nce_loss}")
+
     pair_arr = np.array(pairs) if pairs else np.zeros((0, 2), int)
-    lookup = {}
+    val_pairs = filter_pairs_by_split(pair_arr, seasons, "val")
+    lookup: dict[int, int] = {}
     if len(pair_arr):
         lookup = {int(a): int(b) for a, b in pair_arr}
         lookup.update({int(b): int(a) for a, b in pair_arr})
 
-    history = []
+    best_val_recall: float | None = None
+    best_epoch = -1
+    history: list[float] = []
+    val_trace: list[dict] = []
+
     for epoch in range(args.epochs):
         model.train()
         perm = np.random.permutation(n)
         total, steps = 0.0, 0
+        accum = 0
+        opt.zero_grad(set_to_none=True)
         for s in range(0, n, args.batch):
             idx = perm[s:s + args.batch]
             if len(idx) < 8:
@@ -521,49 +869,130 @@ def main() -> None:
             partner = np.array([lookup.get(int(i), int(i)) for i in idx])
             partner_t = torch.tensor(partner, device=device)
 
-            xa, ma = batch_views(xs, ms, idx_t)
-            xb, mb = batch_views(xs, ms, partner_t)
+            xa, ma = batch_views(xs, ms, idx_t, drop_p=args.drop_p)
+            xb, mb = batch_views(xs, ms, partner_t, drop_p=args.drop_p)
             za, out_a = model(xa, ma, seas_t[idx_t])
             zb, _ = model(xb, mb, seas_t[partner_t])
 
-            loss = info_nce(za, zb)
-            loss = loss + 0.35 * F.cross_entropy(out_a["archetype"], arch_t[idx_t])
+            pos_batch = pos_t[idx_t]
+            pos_partner = pos_t[partner_t]
+            loss = contrastive_loss(
+                za, zb,
+                mode=args.nce_loss,
+                temp=args.nce_temp,
+                pos_a=pos_batch,
+                pos_b=pos_partner,
+                hard_neg_boost=args.hard_neg_boost,
+                arch_labels=arch_t[idx_t],
+            )
+            loss = loss + weights["archetype"] * F.cross_entropy(
+                out_a["archetype"], arch_t[idx_t])
             if pos_mask[idx_t].any():
-                loss = loss + 0.2 * F.cross_entropy(
+                loss = loss + weights["position"] * F.cross_entropy(
                     out_a["position"][pos_mask[idx_t]], pos_t[idx_t][pos_mask[idx_t]])
-            loss = loss + 0.15 * F.mse_loss(out_a["profile"], game_z[idx_t])
+            loss = loss + weights["profile"] * F.mse_loss(
+                out_a["profile"], game_z[idx_t])
             if "skills" in out_a:
-                w = skillm_t[idx_t]
-                if w.sum() > 0:
-                    per_row = ((out_a["skills"] - skill_t[idx_t]) ** 2).mean(-1)
-                    loss = loss + 0.3 * (w * per_row).sum() / w.sum()
+                wm = skillm_t[idx_t]
+                if wm.sum() > 0:
+                    se = (out_a["skills"] - skill_t[idx_t]) ** 2
+                    loss = loss + weights["skills"] * (wm * se).sum() / wm.sum()
             if sal_z is not None and sal_m is not None:
-                w = sal_m[idx_t]
-                if w.sum() > 0:
-                    sal_loss = (w * (out_a["salary"] - sal_z[idx_t]) ** 2).sum() / w.sum()
-                    loss = loss + 0.2 * sal_loss
+                loss = loss + weights["salary"] * masked_scalar_mse(
+                    out_a["salary"], sal_z[idx_t], sal_m[idx_t])
+            if team_z is not None and team_m is not None:
+                loss = loss + weights["team_fit"] * masked_scalar_mse(
+                    out_a["team_fit"], team_z[idx_t], team_m[idx_t])
+            if roster_z is not None and roster_m is not None:
+                loss = loss + weights["roster_lift"] * masked_scalar_mse(
+                    out_a["roster_lift"], roster_z[idx_t], roster_m[idx_t])
+            if form_z is not None and form_m is not None:
+                loss = loss + weights["form_recon"] * masked_vector_mse(
+                    out_a["form_recon"], form_z[idx_t], form_m[idx_t], form_row_m[idx_t])
+            if career_z is not None and career_m is not None:
+                loss = loss + weights["career_slope"] * masked_scalar_mse(
+                    out_a["career_slope"], career_z[idx_t], career_m[idx_t])
+            if comp_z is not None and comp_m is not None:
+                loss = loss + weights["competition"] * masked_scalar_mse(
+                    out_a["competition"], comp_z[idx_t], comp_m[idx_t])
+            if bbref_z is not None and bbref_m is not None and "bbref" in out_a:
+                loss = loss + weights["bbref"] * masked_vector_mse(
+                    out_a["bbref"], bbref_z[idx_t], bbref_m[idx_t], bbref_row_m[idx_t])
             if ped_z is not None and ped_m is not None:
-                w = ped_m[idx_t]
-                if w.sum() > 0:
-                    ped_loss = (w * (out_a["pedigree"] - ped_z[idx_t]) ** 2).sum() / w.sum()
-                    loss = loss + 0.1 * ped_loss
+                loss = loss + weights["pedigree"] * masked_scalar_mse(
+                    out_a["pedigree"], ped_z[idx_t], ped_m[idx_t])
             if po_z is not None and po_m is not None:
-                w = po_m[idx_t]
-                if w.sum() > 0:
-                    po_loss = (w * (out_a["playoff"] - po_z[idx_t]) ** 2).sum() / w.sum()
-                    loss = loss + 0.1 * po_loss
+                loss = loss + weights["playoff"] * masked_scalar_mse(
+                    out_a["playoff"], po_z[idx_t], po_m[idx_t])
+            if hon_z is not None and hon_m is not None:
+                loss = loss + weights["honors"] * masked_scalar_mse(
+                    out_a["honors"], hon_z[idx_t], hon_m[idx_t])
 
-            opt.zero_grad()
-            loss.backward()
+            scaled = loss / args.grad_accum
+            scaled.backward()
+            accum += 1
+            total += float(loss)
+            if accum < args.grad_accum:
+                continue
             nn.utils.clip_grad_norm_(model.parameters(), 1.0)
             opt.step()
-            total += float(loss)
+            if sched_mode == "step":
+                sched.step()
+            opt.zero_grad(set_to_none=True)
+            accum = 0
             steps += 1
-        sched.step()
+        if accum > 0:
+            nn.utils.clip_grad_norm_(model.parameters(), 1.0)
+            opt.step()
+            if sched_mode == "step":
+                sched.step()
+            opt.zero_grad(set_to_none=True)
+            steps += 1
+        if sched_mode == "epoch":
+            sched.step()
         avg = total / max(1, steps)
         history.append(avg)
+
+        log_line = f"epoch {epoch:3d}  loss {avg:.4f}  lr {sched.get_last_lr()[0]:.2e}"
+        if args.val_every > 0 and (
+            epoch % args.val_every == 0 or epoch == args.epochs - 1
+        ):
+            E_val = embed_all(model, xs, ms, seas_t)
+            val_r = recall_at_k(E_val, val_pairs, k=10)
+            test_pairs = filter_pairs_by_split(pair_arr, seasons, "test")
+            test_r = recall_at_k(E_val, test_pairs, k=10)
+            log_line += f"  val_recall@10={val_r:.3f} test_recall@10={test_r:.3f}"
+            val_trace.append({
+                "epoch": epoch,
+                "val_recall_at_10": val_r,
+                "test_recall_at_10": test_r,
+            })
+            if (
+                not args.no_best_checkpoint
+                and val_r is not None
+                and (best_val_recall is None or val_r > best_val_recall)
+            ):
+                best_val_recall = val_r
+                best_epoch = epoch
+                torch.save({
+                    "epoch": epoch,
+                    "model": model.state_dict(),
+                    "val_recall_at_10": val_r,
+                    "args": vars(args),
+                    "weights": weights,
+                }, BEST_CKPT)
         if epoch % 5 == 0 or epoch == args.epochs - 1:
-            print(f"epoch {epoch:3d}  loss {avg:.4f}  lr {sched.get_last_lr()[0]:.2e}")
+            print(log_line)
+
+    if (
+        not args.no_best_checkpoint
+        and BEST_CKPT.exists()
+        and best_epoch >= 0
+    ):
+        ckpt = torch.load(BEST_CKPT, map_location=device, weights_only=False)
+        model.load_state_dict(ckpt["model"])
+        print(f"restored best checkpoint epoch {best_epoch} "
+              f"(val_recall@10={best_val_recall:.3f})")
 
     # ---- export ----
     model.eval()
@@ -624,6 +1053,11 @@ def main() -> None:
 
     pedigree_report = regression_head_report("pedigree", ped_j)
     playoff_report = regression_head_report("playoff", po_j)
+    honors_report = regression_head_report("honors", hon_j)
+    team_fit_report = regression_head_report("team_fit", team_j)
+    roster_lift_report = regression_head_report("roster_lift", roster_j)
+    career_slope_report = regression_head_report("career_slope", career_j)
+    competition_report = regression_head_report("competition", comp_j)
 
     skills_report = None
     if skill_keys:
@@ -631,9 +1065,9 @@ def main() -> None:
             "holdout": skill_holdout_metrics(
                 skill_pred, skill_g, skill_m, seasons, skill_keys),
             "neighbor_consistency_pts_mtnn": skill_neighbor_consistency(
-                E, skill_g, skill_m),
+                E, skill_g, skill_row_mask),
             "neighbor_consistency_pts_transparent_14d": skill_neighbor_consistency(
-                G_base, skill_g, skill_m),
+                G_base, skill_g, skill_row_mask),
         }
     held_out = {}
     for split in ("train", "val", "test", "all"):
@@ -646,9 +1080,24 @@ def main() -> None:
 
     report = {
         "trained": time.strftime("%Y-%m-%d %H:%M"),
-        "model": "mtnn_v4_skills",
+        "model": "mtnn_v4_phase_b",
         "epochs": args.epochs,
+        "best_epoch": best_epoch if best_epoch >= 0 else None,
+        "best_val_recall_at_10": best_val_recall,
         "dim": args.dim,
+        "lr": args.lr,
+        "lr_schedule": args.lr_schedule,
+        "warmup_pct": args.warmup_pct,
+        "anneal_strategy": args.anneal_strategy,
+        "weight_decay": args.weight_decay,
+        "grad_accum": args.grad_accum,
+        "fusion": args.fusion,
+        "nce_loss": args.nce_loss,
+        "nce_temp": args.nce_temp,
+        "drop_p": args.drop_p,
+        "hard_neg_boost": args.hard_neg_boost,
+        "loss_weights": weights,
+        "val_trace": val_trace,
         "towers": {k: len(v) for k, v in fams.items()},
         "positive_pairs": len(pairs),
         "position_labeled": int((positions >= 0).sum()),
@@ -659,8 +1108,13 @@ def main() -> None:
         "position_top1_acc": pos_acc,
         "cross_era_archetype_neighbor_purity_at_20": purity,
         "skills": skills_report,
+        "team_fit": team_fit_report,
+        "roster_lift": roster_lift_report,
+        "career_slope": career_slope_report,
+        "competition": competition_report,
         "pedigree_expectation": pedigree_report,
         "playoff_riser": playoff_report,
+        "honors_recognition": honors_report,
         "promotion_gate": (
             "Promote only if held-out val/test recall@10 beats transparent 14-d "
             "baseline by >=0.05 AND archetype_top1_acc >= 0.55 (not auto-promoted)."

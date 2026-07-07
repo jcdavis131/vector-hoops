@@ -228,6 +228,44 @@ def v6_teams() -> None:
     print(f"  {len(teams)} teams, {len(abbrs)} unique abbreviations")
 
 
+def v7_skills_alignment(data: dict) -> None:
+    print("V7 skills.json alignment with vectors…")
+    path = ASSETS / "skills.json"
+    if not path.exists():
+        fail("assets/skills.json missing — run pipeline/build_skills.py")
+        return
+    sk = json.loads(path.read_text(encoding="utf-8"))
+    if len(sk.get("grades", [])) != len(data["players"]):
+        fail(f"skills grades {len(sk.get('grades', []))} != vectors {len(data['players'])}")
+        return
+    probe = ASSETS / "skill_probe.json"
+    if not probe.exists():
+        fail("assets/skill_probe.json missing")
+        return
+    print(f"  {len(sk['grades'])} rows aligned; {len(sk.get('skills', []))} skills")
+
+
+def v8_pedigree_asset(data: dict) -> None:
+    print("V8 pedigree.json coverage (optional asset)…")
+    path = ASSETS / "pedigree.json"
+    if not path.exists():
+        print("  pedigree.json absent — Skills pedigree panel dormant")
+        return
+    ped = json.loads(path.read_text(encoding="utf-8"))
+    entries = ped.get("entries", {})
+    if not entries:
+        fail("pedigree.json has no entries")
+        return
+    sample = 0
+    for p in data["players"][:50]:
+        key = f"{p['name']}|{p['season']}"
+        if key in entries:
+            sample += 1
+    print(f"  {len(entries)} pedigree rows; sample hit {sample}/50 vector rows")
+    if sample < 10:
+        fail("pedigree keys do not align with vectors.json name|season")
+
+
 if __name__ == "__main__":
     data = json.loads((ASSETS / "vectors.json").read_text(encoding="utf-8"))
     v1_vectors(data)
@@ -236,6 +274,8 @@ if __name__ == "__main__":
     v4_determinism(data)
     v5_procrustes(data)
     v6_teams()
+    v7_skills_alignment(data)
+    v8_pedigree_asset(data)
     if FAILS:
         print(f"\nACCURACY HARNESS: {len(FAILS)} FAILURES — do not ship")
         sys.exit(1)
