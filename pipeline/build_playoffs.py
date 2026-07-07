@@ -36,10 +36,14 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 import time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "pipeline"))
+from nba_http import real_playoff_cache_paths
+
 VECTORS = ROOT / "assets" / "vectors.json"
 CACHE_DIR = ROOT / "pipeline" / "cache"
 FIXTURE = CACHE_DIR / "playoffs.example.json"
@@ -57,7 +61,7 @@ def load_caches(use_fixture: bool) -> tuple[dict, dict, bool]:
     teams: dict[tuple[str, str], dict] = {}
     complete = True
 
-    per_season = sorted(CACHE_DIR.glob("playoffs_*.json"))
+    per_season = real_playoff_cache_paths(CACHE_DIR)
     if per_season and not use_fixture:
         for path in per_season:
             doc = json.loads(path.read_text(encoding="utf-8"))

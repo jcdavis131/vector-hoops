@@ -13,11 +13,14 @@ Run:  python pipeline/test_playoffs.py        (exit 0 = all gates pass)
 from __future__ import annotations
 
 import json
+import re
 import subprocess
 import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "pipeline"))
+from nba_http import real_playoff_cache_paths
 CACHE_DIR = ROOT / "pipeline" / "cache"
 PLAYOFFS = ROOT / "pipeline" / "data" / "playoffs.json"
 ASSET = ROOT / "assets" / "playoffs.json"
@@ -26,14 +29,16 @@ FAILURES: list[str] = []
 
 
 def check(cond: bool, msg: str) -> None:
-    print(f"  [{'PASS' if cond else 'FAIL'}] {msg}")
+    safe = msg.encode(sys.stdout.encoding or "utf-8", errors="backslashreplace").decode(
+        sys.stdout.encoding or "utf-8", errors="backslashreplace")
+    print(f"  [{'PASS' if cond else 'FAIL'}] {safe}")
     if not cond:
         FAILURES.append(msg)
 
 
 def rebuild() -> bool:
-    """Re-derive playoffs.json; returns True if REAL caches were used."""
-    real = bool(list(CACHE_DIR.glob("playoffs_*.json")))
+    """Re-derive playoffs.json; returns True if REAL per-season caches were used."""
+    real = bool(real_playoff_cache_paths(CACHE_DIR))
     cmd = [sys.executable, "pipeline/build_playoffs.py"] + ([] if real else ["--fixture"])
     proc = subprocess.run(cmd, cwd=ROOT, capture_output=True, text=True)
     if proc.returncode != 0:

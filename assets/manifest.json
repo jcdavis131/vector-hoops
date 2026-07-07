@@ -1,0 +1,157 @@
+{
+  "built": "2026-07-07 04:40 UTC",
+  "contract": "transparent_14d",
+  "mtnn_promoted": false,
+  "mtnn_model": "mtnn_v4_phase_b",
+  "mtnn_test_recall_at_10": 0.984,
+  "dataset_ledger": {
+    "run": "2026-07-06 22:59 UTC",
+    "season_hint": null,
+    "steps": [
+      {
+        "step": "rebuild vectors (offline)",
+        "ok": false,
+        "seconds": 0.2
+      },
+      {
+        "step": "rebuild skills",
+        "ok": true,
+        "seconds": 0.4
+      },
+      {
+        "step": "skill gates",
+        "ok": true,
+        "seconds": 0.3
+      },
+      {
+        "step": "rebuild pedigree (Track H)",
+        "ok": false,
+        "seconds": 0.0
+      },
+      {
+        "step": "pedigree gates",
+        "ok": true,
+        "seconds": 0.2
+      },
+      {
+        "step": "rebuild playoffs (Track I)",
+        "ok": true,
+        "seconds": 0.2
+      },
+      {
+        "step": "playoff gates",
+        "ok": true,
+        "seconds": 0.2
+      }
+    ],
+    "pedigree": {
+      "cache_complete": false,
+      "players_drafted": 10,
+      "players_undrafted": 0,
+      "players_unmatched_masked": 2283,
+      "rows_covered": 125,
+      "rows_total": 12392
+    },
+    "playoffs": {
+      "cache_complete": false,
+      "appearances": 8,
+      "seasons_covered": 4,
+      "rows_total": 12392
+    },
+    "player_seasons": 12392,
+    "seasons": [
+      "1996-97",
+      "2025-26"
+    ],
+    "n_seasons": 30,
+    "skills": 12,
+    "badges": 14892,
+    "grade_sha1": "ad4e56119e56"
+  },
+  "steps": {
+    "skills": true,
+    "skill_gates": true,
+    "pedigree": true,
+    "pedigree_gates": true,
+    "playoffs": true,
+    "playoffs_gates": true,
+    "honors": true,
+    "honors_gates": true,
+    "salary_market": true,
+    "salary_gates": true,
+    "player_meta": true,
+    "procrustes_drift.py": true,
+    "archetype_time.py": true,
+    "career_trajectories.py": true
+  },
+  "assets": {
+    "vectors.json": {
+      "sha1": "8054a40e32ac",
+      "present": true
+    },
+    "skills.json": {
+      "sha1": "b58d540763be",
+      "present": true
+    },
+    "skill_probe.json": {
+      "sha1": "6b99dc814702",
+      "present": true
+    },
+    "player_meta.json": {
+      "sha1": "c74159dc601b",
+      "present": true
+    },
+    "teams.json": {
+      "sha1": "441a29f70c4c",
+      "present": true
+    },
+    "pedigree.json": {
+      "sha1": "a5eb46db7739",
+      "present": true
+    },
+    "playoffs.json": {
+      "sha1": "8d71b6c816d6",
+      "present": true
+    },
+    "honors.json": {
+      "sha1": "559abf2b7195",
+      "present": true
+    },
+    "archetypes_time.json": {
+      "sha1": "223bc0181390",
+      "present": true
+    },
+    "trajectories.json": {
+      "sha1": "937b75487820",
+      "present": true
+    },
+    "drift.json": {
+      "sha1": "39c9fa742b50",
+      "present": true
+    },
+    "deadline.json": {
+      "sha1": "532f2a0403dc",
+      "present": true
+    },
+    "chemistry.json": {
+      "sha1": "12205125febd",
+      "present": true
+    },
+    "pivots.json": {
+      "sha1": "1bdafd47648a",
+      "present": true
+    },
+    "eratwins.json": {
+      "sha1": "bb6b7632b187",
+      "present": true
+    },
+    "faderfinisher.json": {
+      "sha1": "306bf9b61758",
+      "present": true
+    },
+    "roles.json": {
+      "sha1": "ddc07e71112b",
+      "present": true
+    }
+  }
+}

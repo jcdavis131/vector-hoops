@@ -23,8 +23,13 @@ absence in an incomplete cache masks the family instead of implying
 "undrafted".
 
 Run:  python pipeline/fetch_draft_history.py [--offline]
-Requires network to stats.nba.com (operator machine — datacenter IPs are
-blocked); one request, no per-season loop, standard retry/backoff.
+Requires network to stats.nba.com. Install ``curl_cffi`` on operator
+machines — Akamai blocks plain ``requests`` / ``nba_api`` TLS fingerprints:
+
+  pip install curl_cffi
+  python pipeline/fetch_draft_history.py
+
+One request, no per-season loop, standard retry/backoff.
 """
 
 from __future__ import annotations
@@ -32,10 +37,14 @@ from __future__ import annotations
 import argparse
 import json
 import re
+import sys
 import time
 import unicodedata
 from collections import defaultdict
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from nba_http import fetch_stats_json, legacy_result_set_rows
 
 ROOT = Path(__file__).resolve().parents[1]
 CACHE = ROOT / "pipeline" / "cache"
@@ -55,20 +64,8 @@ def norm_name(name: str) -> str:
 
 
 def fetch_all_drafts() -> list[dict]:
-    from nba_api.stats.endpoints import drafthistory
-
-    last_err: Exception | None = None
-    for attempt in range(5):
-        try:
-            r = drafthistory.DraftHistory(league_id="00", timeout=75)
-            df = r.get_data_frames()[0]
-            return df.to_dict("records")
-        except Exception as e:  # noqa: BLE001 — retry the throttle wall
-            last_err = e
-            wait = min(120, 5 * 2 ** attempt)
-            print(f"attempt {attempt + 1} failed ({e}); backing off {wait}s")
-            time.sleep(wait)
-    raise SystemExit(f"drafthistory fetch failed after retries: {last_err}")
+    payload = fetch_stats_json("drafthistory", {"LeagueID": "00"}, timeout=90)
+    return legacy_result_set_rows(payload, "DraftHistory")
 
 
 def to_cache(rows: list[dict]) -> dict:

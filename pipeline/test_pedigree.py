@@ -27,7 +27,9 @@ FAILURES: list[str] = []
 
 def check(cond: bool, msg: str) -> None:
     tag = "PASS" if cond else "FAIL"
-    print(f"  [{tag}] {msg}")
+    safe = msg.encode(sys.stdout.encoding or "utf-8", errors="backslashreplace").decode(
+        sys.stdout.encoding or "utf-8", errors="backslashreplace")
+    print(f"  [{tag}] {safe}")
     if not cond:
         FAILURES.append(msg)
 

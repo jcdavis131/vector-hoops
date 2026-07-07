@@ -5,30 +5,9 @@ same stats.nba.com endpoint (so deltas are apples-to-apples from one
 source) plus team playoff records, and writes a self-contained cache:
 
   pipeline/cache/playoffs_{season}.json
-  {
-    "built": "YYYY-MM-DD",
-    "source": "stats.nba.com leaguedashplayerstats Playoffs+Regular via nba_api",
-    "complete": true,
-    "season": "2015-16",
-    "players": {
-      "<norm_name>": {
-        "team_id": 1610612744,
-        "po": {"GP": 24, "MIN": 34.2, "USG": 31.5, "PTS100": 33.1,
-               "TS": 0.585, "PLUS_MINUS": 8.2},
-        "rs": {"GP": 79, "MIN": 34.2, "USG": 32.6, "PTS100": 34.6, "TS": 0.669}
-      }, ...
-    },
-    "teams": {"1610612744": {"po_wins": 15, "rounds": 4}, ...}
-  }
 
-Each cache carries its own regular-season reference so build_playoffs.py
-computes deltas without a second source. The committed fixture
-(playoffs.example.json) has "complete": false so absence never implies a
-non-appearance — it masks instead.
-
-Run:  python pipeline/fetch_playoffs.py [--offline] [--season 2015-16]
-Requires network to stats.nba.com (operator machine — datacenter IPs are
-blocked). Two GETs/season + one team pull; standard retry/backoff.
+Run:  python pipeline/fetch_playoffs.py [--offline] [--season 2023-24]
+Requires curl_cffi on operator machines (see pipeline/nba_http.py).
 """
 
 from __future__ import annotations
@@ -36,20 +15,21 @@ from __future__ import annotations
 import argparse
 import json
 import re
+import sys
 import time
 import unicodedata
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from nba_http import fetch_stats_json, legacy_result_set_rows, real_playoff_cache_paths
+
 ROOT = Path(__file__).resolve().parents[1]
 CACHE = ROOT / "pipeline" / "cache"
-VECTORS = ROOT / "assets" / "vectors.json"
 
-# Playoffs are reliably box-scored from 1996-97 (the charted span).
 SEASONS = [f"{y}-{str(y + 1)[-2:]}" for y in range(1996, 2026)]
 
 
 def norm_name(name: str) -> str:
-    """Same accent-folding join contract as the other Track fetchers."""
     s = unicodedata.normalize("NFD", name)
     s = "".join(c for c in s if not unicodedata.combining(c))
     s = re.sub(r"[.'’-]", "", s.lower())
@@ -61,12 +41,46 @@ def cache_path(season: str) -> Path:
     return CACHE / f"playoffs_{season}.json"
 
 
+def dash_player_params(season: str, season_type: str, measure: str) -> dict:
+    """Full param set stats.nba.com expects (minimal params → HTTP 500)."""
+    return {
+        "LastNGames": 0,
+        "MeasureType": measure,
+        "Month": 0,
+        "OpponentTeamID": 0,
+        "PaceAdjust": "N",
+        "PerMode": "Per100Possessions",
+        "Period": 0,
+        "PlusMinus": "Y",
+        "Rank": "N",
+        "Season": season,
+        "SeasonType": season_type,
+        "LeagueID": "00",
+    }
+
+
+def dash_team_params(season: str, season_type: str, per_mode: str = "Totals") -> dict:
+    return {
+        "LastNGames": 0,
+        "MeasureType": "Base",
+        "Month": 0,
+        "OpponentTeamID": 0,
+        "PaceAdjust": "N",
+        "PerMode": per_mode,
+        "Period": 0,
+        "PlusMinus": "N",
+        "Rank": "N",
+        "Season": season,
+        "SeasonType": season_type,
+        "LeagueID": "00",
+    }
+
 def with_retries(fn, label: str):
     last: Exception | None = None
     for attempt in range(5):
         try:
             return fn()
-        except Exception as e:  # noqa: BLE001 — retry the throttle wall
+        except Exception as e:  # noqa: BLE001 — retry throttle wall
             last = e
             wait = min(120, 5 * 2 ** attempt)
             print(f"  {label}: attempt {attempt + 1} failed ({e}); backoff {wait}s")
@@ -74,23 +88,20 @@ def with_retries(fn, label: str):
     raise SystemExit(f"{label} failed after retries: {last}")
 
 
+def dash_player_rows(season: str, season_type: str, measure: str) -> list[dict]:
+    def call():
+        payload = fetch_stats_json(
+            "leaguedashplayerstats",
+            dash_player_params(season, season_type, measure),
+        )
+        return legacy_result_set_rows(payload, "LeagueDashPlayerStats")
+
+    return with_retries(call, f"{season} {season_type} {measure}")
+
+
 def fetch_player_split(season: str, season_type: str) -> dict[str, dict]:
-    from nba_api.stats.endpoints import leaguedashplayerstats
-
-    def base():
-        return leaguedashplayerstats.LeagueDashPlayerStats(
-            season=season, season_type_all_star=season_type,
-            per_mode_detailed="Per100Possessions", measure_type_detailed_defense="Base",
-            timeout=75).get_data_frames()[0]
-
-    def adv():
-        return leaguedashplayerstats.LeagueDashPlayerStats(
-            season=season, season_type_all_star=season_type,
-            per_mode_detailed="Per100Possessions", measure_type_detailed_defense="Advanced",
-            timeout=75).get_data_frames()[0]
-
-    b = with_retries(base, f"{season} {season_type} Base").to_dict("records")
-    a = with_retries(adv, f"{season} {season_type} Advanced").to_dict("records")
+    b = dash_player_rows(season, season_type, "Base")
+    a = dash_player_rows(season, season_type, "Advanced")
     adv_by_id = {r["PLAYER_ID"]: r for r in a}
     out: dict[str, dict] = {}
     for r in b:
@@ -108,19 +119,17 @@ def fetch_player_split(season: str, season_type: str) -> dict[str, dict]:
 
 
 def fetch_team_playoffs(season: str) -> dict[str, dict]:
-    from nba_api.stats.endpoints import leaguedashteamstats
-
     def call():
-        return leaguedashteamstats.LeagueDashTeamStats(
-            season=season, season_type_all_star="Playoffs",
-            per_mode_detailed="Totals", timeout=75).get_data_frames()[0]
+        payload = fetch_stats_json(
+            "leaguedashteamstats",
+            dash_team_params(season, "Playoffs"),
+        )
+        return legacy_result_set_rows(payload, "LeagueDashTeamStats")
 
-    rows = with_retries(call, f"{season} team Playoffs").to_dict("records")
+    rows = with_retries(call, f"{season} team Playoffs")
     teams: dict[str, dict] = {}
     for r in rows:
         wins = int(r.get("W") or 0)
-        # Rounds advanced inferred from wins (best-of-7 from 1996-97+):
-        # <4 wins = R1 loss, 4-7 = R2, 8-11 = CF, 12-15 = Finals, 16 = champ.
         rounds = 0 if wins < 4 else 1 if wins < 8 else 2 if wins < 12 else 3 if wins < 16 else 4
         teams[str(int(r["TEAM_ID"]))] = {"po_wins": wins, "rounds": rounds}
     return teams
@@ -129,9 +138,14 @@ def fetch_team_playoffs(season: str) -> dict[str, dict]:
 def build_season_cache(season: str) -> dict:
     po = fetch_player_split(season, "Playoffs")
     if not po:
-        return {"built": time.strftime("%Y-%m-%d"), "season": season,
-                "complete": True, "players": {}, "teams": {},
-                "source": "stats.nba.com leaguedashplayerstats Playoffs+Regular via nba_api"}
+        return {
+            "built": time.strftime("%Y-%m-%d"),
+            "season": season,
+            "complete": True,
+            "players": {},
+            "teams": {},
+            "source": "stats.nba.com leaguedashplayerstats via nba_http",
+        }
     rs = fetch_player_split(season, "Regular Season")
     teams = fetch_team_playoffs(season)
     players: dict[str, dict] = {}
@@ -144,7 +158,7 @@ def build_season_cache(season: str) -> dict:
         }
     return {
         "built": time.strftime("%Y-%m-%d"),
-        "source": "stats.nba.com leaguedashplayerstats Playoffs+Regular via nba_api",
+        "source": "stats.nba.com leaguedashplayerstats via nba_http",
         "complete": True,
         "season": season,
         "players": players,

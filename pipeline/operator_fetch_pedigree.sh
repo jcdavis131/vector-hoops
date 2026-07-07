@@ -18,6 +18,12 @@ cd "$(dirname "$0")/.."   # repo root regardless of where it's invoked
 PY="${PYTHON:-python3}"
 
 echo "== 1/4  dependencies"
+if ! "$PY" -c "import curl_cffi" 2>/dev/null; then
+  echo "   curl_cffi not found — installing (Akamai TLS bypass for stats.nba.com)"
+  "$PY" -m pip install --quiet curl_cffi
+else
+  echo "   curl_cffi present"
+fi
 if ! "$PY" -c "import nba_api" 2>/dev/null; then
   echo "   nba_api not found — installing nba_api + numpy"
   "$PY" -m pip install --quiet nba_api numpy
