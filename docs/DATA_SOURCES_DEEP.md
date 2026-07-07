@@ -32,7 +32,7 @@ BBRef documents a **20 requests/minute** ceiling. Vector Hoops policy:
 | Storage | **Parse-and-discard HTML** | only JSON aggregates in `pipeline/cache/` |
 | Resume | Skip seasons already in cache with ≥50 rows | same pattern as positions fetch |
 | Retries | Exponential backoff, max 5 attempts, cap 120 s | match `fetch_team_season.py` |
-| Operator | Approve scrape before production batch runs | see workflow § Operator actions |
+| Operator | Approve scrape before production batch runs | see workflow, Operator actions |
 
 **Compliance:** Use BBRef for research / personal ML only. Do not redistribute raw HTML. Cite [Basketball-Reference](https://www.basketball-reference.com) in `methods.html` when deep_bbref features ship.
 
@@ -124,7 +124,7 @@ pipeline/data/bbref_advanced.json             # merged manifest (integrate_conte
 | **Mask strategy** | Tier 1 always on when GP known; Tier 2 family mask unless Operator enables; never label specific injuries in game copy |
 | **MTNN tower family** | `injury` |
 | **Estimated LOC** | ~120 Tier 1 / +350 Tier 2 |
-| **Blocked-by** | Tier 1: VH-101 game logs; Tier 2: Operator sign-off (workflow § Operator actions) |
+| **Blocked-by** | Tier 1: VH-101 game logs; Tier 2: Operator sign-off (workflow, Operator actions) |
 
 ---
 
@@ -182,7 +182,7 @@ pipeline/data/bbref_advanced.json             # merged manifest (integrate_conte
 | **Estimated LOC** | ~600+ (spike + batch + pair index) |
 | **Blocked-by** | VH-114 gate; disk for PBP cache; Methods limitations text; `verify_accuracy.py` V5 coverage |
 
-**Gate checklist:** see [Cross-cutting integration checklist](#cross-cutting-integration-checklist) § Tier C.
+**Gate checklist:** see [Cross-cutting integration checklist](#cross-cutting-integration-checklist), Tier C.
 
 ---
 
@@ -313,10 +313,10 @@ RAPM".
 
 ### Track L — Video-game scout ratings (2K proxy)
 
-Orthogonal **masked** tower family from third-party 2K attribute snapshots
-(typically scraped from [2kratings.com](https://www.2kratings.com/) — **not**
-official 2K Sports data). Use as a scout-consensus prior for craft axes the
-box score cannot see (handle, lateral quickness, badge-tier defense); never
+Optional **masked** tower family built from third-party 2K attribute snapshots,
+usually scraped from [2kratings.com](https://www.2kratings.com/) (not
+official 2K Sports data). Treat as a scout-consensus prior for craft axes the
+box score cannot see (handle, lateral quickness, badge-tier defense). Do not
 present as measured on-court performance.
 
 | Field | Detail |

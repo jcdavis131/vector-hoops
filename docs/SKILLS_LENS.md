@@ -56,7 +56,7 @@ Design notes:
 - **Badges** fire at grade ≥ 90 ("gold" at ≥ 97). Derived client-side
   from grades — not stored.
 
-Deliberately out of v1 (need wide-matrix or new sources — see §4):
+Deliberately out of v1 (need wide-matrix or new sources; see section 4):
 post-play, off-ball movement, screening, switchability, transition,
 foul drawing as its own axis (PFD lives only in the wide cache).
 
@@ -76,7 +76,7 @@ pipeline/build_skills.py           deterministic builder (numpy only)
 pipeline/test_skills.py            invariant gates (below)
 ```
 
-`assets/vectors.json` stays frozen — the Skills Lens is additive.
+`assets/vectors.json` stays frozen. The Skills Lens is additive.
 
 ## 3. MTNN v4 — players→skills towers
 
@@ -100,9 +100,9 @@ mean held-out skill R² ≥ 0.85.
 held-out recall@10 val/test **0.590 / 0.614** vs transparent baseline
 0.322 / 0.290 (S5 pass); archetype top-1 **0.823** (gate ≥ 0.55);
 cross-era purity@20 **0.651** (S4 floor 0.63); skill towers mean
-held-out R² **0.847 val / 0.842 test** — just under the 0.85 promotion
+held-out R² **0.847 val / 0.842 test**, just under the 0.85 promotion
 bar, so the game ships transparent grades (as designed). Neighbor
-consistency: transparent 7.41 pts vs MTNN 10.07 pts (transparent wins —
+consistency: transparent 7.41 pts vs MTNN 10.07 pts (transparent wins;
 grades are native to that space; reported, not spun). Weakest towers:
 `security` (R² 0.65 test) and `efficiency` (0.67) — percentile-tail
 nonlinearity; candidates for wide-matrix inputs.
@@ -149,32 +149,32 @@ operator machine per the rate-limit policy in `DATA_SOURCES_DEEP.md`.
 
 ## 6. Game & site surfaces (v1)
 
-- **`skills.html` — the Skills Lens.** Search any player, see the
+- **`skills.html`**, the Skills Lens page. Search any player, see the
   12-skill profile per season with badges; per-skill era-honest
   leaderboards; deep-links (`/skills?p=slug`).
-- **Chimera reveal card** shows each donor season's badges, and the
-  *fused* chimera vector is tagged live through `skill_probe.json` —
+- **Chimera reveal card** shows each donor season's badges. The
+  *fused* chimera vector is tagged live through `skill_probe.json`:
   the blend you guessed had a skill profile all along.
 - **`methods.html`** documents composites, percentile grading, and the
   PLUS_MINUS caveat.
 - Wiki AUTO-block badges: deferred until next `build_wiki.py` regen
-  (2,293-file diff) — generator hook noted in §7.
+  (2,293-file diff); generator hook noted in section 7.
 
 ## 7. Follow-ups
 
 - [x] Pedigree tower (Track H, 2026-07-06): draft slot / entry
-      expectations / team-fit prior + `pedigree_expectation` aux head —
-      see `DATA_SOURCES_DEEP.md` Track H; dormant until one operator run
+      expectations / team-fit prior + `pedigree_expectation` aux head.
+      See `DATA_SOURCES_DEEP.md` Track H; dormant until one operator run
       of `fetch_draft_history.py`
 - [x] Playoffs tower (Track I, 2026-07-06): postseason as a distinct
-      regime — playoff-vs-regular-season deltas (minutes, usage, scoring,
+      regime (playoff-vs-regular-season deltas: minutes, usage, scoring,
       efficiency) + team wins/rounds + `playoff_riser` aux head, plus a
       transparent Playoff Lens on `skills.html`; dormant until one
       operator run of `fetch_playoffs.py`
 - [x] Wide-matrix skills (Track J + K, 2026-07-06): post / transition /
-      motor, plus two gravities (Track K) — **shooting gravity** (pull-up
+      motor, plus two gravities (Track K): **shooting gravity** (pull-up
       3s + volume/accuracy; Curry tops) and **rim gravity** (blocks +
-      deterrence; Wembanyama tops) — as masked skills (2015-16+) →
+      deterrence; Wembanyama tops) as masked skills (2015-16+), written to
       `assets/skills_wide.json`, MTNN skill towers with a per-skill mask
       matrix (17 = 12 core + 5 wide), Skills Lens bars + badges; dormant
       until `fetch_wide_skills.py`
