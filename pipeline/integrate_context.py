@@ -15,6 +15,8 @@ import argparse
 import json
 import math
 import re
+import subprocess
+import sys
 from collections import defaultdict
 from pathlib import Path
 
@@ -30,8 +32,10 @@ CAREER_JSON = DATA_DIR / "career_arc.json"
 COMPETITION_JSON = DATA_DIR / "competition.json"
 COMPETITION_JSON_LEGACY = DATA_DIR / "competition_context.json"
 SALARIES_JSON = CACHE_DIR / "salaries_merged.json"
+SALARY_MARKET_JSON = DATA_DIR / "salary_market.json"
 PEDIGREE_JSON = DATA_DIR / "pedigree.json"
 PLAYOFFS_JSON = DATA_DIR / "playoffs.json"
+HONORS_JSON = DATA_DIR / "honors.json"
 
 V4_FEATURES: dict[str, str] = {
   # roster (VH-109)
@@ -54,6 +58,8 @@ V4_FEATURES: dict[str, str] = {
   # market (VH-108)
   "SALARY_LOG": "market",
   "SALARY_CAP_PCT": "market",
+  "SALARY_TEAM_PCT": "market",
+  "SALARY_RANK_POS": "market",
   # team env (VH-107) — joined via roster_context teamId
   "TM_PACE": "team",
   "TM_OFF_RTG": "team",
@@ -86,6 +92,12 @@ V4_FEATURES: dict[str, str] = {
   "PO_PLUS_MINUS": "playoffs",
   "PO_TEAM_WINS": "playoffs",
   "PO_ROUNDS": "playoffs",
+  # honors (VH-117) — lagged peer recognition (award year N-1 -> season N)
+  "HON_ALL_NBA_TEAM_LAG": "honors",
+  "HON_ALL_NBA_VOTE_LAG": "honors",
+  "HON_ASG_LAG": "honors",
+  "HON_ASG_CUM": "honors",
+  "HON_VOTE_RECOG": "honors",
 }
 
 PO_FEATURES = [f for f, fam in V4_FEATURES.items() if fam == "playoffs"]
@@ -166,30 +178,20 @@ def load_playoffs_by_player_season() -> dict[tuple[str, str], dict]:
     return {(r["name"], r["season"]): r for r in data.get("players", [])}
 
 
-def load_salary_cap_pct() -> dict[tuple[str, str], float]:
-    if not SALARIES_JSON.exists():
+def load_honors_by_player_season() -> dict[tuple[str, str], dict]:
+    """(name, season) -> HON_* lagged row from build_honors.py."""
+    if not HONORS_JSON.exists():
         return {}
-    data = json.loads(SALARIES_JSON.read_text(encoding="utf-8"))
-    out: dict[tuple[str, str], float] = {}
-    for row in data.get("salaries", {}).values():
-        cap = row.get("cap_pct")
-        if cap is not None:
-            out[(row.get("norm_name") or norm_name(row["name"]), row["season"])] = float(cap)
-    return out
+    data = json.loads(HONORS_JSON.read_text(encoding="utf-8"))
+    return {(r["name"], r["season"]): r for r in data.get("players", [])}
 
 
-def load_salary_log() -> dict[tuple[str, str], float]:
-    """Raw log10(USD) from salaries_merged.json keyed by (norm_name, season)."""
-    if not SALARIES_JSON.exists():
+def load_salary_market_by_player_season() -> dict[tuple[str, str], dict]:
+    """(name, season) -> SALARY_* row from build_salary_market.py."""
+    if not SALARY_MARKET_JSON.exists():
         return {}
-    data = json.loads(SALARIES_JSON.read_text(encoding="utf-8"))
-    out: dict[tuple[str, str], float] = {}
-    for row in data.get("salaries", {}).values():
-        sal = row.get("salary")
-        if sal and float(sal) > 0:
-            nn = row.get("norm_name") or norm_name(row["name"])
-            out[(nn, row["season"])] = math.log10(float(sal))
-    return out
+    data = json.loads(SALARY_MARKET_JSON.read_text(encoding="utf-8"))
+    return {(r["name"], r["season"]): r for r in data.get("players", [])}
 
 
 def load_team_season_index() -> dict[tuple[str, int], dict]:
@@ -207,7 +209,7 @@ def load_team_season_index() -> dict[tuple[str, int], dict]:
     return out
 
 
-def era_z_append(
+def merge_v4_context(
     Z: np.ndarray,
     M: np.ndarray,
     manifest: dict,
@@ -215,49 +217,68 @@ def era_z_append(
     seasons: np.ndarray,
     values_per_row: list[dict[str, float | None]],
 ) -> tuple[np.ndarray, np.ndarray, dict]:
-    """Append V4 feature columns with era z-scoring within season."""
-    new_feats = [f for f in V4_FEATURES if f not in manifest["features"]]
-    if not new_feats:
-        return Z, M, manifest
+    """Append missing V4 columns and refresh all V4 values (era-z per season).
 
-    n, d0 = Z.shape
-    d1 = len(new_feats)
-    X = np.full((n, d1), np.nan, dtype=np.float32)
+    Idempotent: safe to re-run after pedigree/playoffs/roster artifacts land
+    without bootstrapping a fresh 14-d matrix first.
+    """
+    manifest = dict(manifest)
+    feats = list(manifest["features"])
+    fams = dict(manifest.get("families", {}))
+
+    missing = [f for f in V4_FEATURES if f not in feats]
+    if missing:
+        Z = np.hstack([Z, np.zeros((len(Z), len(missing)), dtype=np.float32)])
+        M = np.hstack([M, np.zeros((len(Z), len(missing)), dtype=np.float32)])
+        feats.extend(missing)
+        for f in missing:
+            fams[f] = V4_FEATURES[f]
+
+    v4_feats = [f for f in V4_FEATURES if f in feats]
+    col_idx = {f: feats.index(f) for f in v4_feats}
+
+    n = len(names)
+    X = np.full((n, len(v4_feats)), np.nan, dtype=np.float32)
     for i, vals in enumerate(values_per_row):
-        for j, f in enumerate(new_feats):
+        for j, f in enumerate(v4_feats):
             v = vals.get(f)
             if v is not None and not (isinstance(v, float) and math.isnan(v)):
                 X[i, j] = float(v)
 
-    Z_out = np.hstack([Z, np.zeros((n, d1), dtype=np.float32)])
-    M_out = np.hstack([M, np.zeros((n, d1), dtype=np.float32)])
+    Z_out = Z.copy()
+    M_out = M.copy()
+    for f in v4_feats:
+        j = col_idx[f]
+        Z_out[:, j] = 0.0
+        M_out[:, j] = 0.0
 
     season_idx: dict[str, list[int]] = defaultdict(list)
     for i, s in enumerate(seasons):
         season_idx[str(s)].append(i)
 
     for idxs in season_idx.values():
-        block = X[idxs]
-        for j in range(d1):
-            col = block[:, j]
-            valid = ~np.isnan(col)
+        for j, f in enumerate(v4_feats):
+            col = col_idx[f]
+            block = X[idxs, j]
+            valid = ~np.isnan(block)
             if not valid.any():
                 continue
-            mu = float(np.nanmean(col))
-            sd = float(np.nanstd(col)) or 1.0
-            zb = (col - mu) / sd
+            mu = float(np.nanmean(block))
+            sd = float(np.nanstd(block)) or 1.0
+            zb = (block - mu) / sd
             for k, i in enumerate(idxs):
                 if valid[k]:
-                    Z_out[i, d0 + j] = np.clip(zb[k], -4, 4)
-                    M_out[i, d0 + j] = 1.0
+                    Z_out[i, col] = np.clip(zb[k], -4, 4)
+                    M_out[i, col] = 1.0
 
-    manifest = dict(manifest)
-    manifest["features"] = list(manifest["features"]) + new_feats
-    fams = dict(manifest.get("families", {}))
-    for f in new_feats:
-        fams[f] = V4_FEATURES[f]
+    manifest["features"] = feats
     manifest["families"] = fams
     return Z_out, M_out, manifest
+
+
+def v4_column_indices(manifest: dict) -> list[int]:
+    return [manifest["features"].index(f) for f in V4_FEATURES
+            if f in manifest["features"]]
 
 
 def build_row_values(
@@ -266,23 +287,24 @@ def build_row_values(
     roster: dict,
     career: dict,
     competition: dict,
-    salary_cap: dict,
-    salary_log: dict,
+    salary_market: dict,
     team_index: dict[tuple[str, int], dict],
     form: dict,
     pedigree: dict,
     playoffs: dict,
+    honors: dict,
 ) -> list[dict[str, float | None]]:
     rows: list[dict[str, float | None]] = []
     for name, season in zip(names, seasons):
         key = (str(name), str(season))
-        nkey = (norm_name(str(name)), str(season))
         r = roster.get(key, {})
         c = career.get(key, {})
         comp = competition.get(key, {})
         form_row = form.get(key, {})
         ped = pedigree.get(key, {})
         po = playoffs.get(key, {})
+        hon = honors.get(key, {})
+        mkt = salary_market.get(key, {})
         team_row = team_index.get((str(season), int(r["teamId"]))) if r.get("teamId") else {}
         rows.append({
             "ROSTER_MIN_RANK": r.get("ROSTER_MIN_RANK"),
@@ -299,8 +321,10 @@ def build_row_values(
             "REST_AVG": comp.get("REST_AVG"),
             "SOS_NET_RTG": comp.get("SOS_NET_RTG"),
             "CONF_STRENGTH": comp.get("CONF_STRENGTH"),
-            "SALARY_CAP_PCT": salary_cap.get(nkey),
-            "SALARY_LOG": salary_log.get(nkey),
+            "SALARY_LOG": mkt.get("SALARY_LOG"),
+            "SALARY_CAP_PCT": mkt.get("SALARY_CAP_PCT"),
+            "SALARY_TEAM_PCT": mkt.get("SALARY_TEAM_PCT"),
+            "SALARY_RANK_POS": mkt.get("SALARY_RANK_POS"),
             "TM_PACE": team_row.get("PACE"),
             "TM_OFF_RTG": team_row.get("OFF_RATING"),
             "TM_DEF_RTG": team_row.get("DEF_RATING"),
@@ -319,6 +343,11 @@ def build_row_values(
             "PED_TEAM_WINPCT": ped.get("PED_TEAM_WINPCT"),
             "PED_YEARS_SINCE": ped.get("PED_YEARS_SINCE"),
             "PED_PICK_DECAY": ped.get("PED_PICK_DECAY"),
+            "HON_ALL_NBA_TEAM_LAG": hon.get("HON_ALL_NBA_TEAM_LAG"),
+            "HON_ALL_NBA_VOTE_LAG": hon.get("HON_ALL_NBA_VOTE_LAG"),
+            "HON_ASG_LAG": hon.get("HON_ASG_LAG"),
+            "HON_ASG_CUM": hon.get("HON_ASG_CUM"),
+            "HON_VOTE_RECOG": hon.get("HON_VOTE_RECOG"),
             **{f: po.get(f) for f in PO_FEATURES},
         })
     return rows
@@ -341,29 +370,41 @@ def main() -> None:
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args()
 
+    proc = subprocess.run(
+        [sys.executable, str(ROOT / "pipeline" / "build_salary_market.py")],
+        cwd=ROOT,
+    )
+    if proc.returncode != 0:
+        raise SystemExit("build_salary_market.py failed")
+
     Z, M, manifest, pids, seasons, names, clusters = load_train_bundle()
     roster = load_roster_by_player_season()
     career = load_career_by_player_season()
     competition = load_competition_by_player_season()
-    salary_cap = load_salary_cap_pct()
-    salary_log = load_salary_log()
+    salary_market = load_salary_market_by_player_season()
     team_index = load_team_season_index()
     form = load_form_by_player_season()
     pedigree = load_pedigree_by_player_season()
     playoffs = load_playoffs_by_player_season()
+    honors = load_honors_by_player_season()
 
     print(f"artifacts: roster={len(roster)} career={len(career)} "
-          f"competition={len(competition)} salary_cap={len(salary_cap)} "
-          f"salary_log={len(salary_log)} team_season={len(team_index)} "
-          f"form={len(form)} pedigree={len(pedigree)} playoffs={len(playoffs)}")
+          f"competition={len(competition)} salary_market={len(salary_market)} "
+          f"team_season={len(team_index)} "
+          f"form={len(form)} pedigree={len(pedigree)} playoffs={len(playoffs)} "
+          f"honors={len(honors)}")
 
     row_vals = build_row_values(
         names, seasons, roster, career, competition,
-        salary_cap, salary_log, team_index, form, pedigree, playoffs)
-    Z2, M2, man2 = era_z_append(Z, M, manifest, names, seasons, row_vals)
-    covered = int((M2[:, Z.shape[1]:] > 0).any(axis=1).sum()) if Z2.shape[1] > Z.shape[1] else 0
+        salary_market, team_index, form, pedigree, playoffs, honors)
+    Z2, M2, man2 = merge_v4_context(Z, M, manifest, names, seasons, row_vals)
+    v4_cols = v4_column_indices(man2)
+    covered = int((M2[:, v4_cols] > 0).any(axis=1).sum()) if v4_cols else 0
+    ped_col = man2["features"].index("PED_PICK_QUALITY") if "PED_PICK_QUALITY" in man2["features"] else None
+    ped_rows = int((M2[:, ped_col] > 0).sum()) if ped_col is not None else 0
     print(f"context merge: {Z.shape[1]} -> {Z2.shape[1]} features; "
-          f"{covered}/{len(names)} rows with any v4 context")
+          f"{covered}/{len(names)} rows with any v4 context; "
+          f"pedigree labeled rows={ped_rows}")
 
     if args.dry_run:
         print("dry-run; not writing")
