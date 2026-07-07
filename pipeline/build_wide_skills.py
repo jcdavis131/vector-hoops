@@ -10,11 +10,15 @@ emitted ONLY for player-seasons with tracking coverage (2015-16+).
   transition  Sprinter      0.6*transition-freq-z + 0.4*transition-PPP-z
   motor       Motor         mean z of screen assists, deflections, loose
                             balls, charges drawn, box-outs
-  gravity     Gravity Well  0.55*catch-shoot-3PA-z + 0.45*catch-shoot-3%-z
-                            (Track K — spacing-pull PROXY from public
-                            tracking, NOT Second Spectrum gravity)
-  navigation  Navigator     0.6*contested-shots-z − 0.4*opp-FG%-z
-                            (Track K — screen-nav / on-ball D proxy)
+  shooting_gravity  Gravity Well  0.40*pull-up-3PA-z + 0.35*3PA-z
+                                  + 0.25*3P%-z (Track K — spacing-pull
+                                  PROXY; pull-up weighted so movement
+                                  shooters like Curry top it, not spot-up
+                                  specialists. NOT Second Spectrum gravity)
+  rim_gravity       Rim Warden    0.50*BLK-z + 0.30*contested-z
+                                  − 0.20*opp-FG%-z (Track K — interior
+                                  deterrence PROXY; rim protectors like
+                                  Wembanyama top it)
 
 Outputs:
   assets/skills_wide.json         grades keyed "name|season" (game surface)
@@ -47,10 +51,10 @@ WIDE_SKILLS = [
     {"key": "post", "label": "Post Play", "badge": "Post Hub"},
     {"key": "transition", "label": "Transition", "badge": "Sprinter"},
     {"key": "motor", "label": "Motor", "badge": "Motor"},
-    # Track K — tracking-derived proxies (see docs). NOT Second Spectrum
-    # gravity/matchup metrics; stated composites of public tracking.
-    {"key": "gravity", "label": "Spacing Gravity", "badge": "Gravity Well"},
-    {"key": "navigation", "label": "Screen Navigation", "badge": "Navigator"},
+    # Track K — two kinds of gravity (see docs). Stated proxies from public
+    # tracking + the box-score contract; NOT Second Spectrum gravity data.
+    {"key": "shooting_gravity", "label": "Shooting Gravity", "badge": "Gravity Well"},
+    {"key": "rim_gravity", "label": "Rim Gravity", "badge": "Rim Warden"},
 ]
 BADGE_GRADE = 90
 GOLD_GRADE = 97
@@ -124,8 +128,16 @@ def main() -> None:
     seasons = np.array([vec["players"][i]["season"] for i in covered_idx])
     names = np.array([vec["players"][i]["name"] for i in covered_idx])
 
+    # Contract (era-z) features for covered rows — the two gravity skills
+    # combine the box-score contract (3PA, 3P%, BLK) with tracking.
+    fidx = {f: k for k, f in enumerate(vec["features"])}
+    Vcov = np.array([vec["players"][i]["v"] for i in covered_idx], dtype=np.float64)
+
     def col(key):
         return np.array([float(r.get(key) or 0.0) for r in raw])
+
+    def cfeat(name):
+        return Vcov[:, fidx[name]]
 
     # Composites (era-z within the covered pool, per season).
     grades = {sk["key"]: np.zeros(len(covered_idx), int) for sk in WIDE_SKILLS}
@@ -137,18 +149,25 @@ def main() -> None:
         trans = 0.6 * zscore(col("trans_freq")[m]) + 0.4 * zscore(col("trans_ppp")[m])
         motor_cols = np.stack([col(c)[m] for c in MOTOR_COLS])
         motor = np.mean([zscore(c) for c in motor_cols], axis=0)
-        # Gravity = spacing pull proxy: catch-and-shoot 3PA volume + accuracy
-        # (defenses must honor an off-ball shooter). NOT Second Spectrum gravity.
-        gravity = 0.55 * zscore(col("cs_fg3a")[m]) + 0.45 * zscore(col("cs_fg3_pct")[m])
-        # Navigation = screen-nav / on-ball D proxy: contested shots (staying
-        # attached) minus opponent FG% allowed when defending.
-        navigation = 0.6 * zscore(col("contested_shots")[m]) - 0.4 * zscore(col("d_fg_pct")[m])
+        # Shooting gravity = the pull a perimeter threat exerts. Pull-up 3s
+        # (self-created, off-dribble) weighted heaviest so movement shooters
+        # like Curry outrank stationary spot-up specialists; plus 3PA volume
+        # and accuracy. A proxy for spacing gravity, not Second Spectrum data.
+        shoot_g = (0.40 * zscore(col("pull_up_fg3a")[m]) +
+                   0.35 * zscore(cfeat("FG3A")[m]) +
+                   0.25 * zscore(cfeat("FG3_PCT")[m]))
+        # Rim gravity = interior deterrence that warps offenses: shot-blocking
+        # + contested shots, minus opponent FG% allowed. Rim protectors like
+        # Wembanyama top it. A proxy, not Second Spectrum rim gravity.
+        rim_g = (0.50 * zscore(cfeat("BLK")[m]) +
+                 0.30 * zscore(col("contested_shots")[m]) -
+                 0.20 * zscore(col("d_fg_pct")[m]))
         # Tie-break each skill by its own volume.
         grades["post"][m] = percentile_grade(post, col("post_freq")[m])
         grades["transition"][m] = percentile_grade(trans, col("trans_freq")[m])
         grades["motor"][m] = percentile_grade(motor, motor_cols.sum(axis=0))
-        grades["gravity"][m] = percentile_grade(gravity, col("cs_fg3a")[m])
-        grades["navigation"][m] = percentile_grade(navigation, col("contested_shots")[m])
+        grades["shooting_gravity"][m] = percentile_grade(shoot_g, col("pull_up_fg3a")[m])
+        grades["rim_gravity"][m] = percentile_grade(rim_g, cfeat("BLK")[m])
 
     built = time.strftime("%Y-%m-%d")
     splits = {}

@@ -44,8 +44,7 @@ To ship it (review, then run):
     git commit -m "Activate wide skills: post / transition / motor (2015-16+)"
     git push
 
-The Skills Lens then shows Post / Transition / Motor / Spacing Gravity /
-Screen Navigation bars from 2015-16 on (earlier seasons stay "not
-tracked"). The MTNN skill towers pick up the five masked targets on the
-next retrain.
+The Skills Lens then shows Post / Transition / Motor / Shooting Gravity /
+Rim Gravity bars from 2015-16 on (earlier seasons stay "not tracked").
+The MTNN skill towers pick up the five masked targets on the next retrain.
 NEXT

@@ -53,7 +53,7 @@ def main() -> None:
     by = {(names[i], seasons[i]): grades[i] for i in range(len(names))}
 
     print("coverage era")
-    check(keys == ["post", "transition", "motor", "gravity", "navigation"],
+    check(keys == ["post", "transition", "motor", "shooting_gravity", "rim_gravity"],
           f"five wide skills ({keys})")
     check(all(int(s[:4]) >= 2015 for s in seasons),
           "every covered row is 2015-16 or later (masked before)")
@@ -82,21 +82,25 @@ def main() -> None:
     spot("Joel Embiid", "2022-23", "post", 80)
     spot("Nikola Jokić", "2022-23", "post", 60)
     spot("Giannis Antetokounmpo", "2022-23", "transition", 80)
-    spot("Ja Morant", "2022-23", "transition", 60)
     spot("Draymond Green", "2022-23", "motor", 80)
     spot("Draymond Green", "2015-16", "motor", 80)
-    # Track K — gravity (spacing pull) and navigation (screen-nav D)
-    spot("Marcus Smart", "2015-16", "gravity", 60)     # 3.1 catch-shoot 3PA
-    spot_low("DeAndre Jordan", "2015-16", "gravity", 30)  # never shoots 3s
-    spot("Rudy Gobert", "2015-16", "navigation", 70)   # elite rim/contest, low opp FG%
-    spot_low("Ja Morant", "2022-23", "navigation", 45)
+    # Track K — the two gravities, checked against the canonical examples:
+    # Curry tops SHOOTING gravity (movement/pull-up 3s), Wembanyama tops
+    # RIM gravity (interior deterrence); each is low on the other axis.
+    spot("Stephen Curry", "2015-16", "shooting_gravity", 85)
+    spot("Stephen Curry", "2023-24", "shooting_gravity", 85)
+    spot_low("Stephen Curry", "2015-16", "rim_gravity", 30)
+    spot("Victor Wembanyama", "2023-24", "rim_gravity", 85)
+    spot("Rudy Gobert", "2023-24", "rim_gravity", 60)
+    spot_low("DeAndre Jordan", "2015-16", "shooting_gravity", 30)  # never shoots
+    spot_low("Anthony Edwards", "2023-24", "rim_gravity", 30)      # not a rim protector
 
     print("mask honesty")
     if real:
         check(len(names) > 500, f"real caches cover many rows ({len(names)})")
         check(ASSET.exists(), "complete cache wrote assets/skills_wide.json")
     else:
-        check(len(names) == 11, f"fixture emits exactly its rows ({len(names)})")
+        check(len(names) == 18, f"fixture emits exactly its rows ({len(names)})")
         check(not ASSET.exists(),
               "partial cache did NOT write assets/skills_wide.json (game dormant)")
 

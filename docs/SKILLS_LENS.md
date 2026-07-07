@@ -172,8 +172,9 @@ operator machine per the rate-limit policy in `DATA_SOURCES_DEEP.md`.
       transparent Playoff Lens on `skills.html`; dormant until one
       operator run of `fetch_playoffs.py`
 - [x] Wide-matrix skills (Track J + K, 2026-07-06): post / transition /
-      motor, plus tracking proxies gravity + navigation (Track K), as
-      masked skills (2015-16+) — `build_wide_skills.py` →
+      motor, plus two gravities (Track K) — **shooting gravity** (pull-up
+      3s + volume/accuracy; Curry tops) and **rim gravity** (blocks +
+      deterrence; Wembanyama tops) — as masked skills (2015-16+) →
       `assets/skills_wide.json`, MTNN skill towers with a per-skill mask
       matrix (17 = 12 core + 5 wide), Skills Lens bars + badges; dormant
       until `fetch_wide_skills.py`

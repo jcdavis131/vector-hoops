@@ -110,13 +110,13 @@ def build_season_cache(season: str) -> dict:
     post = fetch_synergy(season, "Postup")
     trans = fetch_synergy(season, "Transition")
     hustle = fetch_hustle(season)
-    catch = fetch_ptstats(season, "CatchShoot")
+    pullup = fetch_ptstats(season, "PullUpShot")
     defense = fetch_ptstats(season, "Defense")
-    names = set(post) | set(trans) | set(hustle) | set(catch) | set(defense)
+    names = set(post) | set(trans) | set(hustle) | set(pullup) | set(defense)
     players: dict[str, dict] = {}
     for nn in names:
         p, t, h = post.get(nn, {}), trans.get(nn, {}), hustle.get(nn, {})
-        c, d = catch.get(nn, {}), defense.get(nn, {})
+        u, d = pullup.get(nn, {}), defense.get(nn, {})
         players[nn] = {
             "post_freq": float(p.get("POSS_PCT") or 0.0) * 100.0,
             "post_ppp": float(p.get("PPP") or 0.0),
@@ -128,15 +128,14 @@ def build_season_cache(season: str) -> dict:
             "charges": float(h.get("CHARGES_DRAWN") or 0.0),
             "box_outs": float(h.get("BOX_OUTS") or 0.0),
             "contested_shots": float(h.get("CONTESTED_SHOTS") or 0.0),
-            # tracking (Track K): catch-and-shoot 3s (gravity), defended FG%
-            "cs_fg3a": float(c.get("CATCH_SHOOT_FG3A") or 0.0),
-            "cs_fg3_pct": float(c.get("CATCH_SHOOT_FG3_PCT") or 0.0),
+            # tracking (Track K): pull-up 3s (shooting gravity), defended FG%
+            "pull_up_fg3a": float(u.get("PULL_UP_FG3A") or 0.0),
             "d_fg_pct": float(d.get("D_FG_PCT") or 0.0),
         }
     return {
         "built": time.strftime("%Y-%m-%d"),
         "source": ("stats.nba.com synergyplaytypes + leaguehustlestatsplayer "
-                   "+ leaguedashptstats (CatchShoot, Defense)"),
+                   "+ leaguedashptstats (PullUpShot, Defense)"),
         "complete": True, "season": season, "players": players,
     }
 

@@ -301,9 +301,9 @@ RAPM".
 |-------|--------|
 | **Fetcher** | folded into `pipeline/fetch_wide_skills.py` (adds `leaguedashptstats` CatchShoot + Defense) |
 | **Deriver** | `pipeline/build_wide_skills.py` (skills `gravity`, `navigation`) |
-| **Source** | stats.nba.com `leaguedashptstats` — CatchShoot (`CATCH_SHOOT_FG3A`, `CATCH_SHOOT_FG3_PCT`) and Defense (`D_FG_PCT`); contested shots from the hustle feed |
+| **Source** | stats.nba.com `leaguedashptstats` — PullUpShot (`PULL_UP_FG3A`) and Defense (`D_FG_PCT`); contested shots from the hustle feed; 3PA / 3P% / BLK from the box-score contract |
 | **Coverage** | Tracking 2013-14+, but fetched over the shared wide-skill window (2015-16+) so all five wide skills align |
-| **Skills** | `gravity` (Gravity Well — catch-and-shoot 3PA volume + accuracy, a spacing-pull proxy), `navigation` (Navigator — contested shots − opponent FG% allowed, a screen-navigation / on-ball defense proxy) |
+| **Skills** | `shooting_gravity` (Gravity Well — 0.40·pull-up-3PA + 0.35·3PA + 0.25·3P%; pull-up weighted so **movement shooters like Curry** top it, not spot-up specialists), `rim_gravity` (Rim Warden — 0.50·BLK + 0.30·contested − 0.20·opp-FG%; interior deterrence, topped by **rim protectors like Wembanyama**) |
 | **Honesty** | UI label states these are **tracking proxies**, not Second Spectrum gravity/matchup data; Methods carries the caveat |
 | **Mask / grading** | Same as Track J — era-z percentile within the covered-season pool, masked before coverage; volume tie-break |
 | **MTNN** | Two more masked skill-tower targets (17 total: 12 core + 5 wide) |
@@ -329,7 +329,7 @@ Sorted by **impact ÷ effort** for MTNN v4 retrieval + game honesty. Ship top ro
 | — | **H — Pedigree** *(shipped dormant 2026-07-06)* | Entry expectations + team-fit prior; one fetch call | S | Operator fetch | done |
 | — | **I — Playoffs** *(shipped dormant 2026-07-06)* | Postseason as a distinct regime; riser/fader tower | M | Operator fetch | done |
 | — | **J — Wide skills** *(shipped dormant 2026-07-06)* | Post / transition / motor; masked skills 2015-16+ | M | Operator fetch | done |
-| — | **K — Tracking proxies** *(shipped dormant 2026-07-06)* | Gravity + navigation from player tracking (stated proxies) | S | Operator fetch (folded into J) | done |
+| — | **K — Tracking proxies** *(shipped dormant 2026-07-06)* | Shooting + rim gravity from tracking (Curry / Wemby examples) | S | Operator fetch (folded into J) | done |
 
 **S** = small (~≤150 LOC), **M** = medium (~150–300), **L** = large (~300–500), **XL** = 500+.
 
