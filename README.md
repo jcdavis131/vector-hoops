@@ -4,6 +4,10 @@ Daily NBA chimera puzzle over an era-honest player embedding space.
 12,392 player-seasons (1996-2026), per-100-possession, z-scored within
 season; PCA(3) map; 8 auto-named archetypes. Static, zero backend, free.
 
+> **Picking up in-progress work?** Start at **[`docs/HANDOFF.md`](docs/HANDOFF.md)** —
+> current branch state, the four dormant data tracks and how to activate
+> them, verification commands, and open follow-ups.
+
 ## Skills Lens (`skills.html`, `docs/SKILLS_LENS.md`)
 
 Every charted player-season graded 0-99 on twelve skills — fixed linear

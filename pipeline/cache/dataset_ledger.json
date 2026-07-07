@@ -214,5 +214,79 @@
   "skills": 12,
   "badges": 14892,
   "grade_sha1": "ad4e56119e56"
+ },
+ {
+  "run": "2026-07-07 13:38 UTC",
+  "season_hint": null,
+  "steps": [
+   {
+    "step": "rebuild vectors (offline)",
+    "ok": false,
+    "seconds": 3.4
+   },
+   {
+    "step": "rebuild skills",
+    "ok": true,
+    "seconds": 0.6
+   },
+   {
+    "step": "skill gates",
+    "ok": true,
+    "seconds": 0.4
+   },
+   {
+    "step": "rebuild pedigree (Track H)",
+    "ok": false,
+    "seconds": 0.0
+   },
+   {
+    "step": "pedigree gates",
+    "ok": true,
+    "seconds": 0.2
+   },
+   {
+    "step": "rebuild playoffs (Track I)",
+    "ok": true,
+    "seconds": 0.1
+   },
+   {
+    "step": "playoff gates",
+    "ok": true,
+    "seconds": 0.2
+   },
+   {
+    "step": "rebuild wide skills (Track J)",
+    "ok": true,
+    "seconds": 0.2
+   },
+   {
+    "step": "wide-skill gates",
+    "ok": true,
+    "seconds": 0.5
+   }
+  ],
+  "pedigree": {
+   "cache_complete": false,
+   "players_drafted": 10,
+   "players_undrafted": 0,
+   "players_unmatched_masked": 2283,
+   "rows_covered": 125,
+   "rows_total": 12392
+  },
+  "playoffs": {
+   "cache_complete": false,
+   "appearances": 8,
+   "seasons_covered": 4,
+   "rows_total": 12392
+  },
+  "player_seasons": 12392,
+  "seasons": [
+   "1996-97",
+   "2025-26"
+  ],
+  "n_seasons": 30,
+  "skills": 12,
+  "badges": 14892,
+  "grade_sha1": "992fcca1a9a5"
  }
 ]
