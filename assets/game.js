@@ -634,6 +634,16 @@
   var TEAM_DONOR_POOL = null;
   var ROSTER_TEAM_BY_KEY = null;  // "name|season" -> TEAM abbr
   var POPULARITY_BY_NAME = null;  // name -> weight multiplier
+  var PUZZLE_WEIGHT_BY_KEY = null; // "name|season" -> inclusion weight
+  var HONORS_BY_KEY = null; // "name|season" -> {asg, allNbaTeam, allNbaVotePts}
+
+  var METRIC_TIPS = {
+    complementarity: 'How orthogonal two players\' era-z profiles are (1 − |cosine|). Higher means different skill mixes that fit together.',
+    jointPM: 'Average per-game plus-minus of both players that season. A rough lineup success proxy — not true on/off lineup data.',
+    chemistry: 'Equal-weight blend of complementarity and joint-PM percentiles across the top-800 measured teammate pairs.',
+    adjPM: 'Plus-minus adjusted for teammates, opponents, and pace before comparing pre- vs post-trade splits (not raw box-score PM).',
+    dP36: 'Scoring rate change per 36 minutes after the move, era-adjusted within the season pool.'
+  };
 
   var els = {}; // cached DOM refs, filled in initDom()
 
@@ -692,7 +702,7 @@
   }
 
   function playerKey(p) {
-    return p.name + ' (' + p.season + ')';
+    return playerNamePlain(p.name, p.season) + ' (' + p.season + ')';
   }
 
   // MODERN MODE data prep — computed once, right after DATA.players is
@@ -735,6 +745,133 @@
   function ingestPlayerMeta(meta) {
     ROSTER_TEAM_BY_KEY = (meta && meta.roster) || {};
     POPULARITY_BY_NAME = (meta && meta.popularity) || {};
+    PUZZLE_WEIGHT_BY_KEY = (meta && meta.puzzleWeight) || {};
+    HONORS_BY_KEY = (meta && meta.honors) || {};
+    if (window.VHPlayerRoster) window.VHPlayerRoster.setRoster(ROSTER_TEAM_BY_KEY);
+  }
+
+  function playerNameHtml(name, season) {
+    if (window.VHPlayerRoster) {
+      return window.VHPlayerRoster.formatNameHtml(name, season, escapeHtml);
+    }
+    return escapeHtml(name);
+  }
+
+  function playerNamePlain(name, season) {
+    if (window.VHPlayerRoster) {
+      return window.VHPlayerRoster.formatNamePlain(name, season);
+    }
+    return String(name);
+  }
+
+  function puzzleWeightKey(name, season) {
+    return String(name) + '|' + String(season);
+  }
+
+  function puzzleWeightForPlayer(p) {
+    if (!p) return 1;
+    if (PUZZLE_WEIGHT_BY_KEY && PUZZLE_WEIGHT_BY_KEY[puzzleWeightKey(p.name, p.season)]) {
+      return PUZZLE_WEIGHT_BY_KEY[puzzleWeightKey(p.name, p.season)];
+    }
+    return popularityWeight(p);
+  }
+
+  function puzzleWeightForMover(m) {
+    if (!m) return 1;
+    if (PUZZLE_WEIGHT_BY_KEY && PUZZLE_WEIGHT_BY_KEY[puzzleWeightKey(m.name, m.season)]) {
+      return PUZZLE_WEIGHT_BY_KEY[puzzleWeightKey(m.name, m.season)];
+    }
+    return POPULARITY_BY_NAME && POPULARITY_BY_NAME[m.name] ? POPULARITY_BY_NAME[m.name] : 1;
+  }
+
+  function puzzleWeightForQuestion(q) {
+    if (!q) return 1;
+    if (PUZZLE_WEIGHT_BY_KEY && PUZZLE_WEIGHT_BY_KEY[puzzleWeightKey(q.name, q.season)]) {
+      return PUZZLE_WEIGHT_BY_KEY[puzzleWeightKey(q.name, q.season)];
+    }
+    return POPULARITY_BY_NAME && POPULARITY_BY_NAME[q.name] ? POPULARITY_BY_NAME[q.name] : 1;
+  }
+
+  function pickWeightedIndexWithFn(rng, pool, weightFn) {
+    var total = 0;
+    var i;
+    for (i = 0; i < pool.length; i++) total += weightFn(pool[i]);
+    if (total <= 0) return Math.floor(rng() * pool.length);
+    var r = rng() * total;
+    for (i = 0; i < pool.length; i++) {
+      r -= weightFn(pool[i]);
+      if (r <= 0) return i;
+    }
+    return pool.length - 1;
+  }
+
+  function pickUniqueWeightedIndex(rng, pool, usedKeys, keyFn, weightFn, acceptFn) {
+    var guard = 0;
+    while (guard < 8000) {
+      guard++;
+      var idx = pickWeightedIndexWithFn(rng, pool, weightFn);
+      var key = keyFn(pool[idx], idx);
+      if (usedKeys[key]) continue;
+      if (acceptFn && !acceptFn(pool[idx], idx)) continue;
+      return idx;
+    }
+    guard = 0;
+    while (guard < 8000) {
+      guard++;
+      var idx2 = Math.floor(rng() * pool.length);
+      var key2 = keyFn(pool[idx2], idx2);
+      if (!usedKeys[key2]) return idx2;
+    }
+    return Math.floor(rng() * pool.length);
+  }
+
+  function pickWeightedFromIndices(rng, pool, indices, weightFn) {
+    if (!indices.length) return 0;
+    var total = 0;
+    var i;
+    for (i = 0; i < indices.length; i++) total += weightFn(pool[indices[i]]);
+    if (total <= 0) return indices[Math.floor(rng() * indices.length)];
+    var r = rng() * total;
+    for (i = 0; i < indices.length; i++) {
+      r -= weightFn(pool[indices[i]]);
+      if (r <= 0) return indices[i];
+    }
+    return indices[indices.length - 1];
+  }
+
+  function buildUniqueDailyRounds(seed, nRounds, pool, keyFn, weightFn, buildFn, playerKeysFn) {
+    var rng = seededRng(seed);
+    var used = {};
+    var usedPlayers = {};
+    var rounds = [];
+    var guard = 0;
+    function acceptItem(item) {
+      if (!playerKeysFn) return true;
+      var keys = playerKeysFn(item);
+      for (var i = 0; i < keys.length; i++) if (usedPlayers[keys[i]]) return false;
+      return true;
+    }
+    function markPlayers(item) {
+      if (!playerKeysFn) return;
+      var keys = playerKeysFn(item);
+      for (var i = 0; i < keys.length; i++) usedPlayers[keys[i]] = true;
+    }
+    while (rounds.length < nRounds && guard < 12000) {
+      guard++;
+      var idx = pickUniqueWeightedIndex(rng, pool, used, keyFn, weightFn, acceptItem);
+      var key = keyFn(pool[idx], idx);
+      if (used[key]) continue;
+      used[key] = true;
+      markPlayers(pool[idx]);
+      rounds.push(buildFn(pool[idx], rng, idx));
+    }
+    return rounds;
+  }
+
+  function setMetricTip(el, tip) {
+    if (!el) return;
+    el.title = tip || '';
+    el.setAttribute('aria-description', tip || '');
   }
 
   function seasonSortKey(season) {
@@ -750,16 +887,7 @@
   }
 
   function pickWeightedIndex(rng, pool) {
-    var total = 0;
-    var i;
-    for (i = 0; i < pool.length; i++) total += popularityWeight(pool[i]);
-    if (total <= 0) return Math.floor(rng() * pool.length);
-    var r = rng() * total;
-    for (i = 0; i < pool.length; i++) {
-      r -= popularityWeight(pool[i]);
-      if (r <= 0) return i;
-    }
-    return pool.length - 1;
+    return pickWeightedIndexWithFn(rng, pool, puzzleWeightForPlayer);
   }
 
   function buildTeamDonorPool(abbr) {
@@ -1720,7 +1848,7 @@
     function rowHtml(p) {
       var posChip = (typeof p.p === 'number' && p.p >= 0 && DATA.positions) ?
         '<span class="vh-suggestions__chip">' + escapeHtml(DATA.positions[p.p]) + '</span>' : '';
-      return '<span class="vh-suggestions__name">' + escapeHtml(p.name) + '</span>' +
+      return '<span class="vh-suggestions__name">' + playerNameHtml(p.name, p.season) + '</span>' +
         '<span class="vh-suggestions__season">' + escapeHtml(p.season) + '</span>' + posChip;
     }
 
@@ -3098,6 +3226,50 @@
       });
       wrap.innerHTML = html;
       els.revealBody.appendChild(wrap);
+      appendPedigreeDonorNotes(target);
+    });
+  }
+
+  var pedigreeCache = null;
+  function loadPedigree(cb) {
+    if (pedigreeCache) { cb(pedigreeCache); return; }
+    if (pedigreeCache === false) return;
+    fetch('assets/pedigree.json').then(function (res) {
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      return res.json();
+    }).then(function (data) {
+      pedigreeCache = data;
+      cb(data);
+    }).catch(function () {
+      pedigreeCache = false;
+    });
+  }
+
+  function pedigreePickLine(e) {
+    if (!e) return '';
+    if (e.undrafted) return 'undrafted';
+    if (e.overall === 1) return '#1 overall';
+    if (e.overall) return '#' + e.overall + ' overall';
+    return 'drafted';
+  }
+
+  function appendPedigreeDonorNotes(target) {
+    loadPedigree(function (ped) {
+      if (!els.revealBody || !ped || !ped.entries) return;
+      var lines = [target.a, target.b].map(function (donor) {
+        var e = ped.entries[donor.name + '|' + donor.season];
+        if (!e) return '';
+        var expect = (typeof e.expect === 'number') ? (e.expect * 100).toFixed(0) + '% expectation' : '';
+        return '<p class="vh-guess__line"><a href="/skills?p=' + encodeURIComponent(playerSlug(donor.name)) +
+          '&s=' + encodeURIComponent(donor.season) + '">' + donor.name + ' ' + donor.season +
+          '</a> pedigree: <b>' + pedigreePickLine(e) + '</b>' +
+          (expect ? ' &middot; ' + expect : '') + '</p>';
+      }).filter(Boolean).join('');
+      if (!lines) return;
+      var wrap = document.createElement('div');
+      wrap.className = 'vh-reveal__pedigree';
+      wrap.innerHTML = '<div class="vh-section-label">Entry expectations</div>' + lines;
+      els.revealBody.appendChild(wrap);
     });
   }
 
@@ -3150,9 +3322,9 @@
       '<ol class="vh-guesslist">' + nearestRows + '</ol>' +
       '<div class="vh-reveal__okf">OKF dossiers: ' +
       '<a href="#" class="vh-dossier-link" data-slug="' + playerSlug(TARGET.a.name) + '" data-name="' +
-        TARGET.a.name + '">' + TARGET.a.name + '</a> · ' +
+        escapeHtml(TARGET.a.name) + '">' + playerNameHtml(TARGET.a.name, TARGET.a.season) + '</a> · ' +
       '<a href="#" class="vh-dossier-link" data-slug="' + playerSlug(TARGET.b.name) + '" data-name="' +
-        TARGET.b.name + '">' + TARGET.b.name + '</a></div>';
+        escapeHtml(TARGET.b.name) + '">' + playerNameHtml(TARGET.b.name, TARGET.b.season) + '</a></div>';
     els.shareCopied.hidden = true;
     appendSkillLensSection(TARGET);
     appendArchetypePrevalenceLine(TARGET.clusterIdx);
@@ -4166,13 +4338,15 @@
   // the pool already mixes thrives+craters so a 5-draw sample reliably
   // covers both, matching the "at least 2 of each" spirit at pool scale).
   function buildDeadlineDailyRounds() {
-    var rng = seededRng('vector-hoops:deadline-daily:' + playDate());
-    var rounds = [];
-    for (var i = 0; i < DEADLINE_ROUNDS_PER_RUN; i++) {
-      var idx = Math.floor(rng() * DEADLINE_POOL.length);
-      rounds.push({ mover: DEADLINE_POOL[idx], answered: false, correct: null });
-    }
-    return rounds;
+    return buildUniqueDailyRounds(
+      'vector-hoops:deadline-daily:' + playDate(),
+      DEADLINE_ROUNDS_PER_RUN,
+      DEADLINE_POOL,
+      function (m) { return m.name + '|' + m.season + '|' + m.from + '|' + m.to; },
+      puzzleWeightForMover,
+      function (mover) { return { mover: mover, answered: false, correct: null }; },
+      function (m) { return [m.name]; }
+    );
   }
 
   function buildDeadlineFreeRounds() {
@@ -4214,7 +4388,7 @@
     var m = round.mover;
     els.deadlineRoundNum.textContent = String(run.idx + 1);
     els.deadlineScoreNum.textContent = String(run.score);
-    els.deadlinePrompt.textContent = m.name + ' moved ' + m.from + ' → ' + m.to +
+    els.deadlinePrompt.textContent = playerNamePlain(m.name, m.season) + ' moved ' + m.from + ' → ' + m.to +
       ' mid ' + m.season + ' (' + m.gBefore + ' games before, ' + m.gAfter + ' after).';
     els.deadlineReveal.hidden = true;
     els.deadlineThrivedBtn.disabled = false;
@@ -4234,13 +4408,15 @@
   // M7: mover name links to its dossier modal only if that page actually
   // exists — a HEAD request confirms this before ever showing a link, so a
   // missing page fails soft to plain text (never a dead/broken link).
-  function tryLinkMoverName(el, name) {
-    el.textContent = name;
+  function tryLinkMoverName(el, name, season) {
+    var display = season ? playerNamePlain(name, season) : String(name);
+    el.textContent = display;
     var slug = playerSlug(name);
     fetch('knowledge/players/' + slug + '.md', { method: 'HEAD' }).then(function (res) {
       if (!res.ok) return;
+      var label = season ? playerNameHtml(name, season) : escapeHtml(name);
       el.innerHTML = '<a href="#" class="vh-dossier-link" data-slug="' + slug + '" data-name="' +
-        escapeHtml(name) + '">' + escapeHtml(name) + '</a>';
+        escapeHtml(name) + '">' + label + '</a>';
     }).catch(function () { /* fail soft: leave as plain text, no link */ });
   }
 
@@ -4251,7 +4427,7 @@
     var nameSpan = document.createElement('span');
     els.deadlineVerdict.appendChild(nameSpan);
     els.deadlineVerdict.appendChild(document.createTextNode(parts.suffix));
-    tryLinkMoverName(nameSpan, m.name);
+    tryLinkMoverName(nameSpan, m.name, m.season);
   }
 
   // M7 post-round detail: the shipped deadline.json carries the per-36
@@ -4264,7 +4440,9 @@
     var p36 = (m.dP36 >= 0 ? '+' : '') + m.dP36.toFixed(1);
     var pm = (m.dPM >= 0 ? '+' : '') + m.dPM.toFixed(1);
     els.deadlineP36Value.textContent = p36 + ' pts/36';
+    setMetricTip(els.deadlineP36Value, METRIC_TIPS.dP36);
     els.deadlineAdjpm.textContent = 'Context-adjusted plus-minus: ' + pm;
+    setMetricTip(els.deadlineAdjpm, METRIC_TIPS.adjPM);
     els.deadlineSamples.textContent = m.gBefore + 'g → ' + m.gAfter + 'g (games logged before → after the move)';
 
     var magPct = Math.max(2, Math.min(100, Math.round(Math.abs(m.dP36) / DEADLINE_BAR_SCALE_MAX * 100)));
@@ -4480,13 +4658,15 @@
   }
 
   function buildFaderDailyRounds() {
-    var rng = seededRng('vector-hoops:ff-daily:' + playDate());
-    var rounds = [];
-    for (var i = 0; i < FF_ROUNDS_PER_RUN; i++) {
-      var idx = Math.floor(rng() * FF_POOL.length);
-      rounds.push({ q: FF_POOL[idx], answered: false, correct: null });
-    }
-    return rounds;
+    return buildUniqueDailyRounds(
+      'vector-hoops:ff-daily:' + playDate(),
+      FF_ROUNDS_PER_RUN,
+      FF_POOL,
+      function (q) { return q.name + '|' + q.season + '|' + q.stat + '|' + q.verdict; },
+      puzzleWeightForQuestion,
+      function (q) { return { q: q, answered: false, correct: null }; },
+      function (q) { return [q.name]; }
+    );
   }
 
   // Nonce-seeded (crypto-sourced) — same mechanism as Chimera Free Play, so
@@ -4529,7 +4709,7 @@
     var q = round.q;
     els.faderRoundNum.textContent = String(run.idx + 1);
     els.faderScoreNum.textContent = String(run.score);
-    els.faderPrompt.textContent = q.name + ' (' + q.season + ') averaged ' + q.firstHalf +
+    els.faderPrompt.textContent = playerNamePlain(q.name, q.season) + ' (' + q.season + ') averaged ' + q.firstHalf +
       ' per-36 ' + q.stat + ' in the first half of his games. Did he FINISH stronger or FADE?';
     els.faderReveal.hidden = true;
     els.faderFinishBtn.disabled = false;
@@ -4555,7 +4735,7 @@
     var nameSpan = document.createElement('span');
     els.faderVerdict.appendChild(nameSpan);
     els.faderVerdict.appendChild(document.createTextNode(parts.suffix));
-    tryLinkMoverName(nameSpan, q.name);
+    tryLinkMoverName(nameSpan, q.name, q.season);
   }
 
   function renderFaderDetail(q) {
@@ -4842,19 +5022,30 @@
     }
   }
 
+  function chemWasTeammate(name, season, teamAbbr) {
+    if (!ROSTER_TEAM_BY_KEY || !teamAbbr) return false;
+    return ROSTER_TEAM_BY_KEY[puzzleWeightKey(name, season)] === teamAbbr;
+  }
+
   function pickChemDistractors(rng, pairEntry, aPlayer, bPlayer) {
     var excludeIds = {};
     excludeIds[aPlayer.id] = true;
     excludeIds[bPlayer.id] = true;
     chemAnchorPartnerIds(pairEntry.a, pairEntry.season, excludeIds);
 
+    var teamAbbr = pairEntry.team;
     var seasonPool = PLAYERS_BY_SEASON[pairEntry.season] || [];
-    var candidates = seasonPool.filter(function (p) { return !excludeIds[p.id]; });
+    var teammates = seasonPool.filter(function (p) {
+      return !excludeIds[p.id] && chemWasTeammate(p.name, pairEntry.season, teamAbbr);
+    });
+    if (teammates.length < 3) {
+      teammates = seasonPool.filter(function (p) { return !excludeIds[p.id]; });
+    }
 
     var bPos = bPlayer.p;
     var bGroup = (typeof bPos === 'number' && bPos >= 0) ? POSITION_GROUP[bPos] : null;
     var tier1 = [], tier2 = [], tier3 = [];
-    candidates.forEach(function (p) {
+    teammates.forEach(function (p) {
       if (typeof p.p === 'number' && p.p >= 0 && p.p === bPos) tier1.push(p);
       else if (bGroup && typeof p.p === 'number' && p.p >= 0 && POSITION_GROUP[p.p] === bGroup) tier2.push(p);
       else tier3.push(p);
@@ -4864,9 +5055,7 @@
     return ordered.slice(0, 3);
   }
 
-  function buildChemRound(rng) {
-    var idx = Math.floor(rng() * CHEM_POOL.length);
-    var pairEntry = CHEM_POOL[idx];
+  function buildChemRoundFromEntry(rng, pairEntry) {
     var aPlayer = resolveChemPlayer(pairEntry.a, pairEntry.season);
     var bPlayer = resolveChemPlayer(pairEntry.b, pairEntry.season);
     var distractors = pickChemDistractors(rng, pairEntry, aPlayer, bPlayer);
@@ -4874,11 +5063,29 @@
     return { pairEntry: pairEntry, aPlayer: aPlayer, bPlayer: bPlayer, options: options, answered: false, correct: null };
   }
 
+  function buildChemRound(rng) {
+    var idx = pickWeightedIndexWithFn(rng, CHEM_POOL, function (entry) {
+      var a = resolveChemPlayer(entry.a, entry.season);
+      var b = resolveChemPlayer(entry.b, entry.season);
+      return (a ? puzzleWeightForPlayer(a) : 1) + (b ? puzzleWeightForPlayer(b) : 1);
+    });
+    return buildChemRoundFromEntry(rng, CHEM_POOL[idx]);
+  }
+
   function buildChemDailyRounds() {
-    var rng = seededRng('vector-hoops:chem-daily:' + playDate());
-    var rounds = [];
-    for (var i = 0; i < CHEM_ROUNDS_PER_RUN; i++) rounds.push(buildChemRound(rng));
-    return rounds;
+    return buildUniqueDailyRounds(
+      'vector-hoops:chem-daily:' + playDate(),
+      CHEM_ROUNDS_PER_RUN,
+      CHEM_POOL,
+      function (entry) { return entry.season + '|' + entry.team + '|' + entry.a + '|' + entry.b; },
+      function (entry) {
+        var a = resolveChemPlayer(entry.a, entry.season);
+        var b = resolveChemPlayer(entry.b, entry.season);
+        return (a ? puzzleWeightForPlayer(a) : 1) + (b ? puzzleWeightForPlayer(b) : 1);
+      },
+      function (entry, rng) { return buildChemRoundFromEntry(rng, entry); },
+      function (entry) { return [entry.a, entry.b]; }
+    );
   }
 
   function buildChemFreeRounds() {
@@ -4984,10 +5191,11 @@
     els.chemVerdict.appendChild(document.createTextNode(correct ? 'Correct — ' : 'Missed it — '));
     var nameSpan = document.createElement('span');
     els.chemVerdict.appendChild(nameSpan);
-    els.chemVerdict.appendChild(document.createTextNode(' complemented ' + round.aPlayer.name +
+    els.chemVerdict.appendChild(document.createTextNode(' complemented ' + playerNamePlain(round.aPlayer.name, round.aPlayer.season) +
       ' best on the ' + round.pairEntry.season + ' ' + round.pairEntry.team + '.'));
-    tryLinkMoverName(nameSpan, round.bPlayer.name);
+    tryLinkMoverName(nameSpan, round.bPlayer.name, round.bPlayer.season);
     els.chemNumbers.textContent = chemNumbersLine(round.pairEntry);
+    setMetricTip(els.chemNumbers, METRIC_TIPS.complementarity + ' ' + METRIC_TIPS.jointPM + ' ' + METRIC_TIPS.chemistry);
     els.chemWhy.textContent = chemWhyLine(round.aPlayer, round.bPlayer);
 
     els.chemScoreNum.textContent = String(run.score);
@@ -5140,8 +5348,19 @@
     return true;
   }
 
+  function arcNameWeight(name) {
+    var w = POPULARITY_BY_NAME && POPULARITY_BY_NAME[name] ? POPULARITY_BY_NAME[name] : 1;
+    var seasons = ARC_INDEX.byName[name];
+    if (!seasons || !PUZZLE_WEIGHT_BY_KEY) return w;
+    for (var i = 0; i < seasons.length; i++) {
+      var pw = PUZZLE_WEIGHT_BY_KEY[puzzleWeightKey(name, seasons[i].season)];
+      if (pw && pw > w) w = pw;
+    }
+    return w;
+  }
+
   function buildArcRoundFromRng(rng) {
-    var idx = Math.floor(rng() * ARC_INDEX.names.length);
+    var idx = pickWeightedIndexWithFn(rng, ARC_INDEX.names, arcNameWeight);
     var name = ARC_INDEX.names[idx];
     var allSeasons = ARC_INDEX.byName[name]; // sorted ascending already
     var correct;
@@ -5901,9 +6120,11 @@
     return rankByIdx;
   }
 
-  function buildPivotRound(rng) {
-    var idx = Math.floor(rng() * PIVOT_POOL.length);
-    var teamEntry = PIVOT_POOL[idx];
+  function buildPivotRound(rng, teamEntry) {
+    if (!teamEntry) {
+      var idx = Math.floor(rng() * PIVOT_POOL.length);
+      teamEntry = PIVOT_POOL[idx];
+    }
     var rankByIdx = rankPivotCandidates(teamEntry);
     var displayOrder = seededShuffle(rng, teamEntry.candidates.map(function (_, i) { return i; }));
     return {
@@ -5916,11 +6137,23 @@
     };
   }
 
+  function pivotWeightForTeam(teamEntry) {
+    if (!teamEntry || !teamEntry.answer) return 1;
+    var key = puzzleWeightKey(teamEntry.answer, teamEntry.season);
+    if (PUZZLE_WEIGHT_BY_KEY && PUZZLE_WEIGHT_BY_KEY[key]) return PUZZLE_WEIGHT_BY_KEY[key];
+    return POPULARITY_BY_NAME && POPULARITY_BY_NAME[teamEntry.answer] ? POPULARITY_BY_NAME[teamEntry.answer] : 1;
+  }
+
   function buildPivotDailyRounds() {
-    var rng = seededRng('vector-hoops:pivot-daily:' + playDate());
-    var rounds = [];
-    for (var i = 0; i < PIVOT_ROUNDS_PER_RUN; i++) rounds.push(buildPivotRound(rng));
-    return rounds;
+    return buildUniqueDailyRounds(
+      'vector-hoops:pivot-daily:' + playDate(),
+      PIVOT_ROUNDS_PER_RUN,
+      PIVOT_POOL,
+      function (team) { return team.season + '|' + team.team; },
+      pivotWeightForTeam,
+      function (team, rng) { return buildPivotRound(rng, team); },
+      function (team) { return team.answer ? [team.answer] : []; }
+    );
   }
 
   function buildPivotFreeRounds() {
@@ -5977,7 +6210,7 @@
       var btn = document.createElement('button');
       btn.type = 'button';
       btn.className = 'vh-pivot-row';
-      btn.innerHTML = '<span class="vh-pivot-row__name">' + escapeHtml(c.name) + '</span>' + pivotArchetypeChipHtml(c.current);
+      btn.innerHTML = '<span class="vh-pivot-row__name">' + playerNameHtml(c.name, team.season) + '</span>' + pivotArchetypeChipHtml(c.current);
       btn.addEventListener('click', function () { pickPivotCandidate(origIdx); });
       els.pivotRows.appendChild(btn);
     });
@@ -6025,7 +6258,7 @@
       var summary = document.createElement('summary');
       summary.innerHTML =
         '<span class="vh-pivot-row__rank">#' + (rank + 1) + '</span>' +
-        '<span class="vh-pivot-row__name">' + escapeHtml(c.name) + '</span>' +
+        '<span class="vh-pivot-row__name">' + playerNameHtml(c.name, round.teamEntry.season) + '</span>' +
         pivotArchetypeChipHtml(c.current) +
         (isPicked ? '<span class="vh-pivot-row__your-pick">Your pick</span>' : '') +
         (isCorrect ? '<span class="vh-pivot-row__mark" aria-hidden="true">★</span>' : '');
@@ -6083,7 +6316,7 @@
     var nameSpan = document.createElement('span');
     els.pivotVerdict.appendChild(nameSpan);
     els.pivotVerdict.appendChild(document.createTextNode(suffix));
-    tryLinkMoverName(nameSpan, answerCandidate.name);
+    tryLinkMoverName(nameSpan, answerCandidate.name, answerCandidate.season);
 
     els.pivotScoreNum.textContent = String(run.score);
     els.pivotNextBtn.textContent = (run.idx + 1 >= PIVOT_ROUNDS_PER_RUN) ? 'See results' : 'Next round';
@@ -6318,24 +6551,31 @@
   function buildTwinDailyRounds() {
     var pool = TWIN_ANCHOR_POOL || TWIN_POOL;
     var rng = seededRng('vector-hoops:twin-daily:' + playDate());
+    var usedNames = {};
     var rounds = [];
-    var usedIdx = {};
     var decades = TWIN_DECADE_ORDER.filter(function (d) {
       return TWIN_BY_DECADE[d] && TWIN_BY_DECADE[d].length;
     });
     decades.forEach(function (d) {
       if (rounds.length >= TWIN_ROUNDS_PER_RUN) return;
       var bucket = TWIN_BY_DECADE[d];
-      var pick = bucket[Math.floor(rng() * bucket.length)];
-      usedIdx[pick] = true;
+      var available = bucket.filter(function (idx) { return !usedNames[String(pool[idx].name)]; });
+      if (!available.length) return;
+      var pick = pickWeightedFromIndices(rng, pool, available, puzzleWeightForPlayer);
+      usedNames[String(pool[pick].name)] = true;
       rounds.push(buildTwinRound(pool[pick]));
     });
     var guard = 0;
-    while (rounds.length < TWIN_ROUNDS_PER_RUN && guard < 10000) {
+    while (rounds.length < TWIN_ROUNDS_PER_RUN && guard < 12000) {
       guard++;
-      var idx = Math.floor(rng() * pool.length);
-      if (usedIdx[idx]) continue;
-      usedIdx[idx] = true;
+      var idx = pickUniqueWeightedIndex(
+        rng, pool, usedNames,
+        function (p) { return String(p.name); },
+        puzzleWeightForPlayer
+      );
+      var nameKey = String(pool[idx].name);
+      if (usedNames[nameKey]) continue;
+      usedNames[nameKey] = true;
       rounds.push(buildTwinRound(pool[idx]));
     }
     return rounds;
@@ -6474,10 +6714,10 @@
     var nameSpan = document.createElement('span');
     els.twinVerdict.appendChild(nameSpan);
     els.twinVerdict.appendChild(document.createTextNode(' (' + twin.season + ').'));
-    tryLinkMoverName(nameSpan, twin.name);
+    tryLinkMoverName(nameSpan, twin.name, twin.season);
 
-    els.twinRevealAnchorTitle.textContent = anchor.name + ' — ' + anchor.season;
-    els.twinRevealTwinTitle.textContent = twin.name + ' — ' + twin.season;
+    els.twinRevealAnchorTitle.textContent = playerNamePlain(anchor.name, anchor.season) + ' — ' + anchor.season;
+    els.twinRevealTwinTitle.textContent = playerNamePlain(twin.name, twin.season) + ' — ' + twin.season;
     var av = resolveTwinVector(anchor.name, anchor.season);
     var tv = resolveTwinVector(twin.name, twin.season);
     if (av && els.twinRevealAnchorBars) renderMiniSigmaBars(els.twinRevealAnchorBars, av);

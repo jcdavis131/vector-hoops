@@ -77,6 +77,7 @@
 </div>
 
 <script src="assets/dossier.js" defer></script>
+<script src="assets/player-roster.js" defer></script>
 <script defer>
 (function () {
   'use strict';
@@ -123,11 +124,14 @@
     return order.map(function (slug) {
       var rec = bySlug[slug];
       var seasons = rec.seasons.slice().sort();
+      var teams = window.VHPlayerRoster.teamsForSeasons(rec.name, seasons);
       return {
         name: rec.name,
         slug: rec.slug,
         span: seasons.length > 1 ? seasons[0] + '–' + seasons[seasons.length - 1] : seasons[0],
         seasonCount: seasons.length,
+        teams: teams,
+        latestTeam: teams.length ? teams[teams.length - 1] : '',
         positions: Object.keys(rec.positions).sort(),
         archetypes: Object.keys(rec.archetypes).sort()
       };
@@ -175,9 +179,13 @@
       return;
     }
     els.list.innerHTML = shown.map(function (p) {
+      var teamMeta = p.teams.length ?
+        (p.teams.length > 3 ? p.teams.slice(0, 3).join('/') + '+' : p.teams.join('/')) : '';
       return '<li><button type="button" class="wiki-row" data-slug="' + p.slug + '" data-name="' +
         window.VHDossier.escapeHtml(p.name) + '">' +
-        '<span class="wiki-row__name">' + window.VHDossier.escapeHtml(p.name) + '</span>' +
+        '<span class="wiki-row__name">' + window.VHDossier.escapeHtml(p.name) +
+        (teamMeta ? ' <span class="vh-team-tag">' + window.VHDossier.escapeHtml(teamMeta) + '</span>' : '') +
+        '</span>' +
         '<span class="wiki-row__meta">' + p.positions.join('/') + ' &middot; ' + p.span + '</span>' +
         '</button></li>';
     }).join('');
@@ -257,12 +265,14 @@
   function init() {
     initDom();
     setupDossierModal();
-    fetch(DATA_URL)
-      .then(function (res) {
+    Promise.all([
+      fetch(DATA_URL).then(function (res) {
         if (!res.ok) throw new Error('HTTP ' + res.status);
         return res.json();
-      })
-      .then(function (data) {
+      }),
+      window.VHPlayerRoster.load()
+    ]).then(function (loaded) {
+        var data = loaded[0];
         PLAYERS = buildPlayerIndex(data);
         populateFilters(data);
         buildAlphabet();
