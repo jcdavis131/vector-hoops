@@ -53,7 +53,8 @@ def main() -> None:
     by = {(names[i], seasons[i]): grades[i] for i in range(len(names))}
 
     print("coverage era")
-    check(keys == ["post", "transition", "motor"], f"three wide skills ({keys})")
+    check(keys == ["post", "transition", "motor", "gravity", "navigation"],
+          f"five wide skills ({keys})")
     check(all(int(s[:4]) >= 2015 for s in seasons),
           "every covered row is 2015-16 or later (masked before)")
 
@@ -70,12 +71,25 @@ def main() -> None:
         check(int(row[ki[skill]]) >= floor,
               f"{name} {season} {skill} >= {floor} (got {int(row[ki[skill]])})")
 
+    def spot_low(name, season, skill, ceil):
+        row = by.get((name, season))
+        if row is None:
+            check(False, f"{name} {season} covered")
+            return
+        check(int(row[ki[skill]]) <= ceil,
+              f"{name} {season} {skill} <= {ceil} (got {int(row[ki[skill]])})")
+
     spot("Joel Embiid", "2022-23", "post", 80)
     spot("Nikola Jokić", "2022-23", "post", 60)
     spot("Giannis Antetokounmpo", "2022-23", "transition", 80)
     spot("Ja Morant", "2022-23", "transition", 60)
     spot("Draymond Green", "2022-23", "motor", 80)
     spot("Draymond Green", "2015-16", "motor", 80)
+    # Track K — gravity (spacing pull) and navigation (screen-nav D)
+    spot("Marcus Smart", "2015-16", "gravity", 60)     # 3.1 catch-shoot 3PA
+    spot_low("DeAndre Jordan", "2015-16", "gravity", 30)  # never shoots 3s
+    spot("Rudy Gobert", "2015-16", "navigation", 70)   # elite rim/contest, low opp FG%
+    spot_low("Ja Morant", "2022-23", "navigation", 45)
 
     print("mask honesty")
     if real:

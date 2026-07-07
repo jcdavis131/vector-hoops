@@ -6,10 +6,15 @@ express. Each is an era-z composite within the covered-season pool, then
 a percentile grade 0-99 — identical grading to the core Skills Lens, but
 emitted ONLY for player-seasons with tracking coverage (2015-16+).
 
-  post        Post Hub   0.6*postup-freq-z + 0.4*postup-PPP-z
-  transition  Sprinter   0.6*transition-freq-z + 0.4*transition-PPP-z
-  motor       Motor      mean z of screen assists, deflections, loose
-                         balls, charges drawn, box-outs
+  post        Post Hub      0.6*postup-freq-z + 0.4*postup-PPP-z
+  transition  Sprinter      0.6*transition-freq-z + 0.4*transition-PPP-z
+  motor       Motor         mean z of screen assists, deflections, loose
+                            balls, charges drawn, box-outs
+  gravity     Gravity Well  0.55*catch-shoot-3PA-z + 0.45*catch-shoot-3%-z
+                            (Track K — spacing-pull PROXY from public
+                            tracking, NOT Second Spectrum gravity)
+  navigation  Navigator     0.6*contested-shots-z − 0.4*opp-FG%-z
+                            (Track K — screen-nav / on-ball D proxy)
 
 Outputs:
   assets/skills_wide.json         grades keyed "name|season" (game surface)
@@ -42,6 +47,10 @@ WIDE_SKILLS = [
     {"key": "post", "label": "Post Play", "badge": "Post Hub"},
     {"key": "transition", "label": "Transition", "badge": "Sprinter"},
     {"key": "motor", "label": "Motor", "badge": "Motor"},
+    # Track K — tracking-derived proxies (see docs). NOT Second Spectrum
+    # gravity/matchup metrics; stated composites of public tracking.
+    {"key": "gravity", "label": "Spacing Gravity", "badge": "Gravity Well"},
+    {"key": "navigation", "label": "Screen Navigation", "badge": "Navigator"},
 ]
 BADGE_GRADE = 90
 GOLD_GRADE = 97
@@ -82,9 +91,15 @@ def zscore(col: np.ndarray) -> np.ndarray:
     return np.clip((col - mu) / sd, -4, 4)
 
 
-def percentile_grade(scores: np.ndarray) -> np.ndarray:
-    order = scores.argsort().argsort()
-    return np.clip(((order + 0.5) / len(scores) * 100).astype(int), 0, 99)
+def percentile_grade(scores: np.ndarray, tiebreak: np.ndarray | None = None) -> np.ndarray:
+    """Percentile 0-99; exact score ties broken by `tiebreak` (a volume proxy,
+    higher ranks above) so a busier player outranks a same-score bystander."""
+    if tiebreak is None:
+        tiebreak = np.zeros_like(scores)
+    order = np.lexsort((tiebreak, scores))  # primary scores, secondary tiebreak
+    ranks = np.empty(len(scores), dtype=int)
+    ranks[order] = np.arange(len(scores))
+    return np.clip(((ranks + 0.5) / len(scores) * 100).astype(int), 0, 99)
 
 
 def main() -> None:
@@ -120,10 +135,20 @@ def main() -> None:
             continue
         post = 0.6 * zscore(col("post_freq")[m]) + 0.4 * zscore(col("post_ppp")[m])
         trans = 0.6 * zscore(col("trans_freq")[m]) + 0.4 * zscore(col("trans_ppp")[m])
-        motor = np.mean([zscore(col(c)[m]) for c in MOTOR_COLS], axis=0)
-        grades["post"][m] = percentile_grade(post)
-        grades["transition"][m] = percentile_grade(trans)
-        grades["motor"][m] = percentile_grade(motor)
+        motor_cols = np.stack([col(c)[m] for c in MOTOR_COLS])
+        motor = np.mean([zscore(c) for c in motor_cols], axis=0)
+        # Gravity = spacing pull proxy: catch-and-shoot 3PA volume + accuracy
+        # (defenses must honor an off-ball shooter). NOT Second Spectrum gravity.
+        gravity = 0.55 * zscore(col("cs_fg3a")[m]) + 0.45 * zscore(col("cs_fg3_pct")[m])
+        # Navigation = screen-nav / on-ball D proxy: contested shots (staying
+        # attached) minus opponent FG% allowed when defending.
+        navigation = 0.6 * zscore(col("contested_shots")[m]) - 0.4 * zscore(col("d_fg_pct")[m])
+        # Tie-break each skill by its own volume.
+        grades["post"][m] = percentile_grade(post, col("post_freq")[m])
+        grades["transition"][m] = percentile_grade(trans, col("trans_freq")[m])
+        grades["motor"][m] = percentile_grade(motor, motor_cols.sum(axis=0))
+        grades["gravity"][m] = percentile_grade(gravity, col("cs_fg3a")[m])
+        grades["navigation"][m] = percentile_grade(navigation, col("contested_shots")[m])
 
     built = time.strftime("%Y-%m-%d")
     splits = {}

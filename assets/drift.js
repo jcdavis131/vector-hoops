@@ -406,7 +406,7 @@
         x: cx - barW / 2, y: y, width: barW, height: barH, fill: ORANGE_HEX, rx: 3
       }, svg);
       var title = document.createElementNS(SVG_NS, 'title');
-      title.textContent = e.decade + ': ' + e.meanTransitionRate.toFixed(3) +
+      title.textContent = e.decade + ': ' + e.meanTransitionRate.toFixed(2) +
         ' mean transition rate (' + e.careers + ' careers)';
       rect.appendChild(title);
       svgEl('text', {

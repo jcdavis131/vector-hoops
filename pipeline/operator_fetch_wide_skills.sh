@@ -24,7 +24,7 @@ else
   echo "   nba_api present"
 fi
 
-echo "== 2/4  fetch synergy + hustle (2015-16+, resumes from cache)"
+echo "== 2/4  fetch synergy + hustle + tracking (2015-16+, resumes from cache)"
 "$PY" pipeline/fetch_wide_skills.py
 
 echo "== 3/4  rebuild wide skills + transparent asset + gates"
@@ -44,7 +44,8 @@ To ship it (review, then run):
     git commit -m "Activate wide skills: post / transition / motor (2015-16+)"
     git push
 
-The Skills Lens then shows Post / Transition / Motor bars from 2015-16 on
-(earlier seasons stay "not tracked"). The MTNN skill towers pick up the
-three masked targets on the next retrain.
+The Skills Lens then shows Post / Transition / Motor / Spacing Gravity /
+Screen Navigation bars from 2015-16 on (earlier seasons stay "not
+tracked"). The MTNN skill towers pick up the five masked targets on the
+next retrain.
 NEXT

@@ -289,6 +289,28 @@ prints the commit command. Until then the three skills render as
 
 ---
 
+### Track K — Tracking proxies (gravity + navigation)
+
+Extends the wide-skills family with two skills derived from **player
+tracking** (`leaguedashptstats`). Both are **stated proxies from public
+tracking**, not Second Spectrum gravity or matchup-difficulty metrics —
+labeled as such in the UI, the same honesty rule as "Two-Way Impact ≠
+RAPM".
+
+| Field | Detail |
+|-------|--------|
+| **Fetcher** | folded into `pipeline/fetch_wide_skills.py` (adds `leaguedashptstats` CatchShoot + Defense) |
+| **Deriver** | `pipeline/build_wide_skills.py` (skills `gravity`, `navigation`) |
+| **Source** | stats.nba.com `leaguedashptstats` — CatchShoot (`CATCH_SHOOT_FG3A`, `CATCH_SHOOT_FG3_PCT`) and Defense (`D_FG_PCT`); contested shots from the hustle feed |
+| **Coverage** | Tracking 2013-14+, but fetched over the shared wide-skill window (2015-16+) so all five wide skills align |
+| **Skills** | `gravity` (Gravity Well — catch-and-shoot 3PA volume + accuracy, a spacing-pull proxy), `navigation` (Navigator — contested shots − opponent FG% allowed, a screen-navigation / on-ball defense proxy) |
+| **Honesty** | UI label states these are **tracking proxies**, not Second Spectrum gravity/matchup data; Methods carries the caveat |
+| **Mask / grading** | Same as Track J — era-z percentile within the covered-season pool, masked before coverage; volume tie-break |
+| **MTNN** | Two more masked skill-tower targets (17 total: 12 core + 5 wide) |
+| **Blocked-by** | Same operator run as Track J (`fetch_wide_skills.py` now pulls tracking too) |
+
+---
+
 ## ROI-sorted build order
 
 Sorted by **impact ÷ effort** for MTNN v4 retrieval + game honesty. Ship top rows before Tier C.
@@ -307,6 +329,7 @@ Sorted by **impact ÷ effort** for MTNN v4 retrieval + game honesty. Ship top ro
 | — | **H — Pedigree** *(shipped dormant 2026-07-06)* | Entry expectations + team-fit prior; one fetch call | S | Operator fetch | done |
 | — | **I — Playoffs** *(shipped dormant 2026-07-06)* | Postseason as a distinct regime; riser/fader tower | M | Operator fetch | done |
 | — | **J — Wide skills** *(shipped dormant 2026-07-06)* | Post / transition / motor; masked skills 2015-16+ | M | Operator fetch | done |
+| — | **K — Tracking proxies** *(shipped dormant 2026-07-06)* | Gravity + navigation from player tracking (stated proxies) | S | Operator fetch (folded into J) | done |
 
 **S** = small (~≤150 LOC), **M** = medium (~150–300), **L** = large (~300–500), **XL** = 500+.
 
@@ -396,6 +419,7 @@ See [`mtnn_v4_plan.md`](../pipeline/mtnn_v4_plan.md) for tower families and `bbr
 | VH-115 | Pedigree (draft + entry expectations) |
 | VH-116 | Playoffs (postseason distinct regime) |
 | VH-117 | Wide skills (post / transition / motor) |
+| VH-118 | Tracking proxies (gravity / navigation) |
 
 ---
 

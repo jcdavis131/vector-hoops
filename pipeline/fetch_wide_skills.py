@@ -91,14 +91,32 @@ def fetch_hustle(season: str) -> dict[str, dict]:
     return {norm_name(str(r["PLAYER_NAME"])): r for r in rows}
 
 
+def fetch_ptstats(season: str, measure: str) -> dict[str, dict]:
+    """Player tracking (leaguedashptstats) — CatchShoot / Defense measures.
+    Tracking coverage starts 2013-14, but we only fetch the synergy/hustle
+    span (2015-16+) so all wide skills share a coverage window."""
+    from nba_api.stats.endpoints import leaguedashptstats
+
+    def call():
+        return leaguedashptstats.LeagueDashPtStats(
+            season=season, pt_measure_type=measure, player_or_team="Player",
+            per_mode_simple="PerGame", timeout=75).get_data_frames()[0]
+
+    rows = with_retries(call, f"{season} tracking {measure}").to_dict("records")
+    return {norm_name(str(r["PLAYER_NAME"])): r for r in rows}
+
+
 def build_season_cache(season: str) -> dict:
     post = fetch_synergy(season, "Postup")
     trans = fetch_synergy(season, "Transition")
     hustle = fetch_hustle(season)
-    names = set(post) | set(trans) | set(hustle)
+    catch = fetch_ptstats(season, "CatchShoot")
+    defense = fetch_ptstats(season, "Defense")
+    names = set(post) | set(trans) | set(hustle) | set(catch) | set(defense)
     players: dict[str, dict] = {}
     for nn in names:
         p, t, h = post.get(nn, {}), trans.get(nn, {}), hustle.get(nn, {})
+        c, d = catch.get(nn, {}), defense.get(nn, {})
         players[nn] = {
             "post_freq": float(p.get("POSS_PCT") or 0.0) * 100.0,
             "post_ppp": float(p.get("PPP") or 0.0),
@@ -109,10 +127,16 @@ def build_season_cache(season: str) -> dict:
             "loose_balls": float(h.get("LOOSE_BALLS_RECOVERED") or 0.0),
             "charges": float(h.get("CHARGES_DRAWN") or 0.0),
             "box_outs": float(h.get("BOX_OUTS") or 0.0),
+            "contested_shots": float(h.get("CONTESTED_SHOTS") or 0.0),
+            # tracking (Track K): catch-and-shoot 3s (gravity), defended FG%
+            "cs_fg3a": float(c.get("CATCH_SHOOT_FG3A") or 0.0),
+            "cs_fg3_pct": float(c.get("CATCH_SHOOT_FG3_PCT") or 0.0),
+            "d_fg_pct": float(d.get("D_FG_PCT") or 0.0),
         }
     return {
         "built": time.strftime("%Y-%m-%d"),
-        "source": "stats.nba.com synergyplaytypes + leaguehustlestatsplayer",
+        "source": ("stats.nba.com synergyplaytypes + leaguehustlestatsplayer "
+                   "+ leaguedashptstats (CatchShoot, Defense)"),
         "complete": True, "season": season, "players": players,
     }
 

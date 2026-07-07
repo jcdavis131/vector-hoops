@@ -270,7 +270,13 @@
   function fmtDelta(v, digits) {
     if (v === null || v === undefined) return '&mdash;';
     var s = v >= 0 ? '+' : '';
-    return s + v.toFixed(digits === undefined ? 1 : digits);
+    return s + v.toFixed(Math.min(2, digits === undefined ? 1 : digits));
+  }
+
+  // Round any user-facing number to at most 2 decimals, trailing zeros trimmed.
+  function num2(v) {
+    if (v === null || v === undefined) return '&mdash;';
+    return String(Math.round(v * 100) / 100);
   }
 
   function renderPlayoffs(name, season) {
@@ -297,8 +303,8 @@
     function line(label, po, rs, delta, digits) {
       return '<li class="po-split">' +
         '<span class="po-split__label">' + label + '</span>' +
-        '<span class="po-split__rs">RS ' + (rs === null || rs === undefined ? '&mdash;' : rs) + '</span>' +
-        '<span class="po-split__po">PO ' + (po === null || po === undefined ? '&mdash;' : po) + '</span>' +
+        '<span class="po-split__rs">RS ' + num2(rs) + '</span>' +
+        '<span class="po-split__po">PO ' + num2(po) + '</span>' +
         '<span class="po-split__delta">' + fmtDelta(delta, digits) + '</span></li>';
     }
     box.hidden = false;
@@ -310,7 +316,7 @@
       line('Minutes', s.po.MIN, s.rs.MIN, s.min_delta, 1) +
       line('Usage %', s.po.USG, s.rs.USG, s.usg_delta, 1) +
       line('True Shooting', s.po.TS, s.rs.TS,
-           (s.po.TS != null && s.rs.TS != null) ? +(s.po.TS - s.rs.TS).toFixed(3) : null, 3) +
+           (s.po.TS != null && s.rs.TS != null) ? (s.po.TS - s.rs.TS) : null, 2) +
       '</ul>' +
       '<p class="skills-hint">On-court plus-minus per 100 in the playoffs: ' +
       fmtDelta(s.po.PLUS_MINUS, 1) + '. Splits from stats.nba.com.</p>';
@@ -435,13 +441,19 @@
     var featIdx = {};
     DATA.features.forEach(function (f, k) { featIdx[f] = k; });
     var w = SKILLS.skills[j].w;
-    var score = {};
+    var volCols = ['FGA', 'FTA', 'AST'].map(function (f) { return featIdx[f]; })
+      .filter(function (k) { return k !== undefined; });
+    var score = {}, vol = {};
     rows.forEach(function (i) {
-      var s = 0;
-      for (var f in w) s += w[f] * DATA.players[i].v[featIdx[f]];
+      var s = 0, v = DATA.players[i].v;
+      for (var f in w) s += w[f] * v[featIdx[f]];
       score[i] = s;
+      vol[i] = volCols.reduce(function (a, k) { return a + v[k]; }, 0);
     });
-    rows.sort(function (a, b) { return score[b] - score[a]; });
+    // Primary: composite score; ties broken by volume/usage proxy (higher first).
+    rows.sort(function (a, b) {
+      return score[b] - score[a] || vol[b] - vol[a];
+    });
     els.board.innerHTML = rows.slice(0, BOARD_ROWS).map(function (i) {
       var p = DATA.players[i];
       var slug = window.VHDossier.playerSlug(p.name);
