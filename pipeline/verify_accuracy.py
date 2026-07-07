@@ -334,10 +334,20 @@ def v11_mtnn_report_warn() -> None:
     test = rep.get("held_out_recall", {}).get("test", {}).get("recall_at_10_mtnn")
     purity = rep.get("cross_era_archetype_neighbor_purity_at_20")
     print(f"  test recall@10={test}  purity@20={purity}")
-    if purity is not None and purity < 0.63:
-        print("  WARN: purity below 0.63 promotion gate — MTNN stays in pipeline/data/")
-    if test is not None and test < 0.95:
-        print("  WARN: test recall below 0.95 — review before promotion")
+    arch = rep.get("archetype_top1_acc")
+    base = rep.get("held_out_recall", {}).get("test", {}).get("recall_at_10_transparent_14d")
+    eligible = (
+        test is not None and base is not None and test >= base + 0.05
+        and (arch or 0) >= 0.55
+        and purity is not None and purity >= 0.63
+    )
+    if eligible:
+        print("  MTNN promotion gates PASS (embeddings remain pipeline/data/ until wired)")
+    else:
+        if purity is not None and purity < 0.63:
+            print("  WARN: purity below 0.63 promotion gate — MTNN stays in pipeline/data/")
+        if test is not None and test < 0.95:
+            print("  WARN: test recall below 0.95 — review before promotion")
 
 
 if __name__ == "__main__":

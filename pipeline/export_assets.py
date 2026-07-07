@@ -80,6 +80,30 @@ def wide_skills_build_cmd(py: str) -> list[str]:
     return cmd
 
 
+PROMOTION_PURITY_FLOOR = 0.63
+PROMOTION_RECALL_MARGIN = 0.05
+PROMOTION_ARCHETYPE_TOP1 = 0.55
+
+
+def mtnn_promotion_eligible(report: dict | None) -> bool:
+    """Match train_mtnn.py promotion_gate + verify_accuracy v11."""
+    if not report:
+        return False
+    ho = report.get("held_out_recall", {})
+    test = ho.get("test", {})
+    mtnn_r = test.get("recall_at_10_mtnn")
+    base_r = test.get("recall_at_10_transparent_14d")
+    purity = report.get("cross_era_archetype_neighbor_purity_at_20")
+    arch = report.get("archetype_top1_acc")
+    if mtnn_r is None or base_r is None or purity is None or arch is None:
+        return False
+    return (
+        mtnn_r >= base_r + PROMOTION_RECALL_MARGIN
+        and arch >= PROMOTION_ARCHETYPE_TOP1
+        and purity >= PROMOTION_PURITY_FLOOR
+    )
+
+
 def main() -> None:
     py = sys.executable
     steps_ok: dict[str, bool] = {}
@@ -151,7 +175,10 @@ def main() -> None:
         "built": time.strftime("%Y-%m-%d %H:%M UTC", time.gmtime()),
         "contract": "transparent_14d",
         "wide_skills": wide_meta,
-        "mtnn_promoted": False,
+        "mtnn_promoted": mtnn_promotion_eligible(mtnn),
+        "mtnn_promotion_note": (
+            "embeddings stay in pipeline/data/ until a client surface consumes them"
+            if mtnn_promotion_eligible(mtnn) else None),
         "mtnn_model": mtnn.get("model") if mtnn else None,
         "mtnn_test_recall_at_10": (
             mtnn.get("held_out_recall", {}).get("test", {}).get("recall_at_10_mtnn")
