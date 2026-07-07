@@ -36,6 +36,13 @@ SALARY_MARKET_JSON = DATA_DIR / "salary_market.json"
 PEDIGREE_JSON = DATA_DIR / "pedigree.json"
 PLAYOFFS_JSON = DATA_DIR / "playoffs.json"
 HONORS_JSON = DATA_DIR / "honors.json"
+GAME_RATINGS_JSON = DATA_DIR / "game_ratings.json"
+
+_GAME_ATTR_KEYS = (
+    "overall", "three_pt", "mid_range", "close_shot", "ball_handle",
+    "pass_accuracy", "perimeter_def", "interior_def", "steal", "block",
+    "off_rebound", "def_rebound", "speed", "strength",
+)
 
 V4_FEATURES: dict[str, str] = {
   # roster (VH-109)
@@ -98,9 +105,11 @@ V4_FEATURES: dict[str, str] = {
   "HON_ASG_LAG": "honors",
   "HON_ASG_CUM": "honors",
   "HON_VOTE_RECOG": "honors",
+  **{f"GK_{k.upper()}": "game_ratings" for k in _GAME_ATTR_KEYS},
 }
 
 PO_FEATURES = [f for f, fam in V4_FEATURES.items() if fam == "playoffs"]
+GK_FEATURES = [f for f, fam in V4_FEATURES.items() if fam == "game_ratings"]
 
 
 def norm_name(name: str) -> str:
@@ -184,6 +193,15 @@ def load_honors_by_player_season() -> dict[tuple[str, str], dict]:
         return {}
     data = json.loads(HONORS_JSON.read_text(encoding="utf-8"))
     return {(r["name"], r["season"]): r for r in data.get("players", [])}
+
+
+def load_game_ratings_by_player_season() -> dict[tuple[str, str], dict]:
+    """(name, season) -> GK_* row from build_game_ratings.py."""
+    if not GAME_RATINGS_JSON.exists():
+        return {}
+    data = json.loads(GAME_RATINGS_JSON.read_text(encoding="utf-8"))
+    rows = data.get("players", data.get("rows", []))
+    return {(r["name"], r["season"]): r for r in rows}
 
 
 def load_salary_market_by_player_season() -> dict[tuple[str, str], dict]:
@@ -293,6 +311,7 @@ def build_row_values(
     pedigree: dict,
     playoffs: dict,
     honors: dict,
+    game_ratings: dict,
 ) -> list[dict[str, float | None]]:
     rows: list[dict[str, float | None]] = []
     for name, season in zip(names, seasons):
@@ -304,6 +323,7 @@ def build_row_values(
         ped = pedigree.get(key, {})
         po = playoffs.get(key, {})
         hon = honors.get(key, {})
+        gk = game_ratings.get(key, {})
         mkt = salary_market.get(key, {})
         team_row = team_index.get((str(season), int(r["teamId"]))) if r.get("teamId") else {}
         rows.append({
@@ -349,6 +369,7 @@ def build_row_values(
             "HON_ASG_CUM": hon.get("HON_ASG_CUM"),
             "HON_VOTE_RECOG": hon.get("HON_VOTE_RECOG"),
             **{f: po.get(f) for f in PO_FEATURES},
+            **{f: gk.get(f) for f in GK_FEATURES},
         })
     return rows
 
@@ -377,6 +398,11 @@ def main() -> None:
     if proc.returncode != 0:
         raise SystemExit("build_salary_market.py failed")
 
+    subprocess.run(
+        [sys.executable, str(ROOT / "pipeline" / "build_game_ratings.py")],
+        cwd=ROOT,
+    )
+
     Z, M, manifest, pids, seasons, names, clusters = load_train_bundle()
     roster = load_roster_by_player_season()
     career = load_career_by_player_season()
@@ -387,16 +413,18 @@ def main() -> None:
     pedigree = load_pedigree_by_player_season()
     playoffs = load_playoffs_by_player_season()
     honors = load_honors_by_player_season()
+    game_ratings = load_game_ratings_by_player_season()
 
     print(f"artifacts: roster={len(roster)} career={len(career)} "
           f"competition={len(competition)} salary_market={len(salary_market)} "
           f"team_season={len(team_index)} "
           f"form={len(form)} pedigree={len(pedigree)} playoffs={len(playoffs)} "
-          f"honors={len(honors)}")
+          f"honors={len(honors)} game_ratings={len(game_ratings)}")
 
     row_vals = build_row_values(
         names, seasons, roster, career, competition,
-        salary_market, team_index, form, pedigree, playoffs, honors)
+        salary_market, team_index, form, pedigree, playoffs, honors,
+        game_ratings)
     Z2, M2, man2 = merge_v4_context(Z, M, manifest, names, seasons, row_vals)
     v4_cols = v4_column_indices(man2)
     covered = int((M2[:, v4_cols] > 0).any(axis=1).sum()) if v4_cols else 0

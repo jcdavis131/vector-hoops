@@ -34,7 +34,7 @@ def main() -> None:
     print("  (fixture mode)")
 
     doc = json.loads(DATA.read_text(encoding="utf-8"))
-    rows = doc.get("rows", [])
+    rows = doc.get("players", doc.get("rows", []))
     check(len(rows) >= 2, f"fixture covers >=2 rows ({len(rows)})")
     curry = next((r for r in rows if "Curry" in r["name"]), None)
     check(curry is not None and curry.get("GK_THREE_PT", 0) >= 95,

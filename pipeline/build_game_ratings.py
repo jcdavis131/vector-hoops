@@ -81,12 +81,17 @@ def main() -> None:
         rows.append(row)
 
     OUT.parent.mkdir(parents=True, exist_ok=True)
-    OUT.write_text(json.dumps({"built": built, "rows": rows}, indent=2), encoding="utf-8")
+    OUT.write_text(json.dumps({
+        "built": built,
+        "season": cache_season,
+        "complete": complete,
+        "players": rows,
+    }, indent=2), encoding="utf-8")
 
     asset_msg = ""
     if complete and rows:
         ASSET_OUT.write_text(
-            json.dumps({"built": built, "season": cache_season, "rows": rows},
+            json.dumps({"built": built, "season": cache_season, "players": rows},
                        separators=(",", ":")),
             encoding="utf-8")
         asset_msg = f" + {ASSET_OUT.name}"
