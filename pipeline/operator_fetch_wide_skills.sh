@@ -17,11 +17,11 @@ cd "$(dirname "$0")/.."
 PY="${PYTHON:-python3}"
 
 echo "== 1/4  dependencies"
-if ! "$PY" -c "import nba_api" 2>/dev/null; then
-  echo "   installing nba_api + numpy"
-  "$PY" -m pip install --quiet nba_api numpy
+if ! "$PY" -c "import curl_cffi" 2>/dev/null; then
+  echo "   installing curl_cffi (Akamai bypass for stats.nba.com)"
+  "$PY" -m pip install --quiet curl_cffi
 else
-  echo "   nba_api present"
+  echo "   curl_cffi present"
 fi
 
 echo "== 2/4  fetch synergy + hustle + tracking (2015-16+, resumes from cache)"

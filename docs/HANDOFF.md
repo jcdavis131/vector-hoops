@@ -1,8 +1,9 @@
 # Handoff: Skills Lens + dormant data tracks
 
 > **Purpose:** let another agent (or future you) pick up this work without
-> re-deriving context. Snapshot as of branch
-> `claude/skills-tagging-mtnn-towers-1jmils`, 2026-07-06.
+> re-deriving context. **Latest session:** [`HANDOFF_2026-07-07.md`](./HANDOFF_2026-07-07.md)
+> (wide skills live, disruption gravity, fetch fix, HP sweep).
+> Snapshot as of 2026-07-07.
 > **Read next:** `docs/SKILLS_LENS.md` (design), `docs/DATA_SOURCES_DEEP.md`
 > (Tracks H–K specs), `docs/FEATURE_ENGINEERING_SOP.md` (the gate doctrine).
 
@@ -11,11 +12,10 @@
 ## TL;DR
 
 The **Skills Lens** grades all 12,392 player-seasons on 12 transparent
-skills and ships live. Four **dormant data tracks** (H/I/J/K) extend the
-MTNN and the Lens; each is fully built, gated on a committed fixture, and
-**waiting on one operator fetch** because stats.nba.com blocks datacenter
-/ CI IPs (this environment included). Nothing dormant is faked. Game
-surfaces stay hidden until real data lands.
+skills and ships live. **Wide skills (Tracks J+K) are operator-activated:**
+6 masked skills from 2015-16+ when `pipeline/cache/wide_skills_*.json` +
+`assets/skills_wide.json` are committed (see session handoff). Tracks H/I
+may still be dormant until their operator fetches. Nothing dormant is faked.
 
 **The one repeating pattern** (copy it for any new source): `fetch_*.py`
 (operator-only), then a committed `*.example.json` fixture, then `build_*.py`
@@ -53,7 +53,7 @@ same branch name (see the "merged PR" rule in the repo's agent guidance).
 - **Chimera reveal skill lens** (`assets/game.js`): the fused daily blend
   graded live through `skill_probe.json`; donor badges.
 - **MTNN v4** (`pipeline/train_mtnn.py`): per-family towers + a per-skill
-  **skill-tower bank** (currently 17 = 12 core + 5 wide, per-skill masked)
+  **skill-tower bank** (currently 18 = 12 core + 6 wide, per-skill masked)
   + aux heads (archetype, position, profile, salary, `pedigree_expectation`,
   `playoff_riser`). Research lane only. The game ships transparent
   features; promotion is gated (see SKILLS_LENS section 3).
@@ -75,8 +75,7 @@ prints the exact `git add … && commit && push`.
 |-------|--------------|----------|-----------|
 | **H — Pedigree** | draft slot / entry expectations / team-fit prior; `pedigree_expectation` head; **Steals of the Draft** board | `bash pipeline/operator_fetch_pedigree.sh` | `assets/pedigree.json`; pedigree MTNN tower; Steals/Busts board |
 | **I — Playoffs** | postseason as a distinct regime (PO−RS deltas: minutes/usage/scoring/eff + team wins/rounds); `playoff_riser` head; **Playoff Lens** | `bash pipeline/operator_fetch_playoffs.sh` | `assets/playoffs.json`; playoffs MTNN tower; RS-vs-PO splits + riser/fader |
-| **J — Wide skills** | post / transition / motor (masked, 2015-16+) | `bash pipeline/operator_fetch_wide_skills.sh` | `assets/skills_wide.json`; 3 masked skill-tower targets; Lens bars |
-| **K — Tracking gravity** | **shooting gravity** (pull-up 3s + vol/acc; Curry tops) + **rim gravity** (blocks + deterrence; Wemby tops) | same fetch as J (`fetch_wide_skills.py` pulls tracking too) | 2 more masked wide skills |
+| **J+K — Wide skills** | post / transition / motor + shooting / rim / **disruption** gravity (masked, 2015-16+) | `pip install curl_cffi` then `python pipeline/fetch_wide_skills.py` | `assets/skills_wide.json`; 6 masked skill-tower targets; Lens bars |
 
 **Operator fetch does two things you must not skip:** commit the produced
 `pipeline/cache/*.json` (the real caches) **and** the transparent

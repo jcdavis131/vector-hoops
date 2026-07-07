@@ -6,17 +6,26 @@ warmup+cosine and fusion ablations (gated vs concat).
 
 Runs train_mtnn.py over a config grid × seeds and writes
 pipeline/data/mtnn_hp_sweep.json. Ranks by promotion-aware composite:
-60% purity@20 + 40% held-out test recall@10.
+60% purity@20 + 40% held-out test recall@10 (recall < 0.85 demoted).
 
-  python pipeline/mtnn_hp_sweep.py [--epochs 20] [--quick]
-  python pipeline/mtnn_hp_sweep.py --profile novel --epochs 15 --quick
-  python pipeline/mtnn_hp_sweep.py --profile schedule --epochs 20
+  python pipeline/mtnn_hp_sweep.py [--epochs 40] [--quick]
+  python pipeline/mtnn_hp_sweep.py --profile refined --epochs 40
+  python pipeline/mtnn_hp_sweep.py --profile discovery --epochs 40  # v1 grid
 
 Profiles:
+  refined   — v2 grid around concat+onecycle winner (recommended, default)
+  discovery — v1 Brain2Qwerty discovery grid (8 configs, reproducibility)
   classic   — dim × lr × nce_temp × drop_p (original Phase B grid)
   schedule  — lr_schedule × anneal × warmup (fixed dim=48)
-  novel     — curated Brain2Qwerty + embed SOTA recipes (recommended)
+  novel     — alias for refined (backward compatible)
   full      — classic × {legacy, onecycle, warmup-cosine} (large)
+
+Past sweep (profile=discovery, 40 ep, seeds 7/42/99) — key lessons:
+  - concat-fusion-onecycle dominated top-3 (composite ~0.74, recall ~0.99+).
+  - gated fusion + same schedule landed ~0.70 composite, purity ~0.54.
+  - supcon-arch: purity ~0.91 but recall ~0.05 — excluded from refined grid.
+  - Promotion blocker is purity@20 (~0.58 best) not recall; refined grid
+    explores dim / nce_temp / drop_p / wd / warmup / batch around concat.
 """
 
 from __future__ import annotations
@@ -32,8 +41,11 @@ ROOT = Path(__file__).resolve().parents[1]
 REPORT = ROOT / "pipeline" / "data" / "mtnn_report.json"
 OUT = ROOT / "pipeline" / "data" / "mtnn_hp_sweep.json"
 
-# Brain2Qwerty §4.2.2: OneCycleLR, pct_start=0.1, linear decay, AdamW wd=1e-4
-NOVEL_CONFIGS: list[dict] = [
+PROMOTION_PURITY_FLOOR = 0.63
+RECALL_RANK_FLOOR = 0.85  # demote supcon-style retrieval collapse
+
+# v1 discovery grid (2026-07 sweep) — kept for reproducibility / A/B history.
+DISCOVERY_CONFIGS: list[dict] = [
     {
         "tag": "baseline-legacy",
         "lr_schedule": "legacy-epoch-cosine",
@@ -79,6 +91,7 @@ NOVEL_CONFIGS: list[dict] = [
         "warmup_pct": 0.1,
         "dim": 48, "lr": 1.5e-3, "nce_temp": 0.08, "drop_p": 0.12,
         "fusion": "concat", "nce_loss": "infonce", "grad_accum": 1,
+        "weight_decay": 1e-4,
     },
     {
         "tag": "supcon-arch-onecycle",
@@ -99,17 +112,139 @@ NOVEL_CONFIGS: list[dict] = [
 ]
 
 
+def _concat_onecycle(tag: str, **overrides) -> dict:
+    """Winner template from discovery sweep — concat + onecycle linear."""
+    cfg = {
+        "tag": tag,
+        "lr_schedule": "onecycle",
+        "anneal_strategy": "linear",
+        "warmup_pct": 0.1,
+        "dim": 48,
+        "lr": 1.5e-3,
+        "nce_temp": 0.08,
+        "drop_p": 0.12,
+        "fusion": "concat",
+        "nce_loss": "infonce",
+        "grad_accum": 1,
+        "weight_decay": 1e-4,
+    }
+    cfg.update(overrides)
+    return cfg
+
+
+# v2 refined grid — local search around concat-fusion-onecycle for purity@20.
+REFINED_CONFIGS: list[dict] = [
+    _concat_onecycle("concat-winner"),
+    _concat_onecycle("concat-dim-40", dim=40),
+    _concat_onecycle("concat-dim-56", dim=56),
+    _concat_onecycle("concat-dim-64-lr12", dim=64, lr=1.2e-3),
+    _concat_onecycle("concat-nce-007", nce_temp=0.07),
+    _concat_onecycle("concat-nce-009", nce_temp=0.09),
+    _concat_onecycle("concat-nce-010", nce_temp=0.10),
+    _concat_onecycle("concat-drop-010", drop_p=0.10),
+    _concat_onecycle("concat-drop-015", drop_p=0.15),
+    _concat_onecycle("concat-lr-0012", lr=1.2e-3),
+    _concat_onecycle("concat-lr-0020", lr=2.0e-3),
+    _concat_onecycle("concat-wd-5e5", weight_decay=5e-5),
+    _concat_onecycle("concat-wd-2e4", weight_decay=2e-4),
+    _concat_onecycle("concat-warmup-005", warmup_pct=0.05),
+    _concat_onecycle("concat-warmup-015", warmup_pct=0.15),
+    _concat_onecycle("concat-large-batch", grad_accum=2, batch=256),
+    _concat_onecycle(
+        "concat-warmup-cosine",
+        lr_schedule="warmup-cosine",
+        anneal_strategy=None,
+    ),
+    _concat_onecycle("concat-hardneg-02", hard_neg_boost=0.2),
+    _concat_onecycle("concat-hardneg-04", hard_neg_boost=0.4),
+    {
+        "tag": "gated-regression",
+        "lr_schedule": "onecycle",
+        "anneal_strategy": "linear",
+        "warmup_pct": 0.1,
+        "dim": 48, "lr": 1.5e-3, "nce_temp": 0.08, "drop_p": 0.12,
+        "fusion": "gated", "nce_loss": "infonce", "grad_accum": 1,
+        "weight_decay": 1e-4,
+    },
+]
+
+REFINED_QUICK_TAGS = {
+    "concat-winner",
+    "concat-dim-56",
+    "concat-nce-010",
+    "concat-large-batch",
+}
+
+# v3 hybrid grid — concat winner + partial archetype SupCon (purity without collapse).
+HYBRID_CONFIGS: list[dict] = [
+    _concat_onecycle("concat-winner"),
+    _concat_onecycle(
+        "concat-hybrid-010",
+        nce_loss="hybrid", nce_player_weight=0.90, nce_arch_weight=0.10,
+    ),
+    _concat_onecycle(
+        "concat-hybrid-020",
+        nce_loss="hybrid", nce_player_weight=0.80, nce_arch_weight=0.20,
+    ),
+    _concat_onecycle(
+        "concat-hybrid-030",
+        nce_loss="hybrid", nce_player_weight=0.70, nce_arch_weight=0.30,
+    ),
+    _concat_onecycle(
+        "concat-hybrid-040",
+        nce_loss="hybrid", nce_player_weight=0.60, nce_arch_weight=0.40,
+    ),
+    _concat_onecycle(
+        "concat-hybrid-015-t010",
+        nce_loss="hybrid", nce_player_weight=0.85, nce_arch_weight=0.15,
+        nce_temp=0.10,
+    ),
+    _concat_onecycle(
+        "concat-hybrid-020-drop010",
+        nce_loss="hybrid", nce_player_weight=0.80, nce_arch_weight=0.20,
+        drop_p=0.10,
+    ),
+    _concat_onecycle(
+        "concat-hybrid-020-hardneg",
+        nce_loss="hybrid", nce_player_weight=0.80, nce_arch_weight=0.20,
+        hard_neg_boost=0.3,
+    ),
+    {
+        "tag": "supcon-arch-control",
+        "lr_schedule": "onecycle",
+        "anneal_strategy": "linear",
+        "warmup_pct": 0.1,
+        "dim": 48, "lr": 1.5e-3, "nce_temp": 0.08, "drop_p": 0.12,
+        "fusion": "concat", "nce_loss": "supcon-arch", "grad_accum": 1,
+        "weight_decay": 1e-4,
+    },
+]
+
+
 def composite_score(test_recall: float | None, purity: float | None) -> float:
     """Promotion-aware: purity gate is the current blocker."""
     tr = test_recall or 0.0
     pu = purity or 0.0
+    if tr < RECALL_RANK_FLOOR:
+        return 0.3 * tr + 0.3 * pu
     return 0.4 * tr + 0.6 * pu
 
 
 def build_grid(profile: str, quick: bool) -> list[dict]:
-    if profile == "novel":
-        grid = NOVEL_CONFIGS[:2] if quick else NOVEL_CONFIGS
+    if profile == "hybrid":
+        grid = HYBRID_CONFIGS
+        if quick:
+            grid = [c for c in grid if c.get("tag") in {
+                "concat-winner", "concat-hybrid-020", "supcon-arch-control"}]
         return grid
+    if profile in ("refined", "novel"):
+        grid = REFINED_CONFIGS
+        if quick:
+            grid = [c for c in grid if c.get("tag") in REFINED_QUICK_TAGS]
+        return grid
+
+    if profile == "discovery":
+        return DISCOVERY_CONFIGS[:2] if quick else DISCOVERY_CONFIGS
 
     dims = [48] if profile == "schedule" else [32, 48, 64]
     lrs = [1e-3, 1.5e-3, 2e-3]
@@ -185,10 +320,18 @@ def run_one(cfg: dict, epochs: int, seed: int) -> dict:
         cmd.extend(["--batch", str(cfg["batch"])])
     if "warmup_pct" in cfg:
         cmd.extend(["--warmup-pct", str(cfg["warmup_pct"])])
-    if "anneal_strategy" in cfg:
+    if cfg.get("anneal_strategy"):
         cmd.extend(["--anneal-strategy", str(cfg["anneal_strategy"])])
     if "weight_decay" in cfg:
         cmd.extend(["--weight-decay", str(cfg["weight_decay"])])
+    if cfg.get("hard_neg_boost"):
+        cmd.extend(["--hard-neg-boost", str(cfg["hard_neg_boost"])])
+    if cfg.get("nce_player_weight") is not None:
+        cmd.extend(["--nce-player-weight", str(cfg["nce_player_weight"])])
+    if cfg.get("nce_arch_weight") is not None:
+        cmd.extend(["--nce-arch-weight", str(cfg["nce_arch_weight"])])
+    if cfg.get("checkpoint_metric"):
+        cmd.extend(["--checkpoint-metric", str(cfg["checkpoint_metric"])])
 
     subprocess.run(cmd, cwd=ROOT, check=True)
     rep = json.loads(REPORT.read_text(encoding="utf-8"))
@@ -205,13 +348,17 @@ def run_one(cfg: dict, epochs: int, seed: int) -> dict:
         "purity": purity,
         "archetype_top1": rep.get("archetype_top1_acc"),
         "composite": round(score, 4),
+        "promotion_purity_gap": (
+            round(PROMOTION_PURITY_FLOOR - purity, 4) if purity is not None else None),
         "train_hparams": {
-            k: rep.get(k)
+            k: cfg.get(k, rep.get(k))
             for k in (
                 "lr_schedule", "warmup_pct", "anneal_strategy",
                 "weight_decay", "grad_accum", "fusion", "nce_loss",
+                "hard_neg_boost", "nce_player_weight", "nce_arch_weight",
+                "checkpoint_metric",
             )
-            if rep.get(k) is not None
+            if cfg.get(k) is not None or rep.get(k) is not None
         },
     }
 
@@ -220,14 +367,18 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--epochs", type=int, default=20,
                     help="epochs per config (40+ to confirm winners)")
-    ap.add_argument("--profile", choices=("classic", "schedule", "novel", "full"),
-                    default="novel",
-                    help="sweep grid (novel = Brain2Qwerty-inspired curated set)")
+    ap.add_argument(
+        "--profile",
+        choices=("classic", "schedule", "discovery", "refined", "hybrid", "novel", "full"),
+        default="refined",
+        help="sweep grid (refined=concat local; hybrid=player+arch SupCon λ)",
+    )
     ap.add_argument("--quick", action="store_true",
                     help="smoke: 1 seed, truncated grid")
     args = ap.parse_args()
 
-    grid = build_grid(args.profile, args.quick)
+    profile = "refined" if args.profile == "novel" else args.profile
+    grid = build_grid(profile, args.quick)
     seeds = [7] if args.quick else [7, 42, 99]
 
     results: list[dict] = []
@@ -240,15 +391,29 @@ def main() -> None:
 
     ranked = sorted(
         results,
-        key=lambda r: (r.get("composite") or 0, r.get("test_recall") or 0),
+        key=lambda r: (
+            r.get("composite") or 0,
+            r.get("purity") or 0,
+            r.get("test_recall") or 0,
+        ),
         reverse=True,
     )
     summary = {
         "profile": args.profile,
+        "grid_profile": profile,
         "reference": "arXiv:2502.17480 (Brain2Qwerty OneCycleLR + linear anneal)",
-        "ranking": "0.4*test_recall + 0.6*purity (promotion-aware)",
+        "prior_sweep": (
+            "discovery v1: concat-fusion-onecycle best "
+            "(composite 0.745, recall 0.998, purity 0.576 @ 40ep)"
+        ),
+        "ranking": (
+            f"0.4*test_recall + 0.6*purity (promotion-aware); "
+            f"recall<{RECALL_RANK_FLOOR} demoted"
+        ),
+        "promotion_purity_floor": PROMOTION_PURITY_FLOOR,
         "epochs_per_run": args.epochs,
         "seeds": seeds,
+        "n_configs": len(grid),
         "n_runs": len(results),
         "best": ranked[0] if ranked else None,
         "top5": ranked[:5],
@@ -258,10 +423,12 @@ def main() -> None:
     print(f"\nwrote {OUT}")
     if ranked:
         b = ranked[0]
+        gap = b.get("promotion_purity_gap")
+        gap_s = f" gap_to_promotion={gap:+.3f}" if gap is not None else ""
         print(
             f"best composite={b['composite']:.3f} "
             f"test_recall={b['test_recall']:.3f} purity={b.get('purity')} "
-            f"tag={b.get('tag', 'n/a')} schedule={b.get('lr_schedule')}"
+            f"tag={b.get('tag', 'n/a')} fusion={b.get('fusion')}{gap_s}"
         )
 
 

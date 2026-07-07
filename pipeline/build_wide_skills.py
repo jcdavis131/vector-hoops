@@ -19,6 +19,10 @@ emitted ONLY for player-seasons with tracking coverage (2015-16+).
                                   − 0.20*opp-FG%-z (Track K — interior
                                   deterrence PROXY; rim protectors like
                                   Wembanyama top it)
+  disruption_gravity  Disruptor   0.45*STL-z + 0.35*deflections-z
+                                  + 0.20*charges-z (perimeter warp —
+                                  steals + hustle disruption; NOT
+                                  Second Spectrum gravity)
 
 Outputs:
   assets/skills_wide.json         grades keyed "name|season" (game surface)
@@ -34,6 +38,7 @@ from __future__ import annotations
 import argparse
 import json
 import re
+import sys
 import time
 import unicodedata
 from pathlib import Path
@@ -55,6 +60,7 @@ WIDE_SKILLS = [
     # tracking + the box-score contract; NOT Second Spectrum gravity data.
     {"key": "shooting_gravity", "label": "Shooting Gravity", "badge": "Gravity Well"},
     {"key": "rim_gravity", "label": "Rim Gravity", "badge": "Rim Warden"},
+    {"key": "disruption_gravity", "label": "Disruption Gravity", "badge": "Disruptor"},
 ]
 BADGE_GRADE = 90
 GOLD_GRADE = 97
@@ -95,6 +101,21 @@ def zscore(col: np.ndarray) -> np.ndarray:
     return np.clip((col - mu) / sd, -4, 4)
 
 
+def _configure_stdio() -> None:
+    """Windows default cp1252 cannot print Jokić/Nurkić — force UTF-8 or ASCII fallback."""
+    for stream in (sys.stdout, sys.stderr):
+        if hasattr(stream, "reconfigure"):
+            try:
+                stream.reconfigure(encoding="utf-8", errors="replace")
+            except (OSError, ValueError):
+                pass
+
+
+def _safe_console(text: str) -> str:
+    """Windows consoles often use cp1252 — avoid UnicodeEncodeError on accents."""
+    return text.encode("ascii", "replace").decode("ascii")
+
+
 def percentile_grade(scores: np.ndarray, tiebreak: np.ndarray | None = None) -> np.ndarray:
     """Percentile 0-99; exact score ties broken by `tiebreak` (a volume proxy,
     higher ranks above) so a busier player outranks a same-score bystander."""
@@ -107,6 +128,7 @@ def percentile_grade(scores: np.ndarray, tiebreak: np.ndarray | None = None) -> 
 
 
 def main() -> None:
+    _configure_stdio()
     ap = argparse.ArgumentParser()
     ap.add_argument("--fixture", action="store_true")
     args = ap.parse_args()
@@ -162,12 +184,19 @@ def main() -> None:
         rim_g = (0.50 * zscore(cfeat("BLK")[m]) +
                  0.30 * zscore(col("contested_shots")[m]) -
                  0.20 * zscore(col("d_fg_pct")[m]))
+        # Perimeter disruption gravity — on-ball pressure + event creation
+        # that shrinks opponent scoring chances (STL + deflections + charges).
+        disrupt_g = (0.45 * zscore(cfeat("STL")[m]) +
+                     0.35 * zscore(col("deflections")[m]) +
+                     0.20 * zscore(col("charges")[m]))
         # Tie-break each skill by its own volume.
         grades["post"][m] = percentile_grade(post, col("post_freq")[m])
         grades["transition"][m] = percentile_grade(trans, col("trans_freq")[m])
         grades["motor"][m] = percentile_grade(motor, motor_cols.sum(axis=0))
         grades["shooting_gravity"][m] = percentile_grade(shoot_g, col("pull_up_fg3a")[m])
         grades["rim_gravity"][m] = percentile_grade(rim_g, cfeat("BLK")[m])
+        grades["disruption_gravity"][m] = percentile_grade(
+            disrupt_g, col("deflections")[m] + cfeat("STL")[m])
 
     built = time.strftime("%Y-%m-%d")
     splits = {}
@@ -202,8 +231,8 @@ def main() -> None:
     print(f"wide skills: {len(covered_idx)} covered rows across "
           f"{len(set(seasons.tolist()))} seasons (cache complete={complete})")
     for sk in WIDE_SKILLS:
-        top = names[np.argsort(-grades[sk["key"]])[:3]]
-        print(f"  {sk['key']:<11} top: {', '.join(top)}")
+        top = [str(n) for n in names[np.argsort(-grades[sk["key"]])[:3]]]
+        print(f"  {sk['key']:<11} top: {_safe_console(', '.join(top))}")
     print(f"wrote {LABELS_OUT.relative_to(ROOT)}; {asset_msg}")
 
 

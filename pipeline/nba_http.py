@@ -56,11 +56,13 @@ def fetch_stats_json(
     except ImportError:
         return _fetch_via_nba_api(endpoint, params, timeout=timeout)
 
-    session = _curl_session()
-    _warmup(session)
     url = STATS_API.format(endpoint=endpoint)
     last_err: Exception | None = None
     for attempt in range(5):
+        # Fresh session per attempt — reusing one session across burst calls
+        # often triggers Akamai 500 / RemoteDisconnected after synergy/hustle.
+        session = _curl_session()
+        _warmup(session)
         try:
             r = session.get(
                 url, params=params, headers=_STATS_HEADERS, timeout=timeout)
@@ -72,6 +74,11 @@ def fetch_stats_json(
             print(f"  stats.nba.com/{endpoint}: attempt {attempt + 1} "
                   f"failed ({e}); backoff {wait}s")
             time.sleep(wait)
+        finally:
+            try:
+                session.close()
+            except Exception:  # noqa: BLE001
+                pass
     raise RuntimeError(
         f"stats.nba.com/{endpoint} failed after retries: {last_err}")
 

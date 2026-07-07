@@ -428,6 +428,28 @@ def info_nce(
                   F.cross_entropy(logits.T, target))
 
 
+def supcon_archetype(
+    za,
+    zb,
+    *,
+    labels: torch.Tensor,
+    temp: float,
+) -> torch.Tensor:
+    """Archetype-supervised multi-positive contrastive (all same-cluster in-batch)."""
+    logits = za @ zb.T / temp
+    pos = labels.unsqueeze(0) == labels.unsqueeze(1)
+    eye = torch.eye(len(za), device=za.device, dtype=torch.bool)
+    pos = pos & ~eye
+    log_denom = torch.logsumexp(logits, dim=1)
+    pos_logits = logits.masked_fill(~pos, -1e4)
+    log_num = torch.logsumexp(pos_logits, dim=1)
+    has_pos = pos.any(dim=1)
+    if not bool(has_pos.any()):
+        return za.sum() * 0.0
+    loss = -(log_num - log_denom)
+    return loss[has_pos].mean()
+
+
 def contrastive_loss(
     za,
     zb,
@@ -438,8 +460,10 @@ def contrastive_loss(
     pos_b: torch.Tensor | None = None,
     hard_neg_boost: float = 0.0,
     arch_labels: torch.Tensor | None = None,
+    player_weight: float = 0.75,
+    arch_weight: float = 0.25,
 ) -> torch.Tensor:
-    """InfoNCE (default) or archetype-supervised multi-positive NT-Xent."""
+    """InfoNCE (player continuity), supcon-arch, or weighted hybrid."""
     if mode == "infonce":
         return info_nce(
             za, zb, temp=temp,
@@ -450,21 +474,32 @@ def contrastive_loss(
         if arch_labels is None:
             return info_nce(za, zb, temp=temp, pos_a=pos_a, pos_b=pos_b,
                             hard_neg_boost=hard_neg_boost)
-        labels = arch_labels
-        logits = za @ zb.T / temp
-        pos = labels.unsqueeze(0) == labels.unsqueeze(1)
-        eye = torch.eye(len(za), device=za.device, dtype=torch.bool)
-        pos = pos & ~eye
-        log_denom = torch.logsumexp(logits, dim=1)
-        pos_logits = logits.masked_fill(~pos, -1e4)
-        log_num = torch.logsumexp(pos_logits, dim=1)
-        has_pos = pos.any(dim=1)
-        if not bool(has_pos.any()):
-            return info_nce(za, zb, temp=temp, pos_a=pos_a, pos_b=pos_b,
-                            hard_neg_boost=hard_neg_boost)
-        loss = -(log_num - log_denom)
-        return loss[has_pos].mean()
+        return supcon_archetype(za, zb, labels=arch_labels, temp=temp)
+    if mode == "hybrid":
+        l_player = info_nce(
+            za, zb, temp=temp,
+            pos_a=pos_a, pos_b=pos_b,
+            hard_neg_boost=hard_neg_boost,
+        )
+        if arch_labels is None or arch_weight <= 0:
+            return l_player
+        l_arch = supcon_archetype(za, zb, labels=arch_labels, temp=temp)
+        pw, aw = player_weight, arch_weight
+        norm = pw + aw
+        return (pw * l_player + aw * l_arch) / norm
     raise ValueError(f"unknown contrastive loss: {mode}")
+
+
+RECALL_RANK_FLOOR = 0.85
+
+
+def promotion_composite(test_recall: float | None, purity: float | None) -> float:
+    """Same ranking as mtnn_hp_sweep.composite_score (0.4 recall + 0.6 purity)."""
+    tr = test_recall or 0.0
+    pu = purity or 0.0
+    if tr < RECALL_RANK_FLOOR:
+        return 0.3 * tr + 0.3 * pu
+    return 0.4 * tr + 0.6 * pu
 
 
 def adamw_param_groups(model: nn.Module, weight_decay: float) -> list[dict]:
@@ -705,8 +740,16 @@ def main() -> None:
                     help="gradient accumulation steps (effective batch = batch * accum)")
     ap.add_argument("--fusion", choices=("gated", "concat"), default="gated",
                     help="tower fusion: gated attention (default) or concat MLP")
-    ap.add_argument("--nce-loss", choices=("infonce", "supcon-arch"), default="infonce",
-                    help="contrastive anchor: pairwise InfoNCE or archetype multi-positive")
+    ap.add_argument("--nce-loss", choices=("infonce", "supcon-arch", "hybrid"),
+                    default="infonce",
+                    help="contrastive: player InfoNCE, archetype SupCon, or hybrid")
+    ap.add_argument("--nce-player-weight", type=float, default=0.75,
+                    help="hybrid: weight on adjacent-season player InfoNCE")
+    ap.add_argument("--nce-arch-weight", type=float, default=0.25,
+                    help="hybrid: weight on archetype SupCon (purity pressure)")
+    ap.add_argument("--checkpoint-metric", choices=("recall", "composite", "purity"),
+                    default="composite",
+                    help="save best checkpoint by val recall, purity@20, or composite")
     ap.add_argument("--val-every", type=int, default=10,
                     help="log held-out val recall every N epochs; 0=off")
     ap.add_argument("--no-best-checkpoint", action="store_true",
@@ -851,6 +894,8 @@ def main() -> None:
         lookup.update({int(b): int(a) for a, b in pair_arr})
 
     best_val_recall: float | None = None
+    best_val_purity: float | None = None
+    best_val_composite: float | None = None
     best_epoch = -1
     history: list[float] = []
     val_trace: list[dict] = []
@@ -884,6 +929,8 @@ def main() -> None:
                 pos_b=pos_partner,
                 hard_neg_boost=args.hard_neg_boost,
                 arch_labels=arch_t[idx_t],
+                player_weight=args.nce_player_weight,
+                arch_weight=args.nce_arch_weight,
             )
             loss = loss + weights["archetype"] * F.cross_entropy(
                 out_a["archetype"], arch_t[idx_t])
@@ -961,26 +1008,54 @@ def main() -> None:
             val_r = recall_at_k(E_val, val_pairs, k=10)
             test_pairs = filter_pairs_by_split(pair_arr, seasons, "test")
             test_r = recall_at_k(E_val, test_pairs, k=10)
-            log_line += f"  val_recall@10={val_r:.3f} test_recall@10={test_r:.3f}"
-            val_trace.append({
+            val_pu = cross_era_archetype_purity(E_val, clusters, seasons)
+            val_comp = promotion_composite(val_r, val_pu)
+            pu_s = f" purity@20={val_pu:.3f}" if val_pu is not None else ""
+            log_line += (f"  val_recall@10={val_r:.3f} test_recall@10={test_r:.3f}"
+                         f"{pu_s} composite={val_comp:.3f}")
+            trace_row = {
                 "epoch": epoch,
                 "val_recall_at_10": val_r,
                 "test_recall_at_10": test_r,
-            })
-            if (
-                not args.no_best_checkpoint
-                and val_r is not None
-                and (best_val_recall is None or val_r > best_val_recall)
-            ):
-                best_val_recall = val_r
-                best_epoch = epoch
-                torch.save({
-                    "epoch": epoch,
-                    "model": model.state_dict(),
-                    "val_recall_at_10": val_r,
-                    "args": vars(args),
-                    "weights": weights,
-                }, BEST_CKPT)
+                "val_purity_at_20": val_pu,
+                "val_composite": val_comp,
+            }
+            val_trace.append(trace_row)
+            if not args.no_best_checkpoint:
+                metric_val = None
+                if args.checkpoint_metric == "recall":
+                    metric_val = val_r
+                    is_better = (
+                        metric_val is not None
+                        and (best_val_recall is None or metric_val > best_val_recall)
+                    )
+                elif args.checkpoint_metric == "purity":
+                    metric_val = val_pu
+                    is_better = (
+                        metric_val is not None
+                        and (best_val_purity is None or metric_val > best_val_purity)
+                    )
+                else:
+                    metric_val = val_comp
+                    is_better = (
+                        metric_val is not None
+                        and (best_val_composite is None or metric_val > best_val_composite)
+                    )
+                if is_better:
+                    best_val_recall = val_r
+                    best_val_purity = val_pu
+                    best_val_composite = val_comp
+                    best_epoch = epoch
+                    torch.save({
+                        "epoch": epoch,
+                        "model": model.state_dict(),
+                        "val_recall_at_10": val_r,
+                        "val_purity_at_20": val_pu,
+                        "val_composite": val_comp,
+                        "checkpoint_metric": args.checkpoint_metric,
+                        "args": vars(args),
+                        "weights": weights,
+                    }, BEST_CKPT)
         if epoch % 5 == 0 or epoch == args.epochs - 1:
             print(log_line)
 
@@ -991,8 +1066,11 @@ def main() -> None:
     ):
         ckpt = torch.load(BEST_CKPT, map_location=device, weights_only=False)
         model.load_state_dict(ckpt["model"])
+        pu_s = f"{best_val_purity:.3f}" if best_val_purity is not None else "n/a"
+        co_s = f"{best_val_composite:.3f}" if best_val_composite is not None else "n/a"
         print(f"restored best checkpoint epoch {best_epoch} "
-              f"(val_recall@10={best_val_recall:.3f})")
+              f"(metric={args.checkpoint_metric} "
+              f"recall={best_val_recall:.3f} purity={pu_s} composite={co_s})")
 
     # ---- export ----
     model.eval()
@@ -1093,6 +1171,11 @@ def main() -> None:
         "grad_accum": args.grad_accum,
         "fusion": args.fusion,
         "nce_loss": args.nce_loss,
+        "nce_player_weight": args.nce_player_weight,
+        "nce_arch_weight": args.nce_arch_weight,
+        "checkpoint_metric": args.checkpoint_metric,
+        "best_val_purity_at_20": best_val_purity,
+        "best_val_composite": best_val_composite,
         "nce_temp": args.nce_temp,
         "drop_p": args.drop_p,
         "hard_neg_boost": args.hard_neg_boost,
