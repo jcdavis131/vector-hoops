@@ -511,7 +511,7 @@ main{
   min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 4px;
 }
 
 .vh-slot-card__head{
@@ -602,7 +602,7 @@ main{
 }
 .vh-donor-slots .vh-clue-zone{
   padding: 8px 10px;
-  margin: 0 0 8px;
+  margin: 0 0 6px;
 }
 .vh-donor-slots .vh-clue-zone__sentence{
   margin: 0 0 6px;
@@ -666,9 +666,25 @@ main{
 .vh-clue-zone:hover{ border-color: var(--ink-muted); }
 .vh-clue-zone:focus-visible{ outline: 2px solid var(--data-blue); outline-offset: 1px; }
 
-.vh-clue-zone__bars{ width: 100%; margin-bottom: 8px; }
-.vh-clue-zone__bars svg{ width: 100%; height: auto; display: block; }
+.vh-clue-zone__bars{ width: 100%; margin-bottom: 6px; }
+.vh-clue-zone__bars svg{ width: 100%; height: auto; display: block; max-height: 220px; }
 .vh-clue-zone.is-collapsed .vh-clue-zone__bars{ display: none; }
+.vh-clue-zone.is-collapsed{
+  padding-bottom: 6px;
+  margin-bottom: 6px;
+}
+
+/* Resolved donor slots: hide guess UI — name + evidence only */
+.vh-donor-slots .vh-clue-card.is-resolved .vh-autocomplete,
+.vh-donor-slots .vh-clue-card.is-resolved > .vh-btn--primary,
+.vh-donor-slots .vh-clue-card.is-resolved .vh-clue-card__caption,
+.vh-donor-slots .vh-clue-card.is-resolved .vh-clue-card__lock-note{
+  display: none;
+}
+.vh-donor-slots .vh-clue-card.is-resolved .vh-guess-slot__feedback{
+  margin-top: 0;
+  min-height: 0;
+}
 
 .vh-clue-zone__sentence{
   margin: 0 0 8px;

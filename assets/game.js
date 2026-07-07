@@ -1289,12 +1289,18 @@
   // alongside equationForceExpand at every place that flag is reset.
   // ---------------------------------------------------------------------
 
-  var clueForceExpand = { stats: false, archetype: false, mashup: false };
+  // null = follow auto-collapse after first guess; true/false = user override
+  var clueManualState = { stats: null, archetype: null, mashup: null };
 
   function resetClueForceExpand() {
-    clueForceExpand.stats = false;
-    clueForceExpand.archetype = false;
-    clueForceExpand.mashup = false;
+    clueManualState.stats = null;
+    clueManualState.archetype = null;
+    clueManualState.mashup = null;
+  }
+
+  function clueAttemptsFor(key, rec) {
+    if (key === 'mashup') return (rec.mashupGuesses || []).length;
+    return (rec.slots[key] && rec.slots[key].attempts) || 0;
   }
 
   var CLUE_ZONE_CONF = {
@@ -1317,11 +1323,18 @@
     var zoneEl = els[zoneKey];
     if (!zoneEl) return;
     var rec = todayRecord();
-    var attempts = (rec.slots[key] && rec.slots[key].attempts) || 0;
-    var collapsed = attempts > 0 && !clueForceExpand[key];
+    var attempts = clueAttemptsFor(key, rec);
+    var autoCollapsed = attempts > 0;
+    var manual = clueManualState[key];
+    var collapsed;
+    if (manual === true) collapsed = false;
+    else if (manual === false) collapsed = true;
+    else collapsed = autoCollapsed;
     zoneEl.classList.toggle('is-collapsed', collapsed);
     zoneEl.setAttribute('aria-expanded', String(!collapsed));
-    if (els[hintKey]) els[hintKey].textContent = collapsed ? 'tap to expand' : 'tap to collapse';
+    if (els[hintKey]) {
+      els[hintKey].textContent = collapsed ? 'tap to expand' : 'tap to collapse';
+    }
   }
 
   // Stats/Style donor cards: bars + sentence + chips over that donor's
@@ -1332,7 +1345,7 @@
     var conf = CLUE_ZONE_CONF[key];
     if (!conf || !els[conf.zone]) return;
     var vector = TARGET.vector;
-    renderMiniSigmaBars(els[conf.bars], vector, conf.dims);
+    renderMiniSigmaBars(els[conf.bars], vector, conf.dims, { labeled: true });
     els[conf.sentence].textContent = buildHalfScoutingSentence(conf.prefix, vector, conf.dims);
     var chips = buildClueChips(vector, conf.dims, 3);
     els[conf.chips].innerHTML = chips.map(function (c) {
@@ -1347,7 +1360,7 @@
   // bars + collapse behavior around it.
   function renderMashupClueZone() {
     if (!els.mashupClueZone) return;
-    renderMiniSigmaBars(els.mashupClueBars, TARGET.vector, ALL_DIMS);
+    renderMiniSigmaBars(els.mashupClueBars, TARGET.vector, ALL_DIMS, { labeled: true });
     if (els.mashupClueSr) els.mashupClueSr.textContent = miniSigmaSummaryText(TARGET.vector, ALL_DIMS);
     applyClueCollapse('mashup', 'mashupClueZone', 'mashupClueHint');
   }
@@ -1368,6 +1381,8 @@
       if (slot.locked) badgeEl.textContent = '×' + String(slot.mult);
       badgeEl.classList.toggle('vh-slot-card__badge--silver', !!(slot.locked && slot.silver));
     }
+    var cardEl = key === 'stats' ? els.statsSlotCard : els.archetypeSlotCard;
+    if (cardEl) cardEl.classList.toggle('is-resolved', !!slot.locked);
   }
 
   function renderClueCards() {
@@ -1384,7 +1399,9 @@
     var el = els[zoneKey];
     if (!el) return;
     el.addEventListener('click', function () {
-      clueForceExpand[key] = true;
+      var zoneEl = els[zoneKey];
+      var isCollapsed = zoneEl && zoneEl.classList.contains('is-collapsed');
+      clueManualState[key] = isCollapsed ? true : false;
       rerenderFn();
     });
   }
@@ -2589,10 +2606,22 @@
 
   var MINIBAR_XMAX = 4;
 
+  var FEATURE_ABBREV = {
+    PTS: 'Scoring', AST: 'Ast', OREB: 'OReb', DREB: 'DReb', STL: 'Stl', BLK: 'Blk', TOV: 'TOV',
+    FG3A: '3PA', FGA: 'FGA', FTA: 'FTA', FG3_PCT: '3P%', FG_PCT: 'FG%', FT_PCT: 'FT%',
+    PLUS_MINUS: '+/−'
+  };
+
+  function featureBarLabel(dimIdx) {
+    var key = DATA.features[dimIdx];
+    return FEATURE_ABBREV[key] || DATA.featureLabels[key] || key;
+  }
+
   // dims optional: defaults to every dimension (0..vector.length-1), the
   // original full-14 behavior every existing caller (Arc cards, Era Twin)
   // still gets. Clue cards pass STATS_DIMS/SHOOTING_DIMS to summarize just
   // their own half — same subset halfSims() already scores against.
+  // opts.labeled=true adds y-axis stat names + σ scale (clue zones only).
   function miniSigmaSummaryText(vector, dims) {
     dims = dims || vector.map(function (_, i) { return i; });
     var parts = dims.map(function (i) {
@@ -2604,26 +2633,67 @@
   // dims optional: same default/subset contract as miniSigmaSummaryText
   // above — this is the "compact bar renderer" clue cards reuse for their
   // per-half evidence zone.
-  function renderMiniSigmaBars(host, vector, dims) {
+  function renderMiniSigmaBars(host, vector, dims, opts) {
+    opts = opts || {};
+    var labeled = !!opts.labeled;
     dims = dims || vector.map(function (_, i) { return i; });
     host.innerHTML = '';
-    var W = 130, ROWH = 4.4, GAP = 1.2;
-    var H = dims.length * (ROWH + GAP);
-    var mid = W / 2, half = W / 2 - 3;
-    var svg = svgEl('svg', { viewBox: '0 0 ' + W + ' ' + H }, host);
-    svgEl('line', { x1: mid, y1: 0, x2: mid, y2: H, stroke: '#e1e0d9', 'stroke-width': 1 }, svg);
+    var LABEL_W = labeled ? 52 : 0;
+    var BAR_W = labeled ? 108 : 130;
+    var W = LABEL_W + BAR_W;
+    var ROWH = labeled ? 12 : 4.4;
+    var GAP = labeled ? 2 : 1.2;
+    var H = dims.length * (ROWH + GAP) + (labeled ? 10 : 0);
+    var mid = LABEL_W + BAR_W / 2;
+    var half = BAR_W / 2 - 3;
+    var svg = svgEl('svg', {
+      viewBox: '0 0 ' + W + ' ' + H,
+      role: 'img',
+      'aria-label': miniSigmaSummaryText(vector, dims)
+    }, host);
+    if (labeled) {
+      var axisY = H - 8;
+      svgEl('line', {
+        x1: LABEL_W, y1: axisY, x2: W, y2: axisY,
+        stroke: '#d8d6ce', 'stroke-width': 0.75
+      }, svg);
+      [-4, 0, 4].forEach(function (tick) {
+        var tx = LABEL_W + (tick + MINIBAR_XMAX) / (MINIBAR_XMAX * 2) * BAR_W;
+        svgEl('text', {
+          x: tx, y: H - 1, 'text-anchor': 'middle', 'font-size': 7, fill: '#898781'
+        }, svg).textContent = tick === 0 ? '0' : (tick > 0 ? '+' + tick + 'σ' : tick + 'σ');
+      });
+    }
+    svgEl('line', {
+      x1: mid, y1: 0, x2: mid, y2: labeled ? H - 10 : H,
+      stroke: '#e1e0d9', 'stroke-width': 1
+    }, svg);
     dims.forEach(function (dimIdx, row) {
       var v = Math.max(-MINIBAR_XMAX, Math.min(MINIBAR_XMAX, vector[dimIdx]));
       var w = Math.max(1, Math.abs(v) / MINIBAR_XMAX * half);
       var x = v >= 0 ? mid : mid - w;
       var y = row * (ROWH + GAP);
+      if (labeled) {
+        svgEl('text', {
+          x: LABEL_W - 3, y: y + ROWH * 0.78,
+          'text-anchor': 'end', 'font-size': 8, fill: '#5c5a52'
+        }, svg).textContent = featureBarLabel(dimIdx);
+      }
       var rect = svgEl('rect', {
-        x: x, y: y, width: w, height: ROWH, rx: 1,
+        x: x, y: y, width: w, height: ROWH, rx: labeled ? 1.5 : 1,
         fill: v >= 0 ? ORANGE_HEX : BLUE_HEX
       }, svg);
       var title = document.createElementNS(SVG_NS, 'title');
-      title.textContent = DATA.featureLabels[DATA.features[dimIdx]] + ': ' + fmtSigma(vector[dimIdx]);
+      title.textContent = featureBarLabel(dimIdx) + ': ' + fmtSigma(vector[dimIdx]);
       rect.appendChild(title);
+      if (labeled && Math.abs(v) >= 0.35) {
+        var tx = v >= 0 ? x + w + 2 : x - 2;
+        svgEl('text', {
+          x: tx, y: y + ROWH * 0.78,
+          'text-anchor': v >= 0 ? 'start' : 'end',
+          'font-size': 7, fill: v >= 0 ? ORANGE_HEX : BLUE_HEX
+        }, svg).textContent = fmtSigma(v);
+      }
     });
   }
 
@@ -7503,6 +7573,8 @@
     // reuses els.chimeraInput/chimeraSubmit above — shared with Free Play,
     // which only ever hunts the mashup).
     els.donorSlotsRow = document.getElementById('donor-slots-row');
+    els.statsSlotCard = document.getElementById('stats-slot-card');
+    els.archetypeSlotCard = document.getElementById('archetype-slot-card');
     els.chimeraStatsInput = document.getElementById('chimera-stats-input');
     els.chimeraStatsSuggestions = document.getElementById('chimera-stats-suggestions');
     els.chimeraStatsSubmit = document.getElementById('chimera-stats-submit');
