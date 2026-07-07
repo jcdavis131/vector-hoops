@@ -311,6 +311,25 @@ RAPM".
 
 ---
 
+### Track L — Video-game scout ratings (2K proxy)
+
+Orthogonal **masked** tower family from third-party 2K attribute snapshots
+(typically scraped from [2kratings.com](https://www.2kratings.com/) — **not**
+official 2K Sports data). Use as a scout-consensus prior for craft axes the
+box score cannot see (handle, lateral quickness, badge-tier defense); never
+present as measured on-court performance.
+
+| Field | Detail |
+|-------|--------|
+| **Fetcher** | `pipeline/fetch_2k_ratings.py` → `pipeline/cache/game_ratings_{release}.json` |
+| **Deriver** | `pipeline/build_game_ratings.py` → `GK_*` attrs joined by `(name, nba_season)` |
+| **Coverage** | One row per player in the release roster; sparse vs 12k charted seasons; masked elsewhere |
+| **Legal** | Fan scraper / research lane only; Methods disclaimer; no redistribution of 2K IP |
+| **MTNN** | Optional `game_ratings` family + aux head (future); **not** in public Skills Lens until ablation passes |
+| **Blocked-by** | Operator scrape per 2K release; live fetch stub ships fixture-only gates |
+
+---
+
 ## ROI-sorted build order
 
 Sorted by **impact ÷ effort** for MTNN v4 retrieval + game honesty. Ship top rows before Tier C.
