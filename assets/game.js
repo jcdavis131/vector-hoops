@@ -68,6 +68,7 @@
   var LS_KEY_TWIN_DAILY = 'vectorHoops.twin.daily.v1';
   var LS_KEY_TWIN_PRACTICE = 'vectorHoops.twin.practice';
   var LS_KEY_SEEN_HELP = 'vectorHoops.seenHelp';
+  var LS_KEY_SEEN_ORIENT = 'vectorHoops.seenOrient';
   var LS_KEY_LB_PREFIX = 'vectorHoops.lbSubmitted.'; // + game + '.' + day
   var LS_KEY_LB_LAST_GAME = 'vectorHoops.lastPlayedGame';
   // MODERN MODE: a global pool toggle (All-time vs Modern) restricting
@@ -1194,7 +1195,7 @@
     });
     entries.sort(function (a, b) { return Math.abs(b.v) - Math.abs(a.v); });
     return entries.slice(0, count || 3).map(function (e) {
-      return CHIP_LABEL[e.key] + ' ' + fmtSigma(e.v);
+      return fmtChipFriendly(e.key, e.v);
     });
   }
 
@@ -1351,7 +1352,7 @@
     els[conf.chips].innerHTML = chips.map(function (c) {
       return '<span class="vh-hint-chip">' + escapeHtml(c) + '</span>';
     }).join('');
-    if (els[conf.sr]) els[conf.sr].textContent = miniSigmaSummaryText(vector, conf.dims);
+    if (els[conf.sr]) els[conf.sr].textContent = miniSigmaSummaryText(vector, conf.dims, true);
     applyClueCollapse(key, conf.zone, conf.hint);
   }
 
@@ -1361,7 +1362,7 @@
   function renderMashupClueZone() {
     if (!els.mashupClueZone) return;
     renderMiniSigmaBars(els.mashupClueBars, TARGET.vector, ALL_DIMS, { labeled: true });
-    if (els.mashupClueSr) els.mashupClueSr.textContent = miniSigmaSummaryText(TARGET.vector, ALL_DIMS);
+    if (els.mashupClueSr) els.mashupClueSr.textContent = miniSigmaSummaryText(TARGET.vector, ALL_DIMS, true);
     applyClueCollapse('mashup', 'mashupClueZone', 'mashupClueHint');
   }
 
@@ -2370,6 +2371,23 @@
     return (z >= 0 ? '+' : '−') + Math.abs(z).toFixed(1) + 'σ';
   }
 
+  // Plain-language tier for chips, tooltips, and screen-reader summaries.
+  function sigmaTier(v) {
+    var a = Math.abs(v);
+    if (a >= 2) return v >= 0 ? 'well above average' : 'well below average';
+    if (a >= 1) return v >= 0 ? 'above average' : 'below average';
+    if (a >= 0.5) return v >= 0 ? 'slightly above average' : 'slightly below average';
+    return 'about average';
+  }
+
+  function fmtChipFriendly(key, v) {
+    var label = CHIP_LABEL[key] || key;
+    var a = Math.abs(v);
+    if (a >= 2) return (v >= 0 ? 'Elite ' : 'Weak ') + label.toLowerCase();
+    if (a >= 1) return label + ' — ' + sigmaTier(v);
+    return label + ' — ' + sigmaTier(v);
+  }
+
   function zonesSummaryText(label, zones) {
     return label + ' zones: rim ' + fmtSigma(zones.rim) + ', midrange ' + fmtSigma(zones.mid) +
       ', arc ' + fmtSigma(zones.arc) + ', free-throw line ' + fmtSigma(zones.paintFT) +
@@ -2621,13 +2639,18 @@
   // original full-14 behavior every existing caller (Arc cards, Era Twin)
   // still gets. Clue cards pass STATS_DIMS/SHOOTING_DIMS to summarize just
   // their own half — same subset halfSims() already scores against.
-  // opts.labeled=true adds y-axis stat names + σ scale (clue zones only).
-  function miniSigmaSummaryText(vector, dims) {
+  // opts.labeled=true adds y-axis stat names + low/avg/high scale (clue zones).
+  // opts.plain=true uses plain-language screen-reader text instead of σ jargon.
+  function miniSigmaSummaryText(vector, dims, plain) {
     dims = dims || vector.map(function (_, i) { return i; });
     var parts = dims.map(function (i) {
-      return DATA.featureLabels[DATA.features[i]] + ' ' + fmtSigma(vector[i]);
+      var label = DATA.featureLabels[DATA.features[i]];
+      return plain
+        ? label + ' ' + sigmaTier(vector[i])
+        : label + ' ' + fmtSigma(vector[i]);
     });
-    return 'Sigma profile, ' + dims.length + ' dimensions vs era: ' + parts.join(', ') + '.';
+    return (plain ? 'Stat profile vs that season: ' : 'Sigma profile, ' + dims.length + ' dimensions vs era: ')
+      + parts.join(', ') + '.';
   }
 
   // dims optional: same default/subset contract as miniSigmaSummaryText
@@ -2649,7 +2672,7 @@
     var svg = svgEl('svg', {
       viewBox: '0 0 ' + W + ' ' + H,
       role: 'img',
-      'aria-label': miniSigmaSummaryText(vector, dims)
+      'aria-label': miniSigmaSummaryText(vector, dims, labeled)
     }, host);
     if (labeled) {
       var axisY = H - 8;
@@ -2657,11 +2680,16 @@
         x1: LABEL_W, y1: axisY, x2: W, y2: axisY,
         stroke: '#d8d6ce', 'stroke-width': 0.75
       }, svg);
-      [-4, 0, 4].forEach(function (tick) {
-        var tx = LABEL_W + (tick + MINIBAR_XMAX) / (MINIBAR_XMAX * 2) * BAR_W;
+      var axisTicks = [
+        { tick: -4, text: 'low' },
+        { tick: 0, text: 'avg' },
+        { tick: 4, text: 'high' }
+      ];
+      axisTicks.forEach(function (entry) {
+        var tx = LABEL_W + (entry.tick + MINIBAR_XMAX) / (MINIBAR_XMAX * 2) * BAR_W;
         svgEl('text', {
           x: tx, y: H - 1, 'text-anchor': 'middle', 'font-size': 7, fill: '#898781'
-        }, svg).textContent = tick === 0 ? '0' : (tick > 0 ? '+' + tick + 'σ' : tick + 'σ');
+        }, svg).textContent = entry.text;
       });
     }
     svgEl('line', {
@@ -2684,7 +2712,7 @@
         fill: v >= 0 ? ORANGE_HEX : BLUE_HEX
       }, svg);
       var title = document.createElementNS(SVG_NS, 'title');
-      title.textContent = featureBarLabel(dimIdx) + ': ' + fmtSigma(vector[dimIdx]);
+      title.textContent = featureBarLabel(dimIdx) + ': ' + sigmaTier(vector[dimIdx]) + ' (' + fmtSigma(vector[dimIdx]) + ')';
       rect.appendChild(title);
       if (labeled && Math.abs(v) >= 0.35) {
         var tx = v >= 0 ? x + w + 2 : x - 2;
@@ -3222,6 +3250,8 @@
   // fused chimera, which never existed as a real season — gets graded
   // against 30 years of charted seasons. ----
   var skillProbeCache = null; // null = not yet tried; false = failed; object = loaded
+  var wideSkillsCache = null;
+
   function loadSkillProbe(cb) {
     if (skillProbeCache) { cb(skillProbeCache); return; }
     if (skillProbeCache === false) return;
@@ -3234,6 +3264,42 @@
     }).catch(function () {
       skillProbeCache = false;
     });
+  }
+
+  function loadWideSkills(cb) {
+    if (wideSkillsCache) { cb(wideSkillsCache); return; }
+    if (wideSkillsCache === false) { cb(null); return; }
+    fetch('assets/skills_wide.json').then(function (res) {
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      return res.json();
+    }).then(function (data) {
+      wideSkillsCache = data;
+      cb(data);
+    }).catch(function () {
+      wideSkillsCache = false;
+      cb(null);
+    });
+  }
+
+  function wideDonorBadgeHtml(name, season, minGrade, maxChips) {
+    if (!wideSkillsCache || !wideSkillsCache.skills) return '';
+    var wg = wideSkillsCache.grades[name + '|' + season];
+    if (!wg) {
+      return season < '2015-16'
+        ? ' <span class="vh-skill-note">tracking n/a this era</span>'
+        : '';
+    }
+    var graded = wideSkillsCache.skills.map(function (sk) {
+      return { badge: sk.badge, label: sk.label, grade: wg[sk.key] };
+    }).sort(function (a, b) { return b.grade - a.grade; })
+      .filter(function (g) { return g.grade >= minGrade; })
+      .slice(0, maxChips);
+    if (!graded.length) return ' no 90+ tracking badges';
+    return ' <span class="vh-skill-badges">' + graded.map(function (g) {
+      return '<span class="vh-skill-badge' +
+        (g.grade >= wideSkillsCache.goldGrade ? ' vh-skill-badge--gold' : '') +
+        '" title="' + escapeHtml(g.label) + '">' + escapeHtml(g.badge) + ' ' + g.grade + '</span>';
+    }).join('') + '</span>';
   }
 
   // grade(vec, skill j) = composite score interpolated through that skill's
@@ -3280,23 +3346,26 @@
     loadSkillProbe(function (probe) {
       if (!els.revealBody || !target || !target.vector) return;
       var blend = skillBadgeChips(probeGrades(probe, target.vector), 75, 3);
-      var wrap = document.createElement('div');
-      wrap.className = 'vh-reveal__skills';
-      var html = '<div class="vh-section-label">Skill lens</div>';
-      html += blend ?
-        '<p class="vh-guess__line">The blend grades out as:</p>' +
-        '<div class="vh-skill-badges">' + blend + '</div>' :
-        '<p class="vh-guess__line">The blend has no standout skill — a true committee chimera.</p>';
-      [target.a, target.b].forEach(function (donor) {
-        var chips = skillBadgeChips(probeGrades(probe, donor.v), probe.badgeGrade, 3);
-        html += '<p class="vh-guess__line"><a href="' + skillsLensUrl(donor.name, donor.season) +
-          '">' + donor.name + ' ' + donor.season + '</a>: ' +
-          (chips ? '<span class="vh-skill-badges">' + chips + '</span>' : 'no 90+ badges that season') +
-          '</p>';
+      loadWideSkills(function () {
+        var wrap = document.createElement('div');
+        wrap.className = 'vh-reveal__skills';
+        var html = '<div class="vh-section-label">Skill lens</div>';
+        html += blend ?
+          '<p class="vh-guess__line">The blend grades out as (core twelve):</p>' +
+          '<div class="vh-skill-badges">' + blend + '</div>' :
+          '<p class="vh-guess__line">The blend has no standout core skill — a true committee chimera.</p>';
+        [target.a, target.b].forEach(function (donor) {
+          var chips = skillBadgeChips(probeGrades(probe, donor.v), probe.badgeGrade, 3);
+          html += '<p class="vh-guess__line"><a href="' + skillsLensUrl(donor.name, donor.season) +
+            '">' + donor.name + ' ' + donor.season + '</a> (core): ' +
+            (chips ? '<span class="vh-skill-badges">' + chips + '</span>' : 'no 90+ badges') +
+            wideDonorBadgeHtml(donor.name, donor.season, wideSkillsCache ? wideSkillsCache.badgeGrade : 90, 3) +
+            '</p>';
+        });
+        wrap.innerHTML = html;
+        els.revealBody.appendChild(wrap);
+        appendPedigreeDonorNotes(target);
       });
-      wrap.innerHTML = html;
-      els.revealBody.appendChild(wrap);
-      appendPedigreeDonorNotes(target);
     });
   }
 
@@ -7116,6 +7185,25 @@
     try { localStorage.setItem(LS_KEY_SEEN_HELP, '1'); } catch (e) { /* storage unavailable */ }
   }
 
+  function hasSeenOrient() {
+    try { return localStorage.getItem(LS_KEY_SEEN_ORIENT) === '1'; } catch (e) { return false; }
+  }
+
+  function markSeenOrient() {
+    try { localStorage.setItem(LS_KEY_SEEN_ORIENT, '1'); } catch (e) { /* storage unavailable */ }
+  }
+
+  function showOrientBanner() {
+    if (!els.orientBanner || hasSeenOrient()) return;
+    els.orientBanner.hidden = false;
+  }
+
+  function dismissOrientBanner() {
+    if (!els.orientBanner) return;
+    els.orientBanner.hidden = true;
+    markSeenOrient();
+  }
+
   // ---------------------------------------------------------------------
   // Generic modal stack: Escape closes the topmost modal, Tab traps focus
   // inside it. Every modal (help, dossier, stats, methods) pushes/pops here
@@ -7172,6 +7260,7 @@
     els.helpBackdrop.hidden = true;
     els.helpBtn.focus();
     popModal();
+    markSeenHelp();
     // "No taglines on mobile after first visit": once the player has closed
     // how-to-play at least once, the header goes compact for good.
     if (els.appHeader) els.appHeader.classList.add('vh-header--compact');
@@ -7183,6 +7272,17 @@
     els.helpBackdrop.addEventListener('click', function (ev) {
       if (ev.target === els.helpBackdrop) closeHelp();
     });
+  }
+
+  function setupOrientBanner() {
+    if (!els.orientDismissBtn) return;
+    els.orientDismissBtn.addEventListener('click', dismissOrientBanner);
+    if (els.orientRulesBtn) {
+      els.orientRulesBtn.addEventListener('click', function () {
+        dismissOrientBanner();
+        openHelp();
+      });
+    }
   }
 
   // ---------------------------------------------------------------------
@@ -7654,6 +7754,9 @@
     els.helpBackdrop = document.getElementById('help-backdrop');
     els.helpModal = document.getElementById('help-modal');
     els.helpClose = document.getElementById('help-close');
+    els.orientBanner = document.getElementById('orient-banner');
+    els.orientDismissBtn = document.getElementById('orient-dismiss-btn');
+    els.orientRulesBtn = document.getElementById('orient-rules-btn');
     els.loadingBanner = document.getElementById('loading-banner');
     els.errorBanner = document.getElementById('error-banner');
     els.footer = document.getElementById('footer');
@@ -8294,6 +8397,7 @@
     initDom();
     if (hasSeenHelp() && els.appHeader) els.appHeader.classList.add('vh-header--compact');
     setupHelp();
+    setupOrientBanner();
     setupStats();
     setupMethods();
     setupDossierModal();
@@ -8489,13 +8593,8 @@
         if (!todayRecord().s1 && !todayRecord().done) {
           track('vh-start', { mode: 'daily', pool: POOL });
         }
-        // Auto-open the how-to-play modal only on a player's true first-ever
-        // visit (a dedicated flag, independent of daily guess state) — never
-        // on a daily cadence.
-        if (!hasSeenHelp()) {
-          openHelp();
-          markSeenHelp();
-        }
+        // First visit: compact orientation banner (not the full rulebook modal).
+        showOrientBanner();
       })
       .catch(function (err) {
         els.loadingBanner.hidden = true;

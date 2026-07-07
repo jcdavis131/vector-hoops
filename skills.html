@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Skills — Vector Hoops</title>
-<meta name="description" content="Every charted player-season graded 0-99 on twelve skills, era-normalized so a 90 in 1997 means the same as a 90 in 2026. Search any player, compare seasons, browse era-honest skill leaderboards.">
+<meta name="description" content="Every charted player-season graded 0-99 on twelve core skills plus six tracking skills (2015-16+), era-normalized so a 90 in 1997 means the same as a 90 in 2026. Search any player, compare seasons, browse era-honest skill leaderboards.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Ctext%20y%3D%22.9em%22%20font-size%3D%2290%22%3E%26%23127936%3B%3C%2Ftext%3E%3C%2Fsvg%3E">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Skills Lens — Vector Hoops">
@@ -35,9 +35,11 @@
 
   <div class="skills-head">
     <h1>Skills Lens</h1>
-    <p>Every charted player-season graded 0&ndash;99 on twelve skills &mdash; percentile within its own
-      season, so a 90 in 1997 means exactly what a 90 in 2026 means. Badges fire at 90+,
-      gold at 97+. Composites and caveats on the <a href="/methods#skills">methods page</a>.</p>
+    <p>Every charted player-season graded 0&ndash;99 on twelve core skills &mdash; percentile within its own
+      season, so a 90 in 1997 means exactly what a 90 in 2026 means. From 2015-16 on, six
+      <b>tracking skills</b> (post play, transition, motor, and three gravity proxies) join the
+      profile when synergy + hustle data exists. Badges fire at 90+, gold at 97+. Composites and
+      caveats on the <a href="/methods#skills">methods page</a>.</p>
   </div>
 
   <div class="skills-columns">
@@ -55,8 +57,8 @@
         <ul class="skillbar-list" id="skills-bars"></ul>
         <div class="skills-playoffs" id="skills-playoffs" hidden></div>
       </div>
-      <p class="skills-hint" id="skills-empty">Pick a player to see their twelve-skill profile,
-        season by season. Try &ldquo;Curry&rdquo;, &ldquo;Rodman&rdquo;, or &ldquo;Jokić&rdquo;.</p>
+      <p class="skills-hint" id="skills-empty">Pick a player to see their skill profile,
+        season by season. Try &ldquo;Curry&rdquo;, &ldquo;Smart&rdquo;, or &ldquo;Jokić&rdquo;.</p>
     </section>
 
     <section class="skills-panel" aria-label="Skill leaderboards">
@@ -69,8 +71,9 @@
       </div>
       <ol class="skills-board" id="skills-board"></ol>
       <p class="skills-hint">Grades are era-normalized percentiles &mdash; an all-seasons board ranks
-        the raw composite against 30 years of charted seasons. Two-Way Impact is NBA.com on-court
-        plus-minus per 100 (small-minute seasons can spike).</p>
+        the raw composite against 30 years of charted seasons. Tracking-skill boards cover 2015-16+
+        only (masked earlier). Two-Way Impact is NBA.com on-court plus-minus per 100 (small-minute
+        seasons can spike).</p>
     </section>
 
   </div>
@@ -151,6 +154,20 @@
       opt.value = s; opt.textContent = s;
       els.boardSeason.appendChild(opt);
     });
+  }
+
+  // Prepend wide-skill board modes once skills_wide.json lands.
+  function addWideBoardModes() {
+    if (!WIDE || els.boardSkill.querySelector('option[value^="wide:"]')) return;
+    var group = document.createElement('optgroup');
+    group.label = 'Tracking skills (2015-16+)';
+    WIDE.skills.forEach(function (sk) {
+      var opt = document.createElement('option');
+      opt.value = 'wide:' + sk.key;
+      opt.textContent = sk.label;
+      group.appendChild(opt);
+    });
+    els.boardSkill.appendChild(group);
   }
 
   // Prepend the Draft Steals/Busts board modes once pedigree data lands.
@@ -423,11 +440,42 @@
     }).join('');
   }
 
+  function renderWideBoard(wideKey) {
+    var season = els.boardSeason.value;
+    var rows = [];
+    for (var i = 0; i < DATA.players.length; i++) {
+      var p = DATA.players[i];
+      if (season && p.season !== season) continue;
+      var wg = wideGrades(p.name, p.season);
+      if (!wg || wg[wideKey] === undefined) continue;
+      rows.push({ i: i, grade: wg[wideKey] });
+    }
+    rows.sort(function (a, b) { return b.grade - a.grade; });
+    els.board.innerHTML = rows.slice(0, BOARD_ROWS).map(function (row) {
+      var p = DATA.players[row.i];
+      var slug = window.VHDossier.playerSlug(p.name);
+      return '<li>' +
+        '<span class="skills-board__name" data-slug="' + esc(slug) +
+        '" data-season="' + esc(p.season) + '">' + esc(p.name) + '</span>' +
+        '<span class="skills-board__season">' + esc(p.season) + '</span>' +
+        '<span class="skills-board__grade">' + row.grade + '</span>' +
+        '</li>';
+    }).join('');
+    if (!rows.length) {
+      els.board.innerHTML = '<li class="skills-hint">No tracked grades for this filter.</li>';
+    }
+  }
+
   function renderBoard() {
     var mode = els.boardSkill.value;
     if (mode === 'steal' || mode === 'bust') {
       els.boardSeason.disabled = true;
       renderDraftBoard(mode);
+      return;
+    }
+    if (mode && mode.indexOf('wide:') === 0) {
+      els.boardSeason.disabled = false;
+      renderWideBoard(mode.slice(5));
       return;
     }
     els.boardSeason.disabled = false;
@@ -535,12 +583,15 @@
           if (PEDIGREE) addDraftBoardModes();
         })
         .catch(function () { PEDIGREE = false; });
-      // Wide (masked) skills — dormant until assets/skills_wide.json lands.
+      // Wide (masked) skills — post / transition / motor / gravities, 2015-16+.
       fetch('assets/skills_wide.json')
         .then(function (r) { return r.ok ? r.json() : null; })
         .then(function (w) {
           WIDE = w || false;
-          if (WIDE && current.slug) renderProfile();
+          if (WIDE) {
+            addWideBoardModes();
+            if (current.slug) renderProfile();
+          }
         })
         .catch(function () { WIDE = false; });
     }).catch(function (err) {

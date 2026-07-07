@@ -252,18 +252,92 @@ def v8_pedigree_asset(data: dict) -> None:
         print("  pedigree.json absent — Skills pedigree panel dormant")
         return
     ped = json.loads(path.read_text(encoding="utf-8"))
-    entries = ped.get("entries", {})
+    entries = ped.get("entries", ped.get("players", {}))
     if not entries:
         fail("pedigree.json has no entries")
         return
     sample = 0
     for p in data["players"][:50]:
         key = f"{p['name']}|{p['season']}"
-        if key in entries:
+        if key in entries or p["name"] in entries:
             sample += 1
     print(f"  {len(entries)} pedigree rows; sample hit {sample}/50 vector rows")
     if sample < 10:
         fail("pedigree keys do not align with vectors.json name|season")
+
+
+def v9_wide_skills(data: dict) -> None:
+    print("V9 skills_wide.json (optional)…")
+    path = ASSETS / "skills_wide.json"
+    if not path.exists():
+        print("  skills_wide.json absent — wide Skills Lens dormant")
+        return
+    wide = json.loads(path.read_text(encoding="utf-8"))
+    skills = wide.get("skills", [])
+    grades = wide.get("grades", {})
+    if not grades:
+        fail("skills_wide.json has no grades")
+        return
+    if len(skills) < 6:
+        fail(f"skills_wide.json expects 6 wide skills, got {len(skills)}")
+    keys = {s["key"] for s in skills}
+    for required in (
+        "post", "transition", "motor",
+        "shooting_gravity", "rim_gravity", "disruption_gravity",
+    ):
+        if required not in keys:
+            fail(f"skills_wide.json missing wide skill key: {required}")
+    hits = 0
+    modern_pool = 0
+    modern_hits = 0
+    for p in data["players"]:
+        key = f"{p['name']}|{p['season']}"
+        if key in grades:
+            hits += 1
+        if p["season"] >= "2015-16":
+            modern_pool += 1
+            if key in grades:
+                modern_hits += 1
+    sample_n = min(100, modern_pool)
+    print(f"  {len(grades)} wide grades ({len(skills)} skills); "
+          f"key hit {hits}/{len(data['players'])} vector rows")
+    if modern_pool and sample_n:
+        rate = modern_hits / modern_pool
+        print(f"  2015-16+ coverage: {modern_hits}/{modern_pool} ({rate:.1%})")
+        if rate < 0.35:
+            fail(f"wide skills too sparse on 2015-16+ rows ({rate:.1%})")
+
+
+def v10_honors_playoffs(data: dict) -> None:
+    print("V10 honors/playoffs assets (optional)…")
+    for fname, key_field in (
+        ("honors.json", "bySeason"),
+        ("playoffs.json", "splits"),
+    ):
+        path = ASSETS / fname
+        if not path.exists():
+            print(f"  {fname} absent — panel dormant")
+            continue
+        doc = json.loads(path.read_text(encoding="utf-8"))
+        bucket = doc.get(key_field, doc.get("players", {}))
+        n = len(bucket) if isinstance(bucket, (dict, list)) else 0
+        print(f"  {fname}: {n} keys/rows")
+
+
+def v11_mtnn_report_warn() -> None:
+    print("V11 MTNN report gates (warn-only until promotion)…")
+    report_path = HERE / "data" / "mtnn_report.json"
+    if not report_path.exists():
+        print("  no mtnn_report.json — training not finished")
+        return
+    rep = json.loads(report_path.read_text(encoding="utf-8"))
+    test = rep.get("held_out_recall", {}).get("test", {}).get("recall_at_10_mtnn")
+    purity = rep.get("cross_era_archetype_neighbor_purity_at_20")
+    print(f"  test recall@10={test}  purity@20={purity}")
+    if purity is not None and purity < 0.63:
+        print("  WARN: purity below 0.63 promotion gate — MTNN stays in pipeline/data/")
+    if test is not None and test < 0.95:
+        print("  WARN: test recall below 0.95 — review before promotion")
 
 
 if __name__ == "__main__":
@@ -276,6 +350,9 @@ if __name__ == "__main__":
     v6_teams()
     v7_skills_alignment(data)
     v8_pedigree_asset(data)
+    v9_wide_skills(data)
+    v10_honors_playoffs(data)
+    v11_mtnn_report_warn()
     if FAILS:
         print(f"\nACCURACY HARNESS: {len(FAILS)} FAILURES — do not ship")
         sys.exit(1)

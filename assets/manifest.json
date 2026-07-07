@@ -1,61 +1,106 @@
 {
-  "built": "2026-07-07 04:40 UTC",
+  "built": "2026-07-07 21:05 UTC",
   "contract": "transparent_14d",
+  "wide_skills": {
+    "skill_count": 6,
+    "grade_rows": 4865,
+    "source": "real_caches"
+  },
   "mtnn_promoted": false,
   "mtnn_model": "mtnn_v4_phase_b",
-  "mtnn_test_recall_at_10": 0.984,
+  "mtnn_test_recall_at_10": 1.0,
+  "mtnn_purity_at_20": 0.5735768790355671,
+  "hp_sweep_best": {
+    "tag": "concat-fusion-onecycle",
+    "lr_schedule": "onecycle",
+    "anneal_strategy": "linear",
+    "warmup_pct": 0.1,
+    "dim": 48,
+    "lr": 0.0015,
+    "nce_temp": 0.08,
+    "drop_p": 0.12,
+    "fusion": "concat",
+    "nce_loss": "infonce",
+    "grad_accum": 1,
+    "seed": 42,
+    "epochs": 40,
+    "test_recall": 0.998,
+    "val_recall": 0.998,
+    "purity": 0.5755590050536838,
+    "archetype_top1": 0.8367495158166559,
+    "composite": 0.7445,
+    "train_hparams": {
+      "lr_schedule": "onecycle",
+      "warmup_pct": 0.1,
+      "anneal_strategy": "linear",
+      "weight_decay": 0.0001,
+      "grad_accum": 1,
+      "fusion": "concat",
+      "nce_loss": "infonce"
+    }
+  },
   "dataset_ledger": {
-    "run": "2026-07-06 22:59 UTC",
+    "run": "2026-07-07 18:47 UTC",
     "season_hint": null,
     "steps": [
       {
         "step": "rebuild vectors (offline)",
         "ok": false,
-        "seconds": 0.2
+        "seconds": 0.4
       },
       {
         "step": "rebuild skills",
         "ok": true,
-        "seconds": 0.4
+        "seconds": 0.8
       },
       {
         "step": "skill gates",
         "ok": true,
-        "seconds": 0.3
+        "seconds": 0.6
       },
       {
         "step": "rebuild pedigree (Track H)",
-        "ok": false,
-        "seconds": 0.0
+        "ok": true,
+        "seconds": 0.5
       },
       {
         "step": "pedigree gates",
         "ok": true,
-        "seconds": 0.2
+        "seconds": 0.9
       },
       {
         "step": "rebuild playoffs (Track I)",
         "ok": true,
-        "seconds": 0.2
+        "seconds": 0.6
       },
       {
         "step": "playoff gates",
         "ok": true,
-        "seconds": 0.2
+        "seconds": 1.0
+      },
+      {
+        "step": "rebuild wide skills (Track J)",
+        "ok": true,
+        "seconds": 0.9
+      },
+      {
+        "step": "wide-skill gates",
+        "ok": true,
+        "seconds": 1.4
       }
     ],
     "pedigree": {
-      "cache_complete": false,
-      "players_drafted": 10,
-      "players_undrafted": 0,
-      "players_unmatched_masked": 2283,
-      "rows_covered": 125,
+      "cache_complete": true,
+      "players_drafted": 1755,
+      "players_undrafted": 538,
+      "players_unmatched_masked": 0,
+      "rows_covered": 12392,
       "rows_total": 12392
     },
     "playoffs": {
-      "cache_complete": false,
-      "appearances": 8,
-      "seasons_covered": 4,
+      "cache_complete": true,
+      "appearances": 5834,
+      "seasons_covered": 30,
       "rows_total": 12392
     },
     "player_seasons": 12392,
@@ -66,11 +111,13 @@
     "n_seasons": 30,
     "skills": 12,
     "badges": 14892,
-    "grade_sha1": "ad4e56119e56"
+    "grade_sha1": "a1a73fc5d632"
   },
   "steps": {
     "skills": true,
     "skill_gates": true,
+    "wide_skills": true,
+    "wide_skill_gates": true,
     "pedigree": true,
     "pedigree_gates": true,
     "playoffs": true,
@@ -79,6 +126,8 @@
     "honors_gates": true,
     "salary_market": true,
     "salary_gates": true,
+    "game_ratings": true,
+    "game_ratings_gates": true,
     "player_meta": true,
     "procrustes_drift.py": true,
     "archetype_time.py": true,
@@ -90,15 +139,19 @@
       "present": true
     },
     "skills.json": {
-      "sha1": "b58d540763be",
+      "sha1": "97e7b3b8c0e5",
+      "present": true
+    },
+    "skills_wide.json": {
+      "sha1": "fe5c8901ab1c",
       "present": true
     },
     "skill_probe.json": {
-      "sha1": "6b99dc814702",
+      "sha1": "6dafe91d6848",
       "present": true
     },
     "player_meta.json": {
-      "sha1": "c74159dc601b",
+      "sha1": "290da03158e4",
       "present": true
     },
     "teams.json": {
@@ -106,15 +159,15 @@
       "present": true
     },
     "pedigree.json": {
-      "sha1": "a5eb46db7739",
+      "sha1": "f6a0328d6cc2",
       "present": true
     },
     "playoffs.json": {
-      "sha1": "8d71b6c816d6",
+      "sha1": "780001a09b9c",
       "present": true
     },
     "honors.json": {
-      "sha1": "559abf2b7195",
+      "sha1": "1a2657187980",
       "present": true
     },
     "archetypes_time.json": {

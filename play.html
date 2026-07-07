@@ -67,7 +67,7 @@
     </div>
   </div>
   <button class="vh-help-btn" id="stats-btn" type="button" aria-haspopup="dialog" aria-controls="stats-modal" title="Stats">📊</button>
-  <button class="vh-help-btn" id="help-btn" type="button" aria-haspopup="dialog" aria-controls="help-modal" title="How to play">?</button>
+  <button class="vh-help-btn" id="help-btn" type="button" aria-haspopup="dialog" aria-controls="help-modal" title="How to play and read the clues">?</button>
 </header>
 
 <nav class="vh-tabs" id="mode-tabs" role="tablist" aria-label="Game mode">
@@ -222,6 +222,21 @@
         <div class="vh-hints" id="hints-row" hidden></div>
       </div>
 
+      <div class="vh-orient-banner" id="orient-banner" hidden role="region" aria-label="Quick orientation">
+        <div class="vh-orient-banner__inner">
+          <h2 class="vh-orient-banner__title">New here? Start with this</h2>
+          <ol class="vh-orient-banner__steps">
+            <li><b>Three real NBA seasons to name:</b> Stats Player + Style Player = Mashup. Guess in order &mdash; one try each on the first two, then up to six on the Mashup.</li>
+            <li><b>Read the scouting sentence first.</b> It&rsquo;s plain English. The colored bars are extra detail if you want it.</li>
+            <li><b>Orange = above average that year, blue = below, center line = league average.</b> Everyone is judged against their own season, so eras compare fairly.</li>
+          </ol>
+          <div class="vh-orient-banner__actions">
+            <button class="vh-btn vh-btn--primary" id="orient-dismiss-btn" type="button">Got it &mdash; show today&rsquo;s puzzle</button>
+            <button class="vh-btn" id="orient-rules-btn" type="button">Full rules</button>
+          </div>
+        </div>
+      </div>
+
       <!-- v5 STAGED CLUE CARDS: all three answer slots render immediately with
            full evidence (mini sigma bars over its own half of the blend + a
            phrasing-bank sentence + 2-3 extreme-sigma chips) — nothing is
@@ -237,6 +252,12 @@
            with Free Play — see JS renderClueCards()/showPlayingStage(). -->
       <div class="vh-clue-cards" id="clue-cards">
 
+        <details class="vh-read-guide" id="read-guide">
+          <summary>How to read the clue bars</summary>
+          <p>Each row is one stat (scoring, assists, threes, etc.). <strong>Orange to the right</strong> means better than most players <em>that season</em>; <strong>blue to the left</strong> means below average. The center tick is league average &mdash; so a &rsquo;90s center and a modern guard are compared fairly.</p>
+          <p>Tip: start with the scouting sentence, then glance at the bars or the highlight chips for the standouts.</p>
+        </details>
+
         <div class="vh-slots-row vh-donor-slots" id="donor-slots-row" hidden>
           <div class="vh-card vh-slot-card vh-guess-slot vh-clue-card" id="stats-slot-card" data-slot="stats">
             <div class="vh-slot-card__head vh-clue-card__head">
@@ -246,7 +267,7 @@
               </span>
               <span class="vh-slot-card__badge" id="stats-slot-badge" hidden>&times;1</span>
             </div>
-            <p class="vh-clue-card__caption" id="clue-cards-caption">One guess per half &mdash; Stats first, then Style; the Mashup opens up for up to 6 tries once both halves are in. Every half resolves whether you're right or not, and earns a scoring multiplier.</p>
+            <p class="vh-clue-card__caption" id="clue-cards-caption">One guess each on Stats and Style (in order), then up to six tries on the Mashup. Read the scouting sentence first &mdash; the bars are optional detail.</p>
 
             <button type="button" class="vh-clue-zone" id="stats-clue-zone" aria-expanded="true">
               <div class="vh-clue-zone__bars" id="stats-clue-bars"></div>
@@ -454,12 +475,12 @@
             </div>
           </div>
           <div class="vh-court-legend">
-            <span><span class="vh-legend-swatch vh-legend-swatch--orange"></span>offense &mdash; zone fills, &sigma;-labeled</span>
-            <span><span class="vh-legend-swatch vh-legend-swatch--hatch"></span>defense &mdash; 45&deg; hatch</span>
+            <span><span class="vh-legend-swatch vh-legend-swatch--orange"></span>offense &mdash; brighter = further above average</span>
+            <span><span class="vh-legend-swatch vh-legend-swatch--hatch"></span>defense &mdash; hatched = below average</span>
           </div>
           <p class="vh-visually-hidden" id="courts-sr-summary"></p>
 
-          <div class="vh-section-label">Dimensional breakdown &mdash; &sigma; vs era, all 14 dimensions</div>
+          <div class="vh-section-label">Stat-by-stat comparison &mdash; vs that season&rsquo;s league average</div>
           <div class="vh-breakdown" id="breakdown-chart" role="img" aria-label="Diverging bar chart comparing the Chimera and your guess across all 14 stat dimensions in sigmas"></div>
           <p class="vh-visually-hidden" id="breakdown-sr-summary"></p>
           <div class="vh-court-legend">
@@ -656,8 +677,8 @@
         <div class="vh-sheet__body">
           <ol class="vh-arc-reveal-list" id="arc-reveal-list"></ol>
           <p class="vh-arc-trajectory-line" id="arc-trajectory-line" hidden></p>
-          <div class="vh-section-label">Career arc &mdash; scoring &sigma; vs era, by season</div>
-          <div class="vh-arc-linechart" id="arc-linechart" role="img" aria-label="Line chart of this player's scoring sigma across their charted seasons"></div>
+          <div class="vh-section-label">Career arc &mdash; scoring vs league average, by season</div>
+          <div class="vh-arc-linechart" id="arc-linechart" role="img" aria-label="Line chart of this player's scoring compared to league average across their charted seasons"></div>
           <p class="vh-visually-hidden" id="arc-linechart-sr-summary"></p>
         </div>
       </div>
@@ -783,7 +804,7 @@
 
       <p class="vh-whatif-line vh-whatif-line--big" id="whatif-complementarity-line"></p>
 
-      <div class="vh-section-label">Dimensional coverage &mdash; who covers what, &sigma; vs era</div>
+      <div class="vh-section-label">Who covers what &mdash; vs that season&rsquo;s average</div>
       <p class="vh-whatif-line" id="whatif-coverage-summary"></p>
       <div class="vh-breakdown" id="whatif-coverage-chart" role="img" aria-label="Two-color diverging bar chart comparing Player A and Player B across all 14 stat dimensions in sigmas"></div>
       <p class="vh-visually-hidden" id="whatif-coverage-sr-summary"></p>
@@ -949,6 +970,15 @@
 <div class="vh-modal-backdrop" id="help-backdrop" hidden>
   <div class="vh-modal" id="help-modal" role="dialog" aria-modal="true" aria-labelledby="help-title">
     <h2 id="help-title">How to play</h2>
+    <div class="vh-help-quick">
+      <h3 class="vh-help-quick__title">30-second start</h3>
+      <ul class="vh-help-quick__list">
+        <li>Name three <b>real NBA seasons</b>: who brought the counting stats (Stats), who brought shooting &amp; impact (Style), and who plays closest to the blend (Mashup).</li>
+        <li>All clues are on screen from the start &mdash; guess Stats, then Style, then Mashup (up to 6 tries on Mashup).</li>
+        <li><b>Orange bars</b> = above average that year; <b>blue</b> = below; <b>center</b> = league average. Read the scouting sentences first &mdash; no math required.</li>
+      </ul>
+      <p class="vh-help-quick__more">Full rulebook for every mode below.</p>
+    </div>
     <ol class="vh-modal__list">
       <li>Every day we fuse two real player-seasons into one stat line — the equation IS the puzzle: <b>Stats Player</b> + <b>Style Player</b> = <b>Mashup Player</b>. All three cards show their full evidence (sigma bars, hint sentence, chips) from the start — nothing is hidden — but the ORDER is staged: one guess to name the Stats Player, then one guess to name the Style Player, then up to 6 guesses to name the Mashup. Each later card's input stays locked until the one before it resolves.</li>
       <li>Stats/Style are single-shot: whatever you guess, the stage resolves immediately — right or wrong, the true donor is revealed with your alignment % and the multiplier it earned (exact player-season = &times;2.0, &ge;90% = &times;1.5, &ge;75% = &times;1.25, &ge;50% = &times;1.1, below = &times;1.0). The Mashup locks on the single closest real match in the whole pool (PERFECT MATCH, gold) or any guess &ge;92% full-blend cosine ("close enough", silver) — solving on guess 1&ndash;6 is worth 600/500/400/300/200/100 base points. FINAL score = base &times; Stats multiplier &times; Style multiplier (max 2,400). Unsolved mashups still bank a consolation score off the two donor multipliers, so donor skill always counts.</li>
@@ -1055,7 +1085,7 @@
 </div>
 
 <footer class="vh-footer" id="footer">
-  Vectors: per-100-possession stats, z-scored within each season (era-honest) &middot; &mdash; &middot; built &mdash; &middot; anonymous play events help tune the game &mdash; a random id, no account, no ads
+  Stats compared fairly within each season (not raw counting totals) &middot; built &mdash; &middot; anonymous play events help tune the game &mdash; a random id, no account, no ads
 </footer>
 
 <footer class="site-footer">

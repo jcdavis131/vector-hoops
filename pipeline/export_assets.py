@@ -24,13 +24,16 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 ASSETS = ROOT / "assets"
+CACHE_DIR = ROOT / "pipeline" / "cache"
 MANIFEST = ASSETS / "manifest.json"
 LEDGER = ROOT / "pipeline" / "cache" / "dataset_ledger.json"
 REPORT = ROOT / "pipeline" / "data" / "mtnn_report.json"
+SWEEP = ROOT / "pipeline" / "data" / "mtnn_hp_sweep.json"
 
 CLIENT_ASSETS = [
     "vectors.json",
     "skills.json",
+    "skills_wide.json",
     "skill_probe.json",
     "player_meta.json",
     "teams.json",
@@ -65,12 +68,28 @@ def sha1(path: Path) -> str | None:
     return hashlib.sha1(path.read_bytes()).hexdigest()[:12]
 
 
+def has_real_wide_caches() -> bool:
+    """True when operator season caches exist (not just the example fixture)."""
+    return any(CACHE_DIR.glob("wide_skills_*.json"))
+
+
+def wide_skills_build_cmd(py: str) -> list[str]:
+    cmd = [py, "pipeline/build_wide_skills.py"]
+    if not has_real_wide_caches():
+        cmd.append("--fixture")
+    return cmd
+
+
 def main() -> None:
     py = sys.executable
     steps_ok: dict[str, bool] = {}
 
     steps_ok["skills"] = run("build_skills", [py, "pipeline/build_skills.py"])
     steps_ok["skill_gates"] = run("test_skills", [py, "pipeline/test_skills.py"])
+    steps_ok["wide_skills"] = run(
+        "build_wide_skills", wide_skills_build_cmd(py), required=False)
+    steps_ok["wide_skill_gates"] = run(
+        "test_wide_skills", [py, "pipeline/test_wide_skills.py"], required=False)
     steps_ok["pedigree"] = run(
         "build_pedigree", [py, "pipeline/build_pedigree.py"], required=False)
     steps_ok["pedigree_gates"] = run(
@@ -87,6 +106,11 @@ def main() -> None:
         "build_salary_market", [py, "pipeline/build_salary_market.py"], required=False)
     steps_ok["salary_gates"] = run(
         "test_salaries", [py, "pipeline/test_salaries.py"], required=False)
+    steps_ok["game_ratings"] = run(
+        "build_game_ratings", [py, "pipeline/build_game_ratings.py", "--fixture"],
+        required=False)
+    steps_ok["game_ratings_gates"] = run(
+        "test_game_ratings", [py, "pipeline/test_game_ratings.py"], required=False)
     steps_ok["player_meta"] = run(
         "build_player_meta", [py, "pipeline/build_player_meta.py"], required=False)
 
@@ -103,19 +127,37 @@ def main() -> None:
     if REPORT.exists():
         mtnn = json.loads(REPORT.read_text(encoding="utf-8"))
 
+    sweep_best = None
+    if SWEEP.exists():
+        sweep_doc = json.loads(SWEEP.read_text(encoding="utf-8"))
+        sweep_best = sweep_doc.get("best")
+
     ledger_tail = None
     if LEDGER.exists():
         ledger = json.loads(LEDGER.read_text(encoding="utf-8"))
         ledger_tail = ledger[-1] if ledger else None
 
+    wide_meta = None
+    wide_path = ASSETS / "skills_wide.json"
+    if wide_path.exists():
+        wide_doc = json.loads(wide_path.read_text(encoding="utf-8"))
+        wide_meta = {
+            "skill_count": len(wide_doc.get("skills", [])),
+            "grade_rows": len(wide_doc.get("grades", {})),
+            "source": "real_caches" if has_real_wide_caches() else "fixture",
+        }
+
     manifest = {
         "built": time.strftime("%Y-%m-%d %H:%M UTC", time.gmtime()),
         "contract": "transparent_14d",
+        "wide_skills": wide_meta,
         "mtnn_promoted": False,
         "mtnn_model": mtnn.get("model") if mtnn else None,
         "mtnn_test_recall_at_10": (
             mtnn.get("held_out_recall", {}).get("test", {}).get("recall_at_10_mtnn")
             if mtnn else None),
+        "mtnn_purity_at_20": mtnn.get("cross_era_archetype_neighbor_purity_at_20") if mtnn else None,
+        "hp_sweep_best": sweep_best,
         "dataset_ledger": ledger_tail,
         "steps": steps_ok,
         "assets": {

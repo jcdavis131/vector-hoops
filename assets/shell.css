@@ -1476,6 +1476,11 @@ body.vh-team-themed .landing-favorite__select:focus{
   background: var(--paper);
   color: var(--ink-muted);
 }
+.vh-skill-note{
+  font-size: 12px;
+  color: var(--ink-muted);
+  font-style: italic;
+}
 .skills-board-controls{ display: flex; gap: 8px; flex-wrap: wrap; }
 .skills-board-controls select{
   font: 12px var(--mono);

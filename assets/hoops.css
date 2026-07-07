@@ -581,6 +581,58 @@ main{
    collapse-after-first-submission / tap-to-reexpand pattern as the
    equation chip (see .vh-equation-chip). */
 
+.vh-orient-banner{
+  margin: 0 0 10px;
+  border: 2px solid var(--ink);
+  border-radius: 10px;
+  background: linear-gradient(135deg, #fff8f3 0%, #f3f8ff 100%);
+  box-shadow: 4px 4px 0 var(--ink);
+}
+.vh-orient-banner__inner{ padding: 14px 16px; }
+.vh-orient-banner__title{
+  margin: 0 0 8px;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.vh-orient-banner__steps{
+  margin: 0 0 12px;
+  padding-left: 1.2rem;
+  font-size: 13px;
+  line-height: 1.45;
+}
+.vh-orient-banner__steps li + li{ margin-top: 6px; }
+.vh-orient-banner__actions{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.vh-read-guide{
+  margin: 0 0 4px;
+  padding: 8px 10px;
+  border: 1px dashed var(--ink-muted);
+  border-radius: 8px;
+  background: #fafaf7;
+  font-size: 12px;
+  line-height: 1.45;
+}
+.vh-read-guide summary{
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--data-blue);
+  list-style: none;
+}
+.vh-read-guide summary::-webkit-details-marker{ display: none; }
+.vh-read-guide summary::before{
+  content: '▸ ';
+  display: inline-block;
+  transition: transform 0.15s ease;
+}
+.vh-read-guide[open] summary::before{ transform: rotate(90deg); }
+.vh-read-guide p{ margin: 8px 0 0; color: var(--ink-muted); }
+.vh-read-guide p + p{ margin-top: 6px; }
+
 .vh-clue-cards{
   display: flex;
   flex-direction: column;
@@ -1250,6 +1302,35 @@ main{
   border-bottom: 2px solid var(--data-orange);
   display: inline-block;
   padding-bottom: 2px;
+}
+.vh-help-quick{
+  margin: 0 0 14px;
+  padding: 12px 14px;
+  border: 2px solid var(--data-blue);
+  border-radius: 8px;
+  background: #f6f9ff;
+}
+.vh-help-quick__title{
+  margin: 0 0 8px;
+  font-size: 13px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--data-blue);
+}
+.vh-help-quick__list{
+  margin: 0;
+  padding-left: 1.15rem;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+.vh-help-quick__list li + li{ margin-top: 6px; }
+.vh-help-quick__more{
+  margin: 10px 0 0;
+  font-size: 12px;
+  color: var(--ink-muted);
+  font-style: italic;
 }
 .vh-modal__list{
   margin: 0 0 18px;
