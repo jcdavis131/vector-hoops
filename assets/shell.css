@@ -1481,6 +1481,22 @@ body.vh-team-themed .landing-favorite__select:focus{
   color: var(--ink-muted);
   font-style: italic;
 }
+.skills-mtnn{ margin-top: 16px; }
+.skills-mtnn__list{
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+}
+.skills-mtnn__list li{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--hairline);
+  font-size: 13px;
+}
+.skills-mtnn__list a{ font-weight: 600; }
+.skills-mtnn__meta{ color: var(--ink-muted); font-size: 12px; }
 .skills-board-controls{ display: flex; gap: 8px; flex-wrap: wrap; }
 .skills-board-controls select{
   font: 12px var(--mono);

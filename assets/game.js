@@ -3466,7 +3466,40 @@
         escapeHtml(TARGET.b.name) + '">' + playerNameHtml(TARGET.b.name, TARGET.b.season) + '</a></div>';
     els.shareCopied.hidden = true;
     appendSkillLensSection(TARGET);
+    appendMtnnRevealSection(TARGET);
     appendArchetypePrevalenceLine(TARGET.clusterIdx);
+  }
+
+  function appendMtnnRevealSection(target) {
+    if (!window.VHMtnn) return;
+    window.VHMtnn.load(function (mtnn) {
+      if (!els.revealBody || !mtnn || !target || !target.a || !target.b) return;
+      var va = window.VHMtnn.rowVector(target.a.id);
+      var vb = window.VHMtnn.rowVector(target.b.id);
+      if (!va || !vb) return;
+      var blend = window.VHMtnn.blend(va, vb, 0.5);
+      var exclude = {};
+      exclude[target.a.id] = true;
+      exclude[target.b.id] = true;
+      var hits = window.VHMtnn.topKForVector(blend, 3, exclude);
+      if (!hits.length) return;
+      var rows = hits.map(function (h, i) {
+        var p = DATA.players[h.id];
+        var pct = Math.round(h.sim * 100);
+        var rank = i === 0 ? 'Nearest craft match' : 'Runner-up';
+        return '<li><b>' + rank + ':</b> ' +
+          '<a href="' + skillsLensUrl(p.name, p.season) + '">' +
+          playerKey(p) + '</a> &mdash; ' + pct + '% (MTNN)</li>';
+      }).join('');
+      var wrap = document.createElement('div');
+      wrap.className = 'vh-reveal__mtnn';
+      wrap.innerHTML =
+        '<div class="vh-section-label">Skill-aware nearest (MTNN)</div>' +
+        '<p class="vh-guess__line">Same 50/50 donor blend in the 48-d skill embedding ' +
+        '(puzzles still score transparent 14-d):</p>' +
+        '<ol class="vh-guesslist">' + rows + '</ol>';
+      els.revealBody.appendChild(wrap);
+    });
   }
 
   // Stats/Style always resolve by the time the round is done (they're

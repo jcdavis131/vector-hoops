@@ -1,5 +1,5 @@
 {
-  "built": "2026-07-07 21:05 UTC",
+  "built": "2026-07-07 23:33 UTC",
   "contract": "transparent_14d",
   "wide_skills": {
     "skill_count": 6,
@@ -7,6 +7,7 @@
     "source": "real_caches"
   },
   "mtnn_promoted": true,
+  "mtnn_promotion_note": "client mtnn_embeddings.f32 + mtnn_meta.json shipped; game contract stays 14-d",
   "mtnn_model": "mtnn_v4_phase_b",
   "mtnn_test_recall_at_10": 0.996,
   "mtnn_purity_at_20": 0.7461410005650525,
@@ -139,7 +140,9 @@
     "player_meta": true,
     "procrustes_drift.py": true,
     "archetype_time.py": true,
-    "career_trajectories.py": true
+    "career_trajectories.py": true,
+    "mtnn_export": true,
+    "mtnn_export_gates": true
   },
   "assets": {
     "vectors.json": {
@@ -213,6 +216,15 @@
     "roles.json": {
       "sha1": "ddc07e71112b",
       "present": true
+    },
+    "mtnn_meta.json": {
+      "sha1": "bd2933477928",
+      "present": true
     }
+  },
+  "mtnn_embeddings_f32": {
+    "sha1": "22e6b24336ea",
+    "present": true,
+    "bytes": 2379264
   }
 }

@@ -33,13 +33,20 @@ from __future__ import annotations
 import argparse
 import itertools
 import json
+import shutil
 import subprocess
 import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-REPORT = ROOT / "pipeline" / "data" / "mtnn_report.json"
-OUT = ROOT / "pipeline" / "data" / "mtnn_hp_sweep.json"
+DATA_DIR = ROOT / "pipeline" / "data"
+REPORT = DATA_DIR / "mtnn_report.json"
+OUT = DATA_DIR / "mtnn_hp_sweep.json"
+SWEEP_ARTIFACTS = (
+    DATA_DIR / "embedding_v3.npz",
+    DATA_DIR / "mtnn_centroids.npz",
+    REPORT,
+)
 
 PROMOTION_PURITY_FLOOR = 0.63
 RECALL_RANK_FLOOR = 0.85  # demote supcon-style retrieval collapse
@@ -300,7 +307,24 @@ def build_grid(profile: str, quick: bool) -> list[dict]:
     raise ValueError(f"unknown profile: {profile}")
 
 
-def run_one(cfg: dict, epochs: int, seed: int) -> dict:
+def _sweep_backup() -> dict[Path, Path]:
+    """Snapshot promoted train artifacts; sweep runs must not clobber them."""
+    snaps: dict[Path, Path] = {}
+    for path in SWEEP_ARTIFACTS:
+        if path.exists():
+            bak = path.with_suffix(path.suffix + ".sweep_bak")
+            shutil.copy2(path, bak)
+            snaps[path] = bak
+    return snaps
+
+
+def _sweep_restore(snaps: dict[Path, Path]) -> None:
+    for path, bak in snaps.items():
+        if bak.exists():
+            shutil.copy2(bak, path)
+
+
+def run_one(cfg: dict, epochs: int, seed: int, snaps: dict[Path, Path]) -> dict:
     cmd = [
         sys.executable, str(ROOT / "pipeline" / "train_mtnn.py"),
         "--epochs", str(epochs),
@@ -335,6 +359,7 @@ def run_one(cfg: dict, epochs: int, seed: int) -> dict:
 
     subprocess.run(cmd, cwd=ROOT, check=True)
     rep = json.loads(REPORT.read_text(encoding="utf-8"))
+    _sweep_restore(snaps)
     test = rep["held_out_recall"]["test"]["recall_at_10_mtnn"]
     val = rep["held_out_recall"]["val"]["recall_at_10_mtnn"]
     purity = rep.get("cross_era_archetype_neighbor_purity_at_20")
@@ -380,6 +405,9 @@ def main() -> None:
     profile = "refined" if args.profile == "novel" else args.profile
     grid = build_grid(profile, args.quick)
     seeds = [7] if args.quick else [7, 42, 99]
+    snaps = _sweep_backup()
+    if snaps:
+        print(f"sweep: backed up {len(snaps)} promoted artifact(s) — restored after each run")
 
     results: list[dict] = []
     for seed in seeds:
@@ -387,7 +415,7 @@ def main() -> None:
             tag = cfg.get("tag", "")
             label = f"{tag} " if tag else ""
             print(f"\n=== [{i + 1}/{len(grid)}] seed={seed} {label}{cfg} ===")
-            results.append(run_one(cfg, args.epochs, seed))
+            results.append(run_one(cfg, args.epochs, seed, snaps))
 
     ranked = sorted(
         results,

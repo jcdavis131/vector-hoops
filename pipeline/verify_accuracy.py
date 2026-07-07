@@ -342,12 +342,33 @@ def v11_mtnn_report_warn() -> None:
         and purity is not None and purity >= 0.63
     )
     if eligible:
-        print("  MTNN promotion gates PASS (embeddings remain pipeline/data/ until wired)")
+        print("  MTNN promotion gates PASS — client embeddings exported when present")
     else:
         if purity is not None and purity < 0.63:
             print("  WARN: purity below 0.63 promotion gate — MTNN stays in pipeline/data/")
         if test is not None and test < 0.95:
             print("  WARN: test recall below 0.95 — review before promotion")
+
+
+def v12_mtnn_client_assets() -> None:
+    print("V12 MTNN client assets (optional)…")
+    meta_path = ASSETS / "mtnn_meta.json"
+    f32_path = ASSETS / "mtnn_embeddings.f32"
+    if not meta_path.exists():
+        print("  mtnn_meta.json absent — neighbor UI dormant")
+        return
+    meta = json.loads(meta_path.read_text(encoding="utf-8"))
+    dim = meta.get("dim")
+    rows = meta.get("rows")
+    if not f32_path.exists():
+        fail("mtnn_meta.json present but mtnn_embeddings.f32 missing")
+        return
+    nbytes = f32_path.stat().st_size
+    expected = (rows or 0) * (dim or 0) * 4
+    if expected and nbytes != expected:
+        fail(f"mtnn_embeddings.f32 size {nbytes} != expected {expected}")
+    else:
+        print(f"  mtnn client: {rows}×{dim} ({nbytes // 1024} KB f32)")
 
 
 if __name__ == "__main__":
@@ -363,6 +384,7 @@ if __name__ == "__main__":
     v9_wide_skills(data)
     v10_honors_playoffs(data)
     v11_mtnn_report_warn()
+    v12_mtnn_client_assets()
     if FAILS:
         print(f"\nACCURACY HARNESS: {len(FAILS)} FAILURES — do not ship")
         sys.exit(1)

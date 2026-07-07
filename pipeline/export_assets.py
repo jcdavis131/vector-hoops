@@ -49,6 +49,7 @@ CLIENT_ASSETS = [
     "eratwins.json",
     "faderfinisher.json",
     "roles.json",
+    "mtnn_meta.json",
 ]
 
 
@@ -147,6 +148,15 @@ def main() -> None:
         steps_ok[script] = run(
             script, [py, f"pipeline/{script}"], required=False)
 
+    if mtnn_promotion_eligible(
+            json.loads(REPORT.read_text(encoding="utf-8")) if REPORT.exists() else None):
+        steps_ok["mtnn_export"] = run(
+            "export_mtnn_embeddings",
+            [py, "pipeline/export_mtnn_embeddings.py"],
+            required=False)
+        steps_ok["mtnn_export_gates"] = run(
+            "test_mtnn_export", [py, "pipeline/test_mtnn_export.py"], required=False)
+
     mtnn = None
     if REPORT.exists():
         mtnn = json.loads(REPORT.read_text(encoding="utf-8"))
@@ -190,6 +200,14 @@ def main() -> None:
         "assets": {
             name: {"sha1": sha1(ASSETS / name), "present": (ASSETS / name).exists()}
             for name in CLIENT_ASSETS
+        },
+        "mtnn_embeddings_f32": {
+            "sha1": sha1(ASSETS / "mtnn_embeddings.f32"),
+            "present": (ASSETS / "mtnn_embeddings.f32").exists(),
+            "bytes": (
+                (ASSETS / "mtnn_embeddings.f32").stat().st_size
+                if (ASSETS / "mtnn_embeddings.f32").exists() else None
+            ),
         },
     }
     MANIFEST.write_text(json.dumps(manifest, indent=2), encoding="utf-8")

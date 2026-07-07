@@ -55,6 +55,7 @@
         <div class="skills-seasons" id="skills-seasons" role="tablist" aria-label="Season"></div>
         <div class="vh-skill-badges" id="skills-badges"></div>
         <ul class="skillbar-list" id="skills-bars"></ul>
+        <div class="skills-mtnn" id="skills-mtnn" hidden></div>
         <div class="skills-playoffs" id="skills-playoffs" hidden></div>
       </div>
       <p class="skills-hint" id="skills-empty">Pick a player to see their skill profile,
@@ -90,6 +91,7 @@
 </footer>
 
 <script src="assets/dossier.js" defer></script>
+<script src="assets/mtnn.js" defer></script>
 <script defer>
 (function () {
   'use strict';
@@ -105,6 +107,7 @@
   var ORDER = [];     // slugs sorted by name
   var PEDIGREE = null; // assets/pedigree.json (optional; false if absent)
   var WIDE = null;     // assets/skills_wide.json (optional; false if absent)
+  var MTNN_READY = false;
   var current = { slug: '', season: '' };
 
   function esc(s) { return window.VHDossier.escapeHtml(s); }
@@ -117,6 +120,7 @@
     els.seasons = document.getElementById('skills-seasons');
     els.badges = document.getElementById('skills-badges');
     els.bars = document.getElementById('skills-bars');
+    els.mtnn = document.getElementById('skills-mtnn');
     els.playoffs = document.getElementById('skills-playoffs');
     els.empty = document.getElementById('skills-empty');
     els.boardSkill = document.getElementById('board-skill');
@@ -272,6 +276,7 @@
     els.bars.innerHTML = barsHtml;
 
     renderPlayoffs(rec.name, current.season);
+    renderMtnnNeighbors(row.i);
 
     els.profile.hidden = false;
     els.empty.hidden = true;
@@ -337,6 +342,35 @@
       '</ul>' +
       '<p class="skills-hint">On-court plus-minus per 100 in the playoffs: ' +
       fmtDelta(s.po.PLUS_MINUS, 1) + '. Splits from stats.nba.com.</p>';
+  }
+
+  function renderMtnnNeighbors(playerIndex) {
+    var box = els.mtnn;
+    if (!box) return;
+    if (!MTNN_READY || !window.VHMtnn) {
+      box.hidden = true;
+      return;
+    }
+    var hits = window.VHMtnn.topK(playerIndex, 5);
+    if (!hits.length) {
+      box.hidden = true;
+      return;
+    }
+    box.hidden = false;
+    var items = hits.map(function (h) {
+      var p = DATA.players[h.id];
+      var slug = window.VHDossier.playerSlug(p.name);
+      var pct = Math.round(h.sim * 100);
+      return '<li><a href="/skills?p=' + encodeURIComponent(slug) +
+        '&s=' + encodeURIComponent(p.season) + '">' + esc(p.name) +
+        '</a> <span class="skills-mtnn__meta">' + esc(p.season) +
+        ' &middot; ' + pct + '% craft match</span></li>';
+    }).join('');
+    box.innerHTML =
+      '<div class="vh-section-label">Similar craft profiles (MTNN)</div>' +
+      '<p class="skills-hint">Skill-aware 48-d neighbors from the promoted embedding. ' +
+      'Daily puzzles still grade the transparent 14-d stat line.</p>' +
+      '<ol class="skills-mtnn__list">' + items + '</ol>';
   }
 
   function pickPlayer(slug, season) {
@@ -594,6 +628,10 @@
           }
         })
         .catch(function () { WIDE = false; });
+      window.VHMtnn.load(function (ok) {
+        MTNN_READY = !!ok;
+        if (MTNN_READY && current.slug) renderProfile();
+      });
     }).catch(function (err) {
       els.empty.textContent = 'Could not load the skills data (' + err.message + ').';
     });
