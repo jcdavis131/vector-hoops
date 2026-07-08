@@ -1,0 +1,290 @@
+{
+  "built": "2026-07-08",
+  "model": "mtnn_v4_phase_b",
+  "fusion": "concat",
+  "dTower": 24,
+  "dEmb": 48,
+  "nArchetypes": 8,
+  "nPositions": 5,
+  "nNextProfile": 14,
+  "towerFamilies": [
+    "volume",
+    "playmaking",
+    "rebounding",
+    "defense",
+    "efficiency",
+    "shotmix",
+    "bio",
+    "tracking",
+    "form",
+    "market",
+    "roster",
+    "career",
+    "competition",
+    "team",
+    "pedigree",
+    "playoffs",
+    "honors",
+    "game_ratings"
+  ],
+  "familyOrder": [
+    "bio",
+    "career",
+    "competition",
+    "defense",
+    "efficiency",
+    "form",
+    "game_ratings",
+    "honors",
+    "market",
+    "pedigree",
+    "playmaking",
+    "playoffs",
+    "rebounding",
+    "roster",
+    "shotmix",
+    "team",
+    "tracking",
+    "volume"
+  ],
+  "familyFeatures": {
+    "bio": [
+      "AGE",
+      "DRAFT_NUMBER",
+      "PLAYER_HEIGHT_INCHES",
+      "PLAYER_WEIGHT"
+    ],
+    "career": [
+      "YEAR_IN_LEAGUE",
+      "LAG1_COSINE",
+      "DELTA_NORM",
+      "GP_RATIO",
+      "DRAFT_SLOT_Z"
+    ],
+    "competition": [
+      "SOS_NET_RTG",
+      "B2B_RATE",
+      "REST_AVG",
+      "CONF_STRENGTH"
+    ],
+    "defense": [
+      "STL",
+      "BLK",
+      "DEF_RATING"
+    ],
+    "efficiency": [
+      "FG3_PCT",
+      "FG_PCT",
+      "FT_PCT",
+      "PLUS_MINUS",
+      "EFG_PCT",
+      "NET_RATING",
+      "OFF_RATING",
+      "PACE",
+      "PIE",
+      "TS_PCT"
+    ],
+    "form": [
+      "FORM_CEIL",
+      "FORM_DD_RATE",
+      "FORM_GP",
+      "FORM_MIN_AVG",
+      "FORM_TD_RATE",
+      "FORM_VOL"
+    ],
+    "game_ratings": [
+      "GK_OVERALL",
+      "GK_THREE_PT",
+      "GK_MID_RANGE",
+      "GK_CLOSE_SHOT",
+      "GK_BALL_HANDLE",
+      "GK_PASS_ACCURACY",
+      "GK_PERIMETER_DEF",
+      "GK_INTERIOR_DEF",
+      "GK_STEAL",
+      "GK_BLOCK",
+      "GK_OFF_REBOUND",
+      "GK_DEF_REBOUND",
+      "GK_SPEED",
+      "GK_STRENGTH"
+    ],
+    "honors": [
+      "HON_ALL_NBA_TEAM_LAG",
+      "HON_ALL_NBA_VOTE_LAG",
+      "HON_ASG_LAG",
+      "HON_ASG_CUM",
+      "HON_VOTE_RECOG"
+    ],
+    "market": [
+      "SALARY_LOG",
+      "SALARY_CAP_PCT",
+      "SALARY_TEAM_PCT",
+      "SALARY_RANK_POS"
+    ],
+    "pedigree": [
+      "PED_PICK_QUALITY",
+      "PED_ROUND_ONE",
+      "PED_UNDRAFTED",
+      "PED_EXPECT_SLOT",
+      "PED_TEAM_WINPCT",
+      "PED_YEARS_SINCE",
+      "PED_PICK_DECAY"
+    ],
+    "playmaking": [
+      "AST",
+      "TOV",
+      "AST_PCT",
+      "AST_TO",
+      "TM_TOV_PCT",
+      "AVG_SEC_PER_TOUCH",
+      "FRONT_CT_TOUCHES",
+      "PASSES_MADE",
+      "POTENTIAL_AST",
+      "SECONDARY_AST",
+      "TIME_OF_POSS",
+      "TOUCHES"
+    ],
+    "playoffs": [
+      "PO_GP",
+      "PO_MIN",
+      "PO_MIN_DELTA",
+      "PO_USG_DELTA",
+      "PO_PTS_DELTA",
+      "PO_EFF_DELTA",
+      "PO_PLUS_MINUS",
+      "PO_TEAM_WINS",
+      "PO_ROUNDS"
+    ],
+    "rebounding": [
+      "OREB",
+      "DREB",
+      "DREB_PCT",
+      "OREB_PCT",
+      "REB_PCT"
+    ],
+    "roster": [
+      "ROSTER_MIN_RANK",
+      "ROSTER_USAGE_CROWD",
+      "ROSTER_COMPLEMENT",
+      "ROSTER_STAR_GAP",
+      "ROSTER_MATES_N"
+    ],
+    "shotmix": [
+      "PCT_AST_2PM",
+      "PCT_AST_3PM",
+      "PCT_AST_FGM",
+      "PCT_PTS_2PT",
+      "PCT_PTS_2PT_MR",
+      "PCT_PTS_3PT",
+      "PCT_PTS_FB",
+      "PCT_PTS_FT",
+      "PCT_PTS_OFF_TOV",
+      "PCT_PTS_PAINT",
+      "PCT_UAST_2PM",
+      "PCT_UAST_3PM",
+      "PCT_UAST_FGM"
+    ],
+    "team": [
+      "TM_PACE",
+      "TM_OFF_RTG",
+      "TM_DEF_RTG",
+      "TM_NET_RTG",
+      "TM_WIN_PCT"
+    ],
+    "tracking": [
+      "AVG_SPEED",
+      "CATCH_SHOOT_FG3_PCT",
+      "CATCH_SHOOT_FGA",
+      "CATCH_SHOOT_PTS",
+      "DIST_MILES",
+      "DRIVES",
+      "DRIVE_PASSES",
+      "DRIVE_PTS",
+      "ELBOW_TOUCHES",
+      "PAINT_TOUCHES",
+      "POST_TOUCHES",
+      "PULL_UP_FGA",
+      "PULL_UP_PTS"
+    ],
+    "volume": [
+      "PTS",
+      "FG3A",
+      "FGA",
+      "FTA",
+      "USG_PCT"
+    ]
+  },
+  "skillKeys": [
+    "scoring",
+    "shooting",
+    "finishing",
+    "ft",
+    "playmaking",
+    "security",
+    "oreb",
+    "dreb",
+    "hands",
+    "rim",
+    "efficiency",
+    "impact",
+    "post",
+    "transition",
+    "motor",
+    "shooting_gravity",
+    "rim_gravity",
+    "disruption_gravity"
+  ],
+  "gameFeatureKeys": [
+    "PTS",
+    "AST",
+    "OREB",
+    "DREB",
+    "STL",
+    "BLK",
+    "TOV",
+    "FG3A",
+    "FGA",
+    "FTA",
+    "FG3_PCT",
+    "FG_PCT",
+    "FT_PCT",
+    "PLUS_MINUS"
+  ],
+  "gameArchetypes": [
+    "Offensive Glass + Rim Protection",
+    "Offensive Glass (Low Shot Volume)",
+    "Three-Point Volume (Low On-Court Impact)",
+    "Defensive Glass + Rim Pressure (Fts)",
+    "Shot Volume + Three-Point Volume",
+    "Three-Point Accuracy + Three-Point Volume",
+    "Playmaking + Steals",
+    "Scoring Volume + Shot Volume"
+  ],
+  "layers": [
+    {
+      "id": "input",
+      "label": "Masked inputs",
+      "detail": "129 features in 18 families"
+    },
+    {
+      "id": "towers",
+      "label": "Residual towers",
+      "detail": "18 \u00d7 (96 \u2192 24)"
+    },
+    {
+      "id": "fusion",
+      "label": "Concat fusion",
+      "detail": "432 + season \u2192 48-d, L2 norm"
+    },
+    {
+      "id": "embedding",
+      "label": "Embedding",
+      "detail": "Contrastive craft space"
+    },
+    {
+      "id": "heads",
+      "label": "Decode heads",
+      "detail": "8 archetype + 18 skill + 5 position + 14 next-profile"
+    }
+  ]
+}
