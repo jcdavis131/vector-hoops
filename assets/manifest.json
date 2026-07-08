@@ -1,18 +1,18 @@
 {
-  "built": "2026-07-07 23:33 UTC",
+  "built": "2026-07-08 16:18 UTC",
   "contract": "transparent_14d",
   "wide_skills": {
     "skill_count": 6,
-    "grade_rows": 4865,
+    "grade_rows": 5154,
     "source": "real_caches"
   },
   "mtnn_promoted": true,
-  "mtnn_promotion_note": "client mtnn_embeddings.f32 + mtnn_meta.json shipped; game contract stays 14-d",
+  "mtnn_promotion_note": "embeddings stay in pipeline/data/ until a client surface consumes them",
   "mtnn_model": "mtnn_v4_phase_b",
-  "mtnn_test_recall_at_10": 0.976,
-  "mtnn_purity_at_20": 0.8409839579065586,
+  "mtnn_test_recall_at_10": 1.0,
+  "mtnn_purity_at_20": 0.796181133806424,
   "hp_sweep_best": {
-    "tag": "concat-hybrid-040",
+    "tag": "nextstats-hybrid-w005",
     "lr_schedule": "onecycle",
     "anneal_strategy": "linear",
     "warmup_pct": 0.1,
@@ -24,16 +24,17 @@
     "nce_loss": "hybrid",
     "grad_accum": 1,
     "weight_decay": 0.0001,
-    "nce_player_weight": 0.6,
-    "nce_arch_weight": 0.4,
-    "seed": 99,
-    "epochs": 40,
-    "test_recall": 0.896,
-    "val_recall": 0.906,
-    "purity": 0.7581122572710227,
-    "archetype_top1": 0.90848934796643,
-    "composite": 0.8133,
-    "promotion_purity_gap": -0.1281,
+    "nce_player_weight": 0.8,
+    "nce_arch_weight": 0.2,
+    "w_next_profile": 0.05,
+    "seed": 7,
+    "epochs": 25,
+    "test_recall": 0.974,
+    "val_recall": 0.992,
+    "purity": 0.6780999414564625,
+    "archetype_top1": 0.8326392102421718,
+    "composite": 0.7965,
+    "promotion_purity_gap": -0.0481,
     "train_hparams": {
       "lr_schedule": "onecycle",
       "warmup_pct": 0.1,
@@ -43,9 +44,12 @@
       "fusion": "concat",
       "nce_loss": "hybrid",
       "hard_neg_boost": 0.3,
-      "nce_player_weight": 0.6,
-      "nce_arch_weight": 0.4,
-      "checkpoint_metric": "composite"
+      "nce_player_weight": 0.8,
+      "nce_arch_weight": 0.2,
+      "checkpoint_metric": "composite",
+      "tower_width": 24,
+      "tower_hidden": 96,
+      "skill_hidden": 16
     }
   },
   "dataset_ledger": {
@@ -126,43 +130,46 @@
     "skills": true,
     "skill_gates": true,
     "wide_skills": true,
-    "wide_skill_gates": true,
+    "wide_skill_gates": false,
     "pedigree": true,
-    "pedigree_gates": true,
+    "pedigree_gates": false,
     "playoffs": true,
     "playoffs_gates": true,
     "honors": true,
-    "honors_gates": true,
+    "honors_gates": false,
     "salary_market": true,
     "salary_gates": true,
     "game_ratings": true,
     "game_ratings_gates": true,
     "player_meta": true,
+    "current_rosters": true,
     "procrustes_drift.py": true,
     "archetype_time.py": true,
     "career_trajectories.py": true,
     "mtnn_export": true,
-    "mtnn_export_gates": true
+    "mtnn_export_gates": true,
+    "projections": true,
+    "mtnn_viz": true
   },
   "assets": {
     "vectors.json": {
-      "sha1": "8054a40e32ac",
+      "sha1": "fbb9e0bbc7d3",
       "present": true
     },
     "skills.json": {
-      "sha1": "97e7b3b8c0e5",
+      "sha1": "eea1d733b1b0",
       "present": true
     },
     "skills_wide.json": {
-      "sha1": "fe5c8901ab1c",
+      "sha1": "8bcabbd95a4b",
       "present": true
     },
     "skill_probe.json": {
-      "sha1": "6dafe91d6848",
+      "sha1": "b6b7afb58800",
       "present": true
     },
     "player_meta.json": {
-      "sha1": "290da03158e4",
+      "sha1": "3eba052d2e41",
       "present": true
     },
     "teams.json": {
@@ -170,27 +177,35 @@
       "present": true
     },
     "pedigree.json": {
-      "sha1": "f6a0328d6cc2",
+      "sha1": "e5fee2b84a0d",
       "present": true
     },
     "playoffs.json": {
-      "sha1": "780001a09b9c",
+      "sha1": "d8ad485ba9e0",
       "present": true
     },
     "honors.json": {
-      "sha1": "1a2657187980",
+      "sha1": "83179c07746f",
       "present": true
     },
     "archetypes_time.json": {
-      "sha1": "223bc0181390",
+      "sha1": "f1eeaef86d31",
+      "present": true
+    },
+    "archetype_assignments.json": {
+      "sha1": "9e96d43cdb8c",
+      "present": true
+    },
+    "archetype_emergence.json": {
+      "sha1": "f178e6217a3b",
       "present": true
     },
     "trajectories.json": {
-      "sha1": "937b75487820",
+      "sha1": "eb6488697fff",
       "present": true
     },
     "drift.json": {
-      "sha1": "39c9fa742b50",
+      "sha1": "c8dbbe27a3de",
       "present": true
     },
     "deadline.json": {
@@ -205,8 +220,32 @@
       "sha1": "1bdafd47648a",
       "present": true
     },
+    "current_rosters.json": {
+      "sha1": "70cb0b2c8c7c",
+      "present": true
+    },
+    "projections.json": {
+      "sha1": "46905470d60c",
+      "present": true
+    },
+    "mtnn_arch.json": {
+      "sha1": "5bafec761b94",
+      "present": true
+    },
+    "mtnn_map.json": {
+      "sha1": "89609189c033",
+      "present": true
+    },
+    "mtnn_heads.f32": {
+      "sha1": "e8eed09f1f96",
+      "present": true
+    },
+    "mtnn_inputs.f32": {
+      "sha1": "45fad5a7093f",
+      "present": true
+    },
     "eratwins.json": {
-      "sha1": "bb6b7632b187",
+      "sha1": "c743d4e17fdf",
       "present": true
     },
     "faderfinisher.json": {
@@ -218,13 +257,13 @@
       "present": true
     },
     "mtnn_meta.json": {
-      "sha1": "bd2933477928",
+      "sha1": "3b61c64d2570",
       "present": true
     }
   },
   "mtnn_embeddings_f32": {
-    "sha1": "22e6b24336ea",
+    "sha1": "65b56b20a7df",
     "present": true,
-    "bytes": 2379264
+    "bytes": 2489472
   }
 }
