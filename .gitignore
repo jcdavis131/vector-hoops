@@ -3,3 +3,4 @@ __pycache__/
 pipeline/data/
 
 .vercel
+.cursor/

@@ -1,6 +1,6 @@
 /* Vector Hoops — game.js
  * Zero deps, zero build. Loads assets/vectors.json and runs "The Chimera":
- * a daily fused player-season, 6 guesses, cosine-similarity feedback,
+ * a daily fused player-season, 6 guesses, MTNN embedding similarity feedback,
  * a half-court zone-presence story, and a 3D league starfield map.
  *
  * Data contract (assets/vectors.json), produced by pipeline/build_vectors.py:
@@ -29,11 +29,11 @@
   // Player (each always resolves, right or wrong, earning a multiplier),
   // then the Mashup unlocks for up to MAX_MASHUP_GUESSES tries. The Mashup
   // still locks on an exact true-nearest match (gold) or >=92% full-blend
-  // cosine ("close enough" — silver).
+  // MTNN cosine ("close enough" — silver).
   var MAX_MASHUP_GUESSES = 6;
   var WIN_SIMILARITY = 0.92;
-  // Stage multiplier tiers (Stats/Style), by alignment (halfSims cosine)
-  // against that donor's own half of the blend — exact player-season beats
+  // Stage multiplier tiers (Stats/Style), by MTNN alignment to each donor —
+  // exact player-season beats
   // every similarity tier regardless of how close a wrong guess measures.
   var MULT_EXACT = 2.0;
   var MULT_TIER_90 = 1.5;
@@ -319,21 +319,64 @@
     return dot(a, b) / (na * nb);
   }
 
+  var MTNN_READY = false;
+
+  function loadMtnnData() {
+    return new Promise(function (resolve, reject) {
+      if (!window.VHMtnn) {
+        reject(new Error('VHMtnn client missing'));
+        return;
+      }
+      window.VHMtnn.load(function (m) {
+        if (!m) reject(new Error('MTNN embeddings failed to load'));
+        else { MTNN_READY = true; resolve(m); }
+      });
+    });
+  }
+
+  function requireMtnn() {
+    if (!MTNN_READY || !window.VHMtnn) {
+      throw new Error('MTNN embeddings required for puzzle scoring');
+    }
+  }
+
+  function embeddingSim(idA, idB) {
+    requireMtnn();
+    return window.VHMtnn.sim(idA, idB);
+  }
+
+  function mtnnBlendForDonors(a, b) {
+    requireMtnn();
+    var va = window.VHMtnn.rowVector(a.id);
+    var vb = window.VHMtnn.rowVector(b.id);
+    return window.VHMtnn.blend(va, vb, 0.5);
+  }
+
+  function mtnnBlendSim(playerId) {
+    if (!TARGET || !TARGET.mtnnBlend) return 0;
+    requireMtnn();
+    var row = window.VHMtnn.rowVector(playerId);
+    if (!row) return 0;
+    return dot(TARGET.mtnnBlend, row);
+  }
+
+  function donorsDistinctEnough(a, b) {
+    return embeddingSim(a.id, b.id) < 0.3;
+  }
+
   function subVector(v, dims) {
     var out = new Array(dims.length);
     for (var i = 0; i < dims.length; i++) out[i] = v[dims[i]];
     return out;
   }
 
-  // Secondary, per-half read on a guess (kept alongside the primary
-  // full-blend cosine): how well does this guess match the STATS half
-  // (donor A's dims) and the SHOOTING half (donor B's dims) on their own?
-  // Uses the exact same STATS_DIMS/SHOOTING_DIMS split the target vector
-  // was built from — see buildTargetFromPlayers.
-  function halfSims(guessVector) {
+  // Secondary donor read on a guess (kept alongside the primary full-blend
+  // MTNN sim): alignment to donor A (Stats) and donor B (Style) embeddings.
+  function halfSims(guessPlayer) {
+    var gid = guessPlayer.id != null ? guessPlayer.id : guessPlayer;
     return {
-      stats: cosineSim(subVector(TARGET.vector, STATS_DIMS), subVector(guessVector, STATS_DIMS)),
-      shooting: cosineSim(subVector(TARGET.vector, SHOOTING_DIMS), subVector(guessVector, SHOOTING_DIMS))
+      stats: embeddingSim(gid, TARGET.a.id),
+      shooting: embeddingSim(gid, TARGET.b.id)
     };
   }
 
@@ -985,7 +1028,7 @@
   // the two donors themselves — the donors are trivially close on their own
   // half but aren't a "found" answer; the game wants the best real season
   // that plays like the WHOLE blend. Computed once per target (O(n) over the
-  // full player pool, ~12k rows of a 14-dim dot product — trivial cost).
+  // full player pool, ~12k rows of a 48-dim dot product — trivial cost).
   // `pool` defaults to every player-season; MODERN MODE passes
   // MODERN_DONOR_POOL instead so the Mashup answer is an argmax over
   // modern-pool player-seasons only (never an all-time answer a Modern
@@ -997,7 +1040,7 @@
     for (var i = 0; i < players.length; i++) {
       var p = players[i];
       if (p.id === aId || p.id === bId) continue;
-      scored.push({ id: p.id, sim: cosineSim(target.vector, p.v) });
+      scored.push({ id: p.id, sim: dot(target.mtnnBlend, window.VHMtnn.rowVector(p.id)) });
     }
     scored.sort(function (x, y) { return y.sim - x.sim; });
     return scored.slice(0, 3); // [0] = the true nearest; [1],[2] = runner-ups
@@ -1013,7 +1056,10 @@
       vector[i] = i < A_COUNT ? a.v[i] : b.v[i];
     }
     var clusterIdx = nearestCentroidIdx(vector, CENTROIDS);
-    var target = { a: a, b: b, vector: vector, clusterIdx: clusterIdx };
+    var target = {
+      a: a, b: b, vector: vector, clusterIdx: clusterIdx,
+      mtnnBlend: mtnnBlendForDonors(a, b)
+    };
     target.nearest = computeNearestExcludingDonors(target, pool);
     return target;
   }
@@ -1039,7 +1085,7 @@
       tries++;
     } while (
       tries < 2000 &&
-      (a === b || cosineSim(a.v, b.v) >= 0.3)
+      (a === b || !donorsDistinctEnough(a, b))
     );
     return buildTargetFromPlayers(a, b, pool);
   }
@@ -2854,7 +2900,7 @@
       if (p1) {
         list.push({
           id: p1.id, name: rec.s1.guess.name, slot: 'stats',
-          halves: halfSims(p1.v), blendSim: cosineSim(TARGET.vector, p1.v),
+          halves: halfSims(p1), blendSim: mtnnBlendSim(p1.id),
           sim: rec.s1.sim, locked: true, silver: !rec.s1.exact,
           wrongSeasonNote: rec.s1.exact ? null : donorWrongSeasonNote(p1, TARGET.a)
         });
@@ -2865,7 +2911,7 @@
       if (p2) {
         list.push({
           id: p2.id, name: rec.s2.guess.name, slot: 'archetype',
-          halves: halfSims(p2.v), blendSim: cosineSim(TARGET.vector, p2.v),
+          halves: halfSims(p2), blendSim: mtnnBlendSim(p2.id),
           sim: rec.s2.sim, locked: true, silver: !rec.s2.exact,
           wrongSeasonNote: rec.s2.exact ? null : donorWrongSeasonNote(p2, TARGET.b)
         });
@@ -3219,18 +3265,20 @@
   function appendArchetypePrevalenceLine(clusterIdx) {
     if (typeof clusterIdx !== 'number' || clusterIdx < 0) return;
     loadArchetypeTime(function (data) {
-      if (!data || !data.globalArchetypes || !data.prevalence || !data.prevalence.length) return;
-      var name = data.globalArchetypes[clusterIdx];
+      if (!data || !data.prevalence || !data.prevalence.length) return;
+      var names = data.gameGlobalArchetypes || data.globalArchetypes;
+      var prevKey = data.gamePrevalence ? 'gamePrevalence' : 'prevalence';
+      var name = names && names[clusterIdx];
       if (!name) return;
       var peak = null, peakSeason = null;
-      data.prevalence.forEach(function (p) {
+      data[prevKey].forEach(function (p) {
         var share = p.shares && p.shares[clusterIdx];
         if (typeof share === 'number' && (peak === null || share > peak)) {
           peak = share;
           peakSeason = p.season;
         }
       });
-      var last = data.prevalence[data.prevalence.length - 1];
+      var last = data[prevKey][data[prevKey].length - 1];
       var current = last.shares && last.shares[clusterIdx];
       if (peak === null || typeof current !== 'number') return;
       if (!els.revealBody) return;
@@ -3439,7 +3487,7 @@
     var practiceNote = isPractice ? ' (practice)' : '';
     els.revealTitle.textContent = (rec.won ? 'Solved' : 'The Chimera') + practiceNote;
 
-    var abSim = cosineSim(TARGET.a.v, TARGET.b.v);
+    var abSim = embeddingSim(TARGET.a.id, TARGET.b.id);
     var nearestRows = (TARGET.nearest || []).map(function (entry, i) {
       var np = DATA.players[entry.id];
       var pct = Math.round(entry.sim * 100);
@@ -3457,7 +3505,7 @@
       playerKey(TARGET.b) + '</b> (' + traitList([7, 8, 9, 10, 11, 12, 13]).join(', ') + '). ' +
       'These two donors share just ' + Math.round(abSim * 100) + '% overlap — a deliberate contrast pairing.' +
       recapHtml +
-      '<div class="vh-section-label">Closest real matches to the blend</div>' +
+      '<div class="vh-section-label">Closest real matches to the blend (MTNN)</div>' +
       '<ol class="vh-guesslist">' + nearestRows + '</ol>' +
       '<div class="vh-reveal__okf">OKF dossiers: ' +
       '<a href="#" class="vh-dossier-link" data-slug="' + playerSlug(TARGET.a.name) + '" data-name="' +
@@ -3466,40 +3514,7 @@
         escapeHtml(TARGET.b.name) + '">' + playerNameHtml(TARGET.b.name, TARGET.b.season) + '</a></div>';
     els.shareCopied.hidden = true;
     appendSkillLensSection(TARGET);
-    appendMtnnRevealSection(TARGET);
     appendArchetypePrevalenceLine(TARGET.clusterIdx);
-  }
-
-  function appendMtnnRevealSection(target) {
-    if (!window.VHMtnn) return;
-    window.VHMtnn.load(function (mtnn) {
-      if (!els.revealBody || !mtnn || !target || !target.a || !target.b) return;
-      var va = window.VHMtnn.rowVector(target.a.id);
-      var vb = window.VHMtnn.rowVector(target.b.id);
-      if (!va || !vb) return;
-      var blend = window.VHMtnn.blend(va, vb, 0.5);
-      var exclude = {};
-      exclude[target.a.id] = true;
-      exclude[target.b.id] = true;
-      var hits = window.VHMtnn.topKForVector(blend, 3, exclude);
-      if (!hits.length) return;
-      var rows = hits.map(function (h, i) {
-        var p = DATA.players[h.id];
-        var pct = Math.round(h.sim * 100);
-        var rank = i === 0 ? 'Nearest craft match' : 'Runner-up';
-        return '<li><b>' + rank + ':</b> ' +
-          '<a href="' + skillsLensUrl(p.name, p.season) + '">' +
-          playerKey(p) + '</a> &mdash; ' + pct + '% (MTNN)</li>';
-      }).join('');
-      var wrap = document.createElement('div');
-      wrap.className = 'vh-reveal__mtnn';
-      wrap.innerHTML =
-        '<div class="vh-section-label">Skill-aware nearest (MTNN)</div>' +
-        '<p class="vh-guess__line">Same 50/50 donor blend in the 48-d skill embedding ' +
-        '(puzzles still score transparent 14-d):</p>' +
-        '<ol class="vh-guesslist">' + rows + '</ol>';
-      els.revealBody.appendChild(wrap);
-    });
   }
 
   // Stats/Style always resolve by the time the round is done (they're
@@ -3554,7 +3569,7 @@
     if (key === 'archetype' && (!rec.s1 || rec.s2)) return;
 
     var truePlayer = key === 'stats' ? TARGET.a : TARGET.b;
-    var halves = halfSims(p.v);
+    var halves = halfSims(p);
     var sim = key === 'stats' ? halves.stats : halves.shooting;
     var exact = (p.id === truePlayer.id);
     var mult = stageMultiplier(sim, exact);
@@ -3588,7 +3603,7 @@
   }
 
   // Mashup: up to MAX_MASHUP_GUESSES tries, same lock semantics as v3/v4
-  // (exact true-nearest match = gold; >=92% full-blend cosine = silver).
+  // (exact true-nearest match = gold; >=92% full-blend MTNN sim = silver).
   function submitMashupGuess() {
     var p = pendingSelections.mashup;
     if (!p) return;
@@ -3606,8 +3621,8 @@
     }
     hideDuplicateWarning();
 
-    var halves = halfSims(p.v);
-    var blendSim = cosineSim(TARGET.vector, p.v);
+    var halves = halfSims(p);
+    var blendSim = mtnnBlendSim(p.id);
     var entry = {
       id: p.id, name: playerKey(p), slot: 'mashup',
       halves: halves, blendSim: blendSim,
@@ -3668,6 +3683,31 @@
     }
     if (mapColorMode === 'pos') return POS_UNKNOWN;
     return PALETTE[p.c % PALETTE.length];
+  }
+
+  // Human-readable PCA axis metadata (mirrors pipeline/enrich_vectors.py).
+  // Used when vectors.json carries axes; also the client fallback.
+  var MAP_AXIS_DEFAULTS = [
+    { pc: 'PC1', name: 'Paint vs perimeter', lo: 'bigs (boards, blocks)', hi: 'shooters (3PA, 3P%)' },
+    { pc: 'PC2', name: 'Scoring load', lo: 'high-usage scorers (PTS, FGA, FTA)', hi: 'low-usage role players' },
+    { pc: 'PC3', name: 'Ball in hand', lo: 'off-ball, low-event', hi: 'handlers (AST, STL, TOV)' }
+  ];
+  // X=PC1, Y=PC2, Z=PC3 — CVD-checked on the dark map surface.
+  var MAP_AXIS_COLORS = ['#f07070', '#5cc99a', '#6eb5ff'];
+
+  function mapAxisColor(axisIndex) {
+    return MAP_AXIS_COLORS[axisIndex] || '#c3c2b7';
+  }
+
+  function mapAxisMeta(axisIndex) {
+    if (DATA && DATA.axes && DATA.axes[axisIndex]) return DATA.axes[axisIndex];
+    return MAP_AXIS_DEFAULTS[axisIndex] || null;
+  }
+
+  function mapAxisEndShort(label) {
+    if (!label) return '';
+    var p = label.indexOf(' (');
+    return p >= 0 ? label.slice(0, p) : label;
   }
 
   // Project any 14-dim vector into map space via the affine PCA map the
@@ -3762,7 +3802,7 @@
       return project3D(c[0], c[1], c[2], size, mapCam);
     });
     ctx.save();
-    ctx.strokeStyle = 'rgba(137,135,129,0.30)';
+    ctx.strokeStyle = 'rgba(137,135,129,0.22)';
     ctx.lineWidth = 1;
     CUBE_EDGES.forEach(function (e) {
       ctx.beginPath();
@@ -3770,36 +3810,54 @@
       ctx.lineTo(pts[e[1]].sx, pts[e[1]].sy);
       ctx.stroke();
     });
-    // tick marks at quarters along the three labeled axes
-    ctx.strokeStyle = 'rgba(137,135,129,0.45)';
-    [[1, 0, 0], [0, 1, 0], [0, 0, 1]].forEach(function (axis) {
+
+    var axisDirs = [[1, 0, 0], [0, 1, 0], [0, 0, 1]];
+    var origin = project3D(0, 0, 0, size, mapCam);
+    var fam = getComputedStyle(document.body).fontFamily;
+
+    axisDirs.forEach(function (dir, ai) {
+      var color = mapAxisColor(ai);
+      var axis = mapAxisMeta(ai);
+      var hi = project3D(dir[0], dir[1], dir[2], size, mapCam);
+      var hiLabel = project3D(dir[0] * 1.14, dir[1] * 1.14, dir[2] * 1.14, size, mapCam);
+      var loLabel = project3D(-dir[0] * 0.16, -dir[1] * 0.16, -dir[2] * 0.16, size, mapCam);
+
+      // Colored principal axis: origin (low) -> +1 (high).
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      ctx.moveTo(origin.sx, origin.sy);
+      ctx.lineTo(hi.sx, hi.sy);
+      ctx.stroke();
+
+      // Quarter ticks along this axis only.
+      ctx.strokeStyle = color;
+      ctx.globalAlpha = 0.45;
+      ctx.lineWidth = 1;
       for (var t = 0.25; t < 1; t += 0.25) {
-        var p = project3D(axis[0] * t, axis[1] * t, axis[2] * t, size, mapCam);
+        var tick = project3D(dir[0] * t, dir[1] * t, dir[2] * t, size, mapCam);
         ctx.beginPath();
-        ctx.arc(p.sx, p.sy, 1.5, 0, Math.PI * 2);
+        ctx.arc(tick.sx, tick.sy, 1.5, 0, Math.PI * 2);
         ctx.stroke();
       }
+      ctx.globalAlpha = 1;
+
+      if (!axis) return;
+
+      // High end — PC badge + short descriptor.
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillStyle = color;
+      ctx.font = '700 10px ' + fam;
+      ctx.fillText('PC' + (ai + 1) + ' \u00b7 ' + axis.name, hiLabel.sx, hiLabel.sy - 8);
+      ctx.font = '700 8px ' + fam;
+      ctx.fillText('HIGH \u00b7 ' + mapAxisEndShort(axis.hi), hiLabel.sx, hiLabel.sy + 7);
+
+      // Low end — opposite corner of the axis.
+      ctx.font = '700 8px ' + fam;
+      ctx.fillStyle = color;
+      ctx.fillText('LOW \u00b7 ' + mapAxisEndShort(axis.lo), loLabel.sx, loLabel.sy);
     });
-    // axis labels just past the +1 corner of each axis: PC number on the
-    // first line, its basketball meaning on the second
-    ctx.fillStyle = 'rgba(195,194,183,0.9)';
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    var ends = [
-      project3D(1.1, 0, 0, size, mapCam),
-      project3D(0, 1.12, 0, size, mapCam),
-      project3D(0, 0, 1.1, size, mapCam)
-    ];
-    var fam = getComputedStyle(document.body).fontFamily;
-    for (var ai = 0; ai < 3; ai++) {
-      var axis = (DATA && DATA.axes && DATA.axes[ai]) || null;
-      ctx.font = '700 11px ' + fam;
-      ctx.fillText('PC' + (ai + 1), ends[ai].sx, ends[ai].sy - 6);
-      if (axis && axis.name) {
-        ctx.font = '600 9px ' + fam;
-        ctx.fillText(axis.name.toUpperCase(), ends[ai].sx, ends[ai].sy + 6);
-      }
-    }
     ctx.restore();
   }
 
@@ -4089,13 +4147,16 @@
   // "PC1 — On-ball load: low end -> high end".
   function renderMapAxesInfo() {
     if (!els.mapAxes) return;
-    if (!DATA.axes) {
-      els.mapAxes.textContent = 'PC1 / PC2 / PC3 of the era-normalized stat space';
-      return;
-    }
-    els.mapAxes.innerHTML = DATA.axes.map(function (ax, i) {
-      return '<div class="vh-map-axis-def"><b>PC' + (i + 1) + ' · ' + ax.name + '</b> — ' +
-        ax.lo + ' &rarr; ' + ax.hi + '</div>';
+    els.mapAxes.innerHTML = MAP_AXIS_DEFAULTS.map(function (_, i) {
+      var ax = mapAxisMeta(i);
+      if (!ax) return '';
+      var color = mapAxisColor(i);
+      return '<div class="vh-map-axis-def">' +
+        '<span class="vh-map-axis-swatch" style="background:' + color + '" aria-hidden="true"></span>' +
+        '<b style="color:' + color + '">PC' + (i + 1) + ' \u00b7 ' + ax.name + '</b>' +
+        '<span class="vh-map-axis-end vh-map-axis-end--lo">low: ' + mapAxisEndShort(ax.lo) + '</span>' +
+        '<span class="vh-map-axis-end vh-map-axis-end--hi" style="color:' + color + '">high: ' +
+        mapAxisEndShort(ax.hi) + '</span></div>';
     }).join('');
   }
 
@@ -6028,7 +6089,7 @@
 
   function buildWhatifReport() {
     var a = whatifPick.a, b = whatifPick.b;
-    var complementarity = 1 - Math.abs(cosineSim(a.v, b.v));
+    var complementarity = 1 - Math.abs(embeddingSim(a.id, b.id));
     var compPct = Math.round(complementarity * 100);
 
     els.whatifReportEyebrow.textContent = 'Partnership report — ' + playerKey(a) + ' + ' + playerKey(b);
@@ -7544,8 +7605,8 @@
     if (which === 'whatif') {
       els.methodsTitle.textContent = 'What-If Lab — method & data sources';
       els.methodsBody.innerHTML =
-        '<p class="vh-dossier__p">Complementarity = 1 &minus; |cosine| of the two player-seasons\' era-z profiles — the exact ' +
-          'formula chemistry.json uses. Higher means more orthogonal skill profiles; it is not a claim about on-court chemistry ' +
+        '<p class="vh-dossier__p">Complementarity = 1 &minus; |cosine| of the two player-seasons\' promoted MTNN embeddings — the same ' +
+          '48-d skill-aware space Chimera and neighbor search use. Higher means more orthogonal profiles; it is not a claim about on-court chemistry ' +
           'or team success (no lineup on/off data is used here).</p>' +
         '<h4 class="vh-dossier__h4">Data sources &amp; minimums</h4>' +
         '<div class="vh-dossier__bullet">Vectors: per-100-possession stats, z-scored within each season, 14 dimensions, 1996&ndash;97 through 2025&ndash;26.</div>' +
@@ -7578,8 +7639,8 @@
         '<p class="vh-dossier__p">' + escapeHtml(TWINS && TWINS.method || '') + '</p>' +
         '<h4 class="vh-dossier__h4">Data sources &amp; minimums</h4>' +
         '<div class="vh-dossier__bullet">Quiz pool: 1,260 player-seasons from careers with &ge;4 charted seasons, 1996&ndash;97 through 2025&ndash;26.</div>' +
-        '<div class="vh-dossier__bullet">A player\'s twin is always from a DIFFERENT decade by construction &mdash; nearest OTHER-decade player-season by ' +
-          'root-frame cosine, after chaining each decade\'s own Procrustes transform back to the shared 1996&ndash;97 root frame.</div>' +
+        '<div class="vh-dossier__bullet">A player\'s twin is always from a DIFFERENT decade by construction &mdash; nearest OTHER-decade signature season by ' +
+          'MTNN embedding cosine (index-aligned with vectors.json).</div>' +
         '<div class="vh-dossier__bullet">Only the shipped top 5 candidates carry a real similarity number. A guess landing in that top 5 shows its exact ' +
           '% aligned; any other guess shows an honest lower bound off the 5th-place similarity rather than a fabricated number &mdash; warmth shows for ' +
           'near-misses, not for every possible guess.</div>' +
@@ -8284,7 +8345,7 @@
       a = players[pickWeightedIndex(rng, players)];
       b = players[pickWeightedIndex(rng, players)];
       tries++;
-    } while (tries < 2000 && (a === b || cosineSim(a.v, b.v) >= 0.3));
+    } while (tries < 2000 && (a === b || !donorsDistinctEnough(a, b)));
     if (els.pickerStatsInput) els.pickerStatsInput.value = playerKey(a);
     if (els.pickerShootingInput) els.pickerShootingInput.value = playerKey(b);
     setDonorPick('stats', a);
@@ -8450,7 +8511,8 @@
       fetch(PLAYER_META_URL).then(function (res) {
         if (!res.ok) return { roster: {}, popularity: {} };
         return res.json();
-      }).catch(function () { return { roster: {}, popularity: {} }; })
+      }).catch(function () { return { roster: {}, popularity: {} }; }),
+      loadMtnnData()
     ])
       .then(function (pair) {
         var json = pair[0];
@@ -8633,7 +8695,7 @@
         els.loadingBanner.hidden = true;
         els.gameSkeleton.hidden = true;
         els.errorBanner.hidden = false;
-        els.errorBanner.textContent = 'Could not load vectors.json (' + err.message + '). Is assets/vectors.json built yet?';
+        els.errorBanner.textContent = 'Could not load game data (' + err.message + '). Are assets/vectors.json and assets/mtnn_embeddings.f32 built?';
       });
   }
 

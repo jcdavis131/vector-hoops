@@ -1,0 +1,284 @@
+/* Vector Hoops — assets/responsive.css
+ * Mobile-first fluid layout. Loads after hoops.css + shell.css.
+ * Uses --page-gutter / --layout-max / --layout-wide from hoops.css :root. */
+
+/* ---------- global ---------- */
+
+img{
+  max-width: 100%;
+  height: auto;
+}
+
+/* Do NOT blanket-style svg/canvas — game charts, courts, and the 3D map
+   set their own width/height/aspect-ratio in hoops.css + game.js. */
+
+.site-nav,
+.site-footer,
+.vh-challenge-banner{
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ---------- site nav ---------- */
+
+.site-nav{
+  padding-inline: var(--page-gutter);
+}
+
+.site-footer{
+  padding-inline: var(--page-gutter);
+}
+
+@media (max-width: 639px){
+  .site-nav{
+    flex-wrap: nowrap;
+    gap: 8px;
+  }
+  .site-nav__brand{
+    flex: 0 0 auto;
+    max-width: 38%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .site-nav__links{
+    flex: 1 1 auto;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    min-width: 0;
+    -webkit-mask-image: linear-gradient(to right, transparent, black 8px, black calc(100% - 8px), transparent);
+    mask-image: linear-gradient(to right, transparent, black 8px, black calc(100% - 8px), transparent);
+  }
+  .site-nav__links::-webkit-scrollbar{ display: none; }
+  .site-nav__link{
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+}
+
+/* ---------- page shells ---------- */
+
+.wiki-main,
+.skills-main,
+.methods-main,
+.leaderboard-main,
+.drift-main,
+.landing-main{
+  width: min(100%, var(--layout-wide));
+  max-width: var(--layout-wide);
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.wiki-main,
+.skills-main,
+.methods-main,
+.leaderboard-main,
+.drift-main{
+  padding: clamp(16px, 3vw, 24px) var(--page-gutter) clamp(40px, 6vw, 56px);
+  margin-inline: auto;
+}
+
+.wiki-head h1,
+.methods-main h1,
+.lb-head h1,
+.drift-head h1,
+.skills-head h1{
+  font-size: var(--heading-page);
+}
+
+.landing-section,
+.landing-hero{
+  padding-inline: var(--page-gutter);
+  width: min(100%, var(--layout-wide));
+  max-width: var(--layout-wide);
+  margin-inline: auto;
+  box-sizing: border-box;
+}
+
+/* ---------- landing ---------- */
+
+@media (max-width: 479px){
+  .landing-equation{
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 6px;
+  }
+  .credibility-strip{
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 14px 16px;
+  }
+  .landing-favorite__select{
+    min-width: 0;
+    width: 100%;
+  }
+}
+
+.landing-cta,
+.landing-cta-secondary{
+  width: 100%;
+  max-width: 320px;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+@media (min-width: 480px){
+  .landing-cta,
+  .landing-cta-secondary{
+    width: auto;
+    max-width: none;
+  }
+}
+
+/* ---------- play header ---------- */
+
+@media (max-width: 719px){
+  .vh-header{
+    row-gap: 8px;
+  }
+  .vh-header__brand{
+    flex: 1 1 100%;
+    min-width: 0;
+  }
+  .vh-pool-toggle{
+    flex: 1 1 100%;
+    width: 100%;
+  }
+  .vh-pool-toggle .vh-subtab{
+    flex: 1 1 50%;
+    text-align: center;
+  }
+  .vh-stats{
+    margin-left: auto;
+    flex: 0 1 auto;
+  }
+  .vh-identity-chip,
+  .vh-favorite-chip{
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+@media (min-width: 720px){
+  .vh-tagline{
+    max-width: clamp(200px, 28vw, 320px);
+  }
+}
+
+/* ---------- clue charts (scoped — not global svg) ---------- */
+
+.vh-clue-zone__bars svg,
+.vh-breakdown svg,
+.vh-court,
+.vh-map,
+.vh-arc-linechart svg,
+.vh-arc-card__minibars svg{
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  display: block;
+}
+
+.vh-clue-zone__bars svg{
+  max-height: clamp(140px, 38vw, 220px);
+}
+
+/* ---------- result card (narrow phones) ---------- */
+
+@media (max-width: 479px){
+  .vh-result__top{
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .vh-map-thumb-btn{
+    width: min(100%, 160px);
+    height: auto;
+    aspect-ratio: 1;
+    align-self: center;
+  }
+  .vh-warmth{
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    padding: 10px 12px;
+  }
+  .vh-warmth__closest{
+    white-space: normal;
+    text-align: center;
+  }
+}
+
+/* ---------- modals ---------- */
+
+.vh-modal--dossier,
+.vh-modal--stats{
+  max-width: min(560px, calc(100vw - 2 * var(--page-gutter)));
+}
+
+/* ---------- skills lens ---------- */
+
+@media (max-width: 360px){
+  .skillbar{
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-rows: auto auto;
+  }
+  .skillbar__label{
+    grid-column: 1 / -1;
+    white-space: normal;
+  }
+  .skillbar__track{ grid-column: 1; }
+  .skillbar__grade{ grid-column: 2; grid-row: 2; }
+}
+
+.skills-panel,
+.wiki-controls,
+.lb-controls,
+.drift-card{
+  padding: clamp(12px, 2.5vw, 16px);
+}
+
+/* ---------- wiki / leaderboard ---------- */
+
+@media (max-width: 479px){
+  .wiki-row{
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+  .wiki-row__meta{ white-space: normal; }
+  .lb-date-row{
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .lb-date-row .vh-link-btn{ align-self: flex-start; }
+}
+
+.lb-table-wrap,
+.drift-table-wrap,
+.methods-section{
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ---------- wide desktop ---------- */
+
+@media (min-width: 1280px){
+  :root{ --layout-max: 800px; }
+}
+
+@media (min-width: 1000px){
+  #panel-chimera{
+    grid-template-columns: minmax(0, 1fr) minmax(280px, min(380px, 34vw));
+    gap: clamp(14px, 2vw, 22px);
+  }
+}
+
+@media (min-width: 1440px){
+  :root{ --layout-wide: 1200px; }
+}

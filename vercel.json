@@ -1,3 +1,12 @@
 {
-  "cleanUrls": true
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/model", "destination": "/model.html" },
+    { "source": "/trends", "destination": "/trends.html" }
+  ],
+  "redirects": [
+    { "source": "/wiki", "destination": "/players", "permanent": true },
+    { "source": "/skills", "destination": "/players#profile", "permanent": true },
+    { "source": "/drift", "destination": "/trends", "permanent": true }
+  ]
 }

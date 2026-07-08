@@ -1,6 +1,6 @@
 /**
- * MTNN embedding client — lazy-loaded, index-aligned with vectors.json.
- * Game contract stays transparent 14-d; this is for skill-aware neighbors.
+ * Promoted MTNN embedding client — lazy-loaded, index-aligned with vectors.json.
+ * Daily puzzles (Chimera, Era Twin warmth, What-If complementarity) score here.
  */
 (function (global) {
   'use strict';

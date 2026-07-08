@@ -29,10 +29,24 @@
   --mono: ui-monospace, "IBM Plex Mono", "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
   --sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --radius: 10px;
-  --gap: 16px;
+  --gap: clamp(12px, 2.5vw, 18px);
+
+  /* Fluid layout — mobile-first */
+  --page-gutter: clamp(12px, 3.2vw, 28px);
+  --layout-max: 720px;
+  --layout-wide: 1120px;
+  --touch-min: 44px;
+  --text-body: clamp(14px, 0.35vw + 13px, 16px);
+  --text-small: clamp(11px, 0.25vw + 10px, 13px);
+  --heading-page: clamp(18px, 2.2vw + 12px, 26px);
 }
 
 *, *::before, *::after{ box-sizing: border-box; }
+
+html{
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
 
 html, body{
   margin: 0;
@@ -40,6 +54,7 @@ html, body{
   background: var(--paper);
   color: var(--ink);
   font-family: var(--sans);
+  font-size: var(--text-body);
   -webkit-font-smoothing: antialiased;
 }
 
@@ -68,7 +83,9 @@ button, input{ font-family: inherit; }
   align-items: center;
   gap: 12px;
   flex-wrap: wrap;
-  padding: 12px 16px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px var(--page-gutter);
   padding-top: calc(12px + env(safe-area-inset-top, 0));
   background: var(--surface);
   border-bottom: 2px solid var(--ink);
@@ -151,13 +168,24 @@ button, input{ font-family: inherit; }
 
 main{
   flex: 1;
-  width: 100%;
-  max-width: 720px;
-  margin: 0 auto;
-  padding: 20px 16px;
+  width: min(100%, var(--layout-max));
+  max-width: var(--layout-max);
+  min-width: 0;
+  margin-inline: auto;
+  padding: clamp(16px, 3vw, 24px) var(--page-gutter);
   display: flex;
   flex-direction: column;
   gap: var(--gap);
+  box-sizing: border-box;
+}
+
+.vh-panel,
+.vh-card,
+.vh-clue-card,
+.vh-autocomplete,
+.vh-guessbar,
+.vh-play-col{
+  min-width: 0;
 }
 
 .vh-panel{
@@ -171,7 +199,7 @@ main{
   border: 2px solid var(--ink);
   border-radius: var(--radius);
   box-shadow: var(--shadow-block);
-  padding: 16px;
+  padding: clamp(12px, 2.5vw, 18px);
 }
 
 /* ---------- prompt ---------- */
@@ -308,10 +336,20 @@ main{
   hyphens: auto;
 }
 
-@media (max-width: 479px){
-  .vh-equation{ flex-direction: column; align-items: stretch; }
+@media (max-width: 639px){
+  .vh-equation{
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .vh-equation__tile:not(.vh-equation__tile--target){
+    flex: 1 1 auto;
+    max-width: none;
+  }
   .vh-equation__op{ padding: 2px 0; }
-  .vh-equation__tile--target{ flex-basis: auto; }
+  .vh-equation__tile--target{
+    flex-basis: auto;
+    max-width: none;
+  }
 }
 
 /* ---------- guess bar / autocomplete ---------- */
@@ -1218,8 +1256,56 @@ main{
   line-height: 1.45;
   color: #898781;
   pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
 }
-.vh-map-axis-def b{ color: #c3c2b7; font-weight: 700; }
+
+.vh-map-axis-def{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 8px;
+}
+.vh-map-axis-def:first-child{ margin-top: 0; }
+.vh-map-axis-swatch{
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  flex-shrink: 0;
+  align-self: center;
+}
+.vh-map-axis-def b{ font-weight: 700; }
+.vh-map-axis-end{
+  font-size: 9px;
+  letter-spacing: 0.01em;
+}
+.vh-map-axis-end--lo{
+  color: #6f6e69;
+  text-transform: lowercase;
+}
+.vh-map-axis-end--hi{
+  font-weight: 700;
+  text-transform: lowercase;
+}
+
+.drift-interpret{ max-width: 28rem; font-size: 11px; line-height: 1.45; color: var(--ink-soft); }
+
+.trajectory-examples{
+  margin: 10px 0 0;
+  padding-left: 1.1rem;
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+.trajectory-examples__item{ margin-bottom: 8px; }
+.trajectory-examples__item b{ color: var(--ink); }
+.trajectory-examples__arc{
+  display: block;
+  margin-top: 3px;
+  font-style: italic;
+  color: #6b6a63;
+}
 
 .vh-reveal__okf{
   margin-top: 10px;
@@ -1271,7 +1357,7 @@ main{
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: var(--page-gutter, 16px);
   z-index: 100;
 }
 
@@ -1280,16 +1366,17 @@ main{
   border: 2px solid var(--ink);
   border-radius: var(--radius);
   box-shadow: 6px 6px 0 var(--ink);
-  padding: 22px;
-  max-width: 420px;
+  padding: clamp(16px, 3vw, 22px);
+  max-width: min(420px, calc(100vw - 2 * var(--page-gutter, 16px)));
   width: 100%;
+  max-height: min(85dvh, calc(100dvh - 2 * var(--page-gutter, 16px)));
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* how-to-play lists every mode — scroll so "Got it" stays reachable on short viewports */
 #help-modal{
-  max-height: min(85vh, calc(100dvh - 40px));
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
+  max-height: min(85dvh, calc(100dvh - 2 * var(--page-gutter, 16px)));
 }
 .vh-modal h2{
   margin: 0 0 14px;
@@ -2045,12 +2132,15 @@ main{
 /* ---------- tab bar: bottom nav on phones, top tabs from 720px ---------- */
 
 #mode-tabs{
-  margin: 0 16px 14px;
+  box-sizing: border-box;
+  margin: 0 var(--page-gutter) 14px;
 }
 @media (min-width: 720px){
   #mode-tabs{
-    max-width: 688px; /* matches main's padded content width at max-width:720px */
-    margin: 0 auto 16px;
+    width: min(var(--layout-max), calc(100% - 2 * var(--page-gutter)));
+    max-width: var(--layout-max);
+    margin-inline: auto;
+    margin-bottom: 16px;
   }
 }
 
@@ -2189,8 +2279,8 @@ main{
 .vh-sheet{
   background: var(--surface);
   width: 100%;
-  max-width: 720px;
-  max-height: 88vh;
+  max-width: var(--layout-max);
+  max-height: min(88dvh, calc(100dvh - var(--page-gutter)));
   overflow-y: auto;
   border: 2px solid var(--ink);
   border-bottom: none;
