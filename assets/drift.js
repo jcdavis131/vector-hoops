@@ -604,7 +604,7 @@
     ctx.fill('evenodd');
     ctx.strokeStyle = 'rgba(' + rgb + ',' + Math.min(0.95, a + 0.28).toFixed(3) + ')';
     ctx.lineWidth = Math.max(1, g.s * 0.11);
-    ctx.stroke('evenodd');
+    ctx.stroke();
     ctx.restore();
   }
 
@@ -901,16 +901,17 @@
     }
   }
 
-  function showArchetypeError(chartHost, legendHost, shiftsHost, panelsHost) {
+  function showArchetypeError(chartHost, legendHost, shiftsHost, panelsHost, err) {
+    var detail = err && err.message ? ' (' + err.message + ')' : '';
     chartHost.innerHTML = '';
     chartHost.setAttribute('aria-label', 'Archetype eras chart failed to load');
     var p = document.createElement('p');
     p.className = 'drift-loading';
-    p.textContent = 'Could not load the archetype eras data (assets/archetypes_time.json). Try reloading.';
+    p.textContent = 'Could not load the archetype eras data (assets/archetypes_time.json).' + detail + ' Try reloading.';
     chartHost.appendChild(p);
     if (legendHost) legendHost.innerHTML = '';
-    if (shiftsHost) shiftsHost.innerHTML = '<p class="drift-loading">Could not load.</p>';
-    if (panelsHost) panelsHost.innerHTML = '<p class="drift-loading">Could not load.</p>';
+    if (shiftsHost) shiftsHost.innerHTML = '<p class="drift-loading">Could not load.' + detail + '</p>';
+    if (panelsHost) panelsHost.innerHTML = '<p class="drift-loading">Could not load.' + detail + '</p>';
     var courtRoot = document.getElementById('archetype-court-heatmap');
     if (courtRoot) courtRoot.hidden = true;
   }
@@ -1368,9 +1369,18 @@
         renderArchetypeStream(archChartHost, archLegendHost, data);
         renderArchetypeShiftsChart(archShiftsHost, data.biggestShifts);
         renderEraPanelsCompact(archPanelsHost, data.eras);
-        bindCourtHeatmap(data);
-      }).catch(function () {
-        showArchetypeError(archChartHost, archLegendHost, archShiftsHost, archPanelsHost);
+        try {
+          bindCourtHeatmap(data);
+        } catch (courtErr) {
+          console.error('court heatmap failed:', courtErr);
+          var courtRoot = document.getElementById('archetype-court-heatmap');
+          if (courtRoot) {
+            courtRoot.hidden = true;
+          }
+        }
+      }).catch(function (err) {
+        console.error('archetype eras load failed:', err);
+        showArchetypeError(archChartHost, archLegendHost, archShiftsHost, archPanelsHost, err);
       });
     }
 
