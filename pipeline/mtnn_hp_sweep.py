@@ -182,6 +182,58 @@ REFINED_QUICK_TAGS = {
     "concat-large-batch",
 }
 
+# v4 architecture-aware local search — tuned for revised family groupings.
+ARCH_CONFIGS: list[dict] = [
+    _concat_onecycle("arch-baseline"),
+    _concat_onecycle("arch-tw32-th128-sh24",
+                     tower_width=32, tower_hidden=128, skill_hidden=24),
+    _concat_onecycle("arch-tw32-th160-sh32",
+                     tower_width=32, tower_hidden=160, skill_hidden=32),
+    _concat_onecycle("arch-tw28-th128-sh24",
+                     tower_width=28, tower_hidden=128, skill_hidden=24),
+    _concat_onecycle("arch-tw24-th128-sh24",
+                     tower_width=24, tower_hidden=128, skill_hidden=24),
+    _concat_onecycle("arch-tw32-th128-sh24-d56",
+                     tower_width=32, tower_hidden=128, skill_hidden=24, dim=56, lr=1.2e-3),
+    _concat_onecycle("arch-tw32-th128-sh24-t007",
+                     tower_width=32, tower_hidden=128, skill_hidden=24, nce_temp=0.07),
+    _concat_onecycle("arch-tw32-th160-sh24-hardneg",
+                     tower_width=32, tower_hidden=160, skill_hidden=24, hard_neg_boost=0.4),
+    _concat_onecycle("arch-gated-control",
+                     fusion="gated", tower_width=32, tower_hidden=128, skill_hidden=24),
+]
+
+ARCH_QUICK_TAGS = {
+    "arch-baseline",
+    "arch-tw32-th128-sh24",
+    "arch-tw32-th160-sh32",
+    "arch-gated-control",
+}
+
+# v5 next-stats profile — tune forecast head weight with hybrid loss.
+NEXT_STATS_CONFIGS: list[dict] = [
+    _concat_onecycle(
+        "nextstats-hybrid-w005",
+        nce_loss="hybrid", nce_player_weight=0.80, nce_arch_weight=0.20,
+        w_next_profile=0.05,
+    ),
+    _concat_onecycle(
+        "nextstats-hybrid-w008",
+        nce_loss="hybrid", nce_player_weight=0.80, nce_arch_weight=0.20,
+        w_next_profile=0.08,
+    ),
+    _concat_onecycle(
+        "nextstats-hybrid-w010",
+        nce_loss="hybrid", nce_player_weight=0.80, nce_arch_weight=0.20,
+        w_next_profile=0.10,
+    ),
+    _concat_onecycle(
+        "nextstats-hybrid-w012",
+        nce_loss="hybrid", nce_player_weight=0.80, nce_arch_weight=0.20,
+        w_next_profile=0.12,
+    ),
+]
+
 # v3 hybrid grid — concat winner + partial archetype SupCon (purity without collapse).
 HYBRID_CONFIGS: list[dict] = [
     _concat_onecycle("concat-winner"),
@@ -238,6 +290,16 @@ def composite_score(test_recall: float | None, purity: float | None) -> float:
 
 
 def build_grid(profile: str, quick: bool) -> list[dict]:
+    if profile == "nextstats":
+        grid = NEXT_STATS_CONFIGS
+        if quick:
+            grid = grid[:3]
+        return grid
+    if profile == "architecture":
+        grid = ARCH_CONFIGS
+        if quick:
+            grid = [c for c in grid if c.get("tag") in ARCH_QUICK_TAGS]
+        return grid
     if profile == "hybrid":
         grid = HYBRID_CONFIGS
         if quick:
@@ -342,6 +404,12 @@ def run_one(cfg: dict, epochs: int, seed: int, snaps: dict[Path, Path]) -> dict:
     ]
     if "batch" in cfg:
         cmd.extend(["--batch", str(cfg["batch"])])
+    if "tower_width" in cfg:
+        cmd.extend(["--tower-width", str(cfg["tower_width"])])
+    if "tower_hidden" in cfg:
+        cmd.extend(["--tower-hidden", str(cfg["tower_hidden"])])
+    if "skill_hidden" in cfg:
+        cmd.extend(["--skill-hidden", str(cfg["skill_hidden"])])
     if "warmup_pct" in cfg:
         cmd.extend(["--warmup-pct", str(cfg["warmup_pct"])])
     if cfg.get("anneal_strategy"):
@@ -356,6 +424,9 @@ def run_one(cfg: dict, epochs: int, seed: int, snaps: dict[Path, Path]) -> dict:
         cmd.extend(["--nce-arch-weight", str(cfg["nce_arch_weight"])])
     if cfg.get("checkpoint_metric"):
         cmd.extend(["--checkpoint-metric", str(cfg["checkpoint_metric"])])
+    for key, val in cfg.items():
+        if key.startswith("w_") and val is not None:
+            cmd.extend([f"--{key.replace('_', '-')}", str(val)])
 
     subprocess.run(cmd, cwd=ROOT, check=True)
     rep = json.loads(REPORT.read_text(encoding="utf-8"))
@@ -381,7 +452,7 @@ def run_one(cfg: dict, epochs: int, seed: int, snaps: dict[Path, Path]) -> dict:
                 "lr_schedule", "warmup_pct", "anneal_strategy",
                 "weight_decay", "grad_accum", "fusion", "nce_loss",
                 "hard_neg_boost", "nce_player_weight", "nce_arch_weight",
-                "checkpoint_metric",
+                "checkpoint_metric", "tower_width", "tower_hidden", "skill_hidden",
             )
             if cfg.get(k) is not None or rep.get(k) is not None
         },
@@ -394,9 +465,12 @@ def main() -> None:
                     help="epochs per config (40+ to confirm winners)")
     ap.add_argument(
         "--profile",
-        choices=("classic", "schedule", "discovery", "refined", "hybrid", "novel", "full"),
+        choices=("classic", "schedule", "discovery", "refined", "architecture",
+                 "nextstats",
+                 "hybrid", "novel", "full"),
         default="refined",
-        help="sweep grid (refined=concat local; hybrid=player+arch SupCon λ)",
+        help=("sweep grid (refined=concat local; architecture=capacity search; "
+              "hybrid=player+arch SupCon λ; nextstats=tune next-profile loss)"),
     )
     ap.add_argument("--quick", action="store_true",
                     help="smoke: 1 seed, truncated grid")

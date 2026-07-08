@@ -9,7 +9,7 @@ Checks:
   V3  deadline.json: recompute EVERY quiz mover's deltas from the raw
       game logs — exact match (tolerance 0.01 for rounding)
   V4  chimera determinism: seeded target for 30 dates is stable and
-      always satisfies the low-similarity constraint
+      always satisfies the low-similarity MTNN constraint (<0.3)
 """
 
 from __future__ import annotations
@@ -19,6 +19,8 @@ import math
 import sys
 from collections import defaultdict
 from pathlib import Path
+
+import numpy as np
 
 HERE = Path(__file__).resolve().parent
 ASSETS = HERE.parent / "assets"
@@ -113,7 +115,20 @@ def v3_deadline() -> None:
 
 
 def v4_determinism(data: dict) -> None:
-    print("V4 chimera determinism (30 dates)…")
+    print("V4 chimera determinism (30 dates, MTNN donor constraint)…")
+
+    meta_path = ASSETS / "mtnn_meta.json"
+    f32_path = ASSETS / "mtnn_embeddings.f32"
+    if not meta_path.exists() or not f32_path.exists():
+        fail("MTNN assets missing — required for chimera determinism")
+        return
+    meta = json.loads(meta_path.read_text(encoding="utf-8"))
+    dim = int(meta["dim"])
+    rows = int(meta["rows"])
+    E = np.fromfile(f32_path, dtype=np.float32).reshape(rows, dim)
+
+    def mtnn_sim(i: int, j: int) -> float:
+        return float(E[i] @ E[j])
 
     def xmur3(s):
         h = 1779033703
@@ -149,7 +164,7 @@ def v4_determinism(data: dict) -> None:
             a = players[int(rnd() * len(players))]
             tries = 0
             b = players[int(rnd() * len(players))]
-            while (b["id"] == a["id"] or cos(a["v"], b["v"]) >= 0.3) and tries < 2000:
+            while (b["id"] == a["id"] or mtnn_sim(a["id"], b["id"]) >= 0.3) and tries < 2000:
                 b = players[int(rnd() * len(players))]
                 tries += 1
             picks.append((a["id"], b["id"]))
@@ -157,7 +172,7 @@ def v4_determinism(data: dict) -> None:
             fail(f"{ds}: nondeterministic target")
         a = next(p for p in players if p["id"] == picks[0][0])
         b = next(p for p in players if p["id"] == picks[0][1])
-        if cos(a["v"], b["v"]) >= 0.3:
+        if mtnn_sim(a["id"], b["id"]) >= 0.3:
             fail(f"{ds}: similarity constraint violated")
     print("  30/30 dates deterministic + constrained")
 
@@ -322,6 +337,21 @@ def v10_honors_playoffs(data: dict) -> None:
         bucket = doc.get(key_field, doc.get("players", {}))
         n = len(bucket) if isinstance(bucket, (dict, list)) else 0
         print(f"  {fname}: {n} keys/rows")
+
+    po_path = ASSETS / "playoffs.json"
+    if not po_path.exists():
+        return
+    splits = json.loads(po_path.read_text(encoding="utf-8")).get("splits", {})
+    for name, season in (
+        ("Nikola Jokic", "2023-24"),
+        ("Nikola Jokic", "2024-25"),
+        ("Jamal Murray", "2022-23"),
+    ):
+        key = f"{name}|{season}"
+        if key not in splits:
+            fail(f"playoffs.json missing expected split: {key}")
+        else:
+            print(f"  spot check OK: {key} (pts_delta={splits[key].get('pts_delta')})")
 
 
 def v11_mtnn_report_warn() -> None:

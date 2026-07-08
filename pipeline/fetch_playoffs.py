@@ -14,27 +14,18 @@ from __future__ import annotations
 
 import argparse
 import json
-import re
 import sys
 import time
-import unicodedata
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from nba_http import fetch_stats_json, legacy_result_set_rows, real_playoff_cache_paths
+from name_utils import norm_name
 
 ROOT = Path(__file__).resolve().parents[1]
 CACHE = ROOT / "pipeline" / "cache"
 
 SEASONS = [f"{y}-{str(y + 1)[-2:]}" for y in range(1996, 2026)]
-
-
-def norm_name(name: str) -> str:
-    s = unicodedata.normalize("NFD", name)
-    s = "".join(c for c in s if not unicodedata.combining(c))
-    s = re.sub(r"[.'’-]", "", s.lower())
-    s = re.sub(r"\s+(jr|sr|ii|iii|iv|v)$", "", s.strip())
-    return re.sub(r"\s+", " ", s)
 
 
 def cache_path(season: str) -> Path:

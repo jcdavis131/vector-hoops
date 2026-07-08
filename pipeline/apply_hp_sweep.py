@@ -39,6 +39,12 @@ def train_cmd(cfg: dict, *, epochs: int, seed: int, val_every: int) -> list[str]
     ]
     if cfg.get("batch") is not None:
         cmd.extend(["--batch", str(cfg["batch"])])
+    if cfg.get("tower_width") is not None:
+        cmd.extend(["--tower-width", str(cfg["tower_width"])])
+    if cfg.get("tower_hidden") is not None:
+        cmd.extend(["--tower-hidden", str(cfg["tower_hidden"])])
+    if cfg.get("skill_hidden") is not None:
+        cmd.extend(["--skill-hidden", str(cfg["skill_hidden"])])
     if "warmup_pct" in cfg:
         cmd.extend(["--warmup-pct", str(cfg["warmup_pct"])])
     if "anneal_strategy" in cfg:
@@ -51,6 +57,9 @@ def train_cmd(cfg: dict, *, epochs: int, seed: int, val_every: int) -> list[str]
         cmd.extend(["--nce-player-weight", str(cfg["nce_player_weight"])])
     if cfg.get("nce_arch_weight") is not None:
         cmd.extend(["--nce-arch-weight", str(cfg["nce_arch_weight"])])
+    for key, val in cfg.items():
+        if key.startswith("w_") and val is not None:
+            cmd.extend([f"--{key.replace('_', '-')}", str(val)])
     cmd.extend(["--checkpoint-metric", str(cfg.get("checkpoint_metric", "composite"))])
     return cmd
 

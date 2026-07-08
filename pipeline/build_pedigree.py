@@ -43,9 +43,13 @@ import argparse
 import json
 import math
 import re
+import sys
 import time
 import unicodedata
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from name_utils import norm_name
 
 ROOT = Path(__file__).resolve().parents[1]
 VECTORS = ROOT / "assets" / "vectors.json"
@@ -65,15 +69,6 @@ EXPECT_ANCHORS = [
 ]
 EXPECT_ROUND2 = 0.10
 EXPECT_UNDRAFTED = 0.06
-
-
-def norm_name(name: str) -> str:
-    """Same accent-folding norm as fetch_draft_history.py (join contract)."""
-    s = unicodedata.normalize("NFD", name)
-    s = "".join(c for c in s if not unicodedata.combining(c))
-    s = re.sub(r"[.'’-]", "", s.lower())
-    s = re.sub(r"\s+(jr|sr|ii|iii|iv|v)$", "", s.strip())
-    return re.sub(r"\s+", " ", s)
 
 
 def expect_slot(overall: int) -> float:

@@ -25,6 +25,8 @@ import statistics
 from collections import defaultdict
 from pathlib import Path
 
+from name_utils import canonical_name
+
 HERE = Path(__file__).resolve().parent
 DATA = HERE / "data"
 ASSETS = HERE.parent / "assets"
@@ -58,11 +60,12 @@ def load_team_rosters(season: str) -> dict[int, list[dict]]:
         if not line.strip():
             continue
         g = json.loads(line)
-        if not g.get("MIN"):
+        if not g.get("MIN") or not g.get("PLAYER_NAME"):
             continue
         key = (g["TEAM_ID"], g["PLAYER_NAME"])
+        cname = canonical_name(g["PLAYER_NAME"])
         rec = by_key.setdefault(key, {
-            "name": g["PLAYER_NAME"], "team_id": g["TEAM_ID"],
+            "name": cname, "team_id": g["TEAM_ID"],
             "team": g["TEAM_ABBREVIATION"], "min": 0.0,
         })
         rec["min"] += g["MIN"]

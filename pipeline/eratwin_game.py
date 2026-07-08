@@ -1,13 +1,12 @@
-"""ERA TWIN game artifact. Same math as the dossier era-twins (chained
-Procrustes root frame), packaged for play. Method (stated):
+"""ERA TWIN game artifact. Packaged for play in the promoted MTNN embedding
+space (same 48-d vectors as Chimera scoring), index-aligned with
+vectors.json.
 
-- Every charted career's signature season mapped to the 1996-97 root
-  frame (v_root = chain[season] @ v — orientation as verified in
-  build_wiki).
-- For each QUIZ-ELIGIBLE player (signature season >=2000 minutes-proxy:
-  we use careers with >=4 charted seasons for name recognition), the
-  TWIN = nearest other-decade player by root-frame cosine, plus the
-  top-5 candidates (for warmth feedback).
+- For each QUIZ-ELIGIBLE player (career with >=4 charted seasons), the
+  signature season (max |v| norm, same convention as build_wiki) maps to
+  its MTNN row by player-season id.
+- TWIN = nearest other-decade career by MTNN cosine, plus top-5 candidates
+  (for warmth feedback).
 - eratwins.json: {method, players:[{name, season, decade, archetype,
   twin:{name,season,decade,similarity}, top5:[{name,season,sim}]}]}.
 """
@@ -30,29 +29,39 @@ def decade_of(season: str) -> str:
     return f"{y // 10 * 10}s"
 
 
+def load_mtnn_embeddings() -> np.ndarray:
+    meta = json.loads((ASSETS / "mtnn_meta.json").read_text(encoding="utf-8"))
+    dim = int(meta["dim"])
+    rows = int(meta["rows"])
+    f32 = ASSETS / "mtnn_embeddings.f32"
+    if not f32.exists():
+        raise SystemExit(f"missing {f32} — run export_mtnn_embeddings.py")
+    E = np.fromfile(f32, dtype=np.float32)
+    if E.size != rows * dim:
+        raise SystemExit(f"mtnn f32 size {E.size} != {rows}×{dim}")
+    return E.reshape(rows, dim)
+
+
 def main() -> None:
     data = json.loads((ASSETS / "vectors.json").read_text(encoding="utf-8"))
-    drift = json.loads((ASSETS / "drift.json").read_text(encoding="utf-8"))
-    chain = {s: np.array(m) for s, m in drift["chainedToRoot"].items()}
+    E = load_mtnn_embeddings()
     clusters = data["clusters"]
 
     careers = defaultdict(list)
     for p in data["players"]:
         careers[p["name"]].append(p)
 
-    # signature season = max |v| (same convention as build_wiki)
     sigs = {}
     for name, rows in careers.items():
         sig = max(rows, key=lambda r: float(np.linalg.norm(r["v"])))
         sigs[name] = sig
 
-    roots = {name: chain[sig["season"]] @ np.array(sig["v"])
-             for name, sig in sigs.items()}
-    names = list(roots)
-    M = np.stack([roots[n] for n in names])
-    norms = np.linalg.norm(M, axis=1)
-    norms[norms == 0] = 1
-    Mn = M / norms[:, None]
+    names = list(sigs)
+    ids = [sigs[n]["id"] for n in names]
+    if max(ids) >= E.shape[0]:
+        raise SystemExit("vectors.json id exceeds MTNN row count — re-export embeddings")
+
+    Mn = E[ids]  # already L2-normalized at export
 
     eligible = [n for n in names if len(careers[n]) >= MIN_SEASONS]
     out = []
@@ -87,12 +96,12 @@ def main() -> None:
         })
 
     (ASSETS / "eratwins.json").write_text(json.dumps({
-        "method": ("signature seasons mapped to the 1996-97 root frame "
-                   "via chained Procrustes transforms; twin = nearest "
-                   "OTHER-DECADE player by root-frame cosine; quiz pool "
-                   "= careers with >=4 charted seasons; top-5 candidates "
-                   "shipped for warmth feedback; similarity shown so "
-                   "thin matches can be weighed"),
+        "method": ("signature seasons matched in the promoted MTNN embedding "
+                   "(48-d, L2-normalized, index-aligned with vectors.json); "
+                   "twin = nearest OTHER-DECADE career by embedding cosine; "
+                   "quiz pool = careers with >=4 charted seasons; top-5 "
+                   "candidates shipped for warmth feedback; similarity shown "
+                   "so thin matches can be weighed"),
         "players": out,
     }, separators=(",", ":")), encoding="utf-8")
     print(f"{len(out)} quiz-eligible players with era twins")

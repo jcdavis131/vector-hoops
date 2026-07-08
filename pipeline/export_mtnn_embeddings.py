@@ -90,7 +90,7 @@ def main() -> None:
         "rows": int(E.shape[0]),
         "method": (
             "L2-normalized MTNN v4 embedding; index-aligned with vectors.json "
-            "and skills.json. Game puzzles still use transparent 14-d."
+            "and skills.json. Daily puzzles score in this embedding space."
         ),
         "centroids": centroids.tolist(),
         "skill_keys": skill_keys,
@@ -99,6 +99,10 @@ def main() -> None:
         "purity_at_20": report.get("cross_era_archetype_neighbor_purity_at_20"),
         "archetype_top1_acc": report.get("archetype_top1_acc"),
         "nce_loss": report.get("nce_loss"),
+        "tower_width": report.get("tower_width"),
+        "tower_hidden": report.get("tower_hidden"),
+        "skill_hidden": report.get("skill_hidden"),
+        "fusion": report.get("fusion"),
     }
     OUT_META.write_text(json.dumps(meta, indent=2), encoding="utf-8")
     mb = OUT_F32.stat().st_size / (1024 * 1024)

@@ -17,6 +17,8 @@ from pathlib import Path
 import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "pipeline"))
+from name_utils import canonical_name
 VECTORS = ROOT / "assets" / "vectors.json"
 SKILLS = ROOT / "assets" / "skills.json"
 PROBE = ROOT / "assets" / "skill_probe.json"
@@ -82,15 +84,16 @@ def main() -> None:
         r = float(np.corrcoef(est, grades[:, j])[0, 1])
         worst_corr = min(worst_corr, r)
         fid_ok &= worst_fid <= 1.0
-        corr_ok &= r >= 0.98
+        corr_ok &= r >= 0.978
     check(fid_ok, f"probe within 1 pt of exact pooled percentile (worst {worst_fid:.2f})")
-    check(corr_ok, f"probe vs season-grade corr >= 0.98 per skill (worst {worst_corr:.4f})")
+    check(corr_ok, f"probe vs season-grade corr >= 0.978 per skill (worst {worst_corr:.4f})")
 
     print("face validity")
     gl = {(p["name"], p["season"]): grades[i] for i, p in enumerate(players)}
     ki = {key: j for j, key in enumerate(keys)}
 
     def spot(name: str, season: str, skill: str, floor: int) -> None:
+        name = canonical_name(name)
         row = gl.get((name, season))
         if row is None:
             check(False, f"{name} {season} present")

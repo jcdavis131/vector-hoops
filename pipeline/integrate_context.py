@@ -23,6 +23,9 @@ from pathlib import Path
 import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "pipeline"))
+from name_utils import norm_name  # noqa: E402
+
 DATA_DIR = ROOT / "pipeline" / "data"
 CACHE_DIR = ROOT / "pipeline" / "cache"
 
@@ -110,13 +113,6 @@ V4_FEATURES: dict[str, str] = {
 
 PO_FEATURES = [f for f, fam in V4_FEATURES.items() if fam == "playoffs"]
 GK_FEATURES = [f for f, fam in V4_FEATURES.items() if fam == "game_ratings"]
-
-
-def norm_name(name: str) -> str:
-    s = name.lower()
-    s = re.sub(r"[.'’-]", "", s)
-    s = re.sub(r"\s+(jr|sr|ii|iii|iv|v)$", "", s.strip())
-    return re.sub(r"\s+", " ", s)
 
 
 def load_train_bundle():

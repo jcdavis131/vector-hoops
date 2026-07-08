@@ -71,6 +71,7 @@ DEFAULT_LOSS_WEIGHTS: dict[str, float] = {
     "archetype": 0.25,
     "position": 0.15,
     "profile": 0.12,
+    "next_profile": 0.08,
     "skills": 0.18,
     "salary": 0.12,
     "team_fit": 0.08,
@@ -149,6 +150,14 @@ def adjacent_season_pairs(pids, seasons, names=None) -> list[tuple[int, int]]:
             if y2 - y1 == 1:
                 pairs.append((i1, i2))
     return pairs
+
+
+def next_season_index(n_rows: int, pairs: np.ndarray) -> np.ndarray:
+    """Row -> next-season row index (or -1 when unavailable)."""
+    nxt = np.full(n_rows, -1, dtype=np.int64)
+    for i1, i2 in pairs:
+        nxt[int(i1)] = int(i2)
+    return nxt
 
 
 def game_feature_cols(manifest) -> list[int]:
@@ -291,9 +300,11 @@ class MTNN(nn.Module):
         fam_dims: dict[str, int],
         n_seasons: int,
         d_tower: int = 24,
+        d_tower_hidden: int = 96,
         d_emb: int = 48,
         n_game: int = 14,
         n_skills: int = 0,
+        d_skill_hidden: int = 16,
         n_form: int = 0,
         n_bbref: int = 0,
         fusion_mode: str = "gated",
@@ -302,13 +313,19 @@ class MTNN(nn.Module):
         self.families = sorted(fam_dims)
         self.fusion_mode = fusion_mode
         self.towers = nn.ModuleDict({
-            fam: ResidualTower(fam_dims[fam], d_tower) for fam in self.families
+            fam: ResidualTower(
+                fam_dims[fam],
+                d_out=d_tower,
+                d_hidden=d_tower_hidden,
+            )
+            for fam in self.families
         })
         fusion_cls = ConcatFusion if fusion_mode == "concat" else GatedFusion
         self.fusion = fusion_cls(len(self.families), d_tower, n_seasons, d_emb=d_emb)
         self.archetype_head = nn.Linear(d_emb, N_ARCHETYPES)
         self.position_head = nn.Linear(d_emb, len(POSITIONS))
         self.profile_head = nn.Linear(d_emb, n_game)
+        self.next_profile_head = nn.Linear(d_emb, n_game)
         self.salary_head = nn.Linear(d_emb, 1)
         self.team_fit_head = nn.Linear(d_emb, 1)
         self.roster_lift_head = nn.Linear(d_emb, 1)
@@ -319,7 +336,10 @@ class MTNN(nn.Module):
         self.pedigree_head = nn.Linear(d_emb, 1)
         self.playoff_head = nn.Linear(d_emb, 1)
         self.honors_head = nn.Linear(d_emb, 1)
-        self.skill_towers = SkillTowers(d_emb, n_skills) if n_skills else None
+        self.skill_towers = (
+            SkillTowers(d_emb, n_skills, d_hidden=d_skill_hidden)
+            if n_skills else None
+        )
 
     def encode(self, xs, ms, season_ids):
         parts = torch.stack(
@@ -332,6 +352,7 @@ class MTNN(nn.Module):
             "archetype": self.archetype_head(emb),
             "position": self.position_head(emb),
             "profile": self.profile_head(emb),
+            "next_profile": self.next_profile_head(emb),
             "salary": self.salary_head(emb).squeeze(-1),
             "team_fit": self.team_fit_head(emb).squeeze(-1),
             "roster_lift": self.roster_lift_head(emb).squeeze(-1),
@@ -712,6 +733,47 @@ def skill_neighbor_consistency(E: np.ndarray, grades: np.ndarray,
     return round(float(np.mean(gaps)), 2)
 
 
+def next_profile_holdout_metrics(
+    pred: np.ndarray,
+    target: np.ndarray,
+    next_idx: np.ndarray,
+    seasons: np.ndarray,
+    feature_names: list[str],
+) -> dict:
+    """Held-out next-season stats quality on z-scored game features."""
+    out: dict = {}
+    target_split = np.full(len(next_idx), "", dtype=object)
+    valid = next_idx >= 0
+    if valid.any():
+        target_split[valid] = np.array([eval_split(str(s)) for s in seasons[next_idx[valid]]])
+    for split in ("val", "test"):
+        rows = np.where(valid & (target_split == split))[0]
+        if len(rows) == 0:
+            out[split] = None
+            continue
+        y = target[next_idx[rows]]
+        p = pred[rows]
+        resid = y - p
+        mse = float((resid ** 2).mean())
+        rmse = float(np.sqrt(mse))
+        mae = float(np.abs(resid).mean())
+        ss_tot = float(((y - y.mean(axis=0, keepdims=True)) ** 2).sum())
+        r2 = 1.0 - float((resid ** 2).sum()) / max(ss_tot, 1e-9)
+        per_mae = np.abs(resid).mean(axis=0)
+        top = np.argsort(-per_mae)[:5]
+        out[split] = {
+            "rows": int(len(rows)),
+            "mae_z": round(mae, 4),
+            "rmse_z": round(rmse, 4),
+            "r2": round(r2, 4),
+            "worst_features_mae_z": [
+                {"feature": feature_names[j], "mae_z": round(float(per_mae[j]), 4)}
+                for j in top
+            ],
+        }
+    return out
+
+
 # ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
@@ -720,6 +782,12 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--epochs", type=int, default=40)
     ap.add_argument("--dim", type=int, default=48)
+    ap.add_argument("--tower-width", type=int, default=24,
+                    help="per-family tower output width before fusion")
+    ap.add_argument("--tower-hidden", type=int, default=96,
+                    help="per-family tower hidden width")
+    ap.add_argument("--skill-hidden", type=int, default=16,
+                    help="per-skill mini-tower hidden width")
     ap.add_argument("--batch", type=int, default=512)
     ap.add_argument("--lr", type=float, default=1.5e-3)
     ap.add_argument("--seed", type=int, default=7)
@@ -862,9 +930,12 @@ def main() -> None:
     model = MTNN(
         {f: len(c) for f, c in fams.items()},
         n_seasons,
+        d_tower=args.tower_width,
+        d_tower_hidden=args.tower_hidden,
         d_emb=args.dim,
         n_game=len(game_cols),
         n_skills=len(skill_keys),
+        d_skill_hidden=args.skill_hidden,
         n_form=len(form_cols) if form_cols else 0,
         n_bbref=len(bbref_cols) if bbref_cols else 0,
         fusion_mode=args.fusion,
@@ -884,10 +955,15 @@ def main() -> None:
     )
     print(f"lr schedule: {args.lr_schedule} ({sched_mode}-level), "
           f"steps/epoch={steps_per_epoch}, total_steps={total_steps}, "
-          f"fusion={args.fusion}, nce_loss={args.nce_loss}")
+          f"fusion={args.fusion}, nce_loss={args.nce_loss}, "
+          f"tower={args.tower_width}/{args.tower_hidden}, "
+          f"skill_hidden={args.skill_hidden}")
 
     pair_arr = np.array(pairs) if pairs else np.zeros((0, 2), int)
     val_pairs = filter_pairs_by_split(pair_arr, seasons, "val")
+    next_idx_arr = next_season_index(n, pair_arr)
+    next_row_count = int((next_idx_arr >= 0).sum())
+    print(f"next-season stats labels: {next_row_count}/{n} rows")
     lookup: dict[int, int] = {}
     if len(pair_arr):
         lookup = {int(a): int(b) for a, b in pair_arr}
@@ -939,6 +1015,15 @@ def main() -> None:
                     out_a["position"][pos_mask[idx_t]], pos_t[idx_t][pos_mask[idx_t]])
             loss = loss + weights["profile"] * F.mse_loss(
                 out_a["profile"], game_z[idx_t])
+            next_batch = next_idx_arr[idx]
+            next_valid = next_batch >= 0
+            if next_valid.any():
+                next_t = torch.tensor(next_batch[next_valid], device=device)
+                next_valid_t = torch.tensor(next_valid, device=device, dtype=torch.bool)
+                pred_next = out_a["next_profile"][next_valid_t]
+                # Target is next-season z-scored game profile (same 14-d contract).
+                loss = loss + weights["next_profile"] * F.smooth_l1_loss(
+                    pred_next, game_z[next_t])
             if "skills" in out_a:
                 wm = skillm_t[idx_t]
                 if wm.sum() > 0:
@@ -1082,6 +1167,8 @@ def main() -> None:
     pos_logits = heads["position"].cpu().numpy().astype(np.float32)
     skill_pred = (heads["skills"].cpu().numpy().astype(np.float32)
                   if "skills" in heads else np.zeros((len(E), 0), np.float32))
+    next_profile_pred = heads["next_profile"].cpu().numpy().astype(np.float32)
+    game_feature_keys = np.array([manifest["features"][j] for j in game_cols])
 
     np.savez_compressed(
         DATA_DIR / "embedding_v3.npz",
@@ -1089,6 +1176,8 @@ def main() -> None:
         cluster=clusters, position=positions,
         archetype_logits=arch_logits, position_logits=pos_logits,
         skill_pred=skill_pred, skill_keys=np.array(skill_keys),
+        next_profile_pred=next_profile_pred,
+        game_feature_keys=game_feature_keys,
     )
 
     centroids = np.zeros((N_ARCHETYPES, E.shape[1]), dtype=np.float32)
@@ -1147,6 +1236,13 @@ def main() -> None:
             "neighbor_consistency_pts_transparent_14d": skill_neighbor_consistency(
                 G_base, skill_g, skill_row_mask),
         }
+    next_profile_report = next_profile_holdout_metrics(
+        next_profile_pred,
+        Z[:, game_cols],
+        next_idx_arr,
+        seasons,
+        [manifest["features"][j] for j in game_cols],
+    )
     held_out = {}
     for split in ("train", "val", "test", "all"):
         sub = pair_arr if split == "all" else filter_pairs_by_split(pair_arr, seasons, split)
@@ -1163,6 +1259,9 @@ def main() -> None:
         "best_epoch": best_epoch if best_epoch >= 0 else None,
         "best_val_recall_at_10": best_val_recall,
         "dim": args.dim,
+        "tower_width": args.tower_width,
+        "tower_hidden": args.tower_hidden,
+        "skill_hidden": args.skill_hidden,
         "lr": args.lr,
         "lr_schedule": args.lr_schedule,
         "warmup_pct": args.warmup_pct,
@@ -1191,6 +1290,8 @@ def main() -> None:
         "position_top1_acc": pos_acc,
         "cross_era_archetype_neighbor_purity_at_20": purity,
         "skills": skills_report,
+        "next_profile": next_profile_report,
+        "next_profile_labeled_rows": next_row_count,
         "team_fit": team_fit_report,
         "roster_lift": roster_lift_report,
         "career_slope": career_slope_report,

@@ -62,7 +62,7 @@ def main() -> None:
 
     # Legendary playoff RISERS — PO_PTS_DELTA must be positive
     for name, season in [("Kawhi Leonard", "2018-19"), ("Jamal Murray", "2022-23"),
-                         ("Kevin Durant", "2016-17"), ("Nikola Jokić", "2022-23")]:
+                         ("Kevin Durant", "2016-17"), ("Nikola Jokic", "2022-23")]:
         v = field(name, season, "PO_PTS_DELTA")
         check(v is not None and v > 0, f"{name} {season} riser (PO_PTS_DELTA {v} > 0)")
 

@@ -29,6 +29,8 @@ Data sources (each cached under pipeline/cache/, resumable):
      Salary becomes log-salary z-scored within season + a mask column.
 
 Cleaning applied (all guaranteed, audited by end-of-build assertions):
+  - player-season eligibility: schedule-aware GP + total minutes (see
+    pipeline/eligibility.py) — drops small-sample per-100 outliers
   - dedupe on (PLAYER_ID, season) keeping the row with most minutes
   - NaN/None -> season mean (z = 0) with per-feature missing masks
   - empirical-Bayes shrinkage of FG3_PCT / FT_PCT / FG_PCT toward the
@@ -55,6 +57,16 @@ from pathlib import Path
 
 import numpy as np
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from eligibility import (
+    DEFAULT_MIN_GP,
+    DEFAULT_MIN_TOTAL_MINUTES,
+    gates_for_season,
+    season_eligible as check_eligible,
+)
+from nba_http import fetch_stats_json, legacy_result_set_rows, patch_nba_api_session
+from name_utils import canonical_name, norm_name
+
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "assets" / "vectors.json"
 CACHE = ROOT / "pipeline" / "cache"
@@ -62,7 +74,7 @@ DATA_DIR = ROOT / "pipeline" / "data"
 
 SEASONS = [f"{y}-{str(y + 1)[-2:]}" for y in range(1996, 2026)]
 TRACKING_FIRST_SEASON = "2013-14"
-MIN_MINUTES = 800  # a real rotation season
+# Eligibility gates live in pipeline/eligibility.py (schedule-aware GP + minutes).
 
 # ---------------------------------------------------------------------------
 # Feature groups. GAME_FEATURES is the frozen 14-dim game contract
@@ -156,9 +168,14 @@ def load_cached(tag: str, season: str):
         p = cache_path(t, season)
         if p.exists():
             try:
-                return json.loads(p.read_text(encoding="utf-8"))
+                data = json.loads(p.read_text(encoding="utf-8"))
             except Exception:
                 return None
+            # Legacy base_*.json caches are name-keyed dicts without MIN/GP;
+            # treat as a miss so online runs refetch dashbase_* rows.
+            if tag.startswith("dash") and isinstance(data, dict):
+                return None
+            return data
     return None
 
 
@@ -182,11 +199,23 @@ def with_retries(fn, what: str, attempts: int = 5):
     return None
 
 
+def canonicalize_player_rows(rows: list[dict] | None) -> list[dict] | None:
+    if not rows:
+        return rows
+    for r in rows:
+        if r.get("PLAYER_NAME"):
+            r["PLAYER_NAME"] = canonical_name(str(r["PLAYER_NAME"]))
+    return rows
+
+
 def df_to_rows(df, id_col: str, wanted: list[str]) -> tuple[list[dict], list[str]]:
     present = [c for c in wanted if c in df.columns]
     rows = []
     for _, x in df.iterrows():
-        row = {"PLAYER_ID": int(x[id_col]), "PLAYER_NAME": str(x.get("PLAYER_NAME", ""))}
+        row = {
+            "PLAYER_ID": int(x[id_col]),
+            "PLAYER_NAME": canonical_name(str(x.get("PLAYER_NAME", ""))),
+        }
         for c in present:
             v = x[c]
             row[c] = None if v is None or (isinstance(v, float) and math.isnan(v)) else float(v)
@@ -198,7 +227,7 @@ def fetch_dash(season: str, measure: str, wanted: list[str], offline: bool):
     tag = f"dash{measure.lower()}"
     cached = load_cached(tag, season)
     if cached is not None:
-        return cached
+        return canonicalize_player_rows(cached)
     if offline:
         return None
     from nba_api.stats.endpoints import leaguedashplayerstats
@@ -214,6 +243,7 @@ def fetch_dash(season: str, measure: str, wanted: list[str], offline: bool):
 
     rows = with_retries(call, f"{season} {measure}")
     if rows is not None:
+        canonicalize_player_rows(rows)
         save_cache(tag, season, rows)
         time.sleep(1.2)
     return rows
@@ -222,19 +252,42 @@ def fetch_dash(season: str, measure: str, wanted: list[str], offline: bool):
 def fetch_bio(season: str, offline: bool):
     cached = load_cached("bio", season)
     if cached is not None:
-        return cached
+        return canonicalize_player_rows(cached)
     if offline:
         return None
-    from nba_api.stats.endpoints import leaguedashplayerbiostats
 
     def call():
-        r = leaguedashplayerbiostats.LeagueDashPlayerBioStats(season=season, timeout=75)
-        df = r.get_data_frames()[0]
-        # DRAFT_NUMBER arrives as str ('Undrafted'); coerce
-        if "DRAFT_NUMBER" in df.columns:
-            df["DRAFT_NUMBER"] = df["DRAFT_NUMBER"].apply(
-                lambda v: float(v) if str(v).isdigit() else 61.0)
-        rows, _ = df_to_rows(df, "PLAYER_ID", BIO_COLS)
+        payload = fetch_stats_json(
+            "leaguedashplayerbiostats",
+            {
+                "LeagueID": "00",
+                "Season": season,
+                "SeasonType": "Regular Season",
+            },
+            timeout=90,
+        )
+        raw = legacy_result_set_rows(payload)
+        rows = []
+        for raw_row in raw:
+            row = {
+                "PLAYER_ID": int(raw_row["PLAYER_ID"]),
+                "PLAYER_NAME": canonical_name(str(raw_row.get("PLAYER_NAME", ""))),
+            }
+            for c in BIO_COLS:
+                if c not in raw_row:
+                    continue
+                v = raw_row[c]
+                if c == "DRAFT_NUMBER":
+                    row[c] = float(v) if str(v).isdigit() else 61.0
+                elif v is None:
+                    row[c] = None
+                else:
+                    try:
+                        fv = float(v)
+                        row[c] = None if math.isnan(fv) else fv
+                    except (TypeError, ValueError):
+                        row[c] = None
+            rows.append(row)
         return rows
 
     rows = with_retries(call, f"{season} bio")
@@ -338,13 +391,6 @@ def compute_form_features(season: str) -> dict[str, dict]:
 # ---------------------------------------------------------------------------
 # Salary sources
 # ---------------------------------------------------------------------------
-
-def norm_name(name: str) -> str:
-    s = name.lower()
-    s = re.sub(r"[.'’-]", "", s)
-    s = re.sub(r"\s+(jr|sr|ii|iii|iv|v)$", "", s.strip())
-    return re.sub(r"\s+", " ", s)
-
 
 def load_salary_history() -> dict[tuple[str, str], float]:
     """Full-history salaries: prefers merge_salaries output, else raw CSV.
@@ -465,7 +511,20 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--offline", action="store_true",
                     help="rebuild from pipeline/cache only; no network")
+    ap.add_argument("--fixed-gates", action="store_true",
+                    help="use fixed --min-gp/--min-minutes instead of schedule-aware")
+    ap.add_argument("--min-gp", type=int, default=None,
+                    help="fixed minimum GP (requires --fixed-gates)")
+    ap.add_argument("--min-minutes", type=int, default=None,
+                    help="fixed minimum total minutes GP*MIN (requires --fixed-gates)")
     args = ap.parse_args()
+    schedule_aware = not args.fixed_gates
+
+    if patch_nba_api_session():
+        print("nba_http: nba_api routed through curl_cffi")
+    else:
+        print("WARNING: curl_cffi not installed — pip install curl_cffi "
+              "(stats.nba.com often times out without it)")
 
     salary_hist = load_salary_history()
     salary_bbref = fetch_bbref_contracts(args.offline)
@@ -489,15 +548,30 @@ def main() -> None:
                for r in (fetch_bio(season, args.offline) or [])}
         trk = fetch_tracking(season, args.offline) or {}
         form = compute_form_features(season)
+        gate = gates_for_season(season, schedule_aware=schedule_aware)
+        if schedule_aware:
+            min_gp = gate["min_gp"]
+            min_minutes = gate["min_total_minutes"]
+        else:
+            min_gp = args.min_gp if args.min_gp is not None else DEFAULT_MIN_GP
+            min_minutes = (args.min_minutes if args.min_minutes is not None
+                           else DEFAULT_MIN_TOTAL_MINUTES)
 
         n_kept = 0
         for r in base:
-            minutes = (r.get("MIN") or 0) * (r.get("GP") or 0)
-            if minutes < MIN_MINUTES:
+            gp = r.get("GP") or 0
+            mpg = r.get("MIN") or 0
+            if not check_eligible(gp, mpg, season=season, min_gp=min_gp,
+                                  min_total_minutes=min_minutes,
+                                  schedule_aware=False):
                 continue
+            total_min = float(gp) * float(mpg)
             pid = str(r["PLAYER_ID"])
             row = dict(r)
             row["season"] = season
+            row["_gp"] = int(gp)
+            row["_mpg"] = float(mpg)
+            row["_total_min"] = total_min
             for src, name in ((adv, "advanced"), (sco, "scoring"), (bio, "bio")):
                 extra = src.get(pid, {})
                 for k, v in extra.items():
@@ -517,7 +591,7 @@ def main() -> None:
             all_rows.append(row)
             n_kept += 1
         fetched.append(season)
-        print(f"{season}: {n_kept} qualified player-seasons")
+        print(f"{season}: {n_kept} qualified (gp>={min_gp}, min>={min_minutes})")
 
     if not all_rows:
         raise SystemExit("no data available (network throttled and no cache) "
@@ -603,6 +677,8 @@ def main() -> None:
         p = {
             "id": i,
             "name": r["PLAYER_NAME"], "season": r["season"],
+            "gp": r["_gp"], "mpg": round(r["_mpg"], 1),
+            "total_min": round(r["_total_min"]),
             "v": [round(float(z), 3) for z in Zg[i]],
             "x": round(float(P[i, 0]), 4), "y": round(float(P[i, 1]), 4),
             "z": round(float(P[i, 2]), 4),
@@ -617,6 +693,15 @@ def main() -> None:
         "built": time.strftime("%Y-%m-%d"),
         "seasons": [SEASONS[0], SEASONS[-1]],
         "normalization": "per-100 possessions, z-scored within season (era-honest)",
+        "eligibility": {
+            "schedule_aware": schedule_aware,
+            "method": ("15% of season GP (clamp 10–15) + 6% of 48mpg schedule "
+                       "total minutes (floor 450)"),
+            "min_gp": args.min_gp,
+            "min_total_minutes": args.min_minutes,
+            "sample_gates": {s: gates_for_season(s, schedule_aware=schedule_aware)
+                             for s in ("1998-99", "2011-12", "2023-24")},
+        },
         "features": GAME_FEATURES, "featureLabels": LABELS,
         "clusters": cluster_names,
         "players": players,
@@ -635,6 +720,11 @@ def main() -> None:
     manifest = {
         "built": time.strftime("%Y-%m-%d"),
         "n_players": n,
+        "eligibility": {
+            "schedule_aware": schedule_aware,
+            "sample_gates": {s: gates_for_season(s, schedule_aware=schedule_aware)
+                             for s in ("1998-99", "2011-12", "2023-24")},
+        },
         "features": wide_features,
         "families": {f: FAMILY_OF.get(f, "efficiency") for f in wide_features},
         "game_features": GAME_FEATURES,

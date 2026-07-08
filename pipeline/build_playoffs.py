@@ -43,6 +43,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "pipeline"))
 from nba_http import real_playoff_cache_paths
+from name_utils import norm_name
 
 VECTORS = ROOT / "assets" / "vectors.json"
 CACHE_DIR = ROOT / "pipeline" / "cache"
@@ -87,16 +88,6 @@ def load_caches(use_fixture: bool) -> tuple[dict, dict, bool]:
         for tid, rec in recs.items():
             teams[(season, str(tid))] = rec
     return players, teams, complete
-
-
-def norm_name(name: str) -> str:
-    import re
-    import unicodedata
-    s = unicodedata.normalize("NFD", name)
-    s = "".join(c for c in s if not unicodedata.combining(c))
-    s = re.sub(r"[.'’-]", "", s.lower())
-    s = re.sub(r"\s+(jr|sr|ii|iii|iv|v)$", "", s.strip())
-    return re.sub(r"\s+", " ", s)
 
 
 def delta(a, b):

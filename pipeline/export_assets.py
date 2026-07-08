@@ -41,11 +41,19 @@ CLIENT_ASSETS = [
     "playoffs.json",
     "honors.json",
     "archetypes_time.json",
+    "archetype_assignments.json",
+    "archetype_emergence.json",
     "trajectories.json",
     "drift.json",
     "deadline.json",
     "chemistry.json",
     "pivots.json",
+    "current_rosters.json",
+    "projections.json",
+    "mtnn_arch.json",
+    "mtnn_map.json",
+    "mtnn_heads.f32",
+    "mtnn_inputs.f32",
     "eratwins.json",
     "faderfinisher.json",
     "roles.json",
@@ -138,6 +146,8 @@ def main() -> None:
         "test_game_ratings", [py, "pipeline/test_game_ratings.py"], required=False)
     steps_ok["player_meta"] = run(
         "build_player_meta", [py, "pipeline/build_player_meta.py"], required=False)
+    steps_ok["current_rosters"] = run(
+        "build_current_rosters", [py, "pipeline/build_current_rosters.py"], required=False)
 
     # Archetype / drift sidecars (idempotent; fast when vectors unchanged).
     for script in (
@@ -156,6 +166,13 @@ def main() -> None:
             required=False)
         steps_ok["mtnn_export_gates"] = run(
             "test_mtnn_export", [py, "pipeline/test_mtnn_export.py"], required=False)
+
+    emb_npz = ROOT / "pipeline" / "data" / "embedding_v3.npz"
+    if emb_npz.exists():
+        steps_ok["projections"] = run(
+            "project_next_season", [py, "pipeline/project_next_season.py"], required=False)
+        steps_ok["mtnn_viz"] = run(
+            "export_mtnn_viz", [py, "pipeline/export_mtnn_viz.py"], required=False)
 
     mtnn = None
     if REPORT.exists():
