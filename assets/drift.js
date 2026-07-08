@@ -12,6 +12,7 @@
   var DRIFT_URL = 'assets/drift.json';
   var ARCH_URL = 'assets/archetypes_time.json';
   var TRAJ_URL = 'assets/trajectories.json';
+  var EMERGENCE_URL = 'assets/archetype_emergence.json';
   var SVG_NS = 'http://www.w3.org/2000/svg';
 
   var ORANGE_HEX = '#eb6834';
@@ -39,7 +40,15 @@
     { to: '2004-05', label: 'Hand-check rules' },
     { to: '2011-12', label: 'Lockout' },
     { to: '2019-20', label: 'COVID bubble' },
-    { to: '2022-23', label: 'Scoring era' }
+    { to: '2021-22', label: 'Post-bubble spacing' }
+  ];
+
+  var ARCHETYPE_ERAS = [
+    { label: '1996–2003', lo: '1996-97', hi: '2002-03', fill: 'rgba(57,135,229,0.10)', stroke: '#3987e5' },
+    { label: '2003–2009', lo: '2003-04', hi: '2008-09', fill: 'rgba(25,158,112,0.10)', stroke: '#199e70' },
+    { label: '2009–2015', lo: '2009-10', hi: '2014-15', fill: 'rgba(201,133,0,0.10)', stroke: '#c98500' },
+    { label: '2015–2021', lo: '2015-16', hi: '2020-21', fill: 'rgba(144,133,233,0.10)', stroke: '#9085e9' },
+    { label: '2021–2026', lo: '2021-22', hi: '2025-26', fill: 'rgba(235,104,52,0.10)', stroke: '#eb6834' }
   ];
 
   function escapeHtml(s) {
@@ -59,14 +68,48 @@
     }).join(', ');
   }
 
-  function renderChart(host, pairs) {
+  function eraBandsForPairs(pairs, xOf, LEFT, W, RIGHT, n) {
+    var bands = [];
+    ARCHETYPE_ERAS.forEach(function (era) {
+      var idxs = [];
+      pairs.forEach(function (p, i) {
+        if (p.to >= era.lo && p.to <= era.hi) idxs.push(i);
+      });
+      if (!idxs.length) return;
+      var i0 = idxs[0], i1 = idxs[idxs.length - 1];
+      var x0 = i0 === 0 ? LEFT : (xOf(i0 - 1) + xOf(i0)) / 2;
+      var x1 = i1 === n - 1 ? W - RIGHT : (xOf(i1) + xOf(i1 + 1)) / 2;
+      bands.push({ era: era, x0: x0, x1: x1 });
+    });
+    return bands;
+  }
+
+  function biggestShiftRanks(biggestShifts) {
+    var map = {};
+    (biggestShifts || []).forEach(function (p, rank) {
+      map[p.to] = rank + 1;
+    });
+    return map;
+  }
+
+  function renderEraLegend(host) {
+    if (!host) return;
+    host.innerHTML = ARCHETYPE_ERAS.map(function (era) {
+      return '<li class="drift-era-legend__item">' +
+        '<span class="drift-era-legend__swatch" style="background:' + era.fill + ';border-color:' + era.stroke + '"></span>' +
+        '<span class="drift-era-legend__label">' + era.label + '</span></li>';
+    }).join('');
+  }
+
+  function renderChart(host, pairs, biggestShifts) {
     host.innerHTML = '';
     host.removeAttribute('aria-label');
 
-    var W = 880, LEFT = 46, RIGHT = 20, TOP = 46, BOT = 34;
-    var H = 340;
+    var W = 880, LEFT = 46, RIGHT = 20, TOP = 58, BOT = 34;
+    var H = 352;
     var plotW = W - LEFT - RIGHT, plotH = H - TOP - BOT;
     var n = pairs.length;
+    var shiftRank = biggestShiftRanks(biggestShifts);
 
     var maxVal = pairs.reduce(function (m, p) { return Math.max(m, p.rotationDeg); }, 0);
     var yMax = Math.max(15, Math.ceil((maxVal + 1) / 5) * 5);
@@ -81,7 +124,25 @@
       'font-family': getComputedStyle(document.body).fontFamily
     }, host);
 
-    // horizontal gridlines every 5 degrees, hairline; 0-line in ink
+    var bands = eraBandsForPairs(pairs, xOf, LEFT, W, RIGHT, n);
+    bands.forEach(function (band, bi) {
+      svgEl('rect', {
+        x: band.x0, y: TOP, width: band.x1 - band.x0, height: plotH,
+        fill: band.era.fill, stroke: 'none'
+      }, svg);
+      if (bi > 0) {
+        svgEl('line', {
+          x1: band.x0, y1: TOP, x2: band.x0, y2: TOP + plotH,
+          stroke: band.era.stroke, 'stroke-width': 1.5, 'stroke-dasharray': '4 3', opacity: 0.65
+        }, svg);
+      }
+      var cx = (band.x0 + band.x1) / 2;
+      svgEl('text', {
+        x: cx, y: 16, 'text-anchor': 'middle', 'font-size': 10,
+        'font-weight': 700, fill: band.era.stroke
+      }, svg).textContent = band.era.label;
+    });
+
     for (var g = 0; g <= yMax; g += 5) {
       var gy = yOf(g);
       svgEl('line', {
@@ -93,26 +154,41 @@
       }, svg).textContent = g + '°';
     }
 
-    // area fill under the line
     var areaD = 'M ' + xOf(0) + ' ' + yOf(0) + ' ';
     pairs.forEach(function (p, i) { areaD += 'L ' + xOf(i) + ' ' + yOf(p.rotationDeg) + ' '; });
     areaD += 'L ' + xOf(n - 1) + ' ' + yOf(0) + ' Z';
     svgEl('path', { d: areaD, fill: 'rgba(235, 104, 52, 0.12)', stroke: 'none' }, svg);
 
-    // the rotation line
     var lineD = pairs.map(function (p, i) { return xOf(i) + ',' + yOf(p.rotationDeg); }).join(' ');
     svgEl('polyline', { points: lineD, fill: 'none', stroke: ORANGE_HEX, 'stroke-width': 2 }, svg);
 
-    // points + native tooltips + selective x labels
     var xLabelStep = Math.max(1, Math.ceil(n / 10));
     pairs.forEach(function (p, i) {
       var cx = xOf(i), cy = yOf(p.rotationDeg);
-      var dot = svgEl('circle', { cx: cx, cy: cy, r: 3.5, fill: ORANGE_HEX }, svg);
+      var rank = shiftRank[p.to];
+      var r = rank ? 5 : 3.5;
+      var dot = svgEl('circle', {
+        cx: cx, cy: cy, r: r, fill: ORANGE_HEX, style: 'cursor:pointer'
+      }, svg);
+      dot.addEventListener('click', function () {
+        if (window.VHTrendsViz) window.VHTrendsViz.setPair(i);
+      });
       var title = document.createElementNS(SVG_NS, 'title');
       title.textContent = p.from + ' → ' + p.to + ': ' + p.rotationDeg + '° rotation, ' +
         p.sharedPlayers + ' shared players, residual ' + p.residual +
+        (rank ? ' (#' + rank + ' biggest shift)' : '') +
         '. Most-rotated features: ' + featureList(p.mostRotated) + '.';
       dot.appendChild(title);
+
+      if (rank) {
+        svgEl('circle', {
+          cx: cx, cy: cy, r: 9, fill: 'none', stroke: ORANGE_HEX, 'stroke-width': 2.5, opacity: 0.9
+        }, svg);
+        svgEl('text', {
+          x: cx, y: cy - 12, 'text-anchor': 'middle', 'font-size': 9,
+          'font-weight': 800, fill: ORANGE_HEX
+        }, svg).textContent = '#' + rank;
+      }
 
       if (i % xLabelStep === 0 || i === n - 1) {
         svgEl('text', {
@@ -121,14 +197,12 @@
       }
     });
 
-    // story annotations — small labeled markers, staggered into two rows
-    // so nearby spikes (e.g. 2019-20 / 2022-23) don't collide.
     ANNOTATIONS.forEach(function (a, ai) {
       var idx = -1;
       for (var i = 0; i < n; i++) { if (pairs[i].to === a.to) { idx = i; break; } }
       if (idx < 0) return;
       var cx = xOf(idx), cy = yOf(pairs[idx].rotationDeg);
-      var labelY = ai % 2 === 0 ? 12 : 26;
+      var labelY = ai % 2 === 0 ? 30 : 44;
       svgEl('line', {
         x1: cx, y1: cy - 6, x2: cx, y2: labelY + 6,
         stroke: BLUE_HEX, 'stroke-width': 1, 'stroke-dasharray': '2 2'
@@ -144,12 +218,16 @@
   function renderShiftsTable(table, shifts) {
     var tbody = table.querySelector('tbody');
     tbody.innerHTML = shifts.map(function (p) {
+      var interp = p.interpretation
+        ? '<td class="drift-interpret">' + escapeHtml(p.interpretation) + '</td>'
+        : '<td class="drift-interpret">—</td>';
       return '<tr>' +
         '<td>' + escapeHtml(p.from) + ' → ' + escapeHtml(p.to) + '</td>' +
         '<td>' + p.rotationDeg + '°</td>' +
         '<td>' + p.residual + '</td>' +
         '<td>' + p.sharedPlayers + '</td>' +
         '<td>' + escapeHtml(featureList(p.mostRotated)) + '</td>' +
+        interp +
         '</tr>';
     }).join('');
   }
@@ -165,6 +243,45 @@
 
   function pct1(v) { return (v * 100).toFixed(1) + '%'; }
 
+  function truncateName(name, max) {
+    var lim = max || 28;
+    if (!name || name.length <= lim) return name || '';
+    return name.slice(0, lim - 1) + '…';
+  }
+
+  function eraBandsForSeasons(seasons, xOf, LEFT, W, RIGHT, TOP, plotH, n) {
+    var bands = [];
+    ARCHETYPE_ERAS.forEach(function (era) {
+      var idxs = [];
+      seasons.forEach(function (s, i) {
+        if (s >= era.lo && s <= era.hi) idxs.push(i);
+      });
+      if (!idxs.length) return;
+      var i0 = idxs[0], i1 = idxs[idxs.length - 1];
+      var x0 = i0 === 0 ? LEFT : (xOf(i0 - 1) + xOf(i0)) / 2;
+      var x1 = i1 === n - 1 ? W - RIGHT : (xOf(i1) + xOf(i1 + 1)) / 2;
+      bands.push({ era: era, x0: x0, x1: x1 });
+    });
+    return bands;
+  }
+
+  function collapsedPathSegments(path) {
+    var segs = [];
+    (path || []).forEach(function (p) {
+      if (segs.length && segs[segs.length - 1].archetype === p.archetype) {
+        segs[segs.length - 1].count += 1;
+      } else {
+        segs.push({ archetype: p.archetype, count: 1 });
+      }
+    });
+    return segs;
+  }
+
+  function archIndex(name, names) {
+    var i = (names || []).indexOf(name);
+    return i >= 0 ? i : 0;
+  }
+
   // -------------------------------------------------------------------
   // The Archetype Eras (assets/archetypes_time.json): stream chart,
   // biggest-shifts table, five era panels with lineage.
@@ -179,19 +296,13 @@
     var n = prevalence.length;
     var K = names.length;
 
-    var W = 880, LEFT = 40, RIGHT = 16, TOP = 14, BOT = 34;
-    var H = 340;
+    var W = 880, LEFT = 40, RIGHT = 16, TOP = 42, BOT = 34;
+    var H = 352;
     var plotW = W - LEFT - RIGHT, plotH = H - TOP - BOT;
+    var seasons = prevalence.map(function (p) { return p.season; });
 
     function xOf(i) { return n <= 1 ? LEFT + plotW / 2 : LEFT + (i / (n - 1)) * plotW; }
     function yOf(v) { return TOP + (1 - v) * plotH; }
-
-    // cumulative share stack per season, bottom-to-top in archetype order
-    var cum = prevalence.map(function (p) {
-      var c = [], running = 0;
-      for (var k = 0; k < K; k++) { running += p.shares[k] || 0; c.push(running); }
-      return c;
-    });
 
     var svg = svgEl('svg', {
       viewBox: '0 0 ' + W + ' ' + H,
@@ -199,6 +310,31 @@
       'aria-label': 'Archetype share of the league, ' + prevalence[0].season + ' through ' + prevalence[n - 1].season,
       'font-family': getComputedStyle(document.body).fontFamily
     }, host);
+
+    var bands = eraBandsForSeasons(seasons, xOf, LEFT, W, RIGHT, TOP, plotH, n);
+    bands.forEach(function (band, bi) {
+      svgEl('rect', {
+        x: band.x0, y: TOP, width: band.x1 - band.x0, height: plotH,
+        fill: band.era.fill, stroke: 'none'
+      }, svg);
+      if (bi > 0) {
+        svgEl('line', {
+          x1: band.x0, y1: TOP, x2: band.x0, y2: TOP + plotH,
+          stroke: band.era.stroke, 'stroke-width': 1.5, 'stroke-dasharray': '4 3', opacity: 0.55
+        }, svg);
+      }
+      svgEl('text', {
+        x: (band.x0 + band.x1) / 2, y: 14, 'text-anchor': 'middle', 'font-size': 9,
+        'font-weight': 700, fill: band.era.stroke
+      }, svg).textContent = band.era.label;
+    });
+
+    // cumulative share stack per season, bottom-to-top in archetype order
+    var cum = prevalence.map(function (p) {
+      var c = [], running = 0;
+      for (var k = 0; k < K; k++) { running += p.shares[k] || 0; c.push(running); }
+      return c;
+    });
 
     // gridlines every 25%
     for (var g = 0; g <= 4; g++) {
@@ -260,48 +396,512 @@
     }
   }
 
-  function renderArchetypeShiftsTable(table, shifts) {
-    var tbody = table.querySelector('tbody');
-    tbody.innerHTML = shifts.map(function (s) {
+  function renderArchetypeShiftsChart(host, shifts) {
+    if (!host || !shifts || !shifts.length) return;
+    host.innerHTML = '';
+    var W = 420, LEFT = 8, RIGHT = 52, TOP = 8, BOT = 8;
+    var rowH = 26, gap = 6;
+    var H = TOP + shifts.length * (rowH + gap) + BOT;
+    var plotW = W - LEFT - RIGHT;
+    var maxAbs = shifts.reduce(function (m, s) { return Math.max(m, Math.abs(s.delta)); }, 0.01);
+    var midX = LEFT + plotW / 2;
+
+    var svg = svgEl('svg', {
+      viewBox: '0 0 ' + W + ' ' + H,
+      role: 'img',
+      'aria-label': 'Archetype share change, early five seasons vs late five',
+      'font-family': getComputedStyle(document.body).fontFamily
+    }, host);
+
+    svgEl('line', {
+      x1: midX, y1: TOP - 2, x2: midX, y2: H - BOT + 2,
+      stroke: HAIRLINE, 'stroke-width': 1
+    }, svg);
+
+    shifts.forEach(function (s, i) {
+      var y = TOP + i * (rowH + gap) + rowH / 2;
       var up = s.delta >= 0;
-      var deltaCls = 'archetype-delta ' + (up ? 'archetype-delta--up' : 'archetype-delta--down');
+      var barW = (Math.abs(s.delta) / maxAbs) * (plotW / 2 - 4);
+      var x = up ? midX : midX - barW;
+      var color = up ? HOT_HEX : COLD_HEX;
+      var bar = svgEl('rect', {
+        x: x, y: y - 8, width: barW, height: 16, fill: color, rx: 3, opacity: 0.9
+      }, svg);
       var deltaText = (up ? '+' : '') + (s.delta * 100).toFixed(1) + 'pp';
-      return '<tr>' +
-        '<td>' + escapeHtml(s.archetype) + '</td>' +
-        '<td>' + pct1(s.early) + '</td>' +
-        '<td>' + pct1(s.late) + '</td>' +
-        '<td class="' + deltaCls + '">' + deltaText + '</td>' +
-        '</tr>';
-    }).join('');
+      var title = document.createElementNS(SVG_NS, 'title');
+      title.textContent = s.archetype + ': ' + pct1(s.early) + ' early → ' + pct1(s.late) + ' late (' + deltaText + ')';
+      bar.appendChild(title);
+      svgEl('text', {
+        x: up ? midX + barW + 6 : midX - barW - 6, y: y + 4,
+        'text-anchor': up ? 'start' : 'end', 'font-size': 10, 'font-weight': 700, fill: color
+      }, svg).textContent = deltaText;
+      svgEl('text', {
+        x: LEFT, y: y + 4, 'text-anchor': 'start', 'font-size': 10, fill: INK
+      }, svg).textContent = truncateName(s.archetype, 32);
+    });
   }
 
-  function eraLineageHtml(item) {
-    if (!item.ancestor) return '';
-    var strong = item.ancestor.similarity >= 0.9;
-    var cls = 'archetype-lineage' + (strong ? ' archetype-lineage--strong' : '');
-    var chain = strong ? '⛓' : '←';
-    return '<p class="' + cls + '"><span class="archetype-lineage__chain">' + chain + '</span> descends from ' +
-      escapeHtml(item.ancestor.name) + ', ' + item.ancestor.similarity.toFixed(2) + ' aligned similarity</p>';
-  }
-
-  function renderEraPanels(host, eras) {
+  function renderEraPanelsCompact(host, eras) {
+    if (!host || !eras) return;
+    var TAG_LABELS = {
+      three_and_d: '3-and-D',
+      stretch_big: 'Stretch big',
+      traditional_big: 'Trad. big',
+      spacing_role: 'Spacing',
+      two_way_perimeter: 'Two-way',
+      primary_creator: 'Creator',
+      volume_scorer: 'Volume'
+    };
     host.innerHTML = eras.map(function (era) {
-      var items = era.archetypes.slice().sort(function (a, b) { return b.share - a.share; }).map(function (item) {
-        return '<li class="archetype-era-item">' +
-          '<div class="archetype-era-item__name">' + escapeHtml(item.name) + '</div>' +
-          '<div class="archetype-era-item__share">' + pct1(item.share) + ' of the era</div>' +
-          eraLineageHtml(item) +
-          '</li>';
+      var top = era.archetypes.slice().sort(function (a, b) { return b.share - a.share; }).slice(0, 4);
+      var bars = top.map(function (item) {
+        var pct = Math.round(item.share * 100);
+        var badges = '';
+        if (item.novel) badges += '<span class="era-compact-badge era-compact-badge--novel" title="Novel geometry">✦</span>';
+        else if (item.ancestor && item.ancestor.similarity >= 0.9) {
+          badges += '<span class="era-compact-badge era-compact-badge--lineage" title="Strong lineage from ' +
+            escapeHtml(item.ancestor.name) + '">⛓</span>';
+        }
+        var tagBits = (item.tags || []).slice(0, 2).map(function (t) {
+          return '<span class="era-compact-tag">' + escapeHtml(TAG_LABELS[t] || t) + '</span>';
+        }).join('');
+        return '<div class="era-compact-bar" title="' + escapeHtml(item.name) + ' — ' + pct1(item.share) + '">' +
+          '<span class="era-compact-bar__name">' + escapeHtml(truncateName(item.name, 22)) + badges + '</span>' +
+          '<span class="era-compact-bar__track"><span class="era-compact-bar__fill" style="width:' + pct + '%"></span></span>' +
+          '<span class="era-compact-bar__pct">' + pct + '%</span>' +
+          (tagBits ? '<span class="era-compact-bar__tags">' + tagBits + '</span>' : '') +
+          '</div>';
       }).join('');
-      return '<div class="archetype-era-card">' +
-        '<div class="archetype-era-card__head">' + escapeHtml(era.era) +
-        ' <span class="archetype-era-card__n">(n=' + era.n + ')</span></div>' +
-        '<ul class="archetype-era-list">' + items + '</ul>' +
-        '</div>';
+      return '<div class="era-compact-card">' +
+        '<div class="era-compact-card__head">' + escapeHtml(era.era) +
+        '<span>K=' + (era.k || 8) + '</span></div>' + bars + '</div>';
     }).join('');
   }
 
-  function showArchetypeError(chartHost, legendHost, table, panelsHost, methodEl) {
+  // -------------------------------------------------------------------
+  // Court heatmap (Chimera zone recipe on MTNN prevalence mixes)
+  // -------------------------------------------------------------------
+
+  var ZONE_META = [
+    { key: 'rim', label: 'Rim', layer: 'off', group: 'paint' },
+    { key: 'paintFT', label: 'FT / paint', layer: 'off', group: 'paint' },
+    { key: 'mid', label: 'Midrange', layer: 'off', group: 'mid' },
+    { key: 'arc', label: 'Beyond arc', layer: 'off', group: 'arc' },
+    { key: 'oreb', label: 'Off. glass', layer: 'off', group: 'glass' },
+    { key: 'ast', label: 'Playmaking', layer: 'off', group: 'ast' },
+    { key: 'paintD', label: 'Rim protection', layer: 'def', group: 'paintD' },
+    { key: 'perimeterD', label: 'Perimeter D', layer: 'def', group: 'periD' },
+    { key: 'glassD', label: 'Def. glass', layer: 'def', group: 'glassD' }
+  ];
+
+  var COURT_TAG_LABELS = {
+    three_and_d: '3-and-D wing',
+    stretch_big: 'Stretch big',
+    traditional_big: 'Traditional big',
+    spacing_role: 'Spacing role',
+    two_way_perimeter: 'Two-way perimeter',
+    primary_creator: 'Primary creator',
+    volume_scorer: 'Volume scorer'
+  };
+
+  var courtState = {
+    mode: 'diff',
+    eraIdx: 0,
+    data: null,
+    heat: null
+  };
+
+  function zoneScale(mode) {
+    return mode === 'diff' ? 0.25 : 0.75;
+  }
+
+  function zoneAlpha(v, mode) {
+    var t = Math.abs(v) / zoneScale(mode);
+    if (t > 1) t = 1;
+    if (t < 0.03) return 0;
+    return 0.14 + t * 0.58;
+  }
+
+  var COURT_LABEL_POS = {
+    rim: { x: 25, y: 8.4, short: 'RIM' },
+    paintFT: { x: 25, y: 16.6, short: 'FTA' },
+    mid: { x: 10.2, y: 11.4, short: 'MID' },
+    arc: { x: 25, y: 33.5, short: '3PT' },
+    oreb: { x: 10.5, y: 3.2, short: 'OREB' },
+    paintD: { x: 31.2, y: 12.6, short: 'BLK' },
+    perimeterD: { x: 43.6, y: 27.5, short: 'STL' },
+    glassD: { x: 39.5, y: 3.2, short: 'DREB' }
+  };
+
+  function courtZoneLabel(ctx, g, key, v, mode) {
+    var pos = COURT_LABEL_POS[key];
+    if (!pos || Math.abs(v) < 0.025) return;
+    var up = v >= 0;
+    var rgbHex = mode === 'diff'
+      ? (up ? '#006300' : '#c62828')
+      : (up ? '#c45a1f' : '#1f5fbf');
+    var px = g.X(pos.x), py = g.Y(pos.y);
+    ctx.save();
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.font = '700 ' + Math.max(7.5, 1.55 * g.s) + 'px ui-monospace, SFMono-Regular, Menlo, monospace';
+    ctx.fillStyle = 'rgba(255,255,255,0.92)';
+    var w = ctx.measureText(pos.short).width + 6;
+    ctx.fillRect(px - w / 2, py - 7, w, 14);
+    ctx.fillStyle = '#111111';
+    ctx.font = '600 ' + Math.max(6.5, 1.35 * g.s) + 'px ui-monospace, SFMono-Regular, Menlo, monospace';
+    ctx.fillText(pos.short, px, py - 1);
+    ctx.font = '700 ' + Math.max(7.5, 1.55 * g.s) + 'px ui-monospace, SFMono-Regular, Menlo, monospace';
+    ctx.fillStyle = rgbHex;
+    var sig = (v >= 0 ? '+' : '−') + Math.abs(v).toFixed(2) + 'σ';
+    ctx.fillText(sig, px, py + 8);
+    ctx.restore();
+  }
+
+  function courtGeometry(w, h) {
+    var s = w / 50;
+    var g = {
+      s: s, w: w, h: h,
+      RIM: { x: 25, y: 5.25 },
+      RA: 4, R3: 23.75, CORNER: 22,
+      KEY_W: 16, KEY_H: 19, FT_R: 6
+    };
+    g.X = function (ft) { return ft * s; };
+    g.Y = function (ft) { return h - ft * s; };
+    g.breakY = g.RIM.y + Math.sqrt(g.R3 * g.R3 - g.CORNER * g.CORNER);
+    g.leftAngle = Math.atan2(g.Y(g.breakY) - g.Y(g.RIM.y), g.X(25 - g.CORNER) - g.X(g.RIM.x));
+    g.rightAngle = Math.atan2(g.Y(g.breakY) - g.Y(g.RIM.y), g.X(25 + g.CORNER) - g.X(g.RIM.x));
+    return g;
+  }
+
+  function pathRA(ctx, g) {
+    ctx.arc(g.X(g.RIM.x), g.Y(g.RIM.y), g.RA * g.s, 0, Math.PI * 2);
+  }
+  function pathKey(ctx, g) {
+    ctx.rect(g.X(25 - g.KEY_W / 2), g.Y(g.KEY_H), g.KEY_W * g.s, g.KEY_H * g.s);
+  }
+  function pathInside3(ctx, g) {
+    ctx.moveTo(g.X(25 - g.CORNER), g.Y(0));
+    ctx.lineTo(g.X(25 - g.CORNER), g.Y(g.breakY));
+    ctx.arc(g.X(g.RIM.x), g.Y(g.RIM.y), g.R3 * g.s, g.leftAngle, g.rightAngle, false);
+    ctx.lineTo(g.X(25 + g.CORNER), g.Y(0));
+    ctx.closePath();
+  }
+  function pathCourt(ctx, g) {
+    ctx.rect(0, 0, g.w, g.h);
+  }
+
+  function fillSigned(ctx, g, builders, v, mode) {
+    var a = zoneAlpha(v, mode);
+    if (a <= 0) return;
+    var up = v >= 0;
+    var rgb = up ? '0,99,0' : '198,40,40';
+    if (mode !== 'diff') rgb = up ? '235,104,52' : '42,120,214';
+    ctx.save();
+    ctx.beginPath();
+    builders.forEach(function (b) { b(ctx, g); });
+    ctx.fillStyle = 'rgba(' + rgb + ',' + a.toFixed(3) + ')';
+    ctx.fill('evenodd');
+    ctx.strokeStyle = 'rgba(' + rgb + ',' + Math.min(0.95, a + 0.28).toFixed(3) + ')';
+    ctx.lineWidth = Math.max(1, g.s * 0.11);
+    ctx.stroke('evenodd');
+    ctx.restore();
+  }
+
+  function hatchSigned(ctx, g, builders, v, mode, mirror) {
+    var a = zoneAlpha(v, mode);
+    if (a <= 0) return;
+    var rgb = mode === 'diff'
+      ? (v >= 0 ? '0,99,0' : '198,40,40')
+      : '30,100,200';
+    ctx.save();
+    ctx.beginPath();
+    builders.forEach(function (b) { b(ctx, g); });
+    ctx.clip('evenodd');
+    ctx.strokeStyle = 'rgba(' + rgb + ',' + Math.min(0.95, a + 0.22).toFixed(3) + ')';
+    ctx.lineWidth = Math.max(1.2, g.s * 0.18);
+    var step = 2.1 * g.s;
+    var span = g.w + g.h;
+    ctx.beginPath();
+    for (var d = -span; d <= span; d += step) {
+      if (mirror) {
+        ctx.moveTo(d, 0);
+        ctx.lineTo(d - span, span);
+      } else {
+        ctx.moveTo(d, 0);
+        ctx.lineTo(d + span, span);
+      }
+    }
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  function drawCourtLinesLite(ctx, g) {
+    ctx.save();
+    ctx.strokeStyle = 'rgba(17,17,17,0.9)';
+    ctx.lineWidth = Math.max(1.2, g.s * 0.11);
+    ctx.strokeRect(0.5, 0.5, g.w - 1, g.h - 1);
+    ctx.strokeRect(g.X(25 - g.KEY_W / 2), g.Y(g.KEY_H), g.KEY_W * g.s, g.KEY_H * g.s);
+    ctx.beginPath();
+    ctx.arc(g.X(25), g.Y(g.KEY_H), g.FT_R * g.s, Math.PI, 0, false);
+    ctx.stroke();
+    ctx.beginPath();
+    pathRA(ctx, g);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(g.X(22), g.Y(4));
+    ctx.lineTo(g.X(28), g.Y(4));
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(g.X(g.RIM.x), g.Y(g.RIM.y), 0.75 * g.s, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(g.X(25 - g.CORNER), g.Y(0));
+    ctx.lineTo(g.X(25 - g.CORNER), g.Y(g.breakY));
+    ctx.moveTo(g.X(25 + g.CORNER), g.Y(0));
+    ctx.lineTo(g.X(25 + g.CORNER), g.Y(g.breakY));
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(g.X(g.RIM.x), g.Y(g.RIM.y), g.R3 * g.s, g.leftAngle, g.rightAngle, false);
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  function paintZones(ctx, g, zones, mode) {
+    fillSigned(ctx, g, [pathRA], zones.rim || 0, mode);
+    fillSigned(ctx, g, [pathKey, pathRA], zones.paintFT || 0, mode);
+    fillSigned(ctx, g, [pathInside3, pathKey], zones.mid || 0, mode);
+    fillSigned(ctx, g, [pathCourt, pathInside3], zones.arc || 0, mode);
+    hatchSigned(ctx, g, [pathKey], zones.paintD || 0, mode, false);
+    hatchSigned(ctx, g, [pathCourt, pathInside3], zones.perimeterD || 0, mode, true);
+
+    var BOX = 3;
+    var aO = zoneAlpha(zones.oreb || 0, mode);
+    var aD = zoneAlpha(zones.glassD || 0, mode);
+    ctx.save();
+    ctx.lineWidth = 1;
+    if (aO > 0) {
+      var rgbO = mode === 'diff'
+        ? ((zones.oreb || 0) >= 0 ? '0,99,0' : '198,40,40')
+        : '235,104,52';
+      ctx.beginPath();
+      ctx.rect(g.X(14.6), g.Y(2.4 + BOX), BOX * g.s, BOX * g.s);
+      ctx.fillStyle = 'rgba(' + rgbO + ',' + Math.min(0.95, aO + 0.08).toFixed(3) + ')';
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(17,17,17,0.55)';
+      ctx.lineWidth = Math.max(1, g.s * 0.08);
+      ctx.stroke();
+    }
+    if (aD > 0) {
+      var rgbD = mode === 'diff'
+        ? ((zones.glassD || 0) >= 0 ? '0,99,0' : '198,40,40')
+        : '30,100,200';
+      ctx.beginPath();
+      ctx.rect(g.X(50 - 14.6 - BOX), g.Y(2.4 + BOX), BOX * g.s, BOX * g.s);
+      ctx.fillStyle = 'rgba(' + rgbD + ',' + Math.min(0.95, aD + 0.08).toFixed(3) + ')';
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(17,17,17,0.55)';
+      ctx.lineWidth = Math.max(1, g.s * 0.08);
+      ctx.stroke();
+    }
+    ctx.restore();
+
+    var astT = zoneAlpha(zones.ast || 0, mode);
+    if (astT > 0.05) {
+      var rgbA = mode === 'diff'
+        ? ((zones.ast || 0) >= 0 ? '0,99,0' : '208,59,59')
+        : '235,104,52';
+      ctx.save();
+      ctx.strokeStyle = 'rgba(' + rgbA + ',' + Math.min(1, astT + 0.2).toFixed(3) + ')';
+      ctx.fillStyle = ctx.strokeStyle;
+      ctx.lineWidth = Math.max(1, g.s * 0.16);
+      ctx.setLineDash([4, 3]);
+      var o = { x: 25, y: g.KEY_H + 4.5 };
+      [{ x: 9, y: 18 }, { x: 41, y: 18 }, { x: 25, y: 7.2 }].forEach(function (t) {
+        var dx = g.X(t.x) - g.X(o.x), dy = g.Y(t.y) - g.Y(o.y);
+        var len = Math.hypot(dx, dy) || 1, ux = dx / len, uy = dy / len;
+        var hx = g.X(t.x) - ux * 4, hy = g.Y(t.y) - uy * 4;
+        ctx.beginPath();
+        ctx.moveTo(g.X(o.x), g.Y(o.y));
+        ctx.lineTo(hx, hy);
+        ctx.stroke();
+        ctx.save();
+        ctx.setLineDash([]);
+        ctx.beginPath();
+        ctx.moveTo(g.X(t.x), g.Y(t.y));
+        ctx.lineTo(hx - uy * 2.4, hy + ux * 2.4);
+        ctx.lineTo(hx + uy * 2.4, hy - ux * 2.4);
+        ctx.closePath();
+        ctx.fill();
+        ctx.restore();
+      });
+      ctx.restore();
+    }
+  }
+
+  function activeCourtZones() {
+    var heat = courtState.heat;
+    if (!heat) return null;
+    if (courtState.mode === 'diff') return heat.delta;
+    if (courtState.mode === 'early') return heat.early;
+    if (courtState.mode === 'late') return heat.late;
+    var eras = (courtState.data && courtState.data.eras) || [];
+    var era = eras[courtState.eraIdx];
+    return era && era.zoneMix ? era.zoneMix : null;
+  }
+
+  function renderCourtZoneList(host, zones, mode) {
+    if (!host || !zones) return;
+    var rows = ZONE_META.slice().sort(function (a, b) {
+      return Math.abs(zones[b.key] || 0) - Math.abs(zones[a.key] || 0);
+    });
+    host.innerHTML = rows.map(function (z) {
+      var v = zones[z.key] || 0;
+      var cls = v >= 0 ? 'is-up' : 'is-down';
+      var txt = (v >= 0 ? '+' : '') + v.toFixed(2) + 'σ';
+      return '<div class="court-heatmap__zone ' + cls + '">' +
+        '<span class="court-heatmap__zone-name">' +
+        '<span class="court-heatmap__zone-dot" aria-hidden="true"></span>' +
+        escapeHtml(z.label) + '</span>' +
+        '<span class="court-heatmap__zone-val">' + txt + '</span></div>';
+    }).join('');
+  }
+
+  function renderCourtTags(host, eras) {
+    if (!host) return;
+    var era = eras && eras[courtState.eraIdx];
+    var counts = (era && era.tagCounts) || {};
+    var keys = Object.keys(counts).sort(function (a, b) { return counts[b] - counts[a]; });
+    if (!keys.length) {
+      host.innerHTML = '<p class="court-heatmap__tags-empty">Role tags appear when viewing an era.</p>';
+      return;
+    }
+    var total = keys.reduce(function (s, k) { return s + counts[k]; }, 0) || 1;
+    host.innerHTML = '<p class="court-heatmap__tags-label">Era role tags · ' +
+      escapeHtml(era.era) + '</p><div class="court-heatmap__tag-row">' +
+      keys.map(function (k) {
+        var pct = Math.round(100 * counts[k] / total);
+        return '<span class="court-heatmap__tag" title="' + counts[k] + ' cluster hits">' +
+          escapeHtml(COURT_TAG_LABELS[k] || k) +
+          ' <em>' + pct + '%</em></span>';
+      }).join('') + '</div>';
+  }
+
+  function courtCaption() {
+    if (courtState.mode === 'diff') {
+      return 'Long-run diff: last-5 minus first-5 season zone mix (share-weighted archetype means).';
+    }
+    if (courtState.mode === 'early') return 'First five seasons — prevalence-weighted zone presence.';
+    if (courtState.mode === 'late') return 'Last five seasons — prevalence-weighted zone presence.';
+    var eras = (courtState.data && courtState.data.eras) || [];
+    var era = eras[courtState.eraIdx];
+    return era
+      ? ('Era ' + era.era + ' — zone mix of silhouette K=' + era.k + ' re-fit.')
+      : 'Era zone mix.';
+  }
+
+  function drawCourtHeatmap() {
+    var canvas = document.getElementById('archetype-court-canvas');
+    var caption = document.getElementById('archetype-court-caption');
+    var listHost = document.getElementById('archetype-court-zone-list');
+    var tagsHost = document.getElementById('archetype-court-tags');
+    var eraTabs = document.getElementById('archetype-court-era-tabs');
+    if (!canvas || !courtState.heat) return;
+
+    var zones = activeCourtZones();
+    if (!zones) return;
+
+    var rect = canvas.getBoundingClientRect();
+    var dpr = window.devicePixelRatio || 1;
+    var wCss = Math.max(rect.width || canvas.clientWidth || 320, 200);
+    var hCss = wCss * (47 / 50);
+    canvas.width = Math.round(wCss * dpr);
+    canvas.height = Math.round(hCss * dpr);
+    var ctx = canvas.getContext('2d');
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, wCss, hCss);
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, wCss, hCss);
+
+    var g = courtGeometry(wCss, hCss);
+    var paintMode = courtState.mode === 'diff' ? 'diff' : 'abs';
+    paintZones(ctx, g, zones, paintMode);
+    drawCourtLinesLite(ctx, g);
+    ['arc', 'oreb', 'glassD', 'paintD', 'rim', 'mid', 'paintFT', 'perimeterD'].forEach(function (k) {
+      courtZoneLabel(ctx, g, k, zones[k] || 0, paintMode);
+    });
+
+    if (caption) caption.textContent = courtCaption();
+    renderCourtZoneList(listHost, zones, paintMode);
+
+    if (eraTabs) {
+      eraTabs.hidden = courtState.mode !== 'era';
+    }
+    if (courtState.mode === 'era') {
+      renderCourtTags(tagsHost, courtState.data.eras);
+    } else if (tagsHost) {
+      // Long-run modes: show global shift story tags from late vs early share movers
+      var movers = (courtState.data.biggestShifts || []).slice(0, 3);
+      tagsHost.innerHTML = '<p class="court-heatmap__tags-label">Biggest share movers</p>' +
+        '<div class="court-heatmap__tag-row">' +
+        movers.map(function (s) {
+          var d = (s.delta >= 0 ? '+' : '') + (s.delta * 100).toFixed(1) + 'pp';
+          return '<span class="court-heatmap__tag' + (s.delta >= 0 ? ' is-up' : ' is-down') + '">' +
+            escapeHtml(truncateName(s.archetype, 28)) + ' <em>' + d + '</em></span>';
+        }).join('') + '</div>';
+    }
+  }
+
+  function bindCourtHeatmap(data) {
+    var root = document.getElementById('archetype-court-heatmap');
+    if (!root || !data || !data.courtHeatmap) {
+      if (root) root.hidden = true;
+      return;
+    }
+    courtState.data = data;
+    courtState.heat = data.courtHeatmap;
+    courtState.eraIdx = Math.max(0, (data.eras || []).length - 1);
+
+    var eraTabs = document.getElementById('archetype-court-era-tabs');
+    if (eraTabs && data.eras) {
+      eraTabs.innerHTML = data.eras.map(function (e, i) {
+        return '<button type="button" class="court-heatmap__era' +
+          (i === courtState.eraIdx ? ' is-active' : '') +
+          '" data-era="' + i + '">' + escapeHtml(e.era) + '</button>';
+      }).join('');
+      eraTabs.onclick = function (ev) {
+        var btn = ev.target.closest('[data-era]');
+        if (!btn) return;
+        courtState.eraIdx = parseInt(btn.getAttribute('data-era'), 10) || 0;
+        eraTabs.querySelectorAll('.court-heatmap__era').forEach(function (b) {
+          b.classList.toggle('is-active', b === btn);
+        });
+        drawCourtHeatmap();
+      };
+    }
+
+    root.querySelectorAll('.court-heatmap__mode').forEach(function (btn) {
+      btn.onclick = function () {
+        courtState.mode = btn.getAttribute('data-mode') || 'diff';
+        root.querySelectorAll('.court-heatmap__mode').forEach(function (b) {
+          var on = b === btn;
+          b.classList.toggle('is-active', on);
+          b.setAttribute('aria-selected', on ? 'true' : 'false');
+        });
+        drawCourtHeatmap();
+      };
+    });
+
+    drawCourtHeatmap();
+    if (!courtState._resizeBound) {
+      courtState._resizeBound = true;
+      window.addEventListener('resize', function () {
+        if (courtState.heat) drawCourtHeatmap();
+      });
+    }
+  }
+
+  function showArchetypeError(chartHost, legendHost, shiftsHost, panelsHost) {
     chartHost.innerHTML = '';
     chartHost.setAttribute('aria-label', 'Archetype eras chart failed to load');
     var p = document.createElement('p');
@@ -309,10 +909,182 @@
     p.textContent = 'Could not load the archetype eras data (assets/archetypes_time.json). Try reloading.';
     chartHost.appendChild(p);
     if (legendHost) legendHost.innerHTML = '';
-    var tbody = table && table.querySelector('tbody');
-    if (tbody) tbody.innerHTML = '<tr><td colspan="4" class="drift-loading">Could not load.</td></tr>';
+    if (shiftsHost) shiftsHost.innerHTML = '<p class="drift-loading">Could not load.</p>';
     if (panelsHost) panelsHost.innerHTML = '<p class="drift-loading">Could not load.</p>';
-    if (methodEl) methodEl.textContent = 'Could not load method text (assets/archetypes_time.json).';
+    var courtRoot = document.getElementById('archetype-court-heatmap');
+    if (courtRoot) courtRoot.hidden = true;
+  }
+
+  // -------------------------------------------------------------------
+  // Archetype emergence (assets/archetype_emergence.json)
+  // -------------------------------------------------------------------
+
+  var ROLE_SERIES = [
+    { key: 'three_and_d', label: '3-and-D wing', color: '#3987e5' },
+    { key: 'stretch_big', label: 'Stretch big', color: '#199e70' },
+    { key: 'traditional_big', label: 'Traditional big', color: '#c98500' },
+    { key: 'spacing_role', label: 'Spacing role', color: '#d55181' }
+  ];
+
+  function renderEmergenceVerdict(host, hypothesis) {
+    if (!host || !hypothesis) return;
+    var verdictCls = 'emergence-verdict__badge emergence-verdict__badge--' +
+      (hypothesis.verdict || 'unknown').replace('_', '-');
+    var claims = hypothesis.supportedClaims + '/' + hypothesis.totalClaims;
+    var headline = hypothesis.headline || '';
+    if (headline.length > 140) headline = headline.slice(0, 137) + '…';
+    host.innerHTML =
+      '<div class="emergence-verdict__head">' +
+        '<span class="' + verdictCls + '">' + escapeHtml(hypothesis.verdict || '') + '</span>' +
+        '<span class="emergence-verdict__score">' + claims + ' claims</span>' +
+      '</div>' +
+      '<p class="emergence-verdict__headline">' + escapeHtml(headline) + '</p>';
+  }
+
+  function renderRolePrevalenceChart(host, rows) {
+    if (!host || !rows || !rows.length) return;
+    host.innerHTML = '';
+    var W = 880, LEFT = 52, RIGHT = 20, TOP = 20, BOT = 40;
+    var H = 260;
+    var plotW = W - LEFT - RIGHT, plotH = H - TOP - BOT;
+    var n = rows.length;
+    var yMax = 0.35;
+    function xOf(i) { return LEFT + (n <= 1 ? plotW / 2 : (i / (n - 1)) * plotW); }
+    function yOf(v) { return TOP + (1 - v / yMax) * plotH; }
+
+    var svg = svgEl('svg', {
+      viewBox: '0 0 ' + W + ' ' + H,
+      role: 'img',
+      'aria-label': 'Era-relative role prevalence by five-era windows',
+      'font-family': getComputedStyle(document.body).fontFamily
+    }, host);
+
+    for (var g = 0; g <= 4; g++) {
+      var frac = (g / 4) * yMax;
+      var gy = yOf(frac);
+      svgEl('line', {
+        x1: LEFT, y1: gy, x2: W - RIGHT, y2: gy,
+        stroke: g === 0 ? INK : HAIRLINE, 'stroke-width': g === 0 ? 1.5 : 1
+      }, svg);
+      svgEl('text', {
+        x: LEFT - 8, y: gy + 3, 'text-anchor': 'end', 'font-size': 9, fill: INK_MUTED
+      }, svg).textContent = Math.round(frac * 100) + '%';
+    }
+
+    ROLE_SERIES.forEach(function (series) {
+      var pts = rows.map(function (r, i) { return xOf(i) + ',' + yOf(r[series.key] || 0); }).join(' ');
+      svgEl('polyline', {
+        points: pts, fill: 'none', stroke: series.color, 'stroke-width': 2.5
+      }, svg);
+      rows.forEach(function (r, i) {
+        var cx = xOf(i), cy = yOf(r[series.key] || 0);
+        var dot = svgEl('circle', { cx: cx, cy: cy, r: 4, fill: series.color }, svg);
+        var title = document.createElementNS(SVG_NS, 'title');
+        title.textContent = r.era + ' — ' + series.label + ': ' + pct1(r[series.key] || 0);
+        dot.appendChild(title);
+      });
+    });
+
+    rows.forEach(function (r, i) {
+      svgEl('text', {
+        x: xOf(i), y: H - 12, 'text-anchor': 'middle', 'font-size': 9, fill: INK_MUTED
+      }, svg).textContent = r.era.replace('-', '–');
+    });
+
+    var legendY = TOP - 6;
+    ROLE_SERIES.forEach(function (series, si) {
+      var lx = LEFT + si * 155;
+      svgEl('line', {
+        x1: lx, y1: legendY, x2: lx + 18, y2: legendY, stroke: series.color, 'stroke-width': 2.5
+      }, svg);
+      svgEl('text', {
+        x: lx + 22, y: legendY + 3, 'font-size': 9, fill: INK
+      }, svg).textContent = series.label;
+    });
+  }
+
+  function renderRollingDiversityChart(host, rows) {
+    if (!host || !rows || !rows.length) return;
+    host.innerHTML = '';
+    var W = 880, LEFT = 46, RIGHT = 46, TOP = 20, BOT = 40;
+    var H = 220;
+    var plotW = W - LEFT - RIGHT, plotH = H - TOP - BOT;
+    var n = rows.length;
+    var yMax = Math.max.apply(null, rows.map(function (r) { return r.effectiveN; })) * 1.1;
+    var kMax = Math.max.apply(null, rows.map(function (r) { return r.k; })) + 1;
+    function xOf(i) { return LEFT + (n <= 1 ? plotW / 2 : (i / (n - 1)) * plotW); }
+    function yOf(v) { return TOP + (1 - v / yMax) * plotH; }
+    function yK(k) { return TOP + (1 - k / kMax) * plotH; }
+
+    var svg = svgEl('svg', {
+      viewBox: '0 0 ' + W + ' ' + H,
+      role: 'img',
+      'aria-label': 'Rolling five-season optimal K and effective archetype count',
+      'font-family': getComputedStyle(document.body).fontFamily
+    }, host);
+
+    var effPts = rows.map(function (r, i) { return xOf(i) + ',' + yOf(r.effectiveN); }).join(' ');
+    svgEl('polyline', {
+      points: effPts, fill: 'none', stroke: ORANGE_HEX, 'stroke-width': 2
+    }, svg);
+    rows.forEach(function (r, i) {
+      var cx = xOf(i), cy = yK(r.k);
+      svgEl('circle', { cx: cx, cy: cy, r: 3.5, fill: BLUE_HEX }, svg);
+      if (i % 4 === 0 || i === n - 1) {
+        svgEl('text', {
+          x: cx, y: H - 12, 'text-anchor': 'middle', 'font-size': 8, fill: INK_MUTED
+        }, svg).textContent = "'" + (r.endSeason || '').slice(2, 4);
+      }
+    });
+
+    svgEl('text', {
+      x: LEFT - 8, y: TOP + 8, 'text-anchor': 'end', 'font-size': 9, fill: ORANGE_HEX
+    }, svg).textContent = 'eff N';
+    svgEl('text', {
+      x: W - RIGHT + 8, y: TOP + 8, 'text-anchor': 'start', 'font-size': 9, fill: BLUE_HEX
+    }, svg).textContent = 'opt K';
+  }
+
+  function renderEmergenceClaimsViz(host, claims) {
+    if (!host || !claims) return;
+    host.innerHTML = '<div class="emergence-claims-grid">' + claims.map(function (c) {
+      var cls = 'emergence-claim-pill' + (c.supported ? ' emergence-claim-pill--yes' : ' emergence-claim-pill--no');
+      var icon = c.supported ? '✓' : '✗';
+      return '<div class="' + cls + '" title="' + escapeHtml(c.detail) + '">' +
+        '<span class="emergence-claim-pill__icon" aria-hidden="true">' + icon + '</span>' +
+        '<span class="emergence-claim-pill__text">' + escapeHtml(c.claim) + '</span></div>';
+    }).join('') + '</div>';
+  }
+
+  function renderNovelBadges(host, tagged) {
+    if (!host || !tagged) return;
+    var html = tagged.filter(function (t) {
+      return t.novelArchetypes && t.novelArchetypes.length;
+    }).map(function (t) {
+      var badges = t.novelArchetypes.map(function (a) {
+        return '<span class="novel-badge" title="' + escapeHtml(a.name) + ' — ' + pct1(a.share) +
+          ', ancestor sim ' + a.similarity.toFixed(2) + '">' +
+          escapeHtml(truncateName(a.name, 24)) + '</span>';
+      }).join('');
+      return '<div class="novel-era-row"><span class="novel-era-row__label">' + escapeHtml(t.era) +
+        '</span><div class="novel-era-row__badges">' + badges + '</div></div>';
+    }).join('');
+    host.innerHTML = html || '<p class="drift-loading drift-loading--inline">No novel clusters in audit window.</p>';
+  }
+
+  function showEmergenceError(verdictHost, roleHost, rollHost, claimsHost, badgesHost) {
+    var msg = 'Could not load archetype emergence data (assets/archetype_emergence.json).';
+    if (verdictHost) verdictHost.innerHTML = '<p class="drift-loading">' + msg + '</p>';
+    [roleHost, rollHost].forEach(function (h) {
+      if (!h) return;
+      h.innerHTML = '';
+      var p = document.createElement('p');
+      p.className = 'drift-loading';
+      p.textContent = msg;
+      h.appendChild(p);
+    });
+    if (claimsHost) claimsHost.innerHTML = '<p class="drift-loading">' + msg + '</p>';
+    if (badgesHost) badgesHost.innerHTML = '<p class="drift-loading">' + msg + '</p>';
   }
 
   // -------------------------------------------------------------------
@@ -329,11 +1101,11 @@
   };
 
   var TRAJ_CLASS_DEF = {
-    'stable': 'One archetype covered at least three-quarters of the career.',
-    'reinvention': 'One sustained archetype switch, each side holding at least two seasons.',
-    'late-bloom': 'One sustained archetype switch, arriving after the 60% mark of the career.',
-    'migrator': 'Three or more archetypes across the career, none ever reaching 60% of the seasons.',
-    'drifter': 'Moved between archetypes without a switch ever settling into a new majority.'
+    'stable': 'One archetype for >=75% of the career.',
+    'reinvention': 'One clean archetype switch, both sides sustained.',
+    'late-bloom': 'Same switch, but after the 60% mark.',
+    'migrator': '3+ archetypes, none ever dominant.',
+    'drifter': 'Moved without settling into a new majority.'
   };
 
   // Our own read of the most common reinvention motifs, not derived — kept
@@ -348,30 +1120,155 @@
     'Offensive Glass + Defensive Glass→Rim Protection + Offensive Glass': 'adding rim protection'
   };
 
-  function renderTrajectoryHeadline(host, classStats) {
-    var byClass = {};
-    classStats.forEach(function (c) { byClass[c.class] = c; });
-    var reinvention = byClass['reinvention'], stable = byClass['stable'];
-    if (!reinvention || !stable) { host.textContent = 'Not enough classes to compare.'; return; }
-    host.innerHTML = '<b>Reinventors last longest:</b> ' + reinvention.meanCareerLength.toFixed(1) +
-      ' seasons vs ' + stable.meanCareerLength.toFixed(1) + ' for stable specialists &mdash; ' +
-      'observed with selection effects.';
+  var TRAJ_CLASS_COLOR = {
+    'stable': '#3987e5',
+    'reinvention': '#eb6834',
+    'late-bloom': '#c98500',
+    'migrator': '#9085e9',
+    'drifter': '#e66767'
+  };
+
+  function renderTrajectoryClassViz(host, classStats) {
+    if (!host || !classStats || !classStats.length) return;
+    host.innerHTML = '';
+    var sorted = classStats.slice().sort(function (a, b) { return b.share - a.share; });
+    var W = 880, H = 160, cx = 95, cy = 80, r = 58, ir = 34;
+    var svg = svgEl('svg', {
+      viewBox: '0 0 ' + W + ' ' + H,
+      role: 'img',
+      'aria-label': 'Career class distribution',
+      'font-family': getComputedStyle(document.body).fontFamily
+    }, host);
+
+    var start = -Math.PI / 2;
+    var total = sorted.reduce(function (s, c) { return s + c.share; }, 0) || 1;
+    var angle = start;
+    sorted.forEach(function (c) {
+      var slice = (c.share / total) * Math.PI * 2;
+      var x1 = cx + r * Math.cos(angle);
+      var y1 = cy + r * Math.sin(angle);
+      angle += slice;
+      var x2 = cx + r * Math.cos(angle);
+      var y2 = cy + r * Math.sin(angle);
+      var large = slice > Math.PI ? 1 : 0;
+      var color = TRAJ_CLASS_COLOR[c.class] || ORANGE_HEX;
+      var d = 'M ' + cx + ' ' + cy + ' L ' + x1 + ' ' + y1 +
+        ' A ' + r + ' ' + r + ' 0 ' + large + ' 1 ' + x2 + ' ' + y2 + ' Z';
+      var path = svgEl('path', { d: d, fill: color, stroke: SURFACE_HEX, 'stroke-width': 2 }, svg);
+      var title = document.createElementNS(SVG_NS, 'title');
+      var label = TRAJ_CLASS_LABEL[c.class] || c.class;
+      title.textContent = label + ': ' + pct1(c.share) + ', ' + c.meanCareerLength.toFixed(1) + ' seasons avg';
+      path.appendChild(title);
+    });
+    svgEl('circle', { cx: cx, cy: cy, r: ir, fill: SURFACE_HEX }, svg);
+    var reinvention = sorted.find(function (c) { return c.class === 'reinvention'; });
+    var stable = sorted.find(function (c) { return c.class === 'stable'; });
+    if (reinvention && stable) {
+      svgEl('text', {
+        x: cx, y: cy - 4, 'text-anchor': 'middle', 'font-size': 9, 'font-weight': 700, fill: INK
+      }, svg).textContent = 'Reinventors';
+      svgEl('text', {
+        x: cx, y: cy + 10, 'text-anchor': 'middle', 'font-size': 11, 'font-weight': 800, fill: ORANGE_HEX
+      }, svg).textContent = reinvention.meanCareerLength.toFixed(1) + ' yr';
+      svgEl('text', {
+        x: cx, y: cy + 22, 'text-anchor': 'middle', 'font-size': 8, fill: INK_MUTED
+      }, svg).textContent = 'vs ' + stable.meanCareerLength.toFixed(1) + ' stable';
+    }
+
+    var legendX = 200, legendY = 24, rowH = 26;
+    sorted.forEach(function (c, i) {
+      var y = legendY + i * rowH;
+      var color = TRAJ_CLASS_COLOR[c.class] || ORANGE_HEX;
+      var label = TRAJ_CLASS_LABEL[c.class] || c.class;
+      var pmSign = c.meanPMz >= 0 ? '+' : '';
+      svgEl('rect', { x: legendX, y: y - 8, width: 12, height: 12, fill: color, rx: 2 }, svg);
+      svgEl('text', {
+        x: legendX + 18, y: y + 1, 'font-size': 11, 'font-weight': 700, fill: INK
+      }, svg).textContent = label;
+      svgEl('text', {
+        x: legendX + 18, y: y + 14, 'font-size': 9, fill: INK_MUTED
+      }, svg).textContent = pct1(c.share) + ' · ' + c.meanCareerLength.toFixed(1) +
+        ' seasons · PM-z ' + pmSign + c.meanPMz.toFixed(2);
+    });
   }
 
-  function renderTrajectoryClassCards(host, classStats) {
-    var sorted = classStats.slice().sort(function (a, b) { return b.share - a.share; });
-    host.innerHTML = sorted.map(function (c) {
-      var label = TRAJ_CLASS_LABEL[c.class] || c.class;
-      var def = TRAJ_CLASS_DEF[c.class] || '';
-      var pmSign = c.meanPMz >= 0 ? '+' : '';
-      return '<div class="trajectory-class-card">' +
-        '<div class="trajectory-class-card__head">' + escapeHtml(label) + '</div>' +
-        '<div class="trajectory-class-card__share">' + pct1(c.share) + ' of careers</div>' +
-        '<div class="trajectory-class-card__stats">' + c.meanCareerLength.toFixed(1) +
-        ' seasons avg &middot; PM-z ' + pmSign + c.meanPMz.toFixed(2) + '</div>' +
-        '<p class="trajectory-class-card__def">' + escapeHtml(def) + '</p>' +
-        '</div>';
-    }).join('');
+  function renderCareerPathGallery(host, classExamples, globalArchetypes) {
+    if (!host) return;
+    var classes = ['stable', 'reinvention', 'late-bloom', 'migrator', 'drifter'];
+    host.innerHTML = classes.map(function (cls) {
+      var ex = classExamples && classExamples[cls] && classExamples[cls][0];
+      if (!ex) return '';
+      var segs = collapsedPathSegments(ex.path);
+      var total = segs.reduce(function (s, seg) { return s + seg.count; }, 0) || 1;
+      var blocks = segs.map(function (seg) {
+        var idx = archIndex(seg.archetype, globalArchetypes);
+        var w = Math.max(4, Math.round((seg.count / total) * 100));
+        return '<span class="path-block" style="flex:' + seg.count + ';background:' +
+          ARCH_PALETTE[idx % ARCH_PALETTE.length] + '" title="' + escapeHtml(seg.archetype) +
+          ' (' + seg.count + ' seasons)"></span>';
+      }).join('');
+      var skill = ex.skillArc && ex.skillArc.narrative
+        ? '<span class="path-gallery__skill">' + escapeHtml(truncateName(ex.skillArc.narrative, 48)) + '</span>'
+        : '';
+      return '<div class="path-gallery__row">' +
+        '<div class="path-gallery__meta">' +
+          '<span class="path-gallery__class">' + escapeHtml(TRAJ_CLASS_LABEL[cls] || cls) + '</span>' +
+          '<span class="path-gallery__name">' + escapeHtml(ex.name) + '</span>' +
+          '<span class="path-gallery__n">' + ex.n + ' seasons</span>' +
+        '</div>' +
+        '<div class="path-gallery__track" aria-label="Career archetype path for ' + escapeHtml(ex.name) + '">' +
+          blocks + '</div>' + skill + '</div>';
+    }).filter(Boolean).join('');
+  }
+
+  function renderMotifFlowChart(host, motifs) {
+    if (!host || !motifs || !motifs.length) return;
+    host.innerHTML = '';
+    var top = motifs.slice(0, 6);
+    var W = 420, LEFT = 8, RIGHT = 8, TOP = 10;
+    var rowH = 34, gap = 4;
+    var H = TOP + top.length * (rowH + gap) + 8;
+    var maxCount = top.reduce(function (m, x) { return Math.max(m, x.count); }, 1);
+
+    var svg = svgEl('svg', {
+      viewBox: '0 0 ' + W + ' ' + H,
+      role: 'img',
+      'aria-label': 'Top reinvention archetype switches',
+      'font-family': getComputedStyle(document.body).fontFamily
+    }, host);
+
+    top.forEach(function (m, i) {
+      var y = TOP + i * (rowH + gap) + rowH / 2;
+      var barW = 40 + (m.count / maxCount) * 70;
+      var gloss = TRAJ_MOTIF_GLOSS[m.from + '→' + m.to];
+      svgEl('text', {
+        x: LEFT, y: y - 2, 'text-anchor': 'start', 'font-size': 8, fill: INK
+      }, svg).textContent = truncateName(m.from, 22);
+      svgEl('text', {
+        x: LEFT, y: y + 10, 'text-anchor': 'start', 'font-size': 8, fill: INK_MUTED
+      }, svg).textContent = truncateName(m.to, 22);
+      var ax = W / 2 - barW / 2;
+      var line = svgEl('line', {
+        x1: ax, y1: y + 2, x2: ax + barW, y2: y + 2,
+        stroke: ORANGE_HEX, 'stroke-width': 4, 'stroke-linecap': 'round', opacity: 0.85
+      }, svg);
+      var title = document.createElementNS(SVG_NS, 'title');
+      title.textContent = m.from + ' → ' + m.to + ' (' + m.count + ' careers)' +
+        (gloss ? ' — ' + gloss : '');
+      line.appendChild(title);
+      svgEl('polygon', {
+        points: (ax + barW) + ',' + y + ' ' + (ax + barW + 8) + ',' + (y + 2) + ' ' + (ax + barW) + ',' + (y + 4),
+        fill: ORANGE_HEX
+      }, svg);
+      svgEl('text', {
+        x: W - RIGHT, y: y + 4, 'text-anchor': 'end', 'font-size': 10, 'font-weight': 800, fill: ORANGE_HEX
+      }, svg).textContent = '×' + m.count;
+      if (gloss) {
+        svgEl('text', {
+          x: W / 2, y: y + 16, 'text-anchor': 'middle', 'font-size': 8, fill: INK_MUTED, 'font-style': 'italic'
+        }, svg).textContent = gloss;
+      }
+    });
   }
 
   function renderTrajectoryEraChart(host, eraRates) {
@@ -419,19 +1316,13 @@
   }
 
   function renderTrajectoryMotifs(host, motifs) {
-    host.innerHTML = motifs.map(function (m) {
-      var gloss = TRAJ_MOTIF_GLOSS[m.from + '→' + m.to];
-      return '<li class="trajectory-motif-item">' +
-        '<span class="trajectory-motif-item__path">' + escapeHtml(m.from) + ' &rarr; ' + escapeHtml(m.to) + '</span>' +
-        '<span class="trajectory-motif-item__count">&times;' + m.count + '</span>' +
-        (gloss ? '<span class="trajectory-motif-item__gloss">' + escapeHtml(gloss) + '</span>' : '') +
-        '</li>';
-    }).join('');
+    renderMotifFlowChart(host, motifs);
   }
 
-  function showTrajectoryError(headlineHost, cardsHost, chartHost, motifHost, methodEl) {
-    if (headlineHost) headlineHost.textContent = 'Could not load career shape data (assets/trajectories.json).';
-    if (cardsHost) cardsHost.innerHTML = '<p class="drift-loading">Could not load.</p>';
+  function showTrajectoryError(classVizHost, galleryHost, chartHost, motifHost) {
+    var msg = 'Could not load career shape data (assets/trajectories.json).';
+    if (classVizHost) classVizHost.innerHTML = '<p class="drift-loading">' + msg + '</p>';
+    if (galleryHost) galleryHost.innerHTML = '<p class="drift-loading">' + msg + '</p>';
     if (chartHost) {
       chartHost.innerHTML = '';
       chartHost.setAttribute('aria-label', 'Career shapes chart failed to load');
@@ -440,12 +1331,12 @@
       p.textContent = 'Could not load the career shapes data (assets/trajectories.json). Try reloading.';
       chartHost.appendChild(p);
     }
-    if (motifHost) motifHost.innerHTML = '<li class="drift-loading">Could not load.</li>';
-    if (methodEl) methodEl.textContent = 'Could not load method text (assets/trajectories.json).';
+    if (motifHost) motifHost.innerHTML = '<p class="drift-loading">' + msg + '</p>';
   }
 
   document.addEventListener('DOMContentLoaded', function () {
     var chartHost = document.getElementById('drift-chart');
+    var eraLegendHost = document.getElementById('drift-era-legend');
     var shiftsTable = document.getElementById('drift-shifts-table');
     var methodEl = document.getElementById('drift-method-quote');
 
@@ -453,21 +1344,21 @@
       if (!res.ok) throw new Error('HTTP ' + res.status);
       return res.json();
     }).then(function (data) {
-      renderChart(chartHost, data.pairs);
+      renderChart(chartHost, data.pairs, data.biggestShifts);
+      renderEraLegend(eraLegendHost);
       renderShiftsTable(shiftsTable, data.biggestShifts);
       if (methodEl) methodEl.textContent = data.method;
     }).catch(function () {
       showError(chartHost);
       var tbody = shiftsTable && shiftsTable.querySelector('tbody');
-      if (tbody) tbody.innerHTML = '<tr><td colspan="5" class="drift-loading">Could not load.</td></tr>';
+      if (tbody) tbody.innerHTML = '<tr><td colspan="6" class="drift-loading">Could not load.</td></tr>';
       if (methodEl) methodEl.textContent = 'Could not load method text (assets/drift.json).';
     });
 
     var archChartHost = document.getElementById('archetype-stream-chart');
     var archLegendHost = document.getElementById('archetype-legend');
-    var archShiftsTable = document.getElementById('archetype-shifts-table');
+    var archShiftsHost = document.getElementById('archetype-shifts-chart');
     var archPanelsHost = document.getElementById('archetype-era-panels');
-    var archMethodEl = document.getElementById('archetype-method-quote');
 
     if (archChartHost) {
       fetch(ARCH_URL).then(function (res) {
@@ -475,32 +1366,51 @@
         return res.json();
       }).then(function (data) {
         renderArchetypeStream(archChartHost, archLegendHost, data);
-        renderArchetypeShiftsTable(archShiftsTable, data.biggestShifts);
-        renderEraPanels(archPanelsHost, data.eras);
-        if (archMethodEl) archMethodEl.textContent = data.method;
+        renderArchetypeShiftsChart(archShiftsHost, data.biggestShifts);
+        renderEraPanelsCompact(archPanelsHost, data.eras);
+        bindCourtHeatmap(data);
       }).catch(function () {
-        showArchetypeError(archChartHost, archLegendHost, archShiftsTable, archPanelsHost, archMethodEl);
+        showArchetypeError(archChartHost, archLegendHost, archShiftsHost, archPanelsHost);
       });
     }
 
-    var trajHeadlineHost = document.getElementById('trajectory-headline');
-    var trajCardsHost = document.getElementById('trajectory-class-cards');
-    var trajChartHost = document.getElementById('trajectory-era-chart');
-    var trajMotifHost = document.getElementById('trajectory-motif-list');
-    var trajMethodEl = document.getElementById('trajectory-method-quote');
+    var emVerdictHost = document.getElementById('emergence-verdict');
+    var emRoleHost = document.getElementById('emergence-role-chart');
+    var emRollHost = document.getElementById('emergence-rolling-chart');
+    var emClaimsHost = document.getElementById('emergence-claims-viz');
+    var emNovelHost = document.getElementById('emergence-novel-badges');
 
-    if (trajChartHost) {
+    if (emVerdictHost) {
+      fetch(EMERGENCE_URL).then(function (res) {
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        return res.json();
+      }).then(function (data) {
+        renderEmergenceVerdict(emVerdictHost, data.hypothesis);
+        renderRolePrevalenceChart(emRoleHost, data.playerRolePrevalence);
+        renderRollingDiversityChart(emRollHost, data.rollingWindows);
+        renderEmergenceClaimsViz(emClaimsHost, data.hypothesis && data.hypothesis.claims);
+        renderNovelBadges(emNovelHost, data.taggedPrevalence);
+      }).catch(function () {
+        showEmergenceError(emVerdictHost, emRoleHost, emRollHost, emClaimsHost, emNovelHost);
+      });
+    }
+
+    var trajClassHost = document.getElementById('trajectory-class-viz');
+    var trajGalleryHost = document.getElementById('trajectory-path-gallery');
+    var trajChartHost = document.getElementById('trajectory-era-chart');
+    var trajMotifHost = document.getElementById('trajectory-motif-flow');
+
+    if (trajClassHost || trajChartHost) {
       fetch(TRAJ_URL).then(function (res) {
         if (!res.ok) throw new Error('HTTP ' + res.status);
         return res.json();
       }).then(function (data) {
-        renderTrajectoryHeadline(trajHeadlineHost, data.classStats);
-        renderTrajectoryClassCards(trajCardsHost, data.classStats);
+        renderTrajectoryClassViz(trajClassHost, data.classStats);
+        renderCareerPathGallery(trajGalleryHost, data.classExamples, data.globalArchetypes);
         renderTrajectoryEraChart(trajChartHost, data.eraTransitionRates);
-        renderTrajectoryMotifs(trajMotifHost, data.topReinventionMotifs);
-        if (trajMethodEl) trajMethodEl.textContent = data.method;
+        renderMotifFlowChart(trajMotifHost, data.topReinventionMotifs);
       }).catch(function () {
-        showTrajectoryError(trajHeadlineHost, trajCardsHost, trajChartHost, trajMotifHost, trajMethodEl);
+        showTrajectoryError(trajClassHost, trajGalleryHost, trajChartHost, trajMotifHost);
       });
     }
   });
