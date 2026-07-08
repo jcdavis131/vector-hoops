@@ -505,7 +505,7 @@
   };
 
   var courtState = {
-    mode: 'diff',
+    mode: 'era',
     eraIdx: 0,
     data: null,
     heat: null
@@ -739,15 +739,48 @@
     }
   }
 
+  function courtEraBaselineIdx(eraIdx, nEras) {
+    if (nEras <= 0) return 0;
+    // First era has no prior window — compare against the current (latest) era.
+    if (eraIdx <= 0) return nEras - 1;
+    return eraIdx - 1;
+  }
+
+  function courtEraBaselineMeta() {
+    var eras = (courtState.data && courtState.data.eras) || [];
+    var n = eras.length;
+    if (!n) return null;
+    var eraIdx = Math.min(Math.max(courtState.eraIdx, 0), n - 1);
+    var baseIdx = courtEraBaselineIdx(eraIdx, n);
+    return {
+      eraIdx: eraIdx,
+      baseIdx: baseIdx,
+      era: eras[eraIdx],
+      baseline: eras[baseIdx],
+      isCurrentBaseline: eraIdx === 0
+    };
+  }
+
+  function diffZoneMix(current, baseline) {
+    var out = {};
+    ZONE_META.forEach(function (z) {
+      out[z.key] = (current[z.key] || 0) - (baseline[z.key] || 0);
+    });
+    return out;
+  }
+
   function activeCourtZones() {
     var heat = courtState.heat;
     if (!heat) return null;
     if (courtState.mode === 'diff') return heat.delta;
     if (courtState.mode === 'early') return heat.early;
     if (courtState.mode === 'late') return heat.late;
-    var eras = (courtState.data && courtState.data.eras) || [];
-    var era = eras[courtState.eraIdx];
-    return era && era.zoneMix ? era.zoneMix : null;
+    var meta = courtEraBaselineMeta();
+    if (!meta || !meta.era || !meta.era.zoneMix) return null;
+    if (!meta.baseline || !meta.baseline.zoneMix || meta.eraIdx === meta.baseIdx) {
+      return meta.era.zoneMix;
+    }
+    return diffZoneMix(meta.era.zoneMix, meta.baseline.zoneMix);
   }
 
   function renderCourtZoneList(host, zones, mode) {
@@ -769,15 +802,25 @@
 
   function renderCourtTags(host, eras) {
     if (!host) return;
-    var era = eras && eras[courtState.eraIdx];
+    var meta = courtEraBaselineMeta();
+    var era = meta && meta.era;
     var counts = (era && era.tagCounts) || {};
     var keys = Object.keys(counts).sort(function (a, b) { return counts[b] - counts[a]; });
+    var baselineLine = '';
+    if (meta && meta.baseline && meta.eraIdx !== meta.baseIdx) {
+      var baseLabel = meta.isCurrentBaseline ? 'current era' : 'prior era';
+      baselineLine = '<p class="court-heatmap__tags-label">Baseline · ' +
+        escapeHtml(meta.baseline.era) + ' <span class="court-heatmap__baseline-kind">(' +
+        baseLabel + ')</span></p>';
+    }
     if (!keys.length) {
-      host.innerHTML = '<p class="court-heatmap__tags-empty">Role tags appear when viewing an era.</p>';
+      host.innerHTML = baselineLine +
+        '<p class="court-heatmap__tags-empty">Role tags appear when viewing an era.</p>';
       return;
     }
     var total = keys.reduce(function (s, k) { return s + counts[k]; }, 0) || 1;
-    host.innerHTML = '<p class="court-heatmap__tags-label">Era role tags · ' +
+    host.innerHTML = baselineLine +
+      '<p class="court-heatmap__tags-label">Era role tags · ' +
       escapeHtml(era.era) + '</p><div class="court-heatmap__tag-row">' +
       keys.map(function (k) {
         var pct = Math.round(100 * counts[k] / total);
@@ -793,11 +836,14 @@
     }
     if (courtState.mode === 'early') return 'First five seasons — prevalence-weighted zone presence.';
     if (courtState.mode === 'late') return 'Last five seasons — prevalence-weighted zone presence.';
-    var eras = (courtState.data && courtState.data.eras) || [];
-    var era = eras[courtState.eraIdx];
-    return era
-      ? ('Era ' + era.era + ' — zone mix of silhouette K=' + era.k + ' re-fit.')
-      : 'Era zone mix.';
+    var meta = courtEraBaselineMeta();
+    if (!meta || !meta.era) return 'Era zone mix.';
+    if (!meta.baseline || meta.eraIdx === meta.baseIdx) {
+      return 'Era ' + meta.era.era + ' — zone mix of silhouette K=' + meta.era.k + ' re-fit.';
+    }
+    var baseNote = meta.isCurrentBaseline ? 'current era baseline' : 'prior-era baseline';
+    return 'Era ' + meta.era.era + ' vs ' + meta.baseline.era +
+      ' (' + baseNote + ') — zone mix diff, K=' + meta.era.k + ' re-fit.';
   }
 
   function drawCourtHeatmap() {
@@ -824,7 +870,7 @@
     ctx.fillRect(0, 0, wCss, hCss);
 
     var g = courtGeometry(wCss, hCss);
-    var paintMode = courtState.mode === 'diff' ? 'diff' : 'abs';
+    var paintMode = (courtState.mode === 'diff' || courtState.mode === 'era') ? 'diff' : 'abs';
     paintZones(ctx, g, zones, paintMode);
     drawCourtLinesLite(ctx, g);
     ['arc', 'oreb', 'glassD', 'paintD', 'rim', 'mid', 'paintFT', 'perimeterD'].forEach(function (k) {
@@ -864,14 +910,28 @@
 
     var eraTabs = document.getElementById('archetype-court-era-tabs');
     if (eraTabs && data.eras) {
+      var nEras = data.eras.length;
       eraTabs.innerHTML = data.eras.map(function (e, i) {
+        var baseIdx = courtEraBaselineIdx(i, nEras);
+        var baseEra = data.eras[baseIdx];
+        var baseHint = i === 0
+          ? ('vs current (' + (baseEra && baseEra.era) + ')')
+          : ('vs prior (' + (baseEra && baseEra.era) + ')');
         return '<button type="button" class="court-heatmap__era' +
           (i === courtState.eraIdx ? ' is-active' : '') +
-          '" data-era="' + i + '">' + escapeHtml(e.era) + '</button>';
+          '" data-era="' + i + '" title="' + escapeHtml(baseHint) + '">' +
+          escapeHtml(e.era) + '</button>';
       }).join('');
       eraTabs.onclick = function (ev) {
         var btn = ev.target.closest('[data-era]');
         if (!btn) return;
+        // Picking an era should immediately switch to era mode.
+        if (courtState.mode !== 'era') courtState.mode = 'era';
+        root.querySelectorAll('.court-heatmap__mode').forEach(function (b) {
+          var on = (b.getAttribute('data-mode') || '') === 'era';
+          b.classList.toggle('is-active', on);
+          b.setAttribute('aria-selected', on ? 'true' : 'false');
+        });
         courtState.eraIdx = parseInt(btn.getAttribute('data-era'), 10) || 0;
         eraTabs.querySelectorAll('.court-heatmap__era').forEach(function (b) {
           b.classList.toggle('is-active', b === btn);
@@ -890,6 +950,13 @@
         });
         drawCourtHeatmap();
       };
+    });
+
+    // Ensure the active tab visuals reflect the current startup mode.
+    root.querySelectorAll('.court-heatmap__mode').forEach(function (b) {
+      var on = (b.getAttribute('data-mode') || '') === courtState.mode;
+      b.classList.toggle('is-active', on);
+      b.setAttribute('aria-selected', on ? 'true' : 'false');
     });
 
     drawCourtHeatmap();

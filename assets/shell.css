@@ -1590,6 +1590,11 @@ body.vh-team-themed .landing-favorite__select:focus{
   letter-spacing: 0.04em;
   color: var(--ink-muted);
 }
+.court-heatmap__baseline-kind{
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: 0;
+}
 .court-heatmap__tags-empty{
   margin: 0;
   font-size: 11.5px;
@@ -2700,15 +2705,36 @@ body.vh-team-themed .landing-favorite__select:focus{
   .network-story-arrow{ display: none; }
 }
 
-.network-stage-grid{
-  display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1.35fr);
-  gap: 14px;
+/* Full-width stacked sections (embedding space, then data flow). */
+.network-section{
   margin-bottom: 14px;
+  overflow: hidden;
+}
+.network-section__head{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px 16px;
+  margin-bottom: 12px;
+}
+.network-section__head .viz-panel__label{ margin: 0; }
+.network-map-layout{
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 320px);
+  gap: 16px;
   align-items: start;
 }
+.network-flow-layout{
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 340px);
+  gap: 16px;
+  align-items: start;
+}
+.network-flow-main{ min-width: 0; }
 @media (max-width: 900px){
-  .network-stage-grid{ grid-template-columns: 1fr; }
+  .network-map-layout,
+  .network-flow-layout{ grid-template-columns: 1fr; }
 }
 .network-map-canvas{
   display: block;
@@ -2721,6 +2747,34 @@ body.vh-team-themed .landing-favorite__select:focus{
 .network-map-canvas:active{ cursor: grabbing; }
 .network-map-card,
 .network-flow-card{ overflow: hidden; }
+.network-map-layout .network-insights,
+.network-flow-layout .network-node-inspector{ margin-top: 0; }
+/* Trace tooling */
+.network-flow-tools{
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+.network-trace-status{
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-muted);
+}
+.network-trace-status.is-tracing{ color: var(--data-orange); }
+.network-trace-clear{
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 5px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--hairline);
+  background: var(--paper);
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+.network-trace-clear:hover{ border-color: var(--data-orange); color: var(--ink); }
 .network-map-hint{
   margin: 8px 0 0;
   font-size: 11px;
@@ -2882,7 +2936,7 @@ body.vh-team-themed .landing-favorite__select:focus{
   color: var(--ink-muted);
 }
 .network-flow-host{
-  min-height: 520px;
+  min-height: 340px;
   background: #121210;
   border-radius: 8px;
   padding: 8px;
@@ -2952,6 +3006,48 @@ body.vh-team-themed .landing-favorite__select:focus{
   fill: rgba(235,104,52,0.35);
   stroke: #eb6834;
 }
+
+/* Tower family labels (shown for hovered / traced towers). */
+.network-flow-tower-label{
+  fill: #c7c5bd;
+  font-size: 10px;
+  font-family: var(--mono);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+.network-flow-tower-label.is-shown{ opacity: 0.92; }
+
+/* Line-of-sight tracing: dim everything off the active path so the
+   traced input <-> output chain reads as one bright line. */
+.network-flow-svg.is-tracing .network-flow-node:not(.on-path),
+.network-flow-svg.is-tracing .network-flow-node--input:not(.on-path){
+  opacity: 0.1 !important;
+}
+.network-flow-svg.is-tracing .network-flow-edge:not(.on-path){
+  opacity: 0.06 !important;
+}
+.network-flow-svg.is-tracing [data-input-label]:not(.on-path),
+.network-flow-svg.is-tracing [data-input-value]:not(.on-path){
+  opacity: 0.14;
+}
+.network-flow-node.on-path{
+  stroke: #eb6834;
+  fill: rgba(235,104,52,0.5);
+  stroke-width: 2.4;
+}
+.network-flow-edge.on-path{
+  stroke: #eb6834;
+  opacity: 0.95 !important;
+  stroke-width: 2.4;
+}
+.network-flow-node.trace-origin{
+  stroke: #67b5ff;
+  stroke-width: 3.2;
+  fill: rgba(103,181,255,0.45);
+}
+.network-flow-host [data-input-label].on-path,
+.network-flow-host [data-input-value].on-path{ fill: #f3a26f; }
 
 .network-arch-out,
 .network-skill-out{

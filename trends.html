@@ -129,10 +129,10 @@
       <div class="court-heatmap__head">
         <p class="viz-panel__label">Court zone map</p>
         <div class="court-heatmap__modes" role="tablist" aria-label="Court heatmap mode">
-          <button type="button" class="court-heatmap__mode is-active" data-mode="diff" role="tab" aria-selected="true">Long-run diff</button>
+          <button type="button" class="court-heatmap__mode" data-mode="diff" role="tab" aria-selected="false">Long-run diff</button>
           <button type="button" class="court-heatmap__mode" data-mode="early" role="tab" aria-selected="false">First 5</button>
           <button type="button" class="court-heatmap__mode" data-mode="late" role="tab" aria-selected="false">Last 5</button>
-          <button type="button" class="court-heatmap__mode" data-mode="era" role="tab" aria-selected="false">By era</button>
+          <button type="button" class="court-heatmap__mode is-active" data-mode="era" role="tab" aria-selected="true">By era</button>
         </div>
       </div>
       <div class="court-heatmap__body">
@@ -154,6 +154,7 @@
     </div>
     <p class="drift-card__foot">MTNN K=8 global contract; era-native clusters are a research layer.
       Court zones reuse the Chimera half-court recipe on mean era-z vectors.
+      By-era view diffs each window against the prior era (first era vs current).
       <a href="/methods#archetypes">Full method &rarr;</a></p>
   </section>
 
