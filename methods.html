@@ -16,20 +16,11 @@
 <meta name="twitter:image" content="/assets/og.svg">
 <link rel="stylesheet" href="assets/hoops.css">
 <link rel="stylesheet" href="assets/shell.css">
+<link rel="stylesheet" href="assets/responsive.css">
 </head>
 <body>
 
-<nav class="site-nav" aria-label="Vector Hoops site">
-  <a class="site-nav__brand" href="/">VECTOR<span class="site-nav__accent">HOOPS</span></a>
-  <div class="site-nav__links">
-    <a class="site-nav__link" href="/play">Play</a>
-    <a class="site-nav__link" href="/wiki">Wiki</a>
-    <a class="site-nav__link" href="/skills">Skills</a>
-    <a class="site-nav__link is-active" href="/methods" aria-current="page">Methods</a>
-    <a class="site-nav__link" href="/leaderboard">Leaderboard</a>
-    <a class="site-nav__link" href="/drift">Drift</a>
-  </div>
-</nav>
+<nav class="site-nav" data-active="/methods" aria-label="Vector Hoops site"></nav>
 
 <main class="methods-main">
   <h1>Method &amp; data sources</h1>
@@ -94,7 +85,7 @@
     </ul>
     <p>The client never re-derives cluster membership independently &mdash; it uses the label the pipeline computed, verified identical for all 12,392 players by the accuracy harness (check V2, below).</p>
     <p>
-      The <a href="/drift#archetype-eras-method">Drift page</a>'s <b>Archetype Eras</b> section asks how that
+      The <a href="/trends#archetype-eras-method">Trend Research</a> page's <b>Archetype Eras</b> section asks how that
       population of 8 archetypes shifted over three decades, and re-fits a second, independent
       layer of archetypes within five era windows to see whether names and centroids
       persist across eras. The method, quoted verbatim from <code>assets/archetypes_time.json</code>:
@@ -128,7 +119,7 @@
       The fused chimera on the reveal card is graded through the same composites against a pooled all-era quantile table (<code>assets/skill_probe.json</code>) &mdash; that blend never existed as a real season, so its reference pool is all 12,392 charted seasons, stated as such.
     </p>
     <p>
-      <b>Limitations, stated plainly:</b> "Two-Way Impact" is NBA.com on-court plus-minus per 100 possessions (with a small stated scoring stabilizer) &mdash; it is <b>not</b> BPM, RAPM, or any adjusted-impact metric, and small-minute seasons can spike it. Free-throw and 3-point percentages are empirical-Bayes shrunk by attempts upstream, but tiny-sample tails remain. Skills that need play-type, hustle, or tracking data (post play, screening, off-ball movement) are deliberately absent until those sources land with honest masks. A multi-task neural net (per-skill towers on the shared player embedding, <code>pipeline/train_mtnn.py</code>) is trained against these grades as a research lane; the site ships only the transparent composites.
+      <b>Limitations, stated plainly:</b> "Two-Way Impact" is NBA.com on-court plus-minus per 100 possessions (with a small stated scoring stabilizer) &mdash; it is <b>not</b> BPM, RAPM, or any adjusted-impact metric, and small-minute seasons can spike it. Free-throw and 3-point percentages are empirical-Bayes shrunk by attempts upstream, but tiny-sample tails remain. Skills that need play-type, hustle, or tracking data (post play, screening, off-ball movement) are deliberately absent until those sources land with honest masks. The promoted MTNN embedding (<code>pipeline/train_mtnn.py</code>, exported to <code>assets/mtnn_embeddings.f32</code>) scores daily puzzles and neighbor search when it clears held-out recall and purity gates; skill composites on the reveal card stay transparent.
     </p>
     <p>
       <b>Playoff Lens (postseason as a distinct regime).</b> The whole charted space is <b>regular season</b>. When playoff data is loaded, the Skills Lens shows a player-season's regular-season vs playoff splits &mdash; points per 100, minutes, usage, true shooting &mdash; and a stated <b>riser/fader</b> verdict from the points-per-100 difference. "Riser" and "Fader" describe the change in raw postseason production against a shorter, tougher sample; they are <b>not</b> a clutch or leadership claim. Team playoff wins and rounds advanced are the team's, joined by roster. The MTNN treats playoffs as its own tower family (with a <code>playoff_riser</code> head that asks how well a player's regular-season identity forecasts his postseason swing) &mdash; research lane only; the game shows the transparent splits, and nothing at all until the postseason data lands.
@@ -137,7 +128,7 @@
       <b>Wide-matrix skills (post / transition / motor + three gravities).</b> Six skills the box score can't express are graded from richer feeds &mdash; Post Play and Transition from synergy play-type frequency + points-per-possession, Motor from hustle stats (screen assists, deflections, loose balls, charges, box-outs), and three kinds of gravity: <b>Shooting Gravity</b> (pull-up 3-point volume weighted heaviest, plus 3-point volume and accuracy &mdash; the off-dribble threat that pulls defenders out, so a movement shooter like Curry tops it, not a stationary spot-up specialist), <b>Rim Gravity</b> (shot-blocking + contested shots minus opponent field-goal percentage allowed &mdash; the interior deterrence that warps offenses, topped by rim protectors like Wembanyama), and <b>Disruption Gravity</b> (steals + deflections + charges drawn &mdash; perimeter defensive warp that bends passing lanes, topped by disruptors like Marcus Smart). These are <b>masked</b>: tracked only from <b>2015-16 on</b>, so earlier seasons show "not tracked this era" rather than a guessed grade. All three gravities are <b>stated proxies from public NBA.com tracking + the box score &mdash; not Second Spectrum gravity or matchup-difficulty data</b>. Same era-z percentile grading as the core twelve.
     </p>
     <p>
-      <b>Steals of the Draft.</b> Pairs a player's stated draft expectation (the rookie-scale slot implied by his pick) against his actual peak skill grade, both as percentile ranks among drafted players. A late pick who became elite scores as a <b>steal</b>; an early pick who didn't, a <b>bust</b>. It is a descriptive gap between expectation and measured production &mdash; not a re-draft or a value verdict &mdash; and it shows only when the draft data is loaded.
+      <b>Steals of the Draft.</b> Pairs a player's stated draft expectation (the rookie-scale slot implied by his pick) against his <b>career mean</b> skill grade across charted seasons (minimum three), both as percentile ranks among drafted players. A late pick who sustained strong production scores as a <b>steal</b>; an early pick who didn't, a <b>bust</b>. Peak single seasons do not drive the board. It is a descriptive gap between expectation and measured production &mdash; not a re-draft or a value verdict &mdash; and it shows only when the draft data is loaded.
     </p>
   </section>
 
@@ -153,25 +144,23 @@
   <section class="methods-section" id="drift">
     <h2>The League Drift</h2>
     <p>
-      The <a href="/drift">Drift page</a> asks a different question than the rest of the
+      The <a href="/trends">Trend Research</a> page asks a different question than the rest of the
       site: not "how good was this player" but "how much did the shape of the league's
       14-dim vector space itself rotate, season to season." The method, quoted verbatim
       from <code>assets/drift.json</code>:
     </p>
     <p style="font-family:var(--mono); font-size:12px; background:var(--paper); padding:10px 12px; border-radius:8px; border:1px solid var(--hairline); line-height:1.6; white-space:pre-wrap;">orthogonal Procrustes on consecutive-season shared players (&gt;=30); rotation = mean principal angle of Q vs identity; residual = normalized Frobenius after alignment; no scaling (z-spaces pre-normalized); chained transforms map any season into the 1996-97 root frame; axisDrift = 1-|Q_ii|, a stated proxy</p>
     <p>
-      The chained root-frame transforms also power the wiki's <b>Era twin</b> line: each
-      player's signature-season vector is mapped into the 1996-97 frame and matched to
-      its nearest cosine neighbor from a different decade &mdash; a cross-era comparable
-      the raw z-space alone can't honestly produce, because it never accounts for the
-      league's own rotation.
+      The chained root-frame transforms power Trend Research drift charts; the
+      <b>Era Twin</b> daily puzzle now uses the promoted MTNN embedding for
+      cross-decade matching (same space as Chimera scoring).
     </p>
   </section>
 
   <section class="methods-section" id="trajectories">
     <h2>Career Shapes (career trajectories)</h2>
     <p>
-      The <a href="/drift#trajectories-method">Drift page</a>'s <b>Career Shapes</b> section asks a
+      The <a href="/trends#trajectories-method">Trend Research</a> page's <b>Career Shapes</b> section asks a
       career-level question on top of the per-season archetypes above: not "what archetype was this
       season" but "how did this player's own archetype label move across his whole career." Careers
       require at least 4 charted seasons; each season keeps its own per-season global archetype
@@ -204,7 +193,7 @@
       <li><b>V1</b> &mdash; <code>vectors.json</code> internal integrity: dimensions, ranges, no duplicate (name, season) rows, valid map coordinates.</li>
       <li><b>V2</b> &mdash; cluster labels: recomputes nearest-centroid assignment from member means and confirms the client's centroid method reproduces the pipeline's labels for all 12,392 players.</li>
       <li><b>V3</b> &mdash; <code>deadline.json</code>: recomputes <i>every</i> quiz mover's deltas directly from the raw game logs and requires an exact match (0.01 rounding tolerance) &mdash; 100% sample, not a spot-check.</li>
-      <li><b>V4</b> &mdash; Chimera determinism: the seeded daily target is checked across 30 sampled dates for stability and for always satisfying the low-similarity (cosine &lt; 0.3) constraint between its two donor seasons.</li>
+      <li><b>V4</b> &mdash; Chimera determinism: the seeded daily target is checked across 30 sampled dates for stability and for always satisfying the low-similarity (MTNN cosine &lt; 0.3) constraint between its two donor seasons.</li>
     </ul>
   </section>
 
@@ -226,12 +215,13 @@
 
 <footer class="site-footer">
   <div class="site-footer__links">
-    <a href="/wiki">Wiki</a>
+    <a href="/players">Players</a>
     <a href="/play">Play</a>
     <a href="https://github.com/jcdavis131/vector-hoops" target="_blank" rel="noopener">GitHub</a>
   </div>
-  <div class="site-footer__attribution">Every number recomputable from stats.nba.com &amp; Basketball-Reference source data &middot; part of the <a href="https://jcamd.com/arcade" target="_blank" rel="noopener">jcamd arcade</a></div>
+  <div class="site-footer__attribution">Every number recomputable from stats.nba.com &amp; Basketball-Reference source data &middot; from <a href="https://jcamd.com/#lab" target="_blank" rel="noopener">jcamd.com</a></div>
 </footer>
 
+<script src="assets/site-nav.js" defer></script>
 </body>
 </html>

@@ -22,20 +22,11 @@
 <meta name="twitter:image" content="/assets/og.svg">
 <link rel="stylesheet" href="assets/hoops.css">
 <link rel="stylesheet" href="assets/shell.css">
+<link rel="stylesheet" href="assets/responsive.css">
 </head>
 <body>
 
-<nav class="site-nav site-nav--static" aria-label="Vector Hoops site">
-  <a class="site-nav__brand" href="/">VECTOR<span class="site-nav__accent">HOOPS</span></a>
-  <div class="site-nav__links">
-    <a class="site-nav__link is-active" href="/play" aria-current="page">Play</a>
-    <a class="site-nav__link" href="/wiki">Wiki</a>
-    <a class="site-nav__link" href="/skills">Skills</a>
-    <a class="site-nav__link" href="/methods">Methods</a>
-    <a class="site-nav__link" href="/leaderboard">Leaderboard</a>
-    <a class="site-nav__link" href="/drift">Drift</a>
-  </div>
-</nav>
+<nav class="site-nav site-nav--static" data-active="/play" aria-label="Vector Hoops site"></nav>
 
 <div class="vh-challenge-banner" id="challenge-banner" hidden role="status">
   <span id="challenge-banner-text"></span>
@@ -504,7 +495,7 @@
             <canvas id="hoops-map" class="vh-map" width="600" height="600" aria-label="3D starfield of all player-seasons colored by position, with the Chimera blend always shown as a diamond, the Stats Donor (solid square) and Style Donor (hollow square) hidden until their stage resolves, your guesses pinned, and triangulation lines from your latest guess to whichever anchors are currently visible"></canvas>
             <button class="vh-map-pause" id="map-pause-btn" type="button" title="Pause rotation">Pause</button>
             <button class="vh-map-color" id="map-color-btn" type="button" title="Toggle dot coloring">Color: position</button>
-            <div class="vh-map-axes" id="map-axes">PC1 / PC2 / PC3 of the era-normalized stat space</div>
+            <div class="vh-map-axes" id="map-axes" aria-label="PCA axis definitions"></div>
           </div>
           <div class="vh-mapcard__legend" id="map-legend"></div>
         </div>
@@ -981,7 +972,7 @@
     </div>
     <ol class="vh-modal__list">
       <li>Every day we fuse two real player-seasons into one stat line — the equation IS the puzzle: <b>Stats Player</b> + <b>Style Player</b> = <b>Mashup Player</b>. All three cards show their full evidence (sigma bars, hint sentence, chips) from the start — nothing is hidden — but the ORDER is staged: one guess to name the Stats Player, then one guess to name the Style Player, then up to 6 guesses to name the Mashup. Each later card's input stays locked until the one before it resolves.</li>
-      <li>Stats/Style are single-shot: whatever you guess, the stage resolves immediately — right or wrong, the true donor is revealed with your alignment % and the multiplier it earned (exact player-season = &times;2.0, &ge;90% = &times;1.5, &ge;75% = &times;1.25, &ge;50% = &times;1.1, below = &times;1.0). The Mashup locks on the single closest real match in the whole pool (PERFECT MATCH, gold) or any guess &ge;92% full-blend cosine ("close enough", silver) — solving on guess 1&ndash;6 is worth 600/500/400/300/200/100 base points. FINAL score = base &times; Stats multiplier &times; Style multiplier (max 2,400). Unsolved mashups still bank a consolation score off the two donor multipliers, so donor skill always counts.</li>
+      <li>Stats/Style are single-shot: whatever you guess, the stage resolves immediately — right or wrong, the true donor is revealed with your MTNN alignment % and the multiplier it earned (exact player-season = &times;2.0, &ge;90% = &times;1.5, &ge;75% = &times;1.25, &ge;50% = &times;1.1, below = &times;1.0). The Mashup locks on the single closest real match in the whole pool (PERFECT MATCH, gold) or any guess &ge;92% full-blend MTNN similarity ("close enough", silver) — solving on guess 1&ndash;6 is worth 600/500/400/300/200/100 base points. FINAL score = base &times; Stats multiplier &times; Style multiplier (max 2,400). Unsolved mashups still bank a consolation score off the two donor multipliers, so donor skill always counts.</li>
       <li><b>Progressive triangulation:</b> the Chimera diamond is always on the 3D map; each donor's anchor stays hidden until its stage resolves, then lights up — giving you a spatial read on whatever's still ahead.</li>
       <li>Hints (Daily, Mashup stage only — both donors are already revealed by then): mashup guess 3 reveals the true match's position; guess 5 reveals its archetype.</li>
       <li>A round is complete once the Mashup resolves (solved or out of guesses) — points post to the leaderboard either way. Free Play (Build-a-Chimera) is unchanged: you pick both donors yourself — the only hunt is finding the mashup's real match, unlimited attempts, none of it touches your daily streaks or stats.</li>
@@ -1091,16 +1082,17 @@
 <footer class="site-footer">
   <div class="site-footer__links">
     <a href="/methods">Methods</a>
-    <a href="/wiki">Wiki</a>
+    <a href="/players">Players</a>
     <a href="https://github.com/jcdavis131/vector-hoops" target="_blank" rel="noopener">GitHub</a>
   </div>
-  <div class="site-footer__attribution">Every number recomputable from stats.nba.com &amp; Basketball-Reference source data &middot; part of the <a href="https://jcamd.com/arcade" target="_blank" rel="noopener">jcamd arcade</a></div>
+  <div class="site-footer__attribution">Every number recomputable from stats.nba.com &amp; Basketball-Reference source data &middot; from <a href="https://jcamd.com/#lab" target="_blank" rel="noopener">jcamd.com</a></div>
 </footer>
 
 <script src="assets/dossier.js" defer></script>
 <script src="assets/mtnn.js" defer></script>
 <script src="assets/player-roster.js" defer></script>
 <script src="assets/leaderboard.js" defer></script>
+<script src="assets/site-nav.js" defer></script>
 <script src="assets/favorite-team.js" defer></script>
 <script src="assets/game.js" defer></script>
 </body>

@@ -16,20 +16,11 @@
 <meta name="twitter:image" content="/assets/og.svg">
 <link rel="stylesheet" href="assets/hoops.css">
 <link rel="stylesheet" href="assets/shell.css">
+<link rel="stylesheet" href="assets/responsive.css">
 </head>
 <body>
 
-<nav class="site-nav" aria-label="Vector Hoops site">
-  <a class="site-nav__brand" href="/">VECTOR<span class="site-nav__accent">HOOPS</span></a>
-  <div class="site-nav__links">
-    <a class="site-nav__link" href="/play">Play</a>
-    <a class="site-nav__link" href="/wiki">Wiki</a>
-    <a class="site-nav__link" href="/skills">Skills</a>
-    <a class="site-nav__link" href="/methods">Methods</a>
-    <a class="site-nav__link" href="/leaderboard">Leaderboard</a>
-    <a class="site-nav__link" href="/drift">Drift</a>
-  </div>
-</nav>
+<nav class="site-nav" data-active="/" aria-label="Vector Hoops site"></nav>
 
 <main class="landing-main">
 
@@ -47,7 +38,7 @@
           </div>
         </div>
         <ul class="landing-hero__chips" aria-label="Quick facts">
-          <li>12,392 seasons</li>
+          <li>12,966 seasons</li>
           <li>5 game modes</li>
           <li>Era-honest comparisons</li>
         </ul>
@@ -169,20 +160,20 @@
     </div>
 
     <div class="vh-card" style="margin-top:24px">
-      <h2 style="margin:0 0 6px">Beyond the games</h2>
-      <p style="margin:0 0 14px;color:#555">The engine room is open &mdash; same data, no gameplay required.</p>
+      <h2 style="margin:0 0 6px">Research</h2>
+      <p style="margin:0 0 14px;color:#555">Same data as the games — trends, player references, and team labs.</p>
       <div class="modes-grid" style="margin:0">
-        <a class="vh-card mode-card" href="/drift">
-          <div class="mode-card__title">League Drift</div>
-          <p class="mode-card__pitch">30 seasons of the league's geometry &mdash; the math found both lockouts, COVID, and the scoring era on its own.</p>
+        <a class="vh-card mode-card" href="/trends">
+          <div class="mode-card__title">Trend Research</div>
+          <p class="mode-card__pitch">League drift, archetype eras, and career trajectories — 30 seasons of measured geometry.</p>
         </a>
-        <a class="vh-card mode-card" href="/wiki">
-          <div class="mode-card__title">The Player Wiki</div>
-          <p class="mode-card__pitch">2,293 scouting dossiers &mdash; strengths, concerns, era twins, and career trajectories, all recomputable.</p>
+        <a class="vh-card mode-card" href="/players">
+          <div class="mode-card__title">Player References</div>
+          <p class="mode-card__pitch">Directory, dossiers, and era-honest skill grades for every charted player-season.</p>
         </a>
-        <a class="vh-card mode-card" href="/skills">
-          <div class="mode-card__title">Skills Lens</div>
-          <p class="mode-card__pitch">Twelve core skills plus six tracking skills (2015-16+) &mdash; 0&ndash;99, era-normalized. From Sniper to Disruptor.</p>
+        <a class="vh-card mode-card" href="/teams">
+          <div class="mode-card__title">Team Labs</div>
+          <p class="mode-card__pitch">Roster archetype mix and skill snapshots by team and season.</p>
         </a>
         <a class="vh-card mode-card" href="/leaderboard">
           <div class="mode-card__title">Leaderboard</div>
@@ -222,10 +213,10 @@
 <footer class="site-footer">
   <div class="site-footer__links">
     <a href="/methods">Methods</a>
-    <a href="/wiki">Wiki</a>
+    <a href="/players">Players</a>
     <a href="https://github.com/jcdavis131/vector-hoops" target="_blank" rel="noopener">GitHub</a>
   </div>
-  <div class="site-footer__attribution">Every number recomputable from stats.nba.com &amp; Basketball-Reference source data &middot; part of the <a href="https://jcamd.com/arcade" target="_blank" rel="noopener">jcamd arcade</a></div>
+  <div class="site-footer__attribution">Every number recomputable from stats.nba.com &amp; Basketball-Reference source data &middot; from <a href="https://jcamd.com/#lab" target="_blank" rel="noopener">jcamd.com</a></div>
 </footer>
 
 <script>
@@ -240,6 +231,7 @@
     if (el) el.textContent = String(Math.max(days, 1));
   })();
 </script>
+<script src="assets/site-nav.js" defer></script>
 <script src="assets/favorite-team.js" defer></script>
 </body>
 </html>

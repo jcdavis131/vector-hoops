@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MTNN Network Explorer — Vector Hoops</title>
+<meta name="description" content="Step through the Multi-Tower Neural Network: 48-d embeddings, archetype heads, and skill ratings visualized in 3D.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Ctext%20y%3D%22.9em%22%20font-size%3D%2290%22%3E%26%23127936%3B%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta property="og:type" content="website">
+<meta property="og:title" content="MTNN Network Explorer — Vector Hoops">
+<meta property="og:description" content="Walk data through the neural network — towers, fusion, embedding map, archetypes and skills.">
+<meta property="og:image" content="/assets/og.svg">
+<link rel="stylesheet" href="assets/hoops.css">
+<link rel="stylesheet" href="assets/shell.css">
+<link rel="stylesheet" href="assets/responsive.css">
+</head>
+<body>
+
+<nav class="site-nav" data-active="/model" aria-label="Vector Hoops site"></nav>
+
+<main class="research-main network-main">
+
+  <div class="research-head network-head">
+    <h1>Inside the network</h1>
+    <p class="network-hero">Step through the <b>MTNN</b> &mdash; eighteen masked feature towers fuse into a
+      48-dimensional craft embedding, then decode into archetype logits, skill grades, and next-season profile stats.
+      Pick a player-season and watch the signal move.</p>
+  </div>
+
+  <section class="drift-card network-controls-card" aria-label="Explorer controls">
+    <div class="network-controls">
+      <label class="network-controls__label" for="network-search">Player</label>
+      <input type="search" id="network-search" class="wiki-search network-search"
+        placeholder="Search charted players&hellip;" autocomplete="off" autocorrect="off" spellcheck="false">
+      <ul class="network-suggest" id="network-suggest" hidden></ul>
+      <span id="network-player-tag" class="network-player-tag">Loading&hellip;</span>
+      <label class="network-compare-toggle">
+        <input type="checkbox" id="network-compare-toggle">
+        <span>Compare mode</span>
+      </label>
+      <input type="search" id="network-compare-search" class="wiki-search network-search"
+        placeholder="Compare to player-season&hellip;" autocomplete="off" autocorrect="off" spellcheck="false" disabled>
+      <ul class="network-suggest" id="network-compare-suggest" hidden></ul>
+      <span id="network-compare-tag" class="network-player-tag network-player-tag--compare">No compare player</span>
+      <div class="network-step-nav" id="network-step-nav" role="tablist" aria-label="Network layer">
+        <button type="button" class="network-step-btn is-active" data-step="0">Input</button>
+        <button type="button" class="network-step-btn" data-step="1">Towers</button>
+        <button type="button" class="network-step-btn" data-step="2">Fusion</button>
+        <button type="button" class="network-step-btn" data-step="3">Embed</button>
+        <button type="button" class="network-step-btn" data-step="4">Heads</button>
+      </div>
+      <button type="button" id="network-play" class="network-play-btn" aria-label="Play flow animation">
+        Play flow
+      </button>
+    </div>
+    <div class="network-timebar" id="network-timebar" hidden>
+      <div class="network-timebar__head">
+        <span class="network-timebar__label">Career timeline</span>
+        <span id="network-timebar-current" class="network-timebar__current"></span>
+      </div>
+      <input type="range" id="network-time-scrubber" min="0" max="0" step="1" value="0">
+      <div id="network-timebar-range" class="network-timebar__range"></div>
+    </div>
+    <p id="network-step-caption" class="network-step-caption">Loading architecture&hellip;</p>
+    <div id="network-story" class="network-story" aria-live="polite">
+      <p class="drift-loading">Loading input-to-prediction story&hellip;</p>
+    </div>
+    <div id="network-compare-summary" class="network-insights" aria-live="polite">
+      <p class="drift-loading">Compare mode off.</p>
+    </div>
+  </section>
+
+  <div class="network-stage-grid">
+    <section class="drift-card network-map-card" aria-label="48-d embedding map">
+      <p class="viz-panel__label">Embedding space (PCA of 48-d)</p>
+      <canvas id="network-map-canvas" class="network-map-canvas" aria-label="3D MTNN embedding map"></canvas>
+      <p class="network-map-hint">Drag to orbit &middot; scroll to zoom &middot; orange pulse = active player</p>
+      <div id="network-map-insights" class="network-insights" aria-live="polite">
+        <p class="drift-loading">Loading local embedding context&hellip;</p>
+      </div>
+    </section>
+
+    <section class="drift-card network-flow-card" aria-label="Network data flow">
+      <p class="viz-panel__label">Data flow</p>
+      <div id="network-flow-svg" class="network-flow-host" role="img" aria-label="MTNN layer diagram"></div>
+      <div id="network-flow-insights" class="network-insights" aria-live="polite">
+        <p class="drift-loading">Loading flow diagnostics&hellip;</p>
+      </div>
+      <div id="network-node-inspector" class="network-insights" aria-live="polite">
+        <p class="drift-loading">Select an input/tower/output node to inspect exact values and predictions.</p>
+      </div>
+    </section>
+  </div>
+
+  <section class="drift-card network-output-card" aria-label="Model outputs">
+    <div class="viz-duo-grid">
+      <div class="viz-panel">
+        <p class="viz-panel__label">Archetype head (game K=8)</p>
+        <div id="network-arch-out" class="network-arch-out"></div>
+      </div>
+      <div class="viz-panel">
+        <p class="viz-panel__label">Skill towers (grade / 100)</p>
+        <div id="network-skill-out" class="network-skill-out"></div>
+      </div>
+      <div class="viz-panel">
+        <p class="viz-panel__label">Next-season profile (z-score regression)</p>
+        <div id="network-next-out" class="network-skill-out"></div>
+      </div>
+    </div>
+    <p class="drift-card__foot">Tower animation is schematic; embedding position and head outputs are from the
+      latest promoted MTNN checkpoint (concat fusion + hybrid loss 0.8/0.2,
+      held-out test recall@10 0.996, purity@20 0.806). <a href="/methods#mtnn">Full method &rarr;</a></p>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="site-footer__links">
+    <a href="/methods">Methods</a>
+    <a href="/play">Play</a>
+    <a href="https://github.com/jcdavis131/vector-hoops" target="_blank" rel="noopener">GitHub</a>
+  </div>
+  <div class="site-footer__attribution">Every number recomputable from stats.nba.com source data &middot; from <a href="https://jcamd.com/#lab" target="_blank" rel="noopener">jcamd.com</a></div>
+</footer>
+
+<script src="assets/site-nav.js" defer></script>
+<script src="assets/mtnn.js" defer></script>
+<script src="assets/network-viz.js" defer></script>
+</body>
+</html>

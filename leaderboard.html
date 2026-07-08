@@ -16,20 +16,11 @@
 <meta name="twitter:image" content="/assets/og.svg">
 <link rel="stylesheet" href="assets/hoops.css">
 <link rel="stylesheet" href="assets/shell.css">
+<link rel="stylesheet" href="assets/responsive.css">
 </head>
 <body>
 
-<nav class="site-nav" aria-label="Vector Hoops site">
-  <a class="site-nav__brand" href="/">VECTOR<span class="site-nav__accent">HOOPS</span></a>
-  <div class="site-nav__links">
-    <a class="site-nav__link" href="/play">Play</a>
-    <a class="site-nav__link" href="/wiki">Wiki</a>
-    <a class="site-nav__link" href="/skills">Skills</a>
-    <a class="site-nav__link" href="/methods">Methods</a>
-    <a class="site-nav__link is-active" href="/leaderboard" aria-current="page">Leaderboard</a>
-    <a class="site-nav__link" href="/drift">Drift</a>
-  </div>
-</nav>
+<nav class="site-nav" data-active="/leaderboard" aria-label="Vector Hoops site"></nav>
 
 <main class="leaderboard-main">
 
@@ -74,12 +65,13 @@
   <div class="site-footer__links">
     <a href="/play">Play</a>
     <a href="/methods">Methods</a>
-    <a href="/wiki">Wiki</a>
+    <a href="/players">Players</a>
     <a href="https://github.com/jcdavis131/vector-hoops" target="_blank" rel="noopener">GitHub</a>
   </div>
-  <div class="site-footer__attribution">Every number recomputable from stats.nba.com &amp; Basketball-Reference source data &middot; part of the <a href="https://jcamd.com/arcade" target="_blank" rel="noopener">jcamd arcade</a></div>
+  <div class="site-footer__attribution">Every number recomputable from stats.nba.com &amp; Basketball-Reference source data &middot; from <a href="https://jcamd.com/#lab" target="_blank" rel="noopener">jcamd.com</a></div>
 </footer>
 
+<script src="assets/site-nav.js" defer></script>
 <script src="assets/leaderboard.js" defer></script>
 </body>
 </html>
