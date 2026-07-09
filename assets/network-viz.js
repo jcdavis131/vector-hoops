@@ -38,23 +38,23 @@
   var STEPS = [
     {
       id: 'input',
-      caption: '129 masked features arrive in 18 families — volume, playmaking, tracking, roster context, and more.'
+      caption: 'Stats arrive in 18 groups — shooting, playmaking, tracking, roster context, and more.'
     },
     {
       id: 'towers',
-      caption: 'Each ResidualTower encodes one family (96 hidden → 24-d). Missing tracking eras are masked out.'
+      caption: 'Each group runs through its own small net. Years without tracking data are skipped.'
     },
     {
       id: 'fusion',
-      caption: 'Concat fusion stacks 18×24 tower outputs, adds a season token, and projects to a 48-d vector (L2-normalized).'
+      caption: 'Tower outputs stack together and compress into one 48-number player fingerprint.'
     },
     {
       id: 'embedding',
-      caption: 'The embedding is where daily puzzles score cosine similarity — your player lights up on the PCA map.'
+      caption: 'That fingerprint is where we measure similarity — your player lights up on the map.'
     },
     {
       id: 'heads',
-      caption: 'Decode heads read the embedding: archetype logits, position logits, skill towers, and next-season profile stats.'
+      caption: 'Separate readouts guess archetype, position, skills, and next-year stats.'
     }
   ];
 
@@ -66,6 +66,12 @@
     map: null,
     heads: null,
     inputs: null,
+    // Jacobian attribution (assets/mtnn_jacobian.*): causal sensitivity of each
+    // target to each tower's output. Replaces input-magnitude proxies on edges.
+    jac: null,
+    jacData: null,
+    jacTower: {},
+    jacTarget: {},
     features: [],
     featureIndex: {},
     featureLabel: {},
@@ -79,7 +85,9 @@
     compareIdx: -1,
     compareOn: false,
     careerRows: [],
-    selectedNode: { type: 'head_group', key: 'archetype' },
+    selectedNode: null,
+    hoverNode: null,
+    _hoverKey: null,
     step: 0,
     playing: false,
     particles: [],
@@ -153,6 +161,66 @@
     return 0.0;
   }
 
+  // ---- Jacobian attribution -------------------------------------------------
+  // |d(target)/d(tower_output)| for this row. This is causal sensitivity, not
+  // input size: `bio` dominates the position head even though its inputs are
+  // small. Index by family NAME — mtnn_arch.towerFamilies and the jacobian's
+  // towerFamilies are in different orders.
+
+  function jacHas() {
+    return !!(state.jac && state.jacData && state.playerIdx >= 0);
+  }
+
+  function jacInfluence(playerIdx, fam, target) {
+    if (!jacHas()) return null;
+    var t = state.jacTower[fam];
+    var g = state.jacTarget[target];
+    if (t == null || g == null) return null;
+    var nT = state.jac.towerFamilies.length;
+    var nG = state.jac.targets.length;
+    var v = state.jacData[(playerIdx * nT + t) * nG + g];
+    return Number.isFinite(v) ? v : null;
+  }
+
+  /* Influence of every tower on `target`, keyed by family and scaled to 0..1
+     within this row so edge widths stay comparable. */
+  function towerInfluence(playerIdx, target) {
+    if (!jacHas()) return null;
+    var fams = (state.arch && state.arch.towerFamilies) || [];
+    var out = {};
+    var max = 0;
+    for (var i = 0; i < fams.length; i++) {
+      var v = jacInfluence(playerIdx, fams[i], target);
+      if (v == null) continue;
+      out[fams[i]] = v;
+      if (v > max) max = v;
+    }
+    if (max <= 0) return null;
+    for (var k in out) out[k] = out[k] / max;
+    return out;
+  }
+
+  /* Total sensitivity of each head group, normalized across heads. */
+  function headInfluence(playerIdx) {
+    if (!jacHas()) return null;
+    var fams = (state.arch && state.arch.towerFamilies) || [];
+    var out = {};
+    var max = 0;
+    state.jac.targets.forEach(function (t) {
+      if (t === 'embedding') return;
+      var sum = 0;
+      for (var i = 0; i < fams.length; i++) {
+        var v = jacInfluence(playerIdx, fams[i], t);
+        if (v != null) sum += v;
+      }
+      out[t] = sum;
+      if (sum > max) max = sum;
+    });
+    if (max <= 0) return null;
+    for (var k in out) out[k] = out[k] / max;
+    return out;
+  }
+
   function distance3(a, b) {
     var dx = a[0] - b[0];
     var dy = a[1] - b[1];
@@ -200,7 +268,17 @@
     var signalMass = signalVals.reduce(function (a, b) { return a + b; }, 0);
     var top3Mass = topN(signals, 3, 'score').reduce(function (a, b) { return a + b.score; }, 0);
     var inputFocus = signalMass > 1e-9 ? top3Mass / signalMass : 0;
-    var towerSpread = 1 - normalizedEntropy(signalVals);
+
+    // Tower selectivity must be measured on CAUSAL influence. Measured on raw
+    // input magnitudes it reads ~0 for any superstar (every family maxes out),
+    // which previously looked like a network pathology and was not.
+    var embInf = towerInfluence(playerIdx, 'embedding');
+    var towerVals = embInf
+      ? (state.arch.towerFamilies || []).map(function (f) {
+          return embInf[f] != null ? embInf[f] : 0;
+        })
+      : signalVals;
+    var towerSpread = 1 - normalizedEntropy(towerVals);
 
     var arch = softmax(Array.prototype.slice.call(row, 0, state.nArch));
     var archSorted = arch.slice().sort(function (a, b) { return b - a; });
@@ -352,10 +430,18 @@
     return state.heads.subarray(off, off + total);
   }
 
+  /* Tower node size: causal influence on the embedding when the Jacobian is
+     available, else the legacy input-magnitude proxy. */
   function towerHeights(playerIdx) {
     if (playerIdx < 0) return null;
-    var signals = inputSignalsForPlayer(playerIdx);
     var fams = state.arch.towerFamilies || [];
+    var inf = towerInfluence(playerIdx, 'embedding');
+    if (inf) {
+      return fams.map(function (fam) {
+        return 0.25 + (inf[fam] != null ? inf[fam] : 0) * 0.75;
+      });
+    }
+    var signals = inputSignalsForPlayer(playerIdx);
     return fams.map(function (_, i) {
       var s = familyWeight(fams[i], signals);
       return 0.25 + s * 0.75;
@@ -460,17 +546,17 @@
     host.innerHTML =
       '<div class="network-story-lane">' +
         '<div class="network-story-stage' + cls0 + '">' +
-          '<div class="network-story-stage__head">1) Strong Inputs</div>' +
+          '<div class="network-story-stage__head">What went in</div>' +
           '<div class="network-story-stage__chips">' + inputsHtml + '</div>' +
         '</div>' +
         '<div class="network-story-arrow" aria-hidden="true">→</div>' +
         '<div class="network-story-stage' + cls1 + '">' +
-          '<div class="network-story-stage__head">2) Most Active Towers</div>' +
+          '<div class="network-story-stage__head">What lit up</div>' +
           '<div class="network-story-stage__chips">' + towersHtml + '</div>' +
         '</div>' +
         '<div class="network-story-arrow" aria-hidden="true">→</div>' +
         '<div class="network-story-stage' + cls2 + '">' +
-          '<div class="network-story-stage__head">3) Predicted Outcomes</div>' +
+          '<div class="network-story-stage__head">What came out</div>' +
           '<div class="network-story-stage__chips">' + predHtml + '</div>' +
         '</div>' +
       '</div>';
@@ -481,7 +567,7 @@
     if (!host || state.playerIdx < 0) return;
     var nbs = embeddingNeighbors(state.playerIdx, 5);
     if (!nbs.length) {
-      host.innerHTML = '<p class="drift-loading">No local embedding neighbors yet.</p>';
+      host.innerHTML = '<p class="drift-loading">No nearby players yet.</p>';
       return;
     }
     var archNames = (state.arch && state.arch.gameArchetypes) || [];
@@ -496,7 +582,7 @@
       return { name: k, share: counts[k] / nbs.length };
     }).sort(function (a, b) { return b.share - a.share; }).slice(0, 3);
     host.innerHTML =
-      '<div class="network-insights__head">Embedding context</div>' +
+      '<div class="network-insights__head">Nearby players</div>' +
       '<div class="network-insights__chips">' +
         mix.map(function (m) {
           return '<span class="network-insight-chip">' + esc(m.name) + ' <b>' +
@@ -513,7 +599,7 @@
         if (!p) return '';
         return '<li><span class="network-neighbor-list__name">' + esc(p.name) + '</span>' +
           '<span class="network-neighbor-list__meta">' + esc(p.season) + ' · ' +
-          fmtPredScore(n.sim * 100) + '% local sim</span></li>';
+          fmtPredScore(n.sim * 100) + '% match</span></li>';
       }).join('') + '</ol>';
   }
 
@@ -522,19 +608,19 @@
     if (!host || state.playerIdx < 0) return;
     var d = flowDiagnostics(state.playerIdx);
     if (!d) {
-      host.innerHTML = '<p class="drift-loading">No flow diagnostics yet.</p>';
+      host.innerHTML = '<p class="drift-loading">No signal summary yet.</p>';
       return;
     }
     var rows = [
-      { key: 'Input focus', val: d.inputFocus, hint: 'Share of total input mass carried by top 3 families.' },
-      { key: 'Tower selectivity', val: d.towerSpread, hint: '1 - normalized entropy across tower activations.' },
-      { key: 'Archetype certainty', val: d.archMargin, hint: 'Gap between top-1 and top-2 archetype probabilities.' },
-      { key: 'Position certainty', val: d.posMargin, hint: 'Gap between top-1 and top-2 position probabilities.' },
-      { key: 'Skill contrast', val: d.skillContrast, hint: 'Standard deviation across skill-head outputs.' },
-      { key: 'Next-profile signal', val: d.nextSignal, hint: 'Mean absolute z-shift across next-season stats.' }
+      { key: 'Top inputs', val: d.inputFocus, hint: 'How much of the signal comes from the three strongest stat groups.' },
+      { key: 'Tower spread', val: d.towerSpread, hint: 'Whether one tower dominates or several share the load.' },
+      { key: 'Archetype gap', val: d.archMargin, hint: 'How far ahead the top archetype guess is over second place.' },
+      { key: 'Position gap', val: d.posMargin, hint: 'How far ahead the top position guess is over second place.' },
+      { key: 'Skill spread', val: d.skillContrast, hint: 'How uneven the skill grades are across categories.' },
+      { key: 'Next-year signal', val: d.nextSignal, hint: 'How far next-season stat forecasts sit from league average.' }
     ];
     host.innerHTML =
-      '<div class="network-insights__head">Flow diagnostics</div>' +
+      '<div class="network-insights__head">Signal check</div>' +
       '<div class="network-insight-meters">' +
       rows.map(function (r) {
         return '<div class="network-insight-meter" title="' + esc(r.hint) + '">' +
@@ -551,8 +637,8 @@
     if (!host || state.playerIdx < 0) return;
     if (!state.compareOn || state.compareIdx < 0 || state.compareIdx === state.playerIdx) {
       if (tag) tag.textContent = 'No compare player';
-      host.innerHTML = '<div class="network-insights__head">Compare snapshot</div>' +
-        '<p class="skills-hint">Enable compare mode and pick another player-season to see deltas.</p>';
+      host.innerHTML = '<div class="network-insights__head">Side by side</div>' +
+        '<p class="skills-hint">Turn on compare mode and pick another player-season to see the gap.</p>';
       return;
     }
     var a = state.players[state.playerIdx];
@@ -585,7 +671,7 @@
     }
     skillDelta.sort(function (x, y) { return Math.abs(y.delta) - Math.abs(x.delta); });
     host.innerHTML =
-      '<div class="network-insights__head">Compare snapshot</div>' +
+      '<div class="network-insights__head">Side by side</div>' +
       '<div class="network-insights__chips">' +
         '<span class="network-insight-chip">Local sim <b>' + fmtPredScore(localSim * 100) + '%</b></span>' +
         '<span class="network-insight-chip">' + esc(archNameA) + ' <b>' + fmtPredScore(archA.p * 100) + '%</b></span>' +
@@ -654,7 +740,13 @@
   function renderNodeInspector() {
     var host = $('network-node-inspector');
     if (!host || state.playerIdx < 0) return;
-    var node = state.selectedNode || { type: 'head_group', key: 'archetype' };
+    if (!state.selectedNode) {
+      host.innerHTML = '<div class="network-node-inspector__head">Selected node</div>' +
+        '<p class="network-node-inspector__hint">Hover a node to preview its path; click any input, tower, ' +
+        'or output node to lock it here with exact values and predictions.</p>';
+      return;
+    }
+    var node = state.selectedNode;
     var row = headRow(state.playerIdx);
     var player = state.players[state.playerIdx];
     var signals = inputSignalsForPlayer(state.playerIdx);
@@ -681,7 +773,7 @@
     if (node.type === 'input') {
       var inp = shownInputs[node.index];
       if (!inp) {
-        host.innerHTML = '<p class="drift-loading">Select an input node to inspect routing.</p>';
+        host.innerHTML = '<p class="drift-loading">Pick an input node to see which stats fed it.</p>';
         return;
       }
       var towerIdx = fams.indexOf(inp.key);
@@ -793,23 +885,38 @@
       '</p>';
   }
 
+  function nodeFromEl(t) {
+    if (!t || !t.closest) return null;
+    var inp = t.closest('[data-input]');
+    if (inp) return { type: 'input', index: parseInt(inp.getAttribute('data-input'), 10) };
+    var tw = t.closest('[data-tower]');
+    if (tw) return { type: 'tower', index: parseInt(tw.getAttribute('data-tower'), 10) };
+    var hd = t.closest('[data-head-key]');
+    if (hd) return { type: 'head_group', key: hd.getAttribute('data-head-key') };
+    return null;
+  }
+
+  function capWords(s) {
+    return String(s).replace(/\b\w/g, function (m) { return m.toUpperCase(); });
+  }
+
   function buildFlowSvg(host) {
     if (!host || !state.arch) return;
     host.innerHTML = '';
-    var W = 760;
-    var H = 560;
+    var W = 1220;
+    var H = 620;
     var svg = document.createElementNS(SVG_NS, 'svg');
     svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
     svg.setAttribute('class', 'network-flow-svg');
     host.appendChild(svg);
 
-    var cols = [64, 224, 396, 532, 676];
-    var labels = ['Input', 'Towers', 'Fusion', 'Embed', 'Heads'];
+    var cols = [150, 470, 690, 860, 1040];
+    var labels = ['Input families', 'Towers', 'Fusion', 'Embed', 'Decode heads'];
     labels.forEach(function (lab, i) {
       var t = document.createElementNS(SVG_NS, 'text');
       t.setAttribute('x', cols[i]);
-      t.setAttribute('y', 20);
-      t.setAttribute('text-anchor', 'middle');
+      t.setAttribute('y', 22);
+      t.setAttribute('text-anchor', i === 4 ? 'start' : 'middle');
       t.setAttribute('class', 'network-flow-col-label');
       t.textContent = lab;
       svg.appendChild(t);
@@ -817,8 +924,8 @@
 
     var fams = state.arch.towerFamilies || [];
     var nTowers = fams.length || 18;
-    var towerTop = 40;
-    var towerBot = H - 50;
+    var towerTop = 46;
+    var towerBot = H - 46;
     var towerSpan = towerBot - towerTop;
     var towerG = document.createElementNS(SVG_NS, 'g');
     towerG.setAttribute('id', 'flow-towers');
@@ -829,36 +936,45 @@
       var c = document.createElementNS(SVG_NS, 'circle');
       c.setAttribute('cx', cols[1]);
       c.setAttribute('cy', y);
-      c.setAttribute('r', 5);
+      c.setAttribute('r', 6);
       c.setAttribute('class', 'network-flow-node network-flow-node--tower');
       c.setAttribute('data-tower', String(i));
       c.setAttribute('data-family', fam);
       var title = document.createElementNS(SVG_NS, 'title');
-      title.textContent = fam;
+      title.textContent = fam.replace(/_/g, ' ');
       c.appendChild(title);
       towerG.appendChild(c);
+
+      var tl = document.createElementNS(SVG_NS, 'text');
+      tl.setAttribute('x', cols[1] + 12);
+      tl.setAttribute('y', y + 3);
+      tl.setAttribute('class', 'network-flow-tower-label');
+      tl.setAttribute('text-anchor', 'start');
+      tl.setAttribute('data-tower-label', String(i));
+      tl.textContent = fam.replace(/_/g, ' ');
+      towerG.appendChild(tl);
     });
     svg.appendChild(towerG);
 
     var inputG = document.createElementNS(SVG_NS, 'g');
     inputG.setAttribute('id', 'flow-input');
     var nInputs = MAX_INPUT_NODES;
-    var inputTop = 50;
-    var inputSpan = H - 100;
+    var inputTop = 54;
+    var inputSpan = H - 108;
     for (var b = 0; b < nInputs; b++) {
       var iy = inputTop + (b / (nInputs - 1)) * inputSpan;
       var ic = document.createElementNS(SVG_NS, 'rect');
-      ic.setAttribute('x', cols[0] - 14);
-      ic.setAttribute('y', iy - 18);
-      ic.setAttribute('width', 28);
-      ic.setAttribute('height', 36);
-      ic.setAttribute('rx', 4);
+      ic.setAttribute('x', cols[0] - 15);
+      ic.setAttribute('y', iy - 19);
+      ic.setAttribute('width', 30);
+      ic.setAttribute('height', 38);
+      ic.setAttribute('rx', 5);
       ic.setAttribute('class', 'network-flow-node network-flow-node--input');
       ic.setAttribute('data-input', String(b));
       inputG.appendChild(ic);
 
       var it = document.createElementNS(SVG_NS, 'text');
-      it.setAttribute('x', cols[0] + 20);
+      it.setAttribute('x', cols[0] + 24);
       it.setAttribute('y', iy + 3);
       it.setAttribute('class', 'network-flow-col-label');
       it.setAttribute('text-anchor', 'start');
@@ -867,10 +983,10 @@
       inputG.appendChild(it);
 
       var iv = document.createElementNS(SVG_NS, 'text');
-      iv.setAttribute('x', cols[0] + 98);
+      iv.setAttribute('x', cols[0] + 190);
       iv.setAttribute('y', iy + 3);
       iv.setAttribute('class', 'network-flow-col-label');
-      iv.setAttribute('text-anchor', 'start');
+      iv.setAttribute('text-anchor', 'end');
       iv.setAttribute('data-input-value', String(b));
       iv.textContent = '0%';
       inputG.appendChild(iv);
@@ -887,7 +1003,7 @@
     var fusion = document.createElementNS(SVG_NS, 'circle');
     fusion.setAttribute('cx', cols[2]);
     fusion.setAttribute('cy', midY);
-    fusion.setAttribute('r', 20);
+    fusion.setAttribute('r', 22);
     fusion.setAttribute('class', 'network-flow-node network-flow-node--fusion');
     fusion.setAttribute('id', 'flow-fusion');
     svg.appendChild(fusion);
@@ -895,16 +1011,16 @@
     var embed = document.createElementNS(SVG_NS, 'circle');
     embed.setAttribute('cx', cols[3]);
     embed.setAttribute('cy', midY);
-    embed.setAttribute('r', 14);
+    embed.setAttribute('r', 16);
     embed.setAttribute('class', 'network-flow-node network-flow-node--embed');
     embed.setAttribute('id', 'flow-embed');
     svg.appendChild(embed);
 
     var headDefs = [
-      { key: 'archetype', label: 'Archetype logits (' + state.nArch + ')', y: H * 0.24 },
-      { key: 'position', label: 'Position logits (' + state.nPos + ')', y: H * 0.40 },
-      { key: 'skills', label: 'Skill towers (' + state.nSkills + ')', y: H * 0.56 },
-      { key: 'next_profile', label: 'Next-season profile (' + state.nNext + ')', y: H * 0.72 },
+      { key: 'archetype', label: 'Archetype (' + state.nArch + ')', y: H * 0.20 },
+      { key: 'position', label: 'Position (' + state.nPos + ')', y: H * 0.37 },
+      { key: 'skills', label: 'Skills (' + state.nSkills + ')', y: H * 0.54 },
+      { key: 'next_profile', label: 'Next season (' + state.nNext + ')', y: H * 0.71 },
       { key: 'aux', label: 'Aux scalar heads', y: H * 0.86 }
     ];
     var headG = document.createElementNS(SVG_NS, 'g');
@@ -916,14 +1032,14 @@
       var hc = document.createElementNS(SVG_NS, 'circle');
       hc.setAttribute('cx', cols[4]);
       hc.setAttribute('cy', hy);
-      hc.setAttribute('r', 6);
+      hc.setAttribute('r', 7);
       hc.setAttribute('class', 'network-flow-node network-flow-node--head');
       hc.setAttribute('data-head', String(h));
       hc.setAttribute('data-head-key', headDefs[h].key);
       headG.appendChild(hc);
 
       var hl = document.createElementNS(SVG_NS, 'text');
-      hl.setAttribute('x', cols[4] + 12);
+      hl.setAttribute('x', cols[4] + 14);
       hl.setAttribute('y', hy + 3);
       hl.setAttribute('class', 'network-flow-col-label');
       hl.setAttribute('text-anchor', 'start');
@@ -940,7 +1056,7 @@
       var towerY = towerYs[i];
       var p2 = document.createElementNS(SVG_NS, 'path');
       var d2 = 'M' + (cols[1] + 6) + ',' + towerY +
-        ' L' + (cols[2] - 20) + ',' + midY;
+        ' C' + (cols[1] + 70) + ',' + towerY + ' ' + (cols[2] - 70) + ',' + midY + ' ' + (cols[2] - 22) + ',' + midY;
       p2.setAttribute('d', d2);
       p2.setAttribute('class', 'network-flow-edge');
       p2.setAttribute('data-edge', 'fuse-' + i);
@@ -948,9 +1064,9 @@
     });
 
     var e3 = document.createElementNS(SVG_NS, 'line');
-    e3.setAttribute('x1', cols[2] + 20);
+    e3.setAttribute('x1', cols[2] + 22);
     e3.setAttribute('y1', midY);
-    e3.setAttribute('x2', cols[3] - 14);
+    e3.setAttribute('x2', cols[3] - 16);
     e3.setAttribute('y2', midY);
     e3.setAttribute('class', 'network-flow-edge network-flow-edge--main');
     e3.setAttribute('data-edge', 'emb-main');
@@ -959,8 +1075,8 @@
     for (var he = 0; he < headDefs.length; he++) {
       var e4 = document.createElementNS(SVG_NS, 'path');
       var hy2 = headYs[he];
-      var d4 = 'M' + (cols[3] + 14) + ',' + midY +
-        ' C' + (cols[3] + 50) + ',' + midY + ' ' + (cols[4] - 40) + ',' + hy2 + ' ' + (cols[4] - 8) + ',' + hy2;
+      var d4 = 'M' + (cols[3] + 16) + ',' + midY +
+        ' C' + (cols[3] + 60) + ',' + midY + ' ' + (cols[4] - 50) + ',' + hy2 + ' ' + (cols[4] - 8) + ',' + hy2;
       e4.setAttribute('d', d4);
       e4.setAttribute('class', 'network-flow-edge network-flow-edge--head');
       e4.setAttribute('data-edge', 'head-' + he);
@@ -969,26 +1085,29 @@
     svg.insertBefore(edgeG, towerG);
 
     svg.addEventListener('click', function (ev) {
-      var inputNode = ev.target.closest('[data-input]');
-      if (inputNode) {
-        state.selectedNode = { type: 'input', index: parseInt(inputNode.getAttribute('data-input'), 10) };
-        updateFlowVisual();
-        renderNodeInspector();
-        return;
-      }
-      var towerNode = ev.target.closest('[data-tower]');
-      if (towerNode) {
-        state.selectedNode = { type: 'tower', index: parseInt(towerNode.getAttribute('data-tower'), 10) };
-        updateFlowVisual();
-        renderNodeInspector();
-        return;
-      }
-      var headNode = ev.target.closest('[data-head-key]');
-      if (headNode) {
-        state.selectedNode = { type: 'head_group', key: headNode.getAttribute('data-head-key') };
-        updateFlowVisual();
-        renderNodeInspector();
-      }
+      var node = nodeFromEl(ev.target);
+      if (!node) return;
+      state.selectedNode = node;
+      state.hoverNode = null;
+      state._hoverKey = null;
+      updateFlowVisual();
+      renderNodeInspector();
+    });
+
+    svg.addEventListener('mousemove', function (ev) {
+      var node = nodeFromEl(ev.target);
+      var key = node ? JSON.stringify(node) : null;
+      if (key === state._hoverKey) return;
+      state._hoverKey = key;
+      state.hoverNode = node;
+      applyTrace();
+    });
+
+    svg.addEventListener('mouseleave', function () {
+      if (!state.hoverNode) return;
+      state.hoverNode = null;
+      state._hoverKey = null;
+      applyTrace();
     });
 
     state.flowLayout = {
@@ -999,6 +1118,148 @@
       towerYs: towerYs,
       headDefs: headDefs
     };
+  }
+
+  // Which node currently drives the trace: transient hover wins, else the
+  // locked click selection.
+  function activeTraceNode() {
+    return state.hoverNode || state.selectedNode || null;
+  }
+
+  // Full input <-> output chain for a node, as element selectors + a
+  // plain-language summary. Every path runs through the fusion+embed spine.
+  function traceForNode(node) {
+    var fams = (state.arch && state.arch.towerFamilies) || [];
+    var signals = inputSignalsForPlayer(state.playerIdx);
+    var nShown = Math.min(MAX_INPUT_NODES, signals.length);
+    var headDefs = (state.flowLayout && state.flowLayout.headDefs) || [];
+    var nodeSel = [];
+    var edgeSel = ['emb-main'];
+    var origin = null;
+    var summary = '';
+
+    function addInput(i) {
+      nodeSel.push('[data-input="' + i + '"]');
+      nodeSel.push('[data-input-label="' + i + '"]');
+      nodeSel.push('[data-input-value="' + i + '"]');
+    }
+    function addSpine() { nodeSel.push('#flow-fusion'); nodeSel.push('#flow-embed'); }
+    function addAllHeads() {
+      headDefs.forEach(function (_, hi) {
+        nodeSel.push('[data-head="' + hi + '"]');
+        edgeSel.push('head-' + hi);
+      });
+    }
+    function inputForTower(t) {
+      for (var i = 0; i < nShown; i++) {
+        if (signals[i] && signals[i].key === fams[t]) return i;
+      }
+      return -1;
+    }
+
+    if (node.type === 'input') {
+      var i = node.index;
+      var t = signals[i] ? fams.indexOf(signals[i].key) : -1;
+      origin = '[data-input="' + i + '"]';
+      addInput(i);
+      if (t >= 0) { nodeSel.push('[data-tower="' + t + '"]'); edgeSel.push('in-' + i); edgeSel.push('fuse-' + t); }
+      addSpine();
+      addAllHeads();
+      var famLabel = signals[i] ? signals[i].label : ('input ' + (i + 1));
+      summary = capWords(famLabel) + ' → Tower ' + (t >= 0 ? t + 1 : '?') +
+        ' → fusion → embedding → all ' + headDefs.length + ' heads';
+    } else if (node.type === 'tower') {
+      var t2 = node.index;
+      origin = '[data-tower="' + t2 + '"]';
+      nodeSel.push('[data-tower="' + t2 + '"]');
+      edgeSel.push('fuse-' + t2);
+      var iu = inputForTower(t2);
+      if (iu >= 0) { addInput(iu); edgeSel.push('in-' + iu); }
+      addSpine();
+      addAllHeads();
+      summary = capWords((fams[t2] || 'tower').replace(/_/g, ' ')) +
+        ' tower → fusion → embedding → all ' + headDefs.length + ' heads';
+    } else {
+      var key = node.group || node.key;
+      var hIdx = headKeyToIndex(key);
+      origin = '[data-head-key="' + key + '"]';
+      if (hIdx >= 0) { nodeSel.push('[data-head="' + hIdx + '"]'); edgeSel.push('head-' + hIdx); }
+      addSpine();
+      // Walk back along CAUSAL influence on this head, not input magnitude.
+      // ('aux' has no exported Jacobian target; fall back to the embedding.)
+      var inf = towerInfluence(state.playerIdx, key) ||
+        towerInfluence(state.playerIdx, 'embedding');
+      var top = fams.map(function (fam, ix) {
+        return { ix: ix, s: inf ? (inf[fam] != null ? inf[fam] : 0)
+                                : familyWeight(fam, signals) };
+      }).sort(function (a, b) { return b.s - a.s; }).slice(0, 5);
+      top.forEach(function (tp) {
+        nodeSel.push('[data-tower="' + tp.ix + '"]');
+        edgeSel.push('fuse-' + tp.ix);
+        var iw = inputForTower(tp.ix);
+        if (iw >= 0) { addInput(iw); edgeSel.push('in-' + iw); }
+      });
+      var label = key;
+      for (var d = 0; d < headDefs.length; d++) {
+        if (headDefs[d].key === key) { label = headDefs[d].label; break; }
+      }
+      summary = label + ' ← embedding ← fusion ← top ' + top.length + ' towers ← their inputs';
+    }
+    return { nodeSel: nodeSel, edgeSel: edgeSel, origin: origin, summary: summary };
+  }
+
+  // Paint the active trace: brighten its chain, dim everything else
+  // (line-of-sight), surface tower labels along the path, mark the origin.
+  function applyTrace() {
+    var host = $('network-flow-svg');
+    if (!host) return;
+    var svg = host.querySelector('svg');
+    if (!svg) return;
+    var statusEl = $('network-trace-status');
+    var clearBtn = $('network-trace-clear');
+
+    svg.querySelectorAll('.on-path').forEach(function (el) { el.classList.remove('on-path'); });
+    svg.querySelectorAll('.trace-origin').forEach(function (el) { el.classList.remove('trace-origin'); });
+    svg.querySelectorAll('.network-flow-tower-label').forEach(function (el) {
+      el.classList.remove('is-shown', 'on-path');
+    });
+
+    // During the step animation, stand down so the full layer-by-layer
+    // lighting reads without the trace dimming everything off one path.
+    var node = state.playing ? null : activeTraceNode();
+    if (!node || state.playerIdx < 0) {
+      svg.classList.remove('is-tracing');
+      if (statusEl) {
+        statusEl.textContent = 'Click a node to see what fed it and what it drove.';
+        statusEl.classList.remove('is-tracing');
+      }
+      if (clearBtn) clearBtn.hidden = !state.selectedNode;
+      return;
+    }
+
+    var tr = traceForNode(node);
+    svg.classList.add('is-tracing');
+    tr.nodeSel.forEach(function (sel) {
+      svg.querySelectorAll(sel).forEach(function (el) { el.classList.add('on-path'); });
+      var m = sel.match(/data-tower="(\d+)"/);
+      if (m) {
+        var lbl = svg.querySelector('.network-flow-tower-label[data-tower-label="' + m[1] + '"]');
+        if (lbl) lbl.classList.add('is-shown', 'on-path');
+      }
+    });
+    tr.edgeSel.forEach(function (id) {
+      var e = svg.querySelector('[data-edge="' + id + '"]');
+      if (e) e.classList.add('on-path');
+    });
+    if (tr.origin) {
+      var o = svg.querySelector(tr.origin);
+      if (o) o.classList.add('trace-origin');
+    }
+    if (statusEl) {
+      statusEl.textContent = tr.summary;
+      statusEl.classList.add('is-tracing');
+    }
+    if (clearBtn) clearBtn.hidden = false;
   }
 
   function updateFlowVisual() {
@@ -1068,11 +1329,13 @@
       });
     }
     if (step >= 2) {
+      // Edge weight = |d(embedding)/d(tower)| (causal), not input magnitude.
+      var embInf = towerInfluence(idx, 'embedding');
       svg.querySelectorAll('[data-edge^="fuse-"]').forEach(function (e) {
         var idxFuse = parseInt((e.getAttribute('data-edge') || 'fuse-0').split('-')[1], 10);
         var fams = state.arch.towerFamilies || [];
         var fam = fams[idxFuse] || '';
-        var s = familyWeight(fam, signals);
+        var s = embInf ? (embInf[fam] != null ? embInf[fam] : 0) : familyWeight(fam, signals);
         e.style.strokeWidth = String(0.6 + s * 2.6);
         e.style.opacity = String(0.2 + s * 0.75);
         e.classList.add(step === 2 ? 'is-active' : 'is-lit');
@@ -1120,76 +1383,24 @@
           0.5 * topP + 0.5 * nextMag
         ];
       }
+      // Prefer causal sensitivity of each head to the embedding; fall back to
+      // prediction confidence (headStrength) when no Jacobian is loaded.
+      var hInf = headInfluence(idx);
+      var headDefs = (state.flowLayout && state.flowLayout.headDefs) || [];
       svg.querySelectorAll('[data-edge^="head-"]').forEach(function (e, i) {
         var s = headStrength[i] != null ? headStrength[i] : 0.5;
+        if (hInf && headDefs[i] && hInf[headDefs[i].key] != null) {
+          s = hInf[headDefs[i].key];
+        }
         e.style.strokeWidth = String(0.8 + s * 2.8);
         e.style.opacity = String(0.25 + s * 0.75);
         e.classList.add('is-active');
       });
     }
 
-    var selected = state.selectedNode || null;
-    if (selected && selected.type === 'input') {
-      var inNode = svg.querySelector('[data-input="' + selected.index + '"]');
-      if (inNode) inNode.classList.add('is-selected');
-      var src = signals[selected.index];
-      if (src) {
-        var famsIn = state.arch.towerFamilies || [];
-        var tIdx = famsIn.indexOf(src.key);
-        var tNode = svg.querySelector('[data-tower="' + tIdx + '"]');
-        var inEdge = svg.querySelector('[data-edge="in-' + selected.index + '"]');
-        var fuseEdge = svg.querySelector('[data-edge="fuse-' + tIdx + '"]');
-        if (tNode) tNode.classList.add('is-active');
-        if (inEdge) inEdge.classList.add('is-active');
-        if (fuseEdge) fuseEdge.classList.add('is-active');
-      }
-    } else if (selected && selected.type === 'tower') {
-      var twNode = svg.querySelector('[data-tower="' + selected.index + '"]');
-      if (twNode) twNode.classList.add('is-selected');
-      var famsTw = state.arch.towerFamilies || [];
-      var targetFam = famsTw[selected.index];
-      var inIdx = -1;
-      for (var si = 0; si < signals.length; si++) {
-        if (signals[si].key === targetFam) { inIdx = si; break; }
-      }
-      var inNodeTw = inIdx >= 0 ? svg.querySelector('[data-input="' + inIdx + '"]') : null;
-      var inEdgeTw = inIdx >= 0 ? svg.querySelector('[data-edge="in-' + inIdx + '"]') : null;
-      var fuseTw = svg.querySelector('[data-edge="fuse-' + selected.index + '"]');
-      if (inNodeTw) inNodeTw.classList.add('is-active');
-      if (inEdgeTw) inEdgeTw.classList.add('is-active');
-      if (fuseTw) fuseTw.classList.add('is-active');
-    } else if (selected && (selected.type === 'head_group' || selected.type === 'head_item')) {
-      var key = selected.group || selected.key;
-      var hdNode = svg.querySelector('[data-head-key="' + key + '"]');
-      if (hdNode) hdNode.classList.add('is-selected');
-      var hIdx = headKeyToIndex(key);
-      if (hIdx >= 0) {
-        var hEdge = svg.querySelector('[data-edge="head-' + hIdx + '"]');
-        if (hEdge) hEdge.classList.add('is-active');
-      }
-      var famsHd = state.arch.towerFamilies || [];
-      var topTower = famsHd.map(function (fam, i) {
-        return { i: i, s: familyWeight(fam, signals) };
-      }).sort(function (a, b) { return b.s - a.s; }).slice(0, 4);
-      topTower.forEach(function (t) {
-        var tn = svg.querySelector('[data-tower="' + t.i + '"]');
-        var fe = svg.querySelector('[data-edge="fuse-' + t.i + '"]');
-        if (tn) tn.classList.add('is-active');
-        if (fe) fe.classList.add('is-active');
-      });
-      topTower.forEach(function (t) {
-        var fam = famsHd[t.i];
-        for (var si2 = 0; si2 < signals.length; si2++) {
-          if (signals[si2].key === fam) {
-            var inN = svg.querySelector('[data-input="' + si2 + '"]');
-            var inE = svg.querySelector('[data-edge="in-' + si2 + '"]');
-            if (inN) inN.classList.add('is-active');
-            if (inE) inE.classList.add('is-active');
-            break;
-          }
-        }
-      });
-    }
+    // Line-of-sight trace overlay (hover-preview or locked selection):
+    // brightens the full input <-> output chain and dims the rest.
+    applyTrace();
   }
 
   function renderOutputs() {
@@ -1296,7 +1507,7 @@
   function ensureMapCanvasSize(canvas, parent, force) {
     var dpr = window.devicePixelRatio || 1;
     var w = Math.max(280, (parent && parent.clientWidth) || 400);
-    var h = Math.round(w * 0.9);
+    var h = Math.min(Math.round(w * 0.66), 560);
     var sizeChanged =
       force ||
       state.mapSize.w !== w ||
@@ -1570,6 +1781,18 @@
     });
   }
 
+  function bindTraceClear() {
+    var btn = $('network-trace-clear');
+    if (!btn) return;
+    btn.addEventListener('click', function () {
+      state.selectedNode = null;
+      state.hoverNode = null;
+      state._hoverKey = null;
+      updateFlowVisual();
+      renderNodeInspector();
+    });
+  }
+
   function bindNodeInspector() {
     var host = $('network-node-inspector');
     if (!host) return;
@@ -1657,6 +1880,42 @@
     requestAnimationFrame(mapLoop);
   }
 
+  /* Optional: Jacobian attribution. If absent (e.g. export not run yet) the
+     diagram silently keeps its legacy input-magnitude weights. */
+  function loadJacobian() {
+    return Promise.all([
+      fetch('assets/mtnn_jacobian.json').then(function (r) {
+        if (!r.ok) throw new Error('no jacobian meta');
+        return r.json();
+      }),
+      fetch('assets/mtnn_jacobian.f32').then(function (r) {
+        if (!r.ok) throw new Error('no jacobian data');
+        return r.arrayBuffer();
+      })
+    ]).then(function (parts) {
+      var meta = parts[0];
+      var data = new Float32Array(parts[1]);
+      var shape = (meta.perRowLayout && meta.perRowLayout.shape) || [];
+      if (data.length !== shape[0] * shape[1] * shape[2]) {
+        throw new Error('jacobian shape mismatch');
+      }
+      if (shape[0] !== state.players.length) {
+        throw new Error('jacobian row mismatch');
+      }
+      state.jac = meta;
+      state.jacData = data;
+      state.jacTower = {};
+      meta.towerFamilies.forEach(function (f, i) { state.jacTower[f] = i; });
+      state.jacTarget = {};
+      meta.targets.forEach(function (t, i) { state.jacTarget[t] = i; });
+      setStep(state.step);   // repaint edges with causal weights
+    }).catch(function (err) {
+      state.jac = null;
+      state.jacData = null;
+      if (window.console) console.warn('[network-viz] jacobian unavailable:', err.message);
+    });
+  }
+
   function init() {
     Promise.all([
       fetch('assets/vectors.json').then(function (r) { return r.json(); }),
@@ -1703,10 +1962,12 @@
       bindCompare();
       bindTimebar();
       bindNodeInspector();
+      bindTraceClear();
       bindOutputSelectors();
       bindMapDrag();
       bindSteps();
       pickDefaultPlayer();
+      loadJacobian();
       renderMapInsights();
       renderFlowInsights();
       requestAnimationFrame(mapLoop);
