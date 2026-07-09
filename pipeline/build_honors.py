@@ -31,6 +31,7 @@ sys.path.insert(0, str(ROOT / "pipeline"))
 VECTORS = ROOT / "assets" / "vectors.json"
 CACHE_DIR = ROOT / "pipeline" / "cache"
 FIXTURE = CACHE_DIR / "honors.example.json"
+FMVP_CACHE = CACHE_DIR / "honors_finals_mvp.json"
 OUT = ROOT / "pipeline" / "data" / "honors.json"
 ASSET_OUT = ROOT / "assets" / "honors.json"
 
@@ -90,6 +91,12 @@ def main() -> None:
     args = ap.parse_args()
 
     award_idx, complete = load_award_index(args.fixture)
+    fmvp_by_season: dict[str, str] = {}
+    if not args.fixture and FMVP_CACHE.exists():
+        fmvp_doc = json.loads(FMVP_CACHE.read_text(encoding="utf-8"))
+        for season, rec in (fmvp_doc.get("bySeason") or {}).items():
+            if rec.get("norm"):
+                fmvp_by_season[season] = rec["norm"]
     vec = json.loads(VECTORS.read_text(encoding="utf-8"))
 
     cum_asg: dict[str, int] = {}
@@ -97,6 +104,7 @@ def main() -> None:
     contemporaneous: dict[str, dict] = {}
     lagged_rows = 0
     vote_reco_rows = 0
+    fmvp_rows = 0
 
     for p in vec["players"]:
         name, season = p["name"], p["season"]
@@ -105,12 +113,16 @@ def main() -> None:
 
         # Same-season (game weighting / UI)
         same = award_idx.get(season, {}).get(nn, {})
-        if same:
+        is_fmvp = fmvp_by_season.get(season) == nn
+        if same or is_fmvp:
             contemporaneous[key] = {
                 "asg": int(same.get("asg") or 0),
                 "allNbaTeam": int(same.get("all_nba_team") or 0),
                 "allNbaVotePts": int(same.get("vote_pts") or 0),
+                "finalsMvp": 1 if is_fmvp else 0,
             }
+            if is_fmvp:
+                fmvp_rows += 1
 
         prev_s = prior_season(season)
         prev = award_idx.get(prev_s, {}).get(nn, {}) if prev_s else {}
@@ -145,6 +157,7 @@ def main() -> None:
             "lagged_rows": lagged_rows,
             "vote_recognized_rows": vote_reco_rows,
             "contemporaneous_keys": len(contemporaneous),
+            "finals_mvp_keys": fmvp_rows,
             "award_seasons": len(award_idx),
             "rows_total": len(vec["players"]),
         },
@@ -156,7 +169,8 @@ def main() -> None:
         ASSET_OUT.write_text(json.dumps({
             "built": time.strftime("%Y-%m-%d"),
             "note": ("All-NBA voting expands beyond the 15 team slots. "
-                     "Same-season keys for UI; lagged HON_* in pipeline/data."),
+                     "Same-season keys for UI include Finals MVP when "
+                     "honors_finals_mvp.json is present. Lagged HON_* in pipeline/data."),
             "bySeason": contemporaneous,
         }, separators=(",", ":")), encoding="utf-8")
         asset_msg = f"wrote {ASSET_OUT.relative_to(ROOT)} ({len(contemporaneous)} keys)"
@@ -164,7 +178,7 @@ def main() -> None:
         asset_msg = "assets/honors.json NOT written (partial cache)"
 
     print(f"honors: {lagged_rows} lagged rows ({vote_reco_rows} with vote pts), "
-          f"{len(contemporaneous)} contemporaneous keys, "
+          f"{len(contemporaneous)} contemporaneous keys ({fmvp_rows} Finals MVP), "
           f"{len(award_idx)} award seasons (complete={complete})")
     print(f"wrote {OUT.relative_to(ROOT)}; {asset_msg}")
 

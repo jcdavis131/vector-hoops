@@ -215,6 +215,8 @@
   // ---- Playoff Lens (transparent; dormant until assets/playoffs.json lands) ----
   // PLAYOFFS is null until the fetch resolves; false if absent (dormant).
   var PLAYOFFS = null;
+  var PLAYOFF_PATHS = null; // assets/playoff_paths.json (optional game logs)
+  var HONORS = null; // assets/honors.json (All-NBA / ASG / Finals MVP)
 
   function fmtDelta(v, digits) {
     if (v === null || v === undefined) return '&mdash;';
@@ -323,10 +325,83 @@
       'Not a minutes or pace forecast.</p>';
   }
 
+  function renderPlayoffSeries(series, champion) {
+    if (!series || !series.length) return '';
+    return '<ol class="po-series">' + series.map(function (sr) {
+      var won = sr.won !== false && (sr.wins == null || sr.wins > sr.losses);
+      var rowCls = won ? ' po-series__row--won' : ' po-series__row--lost';
+      if (sr.finals || sr.label === 'NBA Finals' || sr.label === 'Finals') {
+        rowCls += champion ? ' po-series__row--champion' : ' po-series__row--finals';
+      }
+      var mark = won ? 'W' : 'L';
+      return '<li class="po-series__row' + rowCls + '">' +
+        '<span class="po-series__round">' + esc(sr.label) + '</span>' +
+        '<span class="po-series__opp">vs ' + esc(sr.opp) + '</span>' +
+        '<span class="po-series__result">' + esc(sr.result) +
+        ' <span class="po-series__mark">' + mark + '</span></span>' +
+        '</li>';
+    }).join('') + '</ol>';
+  }
+
+  function renderPlayoffGames(games) {
+    if (!games || !games.length) return '';
+    var head =
+      '<li class="po-game po-game--head">' +
+        '<span class="po-game__date">Date</span>' +
+        '<span class="po-game__matchup">Matchup</span>' +
+        '<span class="po-game__wl">W/L</span>' +
+        '<span class="po-game__pts">PTS</span>' +
+        '<span class="po-game__reb">REB</span>' +
+        '<span class="po-game__ast">AST</span>' +
+        '<span class="po-game__min">MIN</span>' +
+        '<span class="po-game__pm">+/-</span>' +
+      '</li>';
+    var rows = games.map(function (g) {
+      var wlCls = g.wl === 'W' ? ' po-game__wl--w' : (g.wl === 'L' ? ' po-game__wl--l' : '');
+      return '<li class="po-game">' +
+        '<span class="po-game__date">' + esc((g.d || '').slice(5)) + '</span>' +
+        '<span class="po-game__matchup">' + esc(g.m || '') + '</span>' +
+        '<span class="po-game__wl' + wlCls + '">' + esc(g.wl || '') + '</span>' +
+        '<span class="po-game__pts">' + num2(g.pts) + '</span>' +
+        '<span class="po-game__reb">' + num2(g.reb) + '</span>' +
+        '<span class="po-game__ast">' + num2(g.ast) + '</span>' +
+        '<span class="po-game__min">' + num2(g.min) + '</span>' +
+        '<span class="po-game__pm">' + fmtDelta(g.pm, 0) + '</span>' +
+        '</li>';
+    }).join('');
+    return '<details class="po-games">' +
+      '<summary>Game log (' + games.length + ')</summary>' +
+      '<ul class="po-game-list">' + head + rows + '</ul></details>';
+  }
+
+  function playoffOutcomeLabel(s) {
+    var r = s.rounds;
+    if (typeof r !== 'number') return '';
+    // Explicit champion first — never bury under a series-path "Conf finals" row.
+    if (r === 4 || s.champion) {
+      return '<span class="po-tag po-tag--champion">NBA Champion</span>';
+    }
+    var labels = ['exited R1', 'exited R2', 'exited Conf. finals', 'NBA Finals'];
+    return '<span class="po-tag po-tag--steady">' + (labels[r] || ('round ' + r)) + '</span>';
+  }
+
+  function renderHonorsBadges(name, season) {
+    if (!HONORS || !HONORS.bySeason) return '';
+    var h = HONORS.bySeason[name + '|' + season];
+    if (!h) return '';
+    var bits = [];
+    if (h.finalsMvp) bits.push('<span class="po-tag po-tag--champion">Finals MVP</span>');
+    if (h.allNbaTeam === 3) bits.push('<span class="po-tag po-tag--riser">All-NBA 1st</span>');
+    else if (h.allNbaTeam === 2) bits.push('<span class="po-tag po-tag--riser">All-NBA 2nd</span>');
+    else if (h.allNbaTeam === 1) bits.push('<span class="po-tag po-tag--steady">All-NBA 3rd</span>');
+    if (h.asg) bits.push('<span class="po-tag po-tag--steady">All-Star</span>');
+    return bits.length ? '<span class="po-honors">' + bits.join(' ') + '</span>' : '';
+  }
+
   function renderPlayoffs(name, season) {
     var box = els.playoffs;
     if (!box) return;
-    if (!PLAYOFFS) { box.hidden = true; return; }  // absent or not yet loaded
+    if (!PLAYOFFS) { box.hidden = true; return; }
     var s = PLAYOFFS.splits[name + '|' + season];
     if (!s) {
       box.hidden = false;
@@ -339,10 +414,11 @@
       d >= 2 ? '<span class="po-tag po-tag--riser">Riser +' + d.toFixed(1) + '</span>' :
       d <= -2 ? '<span class="po-tag po-tag--fader">Fader ' + d.toFixed(1) + '</span>' :
       '<span class="po-tag po-tag--steady">Held serve</span>';
-    var rounds = ['missed', 'R1', 'R2', 'Conf finals', 'Finals'];
-    var runNote = (typeof s.rounds === 'number')
-      ? (s.wins + ' playoff win' + (s.wins === 1 ? '' : 's') +
-         ' &middot; ' + (rounds[s.rounds] || ('round ' + s.rounds)))
+    var champion = !!(s.champion || s.rounds === 4);
+    var outcome = playoffOutcomeLabel(s);
+    var honors = renderHonorsBadges(name, season);
+    var runNote = (typeof s.wins === 'number')
+      ? (s.wins + ' playoff win' + (s.wins === 1 ? '' : 's'))
       : '';
     function line(label, po, rs, delta, digits) {
       return '<li class="po-split">' +
@@ -353,8 +429,11 @@
     }
     box.hidden = false;
     box.innerHTML =
-      '<div class="vh-section-label">Playoffs &middot; regular season vs postseason ' + verdict + '</div>' +
-      (runNote ? '<p class="skills-hint">' + runNote + '</p>' : '') +
+      '<div class="vh-section-label">Playoffs &middot; regular season vs postseason ' +
+      outcome + ' ' + honors + ' ' + verdict + '</div>' +
+      (runNote ? '<p class="skills-hint">' + runNote +
+        (champion ? ' &middot; won the NBA Finals' : '') + '</p>' : '') +
+      renderPlayoffSeries(s.series, champion) +
       '<ul class="po-splits">' +
       line('Pts / 100', s.po.PTS100, s.rs.PTS100, s.pts_delta, 1) +
       line('Minutes', s.po.MIN, s.rs.MIN, s.min_delta, 1) +
@@ -362,8 +441,15 @@
       line('True Shooting', s.po.TS, s.rs.TS,
            (s.po.TS != null && s.rs.TS != null) ? (s.po.TS - s.rs.TS) : null, 2) +
       '</ul>' +
+      renderPlayoffGames(
+        (PLAYOFF_PATHS && PLAYOFF_PATHS.paths &&
+          PLAYOFF_PATHS.paths[name + '|' + season] &&
+          PLAYOFF_PATHS.paths[name + '|' + season].games) || s.games
+      ) +
       '<p class="skills-hint">On-court plus-minus per 100 in the playoffs: ' +
-      fmtDelta(s.po.PLUS_MINUS, 1) + '. Splits from stats.nba.com.</p>';
+      fmtDelta(s.po.PLUS_MINUS, 1) +
+      '. Series path lists every round played (including Conf. finals on the way to a title). ' +
+      'Outcome badge is the season result. Source: stats.nba.com + Basketball-Reference Finals MVP.</p>';
   }
 
   function renderMtnnNeighbors(playerIndex) {
@@ -654,6 +740,20 @@
           if (PLAYOFFS && current.slug) renderProfile();
         })
         .catch(function () { PLAYOFFS = false; });
+      fetch('assets/playoff_paths.json')
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (pp) {
+          PLAYOFF_PATHS = pp || false;
+          if (PLAYOFF_PATHS && current.slug) renderProfile();
+        })
+        .catch(function () { PLAYOFF_PATHS = false; });
+      fetch('assets/honors.json')
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (ho) {
+          HONORS = ho || false;
+          if (HONORS && current.slug) renderProfile();
+        })
+        .catch(function () { HONORS = false; });
       // Steals of the Draft is optional — dormant until an operator commits
       // assets/pedigree.json. Adds two board modes when it lands.
       fetch('assets/pedigree.json')

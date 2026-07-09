@@ -102,6 +102,11 @@ V4_FEATURES: dict[str, str] = {
   "PO_PLUS_MINUS": "playoffs",
   "PO_TEAM_WINS": "playoffs",
   "PO_ROUNDS": "playoffs",
+  "PO_SERIES": "playoffs",
+  "PO_CLOSE_GAMES": "playoffs",
+  "PO_AVG_PTS": "playoffs",
+  "PO_HIGH_PTS": "playoffs",
+  "PO_CLUTCH_PTS": "playoffs",
   # honors (VH-117) — lagged peer recognition (award year N-1 -> season N)
   "HON_ALL_NBA_TEAM_LAG": "honors",
   "HON_ALL_NBA_VOTE_LAG": "honors",

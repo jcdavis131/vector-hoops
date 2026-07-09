@@ -19,7 +19,7 @@ cd "$(dirname "$0")/.."
 
 PY="${PYTHON:-python3}"
 
-echo "== 1/4  dependencies"
+echo "== 1/5  dependencies"
 if ! "$PY" -c "import nba_api" 2>/dev/null; then
   echo "   installing nba_api + numpy"
   "$PY" -m pip install --quiet nba_api numpy
@@ -27,38 +27,33 @@ else
   echo "   nba_api present"
 fi
 
-echo "== 2/4  fetch playoff + regular-season splits (resumes from cache)"
+echo "== 2/5  fetch playoff + regular-season splits (resumes from cache)"
 # Two GETs/season + one team pull; on a 429 the fetcher backs off and
 # retries, then exits non-zero (set -e stops us) — just re-run to resume.
 "$PY" pipeline/fetch_playoffs.py
+"$PY" pipeline/repair_playoff_rounds.py   # era-aware 15-win champions → rounds=4
 
-echo "== 3/4  rebuild playoffs family + transparent asset + gates"
+echo "== 3/5  fetch playoff game logs + series matchups"
+"$PY" pipeline/fetch_playoff_gamelogs.py
+
+echo "== 4/5  rebuild playoffs family + transparent asset + gates"
 "$PY" pipeline/build_playoffs.py          # real caches -> writes assets/playoffs.json
 "$PY" pipeline/test_playoffs.py           # detects real caches -> full-coverage gates
 
-echo "== 4/4  review + commit"
+echo "== 5/5  review + commit"
 echo
-git --no-pager diff --stat -- assets/playoffs.json pipeline/cache/ || true
+git --no-pager diff --stat -- assets/playoffs.json assets/playoff_paths.json pipeline/cache/ || true
 echo
 cat <<'NEXT'
-Playoff splits fetched and all gates passed against real coverage.
+Playoff splits + game logs fetched and all gates passed against real coverage.
 
 To ship it (review, then run):
 
-    git add pipeline/cache/playoffs_*.json assets/playoffs.json
-    git commit -m "Activate Playoffs track: postseason splits + game Playoff Lens"
+    git add pipeline/cache/playoffs_*.json pipeline/cache/playoff_games_*.json \
+            assets/playoffs.json assets/playoff_paths.json
+    git commit -m "Playoffs: series matchups + game logs; fix pre-2003 champion rounds"
     git push
 
-That lands on PR #1: the live Skills Lens shows regular-season vs playoff
-splits + riser/fader, and the MTNN playoffs tower gains real coverage.
-The weekly refresh (update_dataset.py) keeps it current after each postseason.
-
-Optional — regenerate MTNN metrics with real playoff coverage:
-
-    python pipeline/bootstrap_train_matrix.py
-    python pipeline/build_pedigree.py   # if you also activated Track H
-    python pipeline/build_playoffs.py
-    python pipeline/integrate_context.py
-    python pipeline/train_mtnn.py --epochs 40
-    # -> mtnn_report.json: playoff_riser R2/MAE on real held-out seasons
+That lands: Skills Lens shows series path + expandable game log, and the
+MTNN playoffs tower gains PO_SERIES / close-game / scoring features.
 NEXT

@@ -2511,6 +2511,22 @@ body.vh-team-themed .landing-favorite__select:focus{
 .po-tag--riser{ background: var(--hot); color: #fff; border-color: var(--hot); }
 .po-tag--fader{ background: var(--cold); color: #fff; border-color: var(--cold); }
 .po-tag--steady{ background: var(--paper); color: var(--ink-soft); }
+.po-tag--champion{
+  background: #111;
+  color: #f5d76e;
+  border-color: #111;
+  font-weight: 800;
+}
+.po-honors{ margin-left: 4px; }
+.po-series__row--won{ border-color: var(--ink); }
+.po-series__row--lost{ opacity: 0.85; }
+.po-series__row--champion{
+  background: #111;
+  color: #f5d76e;
+  border-color: #111;
+}
+.po-series__row--champion .po-series__opp{ color: #f5d76e; }
+.po-series__mark{ font-size: 10px; margin-left: 4px; opacity: 0.85; }
 .po-splits{ list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
 .po-split{
   display: grid;
@@ -2526,6 +2542,66 @@ body.vh-team-themed .landing-favorite__select:focus{
 .po-split__rs{ color: var(--ink-muted); }
 .po-split__po{ font-weight: 700; }
 .po-split__delta{ text-align: right; font-weight: 700; }
+
+.po-series{
+  list-style: none;
+  margin: 0 0 8px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.po-series__row{
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr) 48px;
+  gap: 8px;
+  align-items: baseline;
+  font: 12px var(--mono);
+  padding: 4px 8px;
+  border: 1.5px solid var(--ink);
+  border-radius: 8px;
+  background: var(--paper);
+}
+.po-series__round{ font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em; font-size: 10px; }
+.po-series__opp{ color: var(--ink-soft); }
+.po-series__result{ text-align: right; font-weight: 800; }
+
+.po-games{ margin-top: 4px; }
+.po-games summary{
+  cursor: pointer;
+  font: 700 12px var(--mono);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  padding: 4px 0;
+}
+.po-game-list{
+  list-style: none;
+  margin: 6px 0 0;
+  padding: 0;
+  overflow-x: auto;
+}
+.po-game{
+  display: grid;
+  grid-template-columns: 44px minmax(90px, 1.4fr) 28px 36px 36px 36px 40px 44px;
+  gap: 6px;
+  align-items: baseline;
+  font: 11px var(--mono);
+  padding: 3px 0;
+  border-bottom: 1px solid var(--hairline);
+  min-width: 420px;
+}
+.po-game--head{
+  color: var(--ink-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 9px;
+  border-bottom: 1.5px solid var(--ink);
+}
+.po-game__wl--w{ color: var(--hot); font-weight: 800; }
+.po-game__wl--l{ color: var(--cold); font-weight: 800; }
+.po-game__pts{ font-weight: 800; }
+.po-game__pm{ text-align: right; }
 
 /* ---- wide (masked) tracking skills in the profile ---- */
 .skillbar--widehead .skillbar__label{

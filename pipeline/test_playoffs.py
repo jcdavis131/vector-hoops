@@ -76,12 +76,70 @@ def main() -> None:
     kawhi_min = field("Kawhi Leonard", "2018-19", "PO_MIN_DELTA")
     check(kawhi_min is not None and kawhi_min > 0,
           f"Kawhi 2018-19 minutes elevated in playoffs (PO_MIN_DELTA {kawhi_min})")
-    # Champions: 16 wins, 4 rounds
+    # Champions: 16 wins / 4 rounds (modern) OR 15 wins / 4 rounds (pre-2003 R1 best-of-5)
     check(field("Kawhi Leonard", "2018-19", "PO_TEAM_WINS") == 16.0
           and field("Kawhi Leonard", "2018-19", "PO_ROUNDS") == 4.0,
           "champion Kawhi 2018-19: 16 wins / 4 rounds")
     check(field("James Harden", "2018-19", "PO_ROUNDS") == 1.0,
           "R2-exit Harden 2018-19: rounds == 1")
+
+    # Pre-2003 champions finished with 15 wins — must still be rounds=4 (Champion),
+    # not 3 (Conf finals). Regression guard for Jordan 1997-98 screenshot bug.
+    if real and ("Michael Jordan", "1997-98") in by:
+        check(field("Michael Jordan", "1997-98", "PO_TEAM_WINS") == 15.0
+              and field("Michael Jordan", "1997-98", "PO_ROUNDS") == 4.0,
+              "champion Jordan 1997-98: 15 wins / 4 rounds (best-of-5 R1 era)")
+        # Series path from game logs when present
+        if ASSET.exists():
+            asset = json.loads(ASSET.read_text(encoding="utf-8"))
+            mj = asset["splits"].get("Michael Jordan|1997-98") or {}
+            series = mj.get("series") or []
+            check(len(series) == 4, f"Jordan 1997-98 series path length 4 (got {len(series)})")
+            if series:
+                check(series[-1].get("opp") == "UTA" and series[-1].get("result") == "4-2",
+                      "Jordan 1997-98 Finals vs UTA 4-2")
+                check(mj.get("champion") is True or mj.get("rounds") == 4,
+                      "Jordan 1997-98 champion flag / rounds=4")
+                # Outcome must not be confusable: last series is Finals, not Conf finals
+                check(
+                    series[-1].get("label") in ("Finals", "NBA Finals")
+                    and series[-1].get("finals") is True,
+                    "Jordan 1997-98 last series labeled Finals (not Conf finals)",
+                )
+            for season in ("1996-97", "1997-98"):
+                row = asset["splits"].get(f"Michael Jordan|{season}") or {}
+                check(row.get("rounds") == 4,
+                      f"Jordan {season} rounds=4 Champion (got {row.get('rounds')})")
+                ser = row.get("series") or []
+                check(len(ser) == 4, f"Jordan {season} series path has 4 rounds")
+                check(ser and ser[-1].get("label") in ("Finals", "NBA Finals"),
+                      f"Jordan {season} terminal series is Finals, not Conf finals "
+                      f"(got {ser[-1].get('label') if ser else None})")
+                # Conf finals may appear as an earlier path step — never as the outcome.
+                check(not (ser and ser[-1].get("label") == "Conf finals"),
+                      f"Jordan {season} must not end on Conf finals")
+
+            honors_asset = ROOT / "assets" / "honors.json"
+            if honors_asset.exists():
+                honors = json.loads(honors_asset.read_text(encoding="utf-8")).get("bySeason") or {}
+                for season in ("1996-97", "1997-98"):
+                    h = honors.get(f"Michael Jordan|{season}") or {}
+                    check(h.get("finalsMvp") == 1,
+                          f"Jordan {season} Finals MVP in honors asset")
+            else:
+                check(False, "assets/honors.json present for Finals MVP audit")
+
+            paths_asset = ROOT / "assets" / "playoff_paths.json"
+            if paths_asset.exists():
+                paths = json.loads(paths_asset.read_text(encoding="utf-8")).get("paths") or {}
+                mj_path = paths.get("Michael Jordan|1997-98") or {}
+                games = mj_path.get("games") or []
+                check(len(games) == 21, f"Jordan 1997-98 game log 21 games (got {len(games)})")
+                if games:
+                    check(games[-1].get("pts") == 45 and "UTA" in (games[-1].get("m") or ""),
+                          "Jordan 1997-98 Game 6 Finals: 45 pts @ UTA")
+            else:
+                check(False, "assets/playoff_paths.json present when game logs cached")
 
     wins_ok, rounds_ok, gp_ok = True, True, True
     for r in rows:

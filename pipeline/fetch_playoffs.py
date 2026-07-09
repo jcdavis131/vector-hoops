@@ -109,6 +109,41 @@ def fetch_player_split(season: str, season_type: str) -> dict[str, dict]:
     return out
 
 
+def rounds_from_playoff_wins(season: str, wins: int) -> int:
+    """Map team playoff wins → rounds advanced (0–4).
+
+    0 = exited R1, 1 = exited R2 (conf. semis), 2 = exited conf. finals,
+    3 = exited NBA Finals, 4 = champion.
+
+    Through 2001-02 the first round was best-of-5, so champions typically
+    finished with **15** wins (3+4+4+4). From 2002-03 every round is
+    best-of-7 and champions finish with **16**. A modern-only threshold
+    of ``wins < 16 → rounds 3`` mislabels every 15-win champion as a
+    conference-finals exit (Jordan 1997-98, etc.).
+    """
+    y = int(season.split("-")[0])
+    w = int(wins)
+    if y <= 2001:
+        if w >= 15:
+            return 4
+        if w >= 11:
+            return 3
+        if w >= 7:
+            return 2
+        if w >= 3:
+            return 1
+        return 0
+    if w >= 16:
+        return 4
+    if w >= 12:
+        return 3
+    if w >= 8:
+        return 2
+    if w >= 4:
+        return 1
+    return 0
+
+
 def fetch_team_playoffs(season: str) -> dict[str, dict]:
     def call():
         payload = fetch_stats_json(
@@ -121,8 +156,10 @@ def fetch_team_playoffs(season: str) -> dict[str, dict]:
     teams: dict[str, dict] = {}
     for r in rows:
         wins = int(r.get("W") or 0)
-        rounds = 0 if wins < 4 else 1 if wins < 8 else 2 if wins < 12 else 3 if wins < 16 else 4
-        teams[str(int(r["TEAM_ID"]))] = {"po_wins": wins, "rounds": rounds}
+        teams[str(int(r["TEAM_ID"]))] = {
+            "po_wins": wins,
+            "rounds": rounds_from_playoff_wins(season, wins),
+        }
     return teams
 
 

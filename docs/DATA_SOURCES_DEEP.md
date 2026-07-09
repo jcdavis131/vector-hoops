@@ -233,26 +233,26 @@ role/availability fact, so the tower learns what *changes* in April–June.
 
 | Field | Detail |
 |-------|--------|
-| **Fetcher** | `pipeline/fetch_playoffs.py` → `pipeline/cache/playoffs_{season}.json` |
-| **Deriver** | `pipeline/build_playoffs.py` → `pipeline/data/playoffs.json` (+ transparent `assets/playoffs.json` when cache complete) |
-| **Source URL** | stats.nba.com `leaguedashplayerstats` with `SeasonType=Playoffs` **and** `Regular Season` (Base + Advanced for USG/MIN), `PerMode=Per100Possessions`; team playoff W/L + rounds from `leaguedashteamstats` / series records |
+| **Fetcher** | `pipeline/fetch_playoffs.py` → `pipeline/cache/playoffs_{season}.json`; `pipeline/fetch_playoff_gamelogs.py` → `pipeline/cache/playoff_games_{season}.json` |
+| **Deriver** | `pipeline/build_playoffs.py` → `pipeline/data/playoffs.json` (+ `assets/playoffs.json` series path; `assets/playoff_paths.json` game logs) |
+| **Source URL** | stats.nba.com `leaguedashplayerstats` (Playoffs + Regular Season, Base + Advanced); team W from `leaguedashteamstats`; series + boxes from `leaguegamelog` `SeasonType=Playoffs` |
 | **Coverage** | Playoffs 1996-97+; ~50% of the league in any season (only playoff teams' rotation players); a season with no postseason yet (e.g. current 2025-26) is fully masked |
-| **Fetch difficulty** | **Low–Medium** — two season-type pulls per season (same endpoint), same throttle discipline as `build_vectors.py` |
+| **Fetch difficulty** | **Medium** — splits + team pull + two gamelog pulls/season; Akamai-sensitive (use `curl_cffi`) |
 | **Legal / terms** | NBA.com stats ToS; attribute in Methods; same as Track 0 |
-| **Recommended features** (family `playoffs`) | `PO_GP` (playoff games played), `PO_MIN` (playoff MPG, raw role), `PO_MIN_DELTA` (PO − RS MPG), `PO_USG_DELTA` (PO − RS usage), `PO_PTS_DELTA` (PO − RS pts/100), `PO_EFF_DELTA` (PO − RS TS%), `PO_PLUS_MINUS` (PO on-court ± per 100), `PO_TEAM_WINS` (team playoff wins 0–16), `PO_ROUNDS` (rounds advanced 0–4) |
-| **Mask strategy** | Whole family **masked** when the player logged no playoff games that season (did not appear ≠ played badly); era-z within the **playoff pool** of that season; `PO_TEAM_WINS`/`PO_ROUNDS` join via `TEAM_ID` |
+| **Recommended features** (family `playoffs`) | `PO_GP`, `PO_MIN`, `PO_MIN_DELTA`, `PO_USG_DELTA`, `PO_PTS_DELTA`, `PO_EFF_DELTA`, `PO_PLUS_MINUS`, `PO_TEAM_WINS` (0–16), `PO_ROUNDS` (0–4; champion=4; **15-win champs through 2001-02 still map to 4**), `PO_SERIES`, `PO_CLOSE_GAMES`, `PO_AVG_PTS`, `PO_HIGH_PTS`, `PO_CLUTCH_PTS` |
+| **Mask strategy** | Whole family **masked** when the player logged no playoff games that season (did not appear ≠ played badly); era-z within the **playoff pool** of that season; `PO_TEAM_WINS`/`PO_ROUNDS` join via `TEAM_ID`; game-log features masked when `playoff_games_*.json` absent |
 | **Leakage** | Playoffs happen *after* the regular season, so PO_* legitimately describe season N's full record; the MTNN's same-player adjacent-season objective predicts N+1 from N and is unaffected. PO_* are **never** written into the frozen 14-d game contract. |
 | **MTNN tower family** | `playoffs` (auto-instantiated from the manifest by `family_slices()`) — auxiliary head `playoff_riser` predicts `PO_PTS_DELTA` z from the embedding: how much a player's regular-season identity forecasts his postseason rise or fall |
-| **Game surface** | Transparent **Playoff Lens** on `skills.html` — regular-season vs playoff splits + a stated riser/fader verdict — reads `assets/playoffs.json`, renders nothing until it lands (respects the promotion gate; no model output in the live game) |
-| **Estimated LOC** | ~200 fetcher + ~230 deriver |
-| **Blocked-by** | One operator run of `fetch_playoffs.py` (stats.nba.com blocks datacenter IPs); everything downstream ships dormant-until-cache, gated by `test_playoffs.py` on a committed fixture |
+| **Game surface** | Transparent **Playoff Lens** on Players skill profile — RS vs PO splits, series path (R1→Finals), expandable game log — reads `assets/playoffs.json` + `assets/playoff_paths.json` |
+| **Estimated LOC** | ~400 across fetch/build/test/UI |
+| **Blocked-by** | One operator run of `fetch_playoffs.py` + `fetch_playoff_gamelogs.py` (stats.nba.com blocks datacenter IPs); everything downstream ships dormant-until-cache, gated by `test_playoffs.py` |
 
 **Operator activation (one-time):** on a machine that can reach
 stats.nba.com, run `bash pipeline/operator_fetch_playoffs.sh`. It fetches
-playoff + regular-season splits and team playoff records, rebuilds the
-`playoffs` family against real coverage, runs the full gates, writes the
-transparent `assets/playoffs.json` for the game's Playoff Lens, and prints
-the exact commit command. Until then the family ships masked and
+splits, team records, and playoff game logs, repairs era-aware champion
+rounds, rebuilds the `playoffs` family, runs gates, writes
+`assets/playoffs.json` + `assets/playoff_paths.json`, and prints the
+commit command. Until then the family ships masked and
 `test_playoffs.py` validates the logic against the committed fixture.
 
 ---
