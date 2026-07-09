@@ -38,6 +38,29 @@
       requires <b>MIN &ge; 800</b> minutes played &mdash; a real rotation
       season, not garbage-time noise.
     </p>
+    <div class="methods-plainly">
+      <p class="methods-plainly__head">Three words this page keeps using</p>
+      <dl class="methods-plainly__list">
+        <dt>z-score</dt>
+        <dd>How far above or below average something is, measured in "typical
+          gaps." <b>0 = exactly average. +1 = a solid notch above. +2 = clearly
+          elite. &minus;1 = a notch below.</b> Roughly two-thirds of players land
+          between &minus;1 and +1. We cap it at &plusmn;4 so one freak season
+          can't distort the rest.</dd>
+        <dt>era-z</dt>
+        <dd>The same idea, but a player is only ever compared to <b>the players
+          he actually played against that season</b> &mdash; never to another
+          decade. That's why a 1997 center and a 2026 guard can sit in one
+          honest space: each is scored against his own league, then the two
+          scores are compared. It is <i>not</i> an era adjustment applied after
+          the fact.</dd>
+        <dt>mask</dt>
+        <dd>A flag that says <b>"this was never measured"</b> &mdash; as opposed
+          to "this was measured and it was zero." Tracking data doesn't exist
+          before 2013-14, so those seasons carry a mask instead of a guessed
+          number. Nothing is filled in silently.</dd>
+      </dl>
+    </div>
     <p>Each player-season is 14 features, z-scored within its own season (era-honest &mdash; a 1997 center and a 2026 guard share one honest space):</p>
     <table>
       <thead><tr><th>Feature</th><th>What it measures</th></tr></thead>
@@ -120,8 +143,32 @@
       The fused chimera on the reveal card is graded through the same composites against a pooled all-era quantile table (<code>assets/skill_probe.json</code>) &mdash; that blend never existed as a real season, so its reference pool is all 12,392 charted seasons, stated as such.
     </p>
     <p>
-      <b>Limitations, stated plainly:</b> "Two-Way Impact" is NBA.com on-court plus-minus per 100 possessions (with a small stated scoring stabilizer) &mdash; it is <b>not</b> BPM, RAPM, or any adjusted-impact metric, and small-minute seasons can spike it. Free-throw and 3-point percentages are empirical-Bayes shrunk by attempts upstream, but tiny-sample tails remain. Skills that need play-type, hustle, or tracking data (post play, screening, off-ball movement) are deliberately absent until those sources land with honest masks. The promoted MTNN embedding (<code>pipeline/train_mtnn.py</code>, exported to <code>assets/mtnn_embeddings.f32</code>) scores daily puzzles and neighbor search when it clears held-out recall and purity gates; skill composites on the reveal card stay transparent.
+      <b>Limitations, stated plainly:</b> "Two-Way Impact" is NBA.com on-court plus-minus per 100 possessions (with a small stated scoring stabilizer) &mdash; it is <b>not</b> BPM, RAPM, or any adjusted-impact metric, and small-minute seasons can spike it. Free-throw and 3-point percentages are empirical-Bayes shrunk by attempts upstream, but tiny-sample tails remain. Skills that need play-type, hustle, or tracking data (post play, screening, off-ball movement) are deliberately absent until those sources land with honest masks. The promoted MTNN embedding (<code>pipeline/train_mtnn.py</code>, exported to <code>assets/mtnn_embeddings.f32</code>) scores daily puzzles and neighbor search when it clears its recall and purity gates; skill composites on the reveal card stay transparent.
     </p>
+    <div class="methods-plainly">
+      <p class="methods-plainly__head">How to read the model's two scores</p>
+      <dl class="methods-plainly__list">
+        <dt>recall@10 &mdash; "can it find the same guy next year?"</dt>
+        <dd>Hide a player's next season, then ask the model for the 10 nearest
+          player-seasons to this one. <b>Recall is how often his own next season
+          is in that top 10.</b> Higher is better; 1.0 would mean always.
+          A career changes year to year, so this is a test of whether the model
+          tracks a <i>person</i>, not just a stat line.</dd>
+        <dt>purity@20 &mdash; "do a player's neighbors look like him?"</dt>
+        <dd>Take a player's 20 nearest neighbors <b>from other eras</b> and ask
+          what fraction share his archetype. <b>Higher means the space groups
+          basketball roles rather than decades.</b> ~0.12 would be random
+          (8 archetypes); the seventies aren't a role.</dd>
+        <dt>"held-out" &mdash; and a correction</dt>
+        <dd>A score is only meaningful if the model never saw the answer while
+          learning. We found that earlier training <b>did</b> include the very
+          pairs used to score recall, which inflated it toward a perfect 1.0.
+          That is fixed (<code>pipeline/leakfree.py</code>): the model now
+          trains only on players it is not later graded on, and the honest
+          numbers are lower and real. <b>A number that looks perfect usually
+          means the test was broken.</b></dd>
+      </dl>
+    </div>
     <p>
       <b>Playoff Lens (postseason as a distinct regime).</b> The whole charted space is <b>regular season</b>. When playoff data is loaded, the Skills Lens shows a player-season's regular-season vs playoff splits &mdash; points per 100, minutes, usage, true shooting &mdash; and a stated <b>riser/fader</b> verdict from the points-per-100 difference. It also shows the team's <b>series path</b> (R1 &rarr; Finals opponents and W&ndash;L) and an expandable <b>game log</b> from stats.nba.com <code>leaguegamelog</code>. The header outcome badge is the season result (<b>NBA Champion</b>, Finals, etc.) &mdash; a Conf. finals row in the path is a series they played on the way, not the outcome. Round labels are era-honest: champions through 2001-02 often finished with 15 wins (best-of-5 first round) and are still labeled Champion. Same-season honors (All-NBA, All-Star, <b>Finals MVP</b> from Basketball-Reference) render beside the outcome. "Riser" and "Fader" describe the change in raw postseason production against a shorter, tougher sample; they are <b>not</b> a clutch or leadership claim. The MTNN treats playoffs as its own tower family (with a <code>playoff_riser</code> head plus series/close-game scoring features from the game logs) &mdash; research lane only; the game shows the transparent splits and path, and nothing at all until the postseason data lands.
     </p>

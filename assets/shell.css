@@ -3183,6 +3183,41 @@ body.vh-team-themed .landing-favorite__select:focus{
   color: var(--ink-muted);
   margin: 0 0 4px;
 }
+/* methods.html: plain-language glossaries for readers without a stats
+   background. Same voice as the /model insight notes below. */
+.methods-plainly{
+  border: 1px solid var(--hairline);
+  border-left: 3px solid var(--data-orange);
+  border-radius: 8px;
+  background: var(--surface);
+  padding: 12px 14px;
+  margin: 16px 0;
+}
+.methods-plainly__head{
+  margin: 0 0 8px;
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-muted);
+}
+.methods-plainly__list{ margin: 0; }
+.methods-plainly__list dt{
+  font-weight: 700;
+  color: var(--ink);
+  font-size: 13px;
+  margin-top: 10px;
+}
+.methods-plainly__list dt:first-of-type{ margin-top: 0; }
+.methods-plainly__list dd{
+  margin: 3px 0 0;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+.methods-plainly__list dd b{ color: var(--ink); }
+
 /* Plain-language "how to read this" note above a stats panel. */
 .network-insight-note{
   margin: 0 0 10px;
