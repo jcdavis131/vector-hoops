@@ -401,6 +401,51 @@ def v12_mtnn_client_assets() -> None:
         print(f"  mtnn client: {rows}×{dim} ({nbytes // 1024} KB f32)")
 
 
+def v13_mtnn_jacobian(data: dict) -> None:
+    """Jacobian attribution assets must align with the shipped arch, or the
+    /model diagram silently paints causal edges for a network that no longer
+    exists (row count + byte length alone cannot catch a retrain)."""
+    print("V13 MTNN jacobian attribution (optional)…")
+    jpath = ASSETS / "mtnn_jacobian.json"
+    fpath = ASSETS / "mtnn_jacobian.f32"
+    if not jpath.exists():
+        print("  mtnn_jacobian.json absent — diagram uses legacy input weights")
+        return
+    jac = json.loads(jpath.read_text(encoding="utf-8"))
+    shape = (jac.get("perRowLayout") or {}).get("shape") or []
+    if len(shape) != 3:
+        fail("mtnn_jacobian.json missing perRowLayout.shape")
+        return
+    if not fpath.exists():
+        fail("mtnn_jacobian.json present but mtnn_jacobian.f32 missing")
+        return
+    nbytes = fpath.stat().st_size
+    expected = shape[0] * shape[1] * shape[2] * 4
+    if nbytes != expected:
+        fail(f"mtnn_jacobian.f32 size {nbytes} != expected {expected}")
+    n_players = len(data["players"])
+    if shape[0] != n_players:
+        fail(f"jacobian rows {shape[0]} != vectors {n_players}")
+    arch_path = ASSETS / "mtnn_arch.json"
+    if arch_path.exists():
+        arch = json.loads(arch_path.read_text(encoding="utf-8"))
+        af = set(arch.get("towerFamilies") or [])
+        jf = set(jac.get("towerFamilies") or [])
+        if af and jf and af != jf:
+            fail(f"jacobian towerFamilies != arch (stale export): "
+                 f"jac-only={sorted(jf - af)} arch-only={sorted(af - jf)}")
+        if jac.get("dEmb") is not None and arch.get("dEmb") is not None \
+                and jac["dEmb"] != arch["dEmb"]:
+            fail(f"jacobian dEmb {jac['dEmb']} != arch dEmb {arch['dEmb']}")
+        jc, ac = jac.get("checkpoint"), arch.get("checkpoint")
+        if jc and ac and (jc.get("mtime") != ac.get("mtime")
+                          or jc.get("bytes") != ac.get("bytes")):
+            fail("jacobian checkpoint stamp stale vs arch — re-run "
+                 "export_mtnn_jacobian.py after retraining")
+    print(f"  jacobian: {shape[0]}×{shape[1]}×{shape[2]} "
+          f"({nbytes // 1024} KB), targets={jac.get('targets')}")
+
+
 if __name__ == "__main__":
     data = json.loads((ASSETS / "vectors.json").read_text(encoding="utf-8"))
     v1_vectors(data)
@@ -415,6 +460,7 @@ if __name__ == "__main__":
     v10_honors_playoffs(data)
     v11_mtnn_report_warn()
     v12_mtnn_client_assets()
+    v13_mtnn_jacobian(data)
     if FAILS:
         print(f"\nACCURACY HARNESS: {len(FAILS)} FAILURES — do not ship")
         sys.exit(1)

@@ -204,7 +204,7 @@ def main() -> None:
         "wide_skills": wide_meta,
         "mtnn_promoted": mtnn_promotion_eligible(mtnn),
         "mtnn_promotion_note": (
-            "embeddings stay in pipeline/data/ until a client surface consumes them"
+            "embeddings promoted to assets/ and consumed by /model + neighbor UI"
             if mtnn_promotion_eligible(mtnn) else None),
         "mtnn_model": mtnn.get("model") if mtnn else None,
         "mtnn_test_recall_at_10": (
@@ -232,7 +232,10 @@ def main() -> None:
 
     present = sum(1 for a in manifest["assets"].values() if a["present"])
     print(f"client assets: {present}/{len(CLIENT_ASSETS)} present on disk")
-    print("MTNN embeddings stay in pipeline/data/ until promotion gates pass.")
+    if manifest.get("mtnn_promoted"):
+        print("MTNN embeddings promoted to assets/ (consumed by /model + neighbors).")
+    else:
+        print("MTNN embeddings stay in pipeline/data/ until promotion gates pass.")
     print("Next: python pipeline/verify_accuracy.py  then  vercel --prod")
 
 

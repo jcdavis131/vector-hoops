@@ -229,6 +229,11 @@ def main() -> None:
         "fusion": fusion,
         "dTower": d_tower,
         "dEmb": d_emb,
+        # Provenance stamp; the Jacobian export carries the same fingerprint so
+        # the client can reject a stale attribution file (see network-viz.js).
+        "checkpoint": ({"mtime": int(ckpt_path.stat().st_mtime),
+                        "bytes": int(ckpt_path.stat().st_size)}
+                       if ckpt_path.exists() else None),
         "towerBlocks": n_blocks,
         "mlpHeads": mlp_heads,
         "nArchetypes": int(arch.shape[1]),

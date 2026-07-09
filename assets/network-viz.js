@@ -1902,6 +1902,28 @@
       if (shape[0] !== state.players.length) {
         throw new Error('jacobian row mismatch');
       }
+      // Fail closed if this attribution is stale vs the shipped architecture.
+      // Row count and byte length are invariant across a retrain, so they
+      // cannot catch it; family set, embedding dim and checkpoint stamp can.
+      var af = state.arch && state.arch.towerFamilies;
+      if (af) {
+        var jset = {};
+        meta.towerFamilies.forEach(function (f) { jset[f] = 1; });
+        var sameFams = af.length === meta.towerFamilies.length &&
+          af.every(function (f) { return jset[f]; });
+        if (!sameFams) {
+          throw new Error('jacobian tower families differ from shipped arch (stale export)');
+        }
+      }
+      if (meta.dEmb != null && state.arch && state.arch.dEmb != null &&
+          meta.dEmb !== state.arch.dEmb) {
+        throw new Error('jacobian dEmb mismatch');
+      }
+      var jc = meta.checkpoint;
+      var ac = state.arch && state.arch.checkpoint;
+      if (jc && ac && (jc.mtime !== ac.mtime || jc.bytes !== ac.bytes)) {
+        throw new Error('jacobian checkpoint stale vs shipped arch');
+      }
       state.jac = meta;
       state.jacData = data;
       state.jacTower = {};

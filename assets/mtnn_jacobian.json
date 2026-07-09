@@ -1,5 +1,11 @@
 {
-  "built": "2026-07-08",
+  "built": "2026-07-09",
+  "dEmb": 48,
+  "checkpoint": {
+    "mtime": 1783527233,
+    "bytes": 988922
+  },
+  "matrix": "train_matrix.npz.prefix_bak",
   "method": "Frobenius norm of d(target)/d(tower_output), per row; population view is the mean across rows. Local sensitivity, not a counterfactual ablation.",
   "model": "concat",
   "rows": 12966,

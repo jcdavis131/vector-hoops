@@ -84,7 +84,7 @@ def load_matrix_for(ckpt_fams: dict[str, int]):
         dims = {f: len(c) for f, c in fams.items()}
         if dims == ckpt_fams:
             print(f"  matrix: {mpath.name} ({len(fams)} families) — matches checkpoint")
-            return npz, manifest, fams
+            return npz, manifest, fams, mpath.name
         print(f"  skip {mpath.name}: {len(fams)} families != checkpoint {len(ckpt_fams)}")
     raise SystemExit(
         "no train matrix matches the checkpoint's families. Retrain, or keep the "
@@ -181,7 +181,7 @@ def main() -> None:
     ckpt = torch.load(CKPT, map_location=device, weights_only=False)
     ckpt_fams = families_from_ckpt(ckpt["model"])
     print(f"checkpoint families: {len(ckpt_fams)}")
-    npz, manifest, fams = load_matrix_for(ckpt_fams)
+    npz, manifest, fams, matrix_name = load_matrix_for(ckpt_fams)
 
     Z = npz["Z"].astype(np.float32)
     M = npz["mask"].astype(np.float32)
@@ -209,8 +209,14 @@ def main() -> None:
     # Column-normalize so each target's edges are comparable in the UI.
     pop_norm = pop / np.maximum(pop.max(axis=0, keepdims=True), 1e-9)
 
+    st = CKPT.stat()
     doc = {
         "built": time.strftime("%Y-%m-%d"),
+        # Provenance so the client can fail closed when this file is stale
+        # relative to the shipped mtnn_arch.json (e.g. after a promote/retrain).
+        "dEmb": int(ckpt.get("args", {}).get("dim", 48)),
+        "checkpoint": {"mtime": int(st.st_mtime), "bytes": int(st.st_size)},
+        "matrix": matrix_name,
         "method": ("Frobenius norm of d(target)/d(tower_output), per row; "
                    "population view is the mean across rows. Local sensitivity, "
                    "not a counterfactual ablation."),
