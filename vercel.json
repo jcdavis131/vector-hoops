@@ -5,6 +5,12 @@
     { "source": "/trends", "destination": "/trends.html" }
   ],
   "redirects": [
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "hoops.jcamd.com" }],
+      "destination": "https://hoops.dumbmodel.com/:path*",
+      "permanent": true
+    },
     { "source": "/wiki", "destination": "/players", "permanent": true },
     { "source": "/skills", "destination": "/players#profile", "permanent": true },
     { "source": "/drift", "destination": "/trends", "permanent": true }
