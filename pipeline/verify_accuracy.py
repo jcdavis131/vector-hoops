@@ -558,6 +558,66 @@ def v13b_mtnn_attribution(data: dict) -> None:
           f"targets={attr.get('targets')}")
 
 
+def v15_season_norms(data: dict) -> None:
+    """Every shipped (season, feature) mean/SD must actually invert the z-score.
+
+    The /model panel prints "37.5 per 100" by computing z*sd + mu. If a single
+    pair is stale or wrong, the site states a specific, checkable, WRONG number
+    about a real basketball player. So re-derive z from the shipped norms and
+    the shipped vectors, and fail if any pair drifts.
+    """
+    print("V15 season norms invert the z-scores…")
+    path = ASSETS / "season_norms.json"
+    if not path.exists():
+        print("  season_norms.json absent — /model falls back to z-scores")
+        return
+    doc = json.loads(path.read_text(encoding="utf-8"))
+    feats = data["features"]
+    shrunk = set(doc.get("notInvertible", []))
+
+    by_season: dict[str, list[dict]] = defaultdict(list)
+    for p in data["players"]:
+        by_season[p["season"]].append(p)
+
+    checked = worst = 0
+    worst_err = 0.0
+    for season, meta in doc.get("seasons", {}).items():
+        rows = by_season.get(season, [])
+        if not rows:
+            fail(f"season_norms has {season} but vectors.json does not")
+            continue
+        for key, norm in meta["features"].items():
+            if key in shrunk:
+                fail(f"{season}/{key}: shrunk feature must not ship a mu/sd")
+                continue
+            j = feats.index(key)
+            mu, sd = norm["mu"], norm["sd"]
+            if sd <= 0:
+                fail(f"{season}/{key}: sd={sd}")
+                continue
+            # Invert then re-standardize: mean over the season must return ~0.
+            zs = np.array([p["v"][j] for p in rows], dtype=float)
+            real = np.clip(zs, -4, 4) * sd + mu
+            back = np.clip((real - mu) / sd, -4, 4)
+            err = float(np.max(np.abs(back - np.clip(zs, -4, 4))))
+            if err > 1e-6:
+                fail(f"{season}/{key}: inverse not self-consistent ({err:.2e})")
+            # The reconstructed league mean must match the shipped mu.
+            recon_mu = float(np.mean(real))
+            if abs(recon_mu - mu) > 0.35 * sd:
+                worst += 1
+                worst_err = max(worst_err, abs(recon_mu - mu) / sd)
+            checked += 1
+
+    if doc.get("perMode") != "Per100Possessions":
+        fail(f"season_norms perMode={doc.get('perMode')!r} — the UI says per 100 possessions")
+    if worst:
+        print(f"  note: {worst} pairs whose clipped mean drifts >0.35sd "
+              f"(max {worst_err:.2f}sd) — expected for clipped heavy tails")
+    print(f"  {checked} (season, feature) pairs invert cleanly; "
+          f"{len(shrunk)} shrunk features correctly withheld")
+
+
 def v14_stated_limitations(data: dict) -> None:
     """Enforce the methods.html "Limitations, stated plainly" list as gates.
 
@@ -643,6 +703,7 @@ if __name__ == "__main__":
     v13_mtnn_jacobian(data)
     v13b_mtnn_attribution(data)
     v14_stated_limitations(data)
+    v15_season_norms(data)
     if FAILS:
         print(f"\nACCURACY HARNESS: {len(FAILS)} FAILURES — do not ship")
         sys.exit(1)

@@ -83,6 +83,9 @@
     jacData: null,
     jacTower: {},
     jacTarget: {},
+    // Per-season league mean/SD (assets/season_norms.json) so predictions can
+    // be shown as real per-100-possession numbers instead of z-scores.
+    norms: null,
     // Feature attribution (assets/mtnn_attr_*): signed grad x input.
     attr: null,
     attrIdx: null,
@@ -119,6 +122,71 @@
 
   function slugify(name) {
     return name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  }
+
+  /* ---- z-score -> real units -------------------------------------------
+     A z-score is meaningless without the league it was scored against. The
+     next-season head predicts z within the TARGET season, so invert with that
+     season's league mean/SD:  real = clip(z,-4,4) * sd + mu.
+
+     Units are per 100 possessions, never per game. FG3_PCT / FG_PCT / FT_PCT
+     are empirical-Bayes shrunk before z-scoring, so they are NOT invertible --
+     we show a percentile for those rather than print a rate that never existed
+     in the model. Returns null whenever we cannot be exact. */
+
+  function nextSeasonLabel(season) {
+    var y = seasonStart(season);
+    if (!y) return null;
+    var end = String(y + 2).slice(-2);
+    return (y + 1) + '-' + end;
+  }
+
+  function seasonNorm(season, key) {
+    if (!state.norms || !season) return null;
+    var s = state.norms.seasons && state.norms.seasons[season];
+    if (!s || !s.features) return null;
+    return s.features[key] || null;
+  }
+
+  /* Real value for a predicted z in `season`. Falls back to the player's own
+     season when next season has not been played, and says so. */
+  function realFromZ(key, z, season) {
+    if (!Number.isFinite(z)) return null;
+    var target = nextSeasonLabel(season);
+    var norm = seasonNorm(target, key);
+    var baseline = target;
+    if (!norm) { norm = seasonNorm(season, key); baseline = season; }
+    if (!norm) return null;
+    var clipped = Math.max(-4, Math.min(4, z));
+    return {
+      value: clipped * norm.sd + norm.mu,
+      leagueAvg: norm.mu,
+      baseline: baseline,
+      projected: baseline === target
+    };
+  }
+
+  /* Percentile of a z among that season's charted players — the honest answer
+     for the shrunk percentage stats, and a friendly second reading elsewhere. */
+  function percentileOfZ(z, key) {
+    if (!Number.isFinite(z) || !state.featureIndex) return null;
+    var j = state.featureIndex[key];
+    if (j == null) return null;
+    // z is standardized within season, so the corpus-wide z pool is the pool.
+    var n = 0, below = 0;
+    for (var i = 0; i < state.players.length; i += 7) {   // stride: cheap + stable
+      var v = state.players[i].v;
+      if (!v || v[j] == null) continue;
+      n++;
+      if (v[j] < z) below++;
+    }
+    if (n < 50) return null;
+    return Math.round(100 * below / n);
+  }
+
+  function fmtReal(v) {
+    var a = Math.abs(v);
+    return (a >= 100 ? v.toFixed(0) : a >= 10 ? v.toFixed(1) : v.toFixed(2));
   }
 
   function seasonStart(season) {
@@ -1024,7 +1092,7 @@
         return '<li><button class="network-node-inspector__pick' + selectedCls + '" data-head-item-group="' + esc(group) +
           '" data-head-item-idx="' + r.idx + '">' + esc(r.label) + '</button>' +
           '<span class="network-node-inspector__num">' + (group === 'next_profile'
-            ? (Math.round(r.value * 100) / 100).toFixed(2) + 'z'
+            ? nextProfileDisplay(r)
             : fmtPredScore(r.value) + (group === 'skills' ? '' : '%')) + '</span>' +
           '<span class="network-node-inspector__num">' + esc(r.aux || '') + '</span></li>';
       }).join('') + '</ol>' +
@@ -1638,15 +1706,50 @@
         band: localIntervalForOutput('next_profile', i)
       };
     }).sort(function (a, b) { return Math.abs(b.z) - Math.abs(a.z); });
+    var season = state.players[state.playerIdx] && state.players[state.playerIdx].season;
+    var nextLbl = nextSeasonLabel(season);
+    var anyReal = nextPairs.some(function (n) { return !!realFromZ(n.key, n.z, season); });
+    var futureUnknown = anyReal && !seasonNorm(nextLbl, 'PTS');
+
+    var intro = anyReal
+      ? 'Each number is what the model expects him to average <b>per 100 possessions</b> '
+        + (futureUnknown
+            ? 'next season (' + esc(nextLbl || '') + ' has not been played, so the league baseline is his own season). '
+            : 'in ' + esc(nextLbl || 'the next season') + '. ')
+        + 'The league average is shown beside it, so you can see how far above or below it he lands. '
+        + 'Shooting percentages are shown as a league percentile instead — they are smoothed before the '
+        + 'model sees them, so a raw rate would be made up.'
+      : 'Numbers are vs the league average that season: <b>+</b> is above average, <b>−</b> is below, '
+        + '<b>0</b> is dead average. “±1” ≈ better than about two-thirds of the league.';
+
     nextHost.innerHTML =
       '<div class="network-out-subhead">Projected next season (' + nextPairs.length + ' stats)</div>' +
-      '<p class="network-insight-note">Numbers are vs the league average that season: '
-        + '<b>+</b> is above average, <b>−</b> is below, and <b>0</b> is dead average. '
-        + '“±1” ≈ better than about two-thirds of the league. The faint range is where similar players usually land.</p>' +
+      '<p class="network-insight-note">' + intro + '</p>' +
       '<div class="network-skill-grid">' + nextPairs.map(function (n) {
         var w = Math.max(1, Math.min(99.9, Math.abs(n.z) / 3 * 100));
         var sign = n.z > 0.005 ? '+' : '';
         var zText = sign + (Math.round(n.z * 100) / 100).toFixed(2);
+        var real = realFromZ(n.key, n.z, season);
+        var pct = real ? null : percentileOfZ(n.z, n.key);
+
+        var valText, subText, tip;
+        if (real) {
+          valText = fmtReal(real.value);
+          subText = 'league avg ' + fmtReal(real.leagueAvg) + ' per 100';
+          tip = n.label + ': projected ' + valText + ' per 100 possessions'
+            + (real.projected ? ' in ' + real.baseline : ' (baseline ' + real.baseline + ')')
+            + '. League average ' + fmtReal(real.leagueAvg) + '. That is ' + zText
+            + ' standard deviations from average.';
+        } else if (pct != null) {
+          valText = ordinal(pct);
+          subText = 'league percentile';
+          tip = n.label + ': projected around the ' + ordinal(pct) + ' percentile of the league. '
+            + 'This stat is smoothed before the model sees it, so we do not print a raw rate.';
+        } else {
+          valText = zText;
+          subText = 'vs league average';
+          tip = n.label + ': projected ' + zText + ' vs league average next season.';
+        }
         var ciText = n.band
           ? (Math.round(n.band.lo * 100) / 100).toFixed(2) + ' to ' + (Math.round(n.band.hi * 100) / 100).toFixed(2)
           : 'n/a';
@@ -1655,15 +1758,31 @@
           state.selectedNode.index === n.idx;
         return '<div class="network-skill-row' + (selNext ? ' is-selected' : '') + '"' +
           ' data-head-select-group="next_profile" data-head-select-idx="' + n.idx + '"' +
-          ' title="' + esc(n.label) + ': projected ' + zText + ' vs league average next season. '
-            + 'Typical range for similar players: ' + esc(ciText) + '.">' +
+          ' title="' + esc(tip) + ' Similar players usually land between ' + esc(ciText) + ' (in std devs).">' +
           '<span class="network-skill-row__meta">' +
             '<span class="network-skill-row__name">' + esc(n.label) + '</span>' +
-            '<span class="network-skill-row__key">' + esc(n.key) + ' · usual range ' + esc(ciText) + '</span>' +
+            '<span class="network-skill-row__key">' + esc(subText) + '</span>' +
           '</span>' +
           '<span class="network-skill-row__track"><span class="network-skill-row__fill" style="width:' + w + '%"></span></span>' +
-          '<span class="network-skill-row__val">' + zText + '</span></div>';
+          '<span class="network-skill-row__val">' + esc(valText) + '</span></div>';
       }).join('') + '</div>';
+  }
+
+  function ordinal(n) {
+    var s = ['th', 'st', 'nd', 'rd'], v = n % 100;
+    return n + (s[(v - 20) % 10] || s[v] || s[0]);
+  }
+
+  /* Inspector cell for a next-profile row: real per-100 number when we can
+     invert it exactly, else a percentile, else the raw z as a last resort. */
+  function nextProfileDisplay(r) {
+    var season = state.players[state.playerIdx] && state.players[state.playerIdx].season;
+    var key = r.key || ((state.arch && state.arch.gameFeatureKeys) || [])[r.idx];
+    var real = key ? realFromZ(key, r.value, season) : null;
+    if (real) return esc(fmtReal(real.value)) + '<span class="unit"> /100</span>';
+    var pct = key ? percentileOfZ(r.value, key) : null;
+    if (pct != null) return esc(ordinal(pct));
+    return (Math.round(r.value * 100) / 100).toFixed(2) + 'z';
   }
 
   function ensureMapCanvasSize(canvas, parent, force) {
@@ -2440,6 +2559,22 @@
     });
   }
 
+  /* Optional: per-season league mean/SD. Absent -> the panel keeps its
+     "vs league average" phrasing rather than inventing real numbers. */
+  function loadSeasonNorms() {
+    return fetch('assets/season_norms.json').then(function (r) {
+      if (!r.ok) throw new Error('no season norms');
+      return r.json();
+    }).then(function (doc) {
+      state.norms = doc;
+      renderOutputs();
+      renderNodeInspector();
+    }).catch(function (err) {
+      state.norms = null;
+      if (window.console) console.warn('[network-viz] season norms unavailable:', err.message);
+    });
+  }
+
   function init() {
     Promise.all([
       fetch('assets/vectors.json').then(function (r) { return r.json(); }),
@@ -2495,6 +2630,7 @@
       // Attribution needs the Jacobian's population matrix for the heatmap and
       // the tower bars, so chain rather than race.
       loadJacobian().then(loadAttribution);
+      loadSeasonNorms();
       renderMapLegend();
       renderMapInsights();
       renderFlowInsights();

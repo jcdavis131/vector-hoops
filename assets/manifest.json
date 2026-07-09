@@ -1,5 +1,5 @@
 {
-  "built": "2026-07-09 19:35 UTC",
+  "built": "2026-07-09 20:01 UTC",
   "contract": "transparent_14d",
   "wide_skills": {
     "skill_count": 6,
@@ -156,6 +156,7 @@
     "game_ratings_gates": true,
     "player_meta": true,
     "current_rosters": true,
+    "season_norms": true,
     "procrustes_drift.py": true,
     "archetype_time.py": true,
     "career_trajectories.py": true,
@@ -165,6 +166,10 @@
     "mtnn_viz": true
   },
   "assets": {
+    "season_norms.json": {
+      "sha1": "7e29fad35695",
+      "present": true
+    },
     "vectors.json": {
       "sha1": "fbb9e0bbc7d3",
       "present": true
@@ -202,7 +207,7 @@
       "present": true
     },
     "archetypes_time.json": {
-      "sha1": "a613a858903f",
+      "sha1": "6b30b722b538",
       "present": true
     },
     "archetype_assignments.json": {

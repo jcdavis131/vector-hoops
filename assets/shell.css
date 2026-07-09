@@ -2887,6 +2887,13 @@ body.vh-team-themed .landing-favorite__select:focus{
   box-shadow: 0 0 0 2px #121210;
 }
 .network-map-legend__name{ color: var(--ink-soft); }
+/* "37.5 /100" — the unit recedes so the number reads first. */
+.network-node-inspector__num .unit,
+.network-skill-row__val .unit{
+  color: var(--ink-muted);
+  font-size: 0.85em;
+  font-weight: 400;
+}
 .network-map-card,
 .network-flow-card{ overflow: hidden; }
 .network-map-layout .network-insights,

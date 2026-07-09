@@ -31,6 +31,7 @@ REPORT = ROOT / "pipeline" / "data" / "mtnn_report.json"
 SWEEP = ROOT / "pipeline" / "data" / "mtnn_hp_sweep.json"
 
 CLIENT_ASSETS = [
+    "season_norms.json",
     "vectors.json",
     "skills.json",
     "skills_wide.json",
@@ -178,6 +179,11 @@ def main() -> None:
         "build_player_meta", [py, "pipeline/build_player_meta.py"], required=False)
     steps_ok["current_rosters"] = run(
         "build_current_rosters", [py, "pipeline/build_current_rosters.py"], required=False)
+    # Per-season league mean/SD so the client can turn z-scores back into real
+    # per-100-possession numbers. Self-verifying: a (season, feature) pair that
+    # fails the round-trip is dropped rather than shipped.
+    steps_ok["season_norms"] = run(
+        "export_season_norms", [py, "pipeline/export_season_norms.py"], required=False)
 
     # Archetype / drift sidecars (idempotent; fast when vectors unchanged).
     for script in (

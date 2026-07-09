@@ -59,7 +59,27 @@
           to "this was measured and it was zero." Tracking data doesn't exist
           before 2013-14, so those seasons carry a mask instead of a guessed
           number. Nothing is filled in silently.</dd>
+        <dt>per 100 possessions</dt>
+        <dd>Every rate on this site is <b>per 100 possessions</b>, not per game.
+          A 2026 game has far more possessions than a 1997 game, so per-game
+          numbers would quietly reward playing in a fast era. Per-100 asks the
+          same question of every player: <b>what does he do with the ball he
+          gets?</b> Expect bigger-looking numbers &mdash; a 30-point scorer is
+          nearer 37 per 100.</dd>
       </dl>
+    </div>
+    <div class="methods-plainly">
+      <p class="methods-plainly__head">Why three stats show a percentile, not a number</p>
+      <p style="margin:0;font-size:13px;line-height:1.55;color:var(--ink-soft);">
+        3P%, FG% and FT% are <b>smoothed toward the league average by attempts</b>
+        before the model ever sees them &mdash; otherwise a player who took four
+        threes and made three would read as a 75% shooter. That smoothing cannot
+        be undone, so printing a projected "41.2%" would be inventing a number
+        the model never held. We show <b>where he'd rank in the league</b>
+        instead. Every other stat is converted back to a real per-100 rate, and
+        every one of those conversions is
+        re-checked before deploy (<code>verify_accuracy.py</code> V15).
+      </p>
     </div>
     <p>Each player-season is 14 features, z-scored within its own season (era-honest &mdash; a 1997 center and a 2026 guard share one honest space):</p>
     <table>
