@@ -682,7 +682,7 @@
   var HONORS_BY_KEY = null; // "name|season" -> {asg, allNbaTeam, allNbaVotePts}
 
   var METRIC_TIPS = {
-    complementarity: 'How orthogonal two players\' era-z profiles are (1 − |cosine|). Higher means different skill mixes that fit together.',
+    complementarity: 'How different two players\' skill mixes are — different skills fit together instead of overlapping. Higher is better; among the top real pairs this runs high (roughly 94–99.6%), so read it against that band, not against 0.',
     jointPM: 'Average per-game plus-minus of both players that season. A rough lineup success proxy — not true on/off lineup data.',
     chemistry: 'Equal-weight blend of complementarity and joint-PM percentiles across the top-800 measured teammate pairs.',
     adjPM: 'Plus-minus adjusted for teammates, opponents, and pace before comparing pre- vs post-trade splits (not raw box-score PM).',

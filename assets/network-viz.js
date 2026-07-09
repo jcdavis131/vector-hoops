@@ -611,16 +611,33 @@
       host.innerHTML = '<p class="drift-loading">No signal summary yet.</p>';
       return;
     }
+    // Each hint states what the bar means, which direction is "more", and a
+    // typical range — and, where a low reading is easily misread as "the model
+    // is broken", says plainly what it usually means instead.
     var rows = [
-      { key: 'Top inputs', val: d.inputFocus, hint: 'How much of the signal comes from the three strongest stat groups.' },
-      { key: 'Tower spread', val: d.towerSpread, hint: 'Whether one tower dominates or several share the load.' },
-      { key: 'Archetype gap', val: d.archMargin, hint: 'How far ahead the top archetype guess is over second place.' },
-      { key: 'Position gap', val: d.posMargin, hint: 'How far ahead the top position guess is over second place.' },
-      { key: 'Skill spread', val: d.skillContrast, hint: 'How uneven the skill grades are across categories.' },
-      { key: 'Next-year signal', val: d.nextSignal, hint: 'How far next-season stat forecasts sit from league average.' }
+      { key: 'Top inputs', val: d.inputFocus,
+        hint: 'Share of this player’s signal coming from his 3 strongest stat groups. '
+          + 'Higher = a specialist; lower = an all-around profile. Most players sit around 25–45%.' },
+      { key: 'Tower spread', val: d.towerSpread,
+        hint: 'Whether a few parts of the network drive this player or all of them equally. '
+          + 'A superstar often reads LOW here — he lights up everything at once, which is a strength, not a fault.' },
+      { key: 'Archetype gap', val: d.archMargin,
+        hint: 'How far the model’s top play-style guess leads its second guess. '
+          + 'High = a clear-cut type; low = a genuine hybrid between two styles.' },
+      { key: 'Position gap', val: d.posMargin,
+        hint: 'How far the top position guess leads the runner-up. A LOW gap usually means the player is '
+          + 'genuinely positionless (a point-forward, a switchable big) — not that the model is unsure.' },
+      { key: 'Skill spread', val: d.skillContrast,
+        hint: 'How uneven the skill grades are. High = sharp peaks and valleys (a specialist); '
+          + 'low = an even, well-rounded grade sheet.' },
+      { key: 'Next-year signal', val: d.nextSignal,
+        hint: 'How far the model expects next season’s stats to move from the league average. '
+          + 'Higher = a more distinctive projected season; near zero = a roughly average line.' }
     ];
     host.innerHTML =
       '<div class="network-insights__head">Signal check</div>' +
+      '<p class="network-insight-note">These bars describe how the model is <em>reading</em> this '
+        + 'player — they are not a rating of how good he is. Hover any bar for what it means.</p>' +
       '<div class="network-insight-meters">' +
       rows.map(function (r) {
         return '<div class="network-insight-meter" title="' + esc(r.hint) + '">' +
@@ -789,7 +806,9 @@
             '<span class="network-node-inspector__num">' + esc(f.key) + '</span>' +
             '<span class="network-node-inspector__num">' + (Math.round(f.z * 100) / 100).toFixed(2) + 'z</span></li>';
         }).join('') + '</ol>' +
-        '<p class="network-node-inspector__hint">Exact player-season feature z-scores are shown for this family; edge routes to its matching tower.</p>';
+        '<p class="network-node-inspector__hint">Each value compares this player to the league that season: '
+          + '<b>+</b> above average, <b>−</b> below, in standard deviations (about +1 ≈ top third). '
+          + 'This feature group feeds its matching tower.</p>';
       return;
     }
 
@@ -880,7 +899,7 @@
       }).join('') + '</ol>' +
       '<p class="network-node-inspector__hint">' +
       (group === 'skills' || group === 'next_profile'
-        ? 'Interval column shows local 10-90% prediction band from nearest embedding neighbors.'
+        ? 'The range shows where the middle 80% of the most similar players actually land — a sense of how sure the estimate is.'
         : 'Classification rows show full class probability distribution.') +
       '</p>';
   }
@@ -1483,21 +1502,27 @@
       };
     }).sort(function (a, b) { return Math.abs(b.z) - Math.abs(a.z); });
     nextHost.innerHTML =
-      '<div class="network-out-subhead">All next-profile outputs (' + nextPairs.length + ' stats)</div>' +
+      '<div class="network-out-subhead">Projected next season (' + nextPairs.length + ' stats)</div>' +
+      '<p class="network-insight-note">Numbers are vs the league average that season: '
+        + '<b>+</b> is above average, <b>−</b> is below, and <b>0</b> is dead average. '
+        + '“±1” ≈ better than about two-thirds of the league. The faint range is where similar players usually land.</p>' +
       '<div class="network-skill-grid">' + nextPairs.map(function (n) {
         var w = Math.max(1, Math.min(99.9, Math.abs(n.z) / 3 * 100));
-        var zText = (Math.round(n.z * 100) / 100).toFixed(2) + 'z';
+        var sign = n.z > 0.005 ? '+' : '';
+        var zText = sign + (Math.round(n.z * 100) / 100).toFixed(2);
         var ciText = n.band
-          ? (Math.round(n.band.lo * 100) / 100).toFixed(2) + '–' + (Math.round(n.band.hi * 100) / 100).toFixed(2) + 'z'
+          ? (Math.round(n.band.lo * 100) / 100).toFixed(2) + ' to ' + (Math.round(n.band.hi * 100) / 100).toFixed(2)
           : 'n/a';
         var selNext = state.selectedNode && state.selectedNode.type === 'head_item' &&
           (state.selectedNode.group || state.selectedNode.key) === 'next_profile' &&
           state.selectedNode.index === n.idx;
         return '<div class="network-skill-row' + (selNext ? ' is-selected' : '') + '"' +
-          ' data-head-select-group="next_profile" data-head-select-idx="' + n.idx + '">' +
+          ' data-head-select-group="next_profile" data-head-select-idx="' + n.idx + '"' +
+          ' title="' + esc(n.label) + ': projected ' + zText + ' vs league average next season. '
+            + 'Typical range for similar players: ' + esc(ciText) + '.">' +
           '<span class="network-skill-row__meta">' +
             '<span class="network-skill-row__name">' + esc(n.label) + '</span>' +
-            '<span class="network-skill-row__key">' + esc(n.key) + ' · 10-90% ' + esc(ciText) + '</span>' +
+            '<span class="network-skill-row__key">' + esc(n.key) + ' · usual range ' + esc(ciText) + '</span>' +
           '</span>' +
           '<span class="network-skill-row__track"><span class="network-skill-row__fill" style="width:' + w + '%"></span></span>' +
           '<span class="network-skill-row__val">' + zText + '</span></div>';
