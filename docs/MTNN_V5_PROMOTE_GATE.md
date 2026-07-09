@@ -19,6 +19,7 @@ This file is the **second brain** while Fable 5 (Claude CLI / terminal 51) runs 
 | Operator sign-off required before | any write to promoted checkpoints / `assets/` NN promote |
 | Conflict radar (2026-07-08 fill) | `pipeline/train_mtnn.py` is **dirty in git** (Fable 5 lane) — this Agent must **not** edit it. `pipeline/ablate_v5.py` / `pipeline/sweep_v5.py` are Fable 5. Product lane stays on docs / NUX / next-profile UI / tasks. |
 | Product fills during wait | NUX tour replay (`data-vh-nux-tour`); next-profile predicted vs actual on `/players`; `docs/MTNN_V5_PROMOTE_GATE.md` |
+| **Product review GO (2026-07-09)** | Current v4 assets **PASS** gates + live `/trends` + `/model` smoke — see `tasks/post-retrain-review-notes.md`. Phase 1–2 **blocked** until Fable 5 sweep + operator promote. |
 
 ---
 
@@ -37,37 +38,73 @@ From `docs/MTNN_V5_DEEP_ARCHITECTURE.md` §7 and `pipeline/ablate_v5.py`:
 
 ---
 
-## 2. Comparison table shell (paste ranked results here)
+## 2. Comparison table — PARTIAL (sweep in flight)
 
-### 2a. A / B / C ablation (held-out)
+> **Protocol change — read first.** Every number below is measured under a
+> protocol that did not exist when §1 was written:
+> * `--protocol leakfree` — the legacy loop trained on **1,551 held-out pair
+>   positives** and **1,551 held-out next-season targets**, and fit k-means over
+>   val/test rows. Old "recall@10 = 1.0" was memorization.
+> * `--split player` — the temporal split had a mean family-coverage gap of
+>   **0.167** (tracking 0.372 train vs 1.000 test), discarded 771 straddling
+>   pairs, and never trained 4 seasons' `season_emb` rows.
+> * Matrix rebuilt: dead `game_ratings` tower removed (129→120 features,
+>   18→17 towers), salary backfilled (val/test coverage 0.000 → 0.935/0.888),
+>   `career_arc` un-staled (`DRAFT_SLOT_Z` 0% → 100%).
+>
+> Numbers are therefore **not comparable** to any figure in §1 or in
+> `MTNN_V5_DEEP_ARCHITECTURE.md` §7. See that file's §0 correction block.
 
-| Config | Fusion | purity@20 | Δ vs A | next-profile RMSE | Δ vs A | recall@10 | Verdict cell |
+### 2a. A / B / C ablation (held-out, leak-free + player-split, 60 ep, seed 7)
+
+| Config | Fusion | purity@20 (test) | Δ vs A | next-profile RMSE | Δ vs A | recall@10 | Verdict cell |
 |--------|--------|-----------|--------|-------------------|--------|-----------|--------------|
-| A_v4_control | concat / shallow | _TBD_ | 0 | _TBD_ | 0 | _TBD_ | control |
-| B_deep_concat | concat / deep | _TBD_ | _TBD_ | _TBD_ | _TBD_ | _TBD_ | depth-only |
-| C_transformer | transformer / deep | _TBD_ | _TBD_ | _TBD_ | _TBD_ | _TBD_ | full v5 |
+| A_v4_control | concat / shallow | 0.6748 | 0 | 0.6337 | 0 | 0.9660 | control |
+| B_deep_concat | concat / deep | 0.6804 | **+0.0056** | **0.6097** | **−0.0240 (−3.8%)** | 0.9680 | depth-only |
+| C_transformer | transformer / deep | **NOT RUN** | — | — | — | — | **in flight** |
 
-**Auto-check (fill Y/N):**
+**Auto-check:**
 
 | Check | Pass? |
 |-------|-------|
-| `purity@20(C) ≥ purity@20(A) + 0.02` | _ |
-| next-profile RMSE(C) < RMSE(A) | _ |
-| recall@10(C) ≥ 0.99 | _ |
-| C clearly better than B (not ≈) | _ |
+| `purity@20(C) ≥ purity@20(A) + 0.02` | **N/A — C not run** |
+| next-profile RMSE(C) < RMSE(A) | **N/A — C not run** |
+| `recall@10(C) ≥ 0.99` | **UNSATISFIABLE — see below** |
+| C clearly better than B (not ≈) | **N/A — C not run** |
 
-**§7 outcome (circle one):** `SHIP_C` · `FALLBACK_B` · `KEEP_V4` · `NEEDS_OPERATOR`
+> **The `recall@10 ≥ 0.99` floor is mis-calibrated.** It was set when recall was
+> a *leaked* metric pinned at 1.000. Under leak-free eval **no config reaches
+> 0.99** — A is 0.9660, the best observed is 0.978. Applied as written, the rule
+> mechanically returns `KEEP_V4` for every candidate, including ones that clearly
+> improve. The floor must be re-derived against leak-free numbers (suggest
+> "no regression vs A", i.e. `recall(X) ≥ recall(A) − 0.005`) **before** §1 can
+> decide anything. This is an operator decision, not an agent one.
 
-### 2b. B-family GPU sweep (depth / width / dim)
+**§7 outcome:** **`NEEDS_OPERATOR`** — C unrun; recall floor invalid; single seed.
 
-| Rank | Config id | Key knobs | purity@20 | next RMSE | recall@10 | Notes |
-|------|-----------|-----------|-----------|-----------|-----------|-------|
-| 1 | _TBD_ | | | | | top candidate |
-| 2 | _TBD_ | | | | | |
-| 3 | _TBD_ | | | | | |
-| … | | | | | | |
+### 2b. B-family GPU sweep (depth / width / dim) — 5 of 11 configs complete
 
-**3-seed confirm of winner** (required before lock):
+Ranked by held-out next-RMSE (lower better); purity is **test-only**.
+
+| Rank | Config id | Key knobs | params | purity@20 (test) | next RMSE | recall@10 | Notes |
+|------|-----------|-----------|--------|-----------|-----------|-----------|-------|
+| 1 | `b1_h96_t24_d48` | v4 depth/width **+ MLP heads** | 224,899 | 0.6605 | **0.6072** | **0.978** | cheapest; best RMSE + recall |
+| 2 | `b2_h160_t32_d64` (=B) | 2 blk / 160 / 32 / 64 | 526,091 | 0.6804 | 0.6097 | 0.968 | 2.3× params, no RMSE gain over #1 |
+| 3 | `b2_h224_t32_d64` | wider hidden | 652,427 | 0.6847 | 0.6107 | 0.974 | |
+| 4 | `b2_h160_t32_d48` | zero-migration emb | 513,147 | 0.6858 | 0.6140 | 0.978 | |
+| 5 | `b3_h160_t32_d64` | 3 blocks (deepest) | 709,963 | **0.6934** | 0.6165 | 0.962 | best purity, worst RMSE of group |
+| — | `b2_h160_t48_d64`, `b2_h160_t32_d96`, `b3_h224_t48_d64`, `b3_h160_t32_d96`, `tx_*` ×2 | | | | | | **pending** |
+
+**Leading interpretation (single seed — not locked):** the regression gain is
+attributable to the **2-layer MLP decode heads**, not tower depth.
+`b1_h96_t24_d48` differs from `A_v4_control` by *only* the head type
+(+13,200 params, +6%) and moves RMSE **0.6337 → 0.6072 (−4.2%)** — a larger gain
+than B's −3.8% at 2.5× the params. Tower depth buys **purity** (`b3` leads) at the
+cost of RMSE and recall. There is a **purity ↔ regression tradeoff**; no config
+dominates. `b1` vs `B` on RMSE (0.0025) is **within seed noise**; `b1` vs `A`
+(0.0265) is well outside it.
+
+**3-seed confirm of winner** (required by §3a before lock): **NOT RUN.**
 
 | Seed | purity@20 | next RMSE | recall@10 | Stable? |
 |------|-----------|-----------|-----------|---------|
