@@ -52,23 +52,35 @@ GRID = {
         fusion_mode="transformer", d_model=96, n_fusion_layers=2, n_attn_heads=4)),
 
     # --- Sweep A: the decode-head width, pinned at 64 in every run above even
-    # though the head MLP is what separated b1 from A. v4 towers held fixed
-    # (depth is already mapped). ha64_d48 == b1, i.e. an internal control.
+    # though the head MLP is what separated b1 from the v4 control.
+    #
+    # BASED ON b2 TOWERS (2 blocks / 160 / 32), not v4 towers. The obvious
+    # design -- hold towers at v4 shape and vary the head -- cannot produce a
+    # promotable model: v4-shaped towers are the purity-worst point in the arch
+    # grid (b1 purity 0.6605), and the promotion gate is 0.6*purity, so every
+    # such arm lands ~0.79 composite, below configs we already have. Re-based on
+    # b2_h160_t32_d48 (composite 0.8027, dim 48 => zero migration), which asks
+    # the question that decides what ships: does head width help ON TOP OF a
+    # purity-competitive tower stack?  hb64_d48 == b2_h160_t32_d48 (control).
+    "hb32_d48":  (2, 160, 32, 48, dict(d_head_hidden=32)),
+    "hb64_d48":  (2, 160, 32, 48, dict(d_head_hidden=64)),
+    "hb128_d48": (2, 160, 32, 48, dict(d_head_hidden=128)),
+    "hb256_d48": (2, 160, 32, 48, dict(d_head_hidden=256)),
+    # depth x head interaction: is the head win depth-dependent?
+    # (ha64_d48 == b1, already measured; these two complete the 2x2.)
     "ha32_d48":  (1, 96, 24, 48, dict(d_head_hidden=32)),
-    "ha64_d48":  (1, 96, 24, 48, dict(d_head_hidden=64)),
     "ha128_d48": (1, 96, 24, 48, dict(d_head_hidden=128)),
-    "ha256_d48": (1, 96, 24, 48, dict(d_head_hidden=256)),
-    # embedding-dim interaction at the (expected) best head width
-    "ha128_d64": (1, 96, 24, 64, dict(d_head_hidden=128)),
-    "ha128_d96": (1, 96, 24, 96, dict(d_head_hidden=128)),
+    # embedding dim was the one width that moved BOTH objectives
+    "hb128_d96": (2, 160, 32, 96, dict(d_head_hidden=128)),
 
     # --- Sweep B: the fusion bottleneck. At the v4 default (256) this single
     # Linear is ~57% of all parameters and had no flag until now, so it has
-    # never been swept. Highest-information axis available.
-    "fh128_d48": (1, 96, 24, 48, dict(d_head_hidden=128, d_fusion_hidden=128)),
-    "fh256_d48": (1, 96, 24, 48, dict(d_head_hidden=128, d_fusion_hidden=256)),
-    "fh384_d48": (1, 96, 24, 48, dict(d_head_hidden=128, d_fusion_hidden=384)),
-    "fh512_d48": (1, 96, 24, 48, dict(d_head_hidden=128, d_fusion_hidden=512)),
+    # never been swept. Highest-information axis available. Also based on b2
+    # towers; d_head_hidden is re-pinned to Sweep A's winner before running.
+    "fh128_d48": (2, 160, 32, 48, dict(d_head_hidden=128, d_fusion_hidden=128)),
+    "fh256_d48": (2, 160, 32, 48, dict(d_head_hidden=128, d_fusion_hidden=256)),
+    "fh384_d48": (2, 160, 32, 48, dict(d_head_hidden=128, d_fusion_hidden=384)),
+    "fh512_d48": (2, 160, 32, 48, dict(d_head_hidden=128, d_fusion_hidden=512)),
 }
 
 # Named batches so a run targets one question instead of re-mapping a plateau.
@@ -77,8 +89,8 @@ SWEEP_SETS = {
              "b3_h160_t32_d64", "b2_h224_t32_d64", "b2_h160_t48_d64",
              "b2_h160_t32_d96", "b3_h224_t48_d64", "b3_h160_t32_d96"],
     "transformer": ["tx_b2_h160_t32_d64", "tx_b2_h160_t32_d64_L2"],
-    "head": ["ha32_d48", "ha64_d48", "ha128_d48", "ha256_d48",
-             "ha128_d64", "ha128_d96"],
+    "head": ["hb32_d48", "hb64_d48", "hb128_d48", "hb256_d48",
+             "ha32_d48", "ha128_d48", "hb128_d96"],
     "fusion": ["fh128_d48", "fh256_d48", "fh384_d48", "fh512_d48"],
 }
 
