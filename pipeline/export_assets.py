@@ -94,6 +94,36 @@ PROMOTION_RECALL_MARGIN = 0.05
 PROMOTION_ARCHETYPE_TOP1 = 0.55
 
 
+def leakfree_evidence() -> dict | None:
+    """The inductive numbers for the promoted recipe, read from the frozen
+    recipe (pipeline/promote_recipe.json) -- never recomputed or invented here.
+
+    These come from the apples-to-apples sweep: leak-free protocol, player-level
+    split, three seeds, with the previous recipe measured in the same run.
+    """
+    path = ROOT / "pipeline" / "promote_recipe.json"
+    if not path.exists():
+        return None
+    try:
+        doc = json.loads(path.read_text(encoding="utf-8"))
+    except Exception:  # noqa: BLE001
+        return None
+    ev = doc.get("_evidence", {})
+    winner = ev.get(doc.get("_name", ""), {})
+    if not winner:
+        return None
+    return {
+        "protocol": "leak-free (pipeline/leakfree.py), player-level split, 3 seeds",
+        "objective": ev.get("objective"),
+        "recipe": doc.get("_name"),
+        "recall_at_10": winner.get("recall"),
+        "purity_at_20_test": winner.get("purity_test"),
+        "composite": winner.get("composite"),
+        "gain_vs_previous": ev.get("gain_vs_v4"),
+        "separates_from_previous": ev.get("separates"),
+    }
+
+
 def mtnn_promotion_eligible(report: dict | None) -> bool:
     """Match train_mtnn.py promotion_gate + verify_accuracy v11."""
     if not report:
@@ -207,6 +237,19 @@ def main() -> None:
             "embeddings promoted to assets/ and consumed by /model + neighbor UI"
             if mtnn_promotion_eligible(mtnn) else None),
         "mtnn_model": mtnn.get("model") if mtnn else None,
+        # The production model is an ATLAS: it trains on every charted row by
+        # design, so the two figures below are TRANSDUCTIVE -- the pairs they
+        # score were also training positives. Calling them "test" or "held-out"
+        # is how recall@10 came to read a perfect 1.0. The honest, inductive
+        # numbers (held-out PLAYERS, leak-free protocol) live beside them.
+        "mtnn_eval_protocol": "transductive (atlas) — trained on all rows; NOT held-out",
+        "mtnn_transductive_recall_at_10": (
+            mtnn.get("held_out_recall", {}).get("test", {}).get("recall_at_10_mtnn")
+            if mtnn else None),
+        "mtnn_transductive_purity_at_20": (
+            mtnn.get("cross_era_archetype_neighbor_purity_at_20") if mtnn else None),
+        "mtnn_leakfree": leakfree_evidence(),
+        # Back-compat keys (same values, honest names above).
         "mtnn_test_recall_at_10": (
             mtnn.get("held_out_recall", {}).get("test", {}).get("recall_at_10_mtnn")
             if mtnn else None),

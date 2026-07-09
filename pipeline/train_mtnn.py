@@ -609,6 +609,29 @@ def promotion_composite(test_recall: float | None, purity: float | None) -> floa
     return 0.4 * tr + 0.6 * pu
 
 
+def model_tag(args) -> str:
+    """Name the net that was actually trained.
+
+    The tag was hardcoded to "mtnn_v4_phase_b", so a promoted v5 recipe
+    (stacked tower blocks / MLP decode heads / transformer fusion) shipped
+    describing itself as v4 in mtnn_report.json and, downstream, in the public
+    manifest.json. A label is a claim; derive it from the knobs.
+    """
+    v5 = (getattr(args, "tower_blocks", 1) > 1
+          or getattr(args, "mlp_heads", False)
+          or args.fusion == "transformer"
+          or getattr(args, "fusion_hidden", 0))
+    if not v5:
+        return "mtnn_v4_phase_b"
+    bits = [f"b{args.tower_blocks}", f"h{args.tower_hidden}",
+            f"t{args.tower_width}", f"d{args.dim}"]
+    if args.mlp_heads:
+        bits.append(f"mlp{args.d_head_hidden}")
+    if getattr(args, "fusion_hidden", 0):
+        bits.append(f"fus{args.fusion_hidden}")
+    return f"mtnn_v5_{args.fusion}_" + "_".join(bits)
+
+
 def adamw_param_groups(model: nn.Module, weight_decay: float) -> list[dict]:
     """AdamW with no decay on biases and LayerNorm (LLM/embed convention)."""
     decay, no_decay = [], []
@@ -1363,7 +1386,7 @@ def main() -> None:
 
     report = {
         "trained": time.strftime("%Y-%m-%d %H:%M"),
-        "model": "mtnn_v4_phase_b",
+        "model": model_tag(args),
         "epochs": args.epochs,
         "best_epoch": best_epoch if best_epoch >= 0 else None,
         "best_val_recall_at_10": best_val_recall,
@@ -1371,6 +1394,13 @@ def main() -> None:
         "tower_width": args.tower_width,
         "tower_hidden": args.tower_hidden,
         "skill_hidden": args.skill_hidden,
+        # v5 architecture knobs. Without these the report cannot tell you which
+        # recipe produced it -- only the checkpoint could, which made
+        # mtnn_report.json useless as provenance for a promote.
+        "tower_blocks": args.tower_blocks,
+        "mlp_heads": args.mlp_heads,
+        "d_head_hidden": args.d_head_hidden if args.mlp_heads else None,
+        "fusion_hidden": args.fusion_hidden or None,
         "lr": args.lr,
         "lr_schedule": args.lr_schedule,
         "warmup_pct": args.warmup_pct,

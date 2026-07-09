@@ -3365,3 +3365,179 @@ body.vh-team-themed .landing-favorite__select:focus{
     gap: 8px;
   }
 }
+
+/* ---------------------------------------------------------------------------
+   Attribution panel (/model) — "what drove this prediction"
+
+   Color by the job it does, validated against the light card surface (#ffffff):
+     magnitude (tower bars, heatmap)  -> ONE sequential hue, blue, light->dark
+     signed contribution (features)   -> diverging blue<->red, NEUTRAL gray zero
+     "Other" bucket                   -> recessive neutral, never a 9th hue
+     never-measured                   -> icon + label, never color alone
+   Diverging poles pass the validator on #ffffff: worst adjacent CVD dE 74.6
+   (protan), both >= 3:1 contrast. Sign is double-encoded by side-of-zero, so
+   the bars survive monochrome and forced-colors too.
+--------------------------------------------------------------------------- */
+.network-attr-card{ gap: 12px; }
+
+.attr-tools{ display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.attr-tabs, .attr-scope{ display: flex; gap: 4px; }
+
+.attr-tab, .attr-scope-btn{
+  font: inherit;
+  font-size: 0.78rem;
+  padding: 4px 10px;
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+.attr-tab:hover, .attr-scope-btn:hover{ border-color: var(--ink-muted); color: var(--ink); }
+.attr-tab.is-active, .attr-scope-btn.is-active{
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--paper);
+}
+.attr-subject{
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--ink-muted);
+}
+
+.attr-grid{
+  display: grid;
+  grid-template-columns: minmax(150px, 0.7fr) minmax(220px, 1fr) minmax(260px, 1.3fr);
+  gap: 12px;
+  align-items: start;
+}
+.attr-panel{ min-width: 0; }
+
+/* Stat tile: a value and the baseline it must beat. Never a one-bar bar chart. */
+.attr-tile__label{ font-size: 0.72rem; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.04em; }
+.attr-tile__value{ font-size: 2rem; line-height: 1.1; color: var(--ink); margin: 4px 0; }
+.attr-tile__baseline, .attr-tile__note{ font-size: 0.76rem; color: var(--ink-soft); margin: 0; }
+
+/* Ranked bars: one hue; length carries the value. */
+.attr-bars{ list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 6px; }
+.attr-bar{
+  display: grid;
+  grid-template-columns: minmax(64px, 96px) minmax(0, 1fr) 34px;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+}
+.attr-bar__label{ overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.attr-bar__track{
+  position: relative;
+  height: 12px;
+  background: var(--hairline);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.attr-bar__fill{
+  display: block;
+  height: 100%;
+  background: #2a78d6;              /* sequential blue, step 450 */
+  border-radius: 0 4px 4px 0;       /* 4px rounded data-end, square at baseline */
+}
+.attr-bar__fill--other{ background: var(--ink-muted); }
+.attr-bar__num{
+  font-size: 0.74rem;
+  color: var(--ink-soft);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Diverging bars: anchored at zero, neutral midpoint, hue only in the arms. */
+.attr-divs{ list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 6px; }
+.attr-div{
+  display: grid;
+  grid-template-columns: minmax(72px, 120px) minmax(0, 1fr) 44px;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+}
+.attr-div__label{ overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.attr-div__track{ position: relative; display: flex; align-items: center; height: 12px; }
+.attr-div__half{ position: relative; flex: 1 1 50%; height: 100%; background: var(--hairline); }
+.attr-div__half--neg{ border-radius: 4px 0 0 4px; display: flex; justify-content: flex-end; }
+.attr-div__half--pos{ border-radius: 0 4px 4px 0; }
+.attr-div__zero{ width: 2px; height: 16px; background: var(--ink-muted); flex: 0 0 2px; }
+.attr-div__fill{ display: block; height: 100%; }
+.attr-div__fill--neg{ background: #e34948; border-radius: 4px 0 0 4px; }   /* diverging red */
+.attr-div__fill--pos{ background: #2a78d6; border-radius: 0 4px 4px 0; }   /* diverging blue */
+.attr-div__num{ font-size: 0.74rem; text-align: right; font-variant-numeric: tabular-nums; color: var(--ink-soft); }
+
+/* Never-measured: status + icon + label. Not a zero-length bar. */
+.attr-div--masked .attr-div__masked{
+  grid-column: 2 / span 2;
+  font-size: 0.74rem;
+  color: var(--ink-muted);
+  font-style: italic;
+}
+.attr-div__icon{ font-style: normal; margin-right: 4px; }
+
+.attr-axis{
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 6px 0 0;
+  font-size: 0.7rem;
+  color: var(--ink-muted);
+}
+
+/* Population heatmap: one sequential hue, magnitude by opacity of that hue. */
+.attr-heatmap-wrap{ overflow-x: auto; }
+.attr-heatmap{ border-collapse: collapse; width: 100%; font-size: 0.76rem; }
+.attr-heatmap caption{
+  caption-side: top;
+  text-align: left;
+  color: var(--ink-muted);
+  font-size: 0.74rem;
+  padding-bottom: 6px;
+}
+.attr-heatmap th{ font-weight: 600; color: var(--ink-soft); text-align: left; padding: 4px 6px; }
+.attr-heatmap thead th{ font-size: 0.72rem; color: var(--ink-muted); }
+.attr-cell{
+  position: relative;
+  padding: 0;
+  height: 26px;
+  min-width: 58px;
+  border: 2px solid var(--surface);   /* 2px surface gap between adjacent fills */
+}
+.attr-cell__fill{
+  position: absolute;
+  inset: 0;
+  border-radius: 3px;
+  background: #2a78d6;
+  opacity: calc(0.08 + 0.92 * var(--v));
+}
+.attr-cell__num{
+  position: relative;
+  display: block;
+  text-align: center;
+  line-height: 26px;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.attr-cell__num--onDark{ color: #ffffff; }   /* fill is dark enough to swallow ink */
+
+/* Table view: the accessible answer, and the contrast-relief route. */
+.attr-table{ border-collapse: collapse; width: 100%; font-size: 0.78rem; margin-top: 8px; }
+.attr-table caption{ caption-side: top; text-align: left; color: var(--ink-muted); font-size: 0.74rem; padding-bottom: 6px; }
+.attr-table th, .attr-table td{ text-align: left; padding: 4px 6px; border-bottom: 1px solid var(--hairline); }
+.attr-table th{ color: var(--ink-muted); font-size: 0.72rem; font-weight: 600; }
+.attr-table__num{ text-align: right; font-variant-numeric: tabular-nums; }
+
+@media (max-width: 900px){
+  .attr-grid{ grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (forced-colors: active){
+  .attr-bar__fill, .attr-div__fill--pos{ background: Highlight; }
+  .attr-div__fill--neg{ background: LinkText; }
+  .attr-cell__fill{ opacity: 1; background: Canvas; border: 1px solid CanvasText; }
+}

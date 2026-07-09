@@ -105,6 +105,16 @@ def main() -> None:
         run("mtnn_train", train)
         run("export_mtnn", [py, "pipeline/export_mtnn_embeddings.py"], required=False)
         run("test_mtnn_export", [py, "pipeline/test_mtnn_export.py"], required=False)
+        # The /model page's client assets describe THIS checkpoint or they lie.
+        # export_mtnn_viz re-stamps mtnn_arch.json with the checkpoint
+        # fingerprint that the browser and verify_accuracy V13/V13b compare
+        # against; the Jacobian + attribution exports carry the same stamp.
+        # Skipping either leaves the flow diagram painting the previous net's
+        # causal edges under the new net's predictions — a same-shape retrain
+        # (d_emb unchanged) changes no dimension that would otherwise catch it.
+        run("export_mtnn_viz", [py, "pipeline/export_mtnn_viz.py"])
+        run("export_mtnn_jacobian",
+            [py, "pipeline/export_mtnn_jacobian.py", "--granularity", "both"])
 
     if not args.skip_drift:
         run("drift_suite", [py, "pipeline/rebuild_drift_suite.py", "--skip-skills"])

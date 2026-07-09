@@ -20,6 +20,19 @@
     "isolated_outputs": "pipeline/data/ablation/",
     "hard_rule": "no overwrite of promoted v4 until operator says promote"
   },
+  "post_retrain_review": {
+    "description": "Trends + /model review after Fable 5 retrain lands",
+    "plan": "tasks/plan.md",
+    "todo": "tasks/todo.md",
+    "notes": "tasks/post-retrain-review-notes.md",
+    "status": "phase0-5_pass_on_v4; phase1-2_blocked_fable5",
+    "blocked_on": "Fable 5 HP sweep + operator promote",
+    "pages": ["/trends", "/model"],
+    "verify": [
+      "python pipeline/verify_accuracy.py",
+      "python pipeline/test_mtnn_export.py"
+    ]
+  },
   "next_profile_eval": {
     "description": "Predicted vs actual next-season era-z stats; pending on latest season",
     "asset": "assets/next_profile_eval.json",

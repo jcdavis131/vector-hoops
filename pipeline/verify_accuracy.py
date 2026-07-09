@@ -401,6 +401,45 @@ def v12_mtnn_client_assets() -> None:
         print(f"  mtnn client: {rows}×{dim} ({nbytes // 1024} KB f32)")
 
 
+def local_checkpoint_stamp() -> dict | None:
+    """(mtime, bytes) of the checkpoint the exports claim to describe.
+
+    `assets/mtnn_arch.json` is the stamp the CLIENT compares against, but it is
+    only an anchor once it has been re-exported by a version of
+    export_mtnn_viz.py that writes one — an older arch.json omits the key
+    entirely, and `if arch_stamp and export_stamp` then skips the comparison
+    without a word. Anchoring on the checkpoint itself keeps the guard live
+    wherever a promote actually happens (pipeline/data is gitignored, so this
+    returns None in CI and the arch comparison carries it there).
+    """
+    ckpt = HERE / "data" / "mtnn_best.pt"
+    if not ckpt.exists():
+        return None
+    st = ckpt.stat()
+    return {"mtime": int(st.st_mtime), "bytes": int(st.st_size)}
+
+
+def check_stamp(name: str, stamp: dict | None, arch: dict | None) -> None:
+    """Fail closed when an export describes a checkpoint that is not shipped."""
+    if not stamp:
+        fail(f"{name} carries no checkpoint stamp — re-run its export")
+        return
+    local = local_checkpoint_stamp()
+    if local and (stamp.get("mtime") != local["mtime"]
+                  or stamp.get("bytes") != local["bytes"]):
+        fail(f"{name} checkpoint stamp stale vs pipeline/data/mtnn_best.pt — "
+             f"re-run export_mtnn_jacobian.py after retraining")
+        return
+    if arch is None:
+        return
+    ac = arch.get("checkpoint")
+    if not ac:
+        print(f"  note: mtnn_arch.json has no checkpoint stamp — the client-side "
+              f"provenance guard is INACTIVE until export_mtnn_viz.py is re-run")
+    elif ac.get("mtime") != stamp.get("mtime") or ac.get("bytes") != stamp.get("bytes"):
+        fail(f"{name} checkpoint stamp stale vs arch — re-run its export")
+
+
 def v13_mtnn_jacobian(data: dict) -> None:
     """Jacobian attribution assets must align with the shipped arch, or the
     /model diagram silently paints causal edges for a network that no longer
@@ -437,13 +476,86 @@ def v13_mtnn_jacobian(data: dict) -> None:
         if jac.get("dEmb") is not None and arch.get("dEmb") is not None \
                 and jac["dEmb"] != arch["dEmb"]:
             fail(f"jacobian dEmb {jac['dEmb']} != arch dEmb {arch['dEmb']}")
-        jc, ac = jac.get("checkpoint"), arch.get("checkpoint")
-        if jc and ac and (jc.get("mtime") != ac.get("mtime")
-                          or jc.get("bytes") != ac.get("bytes")):
-            fail("jacobian checkpoint stamp stale vs arch — re-run "
-                 "export_mtnn_jacobian.py after retraining")
+        check_stamp("mtnn_jacobian.json", jac.get("checkpoint"), arch)
+    else:
+        check_stamp("mtnn_jacobian.json", jac.get("checkpoint"), None)
     print(f"  jacobian: {shape[0]}×{shape[1]}×{shape[2]} "
           f"({nbytes // 1024} KB), targets={jac.get('targets')}")
+
+
+def v13b_mtnn_attribution(data: dict) -> None:
+    """Feature-level attribution must fail closed exactly as the tower-level
+    export does: a diverging bar reading "AST pushed this archetype up" is a
+    claim about the SHIPPED net, so a stale export is a lie, not a stale cache."""
+    print("V13b MTNN feature attribution (optional)…")
+    arch_path = ASSETS / "mtnn_arch.json"
+    ppath = ASSETS / "mtnn_attr_pop.json"
+    bpath = ASSETS / "mtnn_attr_topk.bin"
+    if not ppath.exists():
+        print("  mtnn_attr_pop.json absent — /model has no feature attribution")
+        return
+    attr = json.loads(ppath.read_text(encoding="utf-8"))
+    layout = attr.get("topkLayout") or {}
+    shape = layout.get("shape") or []
+    if len(shape) != 3:
+        fail("mtnn_attr_pop.json missing topkLayout.shape")
+        return
+    if not bpath.exists():
+        fail("mtnn_attr_pop.json present but mtnn_attr_topk.bin missing")
+        return
+
+    n_rows, n_t, k = shape
+    feats = attr.get("features") or []
+    if n_rows != len(data["players"]):
+        fail(f"attribution rows {n_rows} != vectors {len(data['players'])}")
+    if n_t != len(attr.get("targets") or []):
+        fail(f"attribution targets {n_t} != listed {attr.get('targets')}")
+
+    expected = n_rows * n_t * k * 2 + n_rows * n_t * k * 4   # uint16 + float32
+    nbytes = bpath.stat().st_size
+    if nbytes != expected:
+        fail(f"mtnn_attr_topk.bin size {nbytes} != expected {expected}")
+    else:
+        count = n_rows * n_t * k
+        raw = bpath.read_bytes()
+        idx = np.frombuffer(raw, dtype=np.uint16, count=count)
+        val = np.frombuffer(raw, dtype=np.float32, count=count, offset=count * 2)
+        if feats and int(idx.max()) >= len(feats):
+            fail(f"attribution index {idx.max()} out of range for "
+                 f"{len(feats)} features")
+        if not np.isfinite(val).all():
+            fail("attribution values contain NaN/Inf")
+
+    # The honesty invariant the export docstring promises: a tower reads
+    # cat([x*m, m]), so a never-measured feature has exactly zero gradient.
+    # If a zero-coverage feature ever shows a contribution, the mask broke.
+    cov = attr.get("coverage") or {}
+    pop_abs = attr.get("populationAbs") or {}
+    leaked = [f for f in feats
+              if cov.get(f) == 0.0
+              and any(abs(pop_abs.get(t, {}).get(f, 0.0)) > 0.0 for t in pop_abs)]
+    if leaked:
+        fail(f"never-measured features carry attribution (mask leak): {leaked[:5]}")
+
+    # Fail closed on a retrain.
+    arch = (json.loads(arch_path.read_text(encoding="utf-8"))
+            if arch_path.exists() else None)
+    check_stamp("mtnn_attr_pop.json", attr.get("checkpoint"), arch)
+
+    manifest = HERE / "data" / "feature_manifest.json"
+    if manifest.exists() and feats:
+        mf = json.loads(manifest.read_text(encoding="utf-8")).get("features") or []
+        # pipeline/data is gitignored, so only compare when it is present AND
+        # was built for this checkpoint (a family-count change legitimately
+        # re-shapes it; the checkpoint stamp above is the authority).
+        if mf and len(mf) != len(feats):
+            print(f"  note: feature_manifest has {len(mf)} features, attribution "
+                  f"has {len(feats)} — matrix differs from checkpoint's")
+
+    n_zero = sum(1 for f in feats if cov.get(f) == 0.0)
+    print(f"  attribution: {n_rows}×{n_t}×{k} top-k ({nbytes // 1024} KB), "
+          f"{len(feats)} features, {n_zero} never measured, "
+          f"targets={attr.get('targets')}")
 
 
 def v14_stated_limitations(data: dict) -> None:
@@ -529,6 +641,7 @@ if __name__ == "__main__":
     v11_mtnn_report_warn()
     v12_mtnn_client_assets()
     v13_mtnn_jacobian(data)
+    v13b_mtnn_attribution(data)
     v14_stated_limitations(data)
     if FAILS:
         print(f"\nACCURACY HARNESS: {len(FAILS)} FAILURES — do not ship")

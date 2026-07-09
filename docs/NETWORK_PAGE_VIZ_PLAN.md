@@ -13,8 +13,20 @@
 | Node-link flow diagram, hover-preview + click-to-lock trace, line-of-sight dimming | ✅ shipped |
 | Edge weights = **causal** `‖∂target/∂tower‖` (Jacobian), not input magnitude | ✅ shipped (`mtnn_jacobian.*`) |
 | Backward trace from a head → the towers that actually drive it | ✅ shipped |
-| Provenance guard: stale attribution vs shipped net fails closed (V13) | ✅ shipped |
-| **Attribution down to the 120 raw input features** | ❌ **missing** |
+| Provenance guard: stale attribution vs shipped net fails closed (V13) | ✅ **now** — see note |
+| Attribution down to the raw input features — **export** | ✅ shipped (`mtnn_attr_*`) |
+| Attribution down to the raw input features — **UI** | ❌ **missing** (Phase 2/3) |
+
+> **Correction (2026-07-09).** The provenance row was ✅ on paper and dead in
+> practice. `export_mtnn_viz.py` writes a `checkpoint` stamp into
+> `mtnn_arch.json`, but the *shipped* `mtnn_arch.json` predates that code and
+> carries no such key — so V13's `if jac_stamp and arch_stamp:` compared
+> nothing and passed in silence. A same-shape retrain (e.g. `hb64_d48`, which
+> keeps `d_emb = 48`) would have promoted a new net while `/model` kept
+> painting the old one's causal edges, with a green harness. V13/V13b now
+> anchor on `pipeline/data/mtnn_best.pt` itself — live wherever a promote
+> happens — and say out loud when the client-side arch stamp is missing.
+> Re-running `export_mtnn_viz.py` at promote time restores the client guard.
 
 The Jacobian export stops at **tower granularity** (17 towers × 5 targets). The
 user-facing question — *"which **inputs** drive this prediction?"* — cannot be
@@ -157,14 +169,52 @@ Phase 1 adds is **depth on the same gesture**:
 
 ## 4. Phase 4 — sequencing and gates
 
-| Step | Depends on |
-|---|---|
-| Re-run `export_mtnn_viz` + `export_mtnn_jacobian` against the promoted net | **final-sweep winner** |
-| Add `--granularity feature` + the two attribution assets | nothing (can start now) |
-| Extend V13 → cover attribution assets (fail closed on stale) | above |
-| Demote `AXIS_COLORS` to chrome; add the archetype legend + table view | nothing (**do now**, it's a live a11y defect) |
-| Build the three new charts against the design-system parameters, validating each palette | above |
-| Screenshot / eyeball pass (the validator checks color, not layout) | last |
+| Step | Depends on | State |
+|---|---|---|
+| Add `--granularity feature` + the two attribution assets | nothing | ✅ done |
+| Extend V13 → cover attribution assets (fail closed on stale) | above | ✅ done (V13b) |
+| Demote `AXIS_COLORS` to chrome; add the archetype legend + table view | nothing | ✅ done (`c068f76`) |
+| Build the three new charts against the design-system parameters, validating each palette | above | ✅ built |
+| Re-run `export_mtnn_viz` + `export_mtnn_jacobian --granularity both` against the promoted net | **final-sweep winner** | ⬜ in flight |
+| Screenshot / eyeball pass (the validator checks color, not layout) | last | ⬜ **not done** |
+
+**Winner (2026-07-09): `hb128_d48`** — `d_emb 48`, i.e. *the same embedding
+width as v4*. Nothing about the shape changes, which is exactly the case the
+dead V13 guard could not see. `retrain_universe.py` now runs `export_mtnn_viz.py`
+and `export_mtnn_jacobian.py --granularity both` before `verify_accuracy.py`, so
+the arch stamp, the Jacobian and the attribution are regenerated together or the
+harness stops the deploy.
+
+**Palette, as validated** (light card surface `#ffffff`, the only surface — the
+site has no dark mode; only the 3-D canvas is dark):
+
+| Job | Encoding | Validator |
+|---|---|---|
+| Tower influence (bars, heatmap) | sequential, one hue, blue `#2a78d6` | contrast ≥ 3:1 |
+| Signed feature contribution | diverging `#2a78d6` ↔ `#e34948`, neutral gray zero | PASS, worst adjacent CVD ΔE 74.6 protan |
+| "Other" tail | recessive neutral `--ink-muted` | never a 9th hue |
+| Never measured | icon + label | never color alone |
+
+Sign is double-encoded by side-of-zero, so the diverging bars survive monochrome
+and `forced-colors`. Bars are labelled as a **share of the largest bar shown**,
+never a raw value: the site never shows a user more than two decimals, and raw
+`skills` contributions would round to `0.00` down the column.
+
+**Export as built.** Four targets, not five: `embedding` is absent because its
+basis is arbitrary, so the *sign* of `∂emb_i/∂x_j` means nothing, and signed
+attribution is the whole point. Classifier targets attribute the predicted
+class's logit ("what drove *this* call"); `skills` and `next_profile` attribute
+the mean output. Consequence to carry into the charts: `skills` attributions are
+~20× smaller in absolute terms because the mean dilutes across 18 skill heads —
+its *cancellation* ratio matches the other heads, so the pattern is intact, but
+**every chart must normalize per target.** A shared scale would render skills
+flat. If per-skill resolution is wanted later, that is 18 targets and ~6.5 MB.
+
+**A masked feature has exactly zero gradient**, because a tower reads
+`cat([x*m, m])`. Verified on the real export: every zero-attribution feature is
+one with zero coverage, and V13b now fails if that ever stops being true. The
+UI must therefore render zero-coverage features as **"not tracked this era"**,
+never as a zero-length bar.
 
 **Definition of done:** every categorical palette on the page has a recorded
 validator run; no identity is carried by color alone; every attribution chart has a

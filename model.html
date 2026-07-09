@@ -23,7 +23,7 @@
 
   <div class="research-head network-head">
     <h1>Inside the network</h1>
-    <p class="network-hero">Pick a player-season and walk through the <b>MTNN</b> &mdash; eighteen stat groups
+    <p class="network-hero">Pick a player-season and walk through the <b>MTNN</b> &mdash; seventeen stat groups
       compress into a 48-number fingerprint, then fan out into archetype, skill, and next-year predictions.
       Hit Play to watch the signal move.</p>
   </div>
@@ -106,6 +106,30 @@
         <p class="drift-loading">Click an input, tower, or output to see its numbers.</p>
       </div>
     </div>
+  </section>
+
+  <section class="drift-card network-attr-card" id="network-attr-card" aria-label="What drove this prediction" hidden>
+    <div class="network-section__head">
+      <p class="viz-panel__label">What drove this prediction</p>
+      <div class="attr-tools">
+        <div class="attr-tabs" id="attr-target-tabs" role="tablist" aria-label="Output to explain"></div>
+        <div class="attr-scope" id="attr-scope" role="group" aria-label="Scope"></div>
+        <button type="button" id="attr-table-toggle" class="network-trace-clear" aria-pressed="false">Table view</button>
+      </div>
+    </div>
+    <p class="attr-subject" id="attr-subject"></p>
+
+    <div class="attr-grid">
+      <div class="viz-panel attr-panel" id="attr-tile"></div>
+      <div class="viz-panel attr-panel" id="attr-towers"></div>
+      <div class="viz-panel attr-panel" id="attr-features"></div>
+    </div>
+    <div id="attr-population" hidden></div>
+
+    <p class="drift-card__foot">These bars show how the <b>network&rsquo;s</b> prediction moved with each input for
+      this player-season, under a first-order approximation &mdash; not a claim about what causes a player to be
+      who he is. A stat marked <b>not tracked this era</b> contributes nothing because it was never measured,
+      which is not the same as not mattering. <a href="/methods#mtnn">How we built this &rarr;</a></p>
   </section>
 
   <section class="drift-card network-output-card" aria-label="Model outputs">

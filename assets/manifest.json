@@ -1,5 +1,5 @@
 {
-  "built": "2026-07-08 16:18 UTC",
+  "built": "2026-07-09 19:35 UTC",
   "contract": "transparent_14d",
   "wide_skills": {
     "skill_count": 6,
@@ -7,10 +7,23 @@
     "source": "real_caches"
   },
   "mtnn_promoted": true,
-  "mtnn_promotion_note": "embeddings stay in pipeline/data/ until a client surface consumes them",
-  "mtnn_model": "mtnn_v4_phase_b",
+  "mtnn_promotion_note": "embeddings promoted to assets/ and consumed by /model + neighbor UI",
+  "mtnn_model": "mtnn_v5_concat_b2_h160_t32_d48_mlp128",
+  "mtnn_eval_protocol": "transductive (atlas) \u2014 trained on all rows; NOT held-out",
+  "mtnn_transductive_recall_at_10": 1.0,
+  "mtnn_transductive_purity_at_20": 0.8067989071472045,
+  "mtnn_leakfree": {
+    "protocol": "leak-free (pipeline/leakfree.py), player-level split, 3 seeds",
+    "objective": "train_mtnn.promotion_composite = 0.4*recall + 0.6*purity (the repo's own gate; next-profile RMSE is in NO gate)",
+    "recipe": "hb128_d48",
+    "recall_at_10": 0.977,
+    "purity_at_20_test": 0.6717,
+    "composite": 0.7937,
+    "gain_vs_previous": 0.009,
+    "separates_from_previous": true
+  },
   "mtnn_test_recall_at_10": 1.0,
-  "mtnn_purity_at_20": 0.796181133806424,
+  "mtnn_purity_at_20": 0.8067989071472045,
   "hp_sweep_best": {
     "tag": "nextstats-hybrid-w005",
     "lr_schedule": "onecycle",
@@ -157,19 +170,19 @@
       "present": true
     },
     "skills.json": {
-      "sha1": "eea1d733b1b0",
+      "sha1": "f1d510ed2a6b",
       "present": true
     },
     "skills_wide.json": {
-      "sha1": "8bcabbd95a4b",
+      "sha1": "cbae40c54300",
       "present": true
     },
     "skill_probe.json": {
-      "sha1": "b6b7afb58800",
+      "sha1": "30a8c58fba75",
       "present": true
     },
     "player_meta.json": {
-      "sha1": "3eba052d2e41",
+      "sha1": "5f785c84a55c",
       "present": true
     },
     "teams.json": {
@@ -177,31 +190,31 @@
       "present": true
     },
     "pedigree.json": {
-      "sha1": "e5fee2b84a0d",
+      "sha1": "28b2e8e2d05d",
       "present": true
     },
     "playoffs.json": {
-      "sha1": "d8ad485ba9e0",
+      "sha1": "6f4221e63630",
       "present": true
     },
     "honors.json": {
-      "sha1": "83179c07746f",
+      "sha1": "937543f4a5a0",
       "present": true
     },
     "archetypes_time.json": {
-      "sha1": "f1eeaef86d31",
+      "sha1": "a613a858903f",
       "present": true
     },
     "archetype_assignments.json": {
-      "sha1": "9e96d43cdb8c",
+      "sha1": "a2b1bfe85fd2",
       "present": true
     },
     "archetype_emergence.json": {
-      "sha1": "f178e6217a3b",
+      "sha1": "3c19226265f4",
       "present": true
     },
     "trajectories.json": {
-      "sha1": "eb6488697fff",
+      "sha1": "29fe8c1b0f4e",
       "present": true
     },
     "drift.json": {
@@ -221,27 +234,27 @@
       "present": true
     },
     "current_rosters.json": {
-      "sha1": "70cb0b2c8c7c",
+      "sha1": "a3137426034a",
       "present": true
     },
     "projections.json": {
-      "sha1": "46905470d60c",
+      "sha1": "fbff4eec2836",
       "present": true
     },
     "mtnn_arch.json": {
-      "sha1": "5bafec761b94",
+      "sha1": "f04d05306ede",
       "present": true
     },
     "mtnn_map.json": {
-      "sha1": "89609189c033",
+      "sha1": "1570e404ad25",
       "present": true
     },
     "mtnn_heads.f32": {
-      "sha1": "e8eed09f1f96",
+      "sha1": "90965c738a28",
       "present": true
     },
     "mtnn_inputs.f32": {
-      "sha1": "45fad5a7093f",
+      "sha1": "53dec423ec9a",
       "present": true
     },
     "eratwins.json": {
@@ -257,12 +270,12 @@
       "present": true
     },
     "mtnn_meta.json": {
-      "sha1": "3b61c64d2570",
+      "sha1": "f018bd9f71e4",
       "present": true
     }
   },
   "mtnn_embeddings_f32": {
-    "sha1": "65b56b20a7df",
+    "sha1": "636f34fe3852",
     "present": true,
     "bytes": 2489472
   }

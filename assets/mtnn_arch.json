@@ -1,9 +1,15 @@
 {
-  "built": "2026-07-08",
+  "built": "2026-07-09",
   "model": "mtnn_v4_phase_b",
   "fusion": "concat",
-  "dTower": 24,
+  "dTower": 32,
   "dEmb": 48,
+  "checkpoint": {
+    "mtime": 1783623905,
+    "bytes": 2263307
+  },
+  "towerBlocks": 2,
+  "mlpHeads": true,
   "nArchetypes": 8,
   "nPositions": 5,
   "nNextProfile": 14,
@@ -24,8 +30,7 @@
     "team",
     "pedigree",
     "playoffs",
-    "honors",
-    "game_ratings"
+    "honors"
   ],
   "familyOrder": [
     "bio",
@@ -34,7 +39,6 @@
     "defense",
     "efficiency",
     "form",
-    "game_ratings",
     "honors",
     "market",
     "pedigree",
@@ -92,22 +96,6 @@
       "FORM_TD_RATE",
       "FORM_VOL"
     ],
-    "game_ratings": [
-      "GK_OVERALL",
-      "GK_THREE_PT",
-      "GK_MID_RANGE",
-      "GK_CLOSE_SHOT",
-      "GK_BALL_HANDLE",
-      "GK_PASS_ACCURACY",
-      "GK_PERIMETER_DEF",
-      "GK_INTERIOR_DEF",
-      "GK_STEAL",
-      "GK_BLOCK",
-      "GK_OFF_REBOUND",
-      "GK_DEF_REBOUND",
-      "GK_SPEED",
-      "GK_STRENGTH"
-    ],
     "honors": [
       "HON_ALL_NBA_TEAM_LAG",
       "HON_ALL_NBA_VOTE_LAG",
@@ -153,7 +141,12 @@
       "PO_EFF_DELTA",
       "PO_PLUS_MINUS",
       "PO_TEAM_WINS",
-      "PO_ROUNDS"
+      "PO_ROUNDS",
+      "PO_SERIES",
+      "PO_CLOSE_GAMES",
+      "PO_AVG_PTS",
+      "PO_HIGH_PTS",
+      "PO_CLUTCH_PTS"
     ],
     "rebounding": [
       "OREB",
@@ -264,17 +257,17 @@
     {
       "id": "input",
       "label": "Masked inputs",
-      "detail": "129 features in 18 families"
+      "detail": "120 features in 17 families"
     },
     {
       "id": "towers",
       "label": "Residual towers",
-      "detail": "18 \u00d7 (96 \u2192 24)"
+      "detail": "17 \u00d7 2 blocks (160 \u2192 32)"
     },
     {
       "id": "fusion",
       "label": "Concat fusion",
-      "detail": "432 + season \u2192 48-d, L2 norm"
+      "detail": "544 + season \u2192 48-d, L2 norm"
     },
     {
       "id": "embedding",

@@ -83,6 +83,13 @@
     jacData: null,
     jacTower: {},
     jacTarget: {},
+    // Feature attribution (assets/mtnn_attr_*): signed grad x input.
+    attr: null,
+    attrIdx: null,
+    attrVal: null,
+    attrTarget: 'archetype',
+    attrScope: 'player',   // 'player' | 'population'
+    attrTable: false,
     features: [],
     featureIndex: {},
     featureLabel: {},
@@ -230,6 +237,91 @@
     if (max <= 0) return null;
     for (var k in out) out[k] = out[k] / max;
     return out;
+  }
+
+  /* ---- Feature attribution (assets/mtnn_attr_*) ----------------------------
+     Signed grad x input over the raw inputs: which STATS pushed this head up or
+     down. The Jacobian above is unsigned sensitivity (right for an edge width);
+     this is directional (right for a bar). Four targets, not five — `embedding`
+     has an arbitrary basis, so the sign of d(emb_i)/d(x_j) means nothing.
+
+     Scales differ by target by construction: `skills` attributes the MEAN of 18
+     skill heads, so its values run ~20x smaller than `archetype`'s. Every chart
+     therefore normalizes within its own target; a shared scale would draw the
+     skills bars flat. */
+
+  function attrHas() {
+    return !!(state.attr && state.attrIdx && state.attrVal);
+  }
+
+  function attrTargetIndex(target) {
+    if (!attrHas()) return -1;
+    return state.attr.targets.indexOf(target);
+  }
+
+  /* Top-k signed contributions for one row and target, biggest |value| first.
+     A value of exactly 0 is not a weak feature — a tower reads cat([x*m, m]),
+     so a never-measured feature has exactly zero gradient. Flag it, never plot
+     it as a short bar. */
+  function attrTopK(playerIdx, target) {
+    var ti = attrTargetIndex(target);
+    if (ti < 0 || playerIdx < 0) return null;
+    var nT = state.attr.targets.length;
+    var k = state.attr.topkLayout.k;
+    var base = (playerIdx * nT + ti) * k;
+    var out = [];
+    for (var r = 0; r < k; r++) {
+      var name = state.attr.features[state.attrIdx[base + r]];
+      if (name == null) continue;
+      var v = state.attrVal[base + r];
+      out.push({
+        key: name,
+        label: (state.featureLabel && state.featureLabel[name]) || name,
+        value: v,
+        masked: v === 0
+      });
+    }
+    return out;
+  }
+
+  /* Population signed means for one target, biggest |mean contribution| first. */
+  function attrPopulation(target, limit) {
+    if (!attrHas()) return null;
+    var signed = state.attr.populationSigned[target];
+    var abs = state.attr.populationAbs[target];
+    if (!signed || !abs) return null;
+    var rows = state.attr.features.map(function (f) {
+      return {
+        key: f,
+        label: (state.featureLabel && state.featureLabel[f]) || f,
+        value: signed[f],
+        weight: abs[f],
+        coverage: state.attr.coverage ? state.attr.coverage[f] : null
+      };
+    }).filter(function (r) { return Number.isFinite(r.weight); });
+    rows.sort(function (a, b) { return b.weight - a.weight; });
+    return limit ? rows.slice(0, limit) : rows;
+  }
+
+  /* Ranked tower influence on a target: top-N by magnitude, remainder summed
+     into a neutral "Other" so a 9th slice never invents a hue. */
+  function towerRanking(playerIdx, target, topN) {
+    if (!jacHas()) return null;
+    var fams = (state.arch && state.arch.towerFamilies) || [];
+    var rows = [];
+    for (var i = 0; i < fams.length; i++) {
+      var v = jacInfluence(playerIdx, fams[i], target);
+      if (v != null) rows.push({ key: fams[i], label: capWords(fams[i].replace(/_/g, ' ')), value: v });
+    }
+    if (!rows.length) return null;
+    rows.sort(function (a, b) { return b.value - a.value; });
+    var head = rows.slice(0, topN);
+    var rest = rows.slice(topN);
+    if (rest.length) {
+      var sum = rest.reduce(function (a, r) { return a + r.value; }, 0);
+      head.push({ key: '__other', label: 'Other (' + rest.length + ')', value: sum, other: true });
+    }
+    return head;
   }
 
   function distance3(a, b) {
@@ -1148,6 +1240,12 @@
       state.selectedNode = node;
       state.hoverNode = null;
       state._hoverKey = null;
+      // Clicking a head is the same gesture that asks "why this output?" —
+      // point the attribution panel at it rather than making the user re-pick.
+      if (node.type === 'head_group' && attrTargetIndex(node.key) >= 0) {
+        state.attrTarget = node.key;
+        renderAttribution();
+      }
       updateFlowVisual();
       renderNodeInspector();
     });
@@ -1715,6 +1813,7 @@
     renderFlowInsights();
     renderCompareSummary();
     renderNodeInspector();
+    renderAttribution();
   }
 
   function pickDefaultPlayer() {
@@ -1939,6 +2038,301 @@
     });
   }
 
+  /* ---- Attribution rendering ----------------------------------------------
+     Forms are chosen by the question, per docs/NETWORK_PAGE_VIZ_PLAN.md:
+       "how much does each tower drive this head"  -> ranked bars, one hue
+       "which inputs pushed it up vs down"         -> diverging bars, zero-anchored
+       "which towers drive which heads, overall"   -> heatmap, one sequential hue
+       "how confident is this head"                -> stat tile, with its baseline
+
+     Bars are labelled as a SHARE of the strongest contribution in the same
+     target, never as a raw value. Two reasons: the site never shows a user more
+     than two decimals, and raw `skills` contributions are ~20x smaller than
+     `archetype`'s (the target is a mean over 18 heads), so raw numbers would
+     read 0.00 down the column. Share is what the bar length already encodes. */
+
+  var ATTR_TARGET_LABELS = {
+    archetype: 'Archetype',
+    position: 'Position',
+    skills: 'Skill grades',
+    next_profile: 'Next season'
+  };
+
+  var ATTR_TARGET_ASKS = {
+    archetype: 'the archetype it picked',
+    position: 'the position it picked',
+    skills: 'its average skill grade',
+    next_profile: 'its next-season forecast'
+  };
+
+  function attrShare(value, denom) {
+    if (!denom) return 0;
+    return Math.max(-100, Math.min(100, (value / denom) * 100));
+  }
+
+  function fmtShare(pct) {
+    var r = Math.round(pct);
+    return (r > 0 ? '+' : r < 0 ? '−' : '') + Math.abs(r) + '%';
+  }
+
+  /* Stat tile — only where a confidence number actually exists. The regression
+     heads have no class probability, and inventing one would be a lie. */
+  function attrTileHTML(target) {
+    var row = headRow(state.playerIdx);
+    if (!row) return '';
+    var probs = null;
+    var baseline = 0;
+    if (target === 'archetype') {
+      probs = softmax(Array.prototype.slice.call(row.subarray(0, state.nArch)));
+      baseline = 1 / state.nArch;
+    } else if (target === 'position') {
+      var off = state.nArch + state.nSkills;
+      probs = softmax(Array.prototype.slice.call(row.subarray(off, off + state.nPos)));
+      baseline = 1 / state.nPos;
+    }
+    if (!probs) {
+      return '<div class="attr-tile attr-tile--none">' +
+        '<div class="attr-tile__label">Confidence</div>' +
+        '<p class="attr-tile__note">Not a classifier &mdash; this head predicts numbers, ' +
+        'so it has no &ldquo;how sure&rdquo; score.</p></div>';
+    }
+    var top = Math.max.apply(null, probs);
+    return '<div class="attr-tile">' +
+      '<div class="attr-tile__label">Confidence in ' + esc(ATTR_TARGET_ASKS[target]) + '</div>' +
+      '<div class="attr-tile__value">' + fmtPredScore(top * 100) + '%</div>' +
+      '<div class="attr-tile__baseline">Guessing at random would score ' +
+        fmtPredScore(baseline * 100) + '%</div></div>';
+  }
+
+  /* Ranked horizontal bars, single hue. Not 17 colors: length carries the
+     value, and a value-ramp across nominal categories is an anti-pattern. */
+  function attrTowersHTML(target) {
+    var rows = state.attrScope === 'population'
+      ? towerPopulationRanking(target, 6)
+      : towerRanking(state.playerIdx, target, 6);
+    if (!rows || !rows.length) {
+      return '<p class="drift-loading">Tower influence unavailable.</p>';
+    }
+    // Denominator is the largest bar SHOWN, which may be "Other" when the tail
+    // outweighs any single tower. Labelling it "% of the strongest tower" would
+    // then be false, so the copy says what it measures.
+    var denom = rows.reduce(function (m, r) { return Math.max(m, r.value); }, 0);
+    var body = rows.map(function (r, i) {
+      var pct = attrShare(r.value, denom);
+      var cls = 'attr-bar__fill' + (r.other ? ' attr-bar__fill--other' : '');
+      var num = (i === 0 || r.other)
+        ? '<span class="attr-bar__num">' + Math.round(pct) + '%</span>' : '';
+      return '<li class="attr-bar" title="' + esc(r.label) + ': ' + Math.round(pct) +
+          '% of the largest bar shown">' +
+        '<span class="attr-bar__label">' + esc(r.label) + '</span>' +
+        '<span class="attr-bar__track"><span class="' + cls +
+          '" style="width:' + Math.max(1, pct).toFixed(1) + '%"></span></span>' +
+        num + '</li>';
+    }).join('');
+    return '<ol class="attr-bars">' + body + '</ol>';
+  }
+
+  function towerPopulationRanking(target, topN) {
+    if (!state.jac || !state.jac.populationInfluence) return null;
+    var pop = state.jac.populationInfluence[target];
+    if (!pop) return null;
+    var rows = Object.keys(pop).map(function (f) {
+      return { key: f, label: capWords(f.replace(/_/g, ' ')), value: pop[f] };
+    });
+    rows.sort(function (a, b) { return b.value - a.value; });
+    var head = rows.slice(0, topN);
+    var rest = rows.slice(topN);
+    if (rest.length) {
+      head.push({
+        key: '__other', other: true, label: 'Other (' + rest.length + ')',
+        value: rest.reduce(function (a, r) { return a + r.value; }, 0)
+      });
+    }
+    return head;
+  }
+
+  /* Diverging bars anchored at zero: sign is the whole question, so a
+     sequential ramp would hide it. Neutral gray midpoint, never a hue. */
+  function attrFeaturesHTML(target) {
+    var rows = state.attrScope === 'population'
+      ? attrPopulation(target, 8)
+      : attrTopK(state.playerIdx, target);
+    if (!rows || !rows.length) {
+      return '<p class="drift-loading">Feature attribution unavailable.</p>';
+    }
+    var denom = rows.reduce(function (m, r) { return Math.max(m, Math.abs(r.value)); }, 0);
+    var strongest = 0;
+    rows.forEach(function (r, i) { if (Math.abs(r.value) > Math.abs(rows[strongest].value)) strongest = i; });
+    var mostNegative = -1;
+    rows.forEach(function (r, i) {
+      if (r.value < 0 && (mostNegative < 0 || r.value < rows[mostNegative].value)) mostNegative = i;
+    });
+
+    var body = rows.map(function (r, i) {
+      if (r.masked) {
+        return '<li class="attr-div attr-div--masked">' +
+          '<span class="attr-div__label">' + esc(r.label) + '</span>' +
+          '<span class="attr-div__masked" role="note">' +
+            '<span class="attr-div__icon" aria-hidden="true">⊘</span> not tracked this era</span></li>';
+      }
+      var pct = attrShare(r.value, denom);
+      var up = pct >= 0;
+      var w = Math.min(100, Math.abs(pct));
+      // Direct-label selectively: the strongest, and the strongest downward push.
+      var num = (i === strongest || i === mostNegative)
+        ? '<span class="attr-div__num">' + fmtShare(pct) + '</span>' : '';
+      return '<li class="attr-div" title="' + esc(r.label) + ': pushed ' +
+          (up ? 'up' : 'down') + ', ' + fmtShare(pct) + ' of the strongest push">' +
+        '<span class="attr-div__label">' + esc(r.label) + '</span>' +
+        '<span class="attr-div__track">' +
+          '<span class="attr-div__half attr-div__half--neg">' +
+            (up ? '' : '<span class="attr-div__fill attr-div__fill--neg" style="width:' + w.toFixed(1) + '%"></span>') +
+          '</span>' +
+          '<span class="attr-div__zero" aria-hidden="true"></span>' +
+          '<span class="attr-div__half attr-div__half--pos">' +
+            (up ? '<span class="attr-div__fill attr-div__fill--pos" style="width:' + w.toFixed(1) + '%"></span>' : '') +
+          '</span>' +
+        '</span>' + num + '</li>';
+    }).join('');
+
+    return '<ul class="attr-divs">' + body + '</ul>' +
+      '<p class="attr-axis"><span>← pushed ' + esc(ATTR_TARGET_ASKS[target]) + ' down</span>' +
+      '<span>pushed it up →</span></p>';
+  }
+
+  /* Population heatmap, 18 towers x 5 targets. A node-link here would be 90
+     crossing edges; sequential one-hue cells answer it at a glance. */
+  function attrHeatmapHTML() {
+    if (!state.jac || !state.jac.populationInfluenceNorm) return '';
+    var norm = state.jac.populationInfluenceNorm;
+    var targets = state.jac.targets;
+    var fams = state.jac.towerFamilies.slice();
+    fams.sort(function (a, b) {
+      return (norm[targets[0]][b] || 0) - (norm[targets[0]][a] || 0);
+    });
+    var head = '<tr><th scope="col">Tower</th>' + targets.map(function (t) {
+      return '<th scope="col">' + esc(ATTR_TARGET_LABELS[t] || capWords(t.replace(/_/g, ' '))) + '</th>';
+    }).join('') + '</tr>';
+    var body = fams.map(function (f) {
+      return '<tr><th scope="row">' + esc(capWords(f.replace(/_/g, ' '))) + '</th>' +
+        targets.map(function (t) {
+          var v = norm[t] && norm[t][f] != null ? norm[t][f] : 0;
+          var pct = Math.round(v * 100);
+          // Flip the ink once the fill is dark enough to swallow it. A blend
+          // mode would leave the mid-ramp cells illegible in both directions.
+          var dark = v > 0.55 ? ' attr-cell__num--onDark' : '';
+          return '<td class="attr-cell" title="' + esc(capWords(f.replace(/_/g, ' '))) + ' → ' +
+            esc(ATTR_TARGET_LABELS[t] || t) + ': ' + pct + '% of the strongest tower">' +
+            '<span class="attr-cell__fill" style="--v:' + v.toFixed(3) + '"></span>' +
+            '<span class="attr-cell__num' + dark + '">' + pct + '</span></td>';
+        }).join('') + '</tr>';
+    }).join('');
+    return '<div class="attr-heatmap-wrap">' +
+      '<table class="attr-heatmap"><caption>Tower influence on each output, averaged over all ' +
+        state.players.length.toLocaleString() + ' player-seasons. ' +
+        'Darker = more influence, scaled within each column.</caption>' +
+      '<thead>' + head + '</thead><tbody>' + body + '</tbody></table></div>';
+  }
+
+  /* The table view is the accessible answer to "which inputs drove this", and
+     it is also the contrast-relief route. Always available, never a fallback. */
+  function attrTableHTML(target) {
+    var rows = state.attrScope === 'population'
+      ? attrPopulation(target, 12)
+      : attrTopK(state.playerIdx, target);
+    if (!rows || !rows.length) return '';
+    var denom = rows.reduce(function (m, r) { return Math.max(m, Math.abs(r.value)); }, 0);
+    var body = rows.map(function (r) {
+      if (r.masked) {
+        return '<tr><td>' + esc(r.label) + '</td><td>not tracked this era</td><td>&mdash;</td></tr>';
+      }
+      var pct = attrShare(r.value, denom);
+      return '<tr><td>' + esc(r.label) + '</td>' +
+        '<td>' + (pct >= 0 ? 'pushed up' : 'pushed down') + '</td>' +
+        '<td class="attr-table__num">' + fmtShare(pct) + '</td></tr>';
+    }).join('');
+    return '<table class="attr-table"><caption>Contributions to ' +
+      esc(ATTR_TARGET_ASKS[target]) + ', as a share of the strongest one.</caption>' +
+      '<thead><tr><th scope="col">Input</th><th scope="col">Direction</th>' +
+      '<th scope="col">Share</th></tr></thead><tbody>' + body + '</tbody></table>';
+  }
+
+  function renderAttribution() {
+    var card = $('network-attr-card');
+    if (!card || !attrHas() || state.playerIdx < 0) return;
+    card.hidden = false;
+    var target = state.attrTarget;
+    var player = state.players[state.playerIdx];
+
+    var tabs = $('attr-target-tabs');
+    if (tabs) {
+      tabs.innerHTML = state.attr.targets.map(function (t) {
+        var on = t === target;
+        return '<button type="button" role="tab" class="attr-tab' + (on ? ' is-active' : '') +
+          '" aria-selected="' + on + '" data-attr-target="' + esc(t) + '">' +
+          esc(ATTR_TARGET_LABELS[t] || t) + '</button>';
+      }).join('');
+    }
+    var scope = $('attr-scope');
+    if (scope) {
+      scope.innerHTML = [['player', 'This player'], ['population', 'All players']].map(function (s) {
+        var on = state.attrScope === s[0];
+        return '<button type="button" class="attr-scope-btn' + (on ? ' is-active' : '') +
+          '" aria-pressed="' + on + '" data-attr-scope="' + s[0] + '">' + s[1] + '</button>';
+      }).join('');
+    }
+    var toggle = $('attr-table-toggle');
+    if (toggle) {
+      toggle.textContent = state.attrTable ? 'Chart view' : 'Table view';
+      toggle.setAttribute('aria-pressed', String(state.attrTable));
+    }
+
+    var who = state.attrScope === 'population'
+      ? 'All ' + state.players.length.toLocaleString() + ' player-seasons'
+      : esc(player.name) + ' · ' + esc(player.season);
+    var subject = $('attr-subject');
+    if (subject) subject.textContent = who;
+
+    var tile = $('attr-tile');
+    if (tile) {
+      tile.innerHTML = state.attrScope === 'population' ? '' : attrTileHTML(target);
+      tile.hidden = state.attrScope === 'population';
+    }
+
+    var towers = $('attr-towers');
+    if (towers) {
+      towers.innerHTML = '<p class="viz-panel__label">Towers driving ' +
+        esc(ATTR_TARGET_ASKS[target]) + '</p>' + attrTowersHTML(target);
+    }
+
+    var feats = $('attr-features');
+    if (feats) {
+      feats.innerHTML = '<p class="viz-panel__label">Stats that pushed it up or down</p>' +
+        (state.attrTable ? attrTableHTML(target) : attrFeaturesHTML(target));
+    }
+
+    var pop = $('attr-population');
+    if (pop) {
+      pop.innerHTML = state.attrScope === 'population' ? attrHeatmapHTML() : '';
+      pop.hidden = state.attrScope !== 'population';
+    }
+  }
+
+  function bindAttribution() {
+    var card = $('network-attr-card');
+    if (!card) return;
+    card.addEventListener('click', function (ev) {
+      var t = ev.target.closest && ev.target.closest('[data-attr-target]');
+      if (t) { state.attrTarget = t.getAttribute('data-attr-target'); renderAttribution(); return; }
+      var s = ev.target.closest && ev.target.closest('[data-attr-scope]');
+      if (s) { state.attrScope = s.getAttribute('data-attr-scope'); renderAttribution(); return; }
+      if (ev.target.closest && ev.target.closest('#attr-table-toggle')) {
+        state.attrTable = !state.attrTable;
+        renderAttribution();
+      }
+    });
+  }
+
   function mapLoop() {
     if (state.step >= 3) drawMap(false);
     requestAnimationFrame(mapLoop);
@@ -2002,6 +2396,50 @@
     });
   }
 
+  /* Optional: feature attribution. Absent (export not run) => the section stays
+     hidden rather than rendering an empty chart. Fails closed on a stale export
+     for the same reason the Jacobian does: a bar reading "AST pushed this
+     archetype up" is a claim about the SHIPPED net. */
+  function loadAttribution() {
+    return Promise.all([
+      fetch('assets/mtnn_attr_pop.json').then(function (r) {
+        if (!r.ok) throw new Error('no attribution meta');
+        return r.json();
+      }),
+      fetch('assets/mtnn_attr_topk.bin').then(function (r) {
+        if (!r.ok) throw new Error('no attribution data');
+        return r.arrayBuffer();
+      })
+    ]).then(function (parts) {
+      var meta = parts[0];
+      var buf = parts[1];
+      var layout = meta.topkLayout || {};
+      var shape = layout.shape || [];
+      var count = shape[0] * shape[1] * shape[2];
+      if (shape[0] !== state.players.length) throw new Error('attribution row mismatch');
+      if (buf.byteLength !== count * 2 + count * 4) throw new Error('attribution size mismatch');
+      var ac = state.arch && state.arch.checkpoint;
+      if (meta.checkpoint && ac &&
+          (meta.checkpoint.mtime !== ac.mtime || meta.checkpoint.bytes !== ac.bytes)) {
+        throw new Error('attribution checkpoint stale vs shipped arch');
+      }
+      // Two contiguous blocks, not interleaved records: a uint16 beside a
+      // float32 would leave the value block 2-byte aligned and unviewable.
+      state.attrIdx = new Uint16Array(buf, 0, count);
+      state.attrVal = new Float32Array(buf, count * 2, count);
+      state.attr = meta;
+      if (meta.targets.indexOf(state.attrTarget) < 0) state.attrTarget = meta.targets[0];
+      var card = $('network-attr-card');
+      if (card) card.hidden = false;
+      renderAttribution();
+    }).catch(function (err) {
+      state.attr = null;
+      state.attrIdx = null;
+      state.attrVal = null;
+      if (window.console) console.warn('[network-viz] attribution unavailable:', err.message);
+    });
+  }
+
   function init() {
     Promise.all([
       fetch('assets/vectors.json').then(function (r) { return r.json(); }),
@@ -2053,7 +2491,10 @@
       bindMapDrag();
       bindSteps();
       pickDefaultPlayer();
-      loadJacobian();
+      bindAttribution();
+      // Attribution needs the Jacobian's population matrix for the heatmap and
+      // the tower bars, so chain rather than race.
+      loadJacobian().then(loadAttribution);
       renderMapLegend();
       renderMapInsights();
       renderFlowInsights();

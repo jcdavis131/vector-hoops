@@ -31,11 +31,38 @@ Honest limits
   * Masked families still have a defined Jacobian (the mask multiplies the
     input, not the gradient path), so influence != coverage. Read them together.
 
+Feature granularity (--granularity feature)
+-------------------------------------------
+The tower-level Jacobian above answers "how sensitive is this head to that
+family", which is the right weight for an EDGE. It cannot answer the question
+the page actually poses — "which raw inputs drove this prediction, and did they
+push it up or down". That needs sign, so we switch estimators: signed
+gradient x input, a_j = x_j * d s / d x_j, taken w.r.t. the family inputs.
+It is the first-order term of the output's decomposition, so the top-k
+contributions genuinely sum toward the prediction.
+
+Each target must be a SCALAR for a signed attribution to mean anything:
+
+  archetype / position   the predicted class's logit (per row argmax) — "what
+                         drove THIS call", not some average over classes
+  skills / next_profile  the mean over the head's outputs — an overall level
+
+`embedding` is deliberately absent. Its basis is arbitrary, so the sign of
+d(emb_i)/d(x_j) carries no meaning; the tower-level Frobenius view above is the
+honest one for the embedding. Four targets here, five there, on purpose.
+
+Because a tower reads cat([x * m, m]), a masked feature has EXACTLY zero
+gradient. Zero attribution therefore means "never measured", not "did not
+matter" — the export carries per-feature coverage so the UI can say which.
+
 Writes:
   assets/mtnn_jacobian.json  — metadata + population influence matrices
   assets/mtnn_jacobian.f32   — per-row [towers x (1 embed + n_head_groups)]
+  assets/mtnn_attr_pop.json  — metadata + population [features x targets]
+  assets/mtnn_attr_topk.bin  — per-row top-k signed contributions
 
 Run: python pipeline/export_mtnn_jacobian.py [--device cuda] [--rows 12966]
+                                             [--granularity tower|feature|both]
 """
 from __future__ import annotations
 
@@ -55,18 +82,32 @@ ASSETS = HERE.parent / "assets"
 CKPT = DATA / "mtnn_best.pt"
 OUT_JSON = ASSETS / "mtnn_jacobian.json"
 OUT_F32 = ASSETS / "mtnn_jacobian.f32"
+OUT_ATTR_JSON = ASSETS / "mtnn_attr_pop.json"
+OUT_ATTR_BIN = ASSETS / "mtnn_attr_topk.bin"
 
 # Head groups exposed by the flow diagram (must match network-viz headDefs).
 HEAD_GROUPS = ["archetype", "position", "skills", "next_profile"]
 
+# Heads whose scalar is the predicted class's logit rather than a mean.
+ARGMAX_HEADS = frozenset({"archetype", "position"})
+
+TOPK = 8
+
 
 def families_from_ckpt(state: dict) -> dict[str, int]:
-    """Recover {family: n_input_features} from tower fc1 shapes (d_cat = 2*d_in)."""
+    """Recover {family: n_input_features} from tower fc1 shapes (d_cat = 2*d_in).
+
+    Match `towers.<fam>.fc1.weight` EXACTLY. A stacked tower (tower_blocks >= 2)
+    also carries `towers.<fam>.blocks.<i>.fc1.weight`, whose in-dim is d_tower,
+    not the family's feature count — a suffix match lets the last block silently
+    overwrite the real entry and every family reports d_tower/2.
+    """
     fams: dict[str, int] = {}
     for k, v in state.items():
-        if k.startswith("towers.") and k.endswith(".fc1.weight"):
-            fam = k.split(".")[1]
-            fams[fam] = v.shape[1] // 2
+        parts = k.split(".")
+        if len(parts) == 4 and parts[0] == "towers" and parts[2] == "fc1" \
+                and parts[3] == "weight":
+            fams[parts[1]] = v.shape[1] // 2
     return dict(sorted(fams.items()))
 
 
@@ -85,7 +126,11 @@ def load_matrix_for(ckpt_fams: dict[str, int]):
         if dims == ckpt_fams:
             print(f"  matrix: {mpath.name} ({len(fams)} families) — matches checkpoint")
             return npz, manifest, fams, mpath.name
-        print(f"  skip {mpath.name}: {len(fams)} families != checkpoint {len(ckpt_fams)}")
+        bad = {f: (ckpt_fams.get(f), dims.get(f))
+               for f in set(dims) | set(ckpt_fams) if dims.get(f) != ckpt_fams.get(f)}
+        print(f"  skip {mpath.name}: {len(fams)} families, "
+              f"{len(bad)} mismatched (ckpt, matrix): "
+              f"{dict(list(bad.items())[:4])}")
     raise SystemExit(
         "no train matrix matches the checkpoint's families. Retrain, or keep the "
         "pre-fix snapshot (train_matrix.npz.prefix_bak).")
@@ -106,6 +151,15 @@ def build_model(ckpt: dict, fam_dims: dict[str, int], n_seasons: int,
         fusion_mode=a.get("fusion", "concat"),
         n_tower_blocks=a.get("tower_blocks", 1),
         mlp_heads=a.get("mlp_heads", False),
+        # Every v5 architecture knob must be replayed from the checkpoint's own
+        # args. Silently defaulting one (d_head_hidden was defaulting to 64
+        # while the promoted recipe trained at 128) does not fail loudly — it
+        # would load a DIFFERENT network under strict=False.
+        d_head_hidden=a.get("d_head_hidden", 64),
+        d_model=a.get("d_model", 96),
+        n_fusion_layers=a.get("n_fusion_layers", 4),
+        n_attn_heads=a.get("n_attn_heads", 4),
+        d_fusion_hidden=(a.get("fusion_hidden") or None),
     ).to(device)
     missing, unexpected = model.load_state_dict(ckpt["model"], strict=False)
     drop = [k for k in missing if not k.startswith(("form_recon", "bbref"))]
@@ -166,11 +220,153 @@ def jacobian_influence(model: T.MTNN, xs, ms, seas, rows: np.ndarray,
     return per_row, groups
 
 
+def target_scalars(heads: dict[str, torch.Tensor]) -> dict[str, torch.Tensor]:
+    """One scalar per row per head — the quantity a signed attribution explains.
+
+    Classifiers use the predicted class's logit (argmax picks the row, the
+    gradient flows only through it). Regression heads use the mean output.
+    """
+    out: dict[str, torch.Tensor] = {}
+    for name, y in heads.items():
+        if name in ARGMAX_HEADS:
+            out[name] = y.gather(1, y.argmax(dim=1, keepdim=True)).squeeze(1)
+        else:
+            out[name] = y.mean(dim=1)
+    return out
+
+
+def feature_attribution(model: T.MTNN, xs, ms, seas, fams: dict[str, list[int]],
+                        n_feat: int, rows: np.ndarray, device: str,
+                        batch: int = 256, topk: int = TOPK):
+    """Signed grad x input, per row, per target, over the raw input features.
+
+    Returns (pop_signed, pop_abs, top_idx, top_val, targets). Rows are
+    independent through towers/fusion (no batch mixing, LayerNorm is per
+    sample), so one backward on the batch sum yields each row's own gradient.
+    """
+    fam_names = list(model.families)
+    cols = {f: torch.tensor(fams[f], device=device, dtype=torch.long)
+            for f in fam_names}
+
+    targets: list[str] = []
+    top_idx = top_val = None
+    acc_signed = acc_abs = None
+
+    for start in range(0, len(rows), batch):
+        idx = rows[start:start + batch]
+        idx_t = torch.tensor(idx, device=device)
+        bx = {f: xs[f][idx_t].detach().clone().requires_grad_(True) for f in fam_names}
+        bm = {f: ms[f][idx_t] for f in fam_names}
+
+        parts = torch.stack([model.towers[f](bx[f], bm[f]) for f in fam_names], dim=1)
+        emb = model.fusion(parts, seas[idx_t])
+        scalars = target_scalars(head_outputs(model, emb))
+
+        if not targets:
+            targets = [g for g in HEAD_GROUPS if g in scalars]
+            n_t = len(targets)
+            acc_signed = np.zeros((n_feat, n_t), dtype=np.float64)
+            acc_abs = np.zeros((n_feat, n_t), dtype=np.float64)
+            top_idx = np.zeros((len(rows), n_t, topk), dtype=np.uint16)
+            top_val = np.zeros((len(rows), n_t, topk), dtype=np.float32)
+
+        for ti, tname in enumerate(targets):
+            grads = torch.autograd.grad(
+                scalars[tname].sum(), [bx[f] for f in fam_names],
+                retain_graph=(ti < len(targets) - 1))
+            attr = torch.zeros(len(idx), n_feat, device=device)
+            for f, g in zip(fam_names, grads):
+                attr[:, cols[f]] = bx[f].detach() * g       # a_j = x_j * dy/dx_j
+
+            a = attr.detach()
+            acc_signed[:, ti] += a.sum(0).double().cpu().numpy()
+            acc_abs[:, ti] += a.abs().sum(0).double().cpu().numpy()
+
+            k = min(topk, n_feat)
+            sel = a.abs().topk(k, dim=1).indices              # rank by |a|, keep sign
+            top_idx[start:start + len(idx), ti, :k] = sel.cpu().numpy().astype(np.uint16)
+            top_val[start:start + len(idx), ti, :k] = (
+                a.gather(1, sel).cpu().numpy().astype(np.float32))
+
+        del parts, emb, scalars, bx
+    n = float(len(rows))
+    return acc_signed / n, acc_abs / n, top_idx, top_val, targets
+
+
+def write_feature_assets(pop_signed, pop_abs, top_idx, top_val, targets,
+                         feat_names, feat_family, coverage, ckpt, matrix_name,
+                         n_rows: int) -> None:
+    """Two assets: a small population JSON, and the per-row top-k binary.
+
+    Dense per-row would be rows x 120 x targets x 4B ~ 25 MB. Top-k answers the
+    only question the UI asks ("what drove THIS prediction") at a tenth of that.
+    The binary is two contiguous blocks rather than interleaved 6-byte records,
+    so the client can take zero-copy typed-array views (a uint16 next to a
+    float32 would leave the float block 2-byte aligned).
+    """
+    n_t, k = len(targets), top_idx.shape[2]
+    OUT_ATTR_BIN.write_bytes(top_idx.tobytes(order="C") + top_val.tobytes(order="C"))
+
+    st = CKPT.stat()
+    doc = {
+        "built": time.strftime("%Y-%m-%d"),
+        # Same fail-closed provenance as the tower export (V13).
+        "checkpoint": {"mtime": int(st.st_mtime), "bytes": int(st.st_size)},
+        "matrix": matrix_name,
+        "rows": int(n_rows),
+        "method": ("Signed gradient x input, a_j = x_j * d(target)/d(x_j), over the "
+                   "raw input features. Classifier targets are the predicted class's "
+                   "logit; regression targets are the mean output. Local "
+                   "linearization, not a counterfactual ablation."),
+        "maskedNote": ("A tower reads cat([x*m, m]), so a masked feature has exactly "
+                       "zero gradient. Zero attribution means NEVER MEASURED, not "
+                       "'no effect' — read it against `coverage`."),
+        "targets": targets,
+        "features": feat_names,
+        "featureFamily": feat_family,
+        # Fraction of rows where the feature was actually observed (mask == 1).
+        "coverage": {f: round(float(c), 4) for f, c in zip(feat_names, coverage)},
+        "populationSigned": {
+            t: {feat_names[j]: round(float(pop_signed[j, ti]), 6)
+                for j in range(len(feat_names))}
+            for ti, t in enumerate(targets)
+        },
+        "populationAbs": {
+            t: {feat_names[j]: round(float(pop_abs[j, ti]), 6)
+                for j in range(len(feat_names))}
+            for ti, t in enumerate(targets)
+        },
+        "topkLayout": {
+            "file": OUT_ATTR_BIN.name,
+            "k": int(k),
+            "shape": [int(n_rows), n_t, int(k)],
+            "order": "row-major: [row][target][rank], ranked by |value| descending",
+            "blocks": [
+                {"name": "index", "dtype": "uint16", "offset": 0,
+                 "bytes": int(top_idx.nbytes), "note": "index into `features`"},
+                {"name": "value", "dtype": "float32", "offset": int(top_idx.nbytes),
+                 "bytes": int(top_val.nbytes), "note": "signed contribution"},
+            ],
+        },
+    }
+    OUT_ATTR_JSON.write_text(json.dumps(doc, indent=2), encoding="utf-8")
+    kb = OUT_ATTR_BIN.stat().st_size / 1024
+    print(f"wrote {OUT_ATTR_JSON.name} + {OUT_ATTR_BIN.name} ({kb:.0f} KB)")
+    print("\ntop features by |contribution| on each target (population mean):")
+    for ti, t in enumerate(targets):
+        order = np.argsort(-pop_abs[:, ti])[:5]
+        s = ", ".join(f"{feat_names[j]} {pop_signed[j, ti]:+.3f}" for j in order)
+        print(f"  {t:<14} {s}")
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--device", choices=("auto", "cpu", "cuda"), default="auto")
     ap.add_argument("--rows", type=int, default=0, help="0 = all rows")
     ap.add_argument("--batch", type=int, default=256)
+    ap.add_argument("--granularity", choices=("tower", "feature", "both"),
+                    default="tower")
+    ap.add_argument("--topk", type=int, default=TOPK)
     args = ap.parse_args()
     device = ("cuda" if (args.device in ("auto", "cuda") and torch.cuda.is_available())
               else "cpu")
@@ -199,6 +395,25 @@ def main() -> None:
 
     n = len(Z) if args.rows <= 0 else min(args.rows, len(Z))
     rows = np.arange(n)
+
+    if args.granularity in ("feature", "both"):
+        feat_names = list(manifest["features"])
+        if len(feat_names) != Z.shape[1]:
+            raise SystemExit(f"manifest has {len(feat_names)} features, "
+                             f"matrix has {Z.shape[1]} columns")
+        feat_family = {f: manifest["families"][f] for f in feat_names}
+        t0 = time.time()
+        pop_signed, pop_abs, top_idx, top_val, targets = feature_attribution(
+            model, xs, ms, seas, fams, len(feat_names), rows, device,
+            args.batch, args.topk)
+        print(f"attribution: {n} rows x {len(feat_names)} features x "
+              f"{len(targets)} targets in {time.time() - t0:.1f}s")
+        write_feature_assets(pop_signed, pop_abs, top_idx, top_val, targets,
+                             feat_names, feat_family, M[rows].mean(axis=0),
+                             ckpt, matrix_name, n)
+        if args.granularity == "feature":
+            return
+
     t0 = time.time()
     per_row, groups = jacobian_influence(model, xs, ms, seas, rows, device, args.batch)
     print(f"jacobians: {n} rows x {len(fams)} towers x {1 + len(groups)} targets "
