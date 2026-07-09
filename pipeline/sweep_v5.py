@@ -81,6 +81,12 @@ GRID = {
     "fh256_d48": (2, 160, 32, 48, dict(d_head_hidden=128, d_fusion_hidden=256)),
     "fh384_d48": (2, 160, 32, 48, dict(d_head_hidden=128, d_fusion_hidden=384)),
     "fh512_d48": (2, 160, 32, 48, dict(d_head_hidden=128, d_fusion_hidden=512)),
+
+    # --- The deployed v4 recipe, as a config. BASE pins mlp_heads=True, so no
+    # grid entry above reproduces the incumbent. Without it in the SAME sweep
+    # (same epochs, seeds, protocol, matrix) there is nothing to promote
+    # against -- every "beats v4" claim so far compared across budgets.
+    "a_v4_ctrl": (1, 96, 24, 48, dict(mlp_heads=False)),
 }
 
 # Named batches so a run targets one question instead of re-mapping a plateau.
@@ -92,6 +98,18 @@ SWEEP_SETS = {
     "head": ["hb32_d48", "hb64_d48", "hb128_d48", "hb256_d48",
              "ha32_d48", "ha128_d48", "hb128_d96"],
     "fusion": ["fh128_d48", "fh256_d48", "fh384_d48", "fh512_d48"],
+
+    # Apples-to-apples finalists: one budget, one protocol, one seed set, with
+    # the deployed v4 recipe measured inside the sweep. One representative per
+    # axis that actually moved the gated composite (depth, dim, fusion width),
+    # plus the transformer whose verdict is still unmeasured.
+    "final": ["a_v4_ctrl",          # incumbent
+              "hb64_d48",           # depth (2 blocks), v4 head width
+              "hb128_d48",          # depth + wider head
+              "b3_h224_t48_d64",    # deepest/widest (60-ep composite leader)
+              "b2_h160_t32_d96",    # embedding dim
+              "fh512_d48",          # fusion width (re-pinned by --head-hidden)
+              "tx_b2_h160_t32_d64"],  # transformer fusion
 }
 
 
@@ -135,6 +153,9 @@ def main() -> None:
     ap.add_argument("--head-hidden", type=int, default=0,
                     help="override d_head_hidden for every config in this run "
                          "(pin Sweep B's fusion arms to Sweep A's winner)")
+    ap.add_argument("--resume", action="store_true",
+                    help="reuse an existing per-config checkpoint instead of "
+                         "retraining it; long multi-seed sweeps keep getting killed")
     ap.add_argument("--protocol", choices=("legacy", "leakfree"), default="leakfree")
     ap.add_argument("--split", choices=("player", "temporal"), default="player")
     args = ap.parse_args()
@@ -163,10 +184,25 @@ def main() -> None:
         if args.head_hidden:
             cfg["d_head_hidden"] = args.head_hidden
         for seed in seeds:
+            ck = OUT / f"sweep_{name}#s{seed}.json"
+            if args.resume and ck.exists():
+                m = json.loads(ck.read_text(encoding="utf-8"))
+                same = (m.get("epochs") == args.epochs
+                        and m.get("protocol") == args.protocol
+                        and m.get("split_mode") == args.split
+                        and m.get("cfg") == cfg)
+                if same:
+                    per_seed[name][seed] = m
+                    print(f"=== {name} seed {seed}: RESUMED from checkpoint "
+                          f"({args.epochs} ep) ===", flush=True)
+                    continue
+                print(f"  checkpoint for {name}#s{seed} differs (budget/protocol/"
+                      f"config) — retraining", flush=True)
             print(f"=== {name} seed {seed} ({args.epochs} ep, {args.protocol}, "
                   f"{args.split}-split) {cfg} ===", flush=True)
             m = AB.train_one(name, cfg, args.epochs, seed=seed, device=device,
                              protocol=args.protocol, split_mode=args.split)
+            m["cfg"] = cfg  # fingerprint so --resume can't reuse a mismatch
             per_seed[name][seed] = m
             pt = m.get("purity_at_20_test")
             print(f"  -> params {m['params']:,} | recall {m['test_recall_at_10']} | "
