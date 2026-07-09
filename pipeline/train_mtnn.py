@@ -211,8 +211,23 @@ def load_skill_labels(names, seasons) -> tuple[np.ndarray, np.ndarray, list[str]
 # Model
 # ---------------------------------------------------------------------------
 
+class _ResBlock(nn.Module):
+    """Same-width residual MLP block (d -> hidden -> d) for stacking depth."""
+
+    def __init__(self, d: int, d_hidden: int):
+        super().__init__()
+        self.fc1 = nn.Linear(d, d_hidden)
+        self.ln1 = nn.LayerNorm(d_hidden)
+        self.fc2 = nn.Linear(d_hidden, d)
+        self.ln2 = nn.LayerNorm(d)
+
+    def forward(self, y: torch.Tensor) -> torch.Tensor:
+        return self.ln2(self.fc2(F.gelu(self.ln1(self.fc1(y)))) + y)
+
+
 class ResidualTower(nn.Module):
-    def __init__(self, d_in: int, d_out: int = 24, d_hidden: int = 96):
+    def __init__(self, d_in: int, d_out: int = 24, d_hidden: int = 96,
+                 n_blocks: int = 1):
         super().__init__()
         d_cat = d_in * 2
         self.fc1 = nn.Linear(d_cat, d_hidden)
@@ -220,10 +235,15 @@ class ResidualTower(nn.Module):
         self.fc2 = nn.Linear(d_hidden, d_out)
         self.ln2 = nn.LayerNorm(d_out)
         self.skip = nn.Linear(d_cat, d_out) if d_cat != d_out else nn.Identity()
+        # v5: optional extra same-width residual blocks for tower depth.
+        self.blocks = nn.ModuleList(
+            [_ResBlock(d_out, d_hidden) for _ in range(max(0, n_blocks - 1))])
 
     def forward(self, x: torch.Tensor, m: torch.Tensor) -> torch.Tensor:
         h = torch.cat([x * m, m], dim=-1)
         y = self.ln2(self.fc2(F.gelu(self.ln1(self.fc1(h)))) + self.skip(h))
+        for blk in self.blocks:
+            y = blk(y)
         return y
 
 
@@ -274,6 +294,39 @@ class ConcatFusion(nn.Module):
         return F.normalize(self.fuse(torch.cat([flat, s], dim=-1)), dim=-1)
 
 
+class TransformerFusion(nn.Module):
+    """v5: self-attention across tower tokens so families interact.
+
+    Each tower output is a token; a season token and a learned [CLS] token
+    are prepended. A pre-LN Transformer encoder lets towers attend to one
+    another (unlike concat, which only mixes them in one linear layer). The
+    [CLS] state becomes the embedding.
+    """
+
+    def __init__(self, n_towers: int, d_tower: int, n_seasons: int,
+                 d_season: int = 12, d_emb: int = 48, d_model: int = 96,
+                 n_layers: int = 4, n_heads: int = 4, ff: int = 256,
+                 dropout: float = 0.1):
+        super().__init__()
+        self.tower_proj = nn.Linear(d_tower, d_model)
+        self.season_emb = nn.Embedding(n_seasons, d_season)
+        self.season_proj = nn.Linear(d_season, d_model)
+        self.cls = nn.Parameter(torch.randn(1, 1, d_model) * 0.02)
+        layer = nn.TransformerEncoderLayer(
+            d_model=d_model, nhead=n_heads, dim_feedforward=ff,
+            dropout=dropout, activation="gelu", batch_first=True, norm_first=True)
+        self.encoder = nn.TransformerEncoder(layer, num_layers=n_layers)
+        self.out = nn.Linear(d_model, d_emb)
+
+    def forward(self, tower_stack: torch.Tensor, season_ids: torch.Tensor) -> torch.Tensor:
+        b = tower_stack.size(0)
+        tok = self.tower_proj(tower_stack)                            # [B, T, d_model]
+        s = self.season_proj(self.season_emb(season_ids)).unsqueeze(1)  # [B, 1, d_model]
+        cls = self.cls.expand(b, -1, -1)                              # [B, 1, d_model]
+        x = self.encoder(torch.cat([cls, s, tok], dim=1))
+        return F.normalize(self.out(x[:, 0]), dim=-1)
+
+
 class SkillTowers(nn.Module):
     """Players→skills tower bank: one mini-tower per Skills Lens skill.
 
@@ -308,6 +361,12 @@ class MTNN(nn.Module):
         n_form: int = 0,
         n_bbref: int = 0,
         fusion_mode: str = "gated",
+        n_tower_blocks: int = 1,
+        mlp_heads: bool = False,
+        d_head_hidden: int = 64,
+        d_model: int = 96,
+        n_fusion_layers: int = 4,
+        n_attn_heads: int = 4,
     ):
         super().__init__()
         self.families = sorted(fam_dims)
@@ -317,15 +376,32 @@ class MTNN(nn.Module):
                 fam_dims[fam],
                 d_out=d_tower,
                 d_hidden=d_tower_hidden,
+                n_blocks=n_tower_blocks,
             )
             for fam in self.families
         })
-        fusion_cls = ConcatFusion if fusion_mode == "concat" else GatedFusion
-        self.fusion = fusion_cls(len(self.families), d_tower, n_seasons, d_emb=d_emb)
-        self.archetype_head = nn.Linear(d_emb, N_ARCHETYPES)
-        self.position_head = nn.Linear(d_emb, len(POSITIONS))
-        self.profile_head = nn.Linear(d_emb, n_game)
-        self.next_profile_head = nn.Linear(d_emb, n_game)
+        if fusion_mode == "concat":
+            self.fusion = ConcatFusion(
+                len(self.families), d_tower, n_seasons, d_emb=d_emb)
+        elif fusion_mode == "transformer":
+            self.fusion = TransformerFusion(
+                len(self.families), d_tower, n_seasons, d_emb=d_emb,
+                d_model=d_model, n_layers=n_fusion_layers, n_heads=n_attn_heads)
+        else:
+            self.fusion = GatedFusion(
+                len(self.families), d_tower, n_seasons, d_emb=d_emb)
+
+        def head(k: int) -> nn.Module:
+            if mlp_heads:
+                return nn.Sequential(
+                    nn.Linear(d_emb, d_head_hidden), nn.GELU(),
+                    nn.Linear(d_head_hidden, k))
+            return nn.Linear(d_emb, k)
+
+        self.archetype_head = head(N_ARCHETYPES)
+        self.position_head = head(len(POSITIONS))
+        self.profile_head = head(n_game)
+        self.next_profile_head = head(n_game)
         self.salary_head = nn.Linear(d_emb, 1)
         self.team_fit_head = nn.Linear(d_emb, 1)
         self.roster_lift_head = nn.Linear(d_emb, 1)
@@ -806,8 +882,20 @@ def main() -> None:
     ap.add_argument("--weight-decay", type=float, default=1e-4)
     ap.add_argument("--grad-accum", type=int, default=1,
                     help="gradient accumulation steps (effective batch = batch * accum)")
-    ap.add_argument("--fusion", choices=("gated", "concat"), default="gated",
-                    help="tower fusion: gated attention (default) or concat MLP")
+    ap.add_argument("--fusion", choices=("gated", "concat", "transformer"), default="gated",
+                    help="tower fusion: gated attention (default), concat MLP, or v5 transformer")
+    ap.add_argument("--tower-blocks", type=int, default=1,
+                    help="v5: residual blocks per family tower (depth)")
+    ap.add_argument("--mlp-heads", action="store_true",
+                    help="v5: 2-layer MLP decode heads instead of linear")
+    ap.add_argument("--d-head-hidden", type=int, default=64,
+                    help="v5: hidden width for MLP decode heads")
+    ap.add_argument("--d-model", type=int, default=96,
+                    help="v5: transformer fusion token width")
+    ap.add_argument("--n-fusion-layers", type=int, default=4,
+                    help="v5: transformer encoder layers")
+    ap.add_argument("--n-attn-heads", type=int, default=4,
+                    help="v5: transformer attention heads")
     ap.add_argument("--nce-loss", choices=("infonce", "supcon-arch", "hybrid"),
                     default="infonce",
                     help="contrastive: player InfoNCE, archetype SupCon, or hybrid")
@@ -939,6 +1027,12 @@ def main() -> None:
         n_form=len(form_cols) if form_cols else 0,
         n_bbref=len(bbref_cols) if bbref_cols else 0,
         fusion_mode=args.fusion,
+        n_tower_blocks=args.tower_blocks,
+        mlp_heads=args.mlp_heads,
+        d_head_hidden=args.d_head_hidden,
+        d_model=args.d_model,
+        n_fusion_layers=args.n_fusion_layers,
+        n_attn_heads=args.n_attn_heads,
     ).to(device)
     opt = torch.optim.AdamW(
         adamw_param_groups(model, args.weight_decay), lr=args.lr)
