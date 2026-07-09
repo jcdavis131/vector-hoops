@@ -132,6 +132,9 @@ def main() -> None:
     ap.add_argument("--only", type=str, default="", help="comma-separated grid names")
     ap.add_argument("--set", type=str, default="", choices=("", *SWEEP_SETS),
                     help="named batch: arch | transformer | head | fusion")
+    ap.add_argument("--head-hidden", type=int, default=0,
+                    help="override d_head_hidden for every config in this run "
+                         "(pin Sweep B's fusion arms to Sweep A's winner)")
     ap.add_argument("--protocol", choices=("legacy", "leakfree"), default="leakfree")
     ap.add_argument("--split", choices=("player", "temporal"), default="player")
     args = ap.parse_args()
@@ -157,6 +160,8 @@ def main() -> None:
     per_seed: dict = {n: {} for n in names}
     for name in names:
         cfg = cfg_for(name)
+        if args.head_hidden:
+            cfg["d_head_hidden"] = args.head_hidden
         for seed in seeds:
             print(f"=== {name} seed {seed} ({args.epochs} ep, {args.protocol}, "
                   f"{args.split}-split) {cfg} ===", flush=True)
