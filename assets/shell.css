@@ -2753,6 +2753,15 @@ body.vh-team-themed .landing-favorite__select:focus{
   line-height: 1.55;
   color: var(--ink-soft);
 }
+/* The exact layer spec, straight off the checkpoint. Recessive chrome sitting
+   under the plain-language caption — never competing with it. */
+.network-step-spec{
+  display: block;
+  margin-top: 4px;
+  font: 400 11px/1.5 var(--font-mono, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace);
+  color: var(--ink-muted);
+  letter-spacing: 0.01em;
+}
 .network-story{
   margin-top: 12px;
 }

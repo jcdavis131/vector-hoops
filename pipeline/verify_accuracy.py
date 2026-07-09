@@ -483,6 +483,67 @@ def v13_mtnn_jacobian(data: dict) -> None:
           f"({nbytes // 1024} KB), targets={jac.get('targets')}")
 
 
+def v13c_mtnn_intervals(_data: dict) -> None:
+    """A prediction interval is a promise about coverage. Two ways it lies:
+
+    1. It was fitted against a checkpoint that is no longer shipped — the same
+       failure mode V13/V13b guard, and just as invisible.
+    2. It simply does not cover. An "80%" band that catches 40% of held-out
+       rows is worse than no band, because the reader trusts it. The exporter
+       measures coverage on a split it never fitted; assert that here rather
+       than assume the export was honest.
+    """
+    print("V13c MTNN prediction intervals (optional)…")
+    ipath = ASSETS / "mtnn_intervals.json"
+    if not ipath.exists():
+        print("  mtnn_intervals.json absent — regression heads show no interval")
+        return
+    iv = json.loads(ipath.read_text(encoding="utf-8"))
+
+    arch_path = ASSETS / "mtnn_arch.json"
+    arch = json.loads(arch_path.read_text(encoding="utf-8")) if arch_path.exists() else None
+    check_stamp("mtnn_intervals.json", iv.get("checkpoint"), arch)
+
+    level = float(iv.get("level") or 0)
+    if not 0 < level < 1:
+        fail(f"mtnn_intervals.json has a nonsensical level {level!r}")
+        return
+
+    expect = {}
+    if arch:
+        expect["skills"] = list(arch.get("skillKeys") or [])
+        expect["next_profile"] = list(arch.get("gameFeatureKeys") or [])
+
+    for name, spec in (iv.get("targets") or {}).items():
+        dims = spec.get("dims") or {}
+        if not dims:
+            fail(f"mtnn_intervals.json target {name} has no dims")
+            continue
+        want = expect.get(name)
+        if want and set(dims) - set(want):
+            fail(f"intervals {name} has dims the net does not: "
+                 f"{sorted(set(dims) - set(want))} — stale export")
+
+        for key, d in dims.items():
+            n_bins = len(d.get("edges") or []) + 1
+            if len(d.get("lo") or []) != n_bins or len(d.get("hi") or []) != n_bins:
+                fail(f"intervals {name}.{key}: lo/hi length != edges+1")
+            if any(hi < lo for lo, hi in zip(d["lo"], d["hi"])):
+                fail(f"intervals {name}.{key}: an upper bound below its lower bound")
+
+        cov = spec.get("coverageTestMean")
+        if cov is None:
+            print(f"  note: {name} has no held-out coverage — cannot verify the promise")
+            continue
+        # Generous band: the fit split is older seasons, so some drift is expected
+        # and honest. A real break (a broken unit conversion, a shuffled row index)
+        # lands far outside this.
+        if not (level - 0.12) <= cov <= (level + 0.10):
+            fail(f"intervals {name}: held-out coverage {cov:.3f} is not the "
+                 f"promised {level:.0%} — the band on /model is lying")
+        print(f"  {name}: {len(dims)} dims, held-out coverage {cov:.3f} vs {level:.0%}")
+
+
 def v13b_mtnn_attribution(data: dict) -> None:
     """Feature-level attribution must fail closed exactly as the tower-level
     export does: a diverging bar reading "AST pushed this archetype up" is a
@@ -702,6 +763,7 @@ if __name__ == "__main__":
     v12_mtnn_client_assets()
     v13_mtnn_jacobian(data)
     v13b_mtnn_attribution(data)
+    v13c_mtnn_intervals(data)
     v14_stated_limitations(data)
     v15_season_norms(data)
     if FAILS:

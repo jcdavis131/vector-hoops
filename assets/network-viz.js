@@ -25,49 +25,67 @@
   var AXIS_LINE = '#4a4944';
   var AXIS_TEXT = '#8a8983';
   var MAX_INPUT_NODES = 10;
-  var SKILL_LABELS = {
-    ft: 'Free Throw Shooting',
-    efficiency: 'Scoring Efficiency',
-    rim: 'Rim Pressure (FTs)',
-    three: 'Three-Point Volume',
-    three_acc: 'Three-Point Accuracy',
-    dreb: 'Defensive Rebounding',
-    oreb: 'Offensive Rebounding',
-    rim_def: 'Rim Protection',
-    steal: 'Ball Pressure',
-    playmaking: 'Playmaking',
-    foul_avoid: 'Foul Discipline',
-    security: 'Ball Security',
-    gravity_off: 'Off-Ball Gravity',
-    gravity_on: 'On-Ball Gravity',
-    gravity_rim: 'Rim Gravity',
-    hand_activity: 'Hand Activity',
-    recovery: 'Defensive Recovery',
-    screen_nav: 'Screen Navigation'
-  };
+  /* Skill display names come from the same artifacts that define the skill
+     targets (assets/skills.json + assets/skills_wide.json), keyed by
+     mtnn_arch.skillKeys. They used to be a literal here, which drifted: eleven
+     of the net's eighteen skill heads had no entry and rendered as raw keys
+     ("shooting_gravity"), while eleven entries named heads the net does not
+     have. A hardcoded copy of exported data will always drift; read the export. */
+  var SKILL_LABELS = {};
 
-  var STEPS = [
-    {
-      id: 'input',
-      caption: 'Stats arrive in 18 groups — shooting, playmaking, tracking, roster context, and more.'
-    },
-    {
-      id: 'towers',
-      caption: 'Each group runs through its own small net. Years without tracking data are skipped.'
-    },
-    {
-      id: 'fusion',
-      caption: 'Tower outputs stack together and compress into one 48-number player fingerprint.'
-    },
-    {
-      id: 'embedding',
-      caption: 'That fingerprint is where we measure similarity — your player lights up on the map.'
-    },
-    {
-      id: 'heads',
-      caption: 'Separate readouts guess archetype, position, skills, and next-year stats.'
-    }
+  function skillLabel(k) {
+    return SKILL_LABELS[k] || capWords(String(k).replace(/_/g, ' '));
+  }
+
+  /* The five layers, in order. `mtnn_arch.json` ships a `layers` array whose
+     label + detail are written by the exporter straight off the checkpoint —
+     that is the authority for the technical line under each caption, and for
+     the flow diagram's column headers.
+
+     The plain-language captions stay hand-written (the site's voice), but every
+     number in them is read from the arch rather than typed. The old literals
+     claimed "18 groups"; the net has 17 families and 120 features. 18 is the
+     skill count, which had leaked across. */
+  var STEP_IDS = ['input', 'towers', 'fusion', 'embedding', 'heads'];
+
+  var FALLBACK_CAPTIONS = [
+    'Stats arrive in family groups — shooting, playmaking, tracking, roster context, and more.',
+    'Each group runs through its own small net. Years without tracking data are skipped.',
+    'Tower outputs stack together and compress into one player fingerprint.',
+    'That fingerprint is where we measure similarity — your player lights up on the map.',
+    'Separate readouts guess archetype, position, skills, and next-year stats.'
   ];
+
+  function archLayer(i) {
+    var layers = (state.arch && state.arch.layers) || [];
+    return layers[i] || null;
+  }
+
+  function stepCaption(i) {
+    var a = state.arch;
+    if (!a) return FALLBACK_CAPTIONS[i];
+    var nFam = (a.towerFamilies || []).length;
+    var nFeat = Object.keys(a.familyFeatures || {}).reduce(function (t, k) {
+      return t + (a.familyFeatures[k] || []).length;
+    }, 0);
+    switch (STEP_IDS[i]) {
+      case 'input':
+        return 'Stats arrive in ' + nFam + ' groups — ' + nFeat + ' numbers in all: ' +
+          'shooting, playmaking, tracking, roster context, and more.';
+      case 'towers':
+        return 'Each group runs through its own small net — ' + a.towerBlocks +
+          ' residual blocks down to ' + a.dTower + ' numbers. Years without tracking data are skipped.';
+      case 'fusion':
+        return 'The ' + nFam + ' tower outputs are concatenated (' + (nFam * a.dTower) +
+          ' numbers), then compressed into one ' + a.dEmb + '-number player fingerprint.';
+      case 'heads':
+        return 'Separate readouts guess archetype (' + a.nArchetypes + '), position (' +
+          a.nPositions + '), skills (' + (a.skillKeys || []).length + '), and next-year stats (' +
+          a.nNextProfile + ').';
+      default:
+        return FALLBACK_CAPTIONS[i];
+    }
+  }
 
   var state = {
     players: [],
@@ -86,6 +104,9 @@
     // Per-season league mean/SD (assets/season_norms.json) so predictions can
     // be shown as real per-100-possession numbers instead of z-scores.
     norms: null,
+    // Calibrated prediction intervals for the regression heads
+    // (assets/mtnn_intervals.json). Null -> no band is drawn.
+    intervals: null,
     // Feature attribution (assets/mtnn_attr_*): signed grad x input.
     attr: null,
     attrIdx: null,
@@ -658,7 +679,7 @@
         var v01 = clamp01(Number(skillVals[j] || 0));
         return {
           key: k,
-          label: SKILL_LABELS[k] || k,
+          label: skillLabel(k),
           val01: v01,
           valPts: capPredPct(v01 * 100)
         };
@@ -881,7 +902,7 @@
       var bv = capPredPct(clamp01(Number(rowB[offSkill + i] || 0)) * 100);
       skillDelta.push({
         key: skillKeys[i],
-        label: SKILL_LABELS[skillKeys[i]] || skillKeys[i],
+        label: skillLabel(skillKeys[i]),
         delta: av - bv
       });
     }
@@ -923,34 +944,32 @@
     span.textContent = state.players[rows[0]].season + ' → ' + state.players[rows[rows.length - 1]].season;
   }
 
-  function quantile(vals, q) {
-    if (!vals.length) return 0;
-    var v = vals.slice().sort(function (a, b) { return a - b; });
-    var pos = (v.length - 1) * q;
-    var lo = Math.floor(pos);
-    var hi = Math.ceil(pos);
-    if (lo === hi) return v[lo];
-    var t = pos - lo;
-    return v[lo] * (1 - t) + v[hi] * t;
-  }
+  /* Calibrated prediction interval for a regression head.
 
-  function localIntervalForOutput(group, idx) {
-    var nbs = embeddingNeighbors(state.playerIdx, 24);
-    if (!nbs.length) return null;
-    var vals = [];
-    nbs.forEach(function (n) {
-      var row = headRow(n.idx);
-      if (!row) return;
-      var offSkill = state.nArch;
-      var offPos = offSkill + state.nSkills;
-      var offNext = offPos + state.nPos;
-      var v = null;
-      if (group === 'skills') v = capPredPct(clamp01(Number(row[offSkill + idx] || 0)) * 100);
-      if (group === 'next_profile') v = Number(row[offNext + idx] || 0);
-      if (Number.isFinite(v)) vals.push(v);
-    });
-    if (vals.length < 6) return null;
-    return { lo: quantile(vals, 0.1), hi: quantile(vals, 0.9) };
+     Reads assets/mtnn_intervals.json: empirical residual quantiles measured on
+     held-out seasons and binned by the predicted value, so the band widens where
+     the head is actually less certain. Coverage is verified on a split the fit
+     never saw (see pipeline/export_mtnn_intervals.py).
+
+     This replaces a spread over the player's embedding neighbours, which could
+     not be an uncertainty: neighbours are near *because* their embeddings agree,
+     so their predictions agree, and the band was narrow by construction and never
+     compared against a real outcome.
+
+     Units match the caller: skills in grade points, next_profile in z. Absent
+     asset -> null, and the UI shows "n/a" rather than inventing a band. */
+  function predictionInterval(group, idx, pred) {
+    var iv = state.intervals;
+    if (!iv || !iv.targets || !iv.targets[group] || !Number.isFinite(pred)) return null;
+    var spec = iv.targets[group];
+    var keys = group === 'skills'
+      ? (state.arch && state.arch.skillKeys)
+      : (state.arch && state.arch.gameFeatureKeys);
+    var dim = keys && keys[idx] && spec.dims[keys[idx]];
+    if (!dim) return null;
+    var b = 0;
+    while (b < dim.edges.length && pred >= dim.edges[b]) b++;
+    return { lo: pred + dim.lo[b], hi: pred + dim.hi[b], level: iv.level, coverage: dim.coverageTest };
   }
 
   function renderNodeInspector() {
@@ -1056,9 +1075,9 @@
       var skillKeys = (state.arch && state.arch.skillKeys) || [];
       for (var si = 0; si < skillKeys.length; si++) {
         var sv = capPredPct(clamp01(Number(row[offSkill + si] || 0)) * 100);
-        var sInt = localIntervalForOutput('skills', si);
+        var sInt = predictionInterval('skills', si, sv);
         rows.push({
-          label: SKILL_LABELS[skillKeys[si]] || skillKeys[si],
+          label: skillLabel(skillKeys[si]),
           value: sv,
           aux: sInt ? (fmtPredScore(sInt.lo) + '–' + fmtPredScore(sInt.hi)) : 'n/a',
           idx: si
@@ -1069,7 +1088,7 @@
       var nextKeys = (state.arch && state.arch.gameFeatureKeys) || [];
       for (var ni = 0; ni < nextKeys.length; ni++) {
         var nv = Number(row[offNext + ni] || 0);
-        var nInt = localIntervalForOutput('next_profile', ni);
+        var nInt = predictionInterval('next_profile', ni, nv);
         rows.push({
           label: (state.featureLabel && state.featureLabel[nextKeys[ni]]) || nextKeys[ni],
           value: nv,
@@ -1098,7 +1117,7 @@
       }).join('') + '</ol>' +
       '<p class="network-node-inspector__hint">' +
       (group === 'skills' || group === 'next_profile'
-        ? 'The range shows where the middle 80% of the most similar players actually land — a sense of how sure the estimate is.'
+        ? 'The range is an 80% prediction interval: on held-out seasons the real value landed inside a band like this about 80% of the time. It reflects how wrong this readout usually is for guesses of this size — not how unusual this particular player is.'
         : 'Classification rows show full class probability distribution.') +
       '</p>';
   }
@@ -1129,7 +1148,13 @@
     host.appendChild(svg);
 
     var cols = [150, 470, 690, 860, 1040];
-    var labels = ['Input families', 'Towers', 'Fusion', 'Embed', 'Decode heads'];
+    // Column headers name the real layers ("Concat fusion", "Residual towers"),
+    // not generic stand-ins, and come from the checkpoint's own export.
+    var labels = STEP_IDS.map(function (_, i) {
+      var layer = archLayer(i);
+      return (layer && layer.label) ||
+        ['Input families', 'Towers', 'Fusion', 'Embed', 'Decode heads'][i];
+    });
     labels.forEach(function (lab, i) {
       var t = document.createElementNS(SVG_NS, 'text');
       t.setAttribute('x', cols[i]);
@@ -1141,7 +1166,8 @@
     });
 
     var fams = state.arch.towerFamilies || [];
-    var nTowers = fams.length || 18;
+    if (!fams.length) return;   // no families -> no diagram, rather than a fictional 18
+    var nTowers = fams.length;
     var towerTop = 46;
     var towerBot = H - 46;
     var towerSpan = towerBot - towerTop;
@@ -1686,7 +1712,7 @@
       return '<div class="network-skill-row' + (selSkill ? ' is-selected' : '') + '"' +
         ' data-head-select-group="skills" data-head-select-idx="' + s.idx + '">' +
         '<span class="network-skill-row__meta">' +
-          '<span class="network-skill-row__name">' + esc(SKILL_LABELS[s.key] || s.key) + '</span>' +
+          '<span class="network-skill-row__name">' + esc(skillLabel(s.key)) + '</span>' +
           '<span class="network-skill-row__key">' + esc(s.key) + '</span>' +
         '</span>' +
         '<span class="network-skill-row__track"><span class="network-skill-row__fill" style="width:' +
@@ -1703,7 +1729,7 @@
         key: k,
         label: (state.featureLabel && state.featureLabel[k]) || k,
         z: Number.isFinite(z) ? z : 0,
-        band: localIntervalForOutput('next_profile', i)
+        band: predictionInterval('next_profile', i, Number.isFinite(z) ? z : 0)
       };
     }).sort(function (a, b) { return Math.abs(b.z) - Math.abs(a.z); });
     var season = state.players[state.playerIdx] && state.players[state.playerIdx].season;
@@ -1896,9 +1922,20 @@
   }
 
   function setStep(step) {
-    state.step = Math.max(0, Math.min(STEPS.length - 1, step));
+    state.step = Math.max(0, Math.min(STEP_IDS.length - 1, step));
     var cap = $('network-step-caption');
-    if (cap) cap.textContent = STEPS[state.step].caption;
+    if (cap) {
+      // Plain-language caption, then the exact layer spec straight off the
+      // checkpoint — so the page can never describe a net it isn't running.
+      var layer = archLayer(state.step);
+      cap.textContent = stepCaption(state.step);
+      if (layer && layer.label && layer.detail) {
+        var spec = document.createElement('span');
+        spec.className = 'network-step-spec';
+        spec.textContent = layer.label + ' · ' + layer.detail;
+        cap.appendChild(spec);
+      }
+    }
     document.querySelectorAll('.network-step-btn').forEach(function (btn) {
       var s = parseInt(btn.getAttribute('data-step'), 10);
       btn.classList.toggle('is-active', s === state.step);
@@ -2146,7 +2183,7 @@
       setStep(0);
       var timer = setInterval(function () {
         s += 1;
-        if (s >= STEPS.length) {
+        if (s >= STEP_IDS.length) {
           clearInterval(timer);
           state.playing = false;
           play.disabled = false;
@@ -2575,6 +2612,44 @@
     });
   }
 
+  /* Optional: calibrated 80% prediction intervals for the regression heads.
+     Absent -> the skill and next-season rows show "n/a" instead of a band. */
+  function loadIntervals() {
+    return fetch('assets/mtnn_intervals.json').then(function (r) {
+      if (!r.ok) throw new Error('no intervals');
+      return r.json();
+    }).then(function (doc) {
+      // Fail closed on a stale asset, exactly as the Jacobian guard does: an
+      // interval measured against a different checkpoint is not an interval.
+      var a = state.arch && state.arch.checkpoint;
+      var b = doc && doc.checkpoint;
+      if (a && b && (a.mtime !== b.mtime || a.bytes !== b.bytes)) {
+        throw new Error('intervals do not match the shipped checkpoint');
+      }
+      state.intervals = doc;
+      renderOutputs();
+      renderNodeInspector();
+    }).catch(function (err) {
+      state.intervals = null;
+      if (window.console) console.warn('[network-viz] intervals unavailable:', err.message);
+    });
+  }
+
+  /* Skill display names, from the artifacts that define the skill targets. */
+  function loadSkillLabels() {
+    return Promise.all(['assets/skills.json', 'assets/skills_wide.json'].map(function (u) {
+      return fetch(u).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; });
+    })).then(function (docs) {
+      docs.forEach(function (doc) {
+        if (!doc || !Array.isArray(doc.skills)) return;
+        doc.skills.forEach(function (s) {
+          if (s && s.key && s.label) SKILL_LABELS[s.key] = s.label;
+        });
+      });
+      renderOutputs();
+    });
+  }
+
   function init() {
     Promise.all([
       fetch('assets/vectors.json').then(function (r) { return r.json(); }),
@@ -2631,6 +2706,8 @@
       // the tower bars, so chain rather than race.
       loadJacobian().then(loadAttribution);
       loadSeasonNorms();
+      loadSkillLabels();
+      loadIntervals();
       renderMapLegend();
       renderMapInsights();
       renderFlowInsights();

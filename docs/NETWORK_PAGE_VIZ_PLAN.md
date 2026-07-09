@@ -223,6 +223,69 @@ the shipped checkpoint.
 
 ---
 
+## 4b. Follow-up (2026-07-09): the page vs the network it runs
+
+Three places where `/model` hardcoded a copy of data the exporter already ships,
+and the copy had drifted from the net:
+
+| Drift | Was | Is |
+|---|---|---|
+| Step-1 caption | "Stats arrive in **18** groups" | 17 families / 120 features, read from `arch` |
+| Flow column headers | "Towers", "Fusion" | `arch.layers[].label` — "Residual towers", "Concat fusion" |
+| `SKILL_LABELS` | stale vocabulary: **11 of 18** heads rendered as raw keys (`shooting_gravity`); 11 entries named heads the net lacks (`three_acc`, `rim_def`, `screen_nav`) | read from `skills.json` + `skills_wide.json`, keyed by `arch.skillKeys` |
+| `nTowers = fams.length \|\| 18` | invented an 18th tower on empty input | bail out; no diagram beats a fictional one |
+
+`mtnn_arch.json` already carries a `layers` array whose `label`/`detail` are written
+straight off the checkpoint (`"Concat fusion" / "544 + season → 48-d, L2 norm"`).
+`network-viz.js` referenced it **zero times**. It now drives the column headers, and
+each step caption is followed by the exact layer spec in mono. The prose stays
+hand-written; every number in it is read from the arch.
+
+> **Naming smell, not fixed here.** One checkpoint answers to three names:
+> `mtnn_arch.model = "mtnn_v4_phase_b"`, `mtnn_meta.model =
+> "mtnn_v5_concat_b2_h160_t32_d48_mlp128"`, `mtnn_jacobian.model = "concat"`. The
+> `checkpoint` stamps agree, so the assets *are* the same net. Worth unifying.
+> Relatedly, `train_mtnn.py`'s docstring still claims "Gated attention fusion across
+> tower outputs (not naive concat)" while the promoted recipe is concat — the page
+> now takes its word from the arch, not the docstring.
+
+### Prediction intervals for the regression heads
+
+The classification heads publish a real confidence. The regression heads published
+nothing, and `/model` filled the gap with `localIntervalForOutput`: the 10th–90th
+percentile of the model's **own predictions for the 24 nearest embedding
+neighbours**, captioned as "where the middle 80% of the most similar players
+**actually land**". That is not an uncertainty and it never touched a real outcome —
+neighbours are close *because* their embeddings agree, so their predictions agree,
+and the band was narrow by construction.
+
+Replaced by `pipeline/export_mtnn_intervals.py` → `assets/mtnn_intervals.json`:
+empirical residual quantiles on the **val** split (2022-23), binned by the quintile
+of the predicted value so the band widens where the head is genuinely less sure.
+
+**Measured coverage on the test split (2024+), which the fit never saw:**
+
+| Target | Dims | Nominal | Held-out coverage |
+|---|---|---|---|
+| `skills` | 18 | 80% | **0.786** |
+| `next_profile` | 14 | 80% | **0.772** |
+
+Slightly conservative, as expected when fitting on older seasons. Per-dim coverage
+spans 0.73–0.835; no pathologies. `post` / `transition` carry ~62-grade-point bands —
+honest, they are wide skills with 40% coverage.
+
+**Gate:** `verify_accuracy` V13c fails closed on a stale checkpoint stamp *and* on
+coverage that has drifted from the promised level — "an 80% band that catches 40% of
+held-out rows is worse than no band, because the reader trusts it." Both failure
+modes were tested by tampering with the asset.
+
+| Step | State |
+|---|---|
+| Re-run `export_mtnn_viz` + `export_mtnn_jacobian --granularity both` | ⬜ still owed by the promote flow |
+| Screenshot / eyeball pass | ⬜ **still not done** — the Chrome extension would not connect. Changed functions were executed headlessly against the real artifacts, and the JS bin lookup was proven to match `np.digitize` on every edge case; layout was **not** looked at. |
+
+---
+
 ## 5. What this plan deliberately does not claim
 
 The attribution is a **local linearization** of a model, not a causal account of

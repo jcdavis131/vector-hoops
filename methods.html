@@ -207,6 +207,26 @@
       <code>assets/next_profile_eval.json</code> (rebuild via
       <code>pipeline/export_next_profile_eval.py</code>).
     </p>
+
+    <p id="intervals">
+      <b>How sure is a number? (prediction intervals).</b> The classification heads
+      publish a real confidence &mdash; the probability the network assigns the class
+      it picked. The value heads (<b>skill grades</b>, <b>next-season stats</b>) have
+      no such thing, so on <a href="/model">/model</a> each one carries an
+      <b>80% prediction interval</b> instead. We take the network's errors on
+      <b>held-out seasons</b> it never trained on (2022&ndash;23), group them by how
+      big the prediction was, and read off the 10th and 90th percentile of those
+      errors. The band you see is that spread laid over the prediction.
+      It is checked against a <i>second</i> held-out span (2024 onward) that the band
+      was not fitted to: the true value lands inside about <b>79%</b> of the time for
+      skill grades and <b>77%</b> for next-season stats, against the 80% promised.
+      The accuracy harness refuses to ship a band whose coverage has drifted.
+      Two honest limits: it says how wrong this readout usually is <i>for predictions
+      of that size</i>, not how unusual this particular player is; and it does not
+      widen when a player's era never measured some of his inputs. Assets:
+      <code>assets/mtnn_intervals.json</code> (rebuild via
+      <code>pipeline/export_mtnn_intervals.py</code>).
+    </p>
     <p>
       <b>Steals of the Draft.</b> Pairs a player's stated draft expectation (the rookie-scale slot implied by his pick) against his <b>career mean</b> skill grade across charted seasons (minimum three), both as percentile ranks among drafted players. A late pick who sustained strong production scores as a <b>steal</b>; an early pick who didn't, a <b>bust</b>. Peak single seasons do not drive the board. It is a descriptive gap between expectation and measured production &mdash; not a re-draft or a value verdict &mdash; and it shows only when the draft data is loaded.
     </p>
