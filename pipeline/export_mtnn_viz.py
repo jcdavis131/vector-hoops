@@ -26,11 +26,22 @@ VECTORS = ASSETS / "vectors.json"
 TRAIN = DATA / "train_matrix.npz"
 MANIFEST = DATA / "feature_manifest.json"
 
-TOWER_FAMILIES = [
+# Preferred display order. Families absent from feature_manifest.json (e.g.
+# game_ratings once integrate_context's coverage gate drops it) are omitted,
+# and any new family is appended -- the diagram must describe the net that
+# actually ships, not a frozen list.
+TOWER_FAMILY_ORDER = [
     "volume", "playmaking", "rebounding", "defense", "efficiency", "shotmix",
     "bio", "tracking", "form", "market", "roster", "career", "competition",
     "team", "pedigree", "playoffs", "honors", "game_ratings",
 ]
+
+
+def tower_families(family_order: list[str]) -> list[str]:
+    present = set(family_order)
+    ordered = [f for f in TOWER_FAMILY_ORDER if f in present]
+    ordered += [f for f in family_order if f not in set(ordered)]
+    return ordered
 
 OUT_ARCH = ASSETS / "mtnn_arch.json"
 OUT_MAP = ASSETS / "mtnn_map.json"
@@ -192,25 +203,53 @@ def main() -> None:
     coords, raw_coords = pca_coords(E)
     axis_meta = infer_axes(raw_coords, arch, skills, skill_keys, cluster_names)
 
+    # Read the shipped net's real shape from the checkpoint when present, so the
+    # diagram never advertises an architecture that was not trained.
+    ckpt_args: dict = {}
+    ckpt_path = DATA / "mtnn_best.pt"
+    if ckpt_path.exists():
+        try:
+            import torch  # local import: viz export must work without torch
+            ckpt_args = torch.load(
+                ckpt_path, map_location="cpu", weights_only=False).get("args", {})
+        except Exception as exc:  # noqa: BLE001
+            print(f"  warn: could not read checkpoint args ({exc}); using defaults")
+
+    fams_used = tower_families(family_order)
+    d_tower = int(ckpt_args.get("tower_width", 24))
+    d_hidden = int(ckpt_args.get("tower_hidden", 96))
+    d_emb = int(E.shape[1])
+    n_blocks = int(ckpt_args.get("tower_blocks", 1))
+    fusion = str(ckpt_args.get("fusion", "concat"))
+    mlp_heads = bool(ckpt_args.get("mlp_heads", False))
+
     arch_doc = {
         "built": time.strftime("%Y-%m-%d"),
-        "model": "mtnn_v4_phase_b",
-        "fusion": "concat",
-        "dTower": 24,
-        "dEmb": 48,
+        "model": str(ckpt_args.get("model", "mtnn_v4_phase_b")),
+        "fusion": fusion,
+        "dTower": d_tower,
+        "dEmb": d_emb,
+        "towerBlocks": n_blocks,
+        "mlpHeads": mlp_heads,
         "nArchetypes": int(arch.shape[1]),
         "nPositions": int(pos.shape[1]),
         "nNextProfile": int(next_profile.shape[1]),
-        "towerFamilies": TOWER_FAMILIES,
+        "towerFamilies": fams_used,
         "familyOrder": family_order,
         "familyFeatures": {fam: [feats[j] for j in family_cols[fam]] for fam in family_order},
         "skillKeys": skill_keys,
         "gameFeatureKeys": game_feature_keys,
         "gameArchetypes": cluster_names,
         "layers": [
-            {"id": "input", "label": "Masked inputs", "detail": "129 features in 18 families"},
-            {"id": "towers", "label": "Residual towers", "detail": "18 × (96 → 24)"},
-            {"id": "fusion", "label": "Concat fusion", "detail": "432 + season → 48-d, L2 norm"},
+            {"id": "input", "label": "Masked inputs",
+             "detail": f"{len(feats)} features in {len(fams_used)} families"},
+            {"id": "towers", "label": "Residual towers",
+             "detail": (f"{len(fams_used)} × {n_blocks} block"
+                        f"{'s' if n_blocks != 1 else ''} ({d_hidden} → {d_tower})")},
+            {"id": "fusion", "label": f"{fusion.title()} fusion",
+             "detail": (f"{len(fams_used) * d_tower} + season → {d_emb}-d, L2 norm"
+                        if fusion == "concat"
+                        else f"attention over {len(fams_used)} towers → {d_emb}-d, L2 norm")},
             {"id": "embedding", "label": "Embedding", "detail": "Contrastive craft space"},
             {
                 "id": "heads",
@@ -227,7 +266,8 @@ def main() -> None:
         "built": time.strftime("%Y-%m-%d"),
         "dim": 3,
         "rows": n,
-        "method": "PCA(3) on 48-d MTNN embeddings; axes min-max scaled for the explorer map.",
+        "method": (f"PCA(3) on {d_emb}-d MTNN embeddings; axes min-max scaled "
+                   "for the explorer map."),
         "axes": axis_meta,
         "coords": coords.tolist(),
     }
