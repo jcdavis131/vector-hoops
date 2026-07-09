@@ -64,6 +64,8 @@ def train_cmd(cfg: dict, *, epochs: int, seed: int, val_every: int) -> list[str]
         cmd.append("--mlp-heads")
     if cfg.get("d_head_hidden") is not None:
         cmd.extend(["--d-head-hidden", str(cfg["d_head_hidden"])])
+    if cfg.get("fusion_hidden") is not None:
+        cmd.extend(["--fusion-hidden", str(cfg["fusion_hidden"])])
     if cfg.get("fusion") == "transformer":
         for key, flag in (("d_model", "--d-model"),
                           ("n_fusion_layers", "--n-fusion-layers"),

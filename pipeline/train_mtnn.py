@@ -251,7 +251,7 @@ class GatedFusion(nn.Module):
     """Attention-weighted tower mix + season context."""
 
     def __init__(self, n_towers: int, d_tower: int, n_seasons: int,
-                 d_season: int = 12, d_emb: int = 48):
+                 d_season: int = 12, d_emb: int = 48, d_hidden: int = 192):
         super().__init__()
         self.season_emb = nn.Embedding(n_seasons, d_season)
         d_in = d_tower + d_season
@@ -260,8 +260,8 @@ class GatedFusion(nn.Module):
             nn.Linear(d_tower, d_tower), nn.Tanh(), nn.Linear(d_tower, 1),
         )
         self.fuse = nn.Sequential(
-            nn.Linear(d_in, 192), nn.GELU(), nn.LayerNorm(192),
-            nn.Linear(192, d_emb),
+            nn.Linear(d_in, d_hidden), nn.GELU(), nn.LayerNorm(d_hidden),
+            nn.Linear(d_hidden, d_emb),
         )
 
     def forward(self, tower_stack: torch.Tensor, season_ids: torch.Tensor) -> torch.Tensor:
@@ -276,16 +276,21 @@ class GatedFusion(nn.Module):
 
 
 class ConcatFusion(nn.Module):
-    """Flatten tower stack + season embedding (Brain2Qwerty conv ablation analogue)."""
+    """Flatten tower stack + season embedding (Brain2Qwerty conv ablation analogue).
+
+    `d_hidden` is the widest layer in the whole net -- at the v4 default of 256
+    it is ~57% of all parameters, and until now it had no CLI knob and was never
+    swept.
+    """
 
     def __init__(self, n_towers: int, d_tower: int, n_seasons: int,
-                 d_season: int = 12, d_emb: int = 48):
+                 d_season: int = 12, d_emb: int = 48, d_hidden: int = 256):
         super().__init__()
         self.season_emb = nn.Embedding(n_seasons, d_season)
         d_in = n_towers * d_tower + d_season
         self.fuse = nn.Sequential(
-            nn.Linear(d_in, 256), nn.GELU(), nn.LayerNorm(256),
-            nn.Linear(256, d_emb),
+            nn.Linear(d_in, d_hidden), nn.GELU(), nn.LayerNorm(d_hidden),
+            nn.Linear(d_hidden, d_emb),
         )
 
     def forward(self, tower_stack: torch.Tensor, season_ids: torch.Tensor) -> torch.Tensor:
@@ -367,6 +372,7 @@ class MTNN(nn.Module):
         d_model: int = 96,
         n_fusion_layers: int = 4,
         n_attn_heads: int = 4,
+        d_fusion_hidden: int | None = None,
     ):
         super().__init__()
         self.families = sorted(fam_dims)
@@ -380,16 +386,20 @@ class MTNN(nn.Module):
             )
             for fam in self.families
         })
+        # d_fusion_hidden=None keeps each fusion's historical default exactly.
         if fusion_mode == "concat":
             self.fusion = ConcatFusion(
-                len(self.families), d_tower, n_seasons, d_emb=d_emb)
+                len(self.families), d_tower, n_seasons, d_emb=d_emb,
+                **({} if d_fusion_hidden is None else {"d_hidden": d_fusion_hidden}))
         elif fusion_mode == "transformer":
             self.fusion = TransformerFusion(
                 len(self.families), d_tower, n_seasons, d_emb=d_emb,
-                d_model=d_model, n_layers=n_fusion_layers, n_heads=n_attn_heads)
+                d_model=d_model, n_layers=n_fusion_layers, n_heads=n_attn_heads,
+                **({} if d_fusion_hidden is None else {"ff": d_fusion_hidden}))
         else:
             self.fusion = GatedFusion(
-                len(self.families), d_tower, n_seasons, d_emb=d_emb)
+                len(self.families), d_tower, n_seasons, d_emb=d_emb,
+                **({} if d_fusion_hidden is None else {"d_hidden": d_fusion_hidden}))
 
         def head(k: int) -> nn.Module:
             if mlp_heads:
@@ -896,6 +906,10 @@ def main() -> None:
                     help="v5: transformer encoder layers")
     ap.add_argument("--n-attn-heads", type=int, default=4,
                     help="v5: transformer attention heads")
+    ap.add_argument("--fusion-hidden", type=int, default=0,
+                    help="fusion hidden width (0 = per-fusion default: concat 256, "
+                         "gated 192, transformer ff 256). At the default this layer "
+                         "is ~57%% of all params and was previously unswept.")
     ap.add_argument("--nce-loss", choices=("infonce", "supcon-arch", "hybrid"),
                     default="infonce",
                     help="contrastive: player InfoNCE, archetype SupCon, or hybrid")
@@ -1033,6 +1047,7 @@ def main() -> None:
         d_model=args.d_model,
         n_fusion_layers=args.n_fusion_layers,
         n_attn_heads=args.n_attn_heads,
+        d_fusion_hidden=(args.fusion_hidden or None),
     ).to(device)
     opt = torch.optim.AdamW(
         adamw_param_groups(model, args.weight_decay), lr=args.lr)
