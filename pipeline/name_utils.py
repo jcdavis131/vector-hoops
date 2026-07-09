@@ -24,6 +24,9 @@ def ascii_fold(name: str) -> str:
     replacements = {
         "ø": "o", "Ø": "O", "đ": "d", "Đ": "D", "ł": "l", "Ł": "L",
         "ß": "ss", "æ": "ae", "Æ": "AE", "œ": "oe", "Œ": "OE",
+        # Turkish dotless/dotted i carry no combining mark, so NFD can't
+        # decompose them (Omer Asık, Alperen Şengün's teammates).
+        "ı": "i", "İ": "I",
     }
     for src, dst in replacements.items():
         s = s.replace(src, dst)

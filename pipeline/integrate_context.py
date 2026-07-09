@@ -228,6 +228,40 @@ def load_team_season_index() -> dict[tuple[str, int], dict]:
     return out
 
 
+# A family below this row-coverage never earns a tower — merging it would
+# hand the MTNN 14 always-masked columns (see game_ratings, a 2-row fixture).
+MIN_FAMILY_COVERAGE = 0.01
+
+
+def family_coverage(values_per_row: list[dict[str, float | None]]) -> dict[str, float]:
+    """Fraction of rows with at least one observed feature, per V4 family."""
+    n = max(1, len(values_per_row))
+    by_fam: dict[str, set[str]] = defaultdict(set)
+    for feat, fam in V4_FEATURES.items():
+        by_fam[fam].add(feat)
+    hits: dict[str, int] = defaultdict(int)
+    for vals in values_per_row:
+        for fam, feats in by_fam.items():
+            for f in feats:
+                v = vals.get(f)
+                if v is not None and not (isinstance(v, float) and math.isnan(v)):
+                    hits[fam] += 1
+                    break
+    return {fam: hits[fam] / n for fam in by_fam}
+
+
+def gated_families(values_per_row: list[dict[str, float | None]]) -> set[str]:
+    """Families dropped for negligible coverage (loudly reported)."""
+    cov = family_coverage(values_per_row)
+    gated = {fam for fam, c in cov.items() if c < MIN_FAMILY_COVERAGE}
+    for fam in sorted(gated):
+        n_feats = sum(1 for f in V4_FEATURES.values() if f == fam)
+        print(f"  GATED family '{fam}': coverage {cov[fam]:.4%} < "
+              f"{MIN_FAMILY_COVERAGE:.0%} — dropping {n_feats} feature(s); "
+              f"no tower will be built for it")
+    return gated
+
+
 def merge_v4_context(
     Z: np.ndarray,
     M: np.ndarray,
@@ -245,15 +279,35 @@ def merge_v4_context(
     feats = list(manifest["features"])
     fams = dict(manifest.get("families", {}))
 
-    missing = [f for f in V4_FEATURES if f not in feats]
+    # Coverage gate: a family whose source rows are effectively absent (a
+    # fixture/stub) must never become a masked-out tower. Measure real
+    # coverage from values_per_row BEFORE any columns are added.
+    gated = gated_families(values_per_row)
+    merge_features = {f: fam for f, fam in V4_FEATURES.items() if fam not in gated}
+
+    # A prior build may already have materialized a now-gated family's columns.
+    # Declining to re-add them is not enough — drop them, or the dead tower
+    # survives in the matrix (game_ratings: 14 cols, 28 observed cells).
+    stale = [f for f in feats if V4_FEATURES.get(f) in gated]
+    if stale:
+        cols = [feats.index(f) for f in stale]
+        Z = np.delete(Z, cols, axis=1)
+        M = np.delete(M, cols, axis=1)
+        feats = [f for f in feats if f not in set(stale)]
+        for f in stale:
+            fams.pop(f, None)
+        print(f"  dropped {len(stale)} stale column(s) for gated families "
+              f"{sorted(gated)}: now {len(feats)} features")
+
+    missing = [f for f in merge_features if f not in feats]
     if missing:
         Z = np.hstack([Z, np.zeros((len(Z), len(missing)), dtype=np.float32)])
         M = np.hstack([M, np.zeros((len(Z), len(missing)), dtype=np.float32)])
         feats.extend(missing)
         for f in missing:
-            fams[f] = V4_FEATURES[f]
+            fams[f] = merge_features[f]
 
-    v4_feats = [f for f in V4_FEATURES if f in feats]
+    v4_feats = [f for f in merge_features if f in feats]
     col_idx = {f: feats.index(f) for f in v4_feats}
 
     n = len(names)
