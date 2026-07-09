@@ -27,8 +27,8 @@
 
   <div class="drift-head research-head">
     <h1>Trend Research</h1>
-    <p class="drift-hero-line">How much did the <b>SHAPE</b> of basketball change each season?
-      Measured by Procrustes alignment &mdash; the math is on the <a href="/methods#drift">methods page</a>.</p>
+    <p class="drift-hero-line">How much did the <b>shape</b> of the league change from one season to the next?
+      We measure it with Procrustes alignment &mdash; details on the <a href="/methods#drift">methods page</a>.</p>
   </div>
 
   <section class="drift-card trends-viz-card" aria-label="What changed this season">
@@ -74,9 +74,9 @@
   <section class="drift-card" aria-label="Drift timeline">
     <div class="drift-card__head">
       <h2>Rotation, season to season</h2>
-      <p>Each point is one consecutive-season pair: how far the 14-dim vector space rotated
-        to go from one season to the next, in degrees. Background bands are the five
-        archetype research eras; orange rings mark the five largest shifts.</p>
+      <p>Each point is one year-to-year step: how far the league&rsquo;s 14-stat player profile
+        had to rotate to line up with the next season. Shaded bands are the five research eras;
+        orange rings mark the five biggest jumps.</p>
     </div>
     <div id="drift-chart" class="drift-chart" role="img" aria-label="Loading league drift chart&hellip;"></div>
     <ul id="drift-era-legend" class="drift-era-legend" aria-label="Archetype era legend"></ul>
@@ -110,17 +110,18 @@
   <section class="drift-card" aria-label="Archetypes over time">
     <div class="drift-card__head drift-card__head--compact">
       <h2>Archetypes over 30 seasons</h2>
-      <p>Global K=8 league share, long-run gainers/losers, and silhouette-picked era re-fits.</p>
+      <p>Eight player types tracked across 30 seasons, who gained or lost share, and how types
+        shift within each era.</p>
     </div>
     <div id="archetype-stream-chart" class="drift-chart archetype-stream-chart" role="img" aria-label="Loading archetype share chart&hellip;"></div>
     <ul id="archetype-legend" class="archetype-legend" aria-label="Archetype legend"></ul>
     <div class="viz-duo-grid">
       <div class="viz-panel">
-        <p class="viz-panel__label">Long-run shifts (first 5 vs last 5 seasons)</p>
+        <p class="viz-panel__label">Biggest type shifts (first 5 vs last 5 seasons)</p>
         <div id="archetype-shifts-chart" class="viz-panel__chart" role="img" aria-label="Loading archetype shift bars&hellip;"></div>
       </div>
       <div class="viz-panel">
-        <p class="viz-panel__label">Era re-fits (top types)</p>
+        <p class="viz-panel__label">Top types by era</p>
         <div id="archetype-era-panels" class="archetype-era-compact">
           <p class="drift-loading">Loading&hellip;</p>
         </div>
@@ -130,9 +131,9 @@
       <div class="court-heatmap__head">
         <p class="viz-panel__label">Court zone map</p>
         <div class="court-heatmap__modes" role="tablist" aria-label="Court heatmap mode">
-          <button type="button" class="court-heatmap__mode" data-mode="diff" role="tab" aria-selected="false">Long-run diff</button>
-          <button type="button" class="court-heatmap__mode" data-mode="early" role="tab" aria-selected="false">First 5</button>
-          <button type="button" class="court-heatmap__mode" data-mode="late" role="tab" aria-selected="false">Last 5</button>
+          <button type="button" class="court-heatmap__mode" data-mode="diff" role="tab" aria-selected="false">30-year change</button>
+          <button type="button" class="court-heatmap__mode" data-mode="early" role="tab" aria-selected="false">Early years</button>
+          <button type="button" class="court-heatmap__mode" data-mode="late" role="tab" aria-selected="false">Recent years</button>
           <button type="button" class="court-heatmap__mode is-active" data-mode="era" role="tab" aria-selected="true">By era</button>
         </div>
       </div>
@@ -148,41 +149,41 @@
         </div>
       </div>
       <p class="court-heatmap__legend">
-        <span class="court-heatmap__swatch court-heatmap__swatch--up"></span> Rising / hot
-        <span class="court-heatmap__swatch court-heatmap__swatch--down"></span> Falling / cool
-        <span class="court-heatmap__swatch court-heatmap__swatch--def"></span> Defense hatch
+        <span class="court-heatmap__swatch court-heatmap__swatch--up"></span> More than baseline
+        <span class="court-heatmap__swatch court-heatmap__swatch--down"></span> Less than baseline
+        <span class="court-heatmap__swatch court-heatmap__swatch--def"></span> Defense zones (hatched)
       </p>
     </div>
-    <p class="drift-card__foot">MTNN K=8 global contract; era-native clusters are a research layer.
-      Court zones reuse the Chimera half-court recipe on mean era-z vectors.
-      By-era view diffs each window against the prior era (first era vs current).
-      <a href="/methods#archetypes">Full method &rarr;</a></p>
+    <p class="drift-card__foot">Eight global player types, plus era-specific re-clusters for research.
+      Court zones map where each era&rsquo;s play showed up on the floor; by-era view compares each window
+      to the one before (the first era is compared to today).
+      <a href="/methods#archetypes">How we built this &rarr;</a></p>
   </section>
 
   <section class="drift-card" aria-label="Archetype emergence">
     <div class="drift-card__head drift-card__head--compact">
       <h2>Archetype emergence</h2>
-      <p>Did new role geometries appear? Era-relative tags and rolling diversity audit.</p>
+      <p>Did genuinely new role shapes show up? Role tags by era and how crowded the type landscape got.</p>
     </div>
     <div id="emergence-verdict" class="emergence-verdict">Loading&hellip;</div>
     <div class="viz-duo-grid">
       <div class="viz-panel">
-        <p class="viz-panel__label">Role prevalence by era</p>
+        <p class="viz-panel__label">Roles by era</p>
         <div id="emergence-role-chart" class="drift-chart emergence-role-chart" role="img"
           aria-label="Loading role prevalence chart&hellip;"></div>
       </div>
       <div class="viz-panel">
-        <p class="viz-panel__label">Rolling archetype diversity</p>
+        <p class="viz-panel__label">How many player types fit each era</p>
         <div id="emergence-rolling-chart" class="drift-chart emergence-rolling-chart" role="img"
           aria-label="Loading rolling archetype diversity chart&hellip;"></div>
       </div>
     </div>
-    <p class="viz-panel__label">Hypothesis claims</p>
+    <p class="viz-panel__label">What we tested</p>
     <div id="emergence-claims-viz" class="emergence-claims-viz" aria-label="Hypothesis claims"></div>
-    <p class="viz-panel__label">Novel era-native clusters</p>
+    <p class="viz-panel__label">New types by era</p>
     <div id="emergence-novel-badges" class="emergence-novel-badges">Loading&hellip;</div>
-    <p class="drift-card__foot">Novelty = ancestor cosine &lt; 0.75.
-      <a href="/methods#archetypes">Full method &rarr;</a></p>
+    <p class="drift-card__foot">A type counts as &ldquo;new&rdquo; when it doesn&rsquo;t resemble anything from the prior era.
+      <a href="/methods#archetypes">How we built this &rarr;</a></p>
   </section>
 
   <section class="drift-card" aria-label="Career shapes">
@@ -205,8 +206,8 @@
         <div id="trajectory-motif-flow" class="trajectory-motif-flow" role="img" aria-label="Loading reinvention paths&hellip;"></div>
       </div>
     </div>
-    <p class="drift-card__foot">Motif glosses are editorial reads, not derived from the math.
-      <a href="/methods#trajectories">Full method &rarr;</a></p>
+    <p class="drift-card__foot">Path labels under common switches are our read, not model output.
+      <a href="/methods#trajectories">How we built this &rarr;</a></p>
   </section>
 
 </main>

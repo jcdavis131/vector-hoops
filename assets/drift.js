@@ -479,7 +479,7 @@
   }
 
   // -------------------------------------------------------------------
-  // Court heatmap (Chimera zone recipe on MTNN prevalence mixes)
+  // Court heatmap
   // -------------------------------------------------------------------
 
   var ZONE_META = [
@@ -741,7 +741,6 @@
 
   function courtEraBaselineIdx(eraIdx, nEras) {
     if (nEras <= 0) return 0;
-    // First era has no prior window — compare against the current (latest) era.
     if (eraIdx <= 0) return nEras - 1;
     return eraIdx - 1;
   }
@@ -808,8 +807,8 @@
     var keys = Object.keys(counts).sort(function (a, b) { return counts[b] - counts[a]; });
     var baselineLine = '';
     if (meta && meta.baseline && meta.eraIdx !== meta.baseIdx) {
-      var baseLabel = meta.isCurrentBaseline ? 'current era' : 'prior era';
-      baselineLine = '<p class="court-heatmap__tags-label">Baseline · ' +
+      var baseLabel = meta.isCurrentBaseline ? 'today' : 'prior era';
+      baselineLine = '<p class="court-heatmap__tags-label">Compared with ' +
         escapeHtml(meta.baseline.era) + ' <span class="court-heatmap__baseline-kind">(' +
         baseLabel + ')</span></p>';
     }
@@ -832,18 +831,19 @@
 
   function courtCaption() {
     if (courtState.mode === 'diff') {
-      return 'Long-run diff: last-5 minus first-5 season zone mix (share-weighted archetype means).';
+      return 'Change from the first five seasons to the last five.';
     }
-    if (courtState.mode === 'early') return 'First five seasons — prevalence-weighted zone presence.';
-    if (courtState.mode === 'late') return 'Last five seasons — prevalence-weighted zone presence.';
+    if (courtState.mode === 'early') return 'League court mix in the first five seasons.';
+    if (courtState.mode === 'late') return 'League court mix in the last five seasons.';
     var meta = courtEraBaselineMeta();
-    if (!meta || !meta.era) return 'Era zone mix.';
+    if (!meta || !meta.era) return 'Court mix for this era.';
     if (!meta.baseline || meta.eraIdx === meta.baseIdx) {
-      return 'Era ' + meta.era.era + ' — zone mix of silhouette K=' + meta.era.k + ' re-fit.';
+      return meta.era.era + ' court mix.';
     }
-    var baseNote = meta.isCurrentBaseline ? 'current era baseline' : 'prior-era baseline';
-    return 'Era ' + meta.era.era + ' vs ' + meta.baseline.era +
-      ' (' + baseNote + ') — zone mix diff, K=' + meta.era.k + ' re-fit.';
+    if (meta.isCurrentBaseline) {
+      return meta.era.era + ' vs today (' + meta.baseline.era + '). Green = more than today.';
+    }
+    return meta.era.era + ' vs prior era (' + meta.baseline.era + '). Green = more than before.';
   }
 
   function drawCourtHeatmap() {
@@ -886,7 +886,6 @@
     if (courtState.mode === 'era') {
       renderCourtTags(tagsHost, courtState.data.eras);
     } else if (tagsHost) {
-      // Long-run modes: show global shift story tags from late vs early share movers
       var movers = (courtState.data.biggestShifts || []).slice(0, 3);
       tagsHost.innerHTML = '<p class="court-heatmap__tags-label">Biggest share movers</p>' +
         '<div class="court-heatmap__tag-row">' +
@@ -915,7 +914,7 @@
         var baseIdx = courtEraBaselineIdx(i, nEras);
         var baseEra = data.eras[baseIdx];
         var baseHint = i === 0
-          ? ('vs current (' + (baseEra && baseEra.era) + ')')
+          ? ('vs today (' + (baseEra && baseEra.era) + ')')
           : ('vs prior (' + (baseEra && baseEra.era) + ')');
         return '<button type="button" class="court-heatmap__era' +
           (i === courtState.eraIdx ? ' is-active' : '') +
@@ -925,7 +924,6 @@
       eraTabs.onclick = function (ev) {
         var btn = ev.target.closest('[data-era]');
         if (!btn) return;
-        // Picking an era should immediately switch to era mode.
         if (courtState.mode !== 'era') courtState.mode = 'era';
         root.querySelectorAll('.court-heatmap__mode').forEach(function (b) {
           var on = (b.getAttribute('data-mode') || '') === 'era';
@@ -952,7 +950,6 @@
       };
     });
 
-    // Ensure the active tab visuals reflect the current startup mode.
     root.querySelectorAll('.court-heatmap__mode').forEach(function (b) {
       var on = (b.getAttribute('data-mode') || '') === courtState.mode;
       b.classList.toggle('is-active', on);

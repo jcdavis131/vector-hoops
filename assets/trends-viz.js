@@ -329,7 +329,7 @@
 
     svgEl('text', {
       x: left, y: H - 10, 'font-size': 9, fill: MUTED
-    }, svg).textContent = 'Bar = axis drift (ranking frame rotation). Color = vs all prior seasons.';
+    }, svg).textContent = 'Bar length = how much that stat shifted. Color = unusual vs earlier seasons.';
   }
 
   function renderStatNarratives(host, pair) {
