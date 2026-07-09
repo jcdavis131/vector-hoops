@@ -57,6 +57,19 @@ def train_cmd(cfg: dict, *, epochs: int, seed: int, val_every: int) -> list[str]
         cmd.extend(["--nce-player-weight", str(cfg["nce_player_weight"])])
     if cfg.get("nce_arch_weight") is not None:
         cmd.extend(["--nce-arch-weight", str(cfg["nce_arch_weight"])])
+    # v5 architecture knobs (sweep_v5 / ablate_v5). Absent -> v4 behaviour.
+    if cfg.get("tower_blocks") is not None:
+        cmd.extend(["--tower-blocks", str(cfg["tower_blocks"])])
+    if cfg.get("mlp_heads"):
+        cmd.append("--mlp-heads")
+    if cfg.get("d_head_hidden") is not None:
+        cmd.extend(["--d-head-hidden", str(cfg["d_head_hidden"])])
+    if cfg.get("fusion") == "transformer":
+        for key, flag in (("d_model", "--d-model"),
+                          ("n_fusion_layers", "--n-fusion-layers"),
+                          ("n_attn_heads", "--n-attn-heads")):
+            if cfg.get(key) is not None:
+                cmd.extend([flag, str(cfg[key])])
     for key, val in cfg.items():
         if key.startswith("w_") and val is not None:
             cmd.extend([f"--{key.replace('_', '-')}", str(val)])
@@ -71,15 +84,26 @@ def main() -> None:
                     help="defaults to best run seed from sweep file")
     ap.add_argument("--val-every", type=int, default=10)
     ap.add_argument("--run", action="store_true", help="execute train_mtnn.py")
+    ap.add_argument("--recipe", type=str, default="",
+                    help="JSON file with a frozen winner config; its keys override "
+                         "the sweep-best entry (promote-gate §3a)")
     args = ap.parse_args()
 
-    if not SWEEP.exists():
+    if not SWEEP.exists() and not args.recipe:
         raise SystemExit(f"missing {SWEEP} — run mtnn_hp_sweep.py first")
 
-    doc = json.loads(SWEEP.read_text(encoding="utf-8"))
-    best = doc.get("best")
+    best = {}
+    if SWEEP.exists():
+        best = json.loads(SWEEP.read_text(encoding="utf-8")).get("best") or {}
+    if args.recipe:
+        path = Path(args.recipe)
+        if not path.exists():
+            raise SystemExit(f"missing recipe file: {path}")
+        override = json.loads(path.read_text(encoding="utf-8"))
+        best = {**best, **override.get("config", override)}
+        print(f"# recipe override: {path}")
     if not best:
-        raise SystemExit("sweep file has no best entry")
+        raise SystemExit("no config: sweep file has no best entry and no --recipe")
 
     seed = args.seed if args.seed is not None else int(best.get("seed", 7))
     cmd = train_cmd(best, epochs=args.epochs, seed=seed, val_every=args.val_every)

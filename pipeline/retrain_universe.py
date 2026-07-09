@@ -59,6 +59,9 @@ def main() -> None:
                     help="hybrid-040 best seed from hp sweep")
     ap.add_argument("--skip-train", action="store_true")
     ap.add_argument("--skip-drift", action="store_true")
+    ap.add_argument("--recipe", type=str, default="",
+                    help="frozen winner config JSON (promote-gate §3a); without it "
+                         "this retrains the OLD hp-sweep recipe, not a v5 winner")
     args = ap.parse_args()
 
     py = sys.executable
@@ -88,12 +91,18 @@ def main() -> None:
     run("integrate_context", [py, "pipeline/integrate_context.py"])
 
     if not args.skip_train:
-        run("mtnn_train", [
+        train = [
             py, "pipeline/apply_hp_sweep.py",
             "--epochs", str(args.epochs),
             "--seed", str(args.seed),
             "--run",
-        ])
+        ]
+        if args.recipe:
+            train.extend(["--recipe", args.recipe])
+        else:
+            print("WARNING: no --recipe; retraining the OLD hp-sweep recipe "
+                  "(no v5 architecture flags).", flush=True)
+        run("mtnn_train", train)
         run("export_mtnn", [py, "pipeline/export_mtnn_embeddings.py"], required=False)
         run("test_mtnn_export", [py, "pipeline/test_mtnn_export.py"], required=False)
 
