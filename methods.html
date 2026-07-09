@@ -16,6 +16,7 @@
 <meta name="twitter:image" content="/assets/og.svg">
 <link rel="stylesheet" href="assets/hoops.css">
 <link rel="stylesheet" href="assets/shell.css">
+<link rel="stylesheet" href="assets/nux.css">
 <link rel="stylesheet" href="assets/responsive.css">
 </head>
 <body>
@@ -128,6 +129,18 @@
       <b>Wide-matrix skills (post / transition / motor + three gravities).</b> Six skills the box score can't express are graded from richer feeds &mdash; Post Play and Transition from synergy play-type frequency + points-per-possession, Motor from hustle stats (screen assists, deflections, loose balls, charges, box-outs), and three kinds of gravity: <b>Shooting Gravity</b> (pull-up 3-point volume weighted heaviest, plus 3-point volume and accuracy &mdash; the off-dribble threat that pulls defenders out, so a movement shooter like Curry tops it, not a stationary spot-up specialist), <b>Rim Gravity</b> (shot-blocking + contested shots minus opponent field-goal percentage allowed &mdash; the interior deterrence that warps offenses, topped by rim protectors like Wembanyama), and <b>Disruption Gravity</b> (steals + deflections + charges drawn &mdash; perimeter defensive warp that bends passing lanes, topped by disruptors like Marcus Smart). These are <b>masked</b>: tracked only from <b>2015-16 on</b>, so earlier seasons show "not tracked this era" rather than a guessed grade. All three gravities are <b>stated proxies from public NBA.com tracking + the box score &mdash; not Second Spectrum gravity or matchup-difficulty data</b>. Same era-z percentile grading as the core twelve.
     </p>
     <p>
+      <b>Next-season profile (predicted vs actual).</b> The MTNN
+      <code>next_profile</code> head reads a player-season embedding and predicts
+      the next season's 14-d era-z game vector. On the Skills Lens profile, prior
+      seasons show <b>predicted vs actual</b> (charted next-year vector) with a
+      mean absolute error on primary stats. For the <b>latest charted season</b>
+      (currently 2025-26), next-year stats are not available yet &mdash; the UI
+      shows the prediction only and labels it as such. Values are geometry-implied
+      z-scores, not a minutes or pace forecast. Asset:
+      <code>assets/next_profile_eval.json</code> (rebuild via
+      <code>pipeline/export_next_profile_eval.py</code>).
+    </p>
+    <p>
       <b>Steals of the Draft.</b> Pairs a player's stated draft expectation (the rookie-scale slot implied by his pick) against his <b>career mean</b> skill grade across charted seasons (minimum three), both as percentile ranks among drafted players. A late pick who sustained strong production scores as a <b>steal</b>; an early pick who didn't, a <b>bust</b>. Peak single seasons do not drive the board. It is a descriptive gap between expectation and measured production &mdash; not a re-draft or a value verdict &mdash; and it shows only when the draft data is loaded.
     </p>
   </section>
@@ -223,5 +236,6 @@
 </footer>
 
 <script src="assets/site-nav.js" defer></script>
+<script src="assets/nux.js" defer></script>
 </body>
 </html>

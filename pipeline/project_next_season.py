@@ -162,6 +162,14 @@ def main() -> None:
     OUT.write_text(json.dumps(payload, separators=(",", ":")), encoding="utf-8")
     print(f"wrote {OUT} — {len(players)} charted players projected {from_season} -> {to_season}")
 
+    # Predicted-vs-actual eval for all seasons (pending on latest). Independent
+    # of this roster slice — safe to run even if rosters are incomplete.
+    try:
+        from export_next_profile_eval import main as export_eval
+        export_eval()
+    except Exception as exc:  # noqa: BLE001 — projection still succeeded
+        print(f"warn: next_profile_eval export skipped ({exc})")
+
 
 if __name__ == "__main__":
     main()

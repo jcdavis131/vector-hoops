@@ -14,6 +14,7 @@
   var PEDIGREE = null; // assets/pedigree.json (optional; false if absent)
   var WIDE = null;     // assets/skills_wide.json (optional; false if absent)
   var ARCH_ASSIGN = null; // assets/archetype_assignments.json (optional)
+  var NEXT_EVAL = null; // assets/next_profile_eval.json (optional; false if absent)
   var MTNN_READY = false;
   var current = { slug: '', season: '' };
 
@@ -29,6 +30,7 @@
     els.bars = document.getElementById('skills-bars');
     els.mtnn = document.getElementById('skills-mtnn');
     els.playoffs = document.getElementById('skills-playoffs');
+    els.nextProfile = document.getElementById('skills-next-profile');
     els.empty = document.getElementById('skills-empty');
     els.boardSkill = document.getElementById('board-skill');
     els.boardSeason = document.getElementById('board-season');
@@ -196,6 +198,7 @@
     barsHtml += wideBarsHtml(rec.name, current.season);
     els.bars.innerHTML = barsHtml;
 
+    renderNextProfile(rec.name, current.season);
     renderPlayoffs(rec.name, current.season);
     renderMtnnNeighbors(row.i);
 
@@ -230,6 +233,94 @@
     var one = Math.round(capped * 10) / 10;
     if (Math.abs(one - capped) < 0.01) return one.toFixed(1);
     return (Math.round(capped * 100) / 100).toFixed(2);
+  }
+
+  function fmtZ(v) {
+    if (v === null || v === undefined || !isFinite(v)) return '&mdash;';
+    var n = Math.round(v * 100) / 100;
+    var s = n >= 0 ? '+' : '';
+    return s + String(n);
+  }
+
+  function renderNextProfile(name, season) {
+    var box = els.nextProfile;
+    if (!box) return;
+    if (!NEXT_EVAL) { box.hidden = true; return; }
+    var row = NEXT_EVAL.rows[name + '|' + season];
+    if (!row) {
+      box.hidden = true;
+      return;
+    }
+    // Career-ended / uncharted next year: keep asset for audit, hide in UI.
+    if (row.status === 'no_next') {
+      box.hidden = true;
+      return;
+    }
+
+    var features = NEXT_EVAL.primaryFeatures || NEXT_EVAL.features || [];
+    var labels = NEXT_EVAL.featureLabels || {};
+    var allKeys = NEXT_EVAL.features || [];
+    var pending = row.status === 'pending';
+    var tag = pending
+      ? '<span class="po-tag po-tag--steady">Prediction only</span>'
+      : '<span class="po-tag po-tag--riser">Predicted vs actual</span>';
+    var hint = pending
+      ? (esc(row.to) + ' stats are not charted yet (latest season ' +
+         esc(NEXT_EVAL.latestSeason || season) +
+         '). Showing the MTNN next-profile prediction only.')
+      : ('From ' + esc(season) + ' embedding &rarr; predicted ' + esc(row.to) +
+         ' era-z profile, compared to the charted ' + esc(row.to) +
+         ' vector' +
+         (row.mae != null ? ' &middot; mean |err| ' + num2(row.mae) + 'σ on primary stats' : '') +
+         '.');
+
+    var head = pending
+      ? '<li class="np-split np-split--head">' +
+          '<span class="np-split__label">Stat</span>' +
+          '<span class="np-split__pred">Predicted</span>' +
+        '</li>'
+      : '<li class="np-split np-split--head">' +
+          '<span class="np-split__label">Stat</span>' +
+          '<span class="np-split__pred">Predicted</span>' +
+          '<span class="np-split__actual">Actual</span>' +
+          '<span class="np-split__delta">&Delta;</span>' +
+        '</li>';
+
+    var lines = features.map(function (key) {
+      var idx = allKeys.indexOf(key);
+      if (idx < 0) return '';
+      var pred = row.pred[idx];
+      var label = labels[key] || key;
+      if (pending) {
+        return '<li class="np-split">' +
+          '<span class="np-split__label" title="' + esc(key) + '">' + esc(label) + '</span>' +
+          '<span class="np-split__pred">' + fmtZ(pred) + '</span>' +
+          '</li>';
+      }
+      var actual = row.actual[idx];
+      var delta = (pred != null && actual != null) ? (pred - actual) : null;
+      var deltaCls = '';
+      if (delta != null) {
+        if (Math.abs(delta) < 0.35) deltaCls = ' np-split__delta--ok';
+        else if (Math.abs(delta) >= 1) deltaCls = ' np-split__delta--miss';
+      }
+      return '<li class="np-split">' +
+        '<span class="np-split__label" title="' + esc(key) + '">' + esc(label) + '</span>' +
+        '<span class="np-split__pred">' + fmtZ(pred) + '</span>' +
+        '<span class="np-split__actual">' + fmtZ(actual) + '</span>' +
+        '<span class="np-split__delta' + deltaCls + '">' + fmtZ(delta) + '</span>' +
+        '</li>';
+    }).join('');
+
+    box.hidden = false;
+    box.className = 'skills-next-profile' + (pending ? ' skills-next-profile--pending' : '');
+    box.innerHTML =
+      '<div class="vh-section-label">Next-season stats ' + tag + '</div>' +
+      '<p class="skills-hint">' + hint + '</p>' +
+      '<ul class="np-splits' + (pending ? ' np-splits--pending' : '') + '">' +
+      head + lines + '</ul>' +
+      '<p class="skills-hint">Values are era-normalized z-scores (same 14-d game vector as the map). ' +
+      'Not a minutes or pace forecast.</p>';
   }
 
   function renderPlayoffs(name, season) {
@@ -590,6 +681,14 @@
           if (ARCH_ASSIGN && current.slug) renderProfile();
         })
         .catch(function () { ARCH_ASSIGN = false; });
+      // Next-season predicted vs actual (pending on latest charted season).
+      fetch('assets/next_profile_eval.json')
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (ne) {
+          NEXT_EVAL = ne || false;
+          if (NEXT_EVAL && current.slug) renderProfile();
+        })
+        .catch(function () { NEXT_EVAL = false; });
       window.VHMtnn.load(function (ok) {
         MTNN_READY = !!ok;
         if (MTNN_READY && current.slug) renderProfile();

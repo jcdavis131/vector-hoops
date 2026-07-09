@@ -1,0 +1,204 @@
+# MTNN v5 — Promote / hold gate (fill-the-wait shell)
+
+> **Status:** Ready for results drop-in · **Lane:** product/docs gatekeeper (not Fable 5 training)
+> **Parents:** [`MTNN_V5_DEEP_ARCHITECTURE.md`](./MTNN_V5_DEEP_ARCHITECTURE.md) §7–§10 · `pipeline/ablate_v5.py`
+> **Hard rule:** **no overwrite of promoted v4** (`mtnn_best.pt`, `embedding_v3.npz`, `mtnn_centroids.npz`, live `assets/mtnn_*`, game NN) until the operator explicitly says promote.
+
+This file is the **second brain** while Fable 5 (Claude CLI / terminal 51) runs GPU ablations and B-family sweeps. Fill numbers when the ranked table lands; do not invent metrics.
+
+---
+
+## 0. Live wait (update from monologue)
+
+| Field | Value |
+|-------|-------|
+| Session | Fable 5 · Claude CLI · terminal `51.txt` |
+| Monologue | `tasks/session-monologue.jsonl` · `python scripts/read_session_monologue.py --format context` |
+| Last known focus | B-family arch sweep (depth/width/dim) on GPU → confirm winner × 3 seeds |
+| Isolated outputs only | `pipeline/data/ablation/` (and any sweep subdirs under it) |
+| Operator sign-off required before | any write to promoted checkpoints / `assets/` NN promote |
+| Conflict radar (2026-07-08 fill) | `pipeline/train_mtnn.py` is **dirty in git** (Fable 5 lane) — this Agent must **not** edit it. `pipeline/ablate_v5.py` is new/untracked (also Fable 5). Product lane stays on docs / NUX / tasks. |
+
+---
+
+## 1. Decision rule (canonical — do not soften)
+
+From `docs/MTNN_V5_DEEP_ARCHITECTURE.md` §7 and `pipeline/ablate_v5.py`:
+
+1. **Ship C (full v5 / transformer)** only if:
+   - `purity@20(C) ≥ purity@20(A) + 0.02`
+   - **and** next-profile test RMSE **improves** vs A
+   - **and** `recall@10(C) ≥ 0.99`
+2. **Else if C ≈ B** (transformer not earning cost) → **fall back to B** (deep concat).
+3. **Else if neither beats A** → **keep v4** (config A / deployed).
+
+“Beats A” for B means clear held-out purity and/or next-profile gain without recall regression below 0.99. If ambiguous, **default hold v4** and ask the operator.
+
+---
+
+## 2. Comparison table shell (paste ranked results here)
+
+### 2a. A / B / C ablation (held-out)
+
+| Config | Fusion | purity@20 | Δ vs A | next-profile RMSE | Δ vs A | recall@10 | Verdict cell |
+|--------|--------|-----------|--------|-------------------|--------|-----------|--------------|
+| A_v4_control | concat / shallow | _TBD_ | 0 | _TBD_ | 0 | _TBD_ | control |
+| B_deep_concat | concat / deep | _TBD_ | _TBD_ | _TBD_ | _TBD_ | _TBD_ | depth-only |
+| C_transformer | transformer / deep | _TBD_ | _TBD_ | _TBD_ | _TBD_ | _TBD_ | full v5 |
+
+**Auto-check (fill Y/N):**
+
+| Check | Pass? |
+|-------|-------|
+| `purity@20(C) ≥ purity@20(A) + 0.02` | _ |
+| next-profile RMSE(C) < RMSE(A) | _ |
+| recall@10(C) ≥ 0.99 | _ |
+| C clearly better than B (not ≈) | _ |
+
+**§7 outcome (circle one):** `SHIP_C` · `FALLBACK_B` · `KEEP_V4` · `NEEDS_OPERATOR`
+
+### 2b. B-family GPU sweep (depth / width / dim)
+
+| Rank | Config id | Key knobs | purity@20 | next RMSE | recall@10 | Notes |
+|------|-----------|-----------|-----------|-----------|-----------|-------|
+| 1 | _TBD_ | | | | | top candidate |
+| 2 | _TBD_ | | | | | |
+| 3 | _TBD_ | | | | | |
+| … | | | | | | |
+
+**3-seed confirm of winner** (required before lock):
+
+| Seed | purity@20 | next RMSE | recall@10 | Stable? |
+|------|-----------|-----------|-----------|---------|
+| 7 | | | | |
+| 13 | | | | |
+| 21 | | | | |
+| mean ± spread | | | | |
+
+---
+
+## 3. Promote checklist — if B (or C) wins
+
+Do **not** start this list until §2 outcome is `SHIP_C` or `FALLBACK_B` **and** operator says go.
+
+### 3a. Pre-promote (still isolated)
+
+- [ ] Ranked table + 3-seed confirm pasted above
+- [ ] Winner config frozen in writing (exact flags / JSON)
+- [ ] Confirm writes stayed under `pipeline/data/ablation/` (or documented sweep dir)
+- [ ] Diff promoted paths: `git status` shows **no** accidental edits to `mtnn_best.pt`, `embedding_v3.npz`, `mtnn_centroids.npz`, `assets/mtnn_*`
+- [ ] Embedding dim decision recorded (48 hold vs 64 migrate) — see architecture §9 / §11
+- [ ] Grep consumers of hardcoded `48` / `d_emb` if dim changes
+
+### 3b. Promote (operator-gated)
+
+- [ ] Full retrain of winner recipe (not just ablation budget) if required by SOP
+- [ ] Export embeddings / meta / viz via existing export path
+- [ ] Extend / re-run `verify_accuracy.py` gates (purity floor, recall floor ≥ 0.99, arch top-1, etc.)
+- [ ] Update `mtnn_report.json` + promotion eligibility keys
+- [ ] Refresh `/model` diagram against the net that actually ships
+- [ ] Smoke game NN / cosine contract on a known puzzle day
+- [ ] Commit message cites §7 outcome + metric deltas
+- [ ] **Only then** replace promoted artifacts
+
+### 3c. Post-promote smoke
+
+- [ ] `verify_accuracy.py` green
+- [ ] Site assets load; play mode still era-honest
+- [ ] Monologue / handoff note: “v4 superseded by \<recipe\> on \<date\>”
+
+---
+
+## 4. Hold checklist — if A wins (keep v4)
+
+- [ ] Record §7 outcome `KEEP_V4` with the comparison table filled
+- [ ] **Do not** overwrite promoted v4 assets
+- [ ] Leave ablation artifacts under `pipeline/data/ablation/` for audit
+- [ ] Optional: enrich **v4** truthful diagram only (`export_mtnn_viz` / network viz) — architecture §10.3
+- [ ] Close research lane note: “v5 rejected; neural net not justified under house rule”
+- [ ] Product lane continues (NUX, UI, docs) without waiting on promote
+
+---
+
+## 5. Gatekeeper — no-overwrite + conflict watch
+
+### 5a. Promoted paths (read-only until operator promote)
+
+Treat as **sacred** during Fable 5 runs:
+
+- `pipeline/data/mtnn_best.pt` (or current best checkpoint name in repo)
+- `pipeline/data/embedding_v3.npz` / centroids / `mtnn_report.json` **when used as live promote source**
+- `assets/mtnn_embeddings.f32`, `assets/mtnn_meta.json`, `assets/mtnn_arch.json`, `assets/mtnn_map.json`
+- Any export that `export_assets.py` / game NN consumes for production
+
+Allowed: writes under `pipeline/data/ablation/`, scratch reports, docs in this file.
+
+### 5b. File conflict radar (this Agent vs Fable 5)
+
+| Hot file | Fable 5 lane? | This Agent lane? |
+|----------|---------------|------------------|
+| `pipeline/train_mtnn.py` | YES — do not edit here | READ only |
+| `pipeline/ablate_v5.py` | YES | READ only |
+| `pipeline/mtnn_hp_sweep.py` / apply / export train paths | likely YES | READ only |
+| `docs/MTNN_V5_*.md`, `tasks/*`, `assets/nux.*`, HTML chrome | NO | YES |
+| Promoted `assets/mtnn_*` | promote-only | **never** during wait |
+
+If monologue shows Fable 5 editing a file this Agent needs: **stop product edit**, note conflict in §0, wait or switch file.
+
+### 5c. Second-brain prompts (when table lands)
+
+1. Paste metrics into §2.
+2. Run the auto-check rows → circle §7 outcome.
+3. If `SHIP_C` or `FALLBACK_B` → present §3 to operator; **do not promote**.
+4. If `KEEP_V4` → execute §4 (docs only).
+5. If `NEEDS_OPERATOR` → stop and ask (ambiguous Δ, missing seed, recall dip).
+
+---
+
+## 6. Readiness report shell (operator-facing)
+
+Copy when the wait ends:
+
+```markdown
+## Readiness — MTNN v5 gate (DATE)
+
+**§7 outcome:** SHIP_C | FALLBACK_B | KEEP_V4
+**Winner recipe:** …
+**Key deltas vs A:** purity@20 … · next RMSE … · recall@10 …
+
+### Evidence
+- Ablation dir: pipeline/data/ablation/…
+- Sweep table: (link or paste §2b)
+- 3-seed confirm: (paste)
+
+### Decisions needed from operator
+1. Promote now? (yes/no) — default NO
+2. Embedding dim 48 vs 64?
+3. Full retrain budget before asset export?
+
+### Verify commands (after explicit promote only)
+- python pipeline/verify_accuracy.py
+- (export / asset smoke as applicable)
+
+### Non-actions (deliberate)
+- Did not overwrite promoted v4 during Fable 5 wait
+- Did not edit train_mtnn.py from product lane
+```
+
+---
+
+## 7. Product fill (independent of sweep)
+
+Already / still safe while GPU runs:
+
+- Site NUX (`assets/nux.js` / `nux.css`) — first-visit modal; skips `/play`
+- UI polish / docs that do not touch training or promoted embeddings
+- This gate file + monologue reader (`scripts/read_session_monologue.py`)
+
+---
+
+## 8. Changelog
+
+| When | What |
+|------|------|
+| 2026-07-08 | Shell created during Fable 5 B-family GPU wait (fill-the-wait) |

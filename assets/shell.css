@@ -2450,6 +2450,45 @@ body.vh-team-themed .landing-favorite__select:focus{
 .skills-board__season{ font: 11px var(--mono); color: var(--ink-soft); }
 .skills-board__grade{ font: 12px var(--mono); font-weight: 700; }
 
+/* ---- next-season predicted vs actual (skills profile) ---- */
+.skills-next-profile{
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px dashed var(--hairline);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.np-splits{ list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; }
+.np-split{
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) 1fr 1fr 52px;
+  align-items: baseline;
+  gap: 8px;
+  font: 12px var(--mono);
+  padding: 3px 0;
+  border-bottom: 1px solid var(--hairline);
+}
+.np-splits--pending .np-split{
+  grid-template-columns: minmax(0, 1.4fr) 1fr;
+}
+.np-split:last-child{ border-bottom: 0; }
+.np-split--head{
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ink-muted);
+  border-bottom: 1.5px solid var(--ink);
+  padding-bottom: 5px;
+  margin-bottom: 2px;
+}
+.np-split__label{ color: var(--ink-soft); font-size: 11px; }
+.np-split__pred{ font-weight: 700; }
+.np-split__actual{ color: var(--ink); }
+.np-split__delta{ text-align: right; font-weight: 700; color: var(--ink-muted); }
+.np-split__delta--ok{ color: var(--ink-soft); }
+.np-split__delta--miss{ color: var(--data-orange); }
+
 /* ---- playoff lens (skills.html Playoff Lens; dormant until data lands) ---- */
 .skills-playoffs{
   margin-top: 12px;

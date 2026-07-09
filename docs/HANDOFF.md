@@ -4,6 +4,9 @@
 > re-deriving context. **Latest session:** [`HANDOFF_2026-07-07.md`](./HANDOFF_2026-07-07.md)
 > (wide skills live, disruption gravity, fetch fix, HP sweep).
 > Snapshot as of 2026-07-07.
+> **v5 research gate (live):** [`MTNN_V5_PROMOTE_GATE.md`](./MTNN_V5_PROMOTE_GATE.md)
+> — promote/hold checklist + comparison shell while Fable 5 runs ablations;
+> **no overwrite of promoted v4** until operator sign-off.
 > **Read next:** `docs/SKILLS_LENS.md` (design), `docs/DATA_SOURCES_DEEP.md`
 > (Tracks H–K specs), `docs/FEATURE_ENGINEERING_SOP.md` (the gate doctrine).
 

@@ -1,0 +1,29 @@
+{
+  "session_monologue": {
+    "description": "ELI5 running narration of Claude CLI terminal 51 (Fable 5 / MTNN v5 ablation work)",
+    "jsonl": "tasks/session-monologue.jsonl",
+    "markdown": "tasks/session-monologue.md",
+    "reader": "scripts/read_session_monologue.py",
+    "watcher": "scripts/watch_session_monologue.py",
+    "terminal_source": "C:\\Users\\jcdav\\.cursor\\projects\\c-Users-jcdav\\terminals\\51.txt",
+    "agent_commands": {
+      "latest_context": "python scripts/read_session_monologue.py --format context",
+      "latest_text": "python scripts/read_session_monologue.py --tail 1",
+      "tail_json": "python scripts/read_session_monologue.py --tail 5 --format json"
+    }
+  },
+  "v5_promote_gate": {
+    "description": "Fill-the-wait promote/hold shell — comparison table + no-overwrite gatekeeper",
+    "doc": "docs/MTNN_V5_PROMOTE_GATE.md",
+    "architecture": "docs/MTNN_V5_DEEP_ARCHITECTURE.md",
+    "ablation_script": "pipeline/ablate_v5.py",
+    "isolated_outputs": "pipeline/data/ablation/",
+    "hard_rule": "no overwrite of promoted v4 until operator says promote"
+  },
+  "next_profile_eval": {
+    "description": "Predicted vs actual next-season era-z stats; pending on latest season",
+    "asset": "assets/next_profile_eval.json",
+    "exporter": "pipeline/export_next_profile_eval.py",
+    "ui": "players.html skill profile (skills-next-profile)"
+  }
+}
