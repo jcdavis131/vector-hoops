@@ -446,6 +446,74 @@ def v13_mtnn_jacobian(data: dict) -> None:
           f"({nbytes // 1024} KB), targets={jac.get('targets')}")
 
 
+def v14_stated_limitations(data: dict) -> None:
+    """Enforce the methods.html "Limitations, stated plainly" list as gates.
+
+    Prose promises rot. Three of the five limitations are mechanically checkable
+    against the shipped artifacts, so check them instead of trusting the copy:
+
+      * tracking exists only 2013-14+, carried as an explicit missing-data mask
+        rather than an imputed guess  -> no observed value may sit under mask=0,
+        and no pre-2013-14 row may carry a tracking observation;
+      * position coverage is 99.7%, not 100%  -> unknowns must survive as -1,
+        never silently coerced to PG (index 0);
+      * archetype names describe statistical cluster centroids  -> one name per
+        cluster, regenerated from centroids by build_vectors.
+    """
+    print("V14 stated limitations (methods.html) enforced…")
+    train = HERE / "data" / "train_matrix.npz"
+    manifest_p = HERE / "data" / "feature_manifest.json"
+    if not train.exists() or not manifest_p.exists():
+        print("  train_matrix/manifest absent — skipping mask-honesty checks")
+    else:
+        npz = np.load(train, allow_pickle=False)
+        Z = npz["Z"].astype(np.float32)
+        M = npz["mask"].astype(np.float32)
+        seasons = npz["season"]
+        manifest = json.loads(manifest_p.read_text(encoding="utf-8"))
+        feats, fam_of = manifest["features"], manifest["families"]
+
+        # (3a) No silent imputation: nothing observed where the mask says missing.
+        leaked = float(np.abs(Z * (1.0 - M)).sum())
+        if leaked > 1e-4:
+            fail(f"imputation under mask: |Z*(1-M)| = {leaked:.6f} (must be 0) — "
+                 "methods.html claims masked, not imputed")
+        else:
+            print("  no values under mask=0 (masked, not imputed)")
+
+        # (3b) Tracking is a 2013-14+ feature family.
+        tcols = [j for j, f in enumerate(feats) if fam_of.get(f) == "tracking"]
+        if tcols:
+            yr = np.array([int(str(s)[:4]) for s in seasons])
+            pre = M[:, tcols][yr < 2013]
+            if pre.size and pre.sum() > 0:
+                fail(f"tracking observed in {int((pre.sum(1) > 0).sum())} pre-2013-14 "
+                     "rows — methods.html claims 2013-14 onward only")
+            else:
+                post = M[:, tcols][yr >= 2013]
+                cov = float((post.sum(1) > 0).mean()) if post.size else 0.0
+                print(f"  tracking: 0 rows before 2013-14, {cov:.1%} coverage after")
+
+    # (4) Position coverage: unknowns preserved as -1, never defaulted to PG.
+    players = data["players"]
+    unknown = sum(1 for p in players if int(p.get("p", -1)) < 0)
+    cov = 1.0 - unknown / max(1, len(players))
+    if unknown == 0:
+        fail("no position marked unknown — methods.html states 99.7% coverage; "
+             "unknowns must survive as -1, not be coerced to a position")
+    if cov < 0.99:
+        fail(f"position coverage {cov:.2%} below the stated ~99.7%")
+    print(f"  position coverage {cov:.2%} ({unknown} rows unknown, preserved as -1)")
+
+    # (5) Archetype names are centroid descriptions — one per cluster.
+    names = data.get("clusters") or []
+    n_clusters = len({p["c"] for p in players})
+    if len(names) != n_clusters:
+        fail(f"{len(names)} archetype names for {n_clusters} clusters")
+    else:
+        print(f"  {len(names)} archetype names, one per statistical centroid")
+
+
 if __name__ == "__main__":
     data = json.loads((ASSETS / "vectors.json").read_text(encoding="utf-8"))
     v1_vectors(data)
@@ -461,6 +529,7 @@ if __name__ == "__main__":
     v11_mtnn_report_warn()
     v12_mtnn_client_assets()
     v13_mtnn_jacobian(data)
+    v14_stated_limitations(data)
     if FAILS:
         print(f"\nACCURACY HARNESS: {len(FAILS)} FAILURES — do not ship")
         sys.exit(1)
