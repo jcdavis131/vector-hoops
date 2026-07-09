@@ -2860,6 +2860,33 @@ body.vh-team-themed .landing-favorite__select:focus{
   cursor: grab;
 }
 .network-map-canvas:active{ cursor: grabbing; }
+/* Archetype legend: the secondary encoding that keeps map identity from
+   resting on hue alone. Text wears ink tokens; the swatch carries identity. */
+.network-map-legend{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  list-style: none;
+  margin: 10px 0 0;
+  padding: 0;
+}
+.network-map-legend__item{
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  line-height: 1.3;
+  color: var(--ink-soft);
+}
+.network-map-legend__swatch{
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  flex: none;
+  /* 2px surface ring so adjacent swatches never touch */
+  box-shadow: 0 0 0 2px #121210;
+}
+.network-map-legend__name{ color: var(--ink-soft); }
 .network-map-card,
 .network-flow-card{ overflow: hidden; }
 .network-map-layout .network-insights,

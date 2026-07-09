@@ -3668,8 +3668,17 @@
 
   // 8 cluster hues, fixed order, validated for the dark map surface
   // (CVD-checked; identity is backed by the labeled legend + numbered pins).
-  var PALETTE = ['#3987e5', '#199e70', '#c98500', '#008300', '#9085e9',
-                 '#e66767', '#d55181', '#d95926'];
+  var PALETTE = ['#3987e5', '#c98500', '#199e70', '#9085e9', '#e66767', '#008300', '#d55181', '#d95926'];
+  var PALETTE_OTHER = '#6f6e69';
+
+  /* Categorical hues are assigned in fixed order and NEVER cycled: a 9th
+     archetype must not silently reuse hue 1. K=8 today, so this only fires if
+     build_vectors ever changes N_ARCHETYPES -- at which point "Other" is the
+     honest answer, not a repeated color. */
+  function clusterColor(idx) {
+    if (typeof idx !== 'number' || idx < 0) return PALETTE_OTHER;
+    return idx < PALETTE.length ? PALETTE[idx] : PALETTE_OTHER;
+  }
 
   // 5 position hues (PG SG SF PF C), validated on the dark map surface —
   // worst adjacent CVD deltaE 41.3, all >= 3:1 contrast. Gray = unknown.
@@ -3682,7 +3691,7 @@
       return POS_PALETTE[p.p % POS_PALETTE.length];
     }
     if (mapColorMode === 'pos') return POS_UNKNOWN;
-    return PALETTE[p.c % PALETTE.length];
+    return clusterColor(p.c);
   }
 
   // Human-readable PCA axis metadata (mirrors pipeline/enrich_vectors.py).
@@ -3692,11 +3701,15 @@
     { pc: 'PC2', name: 'Scoring load', lo: 'high-usage scorers (PTS, FGA, FTA)', hi: 'low-usage role players' },
     { pc: 'PC3', name: 'Ball in hand', lo: 'off-ball, low-event', hi: 'handlers (AST, STL, TOV)' }
   ];
-  // X=PC1, Y=PC2, Z=PC3 — CVD-checked on the dark map surface.
-  var MAP_AXIS_COLORS = ['#f07070', '#5cc99a', '#6eb5ff'];
+  // X=PC1, Y=PC2, Z=PC3. Axes are CHROME, not a data series: the previous triple
+  // (#f07070/#5cc99a/#6eb5ff) was annotated "CVD-checked" but FAILS the dark
+  // lightness band (L .698/.759/.757 vs .48-.67), and three saturated hues
+  // competed with the archetype hues plotted on the same canvas. Recessive
+  // neutral; the X/Y/Z glyph carries the identity.
+  var MAP_AXIS_LINE = '#4a4944';
 
-  function mapAxisColor(axisIndex) {
-    return MAP_AXIS_COLORS[axisIndex] || '#c3c2b7';
+  function mapAxisColor() {
+    return MAP_AXIS_LINE;
   }
 
   function mapAxisMeta(axisIndex) {
@@ -4127,7 +4140,7 @@
       if (hasUnknown) entries.push({ color: POS_UNKNOWN, name: 'unlisted' });
     } else {
       entries = DATA.clusters.map(function (name, idx) {
-        return { color: PALETTE[idx % PALETTE.length], name: name };
+        return { color: clusterColor(idx), name: name };
       });
     }
     var isPractice = activeChimeraMode === 'practice';

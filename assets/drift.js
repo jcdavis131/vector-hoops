@@ -29,8 +29,7 @@
   // archetypes_time.json is emitted in the identical order as vectors.json
   // clusters, so index i here always names the same archetype as PALETTE[i]
   // does on the map.
-  var ARCH_PALETTE = ['#3987e5', '#199e70', '#c98500', '#008300', '#9085e9',
-                      '#e66767', '#d55181', '#d95926'];
+  var ARCH_PALETTE = ['#3987e5', '#c98500', '#199e70', '#9085e9', '#e66767', '#008300', '#d55181', '#d95926'];
 
   // The math finds the spikes; these labels are our own read of known
   // league events near them — stated as observations, not derived facts.

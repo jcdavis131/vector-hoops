@@ -5,14 +5,25 @@
   'use strict';
 
   var SVG_NS = 'http://www.w3.org/2000/svg';
-  var PALETTE = ['#3987e5', '#199e70', '#c98500', '#008300', '#9085e9',
-    '#e66767', '#d55181', '#d95926'];
+  var PALETTE = ['#3987e5', '#c98500', '#199e70', '#9085e9', '#e66767', '#008300', '#d55181', '#d95926'];
+  var PALETTE_OTHER = '#6f6e69';
+
+  /* Fixed order, never cycled: a 9th archetype must not reuse hue 1. */
+  function clusterColor(idx) {
+    if (typeof idx !== 'number' || idx < 0) return PALETTE_OTHER;
+    return idx < PALETTE.length ? PALETTE[idx] : PALETTE_OTHER;
+  }
   var ORANGE = '#eb6834';
   var INK = '#e8e6df';
   var MUTED = '#8a8983';
   var HAIR = '#3a3935';
   var BG = '#121210';
-  var AXIS_COLORS = ['#f07070', '#5cc99a', '#6eb5ff'];
+  // Axes are CHROME, not a data series. The old triple (#f07070/#5cc99a/#6eb5ff)
+  // failed the dark lightness band (L .698/.759/.757 vs .48-.67), competed with
+  // the eight archetype hues on the same canvas, and colored its own text --
+  // text wears text tokens, never a series color. Recessive neutral instead.
+  var AXIS_LINE = '#4a4944';
+  var AXIS_TEXT = '#8a8983';
   var MAX_INPUT_NODES = 10;
   var SKILL_LABELS = {
     ft: 'Free Throw Shooting',
@@ -375,29 +386,30 @@
   function drawEmbeddingAxes(ctx, w, h, cam) {
     var center = project3D(0.5, 0.5, 0.5, w, h, cam);
     var defs = [
-      { key: 'X', hi: [0.98, 0.5, 0.5], lo: [0.02, 0.5, 0.5], color: AXIS_COLORS[0] },
-      { key: 'Y', hi: [0.5, 0.98, 0.5], lo: [0.5, 0.02, 0.5], color: AXIS_COLORS[1] },
-      { key: 'Z', hi: [0.5, 0.5, 0.98], lo: [0.5, 0.5, 0.02], color: AXIS_COLORS[2] }
+      { key: 'X', hi: [0.98, 0.5, 0.5], lo: [0.02, 0.5, 0.5] },
+      { key: 'Y', hi: [0.5, 0.98, 0.5], lo: [0.5, 0.02, 0.5] },
+      { key: 'Z', hi: [0.5, 0.5, 0.98], lo: [0.5, 0.5, 0.02] }
     ];
     var axes = (state.map && state.map.axes) || [];
 
     ctx.save();
     ctx.lineWidth = 1.4;
     ctx.font = '11px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace';
-    defs.forEach(function (d, i) {
+    defs.forEach(function (d) {
       var hi = project3D(d.hi[0], d.hi[1], d.hi[2], w, h, cam);
       var lo = project3D(d.lo[0], d.lo[1], d.lo[2], w, h, cam);
-      ctx.strokeStyle = d.color;
+      ctx.strokeStyle = AXIS_LINE;
       ctx.globalAlpha = 0.9;
       ctx.beginPath();
       ctx.moveTo(lo.sx, lo.sy);
       ctx.lineTo(hi.sx, hi.sy);
       ctx.stroke();
       ctx.globalAlpha = 1;
-      ctx.fillStyle = d.color;
+      ctx.fillStyle = AXIS_LINE;
       ctx.beginPath();
       ctx.arc(hi.sx, hi.sy, 2.4, 0, Math.PI * 2);
       ctx.fill();
+      ctx.fillStyle = AXIS_TEXT;
       ctx.fillText(d.key, hi.sx + 6, hi.sy + 3);
     });
 
@@ -413,7 +425,7 @@
     ctx.fillText('PCA Axes (MTNN 48-d)', panelX + 8, panelY + 13);
     axes.forEach(function (ax, i) {
       var y = panelY + 30 + i * (lineH + 12);
-      ctx.fillStyle = AXIS_COLORS[i % AXIS_COLORS.length];
+      ctx.fillStyle = AXIS_TEXT;
       ctx.fillText((ax.axis || ['X', 'Y', 'Z'][i]) + ' / ' + (ax.pc || ('PC' + (i + 1))), panelX + 8, y);
       ctx.fillStyle = '#d7d5ce';
       ctx.fillText((ax.hi || '').slice(0, 72), panelX + 90, y);
@@ -560,6 +572,33 @@
           '<div class="network-story-stage__chips">' + predHtml + '</div>' +
         '</div>' +
       '</div>';
+  }
+
+  /* The map paints ~13k dots by archetype. Identity must never be carried by
+     colour alone -- the eight hues sit at the reference theme's CVD floor
+     (worst adjacent dE 10.3 protan / 7.9 tritan), which is legal only with a
+     secondary encoding. The legend is that encoding. */
+  function renderMapLegend() {
+    var host = $('network-map-legend');
+    if (!host || !state.arch) return;
+    var names = state.arch.gameArchetypes || [];
+    if (!names.length) return;
+    var unknown = state.players.some(function (p) {
+      return !(typeof p.c === 'number' && p.c >= 0 && p.c < names.length);
+    });
+    var items = names.map(function (nm, i) {
+      return '<li class="network-map-legend__item">' +
+        '<span class="network-map-legend__swatch" style="background:' +
+        clusterColor(i) + '"></span>' +
+        '<span class="network-map-legend__name">' + esc(nm) + '</span></li>';
+    });
+    if (unknown) {
+      items.push('<li class="network-map-legend__item">' +
+        '<span class="network-map-legend__swatch" style="background:' +
+        PALETTE_OTHER + '"></span>' +
+        '<span class="network-map-legend__name">unclustered</span></li>');
+    }
+    host.innerHTML = items.join('');
   }
 
   function renderMapInsights() {
@@ -1453,10 +1492,10 @@
       archRows.push('<div class="network-arch-row' + (clsIdx === bestIdx ? ' is-top' : '') + (selArch ? ' is-selected' : '') +
         '" data-head-select-group="archetype" data-head-select-idx="' + clsIdx + '" title="' + esc(nm) + '">' +
         '<span class="network-arch-row__idx">#' + (clsIdx + 1) + '</span>' +
-        '<span class="network-arch-row__swatch" style="background:' + PALETTE[clsIdx % PALETTE.length] + '"></span>' +
+        '<span class="network-arch-row__swatch" style="background:' + clusterColor(clsIdx) + '"></span>' +
         '<span class="network-arch-row__name">' + esc(nm) + '</span>' +
         '<span class="network-arch-row__track"><span class="network-arch-row__fill" style="width:' +
-        Math.max(1, Math.min(99.9, p * 100)) + '%;background:' + PALETTE[clsIdx % PALETTE.length] + '"></span></span>' +
+        Math.max(1, Math.min(99.9, p * 100)) + '%;background:' + clusterColor(clsIdx) + '"></span></span>' +
         '<span class="network-arch-row__pct">' + pct + '%</span></div>');
     }
     archHost.innerHTML =
@@ -1579,7 +1618,7 @@
     points.forEach(function (pt) {
       var alpha = 0.12 + 0.35 * (1 / (1 + pt.depth * 0.15));
       var p = state.players[pt.i];
-      var col = PALETTE[(p && p.c != null ? p.c : pt.i) % PALETTE.length];
+      var col = clusterColor(p && p.c != null ? p.c : -1);
       ctx.globalAlpha = alpha;
       ctx.fillStyle = col;
       ctx.beginPath();
@@ -2015,6 +2054,7 @@
       bindSteps();
       pickDefaultPlayer();
       loadJacobian();
+      renderMapLegend();
       renderMapInsights();
       renderFlowInsights();
       requestAnimationFrame(mapLoop);
