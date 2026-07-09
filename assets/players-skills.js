@@ -237,6 +237,57 @@
     return (Math.round(capped * 100) / 100).toFixed(2);
   }
 
+  /* ---- z-score -> real per-100 numbers ---------------------------------
+     next_profile_eval ships era-z predictions and actuals. A z-score means
+     nothing without the league it was scored against, so invert it with that
+     TARGET season's league mean/SD (assets/season_norms.json):
+
+        real = clip(z, -4, 4) * sd + mu       units: per 100 possessions
+
+     FG3_PCT / FG_PCT / FT_PCT are empirical-Bayes shrunk before z-scoring, so
+     they are NOT invertible; those keep the z reading rather than print a rate
+     the model never held. Absent norms -> everything falls back to z. */
+
+  var SEASON_NORMS = null;   // assets/season_norms.json (optional)
+
+  function seasonNormFor(season, key) {
+    if (!SEASON_NORMS || !season) return null;
+    var s = SEASON_NORMS.seasons && SEASON_NORMS.seasons[season];
+    return (s && s.features && s.features[key]) || null;
+  }
+
+  function realFromZ(z, season, key) {
+    if (z === null || z === undefined || !isFinite(z)) return null;
+    var n = seasonNormFor(season, key);
+    if (!n) return null;
+    return Math.max(-4, Math.min(4, z)) * n.sd + n.mu;
+  }
+
+  function fmtReal(v) {
+    var a = Math.abs(v);
+    return a >= 100 ? v.toFixed(0) : a >= 10 ? v.toFixed(1) : v.toFixed(2);
+  }
+
+  /* A predicted/actual cell: real per-100 when invertible, else the z. */
+  function fmtStat(z, season, key) {
+    var r = realFromZ(z, season, key);
+    if (r != null) return fmtReal(r);
+    return fmtZ(z);
+  }
+
+  /* Delta must be computed in the SAME space as the cells it sits beside --
+     differencing real values, not z, or the column would not add up. */
+  function fmtStatDelta(pred, actual, season, key) {
+    var rp = realFromZ(pred, season, key);
+    var ra = realFromZ(actual, season, key);
+    if (rp != null && ra != null) {
+      var d = rp - ra;
+      return (d >= 0 ? '+' : '') + fmtReal(d);
+    }
+    if (pred == null || actual == null) return '&mdash;';
+    return fmtZ(pred - actual);
+  }
+
   function fmtZ(v) {
     if (v === null || v === undefined || !isFinite(v)) return '&mdash;';
     var n = Math.round(v * 100) / 100;
@@ -273,7 +324,10 @@
       : ('From ' + esc(season) + ' embedding &rarr; predicted ' + esc(row.to) +
          ' era-z profile, compared to the charted ' + esc(row.to) +
          ' vector' +
-         (row.mae != null ? ' &middot; mean |err| ' + num2(row.mae) + 'σ on primary stats' : '') +
+         (row.mae != null
+             ? ' &middot; typically off by about ' + num2(row.mae)
+               + ' standard deviations on the main stats'
+             : '') +
          '.');
 
     var head = pending
@@ -293,24 +347,31 @@
       if (idx < 0) return '';
       var pred = row.pred[idx];
       var label = labels[key] || key;
+      var norm = seasonNormFor(row.to, key);
+      var unitTip = norm
+        ? key + ': per 100 possessions (league average ' + fmtReal(norm.mu) + ')'
+        : key + ': standard deviations vs the league that season (this stat is '
+          + 'smoothed before the model sees it, so no raw rate is shown)';
       if (pending) {
         return '<li class="np-split">' +
-          '<span class="np-split__label" title="' + esc(key) + '">' + esc(label) + '</span>' +
-          '<span class="np-split__pred">' + fmtZ(pred) + '</span>' +
+          '<span class="np-split__label" title="' + esc(unitTip) + '">' + esc(label) + '</span>' +
+          '<span class="np-split__pred">' + fmtStat(pred, row.to, key) + '</span>' +
           '</li>';
       }
       var actual = row.actual[idx];
-      var delta = (pred != null && actual != null) ? (pred - actual) : null;
+      // Accuracy classes stay in z: "how many SDs off" is the scale-free read.
+      var zDelta = (pred != null && actual != null) ? (pred - actual) : null;
       var deltaCls = '';
-      if (delta != null) {
-        if (Math.abs(delta) < 0.35) deltaCls = ' np-split__delta--ok';
-        else if (Math.abs(delta) >= 1) deltaCls = ' np-split__delta--miss';
+      if (zDelta != null) {
+        if (Math.abs(zDelta) < 0.35) deltaCls = ' np-split__delta--ok';
+        else if (Math.abs(zDelta) >= 1) deltaCls = ' np-split__delta--miss';
       }
       return '<li class="np-split">' +
-        '<span class="np-split__label" title="' + esc(key) + '">' + esc(label) + '</span>' +
-        '<span class="np-split__pred">' + fmtZ(pred) + '</span>' +
-        '<span class="np-split__actual">' + fmtZ(actual) + '</span>' +
-        '<span class="np-split__delta' + deltaCls + '">' + fmtZ(delta) + '</span>' +
+        '<span class="np-split__label" title="' + esc(unitTip) + '">' + esc(label) + '</span>' +
+        '<span class="np-split__pred">' + fmtStat(pred, row.to, key) + '</span>' +
+        '<span class="np-split__actual">' + fmtStat(actual, row.to, key) + '</span>' +
+        '<span class="np-split__delta' + deltaCls + '">' +
+          fmtStatDelta(pred, actual, row.to, key) + '</span>' +
         '</li>';
     }).join('');
 
@@ -321,8 +382,12 @@
       '<p class="skills-hint">' + hint + '</p>' +
       '<ul class="np-splits' + (pending ? ' np-splits--pending' : '') + '">' +
       head + lines + '</ul>' +
-      '<p class="skills-hint">Values are era-normalized z-scores (same 14-d game vector as the map). ' +
-      'Not a minutes or pace forecast.</p>';
+      '<p class="skills-hint">' + (SEASON_NORMS
+        ? 'Numbers are <b>per 100 possessions</b> &mdash; not per game &mdash; measured against the '
+          + esc(row.to) + ' league. Shooting percentages are smoothed before the model sees them, so '
+          + 'those rows stay in standard deviations rather than show a rate that never existed. '
+        : 'Values are standard deviations vs the league that season. ')
+      + 'Not a minutes or pace forecast.</p>';
   }
 
   function renderPlayoffSeries(series, champion) {
@@ -781,6 +846,15 @@
           if (ARCH_ASSIGN && current.slug) renderProfile();
         })
         .catch(function () { ARCH_ASSIGN = false; });
+      // Per-season league mean/SD, so the predicted/actual columns can be shown
+      // as real per-100 numbers instead of z-scores. Optional: absent -> z.
+      fetch('assets/season_norms.json')
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (sn) {
+          SEASON_NORMS = sn || null;
+          if (SEASON_NORMS && current.slug) renderProfile();
+        })
+        .catch(function () { SEASON_NORMS = null; });
       // Next-season predicted vs actual (pending on latest charted season).
       fetch('assets/next_profile_eval.json')
         .then(function (r) { return r.ok ? r.json() : null; })

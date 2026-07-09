@@ -552,7 +552,9 @@
     ctx.fillText(pos.short, px, py - 1);
     ctx.font = '700 ' + Math.max(7.5, 1.55 * g.s) + 'px ui-monospace, SFMono-Regular, Menlo, monospace';
     ctx.fillStyle = rgbHex;
-    var sig = (v >= 0 ? '+' : '−') + Math.abs(v).toFixed(2) + 'σ';
+    // Drift magnitude in z-space, not a per-stat rate: this is a composite,
+    // so there is no per-100 number to convert it into. Say SD, not sigma.
+    var sig = (v >= 0 ? '+' : '−') + Math.abs(v).toFixed(2) + ' SD';
     ctx.fillText(sig, px, py + 8);
     ctx.restore();
   }
@@ -789,7 +791,8 @@
     host.innerHTML = rows.map(function (z) {
       var v = zones[z.key] || 0;
       var cls = v >= 0 ? 'is-up' : 'is-down';
-      var txt = (v >= 0 ? '+' : '') + v.toFixed(2) + 'σ';
+      // zoneMix is an era-vs-era delta of a composite; SD is the honest unit.
+      var txt = (v >= 0 ? '+' : '') + v.toFixed(2) + ' SD';
       return '<div class="court-heatmap__zone ' + cls + '">' +
         '<span class="court-heatmap__zone-name">' +
         '<span class="court-heatmap__zone-dot" aria-hidden="true"></span>' +
