@@ -12,6 +12,7 @@
 <meta property="og:image" content="/assets/og.svg">
 <link rel="stylesheet" href="assets/hoops.css">
 <link rel="stylesheet" href="assets/shell.css">
+<link rel="stylesheet" href="assets/nux.css">
 <link rel="stylesheet" href="assets/responsive.css">
 </head>
 <body>
@@ -70,27 +71,41 @@
     </div>
   </section>
 
-  <div class="network-stage-grid">
-    <section class="drift-card network-map-card" aria-label="48-d embedding map">
-      <p class="viz-panel__label">Embedding space (PCA of 48-d)</p>
-      <canvas id="network-map-canvas" class="network-map-canvas" aria-label="3D MTNN embedding map"></canvas>
-      <p class="network-map-hint">Drag to orbit &middot; scroll to zoom &middot; orange pulse = active player</p>
+  <section class="drift-card network-section network-map-card" aria-label="48-d embedding map">
+    <div class="network-section__head">
+      <p class="viz-panel__label">Embedding space &mdash; PCA of the 48-d MTNN vector</p>
+      <p class="network-map-hint">Drag to orbit &middot; scroll to zoom &middot; orange pulse = active player &middot; lines = nearest neighbors</p>
+    </div>
+    <div class="network-map-layout">
+      <div class="network-map-stage">
+        <canvas id="network-map-canvas" class="network-map-canvas" aria-label="3D MTNN embedding map"></canvas>
+      </div>
       <div id="network-map-insights" class="network-insights" aria-live="polite">
         <p class="drift-loading">Loading local embedding context&hellip;</p>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="drift-card network-flow-card" aria-label="Network data flow">
-      <p class="viz-panel__label">Data flow</p>
-      <div id="network-flow-svg" class="network-flow-host" role="img" aria-label="MTNN layer diagram"></div>
-      <div id="network-flow-insights" class="network-insights" aria-live="polite">
-        <p class="drift-loading">Loading flow diagnostics&hellip;</p>
+  <section class="drift-card network-section network-flow-card" aria-label="Network data flow">
+    <div class="network-section__head">
+      <p class="viz-panel__label">Data flow &mdash; trace signal input &harr; output</p>
+      <div class="network-flow-tools">
+        <span id="network-trace-status" class="network-trace-status">Hover or click any node to light its full path.</span>
+        <button type="button" id="network-trace-clear" class="network-trace-clear" hidden>Clear trace</button>
       </div>
-      <div id="network-node-inspector" class="network-insights" aria-live="polite">
-        <p class="drift-loading">Select an input/tower/output node to inspect exact values and predictions.</p>
+    </div>
+    <div class="network-flow-layout">
+      <div class="network-flow-main">
+        <div id="network-flow-svg" class="network-flow-host" role="img" aria-label="MTNN layer diagram"></div>
+        <div id="network-flow-insights" class="network-insights" aria-live="polite">
+          <p class="drift-loading">Loading flow diagnostics&hellip;</p>
+        </div>
       </div>
-    </section>
-  </div>
+      <div id="network-node-inspector" class="network-insights network-node-inspector" aria-live="polite">
+        <p class="drift-loading">Select an input, tower, or output node to inspect exact values and predictions.</p>
+      </div>
+    </div>
+  </section>
 
   <section class="drift-card network-output-card" aria-label="Model outputs">
     <div class="viz-duo-grid">
@@ -118,6 +133,7 @@
   <div class="site-footer__links">
     <a href="/methods">Methods</a>
     <a href="/play">Play</a>
+    <a href="#" data-vh-nux-tour>Tour</a>
     <a href="https://github.com/jcdavis131/vector-hoops" target="_blank" rel="noopener">GitHub</a>
   </div>
   <div class="site-footer__attribution">Every number recomputable from stats.nba.com source data &middot; from <a href="https://jcamd.com/#lab" target="_blank" rel="noopener">jcamd.com</a></div>
@@ -126,5 +142,6 @@
 <script src="assets/site-nav.js" defer></script>
 <script src="assets/mtnn.js" defer></script>
 <script src="assets/network-viz.js" defer></script>
+<script src="assets/nux.js" defer></script>
 </body>
 </html>

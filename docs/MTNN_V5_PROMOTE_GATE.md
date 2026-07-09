@@ -17,7 +17,8 @@ This file is the **second brain** while Fable 5 (Claude CLI / terminal 51) runs 
 | Last known focus | B-family arch sweep (depth/width/dim) on GPU → confirm winner × 3 seeds |
 | Isolated outputs only | `pipeline/data/ablation/` (and any sweep subdirs under it) |
 | Operator sign-off required before | any write to promoted checkpoints / `assets/` NN promote |
-| Conflict radar (2026-07-08 fill) | `pipeline/train_mtnn.py` is **dirty in git** (Fable 5 lane) — this Agent must **not** edit it. `pipeline/ablate_v5.py` is new/untracked (also Fable 5). Product lane stays on docs / NUX / tasks. |
+| Conflict radar (2026-07-08 fill) | `pipeline/train_mtnn.py` is **dirty in git** (Fable 5 lane) — this Agent must **not** edit it. `pipeline/ablate_v5.py` / `pipeline/sweep_v5.py` are Fable 5. Product lane stays on docs / NUX / next-profile UI / tasks. |
+| Product fills during wait | NUX tour replay (`data-vh-nux-tour`); next-profile predicted vs actual on `/players`; `docs/MTNN_V5_PROMOTE_GATE.md` |
 
 ---
 
