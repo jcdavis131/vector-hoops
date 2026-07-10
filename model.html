@@ -116,7 +116,7 @@
   <section class="drift-card network-section network-map-card" aria-label="48-d embedding map">
     <div class="network-section__head">
       <p class="viz-panel__label">Embedding map (48 numbers, shown in 3D)</p>
-      <p class="network-map-hint">Drag to rotate · scroll to zoom · orange dot = selected player · lines = closest matches · legend = secondary encoding (not color alone)</p>
+      <p class="network-map-hint">Slow auto-rotate · drag to take over · scroll to zoom · orange = selected · lines = closest matches · legend = secondary encoding</p>
     </div>
     <div class="network-map-layout">
       <div class="network-map-stage">
@@ -151,6 +151,32 @@
         <p class="drift-loading">Click an input, tower, or output to see its numbers.</p>
       </div>
     </div>
+
+    <!-- Guess & grade lives inside the flow card so heads decode reads as the
+         continuation of the rightmost column, not a disconnected footer block. -->
+    <div class="network-flow-outputs" id="network-output-card" aria-label="Guess and grade — heads decode">
+      <div class="network-flow-outputs__head">
+        <p class="viz-panel__label">Guess &amp; grade — heads decode</p>
+        <p class="network-map-hint">Same MLP heads as the rightmost column above. Click a row to lock the trace back through the network.</p>
+      </div>
+      <div class="viz-duo-grid network-flow-outputs__grid">
+        <div class="viz-panel network-flow-outputs__panel">
+          <p class="viz-panel__label">Archetype guess (MLP 48→64→8)</p>
+          <div id="network-arch-out" class="network-arch-out"></div>
+        </div>
+        <div class="viz-panel network-flow-outputs__panel">
+          <p class="viz-panel__label">Skill grades out of 100 (18× 48→16→1)</p>
+          <div id="network-skill-out" class="network-skill-out"></div>
+        </div>
+        <div class="viz-panel network-flow-outputs__panel">
+          <p class="viz-panel__label">Next-season forecast (MLP 48→64→14) — per 100 poss</p>
+          <div id="network-next-out" class="network-skill-out"></div>
+        </div>
+      </div>
+      <p class="drift-card__foot">Layer counts and dims match the checkpoint: 17×2 blocks, 544+12=556→128→48 L2, 48-d.
+        Map position and readouts come from the latest promoted MTNN checkpoint.
+        <a href="/methods#mtnn">How we built this →</a></p>
+    </div>
   </section>
 
   <section class="drift-card network-attr-card" id="network-attr-card" aria-label="What drove this prediction" hidden>
@@ -175,25 +201,6 @@
       this player-season, under a first-order approximation — not a claim about what causes a player to be
       who he is. A stat marked <b>not tracked this era</b> has exactly 0 gradient because the tower reads <code>cat([x·m, m])</code>;
       it contributes nothing because it was never measured, which is not the same as not mattering. Embedding target has no sign, so it is not attributed. <a href="/methods#mtnn">How we built this →</a></p>
-  </section>
-
-  <section class="drift-card network-output-card" aria-label="Model outputs">
-    <div class="viz-duo-grid">
-      <div class="viz-panel">
-        <p class="viz-panel__label">Archetype guess (MLP 48→64→8)</p>
-        <div id="network-arch-out" class="network-arch-out"></div>
-      </div>
-      <div class="viz-panel">
-        <p class="viz-panel__label">Skill grades out of 100 (18× 48→16→1)</p>
-        <div id="network-skill-out" class="network-skill-out"></div>
-      </div>
-      <div class="viz-panel">
-        <p class="viz-panel__label">Next-season stat forecast (MLP 48→64→14) — per 100 poss</p>
-        <div id="network-next-out" class="network-skill-out"></div>
-      </div>
-    </div>
-    <p class="drift-card__foot">The animation is simplified but the layer counts and dims match the checkpoint: 17×2 blocks, 544+12=556→128→48 L2, 48-d. Map position and readouts come from the
-      latest promoted MTNN checkpoint. <a href="/methods#mtnn">How we built this →</a></p>
   </section>
 
 </main>

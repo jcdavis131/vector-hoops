@@ -2896,6 +2896,10 @@ body.vh-team-themed .landing-favorite__select:focus{
 }
 .network-map-card,
 .network-flow-card{ overflow: hidden; }
+.network-map-stage{
+  position: relative;
+  min-width: 0;
+}
 .network-map-layout .network-insights,
 .network-flow-layout .network-node-inspector{ margin-top: 0; }
 /* Trace tooling */
@@ -3085,10 +3089,20 @@ body.vh-team-themed .landing-favorite__select:focus{
   color: var(--ink-muted);
 }
 .network-flow-host{
-  min-height: 340px;
+  min-height: 420px;
   background: #121210;
   border-radius: 8px;
-  padding: 8px;
+  padding: 6px 4px 10px;
+  position: relative;
+}
+.network-flow-host::after{
+  content: '';
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  border-radius: 8px;
+  background: radial-gradient(ellipse at 72% 50%, rgba(74,138,176,0.07), transparent 55%);
+  opacity: 0.9;
 }
 .network-arch-row,
 .network-skill-row{
@@ -3112,7 +3126,7 @@ body.vh-team-themed .landing-favorite__select:focus{
   fill: #2a2926;
   stroke: #4a4944;
   stroke-width: 1.5;
-  transition: fill 0.25s ease, stroke 0.25s ease;
+  transition: fill 0.35s ease, stroke 0.35s ease, opacity 0.35s ease;
   cursor: pointer;
 }
 .network-flow-node--input{ fill: #1e1d1a; }
@@ -3131,7 +3145,7 @@ body.vh-team-themed .landing-favorite__select:focus{
   stroke: #3a3935;
   stroke-width: 1;
   opacity: 0.3;
-  transition: stroke 0.25s ease, opacity 0.25s ease, stroke-width 0.25s ease;
+  transition: stroke 0.35s ease, opacity 0.35s ease, stroke-width 0.35s ease;
 }
 .network-flow-edge.is-lit{ stroke: #5a5954; opacity: 0.5; }
 .network-flow-edge.is-active{
@@ -3141,6 +3155,55 @@ body.vh-team-themed .landing-favorite__select:focus{
 }
 .network-flow-edge--main{ stroke-width: 2; }
 .network-flow-edge--head{ stroke-width: 1; }
+
+/* Slow signal crawl on lit / traced edges — presence, not noise. */
+.network-flow-host.is-animating .network-flow-edge.is-active,
+.network-flow-host.is-animating .network-flow-edge.on-path{
+  stroke-dasharray: 7 11;
+  animation: network-flow-crawl 4.8s linear infinite;
+}
+.network-flow-host.is-animating .network-flow-edge--main.is-active,
+.network-flow-host.is-animating .network-flow-edge--main.on-path{
+  stroke-dasharray: 10 14;
+  animation-duration: 5.6s;
+}
+.network-flow-host.is-animating .network-flow-node.is-active,
+.network-flow-host.is-animating .network-flow-node.on-path{
+  animation: network-node-breathe 3.6s ease-in-out infinite;
+}
+.network-flow-host.is-animating .network-flow-node--embed.is-active,
+.network-flow-host.is-animating .network-flow-node--embed.on-path{
+  animation: network-embed-glow 4.2s ease-in-out infinite;
+}
+@keyframes network-flow-crawl{
+  from{ stroke-dashoffset: 0; }
+  to{ stroke-dashoffset: -72; }
+}
+@keyframes network-node-breathe{
+  0%, 100%{ opacity: 1; }
+  50%{ opacity: 0.78; }
+}
+@keyframes network-embed-glow{
+  0%, 100%{ stroke-width: 2; }
+  50%{ stroke-width: 2.8; }
+}
+@media (prefers-reduced-motion: reduce){
+  .network-flow-host.is-animating .network-flow-edge.is-active,
+  .network-flow-host.is-animating .network-flow-edge.on-path,
+  .network-flow-host.is-animating .network-flow-edge--main.is-active,
+  .network-flow-host.is-animating .network-flow-edge--main.on-path,
+  .network-flow-host.is-animating .network-flow-node.is-active,
+  .network-flow-host.is-animating .network-flow-node.on-path,
+  .network-flow-host.is-animating .network-flow-node--embed.is-active,
+  .network-flow-host.is-animating .network-flow-node--embed.on-path{
+    animation: none;
+    stroke-dasharray: none;
+  }
+  .network-flow-node,
+  .network-flow-edge{
+    transition: none;
+  }
+}
 .network-flow-head-item{
   fill: #2a2926;
   stroke: #4a4944;
@@ -3205,9 +3268,56 @@ body.vh-team-themed .landing-favorite__select:focus{
   gap: 8px;
   min-height: 120px;
 }
-.network-output-card .viz-duo-grid{
-  grid-template-columns: 1fr;
-  gap: 16px;
+/* Guess & grade — nested under Data Flow so heads decode feels continuous. */
+.network-flow-outputs{
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--hairline);
+}
+.network-flow-outputs__head{
+  margin-bottom: 12px;
+}
+.network-flow-outputs__head .viz-panel__label{ margin: 0; }
+.network-flow-outputs__grid{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  align-items: start;
+}
+.network-flow-outputs__panel{
+  min-width: 0;
+  padding: 10px 12px;
+  border: 1px solid var(--hairline);
+  border-radius: 8px;
+  background: var(--surface);
+}
+.network-flow-outputs__panel .viz-panel__label{
+  margin: 0 0 8px;
+}
+.network-flow-card.is-heads-step .network-flow-outputs{
+  border-top-color: rgba(235,104,52,0.35);
+}
+.network-flow-card.is-heads-step .network-flow-outputs__panel{
+  border-color: rgba(235,104,52,0.28);
+  box-shadow: inset 0 0 0 1px rgba(235,104,52,0.08);
+}
+@media (max-width: 1100px){
+  .network-flow-outputs__grid{ grid-template-columns: 1fr; }
+}
+.network-flow-outputs__panel .network-arch-row{
+  grid-template-columns: 24px 8px minmax(0, 1fr) minmax(64px, 1fr) 44px;
+  gap: 6px;
+  padding: 5px 6px;
+}
+.network-flow-outputs__panel .network-skill-row{
+  grid-template-columns: minmax(0, 1fr) minmax(64px, 1fr) 36px;
+  gap: 8px;
+  padding: 5px 6px;
+}
+.network-flow-outputs__panel .network-arch-out,
+.network-flow-outputs__panel .network-skill-out{
+  max-height: 320px;
+  overflow: auto;
 }
 .network-out-subhead{
   font-family: var(--mono);

@@ -113,10 +113,20 @@
     playing: false,
     particles: [],
     flowLayout: null,
-    cam: { yaw: 0.55, pitch: 0.25, zoom: 1.1, focal: 2.4 },
+    // Zoomed-in default so the cloud and selected player read clearly;
+    // auto-yaw is applied in mapLoop unless the user is dragging or
+    // prefers-reduced-motion is on.
+    cam: { yaw: 0.62, pitch: 0.32, zoom: 1.72, focal: 2.15 },
     drag: null,
-    mapSize: { w: 0, h: 0, dpr: 1 }
+    mapSize: { w: 0, h: 0, dpr: 1 },
+    reduceMotion: false,
+    _mapLastTs: 0
   };
+
+  function syncReduceMotion() {
+    state.reduceMotion = !!(window.matchMedia &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  }
 
   function $(id) { return document.getElementById(id); }
 
@@ -522,8 +532,9 @@
 
   function project3D(x, y, z, w, h, cam) {
     var cx = w * 0.5;
-    var cy = h * 0.52;
-    var scale = Math.min(w, h) * 0.42 * cam.zoom;
+    var cy = h * 0.5;
+    // Tighter framing: larger base scale so the cloud fills the stage.
+    var scale = Math.min(w, h) * 0.54 * cam.zoom;
     var cosY = Math.cos(cam.yaw);
     var sinY = Math.sin(cam.yaw);
     var cosP = Math.cos(cam.pitch);
@@ -1121,10 +1132,12 @@
 function buildFlowSvg(host) {
     if (!host || !state.arch) return;
     host.innerHTML = '';
-    var W = 1380;
-    var H = 780;
+    // Cropped canvas: less empty margin so the 17-tower stack reads larger.
+    // Right pad keeps long head labels (e.g. skills MLP) inside the frame.
+    var W = 1320;
+    var H = 720;
     var svg = document.createElementNS(SVG_NS, 'svg');
-    svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+    svg.setAttribute('viewBox', '28 0 ' + (W - 28) + ' ' + H);
     svg.setAttribute('class', 'network-flow-svg');
     // Keep preserveAspectRatio so tall 17-tower stack stays readable
     svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
@@ -1133,16 +1146,16 @@ function buildFlowSvg(host) {
     // Truthful column positions — each is a real stage in checkpoint
     // 0 Input families (120 feats), 1 Masked cat([x*m,m]) 2*d_in, 2 B1 hidden 160, 3 B1 out 32 + skip, 4 B2 hidden 160, 5 B2 final 32, 6 Fusion concat+season, 7 Fusion hidden 128→48, 8 Embed 48 L2, 9 Heads MLP
     var COLS = {
-      input: 110,
-      cat: 230,
-      b1h: 320,
-      b1o: 400,
-      b2h: 480,
-      b2o: 560,
-      fusion: 720,
-      fusionHidden: 800,
-      embed: 900,
-      heads: 1120
+      input: 96,
+      cat: 210,
+      b1h: 300,
+      b1o: 380,
+      b2h: 460,
+      b2o: 540,
+      fusion: 690,
+      fusionHidden: 770,
+      embed: 870,
+      heads: 1080
     };
     var colsArr = [COLS.input, COLS.b2o, COLS.fusion, COLS.embed, COLS.heads]; // for legacy layout object
     var topLabels = [
@@ -1198,8 +1211,8 @@ function buildFlowSvg(host) {
 
     var fams = state.arch.towerFamilies || [];
     var nTowers = fams.length || 17;
-    var towerTop = 50;
-    var towerBot = H - 90;
+    var towerTop = 48;
+    var towerBot = H - 56;
     var towerSpan = towerBot - towerTop;
     var towerG = document.createElementNS(SVG_NS, 'g');
     towerG.setAttribute('id', 'flow-towers');
@@ -1246,18 +1259,18 @@ function buildFlowSvg(host) {
       it.setAttribute('class', 'network-flow-col-label');
       it.setAttribute('text-anchor', 'start');
       it.setAttribute('data-input-label', String(i));
-      it.setAttribute('style', 'font-size:10px;');
+      it.setAttribute('style', 'font-size:11px;');
       it.textContent = fam.replace(/_/g,' ');
       inputG.appendChild(it);
 
       // Input value / coverage at right of label
       var iv = document.createElementNS(SVG_NS, 'text');
-      iv.setAttribute('x', String(COLS.input + 155));
+      iv.setAttribute('x', String(COLS.input + 148));
       iv.setAttribute('y', String(y + 3));
       iv.setAttribute('class', 'network-flow-col-label');
       iv.setAttribute('text-anchor', 'end');
       iv.setAttribute('data-input-value', String(i));
-      iv.setAttribute('style', 'font-size:9px;');
+      iv.setAttribute('style', 'font-size:10px;');
       iv.textContent = '0%';
       inputG.appendChild(iv);
 
@@ -2071,7 +2084,8 @@ function buildFlowSvg(host) {
   function ensureMapCanvasSize(canvas, parent, force) {
     var dpr = window.devicePixelRatio || 1;
     var w = Math.max(280, (parent && parent.clientWidth) || 400);
-    var h = Math.min(Math.round(w * 0.66), 560);
+    // Slightly taller stage so the zoomed cloud has room to breathe.
+    var h = Math.min(Math.round(w * 0.74), 640);
     var sizeChanged =
       force ||
       state.mapSize.w !== w ||
@@ -2102,6 +2116,15 @@ function buildFlowSvg(host) {
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.fillStyle = BG;
     ctx.fillRect(0, 0, w, h);
+
+    // Soft radial vignette — depth without competing with archetype hues.
+    var vig = ctx.createRadialGradient(w * 0.5, h * 0.48, Math.min(w, h) * 0.12,
+      w * 0.5, h * 0.48, Math.max(w, h) * 0.72);
+    vig.addColorStop(0, 'rgba(28,27,24,0)');
+    vig.addColorStop(1, 'rgba(0,0,0,0.38)');
+    ctx.fillStyle = vig;
+    ctx.fillRect(0, 0, w, h);
+
     var cam = state.cam;
     drawEmbeddingAxes(ctx, w, h, cam);
     var coords = state.map.coords;
@@ -2116,13 +2139,14 @@ function buildFlowSvg(host) {
     points.sort(function (a, b) { return a.depth - b.depth; });
 
     points.forEach(function (pt) {
-      var alpha = 0.12 + 0.35 * (1 / (1 + pt.depth * 0.15));
+      var alpha = 0.14 + 0.42 * (1 / (1 + pt.depth * 0.14));
       var p = state.players[pt.i];
       var col = clusterColor(p && p.c != null ? p.c : -1);
+      var r = pt.i === state.playerIdx ? 0 : (1.15 + 0.55 * (1 / (1 + pt.depth * 0.2)));
       ctx.globalAlpha = alpha;
       ctx.fillStyle = col;
       ctx.beginPath();
-      ctx.arc(pt.sx, pt.sy, pt.i === state.playerIdx ? 0 : 1.2, 0, Math.PI * 2);
+      ctx.arc(pt.sx, pt.sy, r, 0, Math.PI * 2);
       ctx.fill();
     });
 
@@ -2151,9 +2175,9 @@ function buildFlowSvg(host) {
         ctx.fill();
       }
       var neighbors = embeddingNeighbors(state.playerIdx, 3);
-      ctx.globalAlpha = 0.42;
+      ctx.globalAlpha = 0.38;
       ctx.strokeStyle = '#f3a26f';
-      ctx.lineWidth = 1.1;
+      ctx.lineWidth = 1.15;
       neighbors.forEach(function (n) {
         var nc = coords[n.idx];
         if (!nc) return;
@@ -2163,17 +2187,38 @@ function buildFlowSvg(host) {
         ctx.lineTo(np.sx, np.sy);
         ctx.stroke();
       });
-      var pulse = 0.5 + 0.5 * Math.sin(Date.now() / 280);
+      var pulse = state.reduceMotion ? 0.35 : (0.5 + 0.5 * Math.sin(Date.now() / 900));
+      ctx.globalAlpha = 0.22 + pulse * 0.18;
+      ctx.fillStyle = ORANGE;
+      ctx.beginPath();
+      ctx.arc(ap.sx, ap.sy, 16 + pulse * 6, 0, Math.PI * 2);
+      ctx.fill();
       ctx.globalAlpha = 1;
       ctx.strokeStyle = ORANGE;
-      ctx.lineWidth = 2;
+      ctx.lineWidth = 2.2;
       ctx.beginPath();
-      ctx.arc(ap.sx, ap.sy, 8 + pulse * 4, 0, Math.PI * 2);
+      ctx.arc(ap.sx, ap.sy, 9 + pulse * 2.5, 0, Math.PI * 2);
       ctx.stroke();
       ctx.fillStyle = ORANGE;
       ctx.beginPath();
-      ctx.arc(ap.sx, ap.sy, 5, 0, Math.PI * 2);
+      ctx.arc(ap.sx, ap.sy, 5.2, 0, Math.PI * 2);
       ctx.fill();
+
+      // Selected player label — readability at the zoomed framing.
+      var sel = state.players[state.playerIdx];
+      if (sel) {
+        var label = sel.name + ' · ' + sel.season;
+        ctx.font = '600 12px ui-sans-serif, system-ui, sans-serif';
+        var tw = ctx.measureText(label).width;
+        var lx = Math.max(10, Math.min(w - tw - 18, ap.sx + 14));
+        var ly = Math.max(28, Math.min(h - 12, ap.sy - 14));
+        ctx.globalAlpha = 0.72;
+        ctx.fillStyle = 'rgba(0,0,0,0.55)';
+        ctx.fillRect(lx - 6, ly - 13, tw + 12, 20);
+        ctx.globalAlpha = 1;
+        ctx.fillStyle = '#f0eee6';
+        ctx.fillText(label, lx, ly);
+      }
     }
     ctx.globalAlpha = 1;
   }
@@ -2186,6 +2231,15 @@ function buildFlowSvg(host) {
       var s = parseInt(btn.getAttribute('data-step'), 10);
       btn.classList.toggle('is-active', s === state.step);
     });
+    var flowCard = document.querySelector('.network-flow-card');
+    if (flowCard) {
+      flowCard.classList.toggle('is-heads-step', state.step >= 4);
+      flowCard.classList.toggle('is-flow-playing', !!state.playing);
+    }
+    var flowHost = $('network-flow-svg');
+    if (flowHost) {
+      flowHost.classList.toggle('is-animating', !state.reduceMotion);
+    }
     updateFlowVisual();
     renderStory();
     renderOutputs();
@@ -2407,7 +2461,7 @@ function buildFlowSvg(host) {
     canvas.addEventListener('pointerup', function () { state.drag = null; });
     canvas.addEventListener('wheel', function (e) {
       e.preventDefault();
-      state.cam.zoom = Math.max(0.6, Math.min(2.2, state.cam.zoom - e.deltaY * 0.001));
+      state.cam.zoom = Math.max(0.85, Math.min(2.8, state.cam.zoom - e.deltaY * 0.001));
       drawMap(false);
     }, { passive: false });
     window.addEventListener('resize', function () { drawMap(true); });
@@ -2735,8 +2789,15 @@ function buildFlowSvg(host) {
     });
   }
 
-  function mapLoop() {
-    if (state.step >= 3) drawMap(false);
+  function mapLoop(ts) {
+    ts = ts || 0;
+    var dt = state._mapLastTs ? Math.min(48, ts - state._mapLastTs) : 16;
+    state._mapLastTs = ts;
+    // Slow yaw when idle — presence without fighting a drag or reduced-motion.
+    if (!state.drag && !state.reduceMotion && state.map && state.playerIdx >= 0) {
+      state.cam.yaw += 0.000085 * dt;
+    }
+    if (state.map && state.playerIdx >= 0) drawMap(false);
     requestAnimationFrame(mapLoop);
   }
 
@@ -2859,6 +2920,13 @@ function buildFlowSvg(host) {
   }
 
   function init() {
+    syncReduceMotion();
+    if (window.matchMedia) {
+      var mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+      var onMotion = function () { syncReduceMotion(); };
+      if (mq.addEventListener) mq.addEventListener('change', onMotion);
+      else if (mq.addListener) mq.addListener(onMotion);
+    }
     Promise.all([
       fetch('assets/vectors.json').then(function (r) { return r.json(); }),
       fetch('assets/mtnn_arch.json').then(function (r) { return r.json(); }),
