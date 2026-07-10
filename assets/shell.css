@@ -3548,3 +3548,23 @@ body.vh-team-themed .landing-favorite__select:focus{
   .attr-div__fill--neg{ background: LinkText; }
   .attr-cell__fill{ opacity: 1; background: Canvas; border: 1px solid CanvasText; }
 }
+
+/* Truthful flow additions — B1h/B2h etc, cat, skip dashed */
+.network-flow-node--tower-sub { fill:#26251f; stroke:#555248; stroke-width:1; }
+.network-flow-node--b1h { fill:#2e2c24; }
+.network-flow-node--b1o { fill:#36342b; stroke:#66624d; }
+.network-flow-node--b2h { fill:#2e2c24; }
+.network-flow-node--tower { fill:#3a3830; stroke:#7a7660; stroke-width:1.6; }
+.network-flow-node--cat { fill:#1e1d1a; stroke:#4a4944; }
+.network-flow-node--fusion { fill:#312d1e; stroke:#b38a1a; stroke-width:1.8; }
+.network-flow-node--fusion-hidden { fill:#2b281b; stroke:#8a7520; }
+.network-flow-node--embed { fill:#1f2a33; stroke:#4a8ab0; stroke-width:2; }
+.network-flow-node--season { fill:#2a231e; stroke:#c98500; }
+.network-flow-node--head { fill:#2a2926; stroke:#5a5954; }
+.network-flow-node--head-hidden { fill:#26251f; stroke:#4a4944; }
+.network-flow-node--aux { fill:#26251f; stroke:#6b6a66; }
+.network-flow-edge--tower-internal { stroke:#3f3e39; opacity:0.25; stroke-width:0.9; }
+.network-flow-edge--skip { stroke-dasharray:3 3; opacity:0.45; }
+.network-flow-edge--season { stroke:#6f5a2e; }
+.network-flow-edge--head-hidden { stroke:#4a4944; opacity:0.3; }
+.network-flow-host.is-tracing .network-flow-node--tower-sub:not(.on-path){ opacity:0.25; }
