@@ -618,6 +618,53 @@ def v15_season_norms(data: dict) -> None:
           f"{len(shrunk)} shrunk features correctly withheld")
 
 
+def v16_draft_board(data: dict) -> None:
+    """The Steals/Busts board contract (assets/players-skills.js).
+
+    The board now admits undrafted players as steals and admits short careers as
+    busts, so three assumptions became load-bearing:
+
+      1. every undrafted player carries an expect_slot (else he silently drops
+         out of the steal pool the moment pctRank sees an undefined);
+      2. undrafted players carry NO pick number (the board keys "undrafted" off
+         a null overall, and prints "#null" if one leaks through);
+      3. no drafted player sits at overall == 61 -- the bio cache uses 61 as its
+         "undrafted" sentinel (see career_arc.py), and real historical drafts
+         ran to pick 170, so a genuine #61 would be indistinguishable from a
+         player nobody picked.
+    """
+    print("\n[V16] draft board contract (steals include undrafted; busts include short careers)")
+    path = ASSETS / "pedigree.json"
+    if not path.exists():
+        print("  pedigree.json absent — board is dormant, nothing to check")
+        return
+    players = json.loads(path.read_text(encoding="utf-8"))["players"]
+    charted = {p["name"] for p in data["players"]}
+
+    no_expect = [n for n, p in players.items()
+                 if n in charted and p.get("undrafted") and p.get("expect_slot") is None]
+    if no_expect:
+        fail(f"{len(no_expect)} undrafted players lack expect_slot (e.g. {no_expect[0]})")
+
+    leaked_pick = [n for n, p in players.items()
+                   if n in charted and p.get("undrafted") and p.get("overall") is not None]
+    if leaked_pick:
+        fail(f"{len(leaked_pick)} undrafted players carry a pick number (e.g. {leaked_pick[0]})")
+
+    at_61 = [n for n, p in players.items()
+             if n in charted and not p.get("undrafted") and p.get("overall") == 61]
+    if at_61:
+        fail(f"pick #61 collides with the bio undrafted sentinel: {at_61}")
+
+    undrafted = sum(1 for n, p in players.items() if n in charted and p.get("undrafted"))
+    max_pick = max((p.get("overall") or 0) for n, p in players.items() if n in charted)
+    print(f"  {undrafted} charted undrafted players eligible as steals; "
+          f"max real pick {max_pick}; sentinel 61 unoccupied")
+
+
+def v14_stated_limitations
+
+
 def v14_stated_limitations(data: dict) -> None:
     """Enforce the methods.html "Limitations, stated plainly" list as gates.
 
@@ -704,6 +751,7 @@ if __name__ == "__main__":
     v13b_mtnn_attribution(data)
     v14_stated_limitations(data)
     v15_season_norms(data)
+    v16_draft_board(data)
     if FAILS:
         print(f"\nACCURACY HARNESS: {len(FAILS)} FAILURES — do not ship")
         sys.exit(1)
