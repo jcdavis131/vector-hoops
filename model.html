@@ -23,9 +23,10 @@
 
   <div class="research-head network-head">
     <h1>Inside the network</h1>
-    <p class="network-hero">Pick a player-season and walk through the <b>MTNN</b> &mdash; seventeen stat groups
-      compress into a 48-number fingerprint, then fan out into archetype, skill, and next-year predictions.
-      Hit Play to watch the signal move.</p>
+    <p class="network-hero">Pick a player-season and walk the <b>MTNN</b>: seventeen stat families
+      each run through their own tower, fuse into a 48-number fingerprint, then fan out into
+      archetype, skill, and next-year predictions. Click any node to follow the path —
+      what fed it, and what it drove.</p>
   </div>
 
   <section class="drift-card network-controls-card" aria-label="Explorer controls">
@@ -71,22 +72,6 @@
     </div>
   </section>
 
-  <section class="drift-card network-section network-map-card" aria-label="48-d embedding map">
-    <div class="network-section__head">
-      <p class="viz-panel__label">Embedding map (48 numbers, shown in 3D)</p>
-      <p class="network-map-hint">Drag to rotate &middot; scroll to zoom &middot; orange dot = selected player &middot; lines = closest matches</p>
-    </div>
-    <div class="network-map-layout">
-      <div class="network-map-stage">
-        <canvas id="network-map-canvas" class="network-map-canvas" aria-label="3D MTNN embedding map"></canvas>
-        <ul id="network-map-legend" class="network-map-legend" aria-label="Archetype colours"></ul>
-      </div>
-      <div id="network-map-insights" class="network-insights" aria-live="polite">
-        <p class="drift-loading">Loading nearby players&hellip;</p>
-      </div>
-    </div>
-  </section>
-
   <section class="drift-card network-section network-flow-card" aria-label="Network data flow">
     <div class="network-section__head">
       <p class="viz-panel__label">Data flow</p>
@@ -98,6 +83,10 @@
     <div class="network-flow-layout">
       <div class="network-flow-main">
         <div id="network-flow-svg" class="network-flow-host" role="img" aria-label="MTNN layer diagram"></div>
+        <p class="network-population-note" hidden>
+          Population view uses the tower&times;head heatmap below. Switch back to
+          <b>This player</b> to walk the node-link path.
+        </p>
         <div id="network-flow-insights" class="network-insights" aria-live="polite">
           <p class="drift-loading">Loading signal summary&hellip;</p>
         </div>
@@ -132,7 +121,7 @@
       which is not the same as not mattering. <a href="/methods#mtnn">How we built this &rarr;</a></p>
   </section>
 
-  <section class="drift-card network-output-card" aria-label="Model outputs">
+  <section class="drift-card network-output-card" id="network-output-card" aria-label="Model outputs">
     <div class="viz-duo-grid">
       <div class="viz-panel">
         <p class="viz-panel__label">Archetype guess</p>
@@ -149,6 +138,22 @@
     </div>
     <p class="drift-card__foot">The animation is simplified; the map position and readouts come from the
       latest promoted MTNN checkpoint. <a href="/methods#mtnn">How we built this &rarr;</a></p>
+  </section>
+
+  <section class="drift-card network-section network-map-card" aria-label="48-d embedding map">
+    <div class="network-section__head">
+      <p class="viz-panel__label">Embedding map (48 numbers, shown in 3D)</p>
+      <p class="network-map-hint">Drag to rotate &middot; scroll to zoom &middot; orange dot = selected player &middot; lines = closest matches</p>
+    </div>
+    <div class="network-map-layout">
+      <div class="network-map-stage">
+        <canvas id="network-map-canvas" class="network-map-canvas" aria-label="3D MTNN embedding map"></canvas>
+        <ul id="network-map-legend" class="network-map-legend" aria-label="Archetype colours"></ul>
+      </div>
+      <div id="network-map-insights" class="network-insights" aria-live="polite">
+        <p class="drift-loading">Loading nearby players&hellip;</p>
+      </div>
+    </div>
   </section>
 
 </main>

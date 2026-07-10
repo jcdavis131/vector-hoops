@@ -24,7 +24,6 @@
   // text wears text tokens, never a series color. Recessive neutral instead.
   var AXIS_LINE = '#4a4944';
   var AXIS_TEXT = '#8a8983';
-  var MAX_INPUT_NODES = 10;
   /* Skill display names come from the same artifacts that define the skill
      targets (assets/skills.json + assets/skills_wide.json), keyed by
      mtnn_arch.skillKeys. They used to be a literal here, which drifted: eleven
@@ -32,6 +31,13 @@
      ("shooting_gravity"), while eleven entries named heads the net does not
      have. A hardcoded copy of exported data will always drift; read the export. */
   var SKILL_LABELS = {};
+  var STEP_SHORT = {
+    input: 'Input',
+    towers: 'Towers',
+    fusion: 'Fusion',
+    embedding: 'Embed',
+    heads: 'Heads'
+  };
 
   function skillLabel(k) {
     return SKILL_LABELS[k] || capWords(String(k).replace(/_/g, ' '));
@@ -78,6 +84,9 @@
       case 'fusion':
         return 'The ' + nFam + ' tower outputs are concatenated (' + (nFam * a.dTower) +
           ' numbers), then compressed into one ' + a.dEmb + '-number player fingerprint.';
+      case 'embedding':
+        return 'That ' + a.dEmb + '-number fingerprint is where we measure similarity — ' +
+          'your player lights up on the map below.';
       case 'heads':
         return 'Separate readouts guess archetype (' + a.nArchetypes + '), position (' +
           a.nPositions + '), skills (' + (a.skillKeys || []).length + '), and next-year stats (' +
@@ -114,6 +123,9 @@
     attrTarget: 'archetype',
     attrScope: 'player',   // 'player' | 'population'
     attrTable: false,
+    // When set, the feature chart scopes to this tower family's members
+    // (Phase 3: click a tower → "why is tracking driving this head?").
+    attrFocusFamily: null,
     features: [],
     featureIndex: {},
     featureLabel: {},
@@ -261,11 +273,31 @@
     return ranked;
   }
 
+  /* Diagram inputs stay in towerFamilies order so input i always feeds tower i.
+     Ranking by magnitude (inputSignalsForPlayer) is for the story chips only —
+     truncating the diagram to a top-10 broke causal traces for the other seven. */
+  function diagramInputs(playerIdx) {
+    var fams = (state.arch && state.arch.towerFamilies) || [];
+    var byKey = {};
+    inputSignalsForPlayer(playerIdx).forEach(function (s) { byKey[s.key] = s; });
+    return fams.map(function (fam) {
+      if (byKey[fam]) return byKey[fam];
+      var feats = (state.familyFeatures && state.familyFeatures[fam]) || [];
+      return { key: fam, label: fam.replace(/_/g, ' '), features: feats, score: 0 };
+    });
+  }
+
   function familyWeight(fam, signals) {
     for (var i = 0; i < signals.length; i++) {
       if (signals[i].key === fam) return signals[i].score;
     }
     return 0.0;
+  }
+
+  function featureIsMasked(name, value) {
+    var cov = state.attr && state.attr.coverage ? state.attr.coverage[name] : null;
+    if (cov != null) return cov === 0;
+    return value === 0;
   }
 
   // ---- Jacobian attribution -------------------------------------------------
@@ -367,7 +399,7 @@
         key: name,
         label: (state.featureLabel && state.featureLabel[name]) || name,
         value: v,
-        masked: v === 0
+        masked: featureIsMasked(name, v)
       });
     }
     return out;
@@ -380,12 +412,14 @@
     var abs = state.attr.populationAbs[target];
     if (!signed || !abs) return null;
     var rows = state.attr.features.map(function (f) {
+      var cov = state.attr.coverage ? state.attr.coverage[f] : null;
       return {
         key: f,
         label: (state.featureLabel && state.featureLabel[f]) || f,
         value: signed[f],
         weight: abs[f],
-        coverage: state.attr.coverage ? state.attr.coverage[f] : null
+        coverage: cov,
+        masked: cov === 0
       };
     }).filter(function (r) { return Number.isFinite(r.weight); });
     rows.sort(function (a, b) { return b.weight - a.weight; });
@@ -603,7 +637,7 @@
     ctx.fillRect(panelX, panelY, panelW, panelH);
     ctx.fillStyle = '#c7c5bd';
     ctx.font = '10px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace';
-    ctx.fillText('PCA Axes (MTNN 48-d)', panelX + 8, panelY + 13);
+    ctx.fillText('PCA Axes (MTNN ' + ((state.arch && state.arch.dEmb) || '?') + '-d)', panelX + 8, panelY + 13);
     axes.forEach(function (ax, i) {
       var y = panelY + 30 + i * (lineH + 12);
       ctx.fillStyle = AXIS_TEXT;
@@ -650,8 +684,14 @@
     var topInputs = topN(signals, 3, 'score');
 
     var fams = state.arch && state.arch.towerFamilies ? state.arch.towerFamilies : [];
+    // "What lit up" is causal influence on the embedding when we have it —
+    // the same signal that sizes the tower nodes. Magnitude is only a fallback.
+    var embInf = towerInfluence(playerIdx, 'embedding');
     var towerScores = fams.map(function (fam) {
-      return { fam: fam, score: familyWeight(fam, signals) };
+      return {
+        fam: fam,
+        score: embInf && embInf[fam] != null ? embInf[fam] : familyWeight(fam, signals)
+      };
     });
     var topTowers = topN(towerScores, 3, 'score');
 
@@ -744,7 +784,7 @@
         '</div>' +
         '<div class="network-story-arrow" aria-hidden="true">→</div>' +
         '<div class="network-story-stage' + cls1 + '">' +
-          '<div class="network-story-stage__head">What lit up</div>' +
+          '<div class="network-story-stage__head">What drove the fingerprint</div>' +
           '<div class="network-story-stage__chips">' + towersHtml + '</div>' +
         '</div>' +
         '<div class="network-story-arrow" aria-hidden="true">→</div>' +
@@ -978,14 +1018,13 @@
     if (!state.selectedNode) {
       host.innerHTML = '<div class="network-node-inspector__head">Selected node</div>' +
         '<p class="network-node-inspector__hint">Hover a node to preview its path; click any input, tower, ' +
-        'or output node to lock it here with exact values and predictions.</p>';
+        'or output node to lock the path and open the attribution panel below.</p>';
       return;
     }
     var node = state.selectedNode;
     var row = headRow(state.playerIdx);
     var player = state.players[state.playerIdx];
-    var signals = inputSignalsForPlayer(state.playerIdx);
-    var shownInputs = signals.slice(0, MAX_INPUT_NODES);
+    var diagram = diagramInputs(state.playerIdx);
     var fams = (state.arch && state.arch.towerFamilies) || [];
     var offSkill = state.nArch;
     var offPos = offSkill + state.nSkills;
@@ -1006,18 +1045,19 @@
     }
 
     if (node.type === 'input') {
-      var inp = shownInputs[node.index];
+      var inp = diagram[node.index];
       if (!inp) {
         host.innerHTML = '<p class="drift-loading">Pick an input node to see which stats fed it.</p>';
         return;
       }
       var towerIdx = fams.indexOf(inp.key);
       var featRows = featureRowsForFamily(inp.key);
+      var headAsk = ATTR_TARGET_ASKS[state.attrTarget] || state.attrTarget;
       host.innerHTML =
-        '<div class="network-node-inspector__head">Input family → routed tower</div>' +
+        '<div class="network-node-inspector__head">Input family → matching tower</div>' +
         '<div class="network-insights__chips">' +
-          '<span class="network-insight-chip">' + esc(inp.label) + ' <b>' + fmtPredScore(inp.score * 100) + '%</b></span>' +
-          '<span class="network-insight-chip">Tower #' + (towerIdx >= 0 ? towerIdx + 1 : '?') + '</span>' +
+          '<span class="network-insight-chip">' + esc(inp.label) + '</span>' +
+          '<span class="network-insight-chip">→ ' + esc((fams[towerIdx] || inp.key).replace(/_/g, ' ')) + ' tower</span>' +
         '</div>' +
         '<ol class="network-node-inspector__list">' + featRows.slice(0, 16).map(function (f) {
           return '<li><span class="network-node-inspector__name">' + esc(f.label) + '</span>' +
@@ -1025,26 +1065,41 @@
             '<span class="network-node-inspector__num">' + (Math.round(f.z * 100) / 100).toFixed(2) + 'z</span></li>';
         }).join('') + '</ol>' +
         '<p class="network-node-inspector__hint">Each value compares this player to the league that season: '
-          + '<b>+</b> above average, <b>−</b> below, in standard deviations (about +1 ≈ top third). '
-          + 'This feature group feeds its matching tower.</p>';
+          + '<b>+</b> above average, <b>−</b> below, in standard deviations. '
+          + 'The attribution panel below shows how this family pushed '
+          + esc(headAsk) + ' across every decode head.</p>';
       return;
     }
 
     if (node.type === 'tower') {
       var fam = fams[node.index] || '';
-      var score = familyWeight(fam, signals);
+      var embInf = towerInfluence(state.playerIdx, 'embedding');
+      var headInf = towerInfluence(state.playerIdx, state.attrTarget);
+      var embScore = embInf && embInf[fam] != null ? embInf[fam] : null;
+      var headScore = headInf && headInf[fam] != null ? headInf[fam] : null;
       var towerFeats = featureRowsForFamily(fam);
+      var chips = '<span class="network-insight-chip">' + esc(fam.replace(/_/g, ' ')) + '</span>';
+      if (embScore != null) {
+        chips += '<span class="network-insight-chip">Fingerprint share <b>' +
+          fmtPredScore(embScore * 100) + '%</b></span>';
+      }
+      if (headScore != null) {
+        chips += '<span class="network-insight-chip">' +
+          esc(ATTR_TARGET_LABELS[state.attrTarget] || state.attrTarget) +
+          ' share <b>' + fmtPredScore(headScore * 100) + '%</b></span>';
+      }
       host.innerHTML =
-        '<div class="network-node-inspector__head">Tower activation</div>' +
-        '<div class="network-insights__chips">' +
-          '<span class="network-insight-chip">' + esc(fam.replace(/_/g, ' ')) + ' <b>' + fmtPredScore(score * 100) + '%</b></span>' +
-        '</div>' +
+        '<div class="network-node-inspector__head">Tower influence</div>' +
+        '<div class="network-insights__chips">' + chips + '</div>' +
         '<ol class="network-node-inspector__list">' + towerFeats.slice(0, 16).map(function (f) {
           return '<li><span class="network-node-inspector__name">' + esc(f.label) + '</span>' +
             '<span class="network-node-inspector__num">' + esc(f.key) + '</span>' +
             '<span class="network-node-inspector__num">' + (Math.round(f.z * 100) / 100).toFixed(2) + 'z</span></li>';
         }).join('') + '</ol>' +
-        '<p class="network-node-inspector__hint">Tower width/radius in the flow graph is driven by this activation score.</p>';
+        '<p class="network-node-inspector__hint">Node size is causal influence on the embedding, not how loud the inputs are. '
+          + 'Signed contributions of this tower&rsquo;s stats to '
+          + esc(ATTR_TARGET_ASKS[state.attrTarget] || state.attrTarget) +
+          ' are in the panel below.</p>';
       return;
     }
 
@@ -1099,13 +1154,14 @@
       rows.sort(function (a, b) { return Math.abs(b.value) - Math.abs(a.value); });
     } else {
       host.innerHTML =
-        '<div class="network-node-inspector__head">Output node inspection · aux heads</div>' +
-        '<p class="network-node-inspector__hint">Auxiliary scalar heads are internal training objectives and are not exported individually in this client bundle.</p>';
+        '<div class="network-node-inspector__head">Auxiliary training heads</div>' +
+        '<p class="network-node-inspector__hint">These scalar heads (salary, honors, pedigree, &hellip;) help train the fingerprint. '
+          + 'They are not exported as individual predictions on this page, so there is no attribution chart for them.</p>';
       return;
     }
 
     host.innerHTML =
-      '<div class="network-node-inspector__head">Output node inspection · ' + esc(group.replace(/_/g, ' ')) + '</div>' +
+      '<div class="network-node-inspector__head">Output · ' + esc(group.replace(/_/g, ' ')) + '</div>' +
       '<ol class="network-node-inspector__list">' + rows.map(function (r) {
         var selectedCls = (itemIndex >= 0 && itemIndex === r.idx) ? ' is-selected' : '';
         return '<li><button class="network-node-inspector__pick' + selectedCls + '" data-head-item-group="' + esc(group) +
@@ -1118,7 +1174,7 @@
       '<p class="network-node-inspector__hint">' +
       (group === 'skills' || group === 'next_profile'
         ? 'The range is an 80% prediction interval: on held-out seasons the real value landed inside a band like this about 80% of the time. It reflects how wrong this readout usually is for guesses of this size — not how unusual this particular player is.'
-        : 'Classification rows show full class probability distribution.') +
+        : 'Classification rows show the full class probability distribution. Click a class, or the head node, to see which inputs drove it.') +
       '</p>';
   }
 
@@ -1140,8 +1196,12 @@
   function buildFlowSvg(host) {
     if (!host || !state.arch) return;
     host.innerHTML = '';
+    var fams = state.arch.towerFamilies || [];
+    if (!fams.length) return;   // no families -> no diagram, rather than a fictional count
+    var nTowers = fams.length;
     var W = 1220;
-    var H = 620;
+    // Tall enough for every family: one input row per tower, same order.
+    var H = Math.max(620, 56 + nTowers * 36);
     var svg = document.createElementNS(SVG_NS, 'svg');
     svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
     svg.setAttribute('class', 'network-flow-svg');
@@ -1165,9 +1225,6 @@
       svg.appendChild(t);
     });
 
-    var fams = state.arch.towerFamilies || [];
-    if (!fams.length) return;   // no families -> no diagram, rather than a fictional 18
-    var nTowers = fams.length;
     var towerTop = 46;
     var towerBot = H - 46;
     var towerSpan = towerBot - towerTop;
@@ -1177,6 +1234,16 @@
     fams.forEach(function (fam, i) {
       var y = nTowers <= 1 ? H / 2 : towerTop + (i / (nTowers - 1)) * towerSpan;
       towerYs.push(y);
+      // Invisible hit pad so small marks stay easy to click.
+      var hit = document.createElementNS(SVG_NS, 'circle');
+      hit.setAttribute('cx', cols[1]);
+      hit.setAttribute('cy', y);
+      hit.setAttribute('r', 14);
+      hit.setAttribute('class', 'network-flow-hit');
+      hit.setAttribute('data-tower', String(i));
+      hit.setAttribute('data-family', fam);
+      towerG.appendChild(hit);
+
       var c = document.createElementNS(SVG_NS, 'circle');
       c.setAttribute('cx', cols[1]);
       c.setAttribute('cy', y);
@@ -1200,21 +1267,23 @@
     });
     svg.appendChild(towerG);
 
+    // Inputs share tower order and Y so each family → its tower is a short hop.
     var inputG = document.createElementNS(SVG_NS, 'g');
     inputG.setAttribute('id', 'flow-input');
-    var nInputs = MAX_INPUT_NODES;
-    var inputTop = 54;
-    var inputSpan = H - 108;
+    var nInputs = nTowers;
+    var inputTop = towerTop;
+    var inputSpan = towerSpan;
     for (var b = 0; b < nInputs; b++) {
-      var iy = inputTop + (b / (nInputs - 1)) * inputSpan;
+      var iy = towerYs[b];
       var ic = document.createElementNS(SVG_NS, 'rect');
       ic.setAttribute('x', cols[0] - 15);
-      ic.setAttribute('y', iy - 19);
+      ic.setAttribute('y', iy - 12);
       ic.setAttribute('width', 30);
-      ic.setAttribute('height', 38);
+      ic.setAttribute('height', 24);
       ic.setAttribute('rx', 5);
       ic.setAttribute('class', 'network-flow-node network-flow-node--input');
       ic.setAttribute('data-input', String(b));
+      ic.setAttribute('data-family', fams[b]);
       inputG.appendChild(ic);
 
       var it = document.createElementNS(SVG_NS, 'text');
@@ -1223,7 +1292,7 @@
       it.setAttribute('class', 'network-flow-col-label');
       it.setAttribute('text-anchor', 'start');
       it.setAttribute('data-input-label', String(b));
-      it.textContent = 'input ' + (b + 1);
+      it.textContent = fams[b].replace(/_/g, ' ');
       inputG.appendChild(it);
 
       var iv = document.createElementNS(SVG_NS, 'text');
@@ -1232,10 +1301,14 @@
       iv.setAttribute('class', 'network-flow-col-label');
       iv.setAttribute('text-anchor', 'end');
       iv.setAttribute('data-input-value', String(b));
-      iv.textContent = '0%';
+      iv.textContent = '—';
       inputG.appendChild(iv);
 
       var ip = document.createElementNS(SVG_NS, 'path');
+      var dIn = 'M' + (cols[0] + 14) + ',' + iy +
+        ' C' + (cols[0] + 55) + ',' + iy + ' ' +
+        (cols[1] - 45) + ',' + iy + ' ' + cols[1] + ',' + iy;
+      ip.setAttribute('d', dIn);
       ip.setAttribute('class', 'network-flow-edge');
       ip.setAttribute('data-edge', 'in-' + b);
       inputG.appendChild(ip);
@@ -1261,11 +1334,11 @@
     svg.appendChild(embed);
 
     var headDefs = [
-      { key: 'archetype', label: 'Archetype (' + state.nArch + ')', y: H * 0.20 },
-      { key: 'position', label: 'Position (' + state.nPos + ')', y: H * 0.37 },
-      { key: 'skills', label: 'Skills (' + state.nSkills + ')', y: H * 0.54 },
-      { key: 'next_profile', label: 'Next season (' + state.nNext + ')', y: H * 0.71 },
-      { key: 'aux', label: 'Aux scalar heads', y: H * 0.86 }
+      { key: 'archetype', label: 'Archetype (' + state.nArch + ')', y: H * 0.18 },
+      { key: 'position', label: 'Position (' + state.nPos + ')', y: H * 0.34 },
+      { key: 'skills', label: 'Skills (' + state.nSkills + ')', y: H * 0.50 },
+      { key: 'next_profile', label: 'Next season (' + state.nNext + ')', y: H * 0.66 },
+      { key: 'aux', label: 'Aux (train only)', y: H * 0.82 }
     ];
     var headG = document.createElementNS(SVG_NS, 'g');
     headG.setAttribute('id', 'flow-heads');
@@ -1273,6 +1346,15 @@
     for (var h = 0; h < headDefs.length; h++) {
       var hy = headDefs[h].y;
       headYs.push(hy);
+      var hHit = document.createElementNS(SVG_NS, 'circle');
+      hHit.setAttribute('cx', cols[4]);
+      hHit.setAttribute('cy', hy);
+      hHit.setAttribute('r', 14);
+      hHit.setAttribute('class', 'network-flow-hit');
+      hHit.setAttribute('data-head', String(h));
+      hHit.setAttribute('data-head-key', headDefs[h].key);
+      headG.appendChild(hHit);
+
       var hc = document.createElementNS(SVG_NS, 'circle');
       hc.setAttribute('cx', cols[4]);
       hc.setAttribute('cy', hy);
@@ -1334,12 +1416,7 @@
       state.selectedNode = node;
       state.hoverNode = null;
       state._hoverKey = null;
-      // Clicking a head is the same gesture that asks "why this output?" —
-      // point the attribution panel at it rather than making the user re-pick.
-      if (node.type === 'head_group' && attrTargetIndex(node.key) >= 0) {
-        state.attrTarget = node.key;
-        renderAttribution();
-      }
+      syncAttributionFromNode(node, { scroll: true });
       updateFlowVisual();
       renderNodeInspector();
     });
@@ -1370,6 +1447,35 @@
     };
   }
 
+  /* Point the attribution panel at whatever the visitor just clicked, so one
+     gesture answers "what fed this / what did this drive". */
+  function syncAttributionFromNode(node, opts) {
+    if (!node || !attrHas()) return;
+    opts = opts || {};
+    var fams = (state.arch && state.arch.towerFamilies) || [];
+    if (node.type === 'head_group' || node.type === 'head_item') {
+      var key = node.group || node.key;
+      if (attrTargetIndex(key) >= 0) state.attrTarget = key;
+      state.attrFocusFamily = null;
+      state.attrScope = 'player';
+    } else if (node.type === 'tower') {
+      state.attrFocusFamily = fams[node.index] || null;
+      state.attrScope = 'player';
+    } else if (node.type === 'input') {
+      var diagram = diagramInputs(state.playerIdx);
+      state.attrFocusFamily = (diagram[node.index] && diagram[node.index].key) || fams[node.index] || null;
+      state.attrScope = 'player';
+    }
+    renderAttribution();
+    if (opts.scroll) {
+      var card = $('network-attr-card');
+      if (card && !card.hidden) {
+        try { card.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }
+        catch (e) { /* older browsers */ }
+      }
+    }
+  }
+
   // Which node currently drives the trace: transient hover wins, else the
   // locked click selection.
   function activeTraceNode() {
@@ -1380,8 +1486,7 @@
   // plain-language summary. Every path runs through the fusion+embed spine.
   function traceForNode(node) {
     var fams = (state.arch && state.arch.towerFamilies) || [];
-    var signals = inputSignalsForPlayer(state.playerIdx);
-    var nShown = Math.min(MAX_INPUT_NODES, signals.length);
+    var diagram = diagramInputs(state.playerIdx);
     var headDefs = (state.flowLayout && state.flowLayout.headDefs) || [];
     var nodeSel = [];
     var edgeSel = ['emb-main'];
@@ -1394,30 +1499,34 @@
       nodeSel.push('[data-input-value="' + i + '"]');
     }
     function addSpine() { nodeSel.push('#flow-fusion'); nodeSel.push('#flow-embed'); }
-    function addAllHeads() {
-      headDefs.forEach(function (_, hi) {
+    function addDecodeHeads() {
+      // Skip aux — it has no exported attribution and muddies the path.
+      headDefs.forEach(function (hd, hi) {
+        if (hd.key === 'aux') return;
         nodeSel.push('[data-head="' + hi + '"]');
         edgeSel.push('head-' + hi);
       });
     }
     function inputForTower(t) {
-      for (var i = 0; i < nShown; i++) {
-        if (signals[i] && signals[i].key === fams[t]) return i;
-      }
-      return -1;
+      // Diagram is tower-aligned: input index === tower index.
+      return (t >= 0 && t < diagram.length) ? t : -1;
     }
 
     if (node.type === 'input') {
       var i = node.index;
-      var t = signals[i] ? fams.indexOf(signals[i].key) : -1;
+      var t = i; // aligned
       origin = '[data-input="' + i + '"]';
       addInput(i);
-      if (t >= 0) { nodeSel.push('[data-tower="' + t + '"]'); edgeSel.push('in-' + i); edgeSel.push('fuse-' + t); }
+      if (t >= 0 && t < fams.length) {
+        nodeSel.push('[data-tower="' + t + '"]');
+        edgeSel.push('in-' + i);
+        edgeSel.push('fuse-' + t);
+      }
       addSpine();
-      addAllHeads();
-      var famLabel = signals[i] ? signals[i].label : ('input ' + (i + 1));
-      summary = capWords(famLabel) + ' → Tower ' + (t >= 0 ? t + 1 : '?') +
-        ' → fusion → embedding → all ' + headDefs.length + ' heads';
+      addDecodeHeads();
+      var famLabel = diagram[i] ? diagram[i].label : ('input ' + (i + 1));
+      summary = capWords(famLabel) + ' → ' + capWords((fams[t] || '').replace(/_/g, ' ')) +
+        ' tower → fusion → embedding → decode heads';
     } else if (node.type === 'tower') {
       var t2 = node.index;
       origin = '[data-tower="' + t2 + '"]';
@@ -1426,9 +1535,9 @@
       var iu = inputForTower(t2);
       if (iu >= 0) { addInput(iu); edgeSel.push('in-' + iu); }
       addSpine();
-      addAllHeads();
+      addDecodeHeads();
       summary = capWords((fams[t2] || 'tower').replace(/_/g, ' ')) +
-        ' tower → fusion → embedding → all ' + headDefs.length + ' heads';
+        ' tower → fusion → embedding → decode heads';
     } else {
       var key = node.group || node.key;
       var hIdx = headKeyToIndex(key);
@@ -1439,6 +1548,7 @@
       // ('aux' has no exported Jacobian target; fall back to the embedding.)
       var inf = towerInfluence(state.playerIdx, key) ||
         towerInfluence(state.playerIdx, 'embedding');
+      var signals = inputSignalsForPlayer(state.playerIdx);
       var top = fams.map(function (fam, ix) {
         return { ix: ix, s: inf ? (inf[fam] != null ? inf[fam] : 0)
                                 : familyWeight(fam, signals) };
@@ -1453,7 +1563,8 @@
       for (var d = 0; d < headDefs.length; d++) {
         if (headDefs[d].key === key) { label = headDefs[d].label; break; }
       }
-      summary = label + ' ← embedding ← fusion ← top ' + top.length + ' towers ← their inputs';
+      summary = label + ' ← embedding ← fusion ← top ' + top.length +
+        ' towers (by causal influence) ← their inputs';
     }
     return { nodeSel: nodeSel, edgeSel: edgeSel, origin: origin, summary: summary };
   }
@@ -1480,7 +1591,9 @@
     if (!node || state.playerIdx < 0) {
       svg.classList.remove('is-tracing');
       if (statusEl) {
-        statusEl.textContent = 'Click a node to see what fed it and what it drove.';
+        statusEl.textContent = state.playing
+          ? 'Playing layers… click Stop or wait for the walk to finish.'
+          : 'Click a node to see what fed it and what it drove.';
         statusEl.classList.remove('is-tracing');
       }
       if (clearBtn) clearBtn.hidden = !state.selectedNode;
@@ -1520,6 +1633,7 @@
     var step = state.step;
     var idx = state.playerIdx;
     var heights = towerHeights(idx);
+    var diagram = diagramInputs(idx);
     var signals = inputSignalsForPlayer(idx);
     var layout = state.flowLayout;
 
@@ -1531,23 +1645,22 @@
     });
 
     if (step >= 0) {
-      var shownInputs = signals.slice(0, MAX_INPUT_NODES);
       svg.querySelectorAll('.network-flow-node--input').forEach(function (n) {
         n.classList.add(step === 0 ? 'is-active' : 'is-lit');
       });
       svg.querySelectorAll('[data-input-value]').forEach(function (n, i) {
-        var s = shownInputs[i] ? shownInputs[i].score : 0;
+        var s = diagram[i] ? diagram[i].score : 0;
         n.textContent = fmtPredScore(s * 100) + '%';
       });
       svg.querySelectorAll('[data-input-label]').forEach(function (n, i) {
-        var label = shownInputs[i] ? shownInputs[i].label : ('input ' + (i + 1));
+        var label = diagram[i] ? diagram[i].label : ('input ' + (i + 1));
         n.textContent = label;
-        n.setAttribute('title', shownInputs[i] && shownInputs[i].features && shownInputs[i].features.length
-          ? ('Features: ' + shownInputs[i].features.join(', '))
+        n.setAttribute('title', diagram[i] && diagram[i].features && diagram[i].features.length
+          ? ('Features: ' + diagram[i].features.join(', '))
           : '');
       });
       svg.querySelectorAll('.network-flow-node--input').forEach(function (n, i) {
-        var s = shownInputs[i] ? shownInputs[i].score : 0.0;
+        var s = diagram[i] ? diagram[i].score : 0.0;
         n.style.opacity = String(0.35 + s * 0.65);
       });
     }
@@ -1557,22 +1670,12 @@
         n.setAttribute('r', String(4 + h * 4));
         n.classList.add(step === 1 ? 'is-active' : 'is-lit');
       });
+      // Input→tower edges: coverage/magnitude of the family (how present the
+      // signal is). Fuse edges below carry causal influence — different jobs.
       svg.querySelectorAll('[data-edge^="in-"]').forEach(function (e) {
         var ix = parseInt((e.getAttribute('data-edge') || 'in-0').split('-')[1], 10);
-        var shown = signals[ix] || null;
+        var shown = diagram[ix] || null;
         var s = shown ? shown.score : 0.0;
-        if (layout && shown) {
-          var fams = state.arch.towerFamilies || [];
-          var ti = fams.indexOf(shown.key);
-          if (ti >= 0 && ti < layout.towerYs.length) {
-            var inputY = layout.inputTop + ((ix / (layout.nInputs - 1)) * layout.inputSpan);
-            var towerY = layout.towerYs[ti];
-            var d = 'M' + (layout.cols[0] + 14) + ',' + inputY +
-              ' C' + (layout.cols[0] + 55) + ',' + towerY + ' ' +
-              (layout.cols[1] - 45) + ',' + towerY + ' ' + layout.cols[1] + ',' + towerY;
-            e.setAttribute('d', d);
-          }
-        }
         e.style.strokeWidth = String(0.6 + s * 2.2);
         e.style.opacity = String(0.2 + s * 0.7);
         e.classList.add(step === 1 ? 'is-active' : 'is-lit');
@@ -1646,6 +1749,21 @@
         e.style.opacity = String(0.25 + s * 0.75);
         e.classList.add('is-active');
       });
+    }
+
+    // Locked selection chrome (hover uses .trace-origin during applyTrace).
+    if (state.selectedNode && !state.playing) {
+      var sel = state.selectedNode;
+      var selEl = null;
+      if (sel.type === 'input') {
+        selEl = svg.querySelector('.network-flow-node--input[data-input="' + sel.index + '"]');
+      } else if (sel.type === 'tower') {
+        selEl = svg.querySelector('.network-flow-node--tower[data-tower="' + sel.index + '"]');
+      } else {
+        var hk = sel.group || sel.key;
+        if (hk) selEl = svg.querySelector('.network-flow-node--head[data-head-key="' + hk + '"]');
+      }
+      if (selEl) selEl.classList.add('is-selected');
     }
 
     // Line-of-sight trace overlay (hover-preview or locked selection):
@@ -2107,8 +2225,10 @@
       state.selectedNode = null;
       state.hoverNode = null;
       state._hoverKey = null;
+      state.attrFocusFamily = null;
       updateFlowVisual();
       renderNodeInspector();
+      renderAttribution();
     });
   }
 
@@ -2123,8 +2243,10 @@
         group: btn.getAttribute('data-head-item-group'),
         index: parseInt(btn.getAttribute('data-head-item-idx'), 10)
       };
+      syncAttributionFromNode(state.selectedNode, { scroll: true });
       renderNodeInspector();
       updateFlowVisual();
+      renderOutputs();
     });
   }
 
@@ -2138,6 +2260,7 @@
         group: row.getAttribute('data-head-select-group'),
         index: parseInt(row.getAttribute('data-head-select-idx'), 10)
       };
+      syncAttributionFromNode(state.selectedNode, { scroll: true });
       updateFlowVisual();
       renderNodeInspector();
       renderOutputs();
@@ -2168,29 +2291,55 @@
   }
 
   function bindSteps() {
-    document.querySelectorAll('.network-step-btn').forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        setStep(parseInt(btn.getAttribute('data-step'), 10));
-      });
-    });
     var play = $('network-play');
     if (!play) return;
+    var playTimer = null;
     play.addEventListener('click', function () {
-      if (state.playing) return;
+      if (state.playing) {
+        if (playTimer) clearInterval(playTimer);
+        playTimer = null;
+        state.playing = false;
+        play.textContent = 'Play flow';
+        play.setAttribute('aria-label', 'Play flow animation');
+        updateFlowVisual();
+        return;
+      }
       state.playing = true;
-      play.disabled = true;
+      play.textContent = 'Stop';
+      play.setAttribute('aria-label', 'Stop flow animation');
       var s = 0;
       setStep(0);
-      var timer = setInterval(function () {
+      playTimer = setInterval(function () {
         s += 1;
         if (s >= STEP_IDS.length) {
-          clearInterval(timer);
+          clearInterval(playTimer);
+          playTimer = null;
           state.playing = false;
-          play.disabled = false;
+          play.textContent = 'Play flow';
+          play.setAttribute('aria-label', 'Play flow animation');
+          updateFlowVisual();
           return;
         }
         setStep(s);
       }, 1400);
+    });
+  }
+
+  function syncStepButtons() {
+    var nav = $('network-step-nav');
+    if (!nav || !state.arch) return;
+    nav.innerHTML = STEP_IDS.map(function (id, i) {
+      var layer = archLayer(i);
+      var short = STEP_SHORT[id] || (layer && layer.label) || id;
+      var title = layer ? (layer.label + ' · ' + layer.detail) : short;
+      return '<button type="button" class="network-step-btn' + (i === state.step ? ' is-active' : '') +
+        '" data-step="' + i + '" title="' + esc(title) + '">' + esc(short) + '</button>';
+    }).join('');
+    nav.querySelectorAll('.network-step-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        if (state.playing) return;
+        setStep(parseInt(btn.getAttribute('data-step'), 10));
+      });
     });
   }
 
@@ -2238,26 +2387,88 @@
     if (!row) return '';
     var probs = null;
     var baseline = 0;
+    var names = null;
     if (target === 'archetype') {
       probs = softmax(Array.prototype.slice.call(row.subarray(0, state.nArch)));
       baseline = 1 / state.nArch;
+      names = (state.arch && state.arch.gameArchetypes) || [];
     } else if (target === 'position') {
       var off = state.nArch + state.nSkills;
       probs = softmax(Array.prototype.slice.call(row.subarray(off, off + state.nPos)));
       baseline = 1 / state.nPos;
+      names = ['PG', 'SG', 'SF', 'PF', 'C'];
     }
     if (!probs) {
       return '<div class="attr-tile attr-tile--none">' +
         '<div class="attr-tile__label">Confidence</div>' +
         '<p class="attr-tile__note">Not a classifier &mdash; this head predicts numbers, ' +
-        'so it has no &ldquo;how sure&rdquo; score.</p></div>';
+        'so it has no &ldquo;how sure&rdquo; score. The interval on each row is the honest stand-in.</p></div>';
     }
-    var top = Math.max.apply(null, probs);
+    var best = 0;
+    for (var i = 1; i < probs.length; i++) if (probs[i] > probs[best]) best = i;
+    var top = probs[best];
+    var pick = (names && names[best]) || ('class ' + (best + 1));
     return '<div class="attr-tile">' +
-      '<div class="attr-tile__label">Confidence in ' + esc(ATTR_TARGET_ASKS[target]) + '</div>' +
+      '<div class="attr-tile__label">Picked · ' + esc(pick) + '</div>' +
       '<div class="attr-tile__value">' + fmtPredScore(top * 100) + '%</div>' +
       '<div class="attr-tile__baseline">Guessing at random would score ' +
         fmtPredScore(baseline * 100) + '%</div></div>';
+  }
+
+  /* Features for the current target, optionally scoped to one tower family. */
+  function attrFeatureRows(target) {
+    var rows = state.attrScope === 'population'
+      ? attrPopulation(target, state.attrFocusFamily ? 64 : 8)
+      : attrTopK(state.playerIdx, target);
+    if (!rows) return null;
+    if (state.attrFocusFamily) {
+      var feats = (state.familyFeatures && state.familyFeatures[state.attrFocusFamily]) || [];
+      var set = {};
+      feats.forEach(function (f) { set[f] = 1; });
+      rows = rows.filter(function (r) { return set[r.key]; });
+      if (state.attrScope === 'population') rows = rows.slice(0, 12);
+    }
+    return rows;
+  }
+
+  /* When an input family is locked, show how that family's top drivers push
+     each decode head — small multiples, not a 4-hue chart. */
+  function attrInputMultiplesHTML(fam) {
+    if (!fam || !attrHas()) return '';
+    var feats = (state.familyFeatures && state.familyFeatures[fam]) || [];
+    var set = {};
+    feats.forEach(function (f) { set[f] = 1; });
+    var panels = state.attr.targets.map(function (t) {
+      var rows = (state.attrScope === 'population'
+        ? attrPopulation(t, 64)
+        : attrTopK(state.playerIdx, t)) || [];
+      var inFam = rows.filter(function (r) { return set[r.key] && !r.masked; });
+      if (!inFam.length) {
+        return '<div class="attr-multi">' +
+          '<p class="attr-multi__label">' + esc(ATTR_TARGET_LABELS[t] || t) + '</p>' +
+          '<p class="attr-multi__empty">None of this family&rsquo;s stats were among the top drivers.</p></div>';
+      }
+      var denom = inFam.reduce(function (m, r) { return Math.max(m, Math.abs(r.value)); }, 0);
+      var body = inFam.slice(0, 4).map(function (r) {
+        var pct = attrShare(r.value, denom);
+        var up = pct >= 0;
+        var w = Math.min(100, Math.abs(pct));
+        return '<li class="attr-div" title="' + esc(r.label) + '">' +
+          '<span class="attr-div__label">' + esc(r.label) + '</span>' +
+          '<span class="attr-div__track">' +
+            '<span class="attr-div__half attr-div__half--neg">' +
+              (up ? '' : '<span class="attr-div__fill attr-div__fill--neg" style="width:' + w.toFixed(1) + '%"></span>') +
+            '</span>' +
+            '<span class="attr-div__zero" aria-hidden="true"></span>' +
+            '<span class="attr-div__half attr-div__half--pos">' +
+              (up ? '<span class="attr-div__fill attr-div__fill--pos" style="width:' + w.toFixed(1) + '%"></span>' : '') +
+            '</span></span></li>';
+      }).join('');
+      return '<div class="attr-multi">' +
+        '<p class="attr-multi__label">' + esc(ATTR_TARGET_LABELS[t] || t) + '</p>' +
+        '<ul class="attr-divs">' + body + '</ul></div>';
+    }).join('');
+    return '<div class="attr-multiples">' + panels + '</div>';
   }
 
   /* Ranked horizontal bars, single hue. Not 17 colors: length carries the
@@ -2310,10 +2521,14 @@
   /* Diverging bars anchored at zero: sign is the whole question, so a
      sequential ramp would hide it. Neutral gray midpoint, never a hue. */
   function attrFeaturesHTML(target) {
-    var rows = state.attrScope === 'population'
-      ? attrPopulation(target, 8)
-      : attrTopK(state.playerIdx, target);
+    var rows = attrFeatureRows(target);
     if (!rows || !rows.length) {
+      if (state.attrFocusFamily) {
+        return '<p class="drift-loading">None of the <b>' +
+          esc(state.attrFocusFamily.replace(/_/g, ' ')) +
+          '</b> stats were among the top drivers of ' +
+          esc(ATTR_TARGET_ASKS[target]) + ' for this player-season.</p>';
+      }
       return '<p class="drift-loading">Feature attribution unavailable.</p>';
     }
     var denom = rows.reduce(function (m, r) { return Math.max(m, Math.abs(r.value)); }, 0);
@@ -2356,15 +2571,16 @@
       '<span>pushed it up →</span></p>';
   }
 
-  /* Population heatmap, 18 towers x 5 targets. A node-link here would be 90
-     crossing edges; sequential one-hue cells answer it at a glance. */
+  /* Population heatmap: towers × decode heads. Embedding is a Jacobian target
+     but not an attributed decode head — omit it so the chart matches the tabs. */
   function attrHeatmapHTML() {
     if (!state.jac || !state.jac.populationInfluenceNorm) return '';
     var norm = state.jac.populationInfluenceNorm;
-    var targets = state.jac.targets;
+    var targets = state.jac.targets.filter(function (t) { return t !== 'embedding'; });
     var fams = state.jac.towerFamilies.slice();
+    var sortKey = targets[0];
     fams.sort(function (a, b) {
-      return (norm[targets[0]][b] || 0) - (norm[targets[0]][a] || 0);
+      return (norm[sortKey][b] || 0) - (norm[sortKey][a] || 0);
     });
     var head = '<tr><th scope="col">Tower</th>' + targets.map(function (t) {
       return '<th scope="col">' + esc(ATTR_TARGET_LABELS[t] || capWords(t.replace(/_/g, ' '))) + '</th>';
@@ -2374,8 +2590,6 @@
         targets.map(function (t) {
           var v = norm[t] && norm[t][f] != null ? norm[t][f] : 0;
           var pct = Math.round(v * 100);
-          // Flip the ink once the fill is dark enough to swallow it. A blend
-          // mode would leave the mid-ramp cells illegible in both directions.
           var dark = v > 0.55 ? ' attr-cell__num--onDark' : '';
           return '<td class="attr-cell" title="' + esc(capWords(f.replace(/_/g, ' '))) + ' → ' +
             esc(ATTR_TARGET_LABELS[t] || t) + ': ' + pct + '% of the strongest tower">' +
@@ -2384,19 +2598,20 @@
         }).join('') + '</tr>';
     }).join('');
     return '<div class="attr-heatmap-wrap">' +
-      '<table class="attr-heatmap"><caption>Tower influence on each output, averaged over all ' +
+      '<table class="attr-heatmap"><caption>Tower influence on each decode head, averaged over all ' +
         state.players.length.toLocaleString() + ' player-seasons. ' +
         'Darker = more influence, scaled within each column.</caption>' +
       '<thead>' + head + '</thead><tbody>' + body + '</tbody></table></div>';
   }
 
-  /* The table view is the accessible answer to "which inputs drove this", and
-     it is also the contrast-relief route. Always available, never a fallback. */
   function attrTableHTML(target) {
-    var rows = state.attrScope === 'population'
-      ? attrPopulation(target, 12)
-      : attrTopK(state.playerIdx, target);
+    var rows = attrFeatureRows(target);
     if (!rows || !rows.length) return '';
+    if (state.attrFocusFamily && state.attrScope !== 'population') {
+      rows = rows.slice(0, 12);
+    } else if (!state.attrFocusFamily) {
+      rows = rows.slice(0, 12);
+    }
     var denom = rows.reduce(function (m, r) { return Math.max(m, Math.abs(r.value)); }, 0);
     var body = rows.map(function (r) {
       if (r.masked) {
@@ -2419,6 +2634,12 @@
     card.hidden = false;
     var target = state.attrTarget;
     var player = state.players[state.playerIdx];
+    var flowCard = document.querySelector('.network-flow-card');
+    if (flowCard) {
+      flowCard.classList.toggle('is-population-scope', state.attrScope === 'population');
+    }
+    var popNote = document.querySelector('.network-population-note');
+    if (popNote) popNote.hidden = state.attrScope !== 'population';
 
     var tabs = $('attr-target-tabs');
     if (tabs) {
@@ -2441,13 +2662,25 @@
     if (toggle) {
       toggle.textContent = state.attrTable ? 'Chart view' : 'Table view';
       toggle.setAttribute('aria-pressed', String(state.attrTable));
+      toggle.hidden = state.attrScope === 'population' && !state.attrFocusFamily;
     }
 
     var who = state.attrScope === 'population'
       ? 'All ' + state.players.length.toLocaleString() + ' player-seasons'
       : esc(player.name) + ' · ' + esc(player.season);
+    if (state.attrFocusFamily) {
+      who += ' · ' + capWords(state.attrFocusFamily.replace(/_/g, ' ')) + ' family';
+      if (state.selectedNode && state.selectedNode.type === 'tower') {
+        who += ' → ' + (ATTR_TARGET_LABELS[target] || target);
+      }
+    }
     var subject = $('attr-subject');
-    if (subject) subject.textContent = who;
+    if (subject) {
+      subject.innerHTML = who +
+        (state.attrFocusFamily
+          ? ' <button type="button" class="attr-clear-focus" id="attr-clear-focus">Show all families</button>'
+          : '');
+    }
 
     var tile = $('attr-tile');
     if (tile) {
@@ -2457,14 +2690,35 @@
 
     var towers = $('attr-towers');
     if (towers) {
-      towers.innerHTML = '<p class="viz-panel__label">Towers driving ' +
-        esc(ATTR_TARGET_ASKS[target]) + '</p>' + attrTowersHTML(target);
+      if (state.attrScope === 'population' && !state.attrFocusFamily) {
+        towers.hidden = true;
+        towers.innerHTML = '';
+      } else {
+        towers.hidden = false;
+        towers.innerHTML = '<p class="viz-panel__label">Towers driving ' +
+          esc(ATTR_TARGET_ASKS[target]) + '</p>' + attrTowersHTML(target);
+      }
     }
 
     var feats = $('attr-features');
     if (feats) {
-      feats.innerHTML = '<p class="viz-panel__label">Stats that pushed it up or down</p>' +
-        (state.attrTable ? attrTableHTML(target) : attrFeaturesHTML(target));
+      var isInputFocus = state.selectedNode && state.selectedNode.type === 'input' && state.attrFocusFamily;
+      if (isInputFocus && state.attrScope === 'player') {
+        feats.innerHTML = '<p class="viz-panel__label">' +
+          esc(capWords(state.attrFocusFamily.replace(/_/g, ' '))) +
+          ' → every decode head</p>' + attrInputMultiplesHTML(state.attrFocusFamily);
+      } else if (state.attrScope === 'population' && !state.attrFocusFamily) {
+        feats.innerHTML = '';
+        feats.hidden = true;
+      } else {
+        feats.hidden = false;
+        var featLabel = state.attrFocusFamily
+          ? ('Stats in ' + capWords(state.attrFocusFamily.replace(/_/g, ' ')) +
+            ' that pushed ' + (ATTR_TARGET_ASKS[target] || target))
+          : 'Stats that pushed it up or down';
+        feats.innerHTML = '<p class="viz-panel__label">' + esc(featLabel) + '</p>' +
+          (state.attrTable ? attrTableHTML(target) : attrFeaturesHTML(target));
+      }
     }
 
     var pop = $('attr-population');
@@ -2478,10 +2732,20 @@
     var card = $('network-attr-card');
     if (!card) return;
     card.addEventListener('click', function (ev) {
+      if (ev.target.closest && ev.target.closest('#attr-clear-focus')) {
+        state.attrFocusFamily = null;
+        renderAttribution();
+        return;
+      }
       var t = ev.target.closest && ev.target.closest('[data-attr-target]');
       if (t) { state.attrTarget = t.getAttribute('data-attr-target'); renderAttribution(); return; }
       var s = ev.target.closest && ev.target.closest('[data-attr-scope]');
-      if (s) { state.attrScope = s.getAttribute('data-attr-scope'); renderAttribution(); return; }
+      if (s) {
+        state.attrScope = s.getAttribute('data-attr-scope');
+        if (state.attrScope === 'population') state.attrFocusFamily = null;
+        renderAttribution();
+        return;
+      }
       if (ev.target.closest && ev.target.closest('#attr-table-toggle')) {
         state.attrTable = !state.attrTable;
         renderAttribution();
@@ -2692,6 +2956,7 @@
       state.features.forEach(function (f, i) { state.featureIndex[f] = i; });
       state.featureLabel = vec.featureLabels || {};
       buildFlowSvg($('network-flow-svg'));
+      syncStepButtons();
       bindSearch();
       bindCompare();
       bindTimebar();

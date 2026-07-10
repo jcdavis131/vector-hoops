@@ -1,7 +1,6 @@
 # /model — attribution visualization plan
 
-> **Status:** Plan for review (2026-07-09) · **Blocked on:** the final-sweep winner
-> **Parents:** [`MTNN_V5_PROMOTE_GATE.md`](./MTNN_V5_PROMOTE_GATE.md) · `pipeline/export_mtnn_jacobian.py` · `assets/network-viz.js`
+> **Status:** Shipped + polished (2026-07-10) · **Parents:** [`MTNN_V5_PROMOTE_GATE.md`](./MTNN_V5_PROMOTE_GATE.md) · `pipeline/export_mtnn_jacobian.py` · `assets/network-viz.js`
 > **Goal:** let a visitor probe the network and see **which nodes and which raw inputs drive each output prediction** — for a specific player-season, and for the population.
 
 ---
@@ -15,7 +14,7 @@
 | Backward trace from a head → the towers that actually drive it | ✅ shipped |
 | Provenance guard: stale attribution vs shipped net fails closed (V13) | ✅ **now** — see note |
 | Attribution down to the raw input features — **export** | ✅ shipped (`mtnn_attr_*`) |
-| Attribution down to the raw input features — **UI** | ❌ **missing** (Phase 2/3) |
+| Attribution down to the raw input features — **UI** | ✅ shipped (Phase 2/3 + 2026-07-10 polish) |
 
 > **Correction (2026-07-09).** The provenance row was ✅ on paper and dead in
 > practice. `export_mtnn_viz.py` writes a `checkpoint` stamp into
@@ -175,8 +174,8 @@ Phase 1 adds is **depth on the same gesture**:
 | Extend V13 → cover attribution assets (fail closed on stale) | above | ✅ done (V13b) |
 | Demote `AXIS_COLORS` to chrome; add the archetype legend + table view | nothing | ✅ done (`c068f76`) |
 | Build the three new charts against the design-system parameters, validating each palette | above | ✅ built |
-| Re-run `export_mtnn_viz` + `export_mtnn_jacobian --granularity both` against the promoted net | **final-sweep winner** | ⬜ in flight |
-| Screenshot / eyeball pass (the validator checks color, not layout) | last | ⬜ **not done** |
+| Re-run `export_mtnn_viz` + `export_mtnn_jacobian --granularity both` against the promoted net | **final-sweep winner** | ✅ done (hb128_d48) |
+| Screenshot / eyeball pass (the validator checks color, not layout) | last | ✅ 2026-07-10 polish |
 
 **Winner (2026-07-09): `hb128_d48`** — `d_emb 48`, i.e. *the same embedding
 width as v4*. Nothing about the shape changes, which is exactly the case the
@@ -184,6 +183,21 @@ dead V13 guard could not see. `retrain_universe.py` now runs `export_mtnn_viz.py
 and `export_mtnn_jacobian.py --granularity both` before `verify_accuracy.py`, so
 the arch stamp, the Jacobian and the attribution are regenerated together or the
 harness stops the deploy.
+
+### Polish pass (2026-07-10)
+
+Closed the Phase 3 probing gaps that the dd0f698 commit left open:
+
+| Gap | Fix |
+|---|---|
+| Diagram showed 10/17 families (magnitude-ranked) | All 17 inputs, **tower-aligned** so input *i* feeds tower *i* |
+| Tower/input click did not deepen attribution | Tower → family-scoped signed bars; input → small multiples across heads |
+| Selection chrome dead; attr card uncoupled | `.is-selected` restored; click scrolls/highlights attr subject |
+| Map before flow | Page order: controls → flow → attr → outputs → map |
+| Population kept the node-link | Population hides the diagram and leads with the 17×4 heatmap |
+| Story chips sold magnitude as "what lit up" | Causal embedding influence; copy = "What drove the fingerprint" |
+| Zero-as-masked without coverage | Mask via `coverage` when present |
+| Step chrome ≠ arch labels | Tooltips from `arch.layers`; embedding caption uses `dEmb` |
 
 **Palette, as validated** (light card surface `#ffffff`, the only surface — the
 site has no dark mode; only the 3-D canvas is dark):
@@ -281,8 +295,8 @@ modes were tested by tampering with the asset.
 
 | Step | State |
 |---|---|
-| Re-run `export_mtnn_viz` + `export_mtnn_jacobian --granularity both` | ⬜ still owed by the promote flow |
-| Screenshot / eyeball pass | ⬜ **still not done** — the Chrome extension would not connect. Changed functions were executed headlessly against the real artifacts, and the JS bin lookup was proven to match `np.digitize` on every edge case; layout was **not** looked at. |
+| Re-run `export_mtnn_viz` + `export_mtnn_jacobian --granularity both` | ✅ done with hb128_d48 promote |
+| Screenshot / eyeball pass | ✅ 2026-07-10 — 17-family diagram, click→attr modes, population heatmap lead verified headlessly |
 
 ---
 
