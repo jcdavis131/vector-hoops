@@ -1552,11 +1552,13 @@ function buildFlowSvg(host) {
       headG.appendChild(hl);
     }
 
-    // Insert edges behind towers so nodes stay on top
-    svg.insertBefore(edgeG, towerG);
+    // Append groups first, then tuck edges behind them. insertBefore(edgeG, towerG)
+    // before towerG is a child throws NotFoundError and aborts the whole /model init
+    // (production symptom: "Could not load MTNN explorer assets").
     svg.appendChild(inputG);
     svg.appendChild(towerG);
     svg.appendChild(headG);
+    svg.insertBefore(edgeG, inputG);
 
     svg.addEventListener('click', function (ev) {
       var node = nodeFromEl(ev.target);
@@ -2916,7 +2918,10 @@ function buildFlowSvg(host) {
       renderMapInsights();
       renderFlowInsights();
       requestAnimationFrame(mapLoop);
-    }).catch(function () {
+    }).catch(function (err) {
+      if (window.console) {
+        console.error('[network-viz] init failed:', err && err.message ? err.message : err, err);
+      }
       var cap = $('network-step-caption');
       if (cap) {
         cap.textContent = 'Could not load MTNN explorer assets. Run pipeline/export_mtnn_viz.py after training.';
