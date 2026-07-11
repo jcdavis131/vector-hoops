@@ -6,7 +6,7 @@
 <title>MTNN Network Explorer — Vector Hoops</title>
 <link rel="canonical" href="https://hoops.dumbmodel.com/model">
 <meta property="og:url" content="https://hoops.dumbmodel.com/model">
-<meta name="description" content="Step through the Multi-Tower Neural Network: 120 features, masked cat, 17×2-block residual towers, concat fusion 556→128→48 L2.">
+<meta name="description" content="Walk a player-season through the Multi-Tower Neural Network: 17 residual towers, concat fusion, 48-d embedding, and decode heads.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Ctext%20y%3D%22.9em%22%20font-size%3D%2290%22%3E%26%23127936%3B%3C%2Ftext%3E%3C%2Fsvg%3E">
 <meta property="og:type" content="website">
 <meta property="og:title" content="MTNN Network Explorer — Vector Hoops">
@@ -25,11 +25,11 @@
 
   <div class="research-head network-head">
     <h1>Inside the network</h1>
-    <p class="network-hero">Pick a player-season and walk through the <b>MTNN</b> &mdash; 120 stats in 17 families go through
-      <code>cat([x·m, m])</code> masking, 17 residual towers ×2 blocks (160→32 + LayerNorm + GELU + skip), concat with a 12-d season embedding
-      (544+12=556 →128→48), L2-normalized to a 48-number fingerprint, then MLP heads fan out into archetype, skill, and next-year predictions.
-      Click a node to trace its true path. Hit Play to watch the signal move.</p>
-    <p style="font-size:11px;color:var(--ink-muted);margin-top:8px;">Solo personal project — no connection to employer — built static, zero backend, free-tier only. Every number recomputable from stats.nba.com.</p>
+    <p class="network-hero">Pick a player-season and peer inside the <b>MTNN</b> — a glass box, not a black box.
+      Seventeen stat families each run through their own residual tower, fuse into a 48-number fingerprint,
+      then decode into archetype, position, skill grades, and next-year forecasts. Click a node, output row,
+      or tower to <b>probe</b>: lock the line-of-sight trace, see family share across every head, and read
+      signed feature pushes for that player-season.</p>
   </div>
 
   <section class="drift-card network-controls-card" aria-label="Explorer controls">
@@ -75,65 +75,11 @@
     </div>
   </section>
 
-  <section class="drift-card network-arch-spec-card" aria-label="Shipped architecture — truthful spec" style="border-left:3px solid var(--data-orange);">
-    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;align-items:baseline;">
-      <p class="viz-panel__label" style="margin:0;">Shipped MTNN — <code id="arch-model-id">mtnn_v4_phase_b</code> · <span id="arch-checkpoint">loading</span></p>
-      <span style="font-family:var(--mono);font-size:10px;color:var(--ink-muted);">Hover any node for cat/mask, skip, LN, GELU. Click to lock trace.</span>
-    </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:10px;font-size:12px;line-height:1.5;">
-      <div>
-        <b style="display:block;font-family:var(--mono);font-size:11px;text-transform:uppercase;color:var(--ink-muted);margin-bottom:4px;">Input — 120 feats, 17 families</b>
-        <code>z-scored per season</code> · mask <code>m∈{0,1}</code><br>
-        <code style="background:var(--hairline);padding:1px 4px;border-radius:4px;">h = cat([x·m, m])  → 2·d_in</code><br>
-        <span style="color:var(--ink-muted)">Masked = ∅ shows 0 grad → “not tracked this era”, not zero.</span>
-      </div>
-      <div>
-        <b style="display:block;font-family:var(--mono);font-size:11px;text-transform:uppercase;color:var(--ink-muted);margin-bottom:4px;">Residual towers — 17×2 blocks</b>
-        B1: <code>Linear(2d_in→160) LN GELU 160→32 LN + Linear(2d_in→32) skip</code><br>
-        B2: <code>Linear(32→160) LN GELU 160→32 LN + residual</code><br>
-        <code>→ 32-d per tower (17×32=544)</code>
-      </div>
-      <div>
-        <b style="display:block;font-family:var(--mono);font-size:11px;text-transform:uppercase;color:var(--ink-muted);margin-bottom:4px;">Concat fusion + season</b>
-        Season emb <code>12-d learned</code><br>
-        <code>concat=[544⊕12]=556 → Linear 556→128 GELU LN → Linear 128→48 → L2 norm</code><br>
-        <span id="arch-fusion-detail" style="color:var(--ink-muted)">~224K params, 57% in fusion hidden alone.</span>
-      </div>
-      <div>
-        <b style="display:block;font-family:var(--mono);font-size:11px;text-transform:uppercase;color:var(--ink-muted);margin-bottom:4px;">Embedding & heads — 48-d</b>
-        <code>48-d L2-normalized</code> — cosine = similarity<br>
-        Heads MLP: <code>48→64 GELU →k</code> for arch(8) pos(5) profile(14) next(14)<br>
-        Skills: <code>18×(48→16→1)</code> — grade/100<br>
-        Aux: salary/team/roster/career/competition/pedigree/playoff/honors linear
-      </div>
-    </div>
-    <details style="margin-top:10px;">
-      <summary style="font-family:var(--mono);font-size:11px;cursor:pointer;color:var(--ink-soft);">Show raw <code>mtnn_arch.json</code> layers</summary>
-      <pre id="arch-layers-pre" style="overflow:auto;background:var(--surface);padding:10px;border-radius:8px;font-size:11px;line-height:1.4;max-height:220px;border:1px solid var(--hairline);margin-top:8px;">Loading…</pre>
-    </details>
-  </section>
-
-  <section class="drift-card network-section network-map-card" aria-label="48-d embedding map">
-    <div class="network-section__head">
-      <p class="viz-panel__label">Embedding map (48 numbers, shown in 3D)</p>
-      <p class="network-map-hint">Drag to rotate · scroll to zoom · orange dot = selected player · lines = closest matches · legend = secondary encoding (not color alone)</p>
-    </div>
-    <div class="network-map-layout">
-      <div class="network-map-stage">
-        <canvas id="network-map-canvas" class="network-map-canvas" aria-label="3D MTNN embedding map"></canvas>
-        <ul id="network-map-legend" class="network-map-legend" aria-label="Archetype colours"></ul>
-      </div>
-      <div id="network-map-insights" class="network-insights" aria-live="polite">
-        <p class="drift-loading">Loading nearby players…</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="drift-card network-section network-flow-card" aria-label="Network data flow — truthful">
+  <section class="drift-card network-section network-flow-card" aria-label="Network data flow">
     <div class="network-section__head">
       <div>
-        <p class="viz-panel__label" style="margin:0;">Data flow — truthful to checkpoint</p>
-        <p style="margin:4px 0 0;font-size:11px;color:var(--ink-muted);font-family:var(--mono);">Input mask cat · 2 residual blocks per tower · season emb concat · L2 norm · MLP heads. Hover for LN/GELU/skip labels.</p>
+        <p class="viz-panel__label" style="margin:0;">Data flow</p>
+        <p class="network-flow-subhead">Input mask · 2 residual blocks per tower · season concat · L2 embed · MLP heads. Hover for LN/GELU/skip.</p>
       </div>
       <div class="network-flow-tools">
         <span id="network-trace-status" class="network-trace-status">Click a node to see what fed it and what it drove.</span>
@@ -142,7 +88,7 @@
     </div>
     <div class="network-flow-layout">
       <div class="network-flow-main">
-        <div id="network-flow-svg" class="network-flow-host" role="img" aria-label="MTNN layer diagram — truthful"></div>
+        <div id="network-flow-svg" class="network-flow-host" role="img" aria-label="MTNN layer diagram"></div>
         <div id="network-flow-insights" class="network-insights" aria-live="polite">
           <p class="drift-loading">Loading signal summary…</p>
         </div>
@@ -150,6 +96,33 @@
       <div id="network-node-inspector" class="network-insights network-node-inspector" aria-live="polite">
         <p class="drift-loading">Click an input, tower, or output to see its numbers.</p>
       </div>
+    </div>
+
+    <div class="network-flow-outputs" id="network-output-card" aria-label="Guess and grade — heads decode">
+      <div class="network-flow-outputs__head">
+        <p class="viz-panel__label">Guess &amp; grade — heads decode</p>
+        <p class="network-map-hint">Same MLP heads as the rightmost column. Click a row to lock the trace back through the network.</p>
+      </div>
+      <div class="viz-duo-grid network-flow-outputs__grid">
+        <div class="viz-panel network-flow-outputs__panel">
+          <p class="viz-panel__label">Archetype guess</p>
+          <div id="network-arch-out" class="network-arch-out"></div>
+        </div>
+        <div class="viz-panel network-flow-outputs__panel">
+          <p class="viz-panel__label">Position guess</p>
+          <div id="network-pos-out" class="network-arch-out"></div>
+        </div>
+        <div class="viz-panel network-flow-outputs__panel">
+          <p class="viz-panel__label">Skill grades out of 100</p>
+          <div id="network-skill-out" class="network-skill-out"></div>
+        </div>
+        <div class="viz-panel network-flow-outputs__panel">
+          <p class="viz-panel__label">Next-season forecast — per 100 poss</p>
+          <div id="network-next-out" class="network-skill-out"></div>
+        </div>
+      </div>
+      <p class="drift-card__foot">Layer counts match the checkpoint: 17×2 blocks, 544+12=556→128→48 L2.
+        <a href="/methods#mtnn">How we built this →</a></p>
     </div>
   </section>
 
@@ -171,41 +144,89 @@
     </div>
     <div id="attr-population" hidden></div>
 
-    <p class="drift-card__foot">These bars show how the <b>network's</b> prediction moved with each input for
+    <p class="drift-card__foot">These bars show how the <b>network&rsquo;s</b> prediction moved with each input for
       this player-season, under a first-order approximation — not a claim about what causes a player to be
-      who he is. A stat marked <b>not tracked this era</b> has exactly 0 gradient because the tower reads <code>cat([x·m, m])</code>;
-      it contributes nothing because it was never measured, which is not the same as not mattering. Embedding target has no sign, so it is not attributed. <a href="/methods#mtnn">How we built this →</a></p>
+      who he is. Selecting a single skill, next-stat, or runner-up class still explains the <b>head mean /
+      predicted class</b> until per-item gradients ship. A stat marked <b>not tracked this era</b> has exactly
+      0 gradient because the tower reads <code>cat([x·m, m])</code>.
+      <a href="/methods#mtnn">How we built this →</a></p>
   </section>
 
-  <section class="drift-card network-output-card" aria-label="Model outputs">
-    <div class="viz-duo-grid">
-      <div class="viz-panel">
-        <p class="viz-panel__label">Archetype guess (MLP 48→64→8)</p>
-        <div id="network-arch-out" class="network-arch-out"></div>
+  <section class="drift-card network-section network-map-card" aria-label="48-d embedding map">
+    <div class="network-section__head">
+      <p class="viz-panel__label">Embedding map (48 numbers, shown in 3D)</p>
+      <p class="network-map-hint">Slow auto-rotate · drag to take over · scroll to zoom · hover a dot for name + archetype · orange = selected</p>
+    </div>
+    <div class="network-map-layout">
+      <div class="network-map-stage">
+        <canvas id="network-map-canvas" class="network-map-canvas" aria-label="3D MTNN embedding map"></canvas>
+        <ul id="network-map-legend" class="network-map-legend" aria-label="Archetype colours"></ul>
       </div>
-      <div class="viz-panel">
-        <p class="viz-panel__label">Skill grades out of 100 (18× 48→16→1)</p>
-        <div id="network-skill-out" class="network-skill-out"></div>
-      </div>
-      <div class="viz-panel">
-        <p class="viz-panel__label">Next-season stat forecast (MLP 48→64→14) — per 100 poss</p>
-        <div id="network-next-out" class="network-skill-out"></div>
+      <div id="network-map-insights" class="network-insights" aria-live="polite">
+        <p class="drift-loading">Loading nearby players…</p>
       </div>
     </div>
-    <p class="drift-card__foot">The animation is simplified but the layer counts and dims match the checkpoint: 17×2 blocks, 544+12=556→128→48 L2, 48-d. Map position and readouts come from the
-      latest promoted MTNN checkpoint. <a href="/methods#mtnn">How we built this →</a></p>
   </section>
+
+  <section class="drift-card network-arch-spec-card" aria-label="Shipped architecture">
+    <details class="network-arch-details">
+      <summary class="network-arch-summary">
+        <span class="viz-panel__label" style="margin:0;display:inline;">Shipped MTNN</span>
+        <code id="arch-model-id">mtnn_v4_phase_b</code>
+        <span id="arch-checkpoint" class="network-arch-checkpoint">loading</span>
+        <span class="network-arch-summary__hint">Show layer math</span>
+      </summary>
+      <div class="network-arch-grid">
+        <div>
+          <b class="network-arch-grid__label">Input — 120 feats, 17 families</b>
+          <code>z-scored per season</code> · mask <code>m∈{0,1}</code><br>
+          <code class="network-arch-code">h = cat([x·m, m])  → 2·d_in</code><br>
+          <span class="network-arch-muted">Masked = ∅ shows 0 grad → “not tracked this era”, not zero.</span>
+        </div>
+        <div>
+          <b class="network-arch-grid__label">Residual towers — 17×2 blocks</b>
+          B1: <code>Linear(2d_in→160) LN GELU 160→32 LN + skip</code><br>
+          B2: <code>Linear(32→160) LN GELU 160→32 LN + residual</code><br>
+          <code>→ 32-d per tower (17×32=544)</code>
+        </div>
+        <div>
+          <b class="network-arch-grid__label">Concat fusion + season</b>
+          Season emb <code>12-d learned</code><br>
+          <code>concat=[544⊕12]=556 → 556→128 GELU LN → 128→48 → L2</code><br>
+          <span id="arch-fusion-detail" class="network-arch-muted">~224K params, 57% in fusion hidden alone.</span>
+        </div>
+        <div>
+          <b class="network-arch-grid__label">Embedding &amp; heads — 48-d</b>
+          <code>48-d L2-normalized</code> — cosine = similarity<br>
+          Heads MLP: <code>48→64 GELU →k</code> · Skills: <code>18×(48→16→1)</code>
+        </div>
+      </div>
+      <details class="network-arch-raw">
+        <summary>Show raw <code>mtnn_arch.json</code> layers</summary>
+        <pre id="arch-layers-pre" class="network-arch-pre">Loading…</pre>
+      </details>
+    </details>
+  </section>
+
+  <nav class="site-next" aria-label="Continue">
+    <span class="site-next__label">Next</span>
+    <a href="/players">Players</a>
+    <a href="/methods">Methods</a>
+    <a href="/play">Play</a>
+  </nav>
 
 </main>
 
 <footer class="site-footer">
-  <div class="site-footer__links">
-    <a href="/methods">Methods</a>
+    <div class="site-footer__links">
     <a href="/play">Play</a>
+    <a href="/model">Network</a>
+    <a href="/players">Players</a>
+    <a href="/methods">Methods</a>
     <a href="#" data-vh-nux-tour>Tour</a>
     <a href="https://github.com/jcdavis131/vector-hoops" target="_blank" rel="noopener">GitHub</a>
   </div>
-  <div class="site-footer__attribution">Every number recomputable from stats.nba.com source data · Solo personal project, no connection to employer, built static free-tier only · from <a href="https://dumbmodel.com/" target="_blank" rel="noopener">dumbmodel.com</a></div>
+  <div class="site-footer__attribution">Every number recomputable from stats.nba.com &amp; Basketball-Reference source data &middot; solo personal project &middot; from <a href="https://dumbmodel.com/" target="_blank" rel="noopener">dumbmodel.com</a></div>
 </footer>
 
 <script src="assets/site-nav.js" defer></script>
