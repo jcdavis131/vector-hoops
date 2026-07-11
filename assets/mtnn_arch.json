@@ -1,12 +1,12 @@
 {
-  "built": "2026-07-09",
+  "built": "2026-07-11",
   "model": "mtnn_v4_phase_b",
   "fusion": "concat",
   "dTower": 32,
   "dEmb": 48,
   "checkpoint": {
-    "mtime": 1783623905,
-    "bytes": 2263307
+    "mtime": 1783736655,
+    "bytes": 2262906
   },
   "towerBlocks": 2,
   "mlpHeads": true,
