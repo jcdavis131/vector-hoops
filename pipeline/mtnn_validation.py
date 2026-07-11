@@ -201,15 +201,16 @@ def _slice_summary(
     output: dict[str, dict[str, Any]] = {}
     for value in sorted({str(v) for v in values}):
         rows = np.where(values.astype(str) == value)[0]
-        if len(rows) >= MIN_GROUP_ROWS:
-            group_pairs = held_out_pairs[np.isin(held_out_pairs[:, 1], rows)]
-            output[value] = _summary(
-                distribution_rows=rows,
-                calibration_rows=np.intersect1d(rows, held_out_pairs[:, 1]),
-                next_rows=group_pairs[:, 0] if len(group_pairs) else np.array([], dtype=int),
-                retrieval_pairs=group_pairs,
-                **kwargs,
-            )
+        group_pairs = held_out_pairs[np.isin(held_out_pairs[:, 1], rows)]
+        entry = _summary(
+            distribution_rows=rows,
+            calibration_rows=np.intersect1d(rows, held_out_pairs[:, 1]),
+            next_rows=group_pairs[:, 0] if len(group_pairs) else np.array([], dtype=int),
+            retrieval_pairs=group_pairs,
+            **kwargs,
+        )
+        entry["scorable"] = len(rows) >= MIN_GROUP_ROWS
+        output[value] = entry
     return output
 
 
@@ -283,6 +284,12 @@ def build_validation_report(
     weak_next = [
         item for item in eligible_next_groups if float(item["r2"]) <= 0.0
     ]
+    overall_next = overall["next_profile"]
+    overall_next_weak = bool(
+        overall_next["rows"] >= MIN_NEXT_ROWS
+        and overall_next["r2"] is not None
+        and float(overall_next["r2"]) <= 0.0
+    )
     flags = {
         "near_zero_tower_spread": {
             "flagged": bool(overall["tower_spread"]["mean"] <= 1e-6),
@@ -296,9 +303,13 @@ def build_validation_report(
         },
         "systematically_weak_next_year_signal": {
             "flagged": bool(
-                len(eligible_next_groups) >= 3
-                and len(weak_next) / len(eligible_next_groups) >= 0.6
+                overall_next_weak
+                or (
+                    len(eligible_next_groups) >= 3
+                    and len(weak_next) / len(eligible_next_groups) >= 0.6
+                )
             ),
+            "overall_held_out_r2": overall_next["r2"],
             "groups_evaluated": len(eligible_next_groups),
             "groups_r2_le_0": len(weak_next),
         },

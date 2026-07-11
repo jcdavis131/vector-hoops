@@ -224,6 +224,19 @@ def should_promote(
     if base_r is None or base_p is None:
         return False, "baseline recall/purity missing"
 
+    validation = new_report.get("population_validation")
+    if not isinstance(validation, dict):
+        return False, "population validation missing"
+    flags = validation.get("collapse_flags")
+    if not isinstance(flags, dict):
+        return False, "population validation collapse flags missing"
+    failed_flags = [
+        name for name, detail in flags.items()
+        if isinstance(detail, dict) and detail.get("flagged") is True
+    ]
+    if failed_flags:
+        return False, "population validation failed: " + ", ".join(failed_flags)
+
     if new_recall < float(base_r) - recall_slack:
         return False, (
             f"recall {new_recall:.3f} < floor {float(base_r) - recall_slack:.3f}"
