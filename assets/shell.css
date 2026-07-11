@@ -2449,6 +2449,7 @@ body.vh-team-themed .landing-favorite__select:focus{
 .skills-board__name:hover{ text-decoration: underline; }
 .skills-board__season{ font: 11px var(--mono); color: var(--ink-soft); }
 .skills-board__grade{ font: 12px var(--mono); font-weight: 700; }
+.skills-board__empty{ font: 12px var(--mono); color: var(--ink-soft); }
 
 /* ---- next-season predicted vs actual (skills profile) ---- */
 .skills-next-profile{

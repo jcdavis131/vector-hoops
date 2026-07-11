@@ -210,7 +210,16 @@
       <code>pipeline/export_next_profile_eval.py</code>).
     </p>
     <p>
-      <b>Steals of the Draft.</b> Pairs a player's stated draft expectation (the rookie-scale slot implied by his pick) against his <b>career mean</b> skill grade across charted seasons (minimum three), both as percentile ranks among drafted players. A late pick who sustained strong production scores as a <b>steal</b>; an early pick who didn't, a <b>bust</b>. Peak single seasons do not drive the board. It is a descriptive gap between expectation and measured production &mdash; not a re-draft or a value verdict &mdash; and it shows only when the draft data is loaded.
+      <b>Steals of the Draft.</b> Pairs what was expected of a player on draft night (the rookie-scale slot implied by his pick) against what he actually produced (his <b>career mean</b> skill grade, weighted by minutes played, so a short cameo season counts less than a full one). Both are turned into percentile ranks and subtracted. A player who beat his expectation is a <b>steal</b>; one who fell short of it, a <b>bust</b>. One hot season never drives the board.
+    </p>
+    <p>
+      <b>The two boards use deliberately different filters.</b> A <b>steal</b> has to have proven it, so we require <b>five</b> charted seasons &mdash; and <b>undrafted players are included</b>, because going unpicked through all 60 selections is the largest expectation there is to beat. A <b>bust</b> is the opposite: filtering on seasons played would quietly delete the very players who washed out. So instead we ask only that enough time has passed to judge (five years since the draft), and we let a short career count as evidence rather than as a disqualifier. A bust's whole career must also fall inside our data window, which begins in 1996-97 &mdash; otherwise a star whose prime we never charted looks like a player who never arrived. Undrafted players cannot be busts: there was no expectation for them to miss.
+    </p>
+    <p>
+      <b>Playoff credit is a bonus, never a penalty.</b> Reaching the postseason is mostly a team outcome, so a steal stranded on a bad franchise loses nothing. A player who showed up in the playoffs &mdash; both how often he got there and how much he produced once there &mdash; gains up to ten points.
+    </p>
+    <p class="methods-plainly">
+      <b>Two honest limits.</b> Because both sides are percentile ranks, the scale runs out at the top: once a player is among the very best, further greatness cannot lift his score much, so an undrafted role player can edge out an undrafted-adjacent superstar. And the career grade is a flat average of twelve skills, which under-rates specialists &mdash; an elite defender who never shot is not fully paid for what made him great. This board is a descriptive gap between expectation and measured production. It is not a re-draft, and not a verdict on a player's value.
     </p>
   </section>
 

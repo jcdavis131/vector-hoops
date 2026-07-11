@@ -591,73 +591,178 @@
 
   // ---- Steals of the Draft: draft expectation vs actual career skill ----
   // Career overall = mean of per-season skill means across charted seasons
-  // (not peak — one hot year shouldn't top the board). Requires min charted
-  // seasons so small-sample outliers stay off the steals/busts lists.
-  var DRAFT = null;
-  var MIN_DRAFT_SEASONS = 3;
+  // (not peak — one hot year shouldn't top the board).
+  //
+  // Steals and busts need OPPOSITE eligibility rules, and using one rule for
+  // both is how the board came to hide its own subject matter:
+  //
+  //   steal — has to have proven it, so require a real career (5 charted
+  //     seasons). Undrafted players are eligible: being passed over by all 60
+  //     picks is the largest expectation there is to beat.
+  //   bust  — measured by elapsed opportunity, NOT by survival. Screening on
+  //     seasons played drops precisely the players who washed out. Instead
+  //     require that enough years have passed since the draft to judge, and
+  //     let a short career count as evidence rather than as a disqualifier.
+  //     Undrafted players cannot bust: there was no expectation to miss.
+  //     Because a short career is the evidence, a bust's career must also fall
+  //     entirely inside the data window — otherwise a pre-1996 All-Star whose
+  //     prime we never charted (Tom Chambers, Xavier McDaniel) tops the board.
+  //     Steals are exempt: 5 charted seasons already rule that failure out, and
+  //     the window would drop Ben Wallace, the canonical undrafted steal.
+  //
+  // Because the two pools differ, percentiles are computed per board.
+  var DRAFT = {};
+  var STEAL_MIN_SEASONS = 5;
+  var BUST_MATURITY_YEARS = 5;
+  var PO_BONUS_MAX = 10;
+
+  // Data window, derived rather than pinned.
+  var SEASON_SPAN = null;
+  function seasonSpan() {
+    if (SEASON_SPAN) return SEASON_SPAN;
+    var lo = Infinity, hi = 0;
+    DATA.players.forEach(function (p) {
+      var v = parseInt(p.season.slice(0, 4), 10);
+      if (v < lo) lo = v;
+      if (v > hi) hi = v;
+    });
+    SEASON_SPAN = { first: lo, latest: hi };
+    return SEASON_SPAN;
+  }
 
   function seasonSkillMean(rowIndex) {
     var g = SKILLS.grades[rowIndex];
     return g.reduce(function (a, b) { return a + b; }, 0) / g.length;
   }
 
+  // Minutes-weighted, so a 200-minute cameo season cannot pull a career mean
+  // around as hard as a 2,900-minute one.
   function careerSkillMean(rec) {
     if (!rec.rows.length) return null;
-    var sum = 0;
-    rec.rows.forEach(function (rr) { sum += seasonSkillMean(rr.i); });
-    return sum / rec.rows.length;
+    var sum = 0, mins = 0;
+    rec.rows.forEach(function (rr) {
+      var m = DATA.players[rr.i].total_min || 0;
+      sum += seasonSkillMean(rr.i) * m;
+      mins += m;
+    });
+    if (!mins) return null;
+    return sum / mins;
   }
 
+  // A bust's career has to be observable from its start.
+  function observedFromStart(rec, ped) {
+    var span = seasonSpan();
+    if (ped.undrafted) {
+      var first = Infinity;
+      rec.rows.forEach(function (rr) {
+        var v = parseInt(rr.season.slice(0, 4), 10);
+        if (v < first) first = v;
+      });
+      return first > span.first;
+    }
+    return !!ped.draft_year && ped.draft_year >= span.first;
+  }
+
+  // Mid-rank percentile. Ties MUST share a rank: 364 second-round picks carry
+  // the identical expect_slot of 0.10, and ranking them by position in the
+  // array handed otherwise-identical players expectation percentiles 28 points
+  // apart — a swing bigger than most real steal scores.
   function pctRank(values) {
     var idx = values.map(function (v, i) { return i; })
       .sort(function (a, b) { return values[a] - values[b]; });
     var out = new Array(values.length);
-    for (var r = 0; r < idx.length; r++) out[idx[r]] = (r + 0.5) / idx.length * 100;
+    var r = 0;
+    while (r < idx.length) {
+      var j = r;
+      while (j + 1 < idx.length && values[idx[j + 1]] === values[idx[r]]) j++;
+      var mid = ((r + j) / 2 + 0.5) / values.length * 100;
+      for (var k = r; k <= j; k++) out[idx[k]] = mid;
+      r = j + 1;
+    }
     return out;
   }
 
-  function computeDraft() {
-    if (DRAFT || !PEDIGREE) return DRAFT;
-    var names = [], overall = [], expect = [], meta = [];
+  // playoffs.json carries a row only for seasons a player actually reached the
+  // postseason, so a missing key is a genuine "did not make it".
+  function playoffRecord(rec) {
+    var apps = 0, prod = 0;
+    if (PLAYOFFS && PLAYOFFS.splits) {
+      rec.rows.forEach(function (rr) {
+        var s = PLAYOFFS.splits[rec.name + '|' + rr.season];
+        if (s && s.po && s.po.GP > 0) { apps++; prod += s.po.PTS100 || 0; }
+      });
+    }
+    return { apps: apps, rate: apps / rec.rows.length, prod: apps ? prod / apps : null };
+  }
+
+  function computeDraft(mode) {
+    // PLAYOFFS is null only while its fetch is in flight; scoring now would
+    // bake in a zero playoff bonus for everyone.
+    if (!PEDIGREE || PLAYOFFS === null) return null;
+    if (DRAFT[mode]) return DRAFT[mode];
+    var cutoff = seasonSpan().latest - BUST_MATURITY_YEARS;
+    var pool = [];
     ORDER.forEach(function (slug) {
       var rec = INDEX[slug];
       var ped = PEDIGREE.players[rec.name];
-      if (!ped || ped.undrafted) return;
-      if (rec.rows.length < MIN_DRAFT_SEASONS) return;
+      if (!ped) return;
+      if (mode === 'steal') {
+        if (rec.rows.length < STEAL_MIN_SEASONS) return;
+      } else {
+        if (ped.undrafted || !ped.draft_year) return;
+        if (ped.draft_year > cutoff) return;
+        if (!observedFromStart(rec, ped)) return;
+      }
       var career = careerSkillMean(rec);
       if (career === null) return;
-      names.push(rec.name);
-      overall.push(career);
-      expect.push(ped.expect_slot);
-      meta.push({ ped: ped, seasons: rec.rows.length });
+      pool.push({ rec: rec, ped: ped, career: career, po: playoffRecord(rec) });
     });
-    var actualPct = pctRank(overall), expectPct = pctRank(expect);
-    DRAFT = names.map(function (name, i) {
-      var m = meta[i];
+
+    var actualPct = pctRank(pool.map(function (p) { return p.career; }));
+    var expectPct = pctRank(pool.map(function (p) { return p.ped.expect_slot; }));
+
+    // Playoff credit is a BONUS and never a penalty: reaching the postseason is
+    // a team outcome, so a steal stranded on a bad franchise loses nothing,
+    // while a player who showed up in the playoffs gains. Production is ranked
+    // only among players who actually appeared.
+    var withProd = [];
+    pool.forEach(function (p, i) { if (p.po.prod !== null) withProd.push(i); });
+    var prodPct = pctRank(withProd.map(function (i) { return pool[i].po.prod; }));
+    var prodOf = {};
+    withProd.forEach(function (i, k) { prodOf[i] = prodPct[k]; });
+
+    DRAFT[mode] = pool.map(function (p, i) {
+      var bonus = PO_BONUS_MAX * (0.5 * p.po.rate + 0.5 * ((prodOf[i] || 0) / 100));
       return {
-        name: name, slug: window.VHDossier.playerSlug(name),
-        overall: Math.round(overall[i]),
-        seasons: m.seasons,
-        pick: m.ped.overall,
-        roundNo: m.ped.round, year: m.ped.draft_year, team: m.ped.team,
-        steal: Math.round(actualPct[i] - expectPct[i]),
+        name: p.rec.name, slug: window.VHDossier.playerSlug(p.rec.name),
+        overall: Math.round(p.career),
+        seasons: p.rec.rows.length,
+        poApps: p.po.apps,
+        pick: p.ped.overall,
+        roundNo: p.ped.round, year: p.ped.draft_year, team: p.ped.team,
+        steal: Math.round(actualPct[i] + bonus - expectPct[i]),
       };
     });
-    return DRAFT;
+    return DRAFT[mode];
   }
 
   function renderDraftBoard(mode) {
-    var d = computeDraft().slice();
+    var d = computeDraft(mode);
+    if (!d) { els.board.innerHTML = '<li class="skills-board__empty">Loading draft data…</li>'; return; }
+    d = d.slice();
     d.sort(function (a, b) { return mode === 'steal' ? b.steal - a.steal : a.steal - b.steal; });
     els.board.innerHTML = d.slice(0, BOARD_ROWS).map(function (r) {
-      var pickLbl = '#' + r.pick + (r.roundNo === 2 ? ' R2' : '') +
-        (r.year ? ' ’' + String(r.year).slice(2) : '');
+      var pickLbl = r.pick
+        ? '#' + r.pick + (r.roundNo === 2 ? ' R2' : '') +
+          (r.year ? ' ’' + String(r.year).slice(2) : '')
+        : 'undrafted';
       var cls = r.steal >= 0 ? 'po-tag--riser' : 'po-tag--fader';
       return '<li>' +
         '<span class="skills-board__name" data-slug="' + esc(r.slug) +
         '">' + esc(r.name) + '</span>' +
         '<span class="skills-board__season">' + pickLbl + ' &middot; career ' + r.overall +
-        ' &middot; ' + r.seasons + ' yr</span>' +
+        ' &middot; ' + r.seasons + ' yr' +
+        (r.poApps ? ' &middot; ' + r.poApps + ' playoff yr' : '') + '</span>' +
         '<span class="skills-board__grade po-tag ' + cls + '">' +
         (r.steal >= 0 ? '+' : '') + r.steal + '</span>' +
         '</li>';
@@ -803,8 +908,12 @@
         .then(function (po) {
           PLAYOFFS = po || false;
           if (PLAYOFFS && current.slug) renderProfile();
+          // The draft boards fold playoff credit into their scores, so any
+          // board drawn while this fetch was in flight has to be rebuilt.
+          DRAFT = {};
+          renderBoard();
         })
-        .catch(function () { PLAYOFFS = false; });
+        .catch(function () { PLAYOFFS = false; DRAFT = {}; renderBoard(); });
       fetch('assets/playoff_paths.json')
         .then(function (r) { return r.ok ? r.json() : null; })
         .then(function (pp) {
