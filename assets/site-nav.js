@@ -10,6 +10,7 @@
     { href: '/teams', label: 'Teams', title: 'Team Labs' },
     { href: '/methods', label: 'Methods' },
     { href: '/leaderboard', label: 'Leaderboard' },
+    { href: '/dashboard', label: 'Lab', title: 'Dumbmodel Lab — Data→Clean→Train→Eval' },
   ];
 
   function mount() {

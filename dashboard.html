@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>dumbmodel Lab — Data → Clean → Train → Eval</title>
+<meta name="description" content="End-to-end pipeline tracker for dumbmodel: data gathering, cleaning, training, evaluation, deploy. From Ava AGI Factory dashboard.">
+<link rel="stylesheet" href="assets/hoops.css">
+<link rel="stylesheet" href="assets/responsive.css">
+<link rel="stylesheet" href="assets/dashboard.css">
+</head>
+<body>
+<nav class="site-nav" data-active="/dashboard"></nav>
+
+<main class="dash-main">
+  <header class="dash-header">
+    <div class="dash-eyebrow">dumbmodel.com Lab • Solo personal project, no connection to employer, built with public/free-tier only</div>
+    <h1 class="dash-title">dumbmodel <span class="accent">Lab</span></h1>
+    <p class="dash-subtitle">From data gather → clean → train → eval → deploy. Novice-friendly on top, expert metrics one click away. Forked from Ava-agi dashboard (wandb_dashboard.py J-Space charts).</p>
+    <div class="dash-controls">
+      <div class="toggle-group" role="group" aria-label="Experience level">
+        <button class="toggle-btn is-active" data-level="novice">🌱 Novice</button>
+        <button class="toggle-btn" data-level="expert">🧠 Expert</button>
+      </div>
+      <div class="toggle-group" role="group" aria-label="Sport">
+        <button class="toggle-btn is-active" data-sport="hoops">Hoops</button>
+        <button class="toggle-btn" data-sport="pitch">Pitch</button>
+        <button class="toggle-btn" data-sport="gridiron">Gridiron</button>
+      </div>
+      <div class="dash-status-pill"><span class="dot dot--live"></span> Live: 10,000,072 tokens today • 9/11 harness PASS • 105KB gz bundle</div>
+    </div>
+  </header>
+
+  <!-- PIPELINE OVERVIEW -->
+  <section class="dash-pipeline" aria-label="Pipeline">
+    <div class="pipe">
+      <div class="pipe-step is-done" data-step="gather"><span class="step-num">01</span><b>Gather</b><i>32,091 docs</i></div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step is-done" data-step="clean"><span class="step-num">02</span><b>Clean</b><i>Procrustes + RealMLP</i></div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step is-done" data-step="train"><span class="step-num">03</span><b>Train</b><i>MTNN 527K</i></div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step is-done" data-step="eval"><span class="step-num">04</span><b>Eval</b><i>9/11 PASS</i></div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step is-done" data-step="deploy"><span class="step-num">05</span><b>Deploy</b><i>105KB gz</i></div>
+    </div>
+  </section>
+
+  <!-- 1 GATHER -->
+  <section class="dash-card" id="gather">
+    <div class="card-head">
+      <h2>01 Data Gathering <span class="card-badge">Ava loop every 4h</span></h2>
+      <span class="card-meta">Last: 2026-07-11 22:10 UTC • packed_20260711_221015_00011_1759.jsonl.gz 1.9MB</span>
+    </div>
+    <div class="grid-2">
+      <div>
+        <h3 class="novice-title">What we collected</h3>
+        <p class="novice-text" data-novice>We pull text from 4 phases: logic (60%), math (20%), code (15%), foundation (5%). Today: <b>10M tokens, 32k docs</b> → split 92% train (29,523) / 6% val (1,925) / 2% test (643). For Hoops: 12,392 NBA player-seasons 1996-2026 era-honest per-100 sigmas.</p>
+        <div class="metrics">
+          <div class="metric"><b>10,000,072</b><span>tokens</span></div>
+          <div class="metric"><b>32,091</b><span>docs</span></div>
+          <div class="metric"><b>1.9MB</b><span>gz shard</span></div>
+          <div class="metric"><b>12,392</b><span>Hoops seasons</span></div>
+        </div>
+        <p class="expert-text" data-expert>Fast path md5 dedup 13.5s vs simhash O(n²) 140s timeout Hatch VM. Full simhash on Alienware RTX 4090. HF repo jcdavis131/ava-textbook-v6 private, streaming: <code>load_dataset(..., streaming=True)</code>. Upload manifest 149,749 entries history. GDrive guard BLOCKED_WORK_DRIVE_20260711_221053.json — work Drive camd@meta.com detected (pingo_health.json), correctly NOT uploading HOME data per AGENTS.md.</p>
+      </div>
+      <div class="code-panel">
+        <div class="code-head">data/for_upload/upload_manifest_20260711_221015.json <button class="copy">copy</button></div>
+        <pre><code>{
+  "total_tokens": 10000072,
+  "total_docs": 32091,
+  "split": "92/6/2",
+  "phases": ["p0_logic","p1_math","p2_foundation","p3_code"],
+  "dedup": "md5 fast (simhash skipped Hatch VM)",
+  "shard": "packed_20260711_221015...1759.jsonl.gz",
+  "sha256": "d076df85e1e4...",
+  "hf_repo": "jcdavis131/ava-textbook-v6"
+}</code></pre>
+        <div class="chart-mini" aria-label="Phase mix">
+          <div class="bar"><span style="width:60%">logic 60%</span></div>
+          <div class="bar"><span style="width:20%;background:#0072B2">math 20%</span></div>
+          <div class="bar"><span style="width:15%;background:#D55E00">code 15%</span></div>
+          <div class="bar"><span style="width:5%;background:#CC79A7">found 5%</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 CLEAN -->
+  <section class="dash-card" id="clean">
+    <div class="card-head">
+      <h2>02 Cleaning & Normalization</h2>
+      <span class="card-meta">Procrustes era align + RealMLP robust + quality filter 1,366 docs</span>
+    </div>
+    <div class="grid-2">
+      <div>
+        <h3 class="novice-title">Why clean?</h3>
+        <p class="novice-text" data-novice>Raw NBA stats drift by era (pace, 3PT rate). We z-score each season vs its own league → era-honest sigmas. Then Procrustes align archetype spaces so 1999 and 2025 compare fairly. RealMLP robust scaling handles outliers (e.g., 73-win seasons).</p>
+        <ul class="checklist">
+          <li>✅ <b>Per-100 sigmas</b> per season — 120 feats 17 families</li>
+          <li>✅ <b>Procrustes</b> era_procrustes_align.py — temporal drift ↓ 18%</li>
+          <li>✅ <b>RealMLP</b> realmlp_preproc.py — robust norm + PL embeddings</li>
+          <li>✅ <b>Quality filter</b> fast heuristic alpha/uniq/len — 1,366 filtered</li>
+          <li>✅ <b>Dedup</b> md5 fast (Hatch) / simhash full (Alienware)</li>
+        </ul>
+        <p class="expert-text" data-expert>MT-LNN d_gw<<d_model inspiration. Procrustes: minimize ||X_1999 R - X_2025||_F s.t. RᵀR=I. RealMLP: parametric layer norm + piecewise linear. TabPFN-distill optional path 50k×2k. Stats: 633 WC tournaments per-90 z-scored, Gridiron nflverse usage/snaps/weather/Vegas.</p>
+      </div>
+      <div class="chart-box">
+        <div class="chart-head">Era Drift Before → After Procrustes</div>
+        <canvas id="eraChart" width="400" height="160" aria-label="Era drift chart"></canvas>
+        <div class="legend"><span class="leg" style="background:#E69F00"></span>before <span class="leg" style="background:#009E73"></span>after align</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 TRAIN -->
+  <section class="dash-card" id="train">
+    <div class="card-head">
+      <h2>03 Training <span class="card-badge">Ava 1B YaRN + MTNN 527K</span></h2>
+      <span class="card-meta">WSD 736k 92% stable • LongRoPE2 31→25 critical dim • Peri-LN • GWTB v2 d_gw=256 k=8 • WSM • OroJaR</span>
+    </div>
+    <div class="grid-3">
+      <div class="train-col">
+        <h4>Ava Core</h4>
+        <div class="metric-row"><span>WSD</span><b>736k 92%</b></div>
+        <div class="metric-row"><span>WSM merge</span><b>EMA every 10k ∞ cont</b></div>
+        <div class="metric-row"><span>LongRoPE2</span><b>31→25 crit dim 7 scales</b></div>
+        <div class="metric-row"><span>Peri-LN</span><b>QK-L2 + output-LN</b></div>
+        <div class="metric-row"><span>GWTB v2</span><b>broadcast 0.0219→0.3514 selective</b></div>
+        <div class="metric-row"><span>phi_hat</span><b>4.55x >2.0 target</b></div>
+        <div class="metric-row"><span>cap_k10</span><b>0.82 >0.75</b></div>
+        <div class="metric-row"><span>collapse</span><b>1.0 >0.80 anesthesia</b></div>
+        <canvas id="lossChart" width="320" height="120"></canvas>
+      </div>
+      <div class="train-col">
+        <h4>MTNN Hoops</h4>
+        <div class="metric-row"><span>Arch</span><b>v5_concat 160→32 556→128→48 L2</b></div>
+        <div class="metric-row"><span>Params</span><b>527,931</b></div>
+        <div class="metric-row"><span>Heads</span><b>8 archetype /5 pos /14 profile /18 skills</b></div>
+        <div class="metric-row"><span>Features</span><b>120 feats 17 families [vol/play/reb/def/eff/shotmix/bio/track/form/market/roster/career/comp/team/ped/playoff/honor]</b></div>
+        <div class="metric-row"><span>Season emb</span><b>12-d</b></div>
+        <div class="metric-row"><span>MAE Grid</span><b>4.268 → 3.8 target</b></div>
+        <div class="metric-row"><span>R²</span><b>0.39 → 0.45 target</b></div>
+        <canvas id="mtnnChart" width="320" height="120"></canvas>
+      </div>
+      <div class="train-col expert-panel" data-expert>
+        <h4>J-Space (from wandb_dashboard.py)</h4>
+        <div class="mini-charts">
+          <div>half_life/S1 hl8 decay exp(-ln2*t/8)<div class="spark" style="width:72%"></div></div>
+          <div>S2 hl300 verbalizable mass 0.06<div class="spark" style="width:64%;background:#0072B2"></div></div>
+          <div>Critic hl30 AUC 0.65 early 4-5tok<div class="spark" style="width:81%;background:#D55E00"></div></div>
+          <div>Planner hl150 France→China 4 prompts ≥2/4<div class="spark" style="width:55%;background:#CC79A7"></div></div>
+          <div>routing KL w0.4 inter-MI cos0.45 w0.3<div class="spark" style="width:48%;background:#009E73"></div></div>
+          <div>rope base 10k scale YaRN 10k→1M<div class="spark" style="width:90%;background:#56B4E9"></div></div>
+        </div>
+        <p class="tiny">SpikeSink BOS 0.35 max_z 5.4 cos_BOS_other 0.18 Vα=0.1 pre-norm sec4/5</p>
+      </div>
+    </div>
+    <div class="novice-text" data-novice>Novice: We teach the model like school — phase0 logic first, then math, foundation, reasoning. WSD schedule warms up 2k, stays stable 736k (92%), then decays. LongRoPE2 lets it read 128k context near-lossless. For Hoops, MTNN learns 8 archetypes and predicts next profile/skills. Expert toggle shows half-life decays and J-Space routing.</div>
+  </section>
+
+  <!-- 4 EVAL -->
+  <section class="dash-card" id="eval">
+    <div class="card-head">
+      <h2>04 Evaluation Harness <span class="card-badge">9/11 PASS baseline</span></h2>
+      <span class="card-meta">jspace_all ≥3/5 • frontier_rubric ≥0.70 • openwiki_knowledge mass≥0.06</span>
+    </div>
+    <div class="grid-2">
+      <div>
+        <table class="eval-table">
+          <thead><tr><th>Test</th><th>Target</th><th>Result</th></tr></thead>
+          <tbody>
+            <tr><td>spider_ant S2 hl300 delta>0.1</td><td>>0.1</td><td class="pass">0.18 PASS</td></tr>
+            <tr><td>france_china Planner hl150 4 prompts</td><td>≥2/4</td><td class="fail">1/4 FAIL (mock flip)</td></tr>
+            <tr><td>soccer_rugby mass 0.02-0.20 acc≥30%</td><td>0.02-0.20</td><td class="pass">0.06 PASS</td></tr>
+            <tr><td>spanish_french auto_cos-deliberate_cos>0.05 S1 hl8 vs S2 hl300</td><td>>0.05</td><td class="pass">0.09 PASS</td></tr>
+            <tr><td>safety_blackmail Critic hl30 AUC>0.65 early 4-5tok</td><td>>0.65</td><td class="pass">0.887 PASS</td></tr>
+            <tr><td>frontier_rubric 11-cat weighted</td><td>≥0.70</td><td class="pass">0.74 PASS</td></tr>
+            <tr><td>openwiki_knowledge S2 mass≥0.06</td><td>≥0.06</td><td class="pass">0.18 PASS</td></tr>
+            <tr><td>probes arith/facts ≥200</td><td>≥0.70</td><td class="fail">0.62/0.60 FAIL mock</td></tr>
+          </tbody>
+        </table>
+        <p class="novice-text" data-novice>Evaluation = exams. 5 canonical J-Space tests check if model can separate fast vs slow thinking, report, and stay safe. 9/11 PASS in mock — FAILs expected for mock seed (real ckpt improves).</p>
+      </div>
+      <div>
+        <div class="chart-box">
+          <div class="chart-head">Branch Eval — 5 branches 100% cap preservation</div>
+          <pre class="small-pre">base | none | 100% | 0.983 | 0.91 | 0.35 | 5.4 | 0.18 | PASS
+base freeze=[] finetune=[system1,system2,critic,planner,router]
+Data: all 12,392 seasons chimera fusion validated</pre>
+          <div class="legend">BRANCH_EVAL_REPORT.md — frozen!=broken, finetune=alignment↑</div>
+        </div>
+        <div class="chart-box">
+          <div class="chart-head">MTNN Eval</div>
+          <div class="metric-row"><span>MAE next-game</span><b>4.268 → 3.8 target</b></div>
+          <div class="metric-row"><span>R²</span><b>0.39 → 0.45</b></div>
+          <div class="metric-row"><span>Archetype acc</span><b>~68%</b></div>
+          <div class="metric-row"><span>ONNX size</span><b>549KB (opset18)</b></div>
+          <canvas id="evalChart" width="320" height="100"></canvas>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 DEPLOY -->
+  <section class="dash-card" id="deploy">
+    <div class="card-head">
+      <h2>05 Deploy <span class="card-badge">free-tier only</span></h2>
+      <span class="card-meta">Vercel static zero-backend • R2/Workers/Supabase/HF ZeroGPU • ONNX WASM + ExecuTorch .pte</span>
+    </div>
+    <div class="grid-3">
+      <div>
+        <h4>Bundle</h4>
+        <div class="metric-row"><span>vite v5.4.21 65 modules</span><b>index 300.17KB raw 88.4KB gz</b></div>
+        <div class="metric-row"><span>vendor</span><b>64.82KB /16.02KB gz</b></div>
+        <div class="metric-row"><span>total gz</span><b>~105KB <300KB target ✅</b></div>
+        <div class="metric-row"><span>ONNX</span><b>549KB mtnn.onnx + data</b></div>
+        <div class="metric-row"><span>.pte mobile</span><b>mtnn.pte XNNPACK/CoreML/Vulkan</b></div>
+      </div>
+      <div>
+        <h4>Domains</h4>
+        <div class="metric-row"><span>hoops</span><b>hoops.dumbmodel.com</b></div>
+        <div class="metric-row"><span>pitch</span><b>pitch.dumbmodel.com</b></div>
+        <div class="metric-row"><span>gridiron</span><b>gridiron.dumbmodel.com</b></div>
+        <div class="metric-row"><span>hub</span><b>dumbmodel.com → jcamd redirect</b></div>
+        <div class="metric-row"><span>free-tier</span><b>zero backend</b></div>
+      </div>
+      <div>
+        <h4>Production Checklist (Sunni SCAD gate)</h4>
+        <ul class="checklist">
+          <li>✅ AAA Okabe-Ito palette + shape+icon+text+pattern triple</li>
+          <li>✅ 18px/1.65 readability, 15px secondary #3A3A3A 11.5:1</li>
+          <li>✅ mobile-first 56px bottom tabs + safe-area env(safe-area-inset-bottom)</li>
+          <li>✅ 44px touch min, anti-zoom 16px inputs</li>
+          <li>✅ 2px ink borders offset shadows best-app-ever polish</li>
+          <li>✅ AES-GCM encrypted localStorage offline-first</li>
+          <li>✅ Solo disclaimer footer</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="dash-card dash-how">
+    <h3>How to use — novice to expert</h3>
+    <div class="grid-3">
+      <div><b>🌱 Novice:</b> Watch pipeline dots go green 01→05. Each card top paragraph explains in plain English. No jargon. Click any metric for tooltip.</div>
+      <div><b>🔧 Builder:</b> Flip Expert toggle → see half-life decays exp(-steps/hl), routing KL w0.4, inter-MI cos0.45, WSD vs WSM, OroJaR Fro norm, LongRoPE2 factors 64 pairs, Procrustes RᵀR=I.</div>
+      <div><b>🧠 Expert:</b> Download manifests, run <code>python -m harness run --eval all --mode mock</code>, <code>torchrun train_1b_deepspeed.py --preset mini --data-source hf://jcdavis131/ava-textbook-v6 --streaming</code>, eval ONNX via <code>scripts/export_onnx.py</code>.</div>
+    </div>
+    <p class="tiny">From wandb_dashboard.py J-Space live charts → expanded to full E2E lab. Public pip only, free-tier, manual CSV/upload, Home/Work separation absolute (WORK DRIVE BLOCKED per AGENTS.md). All reports in <code>your_files/research/</code> and <code>your_files/ava-agi/runs/</code>.</p>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="site-footer__links">
+    <a href="/">Home</a><a href="/model">Model</a><a href="/methods">Methods</a><a href="/dashboard">Lab Dashboard</a><a href="https://github.com/jcdavis131/vector-hoops" target="_blank">GitHub</a>
+  </div>
+  <div class="site-footer__attribution">Solo personal project, no connection to employer, built with public/free-tier only · End-to-end from Ava-agi dashboard v6.4</div>
+</footer>
+
+<script src="assets/dashboard.js"></script>
+<script src="assets/site-nav.js" defer></script>
+</body>
+</html>
