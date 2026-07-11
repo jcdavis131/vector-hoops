@@ -281,12 +281,9 @@ HYBRID_CONFIGS: list[dict] = [
 
 
 def composite_score(test_recall: float | None, purity: float | None) -> float:
-    """Promotion-aware: purity gate is the current blocker."""
-    tr = test_recall or 0.0
-    pu = purity or 0.0
-    if tr < RECALL_RANK_FLOOR:
-        return 0.3 * tr + 0.3 * pu
-    return 0.4 * tr + 0.6 * pu
+    """Promotion-aware mid-sweep proxy — delegates to composite_score.partial_cqs."""
+    import composite_score as cqs
+    return cqs.partial_cqs(test_recall, purity)
 
 
 def build_grid(profile: str, quick: bool) -> list[dict]:

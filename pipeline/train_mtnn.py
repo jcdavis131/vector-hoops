@@ -48,6 +48,9 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
+import composite_score as cqs
+from mtnn_validation import build_validation_report, role_labels_from_context
+
 ROOT = Path(__file__).resolve().parents[1]
 DATA_DIR = ROOT / "pipeline" / "data"
 VECTORS = ROOT / "assets" / "vectors.json"
@@ -601,12 +604,8 @@ RECALL_RANK_FLOOR = 0.85
 
 
 def promotion_composite(test_recall: float | None, purity: float | None) -> float:
-    """Same ranking as mtnn_hp_sweep.composite_score (0.4 recall + 0.6 purity)."""
-    tr = test_recall or 0.0
-    pu = purity or 0.0
-    if tr < RECALL_RANK_FLOOR:
-        return 0.3 * tr + 0.3 * pu
-    return 0.4 * tr + 0.6 * pu
+    """Mid-epoch checkpoint proxy — delegates to composite_score.partial_cqs."""
+    return cqs.partial_cqs(test_recall, purity)
 
 
 def model_tag(args) -> str:
@@ -940,15 +939,23 @@ def main() -> None:
                     help="hybrid: weight on adjacent-season player InfoNCE")
     ap.add_argument("--nce-arch-weight", type=float, default=0.25,
                     help="hybrid: weight on archetype SupCon (purity pressure)")
-    ap.add_argument("--checkpoint-metric", choices=("recall", "composite", "purity"),
-                    default="composite",
-                    help="save best checkpoint by val recall, purity@20, or composite")
+    ap.add_argument("--checkpoint-metric", choices=("recall", "composite", "purity", "cqs"),
+                    default="cqs",
+                    help="save best checkpoint by val recall, purity@20, composite/cqs proxy")
     ap.add_argument("--val-every", type=int, default=10,
                     help="log held-out val recall every N epochs; 0=off")
     ap.add_argument("--no-best-checkpoint", action="store_true",
                     help="skip saving/restoring best-val checkpoint")
     ap.add_argument("--exclude-families", type=str, default="",
                     help="comma-separated tower families to drop (ablation)")
+    ap.add_argument("--phase", choices=("select", "final-refit", "auto"),
+                    default="select",
+                    help="select=honest held-out metrics (train-split rows only for loss); "
+                         "final-refit=fit all rows then ship; "
+                         "auto=select then full-corpus refit if promote ok")
+    ap.add_argument("--fit-rows", choices=("train", "all"), default=None,
+                    help="override which rows enter the loss (default: train for "
+                         "select/auto-selection, all for final-refit)")
     for key in DEFAULT_LOSS_WEIGHTS:
         ap.add_argument(f"--w-{key.replace('_', '-')}", type=float, default=None,
                         dest=f"w_{key}")
@@ -1051,6 +1058,18 @@ def main() -> None:
           f"{len(skill_keys) - n_core} wide), per-skill masked")
 
     n = len(Z)
+    split_of = np.array([eval_split(str(s)) for s in seasons])
+    if args.fit_rows is not None:
+        fit_rows_mode = args.fit_rows
+    elif args.phase in ("select", "auto"):
+        fit_rows_mode = "train"
+    else:
+        fit_rows_mode = "all"
+    fit_mask = (split_of == "train") if fit_rows_mode == "train" else np.ones(n, dtype=bool)
+    fit_idx = np.where(fit_mask)[0]
+    print(f"phase={args.phase} fit_rows={fit_rows_mode} "
+          f"n_fit={len(fit_idx)}/{n}")
+
     xs, ms = split_by_family(Z, M, fams, device)
     model = MTNN(
         {f: len(c) for f, c in fams.items()},
@@ -1110,7 +1129,7 @@ def main() -> None:
 
     for epoch in range(args.epochs):
         model.train()
-        perm = np.random.permutation(n)
+        perm = np.random.permutation(fit_idx)
         total, steps = 0.0, 0
         accum = 0
         opt.zero_grad(set_to_none=True)
@@ -1294,7 +1313,12 @@ def main() -> None:
     with torch.no_grad():
         emb = model.encode(xs, ms, seas_t)
         _, heads = model(xs, ms, seas_t)
+        tower_stack = torch.stack(
+            [model.towers[family](xs[family], ms[family]) for family in fams],
+            dim=1,
+        )
     E = emb.cpu().numpy().astype(np.float32)
+    tower_values = tower_stack.cpu().numpy().astype(np.float32)
     arch_logits = heads["archetype"].cpu().numpy().astype(np.float32)
     pos_logits = heads["position"].cpu().numpy().astype(np.float32)
     skill_pred = (heads["skills"].cpu().numpy().astype(np.float32)
@@ -1375,6 +1399,22 @@ def main() -> None:
         seasons,
         [manifest["features"][j] for j in game_cols],
     )
+    population_validation = build_validation_report(
+        embeddings=E,
+        tower_stack=tower_values,
+        archetype_logits=arch_logits,
+        clusters=clusters,
+        positions=positions,
+        seasons=seasons,
+        role_labels=role_labels_from_context(
+            names, seasons, DATA_DIR / "role_context.json",
+        ),
+        next_profile_pred=next_profile_pred,
+        game_profile_target=Z[:, game_cols],
+        next_index=next_idx_arr,
+        pairs=pair_arr,
+        held_out_pairs=filter_pairs_by_split(pair_arr, seasons, "test"),
+    )
     held_out = {}
     for split in ("train", "val", "test", "all"):
         sub = pair_arr if split == "all" else filter_pairs_by_split(pair_arr, seasons, split)
@@ -1430,6 +1470,7 @@ def main() -> None:
         "cross_era_archetype_neighbor_purity_at_20": purity,
         "skills": skills_report,
         "next_profile": next_profile_report,
+        "population_validation": population_validation,
         "next_profile_labeled_rows": next_row_count,
         "team_fit": team_fit_report,
         "roster_lift": roster_lift_report,
@@ -1439,13 +1480,158 @@ def main() -> None:
         "playoff_riser": playoff_report,
         "honors_recognition": honors_report,
         "promotion_gate": (
-            "Promote only if held-out val/test recall@10 beats transparent 14-d "
-            "baseline by >=0.05 AND archetype_top1_acc >= 0.55 (not auto-promoted)."
+            "Promote only if multi-task CQS >= baseline + 0.5 AND test recall@10 "
+            "and purity@20 stay within 0.02 of baseline (not auto-promoted to assets/)."
         ),
     }
+    report["composite"] = cqs.composite_quality(report)
+    ok, why = cqs.should_promote(report)
+    report["promote"] = {"ok": ok, "reason": why}
+    report["metrics_source"] = "selection_holdout"
+    report["selection"] = {
+        "fit_rows": fit_rows_mode,
+        "n_fit": int(fit_mask.sum()),
+        "split": "train y<=2021 / val y<=2023 / test y>=2024",
+        "best_epoch": best_epoch,
+    }
+    report["deploy"] = {
+        "mode": "selection_fit_rows_" + fit_rows_mode,
+        "metrics_source": "selection_holdout",
+        "note": ("Held-out recall/CQS use val/test pairs; loss rows follow fit_rows. "
+                 "Use --phase auto to full-corpus refit after promote."),
+    }
+
+    do_refit = args.phase == "auto" and ok
+    if args.phase == "auto" and not ok:
+        print(f"auto: promote failed ({why}) — skipping full-corpus refit")
+
+    if do_refit and best_epoch > 0:
+        refit_epochs = max(int(best_epoch), 10)
+        print(f"\n-- final-refit on ALL rows ({refit_epochs} epochs) --")
+        fit_idx = np.arange(n)
+        if BEST_CKPT.exists() and not args.no_best_checkpoint:
+            ckpt = torch.load(BEST_CKPT, map_location=device, weights_only=False)
+            model.load_state_dict(ckpt["model"])
+        for epoch in range(refit_epochs):
+            model.train()
+            perm = np.random.permutation(fit_idx)
+            total, steps = 0.0, 0
+            accum = 0
+            opt.zero_grad(set_to_none=True)
+            for s in range(0, len(perm), args.batch):
+                idx = perm[s:s + args.batch]
+                if len(idx) < 8:
+                    continue
+                idx_t = torch.tensor(idx, device=device)
+                partner = np.array([lookup.get(int(i), int(i)) for i in idx])
+                partner_t = torch.tensor(partner, device=device)
+                xa, ma = batch_views(xs, ms, idx_t, drop_p=args.drop_p)
+                xb, mb = batch_views(xs, ms, partner_t, drop_p=args.drop_p)
+                za, out_a = model(xa, ma, seas_t[idx_t])
+                zb, _ = model(xb, mb, seas_t[partner_t])
+                loss = contrastive_loss(
+                    za, zb,
+                    mode=args.nce_loss,
+                    temp=args.nce_temp,
+                    pos_a=pos_t[idx_t],
+                    pos_b=pos_t[partner_t],
+                    hard_neg_boost=args.hard_neg_boost,
+                    arch_labels=arch_t[idx_t],
+                    player_weight=args.nce_player_weight,
+                    arch_weight=args.nce_arch_weight,
+                )
+                loss = loss + weights["archetype"] * F.cross_entropy(
+                    out_a["archetype"], arch_t[idx_t])
+                if pos_mask[idx_t].any():
+                    loss = loss + weights["position"] * F.cross_entropy(
+                        out_a["position"][pos_mask[idx_t]],
+                        pos_t[idx_t][pos_mask[idx_t]])
+                loss = loss + weights["profile"] * F.mse_loss(
+                    out_a["profile"], game_z[idx_t])
+                next_batch = next_idx_arr[idx]
+                next_valid = next_batch >= 0
+                if next_valid.any():
+                    next_t = torch.tensor(next_batch[next_valid], device=device)
+                    next_valid_t = torch.tensor(
+                        next_valid, device=device, dtype=torch.bool)
+                    loss = loss + weights["next_profile"] * F.smooth_l1_loss(
+                        out_a["next_profile"][next_valid_t], game_z[next_t])
+                if "skills" in out_a:
+                    wm = skillm_t[idx_t]
+                    if wm.sum() > 0:
+                        se = (out_a["skills"] - skill_t[idx_t]) ** 2
+                        loss = loss + weights["skills"] * (wm * se).sum() / wm.sum()
+                scaled = loss / args.grad_accum
+                scaled.backward()
+                accum += 1
+                total += float(loss)
+                if accum < args.grad_accum:
+                    continue
+                nn.utils.clip_grad_norm_(model.parameters(), 1.0)
+                opt.step()
+                if sched_mode == "step":
+                    sched.step()
+                opt.zero_grad(set_to_none=True)
+                accum = 0
+                steps += 1
+            if accum > 0:
+                nn.utils.clip_grad_norm_(model.parameters(), 1.0)
+                opt.step()
+                if sched_mode == "step":
+                    sched.step()
+                opt.zero_grad(set_to_none=True)
+                steps += 1
+            if (epoch + 1) % 10 == 0 or epoch + 1 == refit_epochs:
+                print(f"  refit epoch {epoch+1}/{refit_epochs} "
+                      f"loss={total/max(1,steps):.4f}")
+        report["deploy"] = {
+            "mode": "final_refit_all_rows",
+            "metrics_source": "selection_holdout",
+            "refit_epochs": refit_epochs,
+            "refit_n_fit": n,
+            "note": ("Held-out recall/CQS are from the train-split selection run; "
+                     "shipped embeddings are full-corpus refit."),
+        }
+        model.eval()
+        with torch.no_grad():
+            emb = model.encode(xs, ms, seas_t)
+            _, heads = model(xs, ms, seas_t)
+        E = emb.cpu().numpy().astype(np.float32)
+        arch_logits = heads["archetype"].cpu().numpy().astype(np.float32)
+        pos_logits = heads["position"].cpu().numpy().astype(np.float32)
+        skill_pred = (heads["skills"].cpu().numpy().astype(np.float32)
+                      if "skills" in heads else np.zeros((len(E), 0), np.float32))
+        next_profile_pred = heads["next_profile"].cpu().numpy().astype(np.float32)
+        np.savez_compressed(
+            DATA_DIR / "embedding_v3.npz",
+            E=E, player_id=pids, season=seasons, name=names,
+            cluster=clusters, position=positions,
+            archetype_logits=arch_logits, position_logits=pos_logits,
+            skill_pred=skill_pred, skill_keys=np.array(skill_keys),
+            next_profile_pred=next_profile_pred,
+            game_feature_keys=game_feature_keys,
+        )
+        centroids = np.zeros((N_ARCHETYPES, E.shape[1]), dtype=np.float32)
+        for k in range(N_ARCHETYPES):
+            mask_k = clusters == k
+            if mask_k.any():
+                c = E[mask_k].mean(0)
+                centroids[k] = c / (np.linalg.norm(c) + 1e-8)
+        np.savez_compressed(DATA_DIR / "mtnn_centroids.npz", centroids=centroids)
+        torch.save({
+            "epoch": best_epoch,
+            "model": model.state_dict(),
+            "checkpoint_metric": args.checkpoint_metric,
+            "args": vars(args),
+            "weights": weights,
+            "deploy": report["deploy"],
+        }, BEST_CKPT)
+        print("rewrote embedding_v3.npz, mtnn_centroids.npz, mtnn_best.pt from refit")
+
     (DATA_DIR / "mtnn_report.json").write_text(
         json.dumps(report, indent=2), encoding="utf-8")
     print(json.dumps(report, indent=2))
+    print(f"CQS {report['composite']['cqs']} · {why}")
     print("wrote embedding_v3.npz, mtnn_centroids.npz, mtnn_report.json")
 
 

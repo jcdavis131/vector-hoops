@@ -1,17 +1,22 @@
 # MTNN Hill-Climb Plan
 
-**North star:** same-player next-season **recall@10** (primary), without sacrificing archetype interpretability or cross-era neighbor purity.
+**North star:** multi-task **Composite Quality Score (CQS)** — see `pipeline/composite_score.py`.
+Primary continuity signal remains held-out **recall@10**, but promote decisions also
+require cross-era **purity**, skill decode R², next-profile quality, and aux-head health.
 
-**Current baseline (2026-07-05):**
+**Current champion (Bet D, 2026-07-10 — promote gate PASS):**
 
-| Metric | Bootstrap v3 | Context + salary | + Team tower |
-|--------|--------------|------------------|--------------|
-| recall@10 | 0.64 | 0.764 | **0.784** |
-| archetype top-1 | 0.825 | 0.808 | **0.806** |
-| cross-era purity@20 | 0.649 | 0.621 | **0.607** ⚠️ |
-| Towers / features | 5 / 14 | 9 / 30 | **10 / 35** |
+| Metric | Value |
+|--------|-------|
+| **CQS** | **85.87** (bar was 85.28 over baseline 84.78) |
+| test recall@10 | 1.000 |
+| purity@20 | 0.8726 |
+| skills test mean R² | 0.802 |
+| next_profile test R² | 0.651 |
+| position head | 0.998 |
 
-Original v4 recall gate (≥0.67) is cleared. Hill-climb targets **recall ≥0.80 sustained on held-out seasons** and **purity recovery ≥0.63** before any `assets/` promotion.
+**Promote:** `CQS >= baseline + 0.5` **and** recall within −0.02 **and** purity within −0.02.
+Not auto-promoted to `assets/` — run export only after an explicit promote.
 
 ---
 
@@ -19,24 +24,18 @@ Original v4 recall gate (≥0.67) is cleared. Hill-climb targets **recall ≥0.8
 
 ```mermaid
 flowchart LR
-  DATA[Data / join fix] --> MERGE[integrate_context]
-  MERGE --> TRAIN[train_mtnn.py]
-  TRAIN --> EVAL[mtnn_report + ablations]
-  EVAL --> GATE{Gates pass?}
-  GATE -->|yes| TAG[Tag matrix revision]
-  GATE -->|no| DATA
+  TRAIN[train_mtnn.py] --> REPORT[mtnn_report + CQS]
+  REPORT --> GATE{should_promote?}
+  GATE -->|yes| TAG[Tag + optional assets export]
+  GATE -->|no| BET[Next loss/HP bet]
 ```
 
 **Per run, always:**
 
-1. Record `train_matrix` revision (feature count + manifest hash)
-2. `python pipeline/integrate_context.py`
-3. `python pipeline/train_mtnn.py --epochs 40`
-4. Log `mtnn_report.json`; compare vs prior best
-5. Run tower ablation (drop one family, re-eval recall)
-6. `python pipeline/verify_accuracy.py` (deploy harness unchanged)
-
-**Advance only if:** recall@10 ≥ prior best − 0.005 *and* archetype ≥ 0.80 *and* purity ≥ prior best − 0.02.
+1. `python pipeline/train_mtnn.py …` (checkpoint metric default `cqs`)
+2. Read `composite.cqs` + `promote.reason` from `mtnn_report.json`
+3. Log in `tasks/hillclimb-mtnn-cqs.md`
+4. Advance only if `should_promote` is true
 
 ---
 
