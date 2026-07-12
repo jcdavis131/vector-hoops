@@ -67,7 +67,7 @@
   </section>
 
   <section class="dash-card" id="train">
-    <div class="card-head"><h2>03 Train — MTNN 160→32 towers 556→128→48 behind every guess</h2><span class="card-meta">pipeline/train_mtnn_v6.py + TabPFN-distill + MoE gating path</span></div>
+    <div class="card-head"><h2>03 Train — MTNN 160→32 towers 556→128→48 behind every guess</h2><span class="card-meta">pipeline/train_mtnn_v6.py + TabPFN-distill</span></div>
     <div class="grid-3">
       <div class="train-col"><h4>Towers</h4><div class="metric-row"><span>120 feats → 17×</span><b>160→32 LN GELU res×2 =544</b></div><div class="metric-row"><span>+ season emb</span><b>12-d →556</b></div><div class="metric-row"><span>Fusion</span><b>556→128→48 L2</b></div><div class="metric-row"><span>Params</span><b>527,931</b></div><canvas id="towerChart" width="320" height="90"></canvas></div>
       <div class="train-col"><h4>Heads powering games</h4><div class="metric-row"><span>8 archetypes</span><b>Trends + Career Arc 48→64→k</b></div><div class="metric-row"><span>5 positions</span><b>pos classifier</b></div><div class="metric-row"><span>14 next_profile</span><b>Pivot + What-If</b></div><div class="metric-row"><span>18 skills</span><b>Best Teammate 48→16→1</b></div><div class="metric-row"><span>Chimera</span><b>2 seasons → 48-d fuse nearest</b></div><div class="metric-row"><span>Era Twin</span><b>Procrustes nearest cross-era</b></div></div>

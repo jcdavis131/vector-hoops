@@ -956,6 +956,12 @@ def main() -> None:
     ap.add_argument("--fit-rows", choices=("train", "all"), default=None,
                     help="override which rows enter the loss (default: train for "
                          "select/auto-selection, all for final-refit)")
+    ap.add_argument("--era-align", choices=("none", "procrustes"), default="none",
+                    help="v6: rotate the 14 game-feature dims into the 1996-97 root "
+                         "frame via assets/drift.json chainedToRoot before training")
+    ap.add_argument("--robust-scaling", action="store_true",
+                    help="v6: replace the season z-scores with per-season median/IQR "
+                         "scaling (RealMLP-style, clip [-3,3]) before training")
     for key in DEFAULT_LOSS_WEIGHTS:
         ap.add_argument(f"--w-{key.replace('_', '-')}", type=float, default=None,
                         dest=f"w_{key}")
@@ -973,6 +979,21 @@ def main() -> None:
 
     (Z, M, names, seasons, pids, clusters, positions, season_ids,
      manifest) = load_bundle()
+
+    if args.era_align == "procrustes":
+        from era_procrustes_align import load_alignment, align_batch
+        chains = load_alignment()["chains"]
+        Z = align_batch(Z, [str(s) for s in seasons], chains)
+        print(f"era-align procrustes: rotated {len(Z)} rows into 1996-97 root frame "
+              f"({len(chains)} season chains)")
+
+    if args.robust_scaling:
+        from realmlp_preproc import RealMLPPreprocessor
+        preproc = RealMLPPreprocessor(manifest["features"])
+        preproc.fit(Z, [str(s) for s in seasons], M, by_season=True)
+        Z = preproc.transform(Z, [str(s) for s in seasons])
+        print("robust-scaling: replaced season z-scores with median/IQR clip[-3,3]")
+
     fams = family_slices(manifest)
     exclude = {s.strip() for s in args.exclude_families.split(",") if s.strip()}
     if exclude:

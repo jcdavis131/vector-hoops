@@ -345,7 +345,12 @@ def main() -> None:
     ap.add_argument("--split", choices=("player", "temporal"), default="player",
                     help="player = grouped by player (no era shift, no cross-split "
                          "pairs, all seasons trained); temporal = forecasting claim")
+    ap.add_argument("--w-next-profile", type=float, default=None,
+                    help="override the next_profile loss weight (default 0.08); "
+                         "tags output files so A/B runs do not collide")
     args = ap.parse_args()
+    if args.w_next_profile is not None:
+        W["next_profile"] = args.w_next_profile
     try:
         import sys
         sys.stdout.reconfigure(encoding="utf-8")
@@ -367,6 +372,8 @@ def main() -> None:
     for name, cfg in configs.items():
         for seed in seeds:
             tag = f"{name}#s{seed}"
+            if args.w_next_profile is not None:
+                tag += f"_np{args.w_next_profile}"
             print(f"=== {tag} ({epochs} epochs, {args.protocol}, "
                   f"{args.split}-split) ===", flush=True)
             m = train_one(name, cfg, epochs, seed=seed, device=device,

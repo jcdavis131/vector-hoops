@@ -37,6 +37,32 @@ Promote: `CQS >= 85.28` **and** recall ≥ 0.98 **and** purity ≥ 0.7868.
    - Live `pipeline/data/mtnn_best.pt` is Bet D — **assets/ export not run** (needs explicit promote)
 8. [x] Update `mtnn_hill_climb.md` + log results
 
+## Population validation baseline (2026-07-11)
+
+The promoted Bet D checkpoint was scored directly on CPU by
+`pipeline/score_mtnn_validation.py`; this avoids treating a retrain as the
+baseline and leaves public assets untouched.
+
+| Diagnostic | Result |
+|------------|--------|
+| tower spread (mean) | 0.8148 — pass |
+| archetype confidence ≥0.99 | 88.01% — below 95% collapse threshold |
+| held-out archetype ECE | 0.0033 — calibrated |
+| held-out retrieval recall@10 | 1.000 |
+| held-out archetype purity@20 | 0.8566 |
+| held-out next-profile R² | 0.6509 |
+| next-year collapse slices | 0 / 19 |
+
+`population_validation.collapse_flags` is now a hard prerequisite in
+`should_promote()`. No training bet was launched from this baseline: the new
+distributional gate found no population-level collapse, while the primary CQS
+is already 85.87. Rebalancing the next-profile loss was explicitly deferred
+because the comparable Bet A regressed CQS and purity.
+
+An attempted baseline retrain exhausted available GPU memory after epoch 0
+(Cursor held roughly 10.2 / 12.3 GiB). The interrupted checkpoint was saved
+as `mtnn_best.pt.oom_epoch0`, then the archived Bet D checkpoint was restored.
+
 ## Loop prompt
 
 Continue Vector Hoops MTNN CQS hill-climb from `tasks/hillclimb-mtnn-cqs.md`: if a train is running, report epoch/CQS progress; if idle, start or score the top unfinished bet; promote checkpoint only when `should_promote` is true; never touch `assets/` without an explicit promote. No site-polish edits.
