@@ -32,6 +32,17 @@
     </div>
   </section>
 
+  <section class="dash-card" id="manim" style="border:2px solid #111;background:#FFFEF7">
+    <div class="card-head"><h2>Manim 3Blue1Brown Engine — New for v6</h2><span class="card-meta">manim 0.20.1 + manimgl 1.7.2 • pip install manimgl • LaTeX + OpenGL + Cairo • solo</span></div>
+    <p class="novice-text">Turned static SVG flow (W1380 H780 truthful 1:1) into <b>programmatic math animations</b>: Manim turns Python code into precise vector graphics. Each video is code — <code>class MTNNFlow(Scene)</code> with <code>Write()</code>, <code>Create(Rectangle)</code>, <code>Arrow()</code> LaTeX-ready, OpenGL rendered via moderngl + moderngl_window, ffmpeg mux. Replaces hand-drawn diagrams with frame-accurate explanations.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px;margin-top:12px">
+      <div style="border:2px solid #111;border-radius:8px;overflow:hidden"><video autoplay loop muted playsinline controls src="assets/manim/MTNNFlow.mp4" style="width:100%;aspect-ratio:16/9"></video><div style="padding:8px;font-size:12px;background:#111;color:#fff"><b>MTNN v6 flow</b> 17×160→32 towers 544+12 556→128→48 L2 heads 8/5/14/18 → Chimera</div></div>
+      <div style="border:2px solid #111;border-radius:8px;overflow:hidden"><video autoplay loop muted playsinline controls src="assets/manim/KVCompression.mp4" style="width:100%;aspect-ratio:16/9"></video><div style="padding:8px;font-size:12px;background:#1a0a0a;color:#fff"><b>KV 8× compression</b> Zaya1 latent 64 conv7 64GB→8GB + DeltaNet fixed 18MB @170K never grows</div></div>
+      <div style="border:2px solid #111;border-radius:8px;overflow:hidden"><video autoplay loop muted playsinline controls src="assets/manim/AvaJSpace.mp4" style="width:100%;aspect-ratio:16/9"></video><div style="padding:8px;font-size:12px;background:#101010;color:#fff"><b>Ava J-Space</b> S1 Fast hl8 S2 hl300 Critic hl30 Planner hl150 GWTB φ4.55x</div></div>
+    </div>
+    <p class="expert-text" data-expert style="margin-top:10px">Source workspace/manim_dumbmodels/mtnn_flow.py • renders: <code>manim -ql mtnn_flow.py MTNNFlow AvaJSpace KVCompression --media_dir ./media</code> → 352KB +279KB+131KB mp4 480p15 low-quality fast (high -qh 1080p60 ready). OpenGL: moderngl 5.12.0, PyOpenGL, moderngl_window, manimpango 0.6.0, skia-pathops. LaTeX fallback to Text since texlive not required for Text. Next: Procrustes drift animation RᵀR=I minimizing ||X1999R-X2025||_F, DiffusionGemma 256 random tokens canvas refined 123 steps bidirectional, MatFormer E2B inside E4B nesting smoke 2M→nano 14M→mini 162M→base 1B one checkpoint.</p>
+  </section>
+
   <section class="dash-card" id="gather">
     <div class="card-head"><h2>01 Gather — stats.nba.com → 120 feats 17 families</h2><span class="card-meta">mtime 1783736655 bytes 2,262,906 • 1996-97 → 2025-26</span></div>
     <div class="grid-2">
