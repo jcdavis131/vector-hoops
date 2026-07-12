@@ -37,6 +37,18 @@ Promote: `CQS >= 85.28` **and** recall ≥ 0.98 **and** purity ≥ 0.7868.
    - Live `pipeline/data/mtnn_best.pt` is Bet D — **assets/ export not run** (needs explicit promote)
 8. [x] Update `mtnn_hill_climb.md` + log results
 
+9. [x] Bet E: Bet D recipe + `--era-align procrustes --robust-scaling`, 150ep, CPU — **FAIL**
+   - CQS **60.5** (bar 86.37, baseline 85.87) · test recall@10 **0.860** < floor 0.980 · purity@20 **0.668** < floor 0.853
+   - Best epoch was 10 (early): recall 0.874, purity 0.668, composite 0.764 — got worse from there as
+     purity climbed (0.668→0.844) while recall collapsed (0.874→0.708) over epochs 10→149. Era-align +
+     robust-scaling reshape the feature space enough that Bet D's tuned hyperparameters (lr schedule,
+     loss weights) no longer fit it; this is a retune-from-scratch problem, not a one-flag win.
+   - Ran on CPU (`CUDA_VISIBLE_DEVICES=-1`) to avoid GPU contention with the concurrent ava-agi mini
+     training run — confirmed `CUDA_VISIBLE_DEVICES=""` does *not* hide the GPU on this torch/driver
+     build, `"-1"` does.
+   - Live checkpoint restored from `.bet_d_champion`; failed run archived as `mtnn_best.pt.cqs_bet_e` /
+     `mtnn_report.json.cqs_bet_e`. Bet D (CQS 85.87) remains champion.
+
 ## Population validation baseline (2026-07-11)
 
 The promoted Bet D checkpoint was scored directly on CPU by
