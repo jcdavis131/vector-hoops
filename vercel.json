@@ -3,7 +3,11 @@
   "rewrites": [
     {
       "source": "/games",
-      "destination": "/games.html"
+      "destination": "/arcade/index.html"
+    },
+    {
+      "source": "/arcade",
+      "destination": "/arcade/index.html"
     },
     {
       "source": "/model",

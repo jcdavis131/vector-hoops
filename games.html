@@ -1,159 +1,33 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Arcade — Vector Hoops MTNN Games</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<link rel="icon" href="data:," />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<title>Vector Hoops Arcade - MTNN Games</title>
+<meta name="description" content="5 daily viral games powered by real MTNN: Chimera Guesser, 82-0 Vector, Era Warp, Paint Archetype (Chameleon), Trade Fix. 12,392 seasons, 17 towers, 8 archetypes.">
 <link rel="canonical" href="https://hoops.dumbmodel.com/games">
-<meta name="description" content="5 daily viral games powered by the real MTNN — Chimera Guesser, 82-0 Vector, Era Warp, Paint the Archetype (Chameleon), Trade Fix. 12,392 seasons, 17 towers, 8 archetypes. Free, no login.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🏀%3C/text%3E%3C/svg%3E">
-<link rel="stylesheet" href="assets/hoops.css">
-<link rel="stylesheet" href="assets/shell.css">
-<link rel="stylesheet" href="assets/responsive.css">
-<link rel="stylesheet" href="assets/games.css">
+<link rel="stylesheet" crossorigin href="/arcade/assets/index-7n0ys0fe.css">
+<script type="module" crossorigin src="/arcade/assets/index-cdbjs85x.js"></script>
+<style>
+/* minimal top nav shim for prod */
+.top-shim{max-width:1120px; margin:0 auto; padding:10px 12px; font-family:ui-sans-serif; display:flex; gap:12px; align-items:center; flex-wrap:wrap}
+.top-shim a{color:#111; text-decoration:none; border:1.5px solid #111; padding:6px 10px; font-weight:700; box-shadow:2px 2px 0 #111; background:#fff; font-size:12px; text-transform:uppercase}
+.top-shim .brand{font-weight:900; background:#111; color:#fff}
+.footer-note{max-width:1120px; margin:18px auto; padding:0 12px; font-size:11px; font-family:ui-monospace; color:#555}
+</style>
 </head>
 <body>
-
-<nav class="site-nav" data-active="/games" aria-label="Vector Hoops site"></nav>
-
-<header class="games-hero">
-  <h1><span>VECTOR HOOPS</span> ARCADE — MTNN GAMES</h1>
-  <p>5 daily games that <b>are</b> the research. Every guess, spin, and paint runs the real MTNN you can inspect at <a href="/model">/model</a>: 12,392 player-seasons 1996-2026, per-100 z-scored within season, 120 feats → cat([x·m,m]) → 17× residual towers 160→32 LN GELU ×2 (544) + 12-d season_emb = 556 → 128 → 48 L2. Heads: 8 archetypes / 5 pos / 14 next_profile / 18 skills. Daily seed, shareable cards, no account, no ads.</p>
-  <div class="games-mtnn-badge">
-    <span>MTNN v6 SOTA 2026: dTower 32 dEmb 48 ~224K params + 8× KV + 18MB fixed + 10% sparse + MatFormer nesting</span>
-    <span style="margin-left:auto" class="triple-badge"><span>●</span><span id="today-seed">seed …</span></span>
-  </div>
-  <div class="mtnn-mini">Built free/public-tier only • ONNX WASM 2MB distilled • Manim: MTNNFlow.mp4 • Truthful flow W1380 H780 1:1 input→tower cat-box B1h/B1o/B2h/B2o season node fusion 18r L2 badge — see /model • Solo personal project, no connection to employer, built with public/free-tier only</div>
-</header>
-
-<div class="games-tabs" role="tablist">
-  <button class="games-tab is-active" data-game="chimera" role="tab" aria-selected="true">🧬 Chimera Guesser</button>
-  <button class="games-tab" data-game="82" role="tab">🏆 82-0 Vector</button>
-  <button class="games-tab" data-game="warp" role="tab">🌀 Era Warp</button>
-  <button class="games-tab" data-game="paint" role="tab">🎨 Paint Archetype</button>
-  <button class="games-tab" data-game="trade" role="tab">🔀 Trade Fix</button>
+<div class="top-shim">
+  <a class="brand" href="/">VECTOR HOOPS</a>
+  <a href="/play">Play</a>
+  <a href="/games" aria-current="page" style="background:#111;color:#fff">Arcade</a>
+  <a href="/model">Network</a>
+  <a href="/dashboard">Lab</a>
+  <span style="margin-left:auto; font-size:11px; font-family:ui-monospace">Solo personal project, no connection to employer, built with public/free-tier only • MTNN v6 SOTA 12,392 seasons 120 feats 17×160→32×2 544+12=556→128→48 L2 ~224K</span>
 </div>
-
-<main class="games-panels">
-
-  <!-- CHIMERA GUESSER -->
-  <section class="games-panel is-active" id="panel-chimera">
-    <div class="games-card">
-      <h3>Chimera Guesser — Wordle × GeoGuessr for hoops</h3>
-      <div class="sub">Daily mystery player-season hidden. 6 guesses. Each guess shows MTNN distance in 48-d (cosine) + 14-feat heat + archetype + era twin. Uses real vectors.json + mtnn_embeddings.f32 when available. Inspired by Wordle share + GeoGuessr deduction.</div>
-      <div class="games-row" style="margin-bottom:10px">
-        <div style="flex:1 1 280px">
-          <input id="chimera-input" class="games-input" placeholder="Start typing player — e.g. LeBron James 2012-13" autocomplete="off">
-          <div id="chimera-suggest" style="border:2px solid var(--ink); border-top:none; max-height:220px; overflow:auto; display:none; background:#fff"></div>
-        </div>
-        <button class="games-btn games-btn--accent" id="chimera-guess-btn">Guess</button>
-        <button class="games-btn" id="chimera-new-btn">New daily</button>
-      </div>
-      <div id="chimera-clues" class="games-card" style="background:#FFFEF7"></div>
-      <div id="chimera-history"></div>
-      <div id="chimera-share" class="share-card" style="display:none"></div>
-    </div>
-    <div class="games-card mtnn-mini">MTNN hook: v = 14-dim game contract is projection of full 120-feat tower output. Guess → tower 160→32 ×2 → 48-d → cosine distance. Procrustes era-align keeps 1996 vs 2024 comparable. See assets/manim/MTNNFlow.mp4.</div>
-  </section>
-
-  <!-- 82-0 VECTOR -->
-  <section class="games-panel" id="panel-82">
-    <div class="games-card">
-      <h3>82-0 Vector — spin decade + franchise, draft 5, sim</h3>
-      <div class="sub">Viral like 82-0.com: spin gives you decade + team, you can only pick 5 player-seasons from that franchise pool. MTNN computes Strength = sum(tower 48-d) + synergy bonus for covering 8 archetypes and 17 feature families (triple-encoded shape+icon+text+pattern). Goal 82-0 (impossible), also 41-41 and 0-82 modes. Shareable lineup card.</div>
-      <div class="games-row" style="margin-bottom:10px">
-        <button class="games-btn games-btn--accent" id="spin-btn">🎰 Spin decade + team</button>
-        <div id="spin-result" class="triple-badge"></div>
-      </div>
-      <div class="games-grid">
-        <div class="games-card">
-          <h3>Pool (click 5)</h3>
-          <div id="pool-list" style="max-height:420px; overflow:auto; display:grid; gap:6px;"></div>
-        </div>
-        <div class="games-card">
-          <h3>Your 5 + sim</h3>
-          <div id="picked-list"></div>
-          <div id="sim-result" class="mtnn-mini" style="margin-top:10px"></div>
-          <button class="games-btn" id="sim-btn">Sim season</button>
-          <button class="games-btn" id="copy-82-btn">Copy share card</button>
-          <div id="share-82" class="share-card" style="display:none; margin-top:10px"></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ERA WARP -->
-  <section class="games-panel" id="panel-warp">
-    <div class="games-card">
-      <h3>Era Warp — what would he average if time-warped?</h3>
-      <div class="sub">Pick player-season, destination decade. MTNN Procrustes era-align (hill-climb v6 drift ↓18%) warps per-100. You guess warped PTS/AST/REB. Real method: per-season z + season_norms.json + season_emb 12-d. Slider guess, scored by proximity. Teaching tool for era-honest normalization.</div>
-      <div class="games-row">
-        <select id="warp-player" class="games-input" style="flex:1"></select>
-        <select id="warp-era" class="games-input" style="flex:0 0 140px"><option>1996-99</option><option>2000-04</option><option>2005-09</option><option>2010-14</option><option>2015-19</option><option>2020-26</option></select>
-        <button class="games-btn" id="warp-spin">Warp</button>
-      </div>
-      <div class="games-grid" style="margin-top:10px">
-        <div class="games-card"><h3>Warp result (MTNN true)</h3><div id="warp-true"></div></div>
-        <div class="games-card"><h3>Your guess</h3>
-          <label>PTS <input id="g-pts" type="range" min="-3" max="3" step="0.1" value="0"> <span id="g-pts-v">0</span>σ</label><br>
-          <label>AST <input id="g-ast" type="range" min="-3" max="3" step="0.1" value="0"> <span id="g-ast-v">0</span>σ</label><br>
-          <label>TRB <input id="g-trb" type="range" min="-3" max="3" step="0.1" value="0"> <span id="g-trb-v">0</span>σ</label><br>
-          <button class="games-btn games-btn--accent" id="warp-score-btn">Score</button>
-          <div id="warp-score" class="mtnn-mini" style="margin-top:8px"></div>
-        </div>
-      </div>
-      <video autoplay loop muted playsinline controls style="width:100%; margin-top:12px; border:2px solid var(--ink); box-shadow:3px 3px 0 var(--ink)" src="assets/manim/MTNNFlow.mp4"></video>
-    </div>
-  </section>
-
-  <!-- PAINT ARCHETYPE -->
-  <section class="games-panel" id="panel-paint">
-    <div class="games-card">
-      <h3>Paint the Archetype — Meccha Chameleon × Prop Hunt for hoops</h3>
-      <div class="sub">You are a white chibi on a team that needs a specific archetype mix. 3 hunters scan for mismatch in 17 families (volume/playmaking/rebounding/defense/efficiency/shotmix/bio/tracking...). Paint your 8-archetype mix to blend. Daily team needs seed. Inspired by Meccha Chameleon paint-to-hide.</div>
-      <div class="games-row">
-        <div class="chibi" id="chibi">◯</div>
-        <div>
-          <div id="need-bars"></div>
-          <div id="your-bars" style="margin-top:8px"></div>
-        </div>
-        <div>
-          <div id="paint-sliders"></div>
-          <div class="games-row" style="margin-top:8px">
-            <button class="games-btn games-btn--accent" id="paint-check">Check blend</button>
-            <span id="paint-result" class="triple-badge"></span>
-          </div>
-        </div>
-      </div>
-      <div class="mtnn-mini">MTNN: Critic hl=30 scalar validates blend. 8 clusters = triple encoded shape+icon+text+pattern (Okabe-Ito): ● blue, ■ orange, ▲ green, ◆ pink, ★ yellow, ● cyan, ■ gold, ▲ black. Hunter = feature-family mismatch detector.</div>
-    </div>
-  </section>
-
-  <!-- TRADE FIX -->
-  <section class="games-panel" id="panel-trade">
-    <div class="games-card">
-      <h3>Trade Fix — 1 trade to 41 wins puzzle</h3>
-      <div class="sub">Bad 25-win roster with hole in 17 families (e.g. no playmaking, no rim protection). Pick 1 player to swap using vector similarity search (nearest neighbors in PCA 3 map x,y,z). MTNN win projection = Σ PLUS_MINUS z + archetype coverage. Daily puzzle, minimal move wins.</div>
-      <div id="bad-roster" class="games-grid"></div>
-      <div class="games-row" style="margin-top:10px">
-        <input id="trade-input" class="games-input" placeholder="Search replacement — e.g. Jokic 2022-23" style="flex:1">
-        <button class="games-btn" id="trade-btn">Trade & sim</button>
-      </div>
-      <div id="trade-result" class="mtnn-mini" style="margin-top:10px"></div>
-      <div id="trade-suggest" style="border:2px solid var(--ink); max-height:200px; overflow:auto; display:none; background:#fff; margin-top:6px"></div>
-    </div>
-  </section>
-
-</main>
-
-<footer class="site-footer" style="max-width:var(--layout-wide); margin:20px auto; padding:0 var(--page-gutter)">
-  <div class="site-footer__links">
-    <a href="/play">Play</a><a href="/games" aria-current="page">Arcade</a><a href="/model">Network</a><a href="/dashboard">Lab</a><a href="https://github.com/jcdavis131/vector-hoops" target="_blank" rel="noopener">GitHub</a>
-  </div>
-  <div class="site-footer__attribution">MTNN v6 SOTA: 12,392 seasons 120 feats 17 families 8 archetypes cat([x·m,m]) → 17×160→32×2 544+12=556→128→48 L2 ~224K params — every number from stats.nba.com • Solo personal project, no connection to employer, built with public/free-tier only • hoops.dumbmodel.com</div>
-</footer>
-
-<script src="assets/site-nav.js" defer></script>
-<script src="assets/games.js" defer></script>
+<div data-generated-space-root="" data-generated-space-slug="vector-hoops-arcade-mtnn-games"></div>
+<div class="footer-note">Arcade v2 — distilled 600 seasons balanced across 8 archetypes from vectors.json + 14 z-features + 12 skill grades • Triple-encoded shape+icon+text+pattern Okabe-Ito AAA • Daily seed midnight CT • ONNX WASM 2MB ready • hoops.dumbmodel.com</div>
 </body>
 </html>
