@@ -2,6 +2,10 @@
   "cleanUrls": true,
   "rewrites": [
     {
+      "source": "/games",
+      "destination": "/games.html"
+    },
+    {
       "source": "/model",
       "destination": "/model.html"
     },

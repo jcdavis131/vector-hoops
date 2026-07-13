@@ -4,6 +4,7 @@
 
   var LINKS = [
     { href: '/play', label: 'Play' },
+    { href: '/games', label: 'Arcade', title: 'MTNN Games — 5 daily viral games' },
     { href: '/model', label: 'Network', title: 'MTNN Network Explorer' },
     { href: '/trends', label: 'Trends', title: 'Trend Research' },
     { href: '/players', label: 'Players', title: 'Player References' },
