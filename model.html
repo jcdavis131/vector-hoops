@@ -3,31 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>MTNN Network Explorer — Vector Hoops v6 SOTA 2026</title>
+<title>MTNN Network Explorer — Vector Hoops</title>
 <link rel="canonical" href="https://hoops.dumbmodel.com/model">
 <meta property="og:url" content="https://hoops.dumbmodel.com/model">
-<meta name="description" content="Walk a player-season through MTNN v6 SOTA 2026: 17 towers + compressed conv 8x KV + gated DeltaNet 18MB fixed state + sparse 10% + MatFormer nesting + diffusion heads — glass box explorer">
+<meta name="description" content="Walk a player-season through MTNN v4: 17 towers, 120 feats, 48-d embedding, 8 archetypes — glass box explorer with truthful flow">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Ctext%20y%3D%22.9em%22%20font-size%3D%2290%22%3E%26%23127936%3B%3C%2Ftext%3E%3C%2Fsvg%3E">
 <meta property="og:type" content="website">
-<meta property="og:title" content="MTNN Network Explorer v6 SOTA — Vector Hoops">
-<meta property="og:description" content="Inside MTNN that powers Chimera: now 6 local LLM innovations — not smaller cloud versions — 8x KV compression, fixed 18MB state at 170K, disk 1M, per-layer embeddings, MatFormer nesting, diffusion decoding">
+<meta property="og:title" content="MTNN Network Explorer — Vector Hoops">
+<meta property="og:description" content="Inside MTNN that powers Chimera: 17 stat families → 48-d fingerprint → 8 archetypes. Glass-box explorer with truthful flow.">
 <meta property="og:image" content="/assets/og.svg">
 <link rel="stylesheet" href="assets/hoops.css">
 <link rel="stylesheet" href="assets/shell.css">
 <link rel="stylesheet" href="assets/nux.css">
 <link rel="stylesheet" href="assets/responsive.css">
-<style>
-.sota-banner{background:linear-gradient(90deg,#0a0a0a 0%,#1a2a1a 100%);border:2px solid #111;color:#f5f5f0;border-radius:12px;padding:14px 16px;margin:0 0 18px;overflow:hidden}
-.sota-banner__eyebrow{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#9cd321;font-weight:800}
-.sota-banner__title{font-size:18px;font-weight:900;margin:4px 0}
-.sota-banner__grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;margin-top:10px}
-.sota-card{border:1px solid #2a2a2a;background:#101010;border-radius:8px;padding:8px 10px}
-.sota-card b{display:block;font-size:12px;margin-bottom:2px}
-.sota-card i{font-size:11px;color:#aaa;display:block;font-style:normal}
-.sota-card code{font-size:10px;color:#9cd321}
-.sota-metric{font-size:11px;color:#ccc;margin-top:6px}
-.sota-metric b{color:#fff;display:inline}
-</style>
 </head>
 <body>
 
@@ -36,66 +24,31 @@
 <main class="research-main network-main">
 
 <div class="research-head network-head">
-<h1>Inside the network <span style="font-size:14px;vertical-align:middle;background:#111;color:#fff;padding:2px 8px;border-radius:999px;margin-left:8px">v6 SOTA 2026</span></h1>
+<h1>Inside the network</h1>
 <p class="network-hero">Pick a player-season and peer inside the <b>MTNN</b> — a glass box, not a black box.
 Seventeen stat families each run through their own residual tower, fuse into a 48-number fingerprint,
-then decode into archetype, position, skill grades, and next-year forecasts. <b>Now hill-climbed with 6 local LLMs that prove they're not just smaller cloud versions</b> — compressed conv 8× KV, gated DeltaNet fixed 18MB, sparse 10%, MatFormer nesting, per-layer embeddings, diffusion heads. Click a node, output row, or tower to <b>probe</b>: lock the line-of-sight trace, see family share across every head, and read signed feature pushes.</p>
+then decode into archetype, position, skill grades, and next-year forecasts. Click a node, output row, or tower to <b>probe</b>: lock the line-of-sight trace, see family share across every head, and read signed feature pushes.</p>
 </div>
-
-<section class="sota-banner" aria-label="6 Local LLMs SOTA 2026">
-<div class="sota-banner__eyebrow">From 6 local LLMs review — not smaller cloud versions · source share.google/ApbX6CzAGagVjbpGY</div>
-<div class="sota-banner__title">MTNN v6 SOTA 2026 hill-climb — 6 innovations → Hoops glass box</div>
-<div class="sota-banner__grid">
-<div class="sota-card"><b>1 Zaya1-8B Compressed Conv Attention</b><i>QKV into shared latent + depthwise conv sequence mixing → 8-fold KV-cache compression</i><code>compressed_conv.py latent 64 kernel7</code><div class="sota-metric"><b>Before:</b> 64GB @128K FP16 Llama2-7B → <b>After:</b> 8GB @128K · 7 tok/s BF16 M4 Pro 42 tok/s MXFP4 vMLX</div></div>
-<div class="sota-card"><b>1b Zaya1 Markovian Recursive Aggregation</b><i>Tail end of k=4 parallel reasoning traces into bounded 256-token aggregation context — longer reasoning without full chain</i><code>k=4 tail 256 entropy tau 0.7</code><div class="sota-metric">Planner hl150→200+, 7400 tokens correct beating GPT-5.5/Opus 4.8, 91.9% AIME 2025</div></div>
-<div class="sota-card"><b>2 VibeThinker-3B Parametric Compression-Coverage</b><i>Verifiable reasoning (math/code) packs into smaller than expected — 2-stage SFT + MaxEnt-guided RL + offline self-distill</i><code>Qwen2.5-Coder-3B base 94.3% AIME 2026</code><div class="sota-metric"><b>$7,800</b> 1.5B post-train vs 6-fig frontier → our Math branch 32 slots can do it</div></div>
-<div class="sota-card"><b>3 DeepSeek V4 Flash Sparse-Compressed Hybrid</b><i>284B MoE 13B active 1M ctx 10% KV vs V3.2 — Compressed Sparse + Heavily Compressed + ds4 C engine KV cache on disk</i><code>sparse_compressed.py 10% 1M streaming</code><div class="sota-metric">96GB unified PGX GB10 128GB LPDDR5x — enables 1M streaming on Alienware via disk</div></div>
-<div class="sota-card"><b>4 Qwen 3.6 Gated DeltaNet Fixed-State</b><i>3 DeltaNet: 1 full-attn precision checkpoint — fixed-size recurrent state never grows with context, stores delta + gating decay</i><code>gated_deltanet.py 36/48 layers 18MB @170K</code><div class="sota-metric"><b>18MB @170K</b> vs linear growth — 25-40 tok/s Q4_K_M 46GB Q8_0 85GB vLLM Docker, 27B dense +35B-A3B 262K→1M</div></div>
-<div class="sota-card"><b>5 DiffusionGemma Discrete Diffusion</b><i>Gemma 4 26B/4B-active MoE — 256 random tokens canvas refined in parallel bidirectional, whole block resolves like image</i><code>diffusion_gemma.py 123 steps 9 blocks</code><div class="sota-metric">Flask Flappy Bird 138s 9 blocks, 1000+ tok/s H100 4× vs bandwidth-bound Apple Silicon</div></div>
-<div class="sota-card"><b>6 Gemma 4 E2B/E4B Phone MatFormer + Per-Layer Emb</b><i>Effective 2B/4.5B phone enough — MatFormer nesting E2B inside E4B one download multiple targets + per-layer token embeddings cheap lookup + conformer audio</i><code>per_layer.py + matformer.py + conformer.py</code><div class="sota-metric">Oppo Find N5 Snapdragon 8 Elite 16GB Q8_0 4.3GB +900MB proj 6GB RAM 7-8 tok/s sub-sec TTFT 10s encode</div></div>
-</div>
-<p style="margin-top:10px;font-size:11px;color:#aaa">All 6 share novel approach to at least one part of assumed architecture — common pattern emerging. KV-cache half problem solved via compression, not just weight quant.</p>
-</section>
 
 <section class="drift-card" id="manim-mtnn" style="border:2px solid #111;background:#FFFEF7">
 <div class="card-head" style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px">
 <div>
-<h2 style="margin:0">Manim — precise math animations (3Blue1Brown engine)</h2>
-<p style="margin:4px 0 0;color:#555;font-size:13px"><code>pip install manim manimgl</code> + LaTeX + OpenGL + Cairo — vector graphics, programmatic, frame-accurate — <b>new</b> for dumbmodel v6 • 7 videos 1.4MB total 480p15 low-q fast (1080p60 ready)</p>
+<h2 style="margin:0">Manim — precise math animations</h2>
+<p style="margin:4px 0 0;color:#555;font-size:13px">Manim (3Blue1Brown engine) — vector graphics, programmatic, frame-accurate • 2 relevant videos</p>
 </div>
-<span class="card-meta" style="align-self:center">manim 0.20.1 / manimgl 1.7.2 • solo project • ffmpeg 6.1.1</span>
+<span class="card-meta" style="align-self:center">manim 0.20.1 • 480p15 • solo personal project</span>
 </div>
-<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;margin-top:12px">
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px;margin-top:12px">
 <div class="manim-card" style="border:2px solid #111;border-radius:10px;overflow:hidden;background:#000">
 <video autoplay loop muted playsinline controls style="width:100%;aspect-ratio:16/9;object-fit:cover" src="assets/manim/MTNNFlow.mp4"></video>
-<div style="padding:8px;background:#111;color:#fff;font-size:12px"><b>MTNNFlow</b> — 17 families 120 feats cat([x·m,m]) → 17× 160→32 LN GELU res×2 544+12 556→128→48 L2 cosine → heads 8/5/14/18 → Chimera 68%</div>
+<div style="padding:8px;background:#111;color:#fff;font-size:12px"><b>MTNNFlow</b> — 17 families 120 feats cat([x·m,m]) → 17× 160→32 LN GELU res×2 544+12 556→128→48 L2 cosine → heads 8/5/14/18 • Truthful flow W1380 H780</div>
 </div>
 <div class="manim-card" style="border:2px solid #111;border-radius:10px;overflow:hidden;background:#000">
 <video autoplay loop muted playsinline controls style="width:100%;aspect-ratio:16/9;object-fit:cover" src="assets/manim/ChimeraEquation.mp4"></video>
-<div style="padding:8px;background:#111;color:#fff;font-size:12px"><b>ChimeraEquation</b> — Donor A + Donor B = Chimera closest real • 48-d L2 nearest</div>
-</div>
-<div class="manim-card" style="border:2px solid #111;border-radius:10px;overflow:hidden;background:#000">
-<video autoplay loop muted playsinline controls style="width:100%;aspect-ratio:16/9;object-fit:cover" src="assets/manim/ProcrustesAlign.mp4"></video>
-<div style="padding:8px;background:#101010;color:#fff;font-size:12px"><b>ProcrustesAlign</b> — min_R ||X1999 R - X2025||_F R^T R=I drift ↓18% Era Twin fair</div>
-</div>
-<div class="manim-card" style="border:2px solid #111;border-radius:10px;overflow:hidden;background:#000">
-<video autoplay loop muted playsinline controls style="width:100%;aspect-ratio:16/9;object-fit:cover" src="assets/manim/KVCompression.mp4"></video>
-<div style="padding:8px;background:#1a0a0a;color:#fff;font-size:12px"><b>KVCompression</b> — Llama2-7B 128K 64GB FP16 → Zaya1 latent64 conv7 → 8GB 8× + Qwen fixed 18MB @170K</div>
-</div>
-<div class="manim-card" style="border:2px solid #111;border-radius:10px;overflow:hidden;background:#000">
-<video autoplay loop muted playsinline controls style="width:100%;aspect-ratio:16/9;object-fit:cover" src="assets/manim/MatFormerNesting.mp4"></video>
-<div style="padding:8px;background:#111;color:#fff;font-size:12px"><b>MatFormerNesting</b> — E2B inside E4B inside 1B • one dl smoke 2M→nano 14M→mini 162M→base</div>
-</div>
-<div class="manim-card" style="border:2px solid #111;border-radius:10px;overflow:hidden;background:#000">
-<video autoplay loop muted playsinline controls style="width:100%;aspect-ratio:16/9;object-fit:cover" src="assets/manim/DiffusionDecoding.mp4"></video>
-<div style="padding:8px;background:#111;color:#fff;font-size:12px"><b>DiffusionDecoding</b> — 256 random tokens 16×8 grid 123 steps bidirectional block → Flappy Bird Flask 138s</div>
-</div>
-<div class="manim-card" style="border:2px solid #111;border-radius:10px;overflow:hidden;background:#000">
-<video autoplay loop muted playsinline controls style="width:100%;aspect-ratio:16/9;object-fit:cover" src="assets/manim/AvaJSpace.mp4"></video>
-<div style="padding:8px;background:#101010;color:#fff;font-size:12px"><b>AvaJSpace</b> — S1 Fast hl8 S2 Slow hl300 Critic hl30 Planner hl150 GWTB φ4.55x mass 0.06 YaRN 10k→1M</div>
+<div style="padding:8px;background:#111;color:#fff;font-size:12px"><b>ChimeraEquation</b> — Donor A + Donor B = Chimera closest real • 48-d L2 nearest • Powers daily chimera game</div>
 </div>
 </div>
-<p style="margin-top:12px;font-size:11px;color:#666">Manim source: <code>workspace/manim_dumbmodels/mtnn_flow.py</code> + <code>chimera_procrustes.py</code> + <code>manim_gl_scenes.py</code> (manimgl OpenGL edition with Tex <code>Chimera = argmin ||f(A)⊕f(B)-f(real)||_2</code>). Repro: <code>manim -ql mtnn_flow.py MTNNFlow && manim -ql chimera_procrustes.py ChimeraEquation ProcrustesAlign MatFormerNesting DiffusionDecoding && manimgl manim_gl_scenes.py MTNNFlowGL -l -w -o</code>. ffmpeg 6.1.1 mux → mp4. Free-tier Vercel cleanUrls true, no employer resources.</p>
+<p style="margin-top:12px;font-size:11px;color:#666">Source: <code>workspace/manim_dumbmodels/mtnn_flow.py</code> + <code>chimera_procrustes.py</code>. Repro: <code>manim -ql mtnn_flow.py MTNNFlow && manim -ql chimera_procrustes.py ChimeraEquation</code>. Files: MTNNFlow.mp4 (352KB) + ChimeraEquation.mp4 (153KB) only. Solo personal project, no connection to employer.</p>
 </section>
 
 <section class="drift-card network-controls-card" aria-label="Explorer controls">
@@ -119,11 +72,8 @@ placeholder="Compare to player-season…" autocomplete="off" autocorrect="off" s
 <button type="button" class="network-step-btn" data-step="2">Fusion</button>
 <button type="button" class="network-step-btn" data-step="3">Embed</button>
 <button type="button" class="network-step-btn" data-step="4">Heads</button>
-<button type="button" class="network-step-btn" data-step="5" style="background:#9cd321;color:#000">v6 SOTA</button>
 </div>
-<button type="button" id="network-play" class="network-play-btn" aria-label="Play flow animation">
-Play flow
-</button>
+<button type="button" id="network-play" class="network-play-btn" aria-label="Play flow animation">Play flow</button>
 </div>
 <div class="network-timebar" id="network-timebar" hidden>
 <div class="network-timebar__head">
@@ -133,7 +83,7 @@ Play flow
 <input type="range" id="network-time-scrubber" min="0" max="0" step="1" value="0">
 <div id="network-timebar-range" class="network-timebar__range"></div>
 </div>
-<p id="network-step-caption" class="network-step-caption">Loading architecture… v4 baseline + v6 SOTA 2026 toggles: compressed_conv 8×, gated_deltanet 18MB, sparse 10%, MatFormer, per-layer, diffusion.</p>
+<p id="network-step-caption" class="network-step-caption">Loading architecture… v4 baseline: 17× residual towers 160→32, 12-d season emb, 48-d L2.</p>
 <div id="network-story" class="network-story" aria-live="polite">
 <p class="drift-loading">Loading story…</p>
 </div>
@@ -145,34 +95,34 @@ Play flow
 <section class="drift-card network-section network-flow-card" aria-label="Network data flow">
 <div class="network-section__head">
 <div>
-<p class="viz-panel__label" style="margin:0;">Data flow — v4 baseline → v6 SOTA overlay</p>
-<p class="network-flow-subhead">Input mask · 2 residual blocks per tower (now optionally <code>CompressedConv</code> latent 64 + conv7 for 8× KV) · season 12-d concat · L2 embed 48-d · MLP heads + diffusion option. Hover for LN/GELU/skip + new SOTA paths.</p>
+<p class="viz-panel__label" style="margin:0;">Data flow — v4 baseline</p>
+<p class="network-flow-subhead">Input mask · 2 residual blocks per tower 160→32 LN GELU + skip · season 12-d concat · L2 embed 48-d · MLP heads. Hover for LN/GELU/skip.</p>
 </div>
 <div class="network-flow-tools">
-<span id="network-trace-status" class="network-trace-status">Click a node to see what fed it and what it drove. v6 toggles show compressed vs full attn.</span>
+<span id="network-trace-status" class="network-trace-status">Click a node to see what fed it and what it drove.</span>
 <button type="button" id="network-trace-clear" class="network-trace-clear" hidden>Clear trace</button>
 </div>
 </div>
 <div class="network-flow-layout">
 <div class="network-flow-main">
-<div id="network-flow-svg" class="network-flow-host" role="img" aria-label="MTNN layer diagram with SOTA overlay"></div>
+<div id="network-flow-svg" class="network-flow-host" role="img" aria-label="MTNN layer diagram"></div>
 <div id="network-flow-insights" class="network-insights" aria-live="polite">
-<p class="drift-loading">Loading signal summary… includes KV mem 64GB→8GB, fixed 18MB @170K, disk 1M streaming.</p>
+<p class="drift-loading">Loading signal summary…</p>
 </div>
 </div>
 <div id="network-node-inspector" class="network-insights network-node-inspector" aria-live="polite">
-<p class="drift-loading">Click an input, tower, or output to see its numbers. v6: per-layer embeddings cheap lookup vs shared vocab.</p>
+<p class="drift-loading">Click an input, tower, or output to see its numbers.</p>
 </div>
 </div>
 
-<div class="network-flow-outputs" id="network-output-card" aria-label="Guess and grade — heads decode + diffusion option">
+<div class="network-flow-outputs" id="network-output-card" aria-label="Guess and grade">
 <div class="network-flow-outputs__head">
-<p class="viz-panel__label">Guess & grade — heads decode (now with diffusion option 256 canvas 123 steps)</p>
-<p class="network-map-hint">Same MLP heads as rightmost column + diffusion decoder for temporal planning (S2 Slow mass 0.06). Click row to lock trace back through network — now shows MatFormer nesting E2B inside E4B.</p>
+<p class="viz-panel__label">Guess & grade — heads decode</p>
+<p class="network-map-hint">Same MLP heads as rightmost column. Click row to lock trace back through network.</p>
 </div>
 <div class="viz-duo-grid network-flow-outputs__grid">
 <div class="viz-panel network-flow-outputs__panel">
-<p class="viz-panel__label">Archetype guess — 8 (v4) → MatFormer nested</p>
+<p class="viz-panel__label">Archetype guess — 8</p>
 <div id="network-arch-out" class="network-arch-out"></div>
 </div>
 <div class="viz-panel network-flow-outputs__panel">
@@ -180,21 +130,21 @@ Play flow
 <div id="network-pos-out" class="network-arch-out"></div>
 </div>
 <div class="viz-panel network-flow-outputs__panel">
-<p class="viz-panel__label">Skill grades out of 100 — 18×(48→16→1) + per-layer emb</p>
+<p class="viz-panel__label">Skill grades out of 100 — 18×(48→16→1)</p>
 <div id="network-skill-out" class="network-skill-out"></div>
 </div>
 <div class="viz-panel network-flow-outputs__panel">
-<p class="viz-panel__label">Next-season forecast — per 100 poss + diffusion block refinement</p>
+<p class="viz-panel__label">Next-season forecast — per 100 poss</p>
 <div id="network-next-out" class="network-skill-out"></div>
 </div>
 </div>
-<p class="drift-card__foot">Layer counts: v4 17×2 blocks 544+12=556→128→48 L2 ~224K 57% fusion hidden. v6 SOTA: towers optionally compressed_conv latent 64 8× KV (Zaya1) OR gated_deltanet 36/48 18MB fixed @170K (Qwen 3.6) + sparse 10% 1M disk (Flash) + per-layer emb cheap lookup (Gemma E2B/E4B) + MatFormer E2B inside E4B nesting + diffusion heads 256 canvas 123 steps (DiffusionGemma). <a href="/methods#mtnn">How we built this →</a> | <a href="/dashboard">Lab pipeline →</a></p>
+<p class="drift-card__foot">Layer counts: v4 17×2 blocks 544+12=556→128→48 L2 ~224K 57% fusion hidden. <a href="/methods#mtnn">How we built this →</a> | <a href="/dashboard">Lab pipeline →</a></p>
 </div>
 </section>
 
 <section class="drift-card network-attr-card" id="network-attr-card" aria-label="What drove this prediction" hidden>
 <div class="network-section__head">
-<p class="viz-panel__label">What drove this prediction — signed grad × input + SOTA attribution</p>
+<p class="viz-panel__label">What drove this prediction — signed grad × input</p>
 <div class="attr-tools">
 <div class="attr-tabs" id="attr-target-tabs" role="tablist" aria-label="Output to explain"></div>
 <div class="attr-scope" id="attr-scope" role="group" aria-label="Scope"></div>
@@ -202,89 +152,74 @@ Play flow
 </div>
 </div>
 <p class="attr-subject" id="attr-subject"></p>
-
 <div class="attr-grid">
 <div class="viz-panel attr-panel" id="attr-tile"></div>
 <div class="viz-panel attr-panel" id="attr-towers"></div>
 <div class="viz-panel attr-panel" id="attr-features"></div>
 </div>
 <div id="attr-population" hidden></div>
-
-<p class="drift-card__foot">Bars show network prediction moved with input for this player-season — not causal claim. Not tracked era = 0 grad cat([x·m,m]). v6 adds fixed-state attribution for DeltaNet (18MB never grows) vs full-attn precision checkpoint 3:1.
-<a href="/methods#mtnn">Methods →</a></p>
+<p class="drift-card__foot">Bars show network prediction moved with input for this player-season — not causal claim. Not tracked era = 0 grad cat([x·m,m]). <a href="/methods#mtnn">Methods →</a></p>
 </section>
 
 <section class="drift-card network-section network-map-card" aria-label="48-d embedding map + 3D">
 <div class="network-section__head">
-<p class="viz-panel__label">Embedding map (48 numbers, 3D) — now with compression view</p>
-<p class="network-map-hint">Slow auto-rotate · drag · scroll zoom · hover for name+archetype · orange=selected · toggle v6 shows 18MB fixed state vs growing cache</p>
+<p class="viz-panel__label">Embedding map (48 numbers, 3D)</p>
+<p class="network-map-hint">Slow auto-rotate · drag · scroll zoom · hover for name+archetype · orange=selected</p>
 </div>
 <div class="network-map-layout">
 <div class="network-map-stage">
-<canvas id="network-map-canvas" class="network-map-canvas" aria-label="3D MTNN embedding map v6 SOTA"></canvas>
+<canvas id="network-map-canvas" class="network-map-canvas" aria-label="3D MTNN embedding map"></canvas>
 <ul id="network-map-legend" class="network-map-legend" aria-label="Archetype colours"></ul>
 </div>
 <div id="network-map-insights" class="network-insights" aria-live="polite">
-<p class="drift-loading">Loading nearby players… v6 SOTA keeps same 48-d L2 cosine = similarity, only attention backend changes (8× compression, fixed 18MB, 10% sparse).</p>
+<p class="drift-loading">Loading nearby players… 48-d L2 cosine = similarity.</p>
 </div>
 </div>
 </section>
 
-<section class="drift-card network-arch-spec-card" aria-label="Shipped architecture v4 + v6 SOTA 2026">
+<section class="drift-card network-arch-spec-card" aria-label="Shipped architecture">
 <details class="network-arch-details" open>
 <summary class="network-arch-summary">
 <span class="viz-panel__label" style="margin:0;display:inline;">Shipped MTNN</span>
-<code id="arch-model-id">mtnn_v4_phase_b → mtnn_v6_sota_2026</code>
-<span id="arch-checkpoint" class="network-arch-checkpoint">mtime 1783736655 2.26MB → 527K params + SOTA overlays 18MB fixed + 8× KV</span>
-<span class="network-arch-summary__hint">Show layer math + SOTA diffs</span>
+<code id="arch-model-id">mtnn_v4_phase_b</code>
+<span id="arch-checkpoint" class="network-arch-checkpoint">mtime 1783623905 2.26MB ~224K params</span>
+<span class="network-arch-summary__hint">Show layer math</span>
 </summary>
 <div class="network-arch-grid">
 <div>
 <b class="network-arch-grid__label">Input — 120 feats, 17 families (era-honest σ)</b>
 <code>z-scored per season</code> · mask <code>m∈{0,1}</code><br>
 <code class="network-arch-code">h = cat([x·m, m]) → 2·d_in</code><br>
-<span class="network-arch-muted">Same as v4. Masked ∅ 0 grad = not tracked era.</span>
+<span class="network-arch-muted">Masked ∅ 0 grad = not tracked era. Groups: volume/playmaking/rebounding/defense/efficiency/shotmix/bio/tracking/form/market/roster/career/competition/team/pedigree/playoffs/honors</span>
 </div>
 <div>
-<b class="network-arch-grid__label">Residual towers — 17×2 blocks v6 SOTA fork</b>
-<b>v4:</b> <code>Linear 2d_in→160 LN GELU 160→32 LN + skip</code> ×2<br>
-<b>v6 option A - Zaya1 compressed_conv:</b> <code>QKV → latent 64 + Conv1d k7 groups=H → 8× KV cache</code> saves 64GB@128K→8GB, 7 tok/s BF16 M4 Pro 42 tok/s MXFP4 vMLX<br>
-<b>v6 option B - Qwen 3.6 gated_deltanet:</b> <code>Gated DeltaNet 3:1 + 1 full GQA 2-head precision checkpoint — fixed state never grows 18MB @170K 25-40 tok/s</code><br>
-<b>v6 option C - Flash sparse_compressed:</b> <code>Compressed Sparse + Heavily Compressed 10% KV vs V3.2 for 1M + ds4 disk streaming KV on disk</code><br>
-<code>→ 32-d per tower (17×32=544) quantized options</code>
+<b class="network-arch-grid__label">Residual towers — 17×2 blocks</b>
+<code>Linear 2d_in→160 LN GELU 160→32 LN + skip</code> ×2<br>
+<code>→ 32-d per tower (17×32=544)</code>
 </div>
 <div>
-<b class="network-arch-grid__label">Concat fusion + season — now MatFormer nesting</b>
+<b class="network-arch-grid__label">Concat fusion + season</b>
 Season emb <code>12-d learned → concat 544+12=556 → 556→128 GELU LN → 128→48 L2</code><br>
-<b>v6 Gemma E2B/E4B:</b> <code>MatFormer Matryoshka E2B co-trained inside E4B one download multiple targets — smoke 2M→nano 14M→mini 162M→base 1B all from one checkpoint</code><br>
-<b>v6 Per-Layer Embeddings:</b> <code>each decoder layer its own token embeddings cheap lookup tables — cuts vocab mem, enables phone</code><br>
-<span id="arch-fusion-detail" class="network-arch-muted">v4 ~224K params 57% fusion hidden. v6 adds Per-Layer + nesting no extra training for smaller deploy.</span>
+<span id="arch-fusion-detail" class="network-arch-muted">~224K params 57% fusion hidden. Truthful flow W1380 H780 COLS 110/230/320/400/480/560/720/800/900/1120, 1:1 input→tower, cat box, B1h/B1o/B2h/B2o, season node, fusion 18r, L2 badge.</span>
 </div>
 <div>
-<b class="network-arch-grid__label">Embedding & heads — 48-d + diffusion</b>
+<b class="network-arch-grid__label">Embedding & heads — 48-d</b>
 <code>48-d L2-normalized cosine=similarity</code> Heads MLP <code>48→64→k</code> Skills <code>18×(48→16→1)</code><br>
-<b>v6 VibeThinker:</b> <code>verifiable reasoning packs into smaller — MaxEnt RL + self-distill, 94.3% AIME 2026 $7,800 1.5B post-train → Math/Code branches cheap</code><br>
-<b>v6 DiffusionGemma:</b> <code>discrete diffusion 256 random tokens parallel bidirectional block resolves like image 123 steps 9 blocks Flask 138s 1000+ tok/s H100 vs bandwidth Apple Silicon → for next-season forecast whole plan refined before lock</code><br>
-<b>v6 Markovian Recursive:</b> <code>tail end k traces into bounded aggregation context longer reasoning without full chain — Planner 7400 tokens beating GPT-5.5/Opus</code>
-</div>
-<div style="grid-column:1 / -1">
-<b class="network-arch-grid__label">Phone deploy — Gemma E4B proof</b>
-<code>Oppo Find N5 Snapdragon 8 Elite 16GB llama.cpp Termux Q8_0 4.3GB + 900MB projector 6GB RAM 7-8 tok/s sub-sec TTFT 10s encode +10-20s description native conformer audio transcribes sees/hears/calls tools locally</code> → MTNN 527K 549KB ONNX already <phone-ready, execuTorch mtnn.pte XNNPACK
+<code>Archetype 8 / Position 5 / Next profile 14 / Skill 18</code>
 </div>
 </div>
 <details class="network-arch-raw" open>
-<summary>Show raw <code>mtnn_arch.json</code> + v6 SOTA overlay</summary>
-<pre id="arch-layers-pre" class="network-arch-pre">Loading… v4_phase_b 17 families 120 feats → v6_sota_2026: {compressed_conv: {latent:64, kernel:7, compression:8, kv_8x:"64GB→8GB @128K", speed:"7 tok/s BF16 M4 Pro 42 MXFP4"}, gated_deltanet: {ratio:"3:1", fixed_state:"18MB @170K never grows", full_attn:"12 GQA 2-head precision checkpoint", speed:"25-40 tok/s Q4_K_M 46GB Q8_0 85GB"}, sparse_compressed: {ratio:"10% KV vs V3.2 1M ctx", engine:"ds4 DwarfStar C KV on disk streaming", model:"284B MoE 13B active MIT 1M"}, vibethinker: {base:"Qwen2.5-Coder-3B 3B dense", hypothesis:"verifiable reasoning packs smaller", recipe:"2-stage SFT + MaxEnt RL + self-distill", scores:"94.3% AIME 2026 70.2% GPQA 96.1% LeetCode $7800"}, diffusion: {base:"Gemma 4 26B/4B-active MoE", method:"256 random tokens parallel bidirectional block resolves like image", steps:"123 denoising 9 blocks Flask 138s", speed:"1000+ tok/s H100"}, gemma_e2b_e4b: {effective:"E2B 2B E4B 4.5B phone enough", matformer:"E2B inside E4B co-trained one download multiple targets", per_layer:"each layer own embeddings cheap lookup", phone:"Oppo Find N5 16GB Q8_0 4.3GB+900MB 6GB RAM 7-8 tok/s sub-sec TTFT"}}</pre>
+<summary>Show raw <code>mtnn_arch.json</code></summary>
+<pre id="arch-layers-pre" class="network-arch-pre">Loading… v4_phase_b 17 families 120 feats → 544+12=556→128→48 L2 ~224K — real checkpoint mtnn.onnx 549KB + mtnn_map.json. ONNX WASM 2MB distilled, ExecuTorch XNNPACK-friendly ConvNeXt-Tiny path.</pre>
 </details>
 </details>
 </section>
 
-<section class="drift-card" style="border:2px dashed #9cd321;padding:12px">
+<section class="drift-card" style="border:2px dashed #111;padding:12px">
 <p style="margin:0;font-weight:800">Hill-climb log — keep-or-revert</p>
 <ul style="margin:6px 0 0 18px;font-size:12px;line-height:1.5">
-<li><b>2026-07-12 v6 SOTA 2026</b> — Added 6 local LLM innovations as optional attention backends + head decoders. All pass keep-or-revert: KV 8× compression (Zaya1) reduces 64GB→8GB, fixed 18MB (Qwen) enables 170K phone, 10% sparse (Flash) enables 1M disk streaming, $7,800 recipe (VibeThinker) enables cheap Math branch, diffusion 256 canvas (DiffusionGemma) enables bidirectional planning, MatFormer+per-layer (Gemma E4B) enables 6GB RAM phone 7-8 tok/s. Baseline 9/11 harness PASS maintained, bundle still ~105KB gz <300KB target, ONNX 549KB. Solo personal project, no connection to employer.</li>
-<li><b>2026-07-11 v5</b> — Procrustes era align drift ↓18% + RealMLP robust + vite 65 modules 300KB raw 88.4KB gz + vendor 16KB =105KB gz</li>
-<li><b>2026-07-10 v4</b> — truthful flow W1380 H780 COLS 110-1120 1:1 input→tower cat box B1h/B1o/B2h/B2o season node fusion 18r L2 badge</li>
+<li><b>2026-07-11 v5</b> — Procrustes era align drift ↓18% + RealMLP robust + vite 65 modules 300KB raw 88.4KB gz</li>
+<li><b>2026-07-10 v4</b> — truthful flow W1380 H780 COLS 110-1120 1:1 input→tower cat box B1h/B1o/B2h/B2o season node fusion 18r L2 badge — MTNNFlow + ChimeraEquation only relevant videos</li>
 </ul>
 </section>
 
@@ -301,6 +236,7 @@ Season emb <code>12-d learned → concat 544+12=556 → 556→128 GELU LN → 12
 <footer class="site-footer">
 <div class="site-footer__links">
 <a href="/play">Play</a>
+<a href="/games">Arcade</a>
 <a href="/model">Network</a>
 <a href="/players">Players</a>
 <a href="/methods">Methods</a>
@@ -308,7 +244,7 @@ Season emb <code>12-d learned → concat 544+12=556 → 556→128 GELU LN → 12
 <a href="#" data-vh-nux-tour>Tour</a>
 <a href="https://github.com/jcdavis131/vector-hoops" target="_blank" rel="noopener">GitHub</a>
 </div>
-<div class="site-footer__attribution">MTNN v6 SOTA 2026: 12,392 seasons 120 feats 17 families 8 archetypes + compressed 8× KV + fixed 18MB @170K + 10% sparse 1M disk + MatFormer nesting + diffusion 256 canvas — Every number recomputable from stats.nba.com · solo personal project · from <a href="https://dumbmodel.com/" target="_blank" rel="noopener">dumbmodel.com</a></div>
+<div class="site-footer__attribution">MTNN v4: 12,392 seasons 120 feats 17 families 8 archetypes cat([x·m,m]) → 17×160→32×2 544+12=556→128→48 L2 ~224K params — every number recomputable from stats.nba.com · solo personal project, no connection to employer, built with public/free-tier only • hoops.dumbmodel.com</div>
 </footer>
 
 <script src="assets/site-nav.js" defer></script>
