@@ -4,9 +4,8 @@
 
   var LINKS = [
     { href: '/play', label: 'Play' },
-    { href: '/games', label: 'Arcade', title: 'MTNN Games — 5 daily viral games' },
-    { href: '/model', label: 'Network', title: 'MTNN Network Explorer' },
-    { href: '/trends', label: 'Trends', title: 'Trend Research' },
+    { href: '/model', label: 'Network', title: 'MTNN Network Explorer — glass box' },
+    { href: '/trends', label: 'Trends', title: 'Trend Research — 30 seasons measured geometry' },
     { href: '/players', label: 'Players', title: 'Player References' },
     { href: '/teams', label: 'Teams', title: 'Team Labs' },
     { href: '/methods', label: 'Methods' },
