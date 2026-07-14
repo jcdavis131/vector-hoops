@@ -83,8 +83,8 @@
 .network-trace-clear{ min-height:44px; border:2px solid var(--ink); border-radius:999px; padding:0 12px; background:#fff; font-family:var(--mono); font-size:11px; font-weight:800; text-transform:uppercase; box-shadow:2px 2px 0 var(--ink); cursor:pointer; }
 .network-flow-layout{ display:grid; grid-template-columns:minmax(0,1.6fr) minmax(260px,.9fr); gap:14px; padding:14px; }
 @media(max-width:940px){ .network-flow-layout{ grid-template-columns:1fr; } }
-.network-flow-host{ border:2px solid var(--ink); border-radius:12px; background:#121210; min-height:420px; overflow:hidden; position:relative; }
-.network-insights{ border:2px solid var(--ink); border-radius:12px; padding:12px; background:#FFFEF7; min-height:120px; }
+.network-flow-host{ border:2px solid #111; border-radius:12px; background:#FFFEF7; min-height:420px; overflow:hidden; position:relative; box-shadow:4px 4px 0 #111; background-image: radial-gradient(#E8E0C8 1px, transparent 1.2px); background-size: 22px 22px; }
+.network-insights{ border:2px solid #111; border-radius:12px; padding:12px; background:#FFFEF7; min-height:120px; box-shadow:3px 3px 0 #111; }
 .network-flow-outputs{ padding:0 14px 14px; }
 .viz-duo-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:12px; margin-top:12px; }
 .viz-panel{ border:2px solid var(--ink); border-radius:12px; background:#fff; padding:12px; box-shadow:3px 3px 0 var(--ink); }
@@ -98,7 +98,7 @@
 .network-map-card{ padding:16px; }
 .network-map-layout{ display:grid; grid-template-columns:minmax(0,1.4fr) minmax(240px,.7fr); gap:14px; padding-top:12px; }
 @media(max-width:900px){ .network-map-layout{ grid-template-columns:1fr; } }
-.network-map-canvas{ width:100%; aspect-ratio:1.15; border:2px solid var(--ink); border-radius:12px; background:#121210; display:block; }
+.network-map-canvas{ width:100%; aspect-ratio:1.15; border:2px solid #111; border-radius:12px; background:#FFFEF7; display:block; box-shadow:4px 4px 0 #111; }
 .network-map-legend{ display:flex; flex-wrap:wrap; gap:6px; margin:10px 0 0; padding:0; list-style:none; }
 .network-map-legend li{ display:inline-flex; align-items:center; gap:6px; font-family:var(--mono); font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.04em; border:2px solid var(--ink); border-radius:999px; padding:4px 8px; background:#fff; }
 .legend-dot{ width:10px; height:10px; border-radius:2px; border:1.5px solid #111; display:inline-block; }

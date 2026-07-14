@@ -5,25 +5,29 @@
   'use strict';
 
   var SVG_NS = 'http://www.w3.org/2000/svg';
-  var PALETTE = ['#3987e5', '#c98500', '#199e70', '#9085e9', '#e66767', '#008300', '#d55181', '#d95926'];
-  var PALETTE_OTHER = '#6f6e69';
+  // Cam's Lab authentic styling — ADA AAA, distinct from 3b1b dark
+  var BG = '#FFFEF7';
+  var PAPER_DOT = '#E8E0C8';
+  var CARD = '#FFFFFF';
+  var INK = '#111111';
+  var SHADOW = '#111111';
+  var SUBTLE_AAA = '#585858';
+  var MUTED = '#666666';
+  var HAIR = '#B8AFA0'; // axis / hairline ink
+  var OKABE = { orange:'#E69F00', sky:'#56B4E9', green:'#009E73', yellow:'#F0E442', blue:'#0072B2', verm:'#D55E00', purple:'#CC79A7' };
+  // 8 archetypes Okabe triple-encoded (color+shape+text) — AAA 7:1 min on white for blue, others with ink border
+  var PALETTE = [OKABE.blue, OKABE.orange, OKABE.green, OKABE.verm, OKABE.purple, OKABE.sky, OKABE.yellow, OKABE.green];
+  var PALETTE_OTHER = '#999999';
+  var ORANGE = OKABE.orange;
 
   /* Fixed order, never cycled: a 9th archetype must not reuse hue 1. */
   function clusterColor(idx) {
     if (typeof idx !== 'number' || idx < 0) return PALETTE_OTHER;
     return idx < PALETTE.length ? PALETTE[idx] : PALETTE_OTHER;
   }
-  var ORANGE = '#eb6834';
-  var INK = '#e8e6df';
-  var MUTED = '#8a8983';
-  var HAIR = '#3a3935';
-  var BG = '#121210';
-  // Axes are CHROME, not a data series. The old triple (#f07070/#5cc99a/#6eb5ff)
-  // failed the dark lightness band (L .698/.759/.757 vs .48-.67), competed with
-  // the eight archetype hues on the same canvas, and colored its own text --
-  // text wears text tokens, never a series color. Recessive neutral instead.
-  var AXIS_LINE = '#4a4944';
-  var AXIS_TEXT = '#8a8983';
+  // Axes chrome — light paper style, high contrast ink
+  var AXIS_LINE = '#B8AFA0';
+  var AXIS_TEXT = '#585858';
   var MAX_INPUT_NODES = 17; // truthful: 17 families, not top-10 truncated
   var SKILL_LABELS = {
     ft: 'Free Throw Shooting',
@@ -620,18 +624,20 @@
     var panelW = Math.min(w - 24, 520);
     var lineH = 14;
     var panelH = 10 + Math.max(1, axes.length) * (lineH + 12);
-    ctx.fillStyle = 'rgba(0,0,0,0.45)';
-    ctx.fillRect(panelX, panelY, panelW, panelH);
-    ctx.fillStyle = '#c7c5bd';
-    ctx.font = '10px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace';
-    ctx.fillText('PCA Axes (MTNN 48-d)', panelX + 8, panelY + 13);
+    ctx.fillStyle = '#FFFEF7';
+    ctx.strokeStyle = '#111111';
+    ctx.lineWidth = 1.8;
+    ctx.beginPath(); ctx.roundRect(panelX, panelY, panelW, panelH, 8); ctx.fill(); ctx.stroke();
+    ctx.fillStyle = '#111111';
+    ctx.font = '700 10px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace';
+    ctx.fillText('PCA Axes (MTNN 48-d) — Cam\'s Lab light paper', panelX + 8, panelY + 13);
     axes.forEach(function (ax, i) {
       var y = panelY + 30 + i * (lineH + 12);
-      ctx.fillStyle = AXIS_TEXT;
+      ctx.fillStyle = '#111111';
       ctx.fillText((ax.axis || ['X', 'Y', 'Z'][i]) + ' / ' + (ax.pc || ('PC' + (i + 1))), panelX + 8, y);
-      ctx.fillStyle = '#d7d5ce';
+      ctx.fillStyle = '#111111';
       ctx.fillText((ax.hi || '').slice(0, 72), panelX + 90, y);
-      ctx.fillStyle = '#9d9b94';
+      ctx.fillStyle = '#585858';
       ctx.fillText((ax.lo || '').slice(0, 72), panelX + 90, y + lineH);
     });
     ctx.restore();
@@ -1245,7 +1251,7 @@ function buildFlowSvg(host) {
     sub.setAttribute('y', 34);
     sub.setAttribute('text-anchor', 'middle');
     sub.setAttribute('class', 'network-flow-col-label');
-    sub.setAttribute('style', 'font-size:9px;fill:#6b6a66;');
+    sub.setAttribute('style', 'font-size:9px;fill:#585858;');
     sub.textContent = 'cat([x·m, m])  2·d_in';
     svg.appendChild(sub);
     var sub2 = document.createElementNS(SVG_NS, 'text');
@@ -1253,7 +1259,7 @@ function buildFlowSvg(host) {
     sub2.setAttribute('y', 34);
     sub2.setAttribute('text-anchor', 'middle');
     sub2.setAttribute('class', 'network-flow-col-label');
-    sub2.setAttribute('style', 'font-size:9px;fill:#6b6a66;');
+    sub2.setAttribute('style', 'font-size:9px;fill:#585858;');
     sub2.textContent = 'B1 LN+GELU + skip';
     svg.appendChild(sub2);
     var sub3 = document.createElementNS(SVG_NS, 'text');
@@ -1261,7 +1267,7 @@ function buildFlowSvg(host) {
     sub3.setAttribute('y', 34);
     sub3.setAttribute('text-anchor', 'middle');
     sub3.setAttribute('class', 'network-flow-col-label');
-    sub3.setAttribute('style', 'font-size:9px;fill:#6b6a66;');
+    sub3.setAttribute('style', 'font-size:9px;fill:#585858;');
     sub3.textContent = 'B2 32→160→32 res';
     svg.appendChild(sub3);
     var sub4 = document.createElementNS(SVG_NS, 'text');
@@ -1269,7 +1275,7 @@ function buildFlowSvg(host) {
     sub4.setAttribute('y', 34);
     sub4.setAttribute('text-anchor', 'middle');
     sub4.setAttribute('class', 'network-flow-col-label');
-    sub4.setAttribute('style', 'font-size:9px;fill:#6b6a66;');
+    sub4.setAttribute('style', 'font-size:9px;fill:#585858;');
     sub4.textContent = '556→128 GELU LN →48';
     svg.appendChild(sub4);
 
@@ -1346,10 +1352,10 @@ function buildFlowSvg(host) {
       catR.setAttribute('x','-14'); catR.setAttribute('y','-7'); catR.setAttribute('width','28'); catR.setAttribute('height','14'); catR.setAttribute('rx','3');
       catR.setAttribute('class','network-flow-node network-flow-node--cat');
       catR.setAttribute('data-tower-row', String(i));
-      catR.setAttribute('style','fill:#1e1d1a;stroke:#3a3935;stroke-width:1;');
+      catR.setAttribute('style','fill:#FFFFFF;stroke:#111111;stroke-width:1;');
       cat.appendChild(catR);
       var catT = document.createElementNS(SVG_NS, 'text');
-      catT.setAttribute('x','0'); catT.setAttribute('y','3'); catT.setAttribute('text-anchor','middle'); catT.setAttribute('style','font-size:7px;fill:#8a8983;font-family:var(--mono);');
+      catT.setAttribute('x','0'); catT.setAttribute('y','3'); catT.setAttribute('text-anchor','middle'); catT.setAttribute('style','font-size:7px;fill:#111111;font-family:var(--mono);');
       catT.textContent = 'cat';
       cat.appendChild(catT);
       inputG.appendChild(cat);
@@ -1393,7 +1399,7 @@ function buildFlowSvg(host) {
       var skip1 = document.createElementNS(SVG_NS, 'path');
       skip1.setAttribute('d','M'+(COLS.cat+6)+','+(y-7)+' Q'+((COLS.cat+COLS.b1o)/2)+','+(y-14)+' '+COLS.b1o+','+(y-4));
       skip1.setAttribute('class','network-flow-edge network-flow-edge--skip');
-      skip1.setAttribute('style','fill:none;stroke:#4a4944;stroke-width:0.7;stroke-dasharray:2 2;opacity:0.5;');
+      skip1.setAttribute('style','fill:none;stroke:#111111;stroke-width:1;stroke-dasharray:3 2;opacity:0.55;');
       edgeG.appendChild(skip1);
 
       var pB1 = document.createElementNS(SVG_NS, 'path');
@@ -1434,7 +1440,7 @@ function buildFlowSvg(host) {
       var skip2 = document.createElementNS(SVG_NS, 'path');
       skip2.setAttribute('d','M'+COLS.b1o+','+(y+6)+' Q'+((COLS.b1o+COLS.b2o)/2)+','+(y+12)+' '+COLS.b2o+','+(y+4));
       skip2.setAttribute('class','network-flow-edge network-flow-edge--skip');
-      skip2.setAttribute('style','fill:none;stroke:#4a4944;stroke-width:0.7;stroke-dasharray:2 2;opacity:0.5;');
+      skip2.setAttribute('style','fill:none;stroke:#111111;stroke-width:1;stroke-dasharray:3 2;opacity:0.55;');
       edgeG.appendChild(skip2);
 
       var pB2b = document.createElementNS(SVG_NS, 'path');
@@ -1506,7 +1512,7 @@ function buildFlowSvg(host) {
     fusionLabel.setAttribute('y', String(midY+32));
     fusionLabel.setAttribute('text-anchor','middle');
     fusionLabel.setAttribute('class','network-flow-col-label');
-    fusionLabel.setAttribute('style','font-size:8px;fill:#6b6a66;');
+    fusionLabel.setAttribute('style','font-size:8px;fill:#585858;');
     fusionLabel.textContent = '556→128';
     svg.appendChild(fusionLabel);
 
@@ -1554,7 +1560,7 @@ function buildFlowSvg(host) {
     l2badge.setAttribute('y', String(midY-10));
     l2badge.setAttribute('text-anchor','middle');
     l2badge.setAttribute('class','network-flow-col-label');
-    l2badge.setAttribute('style','font-size:8px;fill:#8a8983;');
+    l2badge.setAttribute('style','font-size:8px;fill:#111111;');
     l2badge.textContent = 'L2 norm';
     svg.appendChild(l2badge);
 
@@ -2478,11 +2484,11 @@ function buildFlowSvg(host) {
         ctx.fillRect(hlx - 6, hly - 12, htw + 12, 18);
         ctx.beginPath();
         ctx.arc(hpr.sx, hpr.sy, 5, 0, Math.PI * 2);
-        ctx.strokeStyle = '#e8e6df';
+        ctx.strokeStyle = '#111111';
         ctx.lineWidth = 1.5;
         ctx.stroke();
         ctx.globalAlpha = 1;
-        ctx.fillStyle = '#e8e6df';
+        ctx.fillStyle = '#111111';
         ctx.fillText(hLabel, hlx, hly);
       }
     }
