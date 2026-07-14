@@ -1,21 +1,16 @@
-"""InputFamilies — MTNN v4 truthful explainer
+"""InputFamilies — MTNN v4 truthful explainer, Cam style
 120 feats → 17 families, masking x·m m∈{0,1}, cat([x·m,m]) → 2·d_in per tower
-Solo personal project, no connection to employer, free-tier only, 480p15 <10s
+Solo personal project, no connection to employer, built with public/free-tier only
 """
 from manim import *
-
-# Okabe-Ito AAA palette — colorblind safe
-OKABE = {
-    "orange": "#E69F00",
-    "sky": "#56B4E9",
-    "green": "#009E73",
-    "yellow": "#F0E442",
-    "blue": "#0072B2",
-    "verm": "#D55E00",
-    "purple": "#CC79A7",
-    "gray": "#999999",
-}
-BG = "#0a0a0a"
+from cam_style import (
+    BG, BG_ALT, INK, CARD_FILL, SHADOW, TEXT, SUBTLE, SUBTLE_AAA, OKABE,
+    TITLE_SIZE, LABEL_SIZE, CODE_SIZE, CAPTION_SIZE,
+    INK_STROKE_WIDTH, SHADOW_OFFSET_X, SHADOW_OFFSET_Y, CORNER_RADIUS,
+    MONO_STACK, SANS_STACK,
+    apply_cam_style, cam_card, cam_label, add_blueprint_dots, cam_code_box,
+    check_no_overlap
+)
 
 FAMILIES = [
     ("volume", 10),
@@ -36,7 +31,6 @@ FAMILIES = [
     ("playoffs", 5),
     ("honors", 5),
 ]
-# check sum 120
 assert sum(c for _, c in FAMILIES) == 120
 
 COLOR_CYCLE = [
@@ -46,108 +40,135 @@ COLOR_CYCLE = [
     OKABE["sky"], OKABE["yellow"], OKABE["blue"], OKABE["orange"], OKABE["green"]
 ]
 
+SHAPE_CYCLE = ["●", "■", "▲", "◆"]
+
+def make_white_family_chip(name: str, count: int, color: str, shape_char: str):
+    """White card ink border + colored dot Okabe + mono bold label — triple encoded."""
+    label_str = f"{shape_char} {name}  {count}"
+    txt = Text(label_str, font_size=20, color=TEXT, font=MONO_STACK[0], weight="BOLD")
+    dot = Circle(radius=0.11, fill_color=color, fill_opacity=1.0, stroke_color=INK, stroke_width=3.0)
+    card_w = txt.width + 0.72
+    card_h = 0.52
+    shadow = RoundedRectangle(
+        width=card_w, height=card_h, corner_radius=0.08,
+        fill_color=SHADOW, fill_opacity=1.0, stroke_width=0
+    ).shift([SHADOW_OFFSET_X*0.8, SHADOW_OFFSET_Y*0.8, 0])
+    card = RoundedRectangle(
+        width=card_w, height=card_h, corner_radius=0.08,
+        fill_color=CARD_FILL, fill_opacity=1.0,
+        stroke_color=INK, stroke_width=INK_STROKE_WIDTH*0.9
+    )
+    dot.move_to(card.get_left()).shift(RIGHT*0.26)
+    dot.move_to([dot.get_center()[0], card.get_center()[1], 0])
+    txt.next_to(dot, RIGHT, buff=0.14)
+    txt.move_to([txt.get_center()[0], card.get_center()[1]+0.01, 0])
+    chip = VGroup(shadow, card, dot, txt)
+    chip.card = card
+    chip.dot = dot
+    chip.txt = txt
+    chip.shadow = shadow
+    return chip
+
+
 class InputFamilies(Scene):
     def construct(self):
-        self.camera.background_color = BG
+        apply_cam_style(self, bg=BG, add_dots=True, check_ada=True)
 
-        # --- Title ---
-        title = Text("120 feats → 17 families", font_size=36, weight=BOLD, color=WHITE).to_edge(UP, buff=0.4)
-        subtitle = Text("MTNN v4  per-100 zσ  cat([x·m,m])", font_size=18, color=OKABE["gray"]).next_to(title, DOWN, buff=0.15)
-        self.play(FadeIn(title, shift=DOWN*0.2), FadeIn(subtitle), run_time=0.6)
-        self.wait(0.4)
+        title_card_w = 6.2
+        title_card_h = 1.0
+        title_shadow = RoundedRectangle(width=title_card_w, height=title_card_h, corner_radius=0.1, fill_color=SHADOW, fill_opacity=1, stroke_width=0).shift([0.12, -0.12, 0]).to_edge(UP, buff=0.42)
+        title_base = RoundedRectangle(width=title_card_w, height=title_card_h, corner_radius=0.1, fill_color=CARD_FILL, fill_opacity=1, stroke_color=INK, stroke_width=INK_STROKE_WIDTH).move_to(title_shadow).shift([-0.12, 0.12, 0])
+        accent = RoundedRectangle(width=title_card_w-0.08, height=0.16, corner_radius=0.04, fill_color=OKABE["orange"], fill_opacity=1, stroke_width=0).move_to(title_base.get_top()).shift(DOWN*0.16)
+        title_txt = Text("120 feats → 17 families", font_size=32, color=TEXT, font=SANS_STACK[0], weight="BOLD").move_to(title_base).shift(UP*0.1)
+        sub_txt = Text("MTNN v4  •  per-100  zσ  •  cat([x·m,m])", font_size=16, color=SUBTLE_AAA, font=MONO_STACK[0]).next_to(title_txt, DOWN, buff=0.08)
+        title_group = VGroup(title_shadow, title_base, accent, title_txt, sub_txt)
 
-        # --- Families grid ---
-        # Build rows: each row = dot icon + label + count badge + dots strip
-        rows = VGroup()
+        footer = Text("sum 120  •  17 towers  •  m∈{0,1}", font_size=16, color=SUBTLE_AAA, font=MONO_STACK[0]).to_edge(DOWN, buff=0.28)
+
+        self.play(FadeIn(title_group, shift=DOWN*0.15), run_time=0.55)
+        self.wait(0.2)
+
+        chips = []
         for idx, (name, cnt) in enumerate(FAMILIES):
             col = COLOR_CYCLE[idx % len(COLOR_CYCLE)]
-            # icon shape triple-encoding: cycle shapes ● ■ ▲ ◆ (using unicode via Text for simplicity)
-            shapes = ["●", "■", "▲", "◆"]
-            shape_char = shapes[idx % len(shapes)]
-            icon = Text(shape_char, font_size=16, color=col)
-            label = Text(f"{name}", font_size=14, color=WHITE)
-            count_badge = Text(f"{cnt}", font_size=14, weight=BOLD, color=col)
-            # dots strip: cnt dots mini
-            dots = VGroup(*[Dot(radius=0.045, color=col, fill_opacity=0.95) for _ in range(cnt)])
-            dots.arrange(RIGHT, buff=0.05)
-            # row assemble
-            row = VGroup(icon, label, count_badge, dots)
-            row.arrange(RIGHT, buff=0.12)
-            rows.add(row)
+            shape = SHAPE_CYCLE[idx % len(SHAPE_CYCLE)]
+            chip = make_white_family_chip(name, cnt, col, shape)
+            chips.append(chip)
 
-        # Arrange in 2 columns: 9 left, 8 right
-        left_rows = VGroup(*rows[:9]).arrange(DOWN, aligned_edge=LEFT, buff=0.12)
-        right_rows = VGroup(*rows[9:]).arrange(DOWN, aligned_edge=LEFT, buff=0.12)
-        grid = VGroup(left_rows, right_rows).arrange(RIGHT, buff=0.6, aligned_edge=UP)
-        grid.scale(0.85)
-        grid.next_to(subtitle, DOWN, buff=0.35)
+        col1 = VGroup(*chips[0:6]).arrange(DOWN, buff=0.16, aligned_edge=LEFT)
+        col2 = VGroup(*chips[6:12]).arrange(DOWN, buff=0.16, aligned_edge=LEFT)
+        col3 = VGroup(*chips[12:17]).arrange(DOWN, buff=0.16, aligned_edge=LEFT)
+        grid = VGroup(col1, col2, col3).arrange(RIGHT, buff=0.28, aligned_edge=UP)
+        grid.next_to(title_group, DOWN, buff=0.38)
+        if grid.height > 5.2:
+            grid.scale(0.92)
+            grid.next_to(title_group, DOWN, buff=0.35)
 
-        self.play(FadeIn(grid, shift=UP*0.2), run_time=0.8)
-        self.wait(0.8)
-
-        # --- Masking step ---
-        # Highlight tracking (index 7) and form (index 8) as historically masked
-        # rows[7] = tracking 12, rows[8]=form 6
-        tracking_row = rows[7]
-        form_row = rows[8]
-
-        # Create mask indicators
-        mask_eq = Text("x · m   where   m ∈ {0,1}", font_size=22, color=WHITE, weight=BOLD).to_edge(DOWN, buff=1.0)
-        mask_note = Text("tracking pre-2013  form pre-2015  →  ∅ masked as 0", font_size=14, color=OKABE["gray"]).next_to(mask_eq, DOWN, buff=0.12)
-
-        # Dim effect: reduce opacity of tracking + form dots
-        tracking_dots = tracking_row[3]
-        form_dots = form_row[3]
-
-        self.play(
-            tracking_dots.animate.set_fill(opacity=0.15).set_stroke(opacity=0.15),
-            form_dots.animate.set_fill(opacity=0.15).set_stroke(opacity=0.15),
-            FadeIn(mask_eq),
-            FadeIn(mask_note),
-            run_time=0.7
-        )
-        # Add ∅ symbols over masked rows
-        empty_sym1 = Text("∅", font_size=18, color=OKABE["yellow"], weight=BOLD).move_to(tracking_dots.get_center())
-        empty_sym2 = Text("∅", font_size=18, color=OKABE["yellow"], weight=BOLD).move_to(form_dots.get_center())
-        self.play(FadeIn(empty_sym1), FadeIn(empty_sym2), run_time=0.4)
+        self.play(FadeIn(grid, shift=UP*0.15), run_time=0.6)
         self.wait(0.6)
 
-        # --- cat([x·m,m]) ---
+        tr_chip = chips[7]
+        form_chip = chips[8]
+
+        hl1 = RoundedRectangle(width=tr_chip.card.width+0.08, height=tr_chip.card.height+0.08, corner_radius=0.09, stroke_color=OKABE["verm"], stroke_width=5, fill_opacity=0).move_to(tr_chip.card)
+        hl2 = RoundedRectangle(width=form_chip.card.width+0.08, height=form_chip.card.height+0.08, corner_radius=0.09, stroke_color=OKABE["verm"], stroke_width=5, fill_opacity=0).move_to(form_chip.card)
+        empty1 = Text("∅", font_size=26, color=OKABE["verm"], font=MONO_STACK[0], weight="BOLD").move_to(tr_chip.card.get_right()).shift(RIGHT*0.18)
+        empty2 = Text("∅", font_size=26, color=OKABE["verm"], font=MONO_STACK[0], weight="BOLD").move_to(form_chip.card.get_right()).shift(RIGHT*0.18)
+
+        mask_card_w = 6.8
+        mask_card_h = 0.95
+        mask_shadow = RoundedRectangle(width=mask_card_w, height=mask_card_h, corner_radius=0.1, fill_color=SHADOW, fill_opacity=1, stroke_width=0).shift([0.1, -0.1, 0]).to_edge(DOWN, buff=0.9)
+        mask_base = RoundedRectangle(width=mask_card_w, height=mask_card_h, corner_radius=0.1, fill_color=CARD_FILL, fill_opacity=1, stroke_color=INK, stroke_width=INK_STROKE_WIDTH*0.8).move_to(mask_shadow).shift([-0.1,0.1,0])
+        mask_line1 = Text("tracking pre-2013 • form pre-2015 →  ∅ masked as 0", font_size=18, color=TEXT, font=MONO_STACK[0], weight="BOLD").move_to(mask_base).shift(UP*0.15)
+        mask_line2 = Text("x·m  where m∈{0,1}  →  0 grad  •  never imputed  ✓ era-safe", font_size=16, color=SUBTLE_AAA, font=MONO_STACK[0]).next_to(mask_line1, DOWN, buff=0.08)
+        mask_group = VGroup(mask_shadow, mask_base, mask_line1, mask_line2)
+
+        self.play(Create(hl1), Create(hl2), FadeIn(empty1), FadeIn(empty2), run_time=0.5)
+        self.play(FadeIn(mask_group, shift=UP*0.12), run_time=0.5)
+        self.wait(0.9)
+
+        self.play(FadeOut(mask_group), FadeOut(hl1), FadeOut(hl2), FadeOut(empty1), FadeOut(empty2), run_time=0.4)
+
+        cat_w = 7.2
+        cat_h = 1.6
+        cat_shadow = RoundedRectangle(width=cat_w, height=cat_h, corner_radius=0.12, fill_color=SHADOW, fill_opacity=1, stroke_width=0).shift([0.11, -0.11, 0]).to_edge(DOWN, buff=0.65)
+        cat_base = RoundedRectangle(width=cat_w, height=cat_h, corner_radius=0.12, fill_color=CARD_FILL, fill_opacity=1, stroke_color=INK, stroke_width=INK_STROKE_WIDTH).move_to(cat_shadow).shift([-0.11,0.11,0])
+
+        box_w = 1.9
+        box_h = 0.5
+        box1 = RoundedRectangle(width=box_w, height=box_h, corner_radius=0.06, fill_color="#E6F0FF", fill_opacity=1, stroke_color=INK, stroke_width=4)
+        box1_label = Text("[x·m]", font_size=18, color=TEXT, font=MONO_STACK[0], weight="BOLD").move_to(box1)
+        box2 = RoundedRectangle(width=box_w, height=box_h, corner_radius=0.06, fill_color="#FFE8CC", fill_opacity=1, stroke_color=INK, stroke_width=4)
+        box2_label = Text("[m]", font_size=18, color=TEXT, font=MONO_STACK[0], weight="BOLD").move_to(box2)
+        dot1 = Circle(radius=0.07, fill_color=OKABE["blue"], fill_opacity=1, stroke_color=INK, stroke_width=2.5).move_to(box1.get_right()).shift(RIGHT*0.12)
+        dot2 = Circle(radius=0.07, fill_color=OKABE["orange"], fill_opacity=1, stroke_color=INK, stroke_width=2.5).move_to(box2.get_right()).shift(RIGHT*0.12)
+
+        stack = VGroup(VGroup(box1, box1_label, dot1), VGroup(box2, box2_label, dot2)).arrange(DOWN, buff=0.18, aligned_edge=LEFT)
+        stack.move_to(cat_base).shift(LEFT*1.8)
+
+        arrow = Arrow(start=stack.get_right()+RIGHT*0.2, end=stack.get_right()+RIGHT*1.1, color=INK, stroke_width=5, buff=0.05, tip_length=0.16)
+        cat_label_txt = Text("cat", font_size=20, color=TEXT, font=MONO_STACK[0], weight="BOLD").next_to(arrow, UP, buff=0.06)
+
+        res_w = 2.2
+        res_h = 0.9
+        res_card = RoundedRectangle(width=res_w, height=res_h, corner_radius=0.08, fill_color="#E8FFE8", fill_opacity=1, stroke_color=INK, stroke_width=4).next_to(arrow, RIGHT, buff=0.18)
+        res_t1 = Text("2·d_in", font_size=20, color=TEXT, font=MONO_STACK[0], weight="BOLD").move_to(res_card).shift(UP*0.15)
+        res_t2 = Text("per tower", font_size=16, color=SUBTLE_AAA, font=MONO_STACK[0]).next_to(res_t1, DOWN, buff=0.06)
+
+        cat_vgroup = VGroup(cat_shadow, cat_base, stack, arrow, cat_label_txt, res_card, res_t1, res_t2)
+        cat_top = Text("masking → cat([x·m,m])", font_size=16, color=SUBTLE_AAA, font=MONO_STACK[0]).move_to(cat_base.get_top()).shift(DOWN*0.18)
+
         self.play(
-            FadeOut(mask_eq), FadeOut(mask_note),
-            FadeOut(empty_sym1), FadeOut(empty_sym2),
-            FadeOut(grid),
-            run_time=0.5
+            grid.animate.set_opacity(0.55).scale(0.94),
+            FadeIn(cat_vgroup),
+            FadeIn(cat_top),
+            FadeIn(footer),
+            run_time=0.55
         )
+        self.wait(1.0)
 
-        # Visual cat operation
-        # Two blocks: [x·m] and [m] concatenated
-        block_width = 2.2
-        block_height = 0.6
-        block1 = RoundedRectangle(width=block_width, height=block_height, corner_radius=0.12, color=OKABE["blue"], fill_opacity=0.25, stroke_width=2)
-        block1_label = Text("[x·m]", font_size=20, color=WHITE, weight=BOLD).move_to(block1)
-        block1_group = VGroup(block1, block1_label)
+        check = Text("✓ missing → 0 + flag  •  era-safe • never imputed", font_size=16, color=TEXT, font=MONO_STACK[0], weight="BOLD").next_to(cat_vgroup, DOWN, buff=0.14)
+        self.play(FadeIn(check, shift=UP*0.1), run_time=0.4)
+        self.wait(0.7)
 
-        block2 = RoundedRectangle(width=block_width*0.7, height=block_height, corner_radius=0.12, color=OKABE["orange"], fill_opacity=0.25, stroke_width=2)
-        block2_label = Text("[m]", font_size=20, color=WHITE, weight=BOLD).move_to(block2)
-        block2_group = VGroup(block2, block2_label)
-
-        cat_label = Text("cat", font_size=16, color=OKABE["gray"]).next_to(VGroup(block1_group, block2_group), UP, buff=0.15)
-        plus = Text("+", font_size=20, color=OKABE["gray"])
-
-        top_row = VGroup(block1_group, plus, block2_group).arrange(RIGHT, buff=0.2)
-        top_row.move_to(ORIGIN).shift(UP*0.3)
-
-        arrow = Arrow(start=top_row.get_bottom()+DOWN*0.1, end=top_row.get_bottom()+DOWN*0.9, color=WHITE, stroke_width=4, buff=0.1)
-        result_text = Text("cat([x·m,m]) → 2·d_in per tower", font_size=24, weight=BOLD, color=WHITE).next_to(arrow, DOWN, buff=0.2)
-        check = Text("✓ era-safe  missing → 0 + flag", font_size=16, color=OKABE["green"]).next_to(result_text, DOWN, buff=0.15)
-
-        # Animate cat build
-        self.play(FadeIn(top_row), run_time=0.5)
-        self.play(GrowArrow(arrow), run_time=0.4)
-        self.play(FadeIn(result_text), run_time=0.4)
-        self.play(FadeIn(check), run_time=0.3)
-        self.wait(1.2)
-
-        # End hold for loop
-        self.wait(0.5)
+        self.play(FadeOut(title_group), FadeOut(grid), FadeOut(cat_vgroup), FadeOut(cat_top), FadeOut(check), FadeOut(footer), run_time=0.4)

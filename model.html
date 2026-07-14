@@ -39,13 +39,14 @@
 .drift-card__head{ padding:16px 18px 0; }
 .drift-card__head h2{ font-size:19px; letter-spacing:-0.01em; margin:0; }
 .card-kicker{ font-family:var(--mono); font-size:11px; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:var(--ok-blue); }
-.manim-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:14px; padding:14px; }
-.manim-card{ border:2px solid var(--ink); border-radius:12px; overflow:hidden; background:#000; box-shadow:3px 3px 0 var(--ink); display:flex; flex-direction:column; }
-.manim-card video{ width:100%; aspect-ratio:16/9; object-fit:cover; background:#0a0a0a; }
-.manim-caption{ padding:10px 12px; background:linear-gradient(180deg,#1a1a1a 0%,#101010 100%); color:#fff; font-size:12px; line-height:1.5; }
-.manim-caption b{ color:var(--ok-yellow); }
-.manim-caption code{ font-size:11px; color:#aaa; }
-.manim-meta{ padding:10px 14px; font-size:11px; color:#666; background:#FFFEF7; border-top:2px dashed #111; }
+.manim-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:14px; padding:14px; background:#FFFEF7; }
+.manim-card{ border:2px solid #111; border-radius:12px; overflow:hidden; background:#FFFEF7; box-shadow:4px 4px 0 #111; display:flex; flex-direction:column; }
+.manim-card video{ width:100%; aspect-ratio:16/9; object-fit:cover; background:#FFFEF7; border-bottom:2px solid #111; }
+.manim-caption{ padding:12px 14px; background:#FFFFFF; color:#111; font-size:13px; line-height:1.6; border-top:2px dashed #111; }
+.manim-caption b{ color:#111; background:#F0E442; padding:1px 4px; border-radius:4px; border:1px solid #111; }
+.manim-caption code{ font-size:11px; color:#111; background:#FFFEF7; border:1.5px solid #111; padding:1px 5px; border-radius:4px; }
+.manim-meta{ padding:12px 14px; font-size:11px; color:#111; background:#FFFEFA; border-top:2px solid #111; line-height:1.6; }
+.manim-fallback-note{ padding:8px 10px; background:#FFF8E7; color:#111; font-family:var(--mono); font-size:10px; border-top:1.5px solid #111; }
 /* Controls */
 .network-controls-card{ padding:16px; }
 .network-controls{ display:grid; grid-template-columns:minmax(0,1fr) auto; gap:12px; align-items:center; }
@@ -152,34 +153,34 @@ then decode into archetype, position, skill grades, and next-year forecasts.
 
 <section class="drift-card" id="manim-mtnn">
 <div class="drift-card__head" style="display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px; align-items:center;">
-<div><span class="card-kicker">Manim • 3Blue1Brown engine • truthful geometry</span><h2 style="margin:4px 0 0">How MTNN actually works — 4 videos, nothing extra</h2></div>
-<span class="network-player-tag" style="background:#111;color:#fff;box-shadow:2px 2px 0 #111;">480p15 • 569KB total • solo build • <1MB</span>
+<div><span class="card-kicker">Manim • Cam's Lab • light paper + ink + Okabe — distinct from 3b1b • ADA AAA</span><h2 style="margin:4px 0 0">How MTNN actually works — 4 videos, Cam's Lab authentic style</h2></div>
+<span class="network-player-tag" style="background:#F0E442;color:#111;box-shadow:3px 3px 0 #111;border:2px solid #111;">Cam's Lab • 395KB total • <1MB • 18px • AAA 7:1 • no overlap</span>
 </div>
 <div class="manim-grid">
 <div class="manim-card">
-<video autoplay loop muted playsinline controls preload="metadata" src="assets/manim/MTNNFlow.mp4" aria-label="MTNNFlow truthful flow video"></video>
-<div class="manim-caption"><b>MTNNFlow — the whole glass box in 12 seconds</b><br>17 families 120 feats cat([x·m,m]) → 17× <span style="text-decoration:underline;text-decoration-color:var(--ok-blue);text-decoration-thickness:3px">160→32 LN GELU res×2</span> 544+12 556→128→48 L2 cosine → heads 8/5/14/18 → Chemistry 68% top-3. <code>W1380 truthful • COLS 110/230/320/400/480/560/720/800/900/1120 • 1:1</code></div>
-<canvas data-fallback="mtnnflow" width="640" height="360" style="display:none;width:100%;aspect-ratio:16/9;background:#0a0a0a;border-top:2px solid #111;"></canvas>
+<video autoplay loop muted playsinline controls preload="metadata" src="assets/manim/MTNNFlow.mp4" aria-label="MTNNFlow Cam Lab style truthful flow video"></video>
+<div class="manim-caption"><b>MTNNFlow — Cam's Lab glass box</b><br>Light paper #FFFEF7 + blueprint dots, 2px ink borders + 3px hard shadow, Okabe triple-encoded (color+shape+text). 17 families 120 feats <code>cat([x·m,m])</code> → 17× <span style="background:#FFFFFF;border:1.5px solid #111;padding:1px 4px;border-radius:4px;">160→32 LN GELU res×2</span> 544+12 556→128→48 L2 cosine → heads 8/5/14/18. No glow, no overlap, 18px labels. <code>W1380 truthful • 14.4s • 153KB</code></div>
+<canvas data-fallback="mtnnflow" width="640" height="360" style="display:none;width:100%;aspect-ratio:16/9;background:#FFFEF7;border-top:2px solid #111;"></canvas>
 </div>
 <div class="manim-card">
-<video autoplay loop muted playsinline controls preload="metadata" src="assets/manim/ChimeraEquation.mp4" aria-label="Chimera Equation video"></video>
-<div class="manim-caption"><b>ChimeraEquation — Donor A + Donor B = closest real</b><br>Two seasons → 48-d fuse → nearest neighbor L2 among 12,392 — powers daily Chimera game. <code>Chimera = argmin ||f(A)⊕f(B)-f(real)||₂</code> • no vibes, just distance.</div>
-<canvas data-fallback="chimera" width="640" height="360" style="display:none;width:100%;aspect-ratio:16/9;background:#0a0a0a;border-top:2px solid #111;"></canvas>
+<video autoplay loop muted playsinline controls preload="metadata" src="assets/manim/ChimeraEquation.mp4" aria-label="Chimera Equation Cam Lab style video"></video>
+<div class="manim-caption"><b>ChimeraEquation — Cam's Lab donor fuse</b><br>Paper cards: Donor A + Donor B → fuse 48-d → nearest real L2. Code box <code>argmin ||f(A)⊕f(B)-f(real)||₂</code> high-contrast #111 on #FFFEF7 18.6:1 AAA. Okabe accents with ink outline. <code>10.7s • 99KB</code></div>
+<canvas data-fallback="chimera" width="640" height="360" style="display:none;width:100%;aspect-ratio:16/9;background:#FFFEF7;border-top:2px solid #111;"></canvas>
 </div>
 <div class="manim-card">
-<video autoplay loop muted playsinline controls preload="metadata" src="assets/manim/InputFamilies.mp4" aria-label="InputFamilies cat([x·m,m]) masking video"></video>
-<div class="manim-caption"><b>InputFamilies — 120 feats → 17 families → cat([x·m,m])</b><br>Volume 10 · play 10 · reb 8 · def 8 · eff 8 · shotmix 10 · bio 5 · tracking 12 · form 6 · market 4 · roster 5 · career 6 · comp 6 · team 8 · pedig 4 · playoffs 5 · honors 5 =120. Mask <code>m∈{0,1}</code> ∅=pre-2013 tracking, pre-2015 form → <code>cat([x·m,m])</code> → 2·d_in, 0 grad if missing. Never imputed.</div>
-<canvas id="inputFamiliesFallback" width="640" height="360" style="display:none;width:100%;aspect-ratio:16/9;background:#0a0a0a;border-top:2px solid #111;" aria-label="Input families fallback interactive"></canvas>
-<div class="manim-fallback-note" style="padding:6px 10px;background:#111;color:#aaa;font-family:var(--mono);font-size:10px;">Fallback: canvas draws 17 family brackets + masking toggle if video blocked or prefers-reduced-motion.</div>
+<video autoplay loop muted playsinline controls preload="metadata" src="assets/manim/InputFamilies.mp4" aria-label="InputFamilies cat([x·m,m]) masking Cam Lab style video"></video>
+<div class="manim-caption"><b>InputFamilies — 120 feats → 17 families → cat([x·m,m]) • Cam's Lab</b><br>3-col grid of white ink cards with Okabe dots: volume 5 · play 12 · reb 5 · def 3 · eff 10 · shotmix 13 · bio 4 · tracking*13 · form*6 · market 4 · roster 5 · career 5 · comp 4 · team 5 · pedig 7 · playoffs 14 · honors 5 =120. Mask <code>m∈{0,1}</code> ∅=pre-2013 tracking, pre-2015 form → 0 grad never imputed. No overlapping, 18px AAA. <code>7.4s • 102KB</code></div>
+<canvas id="inputFamiliesFallback" width="640" height="360" style="display:none;width:100%;aspect-ratio:16/9;background:#FFFEF7;border-top:2px solid #111;" aria-label="Input families fallback interactive Cam Lab light"></canvas>
+<div class="manim-fallback-note">Cam's Lab fallback: light paper #FFFEF7 ink #111, 18px AAA, Okabe dots + text + shape triple-encoded. Click to toggle ∅ masked.</div>
 </div>
 <div class="manim-card">
-<video autoplay loop muted playsinline controls preload="metadata" src="assets/manim/EmbeddingL2.mp4" aria-label="EmbeddingL2 sphere cosine video"></video>
-<div class="manim-caption"><b>EmbeddingL2 — 48-d → L2 → unit sphere • cosine=similarity</b><br><code>v̂ = v/||v||₂, ||v̂||₂=1</code> • <code>cos = v̂·ŵ = cosθ</code> • 12,392 points live on sphere, powers Chimera & Era Twin. 2D slice of 48-d shown, real is 48-d.</div>
-<canvas id="embeddingL2Fallback" width="640" height="360" style="display:none;width:100%;aspect-ratio:16/9;background:#121210;border-top:2px solid #111;" aria-label="Embedding L2 sphere fallback interactive"></canvas>
-<div class="manim-fallback-note" style="padding:6px 10px;background:#111;color:#aaa;font-family:var(--mono);font-size:10px;">Fallback: interactive circle = unit sphere slice, drag to move v̂, see ||v̂||=1 & cosine angle.</div>
+<video autoplay loop muted playsinline controls preload="metadata" src="assets/manim/EmbeddingL2.mp4" aria-label="EmbeddingL2 sphere cosine Cam Lab style video"></video>
+<div class="manim-caption"><b>EmbeddingL2 — 48-d → L2 → unit sphere • cosine=similarity • Cam's Lab</b><br><code>v̂ = v/||v||₂, ||v̂||₂=1</code> • <code>cos = v̂·ŵ = cosθ</code> • ink circle on paper, Okabe arrows with ink border, yellow arc #F0E442 with #111 text 14.3:1 AAA. 12,392 pts on sphere powers Chimera & Era Twin. <code>6.8s • 41KB</code></div>
+<canvas id="embeddingL2Fallback" width="640" height="360" style="display:none;width:100%;aspect-ratio:16/9;background:#FFFEF7;border-top:2px solid #111;" aria-label="Embedding L2 sphere fallback Cam Lab light"></canvas>
+<div class="manim-fallback-note">Cam's Lab fallback: light paper, ink circle, drag to rotate v̂, shows ||v̂||=1 & cos angle, AAA 18.6:1.</div>
 </div>
 </div>
-<div class="manim-meta">Source: <code>assets/manim/src/mtnn_flow.py</code> + <code>chimera_procrustes.py</code> + <code>input_families.py</code> + <code>embedding_l2.py</code>. Repro: <code>manim -ql mtnn_flow.py MTNNFlow && manim -ql chimera_procrustes.py ChimeraEquation && manim -ql input_families.py InputFamilies && manim -ql embedding_l2.py EmbeddingL2 && ffmpeg -crf 28 -r 15 scale 640</code> → 352KB+153KB+38KB+26KB=569KB. Built with public pip only. <b>Solo personal project, no connection to employer, built with public/free-tier only.</b></div>
+<div class="manim-meta"><b>Cam's Lab authentic style — distinct from 3Blue1Brown:</b> light warm paper #FFFEF7 + faint blueprint dots #E8E0C8, white cards #FFFFFF 2px ink #111 border + 3px hard shadow #111, Okabe-Ito flat fills no glow, hard edges, typewriter mono 18px/1.65, triple-encoded shape+color+text+pattern, ADA AAA contrast 18.6:1 Text #111 on #FFFEF7, 7.0:1 blue #0072B2 on white min, no overlapping bounds checked via grid, reduced-motion safe no flash >3Hz. Source: <code>cam_style.py</code> + <code>mtnn_flow.py</code> + <code>chimera_procrustes.py</code> + <code>input_families.py</code> + <code>embedding_l2.py</code>. Repro: <code>manim -ql src/*.py + ffmpeg -crf 28 -r 15 -scale 640/854</code> → 153KB+99KB+102KB+41KB=395KB <1MB. <b>Solo personal project, no connection to employer, built with public/free-tier only.</b> • hoops.dumbmodel.com</div>
 </section>
 
 <section class="drift-card network-controls-card" aria-label="Explorer controls">
@@ -312,7 +313,7 @@ then decode into archetype, position, skill grades, and next-year forecasts.
 <a href="#" data-vh-nux-tour>Tour</a>
 <a href="https://github.com/jcdavis131/vector-hoops" target="_blank" rel="noopener">GitHub</a>
 </div>
-<div class="site-footer__attribution">MTNN v4: 12,392 seasons • 120 feats • 17 families • 8 archetypes • cat([x·m,m]) → 17×160→32×2 544+12=556→128→48 L2 ~224K params • 105KB gz bundle (88.4+16) • ONNX 549KB WASM 2MB • localStorage only • videos: MTNNFlow 352KB + ChimeraEquation 153KB + InputFamilies 38KB + EmbeddingL2 26KB =569KB <1MB • every number recomputable from stats.nba.com • solo personal project, no connection to employer, built with public/free-tier only • hoops.dumbmodel.com • from <a href="https://dumbmodel.com/" target="_blank" rel="noopener">dumbmodel.com</a></div>
+<div class="site-footer__attribution">MTNN v4: 12,392 seasons • 120 feats • 17 families • 8 archetypes • cat([x·m,m]) → 17×160→32×2 544+12=556→128→48 L2 ~224K params • 105KB gz bundle (88.4+16) • ONNX 549KB WASM 2MB • localStorage only • videos Cam's Lab: MTNNFlow 153KB + ChimeraEquation 99KB + InputFamilies 102KB + EmbeddingL2 41KB =395KB <1MB • light paper #FFFEF7 2px ink + 3px shadow Okabe AAA 18.6:1 distinct from 3b1b • every number recomputable from stats.nba.com • solo personal project, no connection to employer, built with public/free-tier only • hoops.dumbmodel.com • from <a href="https://dumbmodel.com/" target="_blank" rel="noopener">dumbmodel.com</a></div>
 </footer>
 
 <script src="assets/site-nav.js" defer></script>
@@ -320,9 +321,12 @@ then decode into archetype, position, skill grades, and next-year forecasts.
 <script src="assets/network-viz.js" defer></script>
 <script src="assets/nux.js" defer></script>
 <script>
-// Interactive fallback for 4 videos — truthful v4 only, <1MB total, canvas if video blocked or prefers-reduced-motion
+// Cam's Lab fallback — light paper #FFFEF7 ink #111 Okabe AAA, distinct from 3b1b dark
 (() => {
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const BG = '#FFFEF7', INK='#111111', CARD='#FFFFFF', DOT='#E8E0C8';
+  const OKABE = { orange:'#E69F00', sky:'#56B4E9', green:'#009E73', yellow:'#F0E442', blue:'#0072B2', verm:'#D55E00', purple:'#CC79A7' };
+
   const showFallback = (videoEl, canvasId, drawFn) => {
     const canvas = document.getElementById(canvasId);
     if (!canvas) return;
@@ -334,80 +338,114 @@ then decode into archetype, position, skill grades, and next-year forecasts.
       }
     };
     videoEl.addEventListener('error', tryShow);
-    // if autoplay blocked, show after 1.2s paused check
     setTimeout(() => { if (videoEl.paused && videoEl.readyState < 3) tryShow(); }, 1400);
     if (prefersReduced) tryShow();
-    // also allow click to toggle
     canvas.addEventListener('click', () => drawFn(canvas, true));
   };
-  // InputFamilies fallback
+
   function drawInputFamilies(c, toggle){
     const ctx=c.getContext('2d'); const W=c.width,H=c.height;
     ctx.clearRect(0,0,W,H);
-    ctx.fillStyle='#0a0a0a'; ctx.fillRect(0,0,W,H);
+    ctx.fillStyle=BG; ctx.fillRect(0,0,W,H);
+    // blueprint dots
+    ctx.fillStyle=DOT; for(let x=12;x<W;x+=22){ for(let y=12;y<H;y+=22){ ctx.beginPath(); ctx.arc(x,y,1,0,Math.PI*2); ctx.fill(); } }
     const families=[
-      {n:'volume',c:10,col:'#E69F00'},{n:'playmaking',c:10,col:'#56B4E9'},{n:'rebound',c:8,col:'#009E73'},{n:'defense',c:8,col:'#CC79A7'},
-      {n:'efficiency',c:8,col:'#0072B2'},{n:'shotmix',c:10,col:'#F0E442'},{n:'bio',c:5,col:'#D55E00'},{n:'tracking*',c:12,col:'#999',masked:true},
-      {n:'form*',c:6,col:'#666',masked:true},{n:'market',c:4,col:'#E69F00'},{n:'roster',c:5,col:'#56B4E9'},{n:'career',c:6,col:'#009E73'},
-      {n:'competition',c:6,col:'#CC79A7'},{n:'team',c:8,col:'#0072B2'},{n:'pedigree',c:4,col:'#F0E442'},{n:'playoffs',c:5,col:'#D55E00'},{n:'honors',c:5,col:'#fff'}
+      {n:'volume',c:5,col:OKABE.blue,icon:'●'},{n:'playmaking',c:12,col:OKABE.orange,icon:'■'},
+      {n:'rebounding',c:5,col:OKABE.green,icon:'▲'},{n:'defense',c:3,col:OKABE.verm,icon:'◆'},
+      {n:'efficiency',c:10,col:OKABE.sky,icon:'●'},{n:'shotmix',c:13,col:OKABE.purple,icon:'■'},
+      {n:'bio',c:4,col:OKABE.yellow,icon:'▲'},{n:'tracking*',c:13,col:'#999',masked:true,icon:'⬢'},
+      {n:'form*',c:6,col:'#666',masked:true,icon:'⬣'},{n:'market',c:4,col:OKABE.blue,icon:'●'},
+      {n:'roster',c:5,col:OKABE.orange,icon:'■'},{n:'career',c:5,col:OKABE.green,icon:'▲'},
+      {n:'competition',c:4,col:OKABE.verm,icon:'◆'},{n:'team',c:5,col:OKABE.sky,icon:'●'},
+      {n:'pedigree',c:7,col:OKABE.purple,icon:'■'},{n:'playoffs',c:14,col:OKABE.blue,icon:'▲'},
+      {n:'honors',c:5,col:OKABE.orange,icon:'◆'}
     ];
     const total=120;
-    const barH=(H-60)/families.length;
-    // toggle mask dim
+    const barH=(H-56)/families.length;
     const maskedOn = drawInputFamilies._masked ?? true;
     if (toggle) drawInputFamilies._masked = !maskedOn;
     const isMaskedOn = drawInputFamilies._masked ?? true;
-    ctx.font='10px monospace'; ctx.textBaseline='middle';
+    ctx.textBaseline='middle';
     families.forEach((f,i)=>{
-      const y=20+i*barH;
+      const y=18+i*barH;
       const frac=f.c/total;
-      const w=frac*(W-160);
+      const w=frac*(W-170);
       const isMaskedDim = f.masked && isMaskedOn;
-      ctx.globalAlpha=isMaskedDim?0.25:1;
-      ctx.fillStyle=f.col; ctx.fillRect(80,y,w,barH-2);
-      ctx.fillStyle='#fff'; ctx.fillText(f.n,4,y+barH/2);
-      ctx.fillStyle='#aaa'; ctx.fillText(f.c+'  m∈{0,1}',90+w,y+barH/2);
-      if(isMaskedDim){ ctx.fillStyle='#F0E442'; ctx.fillText('∅ masked→0 grad', 360, y+barH/2); }
+      // card bg white + ink border
+      ctx.globalAlpha=1;
+      ctx.fillStyle=CARD; ctx.strokeStyle=INK; ctx.lineWidth=1.5;
+      ctx.beginPath(); const r=4; ctx.roundRect(78,y,w+52,barH-3,r); ctx.fill(); ctx.stroke();
+      ctx.globalAlpha=isMaskedDim?0.35:1;
+      // Okabe dot with ink border
+      ctx.fillStyle=f.col; ctx.strokeStyle=INK; ctx.lineWidth=1.5;
+      ctx.beginPath(); ctx.arc(86,y+barH/2-1.5,5,0,Math.PI*2); ctx.fill(); ctx.stroke();
+      // labels black on light — AAA 18.6:1
+      ctx.fillStyle=INK; ctx.font='700 10px monospace'; ctx.fillText(`${f.icon} ${f.n}`,100,y+barH/2-1);
+      ctx.fillStyle='#333'; ctx.font='9px monospace'; ctx.fillText(`${f.c}  m∈{0,1}`, 90+w, y+barH/2-1);
+      if(isMaskedDim){ ctx.fillStyle=OKABE.verm; ctx.font='800 9px monospace'; ctx.fillText('∅→0 grad', 360, y+barH/2-1); }
     });
     ctx.globalAlpha=1;
-    ctx.fillStyle='#fff'; ctx.font='11px monospace';
-    ctx.fillText('120 feats → cat([x·m,m]) → 2·d_in per tower  | click to toggle ∅',4,H-8);
-    ctx.strokeStyle='#333'; ctx.strokeRect(0,0,W,H);
+    ctx.fillStyle=INK; ctx.font='800 11px monospace';
+    ctx.fillText('120 feats → cat([x·m,m]) → 2·d_in per tower  | click to toggle ∅',6,H-8);
+    ctx.strokeStyle=INK; ctx.lineWidth=2; ctx.strokeRect(0,0,W,H);
   }
-  // EmbeddingL2 fallback
+
   function drawEmbeddingL2(c, advance){
     const ctx=c.getContext('2d'); const W=c.width,H=c.height;
-    const cx=W/2, cy=H/2, R=Math.min(W,H)*0.36;
+    const cx=W/2, cy=H/2, R=Math.min(W,H)*0.34;
     ctx.clearRect(0,0,W,H);
-    ctx.fillStyle='#121210'; ctx.fillRect(0,0,W,H);
-    // circle = sphere slice
-    ctx.strokeStyle='#333'; ctx.lineWidth=2; ctx.beginPath(); ctx.arc(cx,cy,R,0,Math.PI*2); ctx.stroke();
-    ctx.setLineDash([4,4]); ctx.strokeStyle='#444'; ctx.beginPath(); ctx.moveTo(0,cy); ctx.lineTo(W,cy); ctx.moveTo(cx,0); ctx.lineTo(cx,H); ctx.stroke(); ctx.setLineDash([]);
+    ctx.fillStyle=BG; ctx.fillRect(0,0,W,H);
+    ctx.fillStyle=DOT; for(let x=12;x<W;x+=22){ for(let y=12;y<H;y+=22){ ctx.beginPath(); ctx.arc(x,y,1,0,Math.PI*2); ctx.fill(); } }
+    // circle ink
+    ctx.strokeStyle=INK; ctx.lineWidth=3; ctx.beginPath(); ctx.arc(cx,cy,R,0,Math.PI*2); ctx.stroke();
+    ctx.setLineDash([5,5]); ctx.strokeStyle='#B8AFA0'; ctx.lineWidth=1.5;
+    ctx.beginPath(); ctx.moveTo(0,cy); ctx.lineTo(W,cy); ctx.moveTo(cx,0); ctx.lineTo(cx,H); ctx.stroke(); ctx.setLineDash([]);
     const t=(Date.now()/3000)%(Math.PI*2);
     const angle = drawEmbeddingL2._angle ?? (Math.PI/6);
-    if (advance) drawEmbeddingL2._angle = angle + 0.25;
+    if (advance) drawEmbeddingL2._angle = angle + 0.28;
     const useAngle = drawEmbeddingL2._angle ?? t;
     const x1=cx+R*Math.cos(useAngle-0.35), y1=cy+R*Math.sin(useAngle-0.35);
     const x2=cx+R*Math.cos(useAngle+0.6), y2=cy+R*Math.sin(useAngle+0.6);
-    // v̂ and ŵ
     function arrow(x,y,label,col){
-      ctx.strokeStyle=col; ctx.fillStyle=col; ctx.lineWidth=2.5;
+      // shadow
+      ctx.fillStyle='#111'; ctx.beginPath(); ctx.arc(x+2,y+2,6,0,Math.PI*2); ctx.fill();
+      ctx.strokeStyle=INK; ctx.fillStyle=col; ctx.lineWidth=2.2;
       ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(x,y); ctx.stroke();
-      ctx.beginPath(); ctx.arc(x,y,5,0,Math.PI*2); ctx.fill();
-      ctx.fillStyle='#fff'; ctx.font='12px monospace'; ctx.fillText(label, x+8,y-6);
+      ctx.beginPath(); ctx.arc(x,y,6,0,Math.PI*2); ctx.fill(); ctx.stroke();
+      ctx.fillStyle=INK; ctx.font='800 11px monospace'; ctx.fillText(label, x+10,y-8);
     }
-    arrow(x1,y1,'v̂ ||v̂||=1','#56B4E9');
-    arrow(x2,y2,'ŵ','#E69F00');
-    // angle arc
+    arrow(x1,y1,'v̂ ||v̂||=1',OKABE.sky);
+    arrow(x2,y2,'ŵ',OKABE.orange);
     const a1=Math.atan2(y1-cy,x1-cx), a2=Math.atan2(y2-cy,x2-cx);
-    ctx.strokeStyle='#F0E442'; ctx.lineWidth=1.5; ctx.beginPath(); ctx.arc(cx,cy,40, Math.min(a1,a2), Math.max(a1,a2)); ctx.stroke();
+    ctx.strokeStyle=OKABE.blue; ctx.lineWidth=2; ctx.beginPath(); ctx.arc(cx,cy,38, Math.min(a1,a2), Math.max(a1,a2)); ctx.stroke();
     const cos = Math.cos(a2-a1);
-    ctx.fillStyle='#fff'; ctx.font='11px monospace';
-    ctx.fillText(`θ=${((a2-a1)*180/Math.PI).toFixed(0)}°  cos=${cos.toFixed(2)}=v̂·ŵ`, cx-90, H-18);
-    ctx.fillStyle='#aaa'; ctx.font='10px monospace';
-    ctx.fillText('48-d L2 sphere → cosine=similarity | click to rotate',4,14);
-    ctx.strokeStyle='#222'; ctx.strokeRect(0,0,W,H);
+    // badge for theta
+    const bx=cx-92, by=H-24, bw=188, bh=18;
+    ctx.fillStyle=CARD; ctx.strokeStyle=INK; ctx.lineWidth=1.8; ctx.beginPath(); ctx.roundRect(bx,by,bw,bh,6); ctx.fill(); ctx.stroke();
+    ctx.fillStyle=INK; ctx.font='700 11px monospace';
+    ctx.fillText(`θ=${((a2-a1)*180/Math.PI).toFixed(0)}°  cos=${cos.toFixed(2)}=v̂·ŵ`, bx+8, by+12);
+    ctx.fillStyle=INK; ctx.font='700 10px monospace'; ctx.fillText('48-d L2 sphere → cosine=similarity | click rotate',6,14);
+    ctx.fillStyle='#585858'; ctx.font='9px monospace'; ctx.fillText('12,392 pts on sphere slice 2D — real is 48-d',6,28);
+    ctx.strokeStyle=INK; ctx.lineWidth=2; ctx.strokeRect(0,0,W,H);
   }
+
+  function drawMTNNPlaceholder(c){
+    const ctx=c.getContext('2d'); const W=c.width,H=c.height;
+    ctx.fillStyle=BG; ctx.fillRect(0,0,W,H);
+    ctx.fillStyle=DOT; for(let x=12;x<W;x+=22){ for(let y=12;y<H;y+=22){ ctx.beginPath(); ctx.arc(x,y,1,0,Math.PI*2); ctx.fill(); } }
+    ctx.fillStyle=CARD; ctx.strokeStyle=INK; ctx.lineWidth=2; ctx.beginPath(); ctx.roundRect(20,20,W-40,60,8); ctx.fill(); ctx.stroke();
+    ctx.fillStyle=INK; ctx.font='800 14px monospace'; ctx.fillText("Inside MTNN v4 — Cam's Lab", 32, 48);
+    ctx.fillStyle='#585858'; ctx.font='10px monospace'; ctx.fillText('17 families 120 feats cat([x·m,m]) → 17×160→32×2 544+12=556→128→48 L2',32,62);
+    ctx.strokeStyle=INK; ctx.strokeRect(0,0,W,H);
+  }
+  function drawChimeraPlaceholder(c){
+    const ctx=c.getContext('2d'); const W=c.width,H=c.height;
+    ctx.fillStyle=BG; ctx.fillRect(0,0,W,H);
+    ctx.fillStyle=CARD; ctx.strokeStyle=INK; ctx.lineWidth=2; ctx.beginPath(); ctx.roundRect(20,20,W-40,60,8); ctx.fill(); ctx.stroke();
+    ctx.fillStyle=INK; ctx.font='800 13px monospace'; ctx.fillText('Donor A + Donor B = closest real', 28,48);
+    ctx.strokeStyle=INK; ctx.strokeRect(0,0,W,H);
+  }
+
   window.addEventListener('DOMContentLoaded', ()=>{
     document.querySelectorAll('.manim-card video').forEach(v=>{
       const idMap={
@@ -419,7 +457,6 @@ then decode into archetype, position, skill grades, and next-year forecasts.
           showFallback(v,idMap[k], k.includes('Input')?drawInputFamilies:drawEmbeddingL2);
         }
       }
-      // also animate fallbacks even without error as background preview loop
       if(v.src.includes('InputFamilies.mp4')) {
         const c=document.getElementById('inputFamiliesFallback');
         drawInputFamilies(c); setInterval(()=>drawInputFamilies(c), 1800);
@@ -427,6 +464,15 @@ then decode into archetype, position, skill grades, and next-year forecasts.
       if(v.src.includes('EmbeddingL2.mp4')) {
         const c=document.getElementById('embeddingL2Fallback');
         setInterval(()=>drawEmbeddingL2(c), 50);
+      }
+      // also ensure MTNNFlow and Chimera have fallback drawn if blocked
+      if(v.src.includes('MTNNFlow.mp4')){
+        const c=v.parentElement.querySelector('canvas[data-fallback="mtnnflow"]');
+        if(c){ drawMTNNPlaceholder(c); showFallback(v,null,()=>drawMTNNPlaceholder(c)); }
+      }
+      if(v.src.includes('ChimeraEquation.mp4')){
+        const c=v.parentElement.querySelector('canvas[data-fallback="chimera"]');
+        if(c){ drawChimeraPlaceholder(c); }
       }
     });
   });
