@@ -18,20 +18,20 @@
 <link rel="stylesheet" href="assets/responsive.css">
 <style>
 /* === Vector Hoops Play vNext — best-app-ever polish ===
-   Okabe-Ito AAA triple-encoded (shape+icon+text+pattern)
-   18px/1.65 readability, 56px mobile tabs safe-area, Sunni SCAD bar
+   readable
+   readable at all sizes, 56px mobile tabs safe-area, Sunni SCAD bar
    Solo disclaimer preserved
 */
 :root{
-  --okabe-black: #000000;
-  --okabe-amber: #E69F00;
-  --okabe-sky: #56B4E9;
-  --okabe-green: #009E73;
-  --okabe-yellow: #F0E442;
-  --okabe-blue: #0072B2;
-  --okabe-verm: #D55E00;
-  --okabe-purple: #CC79A7;
-  --okabe-paper: #FFFEF7;
+  --ink: #111;
+  --amber: #E69F00;
+  --sky: #56B4E9;
+  --green: #009E73;
+  --yellow: #F0E442;
+  --blue: #0072B2;
+  --verm: #D55E00;
+  --purple: #CC79A7;
+  --paper: #fdfcf5;
 }
 
 /* readability upgrade */
@@ -46,7 +46,7 @@ body{font-size:18px; line-height:1.65; -webkit-font-smoothing:antialiased; lette
   gap:10px;
   padding:12px var(--page-gutter);
   padding-top:calc(10px + env(safe-area-inset-top));
-  background:linear-gradient(180deg, #FFFEF7 0%, #fafaf8 100%);
+  background:linear-gradient(180deg, #fdfcf5 0%, #fafaf8 100%);
   border-bottom:3px solid var(--ink);
 }
 .vh-header__toprow{display:flex; align-items:flex-start; justify-content:space-between; gap:12px; flex-wrap:wrap}
@@ -60,7 +60,7 @@ body{font-size:18px; line-height:1.65; -webkit-font-smoothing:antialiased; lette
   background:#fff; border:1.5px solid var(--ink); border-radius:999px;
   padding:6px 10px; box-shadow:2px 2px 0 var(--ink); white-space:nowrap
 }
-.vh-identity-chip b, .vh-favorite-chip b{color:var(--okabe-blue)}
+.vh-identity-chip b, .vh-favorite-chip b{color:var(--blue)}
 .vh-header__poolstats{display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-left:auto}
 .vh-pool-toggle{border-radius:999px; overflow:hidden; border-width:2px}
 .vh-pool-toggle .vh-subtab{font-size:10px; min-height:36px; padding:6px 12px; font-weight:800; letter-spacing:0.06em}
@@ -83,7 +83,7 @@ body{font-size:18px; line-height:1.65; -webkit-font-smoothing:antialiased; lette
 }
 .vh-pool-toggle:hover::after{opacity:1}
 
-/* tabs — 56px touch, Okabe-Ito triple encoded, safe-area, AAA */
+/* tabs — 56px touch, safe-area */
 #mode-tabs{
   display:flex;
   gap:0;
@@ -126,16 +126,16 @@ body{font-size:18px; line-height:1.65; -webkit-font-smoothing:antialiased; lette
 .vh-tab.is-active{color:#fff; background:var(--ink)}
 .vh-tab.is-active .vh-tab__icon{border-color:rgba(255,255,255,.2)}
 
-/* Okabe-Ito per-mode triple encoding */
-#tab-chimera{--tab-c:var(--okabe-verm)} #tab-deadline{--tab-c:var(--okabe-blue)} #tab-fader{--tab-c:var(--okabe-sky)} #tab-arc{--tab-c:var(--okabe-amber)} #tab-chem{--tab-c:var(--okabe-green)} #tab-whatif{--tab-c:var(--okabe-purple)} #tab-pivot{--tab-c:var(--okabe-yellow)} #tab-twin{--tab-c:var(--okabe-black)}
-#tab-chimera.is-active{background:var(--okabe-verm); border-color:var(--ink)}
-#tab-deadline.is-active{background:var(--okabe-blue)}
-#tab-fader.is-active{background:var(--okabe-sky); color:var(--ink)}
-#tab-arc.is-active{background:var(--okabe-amber); color:var(--ink)}
-#tab-chem.is-active{background:var(--okabe-green)}
-#tab-whatif.is-active{background:var(--okabe-purple)}
-#tab-pivot.is-active{background:var(--okabe-yellow); color:var(--ink)}
-#tab-twin.is-active{background:var(--okabe-black)}
+/* per-mode colors */
+#tab-chimera{--tab-c:var(--verm)} #tab-deadline{--tab-c:var(--blue)} #tab-fader{--tab-c:var(--sky)} #tab-arc{--tab-c:var(--amber)} #tab-chem{--tab-c:var(--green)} #tab-whatif{--tab-c:var(--purple)} #tab-pivot{--tab-c:var(--yellow)} #tab-twin{--tab-c:var(--black)}
+#tab-chimera.is-active{background:var(--verm); border-color:var(--ink)}
+#tab-deadline.is-active{background:var(--blue)}
+#tab-fader.is-active{background:var(--sky); color:var(--ink)}
+#tab-arc.is-active{background:var(--amber); color:var(--ink)}
+#tab-chem.is-active{background:var(--green)}
+#tab-whatif.is-active{background:var(--purple)}
+#tab-pivot.is-active{background:var(--yellow); color:var(--ink)}
+#tab-twin.is-active{background:var(--black)}
 .vh-tab.is-active::after{
   content:"";
   position:absolute; bottom:0; left:0; right:0; height:4px; background:var(--tab-c);
@@ -147,7 +147,7 @@ body{font-size:18px; line-height:1.65; -webkit-font-smoothing:antialiased; lette
   #mode-tabs{
     position:fixed; left:0; right:0; bottom:0; margin:0; width:100%;
     border-width:2.5px 0 0 0; border-radius:0; box-shadow:0 -3px 0 var(--ink);
-    z-index:60; padding-bottom:env(safe-area-inset-bottom,0); background:#FFFEF7;
+    z-index:60; padding-bottom:env(safe-area-inset-bottom,0); background:#fdfcf5;
     border-radius:0;
   }
   .vh-tab{min-width:68px; min-height:56px; padding:8px 4px; font-size:9px; gap:2px}
@@ -161,14 +161,14 @@ body{font-size:18px; line-height:1.65; -webkit-font-smoothing:antialiased; lette
 .vh-equation{gap:10px; margin:8px 0 14px}
 .vh-equation__tile{border-width:2.5px; border-radius:14px; padding:10px 8px; box-shadow:3px 3px 0 var(--ink); background:#fff}
 .vh-equation__tile--target{background:var(--ink); color:#fff; box-shadow:4px 4px 0 var(--ink)}
-.vh-equation__tile-mark{font-size:32px; color:var(--okabe-verm)}
+.vh-equation__tile-mark{font-size:32px; color:var(--verm)}
 .vh-equation__tile-name{font-size:13px; font-weight:800}
 .vh-equation-chip{border-width:2.5px; border-radius:999px; box-shadow:3px 3px 0 var(--ink); font-size:12px}
 
 /* practice banner — doesn't touch daily streak clarity */
 .vh-practice-banner{
   background:linear-gradient(135deg, #fff8ee 0%, #f0f7ff 100%);
-  border:2.5px dashed var(--okabe-amber);
+  border:2.5px dashed var(--amber);
   border-radius:14px; padding:10px 14px;
   display:flex; align-items:center; justify-content:space-between; gap:10px;
   box-shadow:3px 3px 0 var(--ink);
@@ -181,12 +181,12 @@ body{font-size:18px; line-height:1.65; -webkit-font-smoothing:antialiased; lette
   overflow:auto; scrollbar-width:none; -webkit-overflow-scrolling:touch
 }
 .vh-subtab{min-height:40px; min-width:44px; padding:8px 14px; font-size:11px; font-weight:800; transition:all .12s}
-.vh-subtab.is-active{background:var(--okabe-verm); color:#000; border-color:var(--ink)}
+.vh-subtab.is-active{background:var(--verm); color:#000; border-color:var(--ink)}
 #pool-toggle-modern.is-active, #pool-toggle-all.is-active{background:var(--ink); color:#fff}
 
 /* input polish — 16px anti-zoom, 44px touch */
 .vh-input{font-size:16px; min-height:48px; border-width:2.5px; border-radius:12px; box-shadow:2px 2px 0 var(--ink); transition:all .12s}
-.vh-input:focus{transform:translate(-1px,-1px); box-shadow:4px 4px 0 var(--okabe-blue); border-color:var(--okabe-blue)}
+.vh-input:focus{transform:translate(-1px,-1px); box-shadow:4px 4px 0 var(--blue); border-color:var(--blue)}
 .vh-input--search{padding-left:38px; padding-right:34px}
 .vh-autocomplete__glyph{left:14px; font-size:16px}
 .vh-btn{border-width:2.5px; border-radius:12px; min-height:48px; font-size:13px; letter-spacing:0.05em; box-shadow:3px 3px 0 var(--ink); padding:12px 20px}
@@ -195,18 +195,18 @@ body{font-size:18px; line-height:1.65; -webkit-font-smoothing:antialiased; lette
 
 /* clue cards — more depth */
 .vh-clue-card{border-width:2.5px; border-radius:16px; padding:14px 16px; box-shadow:5px 5px 0 var(--ink); background:#fff}
-.vh-clue-zone{border-width:1.5px; border-radius:12px; padding:10px 12px; background:var(--okabe-paper); transition:border-color .12s}
+.vh-clue-zone{border-width:1.5px; border-radius:12px; padding:10px 12px; background:var(--paper); transition:border-color .12s}
 .vh-clue-zone:hover{border-color:var(--ink)}
 .vh-clue-zone__sentence{font-size:14px; line-height:1.55; font-weight:700}
 .vh-hint-chip{border-width:1.5px; border-radius:999px; padding:5px 10px; font-size:10.5px; box-shadow:1px 1px 0 var(--ink)}
 
 /* triangulation + courts */
-.vh-triangulation{border-radius:12px; background:var(--okabe-paper); padding:10px 12px; border:1.5px solid var(--hairline)}
+.vh-triangulation{border-radius:12px; background:var(--paper); padding:10px 12px; border:1.5px solid var(--hairline)}
 .vh-court{border-width:2.5px; border-radius:14px; box-shadow:3px 3px 0 var(--ink)}
 .vh-breakdown{border-radius:12px; overflow:hidden; border:1.5px solid var(--hairline); padding:6px; background:#fff}
 
 /* warmth */
-.vh-warmth{border-radius:12px; background:var(--okabe-paper)}
+.vh-warmth{border-radius:12px; background:var(--paper)}
 .vh-warmth__bar{border-radius:3px}
 
 /* deadline/fader etc polished */
@@ -223,7 +223,7 @@ body{font-size:18px; line-height:1.65; -webkit-font-smoothing:antialiased; lette
 /* empty states */
 .vh-guesslist__empty, .vh-loading{
   font-family:var(--sans); font-size:15px; font-weight:600; color:var(--ink-soft);
-  padding:28px 18px; text-align:center; border:2px dashed var(--hairline); border-radius:14px; background:var(--okabe-paper)
+  padding:28px 18px; text-align:center; border:2px dashed var(--hairline); border-radius:14px; background:var(--paper)
 }
 
 /* confetti */
@@ -231,13 +231,13 @@ body{font-size:18px; line-height:1.65; -webkit-font-smoothing:antialiased; lette
 #xp-toast{
   position:fixed; left:50%; top:18%; transform:translateX(-50%) translateY(-20px);
   background:var(--ink); color:#fff; font-family:var(--mono); font-weight:800; font-size:13px;
-  padding:10px 16px; border-radius:999px; box-shadow:4px 4px 0 var(--okabe-amber);
+  padding:10px 16px; border-radius:999px; box-shadow:4px 4px 0 var(--amber);
   opacity:0; pointer-events:none; transition:all .35s cubic-bezier(.2,.8,.2,1); z-index:210;
   letter-spacing:0.04em
 }
 #xp-toast.is-visible{opacity:1; transform:translateX(-50%) translateY(0)}
 /* polished — header branding small dot */
-.vh-logo::after{content:"●"; color:var(--okabe-verm); margin-left:4px; font-size:12px; vertical-align:middle}
+.vh-logo::after{content:"●"; color:var(--verm); margin-left:4px; font-size:12px; vertical-align:middle}
 
 /* scrim improved */
 .vh-modal-backdrop, .vh-sheet-backdrop{background:rgba(17,17,17,.6); backdrop-filter:blur(3px)}
@@ -245,7 +245,7 @@ body{font-size:18px; line-height:1.65; -webkit-font-smoothing:antialiased; lette
 .vh-sheet__handle{background:var(--ink); opacity:.15; width:40px}
 
 /* footer solo */
-.site-footer{border-top:3px solid var(--ink); background:#FFFEF7}
+.site-footer{border-top:3px solid var(--ink); background:#fdfcf5}
 .site-footer__attribution{font-family:var(--mono); font-size:11px; line-height:1.5; color:var(--ink-soft)}
 .site-footer__attribution a{color:var(--ink); font-weight:700}
 </style>
@@ -285,7 +285,7 @@ body{font-size:18px; line-height:1.65; -webkit-font-smoothing:antialiased; lette
 </header>
 
 <nav class="vh-tabs" id="mode-tabs" role="tablist" aria-label="Game mode — 8 era-honest MTNN games">
-  <button class="vh-tab is-active" id="tab-chimera" type="button" role="tab" aria-selected="true" title="Chimera — daily fusion Stats+Style=Mashup • Okabe-Ito vermillion">
+  <button class="vh-tab is-active" id="tab-chimera" type="button" role="tab" aria-selected="true" title="Chimera — daily fusion Stats+Style=Mashup • vermillion">
     <span class="vh-tab__icon" aria-hidden="true">🧬</span><span class="vh-tab__label"><span class="vh-tab__label-full">Chimera</span><span class="vh-tab__label-short">Chim</span></span>
   </button>
   <button class="vh-tab" id="tab-deadline" type="button" role="tab" aria-selected="false" title="Deadline — thrived or cratered after trade? • blue">
@@ -563,7 +563,7 @@ body{font-size:18px; line-height:1.65; -webkit-font-smoothing:antialiased; lette
 
 <div class="vh-rollover-banner" id="rollover-banner" hidden role="status"><button type="button" id="rollover-reload-btn" class="vh-rollover-banner__btn">A new Chimera is ready →</button></div>
 
-<div class="vh-modal-backdrop" id="help-backdrop" hidden><div class="vh-modal" id="help-modal" role="dialog" aria-modal="true" aria-labelledby="help-title"><h2 id="help-title">How to play · era-honest MTNN v4</h2><div class="vh-help-quick"><h3 class="vh-help-quick__title">30-sec start · 18px/1.65</h3><ul class="vh-help-quick__list"><li><b>Chimera:</b> Name 3 real seasons — Stats + Style = Mashup closest real match in 12,392. Per-100 σ vs own season.</li><li>All clues on screen Day 1 — orange right = above avg that year, blue left = below, center = avg. Sentence first.</li><li>8 games: Deadline thrived/cratered, Fader rose/fell per-36, Arc order career, Best Mate 4×5, What-If any eras coverage, Pivot adjacent role upside, Era Twin other decade 2 attempts warmth.</li></ul></div><ol class="vh-modal__list"><li>Chimera equation IS puzzle: Stats (pts/reb/ast/def) + Style (shooting & impact) = Mashup closest real season by 48-d L2. Stats/Style one guess each × multiplier, Mashup 6 tries 600→100 base × multipliers max 2400. Gold IDENTIFIED never red, silver ≥92% close enough also win.</li><li>Triangulation: Chimera diamond always shown in 3D map, donor squares hidden until stage resolves → spatial read. Court diagram zone presence orange offense brighter = further above avg, defense hatched = below.</li><li>Pool toggle: All-time 1996→2026 every season, Modern active only current season separate daily unranked, Free Play filters too. Shared links always All-time.</li><li>Deadline: real midseason mover per-36/plus-minus swing, call thrived/cratered 5 rounds. Method = Basketball-Reference game logs Δ.</li><li>Fader: first-half per-36 rate shown, call finished stronger or faded second half. Measured splits.</li><li>Career Arc: unlabeled sigma-bar cards no years, tap oldest→newest, scoring vs avg line chart reveal.</li><li>Best Teammate: teammate pair measured complementarity coverage map, pick true partner 4 options, reveal joint +/- percentile 5 rounds.</li><li>What-If Lab: any two eras partnership report complementarity dimensional coverage redundancy/weakness warnings combined court closest real duo — sandbox unlimited.</li><li>Pivot: current roster who has most measured upside in adjacent archetype role? Exact 2pts top3 1pt historical receipts not prediction 5 rounds.</li><li>Era Twin: anchor σ profile other decade double find them, typeahead other-decade only 2 attempts, warmth similarity % top5 shipped bound otherwise, side-by-side σ + age gap reveal 5 rounds.</li></ol><p class="vh-modal__telemetry" id="telemetry-note">Anonymous play events random id no account no ads — tune game. MTNN v4: 12,392 seasons 120 feats 17 families cat([x·m,m]) 17×160→32×2 544+12=556→128→48 L2 ~224K params heads 8/5/14/18 ONNX WASM 2MB. Solo personal project no employer public/free-tier only.</p><button class="vh-btn vh-btn--primary" id="help-close" type="button">Got it — play</button></div></div>
+<div class="vh-modal-backdrop" id="help-backdrop" hidden><div class="vh-modal" id="help-modal" role="dialog" aria-modal="true" aria-labelledby="help-title"><h2 id="help-title">How to play · era-honest MTNN v4</h2><div class="vh-help-quick"><h3 class="vh-help-quick__title">30-sec start · readable at all sizes</h3><ul class="vh-help-quick__list"><li><b>Chimera:</b> Name 3 real seasons — Stats + Style = Mashup closest real match in 12,392. Per-100 σ vs own season.</li><li>All clues on screen Day 1 — orange right = above avg that year, blue left = below, center = avg. Sentence first.</li><li>8 games: Deadline thrived/cratered, Fader rose/fell per-36, Arc order career, Best Mate 4×5, What-If any eras coverage, Pivot adjacent role upside, Era Twin other decade 2 attempts warmth.</li></ul></div><ol class="vh-modal__list"><li>Chimera equation IS puzzle: Stats (pts/reb/ast/def) + Style (shooting & impact) = Mashup closest real season by 48-d L2. Stats/Style one guess each × multiplier, Mashup 6 tries 600→100 base × multipliers max 2400. Gold IDENTIFIED never red, silver ≥92% close enough also win.</li><li>Triangulation: Chimera diamond always shown in 3D map, donor squares hidden until stage resolves → spatial read. Court diagram zone presence orange offense brighter = further above avg, defense hatched = below.</li><li>Pool toggle: All-time 1996→2026 every season, Modern active only current season separate daily unranked, Free Play filters too. Shared links always All-time.</li><li>Deadline: real midseason mover per-36/plus-minus swing, call thrived/cratered 5 rounds. Method = Basketball-Reference game logs Δ.</li><li>Fader: first-half per-36 rate shown, call finished stronger or faded second half. Measured splits.</li><li>Career Arc: unlabeled sigma-bar cards no years, tap oldest→newest, scoring vs avg line chart reveal.</li><li>Best Teammate: teammate pair measured complementarity coverage map, pick true partner 4 options, reveal joint +/- percentile 5 rounds.</li><li>What-If Lab: any two eras partnership report complementarity dimensional coverage redundancy/weakness warnings combined court closest real duo — sandbox unlimited.</li><li>Pivot: current roster who has most measured upside in adjacent archetype role? Exact 2pts top3 1pt historical receipts not prediction 5 rounds.</li><li>Era Twin: anchor σ profile other decade double find them, typeahead other-decade only 2 attempts, warmth similarity % top5 shipped bound otherwise, side-by-side σ + age gap reveal 5 rounds.</li></ol><p class="vh-modal__telemetry" id="telemetry-note">Anonymous play events random id no account no ads — tune game. MTNN v4: 12,392 seasons 120 feats 17 families cat([x·m,m]) 17×160→32×2 544+12=556→128→48 L2 ~224K params heads 8/5/14/18 ONNX WASM 2MB. Solo personal project no employer public/free-tier only.</p><button class="vh-btn vh-btn--primary" id="help-close" type="button">Got it — play</button></div></div>
 
 <div class="vh-modal-backdrop" id="dossier-backdrop" hidden><div class="vh-modal vh-modal--dossier" id="dossier-modal" role="dialog" aria-modal="true" aria-labelledby="dossier-title"><h2 id="dossier-title">Dossier · per-100 σ</h2><div class="vh-dossier__body" id="dossier-body">Loading…</div><div class="vh-dossier__actions"><a class="vh-dossier__source" id="dossier-source-link" href="#" target="_blank" rel="noopener">View source GitHub</a><button class="vh-btn vh-btn--primary" id="dossier-close" type="button">Close</button></div></div></div>
 

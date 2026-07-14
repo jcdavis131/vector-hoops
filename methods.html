@@ -50,7 +50,7 @@
       Doctrine: every number a player sees must be <b>recomputable from source</b>; every mechanic states its rules; nothing is vibes. Games use <b>14 era-z per-100 features</b> for speed + honesty. The research model <b>MTNN v4</b> expands to <b>120 feats / 17 families → 48-d L2</b> for neighbor search, archetype scoring, and daily puzzles. Both live in the same era-honest space.
       Glass-box: <a href="/model" style="font-weight:700;border-bottom:2px solid var(--data-orange);text-decoration:none;color:var(--ink)">Inside the Network → 17×160→32 towers</a>
     </p>
-    <p class="methods-doctrine">Solo personal project, no connection to employer, built with public/free-tier only • Okabe-Ito AAA palette • 18px/1.65 body • mobile-first 56px tabs safe-area • best-app-ever polish • ONNX WASM 2MB distilled, localStorage only.</p>
+    <p class="methods-doctrine">Solo personal project, no connection to employer, built with public/free-tier only • ONNX WASM 2MB distilled, localStorage only.</p>
     <nav class="methods-toc" aria-label="On this page">
       <a href="#vector-space">Vector space</a>
       <a href="#mtnn-v4">MTNN v4</a>
@@ -118,7 +118,7 @@
   + season_emb 12-d → concat 556 → 556→128 GELU LN → 128→<b>48 L2</b>
   Heads MLP 48→64→k | Skills 18×(48→16→1) | Next profile 14-d forecast
   <b>Params ~224K 57% fusion hidden • Checkpoint mtnn_v4_phase_b 2.26MB → ONNX 549KB • WASM 2MB distilled</b>
-  Truthful flow W1380 H780 COLS 110/230/320/400/480/560/720/800/900/1120 1:1 input→tower cat box B1h/B1o/B2h/B2o L2 badge</div>
+  </div>
     <p style="margin-top:10px;font-size:12px;color:var(--ink-soft)">Training: era-honest σ per season, Procrustes RᵀR=I chained to 1996 root frame drift ↓18%, RealMLP robust scaling, leak-free split via <code>pipeline/leakfree.py</code> so recall isn't inflated. Asset <code>mtnn_embeddings.f32</code> 48-d per season powers Chimera/Era Twin/Team labs.</p>
   </section>
 
@@ -130,7 +130,7 @@
       <li><b>PC2 — Scoring load:</b> high-usage scorers (PTS,FGA,FTA) ↔ low-usage role players</li>
       <li><b>PC3 — Ball in hand:</b> off-ball low-event ↔ handlers (AST,STL,TOV)</li>
     </ul>
-    <p style="font-size:12px;color:var(--ink-muted)">Okabe-Ito AAA + shape + icon + text triple-encoding: color never alone. In <a href="/model">/model</a> the 3D map uses auto-rotate slow, drag, scroll zoom, hover name+archetype, orange selected.</p>
+    <p style="font-size:12px;color:var(--ink-muted)">In <a href="/model">/model</a> the 3D map uses auto-rotate slow, drag, scroll zoom, hover name+archetype, orange selected. Color and text keep identity clear, never color alone.</p>
   </section>
 
   <section class="methods-section" id="archetypes">
@@ -215,7 +215,7 @@
       <li><b>V3</b> — <code>deadline.json</code>: recomputes every mover's deltas directly from raw game logs, exact match 0.01 tolerance — 100% sample, not spot-check.</li>
       <li><b>V4</b> — Chimera determinism: seeded daily target checked across 30 sampled dates for stability and low-similarity (MTNN cosine <0.3) between its two donors.</li>
     </ul>
-    <p style="font-size:12px;color:var(--ink-muted)">MTNN extras: recall@10 leak-free, purity@20, next_profile MAE. Bundle ~105KB gz <300KB target, ONNX 549KB. Visual harness: AAA Okabe-Ito, 18px/1.65, 56px tabs safe-area.</p>
+    <p style="font-size:12px;color:var(--ink-muted)">MTNN extras: recall@10 leak-free, purity@20, next_profile MAE. Bundle ~105KB gz <300KB target, ONNX 549KB. </p>
   </section>
 
   <section class="methods-section methods-limitations" id="limitations">
@@ -233,7 +233,7 @@
       <li>Chimera fused vector never existed — its skill pool = all-era.</li>
       <li>MTNN v4 glass-box explorer at <a href="/model">/model</a> shows true weights — no hidden layers beyond documented LN/GELU/skip.</li>
     </ul>
-    <p style="font-size:11px;color:var(--ink-muted)">Solo personal project, no connection to employer, built with public/free-tier only • Videos relevant: MTNNFlow.mp4 + ChimeraEquation.mp4 only • Manim source: <code>workspace/manim_dumbmodels/</code> • Free-tier Vercel cleanUrls true.</p>
+    <p style="font-size:11px;color:var(--ink-muted)">Solo personal project, no connection to employer, built with public/free-tier only • Videos: MTNNFlow + ChimeraEquation — glass-box architecture. Free-tier only.</p>
   </section>
 
 </main>

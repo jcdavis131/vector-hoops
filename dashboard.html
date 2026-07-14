@@ -32,13 +32,13 @@
 .dash-card{border:2px solid #111;border-radius:14px;background:#fff;box-shadow:4px 4px 0 #111;padding:0;overflow:hidden;margin:20px 0}
 .card-head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;padding:16px 18px 0}
 .card-head h2{margin:0;font-size:19px;letter-spacing:-.01em}
-.card-meta{font-family:var(--mono);font-size:11px;font-weight:700;color:#666;background:#FFFEF7;border:1.5px solid #111;border-radius:999px;padding:6px 10px;align-self:center}
+.card-meta{font-family:var(--mono);font-size:11px;font-weight:700;color:#666;background:var(--paper);border:1.5px solid #111;border-radius:999px;padding:6px 10px;align-self:center}
 .novice-text{font-size:15px;line-height:1.65;color:#333;padding:10px 18px 0;margin:0}
 .expert-text{font-family:var(--mono);font-size:11px;line-height:1.6;color:#666;padding:0 18px;margin:8px 0 0}
 .grid-2{display:grid;grid-template-columns:1.2fr .8fr;gap:14px;padding:14px}@media(max-width:860px){.grid-2{grid-template-columns:1fr}}
 .grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;padding:14px}@media(max-width:900px){.grid-3{grid-template-columns:1fr}}
 .metrics{display:flex;flex-wrap:wrap;gap:8px;margin:12px 18px}
-.metric{display:flex;flex-direction:column;align-items:center;gap:2px;border:2px solid #111;border-radius:10px;padding:10px 14px;background:#FFFEF7;min-width:84px;box-shadow:2px 2px 0 #111}
+.metric{display:flex;flex-direction:column;align-items:center;gap:2px;border:2px solid #111;border-radius:10px;padding:10px 14px;background:var(--paper);min-width:84px;box-shadow:2px 2px 0 #111}
 .metric b{font-size:20px;line-height:1}
 .metric span{font-family:var(--mono);font-size:11px;font-weight:700;text-transform:uppercase;color:#555}
 .code-panel{border:2px solid #111;border-radius:12px;background:#121210;color:#d8d6cf;padding:0;overflow:hidden;box-shadow:3px 3px 0 #111}
@@ -47,7 +47,7 @@
 .code-panel pre{margin:0;padding:12px;overflow:auto}
 .code-panel code{font-family:var(--mono);font-size:11px;line-height:1.5;background:transparent;color:#d8d6cf;padding:0}
 .code-panel b{color:#ffd07a}
-.chart-box{border:2px solid #111;border-radius:12px;padding:12px;background:#FFFEF7;box-shadow:2px 2px 0 #111}
+.chart-box{border:2px solid #111;border-radius:12px;padding:12px;background:var(--paper);box-shadow:2px 2px 0 #111}
 .chart-head{font-family:var(--mono);font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.06em}
 .checklist{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:6px}
 .checklist li{font-size:13px;display:flex;gap:8px;align-items:center}
@@ -82,23 +82,21 @@
     </div>
   </section>
 
-  <section class="dash-card" id="manim" style="border:2px solid #111;background:#FFFEF7">
-    <div class="card-head"><h2>Manim — precise math animations</h2><span class="card-meta">manim 0.20.1 • 480p15 • 2 relevant videos only • 508KB total</span></div>
-    <p class="novice-text">Turned static SVG flow (W1380 H780 truthful 1:1) into <b>programmatic math animations</b>: Manim turns Python code into precise vector graphics. Each video is code — <code>class MTNNFlow(Scene)</code> with <code>Write()</code>, <code>Create(Rectangle)</code>, <code>Arrow()</code> LaTeX-ready, ffmpeg mux. Only MTNN-relevant videos kept.</p>
+  <section class="dash-card" id="manim" style="border:2px solid #111;background:var(--paper)">
+    <div class="card-head"><h2>Manim — precise math animations</h2><span class="card-meta">2 videos • MTNN glass-box</span></div>
+    <p class="novice-text">Turned static flow into <b>programmatic math animations</b>: Manim turns Python code into precise vector graphics. Each video is code — <code>class MTNNFlow(Scene)</code> with <code>Write()</code>, <code>Create(Rectangle)</code>, <code>Arrow()</code> LaTeX-ready. Only MTNN-relevant videos kept.</p>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px;margin-top:12px;padding:0 18px">
       <div style="border:2px solid #111;border-radius:8px;overflow:hidden"><video autoplay loop muted playsinline controls src="assets/manim/MTNNFlow.mp4" style="width:100%;aspect-ratio:16/9"></video><div style="padding:8px;font-size:12px;background:#111;color:#fff"><b>MTNNFlow</b> — 17 families 120 feats cat([x·m,m]) → 17× 160→32 LN GELU res×2 544+12 556→128→48 L2 → heads 8/5/14/18 • Powers 8 MTNN games</div></div>
       <div style="border:2px solid #111;border-radius:8px;overflow:hidden"><video autoplay loop muted playsinline controls src="assets/manim/ChimeraEquation.mp4" style="width:100%;aspect-ratio:16/9"></video><div style="padding:8px;font-size:12px;background:#111;color:#fff"><b>ChimeraEquation</b> — Donor A + Donor B = closest real 48-d L2 nearest • argmin ||f(A)⊕f(B)-f(real)||₂</div></div>
     </div>
-    <p class="expert-text" data-expert style="margin-top:10px;margin-bottom:14px">Source: <code>workspace/manim_dumbmodels/mtnn_flow.py</code> + <code>chimera_procrustes.py</code> • Render: <code>manim -ql mtnn_flow.py MTNNFlow && manim -ql chimera_procrustes.py ChimeraEquation</code> → MTNNFlow.mp4 352KB + ChimeraEquation.mp4 153KB 480p15. Solo personal project, no connection to employer, built with public/free-tier only. <b>MTNN v4 truthful flow W1380 H780 COLS 110/230/320/400/480/560/720/800/900/1120 1:1 input→tower</b></p>
-  </section>
-
+    <p class="expert-text" data-expert style="margin-top:10px;margin-bottom:14px">
   <section class="dash-card" id="gather">
     <div class="card-head"><h2>01 Gather — stats.nba.com → 120 feats 17 families era-z</h2><span class="card-meta">12,392 seasons 1996-97→2025-26 • per-100 poss • 800 MIN filter</span></div>
     <div class="grid-2">
       <div>
         <p class="novice-text">We pull every season per-100 splits from stats.nba.com. Not raw points — <b>sigmas vs that season (era-z)</b> so 1999 and 2025 compare fairly. 12,392 seasons × 17 families: volume, playmaking, rebounding (OREB/DREB), defense (STL/BLK/DEF_RTG), efficiency (EFG%/TS%/OFF_RTG/NET_RTG), shotmix, bio (AGE/HEIGHT/WEIGHT/DRAFT), tracking (2013+ masked), form (FORM_DD), market, roster, career (YEAR_IN_LEAGUE/LAG1_COSINE/DELTA_NORM), competition (SOS_NET_RTG/B2B_RATE), team, pedigree, playoffs, honors. Mask <code>m∈{0,1}</code> → input <code>cat([x·m,m])</code> so model knows "never measured" vs zero.</p>
         <div class="metrics"><div class="metric"><b>12,392</b><span>seasons</span></div><div class="metric"><b>120</b><span>feats</span></div><div class="metric"><b>17</b><span>families</span></div><div class="metric"><b>8</b><span>archetypes</span></div></div>
-        <p class="expert-text" data-expert>Files: archetype_assignments.json, drift.json (Procrustes 30 seasons), mtnn_arch.json v4_h160_t32_d48_mlp128, mtnn_embeddings.f32 48-d L2-norm, mtnn_heads.f32 (8/5/14/18), mtnn_meta.json. Season emb 12-d. Masking cat([x·m,m]) truthful. Flow viz W1380 H780 COLS 110/230/320/400/480/560/720/800/900/1120 1:1.</p>
+        <p class="expert-text" data-expert>Files: archetype_assignments.json, drift.json (Procrustes 30 seasons), mtnn_arch.json v4_h160_t32_d48_mlp128, mtnn_embeddings.f32 48-d L2-norm, mtnn_heads.f32 (8/5/14/18), mtnn_meta.json. Season emb 12-d. Masking cat([x·m,m]) truthful. </p>
       </div>
       <div class="code-panel">
         <div class="code-head">mtnn_arch.json v4 <button class="copy">copy</button></div>
@@ -122,9 +120,9 @@
     <div class="grid-2">
       <div>
         <p class="novice-text">Raw stats drift: pace 91 in 1999 vs 100 in 2025, 3PT rate 18% vs 41%. We z-score each stat within its season → era-honest ±4 clip. Then family masking cat([x·m,m]) preserves "never measured" vs zero. Procrustes: chain yearly rotations RᵀR=I back to 1996 root frame — lets 1999 directly compare 2025 without drift. Just honest geometry, no tricks.</p>
-        <ul class="checklist"><li>✅ Per-season σ — every stat vs its league ±4σ cap</li><li>✅ Family mask cat([x·m,m]) — tracking pre-2013 masked not guessed</li><li>✅ Procrustes root frame 1996-97 — RᵀR=I rotation chain, drift measured in degrees</li><li>✅ Empirical-Bayes shrink % by attempts → shown as percentile not fake %</li><li>✅ Used by Chimera, Deadline, Fader, Arc, Twin, WhatIf, Pivot, Chem</li></ul>
+        <ul class="checklist"><li>✅ Readable at all sizes • Touch-friendly</li><li>✅ No horizontal scroll • 44px touch minimum</li><li>✅ Confetti canvas + XP toast</li><li>✅ Solo disclaimer • public/free-tier only</li></ul>
       </div>
-      <div class="chart-box"><div class="chart-head">Era Drift Before → After Procrustes (degrees)</div><canvas id="eraChart" width="400" height="160"></canvas><div class="legend"><span class="leg" style="background:#E69F00"></span>before <span class="leg" style="background:#009E73"></span>after root align • Okabe-Ito triple-encoded</div></div>
+      <div class="chart-box"><div class="chart-head">Era Drift Before → After Procrustes (degrees)</div><canvas id="eraChart" width="400" height="160"></canvas><div class="legend"><span class="leg" style="background:#E69F00"></span>before <span class="leg" style="background:#009E73"></span>after root align • readable</div></div>
     </div>
   </section>
 
@@ -153,7 +151,7 @@
       </div>
       <div class="train-col"><h4>Glass box not black box</h4>
         <div style="display:grid;gap:6px">
-          <div class="metric" style="flex-direction:row;justify-content:space-between"><span>Truthful flow</span><b>W1380 H780 1:1 COLS</b></div>
+          <div class="metric" style="flex-direction:row;justify-content:space-between"><span>Truthful flow</span><b>1:1 input→tower</b></div>
           <div class="metric" style="flex-direction:row;justify-content:space-between"><span>Probe</span><b>click node → family share</b></div>
           <div class="metric" style="flex-direction:row;justify-content:space-between"><span>Signed pushes</span><b>grad×input per family</b></div>
           <div class="metric" style="flex-direction:row;justify-content:space-between"><span>ONNX</span><b>2MB WASM • local inference</b></div>
@@ -161,7 +159,7 @@
           <div class="metric" style="flex-direction:row;justify-content:space-between"><span>Bundle</span><b>game.js 363KB + games.js 16KB</b></div>
         </div>
         <canvas id="lossChart" width="320" height="100"></canvas>
-        <p class="expert-text" style="padding:0">Solo personal project, no connection to employer, built with public/free-tier only • Free-tier Vercel cleanUrls • ONNX WASM • localStorage only • Okabe-Ito AAA triple-encoded shape+icon+text+pattern • 18px/1.65 readability • 56px tabs safe-area.</p>
+        <p class="expert-text" style="padding:0">Solo personal project, no connection to employer, built with public/free-tier only • Free-tier Vercel cleanUrls • ONNX WASM • localStorage only • readable • touch-friendly.</p>
       </div>
     </div>
   </section>
@@ -188,7 +186,7 @@
 
   <section class="dash-card" id="deploy">
     <div class="card-head"><h2>05 Deploy — daily puzzle + free-tier + best-app-ever polish</h2><span class="card-meta">vite v5.4.21 65 modules • cleanUrls true • vercel.json /games /arcade → /play</span></div>
-    <div class="grid-3"><div><h4>Pipeline</h4><div style="display:grid;gap:6px;margin-top:8px"><div class="metric" style="flex-direction:row;justify-content:space-between"><span>EPOCH_DATE</span><b>2026-07-01 puzzle #1</b></div><div class="metric" style="flex-direction:row;justify-content:space-between"><span>resets</span><b>midnight UTC</b></div><div class="metric" style="flex-direction:row;justify-content:space-between"><span>today tile</span><b>?+?=target • confetti</b></div></div></div><div><h4>Domain</h4><div style="display:grid;gap:6px;margin-top:8px"><div class="metric" style="flex-direction:row;justify-content:space-between"><span>hoops.dumbmodel.com</span><b>primary</b></div><div class="metric" style="flex-direction:row;justify-content:space-between"><span>hoops.jcamd.com</span><b>301 → primary</b></div><div class="metric" style="flex-direction:row;justify-content:space-between"><span>methods</span><b>/methods credibility MTNN v4</b></div></div></div><div><h4>Design gate</h4><ul class="checklist"><li>✅ AAA Okabe-Ito triple encoding shape+icon+text+pattern</li><li>✅ 18px/1.65 readability • 16px anti-zoom</li><li>✅ 56px bottom tabs safe-area • 44px touch min</li><li>✅ Confetti canvas + XP toast • Sunni SCAD bar</li><li>✅ Solo disclaimer • public/free-tier only</li></ul></div></div>
+    <div class="grid-3"><div><h4>Pipeline</h4><div style="display:grid;gap:6px;margin-top:8px"><div class="metric" style="flex-direction:row;justify-content:space-between"><span>EPOCH_DATE</span><b>2026-07-01 puzzle #1</b></div><div class="metric" style="flex-direction:row;justify-content:space-between"><span>resets</span><b>midnight UTC</b></div><div class="metric" style="flex-direction:row;justify-content:space-between"><span>today tile</span><b>?+?=target • confetti</b></div></div></div><div><h4>Domain</h4><div style="display:grid;gap:6px;margin-top:8px"><div class="metric" style="flex-direction:row;justify-content:space-between"><span>hoops.dumbmodel.com</span><b>primary</b></div><div class="metric" style="flex-direction:row;justify-content:space-between"><span>hoops.jcamd.com</span><b>301 → primary</b></div><div class="metric" style="flex-direction:row;justify-content:space-between"><span>methods</span><b>/methods credibility MTNN v4</b></div></div></div><div><h4>Design gate</h4><ul class="checklist"><li>✅ Readable at all sizes • Touch-friendly</li><li>✅ No horizontal scroll • 44px touch minimum</li><li>✅ Confetti canvas + XP toast</li><li>✅ Solo disclaimer • public/free-tier only</li></ul></div></div>
   </section>
 </main>
 <footer class="site-footer"><div class="site-footer__links"><a href="/">Home</a><a href="/play">Play</a><a href="/model">Network</a><a href="/dashboard">Lab</a><a href="/trends">Trends</a><a href="/methods">Methods</a><a href="https://github.com/jcdavis131/vector-hoops">GitHub</a></div><div class="site-footer__attribution">MTNN v4: 12,392 seasons 1996-2026 per-100 zσ 120 feats 17 families cat([x·m,m]) 17×160→32×2 544+12=556→128→48 L2 ~224K params heads 8/5/14/18 ONNX WASM 2MB • 8 games Chimera+Deadline+Fader+Arc+Chem+WhatIf+Pivot+Twin • EPOCH 2026-07-01 • Solo personal project, no connection to employer, built with public/free-tier only • from <a href="https://dumbmodel.com/" target="_blank" rel="noopener">dumbmodel.com</a></div></footer>
