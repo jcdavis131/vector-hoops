@@ -67,7 +67,7 @@
           <li><b>14</b> stats per player</li>
           <li><b>8</b> global archetypes</li>
           <li><b>≥30</b> shared players / pair</li>
-          <li>Triple-encoded: Okabe-Ito + shape + text</li>
+          <li>Measured, not narrated</li>
         </ul>
         <div class="trends-explain">
           <div class="trends-explain__item">
@@ -98,6 +98,27 @@
     </div>
   </div>
 
+  <section class="drift-card" id="research-powered-by-model" aria-label="Powered by MTNN embeddings">
+    <div class="drift-card__head">
+      <p class="trends-section-kicker">Research layer • geometry, not narrative</p>
+      <h2>Powered by MTNN embeddings — not raw stats</h2>
+      <p style="max-width:72ch;line-height:1.65;color:var(--ink-soft);font-size:14px;margin:8px 0 0">
+        Drift in degrees is measured in a Procrustes root frame: each season we solve
+        <code>Q = argmin ||R·X - Y||<sub>F</sub></code> subject to <code>RᵀR=I</code> — the smallest rotation that aligns last year's 14-stat player cloud with this year's.
+        Those <code>Q</code>s are chained backward into the 1996-97 root via <code>assets/drift.json</code> chains (<code>chainedToRoot</code>).
+        The same MTNN embeddings that score puzzles build <code>drift.json</code> + <code>archetypes_time.json</code> — archetype share, emergence claims, career shapes, and court tags all inherit that geometry.
+      </p>
+      <p style="max-width:72ch;line-height:1.65;color:var(--ink-soft);font-size:13px;margin:8px 0 0">
+        Currently deployed is v5 48-d — composite 85.87, cross-era purity 0.8726. v6 64-d (tower W40 H192 B3, fusion transformer d_model 128 L4 H4 FF512) targets purity 0.90+ with tighter archetype streams and more stable era panels.
+        This page is the honesty test that v6 is not overfit: if the rotation timeline keeps the same shape — 2021-22 spacing spike ~11.1°, 2022-23 scoring era 7.6° low — but purity rises and flicker drops, geometry improved, not injected drift.
+        See the full training cockpit, CQS breakdown, and exact train command: <a href="/model#training-cockpit">training cockpit</a>.
+      </p>
+      <p style="max-width:72ch;line-height:1.5;color:var(--ink-muted);font-size:12px;margin:8px 0 0">
+        No code change in <code>trends-viz.js</code> + <code>drift.js</code> for v6 — they read <code>drift.json</code> only. Upgrade is asset regeneration + re-run <code>archetype_era_audit.py</code> and <code>archetype_emergence_audit.py</code>.
+      </p>
+    </div>
+  </section>
+
   <section class="drift-card trends-viz-card" id="what-changed" aria-label="What changed this season">
     <div class="drift-card__head drift-card__head--row">
       <div>
@@ -105,7 +126,7 @@
         <h2>What changed this season?</h2>
         <p>Pick a season below — or tap a story chip — to see how big the shift was and which numbers moved most. Rotation gauge = degrees, tilt compass = play-style axis, bars = which stats rotated.</p>
       </div>
-      <div style="font-family:var(--mono);font-size:10px;color:var(--ink-muted)">Use slider or ← → keys • triple-encoded</div>
+      <div style="font-family:var(--mono);font-size:10px;color:var(--ink-muted)">Use slider or ← → keys</div>
     </div>
     <div id="trends-biggest-shifts" class="trends-biggest-shifts" aria-label="Biggest geometric shifts">
       <p class="drift-loading">Loading biggest shifts…</p>
@@ -175,7 +196,7 @@
     <div class="drift-card__head drift-card__head--compact">
       <p class="trends-section-kicker">8 types • Stream • Era panels • Court heatmap</p>
       <h2>Archetypes over 30 seasons</h2>
-      <p>Eight player types tracked across 30 seasons. Triple-encoded: Okabe-Ito color + pattern + text label so identity never rests on hue alone.</p>
+      <p>Eight player types tracked across 30 seasons — each type has a distinct color, pattern and label.</p>
     </div>
     <div id="archetype-stream-chart" class="drift-chart archetype-stream-chart" role="img" aria-label="Loading archetype share chart…"></div>
     <ul id="archetype-legend" class="archetype-legend" aria-label="Archetype legend"></ul>
@@ -280,7 +301,7 @@
     <a href="#" data-vh-nux-tour>Tour</a>
     <a href="https://github.com/jcdavis131/vector-hoops" target="_blank" rel="noopener">GitHub</a>
   </div>
-  <div class="site-footer__attribution">Every number recomputable from stats.nba.com & Basketball-Reference • Procrustes drift 12,392 seasons 14 feats era-z chained root frame • 8 archetypes Okabe-Ito triple-encoded • Solo personal project, no connection to employer, built with public/free-tier only • from <a href="https://dumbmodel.com/" target="_blank" rel="noopener">dumbmodel.com</a></div>
+  <div class="site-footer__attribution">Every number recomputable from stats.nba.com & Basketball-Reference • Procrustes drift 12,392 seasons 14 feats era-z chained root frame • 8 archetypes • Solo personal project, no connection to employer, built with public/free-tier only • from <a href="https://dumbmodel.com/" target="_blank" rel="noopener">dumbmodel.com</a></div>
 </footer>
 
 <script src="assets/site-nav.js" defer></script>
