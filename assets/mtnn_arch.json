@@ -1,12 +1,12 @@
 {
-  "built": "2026-07-11",
+  "built": "2026-07-14",
   "model": "mtnn_v4_phase_b",
   "fusion": "concat",
   "dTower": 32,
   "dEmb": 48,
   "checkpoint": {
-    "mtime": 1783736655,
-    "bytes": 2262906
+    "mtime": 1784057599,
+    "bytes": 1563083
   },
   "towerBlocks": 2,
   "mlpHeads": true,
@@ -22,32 +22,20 @@
     "shotmix",
     "bio",
     "tracking",
-    "form",
     "market",
-    "roster",
     "career",
-    "competition",
-    "team",
-    "pedigree",
-    "playoffs",
     "honors"
   ],
   "familyOrder": [
     "bio",
     "career",
-    "competition",
     "defense",
     "efficiency",
-    "form",
     "honors",
     "market",
-    "pedigree",
     "playmaking",
-    "playoffs",
     "rebounding",
-    "roster",
     "shotmix",
-    "team",
     "tracking",
     "volume"
   ],
@@ -64,12 +52,6 @@
       "DELTA_NORM",
       "GP_RATIO",
       "DRAFT_SLOT_Z"
-    ],
-    "competition": [
-      "SOS_NET_RTG",
-      "B2B_RATE",
-      "REST_AVG",
-      "CONF_STRENGTH"
     ],
     "defense": [
       "STL",
@@ -88,14 +70,6 @@
       "PIE",
       "TS_PCT"
     ],
-    "form": [
-      "FORM_CEIL",
-      "FORM_DD_RATE",
-      "FORM_GP",
-      "FORM_MIN_AVG",
-      "FORM_TD_RATE",
-      "FORM_VOL"
-    ],
     "honors": [
       "HON_ALL_NBA_TEAM_LAG",
       "HON_ALL_NBA_VOTE_LAG",
@@ -108,15 +82,6 @@
       "SALARY_CAP_PCT",
       "SALARY_TEAM_PCT",
       "SALARY_RANK_POS"
-    ],
-    "pedigree": [
-      "PED_PICK_QUALITY",
-      "PED_ROUND_ONE",
-      "PED_UNDRAFTED",
-      "PED_EXPECT_SLOT",
-      "PED_TEAM_WINPCT",
-      "PED_YEARS_SINCE",
-      "PED_PICK_DECAY"
     ],
     "playmaking": [
       "AST",
@@ -132,35 +97,12 @@
       "TIME_OF_POSS",
       "TOUCHES"
     ],
-    "playoffs": [
-      "PO_GP",
-      "PO_MIN",
-      "PO_MIN_DELTA",
-      "PO_USG_DELTA",
-      "PO_PTS_DELTA",
-      "PO_EFF_DELTA",
-      "PO_PLUS_MINUS",
-      "PO_TEAM_WINS",
-      "PO_ROUNDS",
-      "PO_SERIES",
-      "PO_CLOSE_GAMES",
-      "PO_AVG_PTS",
-      "PO_HIGH_PTS",
-      "PO_CLUTCH_PTS"
-    ],
     "rebounding": [
       "OREB",
       "DREB",
       "DREB_PCT",
       "OREB_PCT",
       "REB_PCT"
-    ],
-    "roster": [
-      "ROSTER_MIN_RANK",
-      "ROSTER_USAGE_CROWD",
-      "ROSTER_COMPLEMENT",
-      "ROSTER_STAR_GAP",
-      "ROSTER_MATES_N"
     ],
     "shotmix": [
       "PCT_AST_2PM",
@@ -176,13 +118,6 @@
       "PCT_UAST_2PM",
       "PCT_UAST_3PM",
       "PCT_UAST_FGM"
-    ],
-    "team": [
-      "TM_PACE",
-      "TM_OFF_RTG",
-      "TM_DEF_RTG",
-      "TM_NET_RTG",
-      "TM_WIN_PCT"
     ],
     "tracking": [
       "AVG_SPEED",
@@ -257,17 +192,17 @@
     {
       "id": "input",
       "label": "Masked inputs",
-      "detail": "120 features in 17 families"
+      "detail": "79 features in 11 families"
     },
     {
       "id": "towers",
       "label": "Residual towers",
-      "detail": "17 \u00d7 2 blocks (160 \u2192 32)"
+      "detail": "11 \u00d7 2 blocks (160 \u2192 32)"
     },
     {
       "id": "fusion",
       "label": "Concat fusion",
-      "detail": "544 + season \u2192 48-d, L2 norm"
+      "detail": "352 + season \u2192 48-d, L2 norm"
     },
     {
       "id": "embedding",

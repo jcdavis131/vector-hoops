@@ -53,7 +53,12 @@
             "source": "/dashboard.html"
         },
         {
-            "destination": "/model#training-cockpit",
+            "destination": "/players",
+            "permanent": false,
+            "source": "/teams"
+        },
+        {
+            "destination": "/model",
             "permanent": true,
             "source": "/lab"
         }
