@@ -1,1 +1,71 @@
-{"cleanUrls":true,"redirects":[{"destination":"https://hoops.dumbmodel.com/:path*","has":[{"type":"host","value":"hoops.jcamd.com"}],"permanent":true,"source":"/:path*"},{"destination":"/players","permanent":true,"source":"/wiki"},{"destination":"/players#profile","permanent":true,"source":"/skills"},{"destination":"/trends","permanent":true,"source":"/drift"},{"destination":"/play","permanent":true,"source":"/games"},{"destination":"/play","permanent":true,"source":"/arcade"},{"destination":"/play","permanent":true,"source":"/arcade/:path*"}],"rewrites":[{"destination":"/model.html","source":"/model"},{"destination":"/trends.html","source":"/trends"},{"destination":"/dashboard.html","source":"/dashboard"}]}
+{
+    "cleanUrls": true,
+    "redirects": [
+        {
+            "destination": "https://hoops.dumbmodel.com/:path*",
+            "has": [
+                {
+                    "type": "host",
+                    "value": "hoops.jcamd.com"
+                }
+            ],
+            "permanent": true,
+            "source": "/:path*"
+        },
+        {
+            "destination": "/players",
+            "permanent": true,
+            "source": "/wiki"
+        },
+        {
+            "destination": "/players#profile",
+            "permanent": true,
+            "source": "/skills"
+        },
+        {
+            "destination": "/trends",
+            "permanent": true,
+            "source": "/drift"
+        },
+        {
+            "destination": "/play",
+            "permanent": true,
+            "source": "/games"
+        },
+        {
+            "destination": "/play",
+            "permanent": true,
+            "source": "/arcade"
+        },
+        {
+            "destination": "/play",
+            "permanent": true,
+            "source": "/arcade/:path*"
+        },
+        {
+            "destination": "/model#training-cockpit",
+            "permanent": true,
+            "source": "/dashboard"
+        },
+        {
+            "destination": "/model#training-cockpit",
+            "permanent": true,
+            "source": "/dashboard.html"
+        },
+        {
+            "destination": "/model#training-cockpit",
+            "permanent": true,
+            "source": "/lab"
+        }
+    ],
+    "rewrites": [
+        {
+            "destination": "/model.html",
+            "source": "/model"
+        },
+        {
+            "destination": "/trends.html",
+            "source": "/trends"
+        }
+    ]
+}

@@ -4,13 +4,12 @@
 
   var LINKS = [
     { href: '/play', label: 'Play' },
-    { href: '/model', label: 'Network', title: 'MTNN Network Explorer — glass box' },
-    { href: '/trends', label: 'Trends', title: 'Trend Research — 30 seasons measured geometry' },
+    { href: '/model', label: 'Network', title: 'MTNN Network Explorer + Training Cockpit — glass box + lab merged' },
+    { href: '/trends', label: 'Trends', title: 'Trend Research — 30 seasons measured geometry, powered by model' },
     { href: '/players', label: 'Players', title: 'Player References' },
     { href: '/teams', label: 'Teams', title: 'Team Labs' },
     { href: '/methods', label: 'Methods' },
     { href: '/leaderboard', label: 'Leaderboard' },
-    { href: '/dashboard', label: 'Lab', title: 'Dumbmodel Lab — Data→Clean→Train→Eval' },
   ];
 
   function mount() {
