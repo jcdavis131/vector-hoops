@@ -1,4 +1,4 @@
-// Vector Hoops Arcade – MTNN Games
+// Vector Hoops Games – MTNN 8 modes (Chimera, Deadline, Fader, Arc, Chem, WhatIf, Pivot, Twin)
 // Solo personal project, no connection to employer, built with public/free-tier only
 // Free-tier: uses vectors.json + teams.json only, no backend
 
