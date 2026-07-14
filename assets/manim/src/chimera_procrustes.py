@@ -58,9 +58,11 @@ class ChimeraEquation(Scene):
         plus_bg = RoundedRectangle(width=0.55, height=0.55, corner_radius=0.08, fill_color=CARD_FILL, fill_opacity=1.0, stroke_color=INK, stroke_width=INK_STROKE_WIDTH*0.6)
         plus_group = VGroup(plus_bg, plus_label)
 
-        # Row positioning — ensure 20px+ spacing (~0.25 units)
-        donor_row = VGroup(donor_a, plus_group, donor_b).arrange(RIGHT, buff=0.35, aligned_edge=UP)
-        donor_row.move_to(ORIGIN + UP*0.85)
+        # Row positioning — ensure 20px+ spacing + AAA no overlap = buff 0.50
+        donor_row = VGroup(donor_a, plus_group, donor_b).arrange(RIGHT, buff=0.50, aligned_edge=UP)
+        donor_row.move_to(ORIGIN + UP*0.90)
+        # check no overlap between donor cards
+        assert donor_a_card_base.width + donor_b_card_base.width + plus_bg.width + 0.50*2 < 10, "donor row too wide"
 
         self.play(FadeIn(donor_a, shift=RIGHT*0.15), run_time=0.5)
         self.play(FadeIn(plus_group, scale=0.9), run_time=0.3)
@@ -78,11 +80,13 @@ class ChimeraEquation(Scene):
         fuse_card = VGroup(fuse_card_base, fuse_content)
         fuse_card.next_to(fuse_arrow, DOWN, buff=0.18)
 
-        # Small L2 badge — high contrast ink on yellow (ADA 15:1)
+        # Small L2 badge — high contrast ink on yellow (ADA 15:1) — FIXED: outside top-right offset 0.35 no overlap edge
         l2_badge_bg = RoundedRectangle(width=1.1, height=0.38, corner_radius=0.12, fill_color=OKABE["yellow"], fill_opacity=1.0, stroke_color=INK, stroke_width=INK_STROKE_WIDTH*0.5)
         l2_badge_text = Text("||v||=1", font_size=14, color=INK, weight=BOLD)
         l2_badge = VGroup(l2_badge_bg, l2_badge_text)
-        l2_badge.move_to(fuse_card_base.get_corner(UP+RIGHT)).shift(LEFT*0.25 + DOWN*0.25)
+        l2_badge.next_to(fuse_card_base.get_corner(UP+RIGHT), UP+RIGHT, buff=0.12).shift(UR*0.22)
+        # ensure badge does not intersect fuse card inner text
+        l2_badge.set_z_index(5)
 
         fuse_group = VGroup(fuse_card, l2_badge)
 
