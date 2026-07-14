@@ -20,10 +20,39 @@
 <link rel="stylesheet" href="assets/shell.css">
 <link rel="stylesheet" href="assets/nux.css">
 <link rel="stylesheet" href="assets/responsive.css">
+<link rel="stylesheet" href="assets/city-intro.css">
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
 </head>
 <body>
 
 <nav class="site-nav" data-active="/" aria-label="Vector Hoops site"></nav>
+
+<section id="city-intro" class="city-intro" aria-label="NBA Cities flyover — live tour of 30 arenas with fans">
+  <canvas id="city-intro-canvas" aria-hidden="true"></canvas>
+  <div class="city-intro__overlay">
+    <div class="city-intro__top">
+      <div class="city-intro__badge" id="city-intro-badge">LIVE CITY TOUR · 30 ARENAS</div>
+      <h2 class="city-intro__city" id="city-intro-city">Chicago <span>CHI</span></h2>
+      <p class="city-intro__arena" id="city-intro-arena">United Center · CHI</p>
+      <div class="city-intro__fans" id="city-intro-fans"><i></i> 1,420 fans cheering</div>
+    </div>
+    <div class="city-intro__bottom">
+      <div class="city-intro__pills" id="city-intro-pills" aria-label="NBA cities"></div>
+      <div class="city-intro__controls">
+        <button id="city-intro-prev" aria-label="Previous city">‹</button>
+        <button id="city-intro-next" aria-label="Next city">›</button>
+        <button id="city-intro-lock" class="city-intro__lock">Lock to my team</button>
+      </div>
+    </div>
+  </div>
+</section>
 
 <main class="landing-main">
 
@@ -238,5 +267,6 @@
 <script src="assets/site-nav.js" defer></script>
 <script src="assets/favorite-team.js" defer></script>
 <script src="assets/nux.js" defer></script>
+<script src="assets/city-intro.js" defer></script>
 </body>
 </html>
