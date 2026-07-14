@@ -148,7 +148,7 @@ body{ padding-bottom:env(safe-area-inset-bottom); }
 <p class="network-hero">Pick any player-season and peer inside the <b>MTNN</b> — a glass box, not a black box.
 Seventeen stat families each run through their own residual tower, fuse into a 48-number fingerprint,
 then decode into archetype, position, skill grades, and next-year forecasts.
-<b>Click a node, output row, or tower to probe</b>: lock the line-of-sight trace, see family share across every head, and read signed feature pushes. Truthful flow <code>W1380 H780</code> — every box measured, 1:1 input→tower, no hand-waving.</p>
+<b>Click a node, output row, or tower to probe</b>: lock the line-of-sight trace, see family share across every head, and read signed feature pushes. Truthful flow <code>W1380 H880</code> — every box measured, 1:1 input→tower, no hand-waving.</p>
 </div>
 
 <section class="drift-card" id="manim-mtnn">
@@ -225,7 +225,7 @@ then decode into archetype, position, skill grades, and next-year forecasts.
 
 <section class="drift-card network-section network-flow-card" aria-label="Network data flow truthful">
 <div class="network-section__head">
-<div><p class="viz-panel__label" style="margin:0;">Data flow — truthful W1380 H780 • v4 baseline</p><p class="network-flow-subhead">Input mask <code>m∈{0,1}</code> • <code>cat([x·m,m])</code> • 2 residual blocks per tower 160→32 LN GELU + skip • season 12-d concat • L2 embed 48-d • MLP heads 8/5/14/18. Hover any node for LN/GELU/skip math. Click to lock trace.</p></div>
+<div><p class="viz-panel__label" style="margin:0;">Data flow — truthful W1380 H880 • v4 baseline</p><p class="network-flow-subhead">Input mask <code>m∈{0,1}</code> • <code>cat([x·m,m])</code> • 2 residual blocks per tower 160→32 LN GELU + skip • season 12-d concat • L2 embed 48-d • MLP heads 8/5/14/18. Hover any node for LN/GELU/skip math. Click to lock trace.</p></div>
 <div class="network-flow-tools"><span id="network-trace-status" class="network-trace-status">Click a node to see what fed it and what it drove — glass box line-of-sight.</span><button type="button" id="network-trace-clear" class="network-trace-clear" hidden>✕ Clear trace</button></div>
 </div>
 <div class="network-flow-layout">
@@ -271,7 +271,7 @@ then decode into archetype, position, skill grades, and next-year forecasts.
 <summary class="network-arch-summary"><span class="viz-panel__label" style="margin:0; display:inline;">Shipped MTNN • glass box</span><code id="arch-model-id">mtnn_v4_phase_b</code><span id="arch-checkpoint" class="network-arch-checkpoint">mtime 1783623905 • 2.26MB • ~224K params • ONNX 549KB • WASM 2MB</span><span class="network-arch-summary__hint">Show layer math + keep-or-revert</span></summary>
 <div class="network-arch-grid">
 <div><b class="network-arch-grid__label">● Input — 120 feats, 17 families (era-honest σ)</b><code>z-scored per season</code> • mask <code>m∈{0,1}</code><br><code class="network-arch-code">h = cat([x·m, m]) → 2·d_in</code><br><span class="network-arch-muted"><b>17 families:</b> volume / playmaking / rebounding / defense / efficiency / shotmix / bio / tracking / form / market / roster / career / competition / team / pedigree / playoffs / honors. Masked ∅ = tracking pre-2013, form pre-2015, etc. → 0 grad, never guessed.</span></div>
-<div><b class="network-arch-grid__label">⬢ Residual towers — 17×2 blocks → 32-d each</b><code>Linear 2d_in→160 LN GELU 160→32 LN + skip</code> ×2 → 32-d per tower<br>Math: <code>17×32=544</code>. LN = LayerNorm per tower. GELU, not ReLU. Skip = residual add before 2nd LN. Era-honest: each feature σ from its own season.<br><span class="network-arch-muted">Truthful: MAX_INPUT_NODES 17, W1380, COLS 110/230/320/400/480/560/720/800/900/1120, 1:1 input→tower.</span></div>
+<div><b class="network-arch-grid__label">⬢ Residual towers — 17×2 blocks → 32-d each</b><code>Linear 2d_in→160 LN GELU 160→32 LN + skip</code> ×2 → 32-d per tower<br>Math: <code>17×32=544</code>. LN = LayerNorm per tower. GELU, not ReLU. Skip = residual add before 2nd LN. Era-honest: each feature σ from its own season.<br><span class="network-arch-muted">Truthful: MAX_INPUT_NODES 17, W1380, COLS 110/250/350/470/580/700/900/1010/1120/1250, 1:1 input→tower.</span></div>
 <div><b class="network-arch-grid__label">⬣ Concat fusion + season — 544+12=556→128→48 L2</b>Season emb <code>12-d learned lookup</code> → concat <code>544+12=556 → 556→128 GELU LN → 128→48 → L2 norm</code><br><span id="arch-fusion-detail" class="network-arch-muted"><b>~224K params total</b> — 57% in fusion 556→128 (70K) + 128→48 (6K). Towers ~132K. Season emb 12-d = 30 seasons ×12 learned. L2 = unit sphere, cosine = similarity. ONNX WASM 2MB loads <300KB gz bundle (105KB measured: 88.4KB gz + 16KB vendor).</span></div>
 <div><b class="network-arch-grid__label">⬕ Embedding & heads — 48-d • 8/5/14/18</b><code>48-d L2-normalized</code> cosine=similarity for Chimera & Era Twin.<br>Heads MLP <code>48→64→k</code>: <code>Archetype 8</code> / <code>Position 5</code> / <code>Next profile 14</code> / <code>Next pred 14</code>. Skills <code>18×(48→16→1)</code> scalar regression (free throw, rim pressure, 3PT volume/acc, boards, rim D, steal, playmaking, etc) 0-99 grades.<br><span class="network-arch-muted">Chimera = 48-d fuse of two embeds → nearest real among 12,392. Era Twin = Procrustes-aligned rotation R minimizing ||X1999 R - X2025||_F + cosine search cross-decade. No lineup/on-off data used anywhere.</span></div>
 </div>
@@ -283,7 +283,7 @@ then decode into archetype, position, skill grades, and next-year forecasts.
 <p style="margin:0; font-weight:900; font-family:var(--mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase;">Hill-climb log — keep-or-revert • truthful only</p>
 <ul style="margin:8px 0 0 18px; font-size:12px; line-height:1.6;">
 <li><b>2026-07-11 v5</b> — Procrustes era align drift ↓18% • RealMLP robust scaling • vite 65 modules 300KB raw 88.4KB gz + vendor 16KB =105KB gz • <code>RᵀR=I</code> chained root frames for Era Twin</li>
-<li><b>2026-07-10 v4</b> — truthful flow W1380 H780 COLS 110-1120 1:1 input→tower cat box B1h/B1o/B2h/B2o season node fusion 18r L2 badge • MTNNFlow + ChimeraEquation only relevant videos • 17 families 120 feats • ~224K params • ONNX 549KB WASM 2MB</li>
+<li><b>2026-07-10 v4</b> — truthful flow W1380 H880 COLS 110-1120 1:1 input→tower cat box B1h/B1o/B2h/B2o season node fusion 18r L2 badge • MTNNFlow + ChimeraEquation only relevant videos • 17 families 120 feats • ~224K params • ONNX 549KB WASM 2MB</li>
 </ul>
 <p style="margin:10px 0 0; font-size:11px; color:#666; font-family:var(--mono);"><b>Doctrine:</b> every number recomputable from stats.nba.com — no vibes. Stats filter MIN≥800. Per-100 possessions, not per-game. Missing eras masked ∅, never imputed. Verification harness V1-V4 gates deploy.</p>
 </section>

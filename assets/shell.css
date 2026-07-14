@@ -3171,13 +3171,13 @@ body.vh-team-themed .landing-favorite__select:focus{
   color: var(--ink-muted);
 }
 .network-flow-host{
-  min-height: 420px;
+  min-height: 520px;
   background: #FFFEF7;
   background-image: radial-gradient(#E8E0C8 1px, transparent 1.2px);
   background-size: 22px 22px;
   border: 2px solid #111;
   border-radius: 12px;
-  padding: 6px 4px 10px;
+  padding: 16px;
   position: relative;
   box-shadow: 4px 4px 0 #111;
 }
