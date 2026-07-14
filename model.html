@@ -152,20 +152,34 @@ then decode into archetype, position, skill grades, and next-year forecasts.
 
 <section class="drift-card" id="manim-mtnn">
 <div class="drift-card__head" style="display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px; align-items:center;">
-<div><span class="card-kicker">Manim • 3Blue1Brown engine • truthful geometry</span><h2 style="margin:4px 0 0">How MTNN actually works — 2 videos, nothing extra</h2></div>
-<span class="network-player-tag" style="background:#111;color:#fff;box-shadow:2px 2px 0 #111;">480p15 • 505KB total • solo build</span>
+<div><span class="card-kicker">Manim • 3Blue1Brown engine • truthful geometry</span><h2 style="margin:4px 0 0">How MTNN actually works — 4 videos, nothing extra</h2></div>
+<span class="network-player-tag" style="background:#111;color:#fff;box-shadow:2px 2px 0 #111;">480p15 • 569KB total • solo build • <1MB</span>
 </div>
 <div class="manim-grid">
 <div class="manim-card">
 <video autoplay loop muted playsinline controls preload="metadata" src="assets/manim/MTNNFlow.mp4" aria-label="MTNNFlow truthful flow video"></video>
 <div class="manim-caption"><b>MTNNFlow — the whole glass box in 12 seconds</b><br>17 families 120 feats cat([x·m,m]) → 17× <span style="text-decoration:underline;text-decoration-color:var(--ok-blue);text-decoration-thickness:3px">160→32 LN GELU res×2</span> 544+12 556→128→48 L2 cosine → heads 8/5/14/18 → Chemistry 68% top-3. <code>W1380 truthful • COLS 110/230/320/400/480/560/720/800/900/1120 • 1:1</code></div>
+<canvas data-fallback="mtnnflow" width="640" height="360" style="display:none;width:100%;aspect-ratio:16/9;background:#0a0a0a;border-top:2px solid #111;"></canvas>
 </div>
 <div class="manim-card">
 <video autoplay loop muted playsinline controls preload="metadata" src="assets/manim/ChimeraEquation.mp4" aria-label="Chimera Equation video"></video>
 <div class="manim-caption"><b>ChimeraEquation — Donor A + Donor B = closest real</b><br>Two seasons → 48-d fuse → nearest neighbor L2 among 12,392 — powers daily Chimera game. <code>Chimera = argmin ||f(A)⊕f(B)-f(real)||₂</code> • no vibes, just distance.</div>
+<canvas data-fallback="chimera" width="640" height="360" style="display:none;width:100%;aspect-ratio:16/9;background:#0a0a0a;border-top:2px solid #111;"></canvas>
+</div>
+<div class="manim-card">
+<video autoplay loop muted playsinline controls preload="metadata" src="assets/manim/InputFamilies.mp4" aria-label="InputFamilies cat([x·m,m]) masking video"></video>
+<div class="manim-caption"><b>InputFamilies — 120 feats → 17 families → cat([x·m,m])</b><br>Volume 10 · play 10 · reb 8 · def 8 · eff 8 · shotmix 10 · bio 5 · tracking 12 · form 6 · market 4 · roster 5 · career 6 · comp 6 · team 8 · pedig 4 · playoffs 5 · honors 5 =120. Mask <code>m∈{0,1}</code> ∅=pre-2013 tracking, pre-2015 form → <code>cat([x·m,m])</code> → 2·d_in, 0 grad if missing. Never imputed.</div>
+<canvas id="inputFamiliesFallback" width="640" height="360" style="display:none;width:100%;aspect-ratio:16/9;background:#0a0a0a;border-top:2px solid #111;" aria-label="Input families fallback interactive"></canvas>
+<div class="manim-fallback-note" style="padding:6px 10px;background:#111;color:#aaa;font-family:var(--mono);font-size:10px;">Fallback: canvas draws 17 family brackets + masking toggle if video blocked or prefers-reduced-motion.</div>
+</div>
+<div class="manim-card">
+<video autoplay loop muted playsinline controls preload="metadata" src="assets/manim/EmbeddingL2.mp4" aria-label="EmbeddingL2 sphere cosine video"></video>
+<div class="manim-caption"><b>EmbeddingL2 — 48-d → L2 → unit sphere • cosine=similarity</b><br><code>v̂ = v/||v||₂, ||v̂||₂=1</code> • <code>cos = v̂·ŵ = cosθ</code> • 12,392 points live on sphere, powers Chimera & Era Twin. 2D slice of 48-d shown, real is 48-d.</div>
+<canvas id="embeddingL2Fallback" width="640" height="360" style="display:none;width:100%;aspect-ratio:16/9;background:#121210;border-top:2px solid #111;" aria-label="Embedding L2 sphere fallback interactive"></canvas>
+<div class="manim-fallback-note" style="padding:6px 10px;background:#111;color:#aaa;font-family:var(--mono);font-size:10px;">Fallback: interactive circle = unit sphere slice, drag to move v̂, see ||v̂||=1 & cosine angle.</div>
 </div>
 </div>
-<div class="manim-meta">Source: <code>workspace/manim_dumbmodels/mtnn_flow.py</code> + <code>chimera_procrustes.py</code>. Repro: <code>manim -ql mtnn_flow.py MTNNFlow && manim -ql chimera_procrustes.py ChimeraEquation</code> → 352KB + 153KB mp4. Built with public pip only. <b>Solo personal project, no connection to employer, built with public/free-tier only.</b></div>
+<div class="manim-meta">Source: <code>assets/manim/src/mtnn_flow.py</code> + <code>chimera_procrustes.py</code> + <code>input_families.py</code> + <code>embedding_l2.py</code>. Repro: <code>manim -ql mtnn_flow.py MTNNFlow && manim -ql chimera_procrustes.py ChimeraEquation && manim -ql input_families.py InputFamilies && manim -ql embedding_l2.py EmbeddingL2 && ffmpeg -crf 28 -r 15 scale 640</code> → 352KB+153KB+38KB+26KB=569KB. Built with public pip only. <b>Solo personal project, no connection to employer, built with public/free-tier only.</b></div>
 </section>
 
 <section class="drift-card network-controls-card" aria-label="Explorer controls">
@@ -298,12 +312,125 @@ then decode into archetype, position, skill grades, and next-year forecasts.
 <a href="#" data-vh-nux-tour>Tour</a>
 <a href="https://github.com/jcdavis131/vector-hoops" target="_blank" rel="noopener">GitHub</a>
 </div>
-<div class="site-footer__attribution">MTNN v4: 12,392 seasons • 120 feats • 17 families • 8 archetypes • cat([x·m,m]) → 17×160→32×2 544+12=556→128→48 L2 ~224K params • 105KB gz bundle (88.4+16) • ONNX 549KB WASM 2MB • localStorage only • videos: MTNNFlow 352KB + ChimeraEquation 153KB • every number recomputable from stats.nba.com • solo personal project, no connection to employer, built with public/free-tier only • hoops.dumbmodel.com • from <a href="https://dumbmodel.com/" target="_blank" rel="noopener">dumbmodel.com</a></div>
+<div class="site-footer__attribution">MTNN v4: 12,392 seasons • 120 feats • 17 families • 8 archetypes • cat([x·m,m]) → 17×160→32×2 544+12=556→128→48 L2 ~224K params • 105KB gz bundle (88.4+16) • ONNX 549KB WASM 2MB • localStorage only • videos: MTNNFlow 352KB + ChimeraEquation 153KB + InputFamilies 38KB + EmbeddingL2 26KB =569KB <1MB • every number recomputable from stats.nba.com • solo personal project, no connection to employer, built with public/free-tier only • hoops.dumbmodel.com • from <a href="https://dumbmodel.com/" target="_blank" rel="noopener">dumbmodel.com</a></div>
 </footer>
 
 <script src="assets/site-nav.js" defer></script>
 <script src="assets/mtnn.js" defer></script>
 <script src="assets/network-viz.js" defer></script>
 <script src="assets/nux.js" defer></script>
+<script>
+// Interactive fallback for 4 videos — truthful v4 only, <1MB total, canvas if video blocked or prefers-reduced-motion
+(() => {
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const showFallback = (videoEl, canvasId, drawFn) => {
+    const canvas = document.getElementById(canvasId);
+    if (!canvas) return;
+    const tryShow = () => {
+      if (videoEl.error || prefersReduced) {
+        videoEl.style.display='none';
+        canvas.style.display='block';
+        drawFn(canvas);
+      }
+    };
+    videoEl.addEventListener('error', tryShow);
+    // if autoplay blocked, show after 1.2s paused check
+    setTimeout(() => { if (videoEl.paused && videoEl.readyState < 3) tryShow(); }, 1400);
+    if (prefersReduced) tryShow();
+    // also allow click to toggle
+    canvas.addEventListener('click', () => drawFn(canvas, true));
+  };
+  // InputFamilies fallback
+  function drawInputFamilies(c, toggle){
+    const ctx=c.getContext('2d'); const W=c.width,H=c.height;
+    ctx.clearRect(0,0,W,H);
+    ctx.fillStyle='#0a0a0a'; ctx.fillRect(0,0,W,H);
+    const families=[
+      {n:'volume',c:10,col:'#E69F00'},{n:'playmaking',c:10,col:'#56B4E9'},{n:'rebound',c:8,col:'#009E73'},{n:'defense',c:8,col:'#CC79A7'},
+      {n:'efficiency',c:8,col:'#0072B2'},{n:'shotmix',c:10,col:'#F0E442'},{n:'bio',c:5,col:'#D55E00'},{n:'tracking*',c:12,col:'#999',masked:true},
+      {n:'form*',c:6,col:'#666',masked:true},{n:'market',c:4,col:'#E69F00'},{n:'roster',c:5,col:'#56B4E9'},{n:'career',c:6,col:'#009E73'},
+      {n:'competition',c:6,col:'#CC79A7'},{n:'team',c:8,col:'#0072B2'},{n:'pedigree',c:4,col:'#F0E442'},{n:'playoffs',c:5,col:'#D55E00'},{n:'honors',c:5,col:'#fff'}
+    ];
+    const total=120;
+    const barH=(H-60)/families.length;
+    // toggle mask dim
+    const maskedOn = drawInputFamilies._masked ?? true;
+    if (toggle) drawInputFamilies._masked = !maskedOn;
+    const isMaskedOn = drawInputFamilies._masked ?? true;
+    ctx.font='10px monospace'; ctx.textBaseline='middle';
+    families.forEach((f,i)=>{
+      const y=20+i*barH;
+      const frac=f.c/total;
+      const w=frac*(W-160);
+      const isMaskedDim = f.masked && isMaskedOn;
+      ctx.globalAlpha=isMaskedDim?0.25:1;
+      ctx.fillStyle=f.col; ctx.fillRect(80,y,w,barH-2);
+      ctx.fillStyle='#fff'; ctx.fillText(f.n,4,y+barH/2);
+      ctx.fillStyle='#aaa'; ctx.fillText(f.c+'  m∈{0,1}',90+w,y+barH/2);
+      if(isMaskedDim){ ctx.fillStyle='#F0E442'; ctx.fillText('∅ masked→0 grad', 360, y+barH/2); }
+    });
+    ctx.globalAlpha=1;
+    ctx.fillStyle='#fff'; ctx.font='11px monospace';
+    ctx.fillText('120 feats → cat([x·m,m]) → 2·d_in per tower  | click to toggle ∅',4,H-8);
+    ctx.strokeStyle='#333'; ctx.strokeRect(0,0,W,H);
+  }
+  // EmbeddingL2 fallback
+  function drawEmbeddingL2(c, advance){
+    const ctx=c.getContext('2d'); const W=c.width,H=c.height;
+    const cx=W/2, cy=H/2, R=Math.min(W,H)*0.36;
+    ctx.clearRect(0,0,W,H);
+    ctx.fillStyle='#121210'; ctx.fillRect(0,0,W,H);
+    // circle = sphere slice
+    ctx.strokeStyle='#333'; ctx.lineWidth=2; ctx.beginPath(); ctx.arc(cx,cy,R,0,Math.PI*2); ctx.stroke();
+    ctx.setLineDash([4,4]); ctx.strokeStyle='#444'; ctx.beginPath(); ctx.moveTo(0,cy); ctx.lineTo(W,cy); ctx.moveTo(cx,0); ctx.lineTo(cx,H); ctx.stroke(); ctx.setLineDash([]);
+    const t=(Date.now()/3000)%(Math.PI*2);
+    const angle = drawEmbeddingL2._angle ?? (Math.PI/6);
+    if (advance) drawEmbeddingL2._angle = angle + 0.25;
+    const useAngle = drawEmbeddingL2._angle ?? t;
+    const x1=cx+R*Math.cos(useAngle-0.35), y1=cy+R*Math.sin(useAngle-0.35);
+    const x2=cx+R*Math.cos(useAngle+0.6), y2=cy+R*Math.sin(useAngle+0.6);
+    // v̂ and ŵ
+    function arrow(x,y,label,col){
+      ctx.strokeStyle=col; ctx.fillStyle=col; ctx.lineWidth=2.5;
+      ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(x,y); ctx.stroke();
+      ctx.beginPath(); ctx.arc(x,y,5,0,Math.PI*2); ctx.fill();
+      ctx.fillStyle='#fff'; ctx.font='12px monospace'; ctx.fillText(label, x+8,y-6);
+    }
+    arrow(x1,y1,'v̂ ||v̂||=1','#56B4E9');
+    arrow(x2,y2,'ŵ','#E69F00');
+    // angle arc
+    const a1=Math.atan2(y1-cy,x1-cx), a2=Math.atan2(y2-cy,x2-cx);
+    ctx.strokeStyle='#F0E442'; ctx.lineWidth=1.5; ctx.beginPath(); ctx.arc(cx,cy,40, Math.min(a1,a2), Math.max(a1,a2)); ctx.stroke();
+    const cos = Math.cos(a2-a1);
+    ctx.fillStyle='#fff'; ctx.font='11px monospace';
+    ctx.fillText(`θ=${((a2-a1)*180/Math.PI).toFixed(0)}°  cos=${cos.toFixed(2)}=v̂·ŵ`, cx-90, H-18);
+    ctx.fillStyle='#aaa'; ctx.font='10px monospace';
+    ctx.fillText('48-d L2 sphere → cosine=similarity | click to rotate',4,14);
+    ctx.strokeStyle='#222'; ctx.strokeRect(0,0,W,H);
+  }
+  window.addEventListener('DOMContentLoaded', ()=>{
+    document.querySelectorAll('.manim-card video').forEach(v=>{
+      const idMap={
+        'InputFamilies.mp4':'inputFamiliesFallback',
+        'EmbeddingL2.mp4':'embeddingL2Fallback'
+      };
+      for(const k in idMap){
+        if(v.src.includes(k)){
+          showFallback(v,idMap[k], k.includes('Input')?drawInputFamilies:drawEmbeddingL2);
+        }
+      }
+      // also animate fallbacks even without error as background preview loop
+      if(v.src.includes('InputFamilies.mp4')) {
+        const c=document.getElementById('inputFamiliesFallback');
+        drawInputFamilies(c); setInterval(()=>drawInputFamilies(c), 1800);
+      }
+      if(v.src.includes('EmbeddingL2.mp4')) {
+        const c=document.getElementById('embeddingL2Fallback');
+        setInterval(()=>drawEmbeddingL2(c), 50);
+      }
+    });
+  });
+})();
+</script>
 </body>
 </html>
