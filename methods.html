@@ -3,122 +3,139 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Methods — Vector Hoops</title>
+<title>Methods — How Vector Hoops is built | Vector Hoops</title>
 <link rel="canonical" href="https://hoops.dumbmodel.com/methods">
 <meta property="og:url" content="https://hoops.dumbmodel.com/methods">
-<meta name="description" content="How Vector Hoops is built: the 14-feature vector space, era z-scoring, PCA map, k-means archetypes, The Deadline and Fader-or-Finisher methods, data sources, the accuracy harness, and honest limitations.">
+<meta name="description" content="Every number recomputable: 12,392 seasons 14 feats era-z for games, 120 feats 17 families for MTNN v4 17×160→32 556→128→48 L2, PCA map, 8 archetypes, Deadline, Fader, Skills Lens, Procrustes drift, accuracy harness.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Ctext%20y%3D%22.9em%22%20font-size%3D%2290%22%3E%26%23127936%3B%3C%2Ftext%3E%3C%2Fsvg%3E">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Methods — Vector Hoops">
-<meta property="og:description" content="Every number on Vector Hoops is recomputable from source. The vector space, the map, the archetypes, the modes, the data sources, and the accuracy harness that gates every deploy.">
+<meta property="og:description" content="The vector space, the MTNN glass box, the map, archetypes, modes, data sources, and accuracy harness that gates every deploy.">
 <meta property="og:image" content="/assets/og.svg">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Methods — Vector Hoops">
-<meta name="twitter:description" content="Every number on Vector Hoops is recomputable from source. The methods, data sources, and accuracy harness, stated plainly.">
-<meta name="twitter:image" content="/assets/og.svg">
 <link rel="stylesheet" href="assets/hoops.css">
 <link rel="stylesheet" href="assets/shell.css">
 <link rel="stylesheet" href="assets/nux.css">
 <link rel="stylesheet" href="assets/responsive.css">
+<style>
+.methods-hero{display:flex;flex-direction:column;gap:12px;margin-bottom:6px}
+.methods-kicker{font-family:var(--mono);font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-muted);display:inline-flex;gap:6px;align-items:center}
+.methods-kicker i{width:6px;height:6px;border-radius:50%;background:var(--data-orange);display:inline-block}
+.methods-hero h1{margin:0;font-family:var(--mono);font-size:clamp(22px,4vw,28px);letter-spacing:-.01em;text-transform:uppercase;line-height:1.1}
+.methods-hero__lede{margin:0;font-size:18px;line-height:1.65;color:var(--ink-soft);max-width:66ch}
+.methods-toc{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.methods-toc a{font-family:var(--mono);font-size:11px;font-weight:700;text-decoration:none;color:var(--ink-soft);border:1.5px solid var(--hairline);border-radius:999px;padding:6px 10px;background:var(--paper)}
+.methods-toc a:hover{border-color:var(--ink);color:var(--ink)}
+.methods-doctrine{margin:0;font-size:12px;line-height:1.55;color:var(--ink-muted);background:var(--paper);border:1px solid var(--hairline);border-left:3px solid var(--data-orange);border-radius:8px;padding:8px 10px}
+.arch-diagram{font-family:var(--mono);font-size:10px;line-height:1.5;background:#121210;color:#d8d6cf;border-radius:10px;padding:12px 14px;overflow:auto;border:2px solid var(--ink);box-shadow:4px 4px 0 var(--ink)}
+.arch-diagram b{color:#ffd07a}
+.methods-two-col{display:grid;grid-template-columns:1.2fr .8fr;gap:14px}
+@media(max-width:760px){.methods-two-col{grid-template-columns:1fr}}
+.feature-chips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.feature-chips span{font-size:11px;border:1px solid var(--hairline);border-radius:6px;padding:4px 8px;background:var(--paper);color:var(--ink-soft);font-family:var(--mono)}
+.feature-chips span b{color:var(--ink)}
+.callout{border:1.5px solid var(--ink);border-radius:10px;padding:10px 12px;box-shadow:3px 3px 0 var(--ink);background:var(--surface);margin:10px 0}
+.callout--orange{border-color:var(--data-orange)}
+.callout__label{font-family:var(--mono);font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--data-orange);margin:0 0 4px}
+</style>
 </head>
 <body>
 
 <nav class="site-nav" data-active="/methods" aria-label="Vector Hoops site"></nav>
 
 <main class="methods-main">
-  <h1>Method &amp; data sources</h1>
-  <p style="font-size:13px; color:var(--ink-soft); margin:0;">
-    Doctrine: every number a player sees must be recomputable from source data;
-    every mechanic states its rules; nothing shown is vibes.
-  </p>
+  <div class="methods-hero">
+    <div class="methods-kicker"><i></i> Methods • Every number recomputable • No vibes</div>
+    <h1>Method & data sources</h1>
+    <p class="methods-hero__lede">
+      Doctrine: every number a player sees must be <b>recomputable from source</b>; every mechanic states its rules; nothing is vibes. Games use <b>14 era-z per-100 features</b> for speed + honesty. The research model <b>MTNN v4</b> expands to <b>120 feats / 17 families → 48-d L2</b> for neighbor search, archetype scoring, and daily puzzles. Both live in the same era-honest space.
+      Glass-box: <a href="/model" style="font-weight:700;border-bottom:2px solid var(--data-orange);text-decoration:none;color:var(--ink)">Inside the Network → 17×160→32 towers</a>
+    </p>
+    <p class="methods-doctrine">Solo personal project, no connection to employer, built with public/free-tier only • Okabe-Ito AAA palette • 18px/1.65 body • mobile-first 56px tabs safe-area • best-app-ever polish • ONNX WASM 2MB distilled, localStorage only.</p>
+    <nav class="methods-toc" aria-label="On this page">
+      <a href="#vector-space">Vector space</a>
+      <a href="#mtnn-v4">MTNN v4</a>
+      <a href="#the-map">The map</a>
+      <a href="#archetypes">Archetypes</a>
+      <a href="#the-deadline">Deadline</a>
+      <a href="#fader-finisher">Fader</a>
+      <a href="#skills">Skills Lens</a>
+      <a href="#data-sources">Data sources</a>
+      <a href="#drift">League Drift</a>
+      <a href="#trajectories">Career shapes</a>
+      <a href="#accuracy-harness">Accuracy harness</a>
+      <a href="#limitations">Limitations</a>
+    </nav>
+  </div>
 
   <section class="methods-section" id="vector-space">
-    <h2>The vector space</h2>
-    <p>
-      12,392 player-seasons, 1996-97 through 2025-26, from stats.nba.com
-      per-100-possession splits (pace-adjusted at the door). Every season
-      requires <b>MIN &ge; 800</b> minutes played &mdash; a real rotation
-      season, not garbage-time noise.
-    </p>
-    <div class="methods-plainly">
-      <p class="methods-plainly__head">Three words this page keeps using</p>
-      <dl class="methods-plainly__list">
-        <dt>z-score</dt>
-        <dd>How far above or below average something is, measured in "typical
-          gaps." <b>0 = exactly average. +1 = a solid notch above. +2 = clearly
-          elite. &minus;1 = a notch below.</b> Roughly two-thirds of players land
-          between &minus;1 and +1. We cap it at &plusmn;4 so one freak season
-          can't distort the rest.</dd>
-        <dt>era-z</dt>
-        <dd>The same idea, but a player is only ever compared to <b>the players
-          he actually played against that season</b> &mdash; never to another
-          decade. That's why a 1997 center and a 2026 guard can sit in one
-          honest space: each is scored against his own league, then the two
-          scores are compared. It is <i>not</i> an era adjustment applied after
-          the fact.</dd>
-        <dt>mask</dt>
-        <dd>A flag that says <b>"this was never measured"</b> &mdash; as opposed
-          to "this was measured and it was zero." Tracking data doesn't exist
-          before 2013-14, so those seasons carry a mask instead of a guessed
-          number. Nothing is filled in silently.</dd>
-        <dt>per 100 possessions</dt>
-        <dd>Every rate on this site is <b>per 100 possessions</b>, not per game.
-          A 2026 game has far more possessions than a 1997 game, so per-game
-          numbers would quietly reward playing in a fast era. Per-100 asks the
-          same question of every player: <b>what does he do with the ball he
-          gets?</b> Expect bigger-looking numbers &mdash; a 30-point scorer is
-          nearer 37 per 100.</dd>
-      </dl>
+    <h2>The vector space — two views, one honest frame</h2>
+    <div class="methods-two-col">
+      <div>
+        <p><b>Games (fast, transparent):</b> 12,392 player-seasons 1996-97 → 2025-26 from stats.nba.com per-100-poss splits, MIN ≥800. Each season 14 features, z-scored within its own season (era-honest). This is what you play with.</p>
+        <table>
+          <thead><tr><th>Feature</th><th>What it measures</th><th>Era note</th></tr></thead>
+          <tbody>
+            <tr><td><code>PTS</code></td><td>scoring volume per 100</td><td>pace-adjusted at door</td></tr>
+            <tr><td><code>AST</code></td><td>playmaking</td><td>raw per 100, era-z</td></tr>
+            <tr><td><code>OREB</code> / <code>DREB</code></td><td>off / def glass</td><td>boards per 100</td></tr>
+            <tr><td><code>STL</code> / <code>BLK</code></td><td>def events</td><td>steals, rim protection</td></tr>
+            <tr><td><code>TOV</code></td><td>turnovers</td><td>negative signal</td></tr>
+            <tr><td><code>FG3A</code> / <code>FGA</code> / <code>FTA</code></td><td>shot mix + rim pressure</td><td>volume, era-z</td></tr>
+            <tr><td><code>FG3_PCT</code> / <code>FG_PCT</code> / <code>FT_PCT</code></td><td>accuracy</td><td>empirical-Bayes shrunk by attempts → shown as percentile, not fake %</td></tr>
+            <tr><td><code>PLUS_MINUS</code></td><td>on-court impact</td><td>per 100, not RAPM</td></tr>
+          </tbody>
+        </table>
+        <p>Cleaning: dedupe (player,season), missing→season mean + mask <code>m∈{0,1}</code> so we track <code>cat([x·m,m])</code>, attempt-weighted EB on %s, clip ±4σ.</p>
+      </div>
+      <div>
+        <div class="callout callout--orange">
+          <p class="callout__label">MTNN v4 expanded — 120 feats / 17 families</p>
+          <p style="margin:0;font-size:12px;line-height:1.55;color:var(--ink-soft)">Same 12,392 seasons but richer: volume, playmaking, rebounding, defense (STL/BLK/DEF_RTG), efficiency (EFG%/TS%/OFF_RTG/NET_RTG), shotmix, bio (AGE/HEIGHT/WEIGHT/DRAFT), tracking (2013+ masked), form (FORM_DD), market, roster, career (YEAR_IN_LEAGUE/LAG1_COSINE/DELTA_NORM), competition (SOS_NET_RTG/B2B_RATE), team, pedigree, playoffs, honors. Each family = own residual tower.</p>
+          <div class="feature-chips">
+            <span><b>120</b> feats</span><span><b>17</b> families</span><span><b>30</b> seasons</span><span><b>8</b> archetypes</span><span><b>48-d</b> L2</span><span><b>~224K</b> params</span>
+          </div>
+          <p style="margin:8px 0 0;font-size:11px;color:var(--ink-muted)">Reconciled: 14 = game distillation for speed + transparency. 120 = research MTNN that powers daily puzzles. Cosine in 48-d decides neighbors in both, root-frame Procrustes aligned.</p>
+        </div>
+        <div class="methods-plainly">
+          <p class="methods-plainly__head">Three words this page keeps using</p>
+          <dl class="methods-plainly__list">
+            <dt>z-score</dt><dd>How far above/below average in “typical gaps.” 0=average, +1 solid notch, +2 elite. Two-thirds sit –1…+1. Cap ±4.</dd>
+            <dt>era-z</dt><dd>Compared only to <b>players he faced that season</b>. A 1997 center and 2026 guard share one honest space because each is scored vs own league first.</dd>
+            <dt>mask</dt><dd><b>“Never measured”</b> vs “measured zero.” Tracking pre-2013 = masked, not guessed.</dd>
+            <dt>per 100</dt><dd>What he does with ball he gets — not per-game inflated by pace. 30 pts ≈37 per 100.</dd>
+          </dl>
+        </div>
+      </div>
     </div>
-    <div class="methods-plainly">
-      <p class="methods-plainly__head">Why three stats show a percentile, not a number</p>
-      <p style="margin:0;font-size:13px;line-height:1.55;color:var(--ink-soft);">
-        3P%, FG% and FT% are <b>smoothed toward the league average by attempts</b>
-        before the model ever sees them &mdash; otherwise a player who took four
-        threes and made three would read as a 75% shooter. That smoothing cannot
-        be undone, so printing a projected "41.2%" would be inventing a number
-        the model never held. We show <b>where he'd rank in the league</b>
-        instead. Every other stat is converted back to a real per-100 rate, and
-        every one of those conversions is
-        re-checked before deploy (<code>verify_accuracy.py</code> V15).
-      </p>
-    </div>
-    <p>Each player-season is 14 features, z-scored within its own season (era-honest &mdash; a 1997 center and a 2026 guard share one honest space):</p>
-    <table>
-      <thead><tr><th>Feature</th><th>What it measures</th></tr></thead>
-      <tbody>
-        <tr><td><code>PTS</code></td><td>scoring volume</td></tr>
-        <tr><td><code>AST</code></td><td>playmaking</td></tr>
-        <tr><td><code>OREB</code></td><td>offensive glass</td></tr>
-        <tr><td><code>DREB</code></td><td>defensive glass</td></tr>
-        <tr><td><code>STL</code></td><td>steals</td></tr>
-        <tr><td><code>BLK</code></td><td>rim protection</td></tr>
-        <tr><td><code>TOV</code></td><td>turnovers</td></tr>
-        <tr><td><code>FG3A</code></td><td>three-point volume</td></tr>
-        <tr><td><code>FGA</code></td><td>shot volume</td></tr>
-        <tr><td><code>FTA</code></td><td>rim pressure (FTs)</td></tr>
-        <tr><td><code>FG3_PCT</code></td><td>three-point accuracy</td></tr>
-        <tr><td><code>FG_PCT</code></td><td>finishing</td></tr>
-        <tr><td><code>FT_PCT</code></td><td>free-throw touch</td></tr>
-        <tr><td><code>PLUS_MINUS</code></td><td>on-court impact</td></tr>
-      </tbody>
-    </table>
-    <p>Cleaning: dedupe on (player, season); missing values fall back to the season mean with a mask; attempt-weighted empirical-Bayes shrinkage on FG3%/FT%/FG%; z-scores clipped at &plusmn;4&sigma;.</p>
+  </section>
+
+  <section class="methods-section" id="mtnn-v4">
+    <h2>MTNN v4 — the glass-box behind every guess</h2>
+    <p>17 stat families each run through own residual tower → fuse into 48-number fingerprint (L2-normalized, cosine = similarity) → decode into archetype 8 / position 5 / skill grades 18×(48→16→1) + per-100 forecast. <a href="/model"><b>See it live: Inside the Network →</b></a> click any node to probe family share and signed grad×input pushes.</p>
+    <div class="arch-diagram">Input 120 feats, mask m∈{0,1}
+  h = cat([x·m, m]) → 2·d_in per family
+  Tower 17×: Linear 2d_in→160 LN GELU → 160→32 LN + skip ×2 → 32-d (total 544)
+  + season_emb 12-d → concat 556 → 556→128 GELU LN → 128→<b>48 L2</b>
+  Heads MLP 48→64→k | Skills 18×(48→16→1) | Next profile 14-d forecast
+  <b>Params ~224K 57% fusion hidden • Checkpoint mtnn_v4_phase_b 2.26MB → ONNX 549KB • WASM 2MB distilled</b>
+  Truthful flow W1380 H780 COLS 110/230/320/400/480/560/720/800/900/1120 1:1 input→tower cat box B1h/B1o/B2h/B2o L2 badge</div>
+    <p style="margin-top:10px;font-size:12px;color:var(--ink-soft)">Training: era-honest σ per season, Procrustes RᵀR=I chained to 1996 root frame drift ↓18%, RealMLP robust scaling, leak-free split via <code>pipeline/leakfree.py</code> so recall isn't inflated. Asset <code>mtnn_embeddings.f32</code> 48-d per season powers Chimera/Era Twin/Team labs.</p>
   </section>
 
   <section class="methods-section" id="the-map">
     <h2>The map</h2>
-    <p>The 3D league map (in-game) projects the 14-dim vector down to 3 axes via PCA, minmax-scaled to [0,1] for rendering. The client's projection is an exact affine recovery of the build-time PCA + minmax map &mdash; not re-fit, so the on-screen position is the honest one. Axes are named from their feature correlations, not guessed:</p>
+    <p>3D league map in-game projects 14-d (or 48-d MTNN) down to 3 axes via PCA, minmax [0,1] for rendering. Client projection = exact affine recovery of build-time PCA + minmax, not re-fit. Axes named from correlations:</p>
     <ul>
-      <li><b>PC1 &mdash; Paint vs perimeter:</b> bigs (boards, blocks) &harr; shooters (3PA, 3P%)</li>
-      <li><b>PC2 &mdash; Scoring load:</b> high-usage scorers (PTS, FGA, FTA) &harr; low-usage role players</li>
-      <li><b>PC3 &mdash; Ball in hand:</b> off-ball, low-event &harr; handlers (AST, STL, TOV)</li>
+      <li><b>PC1 — Paint vs perimeter:</b> bigs (boards, blocks) ↔ shooters (3PA, 3P%)</li>
+      <li><b>PC2 — Scoring load:</b> high-usage scorers (PTS,FGA,FTA) ↔ low-usage role players</li>
+      <li><b>PC3 — Ball in hand:</b> off-ball low-event ↔ handlers (AST,STL,TOV)</li>
     </ul>
+    <p style="font-size:12px;color:var(--ink-muted)">Okabe-Ito AAA + shape + icon + text triple-encoding: color never alone. In <a href="/model">/model</a> the 3D map uses auto-rotate slow, drag, scroll zoom, hover name+archetype, orange selected.</p>
   </section>
 
   <section class="methods-section" id="archetypes">
-    <h2>Archetypes</h2>
-    <p>8 k-means clusters computed at build time on the same 14-dim era-normalized vectors, seeded for reproducibility. Names describe each centroid honestly (its strongest traits), not a scouting label:</p>
+    <h2>Archetypes — 8 global player types</h2>
+    <p>8 k-means clusters at build time on same 14-d era-normalized vectors, seeded reproducible. Names = strongest centroid traits, not scouting:</p>
     <ul>
       <li>Three-Point Accuracy (Low Turnovers)</li>
       <li>Scoring Volume + Shot Volume</li>
@@ -129,189 +146,108 @@
       <li>Offensive Glass + Defensive Glass</li>
       <li>Playmaking + Steals</li>
     </ul>
-    <p>The client never re-derives cluster membership independently &mdash; it uses the label the pipeline computed, verified identical for all 12,392 players by the accuracy harness (check V2, below).</p>
-    <p>
-      The <a href="/trends#archetype-eras-method">Trend Research</a> page's <b>Archetype Eras</b> section asks how that
-      population of 8 archetypes shifted over three decades, and re-fits a second, independent
-      layer of archetypes within five era windows to see whether names and centroids
-      persist across eras. The method, quoted verbatim from <code>assets/archetypes_time.json</code>:
-    </p>
-    <p style="font-family:var(--mono); font-size:12px; background:var(--paper); padding:10px 12px; border-radius:8px; border:1px solid var(--hairline); line-height:1.6; white-space:pre-wrap;">layer 1: per-season share of the 8 global k-means archetypes (labels from vectors.json, no re-fit); layer 2: k-means K=8 re-fit within five era windows (seeded, numpy), named from top-2 centroid sigmas; lineage = nearest predecessor-era centroid by cosine in the Procrustes root frame (era-geometry-corrected); shares are of charted players (MIN&gt;=800), not all rosters &mdash; stated scope</p>
+    <p>Client never re-derives membership — uses pipeline's label, verified all 12,392 via harness V2. Trend Research adds layer 2: K=8 re-fit within five era windows, named top-2 sigma, lineage = nearest predecessor-era centroid cosine in Procrustes root frame.</p>
+    <p class="methods-codeblock">layer 1: per-season share 8 global k-means (labels from vectors.json, no re-fit); layer 2: k-means K=8 re-fit within five era windows (seeded), named from top-2 centroid sigmas; lineage = nearest predecessor-era centroid cosine in Procrustes root frame; shares of charted MIN≥800 players — stated scope</p>
   </section>
 
   <section class="methods-section" id="the-deadline">
-    <h2>The Deadline</h2>
-    <p>
-      Midseason move = an in-season TEAM_ID change with &ge;15 games and &ge;12 minutes per game on both sides, from 2015-16 through 2025-26 game logs (nba_api <code>PlayerGameLogs</code>). Deltas shown: per-36 points, a context-adjusted plus-minus, and a points-per-shot-attempt proxy, before vs. after the move.
-    </p>
-    <p>
-      333 movers were analyzed to build the daily-set pool (25 who thrived, 25 who cratered after moving). The composite Thrived/Cratered score is a <b>stated blend, not a truth claim</b> &mdash; and "midseason move" is not the same claim as an officially reported trade (some are trades, some are waiver/free-agency moves mid-season); this project only has clean team-change dates, so it says exactly that and no more.
-    </p>
+    <h2>The Deadline — midseason team change</h2>
+    <p>Midseason move = in-season TEAM_ID change with ≥15 games and ≥12 MPG both sides, 2015-16 → 2025-26 game logs (nba_api PlayerGameLogs). Deltas: per-36 points, context-adjusted plus-minus, points-per-shot-attempt proxy before vs after.</p>
+    <p>333 movers analyzed → daily-set pool 25 thrived / 25 cratered. Composite score = stated blend, not truth claim. “Midseason move” ≠ officially reported trade; project has only team-change dates.</p>
   </section>
 
   <section class="methods-section" id="fader-finisher">
     <h2>Fader or Finisher</h2>
-    <p>
-      Each player-season is split at its own game-sequence midpoint (not the calendar All-Star break) with &ge;25 games and &ge;12 minutes per game required on both halves, per-36 rates, 2015-16 through 2025-26. The quiz pool (600 rounds) is limited to unambiguous deltas &mdash; a 1.5&ndash;6.0 per-36 swing &mdash; so ties and noise-level changes never appear as puzzles.
-    </p>
+    <p>Split each player-season at own game-sequence midpoint (not calendar ASB) with ≥25 games and ≥12 MPG required both halves, per-36 rates, 2015-16 → 2025-26. Quiz pool 600 rounds limited to unambiguous deltas 1.5–6.0 per-36 swing, so ties/noise never appear.</p>
   </section>
 
   <section class="methods-section" id="skills">
-    <h2>The Skills Lens</h2>
-    <p>
-      Every charted player-season is graded 0&ndash;99 on twelve skills. Each skill is a <b>fixed, published linear composite</b> of the same era-z per-100 features the game already ships (e.g. Perimeter Shooting = 0.55&middot;FG3A&nbsp;+ 0.45&middot;FG3%; full table in <code>docs/SKILLS_LENS.md</code>), converted to a percentile <b>within its own season pool</b> &mdash; so every era carries the same grade distribution, and a 90 in 1997 means exactly what a 90 in 2026 means. Badges fire at 90+, gold at 97+.
-    </p>
-    <p>
-      The fused chimera on the reveal card is graded through the same composites against a pooled all-era quantile table (<code>assets/skill_probe.json</code>) &mdash; that blend never existed as a real season, so its reference pool is all 12,392 charted seasons, stated as such.
-    </p>
-    <p>
-      <b>Limitations, stated plainly:</b> "Two-Way Impact" is NBA.com on-court plus-minus per 100 possessions (with a small stated scoring stabilizer) &mdash; it is <b>not</b> BPM, RAPM, or any adjusted-impact metric, and small-minute seasons can spike it. Free-throw and 3-point percentages are empirical-Bayes shrunk by attempts upstream, but tiny-sample tails remain. Skills that need play-type, hustle, or tracking data (post play, screening, off-ball movement) are deliberately absent until those sources land with honest masks. The promoted MTNN embedding (<code>pipeline/train_mtnn.py</code>, exported to <code>assets/mtnn_embeddings.f32</code>) scores daily puzzles and neighbor search when it clears its recall and purity gates; skill composites on the reveal card stay transparent.
-    </p>
+    <h2>The Skills Lens — 0–99 grades + badges</h2>
+    <p>Every charted season graded 0–99 on twelve skills. Each skill = <b>fixed, published linear composite</b> of same era-z per-100 features (e.g. Perimeter Shooting = 0.55·FG3A + 0.45·FG3%), percentile within own season pool — so every era same distribution, 90 in 1997 = 90 in 2026. Badges 90+, gold 97+.</p>
+    <p>Fused chimera on reveal graded same composites vs pooled all-era quantile table (<code>assets/skill_probe.json</code>) — blend never existed as real season, so reference = all 12,392.</p>
     <div class="methods-plainly">
-      <p class="methods-plainly__head">How to read the model's two scores</p>
+      <p class="methods-plainly__head">MTNN two scores — plain English</p>
       <dl class="methods-plainly__list">
-        <dt>recall@10 &mdash; "can it find the same guy next year?"</dt>
-        <dd>Hide a player's next season, then ask the model for the 10 nearest
-          player-seasons to this one. <b>Recall is how often his own next season
-          is in that top 10.</b> Higher is better; 1.0 would mean always.
-          A career changes year to year, so this is a test of whether the model
-          tracks a <i>person</i>, not just a stat line.</dd>
-        <dt>purity@20 &mdash; "do a player's neighbors look like him?"</dt>
-        <dd>Take a player's 20 nearest neighbors <b>from other eras</b> and ask
-          what fraction share his archetype. <b>Higher means the space groups
-          basketball roles rather than decades.</b> ~0.12 would be random
-          (8 archetypes); the seventies aren't a role.</dd>
-        <dt>"held-out" &mdash; and a correction</dt>
-        <dd>A score is only meaningful if the model never saw the answer while
-          learning. We found that earlier training <b>did</b> include the very
-          pairs used to score recall, which inflated it toward a perfect 1.0.
-          That is fixed (<code>pipeline/leakfree.py</code>): the model now
-          trains only on players it is not later graded on, and the honest
-          numbers are lower and real. <b>A number that looks perfect usually
-          means the test was broken.</b></dd>
+        <dt>recall@10 — “can it find same guy next year?”</dt><dd>Hide next season, ask 10 nearest to this. Recall = how often own next season in top10. Higher better, 1.0 = always.</dd>
+        <dt>purity@20 — “do neighbors look like him?”</dt><dd>20 nearest from other eras, fraction sharing archetype. Higher = groups roles not decades. ~0.12 = random (8 types).</dd>
+        <dt>held-out — leak fix</dt><dd>Earlier training included pairs used to score recall → inflated to ~1.0. Fixed via <code>pipeline/leakfree.py</code>: trains only on players not graded later. Honest numbers lower and real.</dd>
       </dl>
     </div>
-    <p>
-      <b>Playoff Lens (postseason as a distinct regime).</b> The whole charted space is <b>regular season</b>. When playoff data is loaded, the Skills Lens shows a player-season's regular-season vs playoff splits &mdash; points per 100, minutes, usage, true shooting &mdash; and a stated <b>riser/fader</b> verdict from the points-per-100 difference. It also shows the team's <b>series path</b> (R1 &rarr; Finals opponents and W&ndash;L) and an expandable <b>game log</b> from stats.nba.com <code>leaguegamelog</code>. The header outcome badge is the season result (<b>NBA Champion</b>, Finals, etc.) &mdash; a Conf. finals row in the path is a series they played on the way, not the outcome. Round labels are era-honest: champions through 2001-02 often finished with 15 wins (best-of-5 first round) and are still labeled Champion. Same-season honors (All-NBA, All-Star, <b>Finals MVP</b> from Basketball-Reference) render beside the outcome. "Riser" and "Fader" describe the change in raw postseason production against a shorter, tougher sample; they are <b>not</b> a clutch or leadership claim. The MTNN treats playoffs as its own tower family (with a <code>playoff_riser</code> head plus series/close-game scoring features from the game logs) &mdash; research lane only; the game shows the transparent splits and path, and nothing at all until the postseason data lands.
-    </p>
-    <p>
-      <b>Wide-matrix skills (post / transition / motor + three gravities).</b> Six skills the box score can't express are graded from richer feeds &mdash; Post Play and Transition from synergy play-type frequency + points-per-possession, Motor from hustle stats (screen assists, deflections, loose balls, charges, box-outs), and three kinds of gravity: <b>Shooting Gravity</b> (pull-up 3-point volume weighted heaviest, plus 3-point volume and accuracy &mdash; the off-dribble threat that pulls defenders out, so a movement shooter like Curry tops it, not a stationary spot-up specialist), <b>Rim Gravity</b> (shot-blocking + contested shots minus opponent field-goal percentage allowed &mdash; the interior deterrence that warps offenses, topped by rim protectors like Wembanyama), and <b>Disruption Gravity</b> (steals + deflections + charges drawn &mdash; perimeter defensive warp that bends passing lanes, topped by disruptors like Marcus Smart). These are <b>masked</b>: tracked only from <b>2015-16 on</b>, so earlier seasons show "not tracked this era" rather than a guessed grade. All three gravities are <b>stated proxies from public NBA.com tracking + the box score &mdash; not Second Spectrum gravity or matchup-difficulty data</b>. Same era-z percentile grading as the core twelve.
-    </p>
-    <p>
-      <b>Next-season profile (predicted vs actual).</b> The MTNN
-      <code>next_profile</code> head reads a player-season embedding and predicts
-      the next season's 14-d era-z game vector. On the Skills Lens profile, prior
-      seasons show <b>predicted vs actual</b> (charted next-year vector) with a
-      mean absolute error on primary stats. For the <b>latest charted season</b>
-      (currently 2025-26), next-year stats are not available yet &mdash; the UI
-      shows the prediction only and labels it as such. Values are geometry-implied
-      z-scores, not a minutes or pace forecast. Asset:
-      <code>assets/next_profile_eval.json</code> (rebuild via
-      <code>pipeline/export_next_profile_eval.py</code>).
-    </p>
-    <p>
-      <b>Steals of the Draft.</b> Pairs what was expected of a player on draft night (the rookie-scale slot implied by his pick) against what he actually produced (his <b>career mean</b> skill grade, weighted by minutes played, so a short cameo season counts less than a full one). Both are turned into percentile ranks and subtracted. A player who beat his expectation is a <b>steal</b>; one who fell short of it, a <b>bust</b>. One hot season never drives the board.
-    </p>
-    <p>
-      <b>The two boards use deliberately different filters.</b> A <b>steal</b> has to have proven it, so we require <b>five</b> charted seasons &mdash; and <b>undrafted players are included</b>, because going unpicked through all 60 selections is the largest expectation there is to beat. A <b>bust</b> is the opposite: filtering on seasons played would quietly delete the very players who washed out. So instead we ask only that enough time has passed to judge (five years since the draft), and we let a short career count as evidence rather than as a disqualifier. A bust's whole career must also fall inside our data window, which begins in 1996-97 &mdash; otherwise a star whose prime we never charted looks like a player who never arrived. Undrafted players cannot be busts: there was no expectation for them to miss.
-    </p>
-    <p>
-      <b>Playoff credit is a bonus, never a penalty.</b> Reaching the postseason is mostly a team outcome, so a steal stranded on a bad franchise loses nothing. A player who showed up in the playoffs &mdash; both how often he got there and how much he produced once there &mdash; gains up to ten points.
-    </p>
-    <p class="methods-plainly">
-      <b>Two honest limits.</b> Because both sides are percentile ranks, the scale runs out at the top: once a player is among the very best, further greatness cannot lift his score much, so an undrafted role player can edge out an undrafted-adjacent superstar. And the career grade is a flat average of twelve skills, which under-rates specialists &mdash; an elite defender who never shot is not fully paid for what made him great. This board is a descriptive gap between expectation and measured production. It is not a re-draft, and not a verdict on a player's value.
-    </p>
+    <p><b>Next-season profile:</b> MTNN <code>next_profile</code> head reads embedding and predicts next season's 14-d era-z vector. Prior seasons show predicted vs actual MAE. Latest 2025-26 shows prediction only — labeled as such. Asset: <code>assets/next_profile_eval.json</code>.</p>
+    <p><b>Wide-matrix (masked 2015-16+):</b> Post Play, Transition, Motor, Shooting/Rim/Disruption Gravity from tracking+hustle — stated proxies, not Second Spectrum. Pre-2013 shows “not tracked this era.”</p>
   </section>
 
   <section class="methods-section" id="data-sources">
     <h2>Data sources</h2>
     <ul>
-      <li><b>stats.nba.com</b> via <code>nba_api</code> &mdash; <code>leaguedashplayerstats</code> (Base/Advanced/Scoring), <code>leaguedashplayerbiostats</code>, <code>leaguedashptstats</code> (player tracking, 2013-14 onward only &mdash; masked before, never imputed), and <code>PlayerGameLogs</code> (2015-16 through 2025-26 for The Deadline and Fader-or-Finisher).</li>
-      <li><b>Basketball-Reference</b> &mdash; per-season positions (99.7% coverage; unmatched seasons render as &mdash;) and current player contracts where salary history is unavailable elsewhere.</li>
-      <li>Every season/endpoint response is cached locally; re-runs resume from cache. stats.nba.com throttles aggressively, so builds are deliberately incremental.</li>
+      <li><b>stats.nba.com</b> via <code>nba_api</code> — <code>leaguedashplayerstats</code> (Base/Advanced/Scoring), <code>leaguedashplayerbiostats</code>, <code>leaguedashptstats</code> (player tracking 2013-14+ masked, never imputed), <code>leaguegamelog</code> + <code>PlayerGameLogs</code> 2015-16→2025-26 for Deadline/Fader.</li>
+      <li><b>Basketball-Reference</b> — per-season positions 99.7% coverage; contracts where salary history unavailable.</li>
+      <li>Every endpoint cached locally; re-runs resume from cache. Throttles respected, builds incremental. Pipeline: Gather → Clean (era-honest σ + Procrustes + RealMLP) → Train (160→32 towers 556→128→48) → Eval (harness) → Deploy (ONNX WASM, <code>mtnn.js</code>).</li>
     </ul>
   </section>
 
   <section class="methods-section" id="drift">
-    <h2>The League Drift</h2>
-    <p>
-      The <a href="/trends">Trend Research</a> page asks a different question than the rest of the
-      site: not "how good was this player" but "how much did the shape of the league's
-      14-dim vector space itself rotate, season to season." The method, quoted verbatim
-      from <code>assets/drift.json</code>:
-    </p>
-    <p style="font-family:var(--mono); font-size:12px; background:var(--paper); padding:10px 12px; border-radius:8px; border:1px solid var(--hairline); line-height:1.6; white-space:pre-wrap;">orthogonal Procrustes on consecutive-season shared players (&gt;=30); rotation = mean principal angle of Q vs identity; residual = normalized Frobenius after alignment; no scaling (z-spaces pre-normalized); chained transforms map any season into the 1996-97 root frame; axisDrift = 1-|Q_ii|, a stated proxy</p>
-    <p>
-      The chained root-frame transforms power Trend Research drift charts; the
-      <b>Era Twin</b> daily puzzle now uses the promoted MTNN embedding for
-      cross-decade matching (same space as Chimera scoring).
-    </p>
+    <h2>The League Drift — Procrustes</h2>
+    <p>Trend Research asks not “how good” but “how much did 14-d vector space itself rotate, season to season.” Quoted verbatim from <code>assets/drift.json</code>:</p>
+    <p class="methods-codeblock">orthogonal Procrustes on consecutive-season shared players (>=30); rotation = mean principal angle of Q vs identity; residual = normalized Frobenius after alignment; no scaling (z-spaces pre-normalized); chained transforms map any season into 1996-97 root frame; axisDrift = 1-|Q_ii|, stated proxy</p>
+    <p>Chained root-frame powers <a href="/trends">Trend Research</a> drift charts; Era Twin uses promoted MTNN embedding for cross-decade matching. See interactive: <a href="/trends#what-changed">What changed this season?</a> uses gauge + compass + ranked shift bars.</p>
   </section>
 
   <section class="methods-section" id="trajectories">
-    <h2>Career Shapes (career trajectories)</h2>
-    <p>
-      The <a href="/trends#trajectories-method">Trend Research</a> page's <b>Career Shapes</b> section asks a
-      career-level question on top of the per-season archetypes above: not "what archetype was this
-      season" but "how did this player's own archetype label move across his whole career." Careers
-      require at least 4 charted seasons; each season keeps its own per-season global archetype
-      label (never career-static). The taxonomy is rule-based, stated plainly:
-    </p>
+    <h2>Career Shapes — how roles move over a career</h2>
+    <p>Trend Research Career Shapes asks: not “what archetype was this season” but “how did own archetype label move across whole career.” Careers ≥4 charted seasons; each keeps per-season global label (never career-static):</p>
     <ul>
-      <li><b>stable</b> &mdash; one archetype covers at least 75% of the charted seasons.</li>
-      <li><b>reinvention</b> &mdash; exactly one sustained switch: a modal archetype covering at
-        least 75% of the seasons before the switch, and a different modal archetype covering at
-        least 75% of the seasons after it.</li>
-      <li><b>late-bloom</b> &mdash; a reinvention whose switch lands at or after the 60% mark of
-        the career.</li>
-      <li><b>migrator</b> &mdash; three or more distinct archetypes, none ever reaching 60% share.</li>
-      <li><b>drifter</b> &mdash; everything else: two or more archetypes, no sustained switch.</li>
+      <li><b>stable</b> — one archetype ≥75% seasons</li>
+      <li><b>reinvention</b> — one sustained switch: modal ≥75% before, different modal ≥75% after</li>
+      <li><b>late-bloom</b> — reinvention with switch ≥60% career index</li>
+      <li><b>migrator</b> — 3+ distinct archetypes, none ≥60%</li>
+      <li><b>drifter</b> — else: 2+ archetypes, no sustained switch</li>
     </ul>
-    <p>
-      Era comparison: mean transition rate (archetype changes per season-pair) for careers whose
-      midpoint falls in each decade &mdash; do careers migrate more now? Correlates shown
-      (career length, mean plus-minus z) are <b>observed, with selection effects stated</b> &mdash;
-      trajectory class is an outcome of a career, not something assigned to it. The method, quoted
-      verbatim from <code>assets/trajectories.json</code>:
-    </p>
-    <p style="font-family:var(--mono); font-size:12px; background:var(--paper); padding:10px 12px; border-radius:8px; border:1px solid var(--hairline); line-height:1.6; white-space:pre-wrap;">careers &gt;=4 charted seasons; per-season global archetype labels (never career-static); taxonomy rule-based as documented (stable &gt;=75% modal; reinvention = one sustained &gt;=75%/&gt;=75% switch; late-bloom = switch at &gt;=60% career index; migrator = 3+ archetypes none &gt;=60%); era comparison by career-midpoint decade; correlates are observed with selection effects &mdash; trajectory class is an outcome, not an assignment</p>
+    <p class="methods-codeblock">careers >=4 charted seasons; per-season global archetype labels (never career-static); taxonomy rule-based as documented (stable >=75% modal; reinvention = one sustained >=75%/>=75% switch; late-bloom = switch at >=60% career index; migrator = 3+ archetypes none >=60%); era comparison by career-midpoint decade; correlates observed with selection effects — trajectory class is outcome, not assignment</p>
   </section>
 
   <section class="methods-section" id="accuracy-harness">
-    <h2>The accuracy harness</h2>
-    <p><code>pipeline/verify_accuracy.py</code> gates every deploy &mdash; a non-zero exit blocks shipping. It checks:</p>
+    <h2>The accuracy harness — blocks deploy on fail</h2>
+    <p><code>pipeline/verify_accuracy.py</code> gates every deploy — non-zero exit blocks shipping:</p>
     <ul>
-      <li><b>V1</b> &mdash; <code>vectors.json</code> internal integrity: dimensions, ranges, no duplicate (name, season) rows, valid map coordinates.</li>
-      <li><b>V2</b> &mdash; cluster labels: recomputes nearest-centroid assignment from member means and confirms the client's centroid method reproduces the pipeline's labels for all 12,392 players.</li>
-      <li><b>V3</b> &mdash; <code>deadline.json</code>: recomputes <i>every</i> quiz mover's deltas directly from the raw game logs and requires an exact match (0.01 rounding tolerance) &mdash; 100% sample, not a spot-check.</li>
-      <li><b>V4</b> &mdash; Chimera determinism: the seeded daily target is checked across 30 sampled dates for stability and for always satisfying the low-similarity (MTNN cosine &lt; 0.3) constraint between its two donor seasons.</li>
+      <li><b>V1</b> — <code>vectors.json</code> integrity: dims, ranges, no duplicate (name,season), valid map coords.</li>
+      <li><b>V2</b> — cluster labels: recomputes nearest-centroid from member means, confirms client centroid method reproduces pipeline labels for all 12,392.</li>
+      <li><b>V3</b> — <code>deadline.json</code>: recomputes every mover's deltas directly from raw game logs, exact match 0.01 tolerance — 100% sample, not spot-check.</li>
+      <li><b>V4</b> — Chimera determinism: seeded daily target checked across 30 sampled dates for stability and low-similarity (MTNN cosine <0.3) between its two donors.</li>
     </ul>
+    <p style="font-size:12px;color:var(--ink-muted)">MTNN extras: recall@10 leak-free, purity@20, next_profile MAE. Bundle ~105KB gz <300KB target, ONNX 549KB. Visual harness: AAA Okabe-Ito, 18px/1.65, 56px tabs safe-area.</p>
   </section>
 
   <section class="methods-section methods-limitations" id="limitations">
-    <h2>Attribution, license &amp; limitations</h2>
-    <p><b>Attribution:</b> statistics sourced from stats.nba.com and Basketball-Reference; all figures shown are derived, era-normalized aggregates, not raw scrapes republished verbatim.</p>
-    <p><b>License:</b> this repository does not yet publish a license file &mdash; treat the code as all-rights-reserved pending one. Source data remains subject to stats.nba.com's and Basketball-Reference's own terms.</p>
-    <p><b>Limitations, stated plainly:</b></p>
+    <h2>Attribution, license & limitations — stated plainly</h2>
+    <p><b>Attribution:</b> stats from stats.nba.com and Basketball-Reference; derived, era-normalized aggregates, not verbatim scrapes.</p>
+    <p><b>License:</b> code all-rights-reserved pending license file. Source data subject to stats.nba.com / BR terms.</p>
+    <p><b>What this site is not:</b></p>
     <ul>
-      <li>No lineup or on/off data is used anywhere on this site &mdash; nothing here claims to measure who a player shared the floor with.</li>
-      <li>"Midseason move" is a team-ID-change detection, not verified trade metadata &mdash; a move mid-season is not automatically an officially reported trade.</li>
-      <li>Player tracking features (drives, touches, speed/distance) only exist from 2013-14 onward; earlier seasons carry an explicit missing-data mask rather than an imputed guess.</li>
-      <li>Position coverage from Basketball-Reference is 99.7%, not 100% &mdash; a small number of season rows render without a position.</li>
-      <li>Archetype names describe statistical cluster centroids, not scouting judgment or team role.</li>
+      <li>No lineup/on-off data — nothing claims to measure who shared floor with.</li>
+      <li>“Midseason move” = TEAM_ID-change detection, not verified trade metadata.</li>
+      <li>Tracking features only 2013-14 onward; earlier = explicit missing mask, not imputed.</li>
+      <li>Position coverage 99.7%, not 100%.</li>
+      <li>Archetype names = centroid stats, not scouting judgment.</li>
+      <li>Skills “Two-Way Impact” = per-100 plus-minus with small scoring stabilizer — not BPM/RAPM, small-minute spike possible.</li>
+      <li>Chimera fused vector never existed — its skill pool = all-era.</li>
+      <li>MTNN v4 glass-box explorer at <a href="/model">/model</a> shows true weights — no hidden layers beyond documented LN/GELU/skip.</li>
     </ul>
+    <p style="font-size:11px;color:var(--ink-muted)">Solo personal project, no connection to employer, built with public/free-tier only • Videos relevant: MTNNFlow.mp4 + ChimeraEquation.mp4 only • Manim source: <code>workspace/manim_dumbmodels/</code> • Free-tier Vercel cleanUrls true.</p>
   </section>
 
 </main>
 
 <footer class="site-footer">
   <div class="site-footer__links">
-    <a href="/players">Players</a>
     <a href="/play">Play</a>
+    <a href="/model">Network</a>
+    <a href="/trends">Trends</a>
+    <a href="/players">Players</a>
     <a href="#" data-vh-nux-tour>Tour</a>
     <a href="https://github.com/jcdavis131/vector-hoops" target="_blank" rel="noopener">GitHub</a>
   </div>
-  <div class="site-footer__attribution">Every number recomputable from stats.nba.com &amp; Basketball-Reference source data &middot; from <a href="https://dumbmodel.com/" target="_blank" rel="noopener">dumbmodel.com</a></div>
+  <div class="site-footer__attribution">MTNN v4: 12,392 seasons 120 feats 17 families cat([x·m,m]) → 17×160→32×2 544+12=556→128→48 L2 ~224K • 14 feats for games era-z PCA • Every number recomputable from stats.nba.com • Solo personal project, no connection to employer, built with public/free-tier only • from <a href="https://dumbmodel.com/" target="_blank" rel="noopener">dumbmodel.com</a></div>
 </footer>
 
 <script src="assets/site-nav.js" defer></script>
