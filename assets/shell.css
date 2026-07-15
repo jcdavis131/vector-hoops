@@ -320,8 +320,8 @@ html{ scroll-behavior: smooth; }
   border: 2px solid var(--ink);
   border-radius: var(--radius);
   box-shadow: var(--shadow-block);
-  width: clamp(52px, 14vw, 100px);
-  height: clamp(62px, 17vw, 100px);
+  width: clamp(48px, 14vw, 68px);
+  height: clamp(68px, 18vw, 88px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -344,6 +344,7 @@ html{ scroll-behavior: smooth; }
   color: var(--paper);
   background: var(--ink);
   border-color: var(--ink);
+  width: clamp(64px, 18vw, 86px);
   animation: landing-target-pulse 2.5s ease-in-out infinite;
 }
 
