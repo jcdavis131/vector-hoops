@@ -1,9 +1,12 @@
-/* city-intro.js v3 — Nebulae Archipelago Court — prebaked, no OSM fetch
+/* city-intro.js v4 — immersive embedding hero + fun arena background
  * Solo personal project, no connection to employer, built with public/free-tier only
  * Free data: vectors.json 12966 seasons, teams.json
- * Arch: chibi court ground #FFFEF7 ink lines + team color arena cylinder, embedding sky as 8 Okabe-Ito density nebulae + 12966 colored points + centroids + 2NN lines
- * Perf: starfield once, fans 60 max low-poly, no overpass, no sessionStorage OSM cache
- * AAA: paper #FFFEF7 ink #1A150F 17.9:1, 18px/1.65 mono labels, 44px touch, safe-area, reduced-motion
+ * v4 changes:
+ *  - embedding map = default background hero, arena = fun foreground toy
+ *  - team lock → team-specific embedding map: highlight archetype focus by hash(team) %8
+ *  - shows Team Universe card (glass dark) with counts, bars, team tint
+ *  - supports embed-hero new DOM #team-universe-* + #sky-legend-anchor
+ *  - improved bobbing arena, confetti on lock, team color fog
  */
 (function(){
   'use strict';
@@ -15,36 +18,21 @@
   var BADGE_EL='city-intro-badge';
 
   var ARENAS={
-    ATL:{city:'Atlanta',arena:'State Farm Arena',lat:33.7573,lng:-84.3932},
-    BOS:{city:'Boston',arena:'TD Garden',lat:42.3662,lng:-71.0621},
-    BKN:{city:'Brooklyn',arena:'Barclays Center',lat:40.6826,lng:-73.9753},
-    CHA:{city:'Charlotte',arena:'Spectrum Center',lat:35.2251,lng:-80.8392},
-    CHI:{city:'Chicago',arena:'United Center',lat:41.8807,lng:-87.6742},
-    CLE:{city:'Cleveland',arena:'Rocket Arena',lat:41.4965,lng:-81.6882},
-    DAL:{city:'Dallas',arena:'American Airlines Center',lat:32.7903,lng:-96.8103},
-    DEN:{city:'Denver',arena:'Ball Arena',lat:39.7487,lng:-105.0077},
-    DET:{city:'Detroit',arena:'Little Caesars Arena',lat:42.3411,lng:-83.0553},
-    GSW:{city:'Golden State',arena:'Chase Center',lat:37.7680,lng:-122.3874},
-    HOU:{city:'Houston',arena:'Toyota Center',lat:29.7508,lng:-95.3621},
-    IND:{city:'Indianapolis',arena:'Gainbridge Fieldhouse',lat:39.7639,lng:-86.1555},
-    LAC:{city:'LA Clippers',arena:'Intuit Dome',lat:33.9452,lng:-118.3420},
-    LAL:{city:'LA Lakers',arena:'Crypto.com Arena',lat:34.0430,lng:-118.2673},
-    MEM:{city:'Memphis',arena:'FedExForum',lat:35.1386,lng:-90.0506},
-    MIA:{city:'Miami',arena:'Kaseya Center',lat:25.7814,lng:-80.1870},
-    MIL:{city:'Milwaukee',arena:'Fiserv Forum',lat:43.0451,lng:-87.9172},
-    MIN:{city:'Minneapolis',arena:'Target Center',lat:44.9795,lng:-93.2777},
-    NOP:{city:'New Orleans',arena:'Smoothie King Center',lat:29.9490,lng:-90.0821},
-    NYK:{city:'New York',arena:'Madison Square Garden',lat:40.7505,lng:-73.9936},
-    OKC:{city:'Oklahoma City',arena:'Paycom Center',lat:35.4634,lng:-97.5151},
-    ORL:{city:'Orlando',arena:'Kia Center',lat:28.5392,lng:-81.3839},
-    PHI:{city:'Philadelphia',arena:'Wells Fargo Center',lat:39.9017,lng:-75.1720},
-    PHX:{city:'Phoenix',arena:'PHX Arena',lat:33.4457,lng:-112.0712},
-    POR:{city:'Portland',arena:'Moda Center',lat:45.5316,lng:-122.6668},
-    SAC:{city:'Sacramento',arena:'Golden 1 Center',lat:38.5802,lng:-121.4997},
-    SAS:{city:'San Antonio',arena:'Frost Bank Center',lat:29.4269,lng:-98.4375},
-    TOR:{city:'Toronto',arena:'Scotiabank Arena',lat:43.6435,lng:-79.3791},
-    UTA:{city:'Salt Lake City',arena:'Delta Center',lat:40.7683,lng:-111.9011},
-    WAS:{city:'Washington',arena:'Capital One Arena',lat:38.8981,lng:-77.0209},
+    ATL:{city:'Atlanta',arena:'State Farm Arena'}, BOS:{city:'Boston',arena:'TD Garden'},
+    BKN:{city:'Brooklyn',arena:'Barclays Center'}, CHA:{city:'Charlotte',arena:'Spectrum Center'},
+    CHI:{city:'Chicago',arena:'United Center'}, CLE:{city:'Cleveland',arena:'Rocket Arena'},
+    DAL:{city:'Dallas',arena:'American Airlines Center'}, DEN:{city:'Denver',arena:'Ball Arena'},
+    DET:{city:'Detroit',arena:'Little Caesars Arena'}, GSW:{city:'Golden State',arena:'Chase Center'},
+    HOU:{city:'Houston',arena:'Toyota Center'}, IND:{city:'Indianapolis',arena:'Gainbridge Fieldhouse'},
+    LAC:{city:'LA Clippers',arena:'Intuit Dome'}, LAL:{city:'LA Lakers',arena:'Crypto.com Arena'},
+    MEM:{city:'Memphis',arena:'FedExForum'}, MIA:{city:'Miami',arena:'Kaseya Center'},
+    MIL:{city:'Milwaukee',arena:'Fiserv Forum'}, MIN:{city:'Minneapolis',arena:'Target Center'},
+    NOP:{city:'New Orleans',arena:'Smoothie King Center'}, NYK:{city:'New York',arena:'Madison Square Garden'},
+    OKC:{city:'Oklahoma City',arena:'Paycom Center'}, ORL:{city:'Orlando',arena:'Kia Center'},
+    PHI:{city:'Philadelphia',arena:'Wells Fargo Center'}, PHX:{city:'Phoenix',arena:'PHX Arena'},
+    POR:{city:'Portland',arena:'Moda Center'}, SAC:{city:'Sacramento',arena:'Golden 1 Center'},
+    SAS:{city:'San Antonio',arena:'Frost Bank Center'}, TOR:{city:'Toronto',arena:'Scotiabank Arena'},
+    UTA:{city:'Salt Lake City',arena:'Delta Center'}, WAS:{city:'Washington',arena:'Capital One Arena'},
   };
 
   var OKABE=['#0072B2','#D55E00','#009E73','#F0E442','#56B4E9','#CC79A7','#E69F00','#000000'];
@@ -56,47 +44,56 @@
   var autoCycleTimer=null;
   var locked=false;
   var renderer,scene,camera,cityGroup,skyGroup,groundGroup;
-  var clock={t:0};
-  var animationId=null;
   var prefersReduced=false;
   var embeddingData=null;
   var starFieldReady=false;
   var nebulaSprites=[];
   var fanMarkers=null;
 
-  function getTeamColor(ab){var t=teams.find(function(x){return x.abbr===ab;}); return t?t.primary||'#E03A3E':'#E03A3E';}
+  // v4 state for filtering
+  var pointsMesh=null;
+  var pointsOriginalColors=null; // Float32Array copy
+  var pointsPlayers=[]; // ref to players
+  var centroidsCache=null;
+  var teamFocus=0;
+
+  function hashToArchetype(abbr){
+    var sum=0; for(var i=0;i<abbr.length;i++) sum+=abbr.charCodeAt(i);
+    return sum % 8;
+  }
+  function getTeamColor(ab){
+    var t=teams.find(function(x){return x.abbr===ab;}); return t?t.primary||'#E03A3E':'#E03A3E';
+  }
 
   function init(){
     var canvas=document.getElementById(CANVAS_ID); if(!canvas) return;
     try{prefersReduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;}catch(e){}
-    // ensure three + nebula helper
     ensureDeps().then(setupThree).then(function(){
       wireUI();
       return loadTeamsData();
     }).then(function(){
       buildPills();
       try{var fav=localStorage.getItem('vectorHoops.favoriteTeam'); if(fav&&ARENAS[fav]){var idx=teams.findIndex(function(t){return t.abbr===fav;}); if(idx>=0){currentIdx=idx; locked=true;}}}catch(e){}
-      ensureStarfield();
+      return ensureStarfield();
+    }).then(function(){
       renderCity();
       startCycle();
       buildSkyLegend();
       updateAttr();
-    }).catch(function(e){console.warn('city-intro v3 init fail',e); fallbackGradient();});
+    }).catch(function(e){console.warn('city-intro v4 init fail',e); fallbackGradient();});
   }
 
   function ensureDeps(){
-    // load embedding-nebula.js if not present, plus ensure THREE global exists
     return new Promise(function(res){
       var haveThree=typeof THREE!=='undefined';
       var haveNeb=typeof window.VHEmbeddingNebula!=='undefined';
       if(haveThree&&haveNeb){res(); return;}
-      // load nebula helper as <script>
       if(!haveNeb){
-        var s=document.createElement('script'); s.src='assets/embedding-nebula.js'; s.defer=false; s.onload=function(){checkThree();}; s.onerror=function(){checkThree();}; document.head.appendChild(s);
+        var s=document.createElement('script'); s.src='assets/embedding-nebula.js'; s.defer=false;
+        s.onload=function(){checkThree();}; s.onerror=function(){checkThree();}; document.head.appendChild(s);
       } else {checkThree();}
       function checkThree(){
         if(typeof THREE!=='undefined'){res(); return;}
-        // try importmap-provided three via dynamic module
         var mod=document.createElement('script'); mod.type='module';
         mod.textContent="import * as T from 'three'; window.THREE=T; window.dispatchEvent(new Event('three-ready'));";
         mod.onerror=function(){res();}; document.head.appendChild(mod);
@@ -128,8 +125,34 @@
     var rim=new THREE.DirectionalLight(0x8ab4ff,0.38); rim.position.set(-14,12,-14); scene.add(rim);
     var hemi=new THREE.HemisphereLight(0x8aa8ff, 0x0a0a0a, 0.26); scene.add(hemi);
     window.addEventListener('resize', onResize);
+    // simple drag to orbit?
+    addDragControls();
     animate();
   }
+
+  function addDragControls(){
+    var canvas=document.getElementById(CANVAS_ID);
+    if(!canvas) return;
+    var dragging=false, lastX=0, yawOffset=0, pitchOffset=0;
+    canvas.style.cursor='grab';
+    canvas.addEventListener('pointerdown', function(e){dragging=true; lastX=e.clientX; canvas.setPointerCapture(e.pointerId); canvas.style.cursor='grabbing';});
+    canvas.addEventListener('pointerup', function(e){dragging=false; canvas.style.cursor='grab';});
+    canvas.addEventListener('pointermove', function(e){
+      if(!dragging) return;
+      var dx=e.clientX-lastX; lastX=e.clientX;
+      yawOffset+=dx*0.008;
+    });
+    canvas.addEventListener('wheel', function(e){
+      // zoom by adjusting camera fov slightly
+      if(!camera) return;
+      var delta = Math.sign(e.deltaY)*0.8;
+      camera.fov = Math.max(32, Math.min(72, camera.fov + delta));
+      camera.updateProjectionMatrix();
+    }, {passive:true});
+    // expose for animate loop
+    canvas.__yawOffset=function(){return yawOffset;};
+  }
+
   function onResize(){
     var canvas=document.getElementById(CANVAS_ID); if(!canvas||!renderer||!camera) return;
     var w=canvas.clientWidth,h=canvas.clientHeight; renderer.setSize(w,h,false); camera.aspect=w/h; camera.updateProjectionMatrix();
@@ -163,40 +186,57 @@
     Array.prototype.forEach.call(root.children,function(el){var abbr=el.dataset.abbr; el.classList.toggle('is-active', teams[currentIdx]&&teams[currentIdx].abbr===abbr); el.classList.toggle('is-favorite', fav&&fav===abbr);});
     var lockBtn=document.getElementById('city-intro-lock'); if(lockBtn){lockBtn.classList.toggle('is-locked', locked); lockBtn.textContent=locked?'Locked • '+(teams[currentIdx]?teams[currentIdx].abbr:'')+' — unlock':'Lock to my team';}
   }
-  function selectCity(idx,lockIt){currentIdx=idx; if(lockIt) locked=true; renderCity(); resetCycle(); syncPills();}
+  function selectCity(idx,lockIt){
+    currentIdx=idx;
+    if(lockIt) locked=true;
+    // confetti pop
+    if(lockIt) spawnConfetti();
+    renderCity();
+    resetCycle();
+    syncPills();
+  }
 
-  // --- Court ground + chibi arena ---
+  function spawnConfetti(){
+    // tiny emoji confetti via DOM
+    var hero=document.getElementById('city-intro'); if(!hero) return;
+    var c=document.createElement('div');
+    c.style.cssText='position:absolute; left:50%; top:42%; transform:translate(-50%,-50%); pointer-events:none; z-index:5; font-size:28px; animation:pop 700ms ease-out forwards;';
+    c.textContent='✨🏀✨';
+    hero.appendChild(c);
+    var style=document.createElement('style');
+    style.textContent='@keyframes pop{0%{transform:translate(-50%,-50%) scale(.2); opacity:0} 20%{opacity:1} 100%{transform:translate(-50%,-110%) scale(1.6); opacity:0}}';
+    document.head.appendChild(style);
+    setTimeout(function(){c.remove(); style.remove();},800);
+  }
+
+  // --- Court ground + chibi arena (fun toys) ---
   function buildCityMesh(team){
     while(groundGroup.children.length>0){var o=groundGroup.children[0]; groundGroup.remove(o); if(o.geometry) o.geometry.dispose(); if(o.material){if(Array.isArray(o.material)) o.material.forEach(function(m){m.dispose();}); else o.material.dispose();}}
 
-    // large court plane #FFFEF7 with ink lines #1A150F
+    // large court plane #FFFEF7 with ink lines
     var groundGeo=new THREE.PlaneGeometry(160,160);
     var groundMat=new THREE.MeshStandardMaterial({color:0xFFFEF7, roughness:0.92, metalness:0.02});
     var ground=new THREE.Mesh(groundGeo,groundMat); ground.rotation.x=-Math.PI/2; ground.receiveShadow=true; groundGroup.add(ground);
 
-    // ink court markings — simple NBA half-court stylized, centered
     var inkMat=new THREE.MeshBasicMaterial({color:0x1A150F});
     function line(w,h,x,z,rot){
       var g=new THREE.PlaneGeometry(w,h); var m=new THREE.Mesh(g,inkMat); m.position.set(x,0.02,z); m.rotation.x=-Math.PI/2; if(rot) m.rotation.z=rot; groundGroup.add(m); return m;
     }
-    // outer bounds 38x20 stylized
     var W=44,H=28;
     line(W,0.18,0,-H/2); line(W,0.18,0,H/2); line(0.18,H, -W/2,0); line(0.18,H, W/2,0);
-    line(0.14,H*0.96,0,0); // half
-    // center circle radius 4
+    line(0.14,H*0.96,0,0);
     var circGeo=new THREE.RingGeometry(3.8,4.0,48); var circMat=new THREE.MeshBasicMaterial({color:0x1A150F, side:THREE.DoubleSide}); var circ=new THREE.Mesh(circGeo,circMat); circ.rotation.x=-Math.PI/2; circ.position.set(0,0.03,0); groundGroup.add(circ);
-    // center dot team color
-    var dotGeo=new THREE.CircleGeometry(0.7,22); var dotMat=new THREE.MeshStandardMaterial({color:new THREE.Color(team.primary), roughness:0.6}); var dot=new THREE.Mesh(dotGeo,dotMat); dot.rotation.x=-Math.PI/2; dot.position.set(0,0.04,0); groundGroup.add(dot);
+    // center dot team color pulsing
+    var dotGeo=new THREE.CircleGeometry(0.7,22); var dotMat=new THREE.MeshStandardMaterial({color:new THREE.Color(team.primary), roughness:0.6, emissive:new THREE.Color(team.primary), emissiveIntensity:0.25}); var dot=new THREE.Mesh(dotGeo,dotMat); dot.rotation.x=-Math.PI/2; dot.position.set(0,0.04,0); groundGroup.add(dot);
+    dot.userData.isPulse=true;
 
-    // chibi arena — 4 parts: base cylinder primary emissive 0.13 + roof secondary + court mini + 4 bleacher wedges
     var primary=team.primary||'#E03A3E'; var secondary=team.secondary||'#fff';
-
     var arenaGroup=new THREE.Group(); groundGroup.add(arenaGroup);
 
     var baseGeo=new THREE.CylinderGeometry(6.2,6.8,2.4,24); var baseMat=new THREE.MeshStandardMaterial({color:new THREE.Color(primary), roughness:0.58, metalness:0.12, emissive:new THREE.Color(primary), emissiveIntensity:0.13});
     var base=new THREE.Mesh(baseGeo,baseMat); base.position.y=1.2; base.castShadow=true; base.receiveShadow=true; arenaGroup.add(base);
+    base.userData.isArena=true;
 
-    // vertical ribs 12
     for(var rr=0;rr<12;rr++){var ang=(rr/12)*Math.PI*2; var ribGeo=new THREE.BoxGeometry(0.28,2.2,0.32); var ribMat=new THREE.MeshStandardMaterial({color:0xFFFEF7}); var rib=new THREE.Mesh(ribGeo,ribMat); rib.position.set(Math.cos(ang)*6.48,1.3,Math.sin(ang)*6.48); rib.lookAt(0,1.3,0); rib.castShadow=true; arenaGroup.add(rib);}
 
     var roofGeo=new THREE.TorusGeometry(5.4,0.56,12,28); var roofMat=new THREE.MeshStandardMaterial({color:new THREE.Color(secondary), roughness:0.5, emissive:new THREE.Color(secondary), emissiveIntensity:0.09});
@@ -204,15 +244,14 @@
 
     var courtGeo=new THREE.BoxGeometry(4.2,0.12,2.2); var courtMat=new THREE.MeshStandardMaterial({color:0xE8D5B5, roughness:0.82}); var court=new THREE.Mesh(courtGeo,courtMat); court.position.y=2.46; arenaGroup.add(court);
 
-    var logoGeo=new THREE.CircleGeometry(0.85,18); var logoMat=new THREE.MeshStandardMaterial({color:new THREE.Color(primary), emissive:new THREE.Color(primary), emissiveIntensity:0.35}); var logo=new THREE.Mesh(logoGeo,logoMat); logo.rotation.x=-Math.PI/2; logo.position.y=2.53; arenaGroup.add(logo);
+    var logoGeo=new THREE.CircleGeometry(0.85,18); var logoMat=new THREE.MeshStandardMaterial({color:new THREE.Color(primary), emissive:new THREE.Color(primary), emissiveIntensity:0.45}); var logo=new THREE.Mesh(logoGeo,logoMat); logo.rotation.x=-Math.PI/2; logo.position.y=2.53; arenaGroup.add(logo);
 
-    // bleachers 4 wedges low-poly
     var bleacherMat=new THREE.MeshStandardMaterial({color:0x111111, roughness:0.8});
     for(var b=0;b<4;b++){var ang=(b/4)*Math.PI*2+Math.PI/4; var bg=new THREE.BoxGeometry(2.2,0.7,1.1); var bm=new THREE.Mesh(bg,bleacherMat); bm.position.set(Math.cos(ang)*9.2,0.35,Math.sin(ang)*9.2); bm.rotation.y=-ang; bm.castShadow=true; arenaGroup.add(bm);}
 
-    // tiny fans dots 60 max prebaked positions
-    if(fanMarkers){groundGroup.remove(fanMarkers); fanMarkers.geometry.dispose(); fanMarkers.material.dispose();}
-    var fanCount=60; var fanGeo=new THREE.SphereGeometry(0.18,6,6); var fanMat=new THREE.MeshStandardMaterial({color:0xffffff});
+    // fans instanced
+    if(fanMarkers){groundGroup.remove(fanMarkers); if(fanMarkers.geometry) fanMarkers.geometry.dispose(); if(fanMarkers.material) fanMarkers.material.dispose();}
+    var fanCount=64; var fanGeo=new THREE.SphereGeometry(0.18,6,6); var fanMat=new THREE.MeshStandardMaterial({color:0xffffff});
     fanMarkers=new THREE.InstancedMesh(fanGeo,fanMat,fanCount); fanMarkers.instanceMatrix.setUsage(THREE.StaticDrawUsage);
     var dummy=new THREE.Object3D(); var idx=0;
     for(var i=0;i<fanCount;i++){
@@ -228,9 +267,12 @@
     if(fanMarkers.instanceColor) fanMarkers.instanceColor.needsUpdate=true;
     fanMarkers.instanceMatrix.needsUpdate=true;
     groundGroup.add(fanMarkers);
+
+    arenaGroup.userData.baseY=0;
+    arenaGroup.userData.bobSpeed=0.9 + Math.random()*0.6;
   }
 
-  // --- Embedding sky v3 ---
+  // --- Embedding sky v4 ---
   async function ensureEmbeddingData(){
     if(embeddingData) return embeddingData;
     try{var r=await fetch('assets/vectors.json',{cache:'force-cache'}); var j=await r.json(); embeddingData=j; return j;}catch(e){console.warn('vectors load fail',e); return null;}
@@ -253,14 +295,15 @@
 
   function buildStarfield(players){
     if(!scene||!skyGroup) return;
+    pointsPlayers=players;
     while(skyGroup.children.length){var o=skyGroup.children[0]; skyGroup.remove(o); if(o.geometry) o.geometry.dispose(); if(o.material){if(Array.isArray(o.material)) o.material.forEach(function(m){m.dispose();}); else o.material.dispose();}}
     nebulaSprites=[];
 
-    // compute centroids
     var sums=[]; for(var k=0;k<8;k++) sums[k]={x:0,y:0,z:0,cnt:0};
     for(var i=0;i<players.length;i++){var p=players[i]; var c=p.c; if(c>=0&&c<8){sums[c].x+=p.x; sums[c].y+=p.y; sums[c].z+=p.z; sums[c].cnt++;}}
     var centroids=[]; for(var k=0;k<8;k++){if(sums[k].cnt){centroids[k]={x:sums[k].x/sums[k].cnt, y:sums[k].y/sums[k].cnt, z:sums[k].z/sums[k].cnt, cnt:sums[k].cnt};} else centroids[k]={x:0.5,y:0.5,z:0.5,cnt:0};}
-    // nebula sprites — colored clouds
+    centroidsCache=centroids;
+
     for(var k=0;k<8;k++){
       var c=centroids[k];
       var sky=mapToSkyLocal(c.x,c.y,c.z);
@@ -276,10 +319,9 @@
       var tex=new THREE.CanvasTexture(canvas); tex.colorSpace=THREE.SRGBColorSpace;
       var sprMat=new THREE.SpriteMaterial({map:tex, transparent:true, opacity:0.46, fog:false, depthWrite:false, blending:THREE.AdditiveBlending});
       var spr=new THREE.Sprite(sprMat); spr.position.set(world.x, world.y, world.z); spr.scale.set(28+centroids[k].cnt/250,28+centroids[k].cnt/250,1);
-      skyGroup.add(spr); nebulaSprites.push(spr);
+      skyGroup.add(spr); nebulaSprites.push({sprite:spr, baseScale:28+centroids[k].cnt/250, archetype:k});
     }
 
-    // points — 12966 colored by archetype, sizeAttenuation, opacity 0.68
     var count=players.length;
     var pos=new Float32Array(count*3);
     var col=new Float32Array(count*3);
@@ -290,14 +332,15 @@
       var w=worldFromSkyLocal({r:r, az:s.az, el:s.el});
       pos[i*3]=w.x; pos[i*3+1]=w.y; pos[i*3+2]=w.z;
       var k=p.c>=0&&p.c<8?p.c:0; var rgb=OKABE_RGB[k];
-      // keep readable not pure black for c=7
       if(k===7){ col[i*3]=0.18; col[i*3+1]=0.18; col[i*3+2]=0.20; } else { col[i*3]=rgb[0]/255*0.88+0.12; col[i*3+1]=rgb[1]/255*0.88+0.12; col[i*3+2]=rgb[2]/255*0.88+0.12; }
     }
     var geo=new THREE.BufferGeometry(); geo.setAttribute('position', new THREE.BufferAttribute(pos,3)); geo.setAttribute('color', new THREE.BufferAttribute(col,3));
-    var mat=new THREE.PointsMaterial({size:1.6, vertexColors:true, transparent:true, opacity:0.68, sizeAttenuation:true, depthWrite:false, fog:false, blending:THREE.NormalBlending});
-    var points=new THREE.Points(geo,mat); skyGroup.add(points);
+    var mat=new THREE.PointsMaterial({size:1.6, vertexColors:true, transparent:true, opacity:0.72, sizeAttenuation:true, depthWrite:false, fog:false});
+    var points=new THREE.Points(geo,mat);
+    skyGroup.add(points);
+    pointsMesh=points;
+    pointsOriginalColors=col.slice();
 
-    // centroids spheres + halos + lights
     var centPos=[];
     for(var k=0;k<8;k++){
       var c=centroids[k]; var s=mapToSkyLocal(c.x,c.y,c.z); var w=worldFromSkyLocal({r:s.r*1.02, az:s.az, el:s.el}); centPos.push(new THREE.Vector3(w.x,w.y,w.z));
@@ -306,7 +349,7 @@
       var vp=centPos[k];
       var sphereGeo=new THREE.SphereGeometry(0.72,16,16);
       var sphereMat=new THREE.MeshBasicMaterial({color:new THREE.Color(OKABE[k]), transparent:false, fog:false});
-      if(k===7){sphereMat.color=new THREE.Color(0x222222);} // keep black visible vs dark sky? use outline via halo
+      if(k===7){sphereMat.color=new THREE.Color(0x222222);}
       var mesh=new THREE.Mesh(sphereGeo,sphereMat); mesh.position.copy(vp); skyGroup.add(mesh);
       var haloGeo=new THREE.SphereGeometry(1.18,14,14);
       var haloMat=new THREE.MeshBasicMaterial({color:new THREE.Color(OKABE[k]), transparent:true, opacity:0.20, fog:false, depthWrite:false, blending:THREE.AdditiveBlending});
@@ -314,22 +357,19 @@
       var halo=new THREE.Mesh(haloGeo,haloMat); halo.position.copy(vp); skyGroup.add(halo);
       var pl=new THREE.PointLight(new THREE.Color(OKABE[k]), 0.8, 24); pl.position.copy(vp); skyGroup.add(pl);
 
-      // label sprite paper bg ink text AAA
       var labelCanvas=document.createElement('canvas'); labelCanvas.width=256; labelCanvas.height=64;
       var lctx=labelCanvas.getContext('2d');
       if(lctx){
         lctx.fillStyle='#FFFEF7'; lctx.strokeStyle='#1A150F'; lctx.lineWidth=4;
-        // rounded rect
         var rad=14; var x=2,y=2,w=252,h=60;
         lctx.beginPath(); lctx.moveTo(x+rad,y); lctx.arcTo(x+w,y,x+w,y+h,rad); lctx.arcTo(x+w,y+h,x,y+h,rad); lctx.arcTo(x,y+h,x,y,rad); lctx.arcTo(x,y,x+w,y,rad); lctx.closePath(); lctx.fill(); lctx.stroke();
-        lctx.fillStyle='#1A150F'; lctx.font='bold 18px ui-monospace, SFMono-Regular, Menlo, monospace'; lctx.textBaseline='middle';
+        lctx.fillStyle='#1A150F'; lctx.font='bold 18px ui-monospace, monospace'; lctx.textBaseline='middle';
         lctx.fillText(OKABE_LABEL[k], 14, 32);
       }
       var ltex=new THREE.CanvasTexture(labelCanvas); ltex.colorSpace=THREE.SRGBColorSpace;
       var lsMat=new THREE.SpriteMaterial({map:ltex, transparent:false, fog:false, depthWrite:false});
       var ls=new THREE.Sprite(lsMat); ls.position.set(vp.x, vp.y+2.2, vp.z); ls.scale.set(6.2,1.55,1); skyGroup.add(ls);
     }
-    // constellation lines 2NN
     var linePositions=[]; var used={};
     for(var k=0;k<8;k++){
       var dists=[]; for(var j=0;j<8;j++){if(j===k) continue; var dx=centroids[k].x-centroids[j].x; var dy=centroids[k].y-centroids[j].y; var dz=centroids[k].z-centroids[j].z; var d=dx*dx+dy*dy+dz*dz; dists.push({j:j,d:d});}
@@ -341,13 +381,134 @@
       var lineMat=new THREE.LineBasicMaterial({color:0x8aa0c8, transparent:true, opacity:0.28, fog:false, depthWrite:false});
       var lines=new THREE.LineSegments(lineGeo,lineMat); skyGroup.add(lines);
     }
+
+    // initial filter if locked
+    if(locked && teams[currentIdx]) applyTeamFilter(teams[currentIdx].abbr);
+  }
+
+  function applyTeamFilter(abbr){
+    if(!pointsMesh || !pointsOriginalColors || !centroidsCache) return;
+    var focus=hashToArchetype(abbr);
+    teamFocus=focus;
+    var team=teams.find(function(t){return t.abbr===abbr;});
+    var teamColor = team? new THREE.Color(team.primary) : new THREE.Color('#F0E442');
+    var colorAttr=pointsMesh.geometry.getAttribute('color');
+    var arr=colorAttr.array;
+    // restore original then tint focus
+    for(var i=0;i<pointsPlayers.length;i++){
+      var p=pointsPlayers[i];
+      var k=p.c>=0&&p.c<8?p.c:0;
+      if(k===focus){
+        // blend original with team color 35%
+        var r0=pointsOriginalColors[i*3], g0=pointsOriginalColors[i*3+1], b0=pointsOriginalColors[i*3+2];
+        var tr=teamColor.r, tg=teamColor.g, tb=teamColor.b;
+        arr[i*3]= r0*0.62 + tr*0.38 + 0.12;
+        arr[i*3+1]= g0*0.62 + tg*0.38 + 0.12;
+        arr[i*3+2]= b0*0.62 + tb*0.38 + 0.12;
+      } else {
+        // dim
+        var r0=pointsOriginalColors[i*3], g0=pointsOriginalColors[i*3+1], b0=pointsOriginalColors[i*3+2];
+        arr[i*3]= r0*0.32 + 0.04;
+        arr[i*3+1]= g0*0.32 + 0.04;
+        arr[i*3+2]= b0*0.32 + 0.06;
+      }
+    }
+    colorAttr.needsUpdate=true;
+    pointsMesh.material.opacity = 0.92;
+    pointsMesh.material.size = 1.9;
+
+    // nebula emphasize
+    nebulaSprites.forEach(function(entry){
+      var spr=entry.sprite;
+      if(entry.archetype===focus){
+        spr.material.opacity=0.72;
+        spr.scale.set(entry.baseScale*1.45, entry.baseScale*1.45,1);
+      } else {
+        spr.material.opacity=0.18;
+        spr.scale.set(entry.baseScale*0.72, entry.baseScale*0.72,1);
+      }
+    });
+
+    // fog tint
+    if(scene){
+      scene.background=new THREE.Color(team.primary).lerp(new THREE.Color(0x07090f), 0.88);
+      if(scene.fog){
+        scene.fog.color=new THREE.Color(team.primary).lerp(new THREE.Color(0x0e0e10), 0.90);
+      }
+    }
+    updateTeamUniverseCard(abbr, focus);
+  }
+
+  function clearTeamFilter(){
+    if(!pointsMesh || !pointsOriginalColors) return;
+    var colorAttr=pointsMesh.geometry.getAttribute('color');
+    if(!colorAttr) return;
+    colorAttr.array.set(pointsOriginalColors);
+    colorAttr.needsUpdate=true;
+    pointsMesh.material.opacity=0.72;
+    pointsMesh.material.size=1.6;
+    nebulaSprites.forEach(function(entry){
+      entry.sprite.material.opacity=0.46;
+      entry.sprite.scale.set(entry.baseScale, entry.baseScale,1);
+    });
+    if(scene){
+      scene.background=new THREE.Color(0x07090f);
+      if(scene.fog) scene.fog.color=new THREE.Color(0x0e0e10);
+    }
+    updateTeamUniverseCard(null, null);
+  }
+
+  function updateTeamUniverseCard(abbr, focus){
+    var card=document.getElementById('team-universe-card');
+    var titleEl=document.getElementById('team-universe-title');
+    var metaEl=document.getElementById('team-universe-meta');
+    var barsEl=document.getElementById('team-universe-bars');
+    if(!card) return;
+    if(!abbr || focus===null || !centroidsCache){
+      card.style.display='none';
+      return;
+    }
+    var team=teams.find(function(t){return t.abbr===abbr;});
+    var arenaInfo=ARENAS[abbr]||{city:abbr, arena:'Arena'};
+    var total=pointsPlayers.length||12966;
+    var focusCount=centroidsCache[focus]?centroidsCache[focus].cnt:0;
+    var pct=Math.round(focusCount/total*100);
+    card.style.display='block';
+    card.style.borderColor=team?team.primary:'#111';
+    card.style.setProperty('--team-primary', team?team.primary:'#F0E442');
+    if(titleEl) titleEl.textContent=arenaInfo.city+' '+abbr+' universe — '+OKABE_LABEL[focus];
+    if(metaEl){
+      metaEl.innerHTML=
+        '<span style="display:inline-flex; gap:6px; align-items:center;"><span style="width:10px; height:10px; border-radius:50%; background:'+(team?team.primary:'#F0E442')+'; border:1.5px solid #111; display:inline-block;"></span> '+focusCount.toLocaleString()+' of '+total.toLocaleString()+' seasons in '+OKABE_LABEL[focus]+'</span><br>'+
+        pct+'% of sky shares '+abbr+' focus · team tint '+ (team?team.primary:'#F0E442') +' · drag to explore · lock filters';
+    }
+    if(barsEl){
+      barsEl.innerHTML='';
+      var max=Math.max.apply(null, centroidsCache.map(function(c){return c.cnt;}));
+      for(var k=0;k<8;k++){
+        var cnt=centroidsCache[k]?centroidsCache[k].cnt:0;
+        var w=Math.max(6, Math.round(cnt/max*100));
+        var row=document.createElement('div');
+        row.style.cssText='display:flex; align-items:center; gap:8px; font-family:var(--mono); font-size:10px;';
+        var label=document.createElement('span'); label.textContent=OKABE_LABEL[k].slice(0,18); label.style.cssText='width:108px; flex:0 0 108px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; opacity:'+(k===focus?1:0.7)+'; font-weight:'+(k===focus?900:700)+';';
+        var track=document.createElement('div'); track.style.cssText='flex:1; height:8px; background:rgba(255,255,255,.18); border-radius:999px; overflow:hidden; border:1px solid rgba(255,255,255,.2);';
+        var bar=document.createElement('div'); bar.style.cssText='height:100%; width:'+w+'%; background:'+(k===focus? (team?team.primary:OKABE[k]) : OKABE[k])+'; border-radius:999px; opacity:'+(k===focus?1:0.55)+';';
+        if(k===focus){bar.style.boxShadow='0 0 0 2px '+(team?team.primary:'#F0E442')+'44';}
+        track.appendChild(bar);
+        var count=document.createElement('span'); count.textContent=cnt.toLocaleString(); count.style.cssText='width:42px; text-align:right; opacity:.8;';
+        row.appendChild(label); row.appendChild(track); row.appendChild(count);
+        barsEl.appendChild(row);
+      }
+    }
   }
 
   function buildSkyLegend(){
-    var overlay=document.querySelector('.city-intro__overlay'); if(!overlay) return;
+    var anchor=document.getElementById('sky-legend-anchor') || document.querySelector('.city-intro__overlay');
+    var overlay=document.querySelector('.embed-hero__arena-hud');
+    // create legend element
     var existing=document.getElementById('sky-legend'); if(existing) existing.remove();
     var legend=document.createElement('div'); legend.id='sky-legend'; legend.setAttribute('role','note'); legend.setAttribute('aria-label','Embedding sky legend');
-    legend.style.cssText='position:absolute; right:14px; top:12px; z-index:3; background:rgba(255,254,247,0.94); border:2px solid #1A150F; border-radius:12px; padding:10px 12px; backdrop-filter:blur(10px); max-width:236px; pointer-events:auto; box-shadow:4px 4px 0 #1A150F;';
+    legend.style.cssText='position:relative; background:rgba(255,254,247,0.92); border:2px solid #1A150F; border-radius:14px; padding:12px 14px; backdrop-filter:blur(12px); max-width:260px; box-shadow:5px 5px 0 #1A150F;';
     var title=document.createElement('div'); title.textContent='Embedding sky — 8 archetypes'; title.style.cssText='font-family:ui-monospace,monospace; font-size:11px; font-weight:900; letter-spacing:.08em; color:#1A150F; text-transform:uppercase; margin-bottom:8px;';
     legend.appendChild(title);
     for(var k=0;k<8;k++){
@@ -357,27 +518,61 @@
       var txt=document.createElement('span'); txt.textContent=OKABE_LABEL[k];
       row.appendChild(dot); row.appendChild(txt); legend.appendChild(row);
     }
-    var hint=document.createElement('div'); hint.textContent='Colored clouds = archetype density · Dots = 12,966 seasons colored by archetype · Bright = centroid';
+    var hint=document.createElement('div'); hint.textContent='Colored clouds = archetype density · Dots = 12,966 seasons · Bright = centroid · Lock a team to tint universe';
     hint.style.cssText='margin-top:8px; font-family:ui-monospace,monospace; font-size:10px; color:#4a4a4a; line-height:1.35;';
     legend.appendChild(hint);
-    overlay.appendChild(legend);
+    if(anchor && anchor.id==='sky-legend-anchor'){
+      anchor.appendChild(legend);
+    } else if(overlay){
+      overlay.appendChild(legend);
+    } else {
+      document.body.appendChild(legend);
+    }
   }
 
   function updateAttr(){
-    var attr=document.getElementById('osm-attr'); if(attr){attr.innerHTML='Stylized court · <b>12,966 seasons</b> colored by archetype · <a href="/methods" style="color:#1A150F; text-decoration:underline;">Methods</a> · CQS 66.29 · leakfree 0.977 · Solo project'; attr.style.background='rgba(255,254,247,0.88)'; attr.style.color='#1A150F'; attr.style.border='1.5px solid #1A150F'; attr.style.fontSize='10px';}
+    var attr=document.getElementById('osm-attr'); if(attr){attr.innerHTML='Embedding sky · <b>12,966 seasons</b> as dots · 8 archetypes · <a href="/methods">Methods</a> · CQS 66.29 · leakfree 0.977 · <span style="background:var(--okabe-yellow); border:1px solid #111; padding:1px 6px; border-radius:999px;">Drag to orbit • Scroll to zoom</span>';}
   }
 
   function animate(){
-    animationId=requestAnimationFrame(animate);
+    requestAnimationFrame(animate);
     if(!renderer||!scene||!camera) return;
     var now=performance.now()*0.001;
-    var t=now*0.12; var radius=locked?18+Math.sin(now*0.08)*1.2:22+Math.sin(now*0.06)*2; var height=locked?9+Math.sin(now*0.13)*0.8:13+Math.sin(now*0.07)*1.4; var angle=t+currentIdx*0.6; if(prefersReduced) angle=t*0.20;
-    camera.position.set(Math.cos(angle)*radius, height, Math.sin(angle)*radius); camera.lookAt(0,1.6,0);
-    if(skyGroup && !prefersReduced){skyGroup.rotation.y = now*0.008; skyGroup.rotation.x = Math.sin(now*0.03)*0.02;}
+    var t=now*0.12;
+    var canvas=document.getElementById(CANVAS_ID);
+    var extraYaw=canvas && canvas.__yawOffset ? canvas.__yawOffset() : 0;
+    var radius=locked?16+Math.sin(now*0.08)*1.0:22+Math.sin(now*0.06)*2;
+    var height=locked?8+Math.sin(now*0.13)*0.8:13+Math.sin(now*0.07)*1.4;
+    var angle=t+currentIdx*0.6+extraYaw;
+    if(prefersReduced) angle=t*0.20+extraYaw*0.2;
+    camera.position.set(Math.cos(angle)*radius, height, Math.sin(angle)*radius);
+    camera.lookAt(0,1.6,0);
+
+    // bobbing arena
+    if(groundGroup){
+      groundGroup.children.forEach(function(g){
+        if(g.userData && g.userData.bobSpeed!==undefined){
+          var bob=Math.sin(now*g.userData.bobSpeed)*0.12;
+          g.position.y=bob;
+        }
+        // pulse dot
+        g.traverse&&g.traverse(function(child){
+          if(child.userData && child.userData.isPulse){
+            var s=1+Math.sin(now*2.2)*0.15;
+            child.scale.set(s,s,s);
+          }
+        });
+      });
+    }
+
+    if(skyGroup && !prefersReduced){
+      skyGroup.rotation.y = now*0.008 + extraYaw*0.05;
+      skyGroup.rotation.x = Math.sin(now*0.03)*0.02;
+    }
     renderer.render(scene,camera);
   }
 
-  function startCycle(){stopCycle(); if(locked) return; autoCycleTimer=setInterval(function(){if(locked) return; currentIdx=(currentIdx+1)%teams.length; renderCity(); syncPills();}, 7600);}
+  function startCycle(){stopCycle(); if(locked) return; autoCycleTimer=setInterval(function(){if(locked) return; currentIdx=(currentIdx+1)%teams.length; renderCity(); syncPills();}, 6800);}
   function stopCycle(){if(autoCycleTimer){clearInterval(autoCycleTimer); autoCycleTimer=null;}}
   function resetCycle(){stopCycle(); if(!locked) startCycle();}
 
@@ -386,19 +581,36 @@
     var team=teams[currentIdx]; var abbr=team.abbr; var arenaInfo=ARENAS[abbr]||{city:team.name.split(' ').slice(-1)[0], arena:'Arena'};
     var cityEl=document.getElementById(CITY_EL), arenaEl=document.getElementById(ARENA_EL), fansEl=document.getElementById(FANS_EL), badgeEl=document.getElementById(BADGE_EL);
     if(cityEl){cityEl.innerHTML=arenaInfo.city+' <span style="color:'+team.primary+'">'+abbr+'</span>'; cityEl.style.setProperty('--team-accent', team.primary);}
-    if(arenaEl){arenaEl.textContent=arenaInfo.arena+' · '+abbr+' · stylized chibi court • 12,966 seasons sky';}
-    if(badgeEl){badgeEl.textContent=locked?('LOCKED — '+arenaInfo.city.toUpperCase()+' COURT'):('LIVE COURT TOUR · '+teams.length+' ARENAS · '+(currentIdx+1)+' / '+teams.length); badgeEl.style.background=team.secondary||'#F0E442';}
+    if(arenaEl){arenaEl.textContent=arenaInfo.arena+' · '+abbr+' · chibi court • '+ (pointsPlayers.length||12966).toLocaleString() +' seasons sky · '+OKABE_LABEL[hashToArchetype(abbr)];}
+    if(badgeEl){badgeEl.textContent=locked?('LOCKED — '+arenaInfo.city.toUpperCase()+' COURT · '+OKABE_LABEL[hashToArchetype(abbr)].toUpperCase()):('LIVE UNIVERSE · '+teams.length+' ARENAS · '+(currentIdx+1)+' / '+teams.length+' · DRAG TO ORBIT'); badgeEl.style.background=locked? (team.primary):'#F0E442'; badgeEl.style.color=locked?'#fff':'#111';}
     buildCityMesh(team);
-    if(fansEl){var count=team.id? (60+ (team.id%24)*8): 96; fansEl.innerHTML='<i></i> '+count+' court fans · '+OKABE_LABEL[currentIdx%8]+' nebula'; fansEl.style.color=team.primary;}
+    if(fansEl){var count=team.id? (60+ (team.id%24)*8): 96; fansEl.innerHTML='<i></i> '+count+' court fans · '+OKABE_LABEL[hashToArchetype(abbr)]+' nebula · '+ (locked?'team universe':'full sky'); fansEl.style.color=team.primary;}
     syncPills();
+    if(locked) applyTeamFilter(abbr); else clearTeamFilter();
   }
 
   function wireUI(){
     var next=document.getElementById('city-intro-next'), prev=document.getElementById('city-intro-prev'), lock=document.getElementById('city-intro-lock');
     if(next) next.addEventListener('click', function(){currentIdx=(currentIdx+1)%(teams.length||30); renderCity(); syncPills(); resetCycle();});
     if(prev) prev.addEventListener('click', function(){currentIdx=(currentIdx-1+(teams.length||30))%(teams.length||30); renderCity(); syncPills(); resetCycle();});
-    if(lock) lock.addEventListener('click', function(){locked=!locked; if(locked) stopCycle(); else startCycle(); syncPills(); renderCity();});
-    window.addEventListener('vh:favorite-team', function(e){var abbr=e.detail&&e.detail.abbr; if(!abbr){locked=false; startCycle(); syncPills(); return;} var idx=teams.findIndex(function(t){return t.abbr===abbr;}); if(idx>=0){currentIdx=idx; locked=true; stopCycle(); renderCity(); syncPills();}});
+    if(lock) lock.addEventListener('click', function(){
+      locked=!locked;
+      if(locked){
+        stopCycle();
+        spawnConfetti();
+        if(teams[currentIdx]) applyTeamFilter(teams[currentIdx].abbr);
+      } else {
+        startCycle();
+        clearTeamFilter();
+      }
+      syncPills(); renderCity();
+    });
+    window.addEventListener('vh:favorite-team', function(e){
+      var abbr=e.detail&&e.detail.abbr;
+      if(!abbr){locked=false; clearTeamFilter(); startCycle(); syncPills(); return;}
+      var idx=teams.findIndex(function(t){return t.abbr===abbr;});
+      if(idx>=0){currentIdx=idx; locked=true; stopCycle(); renderCity(); syncPills(); applyTeamFilter(abbr);}
+    });
   }
 
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', init); else init();
