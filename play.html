@@ -16,6 +16,7 @@
 <link rel="stylesheet" href="assets/hoops.css">
 <link rel="stylesheet" href="assets/shell.css">
 <link rel="stylesheet" href="assets/responsive.css">
+<script src="https://unpkg.com/posecode-embed@0.1.0/dist/posecode-embed.js"></script>
 <style>
 /* === Vector Hoops Play vNext — best-app-ever polish ===
    readable
@@ -501,6 +502,32 @@ img,svg,canvas{max-width:100%;}
         <div class="vh-reveal__copied" id="share-copied" hidden>Opening Messages… link copied too.</div>
       </div>
 
+      <!-- Posecode Player Animation — archetype-matched, solo built from scratch -->
+      <div class="vh-card" id="player-anim-card" style="overflow:clip; border:2px solid var(--ink); border-radius:16px; box-shadow:6px 6px 0 var(--ink); background:#fff;">
+        <div style="padding:12px 14px; border-bottom:2px solid var(--ink); display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;">
+          <h3 style="margin:0; font-size:15px; font-weight:900; letter-spacing:-.01em;">🕺 Player Move — Posecode 60fps</h3>
+          <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+            <select id="player-anim-select" style="min-height:44px; border:2px solid var(--ink); border-radius:10px; padding:0 10px; font-weight:800; box-shadow:3px 3px 0 var(--ink); font-size:14px; background:#fff;">
+              <option value="assets/posecode/basketball/jump-shot.posecode">Jump Shot — Shooter</option>
+              <option value="assets/posecode/basketball/crossover-dribble.posecode">Crossover — Playmaker</option>
+              <option value="assets/posecode/basketball/defensive-shuffle.posecode">Defensive Shuffle — Rim Protector</option>
+              <option value="assets/posecode/basketball/layup.posecode">Layup — Glass Finisher</option>
+              <option value="assets/posecode/basketball/free-throw.posecode">Free Throw — Ritual</option>
+              <option value="assets/posecode/basketball/box-out.posecode">Box Out — Big Anchor</option>
+              <option value="assets/posecode/basketball/chest-pass.posecode">Chest Pass — Floor General</option>
+              <option value="assets/posecode/basketball/celebration.posecode">Celebration — Arms Up</option>
+            </select>
+            <a href="player-animations.html" class="vh-link-btn" style="font-size:11px;">All 8 →</a>
+          </div>
+        </div>
+        <div id="player-anim-wrap" style="padding:0; background:radial-gradient(120% 90% at 50% 20%, #f7f3e6, #fff 55%); min-height:clamp(300px,60vw,420px);">
+          <posecode-player id="main-player" src="assets/posecode/basketball/jump-shot.posecode" controls loop autoplay autorotate style="display:block; width:100%; height:clamp(300px,60vw,420px);"></posecode-player>
+        </div>
+        <div style="padding:10px 14px; border-top:2px solid var(--ink); font-family:ui-monospace,monospace; font-size:10.5px; line-height:1.6; color:#6B6256;">
+          Each .posecode authored from scratch — pose start = standing, step phases Ns easing, knees: flex, ground-lock: feet, travel, turn, cue. ROM clamped (knee ≤144°). Renderer: <a href="https://github.com/posecode-dev/posecode" target="_blank" rel="noopener">posecode-dev/posecode</a> MIT via <code>posecode-embed</code> &lt;posecode-player&gt; CDN. Solo personal project, no connection to employer, built with public/free-tier only. Playground: posecode.org/play.
+        </div>
+      </div>
+
       <div class="vh-utility-row" id="chimera-utility-row"><button type="button" class="vh-link-btn" id="history-chip-btn">History (<span id="history-count">0</span>) →</button><button type="button" class="vh-link-btn" id="map-sheet-open-btn">3D league map (48-d) →</button></div>
     </div>
 
@@ -720,6 +747,65 @@ img,svg,canvas{max-width:100%;}
   });
   window.VHPlayPolished = {burst, showToast};
 })();
+</script>
+<script type="module">
+  // Posecode animation switcher — archetype → move mapping, solo built from scratch
+  const select = document.getElementById('player-anim-select');
+  const player = document.getElementById('main-player');
+  if(select && player){
+    select.addEventListener('change', ()=>{
+      player.setAttribute('src', select.value);
+    });
+    // Auto-pick based on reveal text / TARGET archetype
+    const mapKeywords = {
+      'shooter': 'assets/posecode/basketball/jump-shot.posecode',
+      'scorer': 'assets/posecode/basketball/layup.posecode',
+      'playmaker': 'assets/posecode/basketball/crossover-dribble.posecode',
+      'point': 'assets/posecode/basketball/crossover-dribble.posecode',
+      'defen': 'assets/posecode/basketball/defensive-shuffle.posecode',
+      'rim': 'assets/posecode/basketball/defensive-shuffle.posecode',
+      'protector': 'assets/posecode/basketball/defensive-shuffle.posecode',
+      'rebound': 'assets/posecode/basketball/box-out.posecode',
+      'big': 'assets/posecode/basketball/box-out.posecode',
+      'bruiser': 'assets/posecode/basketball/box-out.posecode',
+      'free': 'assets/posecode/basketball/free-throw.posecode',
+      'pass': 'assets/posecode/basketball/chest-pass.posecode',
+      'general': 'assets/posecode/basketball/chest-pass.posecode',
+    };
+    function pickForText(txt){
+      txt = (txt||'').toLowerCase();
+      for(const [kw, file] of Object.entries(mapKeywords)){
+        if(txt.includes(kw)) return file;
+      }
+      return null;
+    }
+    // Observe reveal-body for archetype clues
+    const revealBody = document.getElementById('reveal-body');
+    if(revealBody){
+      const mo = new MutationObserver(()=>{
+        const txt = revealBody.textContent||'';
+        const file = pickForText(txt);
+        if(file && select.value !== file){
+          select.value = file;
+          player.setAttribute('src', file);
+        } else if(!file && /win|gold|silver|revealed/i.test(txt)){
+          // win → celebration
+          const celeb = 'assets/posecode/basketball/celebration.posecode';
+          if(select.value !== celeb){ select.value = celeb; player.setAttribute('src', celeb); }
+        }
+      });
+      mo.observe(revealBody, {childList:true, characterData:true, subtree:true});
+    }
+    // Also on page load, if TARGET exposed globally try to match cluster name
+    setTimeout(()=>{
+      try{
+        const t = window.TARGET || window.VH_TARGET || {};
+        const c = (t.clusterName || t.archetype || '') + ' ' + (document.body.textContent||'').slice(0,2000);
+        const file = pickForText(c);
+        if(file) { select.value = file; player.setAttribute('src', file); }
+      }catch{}
+    }, 1200);
+  }
 </script>
 </body>
 </html>

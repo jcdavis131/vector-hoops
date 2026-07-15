@@ -1,0 +1,46 @@
+posecode exercise "Crossover Dribble — Playmaker"
+  rig humanoid
+  pose start = standing
+
+  step "Low Stance Right" 0.4s ease-out:
+    knees: flex 68
+    hips: flex 48
+    hips: abduct 22
+    ankles: dorsiflex 16
+    shoulder_right: flex 42
+    elbow_right: flex 68
+    wrist_right: flex 18
+    shoulder_left: abduct 24
+    ground-lock: feet
+    cue "Low, wide base — ball Right"
+
+  step "Cross To Left" 0.22s drive:
+    pelvis: rotate-out 14
+    shoulders: rotate-in 18
+    shoulder_right: flex 24
+    elbow_right: flex 34
+    wrist_right: extend 12
+    shoulder_left: flex 52
+    elbow_left: flex 78
+    hips: abduct 18
+    travel: -0.18 0
+    ground-lock: feet
+    cue "Snap crossover, hips shift"
+
+  step "Low Stance Left" 0.28s settle:
+    knees: flex 72
+    shoulder_left: flex 46
+    elbow_left: flex 66
+    shoulder_right: abduct 26
+    ground-lock: feet
+    cue "Seal — ball Left"
+
+  step "Recoil Center" 0.3s ease-in-out:
+    pelvis: rotate-out 0
+    hips: abduct 0
+    knees: flex 42
+    shoulders: flex 0
+    elbows: flex 24
+    ground-lock: feet
+
+  repeat 2

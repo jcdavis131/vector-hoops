@@ -1,0 +1,40 @@
+posecode exercise "Layup Drive — Glass Finisher"
+  rig humanoid
+  pose start = standing
+  step "Right-Hand Drive" 0.38s ease-out:
+    knees: flex 48
+    hips: flex 32
+    shoulder_right: flex 54
+    elbow_right: flex 74
+    shoulder_left: abduct 28
+    ground-lock: feet
+    travel: 0.28 0.18
+    cue "Two steps, ball low right"
+  step "Left Foot Plant & Lift" 0.32s drive:
+    knee_left: flex 86
+    hip_left: flex 62
+    knee_right: flex 14
+    hip_right: flex 18
+    ankle_right: plantarflex 24
+    shoulder_right: flex 142
+    elbow_right: flex 32
+    wrist_right: extend 18
+    ground-lock: left foot
+    travel: 0.22 0.28
+    turn: 12
+    cue "Plant left, launch right hand"
+  step "Soft Touch" 0.28s settle:
+    shoulder_right: flex 148
+    elbow_right: flex 18
+    wrist_right: flex 26
+    fingers: flex 44
+    ground-lock: feet
+    cue "Kiss off glass"
+  step "Land & Backpedal" 0.44s ease-in-out:
+    knees: flex 28
+    hips: flex 18
+    shoulders: flex 0
+    elbows: flex 22
+    ground-lock: feet
+    travel: -0.12 -0.1
+  repeat 1

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Player Animations — Vector Hoops Posecode Lab</title>
+<link rel="stylesheet" href="assets/shell.css">
+<link rel="stylesheet" href="assets/responsive.css">
+<style>
+:root{
+  --paper:#FFFEF7; --ink:#1A150F; --ink-soft:#3A332A; --muted:#6B6256;
+  --okabe-blue:#0072B2; --okabe-verm:#D55E00; --okabe-yellow:#F0E442; --okabe-sky:#56B4E9;
+}
+html,body{margin:0; background:var(--paper); color:var(--ink); font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif; overflow-x:hidden;}
+.topbar{position:sticky; top:0; z-index:20; background:var(--paper); border-bottom:2px solid var(--ink); display:flex; align-items:center; justify-content:space-between; padding:10px 14px; padding-top:calc(10px + env(safe-area-inset-top)); min-height:calc(56px + env(safe-area-inset-top));}
+.brand{font-weight:900; letter-spacing:-.02em; font-size:18px; text-decoration:none; color:var(--ink); display:flex; align-items:center; gap:8px;}
+.badge{font-family: ui-monospace, SFMono-Regular, monospace; font-size:11px; font-weight:800; letter-spacing:.08em; background:var(--okabe-yellow); border:2px solid var(--ink); padding:4px 8px; box-shadow:3px 3px 0 var(--ink);}
+.main{max-width:1120px; margin:0 auto; padding:20px 14px calc(96px + env(safe-area-inset-bottom));}
+.hero{border:2px solid var(--ink); border-radius:16px; background:#fff; box-shadow:6px 6px 0 var(--ink); padding:18px; margin:0 0 18px;}
+.hero h1{margin:0 0 6px; font-size:clamp(26px,6vw,36px); line-height:.95; letter-spacing:-.03em;}
+.hero p{margin:0; font-size:18px; line-height:1.65; color:var(--ink-soft); max-width:62ch;}
+.grid{display:grid; grid-template-columns:1fr; gap:16px;}
+@media(min-width:720px){ .grid{grid-template-columns:repeat(2,minmax(0,1fr));} }
+@media(min-width:1080px){ .grid{grid-template-columns:repeat(3,minmax(0,1fr));} }
+.card{border:2px solid var(--ink); border-radius:16px; background:#fff; box-shadow:5px 5px 0 var(--ink); overflow:hidden; display:flex; flex-direction:column; min-width:0;}
+.card-head{padding:12px 14px 10px; border-bottom:2px solid var(--ink); display:flex; justify-content:space-between; align-items:center; gap:10px;}
+.card-title{font-weight:900; font-size:15px; line-height:1.2; margin:0; letter-spacing:-.01em;}
+.card-meta{font-family:ui-monospace,monospace; font-size:10px; font-weight:800; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); white-space:nowrap;}
+.card posecode-player{display:block; width:100%; height:clamp(300px, 60vw, 380px); background:radial-gradient(120% 90% at 50% 20%, #f7f3e6, #fff 55%);}
+.card-foot{padding:10px 14px; border-top:2px solid var(--ink); background:#FFFEF7;}
+.code{font-family:ui-monospace, SFMono-Regular, monospace; font-size:11px; line-height:1.5; color:var(--ink-soft); max-height:120px; overflow:auto; white-space:pre-wrap; word-break:break-word; background:#fff; border:1px dashed var(--ink); border-radius:8px; padding:8px; margin:0;}
+.arch-row{display:flex; gap:6px; flex-wrap:wrap; margin-top:8px;}
+.arch{font-family:ui-monospace,monospace; font-size:10px; font-weight:800; border:2px solid var(--ink); border-radius:999px; padding:3px 8px; background:#fff; box-shadow:2px 2px 0 var(--ink);}
+.arch--blue{background:var(--okabe-blue); color:#fff;}
+.arch--verm{background:var(--okabe-verm); color:#fff;}
+.footer{margin:24px 0 0; font-family:ui-monospace,monospace; font-size:11px; color:var(--muted); text-align:center; line-height:1.6;}
+.footer a{color:var(--ink); text-underline-offset:3px;}
+.btn{ min-height:44px; border:2px solid var(--ink); border-radius:12px; padding:0 14px; background:var(--ink); color:#fff; font-weight:900; box-shadow:4px 4px 0 var(--ink); cursor:pointer; }
+.btn:active{transform:translate(2px,2px); box-shadow:2px 2px 0 var(--ink);}
+.controls{display:flex; gap:10px; flex-wrap:wrap; margin:14px 0 0;}
+</style>
+<script src="https://unpkg.com/posecode-embed@0.1.0/dist/posecode-embed.js"></script>
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="/">🏀 Vector Hoops <span style="font-weight:800; color:var(--okabe-verm);">Posecode Lab</span></a>
+  <span class="badge">8 NBA moves • 60fps • MIT</span>
+</header>
+<main class="main">
+  <section class="hero">
+    <h1>People animations — built from scratch in Posecode</h1>
+    <p>Every move below is hand-authored .posecode using the grammar <code>pose start = standing</code>, <code>step "Name" Ns easing: joints: flex/abduct/rotate, ground-lock, reach, travel, turn, cue</code>. Rendering is forward kinematics in Three.js via <a href="https://github.com/posecode-dev/posecode" target="_blank" rel="noopener">posecode-dev/posecode</a> (MIT) — ROM clamped per joint (knee ≤144°, elbow ≤154°, shoulder ≤180°). Zero build, free-tier Vercel static, on-device 60fps.</p>
+    <div class="controls">
+      <a class="btn" href="/" style="text-decoration:none; display:inline-flex; align-items:center; justify-content:center;">← Back to Hoops</a>
+      <a class="btn" href="https://www.posecode.org/play" target="_blank" rel="noopener" style="background:#fff; color:var(--ink); text-decoration:none; display:inline-flex; align-items:center;">Open Playground ↗</a>
+      <span class="badge" style="background:#fff;">github.com/posecode-dev/posecode · posecode.org/play · MIT</span>
+    </div>
+    <p class="footer" style="text-align:left; margin-top:14px;">Playground: <code>https://www.posecode.org/play</code> • Library: <code>/moves/</code> • Parser: <code>posecode-parser</code> (pure TS, Zod) • Render: <code>posecode-render</code> (Three.js 0.171) • Embed: <code>&lt;posecode-player&gt;</code> • ROM hard-clamped anatomically safe.</p>
+  </section>
+
+  <section class="grid" id="grid">
+    <!-- Cards injected by JS for clean src attribution -->
+  </section>
+
+  <p class="footer">Solo personal project, no connection to employer, built with public/free-tier only • Vector Hoops • 12,966 seasons truth • Okabe-Ito AAA • 18px/1.65 • Design gate Sunni Davis SCAD</p>
+</main>
+
+<script type="module">
+const moves = [
+  { file: 'assets/posecode/basketball/jump-shot.posecode', title: 'Jump Shot — Shooter', arch: 'Shooter • Scorer', color:'blue', desc:'Gather 42° knees → 84° coiled → explode plantarflex 26° → release flex 34° wrists' },
+  { file: 'assets/posecode/basketball/crossover-dribble.posecode', title: 'Crossover — Playmaker', arch:'Playmaker • Slim', color:'verm', desc:'Low 68° knees, rotate-out pelvis 14°, travel -0.18m snap left' },
+  { file: 'assets/posecode/basketball/defensive-shuffle.posecode', title: 'Defensive Shuffle — Anchor', arch:'Rim Protector • Defender', color:'blue', desc:'Abduct 32° hips, 72° shoulders, turn ±8° with lateral travel' },
+  { file: 'assets/posecode/basketball/layup.posecode', title: 'Layup Drive — Glass', arch:'Driver • Athlete', color:'verm', desc:'Drive 0.28m, plant left flex 86°, right plantarflex 24°, soft touch' },
+  { file: 'assets/posecode/basketball/free-throw.posecode', title: 'Free Throw — Ritual', arch:'Shooter • Control', color:'blue', desc:'Routine bounce, set 28° knees, release 156° shoulders, hold follow' },
+  { file: 'assets/posecode/basketball/box-out.posecode', title: 'Box Out — Big', arch:'Bruiser • Rebounder', color:'verm', desc:'Pelvis hinge 28°→36°, abduct 38°, turn 88° to rebound' },
+  { file: 'assets/posecode/basketball/chest-pass.posecode', title: 'Chest Pass — General', arch:'Playmaker • IQ', color:'blue', desc:'84° elbows → 8° punch, travel 0.14m, thumbs down finish' },
+  { file: 'assets/posecode/basketball/celebration.posecode', title: 'Celebration — Arms Up', arch:'Crowd • Win', color:'verm', desc:'Crouch 52° knees → sky 168° abduct → 22° plantarflex pop' },
+];
+
+async function loadText(url){
+  try{
+    const r = await fetch(url);
+    if(!r.ok) throw new Error(r.status);
+    return await r.text();
+  }catch(e){ return `// failed to load ${url}: ${e}` }
+}
+
+const grid = document.getElementById('grid');
+for(const m of moves){
+  const card = document.createElement('div');
+  card.className = 'card';
+  card.innerHTML = `
+    <div class="card-head">
+      <h3 class="card-title">${m.title}</h3>
+      <span class="card-meta">${m.file.split('/').pop()}</span>
+    </div>
+    <posecode-player src="${m.file}" controls autorotate loop speed="1"></posecode-player>
+    <div class="card-foot">
+      <div class="arch-row">
+        <span class="arch arch--${m.color}">${m.arch}</span>
+        <span class="arch">${m.desc}</span>
+      </div>
+      <details style="margin-top:10px"><summary style="font-family:ui-monospace,monospace; font-size:11px; font-weight:800; cursor:pointer;">View .posecode source</summary><pre class="code" data-src="${m.file}">loading…</pre></details>
+    </div>
+  `;
+  grid.appendChild(card);
+}
+
+// lazy load code view when expanded
+grid.addEventListener('toggle', async (e)=>{
+  if(e.target.tagName !== 'DETAILS' || !e.target.open) return;
+  const pre = e.target.querySelector('pre.code');
+  if(!pre || pre.dataset.loaded) return;
+  const text = await loadText(pre.dataset.src);
+  pre.textContent = text;
+  pre.dataset.loaded = '1';
+}, true);
+</script>
+</body>
+</html>
