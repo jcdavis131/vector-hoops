@@ -2,9 +2,10 @@
  * Cache-first for immutable assets, network-first for pages
  * Solo personal project, no connection to employer
  */
-const CACHE_NAME = 'vector-hoops-v6-20260715';
+const CACHE_NAME = 'vector-hoops-v7-20260715';
 const IMMUTABLE = [
   '/manifest.json',
+  '/offline.html',
   '/assets/vectors_lite.json',
   '/assets/teams.json',
   '/assets/players_lite.json',
@@ -27,7 +28,8 @@ const IMMUTABLE = [
   '/assets/keyboard-a11y.js',
   '/assets/seo-dynamic.js',
   '/assets/error-boundary.js',
-  '/assets/delight.js'
+  '/assets/delight.js',
+  '/assets/play-landing-bridge.js'
 ];
 
 self.addEventListener('install', (event)=>{
@@ -66,7 +68,7 @@ self.addEventListener('fetch', (event)=>{
       })
     );
   } else if(url.pathname === '/' || url.pathname === '/play' || url.pathname === '/play.html' || url.pathname.endsWith('.html')){
-    // network-first for HTML
+    // network-first for HTML with offline fallback
     event.respondWith(
       fetch(event.request).then(resp=>{
         if(resp && resp.ok){
@@ -74,7 +76,15 @@ self.addEventListener('fetch', (event)=>{
           caches.open(CACHE_NAME).then(c=> c.put(event.request, clone));
         }
         return resp;
-      }).catch(()=> caches.match(event.request).then(c=> c || caches.match('/')))
+      }).catch(()=> caches.match(event.request).then(c=> c || caches.match('/offline.html')).then(c=> c || caches.match('/')))
+    );
+  } else {
+    // try cache then network for other same-origin
+    event.respondWith(
+      caches.match(event.request).then(cached=>{
+        if(cached) return cached;
+        return fetch(event.request).catch(()=> caches.match('/offline.html'));
+      })
     );
   }
 });
