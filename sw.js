@@ -2,7 +2,7 @@
  * Cache-first for immutable assets, network-first for pages
  * Solo personal project, no connection to employer
  */
-const CACHE_NAME = 'vector-hoops-v4-20260715';
+const CACHE_NAME = 'vector-hoops-v5-20260715';
 const IMMUTABLE = [
   '/manifest.json',
   '/assets/vectors_lite.json',
@@ -11,16 +11,20 @@ const IMMUTABLE = [
   '/assets/og-embed.png',
   '/assets/city-intro.css',
   '/assets/shell.css',
+  '/assets/hoops.css',
   '/assets/responsive.css',
   '/assets/embedding-nebula.js',
   '/assets/city-intro.js',
+  '/assets/hero-perf.js',
   '/assets/landing-play.js',
   '/assets/landing-equation.js',
   '/assets/search-enhance.js',
   '/assets/viral-share.js',
   '/assets/team-leaderboard.js',
   '/assets/push-retention.js',
-  '/assets/pwa-install.js'
+  '/assets/pwa-install.js',
+  '/assets/keyboard-a11y.js',
+  '/assets/seo-dynamic.js'
 ];
 
 self.addEventListener('install', (event)=>{

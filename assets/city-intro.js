@@ -302,6 +302,15 @@
 
   function buildStarfield(players){
     if(!scene||!skyGroup) return;
+    var perf = window.VH_PERF || {isLowEnd:false, prefersReduced:false};
+    var isLowEnd = !!perf.isLowEnd;
+    var originalCount = players.length;
+    // LOD: sample for low-end to keep 60fps on 10M DAU long tail
+    if(isLowEnd && players.length>4200){
+      var sampled=[];
+      for(var si=0; si<players.length; si+=3){ sampled.push(players[si]); }
+      players = sampled;
+    }
     pointsPlayers=players;
     while(skyGroup.children.length){var o=skyGroup.children[0]; skyGroup.remove(o); if(o.geometry) o.geometry.dispose(); if(o.material){if(Array.isArray(o.material)) o.material.forEach(function(m){m.dispose();}); else o.material.dispose();}}
     nebulaSprites=[];
@@ -324,9 +333,12 @@
         var rgb=OKABE_RGB[k]; grad.addColorStop(0,'rgba('+rgb[0]+','+rgb[1]+','+rgb[2]+',0.34)'); grad.addColorStop(1,'rgba('+rgb[0]+','+rgb[1]+','+rgb[2]+',0)'); ctx.fillStyle=grad; ctx.fillRect(0,0,256,256);
       }
       var tex=new THREE.CanvasTexture(canvas); tex.colorSpace=THREE.SRGBColorSpace;
-      var sprMat=new THREE.SpriteMaterial({map:tex, transparent:true, opacity:0.46, fog:false, depthWrite:false, blending:THREE.AdditiveBlending});
-      var spr=new THREE.Sprite(sprMat); spr.position.set(world.x, world.y, world.z); spr.scale.set(28+centroids[k].cnt/250,28+centroids[k].cnt/250,1);
-      skyGroup.add(spr); nebulaSprites.push({sprite:spr, baseScale:28+centroids[k].cnt/250, archetype:k});
+      var opacity = isLowEnd ? 0.32 : 0.46;
+      var sprMat=new THREE.SpriteMaterial({map:tex, transparent:true, opacity:opacity, fog:false, depthWrite:false, blending:THREE.AdditiveBlending});
+      var scale = 28+centroids[k].cnt/250;
+      if(isLowEnd) scale*=0.72;
+      var spr=new THREE.Sprite(sprMat); spr.position.set(world.x, world.y, world.z); spr.scale.set(scale,scale,1);
+      skyGroup.add(spr); nebulaSprites.push({sprite:spr, baseScale:scale, archetype:k});
     }
 
     var count=players.length;
@@ -342,11 +354,15 @@
       if(k===7){ col[i*3]=0.18; col[i*3+1]=0.18; col[i*3+2]=0.20; } else { col[i*3]=rgb[0]/255*0.88+0.12; col[i*3+1]=rgb[1]/255*0.88+0.12; col[i*3+2]=rgb[2]/255*0.88+0.12; }
     }
     var geo=new THREE.BufferGeometry(); geo.setAttribute('position', new THREE.BufferAttribute(pos,3)); geo.setAttribute('color', new THREE.BufferAttribute(col,3));
-    var mat=new THREE.PointsMaterial({size:1.6, vertexColors:true, transparent:true, opacity:0.72, sizeAttenuation:true, depthWrite:false, fog:false});
+    var pointSize = isLowEnd ? 1.2 : 1.6;
+    var mat=new THREE.PointsMaterial({size:pointSize, vertexColors:true, transparent:true, opacity:0.72, sizeAttenuation:true, depthWrite:false, fog:false});
     var points=new THREE.Points(geo,mat);
     skyGroup.add(points);
     pointsMesh=points;
     pointsOriginalColors=col.slice();
+    // emit ready for skeleton + odometer
+    try{ window.dispatchEvent(new CustomEvent('vh:city-ready', {detail:{count:count, originalCount:originalCount, lowEnd:isLowEnd}})); }catch(e){}
+    if(window._vhSetLoadProgress) window._vhSetLoadProgress(1);
 
     var centPos=[];
     for(var k=0;k<8;k++){
