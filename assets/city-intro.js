@@ -463,9 +463,11 @@
     var titleEl=document.getElementById('team-universe-title');
     var metaEl=document.getElementById('team-universe-meta');
     var barsEl=document.getElementById('team-universe-bars');
+    var toggleBtn=document.getElementById('team-universe-toggle');
     if(!card) return;
     if(!abbr || focus===null || !centroidsCache){
       card.style.display='none';
+      if(toggleBtn) toggleBtn.style.display='none';
       return;
     }
     var team=teams.find(function(t){return t.abbr===abbr;});
@@ -478,26 +480,47 @@
     card.style.setProperty('--team-primary', team?team.primary:'#F0E442');
     if(titleEl) titleEl.textContent=arenaInfo.city+' '+abbr+' universe — '+OKABE_LABEL[focus];
     if(metaEl){
-      metaEl.innerHTML=
-        '<span style="display:inline-flex; gap:6px; align-items:center;"><span style="width:10px; height:10px; border-radius:50%; background:'+(team?team.primary:'#F0E442')+'; border:1.5px solid #111; display:inline-block;"></span> '+focusCount.toLocaleString()+' of '+total.toLocaleString()+' seasons in '+OKABE_LABEL[focus]+'</span><br>'+
-        pct+'% of sky shares '+abbr+' focus · team tint '+ (team?team.primary:'#F0E442') +' · drag to explore · lock filters';
+      // compact on mobile: 1 line
+      var isMobile = window.innerWidth <= 860;
+      if(isMobile){
+        metaEl.innerHTML=
+          '<span style="display:inline-flex; gap:6px; align-items:center;"><span style="width:8px; height:8px; border-radius:50%; background:'+(team?team.primary:'#F0E442')+'; border:1px solid #fff; display:inline-block;"></span> '+focusCount.toLocaleString()+'/'+total.toLocaleString()+' · '+pct+'% · '+OKABE_LABEL[focus].split(' ')[0]+'</span>';
+      } else {
+        metaEl.innerHTML=
+          '<span style="display:inline-flex; gap:6px; align-items:center;"><span style="width:10px; height:10px; border-radius:50%; background:'+(team?team.primary:'#F0E442')+'; border:1.5px solid #111; display:inline-block;"></span> '+focusCount.toLocaleString()+' of '+total.toLocaleString()+' seasons in '+OKABE_LABEL[focus]+'</span><br>'+
+          pct+'% of sky shares '+abbr+' focus · drag to explore';
+      }
     }
     if(barsEl){
       barsEl.innerHTML='';
       var max=Math.max.apply(null, centroidsCache.map(function(c){return c.cnt;}));
-      for(var k=0;k<8;k++){
+      // order: focus first, then others sorted by cnt desc for mobile visibility
+      var order = [];
+      order.push(focus);
+      for(var k=0;k<8;k++){ if(k!==focus) order.push(k); }
+      // sort remaining by count after focus
+      var tail = order.slice(1).sort(function(a,b){ return (centroidsCache[b]?centroidsCache[b].cnt:0) - (centroidsCache[a]?centroidsCache[a].cnt:0); });
+      order = [focus].concat(tail);
+      for(var oi=0; oi<order.length; oi++){
+        var k=order[oi];
         var cnt=centroidsCache[k]?centroidsCache[k].cnt:0;
         var w=Math.max(6, Math.round(cnt/max*100));
         var row=document.createElement('div');
-        row.style.cssText='display:flex; align-items:center; gap:8px; font-family:var(--mono); font-size:10px;';
-        var label=document.createElement('span'); label.textContent=OKABE_LABEL[k].slice(0,18); label.style.cssText='width:108px; flex:0 0 108px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; opacity:'+(k===focus?1:0.7)+'; font-weight:'+(k===focus?900:700)+';';
-        var track=document.createElement('div'); track.style.cssText='flex:1; height:8px; background:rgba(255,255,255,.18); border-radius:999px; overflow:hidden; border:1px solid rgba(255,255,255,.2);';
+        row.style.cssText='display:flex; align-items:center; gap:6px; font-family:var(--mono); font-size:9px;';
+        var label=document.createElement('span'); label.textContent=OKABE_LABEL[k].slice(0,16); label.style.cssText='width:84px; flex:0 0 84px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; opacity:'+(k===focus?1:0.72)+'; font-weight:'+(k===focus?900:700)+';';
+        var track=document.createElement('div'); track.style.cssText='flex:1; height:6px; background:rgba(255,255,255,.16); border-radius:999px; overflow:hidden; border:1px solid rgba(255,255,255,.18);';
         var bar=document.createElement('div'); bar.style.cssText='height:100%; width:'+w+'%; background:'+(k===focus? (team?team.primary:OKABE[k]) : OKABE[k])+'; border-radius:999px; opacity:'+(k===focus?1:0.55)+';';
         if(k===focus){bar.style.boxShadow='0 0 0 2px '+(team?team.primary:'#F0E442')+'44';}
         track.appendChild(bar);
-        var count=document.createElement('span'); count.textContent=cnt.toLocaleString(); count.style.cssText='width:42px; text-align:right; opacity:.8;';
+        var count=document.createElement('span'); count.textContent=cnt.toLocaleString(); count.style.cssText='width:32px; text-align:right; opacity:.8; font-size:9px;';
         row.appendChild(label); row.appendChild(track); row.appendChild(count);
         barsEl.appendChild(row);
+      }
+    }
+    if(toggleBtn){
+      toggleBtn.style.display = window.innerWidth <= 860 ? 'inline-flex' : 'none';
+      if(!card.classList.contains('is-expanded')){
+        toggleBtn.textContent='Show breakdown';
       }
     }
   }
