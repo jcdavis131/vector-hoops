@@ -1,16 +1,24 @@
-/* city-intro.css — NBA Cities flyover intro */
+/* city-intro.css — NBA Cities flyover intro — v2 mobile-safe */
 .city-intro{
   position:relative;
   width:100%;
-  height: clamp(420px, 58vh, 640px);
+  max-width:100%;
+  height: clamp(320px, 42vh, 440px);
+  min-height:320px;
   background:#0e0e0e;
   border-bottom:3px solid #111;
   overflow:hidden;
   isolation:isolate;
+  box-sizing:border-box;
+}
+#city-intro.city-intro{
+  height: clamp(320px, 42vh, 440px) !important;
+  min-height:320px;
 }
 #city-intro-canvas{
-  width:100%;
-  height:100%;
+  width:100% !important;
+  height:100% !important;
+  max-width:100%;
   display:block;
 }
 .city-intro__overlay{
@@ -23,8 +31,11 @@
   pointer-events:none;
   z-index:2;
   background: linear-gradient(180deg, rgba(0,0,0,.55) 0%, rgba(0,0,0,0) 32%, rgba(0,0,0,0) 58%, rgba(0,0,0,.72) 100%);
+  box-sizing:border-box;
+  min-width:0;
+  max-width:100%;
 }
-.city-intro__top{ pointer-events:auto; max-width: 1120px; width:100%; margin-inline:auto; }
+.city-intro__top{ pointer-events:auto; max-width: 1120px; width:100%; margin-inline:auto; min-width:0; box-sizing:border-box; }
 .city-intro__badge{
   display:inline-flex;
   font-family:var(--mono);
@@ -39,22 +50,26 @@
   padding:6px 10px;
   box-shadow:3px 3px 0 #111;
   margin-bottom:10px;
+  max-width:100%;
 }
 .city-intro__city{
-  font-size: clamp(32px, 6vw, 56px);
+  font-size: clamp(28px, 6vw, 44px);
   font-weight:900;
   letter-spacing:-.04em;
   color:#fff;
   margin:0;
-  line-height:.9;
+  line-height:.92;
   text-shadow: 3px 3px 0 #111;
+  overflow-wrap:break-word;
 }
 .city-intro__city span{
   color: var(--team-accent, #fff);
+  font-family:var(--mono);
+  font-size:clamp(11px,2.8vw,14px);
 }
 .city-intro__arena{
   font-family:var(--mono);
-  font-size:12px;
+  font-size:11px;
   font-weight:700;
   color:#e8e8e8;
   margin:8px 0 0;
@@ -66,6 +81,8 @@
   padding:5px 10px;
   border-radius:999px;
   backdrop-filter: blur(8px);
+  max-width:100%;
+  overflow-wrap:break-word;
 }
 .city-intro__fans{
   font-family:var(--mono);
@@ -96,6 +113,8 @@
   flex-wrap:wrap;
   align-items:flex-end;
   justify-content:space-between;
+  min-width:0;
+  box-sizing:border-box;
 }
 .city-intro__pills{
   display:flex;
@@ -105,6 +124,7 @@
   max-width: min(100%, 720px);
   padding:4px 2px 8px;
   -webkit-overflow-scrolling:touch;
+  box-sizing:border-box;
 }
 .city-intro__pills::-webkit-scrollbar{display:none}
 .city-pill{
@@ -122,12 +142,13 @@
   box-shadow:2px 2px 0 #111;
   transition: transform .12s ease, box-shadow .12s ease, background .12s ease, color .12s ease;
   min-height:36px;
+  flex:0 0 auto;
 }
 .city-pill:hover{transform:translate(-1px,-1px); box-shadow:3px 3px 0 #111}
 .city-pill.is-active{background:#111; color:#fff; border-color:#111}
 .city-pill.is-favorite{outline:2px solid var(--team-primary, #E03A3E); outline-offset:1px}
 
-.city-intro__controls{display:flex; gap:8px; align-items:center}
+.city-intro__controls{display:flex; gap:8px; align-items:center; flex-wrap:wrap;}
 .city-intro__controls button{
   appearance:none;
   border:2px solid #111;
@@ -182,17 +203,22 @@
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
 
 /* sky legend — v3 paper AAA, not dark */
-#sky-legend{font-variant-ligatures:none; background:rgba(255,254,247,0.94)!important; border:2px solid #1A150F!important; color:#1A150F!important; box-shadow:4px 4px 0 #1A150F!important;}
+#sky-legend{font-variant-ligatures:none; background:rgba(255,254,247,0.94)!important; border:2px solid #1A150F!important; color:#1A150F!important; box-shadow:4px 4px 0 #1A150F!important; max-width:calc(100vw - 20px); box-sizing:border-box;}
 #sky-legend:hover{border-color:#1A150F !important; background:rgba(255,254,247,0.98) !important;}
 #sky-legend div{display:flex}
 .osm-attr{position:absolute; left:8px; bottom:8px; z-index:4; font-family:var(--mono); font-size:10px; color:#1A150F; background:rgba(255,254,247,0.88); padding:4px 8px; border-radius:999px; border:1.5px solid #1A150F; backdrop-filter:blur(6px); pointer-events:auto;}
 .osm-attr a{color:#111; text-decoration:underline; text-underline-offset:2px; font-weight:800;}
 
 @media (max-width:719px){
-  .city-intro{height: clamp(460px, 72vh, 580px);}
+  .city-intro{height: clamp(320px, 48vh, 440px) !important; min-height:320px;}
+  #city-intro.city-intro{height: clamp(320px, 48vh, 440px) !important;}
   .city-intro__bottom{flex-direction:column; align-items:stretch}
-  .city-intro__pills{max-width:100%}
-  #sky-legend{right:10px !important; left:10px !important; top:auto !important; bottom:78px !important; max-width:none !important; display:grid; grid-template-columns:1fr 1fr; gap:0 12px;}
+  .city-intro__pills{max-width:100%; width:100%;}
+  #sky-legend{right:10px !important; left:10px !important; top:auto !important; bottom:calc(78px + env(safe-area-inset-bottom)) !important; max-width:none !important; display:grid; grid-template-columns:1fr 1fr; gap:0 12px; font-size:11px;}
   #sky-legend div:nth-child(1){grid-column:1 / -1;}
   #sky-legend div:last-child{grid-column:1 / -1;}
+}
+@media (max-width:359px){
+  .city-intro{height:clamp(300px,52vh,400px) !important;}
+  .city-intro__city{font-size:clamp(24px,7vw,32px);}
 }

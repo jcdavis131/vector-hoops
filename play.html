@@ -248,6 +248,57 @@ body{font-size:18px; line-height:1.65; -webkit-font-smoothing:antialiased; lette
 .site-footer{border-top:3px solid var(--ink); background:#fdfcf5}
 .site-footer__attribution{font-family:var(--mono); font-size:11px; line-height:1.5; color:var(--ink-soft)}
 .site-footer__attribution a{color:var(--ink); font-weight:700}
+
+/* === MOBILE OVERFLOW FIX v2 — 320/375/414 safe === */
+html,body{overflow-x:hidden; max-width:100%;}
+*,*::before,*::after{box-sizing:border-box;}
+img,svg,canvas{max-width:100%;}
+#app, .play-main, .vh-header--upgraded, .vh-card, .vh-clue-card{ min-width:0; max-width:100%; box-sizing:border-box; }
+.vh-header--upgraded{overflow-x:clip;}
+@media(max-width:719px){
+  .vh-header__toprow,
+  .vh-header__metarow,
+  .vh-header--upgraded__toprow{
+    min-width:0; max-width:100%; flex-wrap:wrap;
+  }
+  .vh-pool-toggle[title]::after{
+    display:none !important;
+  }
+  .vh-pool-toggle{
+    max-width:100%;
+  }
+  body{
+    padding-bottom:0;
+  }
+  #mode-tabs{
+    width:100%; max-width:100vw; min-width:0;
+    left:0; right:0;
+    box-sizing:border-box;
+  }
+  #mode-tabs .vh-tab{
+    min-width:62px; /* allow 8 tabs to scroll, not wrap */
+  }
+  .vh-equation{
+    flex-wrap:wrap;
+    gap:8px;
+    justify-content:center;
+  }
+  .vh-equation__tile{
+    width:clamp(88px,28vw,132px);
+    min-width:0;
+  }
+  .vh-input,.vh-btn{
+    max-width:100%;
+    min-width:0;
+  }
+}
+.vh-card,.vh-result,.vh-clue-zone{
+  width:100%; max-width:100%;
+}
+.site-footer{
+  padding-bottom:calc(88px + env(safe-area-inset-bottom));
+}
+
 </style>
 </head>
 <body>
