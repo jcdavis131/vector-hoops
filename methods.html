@@ -6,7 +6,7 @@
 <title>Methods — How Vector Hoops is built | Vector Hoops</title>
 <link rel="canonical" href="https://hoops.dumbmodel.com/methods">
 <meta property="og:url" content="https://hoops.dumbmodel.com/methods">
-<meta name="description" content="Every number recomputable: 12,392 seasons 14 feats era-z for games, 120 feats 17 families for MTNN v4 17×160→32 556→128→48 L2, PCA map, 8 archetypes, Deadline, Fader, Skills Lens, Procrustes drift, accuracy harness.">
+<meta name="description" content="Every number recomputable: 12,966 seasons 14 feats era-z for games, 120 feats 17 families for MTNN v4 17×160→32 556→128→48 L2, PCA map, 8 archetypes, Deadline, Fader, Skills Lens, Procrustes drift, accuracy harness.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Ctext%20y%3D%22.9em%22%20font-size%3D%2290%22%3E%26%23127936%3B%3C%2Ftext%3E%3C%2Fsvg%3E">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Methods — Vector Hoops">
@@ -71,7 +71,7 @@
     <h2>The vector space — two views, one honest frame</h2>
     <div class="methods-two-col">
       <div>
-        <p><b>Games (fast, transparent):</b> 12,392 player-seasons 1996-97 → 2025-26 from stats.nba.com per-100-poss splits, MIN ≥800. Each season 14 features, z-scored within its own season (era-honest). This is what you play with.</p>
+        <p><b>Games (fast, transparent):</b> 12,966 player-seasons 1996-97 → 2025-26 from stats.nba.com per-100-poss splits, MIN ≥800. Each season 14 features, z-scored within its own season (era-honest). This is what you play with.</p>
         <table>
           <thead><tr><th>Feature</th><th>What it measures</th><th>Era note</th></tr></thead>
           <tbody>
@@ -90,7 +90,7 @@
       <div>
         <div class="callout callout--orange">
           <p class="callout__label">MTNN v4 expanded — 120 feats / 17 families</p>
-          <p style="margin:0;font-size:12px;line-height:1.55;color:var(--ink-soft)">Same 12,392 seasons but richer: volume, playmaking, rebounding, defense (STL/BLK/DEF_RTG), efficiency (EFG%/TS%/OFF_RTG/NET_RTG), shotmix, bio (AGE/HEIGHT/WEIGHT/DRAFT), tracking (2013+ masked), form (FORM_DD), market, roster, career (YEAR_IN_LEAGUE/LAG1_COSINE/DELTA_NORM), competition (SOS_NET_RTG/B2B_RATE), team, pedigree, playoffs, honors. Each family = own residual tower.</p>
+          <p style="margin:0;font-size:12px;line-height:1.55;color:var(--ink-soft)">Same 12,966 seasons but richer: volume, playmaking, rebounding, defense (STL/BLK/DEF_RTG), efficiency (EFG%/TS%/OFF_RTG/NET_RTG), shotmix, bio (AGE/HEIGHT/WEIGHT/DRAFT), tracking (2013+ masked), form (FORM_DD), market, roster, career (YEAR_IN_LEAGUE/LAG1_COSINE/DELTA_NORM), competition (SOS_NET_RTG/B2B_RATE), team, pedigree, playoffs, honors. Each family = own residual tower.</p>
           <div class="feature-chips">
             <span><b>120</b> feats</span><span><b>17</b> families</span><span><b>30</b> seasons</span><span><b>8</b> archetypes</span><span><b>48-d</b> L2</span><span><b>~224K</b> params</span>
           </div>
@@ -146,7 +146,7 @@
       <li>Offensive Glass + Defensive Glass</li>
       <li>Playmaking + Steals</li>
     </ul>
-    <p>Client never re-derives membership — uses pipeline's label, verified all 12,392 via harness V2. Trend Research adds layer 2: K=8 re-fit within five era windows, named top-2 sigma, lineage = nearest predecessor-era centroid cosine in Procrustes root frame.</p>
+    <p>Client never re-derives membership — uses pipeline's label, verified all 12,966 via harness V2. Trend Research adds layer 2: K=8 re-fit within five era windows, named top-2 sigma, lineage = nearest predecessor-era centroid cosine in Procrustes root frame.</p>
     <p class="methods-codeblock">layer 1: per-season share 8 global k-means (labels from vectors.json, no re-fit); layer 2: k-means K=8 re-fit within five era windows (seeded), named from top-2 centroid sigmas; lineage = nearest predecessor-era centroid cosine in Procrustes root frame; shares of charted MIN≥800 players — stated scope</p>
   </section>
 
@@ -164,7 +164,7 @@
   <section class="methods-section" id="skills">
     <h2>The Skills Lens — 0–99 grades + badges</h2>
     <p>Every charted season graded 0–99 on twelve skills. Each skill = <b>fixed, published linear composite</b> of same era-z per-100 features (e.g. Perimeter Shooting = 0.55·FG3A + 0.45·FG3%), percentile within own season pool — so every era same distribution, 90 in 1997 = 90 in 2026. Badges 90+, gold 97+.</p>
-    <p>Fused chimera on reveal graded same composites vs pooled all-era quantile table (<code>assets/skill_probe.json</code>) — blend never existed as real season, so reference = all 12,392.</p>
+    <p>Fused chimera on reveal graded same composites vs pooled all-era quantile table (<code>assets/skill_probe.json</code>) — blend never existed as real season, so reference = all 12,966.</p>
     <div class="methods-plainly">
       <p class="methods-plainly__head">MTNN two scores — plain English</p>
       <dl class="methods-plainly__list">
@@ -211,7 +211,7 @@
     <p><code>pipeline/verify_accuracy.py</code> gates every deploy — non-zero exit blocks shipping:</p>
     <ul>
       <li><b>V1</b> — <code>vectors.json</code> integrity: dims, ranges, no duplicate (name,season), valid map coords.</li>
-      <li><b>V2</b> — cluster labels: recomputes nearest-centroid from member means, confirms client centroid method reproduces pipeline labels for all 12,392.</li>
+      <li><b>V2</b> — cluster labels: recomputes nearest-centroid from member means, confirms client centroid method reproduces pipeline labels for all 12,966.</li>
       <li><b>V3</b> — <code>deadline.json</code>: recomputes every mover's deltas directly from raw game logs, exact match 0.01 tolerance — 100% sample, not spot-check.</li>
       <li><b>V4</b> — Chimera determinism: seeded daily target checked across 30 sampled dates for stability and low-similarity (MTNN cosine <0.3) between its two donors.</li>
     </ul>
@@ -247,7 +247,7 @@
     <a href="#" data-vh-nux-tour>Tour</a>
     <a href="https://github.com/jcdavis131/vector-hoops" target="_blank" rel="noopener">GitHub</a>
   </div>
-  <div class="site-footer__attribution">MTNN v4: 12,392 seasons 120 feats 17 families cat([x·m,m]) → 17×160→32×2 544+12=556→128→48 L2 ~224K • 14 feats for games era-z PCA • Every number recomputable from stats.nba.com • Solo personal project, no connection to employer, built with public/free-tier only • from <a href="https://dumbmodel.com/" target="_blank" rel="noopener">dumbmodel.com</a></div>
+  <div class="site-footer__attribution">MTNN v4: 12,966 seasons 120 feats 17 families cat([x·m,m]) → 17×160→32×2 544+12=556→128→48 L2 ~224K • 14 feats for games era-z PCA • Every number recomputable from stats.nba.com • Solo personal project, no connection to employer, built with public/free-tier only • from <a href="https://dumbmodel.com/" target="_blank" rel="noopener">dumbmodel.com</a></div>
 </footer>
 
 <script src="assets/site-nav.js" defer></script>

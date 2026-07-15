@@ -6,7 +6,7 @@
 <title>How the vector knows — MTNN Training Cockpit — Vector Hoops</title>
 <link rel="canonical" href="https://hoops.dumbmodel.com/model">
 <meta property="og:url" content="https://hoops.dumbmodel.com/model">
-<meta name="description" content="From 12,392 player-seasons to a 48-d fingerprint: training cockpit, architecture, truthful flow, and glass-box explorer for MTNN v4→v6.">
+<meta name="description" content="From 12,966 player-seasons to a 48-d fingerprint: training cockpit, architecture, truthful flow, and glass-box explorer for MTNN v4→v6.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E🏀%3C/text%3E%3C/svg%3E">
 <meta property="og:type" content="website">
 <meta property="og:title" content="How the vector knows — MTNN Training Cockpit">
@@ -168,7 +168,7 @@
 <div class="cockpit-panel">
 <h3>Hill-climb 01→05 + loss weights</h3>
 <div class="pipe">
-<div class="pipe-step is-done"><span class="step-num">01</span><b>Gather</b><i>stats.nba 12,392</i></div><div class="pipe-arrow">→</div>
+<div class="pipe-step is-done"><span class="step-num">01</span><b>Gather</b><i>stats.nba 12,966</i></div><div class="pipe-arrow">→</div>
 <div class="pipe-step is-done"><span class="step-num">02</span><b>Vectors</b><i>per-season z ±4 + mask</i></div><div class="pipe-arrow">→</div>
 <div class="pipe-step is-done"><span class="step-num">03</span><b>Towers</b><i>17×160→32×2</i></div><div class="pipe-arrow">→</div>
 <div class="pipe-step is-done"><span class="step-num">04</span><b>Fusion</b><i>556→128→48 L2 224K</i></div><div class="pipe-arrow">→</div>
@@ -198,7 +198,7 @@
 </div>
 <div class="manim-card">
 <video autoplay loop muted playsinline controls preload="metadata" src="assets/manim/ChimeraEquation.mp4" aria-label="ChimeraEquation — 2 donors fuse to nearest real"></video>
-<div class="manim-caption"><b>ChimeraEquation — how Chimera scores</b><br>Donor A + Donor B → fuse in 48-d → nearest real player-season among 12,392 by cosine. The argmin that powers the daily puzzle: closest to the sum of two fingerprints.</div>
+<div class="manim-caption"><b>ChimeraEquation — how Chimera scores</b><br>Donor A + Donor B → fuse in 48-d → nearest real player-season among 12,966 by cosine. The argmin that powers the daily puzzle: closest to the sum of two fingerprints.</div>
 </div>
 <div class="manim-card">
 <video autoplay loop muted playsinline controls preload="metadata" src="assets/manim/InputFamilies.mp4" aria-label="InputFamilies — 120 feats into 17 families"></video>
@@ -206,7 +206,7 @@
 </div>
 <div class="manim-card">
 <video autoplay loop muted playsinline controls preload="metadata" src="assets/manim/EmbeddingL2.mp4" aria-label="EmbeddingL2 — unit sphere cosine similarity"></video>
-<div class="manim-caption"><b>EmbeddingL2 — 48-d → L2 → unit sphere • cosine = similarity</b><br>v̂ = v/||v||₂, ||v̂||=1, cos = v̂·ŵ. 12,392 points on a sphere powers Chimera, Era Twin, and neighbor search. Same geometry for v6 64-d, just wider.</div>
+<div class="manim-caption"><b>EmbeddingL2 — 48-d → L2 → unit sphere • cosine = similarity</b><br>v̂ = v/||v||₂, ||v̂||=1, cos = v̂·ŵ. 12,966 points on a sphere powers Chimera, Era Twin, and neighbor search. Same geometry for v6 64-d, just wider.</div>
 </div>
 </div>
 </section>
@@ -243,7 +243,7 @@
 <div class="network-controls" style="padding:14px;">
 <div class="search-row" style="grid-column:1 / -1;">
 <label class="viz-panel__label" for="network-search" style="min-width:54px;">Player</label>
-<input type="search" id="network-search" class="wiki-search network-search" placeholder="Search 12,392 player-seasons — e.g. LeBron 2013, Curry 2016…" autocomplete="off" autocorrect="off" spellcheck="false">
+<input type="search" id="network-search" class="wiki-search network-search" placeholder="Search 12,966 player-seasons — e.g. LeBron 2013, Curry 2016…" autocomplete="off" autocorrect="off" spellcheck="false">
 <ul class="network-suggest" id="network-suggest" hidden></ul>
 <span id="network-player-tag" class="network-player-tag">Loading player index…</span>
 </div>
@@ -288,7 +288,7 @@
 </section>
 
 <section class="drift-card network-map-card" aria-label="48-d embedding map">
-<div class="network-section__head"><div><p class="viz-panel__label" style="margin:0;">Embedding map — 48-d rendered in 3D • cosine = similarity</p><p style="font-size:12px; color:#666; margin-top:6px;">Slow auto-rotate • drag to orbit • scroll to zoom • orange=selected — 12,392 points L2-normalized.</p></div></div>
+<div class="network-section__head"><div><p class="viz-panel__label" style="margin:0;">Embedding map — 48-d rendered in 3D • cosine = similarity</p><p style="font-size:12px; color:#666; margin-top:6px;">Slow auto-rotate • drag to orbit • scroll to zoom • orange=selected — 12,966 points L2-normalized.</p></div></div>
 <div class="network-map-layout">
 <div class="network-map-stage">
 <canvas id="network-map-canvas" class="network-map-canvas" aria-label="3D MTNN embedding map"></canvas>
@@ -304,7 +304,7 @@
 <div class="cockpit-grid">
 <div class="cockpit-panel">
 <h3>01 Gather → 02 Vectors</h3>
-<p style="font-size:13px; line-height:1.6;">Pull every per-100 split from stats.nba.com 1996-2026. 12,392 player-seasons after MIN≥800 filter. Per-season z-score so 1999 and 2026 are both 0 = average of their era. Mask m creates cat([x·m,m]) so model knows never-measured vs zero.</p>
+<p style="font-size:13px; line-height:1.6;">Pull every per-100 split from stats.nba.com 1996-2026. 12,966 player-seasons after MIN≥800 filter. Per-season z-score so 1999 and 2026 are both 0 = average of their era. Mask m creates cat([x·m,m]) so model knows never-measured vs zero.</p>
 <ul style="font-size:12px; line-height:1.6; margin:8px 0 0 18px;">
 <li>volume, playmaking, rebounding, defense, efficiency, shotmix</li>
 <li>bio age/height/weight/draft, tracking 2013+ masked, form 2015+ masked</li>

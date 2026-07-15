@@ -23,7 +23,7 @@
 
 Must stay true, never inflated:
 ```
-12,392 player-seasons 1996-2026
+12,966 player-seasons 1996-2026
 120 feats → 17 families cat([x·m,m]) where m∈{0,1} ∅=pre-2013 tracking, pre-2015 form → 0 grad never imputed
 Family counts: volume 5 · play 12 · reb 5 · def 3 · eff 10 · shotmix 13 · bio 4 · tracking*13 · form*6 · market 4 · roster 5 · career 5 · comp 4 · team 5 · pedig 7 · playoffs 14 · honors 5 =120
 Towers: 17 × 160→32 residual ×2 LN GELU =544 + 12 season =556 →128 →48 L2 ~224K params v5 → v6 40→192×3 →128→512→64 ~1.2M

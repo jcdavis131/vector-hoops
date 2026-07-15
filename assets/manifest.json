@@ -80,16 +80,16 @@
       "players_drafted": 1755,
       "players_undrafted": 538,
       "players_unmatched_masked": 0,
-      "rows_covered": 12392,
-      "rows_total": 12392
+      "rows_covered": 12966,
+      "rows_total": 12966
     },
     "playoffs": {
       "cache_complete": true,
       "appearances": 5834,
       "seasons_covered": 30,
-      "rows_total": 12392
+      "rows_total": 12966
     },
-    "player_seasons": 12392,
+    "player_seasons": 12966,
     "seasons": [
       "1996-97",
       "2025-26"
