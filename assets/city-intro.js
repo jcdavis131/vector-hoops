@@ -272,10 +272,17 @@
     arenaGroup.userData.bobSpeed=0.9 + Math.random()*0.6;
   }
 
-  // --- Embedding sky v4 ---
+  // --- Embedding sky v4 — lite first for 10M DAU perf ---
+  async function fetchJson(url){
+    try{var r=await fetch(url,{cache:'force-cache'}); if(!r.ok) throw new Error(r.status); return await r.json();}catch(e){return null;}
+  }
   async function ensureEmbeddingData(){
     if(embeddingData) return embeddingData;
-    try{var r=await fetch('assets/vectors.json',{cache:'force-cache'}); var j=await r.json(); embeddingData=j; return j;}catch(e){console.warn('vectors load fail',e); return null;}
+    // try lite 631KB (114KB gz) first — 7x faster than 3MB
+    var j=await fetchJson('assets/vectors_lite.json');
+    if(!j) j=await fetchJson('assets/vectors.json');
+    if(j){ embeddingData=j; return j; }
+    console.warn('vectors load fail'); return null;
   }
   async function ensureStarfield(){
     if(starFieldReady) return;
@@ -517,11 +524,16 @@
         barsEl.appendChild(row);
       }
     }
+    card.dataset.abbr=abbr;
+    card.dataset.focus=String(focus);
+    var shareBtn=document.getElementById('team-universe-share');
     if(toggleBtn){
-      toggleBtn.style.display = window.innerWidth <= 860 ? 'inline-flex' : 'none';
+      toggleBtn.style.display = window.innerWidth <= 860 ? 'inline-flex' : 'inline-flex';
       if(!card.classList.contains('is-expanded')){
         toggleBtn.textContent='Show breakdown';
       }
+    }
+    if(shareBtn){ shareBtn.style.display='inline-flex'; }
     }
   }
 
