@@ -38,14 +38,22 @@
     return c;
   }
   async function shareUniverse(abbr,text,url,copiedEl){
+    function showToast(msg){
+      try{
+        var t=document.getElementById('vh-toast');
+        if(!t){ t=document.createElement('div'); t.id='vh-toast'; t.className='vh-toast'; document.body.appendChild(t); }
+        t.textContent=msg; t.classList.add('is-visible');
+        setTimeout(function(){ t.classList.remove('is-visible'); }, 2600);
+      }catch(e){}
+    }
     try{
       var titleEl=document.getElementById('team-universe-title'); var metaEl=document.getElementById('team-universe-meta');
       var titleLine=titleEl?titleEl.textContent:abbr+' universe'; var metaLine=metaEl?metaEl.textContent.replace(/\s+/g,' ').trim().slice(0,80):'';
       var canvas=drawTeamCard(abbr,titleLine,metaLine); var blob=await new Promise(function(res){canvas.toBlob(function(b){res(b);},'image/png');});
       var file=new File([blob],'vector-hoops-'+abbr+'.png',{type:'image/png'}); var shareText=text+'\n'+url;
-      if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({title:'Vector Hoops — '+abbr+' Universe',text:shareText,files:[file]}); if(copiedEl){copiedEl.style.display='block'; copiedEl.textContent='Shared!'; setTimeout(function(){copiedEl.style.display='none';},2500);} return;}
-      if(navigator.share){try{await navigator.share({title:'Vector Hoops',text:shareText,url:url}); if(copiedEl){copiedEl.style.display='block'; setTimeout(function(){copiedEl.style.display='none';},2500);} return;}catch(e){}}
-      if(navigator.clipboard&&navigator.clipboard.writeText){await navigator.clipboard.writeText(shareText); if(copiedEl){copiedEl.style.display='block'; copiedEl.textContent='Link copied! Challenge friends.'; setTimeout(function(){copiedEl.style.display='none';},2500);} }
+      if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({title:'Vector Hoops — '+abbr+' Universe',text:shareText,files:[file]}); if(copiedEl){copiedEl.style.display='block'; copiedEl.textContent='Shared!'; setTimeout(function(){copiedEl.style.display='none';},2500);} showToast('🌌 '+abbr+' universe shared'); return;}
+      if(navigator.share){try{await navigator.share({title:'Vector Hoops',text:shareText,url:url}); if(copiedEl){copiedEl.style.display='block'; setTimeout(function(){copiedEl.style.display='none';},2500);} showToast('Link shared — challenge friends'); return;}catch(e){}}
+      if(navigator.clipboard&&navigator.clipboard.writeText){await navigator.clipboard.writeText(shareText); if(copiedEl){copiedEl.style.display='block'; copiedEl.textContent='Link copied! Challenge friends.'; setTimeout(function(){copiedEl.style.display='none';},2500);} showToast('Copied — '+abbr+' vs world → '+url); }
     }catch(e){console.warn('shareUniverse fail',e); if(copiedEl){copiedEl.style.display='block'; copiedEl.textContent='Copy: '+url;}}
   }
   async function shareChimera(puzzleNum,emojiRows,scoreText,url){

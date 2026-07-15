@@ -362,7 +362,7 @@
       var haloMat=new THREE.MeshBasicMaterial({color:new THREE.Color(OKABE[k]), transparent:true, opacity:0.20, fog:false, depthWrite:false, blending:THREE.AdditiveBlending});
       if(k===7) haloMat.color=new THREE.Color(0x999999);
       var halo=new THREE.Mesh(haloGeo,haloMat); halo.position.copy(vp); skyGroup.add(halo);
-      var pl=new THREE.PointLight(new THREE.Color(OKABE[k]), 0.8, 24); pl.position.copy(vp); skyGroup.add(pl);
+      var pl=new THREE.PointLight(new THREE.Color(OKABE[k]), 0.8, 24); pl.position.copy(vp); pl.userData.archetype=k; pl.userData.baseIntensity=0.8; pl.userData.isFocusLight=true; skyGroup.add(pl);
 
       var labelCanvas=document.createElement('canvas'); labelCanvas.width=256; labelCanvas.height=64;
       var lctx=labelCanvas.getContext('2d');
@@ -583,6 +583,23 @@
     camera.position.set(Math.cos(angle)*radius, height, Math.sin(angle)*radius);
     camera.lookAt(0,1.6,0);
 
+    // compute focus intensity for 10M DAU polish
+    var focusPct=0, focusCount=0;
+    if(teamFocus!==null && centroidsCache && centroidsCache[teamFocus]){
+      focusCount=centroidsCache[teamFocus].cnt||0;
+      var total=pointsPlayers.length||12966;
+      focusPct= total>0 ? (focusCount/total) : 0;
+    }
+    var pulseAmp = 0.15 + focusPct*0.45; // 0.15 → 0.6 based on focus size
+    var teamPrimaryFlicker = null;
+    if(teamFocus!==null){
+      try{
+        var favAbbr = localStorage.getItem('vectorHoops.favoriteTeam')|| (teams[currentIdx] && teams[currentIdx].abbr);
+        var favTeam = teams.find(function(tt){ return tt.abbr===favAbbr; });
+        if(favTeam) teamPrimaryFlicker = favTeam.primary;
+      }catch(e){}
+    }
+
     // bobbing arena
     if(groundGroup){
       groundGroup.children.forEach(function(g){
@@ -590,20 +607,65 @@
           var bob=Math.sin(now*g.userData.bobSpeed)*0.12;
           g.position.y=bob;
         }
-        // pulse dot
+        // pulse dot — intensity tied to focus count
         g.traverse&&g.traverse(function(child){
           if(child.userData && child.userData.isPulse){
-            var s=1+Math.sin(now*2.2)*0.15;
-            child.scale.set(s,s,s);
+            var base = 1 + Math.sin(now* (2.2+focusPct))*pulseAmp;
+            // if locked, add team primary glow scale
+            if(locked && teamPrimaryFlicker){
+              base += Math.sin(now*3.1)*0.08;
+            }
+            child.scale.set(base,base,base);
           }
         });
       });
+    }
+
+    // focus PointLight flicker team primary + live dot intensity
+    if(skyGroup){
+      skyGroup.children.forEach(function(child){
+        if(child.isPointLight && child.userData && child.userData.isFocusLight){
+          var isFocus = (child.userData.archetype===teamFocus);
+          if(isFocus){
+            var baseI = child.userData.baseIntensity||0.8;
+            // flicker 0.8 → up to 1.6 when locked, plus team primary slight hue already via color set elsewhere
+            var flick = baseI + Math.sin(now* (isFocus? 2.8:1.7)) * (0.28 + focusPct*0.5) + (locked?0.28:0);
+            child.intensity = flick;
+            // if team primary exists, lerp light color slightly toward team primary when locked
+            if(locked && teamPrimaryFlicker){
+              var teamCol = new THREE.Color(teamPrimaryFlicker);
+              var orig = new THREE.Color(OKABE[child.userData.archetype]||'#FFFFFF');
+              child.color.copy(orig.clone().lerp(teamCol, 0.28 + Math.sin(now*1.3)*0.08));
+            }
+          } else {
+            child.intensity = locked ? 0.12 : (child.userData.baseIntensity||0.8)*0.55;
+          }
+        }
+      });
+    }
+
+    // live-dot css variable tied to focus for growthy feel
+    if(focusPct>0){
+      var liveDot = document.querySelector('.live-dot');
+      if(liveDot){
+        var dotScale = 1 + focusPct*1.8;
+        liveDot.style.setProperty('--pulse-intensity', dotScale.toString());
+        liveDot.style.transform = 'scale('+ (1+ focusPct*0.4) +')';
+        liveDot.style.boxShadow = '0 0 0 '+(2+focusPct*6)+'px '+(teamPrimaryFlicker||'#F0E442')+'44';
+      }
     }
 
     if(skyGroup && !prefersReduced){
       skyGroup.rotation.y = now*0.008 + extraYaw*0.05;
       skyGroup.rotation.x = Math.sin(now*0.03)*0.02;
     }
+    // subtle parallax on scroll
+    try{
+      var sc = window.scrollY||0;
+      var parallax = Math.min(24, sc*0.04);
+      var heroBg = document.querySelector('.embed-hero__bg');
+      if(heroBg && !prefersReduced) heroBg.style.transform = 'translateY('+ (parallax*0.3) +'px)';
+    }catch(e){}
     renderer.render(scene,camera);
   }
 
