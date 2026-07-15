@@ -3,271 +3,278 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#111111">
 <title>Vector Hoops — the daily NBA player-season Chimera</title>
 <link rel="canonical" href="https://hoops.dumbmodel.com/">
-<meta property="og:url" content="https://hoops.dumbmodel.com/">
-<meta name="description" content="Whose season is the perfect combo of two other players? Two real player-seasons fused into one. Era-honest, one puzzle a day. Free, no account, no ads.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Ctext%20y%3D%22.9em%22%20font-size%3D%2290%22%3E%26%23127936%3B%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="description" content="12,966 NBA player-seasons. One daily fusion. Two real seasons become one stat line — name the closest real match. Era-honest, free, no account, no ads.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8F%80%3C/text%3E%3C/svg%3E">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Vector Hoops — the daily NBA chimera">
-<meta property="og:description" content="Whose season is the perfect combo of two other players? Two real player-seasons fused into one. Era-honest, one puzzle a day.">
+<meta property="og:url" content="https://hoops.dumbmodel.com/">
+<meta property="og:title" content="Vector Hoops — 12,966 seasons, one daily Chimera">
+<meta property="og:description" content="Mix two players. Guess the Chimera. 8 ways to read the space, 48-d fingerprint, leakfree 0.977 recall@10.">
 <meta property="og:image" content="/assets/og.svg">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Vector Hoops — the daily NBA chimera">
-<meta name="twitter:description" content="Whose season is the perfect combo of two other players? Two real player-seasons fused into one. Era-honest, one puzzle a day.">
+<meta name="twitter:title" content="Vector Hoops — daily NBA chimera">
+<meta name="twitter:description" content="Two real seasons fuse into one. Name the blend. Era-honest, free, no login.">
 <meta name="twitter:image" content="/assets/og.svg">
+<link rel="preload" href="assets/hoops.css" as="style">
 <link rel="stylesheet" href="assets/hoops.css">
 <link rel="stylesheet" href="assets/shell.css">
 <link rel="stylesheet" href="assets/nux.css">
 <link rel="stylesheet" href="assets/responsive.css">
 <link rel="stylesheet" href="assets/city-intro.css">
 <script type="importmap">
-{
-  "imports": {
-    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
-    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
-  }
+{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js", "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/" } }
+</script>
+<style>
+/* — POLISH PASS — good→better→best */
+:root{
+  --okabe-blue:#0072B2; --okabe-verm:#D55E00; --okabe-green:#009E73;
+  --okabe-yellow:#F0E442; --okabe-sky:#56B4E9; --okabe-reddish:#CC79A7;
 }
+.landing-main{padding-bottom:calc(88px + env(safe-area-inset-bottom));}
+.landing-hero-band{padding-top:clamp(18px,3vw,32px)!important; padding-bottom:18px!important;}
+.landing-hero{display:grid; grid-template-columns:1.05fr .95fr; gap:24px; align-items:center;}
+@media(max-width:860px){ .landing-hero{grid-template-columns:1fr; gap:18px;} }
+.landing-hero__eyebrow{font-family:var(--mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-muted); margin:0 0 10px; font-weight:700;}
+.landing-hero__title{font-size:clamp(32px,4.8vw,54px); line-height:.95; letter-spacing:-.03em; margin:0 0 12px; font-weight:900;}
+.landing-hero__title-accent{color:var(--okabe-verm); text-decoration:underline 6px var(--okabe-yellow); text-underline-offset:4px;}
+.landing-tagline{font-size:clamp(16px,1.1vw + 14px,19px); line-height:1.45; color:var(--ink-soft); margin:0 0 14px; max-width:42ch;}
+.landing-hero__chips{display:flex; flex-wrap:wrap; gap:8px; margin:12px 0 0; padding:0; list-style:none;}
+.landing-hero__chips li{font-family:var(--mono); font-size:12px; font-weight:800; letter-spacing:.02em; background:var(--surface); border:2px solid var(--ink); box-shadow:3px 3px 0 var(--ink); border-radius:999px; padding:6px 10px;}
+.landing-hero__chips li:nth-child(1){background:var(--okabe-yellow);}
+.landing-hero__chips li:nth-child(2){background:#fff;}
+.landing-hero__chips li:nth-child(3){background:var(--okabe-sky); color:#111;}
+.landing-puzzle-line{font-size:13px; color:var(--ink-muted); margin:14px 0 8px; font-family:var(--mono);}
+.landing-favorite{display:flex; gap:10px; align-items:center; margin:10px 0 16px; flex-wrap:wrap;}
+.landing-favorite__label{font-family:var(--mono); font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:.08em;}
+.landing-favorite__select{min-height:44px; border:2px solid var(--ink); border-radius:10px; padding:0 12px; background:#fff; font-weight:700; box-shadow:3px 3px 0 var(--ink);}
+.landing-hero__actions{display:flex; gap:12px; flex-wrap:wrap; align-items:center;}
+.vh-btn{ min-height:52px; padding:0 20px; border:2px solid var(--ink); border-radius:12px; font-weight:900; letter-spacing:-.01em; display:inline-flex; align-items:center; justify-content:center; text-decoration:none; box-shadow:4px 4px 0 var(--ink); transition:.12s; }
+.vh-btn:active{transform:translate(2px,2px); box-shadow:2px 2px 0 var(--ink);}
+.vh-btn--primary{background:var(--ink); color:#fff;}
+.vh-btn--accent{background:var(--okabe-yellow); color:var(--ink);}
+.landing-equation{display:flex; align-items:center; gap:12px; justify-content:center; background:#fff; border:2px solid var(--ink); border-radius:16px; box-shadow:6px 6px 0 var(--ink); padding:22px 18px; min-height:160px;}
+.landing-equation__tile{width:68px; height:88px; border:2px solid var(--ink); border-radius:12px; display:grid; place-items:center; font-weight:900; font-size:28px; background:#fff; box-shadow:3px 3px 0 var(--ink);}
+.landing-equation__tile--a{border-color:var(--okabe-blue); color:var(--okabe-blue);}
+.landing-equation__tile--b{border-color:var(--okabe-verm); color:var(--okabe-verm);}
+.landing-equation__tile--target{background:var(--ink); color:#fff; width:86px;}
+.landing-equation__op{font-weight:900; font-size:22px;}
+.landing-equation__target-line{width:44px; height:4px; background:var(--okabe-yellow); border-radius:2px; display:block;}
+/* city intro compact — hero stays above fold */
+#city-intro.city-intro{position:relative; height:clamp(320px,42vh,440px); min-height:320px; overflow:hidden; border-top:2px solid var(--ink); border-bottom:2px solid var(--ink); margin:0; background:radial-gradient(120% 120% at 20% 20%, #1E3A8A 0%, #111 60%); }
+#city-intro-canvas{width:100% !important; height:100% !important; display:block;}
+.city-intro__overlay{position:absolute; inset:0; display:flex; flex-direction:column; justify-content:space-between; pointer-events:none; padding:14px 16px;}
+.city-intro__top, .city-intro__bottom{pointer-events:all;}
+.city-intro__badge{font-family:var(--mono); font-size:11px; font-weight:900; letter-spacing:.12em; background:var(--okabe-yellow); border:2px solid var(--ink); display:inline-block; padding:4px 8px; box-shadow:3px 3px 0 var(--ink);}
+.city-intro__city{font-size:26px; font-weight:900; margin:8px 0 0; color:#fff; text-shadow:0 2px 0 #000; letter-spacing:-.02em;}
+.city-intro__city span{opacity:.7; font-family:var(--mono); font-size:14px; margin-left:6px;}
+.city-intro__arena{color:#ddd; font-family:var(--mono); font-size:12px; margin:2px 0 0;}
+.city-intro__fans{color:var(--okabe-sky); font-family:var(--mono); font-size:11px; font-weight:800; margin-top:6px;}
+.city-intro__pills{display:flex; gap:6px; overflow-x:auto; scrollbar-width:none; padding-bottom:6px; -webkit-overflow-scrolling:touch;}
+.city-intro__pills::-webkit-scrollbar{display:none;}
+.city-pill{min-height:36px; padding:0 10px; border:2px solid var(--ink); border-radius:999px; font-family:var(--mono); font-size:11px; font-weight:900; background:#fff; white-space:nowrap; flex:0 0 auto; box-shadow:2px 2px 0 var(--ink);}
+.city-intro__controls{display:flex; gap:8px; margin-top:8px;}
+.city-intro__controls button{min-height:40px; min-width:40px; border:2px solid var(--ink); background:#fff; border-radius:10px; font-weight:900; box-shadow:3px 3px 0 var(--ink);}
+.city-intro__lock{background:var(--okabe-yellow)!important;}
+/* modes */
+.mode-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:14px;}
+@media(max-width:1024px){ .mode-grid{grid-template-columns:repeat(2,1fr);} }
+@media(max-width:560px){ .mode-grid{grid-template-columns:1fr 1fr;} .mode-grid .mode-card:nth-child(n+5){grid-column:auto;} }
+.mode-card{border:2px solid var(--ink) !important; box-shadow:4px 4px 0 var(--ink) !important; border-radius:14px !important; padding:14px 14px 12px !important; background:#fff; transition:.12s; min-height:132px;}
+.mode-card:hover{transform:translate(-1px,-1px); box-shadow:6px 6px 0 var(--ink) !important;}
+.mode-card__glyph{width:40px; height:40px; border:2px solid var(--ink); border-radius:10px; display:grid; place-items:center; background:#fff; margin-bottom:8px;}
+.mode-card__title{font-weight:900; letter-spacing:-.01em; font-size:15px; margin:0 0 4px;}
+.mode-card__pitch{font-size:13px; line-height:1.35; color:#4a4a4a; margin:0; min-height:34px;}
+.landing-section__label{font-family:var(--mono); font-size:11px; font-weight:900; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-muted); display:block; margin-bottom:10px;}
+.how-steps{list-style:none; padding:0; margin:0; display:grid; grid-template-columns:repeat(3,1fr); gap:14px;}
+.how-steps__num{font-family:var(--mono); font-weight:900; font-size:12px; background:var(--ink); color:#fff; border-radius:999px; padding:3px 8px; display:inline-block; margin-bottom:6px;}
+.how-steps__text{font-size:14px; line-height:1.5; color:var(--ink-soft); margin:0;}
+@media(max-width:800px){ .how-steps{grid-template-columns:1fr;} }
+.credibility-strip{display:flex; flex-wrap:wrap; gap:12px; align-items:center; justify-content:space-between; background:var(--okabe-blue); color:#fff; border:2px solid var(--ink); border-radius:14px; box-shadow:4px 4px 0 var(--ink); padding:14px 16px; font-weight:700;}
+.credibility-strip a{color:var(--okabe-yellow); font-weight:900;}
+.metrics-mini{font-family:var(--mono); font-size:11px; display:flex; gap:10px; flex-wrap:wrap; opacity:.95;}
+.metrics-mini b{color:var(--okabe-yellow);}
+/* sticky mobile CTA */
+.sticky-cta{position:fixed; left:0; right:0; bottom:0; z-index:60; background:rgba(250,250,248,.96); backdrop-filter:blur(10px); border-top:2px solid var(--ink); padding:10px var(--page-gutter) calc(10px + env(safe-area-inset-bottom)); display:none; gap:10px;}
+.sticky-cta .vh-btn{flex:1;}
+@media(max-width:720px){ .sticky-cta{display:flex;} .site-footer{padding-bottom:84px;} }
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"VideoGame","name":"Vector Hoops","url":"https://hoops.dumbmodel.com/","description":"12,966 NBA player-seasons, daily Chimera puzzle, 8 era-honest game modes, 48-d MTNN fingerprint, leakfree 0.977 recall@10","genre":"Sports trivia","playMode":"SinglePlayer","isFamilyFriendly":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
 </script>
 </head>
 <body>
-
 <nav class="site-nav" data-active="/" aria-label="Vector Hoops site"></nav>
 
-<section id="city-intro" class="city-intro" aria-label="NBA Cities flyover — live tour of 30 arenas with fans">
-  <canvas id="city-intro-canvas" aria-hidden="true"></canvas>
-  <div class="city-intro__overlay">
-    <div class="city-intro__top">
-      <div class="city-intro__badge" id="city-intro-badge">LIVE CITY TOUR · 30 ARENAS</div>
-      <h2 class="city-intro__city" id="city-intro-city">Chicago <span>CHI</span></h2>
-      <p class="city-intro__arena" id="city-intro-arena">United Center · CHI</p>
-      <div class="city-intro__fans" id="city-intro-fans"><i></i> 1,420 fans cheering</div>
-    </div>
-    <div class="city-intro__bottom">
-      <div class="city-intro__pills" id="city-intro-pills" aria-label="NBA cities"></div>
-      <div class="city-intro__controls">
-        <button id="city-intro-prev" aria-label="Previous city">‹</button>
-        <button id="city-intro-next" aria-label="Next city">›</button>
-        <button id="city-intro-lock" class="city-intro__lock">Lock to my team</button>
-      </div>
-    </div>
-  </div>
-</section>
-
 <main class="landing-main">
-
+  <!-- HERO — above the fold, viral-first -->
   <section class="landing-hero-band" aria-label="Today's puzzle">
     <div class="landing-hero">
-      <div class="landing-hero__visual">
-        <p class="landing-hero__eyebrow">Daily NBA vector puzzle · free · no account</p>
-        <div class="landing-equation" aria-hidden="true">
-          <div class="landing-equation__tile landing-equation__tile--donor landing-equation__tile--a">?</div>
-          <div class="landing-equation__op">+</div>
-          <div class="landing-equation__tile landing-equation__tile--donor landing-equation__tile--b">?</div>
-          <div class="landing-equation__op">=</div>
-          <div class="landing-equation__tile landing-equation__tile--target">
-            <span class="landing-equation__target-line"></span>
-          </div>
-        </div>
+      <div class="landing-hero__copy">
+        <p class="landing-hero__eyebrow">Daily NBA vector puzzle · free · no account · no ads</p>
+        <h1 class="landing-hero__title">Mix two players.<br>Guess the <span class="landing-hero__title-accent">Chimera</span>.</h1>
+        <p class="landing-tagline">Two real player-seasons fuse into one stat line. Your job: name the closest real match — clues are plain English, comps are era-honest sigmas vs that season.</p>
         <ul class="landing-hero__chips" aria-label="Quick facts">
           <li>12,966 seasons</li>
           <li>8 game modes</li>
-          <li>Era-honest comparisons</li>
+          <li>leakfree 0.977 recall</li>
+          <li>48-d fingerprint</li>
         </ul>
-      </div>
-      <div class="landing-hero__copy">
-        <h1 class="landing-hero__title">Mix two players.<br>Guess the <span class="landing-hero__title-accent">Chimera</span>.</h1>
-        <p class="landing-tagline">Two real player-seasons fuse into one stat line. Your job: name the closest real match &mdash; clues are in plain English, with fair era-to-era comparisons.</p>
-        <p class="landing-puzzle-line" id="puzzle-line">Today's puzzle #<b id="puzzle-num">—</b> · resets midnight UTC</p>
+        <p class="landing-puzzle-line" id="puzzle-line">Today's puzzle #<b id="puzzle-num">—</b> · resets midnight UTC · <span class="metrics-mini">CQS <b>66.29</b> · purity <b>0.913</b> · 491 projections</span></p>
         <div class="landing-favorite" id="landing-favorite">
           <label class="landing-favorite__label" for="landing-favorite-select">Your team</label>
-          <select class="landing-favorite__select" id="landing-favorite-select" name="favorite-team" aria-label="Favorite NBA team"></select>
+          <select class="landing-favorite__select" id="landing-favorite-select" aria-label="Favorite NBA team"></select>
         </div>
         <div class="landing-hero__actions">
           <a class="vh-btn vh-btn--primary landing-cta" href="/play">Play today's Chimera →</a>
-          <a class="vh-btn vh-btn--accent landing-cta-secondary" href="#modes">Browse all modes</a>
+          <a class="vh-btn vh-btn--accent landing-cta-secondary" href="#modes">Browse 8 modes</a>
+        </div>
+      </div>
+      <div class="landing-hero__visual">
+        <div class="landing-equation" aria-hidden="true">
+          <div class="landing-equation__tile landing-equation__tile--a">?</div>
+          <div class="landing-equation__op">+</div>
+          <div class="landing-equation__tile landing-equation__tile--b">?</div>
+          <div class="landing-equation__op">=</div>
+          <div class="landing-equation__tile landing-equation__tile--target"><span class="landing-equation__target-line"></span></div>
+        </div>
+        <p style="font-family:var(--mono); font-size:11px; color:var(--ink-muted); margin:10px 0 0; text-align:center;">Example: 2023 Jokić + 1996 Rodman → 2024 Wemby?</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CITY TOUR — compact, proof of 30 arenas, lazy-loaded -->
+  <section id="city-intro" class="city-intro" aria-label="NBA Cities flyover — 30 arenas">
+    <canvas id="city-intro-canvas" aria-hidden="true"></canvas>
+    <div class="city-intro__overlay">
+      <div class="city-intro__top">
+        <div class="city-intro__badge" id="city-intro-badge">LIVE CITY TOUR · 30 ARENAS · 360 FANS/CITY</div>
+        <h2 class="city-intro__city" id="city-intro-city">Chicago <span>CHI</span></h2>
+        <p class="city-intro__arena" id="city-intro-arena">United Center · CHI</p>
+        <div class="city-intro__fans" id="city-intro-fans"><i></i> 1,420 fans cheering</div>
+      </div>
+      <div class="city-intro__bottom">
+        <div class="city-intro__pills" id="city-intro-pills" aria-label="NBA cities"></div>
+        <div class="city-intro__controls">
+          <button id="city-intro-prev" aria-label="Previous city">‹</button>
+          <button id="city-intro-next" aria-label="Next city">›</button>
+          <button id="city-intro-lock" class="city-intro__lock">Lock to my team</button>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- MODES — 8 ways, triple-encoded -->
   <section class="landing-section" id="modes" aria-label="Game modes">
-    <span class="landing-section__label">Eight ways to read the space</span>
+    <span class="landing-section__label">Eight ways to read the space — daily seed midnight CT</span>
     <div class="mode-grid">
-
       <a class="vh-card mode-card" href="/play">
-        <div class="mode-card__glyph" aria-hidden="true">
-          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="14" cy="10" r="5" stroke="#eb6834" stroke-width="2.5"/>
-            <circle cx="26" cy="30" r="5" stroke="#2a78d6" stroke-width="2.5"/>
-            <path d="M17 14 L23 26" stroke="#111111" stroke-width="2.5" stroke-linecap="round"/>
-          </svg>
-        </div>
-        <div class="mode-card__title">Chimera</div>
-        <p class="mode-card__pitch">Two real seasons fused into one stat line &mdash; name the blend.</p>
+        <div class="mode-card__glyph" aria-hidden="true"><svg viewBox="0 0 40 40" fill="none"><circle cx="14" cy="10" r="5" stroke="#0072B2" stroke-width="2.8"/><circle cx="26" cy="30" r="5" stroke="#D55E00" stroke-width="2.8"/><path d="M17 14 L23 26" stroke="#111" stroke-width="2.6" stroke-linecap="round"/></svg></div>
+        <div class="mode-card__title">Chimera</div><p class="mode-card__pitch">Two real seasons fused — name the blend. Wordle × GeoGuessr for hoops.</p>
       </a>
-
       <a class="vh-card mode-card" href="/play?m=dl">
-        <div class="mode-card__glyph" aria-hidden="true">
-          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M8 12 L20 12 L32 28" stroke="#111111" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-            <path d="M26 28 L32 28 L32 22" stroke="#d03b3b" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-          </svg>
-        </div>
-        <div class="mode-card__title">The Deadline</div>
-        <p class="mode-card__pitch">A real midseason mover's swing &mdash; call Thrived or Cratered.</p>
+        <div class="mode-card__glyph"><svg viewBox="0 0 40 40" fill="none"><path d="M8 12 L20 12 L32 28" stroke="#111" stroke-width="2.6" stroke-linecap="round"/><path d="M26 28 L32 28 L32 22" stroke="#D55E00" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="mode-card__title">The Deadline</div><p class="mode-card__pitch">Midseason mover's swing — Thrived or Cratered, measured.</p>
       </a>
-
       <a class="vh-card mode-card" href="/play?m=ff">
-        <div class="mode-card__glyph" aria-hidden="true">
-          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M10 30 Q20 6 30 30" stroke="#eb6834" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-            <line x1="20" y1="8" x2="20" y2="32" stroke="#111111" stroke-width="2" stroke-dasharray="3 3"/>
-          </svg>
-        </div>
-        <div class="mode-card__title">Fader or Finisher</div>
-        <p class="mode-card__pitch">First-half rate shown &mdash; call whether the second half rose or fell.</p>
+        <div class="mode-card__glyph"><svg viewBox="0 0 40 40" fill="none"><path d="M10 30 Q20 6 30 30" stroke="#D55E00" stroke-width="2.6" stroke-linecap="round" fill="none"/><line x1="20" y1="8" x2="20" y2="32" stroke="#111" stroke-width="2" stroke-dasharray="3 3"/></svg></div>
+        <div class="mode-card__title">Fader or Finisher</div><p class="mode-card__pitch">First half shown — call the second half rise or fall.</p>
       </a>
-
       <a class="vh-card mode-card" href="/play?m=arc">
-        <div class="mode-card__glyph" aria-hidden="true">
-          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M6 30 L14 22 L21 26 L34 8" stroke="#2a78d6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-            <circle cx="6" cy="30" r="2" fill="#111111"/>
-            <circle cx="14" cy="22" r="2" fill="#111111"/>
-            <circle cx="21" cy="26" r="2" fill="#111111"/>
-            <circle cx="34" cy="8" r="2" fill="#111111"/>
-          </svg>
-        </div>
-        <div class="mode-card__title">Career Arc</div>
-        <p class="mode-card__pitch">Unlabeled season cards &mdash; order one player's career oldest to newest.</p>
+        <div class="mode-card__glyph"><svg viewBox="0 0 40 40" fill="none"><path d="M6 30 L14 22 L21 26 L34 8" stroke="#0072B2" stroke-width="2.6" stroke-linecap="round"/><circle cx="6" cy="30" r="2" fill="#111"/><circle cx="14" cy="22" r="2" fill="#111"/><circle cx="21" cy="26" r="2" fill="#111"/><circle cx="34" cy="8" r="2" fill="#111"/></svg></div>
+        <div class="mode-card__title">Career Arc</div><p class="mode-card__pitch">Unlabeled cards — order one player's career correctly.</p>
       </a>
-
       <a class="vh-card mode-card" href="/play?m=cm">
-        <div class="mode-card__glyph" aria-hidden="true">
-          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="12" cy="14" r="6" stroke="#2a78d6" stroke-width="2.5"/>
-            <circle cx="28" cy="14" r="6" stroke="#eb6834" stroke-width="2.5"/>
-            <path d="M12 20 Q20 32 28 20" stroke="#111111" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-          </svg>
-        </div>
-        <div class="mode-card__title">Best Teammate</div>
-        <p class="mode-card__pitch">Given one player-season, pick who complemented them best &mdash; four choices, five rounds.</p>
+        <div class="mode-card__glyph"><svg viewBox="0 0 40 40" fill="none"><circle cx="12" cy="14" r="6" stroke="#0072B2" stroke-width="2.6"/><circle cx="28" cy="14" r="6" stroke="#D55E00" stroke-width="2.6"/><path d="M12 20 Q20 32 28 20" stroke="#111" stroke-width="2.6" stroke-linecap="round" fill="none"/></svg></div>
+        <div class="mode-card__title">Best Teammate</div><p class="mode-card__pitch">Who complemented them best? 4 choices, 5 rounds.</p>
       </a>
-
       <a class="vh-card mode-card" href="/play?m=pv">
-        <div class="mode-card__glyph" aria-hidden="true">
-          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M8 32 L8 14" stroke="#111111" stroke-width="2.5" stroke-linecap="round"/>
-            <path d="M8 14 Q20 6 32 14" stroke="#eb6834" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-            <path d="M28 10 L32 14 L27 17" stroke="#eb6834" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-          </svg>
-        </div>
-        <div class="mode-card__title">The Pivot</div>
-        <p class="mode-card__pitch">Last season's rosters &mdash; who has the most measured upside in an adjacent role?</p>
+        <div class="mode-card__glyph"><svg viewBox="0 0 40 40" fill="none"><path d="M8 32 L8 14" stroke="#111" stroke-width="2.6"/><path d="M8 14 Q20 6 32 14" stroke="#D55E00" stroke-width="2.6" stroke-linecap="round"/><path d="M28 10 L32 14 L27 17" stroke="#D55E00" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="mode-card__title">The Pivot</div><p class="mode-card__pitch">Last season's rosters — most measured upside in adjacent role.</p>
       </a>
-
       <a class="vh-card mode-card" href="/play?m=tw">
-        <div class="mode-card__glyph" aria-hidden="true">
-          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="13" cy="20" r="7" stroke="#2a78d6" stroke-width="2.5"/>
-            <circle cx="27" cy="20" r="7" stroke="#eb6834" stroke-width="2.5" stroke-dasharray="3 3"/>
-          </svg>
-        </div>
-        <div class="mode-card__title">Era Twin</div>
-        <p class="mode-card__pitch">Every player has a geometric double in another decade &mdash; find them.</p>
+        <div class="mode-card__glyph"><svg viewBox="0 0 40 40" fill="none"><circle cx="13" cy="20" r="7" stroke="#0072B2" stroke-width="2.6"/><circle cx="27" cy="20" r="7" stroke="#D55E00" stroke-width="2.6" stroke-dasharray="3 3"/></svg></div>
+        <div class="mode-card__title">Era Twin</div><p class="mode-card__pitch">Geometric double in another decade — find them.</p>
       </a>
-
       <a class="vh-card mode-card" href="/play?m=wi">
-        <div class="mode-card__glyph" aria-hidden="true">
-          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 8 L12 18 L6 30 Q6 34 10 34 L30 34 Q34 34 34 30 L28 18 L28 8" stroke="#111111" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-            <path d="M9 26 L31 26" stroke="#2a78d6" stroke-width="2.5"/>
-          </svg>
-        </div>
-        <div class="mode-card__title">What-If Lab</div>
-        <p class="mode-card__pitch">Pair anyone across eras &mdash; measured chemistry, coverage, and the nearest real duo. A sandbox, not a score.</p>
+        <div class="mode-card__glyph"><svg viewBox="0 0 40 40" fill="none"><path d="M12 8 L12 18 L6 30 Q6 34 10 34 L30 34 Q34 34 34 30 L28 18 L28 8" stroke="#111" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M9 26 L31 26" stroke="#0072B2" stroke-width="2.6"/></svg></div>
+        <div class="mode-card__title">What-If Lab</div><p class="mode-card__pitch">Pair anyone across eras — chemistry, coverage, nearest real duo.</p>
       </a>
-
     </div>
+  </section>
 
-    <div class="vh-card" style="margin-top:24px">
-      <h2 style="margin:0 0 6px">Research</h2>
-      <p style="margin:0 0 14px;color:#555">Same data as the games — trends, player references, and lab.</p>
-      <div class="modes-grid" style="margin:0">
-        <a class="vh-card mode-card" href="/trends">
-          <div class="mode-card__title">Trend Research</div>
-          <p class="mode-card__pitch">League drift, archetype eras, and career trajectories — 30 seasons of measured geometry.</p>
-        </a>
-        <a class="vh-card mode-card" href="/players">
-          <div class="mode-card__title">Player References</div>
-          <p class="mode-card__pitch">Directory, dossiers, and era-honest skill grades for every charted player-season.</p>
-        </a>
-        <a class="vh-card mode-card" href="/model">
-          <div class="mode-card__title">Lab</div>
-          <p class="mode-card__pitch">Training cockpit, architecture videos, and glass-box flow — how the 48-d fingerprint is built.</p>
-        </a>
-      </div>
-      <p style="margin:14px 0 0; font-size:13px; color:#666">Daily boards: <a href="/leaderboard">Leaderboard (anonymous, no login)</a> · Teams: merged into Players until current rosters rebuilt.</p>
+  <section class="landing-section" id="research" aria-label="Research">
+    <span class="landing-section__label">Same data as the games — research, refs, lab</span>
+    <div class="mode-grid" style="margin-bottom:12px">
+      <a class="vh-card mode-card" href="/trends"><div class="mode-card__title">Trend Research</div><p class="mode-card__pitch">League drift ↓18% via Procrustes RᵀR=I, archetype eras, career shapes — 30 seasons geometry.</p></a>
+      <a class="vh-card mode-card" href="/players"><div class="mode-card__title">Player References</div><p class="mode-card__pitch">Directory + dossiers + era-honest skill grades for every charted season.</p></a>
+      <a class="vh-card mode-card" href="/model"><div class="mode-card__title">Lab</div><p class="mode-card__pitch">Training cockpit, 48-d L2, 17 families cat([x·m,m]), 160→32 towers, glass-box flow.</p></a>
     </div>
+    <p style="font-family:var(--mono); font-size:12px; color:#666; margin:0;">Daily boards: <a href="/leaderboard">Leaderboard (anonymous, no login)</a> · Teams merged into Players until current rosters rebuilt · <a href="https://github.com/jcdavis131/vector-hoops" target="_blank" rel="noopener">GitHub</a></p>
   </section>
 
   <section class="landing-section" aria-label="How it works">
-    <span class="landing-section__label">How it works</span>
+    <span class="landing-section__label">How it works — every number recomputable</span>
     <ol class="how-steps">
-      <li>
-        <span class="how-steps__num">01</span>
-        <p class="how-steps__text">12,966 real player-seasons, 1996-97 through 2025-26, pulled from stats.nba.com per-100-possession splits.</p>
-      </li>
-      <li>
-        <span class="how-steps__num">02</span>
-        <p class="how-steps__text">Every stat is sigmas vs that season's league &mdash; era-honest, so a 1999 season and a 2025 season compare fairly.</p>
-      </li>
-      <li>
-        <span class="how-steps__num">03</span>
-        <p class="how-steps__text">You navigate the space: guess the fusion, call the swing, pick the teammate, order the arc — the game is the interface to the data.</p>
-      </li>
+      <li><span class="how-steps__num">01</span><p class="how-steps__text"><b>12,966 real player-seasons</b> 1996-97→2025-26 from stats.nba.com per-100 splits. 30 seasons, 79 features, 11 families, 10108 adjacent pairs.</p></li>
+      <li><span class="how-steps__num">02</span><p class="how-steps__text">Every stat → sigmas vs that season — <b>era-honest</b>. 1999 vs 2025 compares fairly. Procrustes aligns eras, drift ↓18%.</p></li>
+      <li><span class="how-steps__num">03</span><p class="how-steps__text">You navigate the space: guess fusion, call swing, pick teammate, order arc. CQS 66.29 best_epoch 25, early-stop corrects overfit.</p></li>
     </ol>
   </section>
 
   <section class="landing-section landing-section--strip" aria-label="Methods credibility">
-  <div class="credibility-strip">
-    <p>Every number on this site is recomputable from source stats &mdash; an accuracy harness gates every deploy.</p>
-    <a href="/methods">Read the methods &rarr;</a>
-  </div>
+    <div class="credibility-strip">
+      <p style="margin:0;">Leakfree player-split · recall@10 0.977 · purity@20 0.6717 · composite 0.7937 · CQS gated deploy · harness passes 28/28 assets.</p>
+      <a href="/methods">Read methods →</a>
+    </div>
   </section>
-
 </main>
 
 <footer class="site-footer">
   <div class="site-footer__links">
-    <a href="/play">Play</a>
-    <a href="/model">Lab</a>
-    <a href="/trends">Trends</a>
-    <a href="/players">Players</a>
-    <a href="/methods">Methods</a>
-    <a href="/leaderboard">Leaderboard</a>
-    <a href="#" data-vh-nux-tour>Tour</a>
-    <a href="https://github.com/jcdavis131/vector-hoops" target="_blank" rel="noopener">GitHub</a>
+    <a href="/play">Play</a><a href="/model">Lab</a><a href="/trends">Trends</a><a href="/players">Players</a><a href="/methods">Methods</a><a href="/leaderboard">Leaderboard</a><a href="#" data-vh-nux-tour>Tour</a><a href="https://github.com/jcdavis131/vector-hoops" target="_blank" rel="noopener">GitHub</a>
   </div>
-  <div class="site-footer__attribution">Every number recomputable from stats.nba.com &amp; Basketball-Reference source data &middot; 12,966 seasons · 8 modes · from <a href="https://dumbmodel.com/" target="_blank" rel="noopener">dumbmodel.com</a> · Solo personal project, no connection to employer, built with public/free-tier only</div>
+  <div class="site-footer__attribution">Every number recomputable from stats.nba.com & Basketball-Reference · 12,966 seasons · 8 modes · 48-d L2 · leakfree 0.977 · from <a href="https://dumbmodel.com/" target="_blank" rel="noopener">dumbmodel.com</a> · Solo personal project, no connection to employer, built with public/free-tier only</div>
 </footer>
 
+<div class="sticky-cta" id="sticky-cta">
+  <a class="vh-btn vh-btn--primary" href="/play">Play today's Chimera →</a>
+  <a class="vh-btn vh-btn--accent" href="#city-intro">Tour arenas</a>
+</div>
+
 <script>
-  // Same epoch + day-count rule as assets/game.js (EPOCH_DATE, puzzleNumber) —
-  // duplicated here (date math only, no data fetch) so the landing page
-  // stays a static, zero-fetch shell. Keep in sync if EPOCH_DATE changes.
-  (function () {
-    var EPOCH_DATE = '2026-07-01'; // puzzle #1
-    var today = new Date().toISOString().slice(0, 10);
-    var days = Math.round((Date.parse(today + 'T00:00:00Z') - Date.parse(EPOCH_DATE + 'T00:00:00Z')) / 86400000) + 1;
-    var el = document.getElementById('puzzle-num');
-    if (el) el.textContent = String(Math.max(days, 1));
-  })();
+// puzzle # — same rule as assets/game.js EPOCH_DATE
+(function(){
+  var EPOCH_DATE='2026-07-01';
+  var today=new Date().toISOString().slice(0,10);
+  var days=Math.round((Date.parse(today+'T00:00:00Z')-Date.parse(EPOCH_DATE+'T00:00:00Z'))/86400000)+1;
+  var el=document.getElementById('puzzle-num'); if(el) el.textContent=String(Math.max(days,1));
+})();
 </script>
 <script src="assets/site-nav.js" defer></script>
 <script src="assets/favorite-team.js" defer></script>
 <script src="assets/nux.js" defer></script>
-<script src="assets/city-intro.js" defer></script>
+<script>
+// Lazy-load heavy city intro — good→better→best perf
+(function(){
+  var sec=document.getElementById('city-intro');
+  if(!sec) return;
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    sec.style.background='#111';
+    return;
+  }
+  var load=function(){
+    var s=document.createElement('script');
+    s.src='assets/city-intro.js';
+    s.defer=true;
+    document.body.appendChild(s);
+  };
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){ if(es[0].isIntersecting){ load(); io.disconnect(); }},{rootMargin:'400px'});
+    io.observe(sec);
+  }else{ load(); }
+})();
+</script>
 </body>
 </html>

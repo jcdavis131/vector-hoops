@@ -1,5 +1,5 @@
 {
-  "built": "2026-07-14 19:35 UTC",
+  "built": "2026-07-14 20:43 UTC",
   "contract": "transparent_14d",
   "wide_skills": {
     "skill_count": 6,
@@ -8,10 +8,10 @@
   },
   "mtnn_promoted": true,
   "mtnn_promotion_note": "embeddings promoted to assets/ and consumed by /model + neighbor UI",
-  "mtnn_model": "mtnn_v5_concat_b2_h160_t32_d48_mlp128_fus256",
+  "mtnn_model": "mtnn_v5_concat_b2_h160_t32_d48_mlp128",
   "mtnn_eval_protocol": "transductive (atlas) \u2014 trained on all rows; NOT held-out",
-  "mtnn_transductive_recall_at_10": 0.838,
-  "mtnn_transductive_purity_at_20": 0.6478780243771536,
+  "mtnn_transductive_recall_at_10": 0.47,
+  "mtnn_transductive_purity_at_20": 0.9126192426532017,
   "mtnn_leakfree": {
     "protocol": "leak-free (pipeline/leakfree.py), player-level split, 3 seeds",
     "objective": "train_mtnn.promotion_composite = 0.4*recall + 0.6*purity (the repo's own gate; next-profile RMSE is in NO gate)",
@@ -22,8 +22,8 @@
     "gain_vs_previous": 0.009,
     "separates_from_previous": true
   },
-  "mtnn_test_recall_at_10": 0.838,
-  "mtnn_purity_at_20": 0.6478780243771536,
+  "mtnn_test_recall_at_10": 0.47,
+  "mtnn_purity_at_20": 0.9126192426532017,
   "hp_sweep_best": null,
   "dataset_ledger": {
     "run": "2026-07-07 18:47 UTC",
@@ -167,11 +167,11 @@
       "present": true
     },
     "archetypes_time.json": {
-      "sha1": "f56311556a83",
+      "sha1": "b3be07324755",
       "present": true
     },
     "archetype_assignments.json": {
-      "sha1": "3ded59e04c5e",
+      "sha1": "3fc6095b70bd",
       "present": true
     },
     "archetype_emergence.json": {
@@ -179,7 +179,7 @@
       "present": true
     },
     "trajectories.json": {
-      "sha1": "2e7f5b768a63",
+      "sha1": "4aad11622e2e",
       "present": true
     },
     "drift.json": {
@@ -203,19 +203,19 @@
       "present": true
     },
     "projections.json": {
-      "sha1": "0905e43d8846",
+      "sha1": "19c63f22e0a3",
       "present": true
     },
     "mtnn_arch.json": {
-      "sha1": "10852152899f",
+      "sha1": "19fa0472df58",
       "present": true
     },
     "mtnn_map.json": {
-      "sha1": "b13f2e95bee3",
+      "sha1": "ddf3cc4c5fa9",
       "present": true
     },
     "mtnn_heads.f32": {
-      "sha1": "830fdddb1c30",
+      "sha1": "5b0591137c22",
       "present": true
     },
     "mtnn_inputs.f32": {
@@ -235,12 +235,12 @@
       "present": true
     },
     "mtnn_meta.json": {
-      "sha1": "e16461777ffb",
+      "sha1": "eafbb0fe6ace",
       "present": true
     }
   },
   "mtnn_embeddings_f32": {
-    "sha1": "6e6bccc0bc36",
+    "sha1": "d31a33a4fac9",
     "present": true,
     "bytes": 2489472
   }
