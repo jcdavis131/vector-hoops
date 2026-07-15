@@ -327,6 +327,15 @@ html,body{overflow-x:hidden; max-width:100%; background:var(--paper);}
 <script src="assets/favorite-team.js" defer></script>
 <script src="assets/nux.js" defer></script>
 <script src="assets/viral-share.js" defer></script>
+<script src="assets/landing-play.js" defer></script>
+<script>
+// sw registration for 10M DAU
+if('serviceWorker' in navigator){
+  window.addEventListener('load', function(){
+    navigator.serviceWorker.register('/sw.js', {scope:'/'}).catch(function(){});
+  });
+}
+</script>
 <script>
 // v4.1 hero loader + viral loops for 10M DAU
 (function(){
