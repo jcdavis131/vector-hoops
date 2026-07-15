@@ -231,7 +231,7 @@ html,body{overflow-x:hidden; max-width:100%; background:var(--paper);}
         </div>
       </div>
       <div class="embed-hero__viz">
-        <div class="glass-card" style="padding:10px;"><div class="landing-equation"><div class="landing-equation__tile landing-equation__tile--a">?</div><div class="landing-equation__op">+</div><div class="landing-equation__tile landing-equation__tile--b">?</div><div class="landing-equation__op">=</div><div class="landing-equation__tile landing-equation__tile--target"><span class="landing-equation__target-line"></span></div></div><p style="font-family:var(--mono); font-size:10px; color:#666; margin:6px 0 0; text-align:center;">Jokić + Rodman → Wemby?</p></div>
+        <div class="glass-card" style="padding:10px;"><div class="landing-equation"><div class="landing-equation__tile landing-equation__tile--a">?</div><div class="landing-equation__op">+</div><div class="landing-equation__tile landing-equation__tile--b">?</div><div class="landing-equation__op">=</div><div class="landing-equation__tile landing-equation__tile--target"><span class="landing-equation__target-line"></span></div></div><p data-role="line" style="font-family:var(--mono); font-size:11px; color:#111; margin:6px 0 0; text-align:center; background:#FFFEF7; border:1.5px solid #111; border-radius:999px; padding:3px 8px; display:inline-block; box-shadow:2px 2px 0 #111; cursor:pointer;" aria-live="polite">Jokić + Rodman → Wemby? 84.5% — tap to shuffle</p></div>
         <div class="glass-card glass-card--dark" id="team-universe-card" style="display:none">
           <div style="font-family:var(--mono); font-size:9px; font-weight:900; letter-spacing:.1em; text-transform:uppercase; opacity:.7; margin-bottom:6px;">Team universe</div>
           <div id="team-universe-title" style="font-weight:950; font-size:14px; line-height:1.1; margin-bottom:4px;">—</div>
@@ -269,8 +269,8 @@ html,body{overflow-x:hidden; max-width:100%; background:var(--paper);}
 <!-- Mobile-only equation teaser below hero to avoid cramp — now viral hook -->
 <div class="mobile-equation">
   <div class="glass-card" style="display:flex; gap:12px; align-items:center;">
-    <div class="landing-equation" style="min-height:72px; box-shadow:none; border:none; padding:0; background:transparent; flex:0 0 auto;">
-      <div class="landing-equation__tile landing-equation__tile--a">?</div><div class="landing-equation__op">+</div><div class="landing-equation__tile landing-equation__tile--b">?</div><div class="landing-equation__op">=</div><div class="landing-equation__tile landing-equation__tile--target"><span class="landing-equation__target-line"></span></div>
+    <div class="landing-equation" id="landing-equation-interactive" style="min-height:72px; box-shadow:none; border:none; padding:0; background:transparent; flex:0 0 auto; cursor:pointer;" aria-live="polite" aria-label="Daily chimera teaser, click to randomize">
+      <div class="landing-equation__tile landing-equation__tile--a" data-role="a" role="button" tabindex="0" aria-label="First donor">?</div><div class="landing-equation__op">+</div><div class="landing-equation__tile landing-equation__tile--b" data-role="b" role="button" tabindex="0" aria-label="Second donor">?</div><div class="landing-equation__op">=</div><div class="landing-equation__tile landing-equation__tile--target" data-role="target" role="button" tabindex="0" aria-label="Target fusion">?</div>
     </div>
     <div style="text-align:left; min-width:0; flex:1;">
       <div style="font-weight:950; font-size:13px; letter-spacing:-.01em;">Guess the blend — daily</div>
@@ -328,8 +328,11 @@ html,body{overflow-x:hidden; max-width:100%; background:var(--paper);}
 <script src="assets/nux.js" defer></script>
 <script src="assets/viral-share.js" defer></script>
 <script src="assets/landing-play.js" defer></script>
+<script src="assets/landing-equation.js" defer></script>
+<script src="assets/search-enhance.js" defer></script>
 <script src="assets/team-leaderboard.js" defer></script>
 <script src="assets/push-retention.js" defer></script>
+<script src="assets/pwa-install.js" defer></script>
 <script>
 // sw registration for 10M DAU
 if('serviceWorker' in navigator){
