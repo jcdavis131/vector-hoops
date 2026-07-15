@@ -471,31 +471,47 @@
   function shareChallengeResult(resultText, spec, copiedEl, trackMode) {
     var url = buildChallengeUrl(spec);
     var body = buildChallengeSmsBody(resultText, url, spec);
-    var openedSms = false;
-    if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-      window.location.href = 'sms:?&body=' + encodeURIComponent(body);
-      openedSms = true;
-    } else if (navigator.share) {
-      navigator.share({ text: body, url: url }).catch(function () {});
-      openedSms = true;
-    }
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(body).then(function () {
-        if (copiedEl) {
-          copiedEl.textContent = openedSms
-            ? 'Opening Messages… link copied too.'
-            : 'Copied — paste into a text to challenge someone.';
-          copiedEl.hidden = false;
-        }
-      }).catch(function () {
-        if (copiedEl) {
-          copiedEl.textContent = openedSms ? 'Opening Messages…' : 'Share this result manually.';
-          copiedEl.hidden = false;
-        }
-      });
-    } else if (copiedEl) {
-      copiedEl.textContent = openedSms ? 'Opening Messages…' : 'Share this result manually.';
-      copiedEl.hidden = false;
+    // viral: if chimera and VHShare available, try image share first
+    try{
+      if(window.VHShare && trackMode==='chimera' && typeof spec.day==='number'){
+        var puzzleNum=spec.day; // day number as puzzle #
+        var emojiRows=resultText.split('\n').slice(0,6).join('\n');
+        var scoreLine=resultText.match(/(\d+\/\d+|Solved.*)/i); var scoreText=scoreLine?scoreLine[0]:'';
+        window.VHShare.shareChimera(puzzleNum, emojiRows, scoreText, url).then(function(did){
+          if(!did) fallbackShare();
+        });
+        track('vh-share', { mode: trackMode || 'challenge', pool: POOL });
+        return;
+      }
+    }catch(e){}
+    fallbackShare();
+    function fallbackShare(){
+      var openedSms = false;
+      if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+        window.location.href = 'sms:?&body=' + encodeURIComponent(body);
+        openedSms = true;
+      } else if (navigator.share) {
+        navigator.share({ text: body, url: url }).catch(function () {});
+        openedSms = true;
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(body).then(function () {
+          if (copiedEl) {
+            copiedEl.textContent = openedSms
+              ? 'Opening Messages… link copied too.'
+              : 'Copied — paste into a text to challenge someone.';
+            copiedEl.hidden = false;
+          }
+        }).catch(function () {
+          if (copiedEl) {
+            copiedEl.textContent = openedSms ? 'Opening Messages…' : 'Share this result manually.';
+            copiedEl.hidden = false;
+          }
+        });
+      } else if (copiedEl) {
+        copiedEl.textContent = openedSms ? 'Opening Messages…' : 'Share this result manually.';
+        copiedEl.hidden = false;
+      }
     }
     track('vh-share', { mode: trackMode || 'challenge', pool: POOL });
   }

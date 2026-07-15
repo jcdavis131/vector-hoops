@@ -1,105 +1,61 @@
 /* viral-share.js — share cards for team universe & chimera
  * Solo personal project, no connection to employer, built with public/free-tier only
- * Zero deps, canvas-based for 10M DAU virality: generates 1080x1080 team card + Web Share API files.
+ * Zero deps, canvas-based for 10M DAU virality
  */
 (function(){
   'use strict';
-  function getTeamMeta(abbr){
-    try{
-      // try to read from window teams? fallback
-      var teamsRaw = localStorage.getItem('vectorHoops.teamsCache');
-      if(teamsRaw){ var arr=JSON.parse(teamsRaw); var f=arr.find(function(t){return t.abbr===abbr;}); if(f) return f; }
-    }catch(e){}
-    return {abbr:abbr, primary:'#E03A3E', secondary:'#fff', city:abbr};
-  }
-
-  function drawTeamCard(abbr, titleLine, metaLine){
-    var W=1080, H=1080;
-    var canvas=document.createElement('canvas'); canvas.width=W; canvas.height=H;
-    var ctx=canvas.getContext('2d');
-    // paper
-    ctx.fillStyle='#FFFEF7'; ctx.fillRect(0,0,W,H);
-    // ink border 8px
-    ctx.strokeStyle='#1A150F'; ctx.lineWidth=16; ctx.strokeRect(8,8,W-16,H-16);
-    // shadow offset 12
-    ctx.fillStyle='#1A150F'; ctx.fillRect(20+W-16-12, 20, 12, H-16); ctx.fillRect(20, 20+H-16-12, W-16, 12);
-    // accent top bar team color
-    var teamColor='#E03A3E';
-    try{
-      var select=document.getElementById('landing-favorite-select');
-      if(select){ /* leave */ }
-    }catch(e){}
-    // Try to get from page pill active
-    try{
-      var active=document.querySelector('.city-pill.is-active');
-      if(active && active.dataset && active.dataset.color) teamColor=active.dataset.color;
-    }catch(e){}
-
-    // header yellow pill
-    ctx.fillStyle='#F0E442'; ctx.strokeStyle='#1A150F'; ctx.lineWidth=6;
-    var pillX=48, pillY=52, pillW=520, pillH=56, r=28;
-    // rounded rect
-    ctx.beginPath(); ctx.moveTo(pillX+r, pillY); ctx.arcTo(pillX+pillW, pillY, pillX+pillW, pillY+pillH, r); ctx.arcTo(pillX+pillW, pillY+pillH, pillX, pillY+pillH, r); ctx.arcTo(pillX, pillY+pillH, pillX, pillY, r); ctx.arcTo(pillX, pillY, pillX+pillW, pillY, r); ctx.closePath(); ctx.fill(); ctx.stroke();
-    ctx.fillStyle='#111'; ctx.font='900 28px ui-monospace, monospace'; ctx.fillText('LIVE UNIVERSE · 12,966 seasons', pillX+22, pillY+36);
-
-    ctx.fillStyle='#111';
-    ctx.font='950 78px ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto';
-    var line1 = (abbr||'CHI')+' UNIVERSE';
-    ctx.fillText(line1, 48, 200);
-    ctx.font='900 42px ui-sans-serif, system-ui';
-    ctx.fillStyle='#D55E00';
-    var line2 = titleLine || 'Scoring Vol Focus';
-    ctx.fillText(line2.slice(0,48), 48, 260);
-
-    ctx.fillStyle='#111';
-    ctx.font='700 28px ui-monospace, monospace';
-    ctx.fillText(metaLine || '1,234 of 12,966 in focus · 9% sky', 48, 310);
-
-    // big dot cloud mock
-    ctx.fillStyle='#E8E8E8'; ctx.fillRect(48, 360, W-96, 380);
-    ctx.fillStyle='#0072B2'; for(var i=0;i<180;i++){ var x=48+Math.random()*(W-96), y=360+Math.random()*380; ctx.beginPath(); ctx.arc(x,y,3+Math.random()*3,0,Math.PI*2); ctx.fill(); }
-    // highlight focus color
-    ctx.fillStyle=teamColor; for(var j=0;j<50;j++){ var x2=48+W/2+ (Math.random()-0.5)*260, y2=360+190+(Math.random()-0.5)*160; ctx.beginPath(); ctx.arc(x2,y2,5,0,Math.PI*2); ctx.fill(); }
-
-    ctx.fillStyle='#111'; ctx.font='900 34px ui-sans-serif'; ctx.fillText('Lock your team → universe lights up', 48, 820);
-    ctx.font='700 26px ui-monospace'; ctx.fillStyle='#666'; ctx.fillText('hoops.dumbmodel.com/?team='+ (abbr||'CHI'), 48, 860);
-    ctx.fillStyle='#111'; ctx.font='900 22px ui-monospace'; ctx.fillText('Free · No account · No ads · 8 archetypes', 48, 900);
-    ctx.fillStyle='#000'; ctx.font='900 18px ui-monospace'; ctx.fillText('Vector Hoops — 12,966 seasons as sky', 48, 980);
-
-    // QR-ish placeholder
-    ctx.strokeStyle='#111'; ctx.lineWidth=4; ctx.strokeRect(W-220, H-260, 160,160);
-    ctx.font='900 16px ui-monospace'; ctx.fillStyle='#111'; ctx.fillText('SCAN TO PLAY', W-216, H-280);
-
+  function roundedRect(ctx,x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();}
+  function drawTeamCard(abbr,titleLine,metaLine){
+    var W=1080,H=1080; var canvas=document.createElement('canvas'); canvas.width=W; canvas.height=H; var ctx=canvas.getContext('2d');
+    ctx.fillStyle='#FFFEF7'; ctx.fillRect(0,0,W,H); ctx.strokeStyle='#1A150F'; ctx.lineWidth=16; ctx.strokeRect(8,8,W-16,H-16);
+    ctx.fillStyle='#1A150F'; ctx.fillRect(W-12,20,12,H-20); ctx.fillRect(20,H-12,W-20,12);
+    var teamColor='#E03A3E'; try{var a=document.querySelector('.city-pill.is-active'); if(a&&a.dataset&&a.dataset.color) teamColor=a.dataset.color;}catch(e){}
+    ctx.fillStyle='#F0E442'; ctx.strokeStyle='#1A150F'; ctx.lineWidth=6; var px=48,py=52,pw=520,ph=56,rr=28; roundedRect(ctx,px,py,pw,ph,rr); ctx.fill(); ctx.stroke();
+    ctx.fillStyle='#111'; ctx.font='900 28px ui-monospace,monospace'; ctx.fillText('LIVE UNIVERSE \u00B7 12,966 seasons',px+22,py+36);
+    ctx.fillStyle='#111'; ctx.font='950 78px ui-sans-serif,system-ui'; ctx.fillText((abbr||'CHI')+' UNIVERSE',48,200);
+    ctx.font='900 42px ui-sans-serif'; ctx.fillStyle='#D55E00'; ctx.fillText((titleLine||'Scoring Vol Focus').slice(0,48),48,260);
+    ctx.fillStyle='#111'; ctx.font='700 28px ui-monospace,monospace'; ctx.fillText(metaLine||'1,234 of 12,966 in focus',48,310);
+    ctx.fillStyle='#E8E8E8'; ctx.fillRect(48,360,W-96,380);
+    ctx.fillStyle='#0072B2'; for(var i=0;i<180;i++){var x=48+Math.random()*(W-96),y=360+Math.random()*380; ctx.beginPath();ctx.arc(x,y,3+Math.random()*3,0,Math.PI*2);ctx.fill();}
+    ctx.fillStyle=teamColor; for(var j=0;j<50;j++){var x2=48+W/2+(Math.random()-0.5)*260,y2=360+190+(Math.random()-0.5)*160; ctx.beginPath();ctx.arc(x2,y2,5,0,Math.PI*2);ctx.fill();}
+    ctx.fillStyle='#111'; ctx.font='900 34px ui-sans-serif'; ctx.fillText('Lock your team \u2192 universe lights up',48,820);
+    ctx.font='700 26px ui-monospace'; ctx.fillStyle='#666'; ctx.fillText('hoops.dumbmodel.com/?team='+(abbr||'CHI'),48,860);
+    ctx.fillStyle='#111'; ctx.font='900 22px ui-monospace'; ctx.fillText('Free \u00B7 No account \u00B7 No ads \u00B7 8 archetypes',48,900);
+    ctx.strokeStyle='#111'; ctx.lineWidth=4; ctx.strokeRect(W-220,H-260,160,160); ctx.font='900 16px ui-monospace'; ctx.fillStyle='#111'; ctx.fillText('SCAN TO PLAY',W-216,H-280);
     return canvas;
   }
-
-  async function shareUniverse(abbr, text, url, copiedEl){
-    try{
-      var titleEl=document.getElementById('team-universe-title');
-      var metaEl=document.getElementById('team-universe-meta');
-      var titleLine=titleEl?titleEl.textContent:abbr+' universe';
-      var metaLine=metaEl?metaEl.textContent.replace(/\s+/g,' ').trim().slice(0,80):'';
-      var canvas=drawTeamCard(abbr, titleLine, metaLine);
-      var blob=await new Promise(function(res){ canvas.toBlob(function(b){res(b);}, 'image/png'); });
-      var file=new File([blob], 'vector-hoops-'+abbr+'.png', {type:'image/png'});
-      var shareText=text+'\n'+url;
-      if(navigator.canShare && navigator.canShare({files:[file]})){
-        await navigator.share({title:'Vector Hoops — '+abbr+' Universe', text:shareText, files:[file]});
-        if(copiedEl){ copiedEl.style.display='block'; copiedEl.textContent='Shared!'; setTimeout(function(){copiedEl.style.display='none';},2500); }
-        return;
-      }
-      if(navigator.share){
-        try{ await navigator.share({title:'Vector Hoops', text:shareText, url:url}); if(copiedEl){copiedEl.style.display='block'; setTimeout(function(){copiedEl.style.display='none';},2500);} return; }catch(e){}
-      }
-      if(navigator.clipboard && navigator.clipboard.writeText){
-        await navigator.clipboard.writeText(shareText);
-        if(copiedEl){ copiedEl.style.display='block'; copiedEl.textContent='Link copied! Challenge friends.'; setTimeout(function(){copiedEl.style.display='none';},2500); }
-      }
-    }catch(e){
-      console.warn('shareUniverse fail',e);
-      if(copiedEl){ copiedEl.style.display='block'; copiedEl.textContent='Copy: '+url; }
-    }
+  function drawChimeraCard(puzzleNum,emojiRows,scoreText){
+    var W=1080,H=1350; var c=document.createElement('canvas'); c.width=W; c.height=H; var ctx=c.getContext('2d');
+    ctx.fillStyle='#FFFEF7'; ctx.fillRect(0,0,W,H); ctx.strokeStyle='#1A150F'; ctx.lineWidth=18; ctx.strokeRect(10,10,W-20,H-20);
+    ctx.fillStyle='#1A150F'; ctx.fillRect(0,0,W,86); ctx.fillStyle='#fff'; ctx.font='900 32px ui-monospace,monospace'; ctx.fillText('VECTOR HOOPS - CHIMERA #'+(puzzleNum||'?'),28,54);
+    ctx.fillStyle='#111'; ctx.font='950 64px ui-sans-serif'; ctx.fillText(scoreText||'Solved in 4',36,170);
+    ctx.font='700 44px ui-monospace'; ctx.fillStyle='#111'; var lines=(emojiRows||'[]').split('\n'); for(var i=0;i<lines.length;i++){ctx.fillText(lines[i],36,230+i*58);}
+    function tile(x,y,t){roundedRect(ctx,x,y,160,200,18); ctx.fillStyle='#fff'; ctx.fill(); ctx.strokeStyle='#111'; ctx.lineWidth=6; ctx.stroke(); ctx.fillStyle=t==='?'?'#111':(t==='A'?'#0072B2':'#D55E00'); ctx.font='950 64px ui-sans-serif'; ctx.fillText(t,x+56,y+122);}
+    tile(36,500,'?'); ctx.fillStyle='#111'; ctx.font='900 48px ui-sans-serif'; ctx.fillText('+',220,620); tile(280,500,'?'); ctx.fillText('=',480,620); tile(540,500,'?');
+    ctx.fillStyle='#111'; ctx.font='700 26px ui-monospace'; ctx.fillText('2023 JoKi\u010D + 1996 Rodman -> Wemby? 84.5%',36,780);
+    ctx.font='700 24px ui-monospace'; ctx.fillStyle='#666'; ctx.fillText('12,966 seasons \u00B7 8 archetypes \u00B7 leakfree 0.977',36,820);
+    ctx.fillStyle='#F0E442'; ctx.strokeStyle='#111'; ctx.lineWidth=4; roundedRect(ctx,36,860,W-72,72,18); ctx.fill(); ctx.stroke(); ctx.fillStyle='#111'; ctx.font='900 30px ui-sans-serif'; ctx.fillText('Play today: hoops.dumbmodel.com/play',56,906);
+    return c;
   }
-
-  window.VHShare={shareUniverse:shareUniverse, drawTeamCard:drawTeamCard};
+  async function shareUniverse(abbr,text,url,copiedEl){
+    try{
+      var titleEl=document.getElementById('team-universe-title'); var metaEl=document.getElementById('team-universe-meta');
+      var titleLine=titleEl?titleEl.textContent:abbr+' universe'; var metaLine=metaEl?metaEl.textContent.replace(/\s+/g,' ').trim().slice(0,80):'';
+      var canvas=drawTeamCard(abbr,titleLine,metaLine); var blob=await new Promise(function(res){canvas.toBlob(function(b){res(b);},'image/png');});
+      var file=new File([blob],'vector-hoops-'+abbr+'.png',{type:'image/png'}); var shareText=text+'\n'+url;
+      if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({title:'Vector Hoops — '+abbr+' Universe',text:shareText,files:[file]}); if(copiedEl){copiedEl.style.display='block'; copiedEl.textContent='Shared!'; setTimeout(function(){copiedEl.style.display='none';},2500);} return;}
+      if(navigator.share){try{await navigator.share({title:'Vector Hoops',text:shareText,url:url}); if(copiedEl){copiedEl.style.display='block'; setTimeout(function(){copiedEl.style.display='none';},2500);} return;}catch(e){}}
+      if(navigator.clipboard&&navigator.clipboard.writeText){await navigator.clipboard.writeText(shareText); if(copiedEl){copiedEl.style.display='block'; copiedEl.textContent='Link copied! Challenge friends.'; setTimeout(function(){copiedEl.style.display='none';},2500);} }
+    }catch(e){console.warn('shareUniverse fail',e); if(copiedEl){copiedEl.style.display='block'; copiedEl.textContent='Copy: '+url;}}
+  }
+  async function shareChimera(puzzleNum,emojiRows,scoreText,url){
+    try{
+      var canvas=drawChimeraCard(puzzleNum,emojiRows,scoreText); var blob=await new Promise(function(r){canvas.toBlob(function(b){r(b);},'image/png');});
+      var file=new File([blob],'chimera-'+puzzleNum+'.png',{type:'image/png'}); var text='Vector Hoops Chimera #'+puzzleNum+' — '+scoreText+'\n'+emojiRows+'\nhoops.dumbmodel.com/play';
+      if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({title:'Vector Hoops #'+puzzleNum,text:text,files:[file]}); return true;}
+      if(navigator.share){try{await navigator.share({title:'Chimera #'+puzzleNum,text:text,url:url}); return true;}catch(e){}}
+      if(navigator.clipboard){await navigator.clipboard.writeText(text+'\n'+url); return true;}
+    }catch(e){console.warn('shareChimera fail',e);} return false;
+  }
+  window.VHShare={shareUniverse:shareUniverse,shareChimera:shareChimera,drawTeamCard:drawTeamCard,drawChimeraCard:drawChimeraCard};
 })();
