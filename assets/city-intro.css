@@ -181,12 +181,12 @@
 }
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
 
-/* sky legend — clear, not busy */
-#sky-legend{font-variant-ligatures:none;}
-#sky-legend:hover{border-color:rgba(255,255,255,0.22) !important; background:rgba(12,14,20,0.86) !important;}
+/* sky legend — v3 paper AAA, not dark */
+#sky-legend{font-variant-ligatures:none; background:rgba(255,254,247,0.94)!important; border:2px solid #1A150F!important; color:#1A150F!important; box-shadow:4px 4px 0 #1A150F!important;}
+#sky-legend:hover{border-color:#1A150F !important; background:rgba(255,254,247,0.98) !important;}
 #sky-legend div{display:flex}
-.osm-attr{position:absolute; left:8px; bottom:8px; z-index:4; font-family:var(--mono); font-size:9px; color:rgba(255,255,255,0.42); background:rgba(0,0,0,0.36); padding:3px 6px; border-radius:999px; backdrop-filter:blur(6px); pointer-events:auto;}
-.osm-attr a{color:rgba(255,255,255,0.62); text-decoration:underline; text-underline-offset:2px;}
+.osm-attr{position:absolute; left:8px; bottom:8px; z-index:4; font-family:var(--mono); font-size:10px; color:#1A150F; background:rgba(255,254,247,0.88); padding:4px 8px; border-radius:999px; border:1.5px solid #1A150F; backdrop-filter:blur(6px); pointer-events:auto;}
+.osm-attr a{color:#111; text-decoration:underline; text-underline-offset:2px; font-weight:800;}
 
 @media (max-width:719px){
   .city-intro{height: clamp(460px, 72vh, 580px);}

@@ -4,14 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#07090f">
-<title>Arena Tour — real OSM stadiums + 12966 seasons as stars | Vector Hoops</title>
+<title>Arena Tour — Nebulae Court + 12,966 seasons as colored clouds | Vector Hoops</title>
 <link rel="canonical" href="https://hoops.dumbmodel.com/arena">
-<meta name="description" content="Fly over 30 real NBA arenas — OSM building footprints extruded, neighborhoods, fans, and the entire embedding map as a starry night sky. 12966 seasons as stars, 8 archetype constellations. Production 3D, free, no account.">
+<meta name="description" content="Fly over 30 chibi NBA courts — stylized arenas, neighborhoods as court fans, and the entire embedding map as 8 colored nebulae. 12,966 seasons colored by archetype, 8 centroids. Production 3D, free, no account.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8F%80%3C/text%3E%3C/svg%3E">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://hoops.dumbmodel.com/arena">
-<meta property="og:title" content="Vector Hoops Arena Tour — real stadiums + embedding sky">
-<meta property="og:description" content="30 real NBA arena footprints (OSM) + 12966 seasons as stars. 8 archetype constellations. Fly, search, share.">
+<meta property="og:title" content="Vector Hoops Arena Tour — chibi courts + nebulae sky">
+<meta property="og:description" content="30 chibi NBA courts + 12,966 seasons as colored nebulae clouds. 8 archetype constellations, search highlight, share.">
 <meta property="og:image" content="/assets/og.svg">
 <link rel="stylesheet" href="assets/hoops.css">
 <link rel="stylesheet" href="assets/shell.css">
@@ -29,36 +29,37 @@
 
   <div class="arena-hud-top" id="arena-hud-top">
     <div class="arena-hud-card arena-hud-main" id="arena-hud-main">
-      <p class="arena-hud-badge" style="margin:0 0 8px; display:inline-flex;"><span class="arena-hud-badge" id="arena-badge">LIVE TOUR · REAL BUILDINGS · 1 / 30</span></p>
+      <p class="arena-hud-badge" style="margin:0 0 8px; display:inline-flex;"><span class="arena-hud-badge" id="arena-badge">COURT TOUR · 30 CHIBI ARENAS · 1 / 30</span></p>
       <h1 class="arena-hud-main__city" id="arena-city">Chicago <span>CHI</span></h1>
-      <div class="arena-hud-main__arena" id="arena-arena">United Center · real OSM footprint</div>
+      <div class="arena-hud-main__arena" id="arena-arena">United Center · stylized chibi court • 12,966 seasons nebulae</div>
       <div class="arena-hud-main__meta">
-        <span class="arena-hud-badge" id="arena-building-count">— buildings</span>
-        <span class="arena-hud-badge" id="arena-star-count">12966 stars</span>
+        <span class="arena-hud-badge" id="arena-building-count">stylized court • prebaked</span>
+        <span class="arena-hud-badge" id="arena-star-count">12966 seasons colored</span>
       </div>
       <div style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap;">
         <button class="arena-btn arena-btn--primary" id="arena-share" type="button">Share this view →</button>
         <button class="arena-btn" id="arena-random" type="button">Random arena</button>
       </div>
-      <p style="font-family:var(--mono); font-size:10px; color:#8a90a2; margin:10px 0 0; line-height:1.3;">Click a bright centroid to read archetype · Search a player to highlight its star in the sky.</p>
+      <p style="font-family:var(--mono); font-size:10px; color:#8a90a2; margin:10px 0 0; line-height:1.3;">Click a bright centroid to read archetype · Search a player to highlight its star with gold ring.</p>
     </div>
 
     <div class="arena-controls" id="arena-controls">
       <div class="arena-control-group">
-        <p class="arena-control-group__title">Embedding sky — clear</p>
+        <p class="arena-control-group__title">Embedding sky — dense but clear</p>
         <div class="arena-btn-row">
-          <button class="arena-btn is-active" data-sky="faint" type="button">Faint 12966</button>
+          <button class="arena-btn is-active" data-sky="nebulae" type="button">Nebulae density</button>
+          <button class="arena-btn is-active" data-sky="faint" type="button">12,966 colored</button>
           <button class="arena-btn is-active" data-sky="centroids" type="button">8 centroids</button>
           <button class="arena-btn is-active" data-sky="lines" type="button">Constellation</button>
           <button class="arena-btn is-active" data-sky="labels" type="button">Labels</button>
         </div>
       </div>
       <div class="arena-control-group">
-        <p class="arena-control-group__title">City — real OSM</p>
+        <p class="arena-control-group__title">Court — stylized, no OSM</p>
         <div class="arena-btn-row">
-          <button class="arena-btn is-active" data-city="buildings" type="button">Real buildings</button>
-          <button class="arena-btn is-active" data-city="arena" type="button">Arena shell</button>
-          <button class="arena-btn is-active" data-city="fans" type="button">Fans 360</button>
+          <button class="arena-btn is-active" data-city="buildings" type="button">Court lines</button>
+          <button class="arena-btn is-active" data-city="arena" type="button">Chibi arena</button>
+          <button class="arena-btn is-active" data-city="fans" type="button">Fans 72</button>
         </div>
       </div>
       <div class="arena-control-group">
@@ -67,7 +68,7 @@
         <div id="arena-search-results" style="margin-top:8px; display:flex; flex-direction:column; gap:6px; max-height:160px; overflow:auto;"></div>
       </div>
       <div class="arena-control-group" id="arena-sky-legend-wrap">
-        <p class="arena-control-group__title">8 archetype constellations</p>
+        <p class="arena-control-group__title">8 archetype nebulae</p>
         <div id="arena-sky-legend" style="display:flex; flex-direction:column; gap:6px;"></div>
       </div>
     </div>
@@ -86,10 +87,10 @@
 
   <div class="arena-loading" id="arena-loading">
     <div class="arena-loading__card">
-      <h2 class="arena-loading__title">Loading real Chicago — United Center footprint</h2>
-      <p class="arena-loading__sub" id="arena-loading-sub">Fetching OSM buildings (700m) · embedding 12966 seasons as stars · MTNN 48-d CQS 66.29</p>
+      <h2 class="arena-loading__title">Loading Nebulae Court — chibi Chicago</h2>
+      <p class="arena-loading__sub" id="arena-loading-sub">Prebaked 12,966 seasons colored by archetype · 8 nebulae density clouds · MTNN 48-d CQS 66.29</p>
       <div class="arena-progress"><div class="arena-progress__bar" id="arena-progress-bar"></div></div>
-      <p class="mono" style="margin-top:10px; font-family:var(--mono); font-size:10px; color:#7a8195;">Solo personal project, no connection to employer, built with public/free-tier only · Buildings © OpenStreetMap · Overpass API</p>
+      <p class="mono" style="margin-top:10px; font-family:var(--mono); font-size:10px; color:#7a8195;">Solo personal project, no connection to employer, built with public/free-tier only · Stylized court · prebaked, no external API</p>
     </div>
   </div>
 
@@ -98,35 +99,36 @@
     <p class="arena-tooltip__meta" id="arena-tooltip-meta">—</p>
   </div>
 
-  <div class="osm-attr" id="osm-attr">Buildings © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> · Stars = 12966 seasons · <a href="/methods">Methods</a></div>
+  <div class="osm-attr" id="osm-attr">Stylized court · 12,966 seasons colored by archetype · Nebulae = density · CQS 66.29</div>
 </div>
 
 <section class="arena-details" aria-label="About this viz">
   <div class="arena-details__grid">
     <div>
-      <h2>Real stadiums. Real neighborhoods. 12966 seasons as a night sky.</h2>
-      <p>Every arena footprint is the actual OpenStreetMap building polygon extruded to real height (height / building:levels). Within 720m we fetch ~180 surrounding buildings — the real blocks you’d walk from the parking lot.</p>
-      <p>Above you: the MTNN 48-d embedding projected to 3 PCs → sky dome. <b>12966 faint white stars</b> = every player-season, opacity 0.32 so it’s not busy. <b>8 bright Okabe-Ito centroids</b> = Scoring Vol, Playmaking+Steals, Rim D+O-Glass, etc. Lines = 2 nearest archetypes in PCA space.</p>
+      <h2>Chibi courts. Nebulae density. 12,966 seasons as colored points.</h2>
+      <p>Every city is a stylized #FFFEF7 court with ink lines — center circle in team color, chibi arena shell (12 ribs, secondary roof), 4 low bleacher wedges, 72 fan dots. Zero external API, instant load.</p>
+      <p>Above you: MTNN 48-d embedding projected to 3 PCs → sky dome. <b>8 Okabe-Ito nebulae</b> = archetype density via canvas radial gradients (colored clouds). <b>12,966 points</b> colored by archetype (not white), opacity 0.68, size by z — clear not busy. <b>8 bright centroids</b> with paper labels AAA 17.9:1. Lines = 2 nearest archetypes.</p>
       <p class="mono">Leakfree split CQS 66.29 best_epoch 25 · recall@10 0.977 purity@20 0.6717 · 48-d L2 · 491 projections · Solo free-tier only</p>
       <p><a href="/play" class="vh-btn vh-btn--primary" style="min-height:44px;">Play daily Chimera →</a> <a href="/" class="vh-btn vh-btn--accent" style="min-height:44px; margin-left:8px;">Landing</a></p>
     </div>
     <div>
       <h2>Viral hooks built in</h2>
       <p>• Shareable URL <code>?team=NYK</code> — deep link locks to your team. Share button uses Web Share API or copies link + canvas PNG.</p>
-      <p>• Tap a centroid, read archetype story + top 5 real seasons in that cluster. Search finds any season and highlights its star with gold ring + flies camera.</p>
-      <p>• Reduced-motion respects, 44px touch, safe-area, loading states, OSM session cache.</p>
-      <p>• Production: 2px ink borders, AAA Okabe-Ito, triple encoding dot+color+label, best-app-ever polish.</p>
+      <p>• Search finds any season and highlights its star with gold ring + flies camera + label.</p>
+      <p>• Toggles: nebulae / colored points / centroids / labels / constellation; court lines / chibi arena / fans 72. Reduced-motion respects, 44px touch, safe-area.</p>
+      <p>• Production: 2px ink borders, AAA Okabe-Ito triple encode dot+color+label, best-app-ever polish, no OSM latency.</p>
     </div>
   </div>
 </section>
 
 <footer class="site-footer" style="display:block; background:#fafaf8; color:#111; position:relative; z-index:2; border-top:3px solid #111;">
   <div class="site-footer__links"><a href="/play">Play</a><a href="/">Home</a><a href="/trends">Trends</a><a href="/players">Players</a><a href="/methods">Methods</a><a href="https://github.com/jcdavis131/vector-hoops" target="_blank" rel="noopener">GitHub</a></div>
-  <div class="site-footer__attribution">Every number recomputable · 12,966 seasons · 8 modes · 48-d L2 · leakfree 0.977 · Buildings © OpenStreetMap · from dumbmodel.com · Solo personal project, no connection to employer, built with public/free-tier only</div>
+  <div class="site-footer__attribution">Every number recomputable · 12,966 seasons · 8 modes · 48-d L2 · leakfree 0.977 · Stylized court prebaked · from dumbmodel.com · Solo personal project, no connection to employer, built with public/free-tier only</div>
 </footer>
 
 <script src="assets/site-nav.js" defer></script>
 <script src="assets/favorite-team.js" defer></script>
+<script src="assets/embedding-nebula.js" defer></script>
 <script src="assets/arena-page.js" defer></script>
 </body>
 </html>
