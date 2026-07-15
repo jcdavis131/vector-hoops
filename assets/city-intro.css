@@ -181,8 +181,18 @@
 }
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
 
+/* sky legend — clear, not busy */
+#sky-legend{font-variant-ligatures:none;}
+#sky-legend:hover{border-color:rgba(255,255,255,0.22) !important; background:rgba(12,14,20,0.86) !important;}
+#sky-legend div{display:flex}
+.osm-attr{position:absolute; left:8px; bottom:8px; z-index:4; font-family:var(--mono); font-size:9px; color:rgba(255,255,255,0.42); background:rgba(0,0,0,0.36); padding:3px 6px; border-radius:999px; backdrop-filter:blur(6px); pointer-events:auto;}
+.osm-attr a{color:rgba(255,255,255,0.62); text-decoration:underline; text-underline-offset:2px;}
+
 @media (max-width:719px){
   .city-intro{height: clamp(460px, 72vh, 580px);}
   .city-intro__bottom{flex-direction:column; align-items:stretch}
   .city-intro__pills{max-width:100%}
+  #sky-legend{right:10px !important; left:10px !important; top:auto !important; bottom:78px !important; max-width:none !important; display:grid; grid-template-columns:1fr 1fr; gap:0 12px;}
+  #sky-legend div:nth-child(1){grid-column:1 / -1;}
+  #sky-legend div:last-child{grid-column:1 / -1;}
 }
