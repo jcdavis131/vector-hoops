@@ -23,6 +23,9 @@
   }
 }
 </script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=IBM+Plex+Mono:wght@400;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/shell.css" />
 <link rel="stylesheet" href="assets/responsive.css" />
 <link rel="stylesheet" href="assets/city-intro.css" />
@@ -154,7 +157,7 @@ html,body{overflow-x:hidden; max-width:100%; background:var(--paper);}
 .sticky-cta .vh-btn{flex:1; min-height:42px; font-size:13px;}
 @media(max-width:720px){ .sticky-cta{display:flex;} .site-footer{padding-bottom:calc(76px + env(safe-area-inset-bottom));} }
 
-/* === MOBILE UNCRAMPING === */
+/* ---------- MOBILE UNCRAMPING ---------- */
 @media(max-width:860px){
   .embed-hero{min-height:100svh; min-height:100dvh;}
   .embed-hero__overlay{min-height:100svh; min-height:100dvh; padding:10px 12px 8px; gap:10px; justify-content:flex-start;}
@@ -207,9 +210,131 @@ html,body{overflow-x:hidden; max-width:100%; background:var(--paper);}
 }
 .mobile-equation{display:none; max-width:1120px; margin:12px auto 0; padding:0 var(--page-gutter);}
 .mobile-equation .glass-card{padding:10px 12px; display:flex; align-items:center; justify-content:space-between; gap:10px;}
+
+/* === Drafting Board v6.1 — Professional Field Notes (applies after base) === */
+:root{
+  --vellum:#FFFEF7;
+  --vellum-2:#FEFDF6;
+  --blue-grid:rgba(167,199,231,.32);
+  --grid-dot:#A7C7E7;
+}
+.embed-hero{
+  background:var(--vellum) !important;
+  border-bottom-width:2.2px !important;
+  box-shadow:4px 0 0 #111 inset;
+  min-height:100svh;
+}
+@media(min-width:861px){ .embed-hero{ min-height:92vh; } }
+.embed-hero::before{
+  content:""; position:absolute; inset:0; z-index:0; pointer-events:none;
+  background-image: radial-gradient(circle, var(--grid-dot) 1px, transparent 1.6px);
+  background-size:24px 24px;
+  opacity:.12;
+}
+.embed-hero::after{
+  content:""; position:absolute; inset:0; z-index:1; pointer-events:none;
+  opacity:.08;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E");
+  mix-blend-mode:multiply;
+  filter:contrast(1.2);
+}
+.embed-hero__bg{
+  border:2.2px solid #111;
+  box-shadow:4px 4px 0 #111;
+  border-radius:12px;
+  margin:10px;
+  inset:10px !important;
+  width:auto !important; height:auto !important;
+  overflow:clip;
+  z-index:2 !important;
+}
+.embed-hero__scrim{ z-index:2; }
+.embed-hero__overlay{ z-index:3; }
+@media(max-width:860px){
+  .embed-hero__bg{ margin:8px; inset:8px !important; border-radius:10px; }
+}
+.hand-drawn{ filter:url(#handDrawn); }
+.glass-card{
+  border-width:2.2px !important;
+  box-shadow:4px 4px 0 #111 !important;
+  background:rgba(255,254,247,.88) !important;
+  backdrop-filter:blur(12px) saturate(1.08);
+}
+.glass-card--dark{
+  background:rgba(14,14,18,.86) !important;
+  border-color:#fff !important;
+}
+#landing-equation-main .landing-equation__tile--target{
+  width:78px; height:78px; font-family:'Architects Daughter', var(--mono);
+  font-size:36px; letter-spacing:-.02em;
+  border-width:2.2px; box-shadow:4px 4px 0 #111;
+  filter:url(#handDrawn);
+  background:#111; color:#fff;
+}
+.draft-title-block{
+  position:absolute; right:14px; bottom:14px; z-index:4;
+  font-family:'IBM Plex Mono', var(--mono);
+  background:var(--vellum);
+  border:2.2px solid #111; border-radius:8px;
+  box-shadow:4px 4px 0 #111;
+  padding:8px 10px;
+  display:grid; gap:3px;
+  min-width:158px;
+  pointer-events:none;
+}
+.draft-title-block__row{
+  display:flex; justify-content:space-between; gap:12px;
+  font-size:10px; line-height:1.2; letter-spacing:.04em;
+  border-bottom:1px dashed rgba(17,17,17,.18);
+  padding-bottom:3px;
+}
+.draft-title-block__row:last-child{ border-bottom:none; padding-bottom:0; }
+.draft-title-block__row span{ color:#666; font-weight:700; text-transform:uppercase; }
+.draft-title-block__row b{ color:#111; font-weight:900; }
+.draft-title-block__meta{
+  font-family:'Architects Daughter', cursive;
+  font-size:10px; color:#444; text-align:right; margin-top:2px;
+  transform:rotate(-1deg);
+}
+@media(max-width:860px){
+  .draft-title-block{ right:8px; bottom:8px; min-width:0; padding:6px 8px; border-radius:7px; }
+  .draft-title-block__row{ font-size:8.5px; gap:8px; }
+}
+/* mute top copy slightly for blueprint focus */
+.embed-hero__copy{
+  backdrop-filter:blur(16px) saturate(1.12);
+}
+/* Explore fold */
+.explore-fold{
+  max-width:1120px; margin:18px auto 0; padding:0 var(--page-gutter);
+}
+.explore-fold summary{
+  list-style:none; cursor:pointer;
+  font-family:'IBM Plex Mono', var(--mono);
+  font-size:12px; font-weight:900; letter-spacing:.08em; text-transform:uppercase;
+  background:#111; color:#fff; border:2.2px solid #111; border-radius:12px;
+  box-shadow:4px 4px 0 #F0E442;
+  padding:12px 14px;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.explore-fold summary::-webkit-details-marker{ display:none; }
+.explore-fold summary::after{ content:"↕"; font-size:14px; }
+.explore-fold[open] summary{ background:#FFFEF7; color:#111; }
+.explore-fold__content{ padding-top:14px; }
+.mobile-equation{display:none; max-width:1120px; margin:12px auto 0; padding:0 var(--page-gutter);}
+.mobile-equation .glass-card{padding:10px 12px; display:flex; align-items:center; justify-content:space-between; gap:10px;}
+@media(max-width:860px){ .mobile-equation{display:block !important;} }
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute; pointer-events:none;" aria-hidden="true">
+  <defs>
+    <filter id="handDrawn" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" seed="2" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="0.8" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </defs>
+</svg>
 <nav class="site-nav" data-active="/" aria-label="Vector Hoops site"></nav>
 
 <div class="embed-hero" id="city-intro" aria-label="Embedding universe — 12,966 seasons as sky, 30 arenas as toys">
@@ -263,6 +388,13 @@ html,body{overflow-x:hidden; max-width:100%; background:var(--paper);}
       <div class="city-intro__controls"><button id="city-intro-prev">‹</button><button id="city-intro-next">›</button><button id="city-intro-lock" class="city-intro__lock">Lock</button></div>
     </div>
   </div>
+  <div class="draft-title-block hand-drawn">
+    <div class="draft-title-block__row"><span>SHEET</span><b>A1</b></div>
+    <div class="draft-title-block__row"><span>SCALE</span><b>1:12,966</b></div>
+    <div class="draft-title-block__row"><span>CQS</span><b>66.29</b></div>
+    <div class="draft-title-block__row"><span>MTNN 48-d</span><b>leakfree</b></div>
+    <div class="draft-title-block__meta">field notes · 12,966 seasons</div>
+  </div>
   <div class="osm-attr" id="osm-attr">12,966 seasons · <a href="/methods">Methods</a> · Solo project</div>
 </div>
 
@@ -293,9 +425,12 @@ html,body{overflow-x:hidden; max-width:100%; background:var(--paper);}
 </div>
 
 <main class="landing-main">
-  <section class="landing-section" id="modes" aria-label="Game modes" style="margin-top:14px;">
-    <span class="landing-section__label">Nine ways — daily midnight CT</span>
-    <div class="mode-grid">
+  <details class="explore-fold" id="modes-fold">
+    <summary><span>Explore — 10 era-honest MTNN games</span> <span style="font-size:10px; opacity:.8;">Guess main + Chimera HARD</span></summary>
+    <div class="explore-fold__content">
+      <section class="landing-section" id="modes" aria-label="Game modes" style="margin-top:0; padding:0; max-width:none;">
+        <span class="landing-section__label">Ten ways — daily midnight CT · Guess main + Chimera HARD + Name The Player</span>
+        <div class="mode-grid">
       <a class="vh-card mode-card" href="/play" style="background:#FFFEF7; border-color:#111; box-shadow:4px 4px 0 #111, 0 0 0 3px #F0E442 inset !important;"><div class="mode-card__title">Guess The Player ⭐ Main</div><p class="mode-card__pitch">Daily mystery season — 6 guesses, Wordle for hoops. Exact season wins.</p></a>
       <a class="vh-card mode-card" href="/play?mode=chimera_hard" style="opacity:.92"><div class="mode-card__title">Chimera <span style="font-family:var(--mono); font-size:9px; background:#111; color:#fff; border-radius:999px; padding:2px 6px; vertical-align:middle;">HARD</span></div><p class="mode-card__pitch">Two seasons fused — name the blend. 92%+ wins.</p></a>
       <a class="vh-card mode-card" href="/play?m=dl"><div class="mode-card__title">Deadline</div><p class="mode-card__pitch">Midseason swing — Thrived/Cratered.</p></a>
@@ -307,7 +442,9 @@ html,body{overflow-x:hidden; max-width:100%; background:var(--paper);}
       <a class="vh-card mode-card" href="/play?m=wi"><div class="mode-card__title">What-If</div><p class="mode-card__pitch">Pair anyone across eras.</p></a>
       <a class="vh-card mode-card" href="/fingerprint"><div class="mode-card__title">Name the Player</div><p class="mode-card__pitch">Only the model's read — no name, no team, no year.</p></a>
     </div>
-  </section>
+      </section>
+    </div>
+  </details>
   <section class="landing-section" id="research" aria-label="Research" style="margin-top:18px;">
     <span class="landing-section__label">Same data as games — research, lab</span>
     <div class="mode-grid" style="margin-bottom:10px">
@@ -349,6 +486,22 @@ if('serviceWorker' in navigator){
     navigator.serviceWorker.register('/sw.js', {scope:'/'}).catch(function(){});
   });
 }
+</script>
+<script>
+// drafting-board explore fold - open on desktop, closed on mobile for full-bleed hero
+(function(){
+  var fold=document.getElementById('modes-fold');
+  if(!fold) return;
+  if(window.matchMedia('(min-width:1024px)').matches){ fold.open=true; }
+  var modesLink=document.querySelector('a[href="#modes"]');
+  if(modesLink){
+    modesLink.addEventListener('click', function(e){
+      e.preventDefault();
+      fold.open=true;
+      fold.scrollIntoView({behavior:'smooth', block:'start'});
+    });
+  }
+})();
 </script>
 <script>
 // v4.1 hero loader + viral loops for 10M DAU
