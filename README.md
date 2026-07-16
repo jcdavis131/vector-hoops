@@ -8,6 +8,19 @@ season; PCA(3) map; 8 auto-named archetypes. Static, zero backend, free.
 > current branch state, the four dormant data tracks and how to activate
 > them, verification commands, and open follow-ups.
 
+## Name the Player (`fingerprint.html`, `docs/ARENA.md`)
+
+The 9th daily mode, reachable from `/play`'s tab bar and the mode grid on
+`/`. One anonymized player-season shown as pure model output — MTNN
+constellation position, archetype pull, 12-skill DNA, no name/team/year —
+six guesses, warmth scored by true 48-d cosine. `pipeline/build_arena.py`
+repacks committed assets (vectors/skills/mtnn_map/mtnn_heads/
+mtnn_embeddings/mtnn_meta/player_meta) into a phone-sized bundle
+(`assets/arena/`); `pipeline/test_arena.py` gates every rebuild, wired
+into `pipeline/update_dataset.py`. Not to be confused with `/arena`, the
+3D chibi-court tour (`assets/arena.css`, Three.js) — different feature,
+similar name, worth a rename if it causes confusion.
+
 ## Skills Lens (`skills.html`, `docs/SKILLS_LENS.md`)
 
 Every charted player-season graded 0-99 on twelve skills — fixed linear

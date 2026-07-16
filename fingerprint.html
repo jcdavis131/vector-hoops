@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Name the Player — Vector Hoops</title>
+<link rel="canonical" href="https://hoops.dumbmodel.com/fingerprint">
+<meta name="description" content="A neural net watched 30 seasons of NBA stats and drew every player-season on one map. Each day it stares at one of them. You get the machine's full read — archetype, skill DNA, a dot on the constellation — and six guesses to name the player.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Ctext%20y%3D%22.9em%22%20font-size%3D%2290%22%3E%26%23127936%3B%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://hoops.dumbmodel.com/fingerprint">
+<meta property="og:title" content="Name the Player — Vector Hoops">
+<meta property="og:description" content="The model knows exactly who it is. You get its full read — constellation position, archetype pull, skill DNA — and six guesses. One mystery a day, 12,966 seasons on the board.">
+<meta property="og:image" content="https://hoops.dumbmodel.com/assets/og-embed.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#15171c">
+<link rel="manifest" href="/manifest.json">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/shell.css">
+<link rel="stylesheet" href="assets/arena/arena.css">
+<link rel="preload" href="assets/arena/rows.bin" as="fetch" crossorigin>
+<style>
+/* The shared site-nav ships light-on-paper by default; this page is dark,
+   so it gets its own small override rather than a new nav variant. */
+.site-nav{ background:#15171c; border-bottom-color:#2d313b; }
+.site-nav__brand{ color:#eceef1; }
+.site-nav__accent{ color:#d9a94a; }
+.site-nav__link{ color:#8f939e; }
+.site-nav__link.is-active, .site-nav__link:hover{ color:#eceef1; }
+</style>
+</head>
+<body>
+
+<nav class="site-nav" data-active="/fingerprint" aria-label="Vector Hoops site"></nav>
+
+<div class="app">
+
+  <header class="top">
+    <h1 class="wordmark">Name the <b>Player</b></h1>
+    <button class="day-chip" id="day-chip" type="button">#—</button>
+    <span class="streak-chip" id="streak-chip" hidden></span>
+    <span class="top-spacer"></span>
+    <button class="icon-btn" id="btn-stats" type="button" aria-label="Your stats">▦</button>
+    <button class="icon-btn" id="btn-help" type="button" aria-label="How this works">?</button>
+  </header>
+
+  <section class="sky-wrap" aria-label="The constellation of 12,966 NBA player-seasons. The pulsing gold beacon is today's mystery player-season. Your guesses appear as colored dots — warmer color means closer in the model's space.">
+    <canvas id="sky"></canvas>
+    <span class="sky-legend"><span class="dot"></span> the mystery</span>
+    <span class="sky-caption" id="sky-count">loading the board…</span>
+  </section>
+
+  <div class="intel" id="intel" aria-label="Unlocked intel"></div>
+
+  <div class="guesses" id="guesses" aria-label="Your guesses"></div>
+
+  <section class="card" aria-label="The model's archetype read">
+    <h2 class="card-title">The model's read
+      <span class="hint">pull toward each archetype pole (cosine)</span></h2>
+    <div class="arch-rows" id="arch-rows"></div>
+  </section>
+
+  <section class="card" aria-label="Skill grades">
+    <h2 class="card-title">Skill DNA
+      <span class="hint">0–99, graded within their own season</span></h2>
+    <div class="dna" id="dna"></div>
+    <div class="vitals">
+      <span>games that season <b id="vital-gp">–</b></span>
+      <span>identity data <b>withheld</b></span>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <p>Every number on this board is recomputable from committed data —
+    the map is a 48-d neural embedding of era-adjusted stats, drawn by PCA.
+    No accounts, no ads, no backend.</p>
+    <div class="lab-links">
+      <a href="/play">The other 8 modes</a>
+      <a href="/arena">Arena Tour (3D)</a>
+      <a href="/model">The model</a>
+      <a href="/players">Player dossiers</a>
+      <a href="/trends">Trends</a>
+      <a href="/methods">Methods</a>
+    </div>
+  </footer>
+
+</div>
+
+<div class="guess-bar">
+  <div class="guess-bar-inner">
+    <div class="suggest" id="suggest"></div>
+    <div class="guess-count" id="guess-count"></div>
+    <div class="guess-input-wrap">
+      <input id="guess-input" type="text" autocomplete="off" autocorrect="off"
+             autocapitalize="off" spellcheck="false" enterkeyhint="go"
+             placeholder="Name this player…" aria-label="Guess the player">
+    </div>
+  </div>
+</div>
+
+<span class="sr-only" id="aria-live" aria-live="polite"></span>
+
+<!-- first-visit intro -->
+<div class="overlay" id="ov-intro" hidden>
+  <div class="sheet intro-card" role="dialog" aria-modal="true" aria-label="How to play">
+    <p class="reveal-kicker won">The 9th mode</p>
+    <h2 class="reveal-name">One of these dots is a mystery</h2>
+    <ul class="intro-steps">
+      <li><span class="glyph">✦</span><span><b>The gold beacon is one real NBA
+        season</b>, 1996–2026, placed among all 12,966 by a neural net that
+        only ever saw stats.</span></li>
+      <li><span class="glyph">📊</span><span><b>Below the map is the machine's
+        whole file on them</b> — archetype pull, 12-skill DNA. No name, no
+        team, no year.</span></li>
+      <li><span class="glyph">🎯</span><span><b>Name the player in six.</b>
+        Every guess lands on the map and comes back with a warmth score —
+        how close you are in the model's space.</span></li>
+    </ul>
+    <div class="sheet-actions">
+      <button class="btn primary" id="intro-play" type="button">Show me the board</button>
+    </div>
+  </div>
+</div>
+
+<!-- help / methods -->
+<div class="overlay" id="ov-help" hidden>
+  <div class="sheet" role="dialog" aria-modal="true" aria-label="How this works">
+    <button class="icon-btn close" type="button" aria-label="Close">✕</button>
+    <h2>How this works</h2>
+    <p><b>The board.</b> Every dot is one player-season, 1996-97 through
+    2025-26. Stats are taken per-100 possessions and z-scored within their own
+    season, so eras compare honestly. A multi-tower neural net (MTNN v5)
+    embeds each season into 48 dimensions; the map is a PCA projection of
+    that space. Dots that sit together play alike — regardless of decade.</p>
+    <p><b>Warmth.</b> Your guess is scored by cosine similarity to the mystery
+    in the full 48-d space (not the 2-d picture). Warmth 97.3 means your
+    guess's best-matching season is closer than 97.3% of all 12,966 seasons.
+    For players with long careers, the game charitably uses whichever of
+    their seasons sits nearest.</p>
+    <p><b>Intel unlocks.</b> Miss 2: decade. Miss 3: position. Miss 4: exact
+    season. Miss 5: last-name initial plus an honors note. All stated here —
+    no hidden mechanics.</p>
+    <p><b>The daily.</b> Everyone gets the same mystery, drawn from ~2,000
+    recognizable seasons (weighted by minutes, All-Star and All-NBA
+    recognition). Practice rounds are unlimited and never touch your streak.</p>
+    <p><b>Honesty.</b> Similarities run on int8-quantized embeddings; the
+    worst-case drift vs full precision is measured and shipped in the data
+    file (~0.012 cosine). Every grade and archetype traces to committed
+    assets gated by tests. Dig deeper: <a href="/model">the model</a> ·
+    <a href="/methods">methods</a> ·
+    <a href="/play">the other 8 modes</a>.</p>
+  </div>
+</div>
+
+<!-- stats -->
+<div class="overlay" id="ov-stats" hidden>
+  <div class="sheet" role="dialog" aria-modal="true" aria-label="Your stats">
+    <button class="icon-btn close" type="button" aria-label="Close">✕</button>
+    <h2>Your record</h2>
+    <div class="stat-grid">
+      <div><b id="st-played">0</b><span>played</span></div>
+      <div><b id="st-win">–</b><span>win rate</span></div>
+      <div><b id="st-streak">0</b><span>streak</span></div>
+      <div><b id="st-max">0</b><span>best streak</span></div>
+    </div>
+    <div class="dist" id="st-dist"></div>
+    <p id="st-practice" style="margin-top:12px"></p>
+  </div>
+</div>
+
+<!-- reveal -->
+<div class="overlay" id="ov-reveal" hidden>
+  <div class="sheet" role="dialog" aria-modal="true" aria-label="The reveal">
+    <p class="reveal-kicker" id="rv-kicker"></p>
+    <h2 class="reveal-name" id="rv-name"></h2>
+    <p class="reveal-sub" id="rv-sub"></p>
+    <div class="badge-strip" id="rv-badges"></div>
+    <div class="neighbors">
+      <h3>Their craft neighborhood</h3>
+      <ol id="rv-neighbors"></ol>
+    </div>
+    <p class="trail" id="rv-trail"></p>
+    <div class="sheet-actions">
+      <button class="btn primary" id="rv-share" type="button">Share the trail</button>
+      <button class="btn" id="rv-practice" type="button">Free play — new mystery</button>
+      <button class="btn" id="rv-close" type="button">Keep looking at the board</button>
+    </div>
+    <p class="countdown" id="rv-countdown"></p>
+  </div>
+</div>
+
+<noscript><p style="padding:20px;color:#8f939e">Vector Hoops is a JavaScript
+game — the board can't load without it.</p></noscript>
+
+<script src="assets/site-nav.js" defer></script>
+<script src="assets/arena/daily.js" defer></script>
+<script src="assets/arena/arena.js" defer></script>
+</body>
+</html>

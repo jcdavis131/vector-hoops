@@ -143,6 +143,14 @@ def main() -> None:
     steps.append(run_step(
         "wide-skill gates",
         [sys.executable, "pipeline/test_wide_skills.py"], required=True))
+    # Arena bundle — the /fingerprint game's compact repack of the assets
+    # rebuilt above. Pure derivation, so both steps are hard requirements.
+    steps.append(run_step(
+        "rebuild arena bundle",
+        [sys.executable, "pipeline/build_arena.py"], required=True))
+    steps.append(run_step(
+        "arena gates",
+        [sys.executable, "pipeline/test_arena.py"], required=True))
 
     entry = {
         "run": time.strftime("%Y-%m-%d %H:%M UTC", time.gmtime()),
