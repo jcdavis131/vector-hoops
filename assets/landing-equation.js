@@ -1,180 +1,124 @@
-/* landing-equation.js — interactive ? + ? = ? demo with real players for conversion
- * Uses players_lite.json 800 stars, picks random chimera examples that feel real
- * Adds spring, flip, triple encoding Okabe shapes, 18px/1.65 readability hook
+/* landing-equation.js — v6 Guess main + Chimera HARD
+ * Guess teaser = single ? mystery player, Chimera HARD = ?+?=? 
+ * Uses players_lite.json 800 stars, real names
  * Solo personal project, free-tier only
  */
 (function(){
-  var CACHE_KEY = 'vectorHoops.equationDemo.v1';
   var players = null;
-  var container = null;
 
-  // classic chimeras that test well for virality (seeded)
-  var SEEDED = [
-    {a: 'Nikola Jokic', b: 'Dennis Rodman', t: 'Victor Wembanyama', pct: 84.5},
-    {a: 'Stephen Curry', b: 'Shaquille O\'Neal', t: 'Nikola Jokic', pct: 81.2},
-    {a: 'LeBron James', b: 'Rudy Gobert', t: 'Giannis Antetokounmpo', pct: 79.8},
-    {a: 'Michael Jordan', b: 'Draymond Green', t: 'Kobe Bryant', pct: 88.1},
-    {a: 'Kevin Durant', b: 'Scottie Pippen', t: 'Jayson Tatum', pct: 76.3},
-    {a: 'Allen Iverson', b: 'Wembanyama', t: 'Ja Morant', pct: 73.9}
+  var SEEDED_CHIMERA = [
+    {a:'Nikola Jokic', b:'Dennis Rodman', t:'Victor Wembanyama', pct:84.5},
+    {a:'Stephen Curry', b:'Shaquille O\'Neal', t:'Nikola Jokic', pct:81.2},
+    {a:'LeBron James', b:'Rudy Gobert', t:'Giannis Antetokounmpo', pct:79.8},
+    {a:'Michael Jordan', b:'Draymond Green', t:'Kobe Bryant', pct:88.1}
+  ];
+  var SEEDED_GUESS = [
+    {name:'Michael Jordan', season:'1990-91', hint:'Elite scorer + defender'},
+    {name:'Nikola Jokic', season:'2022-23', hint:'Passing big'},
+    {name:'Stephen Curry', season:'2015-16', hint:'Gravity shooter'},
+    {name:'Victor Wembanyama', season:'2024-25', hint:'Rim + range'},
+    {name:'LeBron James', season:'2012-13', hint:'Two-way engine'}
   ];
 
   function loadPlayers(){
     if(players) return Promise.resolve(players);
-    return fetch('/assets/players_lite.json', {cache:'force-cache'}).then(function(r){ return r.json(); }).then(function(j){
-      players = j.players||[];
-      return players;
-    }).catch(function(){ return SEEDED.map(function(s){return {name:s.a}}).concat(SEEDED.map(function(s){return {name:s.b}})); });
+    return fetch('/assets/players_lite.json',{cache:'force-cache'}).then(function(r){return r.json();}).then(function(j){
+      players=j.players||[]; return players;
+    }).catch(function(){ return []; });
   }
-
-  function pickDemo(){
-    // 70% seeded for recognition, 30% random from pool
-    if(Math.random()<0.7){
-      return SEEDED[Math.floor(Math.random()*SEEDED.length)];
+  function pickChimera(){
+    if(Math.random()<0.7) return SEEDED_CHIMERA[Math.floor(Math.random()*SEEDED_CHIMERA.length)];
+    if(!players || players.length<3) return SEEDED_CHIMERA[0];
+    function rn(){ return players[Math.floor(Math.random()*players.length)].name; }
+    var a=rn(), b=rn(), t=rn(), tries=0;
+    while((a===b||a===t||b===t)&&tries<10){ b=rn(); t=rn(); tries++; }
+    return {a:a,b:b,t:t,pct:(70+Math.random()*18).toFixed(1)};
+  }
+  function pickGuess(){
+    if(players && players.length>5 && Math.random()<0.6){
+      var pl=players[Math.floor(Math.random()*players.length)];
+      return {name:pl.name, season:pl.season||'', hint:(pl.team||'')+' '+(pl.pos||'')||'Tap to shuffle'};
     }
-    if(!players || players.length<3) return SEEDED[0];
-    function rName(){ return players[Math.floor(Math.random()*players.length)].name; }
-    var a = rName(), b = rName(), t = rName();
-    var pct = (70 + Math.random()*18).toFixed(1);
-    // avoid same
-    var tries=0;
-    while((a===b||a===t||b===t) && tries<10){ b=rName(); t=rName(); tries++; }
-    return {a:a, b:b, t:t, pct: pct};
+    return SEEDED_GUESS[Math.floor(Math.random()*SEEDED_GUESS.length)];
   }
-
-  function render(demo, animate){
-    if(!container) return;
-    var aTile = container.querySelector('[data-role="a"]');
-    var bTile = container.querySelector('[data-role="b"]');
-    var tTile = container.querySelector('[data-role="target"]');
-    var line = container.querySelector('[data-role="line"]');
-    if(!aTile) return;
-    if(animate){
-      aTile.style.transform='rotateY(90deg) scale(.9)';
-      bTile.style.transform='rotateY(90deg) scale(.9)';
-      tTile.style.transform='rotateY(90deg) scale(.9)';
-      setTimeout(function(){
-        apply(aTile, demo.a, 'a');
-        apply(bTile, demo.b, 'b');
-        apply(tTile, demo.t, 'target');
-        if(line) line.textContent = demo.a.split(' ').slice(-1)[0] + ' + ' + demo.b.split(' ').slice(-1)[0] + ' → ' + demo.t.split(' ').slice(-1)[0] + '? ' + demo.pct + '%';
-        aTile.style.transform='rotateY(0deg) scale(1)';
-        bTile.style.transform='rotateY(0deg) scale(1)';
-        tTile.style.transform='rotateY(0deg) scale(1)';
-      }, 180);
-    } else {
-      apply(aTile, demo.a, 'a');
-      apply(bTile, demo.b, 'b');
-      apply(tTile, demo.t, 'target');
-      if(line) line.textContent = demo.a.split(' ').slice(-1)[0] + ' + ' + demo.b.split(' ').slice(-1)[0] + ' → ' + demo.t.split(' ').slice(-1)[0] + '? ' + demo.pct + '%';
-    }
-  }
-
-  function apply(el, name, role){
+  function applyEl(el, name, role){
+    if(!el) return;
     el.textContent='';
-    el.setAttribute('aria-label', name + ' ('+role+')');
-    el.title = name;
-    // triple encoding: shape + icon + text + pattern per Sunni SCAD
-    var inner = document.createElement('div');
+    var inner=document.createElement('div');
     inner.style.cssText='display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; width:100%; height:100%; padding:4px; box-sizing:border-box;';
-    var avatar = document.createElement('div');
-    avatar.style.cssText='width:32px; height:32px; border-radius:50%; border:2px solid #111; background:#fff; display:grid; place-items:center; font-weight:900; font-size:12px; box-shadow:1.5px 1.5px 0 #111;';
-    // color by Okabe mapping from c? fallback by hash
-    var hash = 0; for(var i=0;i<name.length;i++) hash = (hash*31 + name.charCodeAt(i)) % 8;
-    var okabe = ['#0072B2','#D55E00','#009E73','#CC79A7','#F0E442','#56B4E9','#E69F00','#000000'];
-    var okabeIcon = ['⬢','■','▲','◆','★','●','◼','⬣'];
-    avatar.style.background = okabe[hash];
-    avatar.style.color = (hash===4 ? '#111' : '#fff');
-    avatar.textContent = okabeIcon[hash];
-    var txt = document.createElement('div');
-    txt.textContent = name.split(' ').slice(-1)[0]; // last name for fit
+    var avatar=document.createElement('div');
+    avatar.style.cssText='width:28px; height:28px; border-radius:50%; border:2px solid #111; display:grid; place-items:center; font-weight:900; font-size:11px; box-shadow:1.5px 1.5px 0 #111;';
+    var hash=0; for(var i=0;i<name.length;i++) hash=(hash*31+name.charCodeAt(i))%8;
+    var okabe=['#0072B2','#D55E00','#009E73','#CC79A7','#F0E442','#56B4E9','#E69F00','#000'];
+    var icon=['⬢','■','▲','◆','★','●','◼','⬣'];
+    avatar.style.background=okabe[hash]; avatar.style.color=hash===4?'#111':'#fff'; avatar.textContent=icon[hash];
+    var txt=document.createElement('div'); txt.textContent=name.split(' ').slice(-1)[0];
     txt.style.cssText='font-family:var(--mono); font-size:10px; font-weight:900; text-align:center; line-height:1.1; max-width:100%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;';
-    var sub = document.createElement('div');
-    sub.textContent = name.split(' ')[0].slice(0,3).toUpperCase();
-    sub.style.cssText='font-family:var(--mono); font-size:8px; opacity:.7; letter-spacing:.04em;';
-    inner.appendChild(avatar);
-    inner.appendChild(txt);
-    inner.appendChild(sub);
+    inner.appendChild(avatar); inner.appendChild(txt);
     el.appendChild(inner);
-    // pattern for triple encoding
-    el.style.background = role==='target' ? '#F0E442' : '#FFFEF7';
-    el.style.borderColor = '#111';
-    if(role==='a') el.style.backgroundImage='radial-gradient(#111 0.8px, transparent 0.9px)';
-    if(role==='b') el.style.backgroundImage='linear-gradient(45deg, rgba(0,0,0,.06) 25%, transparent 25%, transparent 50%, rgba(0,0,0,.06) 50%, rgba(0,0,0,.06) 75%, transparent 75%)';
-    el.style.backgroundSize = role==='a' ? '8px 8px' : '10px 10px';
+    el.style.background=role==='target'?'#F0E442':'#FFFEF7';
+  }
+  function renderChimera(container, demo, animate){
+    if(!container) return;
+    var aTile=container.querySelector('[data-role="a"]'), bTile=container.querySelector('[data-role="b"]'), tTile=container.querySelector('[data-role="target"]');
+    var line=container.parentElement.querySelector('[data-role="line"]') || document.querySelector('#chimera-line');
+    if(!aTile) return;
+    function doSet(){
+      applyEl(aTile,demo.a,'a'); applyEl(bTile,demo.b,'b'); applyEl(tTile,demo.t,'target');
+      if(line) line.textContent=demo.a.split(' ').slice(-1)[0]+' + '+demo.b.split(' ').slice(-1)[0]+' → '+demo.t.split(' ').slice(-1)[0]+' '+demo.pct+'% • HARD';
+    }
+    if(animate){
+      [aTile,bTile,tTile].forEach(function(el){ el.style.transition='transform .22s'; el.style.transform='rotateY(90deg) scale(.9)'; });
+      setTimeout(function(){ doSet(); [aTile,bTile,tTile].forEach(function(el){ el.style.transform='rotateY(0deg) scale(1)'; }); },180);
+    } else doSet();
+  }
+  function renderGuess(main, demo, animate){
+    if(!main) return;
+    var tile=main.querySelector('.landing-equation__tile--target') || main.querySelector('[data-role="target"]') || main;
+    var line=main.parentElement.querySelector('[data-role="line"]');
+    function doSet(){
+      tile.innerHTML='<div style="display:flex; flex-direction:column; align-items:center; justify-content:center; width:100%; height:100%;"><div style="font-size:28px; font-weight:900;">?</div><div style="font-family:var(--mono); font-size:9px; margin-top:2px;">'+demo.name.split(' ').slice(-1)[0]+'</div><div style="font-family:var(--mono); font-size:8px; opacity:.6;">'+(demo.season||'')+'</div></div>';
+      if(line) line.textContent=demo.name+' '+(demo.season||'')+' — '+(demo.hint||'Tap to shuffle guess');
+    }
+    if(animate){
+      tile.style.transition='transform .22s'; tile.style.transform='rotateY(90deg) scale(.9)';
+      setTimeout(function(){ doSet(); tile.style.transform='rotateY(0deg) scale(1)'; },180);
+    } else doSet();
   }
 
   function init(){
-    container = document.getElementById('landing-equation-interactive');
-    if(!container){
-      // upgrade existing .landing-equation to interactive if present
-      var legacy = document.querySelector('.landing-equation');
-      if(legacy){
-        legacy.id='landing-equation-interactive';
-        // inject data-role
-        var tiles = legacy.querySelectorAll('.landing-equation__tile');
-        if(tiles[0]) tiles[0].dataset.role='a';
-        if(tiles[1]) tiles[1].dataset.role='b';
-        if(tiles[2]) tiles[2].dataset.role='target';
-        // find line below
-        var line = legacy.nextElementSibling;
-        if(line && line.tagName==='P'){
-          line.dataset.role='line';
-          line.style.cursor='pointer';
-          line.style.userSelect='none';
-        }
-        container = legacy;
-      } else return;
-    }
-    var lineEl = container.parentElement.querySelector('[data-role="line"]') || document.querySelector('[data-role="line"]');
-    if(!lineEl){
-      lineEl = document.createElement('p');
-      lineEl.dataset.role='line';
-      lineEl.style.cssText='font-family:var(--mono); font-size:11px; color:#111; margin:8px 0 0; text-align:center; background:#FFFEF7; border:1.5px solid #111; border-radius:999px; padding:4px 8px; display:inline-block; cursor:pointer; box-shadow:2px 2px 0 #111;';
-      lineEl.textContent='Tap tiles to randomize — real players';
-      container.parentElement.appendChild(lineEl);
-    }
-    // enhance tiles styles for 3D flip
-    var allTiles = container.querySelectorAll('[data-role]');
-    allTiles.forEach(function(el){
-      if(el.dataset.role==='line') return;
-      el.style.transition='transform .22s cubic-bezier(.22,1,.36,1), box-shadow .22s';
-      el.style.transformStyle='preserve-3d';
-      el.style.cursor='pointer';
-      el.setAttribute('role','button');
-      el.setAttribute('tabindex','0');
-      el.addEventListener('click', function(){ randomize(true); try{ navigator.vibrate && navigator.vibrate(12);}catch(e){} });
-      el.addEventListener('keydown', function(e){ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); randomize(true);} });
-    });
-    lineEl && lineEl.addEventListener('click', function(){ randomize(true); });
-
     loadPlayers().then(function(){
-      var demo = pickDemo();
-      render(demo, false);
-      // auto rotate every 5.6s if not interacted recently
-      var lastInteraction = Date.now();
-      function schedule(){
-        setInterval(function(){
-          if(Date.now() - lastInteraction > 5600){
-            var d = pickDemo();
-            render(d, true);
-          }
-        }, 5600);
+      var chimeraContainer=document.getElementById('landing-equation-interactive');
+      var guessMain=document.getElementById('landing-equation-main');
+      var lastInteraction=Date.now();
+
+      // enable click handlers
+      if(guessMain){
+        guessMain.style.cursor='pointer';
+        guessMain.addEventListener('click', function(){
+          lastInteraction=Date.now();
+          renderGuess(guessMain, pickGuess(), true);
+        });
+        renderGuess(guessMain, pickGuess(), false);
       }
-      schedule();
-      window._vhEquationRandomize = function(){ lastInteraction=Date.now(); randomize(true); };
+      if(chimeraContainer){
+        chimeraContainer.style.cursor='pointer';
+        ['a','b','target'].forEach(function(r){
+          var el=chimeraContainer.querySelector('[data-role="'+r+'"]');
+          if(el){ el.style.transition='transform .22s'; el.style.cursor='pointer'; el.addEventListener('click', function(){ lastInteraction=Date.now(); renderChimera(chimeraContainer, pickChimera(), true); }); }
+        });
+        renderChimera(chimeraContainer, pickChimera(), false);
+        var chimeraLine=chimeraContainer.parentElement.querySelector('[data-role="line"]');
+        if(chimeraLine) chimeraLine.addEventListener('click', function(){ renderChimera(chimeraContainer, pickChimera(), true); });
+      }
+
+      // auto rotate guess only
+      setInterval(function(){
+        if(Date.now()-lastInteraction>5600 && guessMain){
+          renderGuess(guessMain, pickGuess(), true);
+        }
+      },5600);
     });
-
-    function randomize(animate){
-      var d = pickDemo();
-      render(d, animate);
-      // confetti tickle
-      try{
-        var ev = new CustomEvent('vh:equation-shuffle', {detail:d});
-        window.dispatchEvent(ev);
-      }catch(e){}
-    }
   }
-
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', init);
-  else init();
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();

@@ -1,85 +1,68 @@
-# Vector Hoops — complete gameplay plan (trust-first)
+# Vector Hoops — Gameplay v6 (Guess-The-Player pivot)
 
-Doctrine: every number a player sees must be recomputable from source
-data; every mechanic states its rules; nothing shown is vibes. The
-accuracy harness (pipeline/verify_accuracy.py) gates every deploy.
+Doctrine: every number recomputable from source; accuracy harness gates deploy.
 
-## Mode 1 — THE CHIMERA (daily) — complete the bones
+## NEW Main Mode — GUESS THE PLAYER (daily, Wordle for hoops)
 
-**Accuracy backlog (P0 — trust):**
-- A1. Client cluster attribution must EQUAL pipeline k-means labels
-  (today the client computes centroids independently — verify identity
-  for all 12,392 players; ship centroids in vectors.json if not).
-- A2. Win logic spec'd + tested: >=92% cosine, OR exact (name, season)
-  of either component. Naming the right player in the WRONG season =
-  near-miss message (not a win, not a wasted guess — free clarification).
-- A3. Scouting line must derive from the same vector the target uses
-  (test: regenerate line from target.v, compare).
-- A4. Repeat-guess guard (same player-season twice = rejected, no
-  guess consumed).
-- A5. UTC rollover mid-session: freeze the day's puzzle at first load;
-  banner offers "new chimera available" instead of silent swap.
+**Previously Chimera (now Hard mode ?mode=chimera_hard)**
 
-**Mechanics to complete:**
-- M0. **Daily Challenge vs Free Play (every mode)** — Operator directive:
-  Daily = the seeded shared puzzle (streaks, stats, share, comparable
-  across all players; one per UTC day). Free Play = unlimited random
-  puzzles (nonce-seeded, clearly labeled "practice", separate casual
-  counter, zero effect on daily streak/stats, "New chimera" button).
-  Mode switch prominent; daily state never contaminated by practice.
-  Deadline: Daily Set (5 fixed movers, shared) + Free Play (endless).
-- M1. Stats modal (Wordle-grade): played, win %, streak, max streak,
-  guess distribution histogram — localStorage, exportable.
-- M2. Hint economy: guess 3 = position group; guess 5 = archetype name.
-  Stated in How-to-play (no hidden mechanics).
-- M3. Yesterday's chimera replay (practice, unscored, labeled).
-- M4. Reveal flow: full dossier modal in-game (render the OKF .md —
-  no raw-file links), both components + "why these two" (their cosine).
-- M5. Share card v2: includes day #, blocks, and warmth trail.
+Pivot shipped July 15 2026:
 
-## Mode 2 — THE DEADLINE (daily set) — make scores comparable
+- **Single target**: one player-season, weighted by puzzleWeight/popularity from player_meta.json, seeded `vector-hoops:{UTC-date}` via xmur3→mulberry32, deterministic across clients.
+- **Win**: exact player-season id match only (name+season). Right player wrong season = near-miss message, consumes guess but clarifies.
+- **Guesses**: 6 max, similarity % from MTNN embeddings (or cosine fallback) for warmth feedback, directional coaching via sigma bars.
+- **Hints**: guess 3 = position group, guess 5 = archetype name (Okabe triple-encoded).
+- **Scoring**: 600/500/400/300/200/100 by solve index; share text = "Vector Hoops #n 4/6" + warmth blocks.
+- **Maps**: 3D embedding starfield single diamond = mystery player; no donor squares.
+- **Breakdown**: same 14-d σ vs tournament bars, coaching line from target.vector vs guess.v.
+- **Pools**: MODERN = players active last 2 seasons, ALL = 12,966 seasons. Separate daily keys `vectorHoops.v6` and `vectorHoops.v6.modern.daily`; streak isolation.
+- **Free Play**: randomNonce() endless, practice stats `vectorHoops.v6.practice.guess.stats`.
+- **Determinism**: verify_accuracy harness checks weighted pick reproducibly — same seed → same player id on all clients.
 
-**Accuracy backlog (P0):**
-- A6. Every displayed delta recomputed from raw game logs by the
-  harness (sample 100%: all 50 quiz movers) — byte-match deadline.json.
-- A7. Method modal (not just a footer line): windows, minimums,
-  context adjustment formula, "midseason move ≠ officially a trade,"
-  sample sizes ON each card.
-- A8. Balance guarantee: each daily set = 5 movers drawn seeded-daily
-  from thrives+craters with at least 2 of each; scores comparable
-  across players (same set for everyone that day).
+**Trust**
+- All displayed sims recomputed from mtnn_embeddings.f32.
+- Scouting line derives from target.vector.
+- Repeat guess guard.
+- UTC rollover frozen at first load.
 
-**Mechanics:**
-- M6. Daily-set scoring + its own share text ("Deadline 4/5") + streak.
-- M7. Post-round detail: before/after per-36 lines + tiny before/after
-  bar pair; link to the mover's dossier.
+## Hard Mode — CHIMERA (?mode=chimera_hard)
 
-## Mode 3 — FADER OR FINISHER (new; data ready in game logs)
+Preserved legacy v5 Chimera:
+- Two donors fused A dims [0,7) stats + B [7,14) shooting → target.vector.
+- Win: >=92% cosine OR exact name+season of either component.
+- Max 6 mashup tries after stats/style donor phases.
+- Keys: old v5 still migrates, but guess main uses v6.
+- Share: equation format retained.
+- Accessible via /play?mode=chimera_hard, badge HARD in mode grid.
 
-Monthly-split rebounding/scoring: "Did X rebound better before or
-after the All-Star break in Y season?" — 5 rounds daily, computed
-offline into assets/faderfinisher.json by pipeline (with minimums +
-method), harness-verified like Deadline.
+## Other Modes (unchanged)
 
-## Mode 4 — CAREER ARC (new; data already in vectors.json)
+- Deadline (M=dl): 5 thrivers/craters daily set
+- Fader/Finisher (M=ff)
+- Career Arc (M=arc)
+- Teammate Chemistry (M=cm)
+- Pivot (M=pv)
+- Era Twin (M=tw)
+- What-If WhatIf builder
 
-Given one player's 4+ charted seasons as unlabeled vector cards
-(sigma bars only), order them chronologically. Pure existing data;
-teaches the space; zero new fetch.
+Each retains daily vs free play, seeded shared puzzle, separate stats, Methods & Data modals.
 
-## Cross-cutting modals & polish
+## UI — v6 Guess updates
 
-- How-to-play per mode (tabs), Stats, Methods & Data (the trust
-  centerpiece: sources, build dates, filters like MIN>=800, era
-  z-scoring, attribution, limitations), Dossier (in-game OKF render),
-  Settings (reduced motion respect note, clear-data).
-- Social cards (og/twitter + generated og image), loading skeleton,
-  the audit agent's coherence fixes.
+- Landing: primary card "Guess The Player ⭐ Main" → /play, secondary "Chimera HARD" → /play?mode=chimera_hard
+- Equation tiles → single mystery card "? Mystery Player" silhouette in guess mode; chimera tiles only in hard mode.
+- Prompt: "Vector Hoops #n — Find today's mystery season — 6 guesses" vs chimera prompt.
+- Scouting line: single vector, triple encoding Okabe shapes.
+- Help modal per-mode tabs.
+- Share v6 vs v5 distinction.
+- Stats histogram separate for guess vs chimera.
 
-## Delivery order
+## Tech
 
-1. Accuracy harness + A1-A8 fixes (trust before features).
-2. Audit-driven coherence/P1 fixes + social cards + dossier modal.
-3. M1-M7 (complete modes 1-2).
-4. Mode 3 pipeline + UI; Mode 4 UI.
-5. Full re-audit; harness wired as pre-deploy gate.
+- vectors.json 12,966 seasons 1996-97→2025-26, 14 features era-honest per-100, season_norms.json
+- player_meta.json 518KB weighted
+- mtnn_embeddings.f32 2.4M 48-d L2
+- clientside localStorage only, no tracking, paper #FFFEF7 / ink #1A150F, 56px tabs, safe-area, AAA
+- Footer: Solo personal project, no connection to employer, built with public/free-tier only
+
+Last updated 2026-07-15 for v6 pivot.

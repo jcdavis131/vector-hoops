@@ -1,6 +1,6 @@
 /* seo-dynamic.js — dynamic per-team meta + OG for viral share (free tier, client-side)
  * Updates title, OG, description when team locked for better share previews
- * Also injects JSON-LD for puzzle
+ * Also injects JSON-LD for puzzle — v6 Guess main + Chimera HARD
  */
 (function(){
   function updateForTeam(abbr, city){
@@ -8,7 +8,7 @@
     try{
       var newTitle = abbr + ' Universe — Vector Hoops · 12,966 seasons as sky';
       document.title = newTitle;
-      var desc = (city||abbr) + ' fans locked — ' + abbr + ' universe lights up: 12,966 NBA seasons as embedding sky, 8 archetypes, daily Chimera. Free, no account.';
+      var desc = (city||abbr) + ' fans locked — ' + abbr + ' universe lights up: 12,966 NBA seasons as embedding sky, 8 archetypes, daily Guess The Player + Chimera HARD. Free, no account.';
       var metaDesc = document.querySelector('meta[name="description"]');
       if(metaDesc) metaDesc.setAttribute('content', desc);
       var ogt = document.querySelector('meta[property="og:title"]');
@@ -17,12 +17,10 @@
       if(ogd) ogd.setAttribute('content', desc);
       var ogu = document.querySelector('meta[property="og:url"]');
       if(ogu) ogu.setAttribute('content', 'https://hoops.dumbmodel.com/?team='+abbr+'&utm_source=share');
-      // update canonical link if present
       var can = document.querySelector('link[rel="canonical"]');
       if(can) can.setAttribute('href', 'https://hoops.dumbmodel.com/?team='+abbr);
     }catch(e){}
   }
-
   function init(){
     window.addEventListener('vh:favorite-team', function(e){
       var abbr = e.detail && e.detail.abbr;
@@ -33,15 +31,13 @@
       }catch(e){}
       updateForTeam(abbr, city);
     });
-
-    // JSON-LD for VideoGame / Sports
     try{
       var ld = {
         "@context":"https://schema.org",
         "@type":"VideoGame",
         "name":"Vector Hoops",
         "url":"https://hoops.dumbmodel.com",
-        "description":"12,966 NBA seasons as an embedding universe — daily Chimera plus 8 game modes, leakfree MTNN model, free no account",
+        "description":"12,966 NBA seasons as embedding universe — daily Guess The Player main plus Chimera HARD plus 8 game modes, leakfree MTNN model, free no account",
         "genre":["Puzzle","Sports","Strategy"],
         "gamePlatform":["Web","PWA"],
         "isAccessibleForFree":true,
@@ -54,7 +50,5 @@
       document.head.appendChild(s);
     }catch(e){}
   }
-
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', init);
-  else init();
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();

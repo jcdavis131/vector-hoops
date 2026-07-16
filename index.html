@@ -231,7 +231,7 @@ html,body{overflow-x:hidden; max-width:100%; background:var(--paper);}
         </div>
       </div>
       <div class="embed-hero__viz">
-        <div class="glass-card" style="padding:10px;"><div class="landing-equation"><div class="landing-equation__tile landing-equation__tile--a">?</div><div class="landing-equation__op">+</div><div class="landing-equation__tile landing-equation__tile--b">?</div><div class="landing-equation__op">=</div><div class="landing-equation__tile landing-equation__tile--target"><span class="landing-equation__target-line"></span></div></div><p data-role="line" style="font-family:var(--mono); font-size:11px; color:#111; margin:6px 0 0; text-align:center; background:#FFFEF7; border:1.5px solid #111; border-radius:999px; padding:3px 8px; display:inline-block; box-shadow:2px 2px 0 #111; cursor:pointer;" aria-live="polite">Jokić + Rodman → Wemby? 84.5% — tap to shuffle</p></div>
+        <div class="glass-card" style="padding:10px;"><div class="landing-equation" id="landing-equation-main"><div class="landing-equation__tile landing-equation__tile--target" style="width:78px; height:78px; display:grid; place-items:center; font-size:28px; font-weight:900; background:#111; color:#fff;">?</div></div><p data-role="line" style="font-family:var(--mono); font-size:11px; color:#111; margin:6px 0 0; text-align:center; background:#FFFEF7; border:1.5px solid #111; border-radius:999px; padding:3px 8px; display:inline-block; box-shadow:2px 2px 0 #111; cursor:pointer;" aria-live="polite">Guess today's player — 6 tries — tap to shuffle</p></div>
         <div class="glass-card glass-card--dark" id="team-universe-card" style="display:none">
           <div style="font-family:var(--mono); font-size:9px; font-weight:900; letter-spacing:.1em; text-transform:uppercase; opacity:.7; margin-bottom:6px;">Team universe</div>
           <div id="team-universe-title" style="font-weight:950; font-size:14px; line-height:1.1; margin-bottom:4px;">—</div>
@@ -273,10 +273,11 @@ html,body{overflow-x:hidden; max-width:100%; background:var(--paper);}
       <div class="landing-equation__tile landing-equation__tile--a" data-role="a" role="button" tabindex="0" aria-label="First donor">?</div><div class="landing-equation__op">+</div><div class="landing-equation__tile landing-equation__tile--b" data-role="b" role="button" tabindex="0" aria-label="Second donor">?</div><div class="landing-equation__op">=</div><div class="landing-equation__tile landing-equation__tile--target" data-role="target" role="button" tabindex="0" aria-label="Target fusion">?</div>
     </div>
     <div style="text-align:left; min-width:0; flex:1;">
-      <div style="font-weight:950; font-size:13px; letter-spacing:-.01em;">Guess the blend — daily</div>
-      <div style="font-family:var(--mono); font-size:10px; color:#666; margin-top:2px; line-height:1.3;">2023 Jokić + 1996 Rodman → <b>Wemby? 84.5%</b> — wordle for hoops</div>
+      <div style="font-weight:950; font-size:13px; letter-spacing:-.01em;">Guess The Player — daily</div>
+      <div style="font-family:var(--mono); font-size:10px; color:#666; margin-top:2px; line-height:1.3;">Mystery 2023 Jokić? 6 guesses — Wordle for hoops, 12,966 seasons</div>
       <div style="display:flex; gap:6px; margin-top:8px;">
-        <a class="vh-btn vh-btn--primary" href="/play" style="min-height:32px; font-size:11px; padding:0 10px; flex:1;">Play Chimera →</a>
+        <a class="vh-btn vh-btn--primary" href="/play" style="min-height:32px; font-size:11px; padding:0 10px; flex:1;">Play Guess →</a>
+        <a class="vh-btn" href="/play?mode=chimera_hard" style="min-height:32px; font-size:11px; padding:0 10px; background:#fff; border:2px solid #111;">Hard: Chimera</a>
         <button id="mobile-share-btn" class="vh-btn vh-btn--accent" style="min-height:32px; font-size:11px; padding:0 10px;">Share</button>
       </div>
     </div>
@@ -295,7 +296,8 @@ html,body{overflow-x:hidden; max-width:100%; background:var(--paper);}
   <section class="landing-section" id="modes" aria-label="Game modes" style="margin-top:14px;">
     <span class="landing-section__label">Nine ways — daily midnight CT</span>
     <div class="mode-grid">
-      <a class="vh-card mode-card" href="/play"><div class="mode-card__title">Chimera</div><p class="mode-card__pitch">Two seasons fused — name the blend.</p></a>
+      <a class="vh-card mode-card" href="/play" style="background:#FFFEF7; border-color:#111; box-shadow:4px 4px 0 #111, 0 0 0 3px #F0E442 inset !important;"><div class="mode-card__title">Guess The Player ⭐ Main</div><p class="mode-card__pitch">Daily mystery season — 6 guesses, Wordle for hoops. Exact season wins.</p></a>
+      <a class="vh-card mode-card" href="/play?mode=chimera_hard" style="opacity:.92"><div class="mode-card__title">Chimera <span style="font-family:var(--mono); font-size:9px; background:#111; color:#fff; border-radius:999px; padding:2px 6px; vertical-align:middle;">HARD</span></div><p class="mode-card__pitch">Two seasons fused — name the blend. 92%+ wins.</p></a>
       <a class="vh-card mode-card" href="/play?m=dl"><div class="mode-card__title">Deadline</div><p class="mode-card__pitch">Midseason swing — Thrived/Cratered.</p></a>
       <a class="vh-card mode-card" href="/play?m=ff"><div class="mode-card__title">Fader</div><p class="mode-card__pitch">First half shown — call second half.</p></a>
       <a class="vh-card mode-card" href="/play?m=arc"><div class="mode-card__title">Career Arc</div><p class="mode-card__pitch">Order player's career correctly.</p></a>

@@ -31,6 +31,25 @@
   // still locks on an exact true-nearest match (gold) or >=92% full-blend
   // MTNN cosine ("close enough" — silver).
   var MAX_MASHUP_GUESSES = 6;
+  var URL_PARAMS = new URLSearchParams(window.location.search);
+  var GAME_MODE = (URL_PARAMS.get('mode') === 'chimera_hard' || URL_PARAMS.get('mode') === 'chimera') ? 'chimera' : 'guess';
+  var IS_GUESS_MODE = GAME_MODE === 'guess';
+  var MAX_GUESSES_GUESS = 6;
+  var LS_KEY_GUESS = 'vectorHoops.v6';
+  var LS_KEY_GUESS_MODERN = 'vectorHoops.v6.modern.daily';
+  var LS_KEY_GUESS_TEAM = 'vectorHoops.v6.team.daily';
+  var LS_KEY_GUESS_COMP = 'vectorHoops.guess.competition';
+  var LS_KEY_GUESS_PRACTICE_STATS = 'vectorHoops.v6.practice.guess.stats';
+  var LS_KEY_GUESS_RESET_SEEN = 'vectorHoops.v6.resetNoteSeen';
+  var DAILY_TARGET_GUESS = null;
+  var DAILY_TARGET_GUESS_MODERN = null;
+  var DAILY_TARGET_GUESS_TEAM = null;
+  var PRACTICE_TARGET_GUESS = null;
+  var PRACTICE_REC_GUESS = null;
+  var STATE_GUESS = null;
+  var STATE_GUESS_MODERN = null;
+  var STATE_GUESS_TEAM = null;
+
   var WIN_SIMILARITY = 0.92;
   // Stage multiplier tiers (Stats/Style), by MTNN alignment to each donor —
   // exact player-season beats
@@ -988,24 +1007,48 @@
     TEAM_DONOR_POOL = abbr ? buildTeamDonorPool(abbr) : null;
     DAILY_TARGET_TEAM = (TEAM_DONOR_POOL && TEAM_DONOR_POOL.length >= 10)
       ? buildDailyTargetForCompetition('team', abbr) : null;
+    // Guess daily targets (single player)
+    rebuildGuessDailyTargets();
     if (activeChimeraMode === 'daily') {
-      TARGET = activeChimeraDailyTarget() || DAILY_TARGET_MODERN;
+      if (IS_GUESS_MODE) {
+        TARGET = activeGuessDailyTarget() || DAILY_TARGET_GUESS_MODERN || DAILY_TARGET_GUESS;
+      } else {
+        TARGET = activeChimeraDailyTarget() || DAILY_TARGET_MODERN;
+      }
     }
   }
 
   function chimeraDailyState() {
+    if (IS_GUESS_MODE) {
+      if (activeDailyCompetition === 'alltime') return STATE_GUESS;
+      if (activeDailyCompetition === 'team') return STATE_GUESS_TEAM || STATE_GUESS_MODERN;
+      return STATE_GUESS_MODERN;
+    }
     if (activeDailyCompetition === 'alltime') return STATE;
     if (activeDailyCompetition === 'team') return STATE_TEAM || STATE_MODERN;
     return STATE_MODERN;
   }
 
   function activeChimeraDailyTarget() {
+    if (IS_GUESS_MODE) {
+      if (activeDailyCompetition === 'alltime') return DAILY_TARGET_GUESS;
+      if (activeDailyCompetition === 'team') return DAILY_TARGET_GUESS_TEAM || DAILY_TARGET_GUESS_MODERN;
+      return DAILY_TARGET_GUESS_MODERN;
+    }
     if (activeDailyCompetition === 'alltime') return DAILY_TARGET;
     if (activeDailyCompetition === 'team') return DAILY_TARGET_TEAM || DAILY_TARGET_MODERN;
     return DAILY_TARGET_MODERN;
   }
 
   function chimeraCompetitionLabel() {
+    if (IS_GUESS_MODE) {
+      if (activeDailyCompetition === 'alltime') return 'All-Time Guess (ranked)';
+      if (activeDailyCompetition === 'team') {
+        var abbr = getFavoriteTeamAbbr();
+        return abbr ? (abbr + ' Team Guess') : 'Team Guess';
+      }
+      return 'Modern Guess';
+    }
     if (activeDailyCompetition === 'alltime') return 'All-Time Daily (ranked)';
     if (activeDailyCompetition === 'team') {
       var abbr = getFavoriteTeamAbbr();
@@ -1110,9 +1153,139 @@
     return buildTargetFromRng(seededRng('vector-hoops:' + playDate()), pool);
   }
 
+
   function buildPracticeTarget() {
     return buildTargetFromRng(seededRng('vector-hoops:practice:' + randomNonce()), chimeraDonorPool());
   }
+
+  // ---- GUESS MODE single-target builders ----
+  function buildSingleTargetFromRng(rng, pool) {
+    var idx = pickWeightedIndex(rng, pool);
+    var p = pool[idx];
+    return { player: p, vector: p.v, clusterIdx: p.c, id: p.id, x: p.x, y: p.y, z: p.z, a: null, b: null, nearest: null, mtnnBlend: null };
+  }
+  function buildSinglePracticeTarget() {
+    return buildSingleTargetFromRng(seededRng('vector-hoops:guess:practice:' + randomNonce()), chimeraDonorPool());
+  }
+  function buildDailySingleTargetForCompetition(comp, abbr) {
+    var pool;
+    if (comp === 'alltime') pool = DATA.players;
+    else if (comp === 'team') pool = buildTeamDonorPool(abbr || getFavoriteTeamAbbr());
+    else pool = MODERN_DONOR_POOL;
+    if (!pool || !pool.length) return null;
+    // add :guess to seed to separate from chimera seed, deterministic per date/comp
+    return buildSingleTargetFromRng(seededRng(dailySeedForCompetition(comp, abbr) + ':guess'), pool);
+  }
+  function rebuildGuessDailyTargets() {
+    if (!DATA || !MODERN_DONOR_POOL) return;
+    DAILY_TARGET_GUESS = buildDailySingleTargetForCompetition('alltime');
+    DAILY_TARGET_GUESS_MODERN = buildDailySingleTargetForCompetition('modern');
+    var abbr = getFavoriteTeamAbbr();
+    // TEAM_DONOR_POOL already built by chimera rebuild, but rebuild if missing
+    if (!TEAM_DONOR_POOL) TEAM_DONOR_POOL = abbr ? buildTeamDonorPool(abbr) : null;
+    DAILY_TARGET_GUESS_TEAM = (TEAM_DONOR_POOL && TEAM_DONOR_POOL.length >= 10) ? buildDailySingleTargetForCompetition('team', abbr) : null;
+    if (IS_GUESS_MODE && TARGET) {
+      TARGET = activeGuessDailyTarget() || DAILY_TARGET_GUESS_MODERN || DAILY_TARGET_GUESS;
+    }
+  }
+  function activeGuessDailyTarget() {
+    if (activeDailyCompetition === 'alltime') return DAILY_TARGET_GUESS;
+    if (activeDailyCompetition === 'team') return DAILY_TARGET_GUESS_TEAM || DAILY_TARGET_GUESS_MODERN;
+    return DAILY_TARGET_GUESS_MODERN;
+  }
+  function guessDailyState() {
+    if (activeDailyCompetition === 'alltime') return STATE_GUESS;
+    if (activeDailyCompetition === 'team') return STATE_GUESS_TEAM || STATE_GUESS_MODERN;
+    return STATE_GUESS_MODERN;
+  }
+  function freshGuessRecord() {
+    return { v: 6, guesses: [], done: false, won: false, points: 0, bestSim: 0 };
+  }
+  function isV6GuessRecord(rec) {
+    return !!(rec && rec.v === 6 && Array.isArray(rec.guesses));
+  }
+  function loadGuessState() {
+    var s = defaultState();
+    var raw = null;
+    try { raw = localStorage.getItem(LS_KEY_GUESS); } catch (e) { raw = null; }
+    if (raw) {
+      try {
+        var parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === 'object') {
+          s.streak = parsed.streak || 0;
+          s.maxStreak = parsed.maxStreak || parsed.streak || 0;
+          s.lastWinDate = parsed.lastWinDate || null;
+          s.days = parsed.days || {};
+        }
+      } catch (e) {}
+    }
+    if (!isV6GuessRecord(s.days[TODAY])) s.days[TODAY] = freshGuessRecord();
+    return s;
+  }
+  function saveGuessState() {
+    try { localStorage.setItem(LS_KEY_GUESS, JSON.stringify(STATE_GUESS)); } catch (e) {}
+  }
+  function loadGuessModernState() {
+    var s = defaultState();
+    var raw = null;
+    try { raw = localStorage.getItem(LS_KEY_GUESS_MODERN); } catch (e) { raw = null; }
+    if (raw) {
+      try {
+        var parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === 'object') {
+          s.streak = parsed.streak || 0;
+          s.maxStreak = parsed.maxStreak || parsed.streak || 0;
+          s.lastWinDate = parsed.lastWinDate || null;
+          s.days = parsed.days || {};
+        }
+      } catch (e) {}
+    }
+    if (!isV6GuessRecord(s.days[TODAY])) s.days[TODAY] = freshGuessRecord();
+    return s;
+  }
+  function saveGuessModernState() {
+    try { localStorage.setItem(LS_KEY_GUESS_MODERN, JSON.stringify(STATE_GUESS_MODERN)); } catch (e) {}
+  }
+  function loadGuessTeamState() {
+    var s = defaultState();
+    var raw = null;
+    try { raw = localStorage.getItem(LS_KEY_GUESS_TEAM); } catch (e) { raw = null; }
+    if (raw) {
+      try {
+        var parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === 'object') {
+          s.streak = parsed.streak || 0;
+          s.maxStreak = parsed.maxStreak || parsed.streak || 0;
+          s.lastWinDate = parsed.lastWinDate || null;
+          s.days = parsed.days || {};
+        }
+      } catch (e) {}
+    }
+    if (!isV6GuessRecord(s.days[TODAY])) s.days[TODAY] = freshGuessRecord();
+    return s;
+  }
+  function saveGuessTeamState() {
+    try { localStorage.setItem(LS_KEY_GUESS_TEAM, JSON.stringify(STATE_GUESS_TEAM)); } catch (e) {}
+  }
+  function loadGuessPracticeStats() {
+    var s = { played: 0, won: 0 };
+    var raw = null;
+    try { raw = localStorage.getItem(LS_KEY_GUESS_PRACTICE_STATS); } catch (e) { raw = null; }
+    if (raw) {
+      try {
+        var parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === 'object') {
+          s.played = parsed.played || 0;
+          s.won = parsed.won || 0;
+        }
+      } catch (e) {}
+    }
+    return s;
+  }
+  function saveGuessPracticeStats() {
+    try { localStorage.setItem(LS_KEY_GUESS_PRACTICE_STATS, JSON.stringify(PRACTICE_STATS)); } catch (e) {}
+  }
+
 
   function nearestPlayer() {
     var entry = TARGET.nearest && TARGET.nearest[0];
@@ -1151,9 +1324,39 @@
   // v5: hints are Mashup-stage only — both donors are already revealed by
   // the time the Mashup opens (stage 3), so hinting them again would be
   // redundant. Free Play still gets both immediately (unchanged).
+  // Guess mode: 3=position, 5=archetype for single mystery
+  function guessPositionHint() {
+    if (!DATA.positions || !TARGET || !TARGET.player) return null;
+    var p = TARGET.player;
+    return (typeof p.p === 'number' && p.p >=0) ? DATA.positions[p.p] : null;
+  }
+  function guessArchetypeHint() {
+    if (!TARGET || !TARGET.player) return null;
+    return DATA.clusters[TARGET.player.c] || null;
+  }
   function renderHints() {
     if (!els.hintsRow) return;
     var chips = [];
+    if (IS_GUESS_MODE) {
+      var recG = todayRecord();
+      var nG = recG.guesses.length;
+      if (nG >= HINT_POSITION_AT_MASHUP_GUESS) {
+        var posG = guessPositionHint();
+        if (posG) chips.push('<span class="vh-hint-chip">Position: ' + escapeHtml(posG) + '</span>');
+      }
+      if (nG >= HINT_ARCHETYPE_AT_MASHUP_GUESS) {
+        var archG = guessArchetypeHint();
+        if (archG) chips.push('<span class="vh-hint-chip">Archetype: ' + escapeHtml(archG) + '</span>');
+      }
+      if (chips.length) {
+        els.hintsRow.innerHTML = chips.join('');
+        els.hintsRow.hidden = false;
+      } else {
+        els.hintsRow.hidden = true;
+        els.hintsRow.innerHTML = '';
+      }
+      return;
+    }
     if (activeChimeraMode === 'practice') {
       var posHint = nearestPositionHint();
       if (posHint) chips.push('<span class="vh-hint-chip">Position: ' + escapeHtml(posHint) + '</span>');
@@ -1262,7 +1465,19 @@
   }
 
   function renderPrompt() {
-    els.puzzleDay.textContent = String(puzzleNumber(TODAY)); // header "day" is always the daily count
+    els.puzzleDay.textContent = String(puzzleNumber(TODAY));
+    if (IS_GUESS_MODE) {
+      if (activeChimeraMode === 'practice') {
+        els.puzzleNumber.textContent = 'Practice Guess #' + (PRACTICE_STATS.played + 1);
+        if (els.promptText) els.promptText.textContent = "Find the mystery player-season — 6 guesses, similarity + era-honest traits guide you. Free play doesn't affect daily streak.";
+      } else {
+        els.puzzleNumber.textContent = 'Vector Hoops #' + puzzleNumber(playDate()) + ' — ' + chimeraCompetitionLabel();
+        if (els.promptText) els.promptText.textContent = "Guess The Player — one mystery season, 6 tries. Exact player-season wins. Similarity % + position/arch hints at 3 & 5 narrow you in. " + (GAME_MODE==='chimera' ? '' : 'Hard mode ?mode=chimera_hard still available.');
+      }
+      renderEquationTiles();
+      renderChimeraStatusLine();
+      return;
+    }
     if (activeChimeraMode === 'practice') {
       els.puzzleNumber.textContent = 'Practice Chimera #' + (PRACTICE_STATS.played + 1);
       els.promptText.textContent =
@@ -1287,6 +1502,23 @@
   // openly there — only the Mashup tile is ever a mystery in practice.
   function renderEquationTiles() {
     var rec = todayRecord();
+    if (IS_GUESS_MODE) {
+      // Single mystery card: hide stats/style tiles, show mashup as mystery
+      if (els.equationTileA) els.equationTileA.hidden = true;
+      if (els.equationTileB) els.equationTileB.hidden = true;
+      var eqRow = document.getElementById('equation-row');
+      if (eqRow) eqRow.style.justifyContent = 'center';
+      if (rec.done && rec.won && TARGET && TARGET.player) {
+        setEquationTile(els.equationNameMashup, els.equationTileMashup, { locked: true, name: playerKey(TARGET.player), silver: false });
+      } else if (rec.done) {
+        setEquationTile(els.equationNameMashup, els.equationTileMashup, { locked: true, name: rec.won ? playerKey(TARGET.player) : 'Mystery', silver: false });
+      } else {
+        setEquationTile(els.equationNameMashup, els.equationTileMashup, { locked: false, name: null, silver: false });
+        if (els.equationNameMashup) els.equationNameMashup.textContent = '?';
+      }
+      if (els.equationTileMashup) els.equationTileMashup.hidden = false;
+      return;
+    }
     var isPractice = activeChimeraMode === 'practice';
     var statsSlot = isPractice ? { locked: true, name: playerKey(TARGET.a), silver: false } : rec.slots.stats;
     var archSlot = isPractice ? { locked: true, name: playerKey(TARGET.b), silver: false } : rec.slots.archetype;
@@ -1317,6 +1549,20 @@
   // budget (any slot, any order), since there's no longer a fixed sequence.
   function renderChimeraStatusLine() {
     if (!els.chimeraPhaseLabel) return;
+    if (IS_GUESS_MODE) {
+      if (activeChimeraMode === 'practice') {
+        els.chimeraPhaseLabel.textContent = 'Practice — guess the mystery player, unlimited? actually 6 tries, no streak.';
+        return;
+      }
+      var recG = todayRecord();
+      if (recG.done) {
+        els.chimeraPhaseLabel.textContent = (recG.won ? 'Solved in ' + recG.guesses.length + ' — ' : 'Round over — ') + recG.points + ' pts. ' + (recG.won ? 'Exact player-season!' : 'Answer: ' + (TARGET && TARGET.player ? playerKey(TARGET.player) : '?'));
+        return;
+      }
+      var leftG = Math.max(0, MAX_GUESSES_GUESS - recG.guesses.length);
+      els.chimeraPhaseLabel.textContent = 'Guess The Player — ' + leftG + ' guess' + (leftG===1?'':'es') + ' left. ' + (recG.guesses.length>=3 ? 'Hints unlocked. ' : '') + 'Exact season wins.';
+      return;
+    }
     if (activeChimeraMode === 'practice') {
       els.chimeraPhaseLabel.textContent = 'You built it — find its match.';
       return;
@@ -1340,6 +1586,8 @@
   }
 
   function renderScoutingLine() {
+    if (!els.scoutingLine) return;
+    if (!TARGET || !TARGET.vector) { els.scoutingLine.hidden = true; return; }
     els.scoutingLine.hidden = false;
     els.scoutingLine.textContent = buildScoutingLine(TARGET.vector, TARGET.clusterIdx);
   }
@@ -1449,6 +1697,15 @@
   }
 
   function renderClueCards() {
+    if (IS_GUESS_MODE) {
+      // Hide donor slots in guess mode
+      if (els.statsSlotCard) els.statsSlotCard.hidden = true;
+      if (els.archetypeSlotCard) els.archetypeSlotCard.hidden = true;
+      if (els.statsClueZone) els.statsClueZone.hidden = true;
+      if (els.archetypeClueZone) els.archetypeClueZone.hidden = true;
+      renderMashupClueZone();
+      return;
+    }
     if (activeChimeraMode !== 'practice') {
       renderDonorClueZone('stats');
       renderDonorClueZone('archetype');
@@ -1712,6 +1969,17 @@
   // reads "the round in play," so Daily and Free Play share all the same
   // rendering code paths without ever touching each other's storage.
   function todayRecord() {
+    if (IS_GUESS_MODE) {
+      if (activeChimeraMode === 'practice') return PRACTICE_REC_GUESS || PRACTICE_REC;
+      if (CHALLENGE_PLAY_DATE && CHALLENGE_PLAY_DATE !== TODAY) {
+        if (!CHALLENGE_REC) CHALLENGE_REC = freshGuessRecord();
+        return CHALLENGE_REC;
+      }
+      var st = chimeraDailyState();
+      var pd = playDate();
+      if (!st.days[pd] || !isV6GuessRecord(st.days[pd])) st.days[pd] = freshGuessRecord();
+      return st.days[pd];
+    }
     if (activeChimeraMode === 'practice') return PRACTICE_REC;
     if (CHALLENGE_PLAY_DATE && CHALLENGE_PLAY_DATE !== TODAY) {
       if (!CHALLENGE_REC) CHALLENGE_REC = freshDayRecord();
@@ -1750,22 +2018,54 @@
     rec.won = won;
     var modeDetail = activeChimeraMode === 'practice' ? 'free' : 'daily';
     if (activeChimeraMode === 'practice') {
+      if (IS_GUESS_MODE) {
+        PRACTICE_STATS.played++;
+        if (won) PRACTICE_STATS.won++;
+        try { localStorage.setItem(LS_KEY_GUESS_PRACTICE_STATS, JSON.stringify(PRACTICE_STATS)); } catch(e){}
+        track(won ? 'vh-win' : 'vh-loss', { turns: rec.guesses.length, mode: modeDetail, stage: 1, pool: POOL, game: 'guess' });
+        return;
+      }
       PRACTICE_STATS.played++;
       if (won) PRACTICE_STATS.won++;
       savePracticeStats();
       track(won ? 'vh-win' : 'vh-loss', { turns: rec.mashupGuesses.length, mode: modeDetail, stage: 3, pool: POOL });
       return; // Free Play never touches STATE/streak — state isolation (M0)
     }
+    if (IS_GUESS_MODE) {
+      var idx = rec.guesses.length;
+      rec.points = won ? (MASHUP_BASE_POINTS[Math.max(0, idx-1)] || 0) : 0;
+      var st = chimeraDailyState();
+      if (won) {
+        var yesterday = utcDateString(new Date(Date.now() - 86400000));
+        st.streak = (st.lastWinDate === yesterday) ? st.streak + 1 : 1;
+        st.lastWinDate = TODAY;
+        st.maxStreak = Math.max(st.maxStreak || 0, st.streak);
+        track('vh-win', { turns: rec.guesses.length, mode: modeDetail, stage: 1, pool: POOL, game: 'guess', competition: activeDailyCompetition });
+      } else {
+        st.streak = 0;
+        track('vh-loss', { mode: modeDetail, stage: 1, pool: POOL, game: 'guess', competition: activeDailyCompetition });
+      }
+      if (activeDailyCompetition === 'alltime') {
+        submitLeaderboardScore('guess', TODAY, rec.points);
+        try { localStorage.setItem(LS_KEY_GUESS, JSON.stringify(STATE_GUESS)); } catch(e){}
+      } else if (activeDailyCompetition === 'team') {
+        try { localStorage.setItem(LS_KEY_GUESS_TEAM, JSON.stringify(STATE_GUESS_TEAM)); } catch(e){}
+      } else {
+        try { localStorage.setItem(LS_KEY_GUESS_MODERN, JSON.stringify(STATE_GUESS_MODERN)); } catch(e){}
+      }
+      renderStreak();
+      return;
+    }
     rec.points = computeFinalPoints(rec);
-    var st = chimeraDailyState();
+    var st2 = chimeraDailyState();
     if (won) {
-      var yesterday = utcDateString(new Date(Date.now() - 86400000));
-      st.streak = (st.lastWinDate === yesterday) ? st.streak + 1 : 1;
-      st.lastWinDate = TODAY;
-      st.maxStreak = Math.max(st.maxStreak || 0, st.streak);
+      var yesterday2 = utcDateString(new Date(Date.now() - 86400000));
+      st2.streak = (st2.lastWinDate === yesterday2) ? st2.streak + 1 : 1;
+      st2.lastWinDate = TODAY;
+      st2.maxStreak = Math.max(st2.maxStreak || 0, st2.streak);
       track('vh-win', { turns: rec.mashupGuesses.length, mode: modeDetail, stage: 3, pool: POOL, competition: activeDailyCompetition });
     } else {
-      st.streak = 0;
+      st2.streak = 0;
       track('vh-loss', { mode: modeDetail, stage: 3, pool: POOL, competition: activeDailyCompetition });
     }
     if (activeDailyCompetition === 'alltime') {
@@ -1806,23 +2106,30 @@
     var played = 0, wins = 0, dist = [];
     var totalPts = 0, bestDay = 0, multSum = 0, multCount = 0;
     for (var di = 0; di < MAX_MASHUP_GUESSES; di++) dist.push(0);
+    var maxGuesses = IS_GUESS_MODE ? MAX_GUESSES_GUESS : MAX_MASHUP_GUESSES;
+    // ensure dist length matches maxGuesses for guess mode
+    if (IS_GUESS_MODE && dist.length < maxGuesses) {
+      dist = [];
+      for (var di2 = 0; di2 < maxGuesses; di2++) dist.push(0);
+    }
     Object.keys(st.days).forEach(function (d) {
       var rec = st.days[d];
       if (!rec || !rec.done) return;
       played++;
       if (rec.won) {
         wins++;
-        // v5 records: mashupGuesses is already mashup-only. Older v4
-        // records mix all three slots into one guesses[] log — filter to
-        // slot==='mashup' so a donor-slot lock never gets mistaken for the
-        // mashup's solve position in the histogram.
-        var mg = rec.mashupGuesses || (rec.guesses || []).filter(function (g) { return g.slot === 'mashup'; });
-        var n = -1;
-        for (var i = 0; i < mg.length; i++) { if (mg[i].locked) { n = i; break; } }
-        if (n === -1) n = Math.min(MAX_MASHUP_GUESSES, mg.length) - 1;
-        if (n >= 0 && n < dist.length) dist[n]++;
+        if (rec.v === 6) {
+          var n = rec.guesses ? rec.guesses.length - 1 : 0;
+          if (n >=0 && n < dist.length) dist[n]++;
+        } else {
+          var mg = rec.mashupGuesses || (rec.guesses || []).filter(function (g) { return g.slot === 'mashup'; });
+          var n2 = -1;
+          for (var i = 0; i < mg.length; i++) { if (mg[i].locked) { n2 = i; break; } }
+          if (n2 === -1) n2 = Math.min(MAX_MASHUP_GUESSES, mg.length) - 1;
+          if (n2 >= 0 && n2 < dist.length) dist[n2]++;
+        }
       }
-      if (rec.v === 5 && typeof rec.points === 'number') {
+      if ((rec.v === 5 || rec.v === 6) && typeof rec.points === 'number') {
         totalPts += rec.points;
         if (rec.points > bestDay) bestDay = rec.points;
         if (rec.s1 && rec.s2) {
@@ -3115,7 +3422,185 @@
     }
   }
 
+
+  // ---- GUESS MODE core ----
+  function isWinningGuess(p) {
+    if (!TARGET || !TARGET.player) return false;
+    return p.id === TARGET.player.id;
+  }
+  function guessWrongSeasonNote(guessPlayer) {
+    if (!TARGET || !TARGET.player) return null;
+    if (guessPlayer.name === TARGET.player.name && guessPlayer.season !== TARGET.player.season) {
+      return 'Right player, wrong season — target is ' + playerKey(TARGET.player) + '.';
+    }
+    return null;
+  }
+  function submitGuess() {
+    var p = pendingSelections.mashup;
+    if (!p) return;
+    var rec = todayRecord();
+    var isPractice = activeChimeraMode === 'practice';
+    if (rec.done) return;
+    if (rec.guesses.length >= MAX_GUESSES_GUESS && !isPractice) return;
+    if (rec.guesses.some(function(g){ return g.id===p.id; })) {
+      showDuplicateWarning(p);
+      return;
+    }
+    hideDuplicateWarning();
+    var sim = 0;
+    try {
+      if (window.MTNN && typeof embeddingSim === 'function' && TARGET.player) {
+        sim = embeddingSim(p.id, TARGET.player.id);
+      } else {
+        sim = cosineSim(TARGET.vector, p.v);
+      }
+    } catch(e) { sim = cosineSim(TARGET.vector, p.v); }
+    var exact = isWinningGuess(p);
+    var entry = {
+      id: p.id, name: playerKey(p), slot: 'guess',
+      sim: sim, locked: exact, silver: false,
+      wrongSeasonNote: exact ? null : guessWrongSeasonNote(p)
+    };
+    rec.guesses.push(entry);
+    if (sim > rec.bestSim) rec.bestSim = sim;
+    track('vh-guess', { turn: rec.guesses.length, slot: 'guess', mode: isPractice ? 'free' : 'daily', game: 'guess', pool: POOL });
+    var won = exact;
+    if (won || (!isPractice && rec.guesses.length >= MAX_GUESSES_GUESS)) {
+      registerCompletion(won);
+    } else if (!isPractice) {
+      // save guess state
+      var st = chimeraDailyState();
+      try {
+        if (activeDailyCompetition === 'alltime') localStorage.setItem(LS_KEY_GUESS, JSON.stringify(STATE_GUESS));
+        else if (activeDailyCompetition === 'team') localStorage.setItem(LS_KEY_GUESS_TEAM, JSON.stringify(STATE_GUESS_TEAM));
+        else localStorage.setItem(LS_KEY_GUESS_MODERN, JSON.stringify(STATE_GUESS_MODERN));
+      } catch(e){}
+    }
+    pendingSelections.mashup = null;
+    if (els.chimeraInput) els.chimeraInput.value = '';
+    if (els.chimeraSubmit) els.chimeraSubmit.disabled = true;
+    renderGuesses();
+    renderMapOnce();
+  }
+  function renderGuessGuessList(rec) {
+    var list = rec.guesses || [];
+    if (!els.guessList) return;
+    els.guessList.innerHTML = list.length ? '' : '<li class="vh-guesslist__empty">No guesses yet — name a player-season.</li>';
+    list.forEach(function(entry, idx){
+      var li = document.createElement('li');
+      li.className = 'vh-guess' + (entry.locked ? ' is-identified' : '');
+      var pct = Math.round(entry.sim * 100);
+      li.innerHTML = '<div class="vh-guess__head"><span class="vh-guess__num">' + (idx+1) + '</span>' +
+        '<span class="vh-guess__name">' + escapeHtml(entry.name) + '</span>' +
+        '<span class="vh-guess__pct ' + pctColorClass(entry.sim) + '">' + pct + '%</span>' +
+        (entry.locked ? '<span class="vh-guess__badge">Perfect — exact season!</span>' : '') + '</div>';
+      if (entry.wrongSeasonNote) {
+        var note = document.createElement('p');
+        note.className = 'vh-guess__line vh-guess__line--season';
+        note.textContent = entry.wrongSeasonNote;
+        li.appendChild(note);
+      }
+      els.guessList.appendChild(li);
+    });
+    if (els.historyCount) els.historyCount.textContent = String(list.length);
+  }
+  function renderGuessWarmth(rec) {
+    if (!els.warmthCard) return;
+    if (!rec.guesses || rec.guesses.length===0) { els.warmthCard.hidden = true; return; }
+    els.warmthCard.hidden = false;
+    if (els.warmthBars) {
+      els.warmthBars.innerHTML = '';
+      rec.guesses.forEach(function(g){
+        var bar = document.createElement('div');
+        bar.className = 'vh-warmth__bar vh-warmth__bar--mashup';
+        var pct = Math.max(0, Math.round(g.sim*100));
+        bar.style.height = Math.max(3, Math.round(pct*0.4))+'px';
+        if (g.locked) bar.classList.add('is-best');
+        bar.title = g.name + ': ' + pct + '%';
+        els.warmthBars.appendChild(bar);
+      });
+    }
+    if (els.warmthClosest) {
+      var best = rec.guesses.reduce(function(a,b){ return b.sim>a.sim?b:a; }, rec.guesses[0]);
+      els.warmthClosest.textContent = 'Closest: ' + best.name + ' — ' + Math.round(best.sim*100) + '%';
+    }
+  }
+  function renderGuessHeaderStat(rec, isPractice) {
+    if (!els.guessesLeftNum || !els.guessesLeftLabel) return;
+    if (isPractice) {
+      els.guessesLeftLabel.textContent = 'guesses used';
+      els.guessesLeftNum.textContent = String(rec.guesses.length);
+      return;
+    }
+    if (rec.done) {
+      els.guessesLeftLabel.textContent = 'points';
+      els.guessesLeftNum.textContent = String(rec.points);
+    } else {
+      els.guessesLeftLabel.textContent = 'guesses left';
+      els.guessesLeftNum.textContent = String(Math.max(0, MAX_GUESSES_GUESS - rec.guesses.length));
+    }
+  }
+  function buildGuessShareText(rec) {
+    var n = puzzleNumber(playDate());
+    var solvedIdx = rec.won ? rec.guesses.length : null;
+    var kLabel = solvedIdx ? String(solvedIdx) : 'X';
+    var rows = (rec.guesses||[]).map(function(g){
+      if (g.locked) return '🟩⭐';
+      if (g.sim >= 0.85) return '🟩';
+      if (g.sim >= 0.60) return '🟨';
+      return '🟥';
+    }).join('');
+    var trail = (rec.guesses||[]).map(function(g){ return warmthBlockFor(g.sim); }).join('');
+    var headline = 'Vector Hoops #' + n + ' — Guess ' + kLabel + '/' + MAX_GUESSES_GUESS + ' — ' + rec.points + ' pts';
+    var detail = 'Daily: ' + (rec.won ? 'solved in ' + rec.guesses.length : 'not solved') + ' (' + chimeraCompetitionLabel() + ')';
+    return headline + '\n' + detail + '\n' + rows + '\n' + trail;
+  }
+
   function renderGuesses() {
+    if (IS_GUESS_MODE) {
+      var recG = todayRecord();
+      var isPracticeG = activeChimeraMode === 'practice';
+      renderHints();
+      renderEquationTiles();
+      renderChimeraStatusLine();
+      renderEquationCollapse();
+      renderClueCards();
+      if (els.donorSlotsRow) els.donorSlotsRow.hidden = true;
+      renderGuessHeaderStat(recG, isPracticeG);
+      // practice pick UI hidden
+      if (els.pickerCard) els.pickerCard.hidden = true;
+      // enable only mashup input as guess input
+      if (els.chimeraStatsInput) { els.chimeraStatsInput.disabled = true; if (els.chimeraStatsInput.parentElement) els.chimeraStatsInput.parentElement.hidden = true; }
+      if (els.chimeraArchetypeInput) { els.chimeraArchetypeInput.disabled = true; if (els.chimeraArchetypeInput.parentElement) els.chimeraArchetypeInput.parentElement.hidden = true; }
+      var roundOverG = recG.done;
+      setSlotInputDisabled(els.chimeraInput, els.chimeraSubmit, roundOverG || recG.guesses.length >= MAX_GUESSES_GUESS);
+      renderGuessGuessList(recG);
+      renderGuessWarmth(recG);
+      renderMapLegend();
+      if (els.resultCard) els.resultCard.hidden = true;
+      if (els.revealCard) els.revealCard.hidden = true;
+      if (els.triangulationBlock) els.triangulationBlock.hidden = true;
+      var lastG = recG.guesses && recG.guesses.length ? recG.guesses[recG.guesses.length-1] : null;
+      if (lastG) {
+        var lastPlayerG = DATA.players[lastG.id];
+        if (els.resultCard) els.resultCard.hidden = false;
+        if (els.scoreboardPct) els.scoreboardPct.textContent = Math.round(lastG.sim*100) + '%';
+        if (lastPlayerG) {
+          var targetZonesG = renderCourt(els.courtTarget, TARGET.vector);
+          var guessZonesG = renderCourt(els.courtGuess, lastPlayerG.v);
+          if (els.courtGuessLabel) els.courtGuessLabel.textContent = 'Your guess: ' + lastG.name;
+          if (els.storyCaption) els.storyCaption.textContent = storyCaption(targetZonesG, guessZonesG);
+          if (els.quickCoachingLine) els.quickCoachingLine.textContent = coachingLineTop1(TARGET.vector, lastPlayerG.v);
+          renderBreakdown(els.breakdownChart, TARGET.vector, lastPlayerG.v, 'Mystery', lastG.name);
+          if (els.clusterLine) els.clusterLine.innerHTML = clusterLine(lastPlayerG);
+          if (els.coachingLine) els.coachingLine.textContent = coachingLine(TARGET.vector, lastPlayerG.v);
+        }
+      }
+      renderMapThumbnail();
+      if (recG.done) { showReveal(recG); }
+      return;
+    }
+
     var rec = todayRecord();
     var isPractice = activeChimeraMode === 'practice';
     renderHints();
@@ -3231,6 +3716,8 @@
   // nearest match here (already public knowledge post-game); the donors
   // were never secret, so naming them isn't a spoiler either.
   function buildShareText(rec) {
+    if (IS_GUESS_MODE) { return buildGuessShareText(rec); }
+
     var np = nearestPlayer();
     var nearestLabel = np ? playerKey(np) : '?';
     if (activeChimeraMode === 'practice') {
@@ -3498,6 +3985,25 @@
   }
 
   function showReveal(rec) {
+    if (IS_GUESS_MODE) {
+      els.revealCard.hidden = false;
+      var isPracticeG = activeChimeraMode === 'practice';
+      var practiceNoteG = isPracticeG ? ' (practice)' : '';
+      els.revealTitle.textContent = (rec.won ? 'Solved — ' + playerKey(TARGET.player) : 'Answer — ' + playerKey(TARGET.player)) + practiceNoteG;
+      var posG = DATA.positions && TARGET.player ? DATA.positions[TARGET.player.p] : '';
+      var archG = DATA.clusters[TARGET.player.c] || '';
+      var recaps = '<p class="vh-guess__line">You had ' + rec.guesses.length + ' guesses, best ' + Math.round(rec.bestSim*100) + '%.</p>';
+      els.revealBody.innerHTML =
+        '<div class="vh-section-label">Mystery player</div>' +
+        '<p><b>' + escapeHtml(playerKey(TARGET.player)) + '</b> — ' + escapeHtml(posG) + ' · ' + escapeHtml(archG) + '</p>' +
+        recaps +
+        '<div class="vh-reveal__okf">Dossier: ' +
+        '<a href="#" class="vh-dossier-link" data-slug="' + playerSlug(TARGET.player.name) + '" data-name="' + escapeHtml(TARGET.player.name) + '">' + playerNameHtml(TARGET.player.name, TARGET.player.season) + '</a></div>';
+      els.shareCopied.hidden = true;
+      appendSkillLensSection(TARGET);
+      appendArchetypePrevalenceLine(TARGET.clusterIdx);
+      return;
+    }
     els.revealCard.hidden = false;
     var isPractice = activeChimeraMode === 'practice';
     var practiceNote = isPractice ? ' (practice)' : '';
@@ -3621,6 +4127,7 @@
   // Mashup: up to MAX_MASHUP_GUESSES tries, same lock semantics as v3/v4
   // (exact true-nearest match = gold; >=92% full-blend MTNN sim = silver).
   function submitMashupGuess() {
+    if (IS_GUESS_MODE) { submitGuess(); return; }
     var p = pendingSelections.mashup;
     if (!p) return;
     var rec = todayRecord();
@@ -4053,22 +4560,19 @@
     // the thing every slot is triangulating toward). Free Play already
     // knows both donors (the player picked them), so they show immediately
     // there, same as before v4.
-    //   Stats Donor / Style Donor: their OWN exact PCA(3) coordinates
-    //     already carried on the player record (p.x/p.y/p.z in vectors.json)
-    //     — no re-derivation, straight from source data.
-    //   The Chimera (mashup): the 14-dim TARGET.vector run through the
-    //     dataset's embedded affine PCA projection (DATA.proj.W/b — see
-    //     projectVector), falling back to the home-cluster centroid position
-    //     on older dataset builds that don't carry proj.
-    var statsDonorXYZ = { x: TARGET.a.x, y: TARGET.a.y, z: TARGET.a.z };
-    var archDonorXYZ = { x: TARGET.b.x, y: TARGET.b.y, z: TARGET.b.z };
-    var chimeraXYZ = projectVector(TARGET.vector) || CLUSTER_XYZ[TARGET.clusterIdx];
-    var showStats = isPractice || rec.slots.stats.locked;
-    var showArch = isPractice || rec.slots.archetype.locked;
-
-    drawTargetMarker(ctx, size, chimeraXYZ, 'CHIMERA');
-    if (showStats) drawSquareMarker(ctx, size, statsDonorXYZ, { filled: true, label: 'STATS · ' + shortName(TARGET.a.name) });
-    if (showArch) drawSquareMarker(ctx, size, archDonorXYZ, { filled: false, label: 'STYLE · ' + shortName(TARGET.b.name) });
+    if (IS_GUESS_MODE) {
+      var mysteryXYZ = (TARGET && TARGET.player) ? { x: TARGET.player.x, y: TARGET.player.y, z: TARGET.player.z } : (projectVector(TARGET.vector) || CLUSTER_XYZ[TARGET.clusterIdx]);
+      drawTargetMarker(ctx, size, mysteryXYZ, 'MYSTERY');
+    } else {
+      var statsDonorXYZ = { x: TARGET.a.x, y: TARGET.a.y, z: TARGET.a.z };
+      var archDonorXYZ = { x: TARGET.b.x, y: TARGET.b.y, z: TARGET.b.z };
+      var chimeraXYZ = projectVector(TARGET.vector) || CLUSTER_XYZ[TARGET.clusterIdx];
+      var showStats = isPractice || rec.slots.stats.locked;
+      var showArch = isPractice || rec.slots.archetype.locked;
+      drawTargetMarker(ctx, size, chimeraXYZ, 'CHIMERA');
+      if (showStats) drawSquareMarker(ctx, size, statsDonorXYZ, { filled: true, label: 'STATS · ' + shortName(TARGET.a.name) });
+      if (showArch) drawSquareMarker(ctx, size, archDonorXYZ, { filled: false, label: 'STYLE · ' + shortName(TARGET.b.name) });
+    }
 
     // Brief highlight pulse on whichever anchor just locked (~1.6s window).
     if (!isPractice && lastLockEvent) {
@@ -8243,15 +8747,38 @@
   }
 
   function refreshChimeraView() {
-    if (activeChimeraMode === 'practice' && PRACTICE_STAGE === 'pick'
-        && !PRACTICE_TARGET) {
-      // Build-a-Chimera entry: the player picks both donors first.
-      showPickerStage();
-      return;
+    if (!IS_GUESS_MODE) {
+      if (activeChimeraMode === 'practice' && PRACTICE_STAGE === 'pick'
+          && !PRACTICE_TARGET) {
+        showPickerStage();
+        return;
+      }
     }
-    if (activeChimeraMode === 'practice') ensurePracticeTarget();
+    if (activeChimeraMode === 'practice') {
+      if (IS_GUESS_MODE) {
+        if (!PRACTICE_TARGET_GUESS) {
+          PRACTICE_TARGET_GUESS = buildSinglePracticeTarget();
+          PRACTICE_REC_GUESS = freshGuessRecord();
+        }
+      } else {
+        ensurePracticeTarget();
+      }
+    }
     showPlayingStage();
-    TARGET = activeChimeraMode === 'practice' ? PRACTICE_TARGET : activeChimeraDailyTarget();
+    if (IS_GUESS_MODE) {
+      TARGET = activeChimeraMode === 'practice' ? PRACTICE_TARGET_GUESS : activeGuessDailyTarget();
+    } else {
+      TARGET = activeChimeraMode === 'practice' ? PRACTICE_TARGET : activeChimeraDailyTarget();
+    }
+    // safety: if guess target not yet built (race during load), build once
+    if (IS_GUESS_MODE && !TARGET) {
+      if (activeChimeraMode === 'practice') {
+        PRACTICE_TARGET_GUESS = buildSinglePracticeTarget();
+        TARGET = PRACTICE_TARGET_GUESS;
+      } else {
+        TARGET = activeGuessDailyTarget() || DAILY_TARGET_GUESS_MODERN || DAILY_TARGET_GUESS;
+      }
+    }
     renderPrompt();
     renderScoutingLine();
     renderGuesses();
@@ -8392,6 +8919,17 @@
 
   function renderEquationCollapse() {
     var rec = todayRecord();
+    if (IS_GUESS_MODE) {
+      var anyGuessMadeG = (rec.guesses && rec.guesses.length > 0);
+      var collapsedG = anyGuessMadeG && !equationForceExpand;
+      if (els.equationRow) els.equationRow.hidden = collapsedG;
+      if (els.equationChip) els.equationChip.hidden = !collapsedG;
+      if (collapsedG && els.equationChipText) {
+        var mLabelG = rec.done ? (TARGET && TARGET.player ? TARGET.player.name : '?') : '? — ' + rec.guesses.length + '/' + MAX_GUESSES_GUESS;
+        els.equationChipText.textContent = mLabelG;
+      }
+      return;
+    }
     var anyGuessMade = !!rec.s1 || !!rec.s2 || rec.mashupGuesses.length > 0;
     var collapsed = anyGuessMade && !equationForceExpand;
     els.equationRow.hidden = collapsed;
@@ -8430,6 +8968,15 @@
     // "Change donors" (visible once a Build-a-Chimera round is underway):
     // back to the picker, discarding the current blend.
     els.chimeraNewBtn.addEventListener('click', function () {
+      if (IS_GUESS_MODE) {
+        PRACTICE_TARGET_GUESS = buildSinglePracticeTarget();
+        PRACTICE_REC_GUESS = freshGuessRecord();
+        equationForceExpand = false;
+        resetClueForceExpand();
+        refreshChimeraView();
+        track('vh-start', { mode: 'free', pool: POOL, game: 'guess' });
+        return;
+      }
       PRACTICE_TARGET = null;
       PRACTICE_REC = null;
       PRACTICE_STAGE = 'pick';
@@ -8558,11 +9105,40 @@
           activeDailyCompetition = 'modern';
           saveDailyCompetition('modern');
         }
-        TARGET = activeChimeraDailyTarget();
-        STATE = loadState();
-        STATE_MODERN = loadModernState();
-        STATE_TEAM = loadTeamState();
-        if (shouldShowDailyResetNote() && els.resetNote) {
+        if (IS_GUESS_MODE) {
+          STATE_GUESS = loadGuessState();
+          STATE_GUESS_MODERN = loadGuessModernState();
+          STATE_GUESS_TEAM = loadGuessTeamState();
+          TARGET = activeGuessDailyTarget() || DAILY_TARGET_GUESS || DAILY_TARGET_GUESS_MODERN;
+          // Adjust first tab label for chimera_hard vs guess main
+          try {
+            var tc = document.getElementById('tab-chimera');
+            if (tc) {
+              if (GAME_MODE === 'chimera') {
+                tc.title = 'Chimera HARD — daily fusion Stats+Style=Mashup · HARD';
+                var labFull = tc.querySelector('.vh-tab__label-full');
+                var labShort = tc.querySelector('.vh-tab__label-short');
+                var icon = tc.querySelector('.vh-tab__icon');
+                if (labFull) labFull.textContent = 'Chimera HARD';
+                if (labShort) labShort.textContent = 'Hard';
+                if (icon) icon.textContent = '🧬';
+              } else {
+                // ensure guess labeling stays
+                var labFull2 = tc.querySelector('.vh-tab__label-full');
+                if (labFull2 && labFull2.textContent !== 'Guess') labFull2.textContent = 'Guess';
+              }
+            }
+          } catch(e2) {}
+          STATE = STATE_GUESS; // for generic refs that expect STATE
+          STATE_MODERN = STATE_GUESS_MODERN;
+          STATE_TEAM = STATE_GUESS_TEAM;
+        } else {
+          TARGET = activeChimeraDailyTarget();
+          STATE = loadState();
+          STATE_MODERN = loadModernState();
+          STATE_TEAM = loadTeamState();
+        }
+        if (!IS_GUESS_MODE && shouldShowDailyResetNote() && els.resetNote) {
           els.resetNote.hidden = false;
           els.resetNote.textContent = 'Vector Hoops leveled up: Chimera is now a STAGED reveal with ' +
             'scoring multipliers — one guess each for the Stats Player and the Style Player (always ' +
@@ -8572,7 +9148,13 @@
             'rules — your streak and history carried over.';
           markDailyResetNoteSeen();
         }
-        PRACTICE_STATS = loadPracticeStats();
+        if (IS_GUESS_MODE) {
+          PRACTICE_STATS = loadGuessPracticeStats();
+          PRACTICE_REC_GUESS = freshGuessRecord();
+          PRACTICE_TARGET_GUESS = buildSinglePracticeTarget();
+        } else {
+          PRACTICE_STATS = loadPracticeStats();
+        }
         DEADLINE_STATE = loadDeadlineDailyState();
         FADER_STATE = loadFaderDailyState();
         FADER_PRACTICE_STATS = loadFaderPracticeStats();
