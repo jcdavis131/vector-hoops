@@ -1,27 +1,41 @@
 /* Solo personal project, no connection to employer, built with public/free-tier only */
-/* vector-hoops PWA v9-20260717 — Past→Modern single game — 3D map focus — 100M DAU */
+/* vector-hoops PWA v10-20260718 — rotating 3D map + viral image share + steals/busts back */
 
-const CACHE_NAME = 'vector-hoops-v9-20260717-past-modern';
+const CACHE_NAME = 'vector-hoops-v10-20260718-rotating-viral';
 const CORE = [
+  '/',
+  '/play',
+  '/players',
+  '/trends',
+  '/model',
+  '/methods',
   '/manifest.json',
   '/offline.html',
   '/assets/og-embed.png',
+  '/assets/og-1200x630.png',
   '/assets/shell.css',
   '/assets/responsive.css',
-  '/assets/final-qa.css',
+  '/assets/site-nav.js',
   '/assets/mtnn.js',
+  '/assets/viral-share.js',
   '/assets/past-modern-game.js',
   '/assets/vectors_search_lite.json',
   '/assets/players_lite.json',
   '/assets/teams.json',
   '/assets/season_norms.json',
-  '/assets/honors.json'
+  '/assets/honors.json',
+  '/assets/pedigree.json',
+  '/assets/skills.json',
+  '/assets/skills_wide.json'
 ];
 const DENY_CACHE = [
   '/assets/playoff_paths.json',
   '/assets/next_profile_eval.json',
   '/assets/mtnn.onnx',
-  '/assets/mtnn.onnx.data'
+  '/assets/mtnn.onnx.data',
+  '/assets/mtnn_heads.f32',
+  '/assets/mtnn_embeddings.f32',
+  '/assets/vectors.json'
 ];
 const FULL_MTNN = [
   '/assets/mtnn_embeddings.f32',
@@ -36,7 +50,9 @@ const FULL_MTNN = [
   '/assets/archetype_lite.json',
   '/assets/vectors.json',
   '/assets/skills.json',
-  '/assets/archetype_assignments.json'
+  '/assets/archetype_assignments.json',
+  '/assets/playoffs.json',
+  '/assets/pedigree.json'
 ];
 function isDenied(p){ return DENY_CACHE.some(x=> p.includes(x)); }
 self.addEventListener('install', e=>{
@@ -89,7 +105,7 @@ self.addEventListener('fetch', e=>{
   e.respondWith((async()=>{ const c=await caches.match(req); if(c) return c; try{ return await fetch(req);}catch{ return c||caches.match('/offline.html'); }})());
 });
 self.addEventListener('push', e=>{
-  let d={}; try{ d=e.data?e.data.json():{};}catch{} const t=d.title||'Vector Hoops'; const b=d.body||'Daily Past→Modern live — guess twin 🔥';
+  let d={}; try{ d=e.data?e.data.json():{};}catch{} const t=d.title||'Vector Hoops'; const b=d.body||'Daily Past→Modern rotating 3D map live — guess twin 🔥';
   e.waitUntil(self.registration.showNotification(t,{body:b,icon:'/assets/og-embed.png',badge:'/assets/og-embed.png',tag:'vector-hoops-daily',data:{url:d.url||'/play?utm_source=push'}}));
 });
 self.addEventListener('notificationclick', e=>{

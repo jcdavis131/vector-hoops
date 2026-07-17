@@ -56,6 +56,84 @@
       if(navigator.clipboard&&navigator.clipboard.writeText){await navigator.clipboard.writeText(shareText); if(copiedEl){copiedEl.style.display='block'; copiedEl.textContent='Link copied! Challenge friends.'; setTimeout(function(){copiedEl.style.display='none';},2500);} showToast('Copied — '+abbr+' vs world → '+url); }
     }catch(e){console.warn('shareUniverse fail',e); if(copiedEl){copiedEl.style.display='block'; copiedEl.textContent='Copy: '+url;}}
   }
+  function drawPastModernCard(opts){
+    var W=1080, H=1350;
+    var c=document.createElement('canvas'); c.width=W; c.height=H;
+    var ctx=c.getContext('2d');
+    // paper
+    ctx.fillStyle='#FFFEF7'; ctx.fillRect(0,0,W,H);
+    // border
+    ctx.strokeStyle='#1A150F'; ctx.lineWidth=18; ctx.strokeRect(10,10,W-20,H-20);
+    ctx.fillStyle='#1A150F'; ctx.fillRect(0,0,W,96);
+    // title
+    ctx.fillStyle='#fff'; ctx.font='900 28px ui-monospace,monospace';
+    ctx.fillText('VECTOR HOOPS · PAST→MODERN',28,36);
+    ctx.font='700 20px ui-monospace,monospace'; ctx.fillStyle='#F0E442';
+    ctx.fillText('P#'+(opts.puzzleNum||'?')+' · '+opts.dayKey+' · 12,966 AS 3D MAP',28,68);
+    // past hero
+    ctx.fillStyle='#111'; ctx.font='950 54px ui-sans-serif'; ctx.fillText((opts.pastName||'?')+' '+(opts.pastSeason||''),36,170);
+    ctx.font='800 22px ui-monospace'; ctx.fillStyle='#555'; ctx.fillText('Past All-Star → Modern Twin?',36,205);
+    // guess grid rows
+    var y=250;
+    ctx.font='800 20px ui-monospace';
+    (opts.guesses||[]).forEach(function(g,i){
+      var simPct=Math.round(g.sim*100);
+      var rankLabel = g.rank===0?'🎯':'#'+(g.rank+1);
+      var barW = Math.max(18, simPct*5.2);
+      // row bg
+      ctx.fillStyle = g.rank===0 ? '#e8f5e9' : (simPct>80 ? '#FFFEF7' : '#fafaf8');
+      roundedRect(ctx,36,y,W-72,64,14); ctx.fill(); ctx.strokeStyle='#111'; ctx.lineWidth=3; ctx.stroke();
+      // emoji status
+      ctx.fillStyle='#111'; ctx.font='700 22px ui-monospace';
+      var status = g.rank===0?'🟩': g.rank<=3?'🟨': g.rank<=10?'🟧':'⬜';
+      ctx.fillText((i+1)+'. '+status+' '+g.name.slice(0,18)+' '+g.season,48,y+24);
+      ctx.fillStyle = g.rank===0 ? '#009E73' : '#0072B2';
+      ctx.fillRect(48,y+32,barW,10);
+      ctx.fillStyle='#111'; ctx.font='700 16px ui-monospace'; ctx.fillText(simPct+'% '+rankLabel, 48+barW+12, y+40);
+      y+=78;
+    });
+    if(y<520) y=520;
+    // answer
+    ctx.fillStyle='#111'; ctx.font='900 26px ui-sans-serif';
+    if(opts.won){
+      ctx.fillText('Solved '+opts.guesses.length+'/6 → '+opts.answerName,36,y+30);
+    }else if(opts.revealed){
+      ctx.fillText('Answer: '+opts.answerName+' '+(opts.answerSim? Math.round(opts.answerSim*100)+'%':'') ,36,y+30);
+    }else{
+      ctx.fillText('Can you find the modern twin?',36,y+30);
+    }
+    // insight line
+    ctx.font='600 16px ui-monospace'; ctx.fillStyle='#666';
+    var insight = '48-d MTNN recall@10 0.977 · PC1 paint→perim PC2 load PC3 ball · '+ (opts.streak?'streak '+opts.streak+' · ':'') +'hoops.dumbmodel.com/play';
+    ctx.fillText(insight.slice(0,92),36,y+60);
+    // CTA
+    ctx.fillStyle='#F0E442'; ctx.strokeStyle='#111'; ctx.lineWidth=4; roundedRect(ctx,36,H-140,W-72,76,18); ctx.fill(); ctx.stroke();
+    ctx.fillStyle='#111'; ctx.font='900 28px ui-sans-serif'; ctx.fillText('Play today: hoops.dumbmodel.com/play →',56,H-92);
+    // small
+    ctx.font='700 14px ui-monospace'; ctx.fillStyle='#444'; ctx.fillText('12,966 seasons as rotating 3D map · trends · lab · methods',36,H-28);
+    return c;
+  }
+  async function sharePastModern(opts){
+    try{
+      var canvas=drawPastModernCard(opts);
+      var blob=await new Promise(function(r){canvas.toBlob(function(b){r(b);},'image/png');});
+      var file=new File([blob],'pastmodern-P'+opts.puzzleNum+'.png',{type:'image/png'});
+      var grid=(opts.guesses||[]).map(function(g){ if(g.rank===0) return '🟩'; if(g.rank<=3) return '🟨'; if(g.rank<=10) return '🟧'; return '⬜'; }).join('');
+      var score = opts.won ? opts.guesses.length+'/6' : 'X/6';
+      var text='Vector Hoops Past→Modern P#'+opts.puzzleNum+' '+score+' '+grid+'\nPast '+opts.pastName+' '+opts.pastSeason+' → '+(opts.won? opts.guesses.slice(-1)[0].name+' 🎯' : 'modern twin?')+'\n'+(opts.streak?'🔥 streak '+opts.streak+' · ':'')+'12,966 as 3D map \nhoops.dumbmodel.com/play?day='+opts.dayKey;
+      if(navigator.canShare && navigator.canShare({files:[file]})){
+        await navigator.share({title:'Vector Hoops P#'+opts.puzzleNum,text:text,files:[file]});
+        return true;
+      }
+      if(navigator.share){
+        try{ await navigator.share({title:'Past→Modern P#'+opts.puzzleNum,text:text,url:opts.url}); return true; }catch(e){}
+      }
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        await navigator.clipboard.writeText(text+'\n'+opts.url);
+        return 'copied';
+      }
+    }catch(e){console.warn('sharePastModern fail',e);} return false;
+  }
   async function shareChimera(puzzleNum,emojiRows,scoreText,url){
     try{
       var canvas=drawChimeraCard(puzzleNum,emojiRows,scoreText); var blob=await new Promise(function(r){canvas.toBlob(function(b){r(b);},'image/png');});
@@ -65,5 +143,5 @@
       if(navigator.clipboard){await navigator.clipboard.writeText(text+'\n'+url); return true;}
     }catch(e){console.warn('shareChimera fail',e);} return false;
   }
-  window.VHShare={shareUniverse:shareUniverse,shareChimera:shareChimera,drawTeamCard:drawTeamCard,drawChimeraCard:drawChimeraCard};
+  window.VHShare={shareUniverse:shareUniverse,shareChimera:shareChimera,sharePastModern:sharePastModern,drawTeamCard:drawTeamCard,drawChimeraCard:drawChimeraCard,drawPastModernCard:drawPastModernCard};
 })();

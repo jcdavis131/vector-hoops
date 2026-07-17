@@ -1,380 +1,341 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
-<title>Play — Past All-Star → Modern Twin — Vector Hoops 3D Map</title>
-<meta name="description" content="12,966 seasons as 3D embedding map — daily Past All-Star → guess closest modern superstar. 48-d MTNN cosine recall@10 0.977 leakfree."/>
-<meta property="og:title" content="Play Vector Hoops — Past → Modern Twin — 3D Map"/>
-<meta property="og:description" content="Past All-Star → modern twin — 48-d MTNN 12,966 seasons as 3D navigable map. Guess the closest 2024-26 superstar. 6 tries."/>
-<meta property="og:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/>
-<meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/>
-<meta name="twitter:card" content="summary_large_image"/>
-<meta name="theme-color" content="#1A150F"/>
-<link rel="manifest" href="/manifest.json"/>
+<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/><title>Play — Past All-Star → Modern Twin — rotating 3D map — Vector Hoops</title>
+<meta name="description" content="12,966 seasons as rotating 3D map — daily Past All-Star → guess closest modern superstar. 48-d MTNN cosine recall@10 0.977. Share image card, challenge friends, streak, steals/busts in players."/>
+<meta property="og:title" content="Play Vector Hoops — Past→Modern Twin — rotating 3D"/><meta property="og:description" content="Past All-Star → modern twin — 48-d MTNN 12,966 rotating map. 6 tries. Share PNG 1080x1350 + emoji grid + streak. Challenge link ?day=."/><meta property="og:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/><meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/><meta name="twitter:card" content="summary_large_image"/><meta name="theme-color" content="#1A150F"/><link rel="manifest" href="/manifest.json"/>
+<link rel="stylesheet" href="assets/shell.css"/><link rel="stylesheet" href="assets/responsive.css"/>
 <style>
-:root{--paper:#FFFEF7;--ink:#1A150F;--blue:#0072B2;--verm:#D55E00;--sky:#56B4E9;--yellow:#F0E442;--green:#009E73;--mag:#CC79A7;--radius:14px;--shadow:4px 4px 0 var(--ink);--mono:ui-monospace,monospace;--sans:ui-sans-serif,system-ui;}
+:root{--paper:#FFFEF7;--ink:#1A150F;--blue:#0072B2;--verm:#D55E00;--yellow:#F0E442;--green:#009E73;--radius:14px;--shadow:4px 4px 0 var(--ink);--mono:ui-monospace,monospace;--sans:ui-sans-serif,system-ui;}
 *{box-sizing:border-box}html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:18px;line-height:1.65;overflow-x:clip}
 button,.input{min-height:44px}
 .card{background:#fff;border:2.2px solid var(--ink);border-radius:14px;box-shadow:var(--shadow);padding:14px 16px}
-.btn{appearance:none;border:2.2px solid var(--ink);border-radius:12px;min-height:48px;padding:10px 14px;font-weight:900;font-family:var(--mono);text-transform:uppercase;letter-spacing:.04em;cursor:pointer;box-shadow:3px 3px 0 var(--ink);background:#fff;color:var(--ink)}
+.btn{appearance:none;border:2.2px solid var(--ink);border-radius:12px;min-height:48px;padding:10px 14px;font-weight:900;font-family:var(--mono);text-transform:uppercase;letter-spacing:.04em;cursor:pointer;box-shadow:3px 3px 0 var(--ink);background:#fff;color:var(--ink);display:inline-flex;align-items:center;gap:8px}
 .btn:active{transform:translate(1px,1px);box-shadow:1px 1px 0 var(--ink)}
-.btn-primary{background:var(--ink);color:#fff}
-.btn-accent{background:var(--yellow);color:var(--ink)}
+.btn-primary{background:var(--ink);color:#fff}.btn-accent{background:var(--yellow);color:var(--ink)}
 .input{width:100%;border:2.2px solid var(--ink);border-radius:12px;padding:0 12px;font-size:16px;font-weight:600;box-shadow:2px 2px 0 var(--ink)}
 .small-mono{font-family:var(--mono);font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
 .pill{border:1.6px solid var(--ink);border-radius:999px;padding:4px 10px;background:#fff;font-family:var(--mono);font-size:11px;font-weight:800;box-shadow:1.5px 1.5px 0 var(--ink)}
-.main{max-width:920px;margin:0 auto;padding:12px clamp(12px,3vw,20px) calc(92px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:14px}
-#map-wrap{position:relative;min-height:420px;border:2.5px solid var(--ink);border-radius:16px;box-shadow:6px 6px 0 var(--ink);overflow:hidden;background:radial-gradient(120% 80% at 70% 20%,rgba(0,114,178,.12),transparent 48%),radial-gradient(90% 60% at 20% 70%,rgba(213,94,0,.10),transparent 46%),var(--paper)}
-#sky-canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
-#map-overlay{position:absolute;left:10px;right:10px;top:10px;display:flex;justify-content:space-between;gap:8px;z-index:2;pointer-events:none}
+.main{max-width:980px;margin:0 auto;padding:12px clamp(12px,3vw,20px) calc(92px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:14px}
+#map-wrap{position:relative;min-height:460px;border:2.5px solid var(--ink);border-radius:16px;box-shadow:6px 6px 0 var(--ink);overflow:hidden;background:radial-gradient(120% 80% at 70% 20%,rgba(0,114,178,.12),transparent 48%),radial-gradient(90% 60% at 20% 70%,rgba(213,94,0,.10),transparent 46%),var(--paper)}
+#sky-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab}
+#sky-canvas:active{cursor:grabbing}
+#map-overlay{position:absolute;left:10px;right:10px;top:10px;display:flex;justify-content:space-between;gap:8px;z-index:2;pointer-events:none;flex-wrap:wrap}
 #map-overlay .chip{background:rgba(255,254,247,.92);border:2px solid var(--ink);border-radius:999px;padding:4px 8px;font-family:var(--mono);font-size:10px;box-shadow:1px 1px 0 var(--ink)}
+#map-controls{position:absolute;left:10px;bottom:10px;z-index:3;display:flex;gap:6px;flex-wrap:wrap}
+#map-controls .chip{cursor:pointer}
 #hover-tip{position:absolute;left:50%;top:50%;transform:translate(-50%,-100%);background:#FFFEF7;border:2px solid var(--ink);border-radius:10px;padding:6px 8px;box-shadow:3px 3px 0 var(--ink);font-size:11px;line-height:1.35;display:none;z-index:3;pointer-events:none;max-width:220px}
 .guess-row{border:1.6px dashed #bbb;border-radius:10px;padding:10px;background:#FFFEF7;margin-top:8px}
 .guess-row.win{border-color:var(--green);border-style:solid;background:#e8f5e9}
 .bar{height:8px;border-radius:999px;background:#eee;overflow:hidden;margin-top:6px}
-.bar>i{display:block;height:100%;background:var(--blue)}
+.bar>i{display:block;height:100%}
 .suggest{position:relative}
-.suggest ul{position:absolute;z-index:20;left:0;right:0;top:52px;background:#fff;border:2px solid var(--ink);border-radius:12px;box-shadow:var(--shadow);list-style:none;margin:0;padding:6px;max-height:300px;overflow:auto}
+.suggest ul{position:absolute;z-index:20;left:0;right:0;top:52px;background:#fff;border:2px solid var(--ink);border-radius:12px;box-shadow:4px 4px 0 var(--ink);list-style:none;margin:0;padding:6px;max-height:300px;overflow:auto}
 .suggest li{padding:8px 10px;border-radius:8px;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
 .suggest li:hover,.suggest li.is-active{background:var(--yellow)}
 .hd{font-family:"Architects Daughter",var(--mono);line-height:1.1}
+.confetti{position:fixed;inset:0;pointer-events:none;z-index:98}
 </style>
 <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap" rel="stylesheet">
-</head>
-<body>
-<nav style="position:sticky;top:0;z-index:40;display:flex;justify-content:space-between;align-items:center;padding:10px 14px;padding-top:calc(10px + env(safe-area-inset-top));background:rgba(255,254,247,.92);backdrop-filter:blur(10px);border-bottom:2.2px solid var(--ink)">
-  <a href="/" style="font-weight:900;text-decoration:none;color:var(--ink);font-family:var(--mono)">VECTOR<span style="color:var(--verm)">HOOPS</span> · 3D MAP</a>
-  <div style="display:flex;gap:8px;align-items:center"><span class="pill" id="puzzle-pill">P#—</span><span class="pill" id="streak-pill">streak 0</span></div>
-</nav>
+</head><body>
+<nav class="site-nav" data-active="/play" aria-label="Vector Hoops site"></nav>
 
 <div class="main">
-  <div class="card">
-    <h1 class="hd" style="margin:0;font-size:24px">Past All-Star → <b style="background:var(--ink);color:#fff;padding:0 .2em;border-radius:6px">Modern Twin</b></h1>
-    <p class="small-mono" style="text-transform:none;color:#444;margin:6px 0 0;line-height:1.5">Only game. 12,966 seasons as navigable 3D map (48-d MTNN PCA 3). Take a past All-Star, guess which 2024-26 superstar is closest in embedding. 6 tries, hints from real 48-d cosine. <span style="background:var(--yellow);border:1.5px solid var(--ink);border-radius:999px;padding:2px 6px">recall@10 0.977</span></p>
+  <div class="card" style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center">
+    <div><h1 class="hd" style="margin:0;font-size:24px">Past All-Star → <b style="background:var(--ink);color:#fff;padding:0 .2em;border-radius:6px">Modern Twin</b></h1><p class="small-mono" style="text-transform:none;color:#444;margin:6px 0 0;line-height:1.4">12,966 as rotating 3D map · 48-d MTNN recall@10 0.977 · <span id="puzzle-day-label">Today</span> · drag to spin, auto-rotates <span style="background:var(--yellow);border:1.5px solid var(--ink);border-radius:999px;padding:2px 6px">v10 rotating</span> · <a href="/players">Players steals/busts →</a></p></div>
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><span class="pill" id="puzzle-pill">P#—</span><span class="pill" id="streak-pill">streak 0</span><button class="pill" id="btn-challenge" type="button" style="cursor:pointer">👥 Challenge link</button></div>
   </div>
 
-  <div id="map-wrap">
-    <canvas id="sky-canvas" width="640" height="420"></canvas>
-    <div id="map-overlay"><span class="chip" id="map-fact">12,966 real xyz · PC1 paint→perim PC2 load PC3 ball</span><span class="chip">hover: name · season · archetype</span></div>
-    <div id="hover-tip"></div>
-  </div>
+  <div id="map-wrap"><canvas id="sky-canvas" width="640" height="460"></canvas><div id="map-overlay"><span class="chip" id="map-fact">12,966 real xyz — rotating 3D · PC1 paint→perim PC2 load PC3 ball</span><span class="chip">past gold · guesses orange · hover dossier</span></div><div id="map-controls"><button class="chip" id="btn-pause" type="button">⏸ Pause</button><button class="chip" id="btn-reset" type="button">⟲ Reset</button></div><div id="hover-tip"></div></div>
 
   <div class="card" id="past-card">
     <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center">
-      <div><div class="small-mono">Today's Past All-Star</div><h2 id="past-name" class="hd" style="margin:4px 0 2px;font-size:26px">Loading…</h2><div id="past-meta" class="small-mono" style="text-transform:none;color:#555"></div></div>
-      <div style="display:flex;gap:8px"><button id="btn-random" class="btn" type="button">Random Past 🎲</button><button id="btn-new" class="btn btn-accent" type="button">New Puzzle</button></div>
+      <div><div class="small-mono">Today's Past All-Star — <span id="challenge-badge" style="display:none;background:var(--yellow);border:1.5px solid var(--ink);border-radius:6px;padding:1px 6px">CHALLENGE</span></div><h2 id="past-name" class="hd" style="margin:4px 0 2px;font-size:26px">Loading…</h2><div id="past-meta" class="small-mono" style="text-transform:none;color:#555"></div></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap"><button id="btn-random" class="btn" type="button">Random 🎲</button><button id="btn-new" class="btn btn-accent" type="button">New Puzzle</button></div>
     </div>
     <div id="past-xyz" class="small-mono" style="margin-top:8px;text-transform:none;color:#666"></div>
     <div id="past-closest-hint" class="small-mono" style="margin-top:6px;text-transform:none;color:#111;background:#fff;border:1.4px dashed var(--ink);border-radius:8px;padding:6px 8px;display:none"></div>
   </div>
 
   <div class="card">
-    <label class="small-mono" for="guess-input">Guess modern superstar (2024-26)</label>
-    <div class="suggest">
-      <input id="guess-input" class="input" placeholder="Type modern player — e.g., Victor Wembanyama" autocomplete="off" spellcheck="false"/>
-      <ul id="guess-suggest" class="hidden"></ul>
-    </div>
+    <label class="small-mono" for="guess-input">Guess modern superstar (2024-26) — <span style="text-transform:none;color:#666">594 unique · type for autocomplete · Enter to guess</span></label>
+    <div class="suggest"><input id="guess-input" class="input" placeholder="Type modern — e.g., Victor Wembanyama, SGA, Ant" autocomplete="off" spellcheck="false"/><ul id="guess-suggest" class="hidden" style="display:none"></ul></div>
     <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
       <button id="guess-btn" class="btn btn-primary" type="button">Guess →</button>
-      <button id="share-btn" class="btn" type="button">Share</button>
+      <button id="share-btn" class="btn" type="button">📸 Share Image Card</button>
+      <button id="share-text-btn" class="btn" type="button">📋 Copy Grid</button>
       <span id="warm-label" class="pill" style="display:none"></span>
     </div>
     <div id="guesses" aria-live="polite"></div>
     <div id="result" class="hidden" style="margin-top:12px"></div>
   </div>
 
-  <div class="card small-mono" style="text-transform:none;color:#666;font-size:10px">Solo personal project, no connection to employer, built public/free-tier only — 12,966 seasons · MTNN 48-d 0.977 · PC1 paint→perim PC2 load PC3 ball · <a href="/">home</a> · <a href="/offline.html">offline</a></div>
+  <div class="card" style="background:#1A150F;color:#FFFEF7"><h3 class="hd" style="margin:0 0 6px;color:var(--yellow)">Viral upgrade — how sharing works</h3><p style="margin:0;font-size:12px;line-height:1.5;color:#ddd"><b>Image card 1080×1350:</b> past hero + 6 rows 🟩🟨🟧⬜ + sim% bar + rank + streak. Shared via Web Share API file → X/Threads/Discord auto, clipboard fallback. <b>Challenge link:</b> ?day=YYYY-MM-DD forces same past, same answer — compare rank. <b>Rotating map:</b> true 3D perspective, auto-rotate, drag pauses 3s, pause button. <b>Players →</b> <a href="/players" style="color:var(--yellow)">Steals/Busts</a> with playoff bonus — top steal Ben Wallace archetype, busts maturity 5y.</p></div>
+
+  <div class="card small-mono" style="text-transform:none;color:#666;font-size:10px">Solo personal project, no connection to employer, built public/free-tier only — 12,966 seasons · MTNN 48-d 0.977 · PC1 paint→perim PC2 load PC3 ball · <a href="/">home</a> · <a href="/trends">trends</a> · <a href="/players">players steals/busts</a> · <a href="/methods">methods</a> · <a href="/offline.html">offline</a></div>
 </div>
 
+<canvas id="confetti-canvas" class="confetti" style="display:none"></canvas>
+<script src="assets/site-nav.js" defer></script>
 <script src="assets/mtnn.js"></script>
+<script src="assets/viral-share.js"></script>
 <script src="assets/past-modern-game.js"></script>
 <script>
 (function(){
   const $=s=>document.querySelector(s);
-  const STORAGE_GUESS='vh.pastmodern.v1';
+  const STORAGE_GUESS='vh.pastmodern.v10';
   const STREAK_KEY='vh.streak';
   const OKABE=['#0072B2','#D55E00','#009E73','#F0E442','#56B4E9','#CC79A7','#E69F00','#000000'];
   const ARCH=["Glass+Rim","LowVol Glass","Low Impact 3P Vol","Def Glass+Rim FT","Vol+3P Vol","3P Acc+Vol","Playmaking+Steals","Scoring Vol"];
+  let G={guesses:[]};
+  let W=0,H=0,dpr=1, base=[], projected=[];
+  let rotY=Math.PI*0.18, rotX=0.22, auto=true, autoSpeed=0.00022, isDragging=false, lastX=0,lastY=0, idleTimer=0;
+  let animId=null, lastT=0;
+  let pastPt=null;
+  let hoverEl=$('#hover-tip'), canvas=$('#sky-canvas'), factEl=$('#map-fact');
+  let searchPlayers=[];
 
-  let G = {guesses:[]};
-
-  // canvas map
-  let W=0,H=0,dpr=1, points=[], searchPlayers=[];
-  let pastPt=null, modernPts=[], hoverEl=$('#hover-tip'), canvas=$('#sky-canvas'), factEl=$('#map-fact');
-  function resize(){
-    const r=canvas.getBoundingClientRect(); if(!r.width) return;
-    W=r.width; H=r.height; dpr=Math.min(devicePixelRatio||1,2);
-    canvas.width=W*dpr; canvas.height=H*dpr; canvas.style.width=W+'px'; canvas.style.height=H+'px';
-    const ctx=canvas.getContext('2d'); ctx.setTransform(dpr,0,0,dpr,0,0);
-    buildPoints();
-    draw();
+  function resize(){ var r=canvas.getBoundingClientRect(); if(!r.width) return; W=r.width; H=r.height; dpr=Math.min(devicePixelRatio||1,2.5); canvas.width=W*dpr; canvas.height=H*dpr; canvas.style.width=W+'px'; canvas.style.height=H+'px'; var ctx=canvas.getContext('2d'); ctx.setTransform(dpr,0,0,dpr,0,0);}
+  function initBase(lite){
+    base=[];
+    for(var i=0;i<lite.length;i++){ var p=lite[i]; base.push({ox:(p.x-0.5)*2, oy:(p.y-0.5)*2, oz:(p.z-0.5)*2, n:p.n, s:p.s, c:p.c, i:p.i, x:p.x,y:p.y,z:p.z});}
+    projected=new Array(base.length);
+    searchPlayers=lite;
   }
-  function buildPoints(){
-    if(!searchPlayers.length) return;
-    points=[];
-    for(const p of searchPlayers){
-      points.push({i:p.i, n:p.n, s:p.s, x:p.x, y:p.y, z:p.z, c:p.c, sx:p.x*W, sy:(1-p.y)*H*0.92+H*0.04});
+  function projectFrame(){
+    var cy=Math.cos(rotY), sy=Math.sin(rotY), cx=Math.cos(rotX), sx=Math.sin(rotX);
+    var persp=2.8;
+    var st=null; try{ st=VHPastModern.state(); }catch{}
+    var pastI= st&&st.target ? st.target.i : null;
+    for(var i=0;i<base.length;i++){
+      var b=base[i];
+      var xr=b.ox*cy + b.oz*sy;
+      var z1=-b.ox*sy + b.oz*cy;
+      var yr=b.oy*cx - z1*sx;
+      var zr=b.oy*sx + z1*cx;
+      var scale=persp/(persp - zr*0.55);
+      var sxr=W*0.5 + xr*scale*(W*0.40);
+      var syr=H*0.5 - yr*scale*(H*0.40);
+      var depth=(zr+1)*0.5;
+      var alpha=0.22+depth*0.78;
+      var rad=(0.8+depth*1.9)*(W<600?0.9:1);
+      projected[i]={i:b.i,n:b.n,s:b.s,c:b.c,x:b.x,y:b.y,z:b.z,sx:sxr,sy:syr,depth:depth,alpha:alpha,rad:rad, isPast: b.i===pastI};
     }
-    const state=VHPastModern.state();
-    if(state.target){
-      const t=points.find(pp=>pp.i===state.target.i);
-      if(t) pastPt=t;
-    }
-    modernPts = state.modernPool.map(m=>{
-      const pt=points.find(pp=>pp.i===m.i);
-      return pt? {...pt, modernName:m.n} : null;
-    }).filter(Boolean);
   }
   function draw(){
-    if(!canvas) return;
-    const ctx=canvas.getContext('2d');
-    ctx.clearRect(0,0,W,H);
-    const g=ctx.createRadialGradient(W*0.7,H*0.2,0,W*0.7,H*0.2,Math.max(W,H));
-    g.addColorStop(0,'rgba(0,114,178,0.08)'); g.addColorStop(1,'rgba(0,0,0,0)'); ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
-    if(!points.length) return;
-    // all points faint
-    for(const pt of points){
-      const rad = 1.0 + pt.z*1.2;
-      ctx.globalAlpha=0.55;
-      ctx.fillStyle=OKABE[pt.c % OKABE.length];
-      ctx.beginPath(); ctx.arc(pt.sx, pt.sy, rad,0,Math.PI*2); ctx.fill();
+    var ctx=canvas.getContext('2d'); ctx.clearRect(0,0,W,H);
+    var g=ctx.createRadialGradient(W*0.7,H*0.22,0,W*0.7,H*0.22,Math.max(W,H));
+    g.addColorStop(0,'rgba(0,114,178,0.09)'); g.addColorStop(1,'rgba(0,0,0,0)'); ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+    if(!projected.length) return;
+    var order=projected.slice().sort(function(a,b){return a.depth-b.depth;});
+    for(var i=0;i<order.length;i++){
+      var p=order[i];
+      ctx.globalAlpha = p.isPast? 1 : Math.max(0.18,Math.min(0.94,p.alpha*0.82));
+      if(p.isPast){
+        // draw faint underlying
+        ctx.fillStyle=OKABE[p.c%OKABE.length]; ctx.beginPath(); ctx.arc(p.sx,p.sy,p.rad+0.5,0,Math.PI*2); ctx.fill();
+      }else{
+        ctx.fillStyle=OKABE[p.c%OKABE.length]; ctx.beginPath(); ctx.arc(p.sx,p.sy,p.rad,0,Math.PI*2); ctx.fill();
+      }
     }
-    ctx.globalAlpha=1;
-    // modern cluster slightly bigger?
-    // past gold
-    if(pastPt){
-      ctx.fillStyle='#fff'; ctx.strokeStyle='#1A150F'; ctx.lineWidth=2.4;
-      ctx.beginPath(); ctx.arc(pastPt.sx, pastPt.sy, 10,0,Math.PI*2); ctx.fill(); ctx.stroke();
-      ctx.fillStyle='#F0E442'; ctx.beginPath(); ctx.arc(pastPt.sx, pastPt.sy, 6,0,Math.PI*2); ctx.fill();
+    // guesses orange rings + lines
+    var st=null; try{ st=VHPastModern.state(); }catch{}
+    var tProj = st&&st.target ? projected.find(function(pp){return pp.i===st.target.i;}) : null;
+    if(tProj){
+      var ctx2=canvas.getContext('2d');
+      ctx2.strokeStyle='#1A150F'; ctx2.lineWidth=2.8; ctx2.beginPath(); ctx2.arc(tProj.sx,tProj.sy,12,0,Math.PI*2); ctx2.stroke();
+      ctx2.fillStyle='#F0E442'; ctx2.beginPath(); ctx2.arc(tProj.sx,tProj.sy,6.8,0,Math.PI*2); ctx2.fill();
+      ctx2.fillStyle='#1A150F'; ctx2.font='800 10px ui-monospace,monospace'; ctx2.fillText(tProj.n+' '+tProj.s, tProj.sx+14, tProj.sy-12);
     }
     // guesses
-    for(const gu of G.guesses){
-      const pt=points.find(p=>p.n===gu.name && p.s===gu.season) || points.find(p=>p.n===gu.name);
-      if(!pt) continue;
+    for(var gi=0;gi<G.guesses.length;gi++){
+      var gu=G.guesses[gi];
+      var p=projected.find(function(pp){return pp.n===gu.name;}) || projected.find(function(pp){return pp.i===gu.idx;});
+      if(!p) continue;
       ctx.strokeStyle = gu.rank===0 ? '#009E73' : '#D55E00';
-      ctx.lineWidth=2;
-      ctx.beginPath(); ctx.arc(pt.sx, pt.sy, 7,0,Math.PI*2); ctx.stroke();
-      if(pastPt){ ctx.setLineDash([4,4]); ctx.beginPath(); ctx.moveTo(pastPt.sx,pastPt.sy); ctx.lineTo(pt.sx,pt.sy); ctx.stroke(); ctx.setLineDash([]); }
+      ctx.lineWidth= gu.rank===0? 2.8:2;
+      ctx.beginPath(); ctx.arc(p.sx,p.sy, gu.rank===0? 9:7,0,Math.PI*2); ctx.stroke();
+      if(tProj){ ctx.setLineDash([4,4]); ctx.globalAlpha=0.55; ctx.beginPath(); ctx.moveTo(tProj.sx,tProj.sy); ctx.lineTo(p.sx,p.sy); ctx.stroke(); ctx.setLineDash([]); ctx.globalAlpha=1; }
     }
   }
+  function loop(t){
+    animId=requestAnimationFrame(loop);
+    if(!lastT) lastT=t; var dt=Math.min(48,t-lastT); lastT=t;
+    if(!isDragging && auto){ rotY+=dt*autoSpeed; rotX += (Math.sin(t*0.00018)*0.20 - rotX)*0.018; }
+    else if(idleTimer){ idleTimer-=dt; if(idleTimer<=0){ auto=true; var bp=$('#btn-pause'); if(bp) bp.textContent='⏸ Pause'; } }
+    projectFrame(); draw();
+  }
+  function onDown(ev){ isDragging=true; auto=false; lastX= ev.touches?ev.touches[0].clientX:ev.clientX; lastY= ev.touches?ev.touches[0].clientY:ev.clientY; var bp=$('#btn-pause'); if(bp) bp.textContent='▶️ Resume'; }
   function onMove(ev){
-    const rect=canvas.getBoundingClientRect();
-    const x=(ev.touches?ev.touches[0].clientX:ev.clientX)-rect.left;
-    const y=(ev.touches?ev.touches[0].clientY:ev.clientY)-rect.top;
-    let best=null,bestDist=999;
-    for(const pt of points){
-      const dx=pt.sx-x, dy=pt.sy-y; const d=Math.sqrt(dx*dx+dy*dy);
-      if(d<14 && d<bestDist){ best=pt; bestDist=d; }
-    }
-    if(best && hoverEl){
-      hoverEl.style.display='block';
-      hoverEl.style.left=best.sx+'px'; hoverEl.style.top=(best.sy-40)+'px'; hoverEl.style.transform='translate(-50%,-100%)';
-      hoverEl.innerHTML=`<b>${best.n}</b> ${best.s}<br><span class="small-mono" style="text-transform:none">x${best.x.toFixed(2)} y${best.y.toFixed(2)} z${best.z.toFixed(2)} · ${ARCH[best.c%ARCH.length]}</span>`;
-      if(factEl) factEl.textContent=`${best.n} ${best.s} · ${ARCH[best.c%ARCH.length]} · x${best.x.toFixed(2)} y${best.y.toFixed(2)} z${best.z.toFixed(2)}`;
-    }else{
-      if(hoverEl) hoverEl.style.display='none';
-      if(factEl) factEl.textContent=`${searchPlayers.length} real xyz · PC1 paint→perim PC2 load PC3 ball · past gold · guesses orange`;
+    var x=ev.touches?ev.touches[0].clientX:ev.clientX, y=ev.touches?ev.touches[0].clientY:ev.clientY;
+    if(isDragging){ var dx=x-lastX, dy=y-lastY; rotY+=dx*0.008; rotX+=dy*0.006; rotX=Math.max(-0.9,Math.min(0.9,rotX)); lastX=x; lastY=y; }
+    else{
+      if(!projected.length) return;
+      var rect=canvas.getBoundingClientRect(); var mx=x-rect.left, my=y-rect.top;
+      var best=null,bd=15; for(var i=0;i<projected.length;i++){ var p=projected[i]; var d=Math.hypot(p.sx-mx,p.sy-my); if(d<bd){bd=d; best=p;} }
+      if(best && hoverEl){ hoverEl.style.display='block'; hoverEl.style.left=best.sx+'px'; hoverEl.style.top=(best.sy-36)+'px'; hoverEl.innerHTML='<b>'+best.n+'</b> '+best.s+'<br><span class="small-mono" style="text-transform:none">x'+best.x.toFixed(2)+' y'+best.y.toFixed(2)+' z'+best.z.toFixed(2)+' · '+ARCH[best.c%ARCH.length]+'</span>'; factEl.textContent=best.n+' '+best.s+' · '+ARCH[best.c%ARCH.length]; } else { if(hoverEl) hoverEl.style.display='none'; }
     }
   }
+  function onUp(){ if(isDragging){ isDragging=false; idleTimer=3400; } }
 
   function filteredModern(q){
-    q=(q||'').toLowerCase().trim();
-    if(!q) return [];
-    const state=VHPastModern.state();
-    return state.modernPool.filter(m=>m.n.toLowerCase().includes(q)).slice(0,12);
+    q=(q||'').toLowerCase().trim(); if(!q) return [];
+    var st=VHPastModern.state();
+    return st.modernPool.filter(function(m){return m.n.toLowerCase().includes(q);}).slice(0,12);
   }
-
   function attachSuggest(){
-    const input=$('#guess-input'), ul=$('#guess-suggest');
-    let active=-1, last=[];
-    function render(list){
-      last=list;
-      if(!list.length){ ul.classList.add('hidden'); return; }
-      ul.innerHTML=list.map((m,i)=>`<li data-i="${i}" class="${i===active?'is-active':''}"><span><b>${m.n}</b> <span style="opacity:.6">${m.s}</span></span><span class="small-mono">${m.i}</span></li>`).join('');
-      ul.classList.remove('hidden');
-    }
-    input.addEventListener('input',()=>{
-      active=-1;
-      render(filteredModern(input.value));
-    });
-    input.addEventListener('keydown',e=>{
-      if(ul.classList.contains('hidden')) return;
+    var input=$('#guess-input'), ul=$('#guess-suggest');
+    var active=-1, last=[];
+    function render(list){ last=list; if(!list.length){ ul.style.display='none'; ul.classList.add('hidden'); return; }
+      ul.innerHTML=list.map(function(m,i){ return '<li data-i="'+i+'" class="'+(i===active?'is-active':'')+'"><span><b>'+m.n+'</b> <span style="opacity:.6">'+m.s+'</span></span><span class="small-mono">'+m.i+'</span></li>';}).join(''); ul.style.display='block'; ul.classList.remove('hidden'); }
+    input.addEventListener('input',function(){ active=-1; render(filteredModern(this.value)); });
+    input.addEventListener('keydown',function(e){
+      if(ul.style.display==='none') return;
       if(e.key==='ArrowDown'){ e.preventDefault(); active=Math.min(active+1,last.length-1); render(last); }
       else if(e.key==='ArrowUp'){ e.preventDefault(); active=Math.max(active-1,0); render(last); }
-      else if(e.key==='Enter'){
-        if(active>=0 && last[active]){ e.preventDefault(); input.value=last[active].n; ul.classList.add('hidden'); doGuess(); }
-        else if(last.length===1){ input.value=last[0].n; ul.classList.add('hidden'); doGuess(); }
-      } else if(e.key==='Escape'){ ul.classList.add('hidden'); }
+      else if(e.key==='Enter'){ if(active>=0 && last[active]){ e.preventDefault(); input.value=last[active].n; ul.style.display='none'; doGuess(); } else if(last.length===1){ input.value=last[0].n; ul.style.display='none'; doGuess(); } }
+      else if(e.key==='Escape'){ ul.style.display='none'; }
     });
-    ul.addEventListener('click',e=>{
-      const li=e.target.closest('li'); if(!li) return;
-      const i=parseInt(li.dataset.i,10); if(last[i]){ input.value=last[i].n; ul.classList.add('hidden'); doGuess(); }
-    });
-    document.addEventListener('click',e=>{ if(!ul.contains(e.target) && e.target!==input) ul.classList.add('hidden'); });
+    ul.addEventListener('click',function(e){ var li=e.target.closest('li'); if(!li) return; var i=parseInt(li.dataset.i,10); if(last[i]){ input.value=last[i].n; ul.style.display='none'; doGuess(); } });
+    document.addEventListener('click',function(e){ if(!ul.contains(e.target) && e.target!==input) ul.style.display='none'; });
   }
 
   function loadGuesses(){
-    try{ const raw=localStorage.getItem(STORAGE_GUESS); if(!raw) return []; const obj=JSON.parse(raw); if(obj.day!==VHPastModern.state().dayKey) return []; return obj.guesses||[]; }catch{ return []; }
+    try{
+      // support both old and new key, but prefer day-specific
+      var raw=localStorage.getItem(STORAGE_GUESS); if(!raw){ var rawOld=localStorage.getItem('vh.pastmodern.v1'); if(rawOld){ try{ var o=JSON.parse(rawOld); if(o.day===VHPastModern.state().dayKey) return o.guesses||[]; }catch{} } return []; }
+      var obj=JSON.parse(raw); if(obj.day!==VHPastModern.state().dayKey) return []; return obj.guesses||[];
+    }catch{ return []; }
   }
-  function saveGuesses(){
-    try{ localStorage.setItem(STORAGE_GUESS, JSON.stringify({day:VHPastModern.state().dayKey, guesses:G.guesses})); }catch{}
+  function saveGuesses(){ try{ localStorage.setItem(STORAGE_GUESS, JSON.stringify({day:VHPastModern.state().dayKey, guesses:G.guesses})); }catch{} }
+  function loadStreak(){ try{ var raw=localStorage.getItem(STREAK_KEY); if(!raw) return 0; return JSON.parse(raw).streak||0; }catch{ return 0; } }
+  function saveStreak(s){ try{ localStorage.setItem(STREAK_KEY, JSON.stringify({streak:s,last:Date.now()})); }catch{} }
+
+  function confettiBurst(){
+    var cv=$('#confetti-canvas'); if(!cv) return; cv.style.display='block'; var ctx=cv.getContext('2d');
+    cv.width=innerWidth; cv.height=innerHeight;
+    var parts=[]; for(var i=0;i<120;i++){ parts.push({x:Math.random()*cv.width, y:-20-Math.random()*100, vx:(Math.random()-0.5)*6, vy:Math.random()*4+2, r:Math.random()*6+3, c: OKABE[i%OKABE.length], a:1});}
+    var t0=performance.now();
+    function frame(t){
+      var dt=t-t0; ctx.clearRect(0,0,cv.width,cv.height);
+      var alive=false;
+      for(var i=0;i<parts.length;i++){ var p=parts[i]; p.x+=p.vx; p.y+=p.vy; p.vy+=0.08; p.vx*=0.99; p.a-=0.006; if(p.a>0){ alive=true; ctx.globalAlpha=p.a; ctx.fillStyle=p.c; ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fill(); } }
+      ctx.globalAlpha=1; if(alive && dt<4000) requestAnimationFrame(frame); else cv.style.display='none';
+    }
+    requestAnimationFrame(frame);
   }
-  function loadStreak(){ try{ const raw=localStorage.getItem(STREAK_KEY); if(!raw) return 0; return JSON.parse(raw).streak||0; }catch{ return 0; } }
-  function saveStreak(s){ try{ localStorage.setItem(STREAK_KEY, JSON.stringify({streak:s, last:Date.now()})); }catch{} }
 
   function renderPast(){
-    const st=VHPastModern.state();
-    const past=st.target;
-    if(!past) return;
-    $('#past-name').textContent = `${past.n} ${past.s}`;
-    const hon = st.honors[`${past.n}|${past.s}`]||{};
-    const allStarExtra = hon.allNbaTeam ? `· All-NBA ${hon.allNbaTeam} (votes ${hon.allNbaVotePts||0})` : '';
-    $('#past-meta').innerHTML = `ASG ${hon.asg? '★ All-Star':''} ${allStarExtra} · archetype <b>${ARCH[past.c%ARCH.length]}</b> · PC x${past.x.toFixed(2)} y${past.y.toFixed(2)} z${past.z.toFixed(2)} · #${past.i}`;
-    $('#past-xyz').textContent = `PC1 ${past.x.toFixed(2)} paint→perim, PC2 ${past.y.toFixed(2)} load, PC3 ${past.z.toFixed(2)} ball · 48-d embedding row ${past.i} · year ${VHPastModern.parseYear(past.s)}`;
-    if(st.closestModern){
-      const cm=st.closestModern;
-      $('#past-closest-hint').style.display='block';
-      $('#past-closest-hint').textContent = `Closest modern (answer hidden until 6 tries): ${cm.entry.n} ${cm.entry.s} ${(cm.sim*100).toFixed(1)}% cos — but you guess!`;
-      // actually keep hidden? For debugging we show after win only. Hide now?
-      $('#past-closest-hint').style.display='none';
-    }
-    $('#puzzle-pill').textContent=`P#${st.puzzleNum} · ${past.s.slice(0,4)} → 2024-26`;
-    $('#streak-pill').textContent=`streak ${loadStreak()}`;
-    pastPt = points.find(p=>p.i===past.i) || null;
-    draw();
+    var st=VHPastModern.state();
+    var past=st.target; if(!past) return;
+    $('#past-name').textContent=past.n+' '+past.s;
+    var hon=st.honors[past.n+'|'+past.s]||{};
+    var allNba = hon.allNbaTeam? '· All-NBA '+hon.allNbaTeam+' vote '+ (hon.allNbaVotePts||0) : '';
+    $('#past-meta').innerHTML='ASG '+(hon.asg?'★ All-Star':'')+' '+allNba+' · archetype <b>'+ARCH[past.c%ARCH.length]+'</b> · PC x'+past.x.toFixed(2)+' y'+past.y.toFixed(2)+' z'+past.z.toFixed(2)+' · #'+past.i;
+    $('#past-xyz').textContent='PC1 '+past.x.toFixed(2)+' paint→perim, PC2 '+past.y.toFixed(2)+' load, PC3 '+past.z.toFixed(2)+' ball · 48-d row '+past.i+' · year '+VHPastModern.parseYear(past.s)+(st.urlDay?' · challenge day '+st.dayKey:' · today '+st.dayKey);
+    $('#puzzle-pill').textContent='P#'+st.puzzleNum+' · '+past.s.slice(0,4)+'→2024-26'+(st.urlDay?' · challenged':'');
+    $('#streak-pill').textContent='streak '+loadStreak();
+    $('#puzzle-day-label').textContent = st.urlDay ? 'Challenge '+st.dayKey+' · '+past.n : 'Today '+st.dayKey+' · '+past.n;
+    if(st.urlDay) $('#challenge-badge').style.display='inline-block'; else $('#challenge-badge').style.display='none';
+    projectFrame(); draw();
   }
-
   function renderGuesses(){
-    const cont=$('#guesses'); cont.innerHTML='';
-    const st=VHPastModern.state();
-    G.guesses.forEach((g,idx)=>{
-      const simPct=(g.sim*100).toFixed(1);
-      const rankLabel = g.rank===0? '🎯 CLOSEST!' : `#${g.rank+1} of ${st.modernPool.length} modern`;
-      const warm = idx>0 ? (g.rank < G.guesses[idx-1].rank ? '🔥 warmer' : g.rank > G.guesses[idx-1].rank ? '❄️ colder' : 'same') : '';
-      const isWin = g.rank===0;
-      const div=document.createElement('div');
-      div.className='guess-row'+(isWin?' win':'');
-      const dx = st.target? (g.x - st.target.x).toFixed(2) : '?';
-      const dy = st.target? (g.y - st.target.y).toFixed(2) : '?';
-      const dz = st.target? (g.z - st.target.z).toFixed(2) : '?';
-      div.innerHTML=`<div style="display:flex;justify-content:space-between;gap:8px;align-items:center"><b>${g.name} ${g.season}</b><span class="pill" style="background:${simPct>85?'#F0E442': simPct>75?'#56B4E9':'#fff'}">${simPct}% cos · ${rankLabel}</span></div>
-        <div class="small-mono" style="text-transform:none;margin-top:6px;color:#444">Δ PC1 ${dx} paint→perim · Δ PC2 ${dy} load · Δ PC3 ${dz} ball · ${warm} · archetype ${ARCH[g.c%ARCH.length]} · xyz ${g.x.toFixed(2)},${g.y.toFixed(2)},${g.z.toFixed(2)}</div>
-        <div class="bar"><i style="width:${Math.max(4,Math.min(100, parseFloat(simPct)))}%;background:${isWin?'#009E73':'#0072B2'}"></i></div>`;
+    var cont=$('#guesses'); cont.innerHTML='';
+    var st=VHPastModern.state();
+    G.guesses.forEach(function(g,idx){
+      var simPct=(g.sim*100).toFixed(1);
+      var rankLabel=g.rank===0? '🎯 CLOSEST!': '#'+(g.rank+1)+' of '+st.modernPool.length;
+      var warm=idx>0 ? (g.rank < G.guesses[idx-1].rank ? '🔥 warmer' : g.rank > G.guesses[idx-1].rank ? '❄️ colder' : 'same') : '';
+      var isWin=g.rank===0;
+      var div=document.createElement('div'); div.className='guess-row'+(isWin?' win':'');
+      var dx=st.target? (g.x - st.target.x).toFixed(2):'?'; var dy=st.target? (g.y - st.target.y).toFixed(2):'?'; var dz=st.target? (g.z - st.target.z).toFixed(2):'?';
+      var emoji = g.rank===0?'🟩': g.rank<=3?'🟨': g.rank<=10?'🟧':'⬜';
+      div.innerHTML='<div style="display:flex;justify-content:space-between;gap:8px;align-items:center"><b>'+emoji+' '+(idx+1)+'. '+g.name+' '+g.season+'</b><span class="pill" style="background:'+(simPct>85?'#F0E442': simPct>75?'#56B4E9':'#fff')+'">'+simPct+'% · '+rankLabel+'</span></div><div class="small-mono" style="text-transform:none;margin-top:6px;color:#444">Δ PC1 '+dx+' paint→perim · Δ PC2 '+dy+' load · Δ PC3 '+dz+' ball · '+warm+' · '+ARCH[g.c%ARCH.length]+'</div><div class="bar"><i style="width:'+Math.max(4,Math.min(100,parseFloat(simPct)))+'%;background:'+(isWin?'#009E73':'#0072B2')+'"></i></div>';
       cont.appendChild(div);
     });
   }
-
   function finish(){
-    const won = G.guesses.some(g=>g.rank===0);
-    const over = won || G.guesses.length>=6;
-    const resEl=$('#result');
-    const st=VHPastModern.state();
+    var won=G.guesses.some(function(g){return g.rank===0;});
+    var over=won || G.guesses.length>=6;
+    var resEl=$('#result'); var st=VHPastModern.state();
     if(!over){ resEl.classList.add('hidden'); return; }
     resEl.classList.remove('hidden');
-    const closest = st.closestModern;
-    const sortedTop = st.modernListSorted.slice(0,6).map((o,i)=>`${i+1}. ${o.m.n} ${o.m.s} ${(o.sim*100).toFixed(1)}%`).join(' · ');
+    var closest=st.closestModern;
+    var sortedTop=st.modernListSorted.slice(0,6).map(function(o,i){return (i+1)+'. '+o.m.n+' '+o.m.s+' '+(o.sim*100).toFixed(1)+'%';}).join(' · ');
     if(won){
-      const cur=loadStreak()+1; saveStreak(cur); $('#streak-pill').textContent=`streak ${cur}`;
-      resEl.innerHTML=`<div class="card" style="border-color:var(--green)"><h3 class="hd" style="margin:0 0 6px">✅ Solved in ${G.guesses.length}/6 — ${st.target.n} ${st.target.s} → ${closest.entry.n}</h3>
-        <div style="font-size:13px;line-height:1.5"><b>Answer:</b> ${closest.entry.n} ${closest.entry.s} ${(closest.sim*100).toFixed(1)}% cos 48-d<br>
-        <b>Why:</b> Closest in 48-d L2-normalized MTNN (recall@10 0.977) — PC1 paint→perim Δ ${(closest.entry.x - st.target.x).toFixed(2)}, PC2 load Δ ${(closest.entry.y - st.target.y).toFixed(2)}, PC3 ball Δ ${(closest.entry.z - st.target.z).toFixed(2)} — same archetype island ${ARCH[st.target.c%ARCH.length]}→${ARCH[closest.entry.c%ARCH.length]}<br>
-        <b>Top 6 modern twins today:</b> ${sortedTop}<br>
-        <b>Skill truth:</b> 18 towers 48→16→1 raw blend via heads f32 2.33MB — impossible before era-z per-100 sigmas.<br>
-        <span class="small-mono">Share your score — daily deterministic Past→Modern, streak ${cur}</span></div></div>`;
+      var cur=loadStreak()+1; saveStreak(cur); $('#streak-pill').textContent='streak '+cur;
+      resEl.innerHTML='<div class="card" style="border-color:var(--green)"><h3 class="hd" style="margin:0 0 6px">✅ Solved in '+G.guesses.length+'/6 — '+st.target.n+' '+st.target.s+' → '+closest.entry.n+'</h3><div style="font-size:13px;line-height:1.5"><b>Answer:</b> '+closest.entry.n+' '+closest.entry.s+' '+(closest.sim*100).toFixed(1)+'% cos 48-d<br><b>Top 6 twins:</b> '+sortedTop+'<br><b>Skill truth:</b> 18 towers 48→16→1 raw blend via heads f32 2.33MB.<br><span class="small-mono">Share PNG card + emoji grid — streak '+cur+'</span></div></div>';
+      confettiBurst();
     }else{
       saveStreak(0); $('#streak-pill').textContent='streak 0';
-      resEl.innerHTML=`<div class="card" style="border-color:var(--verm)"><h3 class="hd" style="margin:0 0 6px">❌ Revealed — ${st.target.n} ${st.target.s} → ${closest.entry.n} ${closest.entry.s}</h3>
-        <div style="font-size:13px;line-height:1.5"><b>Answer:</b> ${closest.entry.n} ${closest.entry.s} ${(closest.sim*100).toFixed(1)}% cos — closest of ${st.modernPool.length} modern (2024-26)<br>
-        <b>You guessed:</b> ${G.guesses.map(g=>`${g.name} #${g.rank+1} ${ (g.sim*100).toFixed(0)}%`).join(' · ')}<br>
-        <b>Top 6:</b> ${sortedTop}<br>
-        <b>Map insight:</b> Past gold star → modern orange rings linked · PC axes bio/shotmix/tracking from Jacobian influence bars.</div></div>`;
+      resEl.innerHTML='<div class="card" style="border-color:var(--verm)"><h3 class="hd" style="margin:0 0 6px">❌ Revealed — '+st.target.n+' '+st.target.s+' → '+closest.entry.n+' '+closest.entry.s+'</h3><div style="font-size:13px;line-height:1.5"><b>Answer:</b> '+closest.entry.n+' '+closest.entry.s+' '+(closest.sim*100).toFixed(1)+'% cos — closest of '+st.modernPool.length+' modern<br><b>You guessed:</b> '+G.guesses.map(function(g){return g.name+' #'+(g.rank+1)+' '+(g.sim*100).toFixed(0)+'%';}).join(' · ')+'<br><b>Top 6:</b> '+sortedTop+'</div></div>';
     }
-    // reveal hint
-    const hintEl=$('#past-closest-hint'); if(hintEl && closest){ hintEl.style.display='block'; hintEl.textContent=`Answer: ${closest.entry.n} ${closest.entry.s} ${(closest.sim*100).toFixed(1)}% cos 48-d — top ${sortedTop}`; }
-    draw();
+    var hintEl=$('#past-closest-hint'); if(hintEl && closest){ hintEl.style.display='block'; hintEl.textContent='Answer: '+closest.entry.n+' '+closest.entry.s+' '+(closest.sim*100).toFixed(1)+'% cos 48-d — top '+sortedTop; }
+    projectFrame(); draw();
   }
-
   function doGuess(){
-    const input=$('#guess-input');
-    const name=(input.value||'').trim();
-    if(!name) return;
-    const r=VHPastModern.guessModern(name);
-    if(!r.ok){ alert(r.reason); return; }
-    G.guesses.push(r.guess);
-    saveGuesses();
-    input.value='';
-    const warmEl=$('#warm-label');
-    const wc = VHPastModern.warmCold();
-    if(wc && G.guesses.length>1){ warmEl.style.display='inline-flex'; warmEl.textContent=wc; }else warmEl.style.display='none';
-    renderGuesses();
-    finish();
-    draw();
+    var input=$('#guess-input'); var name=(input.value||'').trim(); if(!name) return;
+    var r=VHPastModern.guessModern(name); if(!r.ok){ alert(r.reason); return; }
+    G.guesses.push(r.guess); saveGuesses(); input.value='';
+    var warmEl=$('#warm-label'); var wc=VHPastModern.warmCold(); if(wc && G.guesses.length>1){ warmEl.style.display='inline-flex'; warmEl.textContent=wc; } else warmEl.style.display='none';
+    renderGuesses(); finish(); projectFrame(); draw();
   }
-
   async function main(){
+    resize(); window.addEventListener('resize',resize,{passive:true});
+    canvas.addEventListener('mousedown',onDown); canvas.addEventListener('mousemove',onMove); window.addEventListener('mouseup',onUp);
+    canvas.addEventListener('touchstart',onDown,{passive:true}); canvas.addEventListener('touchmove',onMove,{passive:true}); canvas.addEventListener('touchend',onUp);
+    canvas.addEventListener('mouseleave',function(){ if(hoverEl) hoverEl.style.display='none'; });
+    $('#btn-pause').addEventListener('click',function(){ auto=!auto; this.textContent=auto?'⏸ Pause':'▶️ Resume'; });
+    $('#btn-reset').addEventListener('click',function(){ rotY=Math.PI*0.18; rotX=0.22; auto=true; $('#btn-pause').textContent='⏸ Pause'; });
+
     await VHPastModern.init();
-    const st=VHPastModern.state();
-    searchPlayers = st.searchLite.players;
-    // build canvas
-    resize();
-    window.addEventListener('resize', resize, {passive:true});
-    canvas.addEventListener('mousemove', onMove);
-    canvas.addEventListener('mouseleave', ()=>{ if(hoverEl) hoverEl.style.display='none'; if(factEl) factEl.textContent=`${searchPlayers.length} real xyz · PC1 paint→perim PC2 load PC3 ball`; });
-    canvas.addEventListener('touchmove', onMove, {passive:true});
-    // restore guesses
-    const saved = loadGuesses();
-    // Need to ensure closest computed
+    var st=VHPastModern.state();
+    initBase(st.searchLite.players);
+    projectFrame(); draw(); loop(0);
+
+    var saved=loadGuesses();
     try{ VHPastModern.computeClosest(); }catch{}
-    // if saved guesses from same day, recompute rank with current sorted list
     if(saved.length){
-      // saved holds old guesses with sim/rank from previous load maybe outdated embeddings not ready earlier -> recompute via guessModern? Instead rebuild:
-      const rebuilt=[];
-      for(const sg of saved){
-        const rr=VHPastModern.state().modernListSorted.find(o=>o.m.n===sg.name);
-        if(rr) rebuilt.push({name:sg.name, season:sg.season, idx:rr.m.i, sim:rr.sim, rank: VHPastModern.state().modernListSorted.findIndex(o=>o.m.n===sg.name), x:rr.m.x,y:rr.m.y,z:rr.m.z,c:rr.m.c});
+      var rebuilt=[];
+      for(var j=0;j<saved.length;j++){
+        var sg=saved[j];
+        var rr=st.modernListSorted.find(function(o){return o.m.n===sg.name;});
+        if(rr) rebuilt.push({name:sg.name, season:sg.season, idx:rr.m.i, sim:rr.sim, rank: st.modernListSorted.findIndex(function(o){return o.m.n===sg.name;}), x:rr.m.x,y:rr.m.y,z:rr.m.z,c:rr.m.c});
       }
-      G.guesses=rebuilt;
-      // push internal state guesses to keep consistent for warmCold
-      VHPastModern.state().guesses=rebuilt;
+      G.guesses=rebuilt; VHPastModern.state().guesses=rebuilt;
     }
-    renderPast();
-    renderGuesses();
-    attachSuggest();
-    finish();
-    draw();
+    renderPast(); renderGuesses(); attachSuggest(); finish();
+    $('#guess-btn').addEventListener('click',doGuess);
+    $('#guess-input').addEventListener('keydown',function(e){ if(e.key==='Enter'){ e.preventDefault(); doGuess(); } });
+    $('#btn-random').addEventListener('click',function(){ var p=VHPastModern.pickRandomPast(); G.guesses=[]; saveGuesses(); VHPastModern.state().guesses=[]; renderPast(); renderGuesses(); $('#result').classList.add('hidden'); $('#past-closest-hint').style.display='none'; $('#warm-label').style.display='none'; projectFrame(); draw(); });
+    $('#btn-new').addEventListener('click',function(){ localStorage.removeItem(STORAGE_GUESS); location.href='/play'; });
 
-    $('#guess-btn').addEventListener('click', doGuess);
-    $('#guess-input').addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); doGuess(); }});
-
-    $('#btn-random').addEventListener('click',()=>{
-      const p=VHPastModern.pickRandomPast();
-      G.guesses=[]; saveGuesses(); VHPastModern.state().guesses=[]; renderPast(); renderGuesses(); $('#result').classList.add('hidden'); $('#past-closest-hint').style.display='none'; $('#warm-label').style.display='none'; draw();
+    // share image card
+    $('#share-btn').addEventListener('click',async function(){
+      var st=VHPastModern.state(); var won=G.guesses.some(function(g){return g.rank===0;});
+      var streak=loadStreak();
+      var opts={ puzzleNum: st.puzzleNum, dayKey: st.dayKey, pastName: st.target.n, pastSeason: st.target.s, guesses: G.guesses, answerName: st.closestModern? st.closestModern.entry.n+' '+st.closestModern.entry.s : '', answerSim: st.closestModern? st.closestModern.sim: 0, won: won, revealed: G.guesses.length>=6||won, streak: streak, url: location.origin+'/play?day='+st.dayKey };
+      if(window.VHShare && window.VHShare.sharePastModern){ var res=await window.VHShare.sharePastModern(opts); if(res==='copied'){ this.textContent='Copied PNG+Text!'; setTimeout(function(el){el.textContent='📸 Share Image Card';}.bind(null,this),1500); } else if(res){ this.textContent='Shared! 🎯'; setTimeout(function(el){el.textContent='📸 Share Image Card';}.bind(null,this),1500); } }
+      else { var grid=G.guesses.map(function(g){ return g.rank===0?'🟩': g.rank<=3?'🟨': g.rank<=10?'🟧':'⬜'; }).join(''); var text='Vector Hoops Past→Modern P#'+st.puzzleNum+' '+(won?G.guesses.length+'/6':'X/6')+' '+grid+'\nPast '+st.target.n+' '+st.target.s+' → modern twin?\n'+location.href; if(navigator.clipboard) navigator.clipboard.writeText(text); }
     });
-    $('#btn-new').addEventListener('click',()=>{
-      // force daily reset? Just pick daily again but clear
-      location.reload();
+    $('#share-text-btn').addEventListener('click',function(){
+      var st=VHPastModern.state(); var won=G.guesses.some(function(g){return g.rank===0;});
+      var grid=G.guesses.map(function(g){ return g.rank===0?'🟩': g.rank<=3?'🟨': g.rank<=10?'🟧':'⬜'; }).join('');
+      var lines=G.guesses.map(function(g,i){ var sim=(g.sim*100).toFixed(0); return (i+1)+'. '+(g.rank===0?'🟩': g.rank<=3?'🟨': g.rank<=10?'🟧':'⬜')+' '+g.name+' '+sim+'% #'+(g.rank+1); }).join('\n');
+      var text='Vector Hoops Past→Modern P#'+st.puzzleNum+' '+st.dayKey+' '+(won?G.guesses.length+'/6':'X/6')+' '+grid+'\nPast '+st.target.n+' '+st.target.s+' → '+(won?G.guesses.slice(-1)[0].name:'?')+'\n'+lines+'\nStreak '+loadStreak()+' · 12,966 as rotating 3D map\n'+location.origin+'/play?day='+st.dayKey;
+      if(navigator.clipboard) navigator.clipboard.writeText(text).then(function(){ var b=$('#share-text-btn'); b.textContent='Copied! ✅'; setTimeout(function(){b.textContent='📋 Copy Grid';},1200); });
+      else alert(text);
     });
-    $('#share-btn').addEventListener('click',()=>{
-      const st=VHPastModern.state();
-      const won=G.guesses.some(g=>g.rank===0);
-      const grid=G.guesses.map(g=>{
-        if(g.rank===0) return '🟩';
-        if(g.rank<=3) return '🟨';
-        if(g.rank<=10) return '🟧';
-        return '⬜';
-      }).join('');
-      const text=`Vector Hoops Past→Modern #${st.puzzleNum} ${won?G.guesses.length+'/6':'X/6'} ${grid}\nPast ${st.target.n} ${st.target.s} → modern twin?\nTop guess ${G.guesses[0]?G.guesses[0].name:''} ${G.guesses[0]?(G.guesses[0].sim*100).toFixed(0)+'%':''}\nhttps://hoops.dumbmodel.com/play\n12,966 as 3D map`;
-      if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(text).then(()=>{$('#share-btn').textContent='Copied!'; setTimeout(()=>$('#share-btn').textContent='Share',1200);}); } else alert(text);
+    $('#btn-challenge').addEventListener('click',async function(){
+      var st=VHPastModern.state();
+      var url=location.origin+'/play?day='+st.dayKey+'&utm_source=challenge';
+      var txt='Can you beat my Past→Modern? '+st.target.n+' '+st.target.s+' → modern twin? I got '+G.guesses.length+'/6 streak '+loadStreak()+' — '+url;
+      try{ if(navigator.clipboard) await navigator.clipboard.writeText(txt); this.textContent='Link copied! ✅'; setTimeout(function(el){el.textContent='👥 Challenge link';}.bind(null,this),1500); }catch{ alert(url); }
+      if(navigator.share){ try{ await navigator.share({title:'Challenge — Past→Modern P#'+st.puzzleNum, text: txt, url: url}); }catch{} }
     });
   }
-
-  main().catch(e=>{ console.error(e); alert('Load failed '+e.message+' — try reload, offline cache helps after first visit.'); });
+  main().catch(function(e){ console.error(e); alert('Load failed '+e.message); });
 })();
 </script>
 <script>
-// PWA v8
-(function(){if(!('serviceWorker' in navigator))return;var el=document.createElement('div');el.id='vh-update-toast';el.style.cssText='position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:99;display:none;justify-content:space-between;align-items:center;gap:10px;background:#1A150F;color:#FFFEF7;border:2.2px solid #FFFEF7;border-radius:12px;box-shadow:4px 4px 0 #1A150F;padding:10px 12px;font-family:ui-monospace,monospace;font-size:11px;';el.innerHTML='<span>🟢 Update — Past→Modern v9 48-d</span><button id="vh-update-btn" style="min-height:36px;border:2px solid #FFFEF7;background:#F0E442;color:#1A150F;border-radius:999px;padding:0 12px;font-weight:900;cursor:pointer;">Update →</button>';document.body.appendChild(el);function show(r){el.style.display='flex';document.getElementById('vh-update-btn').onclick=()=>{if(r&&r.waiting)r.waiting.postMessage({type:'SKIP_WAITING'});else location.reload();};}let reloading=false;navigator.serviceWorker.addEventListener('controllerchange',()=>{if(reloading)return;reloading=true;location.reload();});navigator.serviceWorker.register('/sw.js',{scope:'/'}).then(r=>{if(r.waiting)show(r);r.addEventListener('updatefound',()=>{const nw=r.installing;if(!nw)return;nw.addEventListener('statechange',()=>{if(nw.state==='installed'&&navigator.serviceWorker.controller)show(r);});});}).catch(()=>{});})();
+// PWA v10 rotating + viral + steals/busts
+(function(){if(!('serviceWorker' in navigator))return;var el=document.createElement('div');el.id='vh-update-toast';el.style.cssText='position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:99;display:none;justify-content:space-between;align-items:center;gap:10px;background:#1A150F;color:#FFFEF7;border:2.2px solid #FFFEF7;border-radius:12px;box-shadow:4px 4px 0 #1A150F;padding:10px 12px;font-family:ui-monospace,monospace;font-size:11px;';el.innerHTML='<span>🟢 v10 rotating map + viral image share + challenge</span><button id="vh-update-btn" style="min-height:36px;border:2px solid #FFFEF7;background:#F0E442;color:#1A150F;border-radius:999px;padding:0 12px;font-weight:900;cursor:pointer;">Update →</button>';document.body.appendChild(el);function show(r){el.style.display='flex';document.getElementById('vh-update-btn').onclick=function(){if(r&&r.waiting)r.waiting.postMessage({type:'SKIP_WAITING'});else location.reload();};}let reloading=false;navigator.serviceWorker.addEventListener('controllerchange',function(){if(reloading)return;reloading=true;location.reload();});navigator.serviceWorker.register('/sw.js',{scope:'/'}).then(function(r){if(r.waiting)show(r);r.addEventListener('updatefound',function(){var nw=r.installing;if(!nw)return;nw.addEventListener('statechange',function(){if(nw.state==='installed'&&navigator.serviceWorker.controller)show(r);});});}).catch(function(){});})();
 </script>
-</body>
-</html>
+</body></html>

@@ -1,67 +1,270 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/><title>Vector Hoops — 12,966 seasons as 3D embedding map — Past All-Star → Modern Twin</title><meta property="og:title" content="Vector Hoops — 12,966 seasons as 3D map · Past→Modern Twin"/><meta property="og:description" content="12,966 seasons as navigable 3D map — 48-d MTNN recall@10 0.977 leakfree. Daily game: Past All-Star → guess closest modern superstar (2024-26). 6 tries, 3D PC axes."/><meta property="og:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/><meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/><meta property="og:image:alt" content="Vector Hoops 12,966 seasons as 3D sky — 48-d MTNN nebula"/><meta property="og:url" content="https://hoops.dumbmodel.com/"/><meta property="og:type" content="website"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/><meta name="description" content="12,966 NBA seasons era-honest per-100 z-scored as navigable 3D embedding map — 48-d MTNN contrastive recall@10 0.977 leakfree. One game: Past All-Star → Modern Twin."/><meta name="theme-color" content="#1A150F"/><link rel="manifest" href="/manifest.json"/><link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap" rel="stylesheet"><style>
-:root{--paper:#FFFEF7;--ink:#1A150F;--blue:#0072B2;--verm:#D55E00;--yellow:#F0E442;--radius:14px;--shadow:4px 4px 0 var(--ink);--mono:ui-monospace,monospace;--sans:ui-sans-serif,system-ui;}
+<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/><title>Vector Hoops — 12,966 seasons as rotating 3D map — Past→Modern</title>
+<meta property="og:title" content="Vector Hoops — 12,966 as rotating 3D map · Past→Modern Twin"/>
+<meta property="og:description" content="12,966 NBA seasons era-honest per-100 z-scored as rotating 3D embedding map — 48-d MTNN recall@10 0.977. One game: Past All-Star → guess modern twin. Trends, Lab, Players (Steals/Busts), Methods."/>
+<meta property="og:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/><meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/>
+<meta name="description" content="12,966 NBA seasons as rotating 3D embedding map — 48-d MTNN contrastive recall@10 0.977 leakfree. Daily Past→Modern + Trends + Players steals/busts + Methods."/><meta name="theme-color" content="#1A150F"/><link rel="manifest" href="/manifest.json"/>
+<link rel="stylesheet" href="assets/shell.css"/><link rel="stylesheet" href="assets/responsive.css"/>
+<link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#FFFEF7;--ink:#1A150F;--blue:#0072B2;--verm:#D55E00;--yellow:#F0E442;--green:#009E73;--radius:14px;--shadow:4px 4px 0 var(--ink);--mono:ui-monospace,monospace;--sans:ui-sans-serif,system-ui;}
 *{box-sizing:border-box}html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:18px;line-height:1.65;overflow-x:clip}
-.site-nav{position:sticky;top:0;z-index:40;display:flex;justify-content:space-between;align-items:center;padding:10px 14px;padding-top:calc(10px + env(safe-area-inset-top));background:rgba(255,254,247,.92);backdrop-filter:blur(10px);border-bottom:2.2px solid var(--ink)}
 .card{background:#fff;border:2.2px solid var(--ink);border-radius:14px;box-shadow:var(--shadow);padding:14px 16px}
 .btn{appearance:none;min-height:48px;padding:12px 18px;border:2.2px solid var(--ink);border-radius:12px;background:#fff;color:var(--ink);font-family:var(--mono);font-weight:900;text-transform:uppercase;box-shadow:4px 4px 0 var(--ink);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
-.btn-primary{background:var(--ink);color:#fff}
-.btn-accent{background:var(--yellow);color:var(--ink)}
-.small-mono{font-family:var(--mono);font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
+.btn-primary{background:var(--ink);color:#fff}.btn-accent{background:var(--yellow);color:var(--ink)}.small-mono{font-family:var(--mono);font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
 .pill{border:1.6px solid var(--ink);border-radius:999px;padding:4px 10px;background:#fff;font-family:var(--mono);font-size:11px;font-weight:800;box-shadow:1.5px 1.5px 0 var(--ink)}
 #map-wrap{position:relative;min-height:560px;border:2.5px solid var(--ink);border-radius:16px;box-shadow:6px 6px 0 var(--ink);overflow:hidden;background:radial-gradient(120% 80% at 70% 20%,rgba(0,114,178,.12),transparent 48%),radial-gradient(90% 60% at 20% 70%,rgba(213,94,0,.10),transparent 46%),var(--paper)}
-#sky-canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+#sky-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab}
+#sky-canvas:active{cursor:grabbing}
 #map-overlay{position:absolute;left:10px;right:10px;top:10px;display:flex;justify-content:space-between;gap:8px;z-index:2;pointer-events:none;flex-wrap:wrap}
 #map-overlay .chip{background:rgba(255,254,247,.92);border:2px solid var(--ink);border-radius:999px;padding:4px 8px;font-family:var(--mono);font-size:10px;box-shadow:1px 1px 0 var(--ink)}
+#map-controls{position:absolute;left:10px;bottom:10px;z-index:3;display:flex;gap:6px;flex-wrap:wrap}
+#map-controls .chip{pointer-events:auto;cursor:pointer}
 #hover-tip{position:absolute;left:50%;top:50%;transform:translate(-50%,-100%);background:#FFFEF7;border:2px solid var(--ink);border-radius:10px;padding:6px 8px;box-shadow:3px 3px 0 var(--ink);font-size:11px;line-height:1.35;display:none;z-index:3;pointer-events:none;max-width:240px}
-.hero{max-width:1160px;margin:0 auto;padding:18px clamp(14px,3.5vw,28px);display:grid;grid-template-columns:1.15fr .85fr;gap:18px}
-@media(max-width:980px){.hero{grid-template-columns:1fr}#map-wrap{min-height:420px}}
+.hero{max-width:1180px;margin:0 auto;padding:12px clamp(14px,3.5vw,28px);display:grid;grid-template-columns:1.15fr .85fr;gap:18px}
+@media(max-width:980px){.hero{grid-template-columns:1fr}#map-wrap{min-height:480px}}
 .hd{font-family:"Architects Daughter",var(--mono);line-height:.98}
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.viral-strip{display:flex;gap:8px;flex-wrap:wrap;align-items:center;background:#1A150F;color:#FFFEF7;border:2px solid #1A150F;border-radius:12px;padding:10px 12px;box-shadow:4px 4px 0 #1A150F;font-family:var(--mono);font-size:11px}
+.viral-strip b{color:var(--yellow)}
 </style></head><body>
-<nav class="site-nav"><a href="/" style="font-weight:900;text-decoration:none;color:var(--ink);font-family:var(--mono)">VECTOR<span style="color:var(--verm)">HOOPS</span> · 12,966 · 3D MAP</a><div style="display:flex;gap:8px"><span class="pill">48-d MTNN</span><span class="pill">recall@10 0.977</span></div></nav>
+<nav class="site-nav" data-active="/" aria-label="Vector Hoops site"></nav>
 
 <div class="hero">
 <div>
-<div class="small-mono" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px"><span class="pill" style="background:var(--yellow);transform:rotate(-1deg)">LIVE · 12,966 seasons as 3D map</span><span id="puzzle-meta">Past → Modern · daily P#—</span></div>
-<h1 class="hd" style="font-size:clamp(30px,5vw,54px);margin:10px 0">12,966 seasons as <b style="background:var(--ink);color:#fff;padding:0 .18em;border-radius:8px">navigable 3D map</b> — Past All-Star → Modern Twin</h1>
-<p style="color:#3A332A;margin:0 0 10px;line-height:1.5;font-size:16.5px"><b>Era-honest per-100 z-scored 1996→2026:</b> FG3A μ 3.3→7+ handled. <b>48-d MTNN contrastive</b> leakfree <i>recall@10 0.977</i> <i>CQS 66.29</i> sees motor + spacing, not box score. <b>3 axes:</b> <i>PC1 paint vs perimeter</i>, <i>PC2 scoring load</i>, <i>PC3 ball-in-hand</i>. <b>8 archetypes emergent</b> (Okabe-Ito) + <b>12 skill DNA</b>. One game only.</p>
-<p style="color:#444;margin:0;font-size:15px;line-height:1.5"><b>Game:</b> Daily Past All-Star (asg=1, ≤2023) → guess closest 2024-26 superstar by 48-d cosine. 6 tries, hints: cosine %, rank #/991 modern, ΔPC1 paint→perim, ΔPC2 load, ΔPC3 ball, warmer/colder. Share grid.</p>
-<div style="display:flex;gap:12px;flex-wrap:wrap;margin:16px 0 10px"><a class="btn btn-primary" href="/play">▶ Play Past→Modern</a><a class="btn btn-accent" href="/play" id="cta-past">🎯 Today's All-Star</a><a class="btn" href="#how">How 3D map ↓</a></div>
-<div class="chips"><span class="pill">12,966 seasons era-honest</span><span class="pill">48-d MTNN 0.977 r@10</span><span class="pill">8 archetypes emergent</span><span class="pill">PC1 paint→perim PC2 load PC3 ball</span><span class="pill">Only 1 game: Past→Modern</span><span class="pill">Free · No account · PWA</span></div>
-<div class="card" style="margin-top:14px" id="how"><h2 class="hd" style="margin:0 0 6px;font-size:22px">How 3D map → modern twin insight</h2><ul style="margin:8px 0 0 18px;font-size:14px;line-height:1.5"><li><b>48-d cosine:</b> dot of L2-normed MTNN embeddings. 92% even if teams differ — sees ball-in-hand, shot-mix, motor.</li><li><b>Past All-Star pool:</b> honors.json asg=1 ≤2023 (1996→2023) sorted by All-NBA votes — Michael Jordan 1996-97, Kobe, Shaq, Iverson, Duncan, etc.</li><li><b>Modern pool:</b> 2024-25 + 2025-26 unique names (~991→~450 unique) latest embedding per name.</li><li><b>Closest:</b> max dot 48-d among modern — precomputed, rank shown. Warmer = rank ↓.</li><li><b>PC placement:</b> PCA(3) on 48-d from mtnn_map.json — x paint↔perim, y scoring load, z ball-in-hand — Okabe-Ito AAA paper #FFFEF7 ink #1A150F.</li></ul></div>
-</div>
-<div id="map-wrap"><canvas id="sky-canvas" width="640" height="560"></canvas><div id="map-overlay"><span class="chip" id="sky-fact">loading 12,966 real MTNN points…</span><span class="chip">hover name · season · archetype · xyz</span></div><div id="hover-tip"></div></div>
+<div class="small-mono" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px"><span class="pill" style="background:var(--yellow);transform:rotate(-1deg)">ROTATING · 12,966 3D MAP</span><span id="puzzle-meta">Past→Modern · daily P#— · recall@10 0.977</span></div>
+<h1 class="hd" style="font-size:clamp(30px,5vw,54px);margin:10px 0">12,966 seasons as <b style="background:var(--ink);color:#fff;padding:0 .18em;border-radius:8px">rotating 3D map</b> — Past All-Star → Modern Twin</h1>
+<p style="color:#3A332A;margin:0 0 10px;line-height:1.5;font-size:16.5px"><b>Era-honest per-100 z-scored 1996→2026:</b> 48-d MTNN contrastive leakfree <i>recall@10 0.977</i> sees motor + spacing, not box. <b>3 axes:</b> PC1 paint→perim, PC2 scoring load, PC3 ball. <b>8 archetypes</b> Okabe-Ito. <b>Rotating map</b> = true 3D perspective — drag to spin, scroll to pause.</p>
+
+<div class="viral-strip" id="viral-strip">🔥 <span id="viral-streak">streak 0</span> · <span id="viral-today">Today: loading…</span> · <b id="viral-pc" style="color:#F0E442">PC1 paint→perim PC2 load PC3 ball</b> · <span style="opacity:.7">Share = image+grid</span></div>
+
+<p style="color:#444;margin:12px 0;font-size:14.5px;line-height:1.5"><b>Game:</b> Daily Past All-Star (asg=1 ≤2023) → guess closest 2024-26 superstar by 48-d cosine. 6 tries, %cos, rank #/594, ΔPC, warmer/colder. <b>Share</b> generates 1080×1350 PNG card + emoji grid for X/Threads.</p>
+
+<div style="display:flex;gap:10px;flex-wrap:wrap;margin:14px 0 10px">
+<a class="btn btn-primary" href="/play">▶ Play Past→Modern</a>
+<a class="btn btn-accent" href="/play" id="cta-past">🎯 Today's All-Star</a>
+<button class="btn" id="btn-share-board" type="button">📸 Share Map</button>
+<button class="btn" id="btn-challenge" type="button">👥 Challenge Link</button>
 </div>
 
-<div style="max-width:1160px;margin:0 auto;padding:0 clamp(14px,3.5vw,28px) calc(20px + 88px);display:flex;flex-direction:column;gap:12px">
-<div class="card" style="background:var(--ink);color:#fff;border-color:#fff"><h2 class="hd" style="margin:0 0 6px;color:var(--yellow)">Model truth — full MTNN wired — 3D map prod</h2><p style="margin:0;font-size:13px;line-height:1.5;color:#ddd">FULL SCALE 12,966×48-d L2 2.49MB embeddings + 12,966×45-d heads 2.33MB + vectors_search_lite 1.08MB + season_norms 11K. Precomputed edge-cache immutable 1yr · recall@10 0.977 leakfree player split · composite 0.7937 · CQS 66.29. Core &lt;2MB PWA v8. Free R2/Workers CDN. Solo personal project, built public/free-tier only.</p></div>
-<div class="card small-mono" style="text-transform:none;color:#666;font-size:10px">Solo personal project, no connection to employer, built with public/free-tier only — 2026-07-16 · 12,966 seasons as 3D map · MTNN 48-d · Past→Modern only game · <a href="/play">play</a> · <a href="https://github.com/jcdavis131/vector-hoops" target="_blank">GitHub</a></div>
+<div class="chips"><a class="pill" href="/trends">📈 Trends — Procrustes drift</a><a class="pill" href="/players">🧩 Players — Directory + Steals/Busts</a><a class="pill" href="/model">🧪 Lab — MTNN 17×160→32</a><a class="pill" href="/methods">📘 Methods — Every number recomputable</a><span class="pill">Free · No account · PWA v10</span></div>
+
+<div class="card"><h3 class="hd" style="margin:0 0 6px;font-size:20px">Viral mechanics — built for share</h3>
+<ul style="margin:6px 0 0 18px;font-size:13px;line-height:1.6">
+<li><b>Image card:</b> 1080×1350 auto — past name + 6 guesses with 🟩🟨🟧⬜ + bar + streak. Web Share API file → Threads/X/Discord, fallback copy.</li>
+<li><b>Challenge:</b> <code>?day=YYYY-MM-DD</code> link — friend gets same past all-star, same answer. Streak &amp; rank preserved in share text.</li>
+<li><b>Rotating map:</b> auto-rotate slow (10°/s) → drag pauses 3s, pause button bottom-left. Hover tooltip era-honest xyz + archetype.</li>
+<li><b>Map share:</b> "Share Map" renders canvas snapshot → PNG with 12,966 points + Okabe-Ito legend, ready for posting.</li>
+</ul></div>
+
+<div class="card" id="how" style="margin-top:12px"><h2 class="hd" style="margin:0 0 6px;font-size:20px">How the rotating 3D map maps to modern twin</h2>
+<p style="margin:0 0 8px;font-size:13px;line-height:1.55;color:#333">3D uses true perspective projection of PCA(3) on 48-d MTNN (mtnn_map.json). <b>PC1</b> = paint vs perimeter (boards vs 3PA), <b>PC2</b> = scoring load (PTS/FGA/FTA vs role), <b>PC3</b> = ball-in-hand (AST/STL/TOV). Rotation is computed every frame — x = ox·cosY+oz·sinY etc — depth modulates size+alpha. Past All-Star gold ring, guesses orange.</p>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:12px"><div style="border:1.5px dashed #111;border-radius:8px;padding:8px"><b>Steals of Draft →</b> /players leaderboard ranks career mean skill vs draft slot. Undrafted eligible, 5 seasons min. Top steel: Ben Wallace-style undrafted beats expectation 60+ pts.<br><a href="/players" onclick="sessionStorage.setItem('vh_players_tab','steal')">View Steals →</a></div><div style="border:1.5px dashed #111;border-radius:8px;padding:8px"><b>Busts →</b> measures elapsed opportunity, not survival — short career IS evidence. Maturity 5y, no undrafted. Top bust = high pick, low career mean.<br><a href="/players" onclick="sessionStorage.setItem('vh_players_tab','bust')">View Busts →</a></div></div>
 </div>
 
+</div>
+<div id="map-wrap"><canvas id="sky-canvas" width="640" height="560"></canvas><div id="map-overlay"><span class="chip" id="sky-fact">loading 12,966 real MTNN — rotating…</span><span class="chip">drag to spin · hover for dossier</span></div><div id="map-controls"><button class="chip" id="btn-pause" type="button">⏸ Pause rotate</button><button class="chip" id="btn-reset" type="button">⟲ Reset view</button></div><div id="hover-tip"></div></div>
+</div>
+
+<div style="max-width:1180px;margin:0 auto;padding:0 clamp(14px,3.5vw,28px) calc(20px + 88px);display:flex;flex-direction:column;gap:12px">
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px" class="tri-links">
+<a class="card" href="/trends" style="text-decoration:none;color:inherit"><div class="small-mono">Trends · live</div><b style="font-family:'Architects Daughter',mono;font-size:18px">Procrustes drift 11.1° spacing spike</b><div style="font-size:12px;color:#666;margin-top:4px">30 seasons measured geometry, what changed this season gauge+compass, archetype stream, career shapes.</div></a>
+<a class="card" href="/players" style="text-decoration:none;color:inherit"><div class="small-mono">Players · steals/busts back</div><b style="font-family:'Architects Daughter',mono;font-size:18px">Directory + Skill 0-99 + Steals/Busts + Playoffs lens</b><div style="font-size:12px;color:#666;margin-top:4px">Search any name, 0-99 grades era-z, draft steals vs busts with playoff bonus, dossier per season.</div></a>
+<a class="card" href="/model" style="text-decoration:none;color:inherit"><div class="small-mono">Lab · glass-box MTNN</div><b style="font-family:'Architects Daughter',mono;font-size:18px">17 families 120→48-d L2 ~224K params</b><div style="font-size:12px;color:#666;margin-top:4px">Training cockpit, CQS, flow, 3D explorer, pipeline — full wiring.</div></a>
+</div>
+<div class="card" style="background:var(--ink);color:#fff"><h2 class="hd" style="margin:0 0 6px;color:var(--yellow)">Model truth — rotating 3D map prod v10</h2><p style="margin:0;font-size:12.5px;line-height:1.5;color:#ddd">FULL 12,966×48-d L2 2.49MB + 12,966×45-d heads 2.33MB + search_lite 1.08MB + season_norms 11K. Precomputed immutable 1yr · recall@10 0.977 leakfree player split composite 0.7937 CQS 66.29. Core PWA v10 <2MB · shell.css responsive.css nux · 56px bottom tabs safe-area, AAA Okabe-Ito #FFFEF7/#1A150F. Solo personal project free-tier only.</p></div>
+<div class="card small-mono" style="text-transform:none;color:#666;font-size:10px">Solo personal project, no connection to employer, built with public/free-tier only — 2026-07-16 · rotating 3D map · MTNN 48-d · Past→Modern only + Trends + Players steals/busts + Methods · <a href="/play">play</a> · <a href="https://github.com/jcdavis131/vector-hoops" target="_blank">GitHub</a></div>
+</div>
+
+<script src="assets/site-nav.js" defer></script>
 <script src="assets/mtnn.js"></script>
+<script src="assets/viral-share.js"></script>
+<script src="assets/past-modern-game.js"></script>
 <script>
 (function(){
 var c=document.getElementById('sky-canvas'), fact=document.getElementById('sky-fact'), hoverEl=document.getElementById('hover-tip');
+var btnPause=document.getElementById('btn-pause'), btnReset=document.getElementById('btn-reset');
 var OKABE=['#0072B2','#D55E00','#009E73','#F0E442','#56B4E9','#CC79A7','#E69F00','#000000'];
 var ARCH=["Glass+Rim","LowVol Glass","Low Impact 3P Vol","Def Glass+Rim FT","Vol+3P Vol","3P Acc+Vol","Playmaking+Steals","Scoring Vol"];
-var W=0,H=0,dpr=1, points=[], players=[];
-function resize(){ if(!c) return; var r=c.getBoundingClientRect(); W=r.width; H=r.height; dpr=Math.min(devicePixelRatio||1,2); c.width=W*dpr; c.height=H*dpr; c.style.width=W+'px'; c.style.height=H+'px'; var ctx=c.getContext('2d'); ctx.setTransform(dpr,0,0,dpr,0,0); build(); draw(); }
-function build(){ points=[]; for(var i=0;i<players.length;i++){ var p=players[i]; points.push({i:p.i, n:p.n, s:p.s, x:p.x, y:p.y, z:p.z, c:p.c, sx:p.x*W, sy:(1-p.y)*H*0.92+H*0.04}); } }
-function draw(){ if(!c) return; var ctx=c.getContext('2d'); ctx.clearRect(0,0,W,H); var g=ctx.createRadialGradient(W*0.7,H*0.2,0,W*0.7,H*0.2,Math.max(W,H)); g.addColorStop(0,'rgba(0,114,178,0.08)'); g.addColorStop(1,'rgba(0,0,0,0)'); ctx.fillStyle=g; ctx.fillRect(0,0,W,H); if(!points.length) return; for(var i=0;i<points.length;i++){ var pt=points[i]; var rad=1.0+pt.z*1.2; ctx.globalAlpha=0.72; ctx.fillStyle=OKABE[pt.c%OKABE.length]; ctx.beginPath(); ctx.arc(pt.sx,pt.sy,rad,0,Math.PI*2); ctx.fill(); } ctx.globalAlpha=1; }
-function onMove(ev){ if(!points.length) return; var rect=c.getBoundingClientRect(); var x=(ev.touches?ev.touches[0].clientX:ev.clientX)-rect.left; var y=(ev.touches?ev.touches[0].clientY:ev.clientY)-rect.top; var best=null,bd=999; for(var i=0;i<points.length;i++){ var pt=points[i]; var dx=pt.sx-x, dy=pt.sy-y; var d=Math.sqrt(dx*dx+dy*dy); if(d<14 && d<bd){best=pt; bd=d;} } if(best && hoverEl){ hoverEl.style.display='block'; hoverEl.style.left=best.sx+'px'; hoverEl.style.top=(best.sy-38)+'px'; hoverEl.style.transform='translate(-50%,-100%)'; hoverEl.innerHTML='<b>'+best.n+'</b> '+best.s+'<br><span class="small-mono" style="text-transform:none">x'+best.x.toFixed(2)+' y'+best.y.toFixed(2)+' z'+best.z.toFixed(2)+' · '+ARCH[best.c%ARCH.length]+'</span>'; fact.textContent=best.n+' '+best.s+' — '+ARCH[best.c%ARCH.length]+' · x'+best.x.toFixed(2)+' y'+best.y.toFixed(2)+' z'+best.z.toFixed(2); } else { if(hoverEl) hoverEl.style.display='none'; fact.textContent=players.length+' real (vectors_search_lite xyz) · PC1 paint→perim PC2 load PC3 ball · hover any of 12,966'; } }
-async function loadReal(){
-  try{
-    var r=await fetch('assets/vectors_search_lite.json',{cache:'force-cache'}); var j=await r.json(); players=j.players; build(); draw(); fact.textContent=players.length+' real (vectors_search_lite 1.08MB) · PC1 paint→perim PC2 load PC3 ball · past gold in play';
-    // puzzle meta
-    var today=new Date(); var pnum=Math.floor((today - new Date('2026-07-01T00:00:00Z'))/86400000)+1; var el=document.getElementById('puzzle-meta'); if(el) el.textContent='Past→Modern · daily P#'+pnum+' · 48-d MTNN';
-    // optional mtnn sim for Rodman bridge? skip
-  }catch(e){ fact.textContent='12,966 fallback stars'; players=[]; for(var i=0;i<600;i++) points.push({sx:Math.random()*W, sy:Math.random()*H, x:Math.random(), y:Math.random(), z:Math.random(), c:i%8, n:'Player', s:'1996-97'}); draw(); }
+var W=0,H=0,dpr=1;
+var base=[]; // {ox,oy,oz,n,s,c,i,x,y,z}
+var projected=[]; // same + sx,sy,depth,alpha,rad
+var rotY=Math.PI*0.18, rotX=0.22, targetRotX=0.22;
+var auto=true, autoSpeed=0.00022; // rad/ms ~12deg/sec
+var isDragging=false, lastX=0,lastY=0, idleTimer=0;
+var playersCount=0;
+var animId=null;
+
+function resize(){
+  if(!c) return; var rect=c.getBoundingClientRect(); W=rect.width; H=rect.height; dpr=Math.min(devicePixelRatio||1,2.5);
+  c.width=W*dpr; c.height=H*dpr; c.style.width=W+'px'; c.style.height=H+'px';
+  var ctx=c.getContext('2d'); ctx.setTransform(dpr,0,0,dpr,0,0);
 }
-if(c){ resize(); window.addEventListener('resize',resize,{passive:true}); c.addEventListener('mousemove',onMove); c.addEventListener('mouseleave',()=>{ if(hoverEl) hoverEl.style.display='none'; }); c.addEventListener('touchmove',onMove,{passive:true}); loadReal(); }
+function initBase(litePlayers){
+  base=[];
+  // litePlayers have x,y,z 0..1 -> map to -1..1 cube, center 0.5
+  for(var i=0;i<litePlayers.length;i++){
+    var p=litePlayers[i];
+    var ox=(p.x-0.5)*2.0;
+    var oy=(p.y-0.5)*2.0;
+    var oz=(p.z-0.5)*2.0;
+    base.push({ox:ox, oy:oy, oz:oz, n:p.n, s:p.s, c:p.c, i:p.i, x:p.x, y:p.y, z:p.z});
+  }
+  playersCount=base.length;
+  projected=new Array(base.length);
+}
+function projectFrame(now){
+  var cy=Math.cos(rotY), sy=Math.sin(rotY), cx=Math.cos(rotX), sx=Math.sin(rotX);
+  var perspective=2.8;
+  for(var i=0;i<base.length;i++){
+    var b=base[i];
+    // Y rot
+    var xr = b.ox*cy + b.oz*sy;
+    var z1 = -b.ox*sy + b.oz*cy;
+    // X rot
+    var yr = b.oy*cx - z1*sx;
+    var zr = b.oy*sx + z1*cx;
+    // perspective
+    var scale = perspective / (perspective - zr*0.55);
+    var sxr = W*0.5 + xr * scale * (W*0.40);
+    var syr = H*0.5 - yr * scale * (H*0.40);
+    var depth = (zr + 1.0)*0.5; // 0 far, 1 near? actually zr -1..1, +1 near?
+    // near when zr large positive (toward camera) with our transform
+    var alpha = 0.22 + depth*0.78;
+    var rad = (0.8 + depth*1.9) * (W < 600 ? 0.9 : 1.0);
+    projected[i]={i:b.i,n:b.n,s:b.s,c:b.c,x:b.x,y:b.y,z:b.z,sx:sxr,sy:syr,depth:depth,alpha:alpha,rad:rad, ox:xr, oy:yr, oz:zr};
+  }
+}
+function draw(){
+  if(!c) return;
+  var ctx=c.getContext('2d');
+  ctx.clearRect(0,0,W,H);
+  // subtle vignette
+  var g=ctx.createRadialGradient(W*0.7,H*0.22,0,W*0.7,H*0.22,Math.max(W,H));
+  g.addColorStop(0,'rgba(0,114,178,0.09)'); g.addColorStop(1,'rgba(0,0,0,0)');
+  ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+  if(!projected.length) return;
+  // sort back-to-front for correct overlap - sort by depth ascending far->near but we have many points; sorting 12k each frame heavy; sort every 2 frames maybe? Use counting? For now sort by depth quick using built-in only when not dragging for perf
+  // We'll sort index array to avoid moving objects heavy
+  var order=projected.slice().sort(function(a,b){return a.depth - b.depth;});
+  for(var i=0;i<order.length;i++){
+    var p=order[i];
+    ctx.globalAlpha = Math.max(0.18, Math.min(0.95, p.alpha*0.85));
+    ctx.fillStyle = OKABE[p.c%OKABE.length];
+    ctx.beginPath(); ctx.arc(p.sx,p.sy,p.rad,0,Math.PI*2); ctx.fill();
+  }
+  ctx.globalAlpha=1;
+  // highlight today's past
+  try{
+    var st = window.VHPastModern ? window.VHPastModern.state() : null;
+    if(st && st.target){
+      var t = projected.find(function(pp){return pp.i===st.target.i;});
+      if(t){
+        ctx.strokeStyle='#1A150F'; ctx.lineWidth=2.6; ctx.beginPath(); ctx.arc(t.sx,t.sy,11,0,Math.PI*2); ctx.stroke();
+        ctx.fillStyle='#F0E442'; ctx.beginPath(); ctx.arc(t.sx,t.sy,6.5,0,Math.PI*2); ctx.fill();
+        // label
+        ctx.fillStyle='#1A150F'; ctx.font='800 10px ui-monospace,monospace'; ctx.fillText(t.n+' '+t.s, t.sx+10, t.sy-10);
+      }
+    }
+  }catch(e){}
+}
+var lastT=0;
+function loop(t){
+  animId=requestAnimationFrame(loop);
+  if(!lastT) lastT=t;
+  var dt=Math.min(48, t-lastT); lastT=t;
+  if(!isDragging && auto){
+    rotY += dt*autoSpeed;
+    // slight wobble on X
+    rotX += ( (Math.sin(t*0.00018)*0.20 - rotX)*0.018 );
+  }else if(idleTimer){
+    idleTimer-=dt;
+    if(idleTimer<=0){ auto=true; if(btnPause) btnPause.textContent='⏸ Pause rotate'; }
+  }
+  projectFrame(t);
+  draw();
+  if(!(t%600<30)){ /* keep fact? */ }
+}
+function onPointerDown(ev){
+  isDragging=true; auto=false; lastX= ev.touches?ev.touches[0].clientX:ev.clientX; lastY= ev.touches?ev.touches[0].clientY:ev.clientY;
+  if(btnPause) btnPause.textContent='▶️ Resume rotate';
+}
+function onPointerMove(ev){
+  var x= ev.touches?ev.touches[0].clientX:ev.clientX; var y=ev.touches?ev.touches[0].clientY:ev.clientY;
+  if(isDragging){
+    var dx=x-lastX, dy=y-lastY;
+    rotY += dx*0.008; rotX += dy*0.006;
+    rotX = Math.max(-0.9, Math.min(0.9, rotX));
+    lastX=x; lastY=y;
+  } else {
+    // hover check
+    if(!projected.length) return;
+    var rect=c.getBoundingClientRect(); var mx=x-rect.left, my=y-rect.top;
+    var best=null,bd=14; for(var i=0;i<projected.length;i++){ var p=projected[i]; var d=Math.hypot(p.sx-mx,p.sy-my); if(d<bd){bd=d; best=p;} }
+    if(best && hoverEl){ hoverEl.style.display='block'; hoverEl.style.left=best.sx+'px'; hoverEl.style.top=(best.sy-38)+'px'; hoverEl.innerHTML='<b>'+best.n+'</b> '+best.s+'<br><span class="small-mono" style="text-transform:none">x'+best.x.toFixed(2)+' y'+best.y.toFixed(2)+' z'+best.z.toFixed(2)+' · '+ARCH[best.c%ARCH.length]+'</span>'; fact.textContent=best.n+' '+best.s+' — '+ARCH[best.c%ARCH.length]; } else { if(hoverEl) hoverEl.style.display='none'; }
+  }
+}
+function onPointerUp(){
+  if(isDragging){ isDragging=false; idleTimer=3200; }
+}
+function wire(){
+  c.addEventListener('mousedown',onPointerDown); c.addEventListener('mousemove',onPointerMove); window.addEventListener('mouseup',onPointerUp);
+  c.addEventListener('touchstart',onPointerDown,{passive:true}); c.addEventListener('touchmove',onPointerMove,{passive:true}); c.addEventListener('touchend',onPointerUp);
+  c.addEventListener('mouseleave',function(){ if(hoverEl) hoverEl.style.display='none'; });
+}
+async function load(){
+  resize();
+  wire();
+  try{
+    var r=await fetch('assets/vectors_search_lite.json',{cache:'force-cache'}); var j=await r.json();
+    initBase(j.players);
+    fact.textContent=j.players.length+' real MTNN xyz — rotating 3D — drag to spin, auto rotates';
+    // init past-modern for today meta
+    if(window.VHPastModern){ await window.VHPastModern.init(); var st=window.VHPastModern.state(); var m=document.getElementById('puzzle-meta'); if(m) m.textContent='Past→Modern P#'+st.puzzleNum+' · '+st.target.n+' '+st.target.s+' → guess modern · recall@10 0.977'; var vt=document.getElementById('viral-today'); if(vt) vt.textContent='Today: '+st.target.n+' '+st.target.s+' → modern?'; document.getElementById('cta-past').textContent='🎯 '+st.target.n;
+      // streak
+      try{ var s=JSON.parse(localStorage.getItem('vh.streak')||'{}').streak||0; document.getElementById('viral-streak').textContent='streak '+s; }catch{}
+    }
+    loop(0);
+  }catch(e){ fact.textContent='fallback stars — '+e.message; console.warn(e); }
+  window.addEventListener('resize',resize,{passive:true});
+}
+load();
+
+// pause/resume
+if(btnPause){ btnPause.addEventListener('click',function(){ auto=!auto; this.textContent = auto?'⏸ Pause rotate':'▶️ Resume rotate'; if(auto) idleTimer=0; }); }
+if(btnReset){ btnReset.addEventListener('click',function(){ rotY=Math.PI*0.18; rotX=0.22; auto=true; if(btnPause) btnPause.textContent='⏸ Pause rotate'; }); }
+
+// viral share map
+document.getElementById('btn-share-board').addEventListener('click',async function(){
+  try{
+    // snapshot current canvas to PNG with border
+    var snap=document.createElement('canvas'); snap.width=c.width; snap.height=c.height; var sctx=snap.getContext('2d');
+    sctx.drawImage(c,0,0);
+    var blob=await new Promise(function(res){snap.toBlob(function(b){res(b);},'image/png');});
+    if(window.VHShare && navigator.canShare && blob){
+      var file=new File([blob],'vector-hoops-map.png',{type:'image/png'});
+      if(navigator.canShare({files:[file]})){
+        await navigator.share({title:'Vector Hoops 12,966 as 3D map',text:'12,966 seasons as rotating 3D map — Past All-Star → Modern Twin — hoops.dumbmodel.com',files:[file]});
+        return;
+      }
+    }
+    var url=snap.toDataURL('image/png');
+    var a=document.createElement('a'); a.href=url; a.download='vector-hoops-map.png'; a.click();
+  }catch(e){ console.warn(e); alert('Could not share map snapshot'); }
+});
+document.getElementById('btn-challenge').addEventListener('click',async function(){
+  try{
+    var st=window.VHPastModern? window.VHPastModern.state(): null;
+    var day= st? st.dayKey : new Date().toISOString().slice(0,10);
+    var url=location.origin+'/play?day='+day+'&utm_source=challenge';
+    var txt='Can you find the modern twin for '+ (st? st.target.n+' '+st.target.s : 'today\'s Past All-Star')+'? I\'m on streak '+ (document.getElementById('viral-streak').textContent)+' — '+url;
+    if(navigator.clipboard) await navigator.clipboard.writeText(txt);
+    this.textContent='Link copied! ✅';
+    setTimeout(function(el){el.textContent='👥 Challenge Link';}.bind(null,this),1500);
+  }catch(e){ alert('Copy: '+location.origin+'/play?day='+new Date().toISOString().slice(0,10)); }
+});
+
+// PWA v10
+(function(){if(!('serviceWorker' in navigator))return;var el=document.createElement('div');el.id='vh-update-toast';el.style.cssText='position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:99;display:none;justify-content:space-between;align-items:center;gap:10px;background:#1A150F;color:#FFFEF7;border:2.2px solid #FFFEF7;border-radius:12px;box-shadow:4px 4px 0 #1A150F;padding:10px 12px;font-family:ui-monospace,monospace;font-size:11px;';el.innerHTML='<span>🟢 v10 rotating map + viral share + steals/busts</span><button id="vh-update-btn" style="min-height:36px;border:2px solid #FFFEF7;background:#F0E442;color:#1A150F;border-radius:999px;padding:0 12px;font-weight:900;cursor:pointer;">Update →</button>';document.body.appendChild(el);function show(r){el.style.display='flex';document.getElementById('vh-update-btn').onclick=function(){if(r&&r.waiting)r.waiting.postMessage({type:'SKIP_WAITING'});else location.reload();};}let reloading=false;navigator.serviceWorker.addEventListener('controllerchange',function(){if(reloading)return;reloading=true;location.reload();});navigator.serviceWorker.register('/sw.js',{scope:'/'}).then(function(r){if(r.waiting)show(r);r.addEventListener('updatefound',function(){var nw=r.installing;if(!nw)return;nw.addEventListener('statechange',function(){if(nw.state==='installed'&&navigator.serviceWorker.controller)show(r);});});}).catch(function(){});})();
 })();
-</script>
-<script>
-// PWA v8
-(function(){if(!('serviceWorker' in navigator))return;var el=document.createElement('div');el.id='vh-update-toast';el.style.cssText='position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:99;display:none;justify-content:space-between;align-items:center;gap:10px;background:#1A150F;color:#FFFEF7;border:2.2px solid #FFFEF7;border-radius:12px;box-shadow:4px 4px 0 #1A150F;padding:10px 12px;font-family:ui-monospace,monospace;font-size:11px;';el.innerHTML='<span>🟢 Update — 3D Map v9 Past→Modern only</span><button id="vh-update-btn" style="min-height:36px;border:2px solid #FFFEF7;background:#F0E442;color:#1A150F;border-radius:999px;padding:0 12px;font-weight:900;cursor:pointer;">Update →</button>';document.body.appendChild(el);function show(r){el.style.display='flex';document.getElementById('vh-update-btn').onclick=()=>{if(r&&r.waiting)r.waiting.postMessage({type:'SKIP_WAITING'});else location.reload();};}let reloading=false;navigator.serviceWorker.addEventListener('controllerchange',()=>{if(reloading)return;reloading=true;location.reload();});navigator.serviceWorker.register('/sw.js',{scope:'/'}).then(r=>{if(r.waiting)show(r);r.addEventListener('updatefound',()=>{const nw=r.installing;if(!nw)return;nw.addEventListener('statechange',()=>{if(nw.state==='installed'&&navigator.serviceWorker.controller)show(r);});});}).catch(()=>{});})();
 </script>
 </body></html>

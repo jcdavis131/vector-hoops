@@ -36,6 +36,14 @@
   function parseRoute() {
     var hash = (location.hash || '').replace(/^#/, '');
     if (TABS.indexOf(hash) !== -1) return { tab: hash };
+    // support ?steal / ?bust query or sessionStorage from homepage
+    try{
+      var sp=new URLSearchParams(location.search);
+      var q=sp.get('board')||sp.get('tab');
+      if(q==='steal'||q==='bust') return { tab: 'leaderboard', skill: q };
+      var stored=sessionStorage.getItem('vh_players_tab');
+      if(stored==='steal'||stored==='bust'){ sessionStorage.removeItem('vh_players_tab'); return { tab:'leaderboard', skill: stored }; }
+    }catch{}
     return { tab: 'directory' };
   }
 
@@ -52,10 +60,17 @@
       if (d.tab) showTab(d.tab, { slug: d.slug, season: d.season, skill: d.skill, skipHistory: true });
     });
     var route = parseRoute();
-    showTab(route.tab, { slug: route.slug, season: route.season, skipHistory: true });
+    showTab(route.tab, { slug: route.slug, season: route.season, skill: route.skill, skipHistory: true });
+    // if skill steal/bust, set board value after load
+    if(route.skill){
+      setTimeout(function(){
+        var board=document.getElementById('board-skill');
+        if(board){ board.value=route.skill; board.dispatchEvent(new Event('change')); }
+      }, 900);
+    }
     window.addEventListener('hashchange', function () {
       var r = parseRoute();
-      showTab(r.tab, { slug: r.slug, season: r.season, skipHistory: true });
+      showTab(r.tab, { slug: r.slug, season: r.season, skill: r.skill, skipHistory: true });
     });
   }
 

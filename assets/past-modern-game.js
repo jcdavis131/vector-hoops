@@ -102,12 +102,21 @@
 
     await ensureMtnn();
 
-    // pick daily
+    // pick daily — supports ?day=YYYY-MM-DD for challenge links
+    let urlDay=null;
+    try{
+      const sp=new URLSearchParams(location.search);
+      const d=sp.get('day')||sp.get('d');
+      if(d && /^\d{4}-\d{2}-\d{2}$/.test(d)) urlDay=d;
+    }catch{}
     const today = new Date();
-    const dayKey = today.toISOString().slice(0,10);
+    const dayKey = urlDay || today.toISOString().slice(0,10);
     state.dayKey = dayKey;
-    const puzzleNum = Math.floor((today - new Date('2026-07-01T00:00:00Z'))/86400000)+1;
-    state.puzzleNum = puzzleNum;
+    state.urlDay = urlDay;
+    // puzzle num from dayKey 2026-07-01 epoch
+    const dayObj = new Date(dayKey+'T12:00:00Z');
+    const puzzleNum = Math.floor((dayObj - new Date('2026-07-01T00:00:00Z'))/86400000)+1;
+    state.puzzleNum = puzzleNum>0? puzzleNum : 1;
     // deterministic pick: hash dayKey
     let hash=0; for(let i=0;i<dayKey.length;i++) hash=(hash*31 + dayKey.charCodeAt(i))>>>0;
     const pastIdx = past.length? (hash % past.length) : 0;
