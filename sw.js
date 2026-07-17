@@ -1,7 +1,7 @@
 /* Solo personal project, no connection to employer, built with public/free-tier only */
-/* vector-hoops PWA v8-20260717 — 100M DAU prod grade: <2MB core, immutable cache-first BG update, HTML network-first, SWR assets, size guard <4MB, lazy Three.js */
+/* vector-hoops PWA v9-20260717 — Past→Modern single game — 3D map focus — 100M DAU */
 
-const CACHE_NAME = 'vector-hoops-v8-20260717';
+const CACHE_NAME = 'vector-hoops-v9-20260717-past-modern';
 const CORE = [
   '/manifest.json',
   '/offline.html',
@@ -10,13 +10,13 @@ const CORE = [
   '/assets/responsive.css',
   '/assets/final-qa.css',
   '/assets/mtnn.js',
-  '/assets/insight-engine.js',
+  '/assets/past-modern-game.js',
   '/assets/vectors_search_lite.json',
   '/assets/players_lite.json',
   '/assets/teams.json',
-  '/assets/season_norms.json'
+  '/assets/season_norms.json',
+  '/assets/honors.json'
 ];
-// Truly massive never-cache (8.7MB) — network only
 const DENY_CACHE = [
   '/assets/playoff_paths.json',
   '/assets/next_profile_eval.json',
@@ -28,9 +28,12 @@ const FULL_MTNN = [
   '/assets/mtnn_heads.f32',
   '/assets/mtnn_arch.json',
   '/assets/mtnn_meta.json',
+  '/assets/mtnn_map.json',
+  '/assets/mtnn-full.js',
+  '/assets/mtnn-worker.js',
+  '/assets/mtnn-onnx.js',
   '/assets/vectors_lite.json',
   '/assets/archetype_lite.json',
-  '/assets/mtnn_map.json',
   '/assets/vectors.json',
   '/assets/skills.json',
   '/assets/archetype_assignments.json'
@@ -86,7 +89,7 @@ self.addEventListener('fetch', e=>{
   e.respondWith((async()=>{ const c=await caches.match(req); if(c) return c; try{ return await fetch(req);}catch{ return c||caches.match('/offline.html'); }})());
 });
 self.addEventListener('push', e=>{
-  let d={}; try{ d=e.data?e.data.json():{};}catch{} const t=d.title||'Vector Hoops'; const b=d.body||'Daily puzzle live — keep streak 🔥';
+  let d={}; try{ d=e.data?e.data.json():{};}catch{} const t=d.title||'Vector Hoops'; const b=d.body||'Daily Past→Modern live — guess twin 🔥';
   e.waitUntil(self.registration.showNotification(t,{body:b,icon:'/assets/og-embed.png',badge:'/assets/og-embed.png',tag:'vector-hoops-daily',data:{url:d.url||'/play?utm_source=push'}}));
 });
 self.addEventListener('notificationclick', e=>{
