@@ -64,7 +64,7 @@ FORM_FEATURES = [
 ]
 TEAM_FIT_FEATURE = "TM_NET_RTG"
 ROSTER_LIFT_FEATURE = "ROSTER_COMPLEMENT"  # proxy until ROSTER_TOP2_VORP lands
-CAREER_SLOPE_FEATURE = "DELTA_NORM"        # proxy for CAREER_SLOPE_3Y
+CAREER_SLOPE_FEATURE = "CAREER_SLOPE_3Y"   # real 3y mean |Δ|; falls back below
 COMPETITION_FEATURE = "SOS_NET_RTG"
 BBREF_FEATURES = ["WS48", "BPM"]
 HONORS_PRIMARY = "HON_ALL_NBA_VOTE_LAG"
@@ -135,17 +135,19 @@ def family_slices(manifest) -> dict[str, list[int]]:
 
 
 def adjacent_season_pairs(pids, seasons, names=None) -> list[tuple[int, int]]:
+    """Same-player adjacent calendar years keyed by stable NBA PLAYER_ID.
+
+    ``names`` is accepted for call-site compatibility but ignored — display
+    names collide across distinct careers and break continuity.
+    """
+    del names  # explicit: do not key careers by display name
+
     def season_start(s: str) -> int:
         return int(s[:4])
 
-    by_key: dict[str | int, list[tuple[int, int]]] = defaultdict(list)
+    by_key: dict[int, list[tuple[int, int]]] = defaultdict(list)
     for i, (pid, s) in enumerate(zip(pids, seasons)):
-        key: str | int
-        if names is not None:
-            key = str(names[i])
-        else:
-            key = int(pid)
-        by_key[key].append((season_start(str(s)), i))
+        by_key[int(pid)].append((season_start(str(s)), i))
     pairs = []
     for rows in by_key.values():
         rows.sort()
@@ -1048,8 +1050,13 @@ def main() -> None:
               f"{int(M[:, roster_j].sum())} labeled rows")
 
     career_j = col_idx(CAREER_SLOPE_FEATURE)
+    if career_j is None:
+        career_j = col_idx("DELTA_NORM")  # legacy matrices pre-enrichment
     career_z, career_m = (
         tensor_col(Z, M, career_j, device) if career_j is not None else (None, None))
+    if career_j is not None:
+        print(f"career_slope head ({manifest['features'][career_j]}): "
+              f"{int(M[:, career_j].sum())} labeled rows")
 
     comp_j = col_idx(COMPETITION_FEATURE)
     comp_z, comp_m = (tensor_col(Z, M, comp_j, device) if comp_j is not None else (None, None))

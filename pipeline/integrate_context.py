@@ -54,12 +54,22 @@ V4_FEATURES: dict[str, str] = {
   "ROSTER_COMPLEMENT": "roster",
   "ROSTER_STAR_GAP": "roster",
   "ROSTER_MATES_N": "roster",
-  # career (VH-110)
+  # career (VH-110) — continuous PLAYER_ID trajectories
   "YEAR_IN_LEAGUE": "career",
   "LAG1_COSINE": "career",
   "DELTA_NORM": "career",
   "GP_RATIO": "career",
   "DRAFT_SLOT_Z": "career",
+  "CAREER_SLOPE_3Y": "career",
+  "CAREER_GAP_YEARS": "career",
+  "CAREER_TEAM_CHANGE": "career",
+  "CAREER_EXP_YEARS": "career",
+  "CAREER_MPG_SLOPE": "career",
+  "CAREER_GP_SLOPE": "career",
+  "CAREER_ACTIVE_FRAC": "career",
+  "CAREER_GP_PCT": "career",
+  "CAREER_MISS_STREAK": "career",
+  "CAREER_AVAIL_3Y": "career",
   # competition (VH-111)
   "SOS_NET_RTG": "competition",
   "B2B_RATE": "competition",
@@ -289,6 +299,11 @@ def merge_v4_context(
     # Declining to re-add them is not enough — drop them, or the dead tower
     # survives in the matrix (game_ratings: 14 cols, 28 observed cells).
     stale = [f for f in feats if V4_FEATURES.get(f) in gated]
+    # Soft-subset shrinks: drop MATCH_* columns no longer in merge_features.
+    stale += [
+        f for f in feats
+        if f.startswith("MATCH_") and f not in merge_features and f not in stale
+    ]
     if stale:
         cols = [feats.index(f) for f in stale]
         Z = np.delete(Z, cols, axis=1)
@@ -392,6 +407,16 @@ def build_row_values(
             "DELTA_NORM": c.get("DELTA_NORM"),
             "GP_RATIO": c.get("GP_RATIO"),
             "DRAFT_SLOT_Z": c.get("DRAFT_SLOT_Z"),
+            "CAREER_SLOPE_3Y": c.get("CAREER_SLOPE_3Y"),
+            "CAREER_GAP_YEARS": c.get("CAREER_GAP_YEARS"),
+            "CAREER_TEAM_CHANGE": c.get("CAREER_TEAM_CHANGE"),
+            "CAREER_EXP_YEARS": c.get("CAREER_EXP_YEARS"),
+            "CAREER_MPG_SLOPE": c.get("CAREER_MPG_SLOPE"),
+            "CAREER_GP_SLOPE": c.get("CAREER_GP_SLOPE"),
+            "CAREER_ACTIVE_FRAC": c.get("CAREER_ACTIVE_FRAC"),
+            "CAREER_GP_PCT": c.get("CAREER_GP_PCT"),
+            "CAREER_MISS_STREAK": c.get("CAREER_MISS_STREAK"),
+            "CAREER_AVAIL_3Y": c.get("CAREER_AVAIL_3Y"),
             "B2B_RATE": comp.get("B2B_RATE"),
             "REST_AVG": comp.get("REST_AVG"),
             "SOS_NET_RTG": comp.get("SOS_NET_RTG"),

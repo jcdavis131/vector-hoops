@@ -74,14 +74,15 @@ def family_slices(manifest) -> dict[str, list[int]]:
 
 
 def adjacent_season_pairs(pids, seasons, names=None) -> list[tuple[int, int]]:
-    """(i, j) where the same player appears in consecutive seasons."""
+    """(i, j) where the same PLAYER_ID appears in consecutive seasons."""
+    del names
+
     def season_start(s: str) -> int:
         return int(s[:4])
 
-    by_key: dict[str | int, list[tuple[int, int]]] = defaultdict(list)
+    by_key: dict[int, list[tuple[int, int]]] = defaultdict(list)
     for i, (pid, s) in enumerate(zip(pids, seasons)):
-        key: str | int = str(names[i]) if names is not None else int(pid)
-        by_key[key].append((season_start(str(s)), i))
+        by_key[int(pid)].append((season_start(str(s)), i))
     pairs = []
     for rows in by_key.values():
         rows.sort()
