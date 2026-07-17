@@ -178,9 +178,10 @@ button,.input{min-height:44px}
       var gu=G.guesses[gi];
       var p=projected.find(function(pp){return pp.n===gu.name;}) || projected.find(function(pp){return pp.i===gu.idx;});
       if(!p) continue;
-      ctx.strokeStyle = gu.rank===0 ? '#009E73' : '#D55E00';
-      ctx.lineWidth= gu.rank===0? 2.8:2;
-      ctx.beginPath(); ctx.arc(p.sx,p.sy, gu.rank===0? 9:7,0,Math.PI*2); ctx.stroke();
+      var col = gu.rank===0 ? '#009E73' : gu.rank<=3 ? '#E69F00' : gu.rank<=10 ? '#D55E00' : '#0072B2';
+      ctx.strokeStyle = col;
+      ctx.lineWidth= gu.rank===0? 3.0 : gu.rank<=3? 2.4 : 2;
+      ctx.beginPath(); ctx.arc(p.sx,p.sy, gu.rank===0? 10: gu.rank<=3? 8:7,0,Math.PI*2); ctx.stroke();
       if(tProj){ ctx.setLineDash([4,4]); ctx.globalAlpha=0.45; ctx.beginPath(); ctx.moveTo(tProj.sx,tProj.sy); ctx.lineTo(p.sx,p.sy); ctx.stroke(); ctx.setLineDash([]); ctx.globalAlpha=1; }
     }
   }
@@ -199,7 +200,16 @@ button,.input{min-height:44px}
       if(!projected.length) return;
       var rect=canvas.getBoundingClientRect(); var mx=x-rect.left, my=y-rect.top;
       var best=null,bd=15; for(var i=0;i<projected.length;i++){ var p=projected[i]; var d=Math.hypot(p.sx-mx,p.sy-my); if(d<bd){bd=d; best=p;} }
-      if(best && hoverEl){ hoverEl.style.display='block'; hoverEl.style.left=best.sx+'px'; hoverEl.style.top=(best.sy-36)+'px'; hoverEl.innerHTML='<b>'+best.n+'</b> '+best.s+'<br><span class="small-mono" style="text-transform:none">'+ARCH[best.c%ARCH.length]+'</span>'; factEl.textContent=best.n+' '+best.s; } else { if(hoverEl) hoverEl.style.display='none'; }
+      if(best && hoverEl){ hoverEl.style.display='block'; hoverEl.style.left=best.sx+'px'; hoverEl.style.top=(best.sy-36)+'px'; hoverEl.innerHTML='<b>'+best.n+'</b> '+best.s+'<br><span class="small-mono" style="text-transform:none">'+ARCH[best.c%ARCH.length]+'</span>'; factEl.textContent=best.n+' '+best.s; }
+      else {
+        if(hoverEl) hoverEl.style.display='none';
+        // QA fix: reset fact chip when not hovering — was stuck on last hovered (e.g., Joel Embiid)
+        try{
+          var stf = null; try{ stf=VHPastModern.state(); }catch{}
+          if(stf && stf.searchLite) factEl.textContent = stf.searchLite.count+' seasons — rotating map';
+          else factEl.textContent = '12,966 seasons — rotating map';
+        }catch{}
+      }
     }
   }
   function onUp(){ if(isDragging){ isDragging=false; idleTimer=3400; } }
@@ -270,11 +280,20 @@ button,.input{min-height:44px}
     G.guesses.forEach(function(g,idx){
       var simPct=(g.sim*100).toFixed(1);
       var rankLabel=g.rank===0? 'Closest': '#'+(g.rank+1);
-      var warm=idx>0 ? (g.rank < G.guesses[idx-1].rank ? 'warmer' : g.rank > G.guesses[idx-1].rank ? 'colder' : 'same') : '';
-      var isWin=g.rank===0;
-      var div=document.createElement('div'); div.className='guess-row'+(isWin?' win':'');
-      var emoji = g.rank===0?'': g.rank<=3?'': g.rank<=10?'':'';
-      div.innerHTML='<div style="display:flex;justify-content:space-between;gap:8px;align-items:center"><b>'+(idx+1)+'. '+g.name+' '+g.season+'</b><span class="pill">'+simPct+'% · '+rankLabel+'</span></div><div class="small-mono" style="text-transform:none;margin-top:6px;color:#444">'+warm+' · '+ARCH[g.c%ARCH.length]+'</div><div class="bar"><i style="width:'+Math.max(4,Math.min(100,parseFloat(simPct)))+'%;background:'+(isWin?'#009E73':'#0072B2')+'"></i></div>';
+      var warm=idx>0 ? (g.rank < G.guesses[idx-1].rank ? 'warmer 🔥' : g.rank > G.guesses[idx-1].rank ? 'colder ❄️' : 'same') : '';
+      var isClosest=g.rank===0;
+      var isPodium=g.rank>=1 && g.rank<=3;
+      var isClose=g.rank>=4 && g.rank<=10;
+      var barColor, bgColor, emoji, rowClass;
+      if(isClosest){ barColor='#009E73'; bgColor='#e8f5e9'; emoji='🟩'; rowClass='guess-row win'; }
+      else if(isPodium){ barColor='#E69F00'; bgColor='#FFFBEB'; emoji='🟨'; rowClass='guess-row'; }
+      else if(isClose){ barColor='#D55E00'; bgColor='#FFF4E5'; emoji='🟧'; rowClass='guess-row'; }
+      else { barColor='#0072B2'; bgColor='#FFFEF7'; emoji='⬜'; rowClass='guess-row'; }
+      var div=document.createElement('div'); div.className=rowClass;
+      div.style.background=bgColor;
+      div.style.borderColor = isClosest ? '#009E73' : isPodium ? '#E69F00' : isClose ? '#D55E00' : '#ddd';
+      div.style.borderStyle = isClosest ? 'solid' : 'dashed';
+      div.innerHTML='<div style="display:flex;justify-content:space-between;gap:8px;align-items:center"><b>'+emoji+' '+(idx+1)+'. '+g.name+' '+g.season+'</b><span class="pill" style="background:'+bgColor+';border-color:'+barColor+'">'+simPct+'% · '+rankLabel+'</span></div><div class="small-mono" style="text-transform:none;margin-top:6px;color:#444">'+(warm?warm+' · ':'')+ARCH[g.c%ARCH.length]+'</div><div class="bar" style="background:#eee"><i style="width:'+Math.max(4,Math.min(100,parseFloat(simPct)))+'%;background:'+barColor+'"></i></div>';
       cont.appendChild(div);
     });
   }
