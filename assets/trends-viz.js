@@ -74,21 +74,16 @@
       return;
     }
     host.innerHTML =
-      '<div class="trends-biggest-shifts__head">Biggest shifts in 30 seasons</div>' +
-      '<div class="trends-biggest-shifts__row">' +
+      '<div class="trends-biggest-head"><span class="trends-biggest-kicker">30-year view</span><span class="trends-biggest-title">Biggest reshapes — click to jump</span></div>' +
+      '<div class="trends-biggest-row">' +
       shifts.map(function (p, rank) {
         var idx = pairIndex(p.to);
         var active = idx === state.pairIdx ? ' trends-shift-card--active' : '';
-        var feats = featureList(p.mostRotated);
-        var interp = p.interpretation
-          ? '<span class="trends-shift-card__interp">' + p.interpretation + '</span>'
-          : '';
-        return '<button type="button" class="trends-shift-card' + active + '" data-idx="' + idx + '">' +
-          '<span class="trends-shift-card__rank">#' + (rank + 1) + '</span>' +
-          '<span class="trends-shift-card__deg">' + p.rotationDeg + '°</span>' +
-          '<span class="trends-shift-card__season">' + p.from + ' → ' + p.to + '</span>' +
-          '<span class="trends-shift-card__feats">' + feats + '</span>' +
-          interp +
+        var shortFeats = featureList(p.mostRotated).split(', ').slice(0,2).join(' + ');
+        return '<button type="button" class="trends-shift-card' + active + '" data-idx="' + idx + '" title="' + shortFeats + '">' +
+          '<span class="sc-rank">#' + (rank + 1) + '</span>' +
+          '<span class="sc-season">' + p.from.replace("-20","-").replace("-19","-").replace("-18","-").replace("-17","-").replace("-16","-").slice(2) + "→" + p.to.slice(2) + '</span>' +
+          '<span class="sc-deg">' + p.rotationDeg + '°</span>' +
           '</button>';
       }).join('') +
       '</div>';
@@ -335,23 +330,38 @@
   function renderStatNarratives(host, pair) {
     if (!host) return;
     var insights = pair.statInsights || [];
+    var verdict = rotationVerdict(pair.rotationDeg);
     if (!insights.length) {
-      host.innerHTML = '<p class="trends-stat-narratives__empty">No stats crossed the meaningful-drift ' +
-        'threshold this year, or league-rate context is unavailable.</p>';
+      host.innerHTML = '<div class="season-story"><p class="story-intro"><strong>' + pair.to + '</strong> was a ' + verdict.word.toLowerCase() + ' year (' + pair.rotationDeg + '°). ' + verdict.note + '</p><p class="story-empty">No single stat crossed the drift threshold — the frame held steady.</p></div>';
       return;
     }
-    host.innerHTML = insights.map(function (ins) {
-      var cls = 'trends-stat-card trends-stat-card--' + (ins.quality || 'neutral');
-      var badge = QUALITY_LABEL[ins.quality] || 'Notable';
-      return '<article class="' + cls + '">' +
-        '<div class="trends-stat-card__head">' +
-          '<span class="trends-stat-card__name">' +
-            (FEATURE_LABEL[ins.feature] || ins.label) + '</span>' +
-          '<span class="trends-stat-card__badge">' + badge + '</span>' +
-        '</div>' +
-        '<p class="trends-stat-card__body">' + ins.narrative + '</p>' +
-        '</article>';
+    // Build cohesive narrative — one lede + 2-3 flowing paragraphs instead of bullet cards
+    var topLabels = insights.slice(0,3).map(function(ins){ return (FEATURE_LABEL[ins.feature]||ins.label).toLowerCase(); });
+    var lede = '<p class="story-lede"><strong>' + pair.to + '</strong> rotated <strong>' + pair.rotationDeg + '°</strong> — ' + verdict.word.toLowerCase() + '. ' + verdict.note + ' ' +
+      (pair.interpretation ? '<span class="story-interp">' + pair.interpretation + '</span> ' : '') +
+      'The move was led by <strong>' + topLabels.slice(0,2).join('</strong> & <strong>') + '</strong>' + (topLabels[2] ? ' and <strong>' + topLabels[2] + '</strong>' : '') + '.</p>';
+
+    var body = insights.map(function(ins, i){
+      var q = ins.quality || 'neutral';
+      var badge = QUALITY_LABEL[q] || 'Style shift';
+      var badgeCls = 'mini-badge mini-badge--' + q;
+      // clean narrative — keep original but ensure sentence start
+      var text = ins.narrative || '';
+      // Avoid repeating feature name if narrative already starts with it
+      return '<p class="story-para"><span class="story-stat">' + (FEATURE_LABEL[ins.feature]||ins.label) + '</span> <span class="' + badgeCls + '">' + badge + '</span><span class="story-dot"> — </span>' + text + '</p>';
     }).join('');
+
+    // Combine into 2 visual paragraphs if >3 insights — split after 2
+    var mid = Math.ceil(insights.length/2);
+    var firstHalf = insights.slice(0,mid).map(function(ins){
+      var q=ins.quality||'neutral'; var badge=QUALITY_LABEL[q]||'Style shift';
+      return '<p class="story-para"><span class="story-stat">' + (FEATURE_LABEL[ins.feature]||ins.label) + '</span> <span class="mini-badge mini-badge--' + q + '">' + badge + '</span><span class="story-dot"> — </span>' + ins.narrative + '</p>';
+    }).join('');
+    // For cohesive flow, we keep same but wrap in container
+    host.innerHTML = '<div class="season-story">' + lede + '<div class="story-divider"></div>' + firstHalf + (insights.length>mid ? '<div class="story-divider light"></div>' + insights.slice(mid).map(function(ins){
+      var q=ins.quality||'neutral'; var badge=QUALITY_LABEL[q]||'Style shift';
+      return '<p class="story-para"><span class="story-stat">' + (FEATURE_LABEL[ins.feature]||ins.label) + '</span> <span class="mini-badge mini-badge--' + q + '">' + badge + '</span><span class="story-dot"> — </span>' + ins.narrative + '</p>';
+    }).join('') : '') + '</div>';
   }
 
   function renderCompass(host, drifts, pair) {

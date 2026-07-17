@@ -1,128 +1,88 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Player References — Vector Hoops</title>
-<link rel="canonical" href="https://hoops.dumbmodel.com/players">
-<meta property="og:url" content="https://hoops.dumbmodel.com/players">
-<meta name="description" content="Player directory, scouting dossiers, era-honest skill grades, and leaderboards — one reference surface for every charted NBA player-season.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Ctext%20y%3D%22.9em%22%20font-size%3D%2290%22%3E%26%23127936%3B%3C%2Ftext%3E%3C%2Fsvg%3E">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Player References — Vector Hoops">
-<meta property="og:description" content="Directory, dossiers, and skill grades for every charted player-season.">
-<meta property="og:image" content="/assets/og.svg">
-<link rel="stylesheet" href="assets/hoops.css">
-<link rel="stylesheet" href="assets/<link rel="stylesheet" href="assets/nux.css">
-<link rel="stylesheet" href="assets/</head>
-<body>
-
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<title>Players — Directory + Skills — Vector Hoops</title>
+<meta name="description" content="Every player-season graded, searchable directory + skills lens."/>
+<link rel="stylesheet" href="assets/shell.css"/><link rel="stylesheet" href="assets/unified.css"/>
+<link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap" rel="stylesheet">
+</head><body>
 <nav class="site-nav" data-active="/players" aria-label="Vector Hoops site"></nav>
-
-<main class="research-main players-main">
-
-  <div class="research-head">
-    <h1>Player References</h1>
-    <p>Directory of charted players, auto-generated scouting dossiers, and the Skills Lens
-      (0&ndash;99 grades, era-normalized). Pick a name for grades; open the row for the full dossier.</p>
+<div class="main">
+  <div class="card">
+    <div class="kicker"><span class="kdot"></span> Players · 12,966 seasons · search any name</div>
+    <h1 class="hd" style="font-size:clamp(28px,4vw,38px);margin:8px 0 6px">Player Directory <span style="background:var(--ink);color:#fff;padding:0 .18em;border-radius:8px">+ Skills Lens</span></h1>
+    <p style="margin:0;font-size:14px;line-height:1.5;color:#3A332A">Directory of charted players, auto-generated scouting dossiers, and 0–99 grades era-normalized. Pick a name for grades, open a row for full dossier.</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px"><a class="pill" href="/play">Play →</a><a class="pill" href="/trends">Trends →</a><a class="pill" href="/model">Lab →</a></div>
   </div>
 
-  <nav class="research-tabs" role="tablist" aria-label="Player reference views">
-    <button type="button" role="tab" data-tab="directory" class="is-active" aria-selected="true">Directory</button>
-    <button type="button" role="tab" data-tab="profile" aria-selected="false">Skill profile</button>
-    <button type="button" role="tab" data-tab="leaderboard" aria-selected="false">Leaderboards</button>
-  </nav>
+  <div class="card">
+    <div class="tab-pills" role="tablist" aria-label="Player reference views">
+      <button type="button" role="tab" data-tab="directory" class="is-active" aria-selected="true">Directory</button>
+      <button type="button" role="tab" data-tab="profile" aria-selected="false">Skill profile</button>
+      <button type="button" role="tab" data-tab="leaderboard" aria-selected="false">Leaderboards</button>
+    </div>
+  </div>
 
-  <section class="research-panel wiki-main" id="players-panel-directory" role="tabpanel">
+  <section class="card" id="players-panel-directory" role="tabpanel">
     <div class="wiki-controls">
-      <input class="wiki-search" id="wiki-search" type="text" placeholder="Search a player name&hellip;" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" disabled>
-      <div class="wiki-filters">
-        <select id="wiki-filter-pos" disabled>
-          <option value="">All positions</option>
-        </select>
-        <select id="wiki-filter-arch" disabled>
-          <option value="">All archetypes</option>
-        </select>
+      <div class="wiki-search-row">
+        <input class="input wiki-search" id="wiki-search" type="text" placeholder="Search a player — Curry, Jokic, Wemby…" autocomplete="off" spellcheck="false" disabled>
+        <div class="wiki-filters">
+          <select id="wiki-filter-pos" disabled><option value="">All positions</option></select>
+          <select id="wiki-filter-arch" disabled><option value="">All archetypes</option></select>
+        </div>
       </div>
       <div class="wiki-alphabet" id="wiki-alphabet" aria-label="Jump to letter"></div>
-      <div class="wiki-count" id="wiki-count">Loading player index&hellip;</div>
+      <div class="wiki-count" id="wiki-count">Loading player index…</div>
     </div>
-    <ol class="wiki-list" id="wiki-list"></ol>
+    <ol class="wiki-list" id="wiki-list" style="margin-top:10px"></ol>
   </section>
 
-  <section class="research-panel skills-main" id="players-panel-profile" role="tabpanel" hidden>
-    <div class="skills-columns">
-      <section class="skills-panel" aria-label="Player skill profile">
-        <h2>Player profile</h2>
-        <input class="wiki-search" id="skills-search" type="text"
-               placeholder="Search a player name&hellip;" autocomplete="off"
-               autocorrect="off" autocapitalize="off" spellcheck="false" disabled>
-        <ul class="skills-suggest" id="skills-suggest"></ul>
-        <div id="skills-profile" hidden>
-          <p class="skills-player-meta" id="skills-player-meta"></p>
-          <div class="skills-seasons" id="skills-seasons" role="tablist" aria-label="Season"></div>
-          <div class="vh-skill-badges" id="skills-badges"></div>
-          <ul class="skillbar-list" id="skills-bars"></ul>
-          <div class="skills-next-profile" id="skills-next-profile" hidden></div>
-          <div class="skills-mtnn" id="skills-mtnn" hidden></div>
-          <div class="skills-playoffs" id="skills-playoffs" hidden></div>
-        </div>
-        <p class="skills-hint" id="skills-empty">Pick a player to see their skill profile,
-          season by season &mdash; including next-season predicted vs actual when the following
-          year is charted (prediction-only on the latest season). Try &ldquo;Curry&rdquo;,
-          &ldquo;Smart&rdquo;, or &ldquo;Jokic&rdquo;.</p>
-      </section>
-    </div>
-  </section>
-
-  <section class="research-panel skills-main" id="players-panel-leaderboard" role="tabpanel" hidden>
-    <section class="skills-panel" aria-label="Skill leaderboards">
-      <h2>Leaderboard</h2>
-      <div class="skills-board-controls">
-        <select id="board-skill" aria-label="Skill" disabled></select>
-        <select id="board-season" aria-label="Season" disabled>
-          <option value="">All seasons</option>
-        </select>
+  <section class="card" id="players-panel-profile" role="tabpanel" hidden>
+    <div class="skills-panel">
+      <h2 class="hd" style="font-size:20px;margin:0">Player profile</h2>
+      <input class="input" id="skills-search" type="text" placeholder="Search a player name…" autocomplete="off" disabled>
+      <ul class="skills-suggest" id="skills-suggest"></ul>
+      <div id="skills-profile" hidden>
+        <p class="skills-player-meta" id="skills-player-meta"></p>
+        <div class="skills-seasons" id="skills-seasons" role="tablist" aria-label="Season"></div>
+        <div class="vh-skill-badges" id="skills-badges"></div>
+        <ul class="skillbar-list" id="skills-bars"></ul>
+        <div id="skills-next-profile" hidden></div>
+        <div id="skills-mtnn" hidden></div>
+        <div id="skills-playoffs" hidden></div>
       </div>
-      <ol class="skills-board" id="skills-board"></ol>
-      <p class="skills-hint">Grades are era-normalized percentiles. Tracking-skill boards cover 2015-16+
-        only. Draft Steals/Busts rank career mean skill (3+ charted seasons) vs draft slot.
-        Composites and caveats on the <a href="/methods#skills">methods page</a>.</p>
-    </section>
+      <p style="font-size:13px;color:#666;margin:0" id="skills-empty">Pick a player to see skill profile, season by season — including next-season predicted vs actual when following year is charted. Try “Curry”, “Smart”, or “Jokic”.</p>
+      <div style="margin-top:10px;border-top:1.5px dashed var(--ink);padding-top:10px">
+        <div class="small-mono">Skill leaderboard</div>
+        <ol class="wiki-list" id="skills-board" style="margin-top:6px"></ol>
+      </div>
+    </div>
   </section>
 
-</main>
+  <section class="card" id="players-panel-leaderboard" role="tabpanel" hidden>
+    <h2 class="hd" style="font-size:20px;margin:0 0 6px">Leaderboard</h2>
+    <p style="font-size:13px;color:#555;margin:0 0 8px">0–99 skill grades, era-normalized. Pick a skill, see top seasons.</p>
+    <div id="leaderboard-host">Loading…</div>
+  </section>
 
-<footer class="site-footer">
-  <div class="site-footer__links">
-    <a href="/trends">Trends</a>
-    <a href="/model">Lab</a>
-    <a href="/methods">Methods</a>
-    <a href="/play">Play</a>
-    <a href="#" data-vh-nux-tour>Tour</a>
-    <a href="https://github.com/jcdavis131/vector-hoops" target="_blank" rel="noopener">GitHub</a>
-  </div>
-  <div class="site-footer__attribution">Every number recomputable from stats.nba.com &amp; Basketball-Reference source data &middot; from <a href="https://dumbmodel.com/" target="_blank" rel="noopener">dumbmodel.com</a></div>
-</footer>
-
-<div class="vh-modal-backdrop" id="dossier-backdrop" hidden>
-  <div class="vh-modal vh-modal--dossier" id="dossier-modal" role="dialog" aria-modal="true" aria-labelledby="dossier-title">
-    <h2 id="dossier-title">Dossier</h2>
-    <div class="vh-dossier__body" id="dossier-body">Loading&hellip;</div>
-    <div class="vh-dossier__actions">
-      <a class="vh-dossier__source" id="dossier-source-link" href="#" target="_blank" rel="noopener">View source on GitHub</a>
-      <button class="vh-btn vh-btn--primary" id="dossier-close" type="button">Close</button>
+  <div id="dossier-backdrop" class="vh-modal-backdrop" hidden>
+    <div class="vh-modal" role="dialog" aria-modal="true" id="dossier-modal">
+      <div style="display:flex;justify-content:space-between;gap:10px;align-items:center">
+        <h3 class="hd" id="dossier-title" style="margin:0;font-size:18px">Dossier</h3>
+        <button class="btn" id="dossier-close" type="button" style="min-height:36px;padding:6px 10px">Close</button>
+      </div>
+      <div id="dossier-body" style="margin-top:10px;font-size:14px;line-height:1.6"></div>
+      <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><a class="btn btn-accent" id="dossier-source-link" href="#" target="_blank" rel="noopener" style="min-height:36px">View source →</a></div>
     </div>
   </div>
 </div>
 
+<footer class="site-footer"><div class="site-footer__links"><a href="/play">Play</a><a href="/model">Lab</a><a href="/trends">Trends</a><a href="/methods">Methods</a><a href="https://github.com/jcdavis131/vector-hoops" target="_blank" rel="noopener">GitHub</a></div><div class="site-footer__attribution">© 2026 Vector Hoops · hoops.dumbmodel.com</div></footer>
 <script src="assets/site-nav.js" defer></script>
-<script src="assets/dossier.js" defer></script>
-<script src="assets/player-roster.js" defer></script>
-<script src="assets/mtnn.js" defer></script>
-<script src="assets/players-directory.js" defer></script>
-<script src="assets/players-skills.js" defer></script>
-<script src="assets/players-page.js" defer></script>
-<script src="assets/nux.js" defer></script>
-</body>
-</html>
+<script src="assets/dossier.js"></script>
+<script src="assets/player-roster.js"></script>
+<script src="assets/players-directory.js"></script>
+<script src="assets/players-skills.js"></script>
+<script src="assets/players-page.js"></script>
+</body></html>
