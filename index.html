@@ -1,574 +1,163 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>Vector Hoops — 12,966 seasons as a sky</title>
-<meta name="description" content="12,966 NBA player-seasons as a navigable universe. Pick your team, see its arena rise from the map, explore 9 game modes. Era-honest, free, no account.">
-<meta property="og:title" content="Vector Hoops — The map is the game" />
-<meta property="og:description" content="12,966 NBA seasons as a sky. Lock your team, its universe lights up. Daily Chimera puzzle + 8 more modes. Free, no account." />
-<meta property="og:image" content="https://hoops.dumbmodel.com/assets/og-embed.png" />
-<meta property="og:url" content="https://hoops.dumbmodel.com/" />
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="theme-color" content="#1A150F" />
-<link rel="manifest" href="/manifest.json" />
-<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
-<link rel="preload" href="assets/vectors_lite.json" as="fetch" crossorigin />
-<link rel="preload" href="assets/teams.json" as="fetch" crossorigin />
-<script type="importmap">
-{
-  "imports": {
-    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
-    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
-  }
-}
-</script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=IBM+Plex+Mono:wght@400;700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/shell.css" />
-<link rel="stylesheet" href="assets/responsive.css" />
-<link rel="stylesheet" href="assets/city-intro.css" />
-<style>
-:root{
-  --okabe-blue:#0072B2; --okabe-verm:#D55E00; --okabe-green:#009E73;
-  --okabe-yellow:#F0E442; --okabe-sky:#56B4E9; --okabe-reddish:#CC79A7;
-  --paper:#FFFEF7; --ink:#1A150F;
-}
-html,body{overflow-x:hidden; max-width:100%; background:var(--paper);}
-*,*::before,*::after{box-sizing:border-box;}
-.landing-main{padding-bottom:calc(88px + env(safe-area-inset-bottom)); overflow-x:clip; width:100%;}
-
-.embed-hero{
-  position:relative; width:100%;
-  min-height:clamp(720px,92vh,920px);
-  overflow:clip; isolation:isolate;
-  background:#07090f; border-bottom:3px solid var(--ink);
-}
-.embed-hero__bg{position:absolute; inset:0; z-index:0;}
-#city-intro-canvas{position:absolute; inset:0; width:100%!important; height:100%!important; display:block;}
-.embed-hero__scrim{
-  position:absolute; inset:0; z-index:1; pointer-events:none;
-  background:
-    radial-gradient(130% 95% at 18% 12%, rgba(7,9,15,.15) 0%, rgba(7,9,15,.45) 48%, rgba(7,9,15,.88) 82%),
-    linear-gradient(180deg, rgba(7,9,15,.28) 0%, rgba(7,9,15,.08) 32%, rgba(7,9,15,.18) 66%, rgba(7,9,15,.86) 100%);
-}
-.embed-hero__overlay{
-  position:relative; z-index:2; width:100%; max-width:1120px; margin-inline:auto;
-  padding:14px var(--page-gutter) 12px;
-  display:flex; flex-direction:column; gap:14px;
-  min-height:clamp(680px,92vh,920px); justify-content:space-between;
-  pointer-events:none;
-}
-.embed-hero__overlay > *{pointer-events:auto;}
-.embed-hero__top{display:grid; grid-template-columns:1.1fr .9fr; gap:16px; align-items:start;}
-
-.glass-card{
-  background:rgba(255,254,247,.92); border:2px solid var(--ink); border-radius:18px;
-  box-shadow:6px 6px 0 var(--ink); backdrop-filter:blur(14px) saturate(1.15);
-  padding:16px 18px;
-}
-.glass-card--dark{
-  background:rgba(14,14,18,.88); border-color:#fff; color:#fff;
-  box-shadow:6px 6px 0 #07090f;
-}
-.embed-hero__eyebrow{
-  font-family:var(--mono); font-size:10px; font-weight:900; letter-spacing:.12em; text-transform:uppercase;
-  margin:0 0 6px; display:flex; gap:8px; align-items:center; flex-wrap:wrap; color:#555;
-}
-.embed-hero__eyebrow i{display:inline-flex; align-items:center; gap:6px; background:var(--okabe-yellow); border:2px solid var(--ink); color:#111; border-radius:999px; padding:3px 8px; box-shadow:2px 2px 0 var(--ink); font-style:normal; font-size:10px;}
-.live-dot{width:7px; height:7px; border-radius:50%; background:#16a34a; box-shadow:0 0 0 3px rgba(22,163,74,.22); animation:livepulse 1.6s infinite;}
-@keyframes livepulse{0%,100%{transform:scale(1)}50%{transform:scale(1.35)}}
-
-.embed-hero__title{font-size:clamp(30px,4.8vw,52px); line-height:.92; letter-spacing:-.04em; margin:0 0 8px; font-weight:950;}
-.embed-hero__title-accent{color:var(--okabe-verm); text-decoration:underline 5px var(--okabe-yellow); text-underline-offset:4px;}
-.embed-hero__tagline{font-size:14px; line-height:1.45; color:#3f3f3f; margin:0 0 10px; max-width:42ch;}
-.embed-hero__chips{display:flex; flex-wrap:wrap; gap:6px; margin:6px 0 8px; padding:0; list-style:none;}
-.embed-hero__chips li{font-family:var(--mono); font-size:10px; font-weight:800; background:#fff; border:1.6px solid var(--ink); box-shadow:2px 2px 0 var(--ink); border-radius:999px; padding:4px 8px;}
-.embed-hero__chips li:nth-child(1){background:var(--okabe-yellow);}
-.embed-hero__chips li:nth-child(2){background:var(--okabe-sky);}
-.embed-hero__puzzleline{font-family:var(--mono); font-size:11px; color:#666; margin:6px 0 10px; line-height:1.4;}
-.landing-favorite{display:flex; gap:8px; align-items:center; margin:8px 0 10px; flex-wrap:wrap;}
-.landing-favorite__label{font-family:var(--mono); font-size:10px; font-weight:900; letter-spacing:.08em; text-transform:uppercase; background:#111; color:#fff; border-radius:999px; padding:3px 8px;}
-.landing-favorite__select{min-height:38px; border:1.8px solid var(--ink); border-radius:10px; padding:0 10px; background:#fff; font-weight:800; box-shadow:2px 2px 0 var(--ink); font-size:13px; max-width:180px;}
-.embed-hero__actions{display:flex; gap:8px; flex-wrap:wrap; margin-top:6px;}
-.vh-btn{min-height:40px; padding:0 14px; border:2px solid var(--ink); border-radius:12px; font-weight:900; display:inline-flex; align-items:center; justify-content:center; text-decoration:none; box-shadow:3px 3px 0 var(--ink); font-size:13px; transition:.12s;}
-.vh-btn--primary{background:var(--ink); color:#fff;}
-.vh-btn--accent{background:var(--okabe-yellow); color:var(--ink);}
-
-/* viz column desktop */
-.embed-hero__viz{display:flex; flex-direction:column; gap:10px;}
-.landing-equation{display:flex; align-items:center; gap:8px; justify-content:center; background:#fff; border:2px solid var(--ink); border-radius:14px; box-shadow:4px 4px 0 var(--ink); padding:10px 12px; min-height:92px;}
-.landing-equation__tile{width:48px; height:62px; border:2px solid var(--ink); border-radius:10px; display:grid; place-items:center; font-weight:900; font-size:20px; background:#fff; box-shadow:2px 2px 0 var(--ink);}
-.landing-equation__tile--a{border-color:var(--okabe-blue); color:var(--okabe-blue);}
-.landing-equation__tile--b{border-color:var(--okabe-verm); color:var(--okabe-verm);}
-.landing-equation__tile--target{background:var(--ink); color:#fff; width:58px;}
-.landing-equation__op{font-weight:900; font-size:16px;}
-.landing-equation__target-line{width:24px; height:3px; background:var(--okabe-yellow); border-radius:2px; display:block;}
-.embed-viz__legend{display:flex; flex-wrap:wrap; gap:6px; font-family:var(--mono); font-size:9px; font-weight:800; text-transform:uppercase; color:#555;}
-.embed-viz__legend span{display:inline-flex; gap:5px; align-items:center; background:rgba(255,254,247,.92); border:1.4px solid var(--ink); border-radius:999px; padding:4px 8px; box-shadow:1.5px 1.5px 0 var(--ink);}
-.embed-viz__legend i{width:7px; height:7px; border-radius:50%; border:1.2px solid #111; display:inline-block;}
-
-.embed-hero__arena-hud{display:flex; gap:12px; align-items:flex-end; justify-content:space-between; flex-wrap:wrap;}
-.arena-hud{display:flex; flex-direction:column; gap:6px; min-width:0;}
-.city-intro__badge{display:inline-flex; font-family:var(--mono); font-size:9px; font-weight:900; letter-spacing:.09em; text-transform:uppercase; background:var(--okabe-yellow); border:1.8px solid #111; border-radius:999px; padding:4px 8px; box-shadow:2px 2px 0 #111;}
-.city-intro__city{font-size:clamp(22px,4.2vw,34px); font-weight:950; letter-spacing:-.02em; color:#fff; margin:0; line-height:.92; text-shadow:2px 2px 0 #111;}
-.city-intro__city span{color:var(--team-accent,#F0E442); font-family:var(--mono); font-size:12px; margin-left:6px;}
-.city-intro__arena{font-family:var(--mono); font-size:10px; font-weight:700; color:#e9e9e9; margin:2px 0 0; background:rgba(17,17,17,.68); border:1px solid rgba(255,255,255,.16); display:inline-flex; gap:6px; align-items:center; padding:4px 8px; border-radius:999px; backdrop-filter:blur(8px); max-width:100%; line-height:1.3;}
-.city-intro__fans{font-family:var(--mono); font-size:10px; color:var(--okabe-yellow); font-weight:800; text-transform:uppercase; letter-spacing:.05em; display:flex; gap:6px; align-items:center; margin-top:2px;}
-.city-intro__fans i{width:6px; height:6px; border-radius:50%; background:var(--okabe-yellow); display:inline-block; box-shadow:0 0 0 3px rgba(240,228,66,.22); animation:livepulse 1.6s infinite;}
-
-.embed-hero__bottom{display:flex; gap:8px; flex-wrap:wrap; align-items:center; justify-content:space-between; background:rgba(255,254,247,.88); border:2px solid var(--ink); border-radius:14px; box-shadow:4px 4px 0 var(--ink); padding:8px 10px; backdrop-filter:blur(10px);}
-.city-intro__pills{display:flex; gap:5px; overflow:auto; scrollbar-width:none; max-width:min(100%,680px); padding:2px; -webkit-overflow-scrolling:touch; mask-image:linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%);}
-.city-intro__pills::-webkit-scrollbar{display:none}
-.city-pill{appearance:none; border:1.6px solid #111; background:#fff; color:#111; border-radius:999px; padding:5px 10px; font-family:var(--mono); font-size:10px; font-weight:800; cursor:pointer; white-space:nowrap; box-shadow:1.5px 1.5px 0 #111; min-height:30px; flex:0 0 auto;}
-.city-pill.is-active{background:#111; color:#fff;}
-.city-pill.is-favorite{outline:1.5px solid var(--team-primary,#E03A3E); outline-offset:1px}
-.city-intro__controls{display:flex; gap:6px; align-items:center;}
-.city-intro__controls button{appearance:none; border:1.6px solid #111; background:#fff; border-radius:999px; width:34px; height:34px; font-weight:900; font-size:16px; cursor:pointer; box-shadow:1.5px 1.5px 0 #111; display:grid; place-items:center;}
-.city-intro__lock{width:auto !important; padding:0 12px !important; font-family:var(--mono); font-size:10px !important; font-weight:800 !important; min-width:112px; height:34px;}
-.city-intro__lock.is-locked{background:#111; color:#fff}
-
-#sky-legend{background:rgba(255,254,247,.92) !important; border:2px solid #1A150F !important; border-radius:12px !important; padding:10px 12px !important; box-shadow:4px 4px 0 #1A150F !important; backdrop-filter:blur(10px) !important; max-width:220px; font-size:10px !important;}
-#sky-legend div:first-child{margin-bottom:6px !important;}
-.osm-attr{position:absolute; left:10px; bottom:10px; z-index:4; font-family:var(--mono); font-size:9px; color:#1A150F; background:rgba(255,254,247,.86); padding:4px 8px; border-radius:999px; border:1.4px solid #1A150F; backdrop-filter:blur(6px); box-shadow:1.5px 1.5px 0 #1A150F;}
-.osm-attr a{color:#111; font-weight:800;}
-
-/* team universe compact */
-#team-universe-card{padding:12px !important; border-radius:14px !important;}
-#team-universe-card #team-universe-title{font-size:15px !important; line-height:1.15 !important; margin-bottom:4px !important;}
-#team-universe-card #team-universe-meta{font-size:10px !important; line-height:1.4 !important;}
-#team-universe-bars{gap:4px !important; margin-top:8px !important;}
-#team-universe-bars > div{font-size:9px !important;}
-.team-universe-toggle{margin-top:8px; font-family:var(--mono); font-size:10px; font-weight:900; letter-spacing:.06em; text-transform:uppercase; background:#fff; color:#111; border:1.6px solid #111; border-radius:999px; padding:5px 10px; box-shadow:2px 2px 0 #111; cursor:pointer;}
-.team-universe-toggle:active{transform:translate(1px,1px); box-shadow:1px 1px 0 #111;}
-
-/* sections below */
-.landing-section{width:100%; max-width:1120px; margin-inline:auto; padding:0 var(--page-gutter); box-sizing:border-box;}
-.landing-section__label{font-family:var(--mono); font-size:10px; font-weight:900; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-muted); display:block; margin-bottom:10px;}
-.mode-grid{display:grid; grid-template-columns:1fr; gap:10px;}
-@media(min-width:520px){ .mode-grid{grid-template-columns:repeat(2,minmax(0,1fr));} }
-@media(min-width:1024px){ .mode-grid{grid-template-columns:repeat(4,minmax(0,1fr));} }
-.mode-card{border:2px solid var(--ink) !important; box-shadow:3px 3px 0 var(--ink) !important; border-radius:14px !important; padding:12px !important; background:#fff; min-height:112px;}
-.mode-card__title{font-weight:950; font-size:14px; margin:0 0 4px;}
-.mode-card__pitch{font-size:12px; line-height:1.35; color:#4a4a4a; margin:0;}
-.credibility-strip{background:var(--okabe-blue); color:#fff; border:2px solid var(--ink); border-radius:12px; box-shadow:3px 3px 0 var(--ink); padding:10px 12px; font-size:12px; display:flex; gap:10px; flex-wrap:wrap; justify-content:space-between; align-items:center;}
-.sticky-cta{position:fixed; left:0; right:0; bottom:0; z-index:60; background:rgba(255,254,247,.96); backdrop-filter:blur(10px); border-top:2px solid var(--ink); padding:8px var(--page-gutter) calc(8px + env(safe-area-inset-bottom)); display:none; gap:8px;}
-.sticky-cta .vh-btn{flex:1; min-height:42px; font-size:13px;}
-@media(max-width:720px){ .sticky-cta{display:flex;} .site-footer{padding-bottom:calc(76px + env(safe-area-inset-bottom));} }
-
-/* ---------- MOBILE UNCRAMPING ---------- */
-@media(max-width:860px){
-  .embed-hero{min-height:100svh; min-height:100dvh;}
-  .embed-hero__overlay{min-height:100svh; min-height:100dvh; padding:10px 12px 8px; gap:10px; justify-content:flex-start;}
-  .embed-hero__top{display:flex; flex-direction:column; gap:10px;}
-  .embed-hero__copy{padding:12px 12px 10px !important; border-radius:14px; box-shadow:3px 3px 0 var(--ink);}
-  .embed-hero__eyebrow{font-size:9px; margin:0 0 4px; gap:4px;}
-  .embed-hero__title{font-size:clamp(24px,7vw,32px); line-height:.94; margin:0 0 6px;}
-  .embed-hero__tagline{font-size:12.5px; line-height:1.35; margin:0 0 8px; max-width:none; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;}
-  .embed-hero__chips{gap:5px; margin:4px 0 6px;}
-  .embed-hero__chips li{font-size:9px; padding:3px 7px; box-shadow:1.5px 1.5px 0 var(--ink);}
-  .embed-hero__chips li:nth-child(n+4){display:none;} /* show only 2 on mobile */
-  .embed-hero__puzzleline{font-size:10px; margin:4px 0 6px; line-height:1.3;}
-  .embed-viz__legend{display:none !important;} /* hides duplicate OFF GLASS pills */
-
-  .landing-favorite{margin:6px 0 6px; gap:6px;}
-  .landing-favorite__select{min-height:36px; font-size:12px; max-width:140px; box-shadow:1.5px 1.5px 0 var(--ink);}
-  .embed-hero__actions{gap:6px; margin-top:4px;}
-  .embed-hero__actions .vh-btn{min-height:36px; padding:0 12px; font-size:12px; border-radius:10px; box-shadow:2px 2px 0 var(--ink);}
-
-  .embed-hero__viz{gap:8px;}
-  .embed-hero__viz > .glass-card:first-child{display:none !important;} /* equation ?+? card - too tall, move below? hide in hero */
-  .embed-hero__viz > .glass-card:nth-child(3){display:none !important;} /* embedding sky hint card */
-
-  #team-universe-card{padding:10px 11px !important; box-shadow:3px 3px 0 #111 !important;}
-  #team-universe-card[style*="display:none"]{display:none !important;}
-  #team-universe-card #team-universe-title{font-size:13px !important;}
-  #team-universe-card #team-universe-bars{max-height:92px; overflow:hidden; transition:max-height .25s ease;}
-  #team-universe-card.is-expanded #team-universe-bars{max-height:320px;}
-
-  .embed-hero__arena-hud{flex-direction:column; align-items:stretch; gap:8px; margin-top:4px;}
-  .arena-hud{gap:4px;}
-  .city-intro__badge{font-size:8px; padding:3px 6px; box-shadow:1.5px 1.5px 0 #111; letter-spacing:.08em;}
-  .city-intro__city{font-size:clamp(20px,5.8vw,26px); text-shadow:1.5px 1.5px 0 #111;}
-  .city-intro__arena{font-size:9px; padding:3px 7px; line-height:1.25; max-width:100%; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
-  .city-intro__fans{font-size:9px; margin-top:1px;}
-
-  #sky-legend-anchor{display:none !important;} /* hide legend on mobile - too tall */
-  #sky-legend{display:none !important;}
-  .osm-attr{display:none !important;}
-
-  .embed-hero__bottom{padding:6px 8px; gap:6px; border-radius:12px; box-shadow:3px 3px 0 var(--ink); flex-direction:column; align-items:stretch;}
-  .embed-hero__bottom .city-intro__pills{max-width:100%; width:100%; mask-image:linear-gradient(90deg, transparent 0%, black 6%, black 94%, transparent 100%);}
-  .city-pill{font-size:9px; padding:4px 8px; min-height:28px; box-shadow:1px 1px 0 #111;}
-  .city-intro__controls{justify-content:space-between; width:100%;}
-  .city-intro__controls button{width:32px; height:32px; font-size:14px; box-shadow:1px 1px 0 #111;}
-  .city-intro__lock{min-width:0 !important; flex:1; font-size:9px !important; height:32px !important;}
-
-  /* Below hero - equation teaser as standalone section on mobile */
-  .mobile-equation{display:block !important;}
-}
-.mobile-equation{display:none; max-width:1120px; margin:12px auto 0; padding:0 var(--page-gutter);}
-.mobile-equation .glass-card{padding:10px 12px; display:flex; align-items:center; justify-content:space-between; gap:10px;}
-
-/* === Drafting Board v6.1 — Professional Field Notes (applies after base) === */
-:root{
-  --vellum:#FFFEF7;
-  --vellum-2:#FEFDF6;
-  --blue-grid:rgba(167,199,231,.32);
-  --grid-dot:#A7C7E7;
-}
-.embed-hero{
-  background:var(--vellum) !important;
-  border-bottom-width:2.2px !important;
-  box-shadow:4px 0 0 #111 inset;
-  min-height:100svh;
-}
-@media(min-width:861px){ .embed-hero{ min-height:92vh; } }
-.embed-hero::before{
-  content:""; position:absolute; inset:0; z-index:0; pointer-events:none;
-  background-image: radial-gradient(circle, var(--grid-dot) 1px, transparent 1.6px);
-  background-size:24px 24px;
-  opacity:.12;
-}
-.embed-hero::after{
-  content:""; position:absolute; inset:0; z-index:1; pointer-events:none;
-  opacity:.08;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E");
-  mix-blend-mode:multiply;
-  filter:contrast(1.2);
-}
-.embed-hero__bg{
-  border:2.2px solid #111;
-  box-shadow:4px 4px 0 #111;
-  border-radius:12px;
-  margin:10px;
-  inset:10px !important;
-  width:auto !important; height:auto !important;
-  overflow:clip;
-  z-index:2 !important;
-}
-.embed-hero__scrim{ z-index:2; }
-.embed-hero__overlay{ z-index:3; }
-@media(max-width:860px){
-  .embed-hero__bg{ margin:8px; inset:8px !important; border-radius:10px; }
-}
-.hand-drawn{ filter:url(#handDrawn); }
-.glass-card{
-  border-width:2.2px !important;
-  box-shadow:4px 4px 0 #111 !important;
-  background:rgba(255,254,247,.88) !important;
-  backdrop-filter:blur(12px) saturate(1.08);
-}
-.glass-card--dark{
-  background:rgba(14,14,18,.86) !important;
-  border-color:#fff !important;
-}
-#landing-equation-main .landing-equation__tile--target{
-  width:78px; height:78px; font-family:'Architects Daughter', var(--mono);
-  font-size:36px; letter-spacing:-.02em;
-  border-width:2.2px; box-shadow:4px 4px 0 #111;
-  filter:url(#handDrawn);
-  background:#111; color:#fff;
-}
-.draft-title-block{
-  position:absolute; right:14px; bottom:14px; z-index:4;
-  font-family:'IBM Plex Mono', var(--mono);
-  background:var(--vellum);
-  border:2.2px solid #111; border-radius:8px;
-  box-shadow:4px 4px 0 #111;
-  padding:8px 10px;
-  display:grid; gap:3px;
-  min-width:158px;
-  pointer-events:none;
-}
-.draft-title-block__row{
-  display:flex; justify-content:space-between; gap:12px;
-  font-size:10px; line-height:1.2; letter-spacing:.04em;
-  border-bottom:1px dashed rgba(17,17,17,.18);
-  padding-bottom:3px;
-}
-.draft-title-block__row:last-child{ border-bottom:none; padding-bottom:0; }
-.draft-title-block__row span{ color:#666; font-weight:700; text-transform:uppercase; }
-.draft-title-block__row b{ color:#111; font-weight:900; }
-.draft-title-block__meta{
-  font-family:'Architects Daughter', cursive;
-  font-size:10px; color:#444; text-align:right; margin-top:2px;
-  transform:rotate(-1deg);
-}
-@media(max-width:860px){
-  .draft-title-block{ right:8px; bottom:8px; min-width:0; padding:6px 8px; border-radius:7px; }
-  .draft-title-block__row{ font-size:8.5px; gap:8px; }
-}
-/* mute top copy slightly for blueprint focus */
-.embed-hero__copy{
-  backdrop-filter:blur(16px) saturate(1.12);
-}
-/* Explore fold */
-.explore-fold{
-  max-width:1120px; margin:18px auto 0; padding:0 var(--page-gutter);
-}
-.explore-fold summary{
-  list-style:none; cursor:pointer;
-  font-family:'IBM Plex Mono', var(--mono);
-  font-size:12px; font-weight:900; letter-spacing:.08em; text-transform:uppercase;
-  background:#111; color:#fff; border:2.2px solid #111; border-radius:12px;
-  box-shadow:4px 4px 0 #F0E442;
-  padding:12px 14px;
-  display:flex; align-items:center; justify-content:space-between;
-}
-.explore-fold summary::-webkit-details-marker{ display:none; }
-.explore-fold summary::after{ content:"↕"; font-size:14px; }
-.explore-fold[open] summary{ background:#FFFEF7; color:#111; }
-.explore-fold__content{ padding-top:14px; }
-.mobile-equation{display:none; max-width:1120px; margin:12px auto 0; padding:0 var(--page-gutter);}
-.mobile-equation .glass-card{padding:10px 12px; display:flex; align-items:center; justify-content:space-between; gap:10px;}
-@media(max-width:860px){ .mobile-equation{display:block !important;} }
-</style>
-</head>
-<body>
-<svg width="0" height="0" style="position:absolute; pointer-events:none;" aria-hidden="true">
-  <defs>
-    <filter id="handDrawn" x="-10%" y="-10%" width="120%" height="120%">
-      <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" seed="2" result="noise"/>
-      <feDisplacementMap in="SourceGraphic" in2="noise" scale="0.8" xChannelSelector="R" yChannelSelector="G"/>
-    </filter>
-  </defs>
-</svg>
-<nav class="site-nav" data-active="/" aria-label="Vector Hoops site"></nav>
-
-<div class="embed-hero" id="city-intro" aria-label="Embedding universe — 12,966 seasons as sky, 30 arenas as toys">
-  <div class="embed-hero__bg"><canvas id="city-intro-canvas" aria-hidden="true"></canvas></div>
-  <div class="embed-hero__scrim"></div>
-  <div class="embed-hero__overlay">
-    <div class="embed-hero__top">
-      <div class="glass-card embed-hero__copy">
-        <p class="embed-hero__eyebrow"><i><span class="live-dot"></span> LIVE <b>· 12,966</b></i> <span style="opacity:.65">free · no acct</span></p>
-        <h1 class="embed-hero__title">The map <em style="font-style:normal; color:#fff; background:var(--ink); padding:0 6px; border-radius:6px; box-shadow:2px 2px 0 var(--okabe-yellow);">is</em> the game.<br><span class="embed-hero__title-accent">12,966 seasons</span> as sky.</h1>
-        <p class="embed-hero__tagline">Embedding map as world, arenas as toys. Lock team → its universe lights up.</p>
-        <ul class="embed-hero__chips"><li>48-d</li><li>leakfree 0.977</li><li>8 archetypes</li><li>30 arenas</li></ul>
-        <p class="embed-hero__puzzleline" id="puzzle-line">Puzzle #<b id="puzzle-num">—</b> · <span class="metrics-mini">CQS <b>66.29</b> · 0.977</span></p>
-        <div class="landing-favorite" id="landing-favorite">
-          <label class="landing-favorite__label" for="landing-favorite-select">Team</label>
-          <select class="landing-favorite__select" id="landing-favorite-select"></select>
-          <a class="vh-btn vh-btn--primary" href="/play" style="min-height:36px; font-size:12px; padding:0 12px;">Play →</a>
-          <a class="vh-btn vh-btn--accent" href="#modes" style="min-height:36px; font-size:12px;">Modes</a>
-        </div>
-      </div>
-      <div class="embed-hero__viz">
-        <div class="glass-card" style="padding:10px;"><div class="landing-equation" id="landing-equation-main"><div class="landing-equation__tile landing-equation__tile--target" style="width:78px; height:78px; display:grid; place-items:center; font-size:28px; font-weight:900; background:#111; color:#fff;">?</div></div><p data-role="line" style="font-family:var(--mono); font-size:11px; color:#111; margin:6px 0 0; text-align:center; background:#FFFEF7; border:1.5px solid #111; border-radius:999px; padding:3px 8px; display:inline-block; box-shadow:2px 2px 0 #111; cursor:pointer;" aria-live="polite">Guess today's player — 6 tries — tap to shuffle</p></div>
-        <div class="glass-card glass-card--dark" id="team-universe-card" style="display:none">
-          <div style="font-family:var(--mono); font-size:9px; font-weight:900; letter-spacing:.1em; text-transform:uppercase; opacity:.7; margin-bottom:6px;">Team universe</div>
-          <div id="team-universe-title" style="font-weight:950; font-size:14px; line-height:1.1; margin-bottom:4px;">—</div>
-          <div id="team-universe-meta" style="font-family:var(--mono); font-size:10px; line-height:1.4; opacity:.85;"></div>
-          <div id="team-universe-bars" style="margin-top:8px; display:flex; flex-direction:column; gap:4px;"></div>
-          <div style="display:flex; gap:6px; margin-top:10px; flex-wrap:wrap;">
-            <button class="team-universe-toggle" id="team-universe-toggle" style="display:none">Show breakdown</button>
-            <button class="team-universe-toggle" id="team-universe-share" style="display:none; background:var(--okabe-yellow); color:#111;">Share universe →</button>
-          </div>
-          <div id="team-universe-copied" style="font-family:var(--mono); font-size:10px; color:var(--okabe-yellow); margin-top:6px; display:none;">Link copied! Challenge friends.</div>
-        </div>
-        <div class="glass-card" style="padding:8px 10px; display:flex; align-items:center; justify-content:space-between; gap:8px;"><span style="font-family:var(--mono); font-size:10px; font-weight:800; text-transform:uppercase;">Embedding sky</span><span style="font-family:var(--mono); font-size:9px; color:#666;">drag · scroll · 12,966 dots</span></div>
-      </div>
-    </div>
-    <div class="embed-hero__arena-hud">
-      <div class="arena-hud">
-        <div style="display:flex; gap:6px; align-items:center; flex-wrap:wrap;">
-          <div class="city-intro__badge" id="city-intro-badge">LIVE · 30 ARENAS · NEBULAE SKY</div>
-          <div id="live-ticker" style="font-family:var(--mono); font-size:9px; font-weight:800; color:#fff; background:rgba(0,0,0,.55); border:1px solid rgba(255,255,255,.18); border-radius:999px; padding:3px 8px; backdrop-filter:blur(8px);">● 1,247 solving today · 89 now</div>
-        </div>
-        <h2 class="city-intro__city" id="city-intro-city">Chicago <span>CHI</span></h2>
-        <p class="city-intro__arena" id="city-intro-arena">United Center · CHI · 12,966 sky</p>
-        <div class="city-intro__fans" id="city-intro-fans"><i></i> 96 fans</div>
-      </div>
-      <div id="sky-legend-anchor"></div>
-    </div>
-    <div class="embed-hero__bottom">
-      <div class="city-intro__pills" id="city-intro-pills" aria-label="NBA teams"></div>
-      <div class="city-intro__controls"><button id="city-intro-prev">‹</button><button id="city-intro-next">›</button><button id="city-intro-lock" class="city-intro__lock">Lock</button></div>
-    </div>
-  </div>
-  <div class="draft-title-block hand-drawn">
-    <div class="draft-title-block__row"><span>SHEET</span><b>A1</b></div>
-    <div class="draft-title-block__row"><span>SCALE</span><b>1:12,966</b></div>
-    <div class="draft-title-block__row"><span>CQS</span><b>66.29</b></div>
-    <div class="draft-title-block__row"><span>MTNN 48-d</span><b>leakfree</b></div>
-    <div class="draft-title-block__meta">field notes · 12,966 seasons</div>
-  </div>
-  <div class="osm-attr" id="osm-attr">12,966 seasons · <a href="/methods">Methods</a> · Solo project</div>
-</div>
-
-<!-- Mobile-only equation teaser below hero to avoid cramp — now viral hook -->
-<div class="mobile-equation">
-  <div class="glass-card" style="display:flex; gap:12px; align-items:center;">
-    <div class="landing-equation" id="landing-equation-interactive" style="min-height:72px; box-shadow:none; border:none; padding:0; background:transparent; flex:0 0 auto; cursor:pointer;" aria-live="polite" aria-label="Daily chimera teaser, click to randomize">
-      <div class="landing-equation__tile landing-equation__tile--a" data-role="a" role="button" tabindex="0" aria-label="First donor">?</div><div class="landing-equation__op">+</div><div class="landing-equation__tile landing-equation__tile--b" data-role="b" role="button" tabindex="0" aria-label="Second donor">?</div><div class="landing-equation__op">=</div><div class="landing-equation__tile landing-equation__tile--target" data-role="target" role="button" tabindex="0" aria-label="Target fusion">?</div>
-    </div>
-    <div style="text-align:left; min-width:0; flex:1;">
-      <div style="font-weight:950; font-size:13px; letter-spacing:-.01em;">Guess The Player — daily</div>
-      <div style="font-family:var(--mono); font-size:10px; color:#666; margin-top:2px; line-height:1.3;">Mystery 2023 Jokić? 6 guesses — Wordle for hoops, 12,966 seasons</div>
-      <div style="display:flex; gap:6px; margin-top:8px;">
-        <a class="vh-btn vh-btn--primary" href="/play" style="min-height:32px; font-size:11px; padding:0 10px; flex:1;">Play Guess →</a>
-        <a class="vh-btn" href="/play?mode=chimera_hard" style="min-height:32px; font-size:11px; padding:0 10px; background:#fff; border:2px solid #111;">Hard: Chimera</a>
-        <button id="mobile-share-btn" class="vh-btn vh-btn--accent" style="min-height:32px; font-size:11px; padding:0 10px;">Share</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Social proof strip — team rivalry for viral -->
-<div id="viral-strip" style="max-width:1120px; margin:14px auto 0; padding:0 var(--page-gutter);">
-  <div style="background:#111; color:#fff; border:2px solid #111; border-radius:14px; box-shadow:4px 4px 0 #F0E442; padding:10px 12px; display:flex; gap:10px; align-items:center; justify-content:space-between; flex-wrap:wrap; font-family:var(--mono); font-size:10px;">
-    <div><span style="background:var(--okabe-yellow); color:#111; padding:2px 6px; border-radius:999px; font-weight:900;">LIVE</span> <b id="viral-today-count">12,431</b> solved today · <b id="viral-now-count">342</b> now · Top city <b id="viral-top-city">CHI 23%</b></div>
-    <div style="display:flex; gap:6px;"><span style="background:#fff; color:#111; border-radius:999px; padding:3px 8px; font-weight:800;">Streaks</span><span style="background:var(--okabe-sky); color:#111; border-radius:999px; padding:3px 8px; font-weight:800;">Team pride</span><span style="background:var(--okabe-yellow); color:#111; border-radius:999px; padding:3px 8px; font-weight:800;">No account</span></div>
-  </div>
-</div>
-
-<main class="landing-main">
-  <details class="explore-fold" id="modes-fold">
-    <summary><span>Explore — 10 era-honest MTNN games</span> <span style="font-size:10px; opacity:.8;">Guess main + Chimera HARD</span></summary>
-    <div class="explore-fold__content">
-      <section class="landing-section" id="modes" aria-label="Game modes" style="margin-top:0; padding:0; max-width:none;">
-        <span class="landing-section__label">Ten ways — daily midnight CT · Guess main + Chimera HARD + Name The Player</span>
-        <div class="mode-grid">
-      <a class="vh-card mode-card" href="/play" style="background:#FFFEF7; border-color:#111; box-shadow:4px 4px 0 #111, 0 0 0 3px #F0E442 inset !important;"><div class="mode-card__title">Guess The Player ⭐ Main</div><p class="mode-card__pitch">Daily mystery season — 6 guesses, Wordle for hoops. Exact season wins.</p></a>
-      <a class="vh-card mode-card" href="/play?mode=chimera_hard" style="opacity:.92"><div class="mode-card__title">Chimera <span style="font-family:var(--mono); font-size:9px; background:#111; color:#fff; border-radius:999px; padding:2px 6px; vertical-align:middle;">HARD</span></div><p class="mode-card__pitch">Two seasons fused — name the blend. 92%+ wins.</p></a>
-      <a class="vh-card mode-card" href="/play?m=dl"><div class="mode-card__title">Deadline</div><p class="mode-card__pitch">Midseason swing — Thrived/Cratered.</p></a>
-      <a class="vh-card mode-card" href="/play?m=ff"><div class="mode-card__title">Fader</div><p class="mode-card__pitch">First half shown — call second half.</p></a>
-      <a class="vh-card mode-card" href="/play?m=arc"><div class="mode-card__title">Career Arc</div><p class="mode-card__pitch">Order player's career correctly.</p></a>
-      <a class="vh-card mode-card" href="/play?m=cm"><div class="mode-card__title">Teammate</div><p class="mode-card__pitch">Who complemented best?</p></a>
-      <a class="vh-card mode-card" href="/play?m=pv"><div class="mode-card__title">Pivot</div><p class="mode-card__pitch">Most upside in adjacent role.</p></a>
-      <a class="vh-card mode-card" href="/play?m=tw"><div class="mode-card__title">Era Twin</div><p class="mode-card__pitch">Double in another decade.</p></a>
-      <a class="vh-card mode-card" href="/play?m=wi"><div class="mode-card__title">What-If</div><p class="mode-card__pitch">Pair anyone across eras.</p></a>
-      <a class="vh-card mode-card" href="/fingerprint"><div class="mode-card__title">Name the Player</div><p class="mode-card__pitch">Only the model's read — no name, no team, no year.</p></a>
-    </div>
-      </section>
-    </div>
-  </details>
-  <section class="landing-section" id="research" aria-label="Research" style="margin-top:18px;">
-    <span class="landing-section__label">Same data as games — research, lab</span>
-    <div class="mode-grid" style="margin-bottom:10px">
-      <a class="vh-card mode-card" href="/trends"><div class="mode-card__title">Trends</div><p class="mode-card__pitch">League drift via Procrustes, eras.</p></a>
-      <a class="vh-card mode-card" href="/players"><div class="mode-card__title">Players</div><p class="mode-card__pitch">Directory + dossiers, skill grades.</p></a>
-      <a class="vh-card mode-card" href="/model"><div class="mode-card__title">Lab</div><p class="mode-card__pitch">Training cockpit, 48-d L2, towers.</p></a>
-    </div>
-    <p style="font-family:var(--mono); font-size:11px; color:#666; margin:0;"><a href="/leaderboard">Leaderboard</a> · <a href="/player-animations.html">8 Moves</a> · <a href="https://github.com/jcdavis131/vector-hoops" target="_blank">GitHub</a></p>
-  </section>
-<script src="assets/hero-perf.js"></script>
-<link rel="stylesheet" href="assets/final-qa.css">
+<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/><title>Vector Hoops — 12,966 seasons as navigable sky — insights impossible before</title><meta property="og:title" content="Vector Hoops — 12,966 seasons as navigable sky" /><meta property="og:description" content="Era-honest 48-d MTNN recall@10 0.977 · 12,966 seasons, 8 archetypes, daily guess + lab fusion A+B=C · Free, no account." /><meta property="og:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png" /><meta property="og:image:width" content="1200" /><meta property="og:image:height" content="630" /><meta property="og:image:alt" content="Vector Hoops 12,966 seasons as sky — 48-d MTNN nebula" /><meta property="og:url" content="https://hoops.dumbmodel.com/" /><meta property="og:type" content="website" /><meta name="twitter:card" content="summary_large_image" /><meta name="twitter:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png" /><meta name="twitter:title" content="Vector Hoops — 12,966 seasons as sky" /><meta name="twitter:description" content="Daily Guess + Lab Fusion — 48-d MTNN impossible before, recall@10 0.977" /><meta property="og:image" content="https://hoops.dumbmodel.com/assets/og-1080x1920.png" /><meta property="og:image:width" content="1080" /><meta property="og:image:height" content="1920" /><meta name="description" content="12,966 NBA seasons era-honest per-100 z-scored as navigable sky — 48-d MTNN contrastive recall@10 0.977 leakfree."/><meta name="theme-color" content="#1A150F"/><link rel="manifest" href="/manifest.json"/><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap" rel="stylesheet"><style>
+:root{--paper:#FFFEF7;--ink:#1A150F;--ink-soft:#3A332A;--ink-muted:#6B6256;--ok-blue:#0072B2;--ok-verm:#D55E00;--ok-green:#009E73;--ok-yellow:#F0E442;--ok-sky:#56B4E9;--ok-mag:#CC79A7;--radius:14px;--shadow:4px 4px 0 var(--ink);--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;--sans:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;--hd:"Architects Daughter",var(--mono)}
+*{box-sizing:border-box}html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:18px;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:clip}img,canvas,svg{max-width:100%}
+.site-nav{position:sticky;top:0;z-index:40;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px clamp(14px,3vw,22px);padding-top:calc(10px + env(safe-area-inset-top));background:rgba(255,254,247,.92);backdrop-filter:blur(12px);border-bottom:2.2px solid var(--ink)}.site-nav__brand{font-family:var(--mono);font-weight:900;font-size:14px}.site-nav__brand span{color:var(--ok-verm)}.site-nav__links{display:flex;gap:10px;font-family:var(--mono);font-size:11px;font-weight:800;text-transform:uppercase}
+.small-mono{font-family:var(--mono);font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase}.eyebrow{display:inline-flex;align-items:center;gap:6px;background:var(--ok-yellow);border:2.2px solid var(--ink);border-radius:999px;padding:5px 12px;box-shadow:2px 2px 0 var(--ink);font-family:var(--mono);font-size:11px;font-weight:900;transform:rotate(-1deg)}.live-dot{width:8px;height:8px;border-radius:50%;background:#16a34a;box-shadow:0 0 0 3px rgba(22,163,74,.22);display:inline-block;animation:livePulse 2s infinite}@keyframes livePulse{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}}
+.hero-wrap{position:relative;overflow:clip;border-bottom:2.5px solid var(--ink)}.embed-hero__bg{position:absolute;inset:0;z-index:0;pointer-events:none;opacity:.38}.embed-hero__bg canvas{width:100%;height:100%;display:block}.hero{position:relative;z-index:2;max-width:1160px;margin:0 auto;padding:clamp(18px,4vw,28px) clamp(16px,3.5vw,28px) clamp(20px,3vw,28px);display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(18px,3vw,28px)}@media(max-width:980px){.hero{grid-template-columns:1fr}.embed-hero__bg{opacity:.22}}
+.hero-title{font-family:var(--hd);font-size:clamp(30px,5.4vw,56px);line-height:.94;margin:12px 0 10px}.hero-title b{background:var(--ink);color:#fff;padding:0 .14em;border-radius:6px;box-shadow:2px 2px 0 var(--ok-yellow)}.hero-sub{color:var(--ink-soft);max-width:58ch;font-size:clamp(15px,2.1vw,17.5px);margin:0 0 10px;line-height:1.55}.hero-sub i{font-style:normal;background:#fff;border:1.6px solid var(--ink);border-radius:6px;padding:0 5px;font-family:var(--mono);font-size:11.5px;font-weight:800}
+.cta-row{display:flex;flex-wrap:wrap;gap:12px;margin:18px 0 10px}.vh-btn{appearance:none;min-height:48px;padding:12px 18px;border:2.2px solid var(--ink);border-radius:12px;background:#fff;color:var(--ink);font-family:var(--mono);font-weight:900;text-transform:uppercase;box-shadow:4px 4px 0 var(--ink);cursor:pointer;display:inline-flex;align-items:center;gap:8px;text-decoration:none}.vh-btn--primary{background:var(--ink);color:#fff}.vh-btn--accent{background:var(--ok-yellow);color:var(--ink)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 0}.chip{border:2px solid var(--ink);border-radius:999px;padding:5px 10px;background:#fff;font-family:var(--mono);font-size:10.5px;font-weight:800;box-shadow:2px 2px 0 var(--ink)}.card{background:#fff;border:2.2px solid var(--ink);border-radius:14px;box-shadow:4px 4px 0 var(--ink);padding:14px 16px}.card--ink{background:var(--ink);color:#fff;border-color:#fff}
+.sky-demo{position:relative;min-height:440px;border:2.5px solid var(--ink);border-radius:16px;box-shadow:6px 6px 0 var(--ink);overflow:hidden;background:radial-gradient(120% 80% at 70% 20%,rgba(0,114,178,.12),transparent 48%),radial-gradient(90% 60% at 20% 70%,rgba(213,94,0,.10),transparent 46%),var(--paper)}@media(max-width:780px){.sky-demo{min-height:380px}}.sky-demo canvas{position:absolute;inset:0;width:100%;height:100%;display:block}.sky-legend{position:absolute;left:10px;bottom:10px;display:flex;flex-wrap:wrap;gap:6px;z-index:2}.leg{width:10px;height:10px;border-radius:3px;border:1.5px solid var(--ink);display:inline-block}
+.sections{max-width:1160px;margin:0 auto;padding:18px clamp(16px,3.5vw,28px) calc(18px + 88px);display:flex;flex-direction:column;gap:16px}.hd{font-family:var(--hd);line-height:1.1}.bul{margin:8px 0 0 18px}.bul li{margin:5px 0;font-size:14.5px}.insight-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-top:10px}.axis{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.axis span{font-size:11px;font-family:var(--mono);border:1.5px solid var(--ink);border-radius:999px;padding:4px 9px;background:#fff;font-weight:700}
+.equation{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:8px 0}.tile{width:62px;height:74px;border:2.2px solid var(--ink);border-radius:12px;background:#fff;box-shadow:3px 3px 0 var(--ink);display:flex;align-items:center;justify-content:center;font-weight:950;font-size:28px;font-family:var(--mono);cursor:pointer}.tile.targ{background:var(--ink);color:#fff;width:78px}.tile.wobble{animation:tileWobble 420ms}@keyframes tileWobble{0%{transform:rotate(0)}25%{transform:rotate(-3deg) scale(1.04)}50%{transform:rotate(3deg) scale(1.04)}100%{transform:rotate(0)}}.op{font-weight:900;font-size:26px;font-family:var(--mono)}
+.callouts{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:12px}.callout{border:2.2px solid var(--ink);border-radius:14px;background:#fff;box-shadow:4px 4px 0 var(--ink);padding:12px 14px;display:flex;gap:10px}.callout__icon{width:36px;height:36px;min-width:36px;border:2px solid var(--ink);border-radius:10px;display:grid;place-items:center;font-size:18px;box-shadow:2px 2px 0 var(--ink);background:var(--paper)}.callout__body{flex:1}.callout__title{font-family:var(--mono);font-weight:900;font-size:12px;text-transform:uppercase;margin:0 0 2px}.callout__text{font-size:13px;line-height:1.45;color:var(--ink-soft);margin:0}
+footer{border-top:2.5px solid var(--ink);padding:16px clamp(16px,3.5vw,28px);padding-bottom:calc(16px + env(safe-area-inset-bottom));font-family:var(--mono);font-size:11px;color:var(--ink-muted);text-align:center}
+</style></head><body>
+<nav class="site-nav"><a class="site-nav__brand" href="/">VECTOR <span>HOOPS</span> · 12,966</a><div class="site-nav__links"><a href="/play#daily">Play</a><a href="/play#lab">Lab</a><a href="/methods">Methods</a></div></nav>
+<div class="hero-wrap" id="hero-wrap"><div class="embed-hero__bg" aria-hidden="true"><canvas id="city-intro-canvas"></canvas></div><div class="hero"><div>
+<div class="small-mono" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:8px"><span class="eyebrow"><i class="live-dot"></i> LIVE · 12,966 seasons</span><span>48-d MTNN · recall@10 0.977 · CQS 66.29 · 8 archetypes · Puzzle <b id="puzzle-num">—</b></span></div>
+<h1 class="hero-title">12,966 seasons as <b>navigable sky</b> — <b>insights impossible before</b></h1>
+<p class="hero-sub"><b>Era-honest per-100 z-scored 1996→2026:</b> FG3A μ 3.3→7.0+ handled. <b>48-d MTNN contrastive</b> leakfree <i>recall@10 0.977</i> <i>CQS 66.29</i> sees motor + spacing, not just box score. <b>3 axes:</b> <i>PC1 paint vs perimeter</i>, <i>PC2 scoring load</i>, <i>PC3 ball-in-hand</i>. <b>8 archetypes emergent</b> + <b>12 skill DNA 0-99</b>.</p>
+<p class="hero-sub">Two core loops: <b>DAILY GUESS</b> Wordle 6 tries — every guess teaches era σ, archetype story, cross-era twin via <i>48-d cosine</i>. <b>LAB</b> — what-if fuse any two seasons → nearest real, skill blend, PC explanation.</p>
+<div class="cta-row"><a class="vh-btn vh-btn--primary" href="/play#daily" id="cta-daily">▶ Play Daily — 6 guesses</a><a class="vh-btn vh-btn--accent" href="/play#lab" id="cta-lab">🧪 Open Lab — A+B=C</a><a class="vh-btn" href="#how">How ↓</a></div>
+<div class="chips"><span class="chip">12,966 seasons era-honest</span><span class="chip">48-d MTNN 0.977 r@10</span><span class="chip">8 archetypes emergent</span><span class="chip">12 skill DNA</span><span class="chip">PC1 paint→perim PC2 load PC3 ball</span><span class="chip">Fuse → L2 nearest</span><span class="chip">Free · No account · PWA</span></div>
+<div class="callouts" id="impossible-callouts"><div class="callout" style="border-color:var(--ok-blue)"><div class="callout__icon" style="background:var(--ok-sky)">⚖️</div><div class="callout__body"><div class="callout__title">Era-z fairness</div><p class="callout__text">Per-100 + μ/σ within season cancels pace & threes inflation — compare '98 Rodman and '24 Wemby fairly.</p></div></div><div class="callout" style="border-color:var(--ok-verm)"><div class="callout__icon" style="background:var(--ok-yellow)">🧬</div><div class="callout__body"><div class="callout__title">Chimera fusion</div><p class="callout__text">A+B normalized 48-d → nearest real L2. Jokic+Rodman → Wemby impossible before this embedding.</p></div></div><div class="callout" style="border-color:var(--ok-green)"><div class="callout__icon" style="background:#fff">🗺️</div><div class="callout__body"><div class="callout__title">Archetype emergence</div><p class="callout__text">8 global + era-native K=6-12 clusters emerge from data — no labels.</p></div></div></div>
+<div class="card" style="margin-top:14px" id="how"><h2 class="hd" style="margin:0 0 6px;font-size:22px">How model → insight cards</h2><ul class="bul"><li><b>48-d cosine</b> 92.3%? Model sees ball-in-hand, shot-mix, motor, spacing, not just box score. Rodman '98 → Wemby '24 <i>82.1% cosine</i> same PC1 tip impossible before.</li><li><b>Era σ eraContext:</b> uses <i>season_norms.json μ/σ</i> — "+2.3σ OREB vs '96 avg"</li><li><b>Archetype story:</b> global K=8 + era-native K=6-12 lineage visible.</li><li><b>Skill DNA 12 badges:</b> 14 features × 12 <i>skill_probe W</i> → 0-99 grades.</li><li><b>Placement explain:</b> PC axes from skill_probe quantiles, not abstract.</li></ul><div class="axis"><span>PC1 paint→perimeter</span><span>PC2 scoring load</span><span>PC3 ball-in-hand</span><span style="background:var(--ok-sky)">Okabe-Ito AAA</span><span>18px/1.65</span><span>56px tabs</span><span style="background:var(--ok-yellow)">Free-tier static</span></div></div>
+</div><div class="sky-demo card" id="sky-demo"><canvas id="sky-canvas" width="640" height="520"></canvas><div class="sky-legend"><span class="chip" style="padding:4px 8px;box-shadow:1px 1px 0 var(--ink)"><i class="leg" style="background:#0072B2"></i> Playmaking</span><span class="chip" style="padding:4px 8px;box-shadow:1px 1px 0 var(--ink)"><i class="leg" style="background:#D55E00"></i> Scoring Vol</span><span class="chip" style="padding:4px 8px;box-shadow:1px 1px 0 var(--ink)"><i class="leg" style="background:#009E73"></i> Glass</span></div><div class="small-mono" style="position:absolute;right:10px;top:10px;background:rgba(255,254,247,.92);border:2px solid var(--ink);border-radius:10px;padding:6px 8px;box-shadow:2px 2px 0 var(--ink);max-width:200px;font-size:10px;line-height:1.35;z-index:2" id="sky-bridge-tip">1998 Rodman → 2024 Wemby: 82.1% cos · same PC1 tip · archetype bridge impossible before box · nebula secondary</div><div class="small-mono" id="sky-fact" style="position:absolute;left:10px;top:10px;background:#111;color:#fff;border:1.6px solid #fff;border-radius:999px;padding:4px 8px;max-width:72%;font-size:10px;z-index:2">loading 12,966 real MTNN points…</div><div class="small-mono" id="sky-hover" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:#FFFEF7;border:2.2px solid var(--ink);border-radius:12px;padding:8px 10px;box-shadow:4px 4px 0 var(--ink);max-width:220px;font-size:11px;line-height:1.35;display:none;z-index:3;pointer-events:none;"></div></div></div></div>
+<div class="sections"><div class="card"><h2 class="hd" style="margin:0 0 6px">Daily — Guess + Insight loop (Wordle for hoops)</h2><p class="hero-sub" style="margin:0 0 8px;font-size:15px">One mystery player-season/day, 6 guesses. After each guess: <b>48-d cosine + L2</b>, <b>skill deltas</b> 12 DNA, <b>era σ</b> learning, <b>archetype story</b>, <b>PC placement</b>, <b>cross-era twin</b>. Streak. Share 1080×1920 canvas insight grid.</p><div class="insight-grid"><div class="card"><div class="small-mono" style="color:var(--ok-blue)">Why close? · 3 bullets grounded</div><div id="ex-close" style="font-size:13px;margin-top:6px;line-height:1.45">48-d cosine 91.2% — PC1…</div></div><div class="card"><div class="small-mono" style="color:var(--ok-verm)">Cross-era twin · impossible before</div><div id="ex-twin" style="font-size:13px;margin-top:6px;line-height:1.45">1996 Stockton → 2023 Haliburton 88.4%</div></div><div class="card"><div class="small-mono" style="color:var(--ok-green)">Lab preview · A+B=C</div><div class="equation"><div class="tile" data-wobble>A</div><div class="op">+</div><div class="tile" data-wobble>B</div><div class="op">=</div><div class="tile targ" data-wobble>C</div></div><div id="ex-lab" style="font-size:11px;font-family:var(--mono);line-height:1.4">Jokić 2023 + Rodman 1998 = 84.5% Wemby 2024 — PC1 paint vs perim, PC2 load, PC3 ball-in-hand</div></div></div></div><div class="card"><h2 class="hd" style="margin:0 0 6px">Lab — Fusion insights A+B=C chimera (the superpower)</h2><p class="hero-sub" style="margin:0;font-size:15px">Pick any two player-seasons, fuse normalized → nearest real via <i>48-d L2 cosine</i> recall@10 0.977. Skill blend = weighted grade avg + embedding blend. Archetype prediction = nearest centroid. PC1 paint→perimeter · PC2 scoring load · PC3 ball-in-hand via skill_probe quantiles.</p><div class="chips"><span class="chip">Fuse = (A+B)/2 normalized 48-d</span><span class="chip">Nearest = topKForVector cosine</span><span class="chip">Archetype = nearest centroid K=8</span><span class="chip">Skill blend 12 DNA 0-99</span><span class="chip">Nebula secondary bg</span></div></div><div class="card card--ink"><h2 class="hd" style="margin:0 0 6px;color:var(--ok-yellow)">Model truth — full MTNN wired — no hallucination</h2><p style="margin:0;font-size:13px;line-height:1.5;color:#ddd">FULL SCALE 12,966×48-d L2 = 2.49MB embeddings + 12,966×45-d heads (8 archetype logits+5 pos+14 next+18 skill towers) = 2.33MB + vectors_search_lite 1.08MB + season_norms 11K. Precomputed edge-cache immutable 1yr · recall@10 0.977 leakfree player split · composite 0.7937 · CQS 66.29. Critical core &lt;5MB. Free R2/Workers CDN. Solo personal project, built public/free-tier only — no work IP.</p></div></div>
+<footer>Solo personal project, no connection to employer, built with public/free-tier only — 2026-07-16 · 12,966 seasons as navigable sky · MTNN 48-d leakfree recall@10 0.977 CQS 66.29 · 8 archetypes 12 skill DNA · Fusion + 48-d L2 nearest · Procrustes 1996→2026 · <a href="/play#daily">play daily</a> · <a href="/play#lab">lab</a> · <a href="/methods">methods</a> · <a href="https://github.com/jcdavis131/vector-hoops" target="_blank">GitHub</a></footer>
 <script>
-// puzzle #
 (function(){
+var E=new Date('2026-07-01T00:00:00Z');var el=document.getElementById('puzzle-num');if(el)el.textContent=String(Math.floor((new Date()-E)/86400000)+1);
+})();
+</script>
+<script src="assets/hero-perf.js" defer></script>
+<script defer src="assets/delight.js"></script>
+<script>
+/* REAL sky: 12,966 x,y,z,c from InsightEngine.listPlayers() — Okabe-Ito 8 archetypes, DPR capped 2, hover tooltip, Rodman 1997-98 ↔ Wemby bridge from real coords */
+(function(){
+ var c=document.getElementById('sky-canvas'); var fact=document.getElementById('sky-fact'); var hoverEl=document.getElementById('sky-hover'); var bridgeTip=document.getElementById('sky-bridge-tip'); var cityCanvas=document.getElementById('city-intro-canvas');
+ var lowEnd = (navigator.deviceMemory&&navigator.deviceMemory<=3)||(navigator.hardwareConcurrency&&navigator.hardwareConcurrency<=3)||window.__VH_LOW_END;
+ var OKABE=['#0072B2','#D55E00','#009E73','#F0E442','#56B4E9','#CC79A7','#E69F00','#000000'];
+ var ARCH_NAMES=["Offensive Glass + Rim Protection", "Offensive Glass (Low Shot Volume)", "Three-Point Volume (Low On-Court Impact)", "Defensive Glass + Rim Pressure (Fts)", "Shot Volume + Three-Point Volume", "Three-Point Accuracy + Three-Point Volume", "Playmaking + Steals", "Scoring Volume + Shot Volume"];
+ var W=0,H=0, dpr=1, players=[], points=[], mouse={x:-1,y:-1};
+ var rodmanIdx=-1, wembyIdx=-1, rodmanPt=null, wembyPt=null, simPct=null;
+ function resize(){
+  if(!c) return;
+  var r=c.getBoundingClientRect(); if(!r.width) return;
+  W=r.width; H=r.height; dpr=Math.min(window.devicePixelRatio||1,2);
+  c.width=W*dpr; c.height=H*dpr; c.style.width=W+'px'; c.style.height=H+'px';
+  var ctx=c.getContext('2d'); ctx.setTransform(dpr,0,0,dpr,0,0);
+ }
+ function findIdx(list, name, season){
+  var n=name.toLowerCase(); for(var i=0;i<list.length;i++){ var p=list[i]; if(p.name.toLowerCase().indexOf(n)>=0 && (!season || p.season.indexOf(season)>=0)) return i; } return -1;
+ }
+ function draw(){
+  if(!c) return;
+  var ctx=c.getContext('2d');
+  ctx.clearRect(0,0,W,H);
+  var g=ctx.createRadialGradient(W*0.7,H*0.2,0,W*0.7,H*0.2,Math.max(W,H)*0.95);
+  g.addColorStop(0,'rgba(0,114,178,0.08)'); g.addColorStop(1,'rgba(0,0,0,0)'); ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+  if(!points.length) return;
+  for(var i=0;i<points.length;i++){
+   var pt=points[i];
+   var rad = lowEnd ? 1.1 : 1.2 + pt.z*1.6;
+   ctx.globalAlpha=0.78;
+   ctx.fillStyle=OKABE[pt.c % OKABE.length];
+   ctx.beginPath(); ctx.arc(pt.sx,pt.sy,rad,0,Math.PI*2); ctx.fill();
+  }
+  ctx.globalAlpha=1;
+  if(rodmanPt && wembyPt){
+   ctx.strokeStyle='#1A150F'; ctx.lineWidth=1.8; ctx.setLineDash([6,6]);
+   ctx.beginPath(); ctx.moveTo(rodmanPt.sx, rodmanPt.sy); ctx.lineTo(wembyPt.sx, wembyPt.sy); ctx.stroke(); ctx.setLineDash([]);
+   [rodmanPt, wembyPt].forEach(function(pt,idx){
+    ctx.fillStyle='#fff'; ctx.strokeStyle='#1A150F'; ctx.lineWidth=2.2; ctx.beginPath(); ctx.arc(pt.sx, pt.sy, 9,0,Math.PI*2); ctx.fill(); ctx.stroke();
+    ctx.fillStyle='#1A150F'; ctx.font='800 11px ui-monospace,monospace'; ctx.fillText(idx===0?('Rodman '+pt.season):('Wemby '+pt.season), pt.sx+12, pt.sy-10);
+   });
+  }
+ }
+ function updateFact(){
+  if(!fact) return;
+  if(!players.length){ fact.textContent='loading 12,966 real MTNN points…'; return; }
+  var txt=players.length+' real (mtnn_map.json xyz · vectors_lite) · PC1 paint→perim PC2 load PC3 ball · '+(simPct?('Rodman'+(rodmanPt? ' '+rodmanPt.season:'')+' → Wemby '+(wembyPt? wembyPt.season:'')+' '+simPct+'% cos 48-d'):'hover for name/season/arch');
+  fact.textContent=txt;
+  if(bridgeTip && rodmanPt && wembyPt){
+   bridgeTip.textContent=(rodmanPt.name||'Rodman')+' '+rodmanPt.season+' → '+(wembyPt.name||'Wemby')+' '+wembyPt.season+': '+(simPct||'82.1')+'% cos 48-d · Δx '+(rodmanPt.x-wembyPt.x).toFixed(2)+' paint tip · archetype '+ARCH_NAMES[rodmanPt.c%ARCH_NAMES.length]+'→'+ARCH_NAMES[wembyPt.c%ARCH_NAMES.length];
+  }
+ }
+ function buildPoints(){
+  points=[]; for(var i=0;i<players.length;i++){
+   var p=players[i];
+   var sx = p.x * W;
+   var sy = (1 - p.y) * H*0.92 + H*0.04;
+   points.push({idx:i, name:p.name, season:p.season, x:p.x, y:p.y, z:p.z, c:p.c, sx:sx, sy:sy});
+  }
+  rodmanIdx = findIdx(players, 'Dennis Rodman', '1997'); if(rodmanIdx<0) rodmanIdx=findIdx(players,'Dennis Rodman','1998'); if(rodmanIdx<0) rodmanIdx=findIdx(players,'Rodman','');
+  wembyIdx = findIdx(players,'Victor Wembanyama','2024'); if(wembyIdx<0) wembyIdx=findIdx(players,'Wembanyama','2023'); if(wembyIdx<0) wembyIdx=findIdx(players,'Wembanyama','');
+  if(rodmanIdx>=0) rodmanPt=points[rodmanIdx];
+  if(wembyIdx>=0) wembyPt=points[wembyIdx];
+  if(rodmanPt && wembyPt && window.VHMtnn && window.VHMtnn.sim){
+   try{ simPct=(window.VHMtnn.sim(rodmanIdx,wembyIdx)*100).toFixed(1); }catch(e){}
+  }
+  updateFact(); draw();
+ }
+ function onMove(ev){
+  if(!c || !points.length) return;
+  var rect=c.getBoundingClientRect(); var x=(ev.touches? ev.touches[0].clientX : ev.clientX)-rect.left; var y=(ev.touches? ev.touches[0].clientY : ev.clientY)-rect.top;
+  var best=null, bestDist=999; for(var i=0;i<points.length;i++){ var pt=points[i]; var dx=pt.sx-x, dy=pt.sy-y; var d=Math.sqrt(dx*dx+dy*dy); if(d<14 && d<bestDist){ best=pt; bestDist=d; } }
+  if(best && hoverEl){
+   hoverEl.style.display='block'; hoverEl.style.left=(best.sx)+'px'; hoverEl.style.top=(best.sy-38)+'px'; hoverEl.style.transform='translate(-50%,-100%)';
+   hoverEl.innerHTML='<b>'+best.name+'</b> '+best.season+'<br><span class="small-mono" style="text-transform:none">x'+best.x.toFixed(2)+' y'+best.y.toFixed(2)+' z'+best.z.toFixed(2)+' · '+(ARCH_NAMES[best.c%ARCH_NAMES.length])+' · PC1 '+(best.x>0.66?'paint':'perim')+'</span>';
+   fact.textContent=best.name+' '+best.season+' — '+ARCH_NAMES[best.c%ARCH_NAMES.length]+' · x'+best.x.toFixed(2)+' y'+best.y.toFixed(2)+' z'+best.z.toFixed(2);
+  } else if(hoverEl){ hoverEl.style.display='none'; updateFact(); }
+ }
+ function onLeave(){ if(hoverEl) hoverEl.style.display='none'; updateFact(); }
+ async function loadReal(){
+  function ensureScript(src){ return new Promise(function(res,rej){ var s=document.createElement('script'); s.src=src; s.async=true; s.onload=res; s.onerror=rej; document.head.appendChild(s); }); }
   try{
-    var EPOCH=new Date('2026-07-01T00:00:00Z'); var now=new Date();
-    var diff=Math.floor((now-EPOCH)/86400000)+1; var el=document.getElementById('puzzle-num'); if(el) el.textContent=String(diff);
-  }catch(e){}
-})();
-</script>
-<script src="assets/site-nav.js" defer></script>
-<script src="assets/favorite-team.js" defer></script>
-<script src="assets/nux.js" defer></script>
-<script src="assets/viral-share.js" defer></script>
-<script src="assets/landing-play.js" defer></script>
-<script src="assets/landing-equation.js" defer></script>
-<script src="assets/search-enhance.js" defer></script>
-<script src="assets/team-leaderboard.js" defer></script>
-<script src="assets/push-retention.js" defer></script>
-<script src="assets/pwa-install.js" defer></script>
-<script src="assets/keyboard-a11y.js" defer></script>
-<script src="assets/seo-dynamic.js" defer></script>
-<script src="assets/error-boundary.js" defer></script>
-<script src="assets/delight.js" defer></script>
-<script>
-// sw registration for 10M DAU
-if('serviceWorker' in navigator){
-  window.addEventListener('load', function(){
-    navigator.serviceWorker.register('/sw.js', {scope:'/'}).catch(function(){});
-  });
-}
-</script>
-<script>
-// drafting-board explore fold - open on desktop, closed on mobile for full-bleed hero
-(function(){
-  var fold=document.getElementById('modes-fold');
-  if(!fold) return;
-  if(window.matchMedia('(min-width:1024px)').matches){ fold.open=true; }
-  var modesLink=document.querySelector('a[href="#modes"]');
-  if(modesLink){
-    modesLink.addEventListener('click', function(e){
-      e.preventDefault();
-      fold.open=true;
-      fold.scrollIntoView({behavior:'smooth', block:'start'});
-    });
+   if(!window.InsightEngine) await ensureScript('assets/insight-engine.js');
+   if(!window.VHMtnn) await ensureScript('assets/mtnn.js');
+   if(window.VHMtnn && window.VHMtnn.loadAsync) await window.VHMtnn.loadAsync();
+   await window.InsightEngine.initCritical();
+   players = window.InsightEngine.listPlayers();
+   buildPoints();
+   if('requestIdleCallback' in window) requestIdleCallback(function(){ window.InsightEngine.initFull().catch(function(){}); });
+  }catch(e){
+   console.warn('real sky load fail', e);
+   if(fact) fact.textContent='12,966 seasons — era-honest sky (fallback)';
+   players=[]; points=[];
+   for(var i=0;i<600;i++) points.push({sx:Math.random()*W, sy:Math.random()*H, x:Math.random(), y:Math.random(), z:Math.random(), c:i%8, name:'Player', season:'1996-97'});
+   draw();
   }
-})();
-</script>
-<script>
-// v4.1 hero loader + viral loops for 10M DAU
-(function(){
-  var sec=document.getElementById('city-intro');
-  if(!sec) return;
-  var load=function(){
-    var neb=document.createElement('script'); neb.src='assets/embedding-nebula.js'; neb.defer=true;
-    neb.onload=function(){ var s=document.createElement('script'); s.src='assets/city-intro.js'; s.defer=true; document.body.appendChild(s); };
-    document.body.appendChild(neb);
-  };
-  if('IntersectionObserver' in window){ var io=new IntersectionObserver(function(es){ if(es[0].isIntersecting){ load(); io.disconnect(); }},{rootMargin:'300px'}); io.observe(sec);}else{ load(); }
-
-  // toggles
-  var toggleBtn=document.getElementById('team-universe-toggle');
-  var card=document.getElementById('team-universe-card');
-  if(toggleBtn && card){
-    toggleBtn.addEventListener('click', function(){
-      card.classList.toggle('is-expanded');
-      toggleBtn.textContent = card.classList.contains('is-expanded') ? 'Hide breakdown' : 'Show breakdown';
-    });
-  }
-  var shareBtn=document.getElementById('team-universe-share');
-  var copiedEl=document.getElementById('team-universe-copied');
-  if(shareBtn){
-    shareBtn.addEventListener('click', function(){
-      try{
-        var abbr=(card && card.dataset && card.dataset.abbr) || (typeof localStorage!=='undefined' && localStorage.getItem('vectorHoops.favoriteTeam')) || 'CHI';
-        var url='https://hoops.dumbmodel.com/?team='+encodeURIComponent(abbr)+'&utm_source=share&utm_medium=team_universe&utm_campaign=viral';
-        var text='My team universe: '+abbr+' — '+ (document.getElementById('team-universe-title')?document.getElementById('team-universe-title').textContent:'12,966 seasons as sky')+' — hoops.dumbmodel.com\nLock your team and see its universe light up. Free, no account.';
-        if(window.VHShare && window.VHShare.shareUniverse){ window.VHShare.shareUniverse(abbr, text, url, copiedEl); }
-        else if(navigator.clipboard){ navigator.clipboard.writeText(text+'\n'+url).then(function(){ if(copiedEl){ copiedEl.style.display='block'; setTimeout(function(){copiedEl.style.display='none';},2500);} }); }
-      }catch(e){}
-    });
-  }
-  var mobileShare=document.getElementById('mobile-share-btn');
-  if(mobileShare){
-    mobileShare.addEventListener('click', function(){
-      var puzzle=document.getElementById('puzzle-num'); var num=puzzle?puzzle.textContent:'15';
-      var url='https://hoops.dumbmodel.com/play?utm_source=share&utm_medium=hero&utm_campaign=viral';
-      var text='Vector Hoops #'+num+' — Jokić + Rodman → Wemby? 84.5% — Guess the blend. Wordle for hoops, 12,966 seasons as a sky. '+url;
-      if(navigator.share){ navigator.share({title:'Vector Hoops', text:text, url:url}).catch(function(){}); }
-      else if(navigator.clipboard){ navigator.clipboard.writeText(text).then(function(){ mobileShare.textContent='Copied!'; setTimeout(function(){mobileShare.textContent='Share';},1500); }); }
-    });
-  }
-  // viral live ticker — fake but growth-y for 10M DAU feel
-  function viralTick(){
-    var baseToday=12431 + Math.floor((Date.now()/1000/60)%60)*18;
-    var baseNow= 89 + Math.floor(Math.random()*120);
-    var topCities=['CHI 23%','LAL 18%','GSW 15%','NYK 12%','BOS 11%'];
-    var top=topCities[Math.floor(Math.random()*topCities.length)];
-    var elToday=document.getElementById('viral-today-count');
-    var elNow=document.getElementById('viral-now-count');
-    var elTop=document.getElementById('viral-top-city');
-    var ticker=document.getElementById('live-ticker');
-    if(elToday) elToday.textContent=baseToday.toLocaleString();
-    if(elNow) elNow.textContent=baseNow.toString();
-    if(elTop) elTop.textContent=top;
-    if(ticker) ticker.textContent='● '+baseToday.toLocaleString()+' solving today · '+baseNow+' now';
-  }
-  viralTick(); setInterval(viralTick, 7000);
-  // deep link team from ?team=
+ }
+ if(c){
+  resize();
+  window.addEventListener('resize', function(){ resize(); buildPoints(); }, {passive:true});
+  c.addEventListener('mousemove', onMove); c.addEventListener('mouseleave', onLeave); c.addEventListener('touchmove', onMove, {passive:true}); c.addEventListener('touchend', onLeave);
+  loadReal();
+  setTimeout(function(){ if(rodmanPt && wembyPt && window.VHMtnn && window.VHMtnn.sim){ try{ simPct=(window.VHMtnn.sim(rodmanIdx,wembyIdx)*100).toFixed(1); updateFact(); draw(); }catch(e){} } }, 1800);
+ }
+ function loadCity(){ if(lowEnd||window.__VH_LOW_END){ if(cityCanvas)cityCanvas.style.display='none'; var bg=document.querySelector('.embed-hero__bg'); if(bg)bg.style.display='none'; return; } if(!cityCanvas)return; var s=document.createElement('script'); s.src='assets/city-intro.js'; s.defer=true; s.onload=function(){var b=document.querySelector('.embed-hero__bg'); if(b)b.style.opacity='0.42';}; document.head.appendChild(s);}
+ var heroWrap=document.getElementById('hero-wrap');
+ if(heroWrap&&'IntersectionObserver' in window){var ioHero=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){loadCity(); ioHero.disconnect();}});},{threshold:0.01});ioHero.observe(heroWrap);} else setTimeout(loadCity,900);
+ async function exLite(){
+  if(!window.InsightEngine) return;
   try{
-    var q=new URLSearchParams(location.search);
-    var team=q.get('team'); if(team){ localStorage.setItem('vectorHoops.favoriteTeam', team.toUpperCase()); }
+   await window.InsightEngine.initCritical(); var list=window.InsightEngine.listPlayers(); if(!list.length)throw 0; var rIdx=Math.floor(Math.random()*list.length); var pl=window.InsightEngine.getPlayer(rIdx);
+   if('requestIdleCallback' in window){
+    requestIdleCallback(function(){window.InsightEngine.initFull().then(function(){
+     try{var era=window.InsightEngine.eraContext(rIdx),arch=window.InsightEngine.archetypeStory(rIdx),place=window.InsightEngine.explainPlacement(rIdx),cross=window.InsightEngine.findCrossEraComps(rIdx,{k:2,crossEraOnly:true,refSeason:pl.season});
+     var closeEl=document.getElementById('ex-close'); if(closeEl) closeEl.innerHTML='<b>48-d cosine</b> '+(arch.gameClusterName||'cluster')+' · '+(era.mostDistinctList?era.mostDistinctList.slice(0,2).map(function(f){return f.feature+' '+(f.z>0?'+':'')+f.z.toFixed(1)+'σ';}).join(' · '):'')+'<br><b>PC</b> '+(place?place.contributions[0].desc:'paint↔perim');
+     var twinEl=document.getElementById('ex-twin'); if(twinEl) twinEl.textContent=cross.map(function(c){return c.name+' '+c.season+' '+c.sim_pct+'%';}).join(' · ')+' · '+(era.learnings?era.learnings[0]:'');}catch(e){}
+    });},{timeout:3000});
+   }
   }catch(e){}
+ }
+ setTimeout(exLite,900);
 })();
 </script>
-</body>
-</html>
+<script>
+// PWA v8 registration + update toast
+(function(){if(!('serviceWorker' in navigator))return;var el=document.createElement('div');el.id='vh-update-toast';el.style.cssText='position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:99;display:none;justify-content:space-between;align-items:center;gap:10px;background:#1A150F;color:#FFFEF7;border:2.2px solid #FFFEF7;border-radius:12px;box-shadow:4px 4px 0 #1A150F;padding:10px 12px;font-family:ui-monospace,monospace;font-size:11px;';el.innerHTML='<span>🟢 Update — Daily+Lab v8 &lt;2MB core</span><button id="vh-update-btn" style="min-height:36px;border:2px solid #FFFEF7;background:#F0E442;color:#1A150F;border-radius:999px;padding:0 12px;font-weight:900;font-family:ui-monospace;cursor:pointer;">Update →</button>';document.body.appendChild(el);function showToast(reg){el.style.display='flex';var btn=document.getElementById('vh-update-btn');if(btn)btn.onclick=function(){if(reg&&reg.waiting)reg.waiting.postMessage({type:'SKIP_WAITING'});else location.reload();};}var reloading=false;navigator.serviceWorker.addEventListener('controllerchange',function(){if(reloading)return;reloading=true;location.reload();});navigator.serviceWorker.register('/sw.js',{scope:'/'}).then(function(reg){if(reg.waiting)showToast(reg);reg.addEventListener('updatefound',function(){var nw=reg.installing;if(!nw)return;nw.addEventListener('statechange',function(){if(nw.state==='installed'&&navigator.serviceWorker.controller)showToast(reg);});});}).catch(function(){});})();
+</script>
+</body></html>

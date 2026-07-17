@@ -1,96 +1,108 @@
-/* delight.js — confetti + haptics + spring for best-app-ever feel
- * Linear-level polish: team color confetti on lock, spring 300/20 for cards
- * Solo personal project
+/* delight.js vNext — confetti Web Animations, streak flame, haptics 10
+ * 100M DAU polish: 80 particles max, respects prefers-reduced-motion, cleanup
+ * Solo personal project footer required.
  */
 (function(){
+  const REDUCED = typeof window!=='undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const OKABE = ['#D55E00','#0072B2','#009E73','#E69F00','#CC79A7','#56B4E9','#F0E442','#000000'];
+
   function spawnConfetti(teamPrimary){
+    if(REDUCED){
+      try{ if(navigator.vibrate) navigator.vibrate(10); }catch{}
+      return;
+    }
     try{
-      var c = document.createElement('canvas');
-      c.style.cssText='position:fixed; inset:0; pointer-events:none; z-index:100; width:100vw; height:100vh;';
-      document.body.appendChild(c);
-      var ctx = c.getContext('2d');
-      var W = c.width = window.innerWidth;
-      var H = c.height = window.innerHeight;
-      var colors = [teamPrimary||'#F0E442', '#0072B2', '#D55E00', '#fff', '#111'];
-      var pieces = [];
-      for(var i=0;i<42;i++){
-        pieces.push({
-          x: W/2 + (Math.random()-0.5)*120,
-          y: H*0.38 + (Math.random()-0.5)*40,
-          vx: (Math.random()-0.5)*12,
-          vy: -6 - Math.random()*8,
-          rot: Math.random()*Math.PI*2,
-          vr: (Math.random()-0.5)*0.28,
-          size: 6 + Math.random()*7,
-          color: colors[i%colors.length],
-          shape: i%3===0 ? 'circle' : (i%3===1 ? 'rect' : 'tri')
-        });
+      const container = document.createElement('div');
+      container.setAttribute('aria-hidden','true');
+      container.style.cssText='position:fixed; inset:0; pointer-events:none; z-index:200; overflow:hidden;';
+      document.body.appendChild(container);
+      const colors = [teamPrimary||'#F0E442', '#0072B2','#D55E00','#FFFEF7','#1A150F','#56B4E9','#009E73'];
+      const count = Math.min(80, Math.max(36, Math.floor(window.innerWidth/12)));
+      const cx = window.innerWidth*0.5;
+      const cy = window.innerHeight*0.38;
+      const particles=[];
+      for(let i=0;i<count;i++){
+        const el=document.createElement('div');
+        const size = 5 + Math.random()*9;
+        const isDot = i%3===0;
+        el.style.cssText=`position:absolute; left:${cx}px; top:${cy}px; width:${size}px; height:${isDot?size:size*0.62}px; background:${colors[i%colors.length]}; border:${isDot?'1.2px solid #1A150F':'1.5px solid #1A150F'}; border-radius:${isDot?'999px':'3px'}; will-change:transform,opacity;`;
+        container.appendChild(el);
+        particles.push(el);
       }
-      var start = performance.now();
-      function frame(now){
-        var t = (now-start)/1000;
-        ctx.clearRect(0,0,W,H);
-        var alive=false;
-        pieces.forEach(function(p){
-          p.x+=p.vx;
-          p.y+=p.vy;
-          p.vy+=0.22; // gravity
-          p.rot+=p.vr;
-          if(p.y < H+20) alive=true;
-          ctx.save();
-          ctx.translate(p.x, p.y);
-          ctx.rotate(p.rot);
-          ctx.fillStyle=p.color;
-          if(p.shape==='circle'){
-            ctx.beginPath(); ctx.arc(0,0,p.size/2,0,Math.PI*2); ctx.fill();
-          } else if(p.shape==='rect'){
-            ctx.fillRect(-p.size/2, -p.size/2, p.size, p.size*0.6);
-            ctx.strokeStyle='#111'; ctx.lineWidth=1; ctx.strokeRect(-p.size/2, -p.size/2, p.size, p.size*0.6);
-          } else {
-            ctx.beginPath(); ctx.moveTo(0,-p.size/2); ctx.lineTo(p.size/2,p.size/2); ctx.lineTo(-p.size/2,p.size/2); ctx.closePath(); ctx.fill(); ctx.strokeStyle='#111'; ctx.lineWidth=1; ctx.stroke();
-          }
-          ctx.restore();
-        });
-        if(alive && t<3.2) requestAnimationFrame(frame);
-        else c.remove();
-      }
-      requestAnimationFrame(frame);
-    }catch(e){}
+      // Web Animations per particle
+      const anims = particles.map((el, i)=>{
+        const angle = (Math.random()-0.5)*Math.PI*0.9 + -Math.PI*0.5;
+        const dist = 80 + Math.random()* Math.max(180, window.innerWidth*0.35);
+        const dx = Math.cos(angle)*dist + (Math.random()-0.5)*60;
+        const dy = Math.sin(angle)*dist + (Math.random()*80+60) + window.innerHeight*0.1;
+        const rot = (Math.random()-0.5)*720;
+        const scaleEnd = 0.8 + Math.random()*0.6;
+        const dur = 900 + Math.random()*900;
+        const delay = Math.random()*90;
+        const keyframes = [
+          { transform:`translate3d(0,0,0) rotate(0deg) scale(1)`, opacity:1 },
+          { transform:`translate3d(${dx*0.55}px, ${dy*0.32}px,0) rotate(${rot*0.55}deg) scale(${1.05})`, opacity:1, offset:0.6 },
+          { transform:`translate3d(${dx}px, ${dy}px,0) rotate(${rot}deg) scale(${scaleEnd})`, opacity:0 }
+        ];
+        return el.animate(keyframes, { duration:dur, delay, easing:'cubic-bezier(.22,1,.36,1)', fill:'forwards' });
+      });
+      // cleanup
+      const cleanup = ()=>{
+        try{ container.remove(); }catch{}
+      };
+      Promise.all(anims.map(a=> a.finished.catch(()=>{}))).then(cleanup);
+      setTimeout(cleanup, 2800);
+      if(navigator.vibrate) navigator.vibrate(10);
+    }catch(e){
+      try{ if(navigator.vibrate) navigator.vibrate(10);}catch{}
+    }
+  }
+
+  function ensureStyles(){
+    if(document.getElementById('vh-delight-styles')) return;
+    const style=document.createElement('style');
+    style.id='vh-delight-styles';
+    style.textContent=`
+      .streak-flame{ display:inline-flex; gap:1px; align-items:center; }
+      .streak-flame i{ font-style:normal; display:inline-block; animation:vh-flame-flicker .85s ease-in-out infinite; }
+      .streak-flame i:nth-child(2){ animation-delay:.12s } .streak-flame i:nth-child(3){ animation-delay:.22s }
+      @keyframes vh-flame-flicker{ 0%,100%{ transform:translateY(0) scale(1) rotate(0deg); filter:brightness(1)} 50%{ transform:translateY(-1.2px) scale(1.15) rotate(1.5deg); filter:brightness(1.12)} }
+      @media(prefers-reduced-motion:reduce){ .streak-flame i{ animation:none !important } }
+      .vh-card{ transition:transform .18s cubic-bezier(.22,1,.36,1), box-shadow .18s ease; will-change:transform; }
+      .vh-card:hover{ transform:translateY(-2px) rotate(.2deg); }
+      .vh-card:active{ transform:translateY(1px) scale(.985); }
+      @media(prefers-reduced-motion:reduce){ .vh-card{ transition:none } }
+      .tile{ transition:transform .18s cubic-bezier(.22,1,.36,1), box-shadow .18s ease; }
+    `;
+    document.head.appendChild(style);
   }
 
   function init(){
-    // lock confetti
+    ensureStyles();
     document.addEventListener('click', function(e){
-      var lock = e.target.closest && e.target.closest('#city-intro-lock');
+      const lock = e.target.closest && e.target.closest('#city-intro-lock, [data-confetti="team"]');
       if(lock){
-        var isLocking = !lock.classList.contains('is-locked'); // will become locked after click handler runs? Check current state inverted
-        // delay to get team color
         setTimeout(function(){
           try{
-            var abbr = localStorage.getItem('vectorHoops.favoriteTeam') || 'CHI';
-            var teamEls = document.querySelectorAll('.city-pill');
-            var primary = null;
-            teamEls.forEach(function(el){ if(el.dataset.abbr===abbr && el.dataset.color) primary=el.dataset.color; });
+            let primary = null;
+            try{
+              const fav = localStorage.getItem('vectorHoops.favoriteTeam') || 'CHI';
+              const pills = document.querySelectorAll('.city-pill');
+              pills.forEach(function(el){ if(el.dataset.abbr===fav && el.dataset.color) primary=el.dataset.color; });
+            }catch{}
             spawnConfetti(primary||'#F0E442');
-            if(navigator.vibrate) navigator.vibrate([16,24,16]);
-          }catch(err){}
-        }, 120);
+          }catch{}
+        }, 90);
       }
     });
-
-    // equation shuffle confetti tickle small
-    window.addEventListener('vh:equation-shuffle', function(){
-      try{ if(navigator.vibrate) navigator.vibrate(10); }catch(e){}
-    });
-
-    // spring animation for cards on hover / tap (reduce CLS)
-    var style=document.createElement('style');
-    style.textContent='.vh-card{transition:transform .18s cubic-bezier(.22,1,.36,1), box-shadow .18s; will-change:transform;} .vh-card:hover{transform:translateY(-2px) rotate(0.3deg);} .vh-card:active{transform:translateY(1px) scale(.98);} @media(prefers-reduced-motion:reduce){.vh-card{transition:none}}';
-    document.head.appendChild(style);
+    // custom events
+    window.addEventListener('vh:win', function(ev){ try{ spawnConfetti(ev.detail && ev.detail.color || OKABE[0]); }catch{} });
+    window.addEventListener('vh:equation-shuffle', function(){ try{ if(navigator.vibrate) navigator.vibrate(10);}catch{} });
   }
 
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', init);
   else init();
 
-  window.VHDelight = {spawnConfetti:spawnConfetti};
+  window.VHDelight = { spawnConfetti: spawnConfetti };
 })();
+// Solo personal project, no connection to employer, built with public/free-tier only

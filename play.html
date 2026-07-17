@@ -1,818 +1,661 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=5">
-<title>Play — Vector Hoops</title>
-<link rel="canonical" href="https://hoops.dumbmodel.com/play">
-<meta property="og:url" content="https://hoops.dumbmodel.com/play">
-<meta name="description" content="9 era-honest MTNN games — Guess The Player daily (main), Chimera HARD fusion, Deadline moves, Fader vs Finisher, Career Arc ordering, Best Teammate chemistry, What-If Lab vectors, Pivot role upside, Era Twin doubles. 12,966 seasons, 48-d.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Ctext%20y%3D%22.9em%22%20font-size%3D%2290%22%3E%26%23127936%3B%3C%2Ftext%3E%3C%2Fsvg%3E">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Play — Vector Hoops | Guess The Player daily · 9 MTNN Games">
-<meta property="og:description" content="Daily Guess The Player — 6 tries, mystery NBA season. Hard? Chimera fusion available ?mode=chimera_hard. 9 MTNN games, 12,966 seasons.">
-<meta property="og:image" content="https://hoops.dumbmodel.com/assets/og-embed.png">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="theme-color" content="#1A150F" />
-<link rel="manifest" href="/manifest.json" />
-<link rel="stylesheet" href="assets/hoops.css">
-<link rel="stylesheet" href="assets/shell.css">
-<link rel="stylesheet" href="assets/responsive.css">
-<script src="https://unpkg.com/posecode-embed@0.1.0/dist/posecode-embed.js"></script>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<meta property="og:title" content="Play Vector Hoops — Daily + Lab" /><meta property="og:description" content="Wordle for NBA — 48-d cosine, skill deltas, era σ, archetype story, cross-era twin + Lab fusion A+B=C impossible before." /><meta property="og:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png" /><meta property="og:image:width" content="1200" /><meta property="og:image:height" content="630" /><meta name="twitter:card" content="summary_large_image" /><title>Play — Daily Guess + Insight + Lab Fusion — Vector Hoops</title>
+<meta name="description" content="Daily guess + insight — 6 tries, 48-d cosine, era-z deltas, archetype bridge, cross-era comps. Lab A+B=C fusion insights. 12,966 seasons as sky."/>
+<meta name="theme-color" content="#1A150F"/>
+<link rel="manifest" href="/manifest.json"/>
+<link rel="preload" href="assets/vectors_search_lite.json" as="fetch" crossorigin>
+<link rel="preload" href="assets/season_norms.json" as="fetch" crossorigin>
+<link rel="stylesheet" href="assets/shell.css"/>
+<link rel="stylesheet" href="assets/responsive.css"/>
+<link rel="stylesheet" href="assets/hoops.css"/>
+<link rel="stylesheet" href="assets/final-qa.css"/>
 <style>
-/* === Vector Hoops Play vNext — best-app-ever polish ===
-   readable
-   readable at all sizes, 56px mobile tabs safe-area, Sunni SCAD bar
-   Solo disclaimer preserved
-*/
-:root{
-  --ink: #111;
-  --amber: #E69F00;
-  --sky: #56B4E9;
-  --green: #009E73;
-  --yellow: #F0E442;
-  --blue: #0072B2;
-  --verm: #D55E00;
-  --purple: #CC79A7;
-  --paper: #fdfcf5;
-}
-
-/* readability upgrade */
-body{font-size:18px; line-height:1.65; -webkit-font-smoothing:antialiased; letter-spacing:-0.01em}
-.vh-prompt__text{font-size:18px; line-height:1.65}
-.vh-card{border-radius:16px; box-shadow:6px 6px 0 var(--ink); transition:transform .12s ease, box-shadow .12s ease}
-
-/* header upgrade */
-.vh-header--upgraded{
-  display:grid;
-  grid-template-columns:1fr;
-  gap:10px;
-  padding:12px var(--page-gutter);
-  padding-top:calc(10px + env(safe-area-inset-top));
-  background:linear-gradient(180deg, #fdfcf5 0%, #fafaf8 100%);
-  border-bottom:3px solid var(--ink);
-}
-.vh-header__toprow{display:flex; align-items:flex-start; justify-content:space-between; gap:12px; flex-wrap:wrap}
-.vh-header__brandstack{display:flex; flex-direction:column; gap:2px; min-width:0}
-.vh-logo{font-size:19px; letter-spacing:0.06em}
-.vh-tagline{font-size:12.5px; font-weight:700; color:var(--ink-soft); max-width:32ch; line-height:1.35}
-.vh-header__metarow{display:flex; align-items:center; gap:10px; flex-wrap:wrap}
-.vh-identity-chip, .vh-favorite-chip{
-  display:inline-flex; align-items:center; gap:6px;
-  font-family:var(--mono); font-size:11px; font-weight:700;
-  background:#fff; border:1.5px solid var(--ink); border-radius:999px;
-  padding:6px 10px; box-shadow:2px 2px 0 var(--ink); white-space:nowrap
-}
-.vh-identity-chip b, .vh-favorite-chip b{color:var(--blue)}
-.vh-header__poolstats{display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-left:auto}
-.vh-pool-toggle{border-radius:999px; overflow:hidden; border-width:2px}
-.vh-pool-toggle .vh-subtab{font-size:10px; min-height:36px; padding:6px 12px; font-weight:800; letter-spacing:0.06em}
-.vh-pool-toggle .vh-subtab.is-active{background:var(--ink); color:#fff; box-shadow:inset 0 0 0 1px #fff}
-.vh-stats{gap:0; border-width:2.5px; box-shadow:3px 3px 0 var(--ink)}
-.vh-stat{padding:6px 12px}
-.vh-stat__num{font-size:18px}
-.vh-stat__label{font-size:9.5px}
-.vh-help-btn{width:44px; height:44px; min-width:44px; border-width:2.5px; box-shadow:3px 3px 0 var(--ink); font-size:15px}
-.vh-help-btn:hover{transform:translate(-1px,-1px); box-shadow:4px 4px 0 var(--ink)}
-
-/* tooltip for pool toggle */
-.vh-pool-toggle[title]{position:relative}
-.vh-pool-toggle::after{
-  content: attr(title);
-  position:absolute; top:100%; left:50%; transform:translateX(-50%);
-  margin-top:8px; white-space:nowrap; background:var(--ink); color:#fff;
-  font-family:var(--mono); font-size:10px; padding:6px 8px; border-radius:6px;
-  opacity:0; pointer-events:none; transition:opacity .15s; z-index:30
-}
-.vh-pool-toggle:hover::after{opacity:1}
-
-/* tabs — 56px touch, safe-area */
-#mode-tabs{
-  display:flex;
-  gap:0;
-  border:2.5px solid var(--ink);
-  border-radius:14px;
-  overflow:auto;
-  scrollbar-width:none;
-  box-shadow:4px 4px 0 var(--ink);
-  background:#fff;
-  -webkit-overflow-scrolling:touch;
-}
-#mode-tabs::-webkit-scrollbar{display:none}
-.vh-tab{
-  flex:1 1 0;
-  min-width:72px;
-  min-height:56px;
-  display:flex; flex-direction:column; align-items:center; justify-content:center;
-  gap:3px;
-  padding:7px 6px;
-  font-family:var(--mono);
-  font-size:10.5px; font-weight:800;
-  letter-spacing:0.05em;
-  text-transform:uppercase;
-  color:var(--ink-soft);
-  background:#fff;
-  border:none;
-  position:relative;
-  transition:all .12s ease;
-  white-space:nowrap;
-}
-@media (min-width:720px){
-  .vh-tab{flex-direction:row; gap:7px; min-height:52px; font-size:11.5px; padding:10px 14px; min-width:92px}
-}
-.vh-tab + .vh-tab{border-left:2.5px solid var(--ink)}
-.vh-tab__icon{
-  display:block; font-size:17px; line-height:1;
-  width:24px; height:24px; display:flex; align-items:center; justify-content:center;
-  border-radius:6px; border:1.5px solid transparent;
-}
-.vh-tab.is-active{color:#fff; background:var(--ink)}
-.vh-tab.is-active .vh-tab__icon{border-color:rgba(255,255,255,.2)}
-
-/* per-mode colors */
-#tab-chimera{--tab-c:var(--verm)} #tab-deadline{--tab-c:var(--blue)} #tab-fader{--tab-c:var(--sky)} #tab-arc{--tab-c:var(--amber)} #tab-chem{--tab-c:var(--green)} #tab-whatif{--tab-c:var(--purple)} #tab-pivot{--tab-c:var(--yellow)} #tab-twin{--tab-c:var(--black)}
-#tab-chimera.is-active{background:var(--verm); border-color:var(--ink)}
-#tab-deadline.is-active{background:var(--blue)}
-#tab-fader.is-active{background:var(--sky); color:var(--ink)}
-#tab-arc.is-active{background:var(--amber); color:var(--ink)}
-#tab-chem.is-active{background:var(--green)}
-#tab-whatif.is-active{background:var(--purple)}
-#tab-pivot.is-active{background:var(--yellow); color:var(--ink)}
-#tab-twin.is-active{background:var(--black)}
-.vh-tab.is-active::after{
-  content:"";
-  position:absolute; bottom:0; left:0; right:0; height:4px; background:var(--tab-c);
-  opacity:0.9;
-}
-
-/* bottom tab bar on mobile — 56px + safe area */
-@media (max-width:719px){
-  #mode-tabs{
-    position:fixed; left:0; right:0; bottom:0; margin:0; width:100%;
-    border-width:2.5px 0 0 0; border-radius:0; box-shadow:0 -3px 0 var(--ink);
-    z-index:60; padding-bottom:env(safe-area-inset-bottom,0); background:#fdfcf5;
-    border-radius:0;
-  }
-  .vh-tab{min-width:68px; min-height:56px; padding:8px 4px; font-size:9px; gap:2px}
-  .vh-tab__icon{font-size:16px; width:22px; height:22px}
-  main#app{padding-bottom:calc(68px + env(safe-area-inset-bottom))}
-  .vh-footer, .site-footer{padding-bottom:calc(68px + env(safe-area-inset-bottom))}
-  #app-header .vh-logo{display:block; font-size:16px}
-}
-
-/* Chimera equation polished */
-.vh-equation{gap:10px; margin:8px 0 14px}
-.vh-equation__tile{border-width:2.5px; border-radius:14px; padding:10px 8px; box-shadow:3px 3px 0 var(--ink); background:#fff}
-.vh-equation__tile--target{background:var(--ink); color:#fff; box-shadow:4px 4px 0 var(--ink)}
-.vh-equation__tile-mark{font-size:32px; color:var(--verm)}
-.vh-equation__tile-name{font-size:13px; font-weight:800}
-.vh-equation-chip{border-width:2.5px; border-radius:999px; box-shadow:3px 3px 0 var(--ink); font-size:12px}
-
-/* practice banner — doesn't touch daily streak clarity */
-.vh-practice-banner{
-  background:linear-gradient(135deg, #fff8ee 0%, #f0f7ff 100%);
-  border:2.5px dashed var(--amber);
-  border-radius:14px; padding:10px 14px;
-  display:flex; align-items:center; justify-content:space-between; gap:10px;
-  box-shadow:3px 3px 0 var(--ink);
-}
-.vh-practice-banner__text{font-size:11px; letter-spacing:0.06em; color:#5a3e00}
-
-/* subtabs — modern pill style */
-.vh-subtabs{
-  border-radius:999px; border-width:2.5px; box-shadow:3px 3px 0 var(--ink); background:#fff;
-  overflow:auto; scrollbar-width:none; -webkit-overflow-scrolling:touch
-}
-.vh-subtab{min-height:40px; min-width:44px; padding:8px 14px; font-size:11px; font-weight:800; transition:all .12s}
-.vh-subtab.is-active{background:var(--verm); color:#000; border-color:var(--ink)}
-#pool-toggle-modern.is-active, #pool-toggle-all.is-active{background:var(--ink); color:#fff}
-
-/* input polish — 16px anti-zoom, 44px touch */
-.vh-input{font-size:16px; min-height:48px; border-width:2.5px; border-radius:12px; box-shadow:2px 2px 0 var(--ink); transition:all .12s}
-.vh-input:focus{transform:translate(-1px,-1px); box-shadow:4px 4px 0 var(--blue); border-color:var(--blue)}
-.vh-input--search{padding-left:38px; padding-right:34px}
-.vh-autocomplete__glyph{left:14px; font-size:16px}
-.vh-btn{border-width:2.5px; border-radius:12px; min-height:48px; font-size:13px; letter-spacing:0.05em; box-shadow:3px 3px 0 var(--ink); padding:12px 20px}
-.vh-btn--primary{background:var(--ink); color:#fff}
-.vh-btn--primary:hover:not(:disabled){transform:translate(-1.5px,-1.5px); box-shadow:5px 5px 0 var(--ink)}
-
-/* clue cards — more depth */
-.vh-clue-card{border-width:2.5px; border-radius:16px; padding:14px 16px; box-shadow:5px 5px 0 var(--ink); background:#fff}
-.vh-clue-zone{border-width:1.5px; border-radius:12px; padding:10px 12px; background:var(--paper); transition:border-color .12s}
-.vh-clue-zone:hover{border-color:var(--ink)}
-.vh-clue-zone__sentence{font-size:14px; line-height:1.55; font-weight:700}
-.vh-hint-chip{border-width:1.5px; border-radius:999px; padding:5px 10px; font-size:10.5px; box-shadow:1px 1px 0 var(--ink)}
-
-/* triangulation + courts */
-.vh-triangulation{border-radius:12px; background:var(--paper); padding:10px 12px; border:1.5px solid var(--hairline)}
-.vh-court{border-width:2.5px; border-radius:14px; box-shadow:3px 3px 0 var(--ink)}
-.vh-breakdown{border-radius:12px; overflow:hidden; border:1.5px solid var(--hairline); padding:6px; background:#fff}
-
-/* warmth */
-.vh-warmth{border-radius:12px; background:var(--paper)}
-.vh-warmth__bar{border-radius:3px}
-
-/* deadline/fader etc polished */
-.vh-deadline-card, .vh-pivot-card, .vh-twin-card, .vh-arc-card-wrap, .vh-whatif-report{
-  border-width:2.5px; border-radius:16px; box-shadow:5px 5px 0 var(--ink); background:#fff;
-  padding:16px 18px;
-}
-.vh-deadline__prompt{font-size:18px; line-height:1.55; font-weight:700}
-.vh-arc-grid{gap:12px}
-.vh-arc-card{border-width:2.5px; border-radius:14px; box-shadow:3px 3px 0 var(--ink)}
-.vh-chem-option{border-width:2.5px; border-radius:12px; min-height:48px; box-shadow:2px 2px 0 var(--ink); transition:all .12s}
-.vh-pivot-row{border-width:2.5px; border-radius:12px; min-height:48px; box-shadow:2px 2px 0 var(--ink)}
-
-/* empty states */
-.vh-guesslist__empty, .vh-loading{
-  font-family:var(--sans); font-size:15px; font-weight:600; color:var(--ink-soft);
-  padding:28px 18px; text-align:center; border:2px dashed var(--hairline); border-radius:14px; background:var(--paper)
-}
-
-/* confetti */
-#confetti-canvas{position:fixed; inset:0; pointer-events:none; z-index:200; width:100%; height:100%}
-#xp-toast{
-  position:fixed; left:50%; top:18%; transform:translateX(-50%) translateY(-20px);
-  background:var(--ink); color:#fff; font-family:var(--mono); font-weight:800; font-size:13px;
-  padding:10px 16px; border-radius:999px; box-shadow:4px 4px 0 var(--amber);
-  opacity:0; pointer-events:none; transition:all .35s cubic-bezier(.2,.8,.2,1); z-index:210;
-  letter-spacing:0.04em
-}
-#xp-toast.is-visible{opacity:1; transform:translateX(-50%) translateY(0)}
-/* polished — header branding small dot */
-.vh-logo::after{content:"●"; color:var(--verm); margin-left:4px; font-size:12px; vertical-align:middle}
-
-/* scrim improved */
-.vh-modal-backdrop, .vh-sheet-backdrop{background:rgba(17,17,17,.6); backdrop-filter:blur(3px)}
-.vh-modal, .vh-sheet{border-width:2.5px; border-radius:18px; box-shadow:8px 8px 0 var(--ink)}
-.vh-sheet__handle{background:var(--ink); opacity:.15; width:40px}
-
-/* footer solo */
-.site-footer{border-top:3px solid var(--ink); background:#fdfcf5}
-.site-footer__attribution{font-family:var(--mono); font-size:11px; line-height:1.5; color:var(--ink-soft)}
-.site-footer__attribution a{color:var(--ink); font-weight:700}
-
-/* === MOBILE OVERFLOW FIX v2 — 320/375/414 safe === */
-html,body{overflow-x:hidden; max-width:100%;}
-*,*::before,*::after{box-sizing:border-box;}
-img,svg,canvas{max-width:100%;}
-#app, .play-main, .vh-header--upgraded, .vh-card, .vh-clue-card{ min-width:0; max-width:100%; box-sizing:border-box; }
-.vh-header--upgraded{overflow-x:clip;}
-@media(max-width:719px){
-  .vh-header__toprow,
-  .vh-header__metarow,
-  .vh-header--upgraded__toprow{
-    min-width:0; max-width:100%; flex-wrap:wrap;
-  }
-  .vh-pool-toggle[title]::after{
-    display:none !important;
-  }
-  .vh-pool-toggle{
-    max-width:100%;
-  }
-  body{
-    padding-bottom:0;
-  }
-  #mode-tabs{
-    width:100%; max-width:100vw; min-width:0;
-    left:0; right:0;
-    box-sizing:border-box;
-  }
-  #mode-tabs .vh-tab{
-    min-width:62px; /* allow 8 tabs to scroll, not wrap */
-  }
-  .vh-equation{
-    flex-wrap:wrap;
-    gap:8px;
-    justify-content:center;
-  }
-  .vh-equation__tile{
-    width:clamp(88px,28vw,132px);
-    min-width:0;
-  }
-  .vh-input,.vh-btn{
-    max-width:100%;
-    min-width:0;
-  }
-}
-.vh-card,.vh-result,.vh-clue-zone{
-  width:100%; max-width:100%;
-}
-.site-footer{
-  padding-bottom:calc(88px + env(safe-area-inset-bottom));
-}
-
+:root{--paper:#FFFEF7;--ink:#1A150F;--blue:#0072B2;--verm:#D55E00;--sky:#56B4E9;--yellow:#F0E442;--green:#009E73;--mag:#CC79A7;--orange:#E69F00;--radius:12px;--shadow:4px 4px 0 var(--ink);}
+html{font-size:18px;line-height:1.65}
+body{background:var(--paper);color:var(--ink);margin:0;overflow-x:hidden}
+button,.btn,.tile{min-height:44px;min-width:44px}
+.input{font-size:16px}
+.hd{font-family:"Architects Daughter",ui-monospace,monospace}
+.small-mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase}
+.card{border:2px solid var(--ink);border-radius:var(--radius);background:#fff;box-shadow:var(--shadow);padding:14px}
+.btn{appearance:none;border:2px solid var(--ink);border-radius:12px;min-height:44px;padding:10px 14px;font-weight:800;font-family:ui-monospace;text-transform:uppercase;letter-spacing:.04em;cursor:pointer;box-shadow:2px 2px 0 var(--ink);display:inline-flex;align-items:center;gap:8px;text-decoration:none}
+.btn:active{transform:translate(1px,1px);box-shadow:1px 1px 0 var(--ink)}
+.btn-primary{background:var(--ink);color:#fff}
+.btn-accent{background:var(--yellow);color:var(--ink)}
+.input{width:100%;min-height:48px;border:2.2px solid var(--ink);border-radius:12px;padding:0 12px;font-size:16px;font-weight:600;box-shadow:2px 2px 0 var(--ink)}
+.input:focus{outline:3px solid var(--blue);outline-offset:2px}
+.main{max-width:850px;margin:0 auto;padding:12px clamp(12px,3vw,20px) calc(84px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:12px}
+.header-line{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between}
+.pill{border:1.6px solid var(--ink);border-radius:999px;padding:4px 10px;background:#fff;font-family:ui-monospace;font-size:11px;font-weight:800;box-shadow:1.5px 1.5px 0 var(--ink)}
+.tile{width:48px;height:48px;min-width:48px;min-height:48px;border:2px solid var(--ink);border-radius:10px;display:grid;place-items:center;font-weight:900;background:#fff;box-shadow:2px 2px 0 var(--ink);font-size:20px}
+.tile.target{background:var(--ink);color:#fff;width:60px}
+.op{font-weight:900;font-size:20px}
+.eq-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.guess-row{display:flex;flex-direction:column;gap:8px;border:1.5px dashed #ccc;border-radius:10px;padding:10px;margin-top:8px;background:#FFFEF7}
+.insight-bullets{margin:6px 0 0 18px;font-size:13px;line-height:1.45}
+.suggest{position:relative}
+.suggest ul{position:absolute;z-index:20;left:0;right:0;top:52px;background:#fff;border:2px solid var(--ink);border-radius:12px;box-shadow:var(--shadow);list-style:none;margin:0;padding:6px;max-height:280px;overflow:auto}
+.suggest li{padding:8px 10px;border-radius:8px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.suggest li:hover,.suggest li.is-active{background:var(--yellow)}
+.bottom-tabs{position:fixed;left:0;right:0;bottom:0;height:calc(56px + env(safe-area-inset-bottom));padding-bottom:env(safe-area-inset-bottom);background:#FFFEF7;border-top:2.5px solid var(--ink);box-shadow:0 -2px 0 var(--ink);display:flex;z-index:50}
+.bottom-tabs button{flex:1;border:none;background:#fff;font-family:ui-monospace;font-weight:900;font-size:11px;letter-spacing:.06em;text-transform:uppercase;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;min-height:56px}
+.bottom-tabs button.is-active{background:var(--ink);color:#fff}
+.bottom-tabs button span.i{font-size:20px;line-height:1}
+.axis-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px}
+.fusion-card{display:grid;grid-template-columns:1fr;gap:10px}
+@media(min-width:600px){.fusion-card{grid-template-columns:1fr 1fr}}
+.skill-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;font-size:11px;font-family:ui-monospace}
+.skill-cell{border:1.5px solid var(--ink);border-radius:8px;padding:6px 8px;background:#fff}
+.bar{height:6px;border-radius:999px;background:#eee;overflow:hidden;margin-top:4px}
+.bar>i{display:block;height:100%;background:var(--blue)}
+.sheet{position:fixed;left:0;right:0;bottom:0;max-height:82vh;background:#fff;border-top:2.5px solid var(--ink);border-radius:18px 18px 0 0;box-shadow:0 -8px 0 var(--ink);padding:12px 14px calc(14px + env(safe-area-inset-bottom));overflow:auto;z-index:60}
+.hidden{display:none!important}
 </style>
+<link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap" rel="stylesheet">
 </head>
 <body>
+<noscript>
+  <div style="max-width:850px;margin:0 auto;padding:16px"><div class="card" role="alert" style="border-color:#D55E00">JavaScript required — Vector Hoops Daily Guess + Insight + Lab Fusion needs JS to load 12,966 seasons 48-d embeddings offline. <a href="/offline.html">Offline mode →</a> works after first visit. Solo personal project, no connection to employer.</div></div>
+</noscript>
 
-<canvas id="confetti-canvas" width="1" height="1" aria-hidden="true"></canvas>
-<div id="xp-toast" role="status" aria-live="polite"></div>
-
-<nav class="site-nav site-nav--static" data-active="/play" aria-label="Vector Hoops site"></nav>
-
-<div class="vh-challenge-banner" id="challenge-banner" hidden role="status">
-  <span id="challenge-banner-text"></span>
-</div>
-
-<header class="vh-header vh-header--upgraded" id="app-header">
-  <div class="vh-header__toprow">
-    <div class="vh-header__brandstack">
-      <span class="vh-logo">VECTOR<span class="vh-logo__accent">HOOPS</span></span>
-      <span class="vh-tagline" id="tagline">Whose season is the perfect combo of two other players?</span>
-      <div class="vh-header__metarow">
-        <span class="vh-identity-chip" id="identity-chip" title="anonymous session — no account, device only, random id for public board">You play as <b id="identity-name">—</b></span>
-        <span class="vh-favorite-chip" id="favorite-team-chip" hidden title="favorite NBA team — device only, never sent">Rooting for <b id="favorite-team-label">—</b></span>
-      </div>
-    </div>
-    <div class="vh-header__poolstats">
-      <div class="vh-subtabs vh-pool-toggle" id="pool-toggle" role="tablist" aria-label="Player pool" title="All-time = every season 1996→2026 era-honest per-100 sigmas. Modern = only players active in current NBA season. Separate dailies, separate streaks. Free Play filters to active too."><button class="vh-subtab" id="pool-toggle-all" type="button" role="tab" aria-selected="false" title="Every charted player-season 1996-97→today, per-season z-scored">All-time</button><button class="vh-subtab is-active" id="pool-toggle-modern" type="button" role="tab" aria-selected="true" title="Only active NBA players — modern daily, unranked, your All-time daily stays ranked">Modern</button></div>
-      <div class="vh-stats" id="header-stats">
-        <div class="vh-stat"><span class="vh-stat__num" id="puzzle-day">—</span><span class="vh-stat__label">day</span></div>
-        <div class="vh-stat"><span class="vh-stat__num" id="streak-num">0</span><span class="vh-stat__label">streak</span></div>
-        <div class="vh-stat"><span class="vh-stat__num" id="guesses-left-num">9</span><span class="vh-stat__label" id="guesses-left-label">turns</span></div>
-      </div>
-      <button class="vh-help-btn" id="stats-btn" type="button" aria-haspopup="dialog" aria-controls="stats-modal" title="Stats & streaks">📊</button>
-      <button class="vh-help-btn" id="help-btn" type="button" aria-haspopup="dialog" aria-controls="help-modal" title="How to play, method, era-honest sigmas">?</button>
-    </div>
+<nav class="site-nav site-nav--static" data-active="/play" style="border-bottom:2.5px solid var(--ink); padding:8px 14px; display:flex; justify-content:space-between; align-items:center; background:#fff;">
+  <a href="/" style="font-weight:900; text-decoration:none; color:var(--ink);">VECTOR<span style="color:var(--verm)">HOOPS</span> <span class="pill">12,966</span></a>
+  <div style="display:flex; gap:8px; align-items:center;">
+    <span class="small-mono" id="puzzle-meta">P#— · 48-d leakfree</span>
+    <span class="pill" id="streak-pill">streak 0</span>
   </div>
-</header>
-
-<nav class="vh-tabs" id="mode-tabs" role="tablist" aria-label="Game mode — 10 era-honest MTNN games, Guess main + Chimera HARD + Name The Player">
-  <button class="vh-tab is-active" id="tab-chimera" type="button" role="tab" aria-selected="true" title="Guess The Player — daily mystery season, 6 tries · Main">
-    <span class="vh-tab__icon" aria-hidden="true">🎯</span><span class="vh-tab__label"><span class="vh-tab__label-full">Guess</span><span class="vh-tab__label-short">Guess</span></span>
-  </button>
-  <button class="vh-tab" id="tab-deadline" type="button" role="tab" aria-selected="false" title="Deadline — thrived or cratered after trade? • blue">
-    <span class="vh-tab__icon" aria-hidden="true">📉</span><span class="vh-tab__label"><span class="vh-tab__label-full">Deadline</span><span class="vh-tab__label-short">Dead</span></span>
-  </button>
-  <button class="vh-tab" id="tab-fader" type="button" role="tab" aria-selected="false" title="Fader — first-half per-36 rose or fell second half? • sky">
-    <span class="vh-tab__icon" aria-hidden="true">🌡️</span><span class="vh-tab__label"><span class="vh-tab__label-full">Fader</span><span class="vh-tab__label-short">Fade</span></span>
-  </button>
-  <button class="vh-tab" id="tab-arc" type="button" role="tab" aria-selected="false" title="Career Arc — order seasons oldest→newest from sigma bars • amber">
-    <span class="vh-tab__icon" aria-hidden="true">📈</span><span class="vh-tab__label"><span class="vh-tab__label-full">Arc</span><span class="vh-tab__label-short">Arc</span></span>
-  </button>
-  <button class="vh-tab" id="tab-chem" type="button" role="tab" aria-selected="false" title="Best Teammate — who complemented best? 5 rounds • green">
-    <span class="vh-tab__icon" aria-hidden="true">🤝</span><span class="vh-tab__label"><span class="vh-tab__label-full">Best Mate</span><span class="vh-tab__label-short">Mate</span></span>
-  </button>
-  <button class="vh-tab" id="tab-whatif" type="button" role="tab" aria-selected="false" title="What-If Lab — any two eras chemistry report • purple">
-    <span class="vh-tab__icon" aria-hidden="true">🧪</span><span class="vh-tab__label"><span class="vh-tab__label-full">What-If Lab</span><span class="vh-tab__label-short">Lab</span></span>
-  </button>
-  <button class="vh-tab" id="tab-pivot" type="button" role="tab" aria-selected="false" title="Pivot — last season rosters, adjacent role upside • yellow">
-    <span class="vh-tab__icon" aria-hidden="true">🔀</span><span class="vh-tab__label"><span class="vh-tab__label-full">Pivot</span><span class="vh-tab__label-short">Pivot</span></span>
-  </button>
-  <button class="vh-tab" id="tab-twin" type="button" role="tab" aria-selected="false" title="Era Twin — geometric double other decade, 2 attempts, warmth • black">
-    <span class="vh-tab__icon" aria-hidden="true">👥</span><span class="vh-tab__label"><span class="vh-tab__label-full">Era Twin</span><span class="vh-tab__label-short">Twin</span></span>
-  </button>
-  <a class="vh-tab" id="tab-fingerprint" href="/fingerprint" role="tab" aria-selected="false" title="Name the Player — only the model's read: constellation, archetype, skill DNA. Opens its own board.">
-    <span class="vh-tab__icon" aria-hidden="true">🔎</span><span class="vh-tab__label"><span class="vh-tab__label-full">Name the Player</span><span class="vh-tab__label-short">Name</span></span>
-  </a>
 </nav>
 
-<main id="app">
-
-  <section id="panel-chimera" class="vh-panel">
-
-    <div class="vh-subtabs" id="chimera-subtabs" role="tablist" aria-label="Chimera pool">
-      <button class="vh-subtab is-active" id="chimera-sub-modern" type="button" role="tab" aria-selected="true">Modern</button>
-      <button class="vh-subtab" id="chimera-sub-alltime" type="button" role="tab" aria-selected="false">All-Time</button>
-      <button class="vh-subtab" id="chimera-sub-team" type="button" role="tab" aria-selected="false" hidden>My Team</button>
-      <button class="vh-subtab" id="chimera-sub-practice" type="button" role="tab" aria-selected="false">Free Play</button>
+<div class="main" id="main-content">
+  <!-- DAILY -->
+  <section id="view-daily" aria-labelledby="daily-heading">
+    <div class="card">
+      <div class="header-line">
+        <h1 id="daily-heading" class="hd" style="margin:0; font-size:22px; line-height:1.1;">Daily — Guess + Insight <span style="font-family:ui-monospace; font-size:11px; background:var(--yellow); border:1.5px solid var(--ink); border-radius:999px; padding:2px 8px;">6 guesses</span></h1>
+        <span class="small-mono">Puzzle <b id="puzzle-num">—</b> · <b id="daily-date"></b></span>
+      </div>
+      <p class="small-mono" style="margin:6px 0 0; color:#555; text-transform:none; letter-spacing:0;">1 mystery player-season/day. After each guess, model shows what box scores can't: 48-d cosine, era-z skill delta, archetype bridge, cross-era neighbors. Impossible before this data.</p>
+      <label class="small-mono" for="daily-input" style="margin-top:8px;display:block">Guess a player-season</label>
+      <div class="suggest">
+        <input id="daily-input" class="input" placeholder="Guess player-season — eg: LeBron James 2012-13" autocomplete="off" spellcheck="false" aria-controls="daily-suggest" aria-expanded="false" role="combobox" aria-autocomplete="list"/>
+        <ul id="daily-suggest" class="hidden" role="listbox" aria-label="Player-season suggestions"></ul>
+      </div>
+      <div style="display:flex; gap:8px; margin-top:8px; flex-wrap:wrap;">
+        <button id="daily-guess-btn" class="btn btn-primary" type="button">Guess</button>
+        <button id="daily-share" class="btn" type="button" aria-label="Share results">Share</button>
+        <button id="daily-how" class="btn" type="button" aria-haspopup="dialog">Why this is special?</button>
+      </div>
+      <div id="daily-guesses" role="region" aria-live="polite" aria-label="Your guesses with insight bullets"></div>
+      <div id="daily-reveal" class="hidden" style="margin-top:12px;" role="status" aria-live="polite"></div>
+      <div id="daily-fallback" class="hidden card" role="alert" style="margin-top:12px; border-color:var(--verm);">Insight engine loading… If offline, Daily still works from cache. <button onclick="location.reload()" class="btn btn-accent" style="margin-left:8px; min-height:36px;">Retry 1s/2s/4s</button></div>
     </div>
 
-    <div class="vh-practice-banner" id="chimera-practice-banner" hidden>
-      <span class="vh-practice-banner__text">PRACTICE — free play, doesn't touch daily streak or leaderboard</span>
-      <button class="vh-btn vh-btn--accent" id="chimera-new-btn" type="button">New chimera ✨</button>
+    <div class="card">
+      <h2 class="hd" style="margin:0 0 6px; font-size:16px;">Cross-era map — closest to mystery</h2>
+      <p class="small-mono" style="text-transform:none; color:#666;">Model links across eras impossible before per-100 z + MTNN — same archetype, different decade. These are 48-d nearest neighbors.</p>
+      <div id="cross-era-list" style="display:flex; flex-direction:column; gap:6px; margin-top:8px;" aria-live="polite" aria-label="Cross-era comparisons"></div>
     </div>
 
-    <p class="vh-reset-note" id="reset-note" hidden></p>
+    <div class="card">
+      <h2 class="hd" style="margin:0 0 6px; font-size:16px;">How insight works — era-honest</h2>
+      <ul style="margin:6px 0 0 18px; font-size:13px; line-height:1.5;">
+        <li><b>48-d cosine:</b> dot product of L2-normalized MTNN embeddings. Sim 92% even if teams differ — model sees ball-in-hand, shot-mix, motor.</li>
+        <li><b>Era-z skill deltas:</b> using <code>season_norms.json</code> μ/σ to avoid inflation. “+12% more playmaking than avg 2014, similar to 2023 Haliburton”.</li>
+        <li><b>Archetype bridge:</b> 8 global K=8 + era-native K=6-12; lineage = nearest predecessor centroid. Explains 1998 Rodman → 2024 Wemby both Offensive Glass + Rim Protection ends of PC1.</li>
+        <li><b>Embedding map:</b> PC1 paint→perimeter (shooting vs oreb), PC2 scoring load (Volume), PC3 ball-in-hand (Playmaking).</li>
+      </ul>
+    </div>
+  </section>
 
-    <div class="vh-card vh-picker-card" id="picker-card" hidden aria-hidden="true">
-      <div class="vh-prompt__eyebrow">Build-a-Chimera — pick two donors</div>
-      <p class="vh-prompt__text">Stats donor brings counting stats <em>(pts · reb · ast · stl · blk per-100 sigmas)</em>, Style donor brings shooting & impact <em>(EFG% · TS% · OFF/DEF rating sigmas)</em>. We fuse 14-d z-features, you name the real season closest in 48-d L2.</p>
-      <div class="vh-slots-row">
-        <div class="vh-card vh-slot-card" id="picker-card-stats" data-slot="stats">
-          <div class="vh-slot-card__head"><span class="vh-slot-card__title">Stats Player</span><span class="vh-slot-card__badge" id="picker-badge-stats" hidden>Picked ✓</span></div>
-          <div class="vh-autocomplete" id="picker-stats-autocomplete">
-            <span class="vh-autocomplete__glyph" aria-hidden="true">🔍</span>
-            <input type="text" id="picker-stats-input" class="vh-input vh-input--search" placeholder="Any player… scoring/boards/dimes/defense" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" aria-autocomplete="list" aria-controls="picker-stats-suggestions" aria-expanded="false" disabled>
-            <span class="vh-autocomplete__chevron" aria-hidden="true">⌄</span>
-            <ul class="vh-suggestions" id="picker-stats-suggestions" role="listbox" hidden></ul>
-            <p class="vh-autocomplete__hint" id="picker-stats-focus-hint" hidden>eg Jokić 22-23 · then season</p>
-          </div>
-          <p class="vh-autocomplete__kbd">↑↓ browse · Enter pick</p>
-        </div>
-        <div class="vh-card vh-slot-card" id="picker-card-shooting" data-slot="shooting">
-          <div class="vh-slot-card__head"><span class="vh-slot-card__title">Style Player</span><span class="vh-slot-card__badge" id="picker-badge-shooting" hidden>Picked ✓</span></div>
-          <div class="vh-autocomplete" id="picker-shooting-autocomplete">
-            <span class="vh-autocomplete__glyph" aria-hidden="true">🔍</span>
-            <input type="text" id="picker-shooting-input" class="vh-input vh-input--search" placeholder="Any player… shooting & impact" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" aria-autocomplete="list" aria-controls="picker-shooting-suggestions" aria-expanded="false" disabled>
-            <span class="vh-autocomplete__chevron" aria-hidden="true">⌄</span>
-            <ul class="vh-suggestions" id="picker-shooting-suggestions" role="listbox" hidden></ul>
-            <p class="vh-autocomplete__hint" id="picker-shooting-focus-hint" hidden>eg Curry 15-16 · then season</p>
-          </div>
-          <p class="vh-autocomplete__kbd">↑↓ browse · Enter pick</p>
-        </div>
+  <!-- LAB -->
+  <section id="view-lab" class="hidden" aria-labelledby="lab-heading">
+    <div class="card">
+      <div class="header-line">
+        <h1 id="lab-heading" class="hd" style="margin:0; font-size:22px;">Lab — Fusion Insights A+B=C <span class="pill" style="background:var(--sky)">chimera</span></h1>
+        <span class="small-mono">blend skill DNA · archetype · next_profile · position fit</span>
       </div>
-      <p class="vh-picker-error" id="picker-error" role="status" hidden></p>
-      <button class="vh-btn vh-btn--accent" id="picker-randomize-btn" type="button" disabled>Randomize 🎲</button>
+      <p class="small-mono" style="text-transform:none; color:#444; margin-top:6px;">Pick any two player-seasons → predict blend. Insight cards like “Jokic 2023 + Rodman 1998 = 84.5% Wemby 2024 — PC1 paint vs perimeter”. Old tabs now presets inside Lab.</p>
+      <div style="display:grid; grid-template-columns:1fr auto 1fr auto; gap:8px; align-items:end; margin-top:12px;">
+        <div class="suggest"><label class="small-mono" for="lab-a-input">A donor</label><input id="lab-a-input" class="input" placeholder="A — e.g., Jokic 2022-23" autocomplete="off" aria-controls="lab-a-suggest" aria-expanded="false" role="combobox" aria-autocomplete="list"/><ul id="lab-a-suggest" class="hidden" role="listbox"></ul></div>
+        <div class="op" aria-hidden="true">+</div>
+        <div class="suggest"><label class="small-mono" for="lab-b-input">B donor</label><input id="lab-b-input" class="input" placeholder="B — e.g., Rodman 1997-98" autocomplete="off" aria-controls="lab-b-suggest" aria-expanded="false" role="combobox" aria-autocomplete="list"/><ul id="lab-b-suggest" class="hidden" role="listbox"></ul></div>
+        <div class="op" aria-hidden="true">=</div>
+      </div>
+      <div class="eq-row" style="margin-top:12px;">
+        <div id="lab-tile-a" class="tile" aria-label="Donor A">A</div><div class="op" aria-hidden="true">+</div><div id="lab-tile-b" class="tile" style="border-color:var(--verm); color:var(--verm);" aria-label="Donor B">B</div><div class="op" aria-hidden="true">=</div><div id="lab-tile-c" class="tile target" aria-label="Fusion result">?</div>
+        <span id="lab-eq-text" class="small-mono" style="margin-left:8px; text-transform:none; max-width:260px;" aria-live="polite">Select A + B to fuse skill DNA and find closest real season across 12,966.</span>
+      </div>
+      <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:12px;">
+        <button id="lab-fuse-btn" class="btn btn-primary" type="button">Fuse A+B →</button>
+        <button id="lab-random" class="btn" type="button">Random blend 🎲</button>
+        <button id="lab-preset-jr" class="btn" type="button" title="Jokic+Rodman preset">Preset: JR=W</button>
+      </div>
+      <div id="lab-presets" style="display:flex; gap:6px; flex-wrap:wrap; margin-top:10px;">
+        <button data-preset="deadline" class="pill" type="button">Deadline → thrived swing preset</button>
+        <button data-preset="fader" class="pill" type="button">Fader → half split</button>
+        <button data-preset="twin" class="pill" type="button">Era Twin → cross-era twins</button>
+        <button data-preset="teammate" class="pill" type="button">Teammate → complementarity</button>
+      </div>
     </div>
 
-    <div class="vh-play-col" id="chimera-play-col">
-
-      <div class="vh-card vh-skeleton" id="game-skeleton" aria-hidden="true">
-        <div class="vh-skeleton__bar vh-skeleton__bar--title"></div>
-        <div class="vh-skeleton__bar vh-skeleton__bar--text"></div>
-        <div class="vh-skeleton__bar vh-skeleton__bar--text vh-skeleton__bar--short"></div>
-        <p class="vh-skeleton__note">Loading 12,966 seasons · 17 towers 160→32 · 48-d L2…</p>
-      </div>
-
-      <div class="vh-card vh-prompt" id="prompt-card" hidden>
-        <div class="vh-prompt__eyebrow" id="puzzle-number">Vector Hoops #— · MTNN v4 era-honest</div>
-        <p class="vh-chimera-phase" id="chimera-phase-label">Guess any slot, in any order.</p>
-        <div class="vh-equation" id="equation-row">
-          <div class="vh-equation__tile" id="equation-tile-a"><div class="vh-equation__tile-kicker">Stats</div><div class="vh-equation__tile-name vh-equation__tile-mark" id="equation-name-a">?</div><div class="vh-equation__tile-label">pts · reb · ast · def</div></div>
-          <div class="vh-equation__op" aria-hidden="true">+</div>
-          <div class="vh-equation__tile" id="equation-tile-b"><div class="vh-equation__tile-kicker">Style</div><div class="vh-equation__tile-name vh-equation__tile-mark" id="equation-name-b">?</div><div class="vh-equation__tile-label">shooting & impact</div></div>
-          <div class="vh-equation__op" aria-hidden="true">=</div>
-          <div class="vh-equation__tile vh-equation__tile--target" id="equation-tile-mashup"><div class="vh-equation__tile-kicker">Mashup</div><div class="vh-equation__tile-mark" id="equation-name-mashup">?</div></div>
-        </div>
-        <button type="button" class="vh-equation-chip" id="equation-chip" hidden><span id="equation-chip-text">— + — = ?</span><span class="vh-equation-chip__hint">tap to expand</span></button>
-        <p class="vh-prompt__text vh-visually-hidden" id="prompt-text">Loading today's Chimera…</p>
-        <div class="vh-hints" id="hints-row" hidden></div>
-      </div>
-
-      <div class="vh-orient-banner" id="orient-banner" hidden role="region" aria-label="Quick orientation">
-        <div class="vh-orient-banner__inner">
-          <h2 class="vh-orient-banner__title">New here? 30-sec</h2>
-          <ol class="vh-orient-banner__steps">
-            <li><b>Three real seasons:</b> Stats + Style = Mashup. Guess in order — 1 try each on first two, then 6 on Mashup.</li>
-            <li><b>Scouting sentence first.</b> Colored bars are extra detail. Orange = above avg that year, blue = below, center = league avg = fair eras.</li>
-            <li><b>Per-100 sigmas</b> not raw totals. A '99 grinder and '25 spacer compare fairly.</li>
-          </ol>
-          <div class="vh-orient-banner__actions"><button class="vh-btn vh-btn--primary" id="orient-dismiss-btn" type="button">Got it — play</button><button class="vh-btn" id="orient-rules-btn" type="button">Full rules</button></div>
-        </div>
-      </div>
-
-      <div class="vh-clue-cards" id="clue-cards">
-        <details class="vh-read-guide" id="read-guide"><summary>How to read clue bars</summary><p>Each row one stat. <strong>Orange right</strong> = better than most <em>that season</em>; <strong>blue left</strong> = below avg. Center tick = league average — so '90s center vs modern guard fair. Tip: scouting sentence → bars → chips.</p></details>
-        <div class="vh-slots-row vh-donor-slots" id="donor-slots-row" hidden>
-          <div class="vh-card vh-slot-card vh-guess-slot vh-clue-card" id="stats-slot-card" data-slot="stats">
-            <div class="vh-slot-card__head vh-clue-card__head"><span class="vh-clue-card__numtitle"><span class="vh-clue-card__num" aria-hidden="true" style="background:#D55E00">1</span><span class="vh-slot-card__title"><span class="vh-clue-card__mask" id="stats-slot-mask">?</span> · Stats</span></span><span class="vh-slot-card__badge" id="stats-slot-badge" hidden>×1</span></div>
-            <p class="vh-clue-card__caption" id="clue-cards-caption">One guess each on Stats and Style (order matters), then 6 tries on Mashup. Bars show sigmas vs that year's league.</p>
-            <button type="button" class="vh-clue-zone" id="stats-clue-zone" aria-expanded="true"><div class="vh-clue-zone__bars" id="stats-clue-bars"></div><p class="vh-clue-zone__sentence" id="stats-clue-sentence"></p><div class="vh-clue-zone__chips" id="stats-clue-chips" aria-hidden="true"></div><span class="vh-clue-zone__hint" id="stats-clue-hint">tap collapse</span><span class="vh-visually-hidden" id="stats-clue-sr"></span></button>
-            <div class="vh-autocomplete" id="chimera-stats-autocomplete"><span class="vh-autocomplete__glyph" aria-hidden="true">🔍</span><input type="text" id="chimera-stats-input" class="vh-input vh-input--search" placeholder="Stats player… one guess" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" aria-autocomplete="list" aria-controls="chimera-stats-suggestions" aria-expanded="false" disabled><span class="vh-autocomplete__chevron" aria-hidden="true">⌄</span><ul class="vh-suggestions" id="chimera-stats-suggestions" role="listbox" hidden></ul><p class="vh-autocomplete__hint" id="chimera-stats-focus-hint" hidden>Jokić example</p></div>
-            <button class="vh-btn vh-btn--primary" id="chimera-stats-submit" disabled>Guess Stats</button>
-            <p class="vh-guess__line vh-guess-slot__feedback" id="stats-slot-feedback"></p>
-            <button type="button" class="vh-link-btn vh-clue-card__tool" id="stats-map-link">Map →</button>
+    <div id="lab-result" class="hidden" aria-live="polite" aria-label="Fusion results">
+      <div class="card fusion-card">
+        <div>
+          <h2 class="hd" style="margin:0 0 4px;">Fusion insight card</h2>
+          <div id="lab-insight-main" style="font-size:14px; line-height:1.5;"></div>
+          <div class="axis-grid" style="margin-top:10px;">
+            <div class="card" style="box-shadow:2px 2px 0 var(--ink); padding:10px;"><div class="small-mono">PC1 paint→perimeter</div><div id="lab-pc1" style="font-size:12px; margin-top:4px;"></div></div>
+            <div class="card" style="box-shadow:2px 2px 0 var(--ink); padding:10px;"><div class="small-mono">PC2 scoring load</div><div id="lab-pc2" style="font-size:12px; margin-top:4px;"></div></div>
+            <div class="card" style="box-shadow:2px 2px 0 var(--ink); padding:10px;"><div class="small-mono">PC3 ball-in-hand</div><div id="lab-pc3" style="font-size:12px; margin-top:4px;"></div></div>
           </div>
-          <div class="vh-card vh-slot-card vh-guess-slot vh-clue-card" id="archetype-slot-card" data-slot="archetype">
-            <div class="vh-slot-card__head vh-clue-card__head"><span class="vh-clue-card__numtitle"><span class="vh-clue-card__num" aria-hidden="true" style="background:#0072B2">2</span><span class="vh-slot-card__title"><span class="vh-clue-card__mask" id="archetype-slot-mask">?</span> · Style</span></span><span class="vh-slot-card__badge" id="archetype-slot-badge" hidden>×1</span></div>
-            <button type="button" class="vh-clue-zone" id="archetype-clue-zone" aria-expanded="true"><div class="vh-clue-zone__bars" id="archetype-clue-bars"></div><p class="vh-clue-zone__sentence" id="archetype-clue-sentence"></p><div class="vh-clue-zone__chips" id="archetype-clue-chips" aria-hidden="true"></div><span class="vh-clue-zone__hint" id="archetype-clue-hint">tap collapse</span><span class="vh-visually-hidden" id="archetype-clue-sr"></span></button>
-            <div class="vh-autocomplete" id="chimera-archetype-autocomplete"><span class="vh-autocomplete__glyph" aria-hidden="true">🔍</span><input type="text" id="chimera-archetype-input" class="vh-input vh-input--search" placeholder="Style player… one guess" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" aria-autocomplete="list" aria-controls="chimera-archetype-suggestions" aria-expanded="false" disabled><span class="vh-autocomplete__chevron" aria-hidden="true">⌄</span><ul class="vh-suggestions" id="chimera-archetype-suggestions" role="listbox" hidden></ul><p class="vh-autocomplete__hint" id="chimera-archetype-focus-hint" hidden>Curry example</p></div>
-            <button class="vh-btn vh-btn--primary" id="chimera-archetype-submit" disabled>Guess Style</button>
-            <p class="vh-clue-card__lock-note" id="archetype-lock-note">Solve Stats first.</p>
-            <p class="vh-guess__line vh-guess-slot__feedback" id="archetype-slot-feedback"></p>
-            <button type="button" class="vh-link-btn vh-clue-card__tool" id="archetype-map-link">Map →</button>
+          <div id="lab-bridge" style="margin-top:12px;"></div>
+          <div style="margin-top:12px;">
+            <h3 class="hd" style="margin:0 0 6px; font-size:14px;">Tower influence — why fusion lands here (real MTNN v5 Jacobian)</h3>
+            <div id="lab-tower-influence"></div>
           </div>
         </div>
-
-        <div class="vh-card vh-guessbar vh-clue-card" id="guessbar-card" hidden>
-          <div class="vh-slot-card__head vh-clue-card__head vh-guessbar__head"><span class="vh-clue-card__numtitle"><span class="vh-clue-card__num" aria-hidden="true" style="background:#000">3</span><span class="vh-slot-card__title">Mashup Player · 48-d nearest real season</span></span><span class="vh-slot-card__badge" id="mashup-slot-badge" hidden>Locked</span><span class="vh-slot-card__badge vh-slot-card__badge--silver" id="mashup-slot-badge-silver" hidden>Close enough ≥92% — locked</span></div>
-          <button type="button" class="vh-clue-zone" id="mashup-clue-zone" aria-expanded="true"><p class="vh-clue-zone__sentence" id="scouting-line"></p><div class="vh-clue-zone__bars" id="mashup-clue-bars"></div><p class="vh-clue-zone__framing">Blend 14-d per-100 sigmas (7 stats + 7 style) → closest 48-d L2 real season from 12,966.</p><span class="vh-clue-zone__hint" id="mashup-clue-hint">tap collapse</span><span class="vh-visually-hidden" id="mashup-clue-sr"></span></button>
-          <div class="vh-guessbar__inputrow">
-            <div class="vh-autocomplete" id="chimera-autocomplete"><span class="vh-autocomplete__glyph" aria-hidden="true">🔍</span><input type="text" id="chimera-input" class="vh-input vh-input--search" placeholder="Mashup player… closest real season" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" aria-autocomplete="list" aria-controls="chimera-suggestions" aria-expanded="false" disabled><span class="vh-autocomplete__chevron" aria-hidden="true">⌄</span><ul class="vh-suggestions" id="chimera-suggestions" role="listbox" hidden></ul><p class="vh-autocomplete__hint" id="chimera-focus-hint" hidden>Jokić season →</p></div>
-            <button class="vh-btn vh-btn--primary" id="chimera-submit" disabled>Guess Mashup</button>
-            <p class="vh-autocomplete__kbd">↑↓ browse · Enter pick</p>
-            <p class="vh-clue-card__lock-note" id="mashup-lock-note">Solve Style first.</p>
-            <p class="vh-duplicate-warning" id="duplicate-warning" role="status" hidden></p>
-          </div>
-          <div class="vh-warmth vh-clue-card__section" id="warmth-card" hidden><div class="vh-warmth__bars" id="warmth-bars" aria-hidden="true"></div><div class="vh-warmth__closest" id="warmth-closest">Closest: —</div></div>
-          <div class="vh-result vh-clue-card__section" id="result-card" hidden>
-            <div class="vh-result__top"><div class="vh-scoreboard" id="scoreboard"><div class="vh-scoreboard__pct" id="scoreboard-pct">0%</div><div class="vh-scoreboard__sub">match on last guess</div></div><button type="button" class="vh-map-thumb-btn" id="map-thumb-btn" title="Open 3D triangulation map"><canvas id="map-thumb" class="vh-map-thumb" width="120" height="120" aria-hidden="true"></canvas></button></div>
-            <div class="vh-triangulation" id="triangulation-block" hidden><div class="vh-triangulation__row"><span class="vh-tri-icon vh-tri-icon--stats" aria-hidden="true"></span><span class="vh-triangulation__label">vs Stats Donor</span><span class="vh-triangulation__pct" id="tri-stats-pct">—</span></div><div class="vh-triangulation__row"><span class="vh-tri-icon vh-tri-icon--shooting" aria-hidden="true"></span><span class="vh-triangulation__label">vs Style Donor</span><span class="vh-triangulation__pct" id="tri-shooting-pct">—</span></div><div class="vh-triangulation__row"><span class="vh-tri-icon vh-tri-icon--blend" aria-hidden="true"></span><span class="vh-triangulation__label">vs Mashup (48-d L2)</span><span class="vh-triangulation__pct" id="tri-blend-pct">—</span></div></div>
-            <p class="vh-visually-hidden" id="triangulation-sr-summary"></p>
-            <p class="vh-story" id="story-caption"></p>
-            <p class="vh-guess__line vh-guess__line--quick" id="quick-coaching-line"></p>
-            <p class="vh-guess__line" id="cluster-line"></p>
-            <div class="vh-result__actions"><button type="button" class="vh-link-btn" id="report-sheet-open-btn">Full scouting report →</button></div>
-          </div>
-          <button type="button" class="vh-link-btn vh-clue-card__tool" id="mashup-map-link">3D Map →</button>
-        </div>
-      </div>
-
-      <div class="vh-card vh-reveal" id="reveal-card" hidden>
-        <h2 class="vh-reveal__title" id="reveal-title">Revealed · era-honest</h2>
-        <div class="vh-reveal__body" id="reveal-body"></div>
-        <button class="vh-btn vh-btn--accent" id="share-btn" type="button" title="Challenge same puzzle head-to-head">Text challenge 🔗</button>
-        <div class="vh-reveal__copied" id="share-copied" hidden>Opening Messages… link copied too.</div>
-      </div>
-
-      <!-- Posecode Player Animation — archetype-matched, solo built from scratch -->
-      <div class="vh-card" id="player-anim-card" style="overflow:clip; border:2px solid var(--ink); border-radius:16px; box-shadow:6px 6px 0 var(--ink); background:#fff;">
-        <div style="padding:12px 14px; border-bottom:2px solid var(--ink); display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;">
-          <h3 style="margin:0; font-size:15px; font-weight:900; letter-spacing:-.01em;">🕺 Player Move — Posecode 60fps</h3>
-          <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
-            <select id="player-anim-select" style="min-height:44px; border:2px solid var(--ink); border-radius:10px; padding:0 10px; font-weight:800; box-shadow:3px 3px 0 var(--ink); font-size:14px; background:#fff;">
-              <option value="assets/posecode/basketball/jump-shot.posecode">Jump Shot — Shooter</option>
-              <option value="assets/posecode/basketball/crossover-dribble.posecode">Crossover — Playmaker</option>
-              <option value="assets/posecode/basketball/defensive-shuffle.posecode">Defensive Shuffle — Rim Protector</option>
-              <option value="assets/posecode/basketball/layup.posecode">Layup — Glass Finisher</option>
-              <option value="assets/posecode/basketball/free-throw.posecode">Free Throw — Ritual</option>
-              <option value="assets/posecode/basketball/box-out.posecode">Box Out — Big Anchor</option>
-              <option value="assets/posecode/basketball/chest-pass.posecode">Chest Pass — Floor General</option>
-              <option value="assets/posecode/basketball/celebration.posecode">Celebration — Arms Up</option>
-            </select>
-            <a href="player-animations.html" class="vh-link-btn" style="font-size:11px;">All 8 →</a>
-          </div>
-        </div>
-        <div id="player-anim-wrap" style="padding:0; background:radial-gradient(120% 90% at 50% 20%, #f7f3e6, #fff 55%); min-height:clamp(300px,60vw,420px);">
-          <posecode-player id="main-player" src="assets/posecode/basketball/jump-shot.posecode" controls loop autoplay autorotate style="display:block; width:100%; height:clamp(300px,60vw,420px);"></posecode-player>
-        </div>
-        <div style="padding:10px 14px; border-top:2px solid var(--ink); font-family:ui-monospace,monospace; font-size:10.5px; line-height:1.6; color:#6B6256;">
-          Each .posecode authored from scratch — pose start = standing, step phases Ns easing, knees: flex, ground-lock: feet, travel, turn, cue. ROM clamped (knee ≤144°). Renderer: <a href="https://github.com/posecode-dev/posecode" target="_blank" rel="noopener">posecode-dev/posecode</a> MIT via <code>posecode-embed</code> &lt;posecode-player&gt; CDN. Solo personal project, no connection to employer, built with public/free-tier only. Playground: posecode.org/play.
-        </div>
-      </div>
-
-      <div class="vh-utility-row" id="chimera-utility-row"><button type="button" class="vh-link-btn" id="history-chip-btn">History (<span id="history-count">0</span>) →</button><button type="button" class="vh-link-btn" id="map-sheet-open-btn">3D league map (48-d) →</button></div>
-    </div>
-
-    <div class="vh-sheet-backdrop" id="report-sheet-backdrop" hidden>
-      <div class="vh-sheet" id="report-sheet" role="dialog" aria-modal="true" aria-labelledby="report-sheet-title"><div class="vh-sheet__handle" aria-hidden="true"></div><div class="vh-sheet__head"><h2 id="report-sheet-title" class="vh-sheet__title">Full scouting report · per-100 σ</h2><button class="vh-sheet__close" id="report-sheet-close-btn" type="button" aria-label="Close">×</button></div>
-        <div class="vh-sheet__body">
-          <div class="vh-section-label">Court — zone presence (offense orange · defense hatched)</div>
-          <div class="vh-courts" id="courts-row"><div class="vh-court-block"><div class="vh-court-block__label">Chimera (blend)</div><canvas class="vh-court" id="court-target" width="300" height="282" aria-label="Half-court Chimera zone presence"></canvas></div><div class="vh-court-block"><div class="vh-court-block__label" id="court-guess-label">Your guess</div><canvas class="vh-court" id="court-guess" width="300" height="282" aria-label="Half-court guess zone presence"></canvas></div></div>
-          <div class="vh-court-legend"><span><span class="vh-legend-swatch vh-legend-swatch--orange"></span>offense brighter = further above avg that season</span><span><span class="vh-legend-swatch vh-legend-swatch--hatch"></span>defense hatched = below avg</span></div>
-          <p class="vh-visually-hidden" id="courts-sr-summary"></p>
-          <div class="vh-section-label">Stat-by-stat vs league avg — 14-d sigmas</div>
-          <div class="vh-breakdown" id="breakdown-chart" role="img" aria-label="Diverging bars Chimera vs guess across 14 stats"></div>
-          <p class="vh-visually-hidden" id="breakdown-sr-summary"></p>
-          <div class="vh-court-legend"><span><span class="vh-legend-swatch vh-legend-swatch--orange"></span>Chimera</span><span><span class="vh-legend-swatch vh-legend-swatch--blue"></span>your guess</span></div>
-          <p class="vh-guess__line" id="coaching-line"></p>
+        <div>
+          <h2 class="hd" style="margin:0 0 4px;">Closest real seasons — 48-d cosine</h2>
+          <div id="lab-nearest" style="display:flex; flex-direction:column; gap:6px;"></div>
+          <h2 class="hd" style="margin:12px 0 4px;">Skill DNA blend (12 grades avg) — W sparkline shows drivers</h2>
+          <div id="lab-skills" class="skill-grid"></div>
+          <div id="lab-skills-viz" style="margin-top:8px;"></div>
+          <h2 class="hd" style="margin:12px 0 4px;">Archetype prediction — 8-way head distribution (real mtnn_heads.f32)</h2>
+          <div id="lab-archetype" style="font-size:13px; line-height:1.5;"></div>
+          <div id="lab-archetype-dist" style="margin-top:8px"></div>
+          <div id="lab-archetype-chips" style="margin-top:10px"></div>
         </div>
       </div>
     </div>
 
-    <div class="vh-sheet-backdrop" id="map-sheet-backdrop" hidden>
-      <div class="vh-sheet" id="map-sheet" role="dialog" aria-modal="true" aria-labelledby="map-sheet-title"><div class="vh-sheet__handle" aria-hidden="true"></div><div class="vh-sheet__head"><h2 id="map-sheet-title" class="vh-sheet__title">3D league map <span class="vh-mapcard__hint">(drag rotate · wheel/pinch zoom) · diamond=Chimera always shown, squares=donors hidden until stage resolves</span></h2><button class="vh-sheet__close" id="map-sheet-close-btn" type="button" aria-label="Close">×</button></div><div class="vh-sheet__body"><div class="vh-map-wrap"><canvas id="hoops-map" class="vh-map" width="600" height="600" aria-label="3D starfield all seasons colored by archetype, Chimera diamond always shown, Stats/Style squares hidden until stage resolves, triangulation lines"></canvas><button class="vh-map-pause" id="map-pause-btn" type="button">Pause</button><button class="vh-map-color" id="map-color-btn" type="button">Color: archetype</button><div class="vh-map-axes" id="map-axes"></div></div><div class="vh-mapcard__legend" id="map-legend"></div></div></div>
-    </div>
-
-    <div class="vh-sheet-backdrop" id="history-sheet-backdrop" hidden><div class="vh-sheet" id="history-sheet" role="dialog" aria-modal="true" aria-labelledby="history-sheet-title"><div class="vh-sheet__handle" aria-hidden="true"></div><div class="vh-sheet__head"><h2 id="history-sheet-title" class="vh-sheet__title">Guess history · per-100 sigmas</h2><button class="vh-sheet__close" id="history-sheet-close-btn" type="button" aria-label="Close">×</button></div><div class="vh-sheet__body"><ol class="vh-guesslist" id="guess-list" aria-live="polite"></ol></div></div></div>
-
-  </section>
-
-  <section id="panel-deadline" class="vh-panel" hidden>
-    <div class="vh-subtabs" id="deadline-subtabs" role="tablist" aria-label="Deadline mode"><button class="vh-subtab is-active" id="deadline-sub-daily" type="button" role="tab" aria-selected="true">Daily Set</button><button class="vh-subtab" id="deadline-sub-free" type="button" role="tab" aria-selected="false">Free Play</button></div>
-    <div class="vh-practice-banner" id="deadline-practice-banner" hidden><span class="vh-practice-banner__text">PRACTICE — no streak</span></div>
-    <div class="vh-card vh-prompt"><div class="vh-prompt__eyebrow" id="deadline-eyebrow" style="border-color:#0072B2">The Deadline — Daily Set · era-honest per-36</div><p class="vh-prompt__text">Round <span id="deadline-round-num">1</span>/5 · Score <span id="deadline-score-num">0</span><span id="deadline-streak-wrap"> · Streak <span id="deadline-streak-num">0</span></span> · thrived/cratered after move</p></div>
-    <div class="vh-card vh-deadline-card"><p class="vh-deadline__prompt" id="deadline-prompt">Loading a midseason move… real per-36 + plus-minus swing measured</p><div class="vh-deadline__buttons" id="deadline-buttons"><button class="vh-btn vh-btn--thrive" id="deadline-thrived-btn" type="button">Thrived 📈</button><button class="vh-btn vh-btn--crater" id="deadline-crater-btn" type="button">Cratered 📉</button></div><div class="vh-deadline__reveal" id="deadline-reveal" hidden><p class="vh-deadline__verdict" id="deadline-verdict"></p><div class="vh-deadline__detail" id="deadline-detail"><div class="vh-deadline__stat-row"><span class="vh-deadline__stat-label">Δ pts per-36</span><span class="vh-deadline__stat-value" id="deadline-p36-value"></span></div><div class="vh-deadline__bar-pair" id="deadline-p36-bars"></div><p class="vh-deadline__samples" id="deadline-samples"></p><p class="vh-deadline__adjpm" id="deadline-adjpm"></p></div><button class="vh-btn vh-btn--primary" id="deadline-next-btn" type="button">Next round →</button></div><div class="vh-deadline__final" id="deadline-final" hidden><p class="vh-deadline__final-score" id="deadline-final-score"></p><p class="vh-deadline__comeback" id="deadline-comeback" hidden>Next Daily Set UTC midnight.</p><button class="vh-btn vh-btn--accent" id="deadline-share-btn" type="button" hidden>Text challenge</button><div class="vh-reveal__copied" id="deadline-share-copied" hidden>Copied</div><button class="vh-btn vh-btn--accent" id="deadline-again-btn" type="button">Run again</button></div></div>
-    <p class="vh-deadline__method"><button type="button" class="vh-link-btn" id="deadline-method-btn">Method & data sources →</button></p>
-  </section>
-
-  <section id="panel-fader" class="vh-panel" hidden>
-    <div class="vh-subtabs" id="fader-subtabs" role="tablist" aria-label="Fader mode"><button class="vh-subtab is-active" id="fader-sub-daily" type="button" role="tab" aria-selected="true">Daily Set</button><button class="vh-subtab" id="fader-sub-free" type="button" role="tab" aria-selected="false">Free Play</button></div>
-    <div class="vh-practice-banner" id="fader-practice-banner" hidden><span class="vh-practice-banner__text">PRACTICE — no streak</span></div>
-    <div class="vh-card vh-prompt"><div class="vh-prompt__eyebrow" id="fader-eyebrow" style="border-color:#56B4E9">Fader or Finisher — first-half per-36 → second half • rose/fell</div><p class="vh-prompt__text">Round <span id="fader-round-num">1</span>/5 · Score <span id="fader-score-num">0</span><span id="fader-streak-wrap"> · Streak <span id="fader-streak-num">0</span></span> · called rose/fell on per-36</p></div>
-    <div class="vh-card vh-deadline-card"><p class="vh-deadline__prompt" id="fader-prompt">Loading a split… first-half per-36 shown, call rose or fell second half</p><div class="vh-deadline__buttons" id="fader-buttons"><button class="vh-btn vh-btn--finisher" id="fader-finish-btn" type="button">Finished stronger 🔥</button><button class="vh-btn vh-btn--fader" id="fader-fade-btn" type="button">Faded 🧊</button></div><div class="vh-deadline__reveal" id="fader-reveal" hidden><p class="vh-deadline__verdict" id="fader-verdict"></p><div class="vh-deadline__detail" id="fader-detail"><div class="vh-deadline__stat-row"><span class="vh-deadline__stat-label">2nd half</span><span class="vh-deadline__stat-value" id="fader-secondhalf-value"></span></div><div class="vh-deadline__bar-pair" id="fader-bars"></div><p class="vh-deadline__samples" id="fader-samples"></p><p class="vh-deadline__adjpm" id="fader-delta"></p></div><button class="vh-btn vh-btn--primary" id="fader-next-btn" type="button">Next round →</button></div><div class="vh-deadline__final" id="fader-final" hidden><p class="vh-deadline__final-score" id="fader-final-score"></p><p class="vh-deadline__comeback" id="fader-comeback" hidden>Next Set UTC midnight.</p><button class="vh-btn vh-btn--accent" id="fader-share-btn" type="button" hidden>Text challenge</button><div class="vh-reveal__copied" id="fader-share-copied" hidden>Copied</div><button class="vh-btn vh-btn--accent" id="fader-again-btn" type="button">Run again</button></div></div>
-    <p class="vh-deadline__method"><button type="button" class="vh-link-btn" id="fader-method-btn">Method →</button></p>
-  </section>
-
-  <section id="panel-arc" class="vh-panel" hidden>
-    <div class="vh-subtabs" id="arc-subtabs" role="tablist" aria-label="Arc mode"><button class="vh-subtab is-active" id="arc-sub-daily" type="button" role="tab" aria-selected="true">Daily</button><button class="vh-subtab" id="arc-sub-practice" type="button" role="tab" aria-selected="false">Free Play</button></div>
-    <div class="vh-practice-banner" id="arc-practice-banner" hidden><span class="vh-practice-banner__text">PRACTICE — no streak</span><button class="vh-btn vh-btn--accent" id="arc-new-btn" type="button">New arc ✨</button></div>
-    <div class="vh-card vh-prompt"><div class="vh-prompt__eyebrow" id="arc-eyebrow" style="border-color:#E69F00">Career Arc — order career oldest→newest</div><p class="vh-prompt__text" id="arc-instructions">4–5 seasons, sigma bars only, no years. Tap order → submit. Scoring vs league avg each year, not raw.</p></div>
-    <div class="vh-card vh-arc-card-wrap"><div class="vh-arc-grid" id="arc-cards"></div><div class="vh-arc-controls"><button class="vh-link-btn" id="arc-clear-btn" type="button">Clear order</button><button class="vh-btn vh-btn--primary" id="arc-submit-btn" type="button" disabled>Submit order</button></div></div>
-    <div class="vh-card vh-arc-result" id="arc-result" hidden><p class="vh-arc-result__score" id="arc-score-line"></p><button type="button" class="vh-link-btn" id="arc-reveal-open-btn">See true order & arc →</button><div class="vh-arc-result__actions" id="arc-result-actions"><button class="vh-btn vh-btn--accent" id="arc-share-btn" type="button" hidden>Text challenge</button><div class="vh-reveal__copied" id="arc-share-copied" hidden>Copied</div><p class="vh-deadline__comeback" id="arc-comeback" hidden>Next Arc UTC midnight.</p></div></div>
-    <div class="vh-sheet-backdrop" id="arc-reveal-sheet-backdrop" hidden><div class="vh-sheet" id="arc-reveal-sheet" role="dialog" aria-modal="true" aria-labelledby="arc-reveal-sheet-title"><div class="vh-sheet__handle" aria-hidden="true"></div><div class="vh-sheet__head"><h2 id="arc-reveal-sheet-title" class="vh-sheet__title">True order · scoring σ trajectory</h2><button class="vh-sheet__close" id="arc-reveal-sheet-close-btn" type="button">×</button></div><div class="vh-sheet__body"><ol class="vh-arc-reveal-list" id="arc-reveal-list"></ol><p class="vh-arc-trajectory-line" id="arc-trajectory-line" hidden></p><div class="vh-section-label">Career arc — scoring vs avg by season</div><div class="vh-arc-linechart" id="arc-linechart"></div><p class="vh-visually-hidden" id="arc-linechart-sr-summary"></p></div></div></div>
-  </section>
-
-  <section id="panel-chem" class="vh-panel" hidden>
-    <div class="vh-subtabs" id="chem-subtabs" role="tablist" aria-label="Best Teammate mode"><button class="vh-subtab is-active" id="chem-sub-daily" type="button" role="tab" aria-selected="true">Daily Set</button><button class="vh-subtab" id="chem-sub-free" type="button" role="tab" aria-selected="false">Free Play</button></div>
-    <div class="vh-practice-banner" id="chem-practice-banner" hidden><span class="vh-practice-banner__text">PRACTICE — no streak</span></div>
-    <div class="vh-card vh-prompt"><div class="vh-prompt__eyebrow" id="chem-eyebrow" style="border-color:#009E73">Best Teammate — 4 choices ×5 rounds · chemistry measured</div><p class="vh-prompt__text">Round <span id="chem-round-num">1</span>/5 · Score <span id="chem-score-num">0</span><span id="chem-streak-wrap"> · Streak <span id="chem-streak-num">0</span></span> · measured complementarity joint +/- coverage</p></div>
-    <div class="vh-card vh-deadline-card"><p class="vh-deadline__prompt" id="chem-prompt">Loading a pairing… who complemented best that team-season? Real plus-minus & coverage math</p><div class="vh-chem-options" id="chem-options"></div><div class="vh-deadline__reveal" id="chem-reveal" hidden><p class="vh-deadline__verdict" id="chem-verdict"></p><p class="vh-chem__numbers" id="chem-numbers"></p><p class="vh-chem__why" id="chem-why"></p><button class="vh-btn vh-btn--primary" id="chem-next-btn" type="button">Next round →</button></div><div class="vh-deadline__final" id="chem-final" hidden><p class="vh-deadline__final-score" id="chem-final-score"></p><p class="vh-deadline__comeback" id="chem-comeback" hidden>Next Set UTC midnight.</p><button class="vh-btn vh-btn--accent" id="chem-share-btn" type="button" hidden>Text challenge</button><div class="vh-reveal__copied" id="chem-share-copied" hidden>Copied</div><button class="vh-btn vh-btn--accent" id="chem-again-btn" type="button">Run again</button></div></div>
-    <p class="vh-deadline__method"><button type="button" class="vh-link-btn" id="chem-method-btn">Method →</button></p>
-  </section>
-
-  <section id="panel-whatif" class="vh-panel" hidden>
-    <div class="vh-card vh-picker-card">
-      <div class="vh-prompt__eyebrow" style="border-color:#CC79A7">What-If Lab — any two eras · chemistry report</div>
-      <p class="vh-prompt__text">Pair any two player-seasons across eras (per-100 sigmas, era-honest). Get complementarity score, coverage map vs avg, redundancy/weakness warnings, combined court, closest real duo by complementarity. Unlimited, no streak.</p>
-      <div class="vh-slots-row">
-        <div class="vh-card vh-slot-card" id="whatif-card-a" data-slot="a"><div class="vh-slot-card__head"><span class="vh-slot-card__title">Player A</span><span class="vh-slot-card__badge" id="whatif-badge-a" hidden>Picked ✓</span></div><div class="vh-autocomplete" id="whatif-a-autocomplete"><span class="vh-autocomplete__glyph" aria-hidden="true">🔍</span><input type="text" id="whatif-a-input" class="vh-input vh-input--search" placeholder="Any player… era-honest σ" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" aria-autocomplete="list" aria-controls="whatif-a-suggestions" aria-expanded="false" disabled><span class="vh-autocomplete__chevron" aria-hidden="true">⌄</span><ul class="vh-suggestions" id="whatif-a-suggestions" role="listbox" hidden></ul><p class="vh-autocomplete__hint" id="whatif-a-focus-hint" hidden>LeBron example</p></div><p class="vh-autocomplete__kbd">↑↓ · Enter</p></div>
-        <div class="vh-card vh-slot-card" id="whatif-card-b" data-slot="b"><div class="vh-slot-card__head"><span class="vh-slot-card__title">Player B</span><span class="vh-slot-card__badge" id="whatif-badge-b" hidden>Picked ✓</span></div><div class="vh-autocomplete" id="whatif-b-autocomplete"><span class="vh-autocomplete__glyph" aria-hidden="true">🔍</span><input type="text" id="whatif-b-input" class="vh-input vh-input--search" placeholder="Any player… any decade" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" aria-autocomplete="list" aria-controls="whatif-b-suggestions" aria-expanded="false" disabled><span class="vh-autocomplete__chevron" aria-hidden="true">⌄</span><ul class="vh-suggestions" id="whatif-b-suggestions" role="listbox" hidden></ul><p class="vh-autocomplete__hint" id="whatif-b-focus-hint" hidden>Curry example</p></div><p class="vh-autocomplete__kbd">↑↓ · Enter</p></div>
-      </div>
-      <p class="vh-picker-error" id="whatif-error" role="status" hidden></p>
-      <button class="vh-btn vh-btn--accent" id="whatif-randomize-btn" type="button" disabled>Random pair 🎲</button>
-    </div>
-    <div class="vh-card vh-whatif-report" id="whatif-report" hidden>
-      <div class="vh-prompt__eyebrow" id="whatif-report-eyebrow" style="border-color:#CC79A7">Partnership report · 14-d σ coverage</div>
-      <p class="vh-whatif-line vh-whatif-line--big" id="whatif-complementarity-line"></p>
-      <div class="vh-section-label">Coverage — who covers what vs avg</div>
-      <p class="vh-whatif-line" id="whatif-coverage-summary"></p>
-      <div class="vh-breakdown" id="whatif-coverage-chart"></div>
-      <p class="vh-visually-hidden" id="whatif-coverage-sr-summary"></p>
-      <div class="vh-court-legend"><span><span class="vh-legend-swatch vh-legend-swatch--orange"></span><span id="whatif-legend-a">Player A</span></span><span><span class="vh-legend-swatch vh-legend-swatch--blue"></span><span id="whatif-legend-b">Player B</span></span></div>
-      <div class="vh-whatif-flags" id="whatif-flags"></div>
-      <div class="vh-section-label">Combined court — overlaid zones</div>
-      <div class="vh-court-block"><canvas class="vh-court" id="whatif-court" width="300" height="282" aria-label="Half-court both players zone presence"></canvas></div>
-      <p class="vh-visually-hidden" id="whatif-court-sr-summary"></p>
-      <p class="vh-whatif-line" id="whatif-analog-line"></p>
-      <div class="vh-whatif-actions"><button class="vh-btn vh-btn--accent" id="whatif-share-btn" type="button">Share result</button><div class="vh-reveal__copied" id="whatif-share-copied" hidden>Copied ✓</div><button class="vh-link-btn" id="whatif-change-btn" type="button">Change players →</button></div>
-      <p class="vh-deadline__method"><button type="button" class="vh-link-btn" id="whatif-method-btn">Method →</button></p>
+    <div class="card">
+      <h2 class="hd" style="margin:0 0 6px;">What “impossible before” means</h2>
+      <p style="font-size:13px; line-height:1.5; margin:0;">Before per-100 era-z sigmas, comparing 1998 Rodman to 2024 Wemby was raw rebounds. After MTNN 48-d trained leakfree on 12,966 seasons, model reveals latent link: both sit on same PC1 tip — paint gravity + glass + rim protection — despite eras. Fusion A+B shows skill blend weighted avg + embedding blend normalized, then closest real via topKForVector cosine. Position fit uses next_profile logic from 17 tower families.</p>
     </div>
   </section>
 
-  <section id="panel-pivot" class="vh-panel" hidden>
-    <div class="vh-subtabs" id="pivot-subtabs" role="tablist" aria-label="Pivot mode"><button class="vh-subtab is-active" id="pivot-sub-daily" type="button" role="tab" aria-selected="true">Daily Set</button><button class="vh-subtab" id="pivot-sub-free" type="button" role="tab" aria-selected="false">Free Play</button></div>
-    <div class="vh-practice-banner" id="pivot-practice-banner" hidden><span class="vh-practice-banner__text">PRACTICE — no streak</span></div>
-    <div class="vh-card vh-prompt"><div class="vh-prompt__eyebrow" id="pivot-eyebrow" style="border-color:#F0E442">The Pivot — last season rosters · adjacent role upside</div><p class="vh-prompt__text">Round <span id="pivot-round-num">1</span>/5 · Score <span id="pivot-score-num">0</span>/10<span id="pivot-streak-wrap"> · Streak <span id="pivot-streak-num">0</span></span> · historical precedent, not prediction</p></div>
-    <div class="vh-card vh-pivot-card"><p class="vh-pivot__team" id="pivot-team-label">Loading a current roster…</p><p class="vh-pivot__question">Who has most measured upside in an ADJACENT archetype role? Receipts = real past pivots + Δ plus-minus</p><button type="button" class="vh-pivot__caption" id="pivot-caption-btn">Historical precedent with selection effects — not a prediction →</button><div class="vh-pivot-rows" id="pivot-rows"></div><div class="vh-pivot__verdict-wrap" id="pivot-verdict-wrap" hidden><p class="vh-deadline__verdict" id="pivot-verdict"></p><button class="vh-btn vh-btn--primary" id="pivot-next-btn" type="button">Next round →</button></div></div>
-    <div class="vh-deadline__final" id="pivot-final" hidden><p class="vh-deadline__final-score" id="pivot-final-score"></p><p class="vh-deadline__comeback" id="pivot-comeback" hidden>Next UTC midnight.</p><button class="vh-btn vh-btn--accent" id="pivot-share-btn" type="button" hidden>Text challenge</button><div class="vh-reveal__copied" id="pivot-share-copied" hidden>Copied</div><button class="vh-btn vh-btn--accent" id="pivot-again-btn" type="button">Run again</button></div>
-    <p class="vh-deadline__method"><button type="button" class="vh-link-btn" id="pivot-method-btn">Method →</button></p>
-  </section>
+  <div class="card small-mono" style="text-transform:none; color:#666; font-size:10px;">Solo personal project, no connection to employer, built with public/free-tier only — 2026-07-16 · 12,966 seasons as sky · MTNN 48-d 0.977 recall@10 · Okabe-Ito AAA paper #FFFEF7 ink #1A150F · <a href="/offline.html" style="color:inherit">offline</a> · <a href="/" style="color:inherit">home</a></div>
+</div>
 
-  <section id="panel-twin" class="vh-panel" hidden>
-    <div class="vh-subtabs" id="twin-subtabs" role="tablist" aria-label="Era Twin mode"><button class="vh-subtab is-active" id="twin-sub-daily" type="button" role="tab" aria-selected="true">Daily Set</button><button class="vh-subtab" id="twin-sub-free" type="button" role="tab" aria-selected="false">Free Play</button></div>
-    <div class="vh-practice-banner" id="twin-practice-banner" hidden><span class="vh-practice-banner__text">PRACTICE — no streak</span></div>
-    <div class="vh-card vh-prompt"><div class="vh-prompt__eyebrow" id="twin-eyebrow" style="border-color:#000">Era Twin — geometric double other decade · 2 attempts</div><p class="vh-prompt__text">Round <span id="twin-round-num">1</span>/5 · Score <span id="twin-score-num">0</span>/10<span id="twin-streak-wrap"> · Streak <span id="twin-streak-num">0</span></span> · warmth shows similarity %, top 5 shipped</p></div>
-    <div class="vh-card vh-twin-card"><div class="vh-twin-anchor"><p class="vh-twin-anchor__name" id="twin-anchor-name">Loading anchor… era-honest σ profile</p><div class="vh-twin-anchor__chips"><span class="vh-hint-chip" id="twin-anchor-decade-chip"></span><span class="vh-hint-chip" id="twin-anchor-archetype-chip"></span></div><div class="vh-arc-card__minibars" id="twin-anchor-minibars"></div></div><p class="vh-pivot__question">Who is his era twin? Different decade only — fair per-season sigmas</p><p class="vh-twin__attempts" id="twin-attempts">Attempt 1 of 2.</p><div class="vh-autocomplete" id="twin-autocomplete"><span class="vh-autocomplete__glyph" aria-hidden="true">🔍</span><input type="text" id="twin-input" class="vh-input vh-input--search" placeholder="Other-decade player… 2 tries" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" aria-autocomplete="list" aria-controls="twin-suggestions" aria-expanded="false"><span class="vh-autocomplete__chevron" aria-hidden="true">⌄</span><ul class="vh-suggestions" id="twin-suggestions" role="listbox" hidden></ul><p class="vh-autocomplete__hint" id="twin-focus-hint" hidden>Different decade only</p></div><p class="vh-autocomplete__kbd">↑↓ · Enter</p><ul class="vh-twin-guesses" id="twin-guesses"></ul><div class="vh-pivot__verdict-wrap" id="twin-verdict-wrap" hidden><p class="vh-deadline__verdict" id="twin-verdict"></p><div class="vh-slots-row vh-twin-reveal" id="twin-reveal"><div class="vh-card vh-slot-card" id="twin-reveal-anchor-card"><div class="vh-slot-card__head"><span class="vh-slot-card__title" id="twin-reveal-anchor-title"></span></div><div class="vh-arc-card__minibars" id="twin-reveal-anchor-bars"></div></div><div class="vh-card vh-slot-card" id="twin-reveal-twin-card"><div class="vh-slot-card__head"><span class="vh-slot-card__title" id="twin-reveal-twin-title"></span></div><div class="vh-arc-card__minibars" id="twin-reveal-twin-bars"></div></div></div><p class="vh-twin-reveal__similarity" id="twin-reveal-similarity"></p><button class="vh-btn vh-btn--primary" id="twin-next-btn" type="button">Next round →</button></div></div>
-    <div class="vh-deadline__final" id="twin-final" hidden><p class="vh-deadline__final-score" id="twin-final-score"></p><p class="vh-deadline__comeback" id="twin-comeback" hidden>Next UTC midnight.</p><button class="vh-btn vh-btn--accent" id="twin-share-btn" type="button" hidden>Text challenge</button><div class="vh-reveal__copied" id="twin-share-copied" hidden>Copied</div><button class="vh-btn vh-btn--accent" id="twin-again-btn" type="button">Run again</button></div>
-    <p class="vh-deadline__method"><button type="button" class="vh-link-btn" id="twin-method-btn">Method →</button></p>
-  </section>
+<div class="bottom-tabs" role="tablist" aria-label="Play modes 2 loops — Daily Guess+Insight and Lab A+B=C Fusion">
+  <button id="tab-daily" class="is-active" role="tab" aria-selected="true" aria-controls="view-daily"><span class="i" aria-hidden="true">🎯</span><span>Daily Guess+Insight</span></button>
+  <button id="tab-lab" role="tab" aria-selected="false" aria-controls="view-lab"><span class="i" aria-hidden="true">🧪</span><span>Lab A+B=C</span></button>
+</div>
 
-  <div class="vh-loading" id="loading-banner">Loading vectors… 12,966 seasons · MTNN v4 48-d L2 · ONNX WASM 2MB</div>
-  <div class="vh-error" id="error-banner" hidden></div>
-</main>
+<div id="why-sheet" class="sheet hidden" role="dialog" aria-modal="true" aria-labelledby="why-title">
+  <div style="display:flex; justify-content:space-between; align-items:center;"><h2 id="why-title" class="hd" style="margin:0;">Why this is special?</h2><button id="why-close" class="btn" type="button">Close</button></div>
+  <p style="font-size:13px; line-height:1.6;">Most NBA games use box scores. Vector Hoops uses a <b>MTNN — Mixture Tower Neural Net</b> 48-d L2-normalized embedding trained leakfree on 12,966 seasons (1996-2026). Features are per-100 poss sigmas (season_norms.json μ/σ), not raw totals, so eras compare fairly. 17 families cat([x·m,m]) → 160→32 towers → 556→128→48 ~224K params. Heads 8/5/14/18. CQS 66.29, recall@10 0.977.</p>
+  <p style="font-size:13px; line-height:1.6;"><b>Daily Guess+Insight</b> uses that model to explain <i>why</i> you're close — cosine distance, skill deltas, archetype bridge, cross-era comps. <b>Lab Fusion</b> blends two player-seasons into a chimera (weighted embedding avg normalized) and finds closest real — insight cards like Jokic+Rodman=Wemby 84.5% on PC1 paint vs perimeter. PC axes meanings from skill_probe.json quantiles.</p>
+</div>
 
-<div class="vh-rollover-banner" id="rollover-banner" hidden role="status"><button type="button" id="rollover-reload-btn" class="vh-rollover-banner__btn">A new Chimera is ready →</button></div>
-
-<div class="vh-modal-backdrop" id="help-backdrop" hidden><div class="vh-modal" id="help-modal" role="dialog" aria-modal="true" aria-labelledby="help-title"><h2 id="help-title">How to play · era-honest MTNN v4</h2><div class="vh-help-quick"><h3 class="vh-help-quick__title">30-sec start · readable at all sizes</h3><ul class="vh-help-quick__list"><li><b>Chimera:</b> Name 3 real seasons — Stats + Style = Mashup closest real match in 12,966. Per-100 σ vs own season.</li><li>All clues on screen Day 1 — orange right = above avg that year, blue left = below, center = avg. Sentence first.</li><li>8 games: Deadline thrived/cratered, Fader rose/fell per-36, Arc order career, Best Mate 4×5, What-If any eras coverage, Pivot adjacent role upside, Era Twin other decade 2 attempts warmth.</li></ul></div><ol class="vh-modal__list"><li>Chimera equation IS puzzle: Stats (pts/reb/ast/def) + Style (shooting & impact) = Mashup closest real season by 48-d L2. Stats/Style one guess each × multiplier, Mashup 6 tries 600→100 base × multipliers max 2400. Gold IDENTIFIED never red, silver ≥92% close enough also win.</li><li>Triangulation: Chimera diamond always shown in 3D map, donor squares hidden until stage resolves → spatial read. Court diagram zone presence orange offense brighter = further above avg, defense hatched = below.</li><li>Pool toggle: All-time 1996→2026 every season, Modern active only current season separate daily unranked, Free Play filters too. Shared links always All-time.</li><li>Deadline: real midseason mover per-36/plus-minus swing, call thrived/cratered 5 rounds. Method = Basketball-Reference game logs Δ.</li><li>Fader: first-half per-36 rate shown, call finished stronger or faded second half. Measured splits.</li><li>Career Arc: unlabeled sigma-bar cards no years, tap oldest→newest, scoring vs avg line chart reveal.</li><li>Best Teammate: teammate pair measured complementarity coverage map, pick true partner 4 options, reveal joint +/- percentile 5 rounds.</li><li>What-If Lab: any two eras partnership report complementarity dimensional coverage redundancy/weakness warnings combined court closest real duo — sandbox unlimited.</li><li>Pivot: current roster who has most measured upside in adjacent archetype role? Exact 2pts top3 1pt historical receipts not prediction 5 rounds.</li><li>Era Twin: anchor σ profile other decade double find them, typeahead other-decade only 2 attempts, warmth similarity % top5 shipped bound otherwise, side-by-side σ + age gap reveal 5 rounds.</li></ol><p class="vh-modal__telemetry" id="telemetry-note">Anonymous play events random id no account no ads — tune game. MTNN v4: 12,966 seasons 120 feats 17 families cat([x·m,m]) 17×160→32×2 544+12=556→128→48 L2 ~224K params heads 8/5/14/18 ONNX WASM 2MB. Solo personal project no employer public/free-tier only.</p><button class="vh-btn vh-btn--primary" id="help-close" type="button">Got it — play</button></div></div>
-
-<div class="vh-modal-backdrop" id="dossier-backdrop" hidden><div class="vh-modal vh-modal--dossier" id="dossier-modal" role="dialog" aria-modal="true" aria-labelledby="dossier-title"><h2 id="dossier-title">Dossier · per-100 σ</h2><div class="vh-dossier__body" id="dossier-body">Loading…</div><div class="vh-dossier__actions"><a class="vh-dossier__source" id="dossier-source-link" href="#" target="_blank" rel="noopener">View source GitHub</a><button class="vh-btn vh-btn--primary" id="dossier-close" type="button">Close</button></div></div></div>
-
-<div class="vh-modal-backdrop" id="stats-backdrop" hidden><div class="vh-modal vh-modal--stats" id="stats-modal" role="dialog" aria-modal="true" aria-labelledby="stats-title"><h2 id="stats-title">Stats · streaks · XP</h2><div class="vh-stats-section"><div class="vh-stats-section__label">Daily Chimera · Modern = separate unranked</div><div class="vh-stats-grid" id="stats-daily-grid"></div><div class="vh-histogram" id="stats-histogram"></div><p class="vh-stats-modern-line" id="stats-daily-modern-line"></p></div><div class="vh-stats-section"><div class="vh-stats-section__label">Deadline</div><div class="vh-stats-grid" id="stats-deadline-grid"></div><p class="vh-stats-modern-line" id="stats-deadline-modern-line"></p></div><div class="vh-stats-section"><div class="vh-stats-section__label">Fader</div><div class="vh-stats-grid" id="stats-fader-grid"></div><p class="vh-stats-modern-line" id="stats-fader-modern-line"></p></div><div class="vh-stats-section"><div class="vh-stats-section__label">Arc</div><div class="vh-stats-grid" id="stats-arc-grid"></div><p class="vh-stats-modern-line" id="stats-arc-modern-line"></p></div><div class="vh-stats-section"><div class="vh-stats-section__label">Best Teammate</div><div class="vh-stats-grid" id="stats-chem-grid"></div><p class="vh-stats-modern-line" id="stats-chem-modern-line"></p></div><div class="vh-stats-section"><div class="vh-stats-section__label">Pivot</div><div class="vh-stats-grid" id="stats-pivot-grid"></div></div><div class="vh-stats-section"><div class="vh-stats-section__label">Era Twin</div><div class="vh-stats-grid" id="stats-twin-grid"></div><p class="vh-stats-modern-line" id="stats-twin-modern-line"></p></div><div class="vh-stats-section" id="favorite-team-section"><div class="vh-stats-section__label">Favorite team — device only</div><label class="vh-favorite-picker" for="favorite-team-select"><span class="vh-favorite-picker__hint">Pick NBA team saved local only not sent</span><select class="vh-favorite-picker__select" id="favorite-team-select" name="favorite-team"></select></label></div><div class="vh-stats-section vh-stats-section--practice"><div class="vh-stats-section__label">Practice — casual no streak</div><p class="vh-stats-practice-line" id="stats-practice-line"></p></div><div class="vh-stats-actions"><button class="vh-btn" id="stats-clear-btn" type="button">Clear my data</button><button class="vh-btn vh-btn--primary" id="stats-close" type="button">Close</button></div></div></div>
-
-<div class="vh-modal-backdrop" id="methods-backdrop" hidden><div class="vh-modal" id="methods-modal" role="dialog" aria-modal="true" aria-labelledby="methods-title"><h2 id="methods-title">Method & data · era-honest</h2><div class="vh-dossier__body" id="methods-body"></div><button class="vh-btn vh-btn--primary" id="methods-close" type="button">Close</button></div></div>
-
-<footer class="vh-footer" id="footer">MTNN v4 · 12,966 seasons 1996-2026 per-100 z σ · 120 feats 17 families cat([x·m,m]) · 17×160→32 LN GELU res×2 544+12=556→128→48 L2 ~224K heads 8/5/14/18 · 48-d L2 cosine = similarity · ONNX WASM 2MB · anonymous random id no account no ads · era-honest fair comparisons</footer>
-
-<footer class="site-footer">
-  <div class="site-footer__links"><a href="/play">Play</a><a href="/model">Lab</a><a href="/trends">Trends</a><a href="/players">Players</a><a href="/methods">Methods</a><a href="/leaderboard">Boards</a><a href="https://github.com/jcdavis131/vector-hoops" target="_blank" rel="noopener">GitHub</a></div>
-  <div class="site-footer__attribution">Solo personal project, no connection to employer, built with public/free-tier only · MTNN v4: 12,966 seasons · 120 feats 17 families · cat([x·m,m]) → 17×160→32×2 544+12=556→128→48 L2 ~224K params · 8 archetypes · every number recomputable from stats.nba.com & B-Ref · from <a href="https://dumbmodel.com/" target="_blank" rel="noopener">dumbmodel.com</a> · hoops.dumbmodel.com</div>
-</footer>
-
-<script src="assets/dossier.js" defer></script>
-<script src="assets/mtnn.js" defer></script>
-<script src="assets/player-roster.js" defer></script>
-<script src="assets/leaderboard.js" defer></script>
-<script src="assets/site-nav.js" defer></script>
-<script src="assets/favorite-team.js" defer></script>
-<script src="assets/viral-share.js" defer></script>
-<script src="assets/game.js" defer></script>
-<script src="assets/play-landing-bridge.js" defer></script>
-<script>
-// === Play vNext polish — confetti + XP toast, minimal logic preserved ===
-(function(){
-  const canvas = document.getElementById('confetti-canvas');
-  if(!canvas) return;
-  const ctx = canvas.getContext('2d', {alpha:true});
-  let W=0,H=0, particles=[], raf=0, running=false;
-  function resize(){ W=canvas.width=window.innerWidth*devicePixelRatio; H=canvas.height=window.innerHeight*devicePixelRatio; canvas.style.width=window.innerWidth+'px'; canvas.style.height=window.innerHeight+'px'; }
-  resize(); addEventListener('resize', resize);
-  const colors = ['#D55E00','#E69F00','#56B4E9','#009E73','#0072B2','#CC79A7','#F0E442','#000000'];
-  function spawn(n, x){
-    for(let i=0;i<n;i++){
-      particles.push({
-        x: (x!==undefined? x : W*0.5) + (Math.random()-0.5)*60*devicePixelRatio,
-        y: -20*devicePixelRatio,
-        vx: (Math.random()-0.5)*8*devicePixelRatio,
-        vy: (Math.random()*-2 -2)*devicePixelRatio,
-        r: (4+Math.random()*6)*devicePixelRatio,
-        rot: Math.random()*Math.PI*2,
-        drot: (Math.random()-0.5)*0.3,
-        color: colors[Math.floor(Math.random()*colors.length)],
-        life: 0, maxLife: 90+Math.random()*60,
-        shape: Math.random()<0.33?'circle':Math.random()<0.5?'rect':'tri'
-      });
-    }
-  }
-  function step(){
-    ctx.clearRect(0,0,W,H);
-    let alive=false;
-    for(let p of particles){
-      p.life++; p.x+=p.vx; p.y+=p.vy; p.vy+=0.12*devicePixelRatio; p.rot+=p.drot;
-      if(p.life < p.maxLife){
-        alive=true;
-        ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.rot); ctx.fillStyle=p.color;
-        if(p.shape==='circle'){ ctx.beginPath(); ctx.arc(0,0,p.r*0.6,0,Math.PI*2); ctx.fill(); }
-        else if(p.shape==='rect'){ ctx.fillRect(-p.r, -p.r*0.5, p.r*2, p.r); }
-        else { ctx.beginPath(); ctx.moveTo(0,-p.r); ctx.lineTo(p.r, p.r); ctx.lineTo(-p.r, p.r); ctx.closePath(); ctx.fill(); }
-        ctx.restore();
-      }
-    }
-    particles = particles.filter(p=> p.life < p.maxLife && p.y < H+100*devicePixelRatio);
-    if(particles.length>0){ raf=requestAnimationFrame(step); running=true; } else { running=false; ctx.clearRect(0,0,W,H); }
-  }
-  function burst(x){ spawn(120, x); if(!running){ running=true; raf=requestAnimationFrame(step); } }
-  const toast = document.getElementById('xp-toast');
-  function showToast(msg){
-    if(!toast) return;
-    toast.textContent=msg; toast.classList.add('is-visible');
-    clearTimeout(toast._t); toast._t=setTimeout(()=>toast.classList.remove('is-visible'), 2400);
-  }
-  // observe reveals
-  const obsTargets = ['result-card','reveal-card','deadline-reveal','fader-reveal','chem-reveal','twin-verdict-wrap','pivot-verdict-wrap','arc-result'];
-  const mo = new MutationObserver((muts)=>{
-    for(const m of muts){
-      const el = m.target;
-      if(el.id==='result-card' && !el.hidden){
-        const pctEl = document.getElementById('scoreboard-pct');
-        const pct = pctEl ? pctEl.textContent : '';
-        burst(W*0.5);
-        showToast('Chimera solved '+ (pct||'') +' · +XP');
-      }
-      if((el.id==='deadline-final' || el.id==='fader-final' || el.id==='chem-final' || el.id==='twin-final' || el.id==='pivot-final' || el.id==='arc-result') && !el.hidden){
-        burst(W*0.5); showToast('Daily set complete · +XP 🔥');
-      }
-    }
-  });
-  obsTargets.forEach(id=>{
-    const el=document.getElementById(id);
-    if(el) mo.observe(el,{attributes:true, attributeFilter:['hidden']});
-  });
-  // share buttons
-  ['share-btn','deadline-share-btn','fader-share-btn','chem-share-btn','twin-share-btn','pivot-share-btn','arc-share-btn'].forEach(id=>{
-    const b=document.getElementById(id);
-    if(b) b.addEventListener('click', ()=>{ burst(W*0.5); showToast('Challenge link copied · +5 XP'); }, {passive:true});
-  });
-  // streak confetti on load if puzzle-day >1
-  window.addEventListener('load', ()=>{
-    setTimeout(()=>{
-      const dayEl=document.getElementById('puzzle-day');
-      if(dayEl && parseInt(dayEl.textContent||'0',10)%10===0){ /* milestone */ }
-    }, 1200);
-  });
-  window.VHPlayPolished = {burst, showToast};
-})();
+<script>/* web-vitals <50 lines */
+(function(){if('PerformanceObserver' in window){try{var v={};function b(k,x){v[k]=x;try{localStorage.setItem('vh-vitals-play',JSON.stringify(v))}catch{} if(console&&console.log) console.log('[vh play]',k,Math.round(x));}
+new PerformanceObserver(function(l){var e=l.getEntries().at(-1);if(e)b('LCP',e.startTime);}).observe({type:'largest-contentful-paint',buffered:true});
+new PerformanceObserver(function(l){var s=0;l.getEntries().forEach(function(en){if(!en.hadRecentInput)s+=en.value;});if(s)b('CLS',s);}).observe({type:'layout-shift',buffered:true});
+new PerformanceObserver(function(l){var e=l.getEntries()[0];if(e)b('INP',e.processingStart?e.processingStart-e.startTime:e.duration);}).observe({type:'event',buffered:true,durationThreshold:16});}catch(e){}}})();
 </script>
-<script type="module">
-  // Posecode animation switcher — archetype → move mapping, solo built from scratch
-  const select = document.getElementById('player-anim-select');
-  const player = document.getElementById('main-player');
-  if(select && player){
-    select.addEventListener('change', ()=>{
-      player.setAttribute('src', select.value);
-    });
-    // Auto-pick based on reveal text / TARGET archetype
-    const mapKeywords = {
-      'shooter': 'assets/posecode/basketball/jump-shot.posecode',
-      'scorer': 'assets/posecode/basketball/layup.posecode',
-      'playmaker': 'assets/posecode/basketball/crossover-dribble.posecode',
-      'point': 'assets/posecode/basketball/crossover-dribble.posecode',
-      'defen': 'assets/posecode/basketball/defensive-shuffle.posecode',
-      'rim': 'assets/posecode/basketball/defensive-shuffle.posecode',
-      'protector': 'assets/posecode/basketball/defensive-shuffle.posecode',
-      'rebound': 'assets/posecode/basketball/box-out.posecode',
-      'big': 'assets/posecode/basketball/box-out.posecode',
-      'bruiser': 'assets/posecode/basketball/box-out.posecode',
-      'free': 'assets/posecode/basketball/free-throw.posecode',
-      'pass': 'assets/posecode/basketball/chest-pass.posecode',
-      'general': 'assets/posecode/basketball/chest-pass.posecode',
-    };
-    function pickForText(txt){
-      txt = (txt||'').toLowerCase();
-      for(const [kw, file] of Object.entries(mapKeywords)){
-        if(txt.includes(kw)) return file;
-      }
-      return null;
-    }
-    // Observe reveal-body for archetype clues
-    const revealBody = document.getElementById('reveal-body');
-    if(revealBody){
-      const mo = new MutationObserver(()=>{
-        const txt = revealBody.textContent||'';
-        const file = pickForText(txt);
-        if(file && select.value !== file){
-          select.value = file;
-          player.setAttribute('src', file);
-        } else if(!file && /win|gold|silver|revealed/i.test(txt)){
-          // win → celebration
-          const celeb = 'assets/posecode/basketball/celebration.posecode';
-          if(select.value !== celeb){ select.value = celeb; player.setAttribute('src', celeb); }
-        }
-      });
-      mo.observe(revealBody, {childList:true, characterData:true, subtree:true});
-    }
-    // Also on page load, if TARGET exposed globally try to match cluster name
-    setTimeout(()=>{
-      try{
-        const t = window.TARGET || window.VH_TARGET || {};
-        const c = (t.clusterName || t.archetype || '') + ' ' + (document.body.textContent||'').slice(0,2000);
-        const file = pickForText(c);
-        if(file) { select.value = file; player.setAttribute('src', file); }
-      }catch{}
-    }, 1200);
+<script src="assets/error-boundary.js"></script>
+<script src="assets/mtnn.js"></script>
+<script src="assets/mtnn-worker.js"></script>
+<script src="assets/mtnn-onnx.js"></script>
+<script src="assets/insight-engine.js"></script>
+<script src="assets/skill-tower-viz.js"></script>
+<script src="assets/archetype-bridge.js"></script>
+<script src="assets/delight.js"></script>
+<script src="assets/hero-perf.js" defer></script>
+<script src="assets/keyboard-a11y.js" defer></script>
+
+<script>
+(function(){
+  const $ = sel => document.querySelector(sel);
+  const $$ = sel => Array.from(document.querySelectorAll(sel));
+  const storeKey = 'vh.daily.v2';
+  const streakKey = 'vh.streak';
+
+  let DATA=null, PLAYERS=[], TARGET_IDX=null, GUESSES=[], TARGET_EMB=null;
+  let A_IDX=null, B_IDX=null;
+  let initFailed=false;
+
+  function puzzleNum(){ try{ return InsightEngine.puzzleNumber(); }catch(e){ return 1; } }
+  function todayStr(){ return new Date().toLocaleDateString(undefined,{weekday:'short',month:'short',day:'numeric'}); }
+
+  function switchTab(tab){
+    $('#view-daily').classList.toggle('hidden', tab!=='daily');
+    $('#view-lab').classList.toggle('hidden', tab!=='lab');
+    $('#tab-daily').classList.toggle('is-active', tab==='daily');
+    $('#tab-lab').classList.toggle('is-active', tab==='lab');
+    $('#tab-daily').setAttribute('aria-selected', tab==='daily');
+    $('#tab-lab').setAttribute('aria-selected', tab==='lab');
+    $('#tab-daily').tabIndex = tab==='daily'?0:-1;
+    $('#tab-lab').tabIndex = tab==='lab'?0:-1;
+    const url = new URL(location.href);
+    url.searchParams.set('tab', tab);
+    history.replaceState(null,'',url.toString());
   }
+
+  function filteredPlayers(q){
+    q = (q||'').toLowerCase().trim();
+    if(!q) return [];
+    let arr = PLAYERS.filter(p=>{
+      const label = (p.name+' '+p.season).toLowerCase();
+      return label.includes(q) || p.name.toLowerCase().includes(q);
+    });
+    return arr.slice(0,12);
+  }
+
+  function attachSuggest(inputEl, suggestEl, onPick){
+    let activeIdx=-1, lastList=[];
+    function render(list){
+      lastList=list;
+      if(!list.length){ suggestEl.classList.add('hidden'); inputEl.setAttribute('aria-expanded','false'); return; }
+      suggestEl.innerHTML = list.map((p,i)=>`<li data-i="${i}" id="${suggestEl.id}-opt-${i}" role="option" aria-selected="${i===activeIdx?'true':'false'}" class="${i===activeIdx?'is-active':''}"><span><b>${p.name}</b> <span style="opacity:.7">${p.season}</span></span><span style="font-size:10px; opacity:.6">${p.idx}</span></li>`).join('');
+      suggestEl.classList.remove('hidden');
+      inputEl.setAttribute('aria-expanded','true');
+      if(activeIdx>=0 && lastList[activeIdx]){
+        inputEl.setAttribute('aria-activedescendant', suggestEl.id+'-opt-'+activeIdx);
+      } else {
+        inputEl.removeAttribute('aria-activedescendant');
+      }
+    }
+    inputEl.addEventListener('input', ()=>{
+      activeIdx=-1;
+      const q=inputEl.value;
+      const list=filteredPlayers(q);
+      render(list);
+    });
+    inputEl.addEventListener('keydown', (e)=>{
+      if(suggestEl.classList.contains('hidden')) return;
+      if(e.key==='ArrowDown'){ e.preventDefault(); activeIdx=Math.min(activeIdx+1, lastList.length-1); render(lastList);
+      } else if(e.key==='ArrowUp'){ e.preventDefault(); activeIdx=Math.max(activeIdx-1,0); render(lastList);
+      } else if(e.key==='Enter'){
+        if(activeIdx>=0 && lastList[activeIdx]){ e.preventDefault(); onPick(lastList[activeIdx]); suggestEl.classList.add('hidden'); inputEl.setAttribute('aria-expanded','false'); }
+      } else if(e.key==='Escape'){ suggestEl.classList.add('hidden'); inputEl.setAttribute('aria-expanded','false'); inputEl.removeAttribute('aria-activedescendant'); }
+    });
+    suggestEl.addEventListener('click', (e)=>{
+      const li=e.target.closest('li');
+      if(!li) return;
+      const i=parseInt(li.dataset.i,10);
+      if(lastList[i]){ onPick(lastList[i]); suggestEl.classList.add('hidden'); inputEl.setAttribute('aria-expanded','false'); }
+    });
+    document.addEventListener('click', (e)=>{
+      if(!suggestEl.contains(e.target) && e.target!==inputEl) { suggestEl.classList.add('hidden'); inputEl.setAttribute('aria-expanded','false'); }
+    });
+  }
+
+  function loadState(){
+    try{
+      const raw=localStorage.getItem(storeKey);
+      if(!raw) return { puzzle: puzzleNum(), guesses: [] };
+      const obj=JSON.parse(raw);
+      if(obj.puzzle!==puzzleNum()) return { puzzle:puzzleNum(), guesses:[] };
+      return obj;
+    }catch{ return { puzzle:puzzleNum(), guesses:[] }; }
+  }
+  function saveState(){
+    try{ localStorage.setItem(storeKey, JSON.stringify({ puzzle:puzzleNum(), guesses:GUESSES })); }catch(e){
+      try{ window.dispatchEvent(new CustomEvent('vh:storage-full',{detail:{error:String(e)}})); }catch(_){}
+    }
+  }
+  function loadStreak(){
+    try{ const raw=localStorage.getItem(streakKey); if(!raw) return 0; const obj=JSON.parse(raw); return obj.streak||0; }catch{ return 0; }
+  }
+  function saveStreak(streak){
+    try{ localStorage.setItem(streakKey, JSON.stringify({ streak, lastPuzzle:puzzleNum(), updated:Date.now() })); }catch(e){}
+  }
+
+  function renderGuesses(){
+    const cont=$('#daily-guesses');
+    if(!cont) return;
+    cont.innerHTML='';
+    GUESSES.forEach((g)=>{
+      try{
+        const pl = DATA && DATA._data && DATA._data.players ? DATA._data.players[g.idx] : {x:0,y:0,z:0};
+        const sim = g.sim!=null ? (g.sim*100).toFixed(1) : '?';
+        let bullets=[];
+        if(DATA && DATA._data && DATA._data.players){
+          const eraCtxTarget = InsightEngine.eraContext(TARGET_IDX);
+          const eraCtxGuess = InsightEngine.eraContext(g.idx);
+          const skillD = InsightEngine.skillDeltas(TARGET_IDX, g.idx);
+          const archT = InsightEngine.archetypeStory(TARGET_IDX);
+          const archG = InsightEngine.archetypeStory(g.idx);
+          const tp = DATA._data.players[g.idx];
+          const tPlace = DATA._data.players[TARGET_IDX];
+          const dx = (tp.x - tPlace.x).toFixed(2), dy=(tp.y - tPlace.y).toFixed(2), dz=(tp.z - tPlace.z).toFixed(2);
+          bullets.push(`<b>Full MTNN 48-d cosine ${sim}%</b> — L2 ${(Math.sqrt(Math.max(0,2-2*(g.sim||0)))).toFixed(3)} — PC1 Δ${dx} paint→perim, PC2 Δ${dy} load, PC3 Δ${dz} ball — ${Math.abs(parseFloat(dx))<0.1 && Math.abs(parseFloat(dy))<0.1 ? 'very close island (same 48-d cone)' : 'adjacent island'} · <span class="small-mono">emb 48-d L2-normed</span>`);
+          if(skillD && skillD.top3){
+            const src = skillD.source || 'heads';
+            const s = skillD.top3.map(d=>`${d.skill} ${d.from}→${d.to} (${d.delta>0?'+':''}${typeof d.delta==='number'? d.delta.toFixed(2): d.delta})`).join(', ');
+            bullets.push(`<b>Skill towers 48→16→1 delta:</b> ${s} — top diff ${skillD.top3[0].skill}. Source: ${src} · ${skillD.closeness.avgAbs||skillD.closeness.score} avgAbs`);
+          }
+          if(archT && archG){
+            const sameGlobal = archT.mtnnGlobal===archG.mtnnGlobal ? 'same global archetype' : `bridge ${archG.mtnnGlobalName} (${archG.prob? (archG.prob*100).toFixed(0)+'%':''}) → ${archT.mtnnGlobalName} (${archT.prob? (archT.prob*100).toFixed(0)+'%':''})`;
+            const probsG = archG.probs ? archG.probs.slice(0,2).map(p=>`${p.name} ${(p.p*100).toFixed(0)}%`).join(' · ') : '';
+            bullets.push(`<b>Archetype bridge — real 8-logits:</b> guess ${archG.gameClusterName} / ${archG.mtnnGlobalName} — target ${archT.gameClusterName} / ${archT.mtnnGlobalName} — ${sameGlobal}. Probs guess: ${probsG} · Era-native ${archG.eraNativeName} → ${archT.eraNativeName} · <span class="small-mono">${archG.source||''}</span>`);
+          }
+          if(eraCtxTarget && eraCtxGuess){
+            const mostDist = eraCtxGuess.mostDistinct;
+            bullets.push(`<b>Era-z per-100 σ:</b> ${eraCtxGuess.name} in ${eraCtxGuess.season} signature ${mostDist.label} ${mostDist.sigmaText} — target most distinct ${eraCtxTarget.mostDistinct.label} ${eraCtxTarget.mostDistinct.sigmaText} — fair cross-era via season norms`);
+          }
+          if(!bullets.length){
+            bullets.push(`Cosine ${sim}% — insight engine still loading fallback`);
+          }
+        } else {
+          bullets.push(`Guess ${g.name} ${g.season} — ${sim}% cosine 48-d — insight fallback loading…`);
+        }
+        const div=document.createElement('div');
+        div.className='guess-row';
+        div.innerHTML=`<div style="display:flex; justify-content:space-between; gap:8px; align-items:center;"><b>${g.name} ${g.season}</b><span class="pill" style="background:${sim>90?'#F0E442': sim>80?'#56B4E9':'#fff'}">${sim}% cos 48-d</span></div><ul class="insight-bullets">${bullets.map(b=>`<li>${b}</li>`).join('')}</ul>`;
+        cont.appendChild(div);
+      }catch(e){
+        const div=document.createElement('div');
+        div.className='guess-row';
+        div.innerHTML=`<b>${g.name} ${g.season}</b> — ${g.sim!=null?(g.sim*100).toFixed(1)+'%':''} — fallback insight (48-d)`;
+        cont.appendChild(div);
+      }
+    });
+  }
+
+  function renderCrossEra(){
+    const cont=$('#cross-era-list');
+    if(!cont || TARGET_IDX==null) return;
+    try{
+      const refSeason=DATA._data.players[TARGET_IDX].season;
+      const comps = InsightEngine.findCrossEraComps(TARGET_IDX, {k:6, crossEraOnly:true, refSeason: refSeason});
+      if(!comps.length && initFailed){ cont.innerHTML='<div class="card" style="box-shadow:2px 2px 0 var(--ink); padding:8px 10px; font-size:12px;">Cross-era map loading — 48-d nearest neighbors need embeddings. Offline cache works after first visit.</div>'; return; }
+      cont.innerHTML = comps.map(c=>`<div class="card" style="box-shadow:2px 2px 0 var(--ink); padding:8px 10px; display:flex; justify-content:space-between; align-items:center; gap:8px;"><span><b>${c.name}</b> ${c.season} · ${c.sim_pct}% sim</span><span class="small-mono">${c.player.x.toFixed(2)},${c.player.y.toFixed(2)},${c.player.z.toFixed(2)} · PC axes</span></div>`).join('');
+    }catch(e){
+      cont.innerHTML='<div class="card" style="box-shadow:2px 2px 0 var(--ink); padding:8px;">Cross-era map fallback — embeddings loading. Play still works.</div>';
+    }
+  }
+
+  function finishIfWon(){
+    const won = GUESSES.some(g=> g.idx===TARGET_IDX);
+    const over = won || GUESSES.length>=6;
+    if(!over) return;
+    const reveal=$('#daily-reveal');
+    reveal.classList.remove('hidden');
+    try{
+      const target = DATA._data.players[TARGET_IDX];
+      const arch = InsightEngine.archetypeStory(TARGET_IDX);
+      const era = InsightEngine.eraContext(TARGET_IDX);
+      const place = InsightEngine.explainPlacement(TARGET_IDX);
+      reveal.innerHTML=`<div class="card" style="border-color:${won?'var(--green)':'var(--verm)'}"><h2 class="hd" style="margin:0 0 6px;">${won?'✅ Solved':'❌ Revealed'} — ${target.name} ${target.season}</h2>
+        <div style="font-size:13px; line-height:1.5;">
+          <div><b>Archetype:</b> ${arch.tripleStory.join(' · ')}</div>
+          <div style="margin-top:6px;"><b>Era context:</b> ${era.summary}</div>
+          <div style="margin-top:6px;"><b>Placement:</b> ${place.story}</div>
+          <div style="margin-top:6px;"><b>Skill grades:</b> ${DATA._data.skillsList? DATA._data.skillsList.map((s,i)=>`${s}:${DATA._data.grades[TARGET_IDX][i]}`).join(' · ') : 'loading'}</div>
+        </div></div>`;
+    }catch(e){
+      const targetName = PLAYERS[TARGET_IDX] ? PLAYERS[TARGET_IDX].label : 'Mystery';
+      reveal.innerHTML=`<div class="card" style="border-color:${won?'var(--green)':'var(--verm)'}"><h2 class="hd">${won?'✅ Solved':'❌ Revealed'} — ${targetName}</h2><p style="font-size:12px;">Insight reveal fallback — 48-d model still loading, but you ${won?'solved it':'reached max'}. Reload to see archetype bridge.</p></div>`;
+    }
+    if(won){
+      const st=loadStreak()+1;
+      saveStreak(st);
+      $('#streak-pill').textContent='streak '+st;
+      try{ window.dispatchEvent(new CustomEvent('vh:daily-won',{detail:{streak:st}})); }catch(e){}
+    } else {
+      saveStreak(0);
+      $('#streak-pill').textContent='streak 0';
+    }
+  }
+
+  async function initDaily(){
+    try{
+      await InsightEngine.init();
+    }catch(e){
+      initFailed=true;
+      console.warn('InsightEngine init failed', e);
+      try{ window.dispatchEvent(new CustomEvent('vh:insight-failed',{detail:{error:String(e), message:e.message}})); }catch(_){}
+      $('#daily-fallback').classList.remove('hidden');
+      // still try to have PLAYERS from search_lite if available?
+      try{ DATA=InsightEngine; PLAYERS=InsightEngine.listPlayers(); }catch(_){ PLAYERS=[]; }
+      return;
+    }
+    DATA=InsightEngine;
+    PLAYERS=InsightEngine.listPlayers();
+    TARGET_IDX=InsightEngine.dailyIndex();
+    $('#puzzle-num').textContent=String(InsightEngine.puzzleNumber());
+    $('#puzzle-meta').textContent=`P#${InsightEngine.puzzleNumber()} · 48-d leakfree`;
+    $('#daily-date').textContent=todayStr();
+    $('#streak-pill').textContent='streak '+loadStreak();
+
+    // load MTNN for sim with retry events already handled in mtnn.js
+    await new Promise(res=>{ VHMtnn.load(()=>res()); });
+    if(VHMtnn._cache && !VHMtnn._cache()){
+      // mtnn failed
+      try{ window.dispatchEvent(new CustomEvent('vh:mtnn-failed',{detail:{error:'cache false'}})); }catch(_){}
+      $('#daily-fallback').classList.remove('hidden');
+      $('#daily-fallback').innerHTML='48-d embeddings failed — playing with lite search 617KB fallback. <button onclick="location.reload()" class="btn btn-accent" style="min-height:36px">Retry</button> <a href="/offline.html" class="btn" style="min-height:36px">Offline →</a>';
+    }
+    try{ TARGET_EMB = VHMtnn.rowVector(TARGET_IDX); }catch(e){ TARGET_EMB=null; }
+
+    // restore guesses
+    const state=loadState();
+    GUESSES=[];
+    for(const g of state.guesses){
+      const idx=g.idx;
+      let sim=0;
+      try{ sim = VHMtnn.sim(TARGET_IDX, idx); }catch(e){ sim= g.sim||0; }
+      const pl = PLAYERS[idx] || {name:'?',season:''};
+      GUESSES.push({ idx, name: pl.name, season: pl.season, sim });
+    }
+    renderGuesses();
+    renderCrossEra();
+    finishIfWon();
+
+    // attach suggest
+    attachSuggest($('#daily-input'), $('#daily-suggest'), (p)=>{
+      $('#daily-input').value=p.label;
+      $('#daily-input').dataset.idx=p.idx;
+    });
+
+    function doGuess(){
+      const input=$('#daily-input');
+      const raw=input.value.trim();
+      let idx = input.dataset.idx ? parseInt(input.dataset.idx,10) : null;
+      if(idx==null){
+        const match = PLAYERS.find(pp=> (pp.name+' '+pp.season).toLowerCase()===raw.toLowerCase());
+        if(match) idx=match.idx;
+        else {
+          const list=filteredPlayers(raw);
+          if(list[0]) idx=list[0].idx;
+        }
+      }
+      if(idx==null) { alert('Pick a player-season from suggestions'); return; }
+      if(GUESSES.some(g=> g.idx===idx)){ alert('Already guessed'); return; }
+      if(GUESSES.length>=6){ alert('6 guesses max'); return; }
+      let sim=0; try{ sim = VHMtnn.sim(TARGET_IDX, idx); }catch(e){ sim=0; }
+      const pl = PLAYERS[idx];
+      GUESSES.push({ idx, name:pl.name, season:pl.season, sim });
+      saveState();
+      input.value=''; delete input.dataset.idx;
+      $('#daily-suggest').classList.add('hidden');
+      renderGuesses();
+      renderCrossEra();
+      finishIfWon();
+    }
+
+    $('#daily-guess-btn').addEventListener('click', doGuess);
+    $('#daily-input').addEventListener('keydown', (e)=>{ if(e.key==='Enter'){ doGuess(); } });
+
+    $('#daily-share').addEventListener('click', ()=>{
+      const won=GUESSES.some(g=> g.idx===TARGET_IDX);
+      const grid=GUESSES.map(g=>{
+        const s=g.sim;
+        if(s>=0.9) return '🟩';
+        if(s>=0.8) return '🟨';
+        return '⬜';
+      }).join('');
+      const text=`Vector Hoops #${InsightEngine.puzzleNumber()} ${won?GUESSES.length+'/6':GUESSES.length+'/6 X'} ${grid}\nhttps://hoops.dumbmodel.com/play?tab=daily\n12,966 seasons as sky`;
+      if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(text).then(()=>{ $('#daily-share').textContent='Copied!'; setTimeout(()=>$('#daily-share').textContent='Share',1200); }).catch(()=>{ alert(text); }); } else { alert(text); }
+    });
+
+    $('#daily-how').addEventListener('click', ()=>{ $('#why-sheet').classList.remove('hidden'); $('#why-close').focus(); });
+    $('#why-close').addEventListener('click', ()=>{ $('#why-sheet').classList.add('hidden'); $('#daily-how').focus(); });
+  }
+
+  function renderLabResult(){
+    if(A_IDX==null || B_IDX==null) return;
+    try{
+      const fuse = InsightEngine.fuseAndSearch(A_IDX,B_IDX,6);
+      const pa = PLAYERS[A_IDX], pb=PLAYERS[B_IDX];
+      $('#lab-tile-a').textContent=pa.name[0]||'A';
+      $('#lab-tile-b').textContent=pb.name[0]||'B';
+      $('#lab-tile-c').textContent='?';
+      const best = fuse.nearest[0];
+      const archA = InsightEngine.archetypeStory(A_IDX);
+      const archB = InsightEngine.archetypeStory(B_IDX);
+      const archBest = best ? InsightEngine.archetypeStory(best.idx) : null;
+      const eraA = InsightEngine.eraContext(A_IDX);
+      const eraB = InsightEngine.eraContext(B_IDX);
+
+      const headsA = VHMtnn.getHeads ? VHMtnn.getHeads(A_IDX) : null;
+      const fusedHeads = fuse.fuseHeads || null;
+      const simDetails = fusedHeads ? (() => {
+        const arch = fuse.archetypeBlend ? fuse.archetypeBlend.map(a=>`${a.name} ${(a.p*100).toFixed(0)}%`).join(' · ') : '';
+        const topSkills = fusedHeads.skills ? Array.from(fusedHeads.skills).map((v,i)=>({k:(InsightEngine._data.mtnnArch?InsightEngine._data.mtnnArch.skillKeys[i]:'s'+i), v:v})).sort((a,b)=>b.v-a.v).slice(0,3) : [];
+        return {arch, topSkills};
+      })() : null;
+
+      $('#lab-eq-text').textContent = `${pa.name} ${pa.season} + ${pb.name} ${pb.season} = ${best? best.sim_pct+'% '+best.name+' '+best.season : 'fusing...'}`;
+      $('#lab-insight-main').innerHTML=
+        `<div class="pill" style="display:inline-block; background:var(--yellow); margin-bottom:6px; font-weight:900;">FULL MTNN 48-d + 45-d heads · ${pa.name} ${pa.season} + ${pb.name} ${pb.season} = ${best? best.sim_pct+'% '+best.name+' '+best.season+' — L2 '+(best.dist.toFixed(3)) : '...'}</div>
+        <div style="margin-top:6px;"><b>Why this link exists (impossible before era-z + contrastive):</b> PC1 Δ ${(pa.x-pb.x).toFixed(2)} paint vs perimeter, PC2 Δ ${(pa.y-pb.y).toFixed(2)} load, PC3 Δ ${(pa.z-pb.z).toFixed(2)} ball-in-hand. Fused embedding ${(fuse.xyz.x).toFixed(2)},${(fuse.xyz.y).toFixed(2)},${(fuse.xyz.z).toFixed(2)} sits near ${best?best.name:''} — same island in 48-d.</div>
+        <div style="margin-top:6px;"><b>Archetype bridge — real 8-logits softmax:</b> A ${archA.mtnnGlobalName} ${archA.prob? '('+(archA.prob*100).toFixed(0)+'%)':''} (${archA.gameClusterName}) + B ${archB.mtnnGlobalName} ${archB.prob? '('+(archB.prob*100).toFixed(0)+'%)':''} (${archB.gameClusterName}) → fused predicts ${simDetails?simDetails.arch: (archBest?archBest.mtnnGlobalName:'?')} . Era-native ${archA.eraNativeName} + ${archB.eraNativeName} → lineage.</div>
+        <div style="margin-top:6px;"><b>Era context — per-100 z fair:</b> A most distinct ${eraA.mostDistinct.label} ${eraA.mostDistinct.sigmaText}, B ${eraB.mostDistinct.label} ${eraB.mostDistinct.sigmaText} — FG3A μ ${eraA.fg3aEvolution?eraA.fg3aEvolution.thenMu.toFixed(1)+'→'+eraA.fg3aEvolution.nowMu.toFixed(1):'evolution'} era proves why z matters.</div>
+        ${fusedHeads? `<div style="margin-top:6px;"><b>Skill towers 48→16→1 (18):</b> top fused ${simDetails.topSkills.map(s=>s.k+' '+s.v.toFixed(2)).join(' · ')} — from real heads blend ${(VHMtnn.HEAD_DIMS?VHMtnn.HEAD_DIMS.total:'')}d.</div>` : '' }
+        <div class="small-mono" style="margin-top:6px; opacity:.7;">Source: ${fuse.source || 'full MTNN'} · model v5_concat_b2_h160_t32_d48_mlp128 · 224K params · leakfree player split recall@10 0.977 composite 0.7937</div>`;
+
+      $('#lab-pc1').innerHTML=`PC1 paint→perimeter — population influence bio 1.0 / shotmix 0.918 · Jacobian mean ${ (InsightEngine._data.mtnnArch? 'bio drives embedding 0.226':'') }<br/>A x=${pa.x.toFixed(2)} ${pa.x>0.6?'glass/rim tip':'perimeter'}, B x=${pb.x.toFixed(2)}, fused x=${fuse.xyz.x.toFixed(2)} → ${fuse.xyz.x>0.66?'paint tip':'perim side'}`;
+      $('#lab-pc2').innerHTML=`PC2 scoring load — vol influence 1.0 for next_profile<br/>A y=${pa.y.toFixed(2)}, B y=${pb.y.toFixed(2)}, fused y=${fuse.xyz.y.toFixed(2)} — load avg ${(fuse.xyz.y*100).toFixed(0)}%`;
+      $('#lab-pc3').innerHTML=`PC3 ball-in-hand — tracking drives skills 1.0<br/>A z=${pa.z.toFixed(2)}, B z=${pb.z.toFixed(2)}, fused z=${fuse.xyz.z.toFixed(2)} — playmaking blend fused heads pos ${(fusedHeads? 'real heads' : '')}`;
+
+      const nearestCont=$('#lab-nearest');
+      nearestCont.innerHTML= fuse.nearest.map(n=>`<div class="card" style="box-shadow:2px 2px 0 var(--ink); padding:8px 10px; display:flex; justify-content:space-between; gap:8px;"><span><b>${n.name}</b> ${n.season} — ${n.sim_pct}% cos 48-d</span><span class="small-mono">L2 ${n.dist.toFixed(3)} · x${n.x.toFixed(2)} y${n.y.toFixed(2)} z${n.z.toFixed(2)}</span></div>`).join('');
+      if(best) $('#lab-tile-c').textContent=best.name[0]||'?';
+
+      const skillsCont=$('#lab-skills');
+      if(fusedHeads && InsightEngine._data.mtnnArch){
+        const keys=InsightEngine._data.mtnnArch.skillKeys;
+        const rawSkills=Array.from(fusedHeads.skills);
+        const rows=keys.map((k,i)=>{
+          const raw=rawSkills[i]||0;
+          const grade=fuse.skillBlend? fuse.skillBlend[i]: Math.round(raw*15+50);
+          const pct=Math.max(0,Math.min(100,grade));
+          return `<div class="skill-cell" title="raw ${raw.toFixed(3)}"><b>${k}</b> ${grade} <span class="small-mono" style="opacity:.6">${raw>0?'+':''}${raw.toFixed(2)}</span><div class="bar"><i style="width:${pct}%"></i></div></div>`;
+        }).join('');
+        skillsCont.innerHTML=rows+`<div class="small-mono" style="margin-top:6px; grid-column:1/-1; opacity:.6;">Skill towers tower 48→16→1 per skill, 18 skills, blended (A+B)/2. Transparent grades 0-99 shown as bars.</div>`;
+      } else if(fuse.skillBlend){
+        skillsCont.innerHTML = InsightEngine._data.skillsList ? InsightEngine._data.skillsList.map((sk,i)=>{
+          const v=fuse.skillBlend[i];
+          const pct=Math.max(0,Math.min(100,v));
+          return `<div class="skill-cell"><b>${sk}</b> ${v}<div class="bar"><i style="width:${pct}%"></i></div></div>`;
+        }).join('') : '<div class="small-mono">Skill blend fallback — heads loading</div>';
+      }
+      const archEl = $('#lab-archetype');
+      if(archBest && archBest.probs){
+        const bars = archBest.probs.slice(0,4).map(p=>`<div style="display:flex; gap:6px; align-items:center;"><span style="width:140px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${p.name}</span><div class="bar" style="flex:1; height:8px;"><i style="width:${(p.p*100).toFixed(0)}%"></i></div><span class="small-mono">${(p.p*100).toFixed(0)}%</span></div>`).join('');
+        archEl.innerHTML = `<b>${archBest.name} ${archBest.season}</b> — ${archBest.story}<br/><div style="margin-top:6px;">${bars}</div><span class="small-mono" style="opacity:.6;">source ${archBest.source} · 8-logits softmax</span>`;
+      } else {
+        archEl.innerHTML = archBest ? `<b>${archBest.name} ${archBest.season}</b> — ${archBest.story}<br/><span class="small-mono">${archBest.tripleStory.join(' · ')}</span>` : '—';
+      }
+      $('#lab-result').classList.remove('hidden');
+      try{ window.dispatchEvent(new CustomEvent('vh:fusion-done',{detail:{a:A_IDX,b:B_IDX,best:best?best.idx:null}})); }catch(e){}
+    }catch(e){
+      console.warn('lab render failed', e);
+      try{ window.dispatchEvent(new CustomEvent('vh:insight-failed',{detail:{message:e.message}})); }catch(_){}
+      $('#lab-eq-text').textContent='Fusion fallback — embeddings loading. Try random blend again.';
+      $('#lab-result').classList.remove('hidden');
+      $('#lab-result').innerHTML=`<div class="card" role="alert" style="border-color:var(--verm)">Fusion insight failed to load — offline cache may need refresh. ${e.message}. <button onclick="location.reload()" class="btn btn-accent" style="min-height:36px">Retry 1s/2s/4s</button></div>`;
+    }
+  }
+
+  async function initLab(){
+    try{ await InsightEngine.init(); }catch(e){
+      try{ window.dispatchEvent(new CustomEvent('vh:insight-failed',{detail:{message:e.message}})); }catch(_){}
+      return;
+    }
+    DATA=InsightEngine;
+    PLAYERS=InsightEngine.listPlayers();
+    attachSuggest($('#lab-a-input'), $('#lab-a-suggest'), (p)=>{
+      A_IDX=p.idx;
+      $('#lab-a-input').value=p.label;
+      $('#lab-a-input').dataset.idx=p.idx;
+      $('#lab-tile-a').textContent=p.name[0];
+      renderLabResult();
+    });
+    attachSuggest($('#lab-b-input'), $('#lab-b-suggest'), (p)=>{
+      B_IDX=p.idx;
+      $('#lab-b-input').value=p.label;
+      $('#lab-b-input').dataset.idx=p.idx;
+      $('#lab-tile-b').textContent=p.name[0];
+      renderLabResult();
+    });
+    $('#lab-fuse-btn').addEventListener('click', renderLabResult);
+    $('#lab-random').addEventListener('click', ()=>{
+      const r1=Math.floor(Math.random()*PLAYERS.length);
+      let r2=Math.floor(Math.random()*PLAYERS.length);
+      while(r2===r1) r2=Math.floor(Math.random()*PLAYERS.length);
+      A_IDX=r1; B_IDX=r2;
+      $('#lab-a-input').value=PLAYERS[r1].label;
+      $('#lab-b-input').value=PLAYERS[r2].label;
+      renderLabResult();
+    });
+    $('#lab-preset-jr').addEventListener('click', ()=>{
+      const find = (q)=> PLAYERS.findIndex(p=> p.label.toLowerCase().includes(q));
+      let j = find('jokic 2022-23'); if(j<0) j=find('jokic');
+      let r = find('rodman 1997-98'); if(r<0) r=find('rodman');
+      if(j>=0 && r>=0){ A_IDX=j; B_IDX=r; $('#lab-a-input').value=PLAYERS[j].label; $('#lab-b-input').value=PLAYERS[r].label; renderLabResult(); }
+    });
+    $$('#lab-presets [data-preset]').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const preset=btn.dataset.preset;
+        A_IDX=Math.floor(Math.random()*PLAYERS.length); B_IDX=Math.floor(Math.random()*PLAYERS.length);
+        $('#lab-a-input').value=PLAYERS[A_IDX].label; $('#lab-b-input').value=PLAYERS[B_IDX].label;
+        renderLabResult();
+        try{ window.dispatchEvent(new CustomEvent('vh:equation-shuffle')); }catch(e){}
+      });
+    });
+  }
+
+  (async ()=>{
+    try{
+      const params=new URLSearchParams(location.search);
+      const tab=params.get('tab')||'daily';
+      switchTab(tab);
+      $('#tab-daily').addEventListener('click', ()=>switchTab('daily'));
+      $('#tab-lab').addEventListener('click', ()=>switchTab('lab'));
+      await Promise.all([initDaily(), initLab()]);
+    }catch(e){
+      console.warn('play init fail', e);
+      try{ window.dispatchEvent(new CustomEvent('vh:insight-failed',{detail:{message:e.message}})); }catch(_){}
+      const fb=document.getElementById('daily-fallback');
+      if(fb){ fb.classList.remove('hidden'); fb.innerHTML='Initialization failed — offline mode available. '+e.message+' <button onclick="location.reload()" class="btn" style="min-height:36px">Retry</button> <a href="/offline.html" class="btn" style="min-height:36px">Offline →</a>'; }
+    }
+  })();
+})();
+// PWA v8 registration + update toast — 100M DAU
+(function(){
+  if(!('serviceWorker' in navigator)) return;
+  const toast=document.createElement('div');
+  toast.id='vh-update-toast-play';
+  toast.style.cssText='position:fixed; left:12px; right:12px; bottom:calc(68px + env(safe-area-inset-bottom)); z-index:99; display:none; justify-content:space-between; align-items:center; gap:10px; background:#1A150F; color:#FFFEF7; border:2.2px solid #FFFEF7; border-radius:12px; box-shadow:4px 4px 0 #1A150F; padding:10px 12px; font-family:ui-monospace,monospace; font-size:11px;';
+  toast.innerHTML='<span>🟢 Update — v8 core &lt;2MB, Daily+Lab offline</span><button id="vh-update-btn-play" style="min-height:36px; border:2px solid #FFFEF7; background:#F0E442; color:#1A150F; border-radius:999px; padding:0 12px; font-weight:900; cursor:pointer;">Update →</button>';
+  document.body.appendChild(toast);
+  function show(reg){ toast.style.display='flex'; document.getElementById('vh-update-btn-play').onclick=function(){ if(reg&&reg.waiting) reg.waiting.postMessage({type:'SKIP_WAITING'}); else location.reload(); }; }
+  let reloading=false;
+  navigator.serviceWorker.addEventListener('controllerchange', ()=>{ if(reloading) return; reloading=true; location.reload(); });
+  navigator.serviceWorker.register('/sw.js',{scope:'/'}).then(reg=>{
+    if(reg.waiting) show(reg);
+    reg.addEventListener('updatefound', ()=>{ const nw=reg.installing; if(!nw) return; nw.addEventListener('statechange', ()=>{ if(nw.state==='installed' && navigator.serviceWorker.controller) show(reg); }); });
+  }).catch(()=>{});
+})();
 </script>
 </body>
 </html>

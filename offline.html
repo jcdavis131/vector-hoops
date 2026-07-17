@@ -3,40 +3,134 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Vector Hoops — Offline · 12,966 seasons cached</title>
-<meta name="theme-color" content="#111111">
+<title>Offline — Vector Hoops · 12,966 seasons cached</title>
+<meta name="theme-color" content="#1A150F">
+<meta name="description" content="Offline · Daily Guess + Lab Fusion playable from cache. 48-d insights work offline.">
+<link rel="manifest" href="/manifest.json">
+<link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap" rel="stylesheet">
 <style>
-  :root{--paper:#FFFEF7; --ink:#111; --yellow:#F0E442; --blue:#0072B2; --verm:#D55E00;}
-  html,body{margin:0; padding:0; background:var(--paper); color:var(--ink); font-family:ui-sans-serif,system-ui; min-height:100vh; display:flex; flex-direction:column;}
-  main{flex:1; display:grid; place-items:center; padding:24px; box-sizing:border-box;}
-  .card{max-width:420px; width:100%; background:#fff; border:3px solid var(--ink); border-radius:18px; box-shadow:8px 8px 0 var(--ink); padding:18px; box-sizing:border-box; text-align:center;}
-  .badge{display:inline-block; background:var(--yellow); border:2px solid var(--ink); border-radius:999px; padding:4px 10px; font-family:ui-monospace,monospace; font-size:11px; font-weight:900; letter-spacing:.06em;}
-  h1{font-size:28px; line-height:.95; letter-spacing:-.03em; margin:12px 0 6px; font-weight:950;}
-  p{font-size:16px; line-height:1.65; margin:0 0 10px;}
-  .mono{font-family:ui-monospace,monospace; font-size:11px; opacity:.8;}
-  .btns{display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin-top:12px;}
-  .vh-btn{appearance:none; border:2px solid var(--ink); border-radius:999px; min-height:44px; padding:0 16px; font-weight:900; font-family:ui-monospace,monospace; cursor:pointer; text-decoration:none; display:inline-grid; place-items:center;}
-  .vh-btn--primary{background:var(--ink); color:#fff;}
-  .vh-btn--accent{background:var(--yellow); color:var(--ink); box-shadow:3px 3px 0 var(--ink);}
+:root{--paper:#FFFEF7; --ink:#1A150F; --soft:#3A332A; --muted:#6B6256; --yellow:#F0E442; --blue:#0072B2; --verm:#D55E00; --sky:#56B4E9; --green:#009E73; --radius:14px; --shadow:4px 4px 0 var(--ink); --mono:ui-monospace,SFMono-Regular,Menlo,monospace; --hd:"Architects Daughter", var(--mono);}
+*{box-sizing:border-box} html,body{margin:0; background:var(--paper); color:var(--ink); font:18px/1.65 ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,sans-serif; -webkit-font-smoothing:antialiased; min-height:100vh; display:flex; flex-direction:column;}
+a{color:var(--blue)} .mono{font-family:var(--mono); font-size:11px; letter-spacing:.06em; text-transform:uppercase;}
+.nav{position:sticky; top:0; padding:10px 14px; padding-top:calc(10px + env(safe-area-inset-top)); border-bottom:2.2px solid var(--ink); background:var(--paper); display:flex; justify-content:space-between; align-items:center; gap:10px;}
+.brand{font-weight:900; font-family:var(--mono); letter-spacing:.04em; text-transform:uppercase; font-size:14px}
+.brand span{color:var(--verm)}
+.page{max-width:820px; margin:0 auto; padding:18px clamp(14px,3vw,22px) calc(18px + env(safe-area-inset-bottom)); display:flex; flex-direction:column; gap:14px; width:100%;}
+.badge{display:inline-flex; gap:6px; align-items:center; background:var(--yellow); border:2.2px solid var(--ink); border-radius:999px; padding:5px 10px; box-shadow:2px 2px 0 var(--ink); font-weight:900; transform:rotate(-1deg); font-family:var(--mono); font-size:11px}
+.card{background:#fff; border:2.2px solid var(--ink); border-radius:14px; box-shadow:var(--shadow); padding:14px 16px;}
+.hd{font-family:var(--hd); margin:0;}
+.title{font-size:clamp(28px,6vw,40px); line-height:.95; letter-spacing:-.03em;}
+.sub{color:var(--soft); font-size:15px; line-height:1.5}
+.grid{display:grid; grid-template-columns:1fr; gap:10px} @media(min-width:720px){.grid{grid-template-columns:1fr 1fr}}
+.btn{appearance:none; min-height:48px; padding:12px 18px; border:2.2px solid var(--ink); border-radius:12px; background:#fff; color:var(--ink); font-family:var(--mono); font-weight:900; text-transform:uppercase; letter-spacing:.04em; box-shadow:3px 3px 0 var(--ink); cursor:pointer; display:inline-flex; align-items:center; justify-content:center; gap:8px; text-decoration:none;}
+.btn--primary{background:var(--ink); color:#fff}
+.btn--accent{background:var(--yellow)}
+.btn:active{transform:translate(2px,2px); box-shadow:1px 1px 0 var(--ink)}
+.chip{border:2px solid var(--ink); border-radius:999px; padding:4px 10px; background:#fff; font-family:var(--mono); font-size:10.5px; font-weight:800; box-shadow:2px 2px 0 var(--ink)}
+.pillrow{display:flex; flex-wrap:wrap; gap:8px}
+.sep{height:1px; background:var(--ink); opacity:.12; margin:6px 0}
+.insight{font-size:13px; line-height:1.5; border-left:3px solid var(--ink); padding-left:10px; margin:8px 0}
+footer{font-family:var(--mono); font-size:10px; color:var(--muted); text-align:center; line-height:1.5; padding:16px; border-top:2.2px solid var(--ink); margin-top:auto}
 </style>
 </head>
 <body>
-<main>
+<nav class="nav"><a class="brand" href="/">VECTOR <span>HOOPS</span> · 12,966</a><span class="mono">OFFLINE · v8-20260717</span></nav>
+<main class="page">
+  <div><span class="badge"><i style="width:8px; height:8px; border-radius:50%; background:#d55e00; display:inline-block"></i> OFFLINE · CACHED 12,966</span></div>
   <div class="card">
-    <div class="badge">OFFLINE · CACHED 12,966</div>
-    <h1>You’re offline — but the map is cached</h1>
-    <p>12,966 seasons lite-first (114KB gz) + 30 arenas + your team lock are saved for instant play. Reconnect for rivalry board and daily puzzle sync.</p>
-    <div class="btns">
-      <a class="vh-btn vh-btn--primary" href="/play">Play cached →</a>
-      <a class="vh-btn vh-btn--accent" href="/">Go home</a>
+    <h1 class="hd title">You’re offline — but Daily + Lab work from cache</h1>
+    <p class="sub"><b>2 loops, zero signal needed:</b> Daily Guess (Wordle for hoops) and Lab A+B=C fusion both run on 48-d MTNN embeddings + 617KB vectors_lite + skills cached. Insight cards — 48-d cosine, era-z σ, archetype bridge, cross-era twins like Rodman ’98 → Wemby ’24 82% — all compute locally.</p>
+    <div class="pillrow" style="margin-top:10px"><span class="chip">617K vectors_lite</span><span class="chip">468K skills</span><span class="chip">52K players</span><span class="chip">Core &lt;2MB</span><span class="chip">No 8.7M playoff_paths</span></div>
+    <div class="sep"></div>
+    <div class="grid" style="margin-top:8px">
+      <div><div class="mono" style="color:var(--blue)">Daily Guess · offline</div><p class="sub" style="font-size:13px; margin:4px 0 0">Last mystery loads from localStorage. 6 tries, 48-d warmth, skill deltas, archetype story — all offline. Streak saved locally.</p></div>
+      <div><div class="mono" style="color:var(--verm)">Lab Fusion · offline</div><p class="sub" style="font-size:13px; margin:4px 0 0">Fuse any two cached seasons → (A+B)/2 normalized 48-d → nearest real via cosine. PC1 paint→perim, PC2 load, PC3 ball-in-hand explained.</p></div>
     </div>
-    <p class="mono" style="margin-top:12px;">Free · No account · No ads · leakfree 0.977 · solo personal project</p>
-    <p class="mono">Tip: Add to Home Screen — n / p = next/prev arena, l = lock, / = search, ? = help</p>
+  </div>
+
+  <div class="grid">
+    <div class="card" id="last-card">
+      <div class="mono">Last cached puzzle</div>
+      <h2 class="hd" style="font-size:18px; margin:6px 0 4px" id="last-title">Checking local cache…</h2>
+      <div id="last-body" class="sub" style="font-size:13px">Reading <code>vh.daily.v2</code> + <code>vh.streak</code> from localStorage…</div>
+      <div class="pillrow" style="margin-top:10px"><span class="chip" id="streak-chip">streak —</span><span class="chip" id="guesses-chip">guesses —</span></div>
+      <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:12px">
+        <a class="btn btn--primary" href="/play?tab=daily">Play cached Daily →</a>
+        <a class="btn btn--accent" href="/play?tab=lab">Open Lab offline →</a>
+      </div>
+    </div>
+    <div class="card">
+      <div class="mono" style="color:var(--green)">Why this offline works — impossible before</div>
+      <div class="insight"><b>Era-honest:</b> per-100 z via <code>season_norms.json</code> μ/σ — 3-pt inflation handled, so 1998 vs 2024 fair.</div>
+      <div class="insight"><b>48-d MTNN:</b> 224K params, recall@10 0.977 leakfree, not box score — sees motor/spacing. Cosine works offline pure JS.</div>
+      <div class="insight"><b>8 archetypes + 12 DNA:</b> emergent from embeddings, not hand labels. Bridge Rodman ↔ Wemby both Off Glass + Rim Prot tip PC1.</div>
+      <div style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap"><span class="chip">PC1 paint→perim</span><span class="chip">PC2 load</span><span class="chip">PC3 ball</span><span class="chip">AAA Okabe-Ito</span></div>
+    </div>
+  </div>
+
+  <div class="card" style="display:flex; gap:10px; flex-wrap:wrap; align-items:center; justify-content:space-between">
+    <div>
+      <div class="mono">Connection</div>
+      <div class="sub" style="font-size:13px"><span id="online-status">Checking navigator.onLine…</span> · SW v8-20260717 · cache &lt;5MB core</div>
+    </div>
+    <div style="display:flex; gap:8px; flex-wrap:wrap">
+      <button class="btn btn--primary" onclick="location.reload()">Retry →</button>
+      <a class="btn" href="/">Home</a>
+      <button class="btn" id="clear-cache">Clear cache</button>
+    </div>
+  </div>
+
+  <div class="card mono" style="font-size:10px; color:var(--muted); text-transform:none; letter-spacing:0">
+    Solo personal project, no connection to employer, built with public/free-tier only — 2026-07-17 · Vector Hoops offline · Era-honest per-100 z · MTNN 48-d 0.977 R@10 CQS 66.29 · 8 archetypes 12 skill DNA · 12,966 seasons as navigable sky
   </div>
 </main>
+<footer>Tips: n/p next/prev, l lock team, / search, ? help · Add to Home Screen for instant offline daily.</footer>
 <script>
-// if back online, redirect after short
-window.addEventListener('online', function(){ setTimeout(function(){ location.href='/'; }, 700); });
+(function(){
+  const $ = s=> document.querySelector(s);
+  const statusEl = $('#online-status');
+  function updateOnline(){ statusEl.textContent = navigator.onLine ? 'Online — new Daily sync available' : 'Offline — playing cached'; }
+  window.addEventListener('online', ()=>{ updateOnline(); setTimeout(()=>{ location.href='/'; }, 800); });
+  window.addEventListener('offline', updateOnline);
+  updateOnline();
+
+  try {
+    const streakRaw = localStorage.getItem('vh.streak');
+    const dailyRaw = localStorage.getItem('vh.daily.v2');
+    const streak = streakRaw ? JSON.parse(streakRaw) : null;
+    const daily = dailyRaw ? JSON.parse(dailyRaw) : null;
+    const titleEl = $('#last-title');
+    const bodyEl = $('#last-body');
+    const streakChip = $('#streak-chip');
+    const guessesChip = $('#guesses-chip');
+    if (streak && streak.streak!=null) streakChip.textContent='streak '+streak.streak+' · lastP#'+(streak.lastPuzzle||'—');
+    else streakChip.textContent='streak 0 — new';
+    if (daily && daily.guesses) {
+      guessesChip.textContent = (daily.guesses.length||0)+'/6 guesses · P#'+daily.puzzle;
+      titleEl.textContent = 'Puzzle #'+daily.puzzle+' — '+daily.guesses.length+' guesses cached';
+      bodyEl.innerHTML = daily.guesses.map(g=> `<span class="chip" style="margin:2px">${g.name||g.idx} ${g.season||''}</span>`).join(' ') || 'No guesses yet — playable.';
+    } else {
+      titleEl.textContent = 'No cached puzzle — Daily available offline';
+      bodyEl.textContent = 'Core assets cached (vectors_lite 617K, skills 468K). Open Daily → get new mystery when online, then it stays offline.';
+      guessesChip.textContent='0/6 cached';
+    }
+  } catch(e){
+    $('#last-title').textContent='Cache check failed — still playable';
+    $('#last-body').textContent=String(e).slice(0,200);
+  }
+
+  const clearBtn = $('#clear-cache');
+  if (clearBtn) clearBtn.addEventListener('click', async ()=>{
+    if (!confirm('Clear Vector Hoops v8 cache?')) return;
+    try {
+      const keys = await caches.keys();
+      await Promise.all(keys.map(k=> caches.delete(k)));
+      localStorage.removeItem('vh.daily.v2');
+      alert('Cache cleared — reloading');
+      location.reload();
+    } catch(e){ alert('Clear failed '+e); }
+  });
+})();
 </script>
 </body>
 </html>

@@ -1,121 +1,96 @@
-/* sw.js — Vector Hoops PWA for 10M DAU
- * Cache-first for immutable assets, network-first for pages
- * Solo personal project, no connection to employer
- */
-const CACHE_NAME = 'vector-hoops-v7-20260715';
-const IMMUTABLE = [
+/* Solo personal project, no connection to employer, built with public/free-tier only */
+/* vector-hoops PWA v8-20260717 — 100M DAU prod grade: <2MB core, immutable cache-first BG update, HTML network-first, SWR assets, size guard <4MB, lazy Three.js */
+
+const CACHE_NAME = 'vector-hoops-v8-20260717';
+const CORE = [
   '/manifest.json',
   '/offline.html',
-  '/assets/vectors_lite.json',
-  '/assets/teams.json',
-  '/assets/players_lite.json',
   '/assets/og-embed.png',
-  '/assets/city-intro.css',
   '/assets/shell.css',
-  '/assets/hoops.css',
   '/assets/responsive.css',
   '/assets/final-qa.css',
-  '/assets/embedding-nebula.js',
-  '/assets/city-intro.js',
-  '/assets/hero-perf.js',
-  '/assets/landing-play.js',
-  '/assets/landing-equation.js',
-  '/assets/search-enhance.js',
-  '/assets/viral-share.js',
-  '/assets/team-leaderboard.js',
-  '/assets/push-retention.js',
-  '/assets/pwa-install.js',
-  '/assets/keyboard-a11y.js',
-  '/assets/seo-dynamic.js',
-  '/assets/error-boundary.js',
-  '/assets/delight.js',
-  '/assets/play-landing-bridge.js'
+  '/assets/mtnn.js',
+  '/assets/insight-engine.js',
+  '/assets/vectors_search_lite.json',
+  '/assets/players_lite.json',
+  '/assets/teams.json',
+  '/assets/season_norms.json'
 ];
-
-self.addEventListener('install', (event)=>{
-  event.waitUntil(
-    caches.open(CACHE_NAME).then(cache=> cache.addAll(IMMUTABLE.map(u=> new Request(u, {cache:'reload'}))).catch(()=>{})).then(()=> self.skipWaiting())
-  );
-});
-
-self.addEventListener('activate', (event)=>{
-  event.waitUntil(
-    caches.keys().then(keys=> Promise.all(keys.filter(k=>k!==CACHE_NAME).map(k=> caches.delete(k)))).then(()=> self.clients.claim())
-  );
-});
-
-function isAssetRequest(url){
-  return url.pathname.startsWith('/assets/') && (url.pathname.endsWith('.json') || url.pathname.endsWith('.js') || url.pathname.endsWith('.css') || url.pathname.endsWith('.png') || url.pathname.endsWith('.webp'));
-}
-
-self.addEventListener('fetch', (event)=>{
-  const url = new URL(event.request.url);
-  if(url.origin !== location.origin) return;
-  // Don't cache POST or chrome-extension
-  if(event.request.method !== 'GET') return;
-  if(isAssetRequest(url)){
-    // cache-first
-    event.respondWith(
-      caches.match(event.request).then(cached=>{
-        if(cached) return cached;
-        return fetch(event.request).then(resp=>{
-          if(resp && resp.ok){
-            const clone = resp.clone();
-            caches.open(CACHE_NAME).then(c=> c.put(event.request, clone));
-          }
-          return resp;
-        });
-      })
-    );
-  } else if(url.pathname === '/' || url.pathname === '/play' || url.pathname === '/play.html' || url.pathname.endsWith('.html')){
-    // network-first for HTML with offline fallback
-    event.respondWith(
-      fetch(event.request).then(resp=>{
-        if(resp && resp.ok){
-          const clone = resp.clone();
-          caches.open(CACHE_NAME).then(c=> c.put(event.request, clone));
-        }
-        return resp;
-      }).catch(()=> caches.match(event.request).then(c=> c || caches.match('/offline.html')).then(c=> c || caches.match('/')))
-    );
-  } else {
-    // try cache then network for other same-origin
-    event.respondWith(
-      caches.match(event.request).then(cached=>{
-        if(cached) return cached;
-        return fetch(event.request).catch(()=> caches.match('/offline.html'));
-      })
-    );
-  }
-});
-
-self.addEventListener('push', function(event){
-  var data = {};
-  try{ data = event.data ? event.data.json() : {}; }catch(e){ data = {title:'Vector Hoops', body:'Daily puzzle live — keep your streak 🔥'}; }
-  var title = data.title || 'Vector Hoops — puzzle live';
-  var body = data.body || 'Daily Chimera reset midnight CT. Your streak at risk 🔥';
-  event.waitUntil(
-    self.registration.showNotification(title, {
-      body: body,
-      icon: '/assets/og-embed.png',
-      badge: '/assets/og-embed.png',
-      tag: 'vector-hoops-daily',
-      renotify: false,
-      data: {url: '/play?utm_source=push&utm_medium=retention'}
-    })
-  );
-});
-
-self.addEventListener('notificationclick', function(event){
-  event.notification.close();
-  var url = (event.notification.data && event.notification.data.url) || '/play?utm_source=push_click';
-  event.waitUntil(clients.matchAll({type:'window'}).then(function(wins){
-    for(var i=0;i<wins.length;i++){
-      var w = wins[i];
-      if(w.url.indexOf(url.split('?')[0])!==-1 || w.url.indexOf('hoops.dumbmodel.com')!==-1){
-        return w.focus().then(function(){ return w.navigate ? w.navigate(url) : (w.location = url); });
-      }
-    }
-    return clients.openWindow(url);
+// Truly massive never-cache (8.7MB) — network only
+const DENY_CACHE = [
+  '/assets/playoff_paths.json',
+  '/assets/next_profile_eval.json',
+  '/assets/mtnn.onnx',
+  '/assets/mtnn.onnx.data'
+];
+const FULL_MTNN = [
+  '/assets/mtnn_embeddings.f32',
+  '/assets/mtnn_heads.f32',
+  '/assets/mtnn_arch.json',
+  '/assets/mtnn_meta.json',
+  '/assets/vectors_lite.json',
+  '/assets/archetype_lite.json',
+  '/assets/mtnn_map.json',
+  '/assets/vectors.json',
+  '/assets/skills.json',
+  '/assets/archetype_assignments.json'
+];
+function isDenied(p){ return DENY_CACHE.some(x=> p.includes(x)); }
+self.addEventListener('install', e=>{
+  self.skipWaiting();
+  e.waitUntil(caches.open(CACHE_NAME).then(cache=>{
+    return cache.addAll(CORE.map(u=> new Request(u,{cache:'reload'}))).catch(()=>Promise.allSettled(CORE.map(u=> cache.add(new Request(u,{cache:'reload'})))));
   }));
 });
+self.addEventListener('activate', e=>{
+  e.waitUntil((async()=>{
+    if('navigationPreload' in self.registration){ try{ await self.registration.navigationPreload.enable(); }catch{} }
+    const keys=await caches.keys(); await Promise.all(keys.filter(k=>k!==CACHE_NAME).map(k=>caches.delete(k))); await self.clients.claim();
+  })());
+});
+function isImmutable(u){ return CORE.includes(u.pathname) || FULL_MTNN.includes(u.pathname); }
+function isAsset(u){ return u.pathname.startsWith('/assets/') && (u.pathname.endsWith('.js')||u.pathname.endsWith('.css')||u.pathname.endsWith('.json')||u.pathname.endsWith('.png')||u.pathname.endsWith('.webp')||u.pathname.endsWith('.svg')||u.pathname.endsWith('.f32')); }
+self.addEventListener('fetch', e=>{
+  const req=e.request; if(req.method!=='GET') return; const url=new URL(req.url); if(url.origin!==location.origin) return;
+  if(isDenied(url.pathname)){ e.respondWith(fetch(req).catch(()=> new Response('',{status:504}))); return; }
+  if(req.mode==='navigate' || (req.headers.get('accept')||'').includes('text/html')){
+    e.respondWith((async()=>{
+      try{
+        const preload=await e.preloadResponse; if(preload){ const c=await caches.open(CACHE_NAME); c.put(req,preload.clone()).catch(()=>{}); return preload; }
+        const net=await fetch(req); if(net&&net.ok){ const c=await caches.open(CACHE_NAME); c.put(req,net.clone()).catch(()=>{}); } return net;
+      }catch{
+        const cached=await caches.match(req); if(cached) return cached;
+        const off=await caches.match('/offline.html'); if(off) return off; return caches.match('/')||new Response('Offline',{status:503});
+      }
+    })()); return;
+  }
+  if(isImmutable(url)){
+    e.respondWith((async()=>{
+      const cache=await caches.open(CACHE_NAME); const cached=await cache.match(req);
+      const fp=fetch(req).then(r=>{ if(r&&r.ok) cache.put(req,r.clone()).catch(()=>{}); return r; }).catch(()=>null);
+      if(cached){ e.waitUntil(fp); return cached; }
+      const net=await fp; return net||cached||Response.error();
+    })()); return;
+  }
+  if(isAsset(url)){
+    e.respondWith((async()=>{
+      const cache=await caches.open(CACHE_NAME); const cached=await cache.match(req);
+      const fp=fetch(req).then(r=>{
+        if(r&&r.ok){ const cl=r.headers.get('content-length'); if(!cl||parseInt(cl,10)<4000000) cache.put(req,r.clone()).catch(()=>{}); }
+        return r;
+      }).catch(()=>null);
+      if(cached){ e.waitUntil(fp); return cached; }
+      const net=await fp; return net||cached||new Response('',{status:504});
+    })()); return;
+  }
+  e.respondWith((async()=>{ const c=await caches.match(req); if(c) return c; try{ return await fetch(req);}catch{ return c||caches.match('/offline.html'); }})());
+});
+self.addEventListener('push', e=>{
+  let d={}; try{ d=e.data?e.data.json():{};}catch{} const t=d.title||'Vector Hoops'; const b=d.body||'Daily puzzle live — keep streak 🔥';
+  e.waitUntil(self.registration.showNotification(t,{body:b,icon:'/assets/og-embed.png',badge:'/assets/og-embed.png',tag:'vector-hoops-daily',data:{url:d.url||'/play?utm_source=push'}}));
+});
+self.addEventListener('notificationclick', e=>{
+  e.notification.close(); const url=(e.notification.data&&e.notification.data.url)||'/play?utm_source=push_click';
+  e.waitUntil((async()=>{ const wins=await clients.matchAll({type:'window',includeUncontrolled:true}); for(const w of wins){ if(w.url.includes(self.location.origin)){ await w.focus(); if('navigate' in w) try{ await w.navigate(url);}catch{ w.location=url;} else w.location=url; return; } } return clients.openWindow(url); })());
+});
+self.addEventListener('message', e=>{ if(e.data&&e.data.type==='SKIP_WAITING') self.skipWaiting(); });
