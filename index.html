@@ -83,6 +83,13 @@
       <a class="btn btn-primary btn-xl" href="/play?r=672" id="cta-primary">▶ Play — <span id="cta-past">Michael Jordan</span></a>
       <a class="btn" href="/play?mode=random" id="btn-random-hero" style="min-height:54px">🎲 Random</a>
     </div>
+    <div class="cta-row" id="pack-cta-row" style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+      <span class="small-mono" style="opacity:.7;text-transform:none;font-weight:800">Pack Battle — viral:</span>
+      <button class="btn" data-pack-hero="1" type="button" style="min-height:44px">⚡ Solo 1</button>
+      <button class="btn btn-accent" data-pack-hero="3" type="button" style="min-height:44px">🔥 Triple 3</button>
+      <button class="btn" data-pack-hero="5" type="button" style="min-height:44px;background:#fff">🏀 Full 5</button>
+      <span class="small-mono" id="pack-cta-hint" style="opacity:.55;text-transform:none;align-self:center">random grouping, same link = same stars</span>
+    </div>
 
     <div class="micro small-mono" style="text-transform:none;display:flex;gap:8px;align-items:center;margin-top:6px">
       <span class="pulse-dot"></span><span id="sky-fact-inline">Drag to rotate · hover any dot · ★ = Michael Jordan 97-98 placeholder</span>
@@ -118,17 +125,20 @@
 </div>
 
 <div id="viral-row" style="max-width:1180px;margin:10px auto 0;padding:0 clamp(14px,3.5vw,28px) calc(28px + 88px);display:grid;grid-template-columns:1.1fr .9fr;gap:12px">
-  <div class="card" id="random-rush-card" style="display:flex;flex-direction:column;gap:8px">
-    <div class="small-mono" style="display:flex;justify-content:space-between;align-items:center"><span>Random Rush · Endless</span><span class="pill" style="background:#fff">No streak penalty</span></div>
+  <div class="card" id="random-rush-card" style="display:flex;flex-direction:column;gap:10px;border-width:2.5px">
+    <div class="small-mono" style="display:flex;justify-content:space-between;align-items:center"><span style="display:flex;gap:6px;align-items:center"><span class="pill" style="background:var(--ink);color:#fff">📦 Pack Battle</span><span>Viral 1·3·5</span></span><span class="pill pill-yellow">Shareable challenge</span></div>
     <div style="display:flex;gap:10px;align-items:flex-start">
-      <div style="font-size:38px;line-height:1">🎲</div>
-      <div style="flex:1"><b style="font-family:'Architects Daughter',mono;font-size:18px;display:block">Spin a random All-Star</b><div style="font-size:12px;color:#555;margin-top:4px;line-height:1.45">Practice without breaking your daily streak. Every random creates a shareable challenge link <code style="font-size:10px;background:#FFFEF7;border:1px solid #ddd;padding:1px 5px;border-radius:6px">?r=ID</code> — friend gets same star.</div></div>
+      <div style="font-size:38px;line-height:1">⚡</div>
+      <div style="flex:1"><b style="font-family:'Architects Daughter',mono;font-size:18px;display:block">Pack Challenge — random All-Stars, same link for friends</b><div style="font-size:12px;color:#555;margin-top:4px;line-height:1.45">Random grouping of 1, 3 or 5 past All-Stars. Solve it, then share the <code style="font-size:10px;background:#FFFEF7;border:1px solid #ddd;padding:1px 5px;border-radius:6px">?pack=672-123-456</code> link — friends get identical pack. Streak-safe, beat your friend's score.</div></div>
     </div>
     <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px">
-      <a class="btn btn-accent" href="/play?mode=random" id="btn-random-rush">🎲 Random spin</a>
-      <button class="btn" id="btn-copy-random" type="button">Copy challenge link</button>
+      <button class="btn btn-primary" data-pack-card="1" type="button">⚡ Solo · 1</button>
+      <button class="btn btn-accent" data-pack-card="3" type="button">🔥 Triple · 3</button>
+      <button class="btn" data-pack-card="5" type="button" style="background:#fff">🏀 Full Court · 5</button>
+      <button class="btn" id="btn-copy-random" type="button" style="min-height:48px">Copy last link</button>
       <span class="small-mono" id="random-hint" style="align-self:center;opacity:.6;text-transform:none"></span>
     </div>
+    <div class="small-mono" style="text-transform:none;opacity:.6;font-size:10px;line-height:1.3">Each pack = unique names · reproducible link · add &s=2-3-0 for score battle</div>
   </div>
   <div class="card" id="streak-card" style="display:flex;flex-direction:column;gap:8px">
     <div class="small-mono" style="display:flex;justify-content:space-between;align-items:center"><span>🔥 Streak challenge · resets daily</span><span class="pill" id="streak-best-pill">best 0</span></div>
@@ -522,17 +532,12 @@ if(btnCopyRandom){
   btnCopyRandom.addEventListener('click', async function(){
     try{
       var st=window.VHPastModern? window.VHPastModern.state(): null;
-      // for random rush, we want to share the current daily? No, create a random challenge link from a random past
-      var pastId = st && st.target ? st.target.i : null;
-      // pick different random for fun if user hasn't spun
-      if(window.VHPastModern && Math.random()>0.5){
-        var rp = VHPastModern.pickRandomPast ? null : null; // don't repick to avoid state change, just use current
-      }
+      var pastId = st && st.target ? st.target.i : 672;
       var url = location.origin + '/play?r='+pastId;
       var txt = 'Random All-Star challenge — '+ (st? st.target.n+' '+st.target.s : 'past star') +' → modern twin? '+url;
       if(navigator.clipboard) await navigator.clipboard.writeText(txt);
-      showToast('Random challenge link copied — streak-free, share and compare');
-      btnCopyRandom.textContent='Copied!'; setTimeout(function(){ btnCopyRandom.textContent='Copy challenge link'; },1500);
+      showToast('Challenge link copied — streak-free');
+      btnCopyRandom.textContent='Copied!'; setTimeout(function(){ btnCopyRandom.textContent='Copy last link'; },1500);
     }catch(e){ showToast('Could not copy'); }
   });
 }
@@ -547,6 +552,35 @@ if(btnShareStreak){
     }catch(e){}
   });
 }
+// --- PACK BATTLE wiring ---
+function makePackAndGo(n){
+  try{
+    if(!window.VHPastModern || !VHPastModern.generateRandomPack){
+      // fallback to static url generating via mode=pack random
+      location.href = '/play?pack=random&n='+n;
+      return;
+    }
+    var entries = VHPastModern.generateRandomPack(n);
+    var ids = entries.map(function(e){return e.i;});
+    var url = VHPastModern.packShareUrl(ids);
+    location.href = url;
+  }catch(e){
+    console.warn('pack gen fail', e);
+    location.href = '/play?pack=random&n='+n;
+  }
+}
+document.querySelectorAll('[data-pack-hero]').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    var n=parseInt(btn.getAttribute('data-pack-hero')||btn.dataset.packHero,10)||3;
+    makePackAndGo(n);
+  });
+});
+document.querySelectorAll('[data-pack-card]').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    var n=parseInt(btn.getAttribute('data-pack-card')||btn.dataset.packCard,10)||3;
+    makePackAndGo(n);
+  });
+});
 })();
 </script>
 <footer class="site-footer"><div class="site-footer__links"><a href="/play">Play</a><a href="/model">Lab</a><a href="/methods">Methods</a><a href="/players">Players</a><a href="https://github.com/jcdavis131/vector-hoops" target="_blank" rel="noopener">GitHub</a></div><div class="site-footer__attribution">Every number recomputable from stats.nba.com · dumbmodel.com</div></footer>

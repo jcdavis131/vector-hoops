@@ -52,6 +52,151 @@
     if(window.VHMtnn && window.VHMtnn.loadAsync) await window.VHMtnn.loadAsync();
   }
 
+  // ---------- pack helpers ----------
+  function shuffleArray(arr){
+    const a = arr.slice();
+    for(let i=a.length-1;i>0;i--){
+      const j=Math.floor(Math.random()*(i+1));
+      const tmp=a[i]; a[i]=a[j]; a[j]=tmp;
+    }
+    return a;
+  }
+  function parseIdList(raw){
+    if(!raw) return [];
+    // split by dash, comma, underscore, space
+    return raw.split(/[-,_\s]+/).map(s=>s.trim()).filter(Boolean).map(s=>parseInt(s,10)).filter(n=>!Number.isNaN(n)&&n>=0);
+  }
+  function lookupPastById(id, past, lite, honorsMap){
+    // try pastPool first
+    let found = past.find(p=>p.i===id);
+    if(found) return found;
+    // fallback lite
+    const lf = lite.players.find(p=>p.i===id);
+    if(!lf) return null;
+    // validate all-star if possible
+    if(honorsMap){
+      const key = `${lf.n}|${lf.s}`;
+      const h = honorsMap[key];
+      if(!h || h.asg!==1){
+        // allow non-asg? For viral we allow but prefer asg. Keep if year <= PAST_MAX
+        const yr = parseYear(lf.s);
+        if(yr>PAST_MAX || yr<1996) return null;
+      }
+    }
+    return lf;
+  }
+  function generateRandomPack(n){
+    const size = Math.max(1, Math.min(5, n||3));
+    // dedupe pastPool by name unique
+    const byName = new Map();
+    for(const p of state.pastPool){
+      if(!byName.has(p.n)) byName.set(p.n, p);
+    }
+    let unique = Array.from(byName.values());
+    if(unique.length < size){
+      // fallback to full pastPool if not enough unique
+      unique = state.pastPool.slice();
+    }
+    const shuffled = shuffleArray(unique);
+    return shuffled.slice(0, size);
+  }
+  function startPackFromIds(ids){
+    if(!ids || !ids.length) return null;
+    // coerce to entries
+    const entries = [];
+    for(const id of ids){
+      const ent = lookupPastById(id, state.pastPool, state.searchLite, state.honors);
+      if(ent) entries.push(ent);
+    }
+    if(!entries.length) return null;
+    // dedupe by i (keep first)
+    const seen = new Set();
+    const deduped=[];
+    for(const e of entries){ if(!seen.has(e.i)){ seen.add(e.i); deduped.push(e); } }
+    if(!deduped.length) return null;
+    state.packEntries = deduped;
+    state.packIds = deduped.map(e=>e.i);
+    state.packSize = deduped.length;
+    state.packIndex = 0;
+    state.packResults = new Array(deduped.length).fill(null);
+    state.packCode = state.packIds.join('-');
+    state.isPack = true;
+    state.isPackComplete = false;
+    state.target = deduped[0];
+    state.targetIdx = state.target.i;
+    try{ computeClosest(); }catch(e){ console.warn('computeClosest pack fail', e); }
+    return state.target;
+  }
+  function generateAndStartPack(n){
+    const entries = generateRandomPack(n);
+    const ids = entries.map(e=>e.i);
+    startPackFromIds(ids);
+    return {code: state.packCode, ids: state.packIds, entries: state.packEntries};
+  }
+  function advancePack(resultObj){
+    // resultObj = {guesses, won, count} optional — if not provided, deduce from state.guesses
+    if(!state.isPack) return null;
+    const idx = state.packIndex;
+    if(!state.packResults) state.packResults = new Array(state.packSize).fill(null);
+    if(resultObj){
+      state.packResults[idx] = resultObj;
+    }else{
+      // build from state.guesses
+      const guesses = state.guesses || [];
+      const won = guesses.some(g=>g.rank===0);
+      state.packResults[idx] = {guesses: guesses.slice(), won: won, count: guesses.length, solved: won};
+    }
+    if(idx + 1 < state.packSize){
+      state.packIndex = idx + 1;
+      state.target = state.packEntries[state.packIndex];
+      state.targetIdx = state.target.i;
+      state.guesses = []; // reset internal
+      try{ computeClosest(); }catch(e){ console.warn('computeClosest advance',e); }
+      return state.target;
+    }else{
+      state.isPackComplete = true;
+      return null; // complete
+    }
+  }
+  function getPackState(){
+    if(!state.isPack) return {isPack:false};
+    // compute aggregates
+    let solved=0, totalGuesses=0;
+    const results = state.packResults || [];
+    for(const r of results){ if(r){ if(r.won) solved++; totalGuesses+=r.count||0; } }
+    const avg = results.filter(Boolean).length ? (totalGuesses / results.filter(Boolean).length) : 0;
+    return {
+      isPack:true,
+      size: state.packSize,
+      index: state.packIndex,
+      entries: state.packEntries,
+      ids: state.packIds,
+      results: state.packResults,
+      code: state.packCode,
+      complete: !!state.isPackComplete,
+      solved,
+      totalGuesses,
+      avg,
+      challengerScores: state.packChallengerScores || null,
+      challengerRaw: state.packChallengerRaw || null
+    };
+  }
+  function packShareUrl(ids, scores){
+    const origin = (typeof location!=='undefined' && location.origin) ? location.origin : '';
+    const list = Array.isArray(ids) ? ids : state.packIds || [];
+    let url = origin + '/play?pack=' + list.join('-');
+    if(scores && scores.length){
+      url += '&s=' + scores.join('-');
+    }
+    return url;
+  }
+  function packChallengeUrlWithScores(){
+    const ps = getPackState();
+    if(!ps.isPack) return location.href;
+    const scores = (ps.results||[]).map(r=> r ? (r.won ? r.count : 0) : 0);
+    return packShareUrl(ps.ids, scores);
+  }
+
   async function init(){
     const [lite, hon] = await Promise.all([fetchJSON(SEARCH_LITE_URL), fetchJSON(HONORS_URL)]);
     state.searchLite = lite;
@@ -101,8 +246,8 @@
 
     await ensureMtnn();
 
-    // pick daily — supports ?day=YYYY-MM-DD for challenge links, ?r=pastIdx for random challenges, ?mode=random
-    let urlDay=null, urlRandomId=null, modeParam=null;
+    // ----- parse all URL params (including pack) -----
+    let urlDay=null, urlRandomId=null, modeParam=null, packParam=null, packSizeParam=null, scoresParam=null;
     try{
       const sp=new URLSearchParams(location.search);
       const d=sp.get('day')||sp.get('d');
@@ -113,6 +258,11 @@
         if(!Number.isNaN(n)) urlRandomId=n;
       }
       modeParam = sp.get('mode')||sp.get('m');
+      packParam = sp.get('pack')||sp.get('p')||sp.get('packCode');
+      packSizeParam = sp.get('n')||sp.get('size')||sp.get('packSize');
+      scoresParam = sp.get('s')||sp.get('scores')||sp.get('score');
+      state._rawPackParam = packParam;
+      state._rawScoresParam = scoresParam;
     }catch{}
     const today = new Date();
     const todayKey = today.toISOString().slice(0,10);
@@ -122,9 +272,78 @@
     state.urlDay = urlDay;
     state.urlRandomId = urlRandomId;
     state.modeParam = modeParam;
+    // default flags pre-pack
     state.isRandom = !!(urlRandomId!=null || (modeParam && modeParam.toLowerCase()==='random'));
     state.isChallenge = !!urlDay && urlDay!==todayKey;
     state.isDaily = !state.isRandom && !state.isChallenge;
+    state.isPack = false;
+    state.packEntries = [];
+    state.packIds = [];
+    state.packSize = 0;
+    state.packIndex = 0;
+    state.packResults = [];
+    state.packCode = '';
+    state.isPackComplete = false;
+    state.packChallengerScores = null;
+    state.packChallengerRaw = scoresParam || null;
+
+    // ----- pack logic (highest priority) -----
+    let packHandled = false;
+    if(packParam){
+      if(packParam.toLowerCase()==='random'){
+        let n = parseInt(packSizeParam||'3',10);
+        if(!n || isNaN(n)) n = 3;
+        n = Math.max(1, Math.min(5, n));
+        // defer generation until pastPool ready — generate now
+        const entries = generateRandomPack(n);
+        const ids = entries.map(e=>e.i);
+        startPackFromIds(ids);
+        packHandled = true;
+        // parse challenger scores if present
+        if(scoresParam){
+          const sIds = parseIdList(scoresParam);
+          // scores are per puzzle attempts (0=unsolved)
+          state.packChallengerScores = sIds;
+        }
+      }else{
+        const ids = parseIdList(packParam);
+        if(ids.length){
+          const t = startPackFromIds(ids);
+          if(t){
+            packHandled = true;
+            if(scoresParam){
+              const sIds = parseIdList(scoresParam);
+              state.packChallengerScores = sIds;
+            }
+          }
+        }
+      }
+    }
+    // support ?mode=pack&n=3 when pack param not present
+    if(!packHandled && modeParam && modeParam.toLowerCase()==='pack'){
+      let n = parseInt(packSizeParam||'3',10);
+      if(isNaN(n) || !n) n=3;
+      n=Math.max(1,Math.min(5,n));
+      const entries = generateRandomPack(n);
+      const ids = entries.map(e=>e.i);
+      startPackFromIds(ids);
+      packHandled = true;
+    }
+
+    if(packHandled){
+      // override daily flags
+      state.isPack = true;
+      state.isDaily = false;
+      state.isChallenge = false;
+      state.isRandom = false;
+      // puzzleNum for pack: use pack code hash? For display use index+1
+      state.puzzleNum = 1; // placeholder for per-puzzle override in UI
+      if(state.targetIdx!=null){
+        try{ computeClosest(); }catch(e){ console.warn('computeClosest pack', e); }
+      }
+      return state;
+    }
+
     // puzzle num from dayKey 2026-07-01 epoch
     const dayObj = new Date(dayKey+'T12:00:00Z');
     const puzzleNum = Math.floor((dayObj - new Date('2026-07-01T00:00:00Z'))/86400000)+1;
@@ -298,6 +517,15 @@
     fmtHMS,
     OKABE,
     ARCH_NAMES,
-    parseYear
+    parseYear,
+    // pack API
+    generateRandomPack,
+    startPackFromIds,
+    generateAndStartPack,
+    advancePack,
+    getPackState,
+    packShareUrl,
+    packChallengeUrlWithScores,
+    parseIdList
   };
 })();

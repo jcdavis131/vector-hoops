@@ -112,6 +112,60 @@
     ctx.font='700 14px ui-monospace'; ctx.fillStyle='#444'; ctx.fillText('12,966 seasons as rotating 3D map · trends · lab · methods',36,H-28);
     return c;
   }
+  function drawPackCard(opts){
+    var W=1080, H=1350;
+    var c=document.createElement('canvas'); c.width=W; c.height=H; var ctx=c.getContext('2d');
+    ctx.fillStyle='#FFFEF7'; ctx.fillRect(0,0,W,H);
+    ctx.strokeStyle='#1A150F'; ctx.lineWidth=18; ctx.strokeRect(10,10,W-20,H-20);
+    ctx.fillStyle='#1A150F'; ctx.fillRect(0,0,W,110);
+    ctx.fillStyle='#fff'; ctx.font='900 30px ui-monospace,monospace';
+    ctx.fillText('VECTOR HOOPS · PACK CHALLENGE',28,42);
+    ctx.font='700 20px ui-monospace,monospace'; ctx.fillStyle='#F0E442';
+    var code = (opts.packCode|| (opts.ids?opts.ids.join('-'):'')).slice(0,36);
+    ctx.fillText((opts.size||opts.packEntries.length||'?')+'-PACK · '+code+' · 12,966 MAP',28,76);
+    // summary
+    ctx.fillStyle='#111'; ctx.font='950 48px ui-sans-serif';
+    var solved = opts.solved!=null? opts.solved : (opts.results? opts.results.filter(function(r){return r&&r.won;}).length : 0);
+    var total = opts.totalGuesses!=null? opts.totalGuesses : (opts.results? opts.results.reduce(function(a,r){return a+(r?r.count:0);},0):0);
+    var avg = opts.avg || (opts.size? (total/opts.size).toFixed(1) : '0');
+    ctx.fillText(solved+'/'+(opts.size||'?')+' solved · '+total+' guesses · avg '+avg,36,170);
+    // emoji grid
+    ctx.font='700 24px ui-monospace'; ctx.fillStyle='#111';
+    var entries = opts.packEntries||[];
+    var results = opts.results||[];
+    var y=220;
+    entries.forEach(function(e,i){
+      var r=results[i];
+      var status = !r ? '⏳' : r.won ? '✅' : '❌';
+      var count = r ? r.count+'/6' : '—';
+      var barW = r ? Math.max(12, (r.won? 100 - r.count*12 : 60)) : 12;
+      // row bg
+      ctx.fillStyle = r && r.won ? '#e8f5e9' : r ? '#fef4e8' : '#fafaf8';
+      roundedRect(ctx,36,y,W-72,68,14); ctx.fill(); ctx.strokeStyle='#111'; ctx.lineWidth=3; ctx.stroke();
+      ctx.fillStyle='#111'; ctx.font='800 22px ui-sans-serif';
+      ctx.fillText(status+' '+(e.n+' '+e.s).slice(0,28),48,y+28);
+      // bar
+      ctx.fillStyle = r && r.won ? '#009E73' : '#D55E00';
+      ctx.fillRect(48,y+36,barW*4,10);
+      ctx.fillStyle='#111'; ctx.font='700 16px ui-monospace';
+      ctx.fillText(count, 48+barW*4+12, y+44);
+      // modern answer if exists? we only have past here, but add arch label via c maybe
+      ctx.fillStyle='#666'; ctx.font='600 13px ui-monospace';
+      ctx.fillText((e.s||'')+' · try modern twin', 48, y+60);
+      y+=84;
+      if(y>980) return;
+    });
+    // footer insight
+    ctx.fillStyle='#111'; ctx.font='700 18px ui-monospace';
+    var footerY = H-180;
+    ctx.fillText('Can you beat this pack? Same All-Stars, share link challenge.',36,footerY);
+    ctx.font='600 15px ui-monospace'; ctx.fillStyle='#444';
+    ctx.fillText('12,966 as rotating map · past→modern · streak-safe packs',36,footerY+28);
+    // CTA
+    ctx.fillStyle='#F0E442'; ctx.strokeStyle='#111'; ctx.lineWidth=4; roundedRect(ctx,36,H-110,W-72,70,18); ctx.fill(); ctx.stroke();
+    ctx.fillStyle='#111'; ctx.font='900 26px ui-sans-serif'; ctx.fillText('Play pack: hoops.dumbmodel.com/play?pack='+code.slice(0,22),56,H-64);
+    return c;
+  }
   async function sharePastModern(opts){
     try{
       var canvas=drawPastModernCard(opts);
@@ -133,6 +187,33 @@
       }
     }catch(e){console.warn('sharePastModern fail',e);} return false;
   }
+  async function sharePack(opts){
+    try{
+      var canvas=drawPackCard(opts);
+      var blob=await new Promise(function(r){canvas.toBlob(function(b){r(b);},'image/png');});
+      var file=new File([blob],'pack-'+(opts.size||3)+'-'+(opts.packCode||'').slice(0,12)+'.png',{type:'image/png'});
+      var ids = opts.ids || (opts.packEntries? opts.packEntries.map(function(e){return e.i;}) : []);
+      var scores = (opts.results||[]).map(function(r){ return r ? (r.won? r.count:0) : 0; });
+      var url = (location.origin||'https://hoops.dumbmodel.com') + '/play?pack=' + ids.join('-') + (scores.length? '&s='+scores.join('-'):'');
+      var solved = opts.solved!=null? opts.solved : (opts.results? opts.results.filter(function(r){return r&&r.won;}).length : 0);
+      var total = opts.totalGuesses!=null? opts.totalGuesses : (opts.results? opts.results.reduce(function(a,r){return a+(r?r.count:0);},0):0);
+      var avg = opts.avg || (opts.size? (total/opts.size).toFixed(1) : '0');
+      var gridEmoji = (opts.results||[]).map(function(r){ if(!r) return '⬜'; if(!r.won) return '❌'; if(r.count<=2) return '🟩🔥'; if(r.count<=4) return '🟩'; return '🟨'; }).join('');
+      var lines = (opts.packEntries||[]).map(function(e,i){ var r=opts.results&&opts.results[i]; return (r&&r.won?'✅':'❌')+' '+e.n+' '+e.s+' '+(r?r.count+'/6':'—'); }).join('\n');
+      var text='Vector Hoops Pack ('+(opts.size||'?')+') — '+solved+'/'+(opts.size||'?')+' in '+total+' guesses avg '+avg+' '+gridEmoji+'\n'+lines+'\nChallenge: '+url;
+      if(navigator.canShare && navigator.canShare({files:[file]})){
+        await navigator.share({title:'Vector Hoops Pack '+(opts.size||'?'), text:text, files:[file]});
+        return true;
+      }
+      if(navigator.share){
+        try{ await navigator.share({title:'Pack '+(opts.size||'3'), text:text, url:url}); return true; }catch(e){}
+      }
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        await navigator.clipboard.writeText(text);
+        return 'copied';
+      }
+    }catch(e){console.warn('sharePack fail',e);} return false;
+  }
   async function shareChimera(puzzleNum,emojiRows,scoreText,url){
     try{
       var canvas=drawChimeraCard(puzzleNum,emojiRows,scoreText); var blob=await new Promise(function(r){canvas.toBlob(function(b){r(b);},'image/png');});
@@ -142,5 +223,5 @@
       if(navigator.clipboard){await navigator.clipboard.writeText(text+'\n'+url); return true;}
     }catch(e){console.warn('shareChimera fail',e);} return false;
   }
-  window.VHShare={shareUniverse:shareUniverse,shareChimera:shareChimera,sharePastModern:sharePastModern,drawTeamCard:drawTeamCard,drawChimeraCard:drawChimeraCard,drawPastModernCard:drawPastModernCard};
+  window.VHShare={shareUniverse:shareUniverse,shareChimera:shareChimera,sharePastModern:sharePastModern,drawTeamCard:drawTeamCard,drawChimeraCard:drawChimeraCard,drawPastModernCard:drawPastModernCard,drawPackCard:drawPackCard,sharePack:sharePack};
 })();

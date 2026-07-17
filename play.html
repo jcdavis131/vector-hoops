@@ -1,6 +1,6 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/><title>Play — Past All-Star → Modern Twin — Vector Hoops</title>
-<meta name="description" content="Daily Past All-Star → guess closest modern superstar. Rotating map, 6 tries, share your grid."/>
-<meta property="og:title" content="Play Vector Hoops — Past→Modern Twin"/><meta property="og:description" content="Past All-Star → modern twin — 12,966 as rotating map. 6 tries."/><meta property="og:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/><meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/><meta name="twitter:card" content="summary_large_image"/><meta name="theme-color" content="#1A150F"/><link rel="manifest" href="/manifest.json"/>
+<meta name="description" content="Daily Past All-Star → guess closest modern superstar. Rotating map, 6 tries, share your grid. Pack Battle 1·3·5 viral."/>
+<meta property="og:title" content="Play Vector Hoops — Past→Modern Twin"/><meta property="og:description" content="Past All-Star → modern twin — 12,966 as rotating map. 6 tries. Pack 1·3·5 battle."/><meta property="og:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/><meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/><meta name="twitter:card" content="summary_large_image"/><meta name="theme-color" content="#1A150F"/><link rel="manifest" href="/manifest.json"/>
 <style>
 :root{--paper:#FFFEF7;--ink:#1A150F;--blue:#0072B2;--verm:#D55E00;--yellow:#F0E442;--green:#009E73;--radius:14px;--shadow:4px 4px 0 var(--ink);--mono:ui-monospace,monospace;--sans:ui-sans-serif,system-ui;}
 *{box-sizing:border-box}html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:18px;line-height:1.65;overflow-x:clip}
@@ -12,6 +12,7 @@ button,.input{min-height:44px}
 .input{width:100%;border:2.2px solid var(--ink);border-radius:12px;padding:0 12px;font-size:16px;font-weight:600;box-shadow:2px 2px 0 var(--ink)}
 .small-mono{font-family:var(--mono);font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
 .pill{border:1.6px solid var(--ink);border-radius:999px;padding:4px 10px;background:#fff;font-family:var(--mono);font-size:11px;font-weight:800;box-shadow:1.5px 1.5px 0 var(--ink)}
+.pill-yellow{background:var(--yellow)}
 .main{max-width:980px;margin:0 auto;padding:12px clamp(12px,3vw,20px) calc(92px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:14px}
 #map-wrap{position:relative;min-height:460px;border:2.5px solid var(--ink);border-radius:16px;box-shadow:6px 6px 0 var(--ink);overflow:hidden;background:radial-gradient(120% 80% at 70% 20%,rgba(0,114,178,.12),transparent 48%),radial-gradient(90% 60% at 20% 70%,rgba(213,94,0,.10),transparent 46%),var(--paper)}
 #sky-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab}
@@ -37,13 +38,14 @@ button,.input{min-height:44px}
 .suggest li:hover,.suggest li.is-active{background:var(--yellow)}
 .hd{font-family:"Architects Daughter",var(--mono);line-height:1.1}
 .confetti{position:fixed;inset:0;pointer-events:none;z-index:98}
+.pack-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+@media(max-width:560px){.pack-grid{grid-template-columns:1fr}}
 </style>
 <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/shell.css"/>
 <link rel="stylesheet" href="assets/responsive.css"/>
 <link rel="stylesheet" href="assets/final-qa.css"/>
 <link rel="stylesheet" href="assets/unified.css"/>
-
 </head><body>
 <nav class="site-nav" data-active="/play" aria-label="Vector Hoops site"></nav>
 
@@ -55,9 +57,37 @@ button,.input{min-height:44px}
 
   <div id="map-wrap"><canvas id="sky-canvas" width="640" height="460"></canvas><div id="map-overlay"><span class="chip" id="map-fact">12,966 seasons — rotating map</span><span class="chip">gold = past, orange = guesses</span></div><div id="map-controls"><button class="chip" id="btn-pause" type="button">Pause</button><button class="chip" id="btn-reset" type="button">Reset</button></div><div id="map-legend"><div class="legend-title">Map Axes</div><div class="axis"><i>X</i>Paint<em>↔</em>Perimeter</div><div class="axis"><i>Y</i>Role<em>→</em>Scorer</div><div class="axis"><i>Z</i>Off-ball<em>↔</em>On-ball</div><div class="legend-foot">Center = avg</div></div><div id="hover-tip"></div></div>
 
+  <!-- PACK HUB: viral solo/triple/full court -->
+  <div class="card" id="pack-hub" style="display:none;">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
+      <div class="small-mono" style="display:flex;gap:6px;align-items:center"><span class="pill" style="background:var(--ink);color:#fff">⚡ Pack Battle</span><span>Viral 1·3·5</span></div>
+      <span class="pill pill-yellow">Shareable — challenge friends</span>
+    </div>
+    <b class="hd" style="font-size:20px;display:block;margin:8px 0 4px;line-height:1.1">Pack Challenge — random All-Stars, share link</b>
+    <div style="font-size:12px;color:#555;line-height:1.45">Get a random grouping of 1, 3, or 5 past All-Stars. Solve, then share the same pack as a challenge link. Your friends get identical stars — who solves faster?</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
+      <button class="btn btn-primary" data-pack-n="1" type="button">⚡ Solo · 1</button>
+      <button class="btn btn-accent" data-pack-n="3" type="button">🔥 Triple · 3</button>
+      <button class="btn" data-pack-n="5" type="button" style="background:#fff">🏀 Full Court · 5</button>
+      <span class="small-mono" style="align-self:center;opacity:.6;text-transform:none">Unique names · streak-safe</span>
+    </div>
+  </div>
+
+  <div class="card" id="pack-progress" style="display:none;">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
+      <div class="small-mono" style="display:flex;gap:6px;align-items:center;flex-wrap:wrap"><span>Pack <b id="pack-code-label"></b> · <span id="pack-index-label">1/3</span></span><span class="pill" id="pack-mode-pill" style="background:var(--yellow)">PACK</span></div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center"><span class="pill" id="pack-solved-pill">0/0 solved</span><button class="pill" id="pack-share-link-btn" type="button" style="cursor:pointer">📋 Copy challenge link</button></div>
+    </div>
+    <div id="pack-list" style="margin-top:10px;display:flex;flex-direction:column;gap:6px"></div>
+    <div id="pack-challenger-compare" style="margin-top:8px;font-size:12px;display:none"></div>
+    <div id="pack-progress-foot" class="small-mono" style="margin-top:8px;text-transform:none;opacity:.6">Solve each star in 6 tries. Share same pack — friend gets identical grouping.</div>
+  </div>
+
+  <div class="card" id="pack-summary" style="display:none;border-width:2.5px"></div>
+
   <div class="card" id="past-card">
     <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center">
-      <div><div class="small-mono">Today's Past All-Star — <span id="challenge-badge" style="display:none;background:var(--yellow);border:1.5px solid var(--ink);border-radius:6px;padding:1px 6px">CHALLENGE</span></div><h2 id="past-name" class="hd" style="margin:4px 0 2px;font-size:26px">Loading…</h2><div id="past-meta" class="small-mono" style="text-transform:none;color:#555"></div></div>
+      <div><div class="small-mono">Today's Past All-Star — <span id="challenge-badge" style="display:none;background:var(--yellow);border:1.5px solid var(--ink);border-radius:6px;padding:1px 6px">CHALLENGE</span> <span id="pack-badge" style="display:none;background:#0072B2;color:#fff;border:1.5px solid var(--ink);border-radius:6px;padding:1px 6px">PACK</span></div><h2 id="past-name" class="hd" style="margin:4px 0 2px;font-size:26px">Loading…</h2><div id="past-meta" class="small-mono" style="text-transform:none;color:#555"></div></div>
       <div style="display:flex;gap:8px;flex-wrap:wrap"><button id="btn-random" class="btn" type="button">Random</button><button id="btn-new" class="btn btn-accent" type="button">New</button></div>
     </div>
     <div id="past-xyz" class="small-mono" style="margin-top:8px;text-transform:none;color:#666"></div>
@@ -152,7 +182,6 @@ button,.input{min-height:44px}
     if(tProj){
       var pulse = 0.5 + 0.5*Math.sin(t*0.0024);
       var pulse2 = 0.5 + 0.5*Math.sin(t*0.0024+1.2);
-      // aura
       ctx.globalAlpha = 0.12 + pulse*0.10;
       ctx.fillStyle='#F0E442'; ctx.beginPath(); ctx.arc(tProj.sx,tProj.sy, 22 + pulse*9, 0, Math.PI*2); ctx.fill();
       ctx.globalAlpha = 0.20 + pulse2*0.12;
@@ -178,10 +207,9 @@ button,.input{min-height:44px}
       var gu=G.guesses[gi];
       var p=projected.find(function(pp){return pp.n===gu.name;}) || projected.find(function(pp){return pp.i===gu.idx;});
       if(!p) continue;
-      var col = gu.rank===0 ? '#009E73' : gu.rank<=3 ? '#E69F00' : gu.rank<=10 ? '#D55E00' : '#0072B2';
-      ctx.strokeStyle = col;
-      ctx.lineWidth= gu.rank===0? 3.0 : gu.rank<=3? 2.4 : 2;
-      ctx.beginPath(); ctx.arc(p.sx,p.sy, gu.rank===0? 10: gu.rank<=3? 8:7,0,Math.PI*2); ctx.stroke();
+      ctx.strokeStyle = gu.rank===0 ? '#009E73' : '#D55E00';
+      ctx.lineWidth= gu.rank===0? 2.8:2;
+      ctx.beginPath(); ctx.arc(p.sx,p.sy, gu.rank===0? 9:7,0,Math.PI*2); ctx.stroke();
       if(tProj){ ctx.setLineDash([4,4]); ctx.globalAlpha=0.45; ctx.beginPath(); ctx.moveTo(tProj.sx,tProj.sy); ctx.lineTo(p.sx,p.sy); ctx.stroke(); ctx.setLineDash([]); ctx.globalAlpha=1; }
     }
   }
@@ -200,16 +228,7 @@ button,.input{min-height:44px}
       if(!projected.length) return;
       var rect=canvas.getBoundingClientRect(); var mx=x-rect.left, my=y-rect.top;
       var best=null,bd=15; for(var i=0;i<projected.length;i++){ var p=projected[i]; var d=Math.hypot(p.sx-mx,p.sy-my); if(d<bd){bd=d; best=p;} }
-      if(best && hoverEl){ hoverEl.style.display='block'; hoverEl.style.left=best.sx+'px'; hoverEl.style.top=(best.sy-36)+'px'; hoverEl.innerHTML='<b>'+best.n+'</b> '+best.s+'<br><span class="small-mono" style="text-transform:none">'+ARCH[best.c%ARCH.length]+'</span>'; factEl.textContent=best.n+' '+best.s; }
-      else {
-        if(hoverEl) hoverEl.style.display='none';
-        // QA fix: reset fact chip when not hovering — was stuck on last hovered (e.g., Joel Embiid)
-        try{
-          var stf = null; try{ stf=VHPastModern.state(); }catch{}
-          if(stf && stf.searchLite) factEl.textContent = stf.searchLite.count+' seasons — rotating map';
-          else factEl.textContent = '12,966 seasons — rotating map';
-        }catch{}
-      }
+      if(best && hoverEl){ hoverEl.style.display='block'; hoverEl.style.left=best.sx+'px'; hoverEl.style.top=(best.sy-36)+'px'; hoverEl.innerHTML='<b>'+best.n+'</b> '+best.s+'<br><span class="small-mono" style="text-transform:none">'+ARCH[best.c%ARCH.length]+'</span>'; factEl.textContent=best.n+' '+best.s; } else { if(hoverEl) hoverEl.style.display='none'; }
     }
   }
   function onUp(){ if(isDragging){ isDragging=false; idleTimer=3400; } }
@@ -242,7 +261,15 @@ button,.input{min-height:44px}
       var obj=JSON.parse(raw); if(obj.day!==VHPastModern.state().dayKey) return []; return obj.guesses||[];
     }catch{ return []; }
   }
-  function saveGuesses(){ try{ localStorage.setItem(STORAGE_GUESS, JSON.stringify({day:VHPastModern.state().dayKey, guesses:G.guesses})); }catch{} }
+  function saveGuesses(){
+    try{
+      // skip saving in pack mode to avoid clobbering daily
+      var isPack = false;
+      try{ isPack = VHPastModern.state().isPack; }catch{}
+      if(isPack) return;
+      localStorage.setItem(STORAGE_GUESS, JSON.stringify({day:VHPastModern.state().dayKey, guesses:G.guesses}));
+    }catch{}
+  }
   function loadStreak(){ try{ var raw=localStorage.getItem(STREAK_KEY); if(!raw) return 0; return JSON.parse(raw).streak||0; }catch{ return 0; } }
   function saveStreak(s){ try{ localStorage.setItem(STREAK_KEY, JSON.stringify({streak:s,last:Date.now()})); }catch{} }
 
@@ -263,55 +290,251 @@ button,.input{min-height:44px}
   function renderPast(){
     var st=VHPastModern.state();
     var past=st.target; if(!past) return;
+    var isPack = !!st.isPack;
+    var packInfo = '';
+    if(isPack){
+      var ps = VHPastModern.getPackState();
+      packInfo = ' · Pack '+(ps.index+1)+'/'+ps.size+' · '+ps.code.slice(0,18);
+    }
     $('#past-name').textContent=past.n+' '+past.s;
     var hon=st.honors[past.n+'|'+past.s]||{};
     var allNba = hon.allNbaTeam? 'All-NBA '+hon.allNbaTeam : '';
-    $('#past-meta').innerHTML=(hon.asg?'All-Star ': '')+allNba+' · '+ARCH[past.c%ARCH.length];
-    $('#past-xyz').textContent='Year '+VHPastModern.parseYear(past.s)+(st.urlDay?' · challenge '+st.dayKey:'');
-    $('#puzzle-pill').textContent='P#'+st.puzzleNum;
-    $('#streak-pill').textContent='streak '+loadStreak();
-    $('#puzzle-day-label').textContent = st.urlDay ? 'Challenge '+st.dayKey : 'Today '+st.dayKey;
-    if(st.urlDay) $('#challenge-badge').style.display='inline-block'; else $('#challenge-badge').style.display='none';
+    $('#past-meta').innerHTML=(hon.asg?'All-Star ': '')+allNba+' · '+ARCH[past.c%ARCH.length]+ (isPack? ' · Pack '+(st.packIndex+1)+'/'+st.packSize : '');
+    $('#past-xyz').textContent='Year '+VHPastModern.parseYear(past.s)+(st.urlDay?' · challenge '+st.dayKey:'')+ (isPack? ' · pack '+st.packCode : '');
+    if(isPack){
+      $('#puzzle-pill').textContent='PACK '+(st.packIndex+1)+'/'+st.packSize;
+      $('#puzzle-day-label').textContent='Pack '+st.packCode+' · '+(st.packIndex+1)+'/'+st.packSize;
+      $('#pack-badge').style.display='inline-block';
+      $('#challenge-badge').style.display='none';
+    }else{
+      $('#puzzle-pill').textContent='P#'+st.puzzleNum;
+      $('#streak-pill').textContent='streak '+loadStreak();
+      $('#puzzle-day-label').textContent = st.urlDay ? 'Challenge '+st.dayKey : 'Today '+st.dayKey;
+      if(st.urlDay) $('#challenge-badge').style.display='inline-block'; else $('#challenge-badge').style.display='none';
+      $('#pack-badge').style.display='none';
+    }
     projectFrame(); draw();
   }
+
   function renderGuesses(){
     var cont=$('#guesses'); cont.innerHTML='';
-    var st=VHPastModern.state();
     G.guesses.forEach(function(g,idx){
       var simPct=(g.sim*100).toFixed(1);
       var rankLabel=g.rank===0? 'Closest': '#'+(g.rank+1);
-      var warm=idx>0 ? (g.rank < G.guesses[idx-1].rank ? 'warmer 🔥' : g.rank > G.guesses[idx-1].rank ? 'colder ❄️' : 'same') : '';
-      var isClosest=g.rank===0;
-      var isPodium=g.rank>=1 && g.rank<=3;
-      var isClose=g.rank>=4 && g.rank<=10;
-      var barColor, bgColor, emoji, rowClass;
-      if(isClosest){ barColor='#009E73'; bgColor='#e8f5e9'; emoji='🟩'; rowClass='guess-row win'; }
-      else if(isPodium){ barColor='#E69F00'; bgColor='#FFFBEB'; emoji='🟨'; rowClass='guess-row'; }
-      else if(isClose){ barColor='#D55E00'; bgColor='#FFF4E5'; emoji='🟧'; rowClass='guess-row'; }
-      else { barColor='#0072B2'; bgColor='#FFFEF7'; emoji='⬜'; rowClass='guess-row'; }
-      var div=document.createElement('div'); div.className=rowClass;
-      div.style.background=bgColor;
-      div.style.borderColor = isClosest ? '#009E73' : isPodium ? '#E69F00' : isClose ? '#D55E00' : '#ddd';
-      div.style.borderStyle = isClosest ? 'solid' : 'dashed';
-      div.innerHTML='<div style="display:flex;justify-content:space-between;gap:8px;align-items:center"><b>'+emoji+' '+(idx+1)+'. '+g.name+' '+g.season+'</b><span class="pill" style="background:'+bgColor+';border-color:'+barColor+'">'+simPct+'% · '+rankLabel+'</span></div><div class="small-mono" style="text-transform:none;margin-top:6px;color:#444">'+(warm?warm+' · ':'')+ARCH[g.c%ARCH.length]+'</div><div class="bar" style="background:#eee"><i style="width:'+Math.max(4,Math.min(100,parseFloat(simPct)))+'%;background:'+barColor+'"></i></div>';
+      var warm=idx>0 ? (g.rank < G.guesses[idx-1].rank ? 'warmer' : g.rank > G.guesses[idx-1].rank ? 'colder' : 'same') : '';
+      var isWin=g.rank===0;
+      var div=document.createElement('div'); div.className='guess-row'+(isWin?' win':'');
+      div.innerHTML='<div style="display:flex;justify-content:space-between;gap:8px;align-items:center"><b>'+(idx+1)+'. '+g.name+' '+g.season+'</b><span class="pill">'+simPct+'% · '+rankLabel+'</span></div><div class="small-mono" style="text-transform:none;margin-top:6px;color:#444">'+warm+' · '+ARCH[g.c%ARCH.length]+'</div><div class="bar"><i style="width:'+Math.max(4,Math.min(100,parseFloat(simPct)))+'%;background:'+(isWin?'#009E73':'#0072B2')+'"></i></div>';
       cont.appendChild(div);
     });
   }
+
+  function renderPackProgress(){
+    var st=null; try{ st=VHPastModern.state(); }catch{ return; }
+    if(!st.isPack) return;
+    var ps = VHPastModern.getPackState();
+    var codeLabel=$('#pack-code-label'), idxLabel=$('#pack-index-label'), solvedPill=$('#pack-solved-pill'), list=$('#pack-list'), comp=$('#pack-challenger-compare');
+    if(codeLabel) codeLabel.textContent = ps.code.length>24 ? ps.code.slice(0,24)+'…' : ps.code;
+    if(idxLabel) idxLabel.textContent = (ps.index+1)+'/'+ps.size;
+    if(solvedPill){
+      var done = ps.results ? ps.results.filter(Boolean).length : 0;
+      var solved = ps.results ? ps.results.filter(function(r){return r&&r.won;}).length : 0;
+      solvedPill.textContent = solved+'/'+done+' solved · '+ps.size+' total';
+    }
+    if(list){
+      list.innerHTML = ps.entries.map(function(entry,i){
+        var res = ps.results && ps.results[i];
+        var statusIcon='⏳', statusColor='#f5f5f0', extra='pending', borderColor='var(--ink)', bg='#fff', shadow='1.5px 1.5px 0 var(--ink)';
+        if(i < ps.index){
+          if(res){
+            if(res.won){ statusIcon='✅'; statusColor='#009E73'; extra=res.count+'/6'; bg='#e8f5e9'; }
+            else { statusIcon='❌'; statusColor='#D55E00'; extra=res.count+'/6 · X'; bg='#fef2e8'; }
+          }
+          borderColor='#bbb'; shadow='1px 1px 0 #bbb';
+        }else if(i===ps.index){
+          statusIcon='👉'; statusColor='#0072B2'; extra='current'; borderColor='#0072B2'; bg='#FFFEF7'; shadow='3px 3px 0 var(--ink)';
+        }
+        var challenger='';
+        if(ps.challengerScores && ps.challengerScores[i]!=null){
+          var cs=ps.challengerScores[i]; challenger = cs===0 ? ' · they: X' : ' · they: '+cs+'/6';
+        }
+        return '<div style="display:flex;justify-content:space-between;gap:8px;align-items:center;border:2px solid '+borderColor+';border-radius:10px;padding:8px 10px;background:'+bg+';box-shadow:'+shadow+'">'
+          +'<div style="display:flex;gap:8px;align-items:center;min-width:0"><span style="font-size:16px">'+statusIcon+'</span><b style="font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+entry.n+' '+entry.s+'</b><span class="small-mono" style="opacity:.6;white-space:nowrap">'+ARCH[entry.c%ARCH.length]+'</span></div>'
+          +'<div style="display:flex;gap:6px;align-items:center;flex-shrink:0"><span class="pill" style="background:'+statusColor+';color:'+(statusColor==='#f5f5f0'?'#111':'#fff')+';border-color:var(--ink)">'+extra+challenger+'</span></div></div>';
+      }).join('');
+    }
+    if(comp){
+      if(ps.challengerScores && ps.results && ps.results.filter(Boolean).length){
+        var yourWins = ps.results.filter(function(r){return r&&r.won;}).length;
+        var yourTotal = ps.results.filter(Boolean).reduce(function(a,r){return a+(r.count||0);},0);
+        var theirWins = ps.challengerScores.filter(function(s){return s>0;}).length;
+        var theirTotal = ps.challengerScores.reduce(function(a,s){return a+(s>0?s:6);},0);
+        comp.style.display='block';
+        comp.innerHTML='<div style="border:1.6px dashed var(--ink);border-radius:10px;padding:8px 10px;background:#FFFEF7;line-height:1.4">⚔️ VS Challenger: you <b>'+yourWins+'/'+ps.results.filter(Boolean).length+'</b> in '+yourTotal+' guesses — them <b>'+theirWins+'/'+ps.size+'</b> in '+theirTotal+' guesses. '+ (yourWins>theirWins || (yourWins===theirWins && yourTotal < theirTotal) ? 'You\'re ahead! 🔥' : 'Can you beat them?') +'</div>';
+      }else if(ps.challengerScores){
+        comp.style.display='block';
+        var totalCh = ps.challengerScores.reduce(function(a,s){return a+(s>0?s:6);},0);
+        var winsCh = ps.challengerScores.filter(function(s){return s>0;}).length;
+        comp.innerHTML='<div style="border:1.6px dashed var(--ink);border-radius:10px;padding:8px 10px;background:#FFFEF7">⚔️ Challenger scored <b>'+winsCh+'/'+ps.size+'</b> in '+totalCh+' guesses — beat it!</div>';
+      }else{
+        comp.style.display='none';
+      }
+    }
+  }
+
+  function renderPackSummary(){
+    var ps = VHPastModern.getPackState();
+    if(!ps.isPack || !ps.complete) return;
+    var summaryCard = $('#pack-summary');
+    if(!summaryCard) return;
+    summaryCard.style.display='block';
+    var solved = ps.results.filter(function(r){return r&&r.won;}).length;
+    var totalGuesses = ps.results.reduce(function(a,r){return a+(r? r.count:0);},0);
+    var avg = ps.results.length ? (totalGuesses/ps.results.length).toFixed(1) : '0';
+    var gridEmoji = ps.results.map(function(r){
+      if(!r) return '⬜';
+      if(!r.won) return '❌';
+      if(r.count<=2) return '🟩🔥';
+      if(r.count<=4) return '🟩';
+      return '🟨';
+    }).join(' ');
+    var rows = ps.entries.map(function(e,i){
+      var r=ps.results[i];
+      var status = r && r.won ? '✅ '+r.count+'/6' : r ? '❌ '+r.count+'/6' : '—';
+      var challenger = ps.challengerScores && ps.challengerScores[i] ? ' vs them '+ps.challengerScores[i]+'/6' : '';
+      return '<div style="display:flex;justify-content:space-between;gap:8px;font-size:13px;border-top:1px solid #eee;padding:6px 0"><span><b>'+e.n+' '+e.s+'</b> — '+(ARCH[e.c%ARCH.length]||'')+'</span><span class="small-mono">'+status+challenger+'</span></div>';
+    }).join('');
+    summaryCard.innerHTML =
+      '<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">'
+      +'<div><div class="small-mono">Pack complete — '+ps.code.slice(0,28)+'</div><h3 class="hd" style="margin:4px 0 0;font-size:22px">'+solved+'/'+ps.size+' solved — '+totalGuesses+' guesses — avg '+avg+'</h3><div style="font-size:18px;margin-top:6px">'+gridEmoji+'</div></div>'
+      +'<div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-primary" id="btn-copy-pack-link">Copy Challenge Link</button><button class="btn btn-accent" id="btn-copy-pack-results">Copy Results</button><button class="btn" id="btn-share-pack-image">Share Image</button></div></div>'
+      +'<div style="margin-top:12px">'+rows+'</div>'
+      +'<div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap"><a class="btn" href="/play?pack='+ps.ids.join('-')+'">Replay pack</a><button class="btn" id="btn-new-pack-same-size" type="button">New Pack '+ps.size+'</button><a class="btn" href="/play">Daily</a><a class="btn" href="/">Home</a></div>';
+    var copyLinkBtn = summaryCard.querySelector('#btn-copy-pack-link');
+    if(copyLinkBtn){
+      copyLinkBtn.addEventListener('click', async function(){
+        var url = VHPastModern.packShareUrl(ps.ids);
+        try{ await navigator.clipboard.writeText(url); copyLinkBtn.textContent='Copied!'; setTimeout(function(){copyLinkBtn.textContent='Copy Challenge Link';},1200); }catch{ prompt('Copy link', url); }
+      });
+    }
+    var copyResBtn = summaryCard.querySelector('#btn-copy-pack-results');
+    if(copyResBtn){
+      copyResBtn.addEventListener('click', async function(){
+        var scores = ps.results.map(function(r){ return r ? (r.won ? r.count : 0) : 0; });
+        var url = VHPastModern.packShareUrl(ps.ids, scores);
+        var lines = ps.entries.map(function(e,i){
+          var r=ps.results[i]; return (r&&r.won?'✅':'❌')+' '+e.n+' '+e.s+': '+(r? r.count+'/6':'—');
+        }).join('\n');
+        var text = 'Vector Hoops Pack ('+ps.size+') — '+solved+'/'+ps.size+' in '+totalGuesses+' guesses (avg '+avg+')\n'+lines+'\nChallenge me: '+url;
+        try{ await navigator.clipboard.writeText(text); copyResBtn.textContent='Copied!'; setTimeout(function(){copyResBtn.textContent='Copy Results';},1400); }catch{ alert(text); }
+      });
+    }
+    var shareImgBtn = summaryCard.querySelector('#btn-share-pack-image');
+    if(shareImgBtn){
+      shareImgBtn.addEventListener('click', async function(){
+        var opts={packEntries: ps.entries, results: ps.results, packCode: ps.code, solved: solved, totalGuesses: totalGuesses, avg: avg, size: ps.size, ids: ps.ids};
+        if(window.VHShare && VHShare.sharePack){ await VHShare.sharePack(opts); }
+      });
+    }
+    var newSameBtn = summaryCard.querySelector('#btn-new-pack-same-size');
+    if(newSameBtn){
+      newSameBtn.addEventListener('click', function(){
+        var entries = VHPastModern.generateRandomPack(ps.size);
+        var ids = entries.map(function(e){return e.i;});
+        location.href = VHPastModern.packShareUrl(ids);
+      });
+    }
+  }
+
   function finish(){
     var won=G.guesses.some(function(g){return g.rank===0;});
     var over=won || G.guesses.length>=6;
     var resEl=$('#result'); var st=VHPastModern.state();
-    if(!over){ resEl.classList.add('hidden'); return; }
+    var isPack = !!st.isPack;
+    if(!over){ resEl.classList.add('hidden'); if(isPack) renderPackProgress(); return; }
     resEl.classList.remove('hidden');
     var closest=st.closestModern;
     var sortedTop=st.modernListSorted.slice(0,6).map(function(o,i){return (i+1)+'. '+o.m.n+' '+o.m.s+' '+(o.sim*100).toFixed(1)+'%';}).join(' · ');
-    if(won){
-      var cur=loadStreak()+1; saveStreak(cur); $('#streak-pill').textContent='streak '+cur;
-      resEl.innerHTML='<div class="card" style="border-color:var(--green)"><h3 class="hd" style="margin:0 0 6px">Solved in '+G.guesses.length+'/6 — '+st.target.n+' → '+closest.entry.n+'</h3><div style="font-size:13px;line-height:1.5">Answer: '+closest.entry.n+' '+closest.entry.s+' '+(closest.sim*100).toFixed(1)+'%<br>Top: '+sortedTop+'</div></div>';
-      confettiBurst();
+
+    // ---- pack handling: store result ----
+    if(isPack){
+      var packRes = {guesses: G.guesses.slice(), won: won, count: G.guesses.length, solved: won};
+      // ensure packResults array exists and store
+      if(!st.packResults) st.packResults = [];
+      st.packResults[st.packIndex] = packRes;
+      // also keep getPackState updated (it reads from st)
+      renderPackProgress();
+    }
+
+    if(isPack){
+      var ps = VHPastModern.getPackState();
+      var isLast = ps.index+1 >= ps.size;
+      if(won){
+        resEl.innerHTML='<div class="card" style="border-color:var(--green)"><h3 class="hd" style="margin:0 0 6px">Solved in '+G.guesses.length+'/6 — '+st.target.n+' → '+closest.entry.n+'</h3><div style="font-size:13px;line-height:1.5">Answer: '+closest.entry.n+' '+closest.entry.s+' '+(closest.sim*100).toFixed(1)+'%<br>Top: '+sortedTop+'</div><div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">'+(isLast ? '<span class="pill" style="background:var(--green);color:#fff">Pack final!</span>' : '<button class="btn btn-primary" id="btn-next-pack">Next: '+(ps.entries[ps.index+1] ? ps.entries[ps.index+1].n+' ' : '')+'→</button>')+'<button class="btn" id="btn-pack-skip-progress">View pack progress</button></div></div>';
+      }else{
+        resEl.innerHTML='<div class="card" style="border-color:var(--verm)"><h3 class="hd" style="margin:0 0 6px">Revealed — '+st.target.n+' → '+closest.entry.n+'</h3><div style="font-size:13px;line-height:1.5">Closest: '+closest.entry.n+' '+(closest.sim*100).toFixed(1)+'%<br>Top: '+sortedTop+'</div><div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">'+(isLast ? '<span class="pill" style="background:var(--verm);color:#fff">Pack final</span>' : '<button class="btn btn-primary" id="btn-next-pack">Next →</button>')+'<button class="btn" id="btn-pack-skip-progress">View progress</button></div></div>';
+      }
+      var nextBtn = document.getElementById('btn-next-pack');
+      if(nextBtn){
+        nextBtn.addEventListener('click', function(){
+          var nxt = VHPastModern.advancePack();
+          if(!nxt){
+            // complete
+            renderPackProgress();
+            renderPackSummary();
+            resEl.classList.add('hidden');
+            $('#guesses').innerHTML='';
+            G.guesses=[];
+            renderPast();
+            projectFrame(); draw();
+            window.scrollTo({top:0, behavior:'smooth'});
+            confettiBurst();
+            return;
+          }
+          // reset for next puzzle
+          G.guesses=[];
+          try{ VHPastModern.state().guesses=[]; }catch{}
+          renderPast();
+          renderGuesses();
+          renderPackProgress();
+          resEl.classList.add('hidden');
+          $('#past-closest-hint').style.display='none';
+          $('#warm-label').style.display='none';
+          $('#guess-input').value='';
+          projectFrame(); draw();
+        });
+      }
+      var progBtn = document.getElementById('btn-pack-skip-progress');
+      if(progBtn){ progBtn.addEventListener('click', function(){ document.getElementById('pack-progress')?.scrollIntoView({behavior:'smooth'}); }); }
+      if(isLast){
+        // if last puzzle over, show summary after short delay
+        setTimeout(function(){
+          // mark complete if not yet
+          var st2 = VHPastModern.state();
+          if(st2.packIndex+1 >= st2.packSize){
+            st2.isPackComplete = true;
+            // ensure last result stored (already)
+          }
+          renderPackSummary();
+          // also keep progress updated
+          renderPackProgress();
+          if(won) confettiBurst();
+        }, 300);
+        // streak unaffected
+      } else {
+        if(won) confettiBurst();
+      }
     }else{
-      saveStreak(0); $('#streak-pill').textContent='streak 0';
-      resEl.innerHTML='<div class="card" style="border-color:var(--verm)"><h3 class="hd" style="margin:0 0 6px">Revealed — '+st.target.n+' → '+closest.entry.n+'</h3><div style="font-size:13px;line-height:1.5">Closest: '+closest.entry.n+' '+(closest.sim*100).toFixed(1)+'%<br>Top: '+sortedTop+'</div></div>';
+      if(won){
+        var cur=loadStreak()+1; saveStreak(cur); $('#streak-pill').textContent='streak '+cur;
+        try{ VHPastModern.onDailyWin(st.dayKey); }catch{}
+        resEl.innerHTML='<div class="card" style="border-color:var(--green)"><h3 class="hd" style="margin:0 0 6px">Solved in '+G.guesses.length+'/6 — '+st.target.n+' → '+closest.entry.n+'</h3><div style="font-size:13px;line-height:1.5">Answer: '+closest.entry.n+' '+closest.entry.s+' '+(closest.sim*100).toFixed(1)+'%<br>Top: '+sortedTop+'</div></div>';
+        confettiBurst();
+      }else{
+        saveStreak(0); $('#streak-pill').textContent='streak 0';
+        try{ VHPastModern.onDailyLoss(st.dayKey); }catch{}
+        resEl.innerHTML='<div class="card" style="border-color:var(--verm)"><h3 class="hd" style="margin:0 0 6px">Revealed — '+st.target.n+' → '+closest.entry.n+'</h3><div style="font-size:13px;line-height:1.5">Closest: '+closest.entry.n+' '+(closest.sim*100).toFixed(1)+'%<br>Top: '+sortedTop+'</div></div>';
+      }
     }
     var hintEl=$('#past-closest-hint'); if(hintEl && closest){ hintEl.style.display='block'; hintEl.textContent='Answer: '+closest.entry.n+' '+(closest.sim*100).toFixed(0)+'%'; }
     projectFrame(); draw();
@@ -320,6 +543,7 @@ button,.input{min-height:44px}
     var input=$('#guess-input'); var name=(input.value||'').trim(); if(!name) return;
     var r=VHPastModern.guessModern(name); if(!r.ok){ alert(r.reason); return; }
     G.guesses.push(r.guess); saveGuesses(); input.value='';
+    try{ VHPastModern.state().guesses = G.guesses; }catch{}
     var warmEl=$('#warm-label'); var wc=VHPastModern.warmCold(); if(wc && G.guesses.length>1){ warmEl.style.display='inline-flex'; warmEl.textContent=wc; } else warmEl.style.display='none';
     renderGuesses(); finish(); projectFrame(); draw();
   }
@@ -336,9 +560,45 @@ button,.input{min-height:44px}
     initBase(st.searchLite.players);
     projectFrame(); draw(); loop(0);
 
+    // pack UI wiring
+    var packHub = $('#pack-hub');
+    var packProgress = $('#pack-progress');
+    var packSummary = $('#pack-summary');
+    var isPack = !!st.isPack;
+    if(isPack){
+      if(packHub) packHub.style.display='none';
+      if(packProgress) packProgress.style.display='block';
+      if(packSummary) packSummary.style.display='none';
+      renderPackProgress();
+      // pack share copy
+      var packCopyBtn=$('#pack-share-link-btn');
+      if(packCopyBtn){
+        packCopyBtn.addEventListener('click', async function(){
+          var ps=VHPastModern.getPackState();
+          var url=VHPastModern.packShareUrl(ps.ids);
+          try{ await navigator.clipboard.writeText(url); packCopyBtn.textContent='Copied!'; setTimeout(function(){packCopyBtn.textContent='📋 Copy challenge link';},1200); }catch{ prompt('Copy link', url); }
+        });
+      }
+    }else{
+      if(packHub) packHub.style.display='block';
+      // wire pack hub buttons
+      document.querySelectorAll('[data-pack-n]').forEach(function(btn){
+        btn.addEventListener('click', function(){
+          var n = parseInt(btn.dataset.packN||btn.getAttribute('data-pack-n'),10);
+          if(!n) n=3;
+          var entries = VHPastModern.generateRandomPack(n);
+          var ids = entries.map(function(e){return e.i;});
+          var url = VHPastModern.packShareUrl(ids);
+          location.href = url;
+        });
+      });
+      if(packProgress) packProgress.style.display='none';
+      if(packSummary) packSummary.style.display='none';
+    }
+
     var saved=loadGuesses();
     try{ VHPastModern.computeClosest(); }catch{}
-    if(saved.length){
+    if(!isPack && saved.length){
       var rebuilt=[];
       for(var j=0;j<saved.length;j++){
         var sg=saved[j];
@@ -346,22 +606,62 @@ button,.input{min-height:44px}
         if(rr) rebuilt.push({name:sg.name, season:sg.season, idx:rr.m.i, sim:rr.sim, rank: st.modernListSorted.findIndex(function(o){return o.m.n===sg.name;}), x:rr.m.x,y:rr.m.y,z:rr.m.z,c:rr.m.c});
       }
       G.guesses=rebuilt; VHPastModern.state().guesses=rebuilt;
+    }else if(isPack){
+      G.guesses=[]; VHPastModern.state().guesses=[];
     }
     renderPast(); renderGuesses(); attachSuggest(); finish();
+    if(isPack) renderPackProgress();
     $('#guess-btn').addEventListener('click',doGuess);
     $('#guess-input').addEventListener('keydown',function(e){ if(e.key==='Enter'){ e.preventDefault(); doGuess(); } });
-    $('#btn-random').addEventListener('click',function(){ var p=VHPastModern.pickRandomPast(); G.guesses=[]; saveGuesses(); VHPastModern.state().guesses=[]; renderPast(); renderGuesses(); $('#result').classList.add('hidden'); $('#past-closest-hint').style.display='none'; $('#warm-label').style.display='none'; projectFrame(); draw(); });
-    $('#btn-new').addEventListener('click',function(){ localStorage.removeItem(STORAGE_GUESS); location.href='/play'; });
+    $('#btn-random').addEventListener('click',function(){
+      if(st.isPack){
+        if(confirm('Leave pack? Go random?')){
+          var p=VHPastModern.pickRandomPast(); G.guesses=[]; saveGuesses(); VHPastModern.state().guesses=[]; renderPast(); renderGuesses(); $('#result').classList.add('hidden'); $('#past-closest-hint').style.display='none'; $('#warm-label').style.display='none'; projectFrame(); draw();
+          // navigate out of pack to random mode? keep current page but clear pack param
+          history.replaceState(null,'','/play?mode=random');
+          location.reload();
+        }
+        return;
+      }
+      var p=VHPastModern.pickRandomPast(); G.guesses=[]; saveGuesses(); VHPastModern.state().guesses=[]; renderPast(); renderGuesses(); $('#result').classList.add('hidden'); $('#past-closest-hint').style.display='none'; $('#warm-label').style.display='none'; projectFrame(); draw();
+    });
+    $('#btn-new').addEventListener('click',function(){
+      if(st.isPack){
+        // generate new pack same size
+        var entries = VHPastModern.generateRandomPack(st.packSize||3);
+        var ids = entries.map(function(e){return e.i;});
+        location.href = VHPastModern.packShareUrl(ids);
+        return;
+      }
+      localStorage.removeItem(STORAGE_GUESS); location.href='/play';
+    });
 
     $('#share-btn').addEventListener('click',async function(){
       var st=VHPastModern.state(); var won=G.guesses.some(function(g){return g.rank===0;});
       var streak=loadStreak();
+      if(st.isPack){
+        var ps=VHPastModern.getPackState();
+        var opts={packEntries: ps.entries, results: ps.results, packCode: ps.code, solved: ps.results.filter(function(r){return r&&r.won;}).length, totalGuesses: ps.results.reduce(function(a,r){return a+(r?r.count:0);},0), avg: (ps.results.reduce(function(a,r){return a+(r?r.count:0);},0)/ps.size).toFixed(1), size: ps.size, ids: ps.ids};
+        if(window.VHShare && VHShare.sharePack){ await VHShare.sharePack(opts); return; }
+      }
       var opts={ puzzleNum: st.puzzleNum, dayKey: st.dayKey, pastName: st.target.n, pastSeason: st.target.s, guesses: G.guesses, answerName: st.closestModern? st.closestModern.entry.n+' '+st.closestModern.entry.s : '', answerSim: st.closestModern? st.closestModern.sim: 0, won: won, revealed: G.guesses.length>=6||won, streak: streak, url: location.origin+'/play?day='+st.dayKey };
       if(window.VHShare && window.VHShare.sharePastModern){ await window.VHShare.sharePastModern(opts); }
       else { var grid=G.guesses.map(function(g){ return g.rank===0?'🟩': g.rank<=3?'🟨': g.rank<=10?'🟧':'⬜'; }).join(''); var text='Vector Hoops P#'+st.puzzleNum+' '+(won?G.guesses.length+'/6':'X/6')+' '+grid; if(navigator.clipboard) navigator.clipboard.writeText(text); }
     });
     $('#share-text-btn').addEventListener('click',function(){
       var st=VHPastModern.state(); var won=G.guesses.some(function(g){return g.rank===0;});
+      if(st.isPack){
+        var ps=VHPastModern.getPackState();
+        var scores = ps.results.map(function(r){ return r ? (r.won ? r.count : 0) : 0; });
+        var url=VHPastModern.packShareUrl(ps.ids, scores);
+        var lines=ps.entries.map(function(e,i){ var r=ps.results[i]; return (r&&r.won?'✅':'❌')+' '+e.n+' '+e.s+': '+(r? r.count+'/6':'—'); }).join('\n');
+        var solved=ps.results.filter(function(r){return r&&r.won;}).length;
+        var total=ps.results.reduce(function(a,r){return a+(r?r.count:0);},0);
+        var text='Vector Hoops Pack ('+ps.size+') — '+solved+'/'+ps.size+' in '+total+' guesses\n'+lines+'\n'+url;
+        if(navigator.clipboard) navigator.clipboard.writeText(text).then(function(){ var b=$('#share-text-btn'); b.textContent='Copied'; setTimeout(function(){b.textContent='Copy Grid';},1200); });
+        else alert(text);
+        return;
+      }
       var grid=G.guesses.map(function(g){ return g.rank===0?'🟩': g.rank<=3?'🟨': g.rank<=10?'🟧':'⬜'; }).join('');
       var lines=G.guesses.map(function(g,i){ return (i+1)+'. '+g.name+' '+(g.sim*100).toFixed(0)+'% #'+(g.rank+1); }).join('\n');
       var text='Vector Hoops P#'+st.puzzleNum+' '+st.dayKey+' '+(won?G.guesses.length+'/6':'X/6')+' '+grid+'\nPast '+st.target.n+' → '+(won?G.guesses.slice(-1)[0].name:'?')+'\n'+lines+'\n'+location.origin+'/play?day='+st.dayKey;
@@ -370,8 +670,16 @@ button,.input{min-height:44px}
     });
     $('#btn-challenge').addEventListener('click',async function(){
       var st=VHPastModern.state();
-      var url=location.origin+'/play?day='+st.dayKey;
+      var url;
+      if(st.isPack){
+        var ps=VHPastModern.getPackState();
+        var scores = ps.results.map(function(r){ return r ? (r.won ? r.count:0):0; });
+        url = VHPastModern.packShareUrl(ps.ids, scores);
+      }else{
+        url=location.origin+'/play?day='+st.dayKey;
+      }
       var txt='Can you beat my Past→Modern? '+st.target.n+' '+st.target.s+' — '+url;
+      if(st.isPack) txt='Can you beat my Pack ('+st.packSize+')? '+url;
       try{ if(navigator.clipboard) await navigator.clipboard.writeText(txt); this.textContent='Copied'; setTimeout(function(el){el.textContent='Challenge';}.bind(null,this),1500); }catch{ alert(url); }
     });
   }
