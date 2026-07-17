@@ -5,6 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Player Animations — Vector Hoops Posecode Lab</title>
 <link rel="stylesheet" href="assets/<link rel="stylesheet" href="assets/<style>
+<link rel="stylesheet" href="assets/shell.css"/>
+<link rel="stylesheet" href="assets/responsive.css"/>
+<link rel="stylesheet" href="assets/final-qa.css"/>
+<link rel="stylesheet" href="assets/unified.css"/>
+
 :root{
   --paper:#FFFEF7; --ink:#1A150F; --ink-soft:#3A332A; --muted:#6B6256;
   --okabe-blue:#0072B2; --okabe-verm:#D55E00; --okabe-yellow:#F0E442; --okabe-sky:#56B4E9;
@@ -14,6 +19,7 @@ html,body{margin:0; background:var(--paper); color:var(--ink); font-family: Inte
 <script src="https://unpkg.com/posecode-embed@0.1.0/dist/posecode-embed.js"></script>
 </head>
 <body>
+<nav class="site-nav" data-active="/player-animations" aria-label="Vector Hoops site"></nav>
 <header class="topbar">
   <a class="brand" href="/">🏀 Vector Hoops <span style="font-weight:800; color:var(--okabe-verm);">Posecode Lab</span></a>
   <span class="badge">8 NBA moves • 60fps • MIT</span>
@@ -88,5 +94,6 @@ grid.addEventListener('toggle', async (e)=>{
   pre.dataset.loaded = '1';
 }, true);
 </script>
+<footer class="site-footer"><div class="site-footer__links"><a href="/play">Play</a><a href="/model">Lab</a><a href="/methods">Methods</a><a href="/players">Players</a><a href="https://github.com/jcdavis131/vector-hoops" target="_blank" rel="noopener">GitHub</a></div><div class="site-footer__attribution">Every number recomputable from stats.nba.com · dumbmodel.com</div></footer>
 </body>
 </html>

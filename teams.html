@@ -8,9 +8,14 @@
 <meta http-equiv="refresh" content="3;url=/players">
 <meta name="description" content="Team Labs merged into Player References while current roster data is rebuilt.">
 <link rel="stylesheet" href="assets/hoops.css">
+<link rel="stylesheet" href="assets/shell.css"/>
+<link rel="stylesheet" href="assets/responsive.css"/>
+<link rel="stylesheet" href="assets/final-qa.css"/>
+<link rel="stylesheet" href="assets/unified.css"/>
+
 <link rel="stylesheet" href="assets/<link rel="stylesheet" href="assets/</head>
 <body>
-<nav class="site-nav" data-active="/players" aria-label="Vector Hoops site"></nav>
+<nav class="site-nav" data-active="/teams" aria-label="Vector Hoops site"></nav>
 <main class="research-main" style="max-width:760px;margin:auto;padding:48px 20px 88px">
   <div class="drift-card" style="padding:24px">
     <p style="font-family:var(--mono);font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#666">Team Labs — temporarily merged</p>
@@ -23,16 +28,7 @@
     <p style="margin-top:18px;font-size:13px;color:#666">If you're running the rebuild operator: <code>python pipeline/fetch_current_rosters.py --write-cache && python pipeline/build_teams.py && python pipeline/build_current_rosters.py</code></p>
   </div>
 </main>
-<footer class="site-footer">
-  <div class="site-footer__links">
-    <a href="/play">Play</a>
-    <a href="/model">Lab</a>
-    <a href="/trends">Trends</a>
-    <a href="/players">Players</a>
-    <a href="/methods">Methods</a>
-  </div>
-  <div class="site-footer__attribution">Every number recomputable from stats.nba.com · <a href="https://dumbmodel.com/" target="_blank" rel="noopener">dumbmodel.com</a></div>
-</footer>
+<footer class="site-footer"><div class="site-footer__links"><a href="/play">Play</a><a href="/model">Lab</a><a href="/methods">Methods</a><a href="/players">Players</a><a href="https://github.com/jcdavis131/vector-hoops" target="_blank" rel="noopener">GitHub</a></div><div class="site-footer__attribution">Every number recomputable from stats.nba.com · dumbmodel.com</div></footer>
 <script src="assets/site-nav.js" defer></script>
 <script> setTimeout(()=>location.href='/players',3000); </script>
 </body>
