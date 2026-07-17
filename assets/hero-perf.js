@@ -1,4 +1,3 @@
-/* hero-perf.js — 100M DAU low-end detection + skeleton + progress — Solo personal, free-tier only */
 (function(){
   var low=false;
   try{

@@ -1,5 +1,4 @@
 /* city-intro.js v4 — immersive embedding hero + fun arena background
- * Solo personal project, no connection to employer, built with public/free-tier only
  * Free data: vectors.json 12966 seasons, teams.json
  * v4 changes:
  *  - embedding map = default background hero, arena = fun foreground toy

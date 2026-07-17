@@ -1,5 +1,4 @@
 /* Archetype Bridge — MTNN v5 8 archetypes visual proof
- * Solo personal project, no connection to employer, public/free-tier only
  * Real: mtnn_arch.json gameArchetypes 8, mtnn_meta.json centroids 8x48, archetype_assignments.json 12966, mtnn_heads.f32 8-logit distribution
  */
 (function(global){

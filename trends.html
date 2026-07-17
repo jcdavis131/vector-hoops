@@ -14,11 +14,9 @@
 <meta property="og:image" content="/assets/og.svg">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="assets/hoops.css">
-<link rel="stylesheet" href="assets/shell.css">
-<link rel="stylesheet" href="assets/nux.css">
-<link rel="stylesheet" href="assets/responsive.css">
-<style>
-/* trends best-app-ever polish — local only, no global reset */
+<link rel="stylesheet" href="assets/<link rel="stylesheet" href="assets/nux.css">
+<link rel="stylesheet" href="assets/<style>
+/* trends */
 .trends-hero{display:flex;flex-direction:column;gap:18px;padding:10px 0 6px}
 .trends-kicker{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-muted)}
 .trends-kicker__dot{width:6px;height:6px;border-radius:50%;background:var(--data-orange)}
@@ -56,7 +54,7 @@
     <h1>How much did the <b>shape</b> of basketball change?</h1>
     <p class="drift-hero-line trends-hero__lede">
       Not who scored more — <b>what counted as the same kind of player</b>.
-      We take every season's 14-stat player cloud, find the smallest rotation that lines it up with the next season (<b>orthogonal Procrustes</b>), and report that rotation in <b>degrees</b>. Big degree = basketball redefined itself that summer. Details & proof: <a href="/methods#drift">Methods → League Drift</a> and <a href="/model">MTNN glass-box →</a>
+      We take every season's 14-stat player cloud, find the smallest rotation that lines it up with the next season (<b>orthogonal Procrustes</b>), and report that rotation in <b>degrees</b>. Big degree = basketball redefined itself that summer. Details & proof: <a href="/methods#drift">Methods → League Drift</a> and <a href="/model">MTNN Model →</a>
     </p>
     <div class="trends-hero__grid">
       <div class="trends-hero-card">
@@ -93,7 +91,7 @@
           <a href="#archetypes" style="display:block;border:1.5px solid var(--ink);border-radius:8px;padding:10px 12px;text-decoration:none;color:var(--ink);background:var(--surface)">→ Archetypes over time<br><span style="font-size:11px;color:var(--ink-muted)">8 types stream + court heatmap diff/early/late/era</span></a>
           <a href="#emergence" style="display:block;border:1.5px solid var(--ink);border-radius:8px;padding:10px 12px;text-decoration:none;color:var(--ink);background:var(--surface)">→ Emergence & career shapes<br><span style="font-size:11px;color:var(--ink-muted)">New roles, diversity, reinvention paths</span></a>
         </div>
-        <p style="margin:10px 0 0;font-size:11px;color:var(--ink-muted)">Glass-box model behind all of this: <a href="/model" style="font-weight:700">MTNN Network Explorer — 17 families 120 feats → 48-d L2</a></p>
+        <p style="margin:10px 0 0;font-size:11px;color:var(--ink-muted)">Model model behind all of this: <a href="/model" style="font-weight:700">MTNN Network Explorer — 17 families 120 feats → 48-d L2</a></p>
       </div>
     </div>
   </div>
@@ -189,7 +187,7 @@
       <a href="/methods#drift" style="font-family:var(--mono);font-size:11px;font-weight:700">Full write-up →</a>
     </div>
     <p id="drift-method-quote" class="drift-method-quote" style="margin-top:10px">Loading…</p>
-    <p style="margin-top:8px">Chained root-frame transforms power drift charts and Era-Twin matching. The MTNN embedding itself (48-d L2) is the promoted scorer for puzzles: <a href="/model">glass-box network explorer</a> shows towers 17×160→32, fusion 556→128→48.</p>
+    <p style="margin-top:8px">Chained root-frame transforms power drift charts and Era-Twin matching. The MTNN embedding itself (48-d L2) is the promoted scorer for puzzles: <a href="/model">Model network explorer</a> shows towers 17×160→32, fusion 556→128→48.</p>
   </section>
 
   <section class="drift-card" id="archetypes" aria-label="Archetypes over time">
@@ -301,7 +299,7 @@
     <a href="#" data-vh-nux-tour>Tour</a>
     <a href="https://github.com/jcdavis131/vector-hoops" target="_blank" rel="noopener">GitHub</a>
   </div>
-  <div class="site-footer__attribution">Every number recomputable from stats.nba.com & Basketball-Reference • Procrustes drift 12,966 seasons 14 feats era-z chained root frame • 8 archetypes • Solo personal project, no connection to employer, built with public/free-tier only • from <a href="https://dumbmodel.com/" target="_blank" rel="noopener">dumbmodel.com</a></div>
+  <div class="site-footer__attribution">Every number recomputable from stats.nba.com · <a href="https://dumbmodel.com/" target="_blank" rel="noopener">dumbmodel.com</a></div>
 </footer>
 
 <script src="assets/site-nav.js" defer></script>

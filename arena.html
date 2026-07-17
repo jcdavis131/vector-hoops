@@ -14,8 +14,7 @@
 <meta property="og:description" content="30 chibi NBA courts + 12,966 seasons as colored nebulae clouds. 8 archetype constellations, search highlight, share.">
 <meta property="og:image" content="/assets/og.svg">
 <link rel="stylesheet" href="assets/hoops.css">
-<link rel="stylesheet" href="assets/shell.css">
-<link rel="stylesheet" href="assets/arena.css">
+<link rel="stylesheet" href="assets/<link rel="stylesheet" href="assets/arena.css">
 <link rel="stylesheet" href="assets/city-intro.css">
 <script type="importmap">
 { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js", "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/" } }
@@ -87,10 +86,9 @@
 
   <div class="arena-loading" id="arena-loading">
     <div class="arena-loading__card">
-      <h2 class="arena-loading__title">Loading Nebulae Court — chibi Chicago</h2>
-      <p class="arena-loading__sub" id="arena-loading-sub">Prebaked 12,966 seasons colored by archetype · 8 nebulae density clouds · MTNN 48-d CQS 66.29</p>
+      <h2 class="arena-loading__title">Loading Court — chibi Chicago</h2>
+      <p class="arena-loading__sub" id="arena-loading-sub">12,966 seasons colored by archetype · 8 nebulae</p>
       <div class="arena-progress"><div class="arena-progress__bar" id="arena-progress-bar"></div></div>
-      <p class="mono" style="margin-top:10px; font-family:var(--mono); font-size:10px; color:#7a8195;">Solo personal project, no connection to employer, built with public/free-tier only · Stylized court · prebaked, no external API</p>
     </div>
   </div>
 
@@ -99,31 +97,30 @@
     <p class="arena-tooltip__meta" id="arena-tooltip-meta">—</p>
   </div>
 
-  <div class="osm-attr" id="osm-attr">Stylized court · 12,966 seasons colored by archetype · Nebulae = density · CQS 66.29</div>
+  <div class="osm-attr" id="osm-attr">12,966 seasons colored by archetype · Nebulae = density</div>
 </div>
 
 <section class="arena-details" aria-label="About this viz">
   <div class="arena-details__grid">
     <div>
-      <h2>Chibi courts. Nebulae density. 12,966 seasons as colored points.</h2>
-      <p>Every city is a stylized #FFFEF7 court with ink lines — center circle in team color, chibi arena shell (12 ribs, secondary roof), 4 low bleacher wedges, 72 fan dots. Zero external API, instant load.</p>
-      <p>Above you: MTNN 48-d embedding projected to 3 PCs → sky dome. <b>8 Okabe-Ito nebulae</b> = archetype density via canvas radial gradients (colored clouds). <b>12,966 points</b> colored by archetype (not white), opacity 0.68, size by z — clear not busy. <b>8 bright centroids</b> with paper labels AAA 17.9:1. Lines = 2 nearest archetypes.</p>
-      <p class="mono">Leakfree split CQS 66.29 best_epoch 25 · recall@10 0.977 purity@20 0.6717 · 48-d L2 · 491 projections · Solo free-tier only</p>
-      <p><a href="/play" class="vh-btn vh-btn--primary" style="min-height:44px;">Play daily Chimera →</a> <a href="/" class="vh-btn vh-btn--accent" style="min-height:44px; margin-left:8px;">Landing</a></p>
+      <h2>Chibi courts. 12,966 seasons as colored points.</h2>
+      <p>Every city is a stylized court with ink lines — center circle in team color, chibi arena shell, 4 low bleacher wedges, 72 fan dots.</p>
+      <p>Above you: embedding projected to 3 dimensions → sky dome. <b>8 nebulae</b> = archetype density. <b>12,966 points</b> colored by archetype, size by depth. <b>8 centroids</b> with labels.</p>
+      <p class="mono">12,966 seasons · 8 archetypes · Past→Modern daily</p>
+      <p><a href="/play" class="vh-btn vh-btn--primary" style="min-height:44px;">Play daily →</a> <a href="/" class="vh-btn vh-btn--accent" style="min-height:44px; margin-left:8px;">Landing</a></p>
     </div>
     <div>
-      <h2>Viral hooks built in</h2>
-      <p>• Shareable URL <code>?team=NYK</code> — deep link locks to your team. Share button uses Web Share API or copies link + canvas PNG.</p>
-      <p>• Search finds any season and highlights its star with gold ring + flies camera + label.</p>
-      <p>• Toggles: nebulae / colored points / centroids / labels / constellation; court lines / chibi arena / fans 72. Reduced-motion respects, 44px touch, safe-area.</p>
-      <p>• Production: 2px ink borders, AAA Okabe-Ito triple encode dot+color+label, best-app-ever polish, no OSM latency.</p>
+      <h2>Share and explore</h2>
+      <p>Shareable URL <code>?team=NYK</code> — deep link to your team.</p>
+      <p>Search finds any season and highlights its star.</p>
+      <p>Toggles: nebulae, points, centroids, labels, constellation; court, arena, fans.</p>
     </div>
   </div>
 </section>
 
 <footer class="site-footer" style="display:block; background:#fafaf8; color:#111; position:relative; z-index:2; border-top:3px solid #111;">
   <div class="site-footer__links"><a href="/play">Play</a><a href="/">Home</a><a href="/trends">Trends</a><a href="/players">Players</a><a href="/methods">Methods</a><a href="https://github.com/jcdavis131/vector-hoops" target="_blank" rel="noopener">GitHub</a></div>
-  <div class="site-footer__attribution">Every number recomputable · 12,966 seasons · 8 modes · 48-d L2 · leakfree 0.977 · Stylized court prebaked · from dumbmodel.com · Solo personal project, no connection to employer, built with public/free-tier only</div>
+  <div class="site-footer__attribution">Every number recomputable from stats.nba.com · <a href="https://dumbmodel.com/" target="_blank" rel="noopener">dumbmodel.com</a></div>
 </footer>
 
 <script src="assets/site-nav.js" defer></script>

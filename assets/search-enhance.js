@@ -2,7 +2,6 @@
  * - archetype dot triple encoding (shape+color+pattern)
  * - keyboard nav 56px touch, 18px readability guard, aria
  * - haptics on select
- * Solo personal project
  */
 (function(){
   // patch landing-play.js suggestions to include okabe dot

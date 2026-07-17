@@ -7,7 +7,6 @@
  * Assets: embeddings.f32 2.49MB L2, heads.f32 2.33MB layout arch8|skill18|pos5|next14, inputs.f32 12966×11 family aggregates for explain,
  * jacobian.f32 12966×11×5 influence of each tower on embedding/archetype/position/skills/next
  * Edge cache: core <5MB immutable 1yr, ONNX optional lazy, 100M DAU static CDN, no origin hits for assets
- * Solo personal project, no connection to employer, built with public/free-tier only
  */
 (function(global){
   'use strict';

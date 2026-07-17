@@ -4,7 +4,6 @@
  * - On guess, navigates to /play?guess=NAME & stores pending guess
  * - Shows streak flame from localStorage v5/v6
  * - Counts team locks locally for rivalry strip
- * Solo personal, no employer connection
  */
 (function(){
   'use strict';

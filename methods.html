@@ -13,10 +13,8 @@
 <meta property="og:description" content="The vector space, the MTNN glass box, the map, archetypes, modes, data sources, and accuracy harness that gates every deploy.">
 <meta property="og:image" content="/assets/og.svg">
 <link rel="stylesheet" href="assets/hoops.css">
-<link rel="stylesheet" href="assets/shell.css">
-<link rel="stylesheet" href="assets/nux.css">
-<link rel="stylesheet" href="assets/responsive.css">
-<style>
+<link rel="stylesheet" href="assets/<link rel="stylesheet" href="assets/nux.css">
+<link rel="stylesheet" href="assets/<style>
 .methods-hero{display:flex;flex-direction:column;gap:12px;margin-bottom:6px}
 .methods-kicker{font-family:var(--mono);font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-muted);display:inline-flex;gap:6px;align-items:center}
 .methods-kicker i{width:6px;height:6px;border-radius:50%;background:var(--data-orange);display:inline-block}
@@ -48,9 +46,9 @@
     <h1>Method & data sources</h1>
     <p class="methods-hero__lede">
       Doctrine: every number a player sees must be <b>recomputable from source</b>; every mechanic states its rules; nothing is vibes. Games use <b>14 era-z per-100 features</b> for speed + honesty. The research model <b>MTNN v4</b> expands to <b>120 feats / 17 families → 48-d L2</b> for neighbor search, archetype scoring, and daily puzzles. Both live in the same era-honest space.
-      Glass-box: <a href="/model" style="font-weight:700;border-bottom:2px solid var(--data-orange);text-decoration:none;color:var(--ink)">Inside the Network → 17×160→32 towers</a>
+      Model: <a href="/model" style="font-weight:700;border-bottom:2px solid var(--data-orange);text-decoration:none;color:var(--ink)">Inside the Network → 17×160→32 towers</a>
     </p>
-    <p class="methods-doctrine">Solo personal project, no connection to employer, built with public/free-tier only • ONNX WASM 2MB distilled, localStorage only.</p>
+    
     <nav class="methods-toc" aria-label="On this page">
       <a href="#vector-space">Vector space</a>
       <a href="#mtnn-v4">MTNN v4</a>
@@ -110,7 +108,7 @@
   </section>
 
   <section class="methods-section" id="mtnn-v4">
-    <h2>MTNN v4 — the glass-box behind every guess</h2>
+    <h2>MTNN v4 — the Model behind every guess</h2>
     <p>17 stat families each run through own residual tower → fuse into 48-number fingerprint (L2-normalized, cosine = similarity) → decode into archetype 8 / position 5 / skill grades 18×(48→16→1) + per-100 forecast. <a href="/model"><b>See it live: Inside the Network →</b></a> click any node to probe family share and signed grad×input pushes.</p>
     <div class="arch-diagram">Input 120 feats, mask m∈{0,1}
   h = cat([x·m, m]) → 2·d_in per family
@@ -231,9 +229,9 @@
       <li>Archetype names = centroid stats, not scouting judgment.</li>
       <li>Skills “Two-Way Impact” = per-100 plus-minus with small scoring stabilizer — not BPM/RAPM, small-minute spike possible.</li>
       <li>Chimera fused vector never existed — its skill pool = all-era.</li>
-      <li>MTNN v4 glass-box explorer at <a href="/model">/model</a> shows true weights — no hidden layers beyond documented LN/GELU/skip.</li>
+      <li>MTNN v4 Model explorer at <a href="/model">/model</a> shows true weights — no hidden layers beyond documented LN/GELU/skip.</li>
     </ul>
-    <p style="font-size:11px;color:var(--ink-muted)">Solo personal project, no connection to employer, built with public/free-tier only • Videos: MTNNFlow + ChimeraEquation — glass-box architecture. Free-tier only.</p>
+    
   </section>
 
 </main>
@@ -247,7 +245,7 @@
     <a href="#" data-vh-nux-tour>Tour</a>
     <a href="https://github.com/jcdavis131/vector-hoops" target="_blank" rel="noopener">GitHub</a>
   </div>
-  <div class="site-footer__attribution">MTNN v4: 12,966 seasons 120 feats 17 families cat([x·m,m]) → 17×160→32×2 544+12=556→128→48 L2 ~224K • 14 feats for games era-z PCA • Every number recomputable from stats.nba.com • Solo personal project, no connection to employer, built with public/free-tier only • from <a href="https://dumbmodel.com/" target="_blank" rel="noopener">dumbmodel.com</a></div>
+  <div class="site-footer__attribution">Every number recomputable from stats.nba.com · <a href="https://dumbmodel.com/" target="_blank" rel="noopener">dumbmodel.com</a></div>
 </footer>
 
 <script src="assets/site-nav.js" defer></script>

@@ -1,4 +1,4 @@
-/* Vector Hoops — black & white neobrutalist (fleet-aligned)
+
    Paper white + near-black ink, 2px ink borders, hard offset block shadows,
    bold uppercase labels, mono numerals. Color is reserved for DATA:
    orange = the Chimera / offense, blue = your guess / defense,
@@ -31,7 +31,7 @@
   --radius: 10px;
   --gap: clamp(12px, 2.5vw, 18px);
 
-  /* Fluid layout — mobile-first · Sunni SCAD AAA: 18px/1.65 */
+
   --page-gutter: clamp(12px, 3.2vw, 28px);
   --layout-max: 720px;
   --layout-wide: 1120px;

@@ -1,4 +1,3 @@
-/* Solo personal project, no connection to employer, built with public/free-tier only */
 /* vector-hoops PWA v10-20260718 — rotating 3D map + viral image share + steals/busts back */
 
 const CACHE_NAME = 'vector-hoops-v10-20260718-rotating-viral';

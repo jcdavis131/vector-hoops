@@ -1,5 +1,4 @@
 /* error-boundary.js — production grade for 100M DAU
- * Solo personal project, no connection to employer, built with public/free-tier only
  * Handles: window.onerror + unhandledrejection -> vh.errors (max 50, local only)
  *         offline toast, fallback cards for VHMtnn/InsightEngine, Retry 1s/2s/4s
  *         respects prefers-reduced-motion, no external telemetry

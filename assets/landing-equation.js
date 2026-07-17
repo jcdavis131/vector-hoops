@@ -1,7 +1,6 @@
 /* landing-equation.js — v6 Guess main + Chimera HARD
  * Guess teaser = single ? mystery player, Chimera HARD = ?+?=? 
  * Uses players_lite.json 800 stars, real names
- * Solo personal project, free-tier only
  */
 (function(){
   var players = null;

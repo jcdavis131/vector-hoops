@@ -1,74 +1,10 @@
-/* final-qa.css — 390/720/1120 overflow guard + Sunni AAA polish final
- * Loaded LAST. Ensures no horizontal overflow at 320/375/414/720/1120
- * 56px safe-area bottom tabs z-60, Okabe-Ito AAA contrast, 18px/1.65, 16px anti-zoom
- * Solo personal project, no connection to employer, built with public/free-tier only
- */
+/* final-qa.css — overflow guard + final polish, production */
 html,body{ overflow-x:clip; max-width:100vw; box-sizing:border-box; }
 *{ scrollbar-width:thin; }
 html{ -webkit-text-size-adjust:100%; }
 body{ overscroll-behavior-y:none; }
 img,svg,canvas,video{ max-width:100%; height:auto; }
-#city-intro, .landing-main, .mobile-equation, #viral-strip, #team-leaderboard, .main, .site-nav, .site-footer, .bottom-tabs, .sheet, .card{ max-width:100vw; box-sizing:border-box; min-width:0; }
-#sky-canvas-wrap, #sky-canvas{ max-width:100%; box-sizing:border-box; }
-
-/* 16px inputs prevent iOS zoom */
-input, textarea, select, .input, .vh-input{ font-size:16px !important; min-height:44px; max-width:100%; box-sizing:border-box; }
-
-/* suggestion 280px handled inline but guard */
-.suggest ul{ max-height:280px !important; -webkit-overflow-scrolling:touch; }
-
-/* bottom-tabs z-60 + 56px safe-area */
-.bottom-tabs{ z-index:60 !important; height:calc(56px + env(safe-area-inset-bottom)); padding-bottom:env(safe-area-inset-bottom); position:fixed; left:0; right:0; bottom:0; }
-.bottom-tabs button{ min-height:56px; }
-.main{ padding-bottom:calc(76px + env(safe-area-inset-bottom)) !important; }
-
-/* footer safe-area */
-.site-footer, .vh-footer{ padding-bottom:calc(20px + env(safe-area-inset-bottom)); }
-
-/* tile sizes 62 mobile 78 desktop — guard if old css overrides */
-.tile{ width:62px !important; height:62px !important; min-width:62px; min-height:62px; border:2.2px solid #1A150F; box-shadow:4px 4px 0 #F0E442; }
-@media(min-width:760px){ .tile, .tile.target{ width:78px !important; height:78px !important; min-width:78px; min-height:78px; } }
-.tile.target{ box-shadow:4px 4px 0 #56B4E9 !important; }
-
-/* skill DNA grid 2 mobile 3 desktop */
-.skill-grid{ grid-template-columns:repeat(2,1fr) !important; }
-@media(min-width:760px){ .skill-grid{ grid-template-columns:repeat(3,1fr) !important; } }
-
-/* guess row warmth bg already in play.html but guard touch */
-.guess-row{ min-width:0; overflow-wrap:break-word; }
-
-/* sheet handle 56px */
-.sheet__handle{ height:56px !important; min-height:56px !important; }
-
-/* skeleton shimmer Searching 12,966 */
-.skeleton{ background:linear-gradient(90deg,#eee 25%,#FFFEF7 50%,#eee 75%); background-size:200% 100%; animation:vh-qa-shimmer 1.1s linear infinite; }
-@keyframes vh-qa-shimmer{ from{background-position:200% 0} to{background-position:-200% 0} }
-@media(prefers-reduced-motion:reduce){ .skeleton{ animation:none !important } }
-
-/* AAA contrast — ensure ink/paper pairs AAA */
-:root{ --qa-paper:#FFFEF7; --qa-ink:#1A150F; }
-.btn-primary{ background:#1A150F !important; color:#FFFEF7 !important; border-color:#1A150F !important; }
-.btn-accent{ background:#F0E442 !important; color:#1A150F !important; border-color:#1A150F !important; }
-
-/* overflow-x clip for all sections */
-.landing-hero, .city-intro__pills, .mode-grid, .landing-equation{ max-width:100%; min-width:0; overflow-x:clip; }
-.city-intro__pills::-webkit-scrollbar, .mode-grid::-webkit-scrollbar{ display:none; }
-
-/* 320/375/414 QA */
-@media (max-width:390px){
-  .landing-equation{ transform:scale(.88); transform-origin:left center; }
-  .city-pill{ font-size:9px; padding:5px 8px; }
-  .tile{ width:56px !important; height:56px !important; min-width:56px; min-height:56px; }
-}
-@media (min-width:720px) and (max-width:1120px){
-  .embed-hero__overlay{ padding-inline:clamp(16px, 2.5vw, 24px); }
-}
-
-/* scrollWidth <= innerWidth assert helper — invisible marker */
-html::after{ content:''; display:block; width:0; height:0; overflow:hidden; }
-
-/* safe-area for notched devices */
-@supports(padding: env(safe-area-inset-bottom)){
-  .bottom-tabs, .sheet__body, .site-footer{ padding-bottom:env(safe-area-inset-bottom); }
-}
-
+#city-intro, .landing-main, .mobile-equation, #viral-strip, #team-leaderboard, .main, .site-footer, .bottom-tabs, .sheet, .card{ max-width:100vw; box-sizing:border-box; min-width:0; }
+.site-nav{ box-sizing:border-box; max-width:100vw; }
+.bottom-tabs{ position:fixed; bottom:0; left:0; right:0; z-index:60; padding-bottom: env(safe-area-inset-bottom); }
+.card, .btn{ overflow-wrap:break-word; word-break:break-word; }

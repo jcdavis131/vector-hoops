@@ -1,5 +1,4 @@
 /* Vector Hoops — game.js vNext simplified 2-loop pivot
- * Solo personal project, no connection to employer, built with public/free-tier only — 2026-07-16
  * Daily — Guess + Insight: 1 mystery/daily, 6 guesses, surfaces 48-d cosine, era-z skill delta vs season_norms, archetype bridge, cross-era map neighbors
  * Lab — Fusion Insights A+B=C chimera: blend skill DNA, archetype, next_profile, position fit via topKForVector
  * Data aligned: vectors.json 12966 rows, skills.json 468K grades[12966][12], archetype_assignments 3.2M, vectors_lite 617K, mtnn_meta dim48 rows12966 centroids8, mtnn_embeddings.f32

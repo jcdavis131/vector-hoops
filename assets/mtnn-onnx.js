@@ -2,7 +2,6 @@
  * Vector Hoops — Optional ONNX Live Inference (progressive enhancement)
  * Full model 2.35MB (mtnn.onnx + .data) via onnxruntime-web CDN.
  * For 100M DAU, default is precomputed embeddings (edge-cached). ONNX only loads after user interaction in Lab.
- * Solo personal project, no connection to employer, built with public/free-tier only
  */
 (function(global){
   'use strict';

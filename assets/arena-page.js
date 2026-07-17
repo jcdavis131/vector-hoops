@@ -1,5 +1,4 @@
 /* arena-page.js v3 — Nebulae Archipelago Court — production, no OSM
- * Solo personal project, no connection to employer, built with public/free-tier only
  * Full controls: sky toggles nebulae/points/centroids/labels/lines, city toggles arena/court/fans, search highlight gold ring, share ?team=xxx, random, reduced-motion
  */
 (function(){

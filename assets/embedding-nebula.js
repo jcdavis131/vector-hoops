@@ -1,5 +1,4 @@
 /* embedding-nebula.js — colored density clouds + archetype-colored sky
- * Solo personal project, no connection to employer, built with public/free-tier only
  * No external fetch besides vectors.json (prebaked). Free-tier only.
  * Provides: computeCentroids, mapToSky, createNebulaCanvas, buildSkyData
  */

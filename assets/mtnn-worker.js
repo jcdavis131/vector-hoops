@@ -2,7 +2,6 @@
  * Vector Hoops — MTNN Worker for 100M DAU
  * Offloads 12,966 × 48-d dot products off main thread.
  * Loads mtnn_embeddings.f32 once, handles topK queries via postMessage.
- * Solo personal project, no connection to employer, built with public/free-tier only
  */
 self._cache = null;
 

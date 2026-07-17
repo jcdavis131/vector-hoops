@@ -1,5 +1,4 @@
 // /api/team-locks — free-tier global counter for rivalry board, no DB yet, returns seeded distribution blended with optional write
-// Solo personal project, no connection to employer, built with public/free-tier only
 
 // in-memory fallback for serverless - will reset, but gives growthy feel
 // Persist via Upstash/KV later if needed

@@ -1,7 +1,6 @@
 /* team-leaderboard.js — local + api counting locks per day, rivalry
  * Reads LS_TEAM_LOCKS + LS_TEAM_LOCKS_DAILY, shows sorted leaderboard
  * Prepares API hook for R2/Workers free tier
- * Solo personal project
  */
 (function(){
   var LS_LOCKS = 'vectorHoops.teamLocks';

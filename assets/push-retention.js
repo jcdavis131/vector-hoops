@@ -1,5 +1,4 @@
 /* push-retention.js — streak flame + notification prompt after 2 days
- * Solo personal project
  */
 (function(){
   var LS_LAST_VISIT = 'vectorHoops.lastVisit';

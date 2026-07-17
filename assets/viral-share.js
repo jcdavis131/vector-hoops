@@ -1,5 +1,4 @@
 /* viral-share.js — share cards for team universe & chimera
- * Solo personal project, no connection to employer, built with public/free-tier only
  * Zero deps, canvas-based for 10M DAU virality
  */
 (function(){

@@ -5,7 +5,6 @@
  * Model: mtnn_v5_concat_b2_h160_t32_d48_mlp128 11 families cat([x·m,m]) 160→32 towers, 352+12=556→128→48 L2-norm, 224K params, leakfree, recall@10 0.977
  * Assets: mtnn_meta.json, mtnn_arch.json, mtnn_embeddings.f32 2.49MB L2, mtnn_heads.f32 2.33MB edge immutable 1y
  * ONNX optional lazy: mtnn.onnx 549K + .data 1.8M — default fallback embeddings precomputed for scale (no origin hit)
- * Solo personal project, no connection to employer, free-tier static Vercel, built with public/free-tier only
  */
 (function(global){
 'use strict';

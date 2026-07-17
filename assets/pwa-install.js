@@ -1,6 +1,5 @@
 /* pwa-install.js — custom install prompt for 10M DAU, AAA, 44px touch, paper/ink
  * Shows after 2 visits or after team lock, respects beforeinstallprompt
- * Solo personal project
  */
 (function(){
   var LS_KEY = 'vectorHoops.installPromptDismissedAt';

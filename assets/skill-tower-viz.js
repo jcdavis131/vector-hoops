@@ -1,5 +1,4 @@
 /* Skill Tower Viz — MTNN v5 concat b2_h160_t32_d48 full-scale visual proof
- * Solo personal project, no connection to employer, public/free-tier only
  * Surfaces real trained model: skill_probe.json W 12x14, mtnn_jacobian populationInfluence 11 towers, skills.json 12 DNA 0-99
  */
 (function(global){

@@ -1,5 +1,4 @@
 /* city-intro.css v4.2 — immersive embedding hero + uncramped mobile + viral polish
- * Solo personal, no connection to employer, built with public/free-tier only
  */
 #city-intro.embed-hero{position:relative; width:100%; min-height:clamp(680px,92vh,920px); background:#07090f; border-bottom:3px solid #111; overflow:clip; isolation:isolate; box-sizing:border-box;}
 .embed-hero__bg{position:absolute; inset:0; z-index:0; will-change:transform;}

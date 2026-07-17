@@ -1,6 +1,6 @@
 /* Vector Hoops — assets/responsive.css v2
  * Mobile-first fluid layout. Loads after hoops.css + shell.css.
- * FIX: Sunni SCAD AAA, safe-area, touch 44/56px, no horizontal overflow at 320/375/414, iOS anti-zoom 16px
+
  * Uses --page-gutter / --layout-max / --layout-wide from hoops.css :root. */
 
 html,body{

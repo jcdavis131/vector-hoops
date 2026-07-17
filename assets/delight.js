@@ -1,6 +1,5 @@
 /* delight.js vNext — confetti Web Animations, streak flame, haptics 10
  * 100M DAU polish: 80 particles max, respects prefers-reduced-motion, cleanup
- * Solo personal project footer required.
  */
 (function(){
   const REDUCED = typeof window!=='undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -105,4 +104,3 @@
 
   window.VHDelight = { spawnConfetti: spawnConfetti };
 })();
-// Solo personal project, no connection to employer, built with public/free-tier only

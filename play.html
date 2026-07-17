@@ -1,6 +1,6 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/><title>Play — Past All-Star → Modern Twin — rotating 3D map — Vector Hoops</title>
-<meta name="description" content="12,966 seasons as rotating 3D map — daily Past All-Star → guess closest modern superstar. 48-d MTNN cosine recall@10 0.977. Share image card, challenge friends, streak, steals/busts in players."/>
-<meta property="og:title" content="Play Vector Hoops — Past→Modern Twin — rotating 3D"/><meta property="og:description" content="Past All-Star → modern twin — 48-d MTNN 12,966 rotating map. 6 tries. Share PNG 1080x1350 + emoji grid + streak. Challenge link ?day=."/><meta property="og:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/><meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/><meta name="twitter:card" content="summary_large_image"/><meta name="theme-color" content="#1A150F"/><link rel="manifest" href="/manifest.json"/>
+<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/><title>Play — Past All-Star → Modern Twin — Vector Hoops</title>
+<meta name="description" content="Daily Past All-Star → guess closest modern superstar. Rotating map, 6 tries, share your grid."/>
+<meta property="og:title" content="Play Vector Hoops — Past→Modern Twin"/><meta property="og:description" content="Past All-Star → modern twin — 12,966 as rotating map. 6 tries."/><meta property="og:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/><meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/><meta name="twitter:card" content="summary_large_image"/><meta name="theme-color" content="#1A150F"/><link rel="manifest" href="/manifest.json"/>
 <link rel="stylesheet" href="assets/shell.css"/><link rel="stylesheet" href="assets/responsive.css"/>
 <style>
 :root{--paper:#FFFEF7;--ink:#1A150F;--blue:#0072B2;--verm:#D55E00;--yellow:#F0E442;--green:#009E73;--radius:14px;--shadow:4px 4px 0 var(--ink);--mono:ui-monospace,monospace;--sans:ui-sans-serif,system-ui;}
@@ -21,6 +21,12 @@ button,.input{min-height:44px}
 #map-overlay .chip{background:rgba(255,254,247,.92);border:2px solid var(--ink);border-radius:999px;padding:4px 8px;font-family:var(--mono);font-size:10px;box-shadow:1px 1px 0 var(--ink)}
 #map-controls{position:absolute;left:10px;bottom:10px;z-index:3;display:flex;gap:6px;flex-wrap:wrap}
 #map-controls .chip{cursor:pointer}
+#map-legend{position:absolute;right:10px;bottom:10px;z-index:3;background:rgba(255,254,247,.94);border:2px solid var(--ink);border-radius:12px;padding:7px 9px;box-shadow:2px 2px 0 var(--ink);font-family:var(--mono);font-size:9px;line-height:1.35;pointer-events:none;min-width:128px}
+#map-legend .legend-title{font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:900;opacity:.55;margin-bottom:4px}
+#map-legend .axis{display:flex;gap:5px;align-items:center;margin:2px 0;white-space:nowrap}
+#map-legend .axis i{font-style:normal;font-weight:900;width:14px;height:14px;display:inline-flex;align-items:center;justify-content:center;background:var(--ink);color:#fff;border-radius:4px;font-size:7.5px;line-height:1}
+#map-legend .axis em{font-style:normal;opacity:.35;margin:0 1px}
+#map-legend .legend-foot{margin-top:4px;font-size:7.5px;opacity:.45;line-height:1.2}
 #hover-tip{position:absolute;left:50%;top:50%;transform:translate(-50%,-100%);background:#FFFEF7;border:2px solid var(--ink);border-radius:10px;padding:6px 8px;box-shadow:3px 3px 0 var(--ink);font-size:11px;line-height:1.35;display:none;z-index:3;pointer-events:none;max-width:220px}
 .guess-row{border:1.6px dashed #bbb;border-radius:10px;padding:10px;background:#FFFEF7;margin-top:8px}
 .guess-row.win{border-color:var(--green);border-style:solid;background:#e8f5e9}
@@ -39,37 +45,33 @@ button,.input{min-height:44px}
 
 <div class="main">
   <div class="card" style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center">
-    <div><h1 class="hd" style="margin:0;font-size:24px">Past All-Star → <b style="background:var(--ink);color:#fff;padding:0 .2em;border-radius:6px">Modern Twin</b></h1><p class="small-mono" style="text-transform:none;color:#444;margin:6px 0 0;line-height:1.4">12,966 as rotating 3D map · 48-d MTNN recall@10 0.977 · <span id="puzzle-day-label">Today</span> · drag to spin, auto-rotates <span style="background:var(--yellow);border:1.5px solid var(--ink);border-radius:999px;padding:2px 6px">v10 rotating</span> · <a href="/players">Players steals/busts →</a></p></div>
-    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><span class="pill" id="puzzle-pill">P#—</span><span class="pill" id="streak-pill">streak 0</span><button class="pill" id="btn-challenge" type="button" style="cursor:pointer">👥 Challenge link</button></div>
+    <div><h1 class="hd" style="margin:0;font-size:24px">Past All-Star → <b style="background:var(--ink);color:#fff;padding:0 .2em;border-radius:6px">Modern Twin</b></h1><p class="small-mono" style="text-transform:none;color:#444;margin:6px 0 0;line-height:1.4"><span id="puzzle-day-label">Today</span> · 6 tries · drag to spin · <a href="/players">Players →</a></p></div>
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><span class="pill" id="puzzle-pill">P#—</span><span class="pill" id="streak-pill">streak 0</span><button class="pill" id="btn-challenge" type="button" style="cursor:pointer">Challenge</button></div>
   </div>
 
-  <div id="map-wrap"><canvas id="sky-canvas" width="640" height="460"></canvas><div id="map-overlay"><span class="chip" id="map-fact">12,966 real xyz — rotating 3D · PC1 paint→perim PC2 load PC3 ball</span><span class="chip">past gold · guesses orange · hover dossier</span></div><div id="map-controls"><button class="chip" id="btn-pause" type="button">⏸ Pause</button><button class="chip" id="btn-reset" type="button">⟲ Reset</button></div><div id="hover-tip"></div></div>
+  <div id="map-wrap"><canvas id="sky-canvas" width="640" height="460"></canvas><div id="map-overlay"><span class="chip" id="map-fact">12,966 seasons — rotating map</span><span class="chip">gold = past, orange = guesses</span></div><div id="map-controls"><button class="chip" id="btn-pause" type="button">Pause</button><button class="chip" id="btn-reset" type="button">Reset</button></div><div id="map-legend"><div class="legend-title">Map Axes</div><div class="axis"><i>X</i>Paint<em>↔</em>Perimeter</div><div class="axis"><i>Y</i>Role<em>→</em>Scorer</div><div class="axis"><i>Z</i>Off-ball<em>↔</em>On-ball</div><div class="legend-foot">Center = avg</div></div><div id="hover-tip"></div></div>
 
   <div class="card" id="past-card">
     <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center">
       <div><div class="small-mono">Today's Past All-Star — <span id="challenge-badge" style="display:none;background:var(--yellow);border:1.5px solid var(--ink);border-radius:6px;padding:1px 6px">CHALLENGE</span></div><h2 id="past-name" class="hd" style="margin:4px 0 2px;font-size:26px">Loading…</h2><div id="past-meta" class="small-mono" style="text-transform:none;color:#555"></div></div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap"><button id="btn-random" class="btn" type="button">Random 🎲</button><button id="btn-new" class="btn btn-accent" type="button">New Puzzle</button></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap"><button id="btn-random" class="btn" type="button">Random</button><button id="btn-new" class="btn btn-accent" type="button">New</button></div>
     </div>
     <div id="past-xyz" class="small-mono" style="margin-top:8px;text-transform:none;color:#666"></div>
     <div id="past-closest-hint" class="small-mono" style="margin-top:6px;text-transform:none;color:#111;background:#fff;border:1.4px dashed var(--ink);border-radius:8px;padding:6px 8px;display:none"></div>
   </div>
 
   <div class="card">
-    <label class="small-mono" for="guess-input">Guess modern superstar (2024-26) — <span style="text-transform:none;color:#666">594 unique · type for autocomplete · Enter to guess</span></label>
-    <div class="suggest"><input id="guess-input" class="input" placeholder="Type modern — e.g., Victor Wembanyama, SGA, Ant" autocomplete="off" spellcheck="false"/><ul id="guess-suggest" class="hidden" style="display:none"></ul></div>
+    <label class="small-mono" for="guess-input">Guess modern superstar</label>
+    <div class="suggest"><input id="guess-input" class="input" placeholder="Type modern — e.g., Wembanyama, SGA, Ant" autocomplete="off" spellcheck="false"/><ul id="guess-suggest" class="hidden" style="display:none"></ul></div>
     <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
-      <button id="guess-btn" class="btn btn-primary" type="button">Guess →</button>
-      <button id="share-btn" class="btn" type="button">📸 Share Image Card</button>
-      <button id="share-text-btn" class="btn" type="button">📋 Copy Grid</button>
+      <button id="guess-btn" class="btn btn-primary" type="button">Guess</button>
+      <button id="share-btn" class="btn" type="button">Share</button>
+      <button id="share-text-btn" class="btn" type="button">Copy Grid</button>
       <span id="warm-label" class="pill" style="display:none"></span>
     </div>
     <div id="guesses" aria-live="polite"></div>
     <div id="result" class="hidden" style="margin-top:12px"></div>
   </div>
-
-  <div class="card" style="background:#1A150F;color:#FFFEF7"><h3 class="hd" style="margin:0 0 6px;color:var(--yellow)">Viral upgrade — how sharing works</h3><p style="margin:0;font-size:12px;line-height:1.5;color:#ddd"><b>Image card 1080×1350:</b> past hero + 6 rows 🟩🟨🟧⬜ + sim% bar + rank + streak. Shared via Web Share API file → X/Threads/Discord auto, clipboard fallback. <b>Challenge link:</b> ?day=YYYY-MM-DD forces same past, same answer — compare rank. <b>Rotating map:</b> true 3D perspective, auto-rotate, drag pauses 3s, pause button. <b>Players →</b> <a href="/players" style="color:var(--yellow)">Steals/Busts</a> with playoff bonus — top steal Ben Wallace archetype, busts maturity 5y.</p></div>
-
-  <div class="card small-mono" style="text-transform:none;color:#666;font-size:10px">Solo personal project, no connection to employer, built public/free-tier only — 12,966 seasons · MTNN 48-d 0.977 · PC1 paint→perim PC2 load PC3 ball · <a href="/">home</a> · <a href="/trends">trends</a> · <a href="/players">players steals/busts</a> · <a href="/methods">methods</a> · <a href="/offline.html">offline</a></div>
 </div>
 
 <canvas id="confetti-canvas" class="confetti" style="display:none"></canvas>
@@ -90,14 +92,12 @@ button,.input{min-height:44px}
   let animId=null, lastT=0;
   let pastPt=null;
   let hoverEl=$('#hover-tip'), canvas=$('#sky-canvas'), factEl=$('#map-fact');
-  let searchPlayers=[];
 
   function resize(){ var r=canvas.getBoundingClientRect(); if(!r.width) return; W=r.width; H=r.height; dpr=Math.min(devicePixelRatio||1,2.5); canvas.width=W*dpr; canvas.height=H*dpr; canvas.style.width=W+'px'; canvas.style.height=H+'px'; var ctx=canvas.getContext('2d'); ctx.setTransform(dpr,0,0,dpr,0,0);}
   function initBase(lite){
     base=[];
     for(var i=0;i<lite.length;i++){ var p=lite[i]; base.push({ox:(p.x-0.5)*2, oy:(p.y-0.5)*2, oz:(p.z-0.5)*2, n:p.n, s:p.s, c:p.c, i:p.i, x:p.x,y:p.y,z:p.z});}
     projected=new Array(base.length);
-    searchPlayers=lite;
   }
   function projectFrame(){
     var cy=Math.cos(rotY), sy=Math.sin(rotY), cx=Math.cos(rotX), sx=Math.sin(rotX);
@@ -128,14 +128,8 @@ button,.input{min-height:44px}
     for(var i=0;i<order.length;i++){
       var p=order[i];
       ctx.globalAlpha = p.isPast? 1 : Math.max(0.18,Math.min(0.94,p.alpha*0.82));
-      if(p.isPast){
-        // draw faint underlying
-        ctx.fillStyle=OKABE[p.c%OKABE.length]; ctx.beginPath(); ctx.arc(p.sx,p.sy,p.rad+0.5,0,Math.PI*2); ctx.fill();
-      }else{
-        ctx.fillStyle=OKABE[p.c%OKABE.length]; ctx.beginPath(); ctx.arc(p.sx,p.sy,p.rad,0,Math.PI*2); ctx.fill();
-      }
+      ctx.fillStyle=OKABE[p.c%OKABE.length]; ctx.beginPath(); ctx.arc(p.sx,p.sy,p.rad,0,Math.PI*2); ctx.fill();
     }
-    // guesses orange rings + lines
     var st=null; try{ st=VHPastModern.state(); }catch{}
     var tProj = st&&st.target ? projected.find(function(pp){return pp.i===st.target.i;}) : null;
     if(tProj){
@@ -144,7 +138,6 @@ button,.input{min-height:44px}
       ctx2.fillStyle='#F0E442'; ctx2.beginPath(); ctx2.arc(tProj.sx,tProj.sy,6.8,0,Math.PI*2); ctx2.fill();
       ctx2.fillStyle='#1A150F'; ctx2.font='800 10px ui-monospace,monospace'; ctx2.fillText(tProj.n+' '+tProj.s, tProj.sx+14, tProj.sy-12);
     }
-    // guesses
     for(var gi=0;gi<G.guesses.length;gi++){
       var gu=G.guesses[gi];
       var p=projected.find(function(pp){return pp.n===gu.name;}) || projected.find(function(pp){return pp.i===gu.idx;});
@@ -159,10 +152,10 @@ button,.input{min-height:44px}
     animId=requestAnimationFrame(loop);
     if(!lastT) lastT=t; var dt=Math.min(48,t-lastT); lastT=t;
     if(!isDragging && auto){ rotY+=dt*autoSpeed; rotX += (Math.sin(t*0.00018)*0.20 - rotX)*0.018; }
-    else if(idleTimer){ idleTimer-=dt; if(idleTimer<=0){ auto=true; var bp=$('#btn-pause'); if(bp) bp.textContent='⏸ Pause'; } }
+    else if(idleTimer){ idleTimer-=dt; if(idleTimer<=0){ auto=true; var bp=$('#btn-pause'); if(bp) bp.textContent='Pause'; } }
     projectFrame(); draw();
   }
-  function onDown(ev){ isDragging=true; auto=false; lastX= ev.touches?ev.touches[0].clientX:ev.clientX; lastY= ev.touches?ev.touches[0].clientY:ev.clientY; var bp=$('#btn-pause'); if(bp) bp.textContent='▶️ Resume'; }
+  function onDown(ev){ isDragging=true; auto=false; lastX= ev.touches?ev.touches[0].clientX:ev.clientX; lastY= ev.touches?ev.touches[0].clientY:ev.clientY; var bp=$('#btn-pause'); if(bp) bp.textContent='Resume'; }
   function onMove(ev){
     var x=ev.touches?ev.touches[0].clientX:ev.clientX, y=ev.touches?ev.touches[0].clientY:ev.clientY;
     if(isDragging){ var dx=x-lastX, dy=y-lastY; rotY+=dx*0.008; rotX+=dy*0.006; rotX=Math.max(-0.9,Math.min(0.9,rotX)); lastX=x; lastY=y; }
@@ -170,7 +163,7 @@ button,.input{min-height:44px}
       if(!projected.length) return;
       var rect=canvas.getBoundingClientRect(); var mx=x-rect.left, my=y-rect.top;
       var best=null,bd=15; for(var i=0;i<projected.length;i++){ var p=projected[i]; var d=Math.hypot(p.sx-mx,p.sy-my); if(d<bd){bd=d; best=p;} }
-      if(best && hoverEl){ hoverEl.style.display='block'; hoverEl.style.left=best.sx+'px'; hoverEl.style.top=(best.sy-36)+'px'; hoverEl.innerHTML='<b>'+best.n+'</b> '+best.s+'<br><span class="small-mono" style="text-transform:none">x'+best.x.toFixed(2)+' y'+best.y.toFixed(2)+' z'+best.z.toFixed(2)+' · '+ARCH[best.c%ARCH.length]+'</span>'; factEl.textContent=best.n+' '+best.s+' · '+ARCH[best.c%ARCH.length]; } else { if(hoverEl) hoverEl.style.display='none'; }
+      if(best && hoverEl){ hoverEl.style.display='block'; hoverEl.style.left=best.sx+'px'; hoverEl.style.top=(best.sy-36)+'px'; hoverEl.innerHTML='<b>'+best.n+'</b> '+best.s+'<br><span class="small-mono" style="text-transform:none">'+ARCH[best.c%ARCH.length]+'</span>'; factEl.textContent=best.n+' '+best.s; } else { if(hoverEl) hoverEl.style.display='none'; }
     }
   }
   function onUp(){ if(isDragging){ isDragging=false; idleTimer=3400; } }
@@ -183,8 +176,8 @@ button,.input{min-height:44px}
   function attachSuggest(){
     var input=$('#guess-input'), ul=$('#guess-suggest');
     var active=-1, last=[];
-    function render(list){ last=list; if(!list.length){ ul.style.display='none'; ul.classList.add('hidden'); return; }
-      ul.innerHTML=list.map(function(m,i){ return '<li data-i="'+i+'" class="'+(i===active?'is-active':'')+'"><span><b>'+m.n+'</b> <span style="opacity:.6">'+m.s+'</span></span><span class="small-mono">'+m.i+'</span></li>';}).join(''); ul.style.display='block'; ul.classList.remove('hidden'); }
+    function render(list){ last=list; if(!list.length){ ul.style.display='none'; return; }
+      ul.innerHTML=list.map(function(m,i){ return '<li data-i="'+i+'" class="'+(i===active?'is-active':'')+'"><span><b>'+m.n+'</b> <span style="opacity:.6">'+m.s+'</span></span><span class="small-mono">'+m.i+'</span></li>';}).join(''); ul.style.display='block'; }
     input.addEventListener('input',function(){ active=-1; render(filteredModern(this.value)); });
     input.addEventListener('keydown',function(e){
       if(ul.style.display==='none') return;
@@ -199,8 +192,7 @@ button,.input{min-height:44px}
 
   function loadGuesses(){
     try{
-      // support both old and new key, but prefer day-specific
-      var raw=localStorage.getItem(STORAGE_GUESS); if(!raw){ var rawOld=localStorage.getItem('vh.pastmodern.v1'); if(rawOld){ try{ var o=JSON.parse(rawOld); if(o.day===VHPastModern.state().dayKey) return o.guesses||[]; }catch{} } return []; }
+      var raw=localStorage.getItem(STORAGE_GUESS); if(!raw) return [];
       var obj=JSON.parse(raw); if(obj.day!==VHPastModern.state().dayKey) return []; return obj.guesses||[];
     }catch{ return []; }
   }
@@ -227,12 +219,12 @@ button,.input{min-height:44px}
     var past=st.target; if(!past) return;
     $('#past-name').textContent=past.n+' '+past.s;
     var hon=st.honors[past.n+'|'+past.s]||{};
-    var allNba = hon.allNbaTeam? '· All-NBA '+hon.allNbaTeam+' vote '+ (hon.allNbaVotePts||0) : '';
-    $('#past-meta').innerHTML='ASG '+(hon.asg?'★ All-Star':'')+' '+allNba+' · archetype <b>'+ARCH[past.c%ARCH.length]+'</b> · PC x'+past.x.toFixed(2)+' y'+past.y.toFixed(2)+' z'+past.z.toFixed(2)+' · #'+past.i;
-    $('#past-xyz').textContent='PC1 '+past.x.toFixed(2)+' paint→perim, PC2 '+past.y.toFixed(2)+' load, PC3 '+past.z.toFixed(2)+' ball · 48-d row '+past.i+' · year '+VHPastModern.parseYear(past.s)+(st.urlDay?' · challenge day '+st.dayKey:' · today '+st.dayKey);
-    $('#puzzle-pill').textContent='P#'+st.puzzleNum+' · '+past.s.slice(0,4)+'→2024-26'+(st.urlDay?' · challenged':'');
+    var allNba = hon.allNbaTeam? 'All-NBA '+hon.allNbaTeam : '';
+    $('#past-meta').innerHTML=(hon.asg?'All-Star ': '')+allNba+' · '+ARCH[past.c%ARCH.length];
+    $('#past-xyz').textContent='Year '+VHPastModern.parseYear(past.s)+(st.urlDay?' · challenge '+st.dayKey:'');
+    $('#puzzle-pill').textContent='P#'+st.puzzleNum;
     $('#streak-pill').textContent='streak '+loadStreak();
-    $('#puzzle-day-label').textContent = st.urlDay ? 'Challenge '+st.dayKey+' · '+past.n : 'Today '+st.dayKey+' · '+past.n;
+    $('#puzzle-day-label').textContent = st.urlDay ? 'Challenge '+st.dayKey : 'Today '+st.dayKey;
     if(st.urlDay) $('#challenge-badge').style.display='inline-block'; else $('#challenge-badge').style.display='none';
     projectFrame(); draw();
   }
@@ -241,13 +233,12 @@ button,.input{min-height:44px}
     var st=VHPastModern.state();
     G.guesses.forEach(function(g,idx){
       var simPct=(g.sim*100).toFixed(1);
-      var rankLabel=g.rank===0? '🎯 CLOSEST!': '#'+(g.rank+1)+' of '+st.modernPool.length;
-      var warm=idx>0 ? (g.rank < G.guesses[idx-1].rank ? '🔥 warmer' : g.rank > G.guesses[idx-1].rank ? '❄️ colder' : 'same') : '';
+      var rankLabel=g.rank===0? 'Closest': '#'+(g.rank+1);
+      var warm=idx>0 ? (g.rank < G.guesses[idx-1].rank ? 'warmer' : g.rank > G.guesses[idx-1].rank ? 'colder' : 'same') : '';
       var isWin=g.rank===0;
       var div=document.createElement('div'); div.className='guess-row'+(isWin?' win':'');
-      var dx=st.target? (g.x - st.target.x).toFixed(2):'?'; var dy=st.target? (g.y - st.target.y).toFixed(2):'?'; var dz=st.target? (g.z - st.target.z).toFixed(2):'?';
-      var emoji = g.rank===0?'🟩': g.rank<=3?'🟨': g.rank<=10?'🟧':'⬜';
-      div.innerHTML='<div style="display:flex;justify-content:space-between;gap:8px;align-items:center"><b>'+emoji+' '+(idx+1)+'. '+g.name+' '+g.season+'</b><span class="pill" style="background:'+(simPct>85?'#F0E442': simPct>75?'#56B4E9':'#fff')+'">'+simPct+'% · '+rankLabel+'</span></div><div class="small-mono" style="text-transform:none;margin-top:6px;color:#444">Δ PC1 '+dx+' paint→perim · Δ PC2 '+dy+' load · Δ PC3 '+dz+' ball · '+warm+' · '+ARCH[g.c%ARCH.length]+'</div><div class="bar"><i style="width:'+Math.max(4,Math.min(100,parseFloat(simPct)))+'%;background:'+(isWin?'#009E73':'#0072B2')+'"></i></div>';
+      var emoji = g.rank===0?'': g.rank<=3?'': g.rank<=10?'':'';
+      div.innerHTML='<div style="display:flex;justify-content:space-between;gap:8px;align-items:center"><b>'+(idx+1)+'. '+g.name+' '+g.season+'</b><span class="pill">'+simPct+'% · '+rankLabel+'</span></div><div class="small-mono" style="text-transform:none;margin-top:6px;color:#444">'+warm+' · '+ARCH[g.c%ARCH.length]+'</div><div class="bar"><i style="width:'+Math.max(4,Math.min(100,parseFloat(simPct)))+'%;background:'+(isWin?'#009E73':'#0072B2')+'"></i></div>';
       cont.appendChild(div);
     });
   }
@@ -261,13 +252,13 @@ button,.input{min-height:44px}
     var sortedTop=st.modernListSorted.slice(0,6).map(function(o,i){return (i+1)+'. '+o.m.n+' '+o.m.s+' '+(o.sim*100).toFixed(1)+'%';}).join(' · ');
     if(won){
       var cur=loadStreak()+1; saveStreak(cur); $('#streak-pill').textContent='streak '+cur;
-      resEl.innerHTML='<div class="card" style="border-color:var(--green)"><h3 class="hd" style="margin:0 0 6px">✅ Solved in '+G.guesses.length+'/6 — '+st.target.n+' '+st.target.s+' → '+closest.entry.n+'</h3><div style="font-size:13px;line-height:1.5"><b>Answer:</b> '+closest.entry.n+' '+closest.entry.s+' '+(closest.sim*100).toFixed(1)+'% cos 48-d<br><b>Top 6 twins:</b> '+sortedTop+'<br><b>Skill truth:</b> 18 towers 48→16→1 raw blend via heads f32 2.33MB.<br><span class="small-mono">Share PNG card + emoji grid — streak '+cur+'</span></div></div>';
+      resEl.innerHTML='<div class="card" style="border-color:var(--green)"><h3 class="hd" style="margin:0 0 6px">Solved in '+G.guesses.length+'/6 — '+st.target.n+' → '+closest.entry.n+'</h3><div style="font-size:13px;line-height:1.5">Answer: '+closest.entry.n+' '+closest.entry.s+' '+(closest.sim*100).toFixed(1)+'%<br>Top: '+sortedTop+'</div></div>';
       confettiBurst();
     }else{
       saveStreak(0); $('#streak-pill').textContent='streak 0';
-      resEl.innerHTML='<div class="card" style="border-color:var(--verm)"><h3 class="hd" style="margin:0 0 6px">❌ Revealed — '+st.target.n+' '+st.target.s+' → '+closest.entry.n+' '+closest.entry.s+'</h3><div style="font-size:13px;line-height:1.5"><b>Answer:</b> '+closest.entry.n+' '+closest.entry.s+' '+(closest.sim*100).toFixed(1)+'% cos — closest of '+st.modernPool.length+' modern<br><b>You guessed:</b> '+G.guesses.map(function(g){return g.name+' #'+(g.rank+1)+' '+(g.sim*100).toFixed(0)+'%';}).join(' · ')+'<br><b>Top 6:</b> '+sortedTop+'</div></div>';
+      resEl.innerHTML='<div class="card" style="border-color:var(--verm)"><h3 class="hd" style="margin:0 0 6px">Revealed — '+st.target.n+' → '+closest.entry.n+'</h3><div style="font-size:13px;line-height:1.5">Closest: '+closest.entry.n+' '+(closest.sim*100).toFixed(1)+'%<br>Top: '+sortedTop+'</div></div>';
     }
-    var hintEl=$('#past-closest-hint'); if(hintEl && closest){ hintEl.style.display='block'; hintEl.textContent='Answer: '+closest.entry.n+' '+closest.entry.s+' '+(closest.sim*100).toFixed(1)+'% cos 48-d — top '+sortedTop; }
+    var hintEl=$('#past-closest-hint'); if(hintEl && closest){ hintEl.style.display='block'; hintEl.textContent='Answer: '+closest.entry.n+' '+(closest.sim*100).toFixed(0)+'%'; }
     projectFrame(); draw();
   }
   function doGuess(){
@@ -282,8 +273,8 @@ button,.input{min-height:44px}
     canvas.addEventListener('mousedown',onDown); canvas.addEventListener('mousemove',onMove); window.addEventListener('mouseup',onUp);
     canvas.addEventListener('touchstart',onDown,{passive:true}); canvas.addEventListener('touchmove',onMove,{passive:true}); canvas.addEventListener('touchend',onUp);
     canvas.addEventListener('mouseleave',function(){ if(hoverEl) hoverEl.style.display='none'; });
-    $('#btn-pause').addEventListener('click',function(){ auto=!auto; this.textContent=auto?'⏸ Pause':'▶️ Resume'; });
-    $('#btn-reset').addEventListener('click',function(){ rotY=Math.PI*0.18; rotX=0.22; auto=true; $('#btn-pause').textContent='⏸ Pause'; });
+    $('#btn-pause').addEventListener('click',function(){ auto=!auto; this.textContent=auto?'Pause':'Resume'; });
+    $('#btn-reset').addEventListener('click',function(){ rotY=Math.PI*0.18; rotX=0.22; auto=true; $('#btn-pause').textContent='Pause'; });
 
     await VHPastModern.init();
     var st=VHPastModern.state();
@@ -307,35 +298,29 @@ button,.input{min-height:44px}
     $('#btn-random').addEventListener('click',function(){ var p=VHPastModern.pickRandomPast(); G.guesses=[]; saveGuesses(); VHPastModern.state().guesses=[]; renderPast(); renderGuesses(); $('#result').classList.add('hidden'); $('#past-closest-hint').style.display='none'; $('#warm-label').style.display='none'; projectFrame(); draw(); });
     $('#btn-new').addEventListener('click',function(){ localStorage.removeItem(STORAGE_GUESS); location.href='/play'; });
 
-    // share image card
     $('#share-btn').addEventListener('click',async function(){
       var st=VHPastModern.state(); var won=G.guesses.some(function(g){return g.rank===0;});
       var streak=loadStreak();
       var opts={ puzzleNum: st.puzzleNum, dayKey: st.dayKey, pastName: st.target.n, pastSeason: st.target.s, guesses: G.guesses, answerName: st.closestModern? st.closestModern.entry.n+' '+st.closestModern.entry.s : '', answerSim: st.closestModern? st.closestModern.sim: 0, won: won, revealed: G.guesses.length>=6||won, streak: streak, url: location.origin+'/play?day='+st.dayKey };
-      if(window.VHShare && window.VHShare.sharePastModern){ var res=await window.VHShare.sharePastModern(opts); if(res==='copied'){ this.textContent='Copied PNG+Text!'; setTimeout(function(el){el.textContent='📸 Share Image Card';}.bind(null,this),1500); } else if(res){ this.textContent='Shared! 🎯'; setTimeout(function(el){el.textContent='📸 Share Image Card';}.bind(null,this),1500); } }
-      else { var grid=G.guesses.map(function(g){ return g.rank===0?'🟩': g.rank<=3?'🟨': g.rank<=10?'🟧':'⬜'; }).join(''); var text='Vector Hoops Past→Modern P#'+st.puzzleNum+' '+(won?G.guesses.length+'/6':'X/6')+' '+grid+'\nPast '+st.target.n+' '+st.target.s+' → modern twin?\n'+location.href; if(navigator.clipboard) navigator.clipboard.writeText(text); }
+      if(window.VHShare && window.VHShare.sharePastModern){ await window.VHShare.sharePastModern(opts); }
+      else { var grid=G.guesses.map(function(g){ return g.rank===0?'🟩': g.rank<=3?'🟨': g.rank<=10?'🟧':'⬜'; }).join(''); var text='Vector Hoops P#'+st.puzzleNum+' '+(won?G.guesses.length+'/6':'X/6')+' '+grid; if(navigator.clipboard) navigator.clipboard.writeText(text); }
     });
     $('#share-text-btn').addEventListener('click',function(){
       var st=VHPastModern.state(); var won=G.guesses.some(function(g){return g.rank===0;});
       var grid=G.guesses.map(function(g){ return g.rank===0?'🟩': g.rank<=3?'🟨': g.rank<=10?'🟧':'⬜'; }).join('');
-      var lines=G.guesses.map(function(g,i){ var sim=(g.sim*100).toFixed(0); return (i+1)+'. '+(g.rank===0?'🟩': g.rank<=3?'🟨': g.rank<=10?'🟧':'⬜')+' '+g.name+' '+sim+'% #'+(g.rank+1); }).join('\n');
-      var text='Vector Hoops Past→Modern P#'+st.puzzleNum+' '+st.dayKey+' '+(won?G.guesses.length+'/6':'X/6')+' '+grid+'\nPast '+st.target.n+' '+st.target.s+' → '+(won?G.guesses.slice(-1)[0].name:'?')+'\n'+lines+'\nStreak '+loadStreak()+' · 12,966 as rotating 3D map\n'+location.origin+'/play?day='+st.dayKey;
-      if(navigator.clipboard) navigator.clipboard.writeText(text).then(function(){ var b=$('#share-text-btn'); b.textContent='Copied! ✅'; setTimeout(function(){b.textContent='📋 Copy Grid';},1200); });
+      var lines=G.guesses.map(function(g,i){ return (i+1)+'. '+g.name+' '+(g.sim*100).toFixed(0)+'% #'+(g.rank+1); }).join('\n');
+      var text='Vector Hoops P#'+st.puzzleNum+' '+st.dayKey+' '+(won?G.guesses.length+'/6':'X/6')+' '+grid+'\nPast '+st.target.n+' → '+(won?G.guesses.slice(-1)[0].name:'?')+'\n'+lines+'\n'+location.origin+'/play?day='+st.dayKey;
+      if(navigator.clipboard) navigator.clipboard.writeText(text).then(function(){ var b=$('#share-text-btn'); b.textContent='Copied'; setTimeout(function(){b.textContent='Copy Grid';},1200); });
       else alert(text);
     });
     $('#btn-challenge').addEventListener('click',async function(){
       var st=VHPastModern.state();
-      var url=location.origin+'/play?day='+st.dayKey+'&utm_source=challenge';
-      var txt='Can you beat my Past→Modern? '+st.target.n+' '+st.target.s+' → modern twin? I got '+G.guesses.length+'/6 streak '+loadStreak()+' — '+url;
-      try{ if(navigator.clipboard) await navigator.clipboard.writeText(txt); this.textContent='Link copied! ✅'; setTimeout(function(el){el.textContent='👥 Challenge link';}.bind(null,this),1500); }catch{ alert(url); }
-      if(navigator.share){ try{ await navigator.share({title:'Challenge — Past→Modern P#'+st.puzzleNum, text: txt, url: url}); }catch{} }
+      var url=location.origin+'/play?day='+st.dayKey;
+      var txt='Can you beat my Past→Modern? '+st.target.n+' '+st.target.s+' — '+url;
+      try{ if(navigator.clipboard) await navigator.clipboard.writeText(txt); this.textContent='Copied'; setTimeout(function(el){el.textContent='Challenge';}.bind(null,this),1500); }catch{ alert(url); }
     });
   }
-  main().catch(function(e){ console.error(e); alert('Load failed '+e.message); });
+  main().catch(function(e){ console.error(e); });
 })();
-</script>
-<script>
-// PWA v10 rotating + viral + steals/busts
-(function(){if(!('serviceWorker' in navigator))return;var el=document.createElement('div');el.id='vh-update-toast';el.style.cssText='position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:99;display:none;justify-content:space-between;align-items:center;gap:10px;background:#1A150F;color:#FFFEF7;border:2.2px solid #FFFEF7;border-radius:12px;box-shadow:4px 4px 0 #1A150F;padding:10px 12px;font-family:ui-monospace,monospace;font-size:11px;';el.innerHTML='<span>🟢 v10 rotating map + viral image share + challenge</span><button id="vh-update-btn" style="min-height:36px;border:2px solid #FFFEF7;background:#F0E442;color:#1A150F;border-radius:999px;padding:0 12px;font-weight:900;cursor:pointer;">Update →</button>';document.body.appendChild(el);function show(r){el.style.display='flex';document.getElementById('vh-update-btn').onclick=function(){if(r&&r.waiting)r.waiting.postMessage({type:'SKIP_WAITING'});else location.reload();};}let reloading=false;navigator.serviceWorker.addEventListener('controllerchange',function(){if(reloading)return;reloading=true;location.reload();});navigator.serviceWorker.register('/sw.js',{scope:'/'}).then(function(r){if(r.waiting)show(r);r.addEventListener('updatefound',function(){var nw=r.installing;if(!nw)return;nw.addEventListener('statechange',function(){if(nw.state==='installed'&&navigator.serviceWorker.controller)show(r);});});}).catch(function(){});})();
 </script>
 </body></html>

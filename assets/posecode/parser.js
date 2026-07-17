@@ -1,6 +1,5 @@
 /**
  * Posecode Parser — pure ESM, educational fallback
- * Solo personal project, no connection to employer, built with public/free-tier only
  *
  * Official production uses:
  *   - posecode-parser (pure TS, Zod IR, ROM-clamped)
