@@ -63,9 +63,12 @@ a{color:inherit}
 .vh-skill-badges{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
 .vh-skill-badges span{border:1.5px solid var(--ink);border-radius:999px;padding:3px 8px;font-family:var(--mono);font-size:10px;font-weight:800;background:#fff;box-shadow:1px 1px 0 var(--ink)}
 
-/* dossier modal */
-.vh-modal-backdrop{position:fixed;inset:0;background:rgba(26,21,15,.45);display:grid;place-items:center;z-index:80;padding:16px}
-.vh-modal{background:#fff;border:2.5px solid var(--ink);border-radius:16px;box-shadow:6px 6px 0 var(--ink);max-width:560px;width:100%;max-height:80vh;overflow:auto;padding:14px 16px}
+/* dossier modal - fixed to allow click-out + proper hidden handling */
+[hidden]{display:none !important}
+.vh-modal-backdrop{position:fixed;inset:0;background:rgba(26,21,15,.45);display:grid;place-items:center;z-index:80;padding:16px;cursor:pointer}
+.vh-modal-backdrop[hidden]{display:none !important}
+.vh-modal{background:#fff;border:2.5px solid var(--ink);border-radius:16px;box-shadow:6px 6px 0 var(--ink);max-width:560px;width:100%;max-height:80vh;overflow:auto;padding:14px 16px;cursor:auto;pointer-events:auto}
+body.vh-modal-open{overflow:hidden;overscroll-behavior:contain}
 
 /* leaderboard */
 .lb-controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}

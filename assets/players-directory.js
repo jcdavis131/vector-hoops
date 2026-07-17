@@ -180,12 +180,20 @@
       if (!row) return;
       openDossier(row.getAttribute('data-slug'), row.getAttribute('data-name'), row);
     });
-    els.dossierClose.addEventListener('click', closeDossier);
+    els.dossierClose.addEventListener('click', function(e){ e.preventDefault(); closeDossier(); });
     els.dossierBackdrop.addEventListener('click', function (ev) {
-      if (ev.target === els.dossierBackdrop) closeDossier();
+      // click on backdrop itself or outside modal should close - more forgiving than strict ===
+      if (ev.target === els.dossierBackdrop || !ev.target.closest('.vh-modal')) {
+        closeDossier();
+      }
     });
+    // Also close if clicking directly on modal's close area? handled above.
     document.addEventListener('keydown', function (ev) {
       if (ev.key === 'Escape' && !els.dossierBackdrop.hidden) closeDossier();
+    });
+    // Prevent modal clicks from bubbling to backdrop
+    els.dossierModal.addEventListener('click', function(ev){
+      ev.stopPropagation();
     });
   }
 
