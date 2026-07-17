@@ -12,7 +12,7 @@
     if (TABS.indexOf(tab) === -1) tab = 'directory';
     TABS.forEach(function (t) {
       var panel = document.getElementById(panelId(t));
-      var btn = document.querySelector('.research-tabs [data-tab="' + t + '"]');
+      var btn = document.querySelector('.tab-pills [data-tab="' + t + '"], .research-tabs [data-tab="' + t + '"]');
       if (panel) panel.hidden = t !== tab;
       if (btn) {
         btn.classList.toggle('is-active', t === tab);
@@ -48,7 +48,7 @@
   }
 
   function init() {
-    var bar = document.querySelector('.research-tabs');
+    var bar = document.querySelector('.tab-pills, .research-tabs');
     if (!bar) return;
     bar.addEventListener('click', function (ev) {
       var btn = ev.target.closest('[data-tab]');

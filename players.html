@@ -57,17 +57,18 @@
         <div id="skills-playoffs" hidden></div>
       </div>
       <p style="font-size:13px;color:#666;margin:0" id="skills-empty">Pick a player to see skill profile, season by season — including next-season predicted vs actual when following year is charted. Try “Curry”, “Smart”, or “Jokic”.</p>
-      <div style="margin-top:10px;border-top:1.5px dashed var(--ink);padding-top:10px">
-        <div class="small-mono">Skill leaderboard</div>
-        <ol class="wiki-list" id="skills-board" style="margin-top:6px"></ol>
-      </div>
     </div>
   </section>
 
   <section class="card" id="players-panel-leaderboard" role="tabpanel" hidden>
     <h2 class="hd" style="font-size:20px;margin:0 0 6px">Leaderboard</h2>
-    <p style="font-size:13px;color:#555;margin:0 0 8px">0–99 skill grades, era-normalized. Pick a skill, see top seasons.</p>
-    <div id="leaderboard-host">Loading…</div>
+    <p style="font-size:13px;color:#555;margin:0 0 12px">0–99 skill grades, era-normalized. Pick a skill, see top seasons. Tracking boards cover 2015-16+ only. Draft Steals/Busts rank career mean vs draft slot.</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">
+      <select id="board-skill" class="input" style="flex:1 1 180px;min-width:160px;min-height:44px" disabled><option>Loading skills…</option></select>
+      <select id="board-season" class="input" style="flex:0 0 160px;min-height:44px" disabled><option value="">All seasons</option></select>
+    </div>
+    <ol class="wiki-list" id="skills-board" style="margin-top:6px"></ol>
+    <p class="small-mono" style="margin-top:10px;color:#666;text-transform:none">Grades are era-normalized percentiles. Details on <a href="/methods#skills">methods</a>.</p>
   </section>
 
   <div id="dossier-backdrop" class="vh-modal-backdrop" hidden>
