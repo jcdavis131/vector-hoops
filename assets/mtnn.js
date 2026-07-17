@@ -1,10 +1,9 @@
 /**
- * MTNN v5 full-scale client — 48-d embeddings + 45-d heads layout arch8|skill18|pos5|next14 — PROD 100M DAU
- * Correct HEAD_ORDER: arch:0 (8 logits), skill:8 (18 raw), pos:26 (5 logits), next:31 (14 z)
- * Mean abs diff 0.0 vs pipeline/data/embedding_v3.npz ground truth
- * Model: mtnn_v5_concat_b2_h160_t32_d48_mlp128 11 families cat([x·m,m]) 160→32 towers, 352+12=556→128→48 L2-norm, 224K params, leakfree, recall@10 0.977
- * Assets: mtnn_meta.json, mtnn_arch.json, mtnn_embeddings.f32 2.49MB L2, mtnn_heads.f32 2.33MB edge immutable 1y
- * ONNX optional lazy: mtnn.onnx 549K + .data 1.8M — default fallback embeddings precomputed for scale (no origin hit)
+ * MTNN client — 48-d embeddings + heads arch8 skill18 pos5 next14
+ * Mean abs diff 0 vs pipeline ground truth
+ * Model: 17 families cat([x·m,m]) towers 160→32, 556→128→48 L2-norm, leakfree
+ * Assets: mtnn_meta.json, mtnn_arch.json, embeddings, heads edge-cached
+ * ONNX optional lazy
  */
 (function(global){
 'use strict';

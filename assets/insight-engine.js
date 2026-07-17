@@ -1,7 +1,6 @@
-/* Vector Hoops — Insight Engine v3 FULL MTNN
- * Production grade 100M DAU — wired to real full-scale trained MTNN
- * Model: mtnn_v5_concat_b2_h160_t32_d48_mlp128 — 12,966 seasons, 48-d L2, 45-d heads (8 archetype logits +5 pos+14 next+18 skills)
- * Embeddings: mtnn_embeddings.f32 2.49MB + mtnn_heads.f32 2.33MB, both immutable edge-cached
+/* Vector Hoops — Insight Engine
+ * Full MTNN: 12,966 seasons, 48-d L2, heads for archetype, position, next, skills
+ * Assets are immutable edge-cached
  */
 (function (global) {
   'use strict';

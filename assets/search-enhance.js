@@ -1,6 +1,6 @@
-/* search-enhance.js — upgrades landing-play typeahead to Sunni SCAD AAA
- * - archetype dot triple encoding (shape+color+pattern)
- * - keyboard nav 56px touch, 18px readability guard, aria
+/* search-enhance.js — upgrades typeahead with archetype dot */
+/* - color + shape encoding for archetype
+ * - keyboard nav, readability guard, aria
  * - haptics on select
  */
 (function(){

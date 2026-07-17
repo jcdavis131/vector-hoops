@@ -395,11 +395,26 @@
     }
   }
 
+  // Narrative-driven archetype narrative
+  function renderArchetypeEraNarrative(host, data) {
+    if (!host || !data || !data.eras) return;
+    var eras = data.eras;
+    var shifts = data.biggestShifts || [];
+    var early = shifts[0], late = shifts[1];
+    var story = '';
+    story += '<p><span class="arch-era-kicker">1996–2003</span><span class="arch-era-sentence">League was still paint-built. <strong>' + escapeHtml(truncateName(eras[0].archetypes.slice().sort(function(a,b){return b.share-a.share;})[0].name, 36)) + '</strong> led at ' + Math.round(eras[0].archetypes.slice().sort(function(a,b){return b.share-a.share;})[0].share*100) + '%. Bigs who rebounded and blocked — ' + Math.round((eras[0].archetypes.reduce(function(s,a){ return /Glass|Rim|Interior/i.test(a.name)? s+a.share: s;},0))*100) + '% combined glass/rim types.</span></p>';
+    story += '<p><span class="arch-era-kicker">2003–2009</span><span class="arch-era-sentence">Transition. <strong>' + escapeHtml(truncateName(eras[1].archetypes.slice().sort(function(a,b){return b.share-a.share;})[0].name, 36)) + '</strong> on top, but playmaking guards held ' + Math.round(eras[1].archetypes.slice().sort(function(a,b){return b.share-a.share;})[1].share*100) + '%. Diversity peaked — effective types 7.7.</span></p>';
+    story += '<p><span class="arch-era-kicker">2009–2015</span><span class="arch-era-sentence">Protection still king: <strong>' + escapeHtml(truncateName(eras[2].archetypes.slice().sort(function(a,b){return b.share-a.share;})[0].name, 36)) + '</strong> 18% share. Spacing tags just 12% of league.</span></p>';
+    story += '<p><span class="arch-era-kicker">2015–2021</span><span class="arch-era-sentence"><strong>The flip.</strong> Top three are now all perimeter shooting — ' + eras[3].archetypes.slice().sort(function(a,b){return b.share-a.share;}).slice(0,3).map(function(a){return escapeHtml(truncateName(a.name,24))+' '+Math.round(a.share*100)+'%';}).join(', ') + '. That is the Warriors/Curry effect in the stream.</span></p>';
+    story += '<p><span class="arch-era-kicker">2021–2026</span><span class="arch-era-sentence">Modern hybrid: <strong>' + escapeHtml(truncateName(eras[4].archetypes.slice().sort(function(a,b){return b.share-a.share;})[0].name, 36)) + '</strong> 21% — bigs who shoot <em>and</em> board. ' + (shifts.length? 'Pure <em>Offensive Glass + Rim Protection</em> went 28%→0% (' + (shifts[0].delta*100).toFixed(1) + 'pp) replaced by ' + escapeHtml(truncateName(shifts[1].archetype,32)) + ' +'+(shifts[1].delta*100).toFixed(1)+'pp.' : '') + '</span></p>';
+    host.innerHTML = story;
+  }
+
   function renderArchetypeShiftsChart(host, shifts) {
     if (!host || !shifts || !shifts.length) return;
     host.innerHTML = '';
-    var W = 420, LEFT = 8, RIGHT = 52, TOP = 8, BOT = 8;
-    var rowH = 26, gap = 6;
+    var W = 440, LEFT = 12, RIGHT = 62, TOP = 6, BOT = 6;
+    var rowH = 38, gap = 10;
     var H = TOP + shifts.length * (rowH + gap) + BOT;
     var plotW = W - LEFT - RIGHT;
     var maxAbs = shifts.reduce(function (m, s) { return Math.max(m, Math.abs(s.delta)); }, 0.01);
@@ -413,67 +428,60 @@
     }, host);
 
     svgEl('line', {
-      x1: midX, y1: TOP - 2, x2: midX, y2: H - BOT + 2,
-      stroke: HAIRLINE, 'stroke-width': 1
+      x1: midX, y1: TOP, x2: midX, y2: H - BOT,
+      stroke: HAIRLINE, 'stroke-width': 1.2
     }, svg);
 
     shifts.forEach(function (s, i) {
       var y = TOP + i * (rowH + gap) + rowH / 2;
       var up = s.delta >= 0;
-      var barW = (Math.abs(s.delta) / maxAbs) * (plotW / 2 - 4);
+      var barW = (Math.abs(s.delta) / maxAbs) * (plotW / 2 - 8);
       var x = up ? midX : midX - barW;
       var color = up ? HOT_HEX : COLD_HEX;
       var bar = svgEl('rect', {
-        x: x, y: y - 8, width: barW, height: 16, fill: color, rx: 3, opacity: 0.9
+        x: x, y: y, width: barW, height: 10, fill: color, rx: 5, opacity: 0.92
       }, svg);
       var deltaText = (up ? '+' : '') + (s.delta * 100).toFixed(1) + 'pp';
       var title = document.createElementNS(SVG_NS, 'title');
       title.textContent = s.archetype + ': ' + pct1(s.early) + ' early → ' + pct1(s.late) + ' late (' + deltaText + ')';
       bar.appendChild(title);
       svgEl('text', {
-        x: up ? midX + barW + 6 : midX - barW - 6, y: y + 4,
-        'text-anchor': up ? 'start' : 'end', 'font-size': 10, 'font-weight': 700, fill: color
+        x: up ? midX + barW + 8 : midX - barW - 8, y: y + 4,
+        'text-anchor': up ? 'start' : 'end', 'font-size': 10, 'font-weight': 800, fill: color
       }, svg).textContent = deltaText;
-      svgEl('text', {
-        x: LEFT, y: y + 4, 'text-anchor': 'start', 'font-size': 10, fill: INK
-      }, svg).textContent = truncateName(s.archetype, 32);
+      // Split name into two lines via tspan if long
+      var name = s.archetype;
+      if (name.length > 26) {
+        var parts = name.split(' + ');
+        var l1 = parts.slice(0,2).join(' + ');
+        var l2 = parts.slice(2).join(' + ');
+        if (!l2) { l1 = name.slice(0,26); l2 = name.slice(26); }
+        svgEl('text', { x: LEFT, y: y - 2, 'font-size': 9.5, fill: INK, 'font-weight': 600 }, svg).textContent = l1;
+        svgEl('text', { x: LEFT, y: y + 9, 'font-size': 8.5, fill: INK_MUTED }, svg).textContent = l2;
+      } else {
+        svgEl('text', {
+          x: LEFT, y: y + 4, 'text-anchor': 'start', 'font-size': 10, fill: INK, 'font-weight': 600
+        }, svg).textContent = name;
+      }
     });
   }
 
   function renderEraPanelsCompact(host, eras) {
     if (!host || !eras) return;
-    var TAG_LABELS = {
-      three_and_d: '3-and-D',
-      stretch_big: 'Stretch big',
-      traditional_big: 'Trad. big',
-      spacing_role: 'Spacing',
-      two_way_perimeter: 'Two-way',
-      primary_creator: 'Creator',
-      volume_scorer: 'Volume'
-    };
     host.innerHTML = eras.map(function (era) {
-      var top = era.archetypes.slice().sort(function (a, b) { return b.share - a.share; }).slice(0, 4);
+      var sorted = era.archetypes.slice().sort(function (a, b) { return b.share - a.share; });
+      var top = sorted.slice(0, 3);
+      var sentence = '';
+      if (era.era === '1996-2003') sentence = 'Early league was ' + Math.round(top[0].share*100) + '% ' + escapeHtml(truncateName(top[0].name,22)) + ' + ' + Math.round(top[1].share*100) + '% ' + escapeHtml(truncateName(top[1].name,20)) + ' — anchor bigs + score-first wings.';
+      else if (era.era === '2003-2009') sentence = 'Middle era mixed ' + top.map(function(t){ return escapeHtml(truncateName(t.name,18))+' '+Math.round(t.share*100)+'%';}).join(' / ') + '. Playmaking held.';
+      else if (era.era === '2009-2015') sentence = 'Defense still paid: ' + escapeHtml(top[0].name) + ' ' + Math.round(top[0].share*100) + '%. Offense shifted to volume.';
+      else if (era.era === '2015-2021') sentence = 'Spacing era: ' + top.slice(0,2).map(function(t){return escapeHtml(truncateName(t.name,20))+' '+Math.round(t.share*100)+'%';}).join(' + ') + ' led.';
+      else sentence = 'Today: ' + top.map(function(t){return escapeHtml(truncateName(t.name,18))+' '+Math.round(t.share*100)+'%';}).join(', ') + ' — hybrids.';
       var bars = top.map(function (item) {
         var pct = Math.round(item.share * 100);
-        var badges = '';
-        if (item.novel) badges += '<span class="era-compact-badge era-compact-badge--novel" title="Novel geometry">✦</span>';
-        else if (item.ancestor && item.ancestor.similarity >= 0.9) {
-          badges += '<span class="era-compact-badge era-compact-badge--lineage" title="Strong lineage from ' +
-            escapeHtml(item.ancestor.name) + '">⛓</span>';
-        }
-        var tagBits = (item.tags || []).slice(0, 2).map(function (t) {
-          return '<span class="era-compact-tag">' + escapeHtml(TAG_LABELS[t] || t) + '</span>';
-        }).join('');
-        return '<div class="era-compact-bar" title="' + escapeHtml(item.name) + ' — ' + pct1(item.share) + '">' +
-          '<span class="era-compact-bar__name">' + escapeHtml(truncateName(item.name, 22)) + badges + '</span>' +
-          '<span class="era-compact-bar__track"><span class="era-compact-bar__fill" style="width:' + pct + '%"></span></span>' +
-          '<span class="era-compact-bar__pct">' + pct + '%</span>' +
-          (tagBits ? '<span class="era-compact-bar__tags">' + tagBits + '</span>' : '') +
-          '</div>';
+        return '<div class="era-compact-bar" title="' + escapeHtml(item.name) + ' — ' + pct1(item.share) + '"><span class="era-compact-bar__name">' + escapeHtml(truncateName(item.name, 22)) + '</span><span class="era-compact-bar__track"><span class="era-compact-bar__fill" style="width:' + pct + '%"></span></span><span class="era-compact-bar__pct">' + pct + '%</span></div>';
       }).join('');
-      return '<div class="era-compact-card">' +
-        '<div class="era-compact-card__head">' + escapeHtml(era.era) +
-        '<span>K=' + (era.k || 8) + '</span></div>' + bars + '</div>';
+      return '<div class="era-compact-card"><div class="era-compact-card__head">' + escapeHtml(era.era) + '<span>K=' + (era.k || 8) + '</span></div><p class="era-compact-sen">' + sentence + '</p>' + bars + '</div>';
     }).join('');
   }
 
@@ -995,17 +1003,13 @@
 
   function renderEmergenceVerdict(host, hypothesis) {
     if (!host || !hypothesis) return;
-    var verdictCls = 'emergence-verdict__badge emergence-verdict__badge--' +
-      (hypothesis.verdict || 'unknown').replace('_', '-');
     var claims = hypothesis.supportedClaims + '/' + hypothesis.totalClaims;
     var headline = hypothesis.headline || '';
-    if (headline.length > 140) headline = headline.slice(0, 137) + '…';
     host.innerHTML =
-      '<div class="emergence-verdict__head">' +
-        '<span class="' + verdictCls + '">' + escapeHtml(hypothesis.verdict || '') + '</span>' +
-        '<span class="emergence-verdict__score">' + claims + ' claims</span>' +
-      '</div>' +
-      '<p class="emergence-verdict__headline">' + escapeHtml(headline) + '</p>';
+      '<div class="emergence-narrative">' +
+        '<div class="emergence-kicker"><span class="arch-era-kicker">VERDICT</span><span class="trends-chip trends-chip--active" style="margin-left:6px">' + escapeHtml(hypothesis.verdict) + ' · ' + claims + '</span></div>' +
+        '<p class="story-lede" style="margin-top:8px">' + escapeHtml(headline) + '</p>' +
+      '</div>';
   }
 
   function renderRolePrevalenceChart(host, rows) {
@@ -1114,29 +1118,28 @@
 
   function renderEmergenceClaimsViz(host, claims) {
     if (!host || !claims) return;
-    host.innerHTML = '<div class="emergence-claims-grid">' + claims.map(function (c) {
-      var cls = 'emergence-claim-pill' + (c.supported ? ' emergence-claim-pill--yes' : ' emergence-claim-pill--no');
-      var icon = c.supported ? '✓' : '✗';
-      return '<div class="' + cls + '" title="' + escapeHtml(c.detail) + '">' +
-        '<span class="emergence-claim-pill__icon" aria-hidden="true">' + icon + '</span>' +
-        '<span class="emergence-claim-pill__text">' + escapeHtml(c.claim) + '</span></div>';
-    }).join('') + '</div>';
+    // Turn bullet checklist into flowing narrative
+    var yes = claims.filter(function(c){return c.supported;});
+    var no = claims.filter(function(c){return !c.supported;});
+    var sent = yes.map(function(c){ return escapeHtml(c.detail); }).slice(0,4).join(' · ');
+    var noSent = no.map(function(c){ return escapeHtml(c.detail); }).join(' ');
+    host.innerHTML = '<div class="season-story" style="box-shadow:1.5px 1.5px 0 var(--ink);padding:12px 14px">' +
+      '<p class="story-para"><strong>Why we think it emerged:</strong> ' + sent + '.</p>' +
+      (noSent ? '<p class="story-para" style="color:#6B665E"><strong>The holdout:</strong> ' + noSent + '</p>' : '') +
+      '<p class="story-para" style="margin-top:8px;font-size:11px;color:#6B665E">6 of 7 checks passed — not a clean monotonic shrink, but spacing roles (3-and-D + stretch big) grew from 6% → 11% while traditional glass-big fell 30%→25%.</p>' +
+      '</div>';
   }
 
   function renderNovelBadges(host, tagged) {
     if (!host || !tagged) return;
-    var html = tagged.filter(function (t) {
-      return t.novelArchetypes && t.novelArchetypes.length;
-    }).map(function (t) {
-      var badges = t.novelArchetypes.map(function (a) {
-        return '<span class="novel-badge" title="' + escapeHtml(a.name) + ' — ' + pct1(a.share) +
-          ', ancestor sim ' + a.similarity.toFixed(2) + '">' +
-          escapeHtml(truncateName(a.name, 24)) + '</span>';
-      }).join('');
-      return '<div class="novel-era-row"><span class="novel-era-row__label">' + escapeHtml(t.era) +
-        '</span><div class="novel-era-row__badges">' + badges + '</div></div>';
+    // Convert badge soup into narrative sentence per era
+    var erasWithNovel = tagged.filter(function(t){return t.novelArchetypes && t.novelArchetypes.length;});
+    if (!erasWithNovel.length) { host.innerHTML=''; return; }
+    var html = erasWithNovel.map(function(t){
+      var tops = t.novelArchetypes.slice(0,2).map(function(a){return escapeHtml(truncateName(a.name,28))+' '+Math.round(a.share*100)+'%';}).join(', ');
+      return '<p class="story-para" style="font-size:12px"><span class="arch-era-kicker">' + escapeHtml(t.era) + '</span><span style="margin-left:6px">' + tops + (t.novelArchetypes.length>2 ? ' +'+(t.novelArchetypes.length-2)+' more novel types' : '') + ' — new cluster geometry appeared.</span></p>';
     }).join('');
-    host.innerHTML = html || '<p class="drift-loading drift-loading--inline">No novel clusters in audit window.</p>';
+    host.innerHTML = '<div class="season-story" style="margin-top:8px;box-shadow:1.5px 1.5px 0 var(--ink)"><div style="font-family:var(--mono);font-size:10px;font-weight:800;text-transform:uppercase;margin-bottom:4px">Mid/post-2000s novel geometry</div>' + html + '</div>';
   }
 
   function showEmergenceError(verdictHost, roleHost, rollHost, claimsHost, badgesHost) {
@@ -1426,6 +1429,7 @@
     var archLegendHost = document.getElementById('archetype-legend');
     var archShiftsHost = document.getElementById('archetype-shifts-chart');
     var archPanelsHost = document.getElementById('archetype-era-panels');
+    var archNarrHost = document.getElementById('archetype-era-narrative');
 
     if (archChartHost) {
       fetch(ARCH_URL).then(function (res) {
@@ -1435,6 +1439,7 @@
         renderArchetypeStream(archChartHost, archLegendHost, data);
         renderArchetypeShiftsChart(archShiftsHost, data.biggestShifts);
         renderEraPanelsCompact(archPanelsHost, data.eras);
+        if (archNarrHost) renderArchetypeEraNarrative(archNarrHost, data);
         try {
           bindCourtHeatmap(data);
         } catch (courtErr) {

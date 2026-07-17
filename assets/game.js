@@ -1,9 +1,7 @@
 /* Vector Hoops — game.js vNext simplified 2-loop pivot
- * Daily — Guess + Insight: 1 mystery/daily, 6 guesses, surfaces 48-d cosine, era-z skill delta vs season_norms, archetype bridge, cross-era map neighbors
- * Lab — Fusion Insights A+B=C chimera: blend skill DNA, archetype, next_profile, position fit via topKForVector
- * Data aligned: vectors.json 12966 rows, skills.json 468K grades[12966][12], archetype_assignments 3.2M, vectors_lite 617K, mtnn_meta dim48 rows12966 centroids8, mtnn_embeddings.f32
- * Depends on assets/mtnn.js VHMtnn.load/topK/sim/rowVector/topKForVector/blend and assets/insight-engine.js InsightEngine
- * Mobile-first 56px bottom tabs, 48px equation tiles, bottom sheet insights, Okabe-Ito AAA
+ * Daily — Guess + Insight: 1 mystery per day, 6 guesses, 48-d cosine, era-z skill delta, archetype bridge, cross-era neighbors
+ * Lab — Fusion A+B=C chimera: blend skill DNA, archetype, next profile, position fit
+ * Data: 12966 seasons, grades per season, embeddings
  */
 (function(){
   'use strict';

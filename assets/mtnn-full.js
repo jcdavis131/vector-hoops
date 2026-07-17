@@ -1,12 +1,7 @@
-/* Vector Hoops — MTNN Full — production integration of embeddings + heads + jacobian + arch
- * Wires everything to real full-scale trained MTNN: Daily Guess uses 48-d cosine + tower heads,
- * Lab fusion uses embedding blend normalized → nearest real + heads decode (archetype probs, skill towers, next_profile)
- * Model spec: 12,966 seasons, 79 feats in 11 families [bio,career,defense,efficiency,honors,market,playmaking,rebounding,shotmix,tracking,volume]
- * 2-block residual towers 160→32, concat 352+12 season_emb=556→128→48 L2-norm, ~224K params, leakfree player-level split
- * recall@10 0.977 composite 0.7937, CQS 66.29, training cockpit /model
- * Assets: embeddings.f32 2.49MB L2, heads.f32 2.33MB layout arch8|skill18|pos5|next14, inputs.f32 12966×11 family aggregates for explain,
- * jacobian.f32 12966×11×5 influence of each tower on embedding/archetype/position/skills/next
- * Edge cache: core <5MB immutable 1yr, ONNX optional lazy, 100M DAU static CDN, no origin hits for assets
+/* Vector Hoops — MTNN Full — embeddings + heads + jacobian + arch
+ * 12,966 seasons, residual towers, 48-d L2
+ * Assets: embeddings, heads, inputs aggregated, jacobian
+ * Edge cache immutable
  */
 (function(global){
   'use strict';
