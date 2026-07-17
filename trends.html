@@ -177,25 +177,32 @@ main#trends-app{width:min(1180px,calc(100% - 2*clamp(12px,3.2vw,24px)));margin:0
   <details class="collapse" open>
     <summary>Archetypes over 30 seasons — stream + court</summary>
     <div class="collapse-body">
+      <div class="season-story" style="margin-bottom:12px">
+        <p class="story-lede">From rim protection to spacing. This stream is every season broken into 8 player types — the thickness is how common that type was. <span class="story-interp">Paint-built → perimeter-built in 20 years.</span></p>
+        <div id="archetype-era-narrative" style="margin-top:10px"></div>
+      </div>
+
       <div id="archetype-stream-chart" class="drift-chart"></div>
-      <ul id="archetype-legend" class="era-legend"></ul>
-      <div class="viz-duo-grid">
-        <div><p class="sub">Biggest type shifts early vs late</p><div id="archetype-shifts-chart"></div></div>
-        <div><p class="sub">Top types by era</p><div id="archetype-era-panels"></div></div>
-      </div>
-      <div class="court-heatmap" id="archetype-court-heatmap">
-        <div><canvas id="archetype-court-canvas" width="400" height="376" style="width:100%;border:1.5px solid var(--ink);border-radius:10px"></canvas><p id="archetype-court-caption" class="caption">Loading court…</p></div>
+      <ul id="archetype-legend" class="era-legend" style="margin-top:8px"></ul>
+
+      <div style="display:grid;grid-template-columns:1.15fr .85fr;gap:14px;margin-top:14px">
         <div>
-          <div id="archetype-court-era-tabs" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px"></div>
-          <div id="archetype-court-zone-list" style="font-family:var(--mono);font-size:11px"></div>
-          <div id="archetype-court-tags" style="margin-top:6px"></div>
+          <h3 style="margin:0 0 8px;font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:.04em">Where they live on the court</h3>
+          <div class="court-heatmap" id="archetype-court-heatmap" style="display:block;margin-top:0">
+            <div><canvas id="archetype-court-canvas" width="400" height="376" style="width:100%;border:1.5px solid var(--ink);border-radius:10px;background:#FFFEF7"></canvas><p id="archetype-court-caption" class="caption" style="margin-top:6px">Shot zones for the era — darker = more concentrated. Tab through eras below.</p></div>
+            <div>
+              <div id="archetype-court-era-tabs" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px"></div>
+              <div id="archetype-court-zone-list" style="font-family:var(--mono);font-size:11px;line-height:1.5"></div>
+              <div id="archetype-court-tags" style="margin-top:8px;display:flex;flex-wrap:wrap;gap:6px"></div>
+            </div>
+          </div>
         </div>
-      </div>
-      <div style="display:flex;gap:6px;margin-top:6px">
-        <button class="trends-chip court-heatmap__mode" data-mode="diff">30-yr Δ</button>
-        <button class="trends-chip court-heatmap__mode" data-mode="early">Early</button>
-        <button class="trends-chip court-heatmap__mode" data-mode="late">Recent</button>
-        <button class="trends-chip court-heatmap__mode is-active" data-mode="era">By era</button>
+        <div>
+          <h3 style="margin:0 0 8px;font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:.04em">Biggest turnover — what disappeared</h3>
+          <div id="archetype-shifts-chart"></div>
+          <p class="caption" style="margin-top:8px">Early 5 seasons vs last 5 — positive = more common now, negative = vanished. Pure glass/rim archetype went 28%→0%.</p>
+          <div id="archetype-era-panels" style="margin-top:12px"></div>
+        </div>
       </div>
     </div>
   </details>
@@ -204,18 +211,32 @@ main#trends-app{width:min(1180px,calc(100% - 2*clamp(12px,3.2vw,24px)));margin:0
     <summary>Emergence & career shapes — did new roles show up?</summary>
     <div class="collapse-body">
       <div id="emergence-verdict"></div>
-      <div class="viz-duo-grid">
-        <div><p class="sub">Roles by era</p><div id="emergence-role-chart"></div></div>
-        <div><p class="sub">Diversity over time</p><div id="emergence-rolling-chart"></div></div>
+      <div id="emergence-claims-viz" style="margin-top:10px"></div>
+
+      <h3 style="margin:16px 0 8px;font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:.04em">The numbers behind the verdict</h3>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div>
+          <div id="emergence-role-chart"></div>
+          <p class="caption">3-and-D + stretch big grew 6% → 11% from early to modern. Traditional big fell from 30% → 25% of minutes.</p>
+        </div>
+        <div>
+          <div id="trajectory-class-viz"></div>
+          <p class="caption">Career shapes: 64% stable specialist, 21% reinvent once, rest migrate. Reinventors play 8.4 seasons on average vs 5.1 for stable.</p>
+        </div>
       </div>
-      <div id="emergence-claims-viz" style="margin-top:8px"></div>
-      <div id="emergence-novel-badges" style="margin-top:6px"></div>
-      <div class="viz-duo-grid" style="margin-top:8px">
-        <div><p class="sub">Career class mix</p><div id="trajectory-class-viz"></div></div>
-        <div><p class="sub">Transition rate by decade</p><div id="trajectory-era-chart"></div></div>
+
+      <div style="margin-top:14px">
+        <h4 style="margin:0 0 8px;font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:#5A5248">Example reinventions — not just positions, archetype switches</h4>
+        <div id="trajectory-path-gallery"></div>
       </div>
-      <div id="trajectory-path-gallery" style="margin-top:8px"></div>
-      <div id="trajectory-motif-flow" style="margin-top:8px"></div>
+
+      <!-- Keep these hidden for now — data available but story doesn't need them in main flow -->
+      <div style="display:none">
+        <div id="emergence-rolling-chart"></div>
+        <div id="emergence-novel-badges"></div>
+        <div id="trajectory-era-chart"></div>
+        <div id="trajectory-motif-flow"></div>
+      </div>
     </div>
   </details>
 

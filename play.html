@@ -123,7 +123,20 @@ button,.input{min-height:44px}
       projected[i]={i:b.i,n:b.n,s:b.s,c:b.c,x:b.x,y:b.y,z:b.z,sx:sxr,sy:syr,depth:depth,alpha:alpha,rad:rad, isPast: b.i===pastI};
     }
   }
-  function draw(){
+  function drawStarPath(ctx, cx, cy, spikes, outerR, innerR, rot){
+    var step = Math.PI/spikes;
+    ctx.beginPath();
+    for(var i=0;i<spikes*2;i++){
+      var r = i%2===0 ? outerR : innerR;
+      var a = rot + i*step;
+      var x = cx + Math.cos(a)*r;
+      var y = cy + Math.sin(a)*r;
+      if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+    }
+    ctx.closePath();
+  }
+  function draw(t){
+    t = t || performance.now();
     var ctx=canvas.getContext('2d'); ctx.clearRect(0,0,W,H);
     var g=ctx.createRadialGradient(W*0.7,H*0.22,0,W*0.7,H*0.22,Math.max(W,H));
     g.addColorStop(0,'rgba(0,114,178,0.09)'); g.addColorStop(1,'rgba(0,0,0,0)'); ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
@@ -131,16 +144,35 @@ button,.input{min-height:44px}
     var order=projected.slice().sort(function(a,b){return a.depth-b.depth;});
     for(var i=0;i<order.length;i++){
       var p=order[i];
-      ctx.globalAlpha = p.isPast? 1 : Math.max(0.18,Math.min(0.94,p.alpha*0.82));
+      ctx.globalAlpha = p.isPast? 0.28 : Math.max(0.18,Math.min(0.94,p.alpha*0.82));
       ctx.fillStyle=OKABE[p.c%OKABE.length]; ctx.beginPath(); ctx.arc(p.sx,p.sy,p.rad,0,Math.PI*2); ctx.fill();
     }
     var st=null; try{ st=VHPastModern.state(); }catch{}
     var tProj = st&&st.target ? projected.find(function(pp){return pp.i===st.target.i;}) : null;
     if(tProj){
-      var ctx2=canvas.getContext('2d');
-      ctx2.strokeStyle='#1A150F'; ctx2.lineWidth=2.8; ctx2.beginPath(); ctx2.arc(tProj.sx,tProj.sy,12,0,Math.PI*2); ctx2.stroke();
-      ctx2.fillStyle='#F0E442'; ctx2.beginPath(); ctx2.arc(tProj.sx,tProj.sy,6.8,0,Math.PI*2); ctx2.fill();
-      ctx2.fillStyle='#1A150F'; ctx2.font='800 10px ui-monospace,monospace'; ctx2.fillText(tProj.n+' '+tProj.s, tProj.sx+14, tProj.sy-12);
+      var pulse = 0.5 + 0.5*Math.sin(t*0.0024);
+      var pulse2 = 0.5 + 0.5*Math.sin(t*0.0024+1.2);
+      // aura
+      ctx.globalAlpha = 0.12 + pulse*0.10;
+      ctx.fillStyle='#F0E442'; ctx.beginPath(); ctx.arc(tProj.sx,tProj.sy, 22 + pulse*9, 0, Math.PI*2); ctx.fill();
+      ctx.globalAlpha = 0.20 + pulse2*0.12;
+      ctx.fillStyle='#FFFEF7'; ctx.beginPath(); ctx.arc(tProj.sx,tProj.sy, 12 + pulse*3, 0, Math.PI*2); ctx.fill();
+      ctx.globalAlpha = 1;
+      ctx.save();
+      ctx.shadowColor='rgba(240,228,66,0.5)'; ctx.shadowBlur= 10 + pulse*7;
+      ctx.fillStyle='#F0E442'; ctx.strokeStyle='#1A150F'; ctx.lineWidth=2.4;
+      var outer = 11.5 + pulse*1.8, inner = 5.2 + pulse*0.9;
+      drawStarPath(ctx, tProj.sx, tProj.sy, 5, outer, inner, -Math.PI/2 + Math.sin(t*0.0006)*0.18);
+      ctx.fill(); ctx.stroke();
+      ctx.shadowBlur=0; ctx.restore();
+      ctx.fillStyle='#1A150F'; ctx.font='800 11px ui-monospace,monospace';
+      var label = tProj.n+' '+tProj.s;
+      var tw = ctx.measureText(label).width;
+      var lx = tProj.sx + outer + 12, ly = tProj.sy - 14;
+      if(lx+tw+18>W-4) lx = tProj.sx - tw - outer - 18;
+      ctx.fillStyle='rgba(255,254,247,0.97)'; ctx.strokeStyle='#1A150F'; ctx.lineWidth=1.5;
+      ctx.beginPath(); var rx=8, rw=tw+16, rh=18; ctx.moveTo(lx+rx, ly-rh); ctx.lineTo(lx+rw-rx, ly-rh); ctx.quadraticCurveTo(lx+rw, ly-rh, lx+rw, ly-rh+rx); ctx.lineTo(lx+rw, ly-rx); ctx.quadraticCurveTo(lx+rw, ly, lx+rw-rx, ly); ctx.lineTo(lx+rx, ly); ctx.quadraticCurveTo(lx, ly, lx, ly-rx); ctx.lineTo(lx, ly-rh+rx); ctx.quadraticCurveTo(lx, ly-rh, lx+rx, ly-rh); ctx.closePath(); ctx.fill(); ctx.stroke();
+      ctx.fillStyle='#1A150F'; ctx.fillText(label, lx+8, ly-4.5);
     }
     for(var gi=0;gi<G.guesses.length;gi++){
       var gu=G.guesses[gi];
@@ -149,7 +181,7 @@ button,.input{min-height:44px}
       ctx.strokeStyle = gu.rank===0 ? '#009E73' : '#D55E00';
       ctx.lineWidth= gu.rank===0? 2.8:2;
       ctx.beginPath(); ctx.arc(p.sx,p.sy, gu.rank===0? 9:7,0,Math.PI*2); ctx.stroke();
-      if(tProj){ ctx.setLineDash([4,4]); ctx.globalAlpha=0.55; ctx.beginPath(); ctx.moveTo(tProj.sx,tProj.sy); ctx.lineTo(p.sx,p.sy); ctx.stroke(); ctx.setLineDash([]); ctx.globalAlpha=1; }
+      if(tProj){ ctx.setLineDash([4,4]); ctx.globalAlpha=0.45; ctx.beginPath(); ctx.moveTo(tProj.sx,tProj.sy); ctx.lineTo(p.sx,p.sy); ctx.stroke(); ctx.setLineDash([]); ctx.globalAlpha=1; }
     }
   }
   function loop(t){

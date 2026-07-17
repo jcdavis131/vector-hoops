@@ -1,73 +1,154 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/><title>Vector Hoops — 12,966 seasons as rotating map — Past→Modern</title>
+<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<title>Vector Hoops — 12,966 seasons as rotating map — Past→Modern</title>
 <meta property="og:title" content="Vector Hoops — 12,966 as rotating map · Past→Modern Twin"/>
 <meta property="og:description" content="12,966 NBA seasons as rotating embedding map. One game: Past All-Star → guess modern twin."/>
-<meta property="og:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/><meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/>
-<meta name="description" content="12,966 NBA seasons as rotating embedding map. Daily Past→Modern."/><meta name="theme-color" content="#1A150F"/><link rel="manifest" href="/manifest.json"/>
+<meta property="og:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/><meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/>
+<meta name="twitter:card" content="summary_large_image"/><meta name="twitter:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/>
+<meta name="description" content="12,966 NBA seasons as rotating embedding map. Daily Past→Modern."/><meta name="theme-color" content="#1A150F"/>
+<link rel="manifest" href="/manifest.json"/>
 <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/shell.css"/>
-<link rel="stylesheet" href="assets/responsive.css"/>
-<link rel="stylesheet" href="assets/final-qa.css"/>
-<link rel="stylesheet" href="assets/unified.css"/>
-
+<link rel="stylesheet" href="assets/shell.css"/><link rel="stylesheet" href="assets/responsive.css"/><link rel="stylesheet" href="assets/final-qa.css"/><link rel="stylesheet" href="assets/unified.css"/>
 <style>
 :root{--paper:#FFFEF7;--ink:#1A150F;--blue:#0072B2;--verm:#D55E00;--yellow:#F0E442;--green:#009E73;--radius:14px;--shadow:4px 4px 0 var(--ink);--mono:ui-monospace,monospace;--sans:ui-sans-serif,system-ui;}
 *{box-sizing:border-box}html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:18px;line-height:1.65;overflow-x:clip}
 .card{background:#fff;border:2.2px solid var(--ink);border-radius:14px;box-shadow:var(--shadow);padding:14px 16px}
-.btn{appearance:none;min-height:48px;padding:12px 18px;border:2.2px solid var(--ink);border-radius:12px;background:#fff;color:var(--ink);font-family:var(--mono);font-weight:900;text-transform:uppercase;box-shadow:4px 4px 0 var(--ink);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
-.btn-primary{background:var(--ink);color:#fff}.btn-accent{background:var(--yellow);color:var(--ink)}.small-mono{font-family:var(--mono);font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
+.btn{appearance:none;min-height:48px;padding:12px 18px;border:2.2px solid var(--ink);border-radius:12px;background:#fff;color:var(--ink);font-family:var(--mono);font-weight:900;text-transform:uppercase;box-shadow:4px 4px 0 var(--ink);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:transform .08s,box-shadow .08s}
+.btn:active{transform:translate(1px,1px);box-shadow:1px 1px 0 var(--ink)}
+.btn-primary{background:var(--ink);color:#fff}.btn-accent{background:var(--yellow);color:var(--ink)}.btn-xl{font-size:15px;min-height:54px;padding:14px 22px}
+.small-mono{font-family:var(--mono);font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
 .pill{border:1.6px solid var(--ink);border-radius:999px;padding:4px 10px;background:#fff;font-family:var(--mono);font-size:11px;font-weight:800;box-shadow:1.5px 1.5px 0 var(--ink)}
+.pill-yellow{background:var(--yellow);transform:rotate(-1deg)}
+
 #map-wrap{position:relative;min-height:560px;border:2.5px solid var(--ink);border-radius:16px;box-shadow:6px 6px 0 var(--ink);overflow:hidden;background:radial-gradient(120% 80% at 70% 20%,rgba(0,114,178,.12),transparent 48%),radial-gradient(90% 60% at 20% 70%,rgba(213,94,0,.10),transparent 46%),var(--paper)}
 #sky-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab}
 #sky-canvas:active{cursor:grabbing}
 #map-overlay{position:absolute;left:10px;right:10px;top:10px;display:flex;justify-content:space-between;gap:8px;z-index:2;pointer-events:none;flex-wrap:wrap}
-#map-overlay .chip{background:rgba(255,254,247,.92);border:2px solid var(--ink);border-radius:999px;padding:4px 8px;font-family:var(--mono);font-size:10px;box-shadow:1px 1px 0 var(--ink)}
+#map-overlay .chip{background:rgba(255,254,247,.92);border:2px solid var(--ink);border-radius:999px;padding:5px 10px;font-family:var(--mono);font-size:10px;box-shadow:1.5px 1.5px 0 var(--ink)}
 #map-controls{position:absolute;left:10px;bottom:10px;z-index:3;display:flex;gap:6px;flex-wrap:wrap}
-#map-controls .chip{pointer-events:auto;cursor:pointer}
-#map-legend{position:absolute;right:10px;bottom:10px;z-index:3;background:rgba(255,254,247,.94);border:2px solid var(--ink);border-radius:12px;padding:7px 9px;box-shadow:2px 2px 0 var(--ink);font-family:var(--mono);font-size:9px;line-height:1.35;pointer-events:none;min-width:128px}
-#map-legend .legend-title{font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:900;opacity:.55;margin-bottom:4px}
-#map-legend .axis{display:flex;gap:5px;align-items:center;margin:2px 0;white-space:nowrap}
-#map-legend .axis i{font-style:normal;font-weight:900;width:14px;height:14px;display:inline-flex;align-items:center;justify-content:center;background:var(--ink);color:#fff;border-radius:4px;font-size:7.5px;line-height:1}
-#map-legend .axis em{font-style:normal;opacity:.35;margin:0 1px}
-#map-legend .legend-foot{margin-top:4px;font-size:7.5px;opacity:.45;line-height:1.2}
-#hover-tip{position:absolute;left:50%;top:50%;transform:translate(-50%,-100%);background:#FFFEF7;border:2px solid var(--ink);border-radius:10px;padding:6px 8px;box-shadow:3px 3px 0 var(--ink);font-size:11px;line-height:1.35;display:none;z-index:3;pointer-events:none;max-width:240px}
-.hero{max-width:1180px;margin:0 auto;padding:12px clamp(14px,3.5vw,28px);display:grid;grid-template-columns:1.15fr .85fr;gap:18px}
-@media(max-width:980px){.hero{grid-template-columns:1fr}#map-wrap{min-height:480px}}
-.hd{font-family:"Architects Daughter",var(--mono);line-height:.98}
-.chips{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
-.viral-strip{display:flex;gap:8px;flex-wrap:wrap;align-items:center;background:#1A150F;color:#FFFEF7;border:2px solid #1A150F;border-radius:12px;padding:10px 12px;box-shadow:4px 4px 0 #1A150F;font-family:var(--mono);font-size:11px}
+#map-controls .chip{pointer-events:auto;cursor:pointer;background:#fff;border:2px solid var(--ink);border-radius:999px;padding:6px 10px;font-family:var(--mono);font-size:10px;font-weight:800;box-shadow:1.5px 1.5px 0 var(--ink)}
+#map-legend{position:absolute;right:10px;bottom:10px;z-index:3;background:rgba(255,254,247,.97);border:2px solid var(--ink);border-radius:14px;padding:8px 9px 8px 8px;box-shadow:2px 2px 0 var(--ink);font-family:var(--mono);font-size:9px;line-height:1.35;pointer-events:auto;min-width:186px;max-width:214px}
+#map-legend .legend-title{font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:900;opacity:.65;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center;gap:6px}
+#map-legend .legend-toggle-wrap{display:flex;gap:4px}
+#map-legend .chip-mini{pointer-events:auto;cursor:pointer;background:#fff;border:1.5px solid var(--ink);border-radius:999px;padding:3px 7px;font-family:var(--mono);font-size:7.5px;font-weight:900;letter-spacing:.04em;box-shadow:1px 1px 0 var(--ink);opacity:.7}
+#map-legend .chip-mini.is-active{background:var(--ink);color:#fff;opacity:1}
+#map-legend .axis{display:flex;gap:5px;align-items:center;margin:2.8px 0;white-space:nowrap;font-size:8.5px}
+#map-legend .axis i{font-style:normal;font-weight:900;width:13px;height:13px;display:inline-flex;align-items:center;justify-content:center;background:var(--ink);color:#fff;border-radius:4px;font-size:7px;line-height:1;flex-shrink:0}
+#map-legend .axis em{font-style:normal;opacity:.45;margin-left:auto;font-size:7px}
+#map-legend .legend-foot{margin-top:6px;font-size:7px;opacity:.55;line-height:1.25;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.legend-star{display:inline-flex;width:14px;height:14px;align-items:center;justify-content:center;background:var(--yellow);border:1.5px solid var(--ink);border-radius:4px;font-size:10px}
+#orient-canvas{display:block;background:radial-gradient(100% 100% at 50% 50%,rgba(0,114,178,.08),transparent 70%),#FFFEF7;border:1.5px solid var(--ink);border-radius:9px;box-shadow:inset 1px 1px 0 rgba(0,0,0,.08)}
+#map-legend .pos-dots{display:flex;gap:3px;flex-wrap:wrap;margin-top:4px}
+#map-legend .pos-dot{width:8px;height:8px;border-radius:50%;border:1.2px solid var(--ink);display:inline-block}
+#hover-tip{position:absolute;left:50%;top:50%;transform:translate(-50%,-100%);background:#FFFEF7;border:2px solid var(--ink);border-radius:10px;padding:7px 9px;box-shadow:3px 3px 0 var(--ink);font-size:11px;line-height:1.35;display:none;z-index:3;pointer-events:none;max-width:260px}
+
+.hero{max-width:1180px;margin:0 auto;padding:18px clamp(14px,3.5vw,28px) 10px;display:grid;grid-template-columns:1.08fr .92fr;gap:28px;align-items:start}
+@media(max-width:980px){.hero{grid-template-columns:1fr}#map-wrap{min-height:500px}}
+.hd{font-family:"Architects Daughter",var(--mono);line-height:.92;letter-spacing:-.01em}
+.hero-copy{display:flex;flex-direction:column;gap:14px}
+.eyebrow{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.eyebrow #puzzle-meta{opacity:.65}
+.deck{color:#2E2A23;margin:0;line-height:1.5;font-size:18px;max-width:46ch}
+.deck b{color:var(--ink)}
+.cta-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:2px}
+.micro{color:#5A544D;text-transform:none;font-weight:600;font-size:11.5px;letter-spacing:.01em;line-height:1.5}
+.micro-2{color:#8A867F;text-transform:none;font-weight:700;font-size:10.5px;letter-spacing:.02em;display:flex;gap:10px;flex-wrap:wrap}
+.pulse-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--yellow);border:1.5px solid var(--ink);box-shadow:0 0 0 3px rgba(240,228,66,.35);animation:pulse 1.6s ease-in-out infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 3px rgba(240,228,66,.35);transform:scale(1)}50%{box-shadow:0 0 0 7px rgba(240,228,66,.18);transform:scale(1.08)}}
+
+.tri{max-width:1180px;margin:12px auto 0;padding:0 clamp(14px,3.5vw,28px) calc(20px + 88px);display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+@media(max-width:760px){.tri{grid-template-columns:1fr}}
+.tri .card{transition:transform .12s,box-shadow .12s}
+.tri .card:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--ink)}
 </style></head><body>
 <nav class="site-nav" data-active="/" aria-label="Vector Hoops site"></nav>
 
 <div class="hero">
-<div>
-<div class="small-mono" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px"><span class="pill" style="background:var(--yellow);transform:rotate(-1deg)">ROTATING · 12,966</span><span id="puzzle-meta">Past→Modern · Daily</span></div>
-<h1 class="hd" style="font-size:clamp(30px,5vw,54px);margin:10px 0">12,966 seasons as <b style="background:var(--ink);color:#fff;padding:0 .18em;border-radius:8px">rotating map</b> — Past All-Star → Modern Twin</h1>
-<p style="color:#3A332A;margin:0 0 10px;line-height:1.5;font-size:16.5px">Daily puzzle: a past All-Star — guess which modern superstar plays most like them.</p>
+  <div class="hero-copy">
+    <div class="small-mono eyebrow">
+      <span class="pill pill-yellow">12,966 · ROTATING</span>
+      <span id="viral-streak" class="pill" style="background:#1A150F;color:#FFFEF7">streak 0</span>
+      <span id="puzzle-meta" style="opacity:.6">Daily puzzle</span>
+    </div>
 
-<div class="viral-strip" id="viral-strip"><span id="viral-streak">streak 0</span> · <span id="viral-today">Today: loading…</span></div>
+    <h1 class="hd" style="font-size:clamp(38px,5.8vw,62px);margin:2px 0 0;letter-spacing:-.02em">
+      Find the<br>modern twin<span style="opacity:.35">.</span>
+    </h1>
 
-<div style="display:flex;gap:10px;flex-wrap:wrap;margin:14px 0 10px">
-<a class="btn btn-primary" href="/play">▶ Play Past→Modern</a>
-<a class="btn btn-accent" href="/play" id="cta-past">Today's All-Star</a>
-<button class="btn" id="btn-share-board" type="button">Share Map</button>
-<button class="btn" id="btn-challenge" type="button">Challenge</button>
+    <p class="deck" id="deck-line" style="margin-top:10px;font-size:17px;line-height:1.45">
+      <b id="deck-name" style="font-weight:900">Today's All-Star</b> → who plays most like them now?<br>
+      <span id="viral-today" style="opacity:.6;font-size:14px">Loading today's star…</span>
+    </p>
+
+    <div class="cta-row">
+      <a class="btn btn-primary btn-xl" href="/play" id="cta-primary">▶ Play — <span id="cta-past">Today</span></a>
+      <a class="btn" href="/play?mode=random" id="btn-random-hero" style="min-height:54px">🎲 Random</a>
+    </div>
+
+    <div class="micro small-mono" style="text-transform:none;display:flex;gap:8px;align-items:center;margin-top:6px">
+      <span class="pulse-dot"></span><span id="sky-fact-inline">Drag to rotate · hover any dot · ★ is today's star</span>
+    </div>
+  </div>
+
+  <div id="map-wrap">
+    <canvas id="sky-canvas" width="640" height="560"></canvas>
+    <div id="map-overlay" aria-hidden="true">
+      <span class="chip" id="sky-fact">loading 12,966 — rotating…</span>
+      <span class="chip" id="sky-hover-chip" style="opacity:.6">★ pulsing = today's Past All-Star</span>
+    </div>
+    <div id="map-controls">
+      <button class="chip" id="btn-pause" type="button">Pause</button>
+      <button class="chip" id="btn-reset" type="button">Reset</button>
+      <button class="chip" id="btn-share-board" type="button" style="background:#FFFEF7">Share Map</button>
+    </div>
+    <div id="map-legend" style="min-width:128px;max-width:168px;padding:8px 8px">
+      <div class="legend-title" style="margin-bottom:5px">Map</div>
+      <div class="axis"><i>X</i> Paint ↔ Perim</div>
+      <div class="axis"><i>Y</i> Role → Score</div>
+      <div class="axis"><i>Z</i> Off ↔ On</div>
+      <div class="legend-foot" style="margin-top:8px;border-top:1.2px solid var(--ink);padding-top:6px"><span class="legend-star" style="display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;background:var(--yellow);border:1.5px solid var(--ink);border-radius:5px;font-size:11px;box-shadow:1px 1px 0 var(--ink)">★</span> <span id="legend-star-name" style="font-weight:800">today</span></div>
+    </div>
+    <div id="hover-tip"></div>
+  </div>
 </div>
 
-<div class="chips"><a class="pill" href="/trends">Trends</a><a class="pill" href="/players">Players</a><a class="pill" href="/model">Lab</a><a class="pill" href="/methods">Methods</a></div>
-
-<div class="card" style="margin-top:12px"><p style="margin:0;font-size:13px;line-height:1.5">Drag to rotate, scroll to pause. Gold = today's Past All-Star.</p></div>
-
-</div>
-<div id="map-wrap"><canvas id="sky-canvas" width="640" height="560"></canvas><div id="map-overlay"><span class="chip" id="sky-fact">loading 12,966 — rotating…</span><span class="chip">drag to spin · hover for player</span></div><div id="map-controls"><button class="chip" id="btn-pause" type="button">Pause</button><button class="chip" id="btn-reset" type="button">Reset</button></div><div id="map-legend"><div class="legend-title">Map Axes</div><div class="axis"><i>X</i>Paint<em>↔</em>Perimeter</div><div class="axis"><i>Y</i>Role<em>→</em>Scorer</div><div class="axis"><i>Z</i>Off-ball<em>↔</em>On-ball</div><div class="legend-foot">Center = league avg</div></div><div id="hover-tip"></div></div>
+<div class="tri">
+  <a class="card" href="/trends" style="text-decoration:none;color:inherit"><div class="small-mono">Trends</div><b style="font-family:'Architects Daughter',mono;font-size:19px">How the game changed</b><div style="font-size:13px;color:#666;margin-top:5px;line-height:1.45">30 seasons of drift, archetype shifts, career shapes — one scrub to play it.</div></a>
+  <a class="card" href="/players" style="text-decoration:none;color:inherit"><div class="small-mono">Players</div><b style="font-family:'Architects Daughter',mono;font-size:19px">Directory + Skills</b><div style="font-size:13px;color:#666;margin-top:5px;line-height:1.45">Every season graded, search any name, compare eras side-by-side.</div></a>
+  <a class="card" href="/model" style="text-decoration:none;color:inherit"><div class="small-mono">Lab</div><b style="font-family:'Architects Daughter',mono;font-size:19px">Inside the model</b><div style="font-size:13px;color:#666;margin-top:5px;line-height:1.45">How the embedding is built, what it captures, and where it fails.</div></a>
 </div>
 
-<div style="max-width:1180px;margin:0 auto;padding:0 clamp(14px,3.5vw,28px) calc(20px + 88px);display:flex;flex-direction:column;gap:12px">
-<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px" class="tri-links">
-<a class="card" href="/trends" style="text-decoration:none;color:inherit"><div class="small-mono">Trends</div><b style="font-family:'Architects Daughter',mono;font-size:18px">How the game changed</b><div style="font-size:12px;color:#666;margin-top:4px">30 seasons of drift, archetype shifts, and career shapes.</div></a>
-<a class="card" href="/players" style="text-decoration:none;color:inherit"><div class="small-mono">Players</div><b style="font-family:'Architects Daughter',mono;font-size:18px">Directory + Skills</b><div style="font-size:12px;color:#666;margin-top:4px">Every season graded, search any name, compare eras.</div></a>
-<a class="card" href="/model" style="text-decoration:none;color:inherit"><div class="small-mono">Lab</div><b style="font-family:'Architects Daughter',mono;font-size:18px">Inside the model</b><div style="font-size:12px;color:#666;margin-top:4px">How the embedding is built and what it captures.</div></a>
+<div id="viral-row" style="max-width:1180px;margin:10px auto 0;padding:0 clamp(14px,3.5vw,28px) calc(28px + 88px);display:grid;grid-template-columns:1.1fr .9fr;gap:12px">
+  <div class="card" id="random-rush-card" style="display:flex;flex-direction:column;gap:8px">
+    <div class="small-mono" style="display:flex;justify-content:space-between;align-items:center"><span>Random Rush · Endless</span><span class="pill" style="background:#fff">No streak penalty</span></div>
+    <div style="display:flex;gap:10px;align-items:flex-start">
+      <div style="font-size:38px;line-height:1">🎲</div>
+      <div style="flex:1"><b style="font-family:'Architects Daughter',mono;font-size:18px;display:block">Spin a random All-Star</b><div style="font-size:12px;color:#555;margin-top:4px;line-height:1.45">Practice without breaking your daily streak. Every random creates a shareable challenge link <code style="font-size:10px;background:#FFFEF7;border:1px solid #ddd;padding:1px 5px;border-radius:6px">?r=ID</code> — friend gets same star.</div></div>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px">
+      <a class="btn btn-accent" href="/play?mode=random" id="btn-random-rush">🎲 Random spin</a>
+      <button class="btn" id="btn-copy-random" type="button">Copy challenge link</button>
+      <span class="small-mono" id="random-hint" style="align-self:center;opacity:.6;text-transform:none"></span>
+    </div>
+  </div>
+  <div class="card" id="streak-card" style="display:flex;flex-direction:column;gap:8px">
+    <div class="small-mono" style="display:flex;justify-content:space-between;align-items:center"><span>🔥 Streak challenge · resets daily</span><span class="pill" id="streak-best-pill">best 0</span></div>
+    <div style="display:flex;gap:12px;align-items:center">
+      <div style="width:56px;height:56px;border:2.2px solid var(--ink);border-radius:14px;background:var(--paper);display:flex;align-items:center;justify-content:center;box-shadow:3px 3px 0 var(--ink);flex-shrink:0"><span id="streak-big" style="font-family:'Architects Daughter',mono;font-size:24px;font-weight:900;line-height:1">0</span></div>
+      <div style="flex:1">
+        <b id="streak-title" style="font-family:'Architects Daughter',mono;font-size:17px;display:block">Start your streak</b>
+        <div id="streak-desc" style="font-size:12px;color:#555;margin-top:3px;line-height:1.45">Win today's daily before midnight UTC to build. Miss a day and it resets. 7 days = Week Warrior.</div>
+        <div id="streak-track" style="display:flex;gap:4px;margin-top:8px"></div>
+        <div class="small-mono" id="next-countdown" style="margin-top:6px;text-transform:none;opacity:.7;display:none">Next in <span id="countdown-hms">--</span></div>
+      </div>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:2px">
+      <a class="btn btn-primary" href="/play" id="btn-continue-streak">▶ Play daily</a>
+      <button class="btn" id="btn-share-streak" type="button">Share streak</button>
+    </div>
+  </div>
 </div>
-</div>
+
+<div id="toast" style="position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom));transform:translateX(-50%);background:#1A150F;color:#FFFEF7;border:2px solid #1A150F;border-radius:12px;padding:10px 14px;box-shadow:4px 4px 0 #1A150F;font-family:var(--mono);font-size:11px;z-index:99;display:none;max-width:min(86vw,420px);text-align:center"></div>
 
 <script src="assets/site-nav.js" defer></script>
 <script src="assets/mtnn.js"></script>
@@ -75,17 +156,20 @@
 <script src="assets/past-modern-game.js"></script>
 <script>
 (function(){
-var c=document.getElementById('sky-canvas'), fact=document.getElementById('sky-fact'), hoverEl=document.getElementById('hover-tip');
+var c=document.getElementById('sky-canvas'), fact=document.getElementById('sky-fact'), factInline=document.getElementById('sky-fact-inline'), hoverEl=document.getElementById('hover-tip'), hoverChip=document.getElementById('sky-hover-chip');
 var btnPause=document.getElementById('btn-pause'), btnReset=document.getElementById('btn-reset');
 var OKABE=['#0072B2','#D55E00','#009E73','#F0E442','#56B4E9','#CC79A7','#E69F00','#000000'];
+var POS_COLORS=['#0072B2','#D55E00','#009E73','#F0E442','#CC79A7'];
+var POS_LABELS=['PG','SG','SF','PF','C'];
 var ARCH=["Glass+Rim","LowVol Glass","Low Impact 3P Vol","Def Glass+Rim FT","Vol+3P Vol","3P Acc+Vol","Playmaking+Steals","Scoring Vol"];
 var W=0,H=0,dpr=1;
-var base=[];
-var projected=[];
+var base=[], projected=[];
 var rotY=Math.PI*0.18, rotX=0.22;
 var auto=true, autoSpeed=0.00022;
 var isDragging=false, lastX=0,lastY=0, idleTimer=0;
-var animId=null;
+var lastT=0;
+var colorMode = localStorage.getItem('vh.colorMode') || 'arch';
+var posCache = new Array(13000).fill(-1);
 
 function resize(){
   if(!c) return; var rect=c.getBoundingClientRect(); W=rect.width; H=rect.height; dpr=Math.min(devicePixelRatio||1,2.5);
@@ -96,10 +180,7 @@ function initBase(litePlayers){
   base=[];
   for(var i=0;i<litePlayers.length;i++){
     var p=litePlayers[i];
-    var ox=(p.x-0.5)*2.0;
-    var oy=(p.y-0.5)*2.0;
-    var oz=(p.z-0.5)*2.0;
-    base.push({ox:ox, oy:oy, oz:oz, n:p.n, s:p.s, c:p.c, i:p.i, x:p.x, y:p.y, z:p.z});
+    base.push({ox:(p.x-0.5)*2.0, oy:(p.y-0.5)*2.0, oz:(p.z-0.5)*2.0, n:p.n, s:p.s, c:p.c, i:p.i, x:p.x, y:p.y, z:p.z});
   }
   projected=new Array(base.length);
 }
@@ -118,10 +199,77 @@ function projectFrame(){
     var depth = (zr + 1.0)*0.5;
     var alpha = 0.22 + depth*0.78;
     var rad = (0.8 + depth*1.9) * (W < 600 ? 0.9 : 1.0);
-    projected[i]={i:b.i,n:b.n,s:b.s,c:b.c,x:b.x,y:b.y,z:b.z,sx:sxr,sy:syr,depth:depth,alpha:alpha,rad:rad, ox:xr, oy:yr, oz:zr};
+    projected[i]={i:b.i,n:b.n,s:b.s,c:b.c,x:b.x,y:b.y,z:b.z,sx:sxr,sy:syr,depth:depth,alpha:alpha,rad:rad, xr:xr, yr:yr, zr:zr};
   }
 }
-function draw(){
+function drawStarPath(ctx, cx, cy, spikes, outerR, innerR, rot){
+  ctx.beginPath();
+  for(var i=0;i<spikes*2;i++){
+    var r = (i%2===0)?outerR:innerR;
+    var a = rot + i*Math.PI/spikes;
+    var sx = cx + Math.cos(a)*r;
+    var sy = cy + Math.sin(a)*r;
+    if(i===0) ctx.moveTo(sx,sy); else ctx.lineTo(sx,sy);
+  }
+  ctx.closePath();
+}
+function getPointColor(p){
+  if(colorMode==='pos'){
+    var idx=p.i;
+    var pc = posCache[idx];
+    if(pc===-1){
+      if(window.VHMtnn && VHMtnn.isReady()){
+        try{ var pr=VHMtnn.predictPosition(idx); if(pr) { posCache[idx]=pr.argmax; pc=pr.argmax; } }catch(e){}
+      }
+    }
+    if(pc!==undefined && pc>=0) return POS_COLORS[pc%POS_COLORS.length];
+  }
+  return OKABE[p.c%OKABE.length];
+}
+function drawOrient(){
+  var oc=document.getElementById('orient-canvas'); if(!oc) return;
+  var octx=oc.getContext('2d');
+  var Ow=oc.width, Oh=oc.height, cx=Ow/2, cy=Oh/2;
+  octx.clearRect(0,0,Ow,Oh);
+  var cyR=Math.cos(rotY), syR=Math.sin(rotY), cxR=Math.cos(rotX), sxR=Math.sin(rotX);
+  var axes=[
+    {label:'X',vec:{x:1,y:0,z:0},color:'#0072B2',name:'Paint↔Perim'},
+    {label:'Y',vec:{x:0,y:1,z:0},color:'#009E73',name:'Role→Score'},
+    {label:'Z',vec:{x:0,y:0,z:1},color:'#D55E00',name:'Off↔On'}
+  ];
+  var proj=[];
+  for(var k=0;k<axes.length;k++){
+    var ax=axes[k];
+    var xr = ax.vec.x*cyR + ax.vec.z*syR;
+    var z1 = -ax.vec.x*syR + ax.vec.z*cyR;
+    var yr = ax.vec.y*cxR - z1*sxR;
+    var zr = ax.vec.y*sxR + z1*cxR;
+    var sxr = cx + xr*24;
+    var syr = cy - yr*24;
+    proj.push({x:sxr,y:syr,z:zr,label:ax.label,color:ax.color,name:ax.name,orig:ax});
+  }
+  proj.sort(function(a,b){return a.z-b.z;});
+  for(var i=0;i<proj.length;i++){
+    var p=proj[i];
+    var alpha = 0.38 + 0.62*(p.z+1)/2;
+    octx.globalAlpha=alpha;
+    octx.strokeStyle=p.color; octx.lineWidth=2.4;
+    octx.beginPath(); octx.moveTo(cx,cy); octx.lineTo(p.x,p.y); octx.stroke();
+    octx.fillStyle=p.color; octx.beginPath(); octx.arc(p.x,p.y,3.2,0,Math.PI*2); octx.fill();
+    octx.fillStyle='#1A150F'; octx.font='900 9px ui-monospace,monospace';
+    octx.fillText(p.label, p.x+4, p.y+3);
+    var dirEl=document.getElementById('axis-'+p.label.toLowerCase()+'-dir');
+    if(dirEl){
+      var depth = p.z>0.25 ? ' out' : p.z<-0.25 ? ' in' : '';
+      dirEl.textContent = (p.z>0?'↗':'↙')+depth;
+      dirEl.style.opacity = 0.4 + alpha*0.6;
+    }
+  }
+  octx.globalAlpha=1;
+  // center dot
+  octx.fillStyle='#1A150F'; octx.beginPath(); octx.arc(cx,cy,2,0,Math.PI*2); octx.fill();
+}
+function draw(t){
   if(!c) return;
   var ctx=c.getContext('2d');
   ctx.clearRect(0,0,W,H);
@@ -132,26 +280,59 @@ function draw(){
   var order=projected.slice().sort(function(a,b){return a.depth - b.depth;});
   for(var i=0;i<order.length;i++){
     var p=order[i];
-    ctx.globalAlpha = Math.max(0.18, Math.min(0.95, p.alpha*0.85));
-    ctx.fillStyle = OKABE[p.c%OKABE.length];
+    ctx.globalAlpha = Math.max(0.18, Math.min(0.95, p.alpha*0.82));
+    ctx.fillStyle = getPointColor(p);
     ctx.beginPath(); ctx.arc(p.sx,p.sy,p.rad,0,Math.PI*2); ctx.fill();
   }
   ctx.globalAlpha=1;
   try{
     var st = window.VHPastModern ? window.VHPastModern.state() : null;
     if(st && st.target){
-      var t = projected.find(function(pp){return pp.i===st.target.i;});
-      if(t){
-        ctx.strokeStyle='#1A150F'; ctx.lineWidth=2.6; ctx.beginPath(); ctx.arc(t.sx,t.sy,11,0,Math.PI*2); ctx.stroke();
-        ctx.fillStyle='#F0E442'; ctx.beginPath(); ctx.arc(t.sx,t.sy,6.5,0,Math.PI*2); ctx.fill();
-        ctx.fillStyle='#1A150F'; ctx.font='800 10px ui-monospace,monospace'; ctx.fillText(t.n+' '+t.s, t.sx+10, t.sy-10);
+      var tp = projected.find(function(pp){return pp.i===st.target.i;});
+      if(tp){
+        var pulse = 0.5 + 0.5*Math.sin(t*0.0024);
+        var pulse2 = 0.5 + 0.5*Math.sin(t*0.0024 + 1.3);
+        // subtle non-rainbow glow: double aura, less distracting yet distinct
+        ctx.globalAlpha = 0.12 + pulse*0.09;
+        ctx.fillStyle = '#F0E442';
+        ctx.beginPath(); ctx.arc(tp.sx, tp.sy, 22 + pulse*9, 0, Math.PI*2); ctx.fill();
+        ctx.globalAlpha = 0.18 + pulse2*0.12;
+        ctx.fillStyle = '#FFFEF7';
+        ctx.beginPath(); ctx.arc(tp.sx, tp.sy, 12 + pulse*3.5, 0, Math.PI*2); ctx.fill();
+        var outer = 11.5 + pulse*1.8;
+        var inner = 5.2 + pulse*0.9;
+        ctx.globalAlpha = 1;
+        ctx.save();
+        ctx.shadowColor = 'rgba(240,228,66,0.50)';
+        ctx.shadowBlur = 10 + pulse*7;
+        ctx.fillStyle = '#F0E442';
+        ctx.strokeStyle = '#1A150F';
+        ctx.lineWidth = 2.2;
+        drawStarPath(ctx, tp.sx, tp.sy, 5, outer, inner, -Math.PI/2 + Math.sin(t*0.0006)*0.18);
+        ctx.fill(); ctx.stroke();
+        ctx.shadowBlur = 0;
+        ctx.restore();
+        var label = tp.n+' '+tp.s;
+        ctx.font='800 11px ui-monospace,monospace';
+        var tw = ctx.measureText(label).width;
+        var padX=8;
+        var lx = tp.sx + outer + 10, ly = tp.sy - 16;
+        if(lx + tw + padX*2 > W-6) lx = tp.sx - (tw+padX*2+outer+10);
+        if(ly<12) ly = tp.sy + outer + 12;
+        ctx.fillStyle='rgba(255,254,247,0.96)'; ctx.strokeStyle='#1A150F'; ctx.lineWidth=1.6;
+        ctx.beginPath();
+        var rx=9; var rw=tw+padX*2, rh=18;
+        ctx.moveTo(lx+rx, ly-rh); ctx.lineTo(lx+rw-rx, ly-rh); ctx.quadraticCurveTo(lx+rw, ly-rh, lx+rw, ly-rh+rx); ctx.lineTo(lx+rw, ly-rx); ctx.quadraticCurveTo(lx+rw, ly, lx+rw-rx, ly); ctx.lineTo(lx+rx, ly); ctx.quadraticCurveTo(lx, ly, lx, ly-rx); ctx.lineTo(lx, ly-rh+rx); ctx.quadraticCurveTo(lx, ly-rh, lx+rx, ly-rh); ctx.closePath();
+        ctx.fill(); ctx.stroke();
+        ctx.fillStyle='#1A150F';
+        ctx.fillText(label, lx+padX, ly-5.5);
       }
     }
-  }catch(e){}
+  }catch(e){ console.warn(e); }
+  if(document.getElementById('orient-canvas')) drawOrient();
 }
-var lastT=0;
 function loop(t){
-  animId=requestAnimationFrame(loop);
+  requestAnimationFrame(loop);
   if(!lastT) lastT=t;
   var dt=Math.min(48, t-lastT); lastT=t;
   if(!isDragging && auto){
@@ -162,7 +343,7 @@ function loop(t){
     if(idleTimer<=0){ auto=true; if(btnPause) btnPause.textContent='Pause'; }
   }
   projectFrame();
-  draw();
+  draw(t);
 }
 function onPointerDown(ev){
   isDragging=true; auto=false; lastX= ev.touches?ev.touches[0].clientX:ev.clientX; lastY= ev.touches?ev.touches[0].clientY:ev.clientY;
@@ -178,31 +359,114 @@ function onPointerMove(ev){
   } else {
     if(!projected.length) return;
     var rect=c.getBoundingClientRect(); var mx=x-rect.left, my=y-rect.top;
-    var best=null,bd=14; for(var i=0;i<projected.length;i++){ var p=projected[i]; var d=Math.hypot(p.sx-mx,p.sy-my); if(d<bd){bd=d; best=p;} }
-    if(best && hoverEl){ hoverEl.style.display='block'; hoverEl.style.left=best.sx+'px'; hoverEl.style.top=(best.sy-38)+'px'; hoverEl.innerHTML='<b>'+best.n+'</b> '+best.s+'<br><span class="small-mono" style="text-transform:none">'+ARCH[best.c%ARCH.length]+'</span>'; fact.textContent=best.n+' '+best.s+' — '+ARCH[best.c%ARCH.length]; } else { if(hoverEl) hoverEl.style.display='none'; }
+    var best=null,bd=16; for(var i=0;i<projected.length;i++){ var p=projected[i]; var d=Math.hypot(p.sx-mx,p.sy-my); if(d<bd){bd=d; best=p;} }
+    if(best && hoverEl){
+      hoverEl.style.display='block'; hoverEl.style.left=best.sx+'px'; hoverEl.style.top=(best.sy-38)+'px';
+      var posLbl = '';
+      if(colorMode==='pos' && posCache[best.i]>=0) posLbl = ' · '+POS_LABELS[posCache[best.i]];
+      hoverEl.innerHTML='<b>'+best.n+'</b> '+best.s+'<br><span class="small-mono" style="text-transform:none">'+ARCH[best.c%ARCH.length]+posLbl+'</span>';
+      fact.textContent=best.n+' '+best.s+' — '+ARCH[best.c%ARCH.length]+posLbl;
+      if(factInline) factInline.textContent=best.n+' '+best.s+' — '+ARCH[best.c%ARCH.length];
+      if(hoverChip) hoverChip.style.opacity='0';
+    } else {
+      if(hoverEl) hoverEl.style.display='none';
+      if(hoverChip) hoverChip.style.opacity='0.7';
+    }
   }
 }
-function onPointerUp(){
-  if(isDragging){ isDragging=false; idleTimer=3200; }
-}
+function onPointerUp(){ if(isDragging){ isDragging=false; idleTimer=3200; } }
 function wire(){
   c.addEventListener('mousedown',onPointerDown); c.addEventListener('mousemove',onPointerMove); window.addEventListener('mouseup',onPointerUp);
   c.addEventListener('touchstart',onPointerDown,{passive:true}); c.addEventListener('touchmove',onPointerMove,{passive:true}); c.addEventListener('touchend',onPointerUp);
-  c.addEventListener('mouseleave',function(){ if(hoverEl) hoverEl.style.display='none'; });
+  c.addEventListener('mouseleave',function(){ if(hoverEl) hoverEl.style.display='none'; if(hoverChip) hoverChip.style.opacity='0.7'; });
+  var bArch=document.getElementById('btn-arch'), bPos=document.getElementById('btn-pos');
+  function setMode(m){
+    colorMode=m; localStorage.setItem('vh.colorMode',m);
+    if(bArch) bArch.classList.toggle('is-active', m==='arch');
+    if(bPos) bPos.classList.toggle('is-active', m==='pos');
+    var lbl=document.getElementById('legend-color-label');
+    var archDots=document.getElementById('arch-dots'), posDots=document.getElementById('pos-dots');
+    if(lbl) lbl.textContent = m==='pos' ? '5 positions' : '8 archetypes';
+    if(archDots) archDots.style.display = m==='arch'?'flex':'none';
+    if(posDots) posDots.style.display = m==='pos'?'flex':'none';
+  }
+  if(bArch) bArch.addEventListener('click',function(){ setMode('arch'); });
+  if(bPos) bPos.addEventListener('click',function(){ setMode('pos'); if(window.VHMtnn && VHMtnn.isReady()){ /* trigger lazy build */ } });
+  setMode(colorMode);
 }
 async function load(){
-  resize();
-  wire();
+  resize(); wire();
   try{
     var r=await fetch('assets/vectors_search_lite.json',{cache:'force-cache'}); var j=await r.json();
     initBase(j.players);
     fact.textContent=j.players.length+' seasons — drag to spin';
-    if(window.VHPastModern){ await window.VHPastModern.init(); var st=window.VHPastModern.state(); var vt=document.getElementById('viral-today'); if(vt) vt.textContent='Today: '+st.target.n+' '+st.target.s; document.getElementById('cta-past').textContent=st.target.n;
-      try{ var s=JSON.parse(localStorage.getItem('vh.streak')||'{}').streak||0; document.getElementById('viral-streak').textContent='streak '+s; }catch{}
+    if(factInline) factInline.textContent=j.players.length+' seasons — drag to rotate';
+    if(window.VHPastModern){
+      await window.VHPastModern.init();
+      if(window.VHMtnn){ try{ await VHMtnn.loadAsync(); }catch(e){} }
+      var st=window.VHPastModern.state();
+      var vt=document.getElementById('viral-today'); if(vt) vt.textContent='Today: '+st.target.n+' '+st.target.s;
+      var dn=document.getElementById('deck-name'); if(dn) dn.textContent=st.target.n+' '+st.target.s;
+      var cp=document.getElementById('cta-past'); if(cp) cp.textContent=st.target.n;
+      try{ var s=VHPastModern.getStreak(); document.getElementById('viral-streak').textContent = s.streak>0 ? '🔥 '+s.streak : 'streak 0'; }catch{}
+      setupViral(st);
     }
     loop(0);
   }catch(e){ fact.textContent='loading — '+e.message; console.warn(e); }
   window.addEventListener('resize',resize,{passive:true});
+}
+function setupViral(st){
+  try{
+    var sInfo = VHPastModern.getStreak();
+    var big = document.getElementById('streak-big');
+    var title = document.getElementById('streak-title');
+    var desc = document.getElementById('streak-desc');
+    var bestPill = document.getElementById('streak-best-pill');
+    var track = document.getElementById('streak-track');
+    var countdownWrap = document.getElementById('next-countdown');
+    if(big) big.textContent = sInfo.streak;
+    if(bestPill) bestPill.textContent = 'best '+sInfo.best;
+    if(track){
+      track.innerHTML='';
+      for(var i=0;i<7;i++){
+        var dot=document.createElement('span');
+        dot.style.cssText='width:22px;height:6px;border-radius:999px;border:1.5px solid var(--ink);display:inline-block;'+(i < sInfo.streak%7 || (sInfo.streak>=7 && i<7) ? 'background:var(--yellow);box-shadow:1px 1px 0 var(--ink)' : 'background:#fff;opacity:.55');
+        track.appendChild(dot);
+      }
+    }
+    if(sInfo.streak===0){
+      if(title) title.textContent='Start your streak';
+      if(desc) desc.textContent='Win today\'s daily before midnight UTC to start. 7 in a row = Week Warrior badge. Random spins don\'t break streak.';
+    } else if(sInfo.streak>=7){
+      if(title) title.textContent='Week Warrior! '+sInfo.streak+'🔥';
+      if(desc) desc.textContent='Insane consistency. Keep it alive — daily resets at midnight UTC. Share your streak.';
+    } else {
+      if(title) title.textContent=sInfo.streak+' day'+(sInfo.streak===1?'':'s')+' — keep it alive';
+      if(desc) desc.textContent=(7-sInfo.streak)+' more to Week Warrior. Random doesn\'t affect streak.';
+    }
+    // check if daily already won today
+    var todayKey = st.todayKey || new Date().toISOString().slice(0,10);
+    var already = false;
+    try{
+      var raw=localStorage.getItem('vh.pastmodern.v10');
+      if(raw){ var obj=JSON.parse(raw); if(obj.day===todayKey && obj.guesses && obj.guesses.some(function(g){return g.rank===0;})) already=true; }
+    }catch(e){}
+    var countdownEl=document.getElementById('countdown-hms');
+    if(already && countdownWrap){
+      countdownWrap.style.display='block';
+      function tick(){
+        var ms=VHPastModern.msToNextDaily(); if(countdownEl) countdownEl.textContent=VHPastModern.fmtHMS(ms);
+      }
+      tick(); setInterval(tick,1000);
+      var btnContinue=document.getElementById('btn-continue-streak'); if(btnContinue){ btnContinue.textContent='Done today ✓'; btnContinue.href='/play?mode=random'; }
+    }
+    // random hint
+    var rh=document.getElementById('random-hint'); if(rh && st.target){ rh.textContent='Today is '+st.target.n+' '+st.target.s; }
+  }catch(e){ console.warn('setupViral', e); }
+}
+function showToast(msg, ms){
+  var t=document.getElementById('toast'); if(!t) return;
+  t.textContent=msg; t.style.display='block'; clearTimeout(t._tm); t._tm=setTimeout(function(){ t.style.display='none'; }, ms||2600);
 }
 load();
 
@@ -223,6 +487,7 @@ document.getElementById('btn-share-board').addEventListener('click',async functi
     }
     var url=snap.toDataURL('image/png');
     var a=document.createElement('a'); a.href=url; a.download='vector-hoops-map.png'; a.click();
+    showToast('Map image saved');
   }catch(e){ console.warn(e); }
 });
 document.getElementById('btn-challenge').addEventListener('click',async function(){
@@ -232,10 +497,40 @@ document.getElementById('btn-challenge').addEventListener('click',async function
     var url=location.origin+'/play?day='+day;
     var txt='Can you find the modern twin for '+ (st? st.target.n+' '+st.target.s : 'today')+'? '+url;
     if(navigator.clipboard) await navigator.clipboard.writeText(txt);
-    this.textContent='Copied';
-    setTimeout(function(el){el.textContent='Challenge';}.bind(null,this),1500);
+    this.textContent='Copied!'; showToast('Challenge link copied — daily streak resets at midnight UTC'); setTimeout(function(el){el.textContent='Challenge';}.bind(null,this),1500);
   }catch(e){}
 });
+var btnRandomRush=document.getElementById('btn-random-rush'); if(btnRandomRush){ /* href already random */ btnRandomRush.addEventListener('click',function(e){ /* let navigate */ }); }
+var btnCopyRandom=document.getElementById('btn-copy-random');
+if(btnCopyRandom){
+  btnCopyRandom.addEventListener('click', async function(){
+    try{
+      var st=window.VHPastModern? window.VHPastModern.state(): null;
+      // for random rush, we want to share the current daily? No, create a random challenge link from a random past
+      var pastId = st && st.target ? st.target.i : null;
+      // pick different random for fun if user hasn't spun
+      if(window.VHPastModern && Math.random()>0.5){
+        var rp = VHPastModern.pickRandomPast ? null : null; // don't repick to avoid state change, just use current
+      }
+      var url = location.origin + '/play?r='+pastId;
+      var txt = 'Random All-Star challenge — '+ (st? st.target.n+' '+st.target.s : 'past star') +' → modern twin? '+url;
+      if(navigator.clipboard) await navigator.clipboard.writeText(txt);
+      showToast('Random challenge link copied — streak-free, share and compare');
+      btnCopyRandom.textContent='Copied!'; setTimeout(function(){ btnCopyRandom.textContent='Copy challenge link'; },1500);
+    }catch(e){ showToast('Could not copy'); }
+  });
+}
+var btnShareStreak=document.getElementById('btn-share-streak');
+if(btnShareStreak){
+  btnShareStreak.addEventListener('click', async function(){
+    try{
+      var sInfo = window.VHPastModern ? VHPastModern.getStreak() : {streak:0,best:0};
+      var txt = 'Vector Hoops — 🔥 '+sInfo.streak+' day streak (best '+sInfo.best+') — 12,966 seasons as rotating map — '+location.origin;
+      if(navigator.clipboard) await navigator.clipboard.writeText(txt);
+      showToast('Streak copied — '+sInfo.streak+'🔥');
+    }catch(e){}
+  });
+}
 })();
 </script>
 <footer class="site-footer"><div class="site-footer__links"><a href="/play">Play</a><a href="/model">Lab</a><a href="/methods">Methods</a><a href="/players">Players</a><a href="https://github.com/jcdavis131/vector-hoops" target="_blank" rel="noopener">GitHub</a></div><div class="site-footer__attribution">Every number recomputable from stats.nba.com · dumbmodel.com</div></footer>
