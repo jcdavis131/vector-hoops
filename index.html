@@ -75,17 +75,17 @@
     </h1>
 
     <p class="deck" id="deck-line" style="margin-top:10px;font-size:17px;line-height:1.45">
-      <b id="deck-name" style="font-weight:900">Today's All-Star</b> → who plays most like them now?<br>
-      <span id="viral-today" style="opacity:.6;font-size:14px">Loading today's star…</span>
+      <b id="deck-name" style="font-weight:900">Michael Jordan 1997-98</b> → who plays most like them now?<br>
+      <span id="viral-today" style="opacity:.6;font-size:14px">Placeholder: Michael Jordan 1997-98 — daily inside</span>
     </p>
 
     <div class="cta-row">
-      <a class="btn btn-primary btn-xl" href="/play" id="cta-primary">▶ Play — <span id="cta-past">Today</span></a>
+      <a class="btn btn-primary btn-xl" href="/play?r=672" id="cta-primary">▶ Play — <span id="cta-past">Michael Jordan</span></a>
       <a class="btn" href="/play?mode=random" id="btn-random-hero" style="min-height:54px">🎲 Random</a>
     </div>
 
     <div class="micro small-mono" style="text-transform:none;display:flex;gap:8px;align-items:center;margin-top:6px">
-      <span class="pulse-dot"></span><span id="sky-fact-inline">Drag to rotate · hover any dot · ★ is today's star</span>
+      <span class="pulse-dot"></span><span id="sky-fact-inline">Drag to rotate · hover any dot · ★ = Michael Jordan 97-98 placeholder</span>
     </div>
   </div>
 
@@ -93,7 +93,7 @@
     <canvas id="sky-canvas" width="640" height="560"></canvas>
     <div id="map-overlay" aria-hidden="true">
       <span class="chip" id="sky-fact">loading 12,966 — rotating…</span>
-      <span class="chip" id="sky-hover-chip" style="opacity:.6">★ pulsing = today's Past All-Star</span>
+      <span class="chip" id="sky-hover-chip" style="opacity:.6">★ pulsing = Michael Jordan 97-98 (placeholder)</span>
     </div>
     <div id="map-controls">
       <button class="chip" id="btn-pause" type="button">Pause</button>
@@ -105,7 +105,7 @@
       <div class="axis"><i>X</i> Paint ↔ Perim</div>
       <div class="axis"><i>Y</i> Role → Score</div>
       <div class="axis"><i>Z</i> Off ↔ On</div>
-      <div class="legend-foot" style="margin-top:8px;border-top:1.2px solid var(--ink);padding-top:6px"><span class="legend-star" style="display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;background:var(--yellow);border:1.5px solid var(--ink);border-radius:5px;font-size:11px;box-shadow:1px 1px 0 var(--ink)">★</span> <span id="legend-star-name" style="font-weight:800">today</span></div>
+      <div class="legend-foot" style="margin-top:8px;border-top:1.2px solid var(--ink);padding-top:6px"><span class="legend-star" style="display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;background:var(--yellow);border:1.5px solid var(--ink);border-radius:5px;font-size:11px;box-shadow:1px 1px 0 var(--ink)">★</span> <span id="legend-star-name" style="font-weight:800">Michael Jordan 97-98</span></div>
     </div>
     <div id="hover-tip"></div>
   </div>
@@ -158,6 +158,8 @@
 (function(){
 var c=document.getElementById('sky-canvas'), fact=document.getElementById('sky-fact'), factInline=document.getElementById('sky-fact-inline'), hoverEl=document.getElementById('hover-tip'), hoverChip=document.getElementById('sky-hover-chip');
 var btnPause=document.getElementById('btn-pause'), btnReset=document.getElementById('btn-reset');
+var HERO_MJ={i:672,n:'Michael Jordan',s:'1997-98',x:0.6445,y:0.2355,z:0.316,c:7};
+var HERO_MJ_ID=672;
 var OKABE=['#0072B2','#D55E00','#009E73','#F0E442','#56B4E9','#CC79A7','#E69F00','#000000'];
 var POS_COLORS=['#0072B2','#D55E00','#009E73','#F0E442','#CC79A7'];
 var POS_LABELS=['PG','SG','SF','PF','C'];
@@ -286,10 +288,15 @@ function draw(t){
   }
   ctx.globalAlpha=1;
   try{
-    var st = window.VHPastModern ? window.VHPastModern.state() : null;
-    if(st && st.target){
-      var tp = projected.find(function(pp){return pp.i===st.target.i;});
-      if(tp){
+    // HERO placeholder: always MJ 97-98 (id 672) per request
+    var heroIdx = HERO_MJ_ID;
+    var tp = projected.find(function(pp){return pp.i===heroIdx;});
+    // fallback to daily target if MJ not in current projection (should not happen)
+    if(!tp){
+      var st = window.VHPastModern ? window.VHPastModern.state() : null;
+      if(st && st.target) tp = projected.find(function(pp){return pp.i===st.target.i;});
+    }
+    if(tp){
         var pulse = 0.5 + 0.5*Math.sin(t*0.0024);
         var pulse2 = 0.5 + 0.5*Math.sin(t*0.0024 + 1.3);
         // subtle non-rainbow glow: double aura, less distracting yet distinct
@@ -327,7 +334,6 @@ function draw(t){
         ctx.fillStyle='#1A150F';
         ctx.fillText(label, lx+padX, ly-5.5);
       }
-    }
   }catch(e){ console.warn(e); }
   if(document.getElementById('orient-canvas')) drawOrient();
 }
@@ -396,18 +402,28 @@ function wire(){
 }
 async function load(){
   resize(); wire();
+  // default hero placeholder = MJ 97-98 always
+  var dn0=document.getElementById('deck-name'); if(dn0) dn0.textContent='Michael Jordan 1997-98';
+  var cp0=document.getElementById('cta-past'); if(cp0) cp0.textContent='Michael Jordan';
+  var cta0=document.getElementById('cta-primary'); if(cta0) cta0.href='/play?r='+HERO_MJ_ID;
+  var lsn0=document.getElementById('legend-star-name'); if(lsn0) lsn0.textContent='Michael Jordan 97-98';
+  var vt0=document.getElementById('viral-today'); if(vt0) vt0.textContent='Placeholder: Michael Jordan 1997-98 — daily inside';
+  var hc0=document.getElementById('sky-hover-chip'); if(hc0) hc0.textContent='★ pulsing = Michael Jordan 97-98 (placeholder)';
   try{
     var r=await fetch('assets/vectors_search_lite.json',{cache:'force-cache'}); var j=await r.json();
     initBase(j.players);
-    fact.textContent=j.players.length+' seasons — drag to spin';
-    if(factInline) factInline.textContent=j.players.length+' seasons — drag to rotate';
+    fact.textContent=j.players.length+' seasons — drag to spin · ★ MJ 97-98';
+    if(factInline) factInline.textContent='Drag to rotate · '+j.players.length+' seasons · ★ = Michael Jordan 97-98 placeholder';
     if(window.VHPastModern){
       await window.VHPastModern.init();
       if(window.VHMtnn){ try{ await VHMtnn.loadAsync(); }catch(e){} }
       var st=window.VHPastModern.state();
-      var vt=document.getElementById('viral-today'); if(vt) vt.textContent='Today: '+st.target.n+' '+st.target.s;
-      var dn=document.getElementById('deck-name'); if(dn) dn.textContent=st.target.n+' '+st.target.s;
-      var cp=document.getElementById('cta-past'); if(cp) cp.textContent=st.target.n;
+      // keep hero map locked to MJ placeholder - do not overwrite with daily
+      var vt=document.getElementById('viral-today'); if(vt) vt.textContent='Placeholder: Michael Jordan 1997-98 · Today daily: '+st.target.n+' '+st.target.s;
+      var dn=document.getElementById('deck-name'); if(dn) dn.textContent='Michael Jordan 1997-98';
+      var cp=document.getElementById('cta-past'); if(cp) cp.textContent='Michael Jordan';
+      var cta=document.getElementById('cta-primary'); if(cta) cta.href='/play?r='+HERO_MJ_ID;
+      var lsn=document.getElementById('legend-star-name'); if(lsn) lsn.textContent='Michael Jordan 97-98';
       try{ var s=VHPastModern.getStreak(); document.getElementById('viral-streak').textContent = s.streak>0 ? '🔥 '+s.streak : 'streak 0'; }catch{}
       setupViral(st);
     }
@@ -460,8 +476,8 @@ function setupViral(st){
       tick(); setInterval(tick,1000);
       var btnContinue=document.getElementById('btn-continue-streak'); if(btnContinue){ btnContinue.textContent='Done today ✓'; btnContinue.href='/play?mode=random'; }
     }
-    // random hint
-    var rh=document.getElementById('random-hint'); if(rh && st.target){ rh.textContent='Today is '+st.target.n+' '+st.target.s; }
+    // random hint - keep MJ placeholder context
+    var rh=document.getElementById('random-hint'); if(rh && st.target){ rh.textContent='Hero map: Michael Jordan 97-98 · Today daily: '+st.target.n+' '+st.target.s; }
   }catch(e){ console.warn('setupViral', e); }
 }
 function showToast(msg, ms){

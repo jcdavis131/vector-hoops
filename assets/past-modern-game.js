@@ -101,25 +101,60 @@
 
     await ensureMtnn();
 
-    // pick daily — supports ?day=YYYY-MM-DD for challenge links
-    let urlDay=null;
+    // pick daily — supports ?day=YYYY-MM-DD for challenge links, ?r=pastIdx for random challenges, ?mode=random
+    let urlDay=null, urlRandomId=null, modeParam=null;
     try{
       const sp=new URLSearchParams(location.search);
       const d=sp.get('day')||sp.get('d');
       if(d && /^\d{4}-\d{2}-\d{2}$/.test(d)) urlDay=d;
+      const r=sp.get('r')||sp.get('past');
+      if(r!=null){
+        const n=parseInt(r,10);
+        if(!Number.isNaN(n)) urlRandomId=n;
+      }
+      modeParam = sp.get('mode')||sp.get('m');
     }catch{}
     const today = new Date();
-    const dayKey = urlDay || today.toISOString().slice(0,10);
+    const todayKey = today.toISOString().slice(0,10);
+    const dayKey = urlDay || todayKey;
     state.dayKey = dayKey;
+    state.todayKey = todayKey;
     state.urlDay = urlDay;
+    state.urlRandomId = urlRandomId;
+    state.modeParam = modeParam;
+    state.isRandom = !!(urlRandomId!=null || (modeParam && modeParam.toLowerCase()==='random'));
+    state.isChallenge = !!urlDay && urlDay!==todayKey;
+    state.isDaily = !state.isRandom && !state.isChallenge;
     // puzzle num from dayKey 2026-07-01 epoch
     const dayObj = new Date(dayKey+'T12:00:00Z');
     const puzzleNum = Math.floor((dayObj - new Date('2026-07-01T00:00:00Z'))/86400000)+1;
     state.puzzleNum = puzzleNum>0? puzzleNum : 1;
-    // deterministic pick: hash dayKey
-    let hash=0; for(let i=0;i<dayKey.length;i++) hash=(hash*31 + dayKey.charCodeAt(i))>>>0;
-    const pastIdx = past.length? (hash % past.length) : 0;
-    state.target = past[pastIdx] || null;
+
+    let targetPicked=null;
+    if(urlRandomId!=null){
+      // find by i == urlRandomId in pastPool otherwise fallback to lite index
+      targetPicked = past.find(p=>p.i===urlRandomId) || null;
+      if(!targetPicked){
+        // try search lite directly then validate it is all-star
+        const liteFound = lite.players.find(p=>p.i===urlRandomId);
+        if(liteFound){
+          const key = `${liteFound.n}|${liteFound.s}`;
+          if(state.honors[key] && state.honors[key].asg===1) targetPicked=liteFound;
+        }
+      }
+    }
+    if(!targetPicked && modeParam && modeParam.toLowerCase()==='random'){
+      // true random spin
+      const idx = Math.floor(Math.random()*past.length);
+      targetPicked = past[idx];
+    }
+    if(!targetPicked){
+      // deterministic daily pick by dayKey
+      let hash=0; for(let i=0;i<dayKey.length;i++) hash=(hash*31 + dayKey.charCodeAt(i))>>>0;
+      const pastIdx = past.length? (hash % past.length) : 0;
+      targetPicked = past[pastIdx] || null;
+    }
+    state.target = targetPicked;
     state.targetIdx = state.target? state.target.i : null;
 
     if(state.targetIdx!=null){
@@ -177,9 +212,62 @@
     return 'same';
   }
 
+  // ---- streak v2 ----
+  const STREAK_KEY='vh.streak.v2';
+  const BEST_KEY='vh.best.streak.v2';
+  function loadStreakRaw(){
+    try{
+      const raw=localStorage.getItem(STREAK_KEY);
+      if(!raw) return {streak:0, lastPlayedDay:null, best:0, lastWin:false};
+      const j=JSON.parse(raw);
+      return {streak:j.streak||0, lastPlayedDay:j.lastPlayedDay||null, best:j.best||j.streak||0, lastWin:!!j.lastWin};
+    }catch{ return {streak:0,lastPlayedDay:null,best:0,lastWin:false}; }
+  }
+  function saveStreakRaw(obj){
+    try{ localStorage.setItem(STREAK_KEY, JSON.stringify(obj)); }catch{}
+  }
+  function getStreak(){ return loadStreakRaw(); }
+  function onDailyWin(dayKey){
+    if(!dayKey) return 0;
+    const cur=getStreak();
+    if(cur.lastPlayedDay===dayKey) return cur.streak; // already counted
+    let nxtStreak=1;
+    if(cur.lastPlayedDay){
+      const d1=new Date(cur.lastPlayedDay+'T00:00:00Z');
+      const d2=new Date(dayKey+'T00:00:00Z');
+      const diff=Math.round((d2-d1)/86400000);
+      if(diff===1) nxtStreak=cur.streak+1;
+      else if(diff===0) nxtStreak=cur.streak;
+      else nxtStreak=1;
+    }
+    const best=Math.max(cur.best||0, nxtStreak);
+    const updated={streak:nxtStreak, lastPlayedDay:dayKey, best:best, lastWin:true};
+    saveStreakRaw(updated);
+    try{ localStorage.setItem('vh.streak', JSON.stringify({streak:nxtStreak})); }catch{}
+    return nxtStreak;
+  }
+  function onDailyLoss(dayKey){
+    // break streak but keep lastPlayedDay
+    const cur=getStreak();
+    const updated={streak:0, lastPlayedDay:dayKey, best:cur.best||cur.streak||0, lastWin:false};
+    saveStreakRaw(updated);
+    try{ localStorage.setItem('vh.streak', JSON.stringify({streak:0})); }catch{}
+    return 0;
+  }
+  function msToNextDaily(){
+    const now=new Date();
+    const tomorrow=new Date(now); tomorrow.setDate(tomorrow.getDate()+1); tomorrow.setHours(0,0,0,0);
+    return tomorrow-now;
+  }
+  function fmtHMS(ms){
+    const s=Math.floor(ms/1000); const h=Math.floor(s/3600); const m=Math.floor((s%3600)/60); const sec=s%60;
+    if(h>0) return `${h}h ${m}m`;
+    if(m>0) return `${m}m ${sec}s`;
+    return `${sec}s`;
+  }
+
   function resetDaily(){
     state.guesses=[];
-    // repick random if needed
   }
 
   function pickRandomPast(){
@@ -188,6 +276,9 @@
     state.target = state.pastPool[idx];
     state.targetIdx = state.target.i;
     state.guesses=[];
+    state.isRandom=true;
+    state.isDaily=false;
+    state.isChallenge=false;
     computeClosest();
     return state.target;
   }
@@ -200,6 +291,11 @@
     rankOfModernName,
     warmCold,
     pickRandomPast,
+    getStreak,
+    onDailyWin,
+    onDailyLoss,
+    msToNextDaily,
+    fmtHMS,
     OKABE,
     ARCH_NAMES,
     parseYear
