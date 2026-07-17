@@ -205,7 +205,7 @@ button,.input{min-height:44px}
     }
     for(var gi=0;gi<G.guesses.length;gi++){
       var gu=G.guesses[gi];
-      var p=projected.find(function(pp){return pp.n===gu.name;}) || projected.find(function(pp){return pp.i===gu.idx;});
+      var p=projected.find(function(pp){return pp.i===gu.idx;}) || projected.find(function(pp){return pp.n===gu.name && pp.s===gu.season;}) || projected.find(function(pp){return pp.n===gu.name;});
       if(!p) continue;
       ctx.strokeStyle = gu.rank===0 ? '#009E73' : '#D55E00';
       ctx.lineWidth= gu.rank===0? 2.8:2;
