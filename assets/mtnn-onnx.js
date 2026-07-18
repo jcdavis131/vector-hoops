@@ -29,7 +29,7 @@
       return ort.InferenceSession.create('assets/mtnn.onnx', { executionProviders: ['wasm'] });
     }).then(function(sess){
       session = sess;
-      console.log('[MTNN-ONNX] session ready, inputs', sess.inputNames, 'outputs', sess.outputNames);
+      void 0 /*log removed*/; //('[MTNN-ONNX] session ready, inputs', sess.inputNames, 'outputs', sess.outputNames);
       return sess;
     }).catch(function(err){
       console.warn('[MTNN-ONNX] not loaded, falling back to precomputed', err);

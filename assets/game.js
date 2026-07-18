@@ -107,5 +107,5 @@
   };
 
   // auto-wire if old DOM exists? we support new 2-tab page only — legacy modes no-op
-  console.log('[VHGame vNext] 2-loop pivot loaded — Daily Guess+Insight + Lab Fusion');
+  void 0 /*log removed*/; //('[VHGame vNext] 2-loop pivot loaded — Daily Guess+Insight + Lab Fusion');
 })();

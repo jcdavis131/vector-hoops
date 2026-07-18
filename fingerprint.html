@@ -18,7 +18,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/<link rel="stylesheet" href="assets/arena/arena.css">
+<link rel="stylesheet" href="assets/arena/arena.css">
 <link rel="stylesheet" href="assets/shell.css"/>
 <link rel="stylesheet" href="assets/responsive.css"/>
 <link rel="stylesheet" href="assets/final-qa.css"/>
@@ -36,6 +36,8 @@
 </style>
 </head>
 <body>
+<noscript><div role="alert" style="padding:16px;text-align:center">Enable JS — Vector Hoops needs JavaScript for Daily Court + Map</div></noscript>
+
 
 <nav class="site-nav" data-active="/fingerprint" aria-label="Vector Hoops site"></nav>
 
@@ -184,9 +186,13 @@
 <noscript><p style="padding:20px;color:#8f939e">Vector Hoops is a JavaScript
 game — the board can't load without it.</p></noscript>
 
+<script src="assets/error-boundary.js"></script>
+<script src="assets/keyboard-a11y.js"></script>
 <script src="assets/site-nav.js" defer></script>
+<script src="assets/pwa-install.js"></script>
 <script src="assets/arena/daily.js" defer></script>
 <script src="assets/arena/arena.js" defer></script>
 <footer class="site-footer"><div class="site-footer__links"><a href="/play">Play</a><a href="/model">Lab</a><a href="/methods">Methods</a><a href="/players">Players</a><a href="https://github.com/jcdavis131/vector-hoops" target="_blank" rel="noopener">GitHub</a></div><div class="site-footer__attribution">Every number recomputable from stats.nba.com · dumbmodel.com</div></footer>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js').catch(()=>{})})}</script>
 </body>
 </html>

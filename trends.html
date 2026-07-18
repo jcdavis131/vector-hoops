@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1A150F">
+<link rel="manifest" href="/manifest.json">
 <title>Trends — How the game changed | Vector Hoops</title>
 <link rel="canonical" href="https://hoops.dumbmodel.com/trends">
 <meta name="description" content="30 seasons as geometry: rotation, archetypes, court zones. Play through years.">
@@ -221,8 +223,15 @@ input[type=range]{touch-action:manipulation}
 /* ensure anchor sticky doesn't hide content */
 #drift-timeline,#what-changed{scroll-margin-top:120px}
 </style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://hoops.dumbmodel.com/trends">
+<meta property="og:title" content="Trends — How the game changed | Vector Hoops">
+<meta property="og:description" content="30 seasons as geometry: rotation, archetypes, court zones. Play through years.">
+<meta property="og:image" content="/assets/og.svg">
 </head>
 <body>
+<noscript><div role="alert" style="padding:16px;text-align:center">Enable JS — Vector Hoops needs JavaScript for Daily Court + Map</div></noscript>
+
 <nav class="site-nav" data-active="/trends" aria-label="Vector Hoops site"></nav>
 <main id="trends-app">
 
@@ -370,7 +379,10 @@ input[type=range]{touch-action:manipulation}
 </main>
 <footer class="site-footer"><div class="site-footer__links"><a href="/play">Play</a><a href="/model">Lab</a><a href="/methods">Methods</a><a href="/players">Players</a><a href="https://github.com/jcdavis131/vector-hoops" target="_blank" rel="noopener">GitHub</a></div><div class="site-footer__attribution">Every number recomputable from stats.nba.com · dumbmodel.com</div></footer>
 
+<script src="assets/error-boundary.js"></script>
+<script src="assets/keyboard-a11y.js"></script>
 <script src="assets/site-nav.js" defer></script>
+<script src="assets/pwa-install.js"></script>
 <script src="assets/trends-viz.js" defer></script>
 <script src="assets/drift.js"></script>
 <script>
@@ -459,5 +471,6 @@ input[type=range]{touch-action:manipulation}
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();
 </script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js').catch(()=>{})})}</script>
 </body>
 </html>

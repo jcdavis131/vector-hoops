@@ -59,7 +59,11 @@
 @media(max-width:760px){.tri{grid-template-columns:1fr}}
 .tri .card{transition:transform .12s,box-shadow .12s}
 .tri .card:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--ink)}
-</style></head><body>
+</style><meta property="og:type" content="website">
+<meta property="og:url" content="https://hoops.dumbmodel.com/">
+</head><body>
+<noscript><div role="alert" style="padding:16px;text-align:center">Enable JS — Vector Hoops needs JavaScript for Daily Court + Map</div></noscript>
+
 <nav class="site-nav" data-active="/" aria-label="Vector Hoops site"></nav>
 
 <div class="hero">
@@ -160,7 +164,10 @@
 
 <div id="toast" style="position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom));transform:translateX(-50%);background:#1A150F;color:#FFFEF7;border:2px solid #1A150F;border-radius:12px;padding:10px 14px;box-shadow:4px 4px 0 #1A150F;font-family:var(--mono);font-size:11px;z-index:99;display:none;max-width:min(86vw,420px);text-align:center"></div>
 
+<script src="assets/error-boundary.js"></script>
+<script src="assets/keyboard-a11y.js"></script>
 <script src="assets/site-nav.js" defer></script>
+<script src="assets/pwa-install.js"></script>
 <script src="assets/mtnn.js"></script>
 <script src="assets/viral-share.js"></script>
 <script src="assets/past-modern-game.js"></script>
@@ -556,13 +563,12 @@ if(btnShareStreak){
 function makePackAndGo(n){
   try{
     if(!window.VHPastModern || !VHPastModern.generateRandomPack){
-      // fallback to static url generating via mode=pack random
       location.href = '/play?pack=random&n='+n;
       return;
     }
     var entries = VHPastModern.generateRandomPack(n);
     var ids = entries.map(function(e){return e.i;});
-    var url = VHPastModern.packShareUrl(ids);
+    var url = (VHPastModern.packChallengeUrl ? VHPastModern.packChallengeUrl(ids) : VHPastModern.packShareUrl(ids));
     location.href = url;
   }catch(e){
     console.warn('pack gen fail', e);
@@ -584,4 +590,5 @@ document.querySelectorAll('[data-pack-card]').forEach(function(btn){
 })();
 </script>
 <footer class="site-footer"><div class="site-footer__links"><a href="/play">Play</a><a href="/model">Lab</a><a href="/methods">Methods</a><a href="/players">Players</a><a href="https://github.com/jcdavis131/vector-hoops" target="_blank" rel="noopener">GitHub</a></div><div class="site-footer__attribution">Every number recomputable from stats.nba.com · dumbmodel.com</div></footer>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js').catch(()=>{})})}</script>
 </body></html>

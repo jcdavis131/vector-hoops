@@ -15,7 +15,14 @@
 .chip{border:1.5px solid var(--ink);border-radius:999px;padding:4px 8px;font-size:11px;font-family:var(--mono);background:#fff}
 .hd{font-family:var(--hd);line-height:.98}
 .badge{background:var(--yellow);border:2px solid var(--ink);border-radius:999px;padding:4px 10px;font-family:var(--mono);font-size:11px;font-weight:800}
-</style></head><body>
+</style><meta property="og:type" content="website">
+<meta property="og:url" content="https://hoops.dumbmodel.com/offline">
+<meta property="og:title" content="Offline — Vector Hoops">
+<meta property="og:description" content="Offline — Past→Modern still works cached.">
+<meta property="og:image" content="/assets/og-embed.png">
+</head><body>
+<noscript><div role="alert" style="padding:16px;text-align:center">Enable JS — Vector Hoops needs JavaScript for Daily Court + Map</div></noscript>
+
 <nav class="site-nav" data-active="/offline" aria-label="Vector Hoops site"></nav>
 <nav class="nav"><a class="brand" href="/" style="font-weight:900;text-decoration:none;color:var(--ink)">VECTOR HOOPS · 12,966</a><span class="mono">OFFLINE</span></nav>
 <main class="page">
@@ -39,4 +46,8 @@
 })();
 </script>
 <footer class="site-footer"><div class="site-footer__links"><a href="/play">Play</a><a href="/model">Lab</a><a href="/methods">Methods</a><a href="/players">Players</a><a href="https://github.com/jcdavis131/vector-hoops" target="_blank" rel="noopener">GitHub</a></div><div class="site-footer__attribution">Every number recomputable from stats.nba.com · dumbmodel.com</div></footer>
+<script src="assets/error-boundary.js"></script>
+<script src="assets/keyboard-a11y.js"></script>
+<script src="assets/pwa-install.js"></script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js').catch(()=>{})})}</script>
 </body></html>

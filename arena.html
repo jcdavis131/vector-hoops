@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#07090f">
+<link rel="manifest" href="/manifest.json">
 <title>Arena Tour — Nebulae Court + 12,966 seasons as colored clouds | Vector Hoops</title>
 <link rel="canonical" href="https://hoops.dumbmodel.com/arena">
 <meta name="description" content="Fly over 30 chibi NBA courts — stylized arenas, neighborhoods as court fans, and the entire embedding map as 8 colored nebulae. 12,966 seasons colored by archetype, 8 centroids. Production 3D, free, no account.">
@@ -14,7 +15,7 @@
 <meta property="og:description" content="30 chibi NBA courts + 12,966 seasons as colored nebulae clouds. 8 archetype constellations, search highlight, share.">
 <meta property="og:image" content="/assets/og.svg">
 <link rel="stylesheet" href="assets/hoops.css">
-<link rel="stylesheet" href="assets/<link rel="stylesheet" href="assets/arena.css">
+<link rel="stylesheet" href="assets/arena.css">
 <link rel="stylesheet" href="assets/city-intro.css">
 <link rel="stylesheet" href="assets/shell.css"/>
 <link rel="stylesheet" href="assets/responsive.css"/>
@@ -26,6 +27,8 @@
 </script>
 </head>
 <body class="arena-page">
+<noscript><div role="alert" style="padding:16px;text-align:center">Enable JS — Vector Hoops needs JavaScript for Daily Court + Map</div></noscript>
+
 <nav class="site-nav" data-active="/arena" aria-label="Vector Hoops site"></nav>
 
 <div class="arena-stage-wrap" id="arena-stage-wrap">
@@ -125,9 +128,13 @@
 
 <footer class="site-footer"><div class="site-footer__links"><a href="/play">Play</a><a href="/model">Lab</a><a href="/methods">Methods</a><a href="/players">Players</a><a href="https://github.com/jcdavis131/vector-hoops" target="_blank" rel="noopener">GitHub</a></div><div class="site-footer__attribution">Every number recomputable from stats.nba.com · dumbmodel.com</div></footer>
 
+<script src="assets/error-boundary.js"></script>
+<script src="assets/keyboard-a11y.js"></script>
 <script src="assets/site-nav.js" defer></script>
+<script src="assets/pwa-install.js"></script>
 <script src="assets/favorite-team.js" defer></script>
 <script src="assets/embedding-nebula.js" defer></script>
 <script src="assets/arena-page.js" defer></script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js').catch(()=>{})})}</script>
 </body>
 </html>

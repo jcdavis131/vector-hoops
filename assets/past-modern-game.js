@@ -1,7 +1,8 @@
 /* past-modern-game.js — Past All-Star -> Guess Modern Twin | 100M DAU prod
    Loads: vectors_search_lite.json (12966 xyz), honors.json (asg), mtnn_embeddings via VHMtnn
    Game: daily past all-star (asg=1, season<2024) -> closest modern (2024-25/2025-26) by 48-d cosine
-   NEW: Daily Court = 5 deterministic puzzles per day, broader meta game
+   Daily Court = 5 deterministic puzzles per day, broader meta game
+   Pack Battle v2 — production-grade: progress, persistence, battle vs challenger, share with scores
 */
 (function(){
   const HONORS_URL = 'assets/honors.json';
@@ -10,6 +11,9 @@
   const PAST_MAX = 2023;
   const OKABE = ['#0072B2','#D55E00','#009E73','#F0E442','#56B4E9','#CC79A7','#E69F00','#000000'];
   const ARCH_NAMES=["Glass+Rim","LowVol Glass","Low Impact 3P Vol","Def Glass+Rim FT","Vol+3P Vol","3P Acc+Vol","Playmaking+Steals","Scoring Vol"];
+  const PACK_PREFIX = 'vh.pack.';
+  const PACK_CURRENT_KEY = 'vh.pack.current';
+  const PACK_MAX = 5;
 
   function parseYear(seasonStr){
     let y = parseInt((seasonStr||'').slice(0,4),10);
@@ -53,9 +57,60 @@
     return hashStr(ip + '|'+dayKey+'|court') % 5;
   }
 
-  // pack helpers
+  // ---------- pack helpers v2 ----------
   function shuffleArray(arr){ const a=arr.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); const tmp=a[i]; a[i]=a[j]; a[j]=tmp; } return a; }
-  function parseIdList(raw){ if(!raw) return []; return raw.split(/[-,_\s]+/).map(s=>s.trim()).filter(Boolean).map(s=>parseInt(s,10)).filter(n=>!Number.isNaN(n)&&n>=0); }
+  function parseIdList(raw){
+    if(!raw) return [];
+    return raw.split(/[-,_\s]+/).map(s=>s.trim()).filter(Boolean).map(s=>parseInt(s,10)).filter(n=>!Number.isNaN(n)&&n>=0);
+  }
+  function parseScores(raw){
+    // scores: 0=fail, 1-6 = win in N. Also allow 7 as fail alias
+    if(!raw) return [];
+    return raw.split(/[-,_\s]+/).map(s=>s.trim()).filter(Boolean).map(s=>{
+      const n=parseInt(s,10);
+      if(Number.isNaN(n)) return 0;
+      if(n<0) return 0;
+      if(n===0) return 0;
+      if(n>6) return 0; // 7+ => fail
+      return n;
+    });
+  }
+  function packStorageKey(code){ return PACK_PREFIX + code; }
+  function savePackState(){
+    try{
+      if(!state.isPack || !state.packCode) return;
+      const data = {
+        v:3,
+        ids: state.packIds,
+        results: state.packResults,
+        index: state.packIndex,
+        size: state.packSize,
+        challenger: state.packChallengerScores,
+        code: state.packCode,
+        currentGuesses: (state.guesses||[]).slice(),
+        ts: Date.now()
+      };
+      localStorage.setItem(packStorageKey(state.packCode), JSON.stringify(data));
+      localStorage.setItem(PACK_CURRENT_KEY, state.packCode);
+    }catch{}
+  }
+  function loadPackState(code){
+    try{
+      if(!code) return null;
+      const raw = localStorage.getItem(packStorageKey(code));
+      if(!raw) return null;
+      const j = JSON.parse(raw);
+      if(!j || !Array.isArray(j.ids)) return null;
+      return j;
+    }catch{return null;}
+  }
+  function clearPackState(code){
+    try{
+      if(code) localStorage.removeItem(packStorageKey(code));
+      const cur = localStorage.getItem(PACK_CURRENT_KEY);
+      if(cur===code) localStorage.removeItem(PACK_CURRENT_KEY);
+    }catch{}
+  }
   function lookupPastById(id, past, lite, honorsMap){
     let found = past.find(p=>p.i===id); if(found) return found;
     const lf = lite.players.find(p=>p.i===id); if(!lf) return null;
@@ -63,51 +118,245 @@
     return lf;
   }
   function generateRandomPack(n){
-    const size=Math.max(1,Math.min(5,n||3));
-    const byName=new Map(); for(const p of state.pastPool){ if(!byName.has(p.n)) byName.set(p.n,p); }
-    let unique=Array.from(byName.values()); if(unique.length<size) unique=state.pastPool.slice();
-    const shuffled=shuffleArray(unique); return shuffled.slice(0,size);
+    const size=Math.max(1,Math.min(PACK_MAX,n||3));
+    if(!state.pastPool || !state.pastPool.length) return [];
+    const byName=new Map();
+    for(const p of state.pastPool){ if(!byName.has(p.n)) byName.set(p.n,p); }
+    let unique=Array.from(byName.values());
+    if(unique.length<size) unique=state.pastPool.slice();
+    const shuffled=shuffleArray(unique);
+    return shuffled.slice(0,size);
   }
-  function startPackFromIds(ids){
+  function startPackFromIds(ids, options){
+    options = options || {};
     if(!ids||!ids.length) return null;
-    const entries=[]; for(const id of ids){ const ent=lookupPastById(id, state.pastPool, state.searchLite, state.honors); if(ent) entries.push(ent); }
+    const limited = ids.slice(0, PACK_MAX);
+    const entries=[];
+    for(const id of limited){
+      const ent=lookupPastById(id, state.pastPool, state.searchLite, state.honors);
+      if(ent) entries.push(ent);
+    }
     if(!entries.length) return null;
-    const seen=new Set(); const deduped=[]; for(const e of entries){ if(!seen.has(e.i)){ seen.add(e.i); deduped.push(e); } }
+    // dedup by id AND by name (keep first occurrence in order)
+    const seenId=new Set();
+    const seenName=new Set();
+    const deduped=[];
+    for(const e of entries){
+      if(seenId.has(e.i)) continue;
+      if(seenName.has(e.n)) continue;
+      seenId.add(e.i);
+      seenName.add(e.n);
+      deduped.push(e);
+    }
     if(!deduped.length) return null;
-    state.packEntries=deduped; state.packIds=deduped.map(e=>e.i); state.packSize=deduped.length; state.packIndex=0; state.packResults=new Array(deduped.length).fill(null);
-    state.packCode=state.packIds.join('-'); state.isPack=true; state.isPackComplete=false; state.target=deduped[0]; state.targetIdx=state.target.i;
+    state.packEntries=deduped;
+    state.packIds=deduped.map(e=>e.i);
+    state.packSize=deduped.length;
+    state.packCode=state.packIds.join('-');
+    state.isPack=true;
+    state.isPackComplete=false;
+
+    // try restore from storage unless forceFresh
+    let restored = null;
+    if(!options.forceFresh){
+      const saved = loadPackState(state.packCode);
+      if(saved && Array.isArray(saved.ids) && saved.ids.join('-')===state.packCode && Array.isArray(saved.results)){
+        restored = saved;
+      }
+    }
+
+    if(restored){
+      // normalize results length
+      let results = restored.results;
+      if(results.length !== state.packSize){
+        // pad/truncate
+        const newRes = new Array(state.packSize).fill(null);
+        for(let i=0;i<Math.min(results.length, state.packSize);i++) newRes[i]=results[i];
+        results = newRes;
+      }
+      state.packResults = results;
+      // determine next index
+      let idx = restored.index;
+      if(typeof idx !== 'number' || idx<0 || idx>=state.packSize) idx = 0;
+      // if results[idx] exists and there is later null, jump to first null
+      const firstNull = results.findIndex(r=>!r);
+      if(firstNull!==-1){
+        // if saved index points to completed slot and next is null, go to null
+        if(results[idx] && firstNull!==idx){
+          // find first incomplete from idx onward, else first incomplete overall
+          let next = -1;
+          for(let i=idx;i<state.packSize;i++){ if(!results[i]){ next=i; break; } }
+          if(next===-1) next = firstNull;
+          idx = next;
+        }
+      } else {
+        // all done
+        state.isPackComplete = true;
+        idx = state.packSize-1;
+      }
+      state.packIndex = idx;
+      // if all results filled, mark complete
+      if(results.every(r=>!!r)) state.isPackComplete = true;
+
+      // restore current in-progress guesses if any and we are not complete
+      if(!state.isPackComplete && Array.isArray(restored.currentGuesses) && restored.currentGuesses.length && idx===restored.index){
+        state.guesses = restored.currentGuesses.slice();
+      }
+    } else {
+      state.packIndex=0;
+      state.packResults=new Array(deduped.length).fill(null);
+    }
+
+    // keep challenger scores from URL if provided, else from restored
+    if(options.challengerScores && options.challengerScores.length){
+      state.packChallengerScores = options.challengerScores.slice(0, state.packSize);
+    } else if(restored && restored.challenger){
+      // if URL didn't have challenger but saved did, keep saved UNLESS URL had explicit empty (meaning no battle)
+      if(!state.packChallengerScores || !state.packChallengerScores.length){
+        state.packChallengerScores = restored.challenger;
+      }
+    }
+
+    state.target=state.packEntries[state.packIndex];
+    state.targetIdx=state.target ? state.target.i : null;
+    state.guesses = [];
+    state.isPack = true;
     try{ computeClosest(); }catch(e){ console.warn('computeClosest pack fail', e); }
+    savePackState();
     return state.target;
   }
   function advancePack(resultObj){
     if(!state.isPack) return null;
     const idx=state.packIndex;
     if(!state.packResults) state.packResults=new Array(state.packSize).fill(null);
-    if(resultObj) state.packResults[idx]=resultObj;
-    else { const guesses=state.guesses||[]; const won=guesses.some(g=>g.rank===0); state.packResults[idx]={guesses:guesses.slice(), won:won, count:guesses.length, solved:won}; }
-    if(idx+1<state.packSize){ state.packIndex=idx+1; state.target=state.packEntries[state.packIndex]; state.targetIdx=state.target.i; state.guesses=[]; try{ computeClosest(); }catch(e){ console.warn(e); } return state.target; }
-    else { state.isPackComplete=true; return null; }
+    // resultObj optional, otherwise build from state.guesses
+    let result = resultObj;
+    if(!result){
+      const guesses=state.guesses||[];
+      const won=guesses.some(g=>g.rank===0);
+      result={guesses:guesses.slice(), won:won, count:guesses.length, solved:won, ts:Date.now()};
+    }
+    state.packResults[idx]=result;
+    savePackState();
+
+    if(idx+1<state.packSize){
+      state.packIndex=idx+1;
+      state.target=state.packEntries[state.packIndex];
+      state.targetIdx=state.target.i;
+      state.guesses=[];
+      try{ computeClosest(); }catch(e){ console.warn(e); }
+      savePackState();
+      return state.target;
+    } else {
+      state.isPackComplete=true;
+      savePackState();
+      return null;
+    }
+  }
+  function resetCurrentPack(){
+    if(!state.isPack) return null;
+    state.packIndex=0;
+    state.packResults=new Array(state.packSize).fill(null);
+    state.isPackComplete=false;
+    state.target=state.packEntries[0];
+    state.targetIdx=state.target.i;
+    state.guesses=[];
+    try{ computeClosest(); }catch{}
+    savePackState();
+    return state.target;
+  }
+  function abandonPack(){
+    if(state.packCode) clearPackState(state.packCode);
+    state.isPack=false;
+    state.isPackComplete=false;
+    state.packEntries=[];
+    state.packIds=[];
+    state.packSize=0;
+    state.packIndex=0;
+    state.packResults=[];
+    state.packCode='';
+    state.packChallengerScores=null;
+    state.guesses=[];
   }
   function getPackState(){
     if(!state.isPack) return {isPack:false};
-    let solved=0,totalGuesses=0; const results=state.packResults||[];
-    for(const r of results){ if(r){ if(r.won) solved++; totalGuesses+=r.count||0; } }
-    const avg = results.filter(Boolean).length ? (totalGuesses / results.filter(Boolean).length) : 0;
-    return {isPack:true,size:state.packSize,index:state.packIndex,entries:state.packEntries,ids:state.packIds,results:state.packResults,code:state.packCode,complete:!!state.isPackComplete,solved,totalGuesses,avg,challengerScores:state.packChallengerScores||null};
+    let solved=0,totalGuesses=0, failed=0;
+    const results=state.packResults||[];
+    for(const r of results){ if(r){ if(r.won) { solved++; totalGuesses+=r.count||0; } else { failed++; totalGuesses+=r.count||6; } } }
+    const completedCount = results.filter(Boolean).length;
+    const avg = completedCount ? (totalGuesses / completedCount) : 0;
+    const avgWin = solved ? (results.filter(r=>r&&r.won).reduce((a,r)=>a+(r.count||0),0)/solved) : 0;
+    return {isPack:true,size:state.packSize,index:state.packIndex,entries:state.packEntries,ids:state.packIds,results:state.packResults,code:state.packCode,complete:!!state.isPackComplete,solved,failed,totalGuesses,avg,avgWin,challengerScores:state.packChallengerScores||null, total:state.packSize, progress: completedCount};
+  }
+  function getPackBattleSummary(){
+    const ps = getPackState();
+    if(!ps.isPack) return null;
+    const self = ps;
+    const challScores = ps.challengerScores||[];
+    let challSolved=0, challTotal=0;
+    for(let i=0;i<ps.size;i++){
+      const sc = challScores[i];
+      if(typeof sc==='number' && sc>=1 && sc<=6){ challSolved++; challTotal+=sc; }
+      else if(typeof sc==='number' && sc===0){ challTotal+=7; } else if(sc!=null){ challTotal+=7; }
+    }
+    const selfScoreForUrl = (ps.results||[]).map(r=> r ? (r.won ? r.count : 0) : 0);
+    const battle = {
+      hasChallenger: challScores.length>0,
+      selfSolved: self.solved,
+      selfTotal: self.totalGuesses,
+      selfAvg: self.avg,
+      selfAvgWin: self.avgWin,
+      challSolved,
+      challTotal,
+      challAvg: challScores.length ? (challTotal / ps.size) : 0,
+      selfWins: false,
+      isTie: false,
+      results: ps.results,
+      challengerScores: challScores,
+      selfScores: selfScoreForUrl
+    };
+    if(battle.hasChallenger){
+      if(self.solved > challSolved) battle.selfWins = true;
+      else if(self.solved < challSolved) battle.selfWins = false;
+      else {
+        // same solved, fewer guesses wins
+        if(self.totalGuesses < challTotal) battle.selfWins = true;
+        else if(self.totalGuesses > challTotal) battle.selfWins = false;
+        else battle.isTie = true;
+      }
+    }
+    return battle;
   }
   function packShareUrl(ids, scores){
     const origin=(typeof location!=='undefined'&&location.origin)?location.origin:'';
     const list=Array.isArray(ids)?ids:state.packIds||[];
-    let url=origin+'/play?pack='+list.join('-'); if(scores&&scores.length) url+='&s='+scores.join('-'); return url;
+    if(!list.length) return origin+'/play';
+    let url=origin+'/play?pack='+list.join('-');
+    if(scores&&scores.length){
+      const s = scores.map(v=> (typeof v==='number'? v : 0)).join('-');
+      url+='&s='+s;
+    } else if(state.packResults && state.packResults.length){
+      // auto-include self scores when sharing after completion
+      const selfScores = state.packResults.map(r=> r ? (r.won ? r.count : 0) : 0);
+      if(selfScores.some(v=>v>0)){
+        url+='&s='+selfScores.join('-');
+      }
+    }
+    return url;
+  }
+  function packChallengeUrl(ids){
+    // URL for friends to play same pack, WITHOUT scores (so they become challenger)
+    const origin=(typeof location!=='undefined'&&location.origin)?location.origin:'';
+    const list=Array.isArray(ids)?ids:state.packIds||[];
+    if(!list.length) return origin+'/play';
+    return origin+'/play?pack='+list.join('-');
   }
 
   // DAILY COURT helpers
   function getDailyState(){
     if(!state.dailyPool||!state.dailyPool.length) return {isDailyCourt:false};
     const dayKey=state.dayKey;
-    const slot=state.dailySlot||0;
     const pool=state.dailyPool;
-    // read per-slot localStorage to compute solved
     let solved=0, totalGuesses=0, slotResults=[];
     for(let i=0;i<pool.length;i++){
       try{
@@ -134,7 +383,7 @@
       isDailyCourt:true,
       dayKey,
       pool,
-      slot,
+      slot: state.dailySlot||0,
       total:pool.length,
       solved,
       totalGuesses,
@@ -145,7 +394,6 @@
     };
   }
   async function fetchIp(){
-    // try our own /api/ip first (Vercel gives real IP, no third-party)
     try{
       const r=await fetch('/api/ip', {cache:'no-store'});
       if(r.ok){ const j=await r.json(); if(j.ip) return j.ip; }
@@ -163,7 +411,8 @@
     isRandom:false,isChallenge:false,isDaily:false,isPack:false,
     packEntries:[],packIds:[],packSize:0,packIndex:0,packResults:[],packCode:'',isPackComplete:false,packChallengerScores:null,
     dailyPool:[],dailySlot:0,dailyTotal:5,dailyIsPractice:false,dailyAssignedSlot:null,ip:null,
-    puzzleNum:1
+    puzzleNum:1,
+    _rawPackParam:null, _rawScoresParam:null
   };
 
   async function init(){
@@ -212,22 +461,50 @@
     state.isRandom=!!(urlRandomId!=null || (modeParam && modeParam.toLowerCase()==='random'));
     state.isChallenge=!!urlDay && urlDay!==todayKey;
     state.isDaily=!state.isRandom && !state.isChallenge;
-    state.isPack=false; state.packChallengerScores=scoresParam?parseIdList(scoresParam):null;
+    state.isPack=false;
+    state.packChallengerScores=scoresParam?parseScores(scoresParam):null;
 
-    // pack priority
+    // pack priority - production handling
     let packHandled=false;
+    let packStartIds=null;
     if(packParam){
-      if(packParam.toLowerCase()==='random'){ let n=parseInt(packSizeParam||'3',10); if(!n||isNaN(n)) n=3; n=Math.max(1,Math.min(5,n)); const entries=generateRandomPack(n); const ids=entries.map(e=>e.i); startPackFromIds(ids); packHandled=true; }
-      else { const ids=parseIdList(packParam); if(ids.length){ const t=startPackFromIds(ids); if(t) packHandled=true; } }
+      if(typeof packParam==='string' && packParam.toLowerCase()==='random'){
+        let n=parseInt(packSizeParam||'3',10); if(!n||isNaN(n)) n=3; n=Math.max(1,Math.min(PACK_MAX,n));
+        const entries=generateRandomPack(n);
+        packStartIds=entries.map(e=>e.i);
+        packHandled=packStartIds.length>0;
+      } else {
+        const ids=parseIdList(packParam);
+        if(ids.length){ packStartIds=ids; }
+      }
     }
-    if(!packHandled && modeParam && modeParam.toLowerCase()==='pack'){ let n=parseInt(packSizeParam||'3',10); if(isNaN(n)||!n) n=3; n=Math.max(1,Math.min(5,n)); const entries=generateRandomPack(n); const ids=entries.map(e=>e.i); startPackFromIds(ids); packHandled=true; }
-    if(packHandled){ state.isPack=true; state.isDaily=false; state.isChallenge=false; state.isRandom=false; state.puzzleNum=1; if(state.targetIdx!=null){ try{ computeClosest(); }catch{} } return state; }
+    if(!packHandled && modeParam && modeParam.toLowerCase()==='pack'){
+      let n=parseInt(packSizeParam||'3',10); if(isNaN(n)||!n) n=3; n=Math.max(1,Math.min(PACK_MAX,n));
+      const entries=generateRandomPack(n);
+      packStartIds=entries.map(e=>e.i);
+      packHandled=packStartIds.length>0;
+    }
+
+    if(packHandled && packStartIds){
+      const t=startPackFromIds(packStartIds, {challengerScores: state.packChallengerScores});
+      if(t){
+        state.isPack=true; state.isDaily=false; state.isChallenge=false; state.isRandom=false; state.puzzleNum=1;
+        if(state.targetIdx!=null){ try{ computeClosest(); }catch{} }
+        return state;
+      } else {
+        // invalid pack
+        state.packInvalid = true;
+        state.packInvalidRaw = packParam;
+        // fall through to daily but mark invalid so UI can show error
+        state.isPack=false;
+        state.isPackComplete=false;
+      }
+    }
 
     // daily court pool
     const dailyPool=buildDailyPool(dayKey, past);
     state.dailyPool=dailyPool; state.dailyTotal=dailyPool.length;
 
-    // decide effective slot
     let assignedSlot=null;
     let effectiveSlot=0;
     if(typeof localStorage!=='undefined'){
@@ -236,10 +513,8 @@
         if(cached){ const cj=JSON.parse(cached); if(typeof cj.assignedSlot==='number') assignedSlot=cj.assignedSlot; }
       }catch{}
     }
-    // if slot param provided, use it but remember if it's not assigned, it's practice? For daily court we allow all, not practice
     if(slotParam!=null) effectiveSlot=slotParam;
     else {
-      // default to first unsolved, or 0
       let firstUnsolved=0; let found=false;
       try{
         for(let i=0;i<5;i++){
@@ -248,30 +523,23 @@
           const j=JSON.parse(raw); const won=(j.guesses||[]).some(g=>g.rank===0); const over=(j.guesses||[]).length>=6;
           if(!won && !over){ firstUnsolved=i; found=true; break; }
         }
-        if(!found){
-          // all done, stay at 0
-          firstUnsolved=0;
-        }
+        if(!found){ firstUnsolved=0; }
       }catch{ firstUnsolved=0; }
       effectiveSlot=firstUnsolved;
     }
 
-    // async IP fetch to set assignedSlot for future (non-blocking)
-    // store assignedSlot deterministically per IP, but pool itself is same for everyone (prevents reroll cheat)
     fetchIp().then(ip=>{
       if(!ip) return;
       state.ip=ip;
       const ipSlot=getDailySlotFromIp(ip, dayKey);
       state.dailyAssignedSlot=ipSlot;
       try{ localStorage.setItem('vh.dailyCourt.assign.'+dayKey, JSON.stringify({ip, assignedSlot:ipSlot, ts:Date.now()})); }catch{}
-      // dispatch event for UI to update badge
       try{ window.dispatchEvent(new CustomEvent('vh-daily-ip', {detail:{ip, ipSlot}})); }catch{}
     }).catch(()=>{});
 
     state.dailySlot=effectiveSlot;
     if(assignedSlot!=null) state.dailyAssignedSlot=assignedSlot;
 
-    // puzzle num: day epoch *5 + slot
     const dayObj=new Date(dayKey+'T12:00:00Z'); const baseNum=Math.floor((dayObj - new Date('2026-07-01T00:00:00Z'))/86400000);
     state.puzzleNum = baseNum*5 + effectiveSlot +1;
 
@@ -285,10 +553,8 @@
     }
     if(!targetPicked){
       if(state.isDaily || state.isChallenge){
-        // pick from daily pool
         targetPicked = dailyPool[effectiveSlot] || dailyPool[0];
       } else {
-        // legacy single daily hash fallback
         let h=0; for(let i=0;i<dayKey.length;i++) h=(h*31 + dayKey.charCodeAt(i))>>>0;
         const pastIdx=past.length? (h % past.length):0; targetPicked=past[pastIdx]||null;
       }
@@ -349,17 +615,17 @@
   function msToNextDaily(){ const now=new Date(); const tomorrow=new Date(now); tomorrow.setDate(tomorrow.getDate()+1); tomorrow.setHours(0,0,0,0); return tomorrow-now; }
   function fmtHMS(ms){ const s=Math.floor(ms/1000); const h=Math.floor(s/3600); const m=Math.floor((s%3600)/60); const sec=s%60; if(h>0) return `${h}h ${m}m`; if(m>0) return `${m}m ${sec}s`; return `${sec}s`; }
 
-  function pickRandomPast(){ if(!state.pastPool.length) return null; const idx=Math.floor(Math.random()*state.pastPool.length); state.target=state.pastPool[idx]; state.targetIdx=state.target.i; state.guesses=[]; state.isRandom=true; state.isDaily=false; state.isChallenge=false; computeClosest(); return state.target; }
+  function pickRandomPast(){ if(!state.pastPool.length) return null; const idx=Math.floor(Math.random()*state.pastPool.length); state.target=state.pastPool[idx]; state.targetIdx=state.target.i; state.guesses=[]; state.isRandom=true; state.isDaily=false; state.isChallenge=false; state.isPack=false; computeClosest(); return state.target; }
   function switchDailySlot(slot){
     if(slot<0||slot>=5) return null; if(!state.dailyPool||!state.dailyPool.length) return null;
-    state.dailySlot=slot; state.target=state.dailyPool[slot]; state.targetIdx=state.target.i; state.guesses=[]; // will be reloaded by caller from per-slot storage
+    state.dailySlot=slot; state.target=state.dailyPool[slot]; state.targetIdx=state.target.i; state.guesses=[];
     try{ computeClosest(); }catch{} return state.target;
   }
 
   window.VHPastModern={
     init, state:()=>state, computeClosest, guessModern, rankOfModernName, warmCold, pickRandomPast, getStreak, onDailyWin, onDailyLoss, msToNextDaily, fmtHMS,
     OKABE, ARCH_NAMES, parseYear,
-    generateRandomPack, startPackFromIds, advancePack, getPackState, packShareUrl, parseIdList,
-    getDailyState, switchDailySlot, buildDailyPool, hashStr, fetchIp
+    generateRandomPack, startPackFromIds, advancePack, getPackState, packShareUrl, parseIdList, parseScores, getPackBattleSummary, resetCurrentPack, abandonPack, packChallengeUrl, savePackState, loadPackState, clearPackState,
+    getDailyState, switchDailySlot, buildDailyPool, hashStr, fetchIp, PACK_MAX
   };
 })();

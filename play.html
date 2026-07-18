@@ -1,7 +1,7 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
 <title>Play — Daily Court 5× — Vector Hoops</title>
-<meta name="description" content="Daily Court: 5 past All-Stars → 5 modern twins. 6 tries each, build your modern starting 5. Refresh-proof."/>
-<meta property="og:title" content="Play Vector Hoops — Daily Court 5×"/>
+<meta name="description" content="Daily Court: 5 past All-Stars → 5 modern twins. 6 tries each, build your modern starting 5. Pack Battle — share same link, battle friends."/>
+<meta property="og:title" content="Play Vector Hoops — Daily Court 5× + Pack Battle"/>
 <meta name="theme-color" content="#1A150F"/><link rel="manifest" href="/manifest.json"/>
 <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/shell.css"/><link rel="stylesheet" href="assets/responsive.css"/><link rel="stylesheet" href="assets/final-qa.css"/><link rel="stylesheet" href="assets/unified.css"/>
@@ -49,6 +49,23 @@ button,.input{min-height:44px}
 .progress-dot{width:26px;height:26px;border-radius:50%;border:2px solid var(--ink);display:inline-flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;font-weight:900;background:#fff;box-shadow:1.5px 1.5px 0 var(--ink)}
 .progress-dot.is-done{background:var(--ink);color:#fff}.progress-dot.is-current{background:var(--yellow)}
 
+/* PACK PRODUCTION */
+.pack-header{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
+.pack-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px}
+@media(max-width:640px){.pack-grid{grid-template-columns:1fr}}
+.pack-card{border:2px solid var(--ink);border-radius:12px;padding:10px;background:#fff;box-shadow:2px 2px 0 var(--ink);position:relative;min-height:92px;display:flex;flex-direction:column;justify-content:space-between}
+.pack-card.is-active{border-color:var(--blue);background:#f0f8ff;outline:3px solid var(--yellow)}
+.pack-card.is-won{border-color:var(--green);background:#e8f5e9}
+.pack-card.is-lost{border-color:var(--verm);background:#fef2e8}
+.pack-top{font-family:var(--mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;opacity:.6;display:flex;justify-content:space-between;gap:6px}
+.pack-name{font-weight:900;font-size:13px;line-height:1.2;margin:4px 0}
+.pack-meta{font-family:var(--mono);font-size:10px;color:#444}
+.pack-badge{position:absolute;top:8px;right:8px;font-size:10px}
+.battle-banner{border:2.5px solid var(--ink);border-radius:12px;padding:10px 12px;background:var(--yellow);box-shadow:3px 3px 0 var(--ink);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center;margin-top:10px}
+.battle-win{background:var(--green);color:#fff}
+.battle-lose{background:#fff}
+.battle-tie{background:#fff}
+
 /* DAILY COURT */
 #daily-court{border-width:2.5px;background:linear-gradient(180deg,#fff 0%, #FFFEF7 100%)}
 .court-top{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center}
@@ -83,16 +100,22 @@ button,.input{min-height:44px}
 .onboard-step{display:flex;gap:10px;align-items:flex-start;border:1.8px solid var(--ink);border-radius:12px;padding:10px 12px;background:#FFFEF7;box-shadow:2px 2px 0 var(--ink)}
 .onboard-step__num{flex:0 0 28px;width:28px;height:28px;border-radius:50%;background:var(--ink);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:13px;font-weight:900}
 </style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://hoops.dumbmodel.com/play">
+<meta property="og:description" content="Daily Court: 5 past All-Stars → 5 modern twins. 6 tries each, build your modern starting 5. Pack Battle — share same link, battle friends.">
+<meta property="og:image" content="/assets/og-1200x630.png">
 </head><body>
+<noscript><div role="alert" style="padding:16px;text-align:center">Enable JS — Vector Hoops needs JavaScript for Daily Court + Map</div></noscript>
+
 <nav class="site-nav" data-active="/play" aria-label="Vector Hoops site"></nav>
 <div class="main">
 
   <div class="card" id="game-header">
     <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start">
       <div style="flex:1 1 300px;min-width:0">
-        <div class="small-mono" style="display:flex;gap:6px;align-items:center;margin-bottom:6px"><span style="width:6px;height:6px;border-radius:50%;background:var(--verm);display:inline-block"></span> DAILY COURT • 5× PAST → MODERN <span id="mode-badge" class="pill" style="background:var(--blue);color:#fff">DAILY 5</span></div>
-        <h1 class="game-title hd">Build your <span style="background:var(--ink);color:#fff;padding:0 .18em;border-radius:6px">modern starting 5</span></h1>
-        <p class="game-subtitle">5 past All-Stars every day — same for everyone, fixed at midnight UTC. Can't cheat by refresh. Solve 1 to save streak, 3 to unlock Sharpshooter, 5 for Full Court perfect. Each solved past gives you its modern twin for your lineup.</p>
+        <div class="small-mono" style="display:flex;gap:6px;align-items:center;margin-bottom:6px"><span style="width:6px;height:6px;border-radius:50%;background:var(--verm);display:inline-block"></span> <span id="header-mode-label">DAILY COURT • 5× PAST → MODERN</span> <span id="mode-badge" class="pill" style="background:var(--blue);color:#fff">DAILY 5</span></div>
+        <h1 class="game-title hd" id="game-title">Build your <span style="background:var(--ink);color:#fff;padding:0 .18em;border-radius:6px">modern starting 5</span></h1>
+        <p class="game-subtitle" id="game-subtitle">5 past All-Stars every day — same for everyone, fixed at midnight UTC. Can't cheat by refresh. Solve 1 to save streak, 3 to unlock Sharpshooter, 5 for Full Court perfect. Each solved past gives you its modern twin for your lineup.</p>
       </div>
       <div style="flex:0 0 auto;display:flex;flex-direction:column;gap:8px;align-items:flex-end">
         <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end"><span class="pill" id="puzzle-pill">P#—</span><span class="pill" id="streak-pill">streak 0</span><span class="pill" id="tries-pill">0/6</span></div>
@@ -117,7 +140,6 @@ button,.input{min-height:44px}
     <div class="mode-desc" id="mode-desc">Daily Court: 5 fixed puzzles per day, same for all IPs. Refresh can't reroll. Play any order, progress saves per slot. Solve 3+ to keep bonus streak.</div>
   </div>
 
-  <!-- NEW DAILY COURT -->
   <div class="card" id="daily-court" style="display:none;">
     <div class="court-top">
       <div><div class="small-mono">Daily Court — <span id="court-day-label">Today</span> • same for everyone • refresh-proof</div><h3 class="hd" style="margin:4px 0 0;font-size:20px"><span id="court-solved">0</span>/5 solved • <span id="court-guesses">0</span> guesses</h3></div>
@@ -135,26 +157,35 @@ button,.input{min-height:44px}
 
   <div id="map-wrap"><canvas id="sky-canvas" width="640" height="380"></canvas><div id="map-overlay"><span class="chip" id="map-fact">12,966 seasons • ★ target past</span><span class="chip">orange rings = your guesses</span></div><div id="map-controls"><button class="chip pill" id="btn-pause" type="button">Pause</button><button class="chip pill" id="btn-reset" type="button">Reset</button></div><div id="map-legend"><div style="font-family:var(--mono);font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:900;opacity:.55;margin-bottom:4px">Map</div><div style="font-family:var(--mono);font-size:9px">Drag to orbit • ★ = past</div></div><div id="hover-tip"></div></div>
 
+  <!-- PACK BATTLE v2 Production UI -->
   <div class="card" id="pack-progress" style="display:none;"></div>
   <div class="card" id="pack-summary" style="display:none;border-width:2.5px"></div>
+  <div class="card" id="pack-invalid" style="display:none;border-color:var(--verm);border-width:2.5px"></div>
 
   <div class="card" id="past-card" style="border-width:2.5px">
-    <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:flex-start">
-      <div style="flex:1 1 260px;min-width:0">
-        <div class="small-mono" style="display:flex;gap:6px;align-items:center"><span style="background:var(--yellow);border:1.5px solid var(--ink);border-radius:6px;padding:1px 6px">TARGET • PAST ALL-STAR</span><span id="past-xyz" style="text-transform:none;color:#666"></span></div>
-        <h2 id="past-name" class="hd" style="margin:6px 0 4px;font-size:28px">Loading…</h2>
-        <div id="past-meta" class="small-mono" style="text-transform:none;color:#444;line-height:1.4"></div>
-        <div class="turn-indicator"><span class="turn-dot"></span><span id="turn-text">Game starts now — 6 guesses to find modern twin</span></div>
+    <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start">
+      <div style="flex:1 1 280px;min-width:0">
+        <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:8px">
+          <span class="pill pill-yellow">TARGET • PAST ALL-STAR</span>
+          <span class="pill" id="past-arch-pill" style="background:#fff">—</span>
+          <span class="pill" id="past-slot-pill">Slot 1/5</span>
+          <span id="past-xyz" class="small-mono" style="display:none"></span>
+        </div>
+        <h2 id="past-name" class="hd" style="margin:0 0 6px;font-size:clamp(24px,5vw,32px);line-height:1">Loading…</h2>
+        <div id="past-meta" class="small-mono" style="text-transform:none;color:#444;line-height:1.45"></div>
+        <div class="turn-indicator" style="margin-top:10px"><span class="turn-dot"></span><span id="turn-text">Game starts now — 6 guesses to find modern twin</span></div>
+        <div id="past-closest-hint" class="small-mono" style="margin-top:10px;text-transform:none;display:none"></div>
       </div>
-      <div style="flex:0 0 auto;display:flex;gap:8px;flex-wrap:wrap"><button id="btn-random" class="btn" type="button">🎲 Random</button><button id="btn-new" class="btn btn-accent" type="button">Daily Court</button></div>
+      <div style="flex:0 0 auto;display:flex;gap:8px;flex-wrap:wrap;align-self:flex-start">
+        <button id="btn-random" class="btn" type="button">🎲 Random</button>
+        <button id="btn-new" class="btn btn-accent" type="button">Daily Court</button>
+      </div>
     </div>
-    <div id="past-closest-hint" class="small-mono" style="margin-top:10px;text-transform:none;display:none"></div>
   </div>
 
-  <div class="ready-banner" id="ready-banner"><div><h3>▶ Ready? First guess begins game</h3><p>Same 5 puzzles for everyone today. You see past All-Star ★. Type 2024-26 player below — 6 tries. Warmer/colder after each.</p></div><button class="btn btn-primary" id="btn-focus-guess" type="button">Start typing →</button></div>
-
-  <div class="card" id="guess-card">
-    <div style="display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px"><label class="small-mono" for="guess-input" style="margin:0">Guess modern — turn <span id="turn-count">1</span>/6 • slot <span id="slot-label">1</span>/5</label><span class="pill" id="warm-label" style="display:none"></span></div>
+  <div class="card" id="guess-card" style="border-width:2.5px">
+    <div class="ready-banner" id="ready-banner" style="margin:-2px -2px 14px;border-style:dashed"><div style="min-width:0"><h3 style="margin:0 0 4px;font-size:16px;line-height:1.2">▶ Ready? First guess begins game</h3><p style="margin:0;font-size:13px;line-height:1.45;opacity:.9">Same 5 puzzles for everyone today. You see past All-Star ★. Type a 2024–26 modern player below — 6 tries. Warmer/colder after each.</p></div><button class="btn btn-primary" id="btn-focus-guess" type="button" style="flex:0 0 auto">Start typing →</button></div>
+    <div style="display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px"><label class="small-mono" for="guess-input" style="margin:0">Guess modern — turn <span id="turn-count">1</span>/6 • <span id="slot-label-wrap">slot <span id="slot-label">1</span>/5</span></label><span class="pill" id="warm-label" style="display:none"></span></div>
     <div class="suggest"><input id="guess-input" class="input" placeholder="Type modern — e.g., Wembanyama, SGA, Ant" autocomplete="off" spellcheck="false"/><ul id="guess-suggest" style="display:none"></ul></div>
     <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap"><button id="guess-btn" class="btn btn-primary" type="button">Guess</button><button id="share-btn" class="btn" type="button">Share</button><button id="share-text-btn" class="btn" type="button">Copy Grid</button><button id="btn-challenge" class="btn" type="button">Challenge</button></div>
     <div id="guesses" style="margin-top:8px"></div><div id="result" style="margin-top:12px"></div>
@@ -163,19 +194,22 @@ button,.input{min-height:44px}
 
 <div id="onboarding-backdrop" class="vh-sheet-backdrop" hidden>
   <div class="vh-sheet" role="dialog" aria-modal="true"><div class="vh-sheet__handle"></div>
-    <div class="vh-sheet__head"><h2 class="vh-sheet__title">Daily Court — 5× broader game</h2><button class="vh-sheet__close" id="btn-onboard-close" type="button">✕</button></div>
-    <div class="small-mono" style="margin-bottom:8px;color:#5A5248">5 puzzles • meta lineup • can't cheat via refresh</div>
+    <div class="vh-sheet__head"><h2 class="vh-sheet__title">Daily Court — 5× + Pack Battle</h2><button class="vh-sheet__close" id="btn-onboard-close" type="button">✕</button></div>
+    <div class="small-mono" style="margin-bottom:8px;color:#5A5248">5 puzzles daily + viral packs</div>
     <div class="onboard-steps">
-      <div class="onboard-step"><span class="onboard-step__num">1</span><div><b>5 fixed past All-Stars per day, same for everyone</b><p>Deterministic from date: hash(date+slot). Refresh gives same 5 — stored in Vercel edge via /api/ip for IP badge but puzzles are global. Anti-cheat: guesses saved per slot in localStorage <code>vh.daily.v2.{day}.slot{i}</code> and can't be rerolled.</p></div></div>
-      <div class="onboard-step"><span class="onboard-step__num">2</span><div><b>Play any order, build modern starting 5</b><p>Each slot = one past → guess its modern twin (2024-26). When solved, you collect that modern player. Your lineup bar fills. PG/SG/SF/PF/C assigned by archetype. Solve 3 = Sharpshooter, 5 = Full Court perfect + gold share card.</p></div></div>
-      <div class="onboard-step"><span class="onboard-step__num">3</span><div><b>Broader game loop</b><p>1 solved → streak saved. 3 solved → unlock hint for remaining (shows archetype). 5 solved → perfect day, +bonus XP, leaderboard multiplier, and you can copy "Daily Court" link to challenge friends — they get same 5 in same order.</p></div></div>
+      <div class="onboard-step"><span class="onboard-step__num">1</span><div><b>Daily Court: 5 fixed past All-Stars per day, same for everyone</b><p>Deterministic from date: hash(date+slot). Refresh gives same 5. Guesses saved per slot in localStorage. Can't be rerolled.</p></div></div>
+      <div class="onboard-step"><span class="onboard-step__num">2</span><div><b>Pack Battle: 1, 3 or 5 random All-Stars — same link for friends</b><p><code>?pack=672-123-456</code> = identical pack for everyone. Share link, friends get same stars. Add <code>&s=2-3-0</code> to include your scores (0=fail). Battle: who solves more in fewer guesses? Streak-safe, persists through refresh.</p></div></div>
+      <div class="onboard-step"><span class="onboard-step__num">3</span><div><b>Battle flow</b><p>Solve slot → Next → final summary shows total solved, total guesses, avg, and vs challenger. Share final pack image (canvas) with score. Copy challenge link to beat friends. New packs via ⚡🔥🏀 buttons.</p></div></div>
     </div>
     <div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap"><button class="btn btn-primary" id="btn-onboard-play" type="button">▶ Play Court</button><button class="btn" id="btn-onboard-random" type="button">🎲 Random</button></div>
   </div>
 </div>
 
 <canvas id="confetti-canvas" class="confetti" style="display:none"></canvas>
-<script src="assets/site-nav.js" defer></script><script src="assets/mtnn.js"></script><script src="assets/viral-share.js"></script><script src="assets/past-modern-game.js"></script>
+<script src="assets/error-boundary.js"></script>
+<script src="assets/keyboard-a11y.js"></script>
+<script src="assets/site-nav.js" defer></script>
+<script src="assets/pwa-install.js"></script><script src="assets/mtnn.js"></script><script src="assets/viral-share.js"></script><script src="assets/past-modern-game.js"></script>
 <script>
 (function(){
   const $=s=>document.querySelector(s);
@@ -185,6 +219,7 @@ button,.input{min-height:44px}
   let W=0,H=0, base=[], projected=[], rotY=Math.PI*0.18, rotX=0.22, auto=true, autoSpeed=0.00022, isDragging=false, lastX=0,lastY=0, idleTimer=0, animId=null, lastT=0;
   let hoverEl=$('#hover-tip'), canvas=$('#sky-canvas'), factEl=$('#map-fact');
 
+  // --- map ---
   function resize(){ const r=canvas.getBoundingClientRect(); if(!r.width) return; W=r.width; H=r.height; const dpr=Math.min(devicePixelRatio||1,2.5); canvas.width=W*dpr; canvas.height=H*dpr; canvas.style.width=W+'px'; canvas.style.height=H+'px'; const ctx=canvas.getContext('2d'); ctx.setTransform(dpr,0,0,dpr,0,0); }
   function initBase(lite){ base=[]; for(let i=0;i<lite.length;i++){ const p=lite[i]; base.push({ox:(p.x-0.5)*2, oy:(p.y-0.5)*2, oz:(p.z-0.5)*2, n:p.n, s:p.s, c:p.c, i:p.i, x:p.x,y:p.y,z:p.z}); } projected=new Array(base.length); }
   function projectFrame(){
@@ -220,6 +255,8 @@ button,.input{min-height:44px}
     }
   }
   function onUp(){ if(isDragging){ isDragging=false; idleTimer=3400; } }
+
+  // --- helpers ---
   function filteredModern(q){ q=(q||'').toLowerCase().trim(); if(!q) return []; const st=VHPastModern.state(); return st.modernPool.filter(m=>m.n.toLowerCase().includes(q)).slice(0,12); }
   function attachSuggest(){
     const input=$('#guess-input'), ul=$('#guess-suggest'); let active=-1,last=[];
@@ -234,13 +271,22 @@ button,.input{min-height:44px}
   function loadGuesses(){
     try{
       const st=VHPastModern.state();
-      if(st.isPack) return [];
+      if(st.isPack){
+        // load from state (restored from storage includes currentGuesses)
+        if(st.guesses && st.guesses.length) return st.guesses.slice();
+        // also check LS for in-progress if state empty (fallback)
+        const code = st.packCode;
+        if(code){
+          const raw = localStorage.getItem('vh.pack.'+code);
+          if(raw){ const j=JSON.parse(raw); if(Array.isArray(j.currentGuesses)) return j.currentGuesses; }
+        }
+        return [];
+      }
       if(st.isDaily||st.isChallenge){
         const k=dailySlotKey(st.dayKey, st.dailySlot||0);
         const raw=localStorage.getItem(k);
         if(!raw) return [];
         const j=JSON.parse(raw);
-        // dedupe
         const seen={}; const out=[]; for(const g of (j.guesses||[])){ const key=(g.name||'').toLowerCase(); if(!key||seen[key]) continue; seen[key]=true; out.push(g); }
         return out;
       } else {
@@ -251,7 +297,11 @@ button,.input{min-height:44px}
   function saveGuesses(){
     try{
       const st=VHPastModern.state();
-      if(st.isPack) return;
+      if(st.isPack){
+        // persist current guesses for this pack slot
+        statePackSaveGuesses();
+        return;
+      }
       if(st.isDaily||st.isChallenge){
         const k=dailySlotKey(st.dayKey, st.dailySlot||0);
         localStorage.setItem(k, JSON.stringify({day:st.dayKey, slot:st.dailySlot, guesses:G.guesses}));
@@ -260,16 +310,25 @@ button,.input{min-height:44px}
       }
     }catch{}
   }
+  function statePackSaveGuesses(){
+    try{
+      const st=VHPastModern.state();
+      st.guesses = G.guesses.slice();
+      if(window.VHPastModern && VHPastModern.savePackState) VHPastModern.savePackState();
+    }catch{}
+  }
   function loadStreak(){ try{ const raw=localStorage.getItem('vh.streak'); if(!raw) return 0; return JSON.parse(raw).streak||0; }catch{ return 0; } }
   function saveStreak(s){ try{ localStorage.setItem('vh.streak', JSON.stringify({streak:s,last:Date.now()})); }catch{} }
   function confettiBurst(){
-    const cv=$('#confetti-canvas'); if(!cv) return; cv.style.display='block'; const ctx=cv.getContext('2d'); cv.width=innerWidth; cv.height=innerHeight; const parts=[]; for(let i=0;i<120;i++){ parts.push({x:Math.random()*cv.width, y:-20-Math.random()*100, vx:(Math.random()-0.5)*6, vy:Math.random()*4+2, r:Math.random()*6+3, c:OKABE[i%OKABE.length], a:1}); }
-    const t0=performance.now(); function frame(t){ const dt=t-t0; ctx.clearRect(0,0,cv.width,cv.height); let alive=false; for(let i=0;i<parts.length;i++){ const p=parts[i]; p.x+=p.vx; p.y+=p.vy; p.vy+=0.08; p.vx*=0.99; p.a-=0.006; if(p.a>0){ alive=true; ctx.globalAlpha=p.a; ctx.fillStyle=p.c; ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fill(); } } ctx.globalAlpha=1; if(alive&&dt<4000) requestAnimationFrame(frame); else cv.style.display='none'; } requestAnimationFrame(frame);
+    const cv=$('#confetti-canvas'); if(!cv) return; cv.style.display='block'; const ctx=cv.getContext('2d'); cv.width=innerWidth; cv.height=innerHeight; const parts=[]; for(let i=0;i<140;i++){ parts.push({x:Math.random()*cv.width, y:-20-Math.random()*100, vx:(Math.random()-0.5)*6, vy:Math.random()*4+2.5, r:Math.random()*6+3, c:OKABE[i%OKABE.length], a:1}); }
+    const t0=performance.now(); function frame(t){ const dt=t-t0; ctx.clearRect(0,0,cv.width,cv.height); let alive=false; for(let i=0;i<parts.length;i++){ const p=parts[i]; p.x+=p.vx; p.y+=p.vy; p.vy+=0.09; p.vx*=0.99; p.a-=0.005; if(p.a>0){ alive=true; ctx.globalAlpha=p.a; ctx.fillStyle=p.c; ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fill(); } } ctx.globalAlpha=1; if(alive&&dt<4500) requestAnimationFrame(frame); else cv.style.display='none'; } requestAnimationFrame(frame);
   }
 
+  // --- DAILY COURT ---
   function renderDailyCourt(){
     const grid=$('#court-grid'), label=$('#court-day-label'), solvedEl=$('#court-solved'), guessesEl=$('#court-guesses'), lineupBar=$('#lineup-bar'), ipBadge=$('#court-ip-badge');
     const st=VHPastModern.state(); if(!st.dailyPool||!st.dailyPool.length){ $('#daily-court').style.display='none'; return; }
+    if(st.isPack){ $('#daily-court').style.display='none'; return; }
     $('#daily-court').style.display='block';
     if(label) label.textContent=st.dayKey;
     if(ipBadge) ipBadge.textContent = st.ip ? `IP slot ${st.dailyAssignedSlot!=null?st.dailyAssignedSlot+1:'?'} • ${st.ip.slice(0,12)}` : 'Same for everyone • refresh-proof';
@@ -285,13 +344,11 @@ button,.input{min-height:44px}
     }
     if(solvedEl) solvedEl.textContent=totalSolved;
     if(guessesEl) guessesEl.textContent=totalGuesses;
-    // rewards
     const r1=$('#reward-1'), r3=$('#reward-3'), r5=$('#reward-5');
     if(r1){ r1.classList.toggle('is-unlocked', totalSolved>=1); }
     if(r3){ r3.classList.toggle('is-unlocked', totalSolved>=3); if(totalSolved>=3) r3.classList.add('gold'); }
     if(r5){ r5.classList.toggle('is-unlocked', totalSolved>=5); if(totalSolved>=5) r5.classList.add('gold'); }
 
-    // grid
     if(grid){
       grid.innerHTML = st.dailyPool.map((p,i)=>{
         const sd=slotData[i];
@@ -307,12 +364,9 @@ button,.input{min-height:44px}
         el.addEventListener('click',()=>{
           const slot=parseInt(el.dataset.slot,10);
           if(isNaN(slot)) return;
-          // switch slot
           const target = VHPastModern.switchDailySlot(slot);
           if(target){
-            // update URL param slot without reload
-            const url=new URL(location.href); url.searchParams.set('slot', slot); history.replaceState(null,'',url);
-            // reset guesses array to slot's saved
+            const url=new URL(location.href); url.searchParams.set('slot', slot); url.searchParams.delete('pack'); url.searchParams.delete('s'); history.replaceState(null,'',url);
             G.guesses = loadGuesses();
             try{ VHPastModern.state().guesses=G.guesses.slice(); }catch{}
             renderPast(); renderGuesses(); renderDailyCourt(); updateStatusBar(); projectFrame(); draw();
@@ -321,15 +375,13 @@ button,.input{min-height:44px}
         });
       });
     }
-    // lineup bar: modern twins for solved slots
     if(lineupBar){
       const chips=[];
       for(let i=0;i<5;i++){
         const sd=slotData[i];
         if(sd&&sd.won){
-          // find winning guess name = rank 0 guess
           const winGuess = sd.guesses.find(g=>g.rank===0);
-          if(winGuess) chips.push(`<span class="lineup-chip">Slot ${i+1}: ${sd.guesses[0]? '' : ''}${winGuess.name} ← ${st.dailyPool[i].n}</span>`);
+          if(winGuess) chips.push(`<span class="lineup-chip">Slot ${i+1}: ${winGuess.name} ← ${st.dailyPool[i].n}</span>`);
           else chips.push(`<span class="lineup-chip">Slot ${i+1}: solved</span>`);
         } else {
           chips.push(`<span class="lineup-chip" style="opacity:.5">Slot ${i+1}: —</span>`);
@@ -339,34 +391,277 @@ button,.input{min-height:44px}
     }
   }
 
+  // --- PACK BATTLE PROD ---
+  function renderPackInvalid(){
+    const el=$('#pack-invalid'); const st=VHPastModern.state();
+    if(!st.packInvalid){ el.style.display='none'; return; }
+    el.style.display='block';
+    el.innerHTML=`<div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start">
+      <div><div class="small-mono" style="color:var(--verm)">⚠️ Invalid pack link</div><h3 class="hd" style="margin:6px 0">Couldn't load pack <code>${(st.packInvalidRaw||'').slice(0,64)}</code></h3><div style="font-size:13px;line-height:1.5">Pack must be past All-Star IDs (1996-2023, All-Star seasons). Example: <code>?pack=672-1234-456</code>. Generate a new one.</div></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-primary" id="btn-pack-fix-3">🔥 New Triple 3</button><button class="btn" id="btn-pack-fix-5">🏀 Full 5</button></div>
+    </div>`;
+    el.querySelector('#btn-pack-fix-3')?.addEventListener('click',()=>{ const entries=VHPastModern.generateRandomPack(3); location.href=VHPastModern.packShareUrl(entries.map(e=>e.i)); });
+    el.querySelector('#btn-pack-fix-5')?.addEventListener('click',()=>{ const entries=VHPastModern.generateRandomPack(5); location.href=VHPastModern.packShareUrl(entries.map(e=>e.i)); });
+  }
+
+  function renderPackProgress(){
+    const el=$('#pack-progress'); const st=VHPastModern.state();
+    if(!st.isPack){ el.style.display='none'; return; }
+    const ps=VHPastModern.getPackState();
+    const battle=VHPastModern.getPackBattleSummary();
+    el.style.display='block';
+
+    const size = ps.size;
+    const idx = ps.index;
+    const solved = ps.solved;
+    const progress = ps.progress;
+    const chall = ps.challengerScores||[];
+    const hasChallenger = chall.length>0;
+
+    // header
+    let header = `<div class="pack-header"><div><div class="small-mono" style="display:flex;gap:6px;align-items:center"><span class="pill" style="background:var(--ink);color:#fff">📦 PACK BATTLE</span><span class="pill pill-yellow">${size} PACK</span><span class="pill">${solved}/${size} solved • ${idx+1}/${size}</span>${hasChallenger?`<span class="pill pill-blue">vs Friend ${chall.filter(s=>s>0).length}/${size}</span>`:''}</div><h3 class="hd" style="margin:6px 0 0;font-size:20px">Pack ${size===1?'Solo ⚡':size===3?'Triple 🔥':'Full Court 🏀'} — ${progress}/${size} played</h3><div style="font-size:12px;color:#555">Code <code>${ps.code.slice(0,42)}</code> • Same link = same All-Stars for friends • Refresh-proof</div></div><div style="display:flex;gap:6px;flex-wrap:wrap"><button class="pill" id="btn-pack-copy-link" type="button">📋 Copy pack link</button><button class="pill" id="btn-pack-abandon" type="button">✕ Exit pack</button></div></div>`;
+
+    // dots
+    let dotsHtml = `<div class="progress-dots" style="margin:8px 0 10px">`;
+    for(let i=0;i<size;i++){
+      const r = ps.results[i];
+      let cls='progress-dot'; let txt=i+1;
+      if(r){ if(r.won){ cls+=' is-done'; txt='✓'; } else { cls+=' is-done'; txt='✗'; } }
+      if(i===idx) cls+=' is-current';
+      dotsHtml+=`<span class="${cls}" title="${ps.entries[i]?ps.entries[i].n:''}">${txt}</span>`;
+    }
+    dotsHtml+=`</div>`;
+
+    // grid
+    let grid = `<div class="pack-grid">`;
+    for(let i=0;i<size;i++){
+      const e = ps.entries[i];
+      const r = ps.results[i];
+      const challScore = chall[i];
+      const isActive = i===idx;
+      let cls='pack-card'; let badge='⏳'; let meta='Not started';
+      if(isActive) cls+=' is-active';
+      if(r){
+        if(r.won){ cls+=' is-won'; badge=`✅ ${r.count}/6`; meta=`Won in ${r.count} • ${r.guesses && r.guesses[r.guesses.length-1]? r.guesses[r.guesses.length-1].name : ''}`; }
+        else { cls+=' is-lost'; badge=`❌ ${r.count}/6`; meta=`Failed • answer ${VHPastModern.state().closestModern && isActive ? VHPastModern.state().closestModern.entry.n : '—'}`; }
+      } else if(isActive){
+        badge=`▶ NOW`; meta=`${G.guesses.length}/6 used • ${ARCH[e.c%ARCH.length]}`;
+      }
+      const challText = (hasChallenger && typeof challScore==='number') ? (challScore>0 ? `Friend: ✅ ${challScore}/6` : `Friend: ❌`) : '';
+      grid+=`<div class="${cls}" data-pack-i="${i}"><div class="pack-top"><span>Slot ${i+1}</span><span>${ARCH[e.c%ARCH.length]}</span></div><div class="pack-name">${e.n} ${e.s}</div><div class="pack-meta">${meta}${challText?`<br><span style="opacity:.8">${challText}</span>`:''}</div><span class="pack-badge pill ${r&&r.won?'pill-green':''}">${badge}</span></div>`;
+    }
+    grid+=`</div>`;
+
+    // battle banner if has challenger and any progress
+    let battleHtml='';
+    if(hasChallenger){
+      const bs = battle;
+      let resultText='Battle vs friend';
+      let bannerCls='battle-banner battle-tie';
+      if(bs){
+        if(bs.isTie) { resultText=`🤝 Tie — ${bs.selfSolved}/${size} vs ${bs.challSolved}/${size} — ${bs.selfTotal} vs ${bs.challTotal} guesses`; bannerCls='battle-banner battle-tie'; }
+        else if(bs.selfWins) { resultText=`🏆 You lead — ${bs.selfSolved}/${size} (${bs.selfTotal} guesses) vs ${bs.challSolved}/${size} (${bs.challTotal})`; bannerCls='battle-banner battle-win'; }
+        else { resultText=`😤 Friend leads — ${bs.challSolved}/${size} (${bs.challTotal}) vs ${bs.selfSolved}/${size} (${bs.selfTotal})`; bannerCls='battle-banner battle-lose'; }
+      }
+      battleHtml=`<div class="${bannerCls}"><b>${resultText}</b><span class="small-mono" style="text-transform:none">Share with &s= scores to battle. 0=fail</span></div>`;
+    } else {
+      battleHtml=`<div class="small-mono" style="margin-top:10px;opacity:.6;text-transform:none">Tip: Finish pack, then share link with your scores (add &s=) — friends play same pack and try to beat you. Streak-safe, refresh keeps progress.</div>`;
+    }
+
+    el.innerHTML = header+dotsHtml+grid+battleHtml;
+
+    // interactions
+    el.querySelectorAll('.pack-card').forEach(card=>{
+      card.addEventListener('click',()=>{
+        const i=parseInt(card.dataset.packI,10);
+        if(isNaN(i)) return;
+        // allow jumping to already played or current? For production, allow jump to any completed or current, but not future locked? We'll allow jump to any completed or current to review, but not future unplayed to avoid cheat? Actually allow.
+        if(i>ps.results.filter(Boolean).length && i!==idx) {
+          // future locked - show toast but allow? We'll block
+          // allow only if <= progress or is current
+          if(i>progress && i!==idx) return;
+        }
+        // switch target
+        const st2=VHPastModern.state();
+        // save current guesses first
+        statePackSaveGuesses();
+        // if switching away from active unfinished, keep its in-progress guesses in memory via save
+        st2.packIndex = i;
+        st2.target = st2.packEntries[i];
+        st2.targetIdx = st2.target.i;
+        // load guesses for that slot: if result exists, show its guesses, else load currentGuesses if was active
+        const res = st2.packResults[i];
+        if(res && res.guesses){
+          G.guesses = res.guesses.slice();
+          st2.guesses = G.guesses.slice();
+        } else {
+          // check if this slot had in-progress saved in overall storage
+          try{
+            const raw = localStorage.getItem('vh.pack.'+st2.packCode);
+            if(raw){ const j=JSON.parse(raw); if(j.index===i && Array.isArray(j.currentGuesses) && !res){ G.guesses=j.currentGuesses.slice(); st2.guesses=G.guesses.slice(); } else { G.guesses=[]; st2.guesses=[]; } }
+            else { G.guesses=[]; st2.guesses=[]; }
+          }catch{ G.guesses=[]; st2.guesses=[]; }
+          if(i!==idx && !res){ G.guesses=[]; st2.guesses=[]; }
+        }
+        try{ VHPastModern.computeClosest(); }catch{}
+        VHPastModern.savePackState();
+        renderPast(); renderGuesses(); renderPackProgress(); renderPackSummary(); updateStatusBar(); projectFrame(); draw();
+        window.scrollTo({top: $('#past-card').offsetTop-20, behavior:'smooth'});
+      });
+    });
+
+    const copyBtn = el.querySelector('#btn-pack-copy-link');
+    if(copyBtn){
+      copyBtn.addEventListener('click', async()=>{
+        const url = VHPastModern.packChallengeUrl(ps.ids);
+        try{ await navigator.clipboard.writeText(url); copyBtn.textContent='Copied!'; setTimeout(()=>copyBtn.textContent='📋 Copy pack link',1200); }catch{ prompt('Copy link', url); }
+      });
+    }
+    const abandonBtn = el.querySelector('#btn-pack-abandon');
+    if(abandonBtn){
+      abandonBtn.addEventListener('click', ()=>{
+        if(confirm('Exit pack? Progress stays saved for this link but you will return to Daily Court.')){
+          VHPastModern.abandonPack();
+          location.href='/play';
+        }
+      });
+    }
+  }
+
+  function renderPackSummary(){
+    const el=$('#pack-summary'); const st=VHPastModern.state();
+    if(!st.isPack){ el.style.display='none'; return; }
+    const ps=VHPastModern.getPackState();
+    if(!ps.complete && ps.progress < ps.size){ el.style.display='none'; return; }
+    // complete -> show summary
+    el.style.display='block';
+    const battle=VHPastModern.getPackBattleSummary();
+    const solved = ps.solved;
+    const total = ps.size;
+    const totalGuesses = ps.totalGuesses;
+    const avg = ps.avg.toFixed(1);
+    const avgWin = ps.avgWin ? ps.avgWin.toFixed(1) : '—';
+    const hasChall = battle && battle.hasChallenger;
+
+    let title = solved===total ? `🏆 Pack Perfect ${solved}/${total}` : solved>=Math.ceil(total/2) ? `🔥 Pack Won ${solved}/${total}` : `📦 Pack Complete ${solved}/${total}`;
+    let battleBlock='';
+    if(hasChall){
+      if(battle.isTie) battleBlock=`<div class="battle-banner battle-tie"><b>🤝 Tie vs Friend</b> — you ${battle.selfSolved}/${total} in ${battle.selfTotal} • friend ${battle.challSolved}/${total} in ${battle.challTotal}</div>`;
+      else if(battle.selfWins) battleBlock=`<div class="battle-banner battle-win"><b>🏆 You Beat Friend!</b> — ${battle.selfSolved}/${total} (${battle.selfTotal}) vs ${battle.challSolved}/${total} (${battle.challTotal})</div>`;
+      else battleBlock=`<div class="battle-banner battle-lose"><b>😤 Friend Wins — Rematch?</b> — friend ${battle.challSolved}/${total} (${battle.challTotal}) vs you ${battle.selfSolved}/${total} (${battle.selfTotal})</div>`;
+    }
+
+    const rows = ps.entries.map((e,i)=>{
+      const r=ps.results[i];
+      const challScore = (ps.challengerScores||[])[i];
+      const you = r ? (r.won ? `✅ ${r.count}/6 — ${r.guesses.find(g=>g.rank===0)?.name || ''}` : `❌ ${r.count}/6`) : '—';
+      const friend = (hasChall && typeof challScore==='number') ? (challScore>0?`✅ ${challScore}/6`:`❌`) : '—';
+      return `<div style="display:flex;justify-content:space-between;gap:8px;border-bottom:1px dashed #eee;padding:6px 0"><span><b>${i+1}. ${e.n} ${e.s}</b></span><span style="font-family:var(--mono);font-size:11px">${you} ${hasChall?`| Friend: ${friend}`:''}</span></div>`;
+    }).join('');
+
+    el.innerHTML=`<div><div class="small-mono" style="display:flex;gap:6px;align-items:center"><span class="pill" style="background:var(--ink);color:#fff">PACK FINAL</span><span class="pill pill-yellow">${solved}/${total} solved</span><span class="pill">${totalGuesses} guesses • avg ${avg}</span></div><h3 class="hd" style="margin:8px 0 6px;font-size:24px">${title}</h3><div style="font-size:13px;line-height:1.5">Total ${totalGuesses} guesses • Avg ${avg} overall • Avg win ${avgWin} • Code ${ps.code.slice(0,48)}</div>${battleBlock}<div style="margin-top:10px">${rows}</div><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px"><button class="btn btn-primary" id="btn-pack-share-img">📸 Share Pack Image</button><button class="btn" id="btn-pack-copy-battle">📋 Copy Battle Link (with scores)</button><button class="btn" id="btn-pack-replay">🔁 Replay Same Pack</button><button class="btn" id="btn-pack-new" type="button">🎲 New ${total} Pack</button><button class="btn" id="btn-pack-daily">🏀 Daily Court</button></div></div>`;
+
+    el.querySelector('#btn-pack-share-img')?.addEventListener('click', async()=>{
+      const ps2=VHPastModern.getPackState();
+      const opts={size:ps2.size, packEntries:ps2.entries, results:ps2.results, solved:ps2.solved, totalGuesses:ps2.totalGuesses, avg:ps2.avg, packCode:ps2.code, ids:ps2.ids};
+      if(window.VHShare && VHShare.sharePack){ const res=await VHShare.sharePack(opts); if(res==='copied') { const b=el.querySelector('#btn-pack-share-img'); b.textContent='Copied text!'; setTimeout(()=>b.textContent='📸 Share Pack Image',1200); } }
+    });
+    el.querySelector('#btn-pack-copy-battle')?.addEventListener('click', async()=>{
+      const ps2=VHPastModern.getPackState();
+      const selfScores = ps2.results.map(r=> r ? (r.won? r.count:0):0);
+      const url = VHPastModern.packShareUrl(ps2.ids, selfScores);
+      try{ await navigator.clipboard.writeText(url); const b=el.querySelector('#btn-pack-copy-battle'); b.textContent='Copied!'; setTimeout(()=>b.textContent='📋 Copy Battle Link (with scores)',1400); }catch{ prompt('Copy', url); }
+    });
+    el.querySelector('#btn-pack-replay')?.addEventListener('click', ()=>{
+      VHPastModern.resetCurrentPack();
+      G.guesses=[]; renderPast(); renderGuesses(); renderPackProgress(); renderPackSummary(); updateStatusBar(); projectFrame(); draw();
+      window.scrollTo({top: $('#past-card').offsetTop-20, behavior:'smooth'});
+    });
+    el.querySelector('#btn-pack-new')?.addEventListener('click', ()=>{
+      const n=ps.size; const entries=VHPastModern.generateRandomPack(n); location.href=VHPastModern.packShareUrl(entries.map(e=>e.i));
+    });
+    el.querySelector('#btn-pack-daily')?.addEventListener('click', ()=>{ location.href='/play'; });
+  }
+
   function updateStatusBar(){
     const st=VHPastModern.state();
-    const triesPill=$('#tries-pill'), phase=$('#game-phase-label'), dots=$('#guess-dots'), turnCount=$('#turn-count'), slotLabel=$('#slot-label');
+    const triesPill=$('#tries-pill'), phase=$('#game-phase-label'), dots=$('#guess-dots'), turnCount=$('#turn-count'), slotLabel=$('#slot-label'), slotWrap=$('#slot-label-wrap');
     const count=G.guesses.length;
     if(triesPill) triesPill.textContent=count+'/6';
     if(turnCount) turnCount.textContent=(count+1<=6?count+1:6);
-    if(slotLabel) slotLabel.textContent=(st.dailySlot!=null? st.dailySlot+1:1);
-    if(dots){ dots.innerHTML=''; for(let i=0;i<6;i++){ const d=document.createElement('span'); d.className='progress-dot'+(i<count?' is-done':'')+(i===count?' is-current':''); d.textContent=i<count?'✓':i+1; dots.appendChild(d); } }
+    if(slotLabel){
+      if(st.isPack) slotLabel.textContent=(st.packIndex+1)+'/'+st.packSize;
+      else slotLabel.textContent=(st.dailySlot!=null? st.dailySlot+1:1)+'/5';
+    }
+    if(slotWrap){
+      if(st.isPack) slotWrap.innerHTML=`pack <span id="slot-label">${st.packIndex+1}</span>/${st.packSize}`;
+      else slotWrap.innerHTML=`slot <span id="slot-label">${st.dailySlot!=null?st.dailySlot+1:1}</span>/5`;
+    }
+    if(dots){
+      dots.innerHTML='';
+      for(let i=0;i<6;i++){
+        const d=document.createElement('span');
+        d.className='progress-dot'+(i<count?' is-done':'')+(i===count?' is-current':'');
+        d.textContent=i<count?'✓':i+1;
+        dots.appendChild(d);
+      }
+    }
     const won=G.guesses.some(g=>g.rank===0); const over=won||count>=6;
+    const safeSlotDaily = (st.dailySlot!=null ? st.dailySlot+1 : 1);
     if(phase){
-      if(st.isDaily) phase.textContent= over? (won? `Slot ${st.dailySlot+1} won in ${count}/6`:`Slot ${st.dailySlot+1} failed`) : `Slot ${st.dailySlot+1}/5 • ${count}/6 • same 5 for everyone today`;
+      if(st.isPack){
+        const ps=VHPastModern.getPackState();
+        phase.textContent= over? (won? `Pack ${ps.index+1}/${ps.size} won in ${count}/6`:`Pack ${ps.index+1}/${ps.size} failed`) : `Pack Battle ${ps.code.slice(0,24)} • ${ps.index+1}/${ps.size} • ${count}/6 • vs friends`;
+      } else if(st.isDaily) phase.textContent= over? (won? `Slot ${safeSlotDaily} won in ${count}/6`:`Slot ${safeSlotDaily} failed`) : `Slot ${safeSlotDaily}/5 • ${count}/6 • same 5 for everyone today`;
       else if(over) phase.textContent=won? `Won in ${count}/6`:'Game over';
       else phase.textContent = count===0? 'Ready — first guess begins' : `Playing — ${count}/6 used`;
     }
-    const readyBanner=$('#ready-banner'); if(readyBanner) readyBanner.style.display = (count===0 && !over)? 'flex':'none';
+    const readyBanner=$('#ready-banner'); if(readyBanner) readyBanner.style.display = (count===0 && !over && !st.isPackComplete)? 'flex':'none';
     const guessBtn=$('#guess-btn'); if(guessBtn) guessBtn.textContent = count===0? 'Guess — begin' : `Guess ${count+1}/6`;
-    const turnText=$('#turn-text'); if(turnText){ if(over) turnText.textContent=won? `Won in ${count} — switch slot for next` : `Failed — answer was ${st.closestModern?st.closestModern.entry.n:'?'}`; else if(count===0) turnText.textContent=`Slot ${st.dailySlot+1}/5 • Game starts now — 6 guesses`; else turnText.textContent=`Guess ${count}/6 used — ${6-count} left`; }
+    const turnText=$('#turn-text'); if(turnText){
+      if(st.isPack){
+        const ps=VHPastModern.getPackState();
+        if(ps.complete) turnText.textContent=`Pack ${ps.solved}/${ps.size} • Final summary below`;
+        else if(over) turnText.textContent=won? `Won in ${count} — Next pack slot` : `Failed — answer was ${st.closestModern?st.closestModern.entry.n:'?'}`;
+        else if(count===0) turnText.textContent=`Pack ${ps.index+1}/${ps.size} • ${st.target.n} • 6 guesses`;
+        else turnText.textContent=`Guess ${count}/6 used — ${6-count} left — Pack ${ps.index+1}/${ps.size}`;
+      } else {
+        if(over) turnText.textContent=won? `Won in ${count} — switch slot for next` : `Failed — answer was ${st.closestModern?st.closestModern.entry.n:'?'}`;
+        else if(count===0) turnText.textContent=`Slot ${safeSlotDaily}/5 • Game starts now — 6 guesses`;
+        else turnText.textContent=`Guess ${count}/6 used — ${6-count} left`;
+      }
+    }
   }
 
   function renderPast(){
     const st=VHPastModern.state(); const past=st.target; if(!past) return;
+    const slotNum = st.isPack ? (st.packIndex+1) : (st.dailySlot!=null ? st.dailySlot+1 : 1);
+    const totalSlots = st.isPack ? st.packSize : 5;
+    const archLabel = ARCH[past.c%ARCH.length];
+    const modeLabel = st.isPack ? `PACK ${slotNum}/${totalSlots}` : `Slot ${slotNum}/${totalSlots}`;
     $('#past-name').textContent=past.n+' '+past.s;
     const hon=st.honors[past.n+'|'+past.s]||{}; const allNba=hon.allNbaTeam? 'All-NBA '+hon.allNbaTeam : '';
-    $('#past-meta').innerHTML=(hon.asg?'All-Star ':'')+allNba+' • '+ARCH[past.c%ARCH.length]+' • '+past.s+' • Slot '+(st.dailySlot+1)+'/5';
-    $('#past-xyz').textContent='Target • ★ Gold • Slot '+(st.dailySlot+1);
-    $('#puzzle-pill').textContent= st.isDaily? `COURT ${st.dailySlot+1}/5` : 'P#'+st.puzzleNum;
+    $('#past-meta').innerHTML=(hon.asg?'All-Star ':'')+(allNba? allNba+' • ' : '')+archLabel+' • '+past.s+' • '+modeLabel;
+    // new pills
+    const archPill=$('#past-arch-pill'); if(archPill) archPill.textContent=archLabel;
+    const slotPill=$('#past-slot-pill'); if(slotPill) slotPill.textContent=modeLabel;
+    const xyz=$('#past-xyz'); if(xyz){ xyz.textContent=''; xyz.style.display='none'; }
+    if(st.isPack){
+      const ps=VHPastModern.getPackState();
+      $('#puzzle-pill').textContent=`PACK ${ps.index+1}/${ps.size}`;
+      $('#mode-badge').textContent=`PACK ${ps.size}`;
+      $('#mode-badge').style.background='var(--ink)';
+      $('#header-mode-label').textContent=`PACK BATTLE • ${ps.size} × PAST → MODERN`;
+      $('#game-title').innerHTML=`Pack Battle <span style="background:var(--ink);color:#fff;padding:0 .18em;border-radius:6px">${ps.size} cards</span>`;
+      $('#game-subtitle').textContent=`${ps.size} past All-Stars, same link for friends. Solve 1/6 each. Share with scores to battle. Refresh-proof save.`;
+      $('#mode-desc').textContent=`Pack Battle: ${ps.size} fixed past All-Stars from link ${ps.code.slice(0,36)}... — same for everyone with link. Progress saves locally, streak-safe. Share with &s= scores to challenge friends.`;
+    } else {
+      $('#puzzle-pill').textContent= st.isDaily? `COURT ${slotNum}/5` : 'P#'+st.puzzleNum;
+      $('#mode-badge').textContent= st.isDaily? 'DAILY 5' : st.isRandom? 'RANDOM' : 'DAILY';
+      $('#header-mode-label').textContent='DAILY COURT • 5× PAST → MODERN';
+    }
     $('#streak-pill').textContent='streak '+loadStreak();
-    $('#puzzle-day-label').textContent= st.isDaily? `Daily Court ${st.dayKey} • 5 puzzles` : st.dayKey;
+    $('#puzzle-day-label').textContent= st.isPack ? `Pack ${st.packCode.slice(0,24)}…` : st.isDaily? `Daily Court ${st.dayKey} • 5 puzzles` : st.dayKey;
     updateStatusBar(); projectFrame(); draw();
   }
   function renderGuesses(){
@@ -378,49 +673,114 @@ button,.input{min-height:44px}
     });
     updateStatusBar();
   }
+
   function finish(){
     const won=G.guesses.some(g=>g.rank===0); const over=won||G.guesses.length>=6; const resEl=$('#result'); const st=VHPastModern.state(); const isPack=!!st.isPack;
-    if(!over){ resEl.innerHTML=''; resEl.style.display='none'; if(isPack) {} updateStatusBar(); renderDailyCourt(); return; }
-    resEl.style.display='block'; const closest=st.closestModern; const sortedTop=st.modernListSorted.slice(0,5).map((o,i)=>`${i+1}. ${o.m.n} ${ (o.sim*100).toFixed(0)}%`).join(' • ');
+    if(!over){ resEl.innerHTML=''; resEl.style.display='none'; updateStatusBar(); renderDailyCourt(); renderPackProgress(); renderPackSummary(); return; }
+    resEl.style.display='block';
+    const closest=st.closestModern;
+    const sortedTop=st.modernListSorted.slice(0,5).map((o,i)=>`${i+1}. ${o.m.n} ${ (o.sim*100).toFixed(0)}%`).join(' • ');
+
     if(isPack){
-      // pack logic (kept simple)
-      const ps=VHPastModern.getPackState(); if(!st.packResults) st.packResults=[]; st.packResults[st.packIndex]={guesses:G.guesses.slice(), won:won, count:G.guesses.length}; const isLast=ps.index+1>=ps.size;
-      if(won){ resEl.innerHTML=`<div class="card" style="border-color:var(--green)"><h3 class="hd">✅ Solved in ${G.guesses.length}/6 — ${st.target.n} → ${closest.entry.n}</h3><div style="font-size:13px">Answer: ${closest.entry.n} ${(closest.sim*100).toFixed(1)}%<br>Top: ${sortedTop}</div><div style="margin-top:10px">${isLast? '<span class="pill pill-green">Pack final!</span>': `<button class="btn btn-primary" id="btn-next-pack">Next →</button>`}</div></div>`; }
-      else { resEl.innerHTML=`<div class="card" style="border-color:var(--verm)"><h3 class="hd">❌ ${st.target.n} → ${closest.entry.n}</h3><div style="font-size:13px">Closest: ${closest.entry.n} ${(closest.sim*100).toFixed(1)}%<br>Top: ${sortedTop}</div></div>`; }
-      const nextBtn=document.getElementById('btn-next-pack'); if(nextBtn){ nextBtn.addEventListener('click',()=>{ const nxt=VHPastModern.advancePack(); if(!nxt){ resEl.style.display='none'; $('#guesses').innerHTML=''; G.guesses=[]; renderPast(); projectFrame(); draw(); confettiBurst(); return; } G.guesses=[]; renderPast(); renderGuesses(); resEl.style.display='none'; $('#past-closest-hint').style.display='none'; $('#warm-label').style.display='none'; $('#guess-input').value=''; projectFrame(); draw(); }); }
+      const ps=VHPastModern.getPackState();
+      // save result for current slot if not already saved (idempotent)
+      if(!ps.results[ps.index] || ps.results[ps.index].count!==G.guesses.length){
+        // store result via advance helper? Actually we store manually here for immediate UI, then advance on Next click
+        // update in-memory result but don't advance yet
+        if(!st.packResults) st.packResults=[];
+        st.packResults[st.packIndex]={guesses:G.guesses.slice(), won:won, count:G.guesses.length, solved:won, ts:Date.now()};
+        VHPastModern.savePackState();
+      }
+
+      const isLast = ps.index+1>=ps.size;
+      const nextLabel = isLast ? 'View Pack Summary' : `Next — ${ps.index+2}/${ps.size} →`;
+
+      if(won){
+        resEl.innerHTML=`<div class="card" style="border-color:var(--green)"><h3 class="hd">✅ Solved in ${G.guesses.length}/6 — ${st.target.n} → ${closest.entry.n}</h3><div style="font-size:13px;line-height:1.5">Answer: ${closest.entry.n} ${(closest.sim*100).toFixed(1)}%<br>Top 5: ${sortedTop}</div><div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-primary" id="btn-next-pack">${nextLabel}</button><button class="btn" id="btn-pack-share-mid">Share</button></div></div>`;
+      } else {
+        resEl.innerHTML=`<div class="card" style="border-color:var(--verm)"><h3 class="hd">❌ ${st.target.n} → ${closest.entry.n}</h3><div style="font-size:13px;line-height:1.5">Closest: ${closest.entry.n} ${(closest.sim*100).toFixed(1)}%<br>Top 5: ${sortedTop}<br><span style="opacity:.7">You can still continue — pack counts failed as 0 in battle.</span></div><div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-primary" id="btn-next-pack">${nextLabel}</button><button class="btn" id="btn-pack-share-mid">Share</button></div></div>`;
+      }
+
+      const nextBtn=document.getElementById('btn-next-pack');
+      if(nextBtn){
+        nextBtn.addEventListener('click',()=>{
+          // advance explicitly
+          const currentResult = {guesses:G.guesses.slice(), won:won, count:G.guesses.length, solved:won, ts:Date.now()};
+          const nxt = VHPastModern.advancePack(currentResult);
+          if(!nxt){
+            // completed
+            resEl.style.display='none';
+            $('#guesses').innerHTML='';
+            G.guesses=[];
+            renderPast();
+            renderPackProgress();
+            renderPackSummary();
+            projectFrame(); draw();
+            confettiBurst();
+            // scroll to summary
+            setTimeout(()=>{ $('#pack-summary').scrollIntoView({behavior:'smooth'}); }, 200);
+            return;
+          }
+          G.guesses=[];
+          // try restore if next slot had saved currentGuesses (should be empty)
+          renderPast(); renderGuesses(); resEl.style.display='none';
+          $('#past-closest-hint').style.display='none'; $('#warm-label').style.display='none'; $('#guess-input').value='';
+          renderPackProgress(); renderPackSummary(); updateStatusBar(); projectFrame(); draw();
+        });
+      }
+      const shareMidBtn=document.getElementById('btn-pack-share-mid');
+      if(shareMidBtn){
+        shareMidBtn.addEventListener('click', async()=>{
+          const ps2=VHPastModern.getPackState();
+          const selfScores = ps2.results.map(r=> r ? (r.won? r.count:0):0);
+          const opts={size:ps2.size, packEntries:ps2.entries, results:ps2.results, solved:ps2.solved, totalGuesses:ps2.totalGuesses, avg:ps2.avg, packCode:ps2.code, ids:ps2.ids, selfScores};
+          // copy battle link
+          const url=VHPastModern.packShareUrl(ps2.ids, selfScores);
+          try{ await navigator.clipboard.writeText(url); shareMidBtn.textContent='Link copied!'; setTimeout(()=>shareMidBtn.textContent='Share',1200); }catch{}
+          if(window.VHShare && VHShare.sharePack){ await VHShare.sharePack(opts); }
+        });
+      }
+
       if(won) confettiBurst();
+      renderPackProgress();
+      // if last was just completed, also render summary after small delay? Actually summary rendered on next click for final, but we want summary when complete via advance. For case where user refreshes and pack already complete, finish() will be called with over false? Need to handle complete case separately
+      if(ps.complete){
+        renderPackSummary();
+      }
     } else {
       if(won){
         if(st.isDaily){
-          // check daily court progress for streak: if at least 1 solved, streak counts
           try{
-            const dailyState=VHPastModern.getDailyState(); if(dailyState.solved>=1 || G.guesses.some(g=>g.rank===0)) { VHPastModern.onDailyWin(st.dayKey); }
+            const dailyState=VHPastModern.getDailyState();
+            if(dailyState.solved>=1 || G.guesses.some(g=>g.rank===0)) { VHPastModern.onDailyWin(st.dayKey); }
           }catch{}
         } else { try{ VHPastModern.onDailyWin(st.dayKey); }catch{} }
         const cur=loadStreak()+1; saveStreak(cur); $('#streak-pill').textContent='streak '+cur;
         resEl.innerHTML=`<div class="card" style="border-color:var(--green)"><h3 class="hd">✅ Solved in ${G.guesses.length}/6 — ${st.target.n} → ${closest.entry.n}</h3><div style="font-size:13px">Answer: ${closest.entry.n} ${closest.entry.s} ${(closest.sim*100).toFixed(1)}%<br>Top 5: ${sortedTop}</div><div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-primary" id="btn-next-slot">Next slot →</button><button class="btn" id="btn-view-court">View court</button></div></div>`;
         confettiBurst();
       } else {
-        if(st.isDaily){
-          // if this is first loss of day and no wins yet, break? Actually streak needs at least 1 win to keep, so don't break on single slot loss
-          const dailyState=VHPastModern.getDailyState();
-          if(dailyState.solved===0){ // no solves today at all, after 6 fails? Actually count loss only if player attempted and failed first slot? We will not break streak immediately, wait for end of day
-          }
-        } else { saveStreak(0); $('#streak-pill').textContent='streak 0'; try{ VHPastModern.onDailyLoss(st.dayKey); }catch{} }
-        resEl.innerHTML=`<div class="card" style="border-color:var(--verm)"><h3 class="hd">❌ Revealed — ${st.target.n} → ${closest.entry.n}</h3><div style="font-size:13px">Closest: ${closest.entry.n} ${(closest.sim*100).toFixed(1)}%<br>Top 5: ${sortedTop}</div><div style="margin-top:10px"><button class="btn btn-primary" id="btn-next-slot">Next slot →</button></div></div>`;
+        resEl.innerHTML=`<div class="card" style="border-color:var(--verm)"><h3 class="hd">❌ Revealed — ${st.target.n} → ${closest.entry.n}</h3><div style="font-size:13px">Closest: ${closest.entry.n} ${(closest.sim*100).toFixed(1)}%<br>Top 5: ${sortedTop}</div><div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-primary" id="btn-next-slot">Next slot →</button><button class="btn" id="btn-view-court">View court</button></div></div>`;
       }
       const nextSlotBtn=document.getElementById('btn-next-slot');
       if(nextSlotBtn){ nextSlotBtn.addEventListener('click',()=>{
-        const st=VHPastModern.state(); let next=(st.dailySlot+1)%5; // loop
-        // find next unsolved
+        const st=VHPastModern.state(); let next=(st.dailySlot+1)%5;
         for(let i=0;i<5;i++){ const cand=(st.dailySlot+1+i)%5; try{ const raw=localStorage.getItem(dailySlotKey(st.dayKey,cand)); if(!raw){ next=cand; break; } const j=JSON.parse(raw); const won=(j.guesses||[]).some(g=>g.rank===0); const over=(j.guesses||[]).length>=6; if(!won&&!over){ next=cand; break; } }catch{} }
-        const url=new URL(location.href); url.searchParams.set('slot', next); location.href=url.toString();
+        const url=new URL(location.href); url.searchParams.set('slot', next); url.searchParams.delete('pack'); url.searchParams.delete('s'); location.href=url.toString();
       }); }
-      const viewCourtBtn=document.getElementById('btn-view-court'); if(viewCourtBtn){ viewCourtBtn.addEventListener('click',()=>{ $('#daily-court').scrollIntoView({behavior:'smooth'}); }); }
+      const viewCourtBtn=document.getElementById('btn-view-court'); if(viewCourtBtn){ viewCourtBtn.addEventListener('click',()=>{ 
+        const el=document.getElementById('daily-court')||document.getElementById('game-header');
+        if(!el) return;
+        try{ if(el.style.display==='none'){ el.style.display='block'; renderDailyCourt(); } }catch{}
+        const y=el.getBoundingClientRect().top + window.pageYOffset - 10;
+        window.scrollTo({top:y, behavior:'smooth'});
+        // fallback
+        setTimeout(()=>{ try{ el.scrollIntoView({behavior:'smooth', block:'start'}); }catch{} }, 50);
+      }); }
     }
     const hintEl=$('#past-closest-hint'); if(hintEl&&closest){ hintEl.style.display='block'; hintEl.textContent=`Answer: ${closest.entry.n} ${(closest.sim*100).toFixed(0)}% — ${won?'won':'over'}`; hintEl.style.background='#fff'; hintEl.style.border='1.4px dashed var(--ink)'; hintEl.style.borderRadius='8px'; hintEl.style.padding='6px 8px'; }
     projectFrame(); draw(); updateStatusBar(); renderDailyCourt();
   }
+
   function doGuess(){
     const input=$('#guess-input'); const name=(input.value||'').trim(); if(!name) return;
     const low=name.toLowerCase(); const mm=name.match(/^(.+?)\s+\d{4}-\d{2}$/); const low2=mm? mm[1].trim().toLowerCase(): low;
@@ -429,7 +789,7 @@ button,.input{min-height:44px}
     if(G.guesses.some(g=> g.idx===r.guess.idx|| (g.name||'').toLowerCase().trim()===r.guess.name.toLowerCase().trim())){ alert('Already guessed'); input.value=''; return; }
     G.guesses.push(r.guess); try{ VHPastModern.state().guesses=G.guesses.slice(); }catch{} saveGuesses(); input.value='';
     const warmEl=$('#warm-label'); const wc=VHPastModern.warmCold(); if(wc&&G.guesses.length>1){ warmEl.style.display='inline-flex'; warmEl.textContent=wc; } else warmEl.style.display='none';
-    renderGuesses(); finish(); projectFrame(); draw();
+    renderGuesses(); finish(); projectFrame(); draw(); renderPackProgress();
   }
 
   async function main(){
@@ -444,32 +804,45 @@ button,.input{min-height:44px}
     const st=VHPastModern.state();
     initBase(st.searchLite.players); projectFrame(); draw(); loop(0);
 
-    // mode tabs
     const isPack=!!st.isPack;
     let mode='daily'; if(isPack) mode='pack'; else if(st.isRandom) mode='random';
-    document.querySelectorAll('.mode-tab').forEach(btn=>{ const m=btn.dataset.mode; if(m===mode) btn.classList.add('is-active'); else btn.classList.remove('is-active'); });
+    document.querySelectorAll('.mode-tab').forEach(btn=>{ const m=btn.dataset.mode; const isPackTab=m.startsWith('pack'); if(isPack){ if(isPackTab && parseInt(btn.dataset.packN||'3',10)===st.packSize) btn.classList.add('is-active'); else if(!isPackTab) btn.classList.remove('is-active'); } else { if(m===mode) btn.classList.add('is-active'); else btn.classList.remove('is-active'); if(isPackTab) btn.classList.remove('is-active'); } });
     document.querySelectorAll('.mode-tab').forEach(btn=>{
       btn.addEventListener('click',()=>{
         const m=btn.dataset.mode;
-        if(m.startsWith('pack')){ const n=parseInt(btn.dataset.packN||'3',10); const entries=VHPastModern.generateRandomPack(n); const ids=entries.map(e=>e.i); location.href=VHPastModern.packShareUrl(ids); return; }
+        if(m.startsWith('pack')){ const n=parseInt(btn.dataset.packN||'3',10); const entries=VHPastModern.generateRandomPack(n); if(!entries.length){ alert('Loading… try again in a sec'); return; } const ids=entries.map(e=>e.i); location.href=VHPastModern.packShareUrl(ids); return; }
         if(m==='random'){ const p=VHPastModern.pickRandomPast(); location.href='/play?mode=random&r='+p.i; return; }
         if(m==='daily'){ location.href='/play'; return; }
       });
     });
 
-    // daily court
     renderDailyCourt();
+    renderPackInvalid();
     window.addEventListener('vh-daily-ip',()=>{ renderDailyCourt(); });
 
     const saved=loadGuesses();
     if(!isPack){
       if(saved.length){ G.guesses=saved.slice(); try{ VHPastModern.state().guesses=saved.slice(); }catch{} }
       else { G.guesses=[]; }
-    } else { G.guesses=[]; }
+    } else {
+      // pack: loadGuesses already returns currentGuesses from storage
+      G.guesses = saved.slice();
+      try{ VHPastModern.state().guesses=G.guesses.slice(); }catch{}
+      // if pack already complete, show summary immediately
+      if(st.isPackComplete){
+        renderPackProgress();
+        renderPackSummary();
+        // set guesses to last slot's guesses for map viz
+        const lastRes = st.packResults[st.packSize-1];
+        if(lastRes && lastRes.guesses) G.guesses = lastRes.guesses.slice();
+        else G.guesses=[];
+      } else {
+        renderPackProgress();
+      }
+    }
 
-    renderPast(); renderGuesses(); attachSuggest(); finish(); renderDailyCourt();
+    renderPast(); renderGuesses(); attachSuggest(); finish(); renderDailyCourt(); renderPackProgress(); renderPackSummary();
 
-    // onboarding
     const onboardSeen=localStorage.getItem('vh.onboardSeenV3');
     const backdrop=$('#onboarding-backdrop');
     function openOnboard(){ if(backdrop){ backdrop.hidden=false; document.body.style.overflow='hidden'; } }
@@ -485,21 +858,41 @@ button,.input{min-height:44px}
     $('#guess-btn').addEventListener('click', doGuess);
     $('#guess-input').addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); doGuess(); } });
     $('#btn-random').addEventListener('click', ()=>{ const p=VHPastModern.pickRandomPast(); location.href='/play?mode=random&r='+p.i; });
-    $('#btn-new').addEventListener('click', ()=>{ location.href='/play'; });
+    $('#btn-new').addEventListener('click', ()=>{ if(st.isPack){ VHPastModern.abandonPack(); } location.href='/play'; });
     $('#btn-copy-court')?.addEventListener('click', async ()=>{
       const s=VHPastModern.state(); const url=location.origin+'/play?day='+s.dayKey; const court=s.dailyPool.map((p,i)=>`${i+1}. ${p.n} ${p.s}`).join('\n'); const text=`Daily Court ${s.dayKey} — 5 puzzles\n${court}\n${url}`; try{ await navigator.clipboard.writeText(text); const b=$('#btn-copy-court'); b.textContent='Copied!'; setTimeout(()=>b.textContent='📋 Copy court',1200); }catch{ prompt('Copy', text); }
     });
     $('#share-btn').addEventListener('click', async ()=>{
-      const s=VHPastModern.state(); const won=G.guesses.some(g=>g.rank===0);
+      const s=VHPastModern.state();
+      if(s.isPack){
+        const ps=VHPastModern.getPackState();
+        const selfScores = ps.results.map(r=> r ? (r.won? r.count:0):0);
+        const opts={size:ps.size, packEntries:ps.entries, results:ps.results, solved:ps.solved, totalGuesses:ps.totalGuesses, avg:ps.avg, packCode:ps.code, ids:ps.ids, selfScores};
+        if(window.VHShare&&VHShare.sharePack){ const res=await VHShare.sharePack(opts); if(res==='copied'){ const b=$('#share-btn'); const orig=b.textContent; b.textContent='Copied!'; setTimeout(()=>b.textContent=orig,1200); } return; }
+        const url=VHPastModern.packShareUrl(ps.ids, selfScores);
+        try{ await navigator.clipboard.writeText(`Pack Battle ${ps.size} — ${ps.solved}/${ps.size} in ${ps.totalGuesses} guesses — Can you beat me? ${url}`); const b=$('#share-btn'); b.textContent='Copied link!'; setTimeout(()=>b.textContent='Share',1200); }catch{}
+        return;
+      }
       if(s.isDaily){
         const dailyState=VHPastModern.getDailyState(); const opts={dayKey:s.dayKey, pool:s.dailyPool, slotResults:dailyState.slotResults, solved:dailyState.solved, totalGuesses:dailyState.totalGuesses, url:location.origin+'/play?day='+s.dayKey};
         if(window.VHShare&&VHShare.shareDailyCourt){ await VHShare.shareDailyCourt(opts); return; }
       }
+      const won=G.guesses.some(g=>g.rank===0);
       const opts={puzzleNum:s.puzzleNum, dayKey:s.dayKey, pastName:s.target.n, pastSeason:s.target.s, guesses:G.guesses, answerName:s.closestModern? s.closestModern.entry.n: '', answerSim:s.closestModern? s.closestModern.sim:0, won:won, streak:loadStreak(), url:location.origin+'/play?day='+s.dayKey+'&slot='+s.dailySlot};
       if(window.VHShare&&window.VHShare.sharePastModern) await window.VHShare.sharePastModern(opts);
     });
     $('#share-text-btn').addEventListener('click', ()=>{
-      const s=VHPastModern.state(); const won=G.guesses.some(g=>g.rank===0);
+      const s=VHPastModern.state();
+      if(s.isPack){
+        const ps=VHPastModern.getPackState();
+        const lines=ps.entries.map((p,i)=>{ const r=ps.results[i]; const status=r? (r.won? `✅ ${r.count}/6`:`❌`) : '⬜'; return `${status} Slot ${i+1}: ${p.n} ${p.s}`; }).join('\n');
+        const selfScores = ps.results.map(r=> r ? (r.won? r.count:0):0);
+        const url=VHPastModern.packShareUrl(ps.ids, selfScores);
+        const text=`Pack Battle (${ps.size}) — ${ps.solved}/${ps.size} in ${ps.totalGuesses} guesses avg ${ps.avg.toFixed(1)}\n${lines}\nBattle: ${url}`;
+        navigator.clipboard.writeText(text).then(()=>{ const b=$('#share-text-btn'); b.textContent='Copied'; setTimeout(()=>b.textContent='Copy Grid',1200); });
+        return;
+      }
+      const won=G.guesses.some(g=>g.rank===0);
       if(s.isDaily){
         const dailyState=VHPastModern.getDailyState(); const lines=s.dailyPool.map((p,i)=>{ const sd=dailyState.slotResults[i]; const status=sd? (sd.won? `✅ ${sd.cnt}/6` : `❌ ${sd.cnt}/6`): '⬜'; return `${status} Slot ${i+1}: ${p.n}`; }).join('\n');
         const text=`Daily Court ${s.dayKey} — ${dailyState.solved}/5 in ${dailyState.totalGuesses} guesses\n${lines}\n${location.origin}/play?day=${s.dayKey}`; navigator.clipboard.writeText(text).then(()=>{ const b=$('#share-text-btn'); b.textContent='Copied'; setTimeout(()=>b.textContent='Copy Grid',1200); });
@@ -507,10 +900,22 @@ button,.input{min-height:44px}
       }
       const grid=G.guesses.map(g=> g.rank===0?'🟩': g.rank<=3?'🟨':'⬜').join(''); const lines=G.guesses.map((g,i)=>`${i+1}. ${g.name} ${(g.sim*100).toFixed(0)}% #${g.rank+1}`).join('\n'); const text=`Vector Hoops P#${s.puzzleNum} ${s.dayKey} ${won?G.guesses.length+'/6':'X/6'} ${grid}\nPast ${s.target.n} → ${won?G.guesses.slice(-1)[0].name:'?'}\n${lines}\n${location.origin}/play?day=${s.dayKey}&slot=${s.dailySlot}`; navigator.clipboard.writeText(text).then(()=>{ const b=$('#share-text-btn'); b.textContent='Copied'; setTimeout(()=>b.textContent='Copy Grid',1200); });
     });
-    $('#btn-challenge').addEventListener('click', async function(){ const s=VHPastModern.state(); const url=location.origin+'/play?day='+s.dayKey+(s.isDaily? `&slot=${s.dailySlot}`:''); const txt=`Can you beat my Daily Court ${s.dayKey}? Slot ${s.dailySlot+1} ${s.target.n} — ${url}`; try{ await navigator.clipboard.writeText(txt); this.textContent='Copied'; setTimeout(()=>this.textContent='Challenge',1200); }catch{ alert(url); } });
+    $('#btn-challenge').addEventListener('click', async function(){
+      const s=VHPastModern.state();
+      if(s.isPack){
+        const ps=VHPastModern.getPackState();
+        const selfScores = ps.results.map(r=> r ? (r.won? r.count:0):0);
+        const url=VHPastModern.packShareUrl(ps.ids, selfScores);
+        const txt=`Can you beat my Pack ${ps.size}? I got ${ps.solved}/${ps.size} in ${ps.totalGuesses} guesses — ${url}`;
+        try{ await navigator.clipboard.writeText(txt); this.textContent='Copied!'; setTimeout(()=>this.textContent='Challenge',1200); }catch{ alert(url); }
+        return;
+      }
+      const url=location.origin+'/play?day='+s.dayKey+(s.isDaily? `&slot=${s.dailySlot}`:''); const txt=`Can you beat my Daily Court ${s.dayKey}? Slot ${s.dailySlot+1} ${s.target.n} — ${url}`; try{ await navigator.clipboard.writeText(txt); this.textContent='Copied'; setTimeout(()=>this.textContent='Challenge',1200); }catch{ alert(url); }
+    });
   }
-  main().catch(e=>{ console.error(e); });
+  main().catch(e=>{ console.error(e); const inv=$('#pack-invalid'); if(inv){ inv.style.display='block'; inv.innerHTML=`<div class="small-mono" style="color:var(--verm)">Error</div><h3>${e.message}</h3><pre style="white-space:pre-wrap;font-size:11px">${e.stack||''}</pre>`; } });
 })();
 </script>
-<footer class="site-footer"><div class="site-footer__links"><a href="/play">Play</a><a href="/model">Lab</a><a href="/methods">Methods</a><a href="/players">Players</a><a href="https://github.com/jcdavis131/vector-hoops" target="_blank" rel="noopener">GitHub</a></div><div class="site-footer__attribution">Every number recomputable from stats.nba.com · dumbmodel.com</div></footer>
+<footer class="site-footer"><div class="site-footer__links"><a href="/play">Play</a><a href="/model">Lab</a><a href="/methods">Methods</a><a href="/players">Players</a><a href="https://github.com/jcdavis131/vector-hoops" target="_blank" rel="noopener">GitHub</a></div><div class="site-footer__attribution">Every number recomputable from stats.nba.com · dumbmodel.com — free, no account, no trackers</div></footer>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js').catch(()=>{})})}</script>
 </body></html>

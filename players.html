@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en"><head>
 <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<meta name="theme-color" content="#1A150F">
+<link rel="manifest" href="/manifest.json">
 <title>Players — Directory + Skills — Vector Hoops</title>
 <meta name="description" content="Every player-season graded, searchable directory + skills lens."/>
 <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap" rel="stylesheet">
@@ -9,7 +11,14 @@
 <link rel="stylesheet" href="assets/final-qa.css"/>
 <link rel="stylesheet" href="assets/unified.css"/>
 
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://hoops.dumbmodel.com/players">
+<meta property="og:title" content="Players — Directory + Skills — Vector Hoops">
+<meta property="og:description" content="Every player-season graded, searchable directory + skills lens.">
+<meta property="og:image" content="/assets/og-1200x630.png">
 </head><body>
+<noscript><div role="alert" style="padding:16px;text-align:center">Enable JS — Vector Hoops needs JavaScript for Daily Court + Map</div></noscript>
+
 <nav class="site-nav" data-active="/players" aria-label="Vector Hoops site"></nav>
 <div class="main">
   <div class="card">
@@ -84,10 +93,14 @@
 </div>
 
 <footer class="site-footer"><div class="site-footer__links"><a href="/play">Play</a><a href="/model">Lab</a><a href="/methods">Methods</a><a href="/players">Players</a><a href="https://github.com/jcdavis131/vector-hoops" target="_blank" rel="noopener">GitHub</a></div><div class="site-footer__attribution">Every number recomputable from stats.nba.com · dumbmodel.com</div></footer>
+<script src="assets/error-boundary.js"></script>
+<script src="assets/keyboard-a11y.js"></script>
 <script src="assets/site-nav.js" defer></script>
+<script src="assets/pwa-install.js"></script>
 <script src="assets/dossier.js"></script>
 <script src="assets/player-roster.js"></script>
 <script src="assets/players-directory.js"></script>
 <script src="assets/players-skills.js"></script>
 <script src="assets/players-page.js"></script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js').catch(()=>{})})}</script>
 </body></html>
