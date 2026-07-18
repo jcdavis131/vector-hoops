@@ -4,100 +4,222 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Trends — How the game changed | Vector Hoops</title>
-<link rel="stylesheet" href="assets/shell.css"/>
-<link rel="stylesheet" href="assets/responsive.css"/>
-<link rel="stylesheet" href="assets/final-qa.css"/>
-<link rel="stylesheet" href="assets/unified.css"/>
-
 <link rel="canonical" href="https://hoops.dumbmodel.com/trends">
 <meta name="description" content="30 seasons as geometry: rotation, archetypes, court zones. Play through years.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8F%80%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🏀%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/shell.css">
+<link rel="stylesheet" href="assets/responsive.css">
+<link rel="stylesheet" href="assets/final-qa.css">
+<link rel="stylesheet" href="assets/unified.css">
 <style>
-:root{--paper:#FFFEF7;--ink:#1A150F;--orange:#D55E00;--hair:#E5E2D8;--mono:ui-monospace,monospace;--sans:ui-sans-serif,system-ui}
+:root{
+  --paper:#FFFEF7;--ink:#1A150F;--orange:#D55E00;--blue:#0072B2;--yellow:#F0E442;
+  --hair:#E5E2D8;--mono:ui-monospace,monospace;--sans:ui-sans-serif,system-ui;
+  --page-gutter:clamp(12px,3.2vw,20px);
+}
 *{box-sizing:border-box}
-html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);overflow-x:clip}
-main#trends-app{width:min(1180px,calc(100% - 2*clamp(12px,3.2vw,24px)));margin:0 auto;padding:8px 0 32px;display:flex;flex-direction:column;gap:14px}
-.hero-compact{padding:10px 0 4px;display:flex;flex-direction:column;gap:8px}
-.kicker{font-family:var(--mono);font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#5A5248;display:flex;gap:8px;align-items:center}
-.kdot{width:6px;height:6px;border-radius:50%;background:var(--orange)}
-.hero-compact h1{margin:0;font-family:var(--mono);font-size:clamp(22px,3.4vw,30px);line-height:1.08;letter-spacing:-.02em;text-transform:uppercase}
+html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:18px;line-height:1.65;overflow-x:clip;-webkit-text-size-adjust:100%}
+img,svg,canvas,video{max-width:100%;height:auto;display:block}
+a{color:inherit}
+
+/* app shell */
+main#trends-app{
+  width:min(1180px,100%);max-width:1180px;
+  margin:0 auto;
+  padding:12px var(--page-gutter) calc(96px + env(safe-area-inset-bottom));
+  display:flex;flex-direction:column;gap:16px;
+}
+
+.hero-compact{display:flex;flex-direction:column;gap:10px;padding:10px 2px 4px}
+.kicker{
+  font-family:var(--mono);font-size:10px;font-weight:800;
+  letter-spacing:.08em;text-transform:uppercase;color:#5A5248;
+  display:flex;gap:8px;align-items:center;flex-wrap:wrap;
+}
+.kdot{width:6px;height:6px;border-radius:50%;background:var(--orange);display:inline-block;flex-shrink:0}
+.hero-compact h1{
+  margin:0;
+  font-family:"Architects Daughter",var(--mono);
+  font-size:clamp(28px,7vw,42px);line-height:.96;letter-spacing:-.02em;
+}
 .hero-compact h1 b{color:var(--orange)}
-.lede{margin:0;font-size:14px;line-height:1.5;color:#3A332A;max-width:68ch}
-.pills{display:flex;flex-wrap:wrap;gap:6px}
-.pills .pill{border:1.6px solid var(--ink);border-radius:999px;padding:3px 9px;background:#fff;font-family:var(--mono);font-size:10px;font-weight:800;box-shadow:1.2px 1.2px 0 var(--ink)}
+.lede{margin:0;font-size:clamp(15px,3.8vw,18px);line-height:1.55;color:#2E2A23;max-width:68ch}
 
-.card{border:2.2px solid var(--ink);border-radius:14px;box-shadow:4px 4px 0 var(--ink);background:#fff;padding:12px 12px}
-.card h2{margin:0 0 2px;font-family:var(--mono);font-size:13px;text-transform:uppercase;letter-spacing:.04em}
-.card .sub{margin:0 0 8px;font-size:11px;color:#6B665E;line-height:1.4}
-.viz-grid{display:grid;grid-template-columns:280px 280px 1fr;gap:10px}
-@media(max-width:980px){.viz-grid{grid-template-columns:1fr 1fr}.viz-grid #trends-shift-bars{grid-column:1/-1}}
-@media(max-width:640px){.viz-grid{grid-template-columns:1fr}}
-.trends-viz-svg svg{width:100%;height:auto;display:block}
-.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
-.caption{font-size:11px;color:#5A5248;line-height:1.45;margin:6px 0 0}
+/* cards */
+.card{
+  background:#fff;border:2.2px solid var(--ink);border-radius:16px;
+  box-shadow:4px 4px 0 var(--ink);padding:14px 14px;
+  min-width:0;
+}
+@media(min-width:600px){.card{padding:16px}}
+.card h2{
+  margin:0 0 6px;
+  font-family:var(--mono);font-size:clamp(13px,3.5vw,16px);
+  text-transform:uppercase;letter-spacing:.04em;line-height:1.2;
+}
+.card .sub{margin:0 0 10px;font-size:13px;line-height:1.5;color:#5A5248}
 
-/* top timeline combined with play */
-#drift-timeline{position:relative}
-#drift-timeline .drift-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap;margin-bottom:8px}
-#drift-timeline .drift-head-left{flex:1 1 380px;min-width:260px}
-#drift-timeline .drift-head-right{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
-.btn-play{appearance:none;min-height:38px;padding:0 14px;border:2.2px solid var(--ink);border-radius:10px;background:var(--ink);color:#fff;font-family:var(--mono);font-weight:900;text-transform:uppercase;font-size:12px;cursor:pointer;box-shadow:2px 2px 0 var(--ink)}
-.btn-play:hover{transform:translate(-1px,-1px);box-shadow:3px 3px 0 var(--ink)}
-.btn-speed{appearance:none;border:1.5px solid var(--ink);border-radius:999px;padding:5px 10px;background:#fff;font-family:var(--mono);font-size:10px;font-weight:800;cursor:pointer}
-#current-year,#current-year-top{font-family:var(--mono);font-weight:900;color:var(--ink);font-size:12px;background:#F0E442;border:1.5px solid var(--ink);border-radius:999px;padding:3px 9px;box-shadow:1px 1px 0 var(--ink)}
+/* drift timeline header */
+#drift-timeline .drift-head{
+  display:flex;flex-direction:column;gap:12px;margin-bottom:10px;
+}
+@media(min-width:840px){
+  #drift-timeline .drift-head{flex-direction:row;justify-content:space-between;align-items:flex-start}
+  #drift-timeline .drift-head-left{flex:1 1 380px;min-width:0}
+}
+.drift-head-right{
+  display:flex;gap:8px;align-items:center;flex-wrap:wrap;
+}
+.btn-play{
+  appearance:none;min-height:48px;padding:0 18px;
+  border:2.2px solid var(--ink);border-radius:12px;
+  background:var(--ink);color:#fff;
+  font-family:var(--mono);font-weight:900;text-transform:uppercase;font-size:13px;
+  cursor:pointer;box-shadow:3px 3px 0 var(--ink);
+  display:inline-flex;align-items:center;justify-content:center;
+}
+.btn-play:active{transform:translate(1px,1px);box-shadow:1px 1px 0 var(--ink)}
+.btn-speed{
+  appearance:none;min-height:40px;
+  border:1.8px solid var(--ink);border-radius:999px;
+  padding:6px 14px;background:#fff;
+  font-family:var(--mono);font-size:11px;font-weight:800;cursor:pointer;
+  box-shadow:2px 2px 0 var(--ink);
+}
+#current-year,#current-year-top{
+  font-family:var(--mono);font-weight:900;color:var(--ink);font-size:11px;
+  background:var(--yellow);border:1.8px solid var(--ink);border-radius:999px;
+  padding:5px 10px;box-shadow:1.5px 1.5px 0 var(--ink);white-space:nowrap;
+}
 .drift-chart svg{width:100%;height:auto;display:block}
-.scrub-wrap{margin-top:10px;display:flex;flex-direction:column;gap:6px}
+.scrub-wrap{margin-top:12px;display:flex;flex-direction:column;gap:10px}
 .scrub-row{display:flex;gap:10px;align-items:center}
-.scrub-row input[type=range]{flex:1 1 auto;accent-color:var(--orange);height:28px}
+.scrub-row input[type=range]{flex:1 1 auto;accent-color:var(--orange);height:44px;min-height:44px}
 .scrub-meta{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10px;color:#5A5248}
-.meta-pills{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
-.era-legend{display:flex;flex-wrap:wrap;gap:8px;padding:0;margin:8px 0 0;list-style:none}
-.era-legend li{font-family:var(--mono);font-size:10px;display:flex;gap:6px;align-items:center}
-.era-legend__swatch{width:12px;height:8px;border-radius:3px;border:1.5px solid var(--ink);display:inline-block}
 
-/* biggest reshapes chips */
-.trends-biggest-row{display:flex;gap:6px;overflow-x:auto;padding:4px 0 2px;scrollbar-width:none}
+/* chip rows horizontally scrollable */
+.trends-biggest-row{
+  display:flex;gap:8px;overflow-x:auto;flex-wrap:nowrap;
+  padding:4px 0 8px;-webkit-overflow-scrolling:touch;scrollbar-width:none;
+  scroll-snap-type:x proximity;
+}
 .trends-biggest-row::-webkit-scrollbar{display:none}
-.trends-shift-card{display:inline-flex;align-items:center;gap:5px;flex:0 0 auto;border:1.6px solid var(--ink);border-radius:999px;padding:5px 10px;background:#fff;font-family:var(--mono);font-size:10px;font-weight:700;cursor:pointer;box-shadow:1.5px 1.5px 0 var(--ink);white-space:nowrap}
+.trends-shift-card{
+  flex:0 0 auto;scroll-snap-align:start;
+  display:inline-flex;align-items:center;gap:6px;
+  border:1.8px solid var(--ink);border-radius:999px;
+  padding:8px 12px;background:#fff;
+  font-family:var(--mono);font-size:11px;font-weight:700;
+  cursor:pointer;box-shadow:2px 2px 0 var(--ink);white-space:nowrap;
+  min-height:40px;
+}
 .trends-shift-card--active{background:var(--ink);color:#fff}
-.sc-rank{opacity:.5;font-size:9px}
+.sc-rank{opacity:.55;font-size:9px}
 .sc-deg{font-weight:900;color:var(--orange)}
-.trends-shift-card--active .sc-deg{color:#F0E442}
-.story-chips{display:flex;gap:6px;flex-wrap:wrap}
-.trends-chip{border:1.5px solid var(--ink);border-radius:999px;padding:3px 8px;background:#fff;font-family:var(--mono);font-size:10px;font-weight:700;cursor:pointer}
+.trends-shift-card--active .sc-deg{color:var(--yellow)}
+.story-chips{display:flex;gap:8px;flex-wrap:wrap}
+.trends-chip{
+  border:1.8px solid var(--ink);border-radius:999px;
+  padding:6px 12px;background:#fff;
+  font-family:var(--mono);font-size:11px;font-weight:700;cursor:pointer;
+  box-shadow:1.5px 1.5px 0 var(--ink);min-height:36px;
+}
 .trends-chip--active{background:var(--orange);color:#fff}
 .drift-active{stroke:#1A150F!important;stroke-width:3!important;filter:drop-shadow(0 0 4px #D55E00)}
+.caption{font-size:12px;color:#5A5248;line-height:1.5;margin:8px 0 0}
 
-/* what changed */
-.season-story{margin-top:8px;padding:12px 14px;border:1.8px solid var(--ink);border-radius:12px;background:#FFFEF7;box-shadow:2px 2px 0 var(--ink)}
-.story-lede{font-size:14px;line-height:1.55;margin:0 0 8px;color:#1A150F}
+.era-legend{display:flex;flex-wrap:wrap;gap:8px;padding:0;margin:10px 0 0;list-style:none}
+.era-legend li{font-family:var(--mono);font-size:10px;display:flex;gap:6px;align-items:center}
+.era-legend__swatch{width:14px;height:8px;border-radius:3px;border:1.5px solid var(--ink);display:inline-block}
+
+/* what changed grid — mobile first single col */
+.viz-grid{
+  display:grid;grid-template-columns:1fr;gap:12px;margin-top:10px;
+}
+@media(min-width:640px){.viz-grid{grid-template-columns:1fr 1fr}}
+@media(min-width:1024px){.viz-grid{grid-template-columns:0.9fr 0.9fr 1.2fr}}
+.trends-viz-svg{
+  background:#FFFEF7;border-radius:12px;
+  min-height:160px;display:flex;align-items:center;justify-content:center;
+}
+.trends-viz-svg svg{width:100%;height:auto;display:block}
+
+/* what changed narrative */
+.season-story{
+  margin-top:10px;padding:14px 14px;
+  border:1.8px solid var(--ink);border-radius:14px;
+  background:#FFFEF7;box-shadow:3px 3px 0 var(--ink);
+}
+.story-lede{font-size:15px;line-height:1.6;margin:0 0 10px;color:#1A150F}
 .story-lede strong{font-weight:900}
 .story-interp{color:#6B665E;font-style:italic}
-.story-divider{height:1.5px;background:var(--ink);opacity:.12;margin:10px 0}
-.story-divider.light{opacity:.06}
-.story-para{font-size:13.5px;line-height:1.6;margin:8px 0;color:#2B2B2B}
-.story-stat{font-weight:800;font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.02em;background:#fff;border:1.5px solid var(--ink);border-radius:999px;padding:1px 7px;box-shadow:1px 1px 0 var(--ink)}
-.story-dot{opacity:.5;margin:0 3px}
-.mini-badge{display:inline-flex;align-items:center;border:1.5px solid var(--ink);border-radius:999px;padding:1px 7px;font-family:var(--mono);font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;margin-left:4px;position:relative;top:-1px}
+.story-divider{height:1.5px;background:var(--ink);opacity:.12;margin:12px 0}
+.story-para{font-size:14px;line-height:1.65;margin:10px 0;color:#2B2B2B}
+.story-stat{
+  font-weight:800;font-family:var(--mono);font-size:11px;text-transform:uppercase;
+  background:#fff;border:1.5px solid var(--ink);border-radius:999px;
+  padding:2px 8px;box-shadow:1px 1px 0 var(--ink);display:inline-flex;gap:4px;align-items:center;
+}
+.mini-badge{
+  display:inline-flex;align-items:center;
+  border:1.5px solid var(--ink);border-radius:999px;
+  padding:2px 8px;font-family:var(--mono);font-size:9px;font-weight:800;
+  text-transform:uppercase;letter-spacing:.04em;margin-left:6px;position:relative;top:-1px;
+}
 .mini-badge--favorable{background:#E8F5E9;color:#1A5C2A;border-color:#1A5C2A}
 .mini-badge--unfavorable{background:#FDE8E6;color:#7A1F1A;border-color:#7A1F1A}
 .mini-badge--neutral{background:#fff;color:#5A5248}
 .mini-badge--unreliable{background:#EDE9FE;color:#4C3A8A;border-color:#6B5BD0}
-.slim-table{width:100%;border-collapse:collapse;font-size:11px}
-.slim-table th,.slim-table td{border-top:1px solid var(--hair);padding:6px 6px;text-align:left;vertical-align:top}
-.slim-table th{font-family:var(--mono);font-size:10px;text-transform:uppercase;color:#6B665E}
-.method-quote{font-family:var(--mono);font-size:11px;background:#FFFEF7;border:1.5px dashed var(--ink);border-radius:10px;padding:8px 10px}
-.collapse{border:2.2px solid var(--ink);border-radius:14px;background:#fff;box-shadow:4px 4px 0 var(--ink);overflow:hidden}
-.collapse summary{cursor:pointer;padding:10px 12px;font-family:var(--mono);font-size:12px;font-weight:800;text-transform:uppercase;list-style:none;display:flex;justify-content:space-between;align-items:center}
+
+.slim-table{width:100%;border-collapse:collapse;font-size:13px;min-width:540px}
+.slim-table th,.slim-table td{border-top:1px solid #E5E2D8;padding:8px 8px;text-align:left;vertical-align:top}
+.slim-table th{font-family:var(--mono);font-size:10px;text-transform:uppercase;color:#6B665E;white-space:nowrap}
+.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:8px}
+.table-scroll::-webkit-scrollbar{display:none}
+
+.method-quote{
+  font-family:var(--mono);font-size:12px;line-height:1.5;
+  background:#FFFEF7;border:1.8px dashed var(--ink);border-radius:12px;
+  padding:10px 12px
+}
+
+/* collapses */
+.collapse{
+  border:2.2px solid var(--ink);border-radius:16px;
+  background:#fff;box-shadow:4px 4px 0 var(--ink);overflow:hidden;
+}
+.collapse summary{
+  cursor:pointer;padding:14px 16px;
+  font-family:var(--mono);font-size:13px;font-weight:900;
+  text-transform:uppercase;letter-spacing:.03em;
+  list-style:none;display:flex;justify-content:space-between;align-items:center;
+  min-height:48px;
+}
 .collapse summary::-webkit-details-marker{display:none}
-.collapse summary:after{content:'▾'}
+.collapse summary:after{content:'▾';font-size:14px}
 .collapse[open] summary:after{content:'▴'}
-.collapse-body{padding:0 12px 12px}
-.viz-duo-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}
-@media(max-width:840px){.viz-duo-grid{grid-template-columns:1fr}}
-.court-heatmap{display:grid;grid-template-columns:320px 1fr;gap:12px;margin-top:8px}
-@media(max-width:860px){.court-heatmap{grid-template-columns:1fr}}
-#archetype-stream-chart,#archetype-shifts-chart,#emergence-role-chart,#emergence-rolling-chart,#trajectory-class-viz,#trajectory-era-chart{width:100%}
+.collapse-body{padding:0 14px 16px}
+@media(min-width:600px){.collapse-body{padding:0 16px 18px}}
+
+.viz-duo-grid{display:grid;grid-template-columns:1fr;gap:12px;margin-top:10px}
+@media(min-width:800px){.viz-duo-grid{grid-template-columns:1fr 1fr}}
+
+/* court heatmap mobile first */
+.court-heatmap{display:grid;grid-template-columns:1fr;gap:14px;margin-top:10px}
+@media(min-width:860px){.court-heatmap{grid-template-columns:320px 1fr}}
+#archetype-court-canvas{width:100%;border:1.8px solid var(--ink);border-radius:12px;background:#FFFEF7}
+
+/* pills */
+.pill{border:1.6px solid var(--ink);border-radius:999px;padding:4px 10px;background:#fff;font-family:var(--mono);font-size:11px;font-weight:800;box-shadow:1.5px 1.5px 0 var(--ink)}
+
+/* touch targets for range */
+input[type=range]{touch-action:manipulation}
+
+/* fix overflow */
+.card, .collapse, .season-story{overflow-wrap:break-word;word-break:break-word}
+
+/* ensure anchor sticky doesn't hide content */
+#drift-timeline,#what-changed{scroll-margin-top:120px}
 </style>
 </head>
 <body>
@@ -107,20 +229,20 @@ main#trends-app{width:min(1180px,calc(100% - 2*clamp(12px,3.2vw,24px)));margin:0
   <div class="hero-compact">
     <div class="kicker"><span class="kdot"></span> 1996–2026 · 30 seasons · How the definition of a player type moved</div>
     <h1>How much did the <b>shape</b> of basketball change?</h1>
-    <p class="lede">Not who scored more — <b>what counted as the same kind of player</b>. This line is 30 seasons of frame drift. Play it — every chart below follows the same year.</p>
+    <p class="lede">Not who scored more — <b>what counted as the same kind of player</b>. This line is 30 seasons of frame drift. Tap Play — every chart below follows the same year.</p>
   </div>
 
   <!-- COMBINED TOP: Season-to-season line + play controls -->
   <section class="card" id="drift-timeline">
     <div class="drift-head">
       <div class="drift-head-left">
-        <h2>Rotation, season to season — 30 points <span id="current-year-top">2025-26</span></h2>
-        <p class="sub">How far the 14-stat player cloud had to rotate to match next season. Shaded eras, orange ring = top 5 jumps. That vertical dash is your year — it drives gauge, compass, bars, and story below.</p>
+        <h2>Rotation, season to season — 30 points <span id="current-year-top" class="pill" style="display:inline-flex;margin-left:6px">2025-26</span></h2>
+        <p class="sub">How far the 14-stat player cloud had to rotate to match next season. Orange ring = top 5 jumps. Vertical dash = your year — drives gauge, compass, bars, story below.</p>
       </div>
       <div class="drift-head-right">
         <button id="btn-play-years" class="btn-play" type="button">▶ Play years</button>
         <button id="btn-speed" class="btn-speed" type="button">0.9s / yr</button>
-        <span id="current-year" class="pill" style="font-family:var(--mono);font-size:11px">2025-26</span>
+        <span id="current-year" class="pill">2025-26</span>
       </div>
     </div>
 
@@ -129,80 +251,80 @@ main#trends-app{width:min(1180px,calc(100% - 2*clamp(12px,3.2vw,24px)));margin:0
 
     <div class="scrub-wrap">
       <div class="scrub-row">
-        <span style="font-family:var(--mono);font-size:10px;color:#5A5248">1996-97</span>
+        <span style="font-family:var(--mono);font-size:10px;color:#5A5248;flex:0 0 auto">1996-97</span>
         <input id="global-year-slider" type="range" min="0" max="29" value="29" aria-label="Scrub years">
-        <span style="font-family:var(--mono);font-size:10px;color:#5A5248">2025-26</span>
+        <span style="font-family:var(--mono);font-size:10px;color:#5A5248;flex:0 0 auto">2025-26</span>
       </div>
       <div class="meta-pills">
         <div id="trends-biggest-shifts" class="trends-biggest-row"></div>
       </div>
-      <div class="meta-pills">
-        <span style="font-family:var(--mono);font-size:9px;font-weight:800;text-transform:uppercase;color:#5A5248;align-self:center">Jumps:</span>
+      <div class="meta-pills" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+        <span style="font-family:var(--mono);font-size:9px;font-weight:800;text-transform:uppercase;color:#5A5248;flex:0 0 auto">Jumps:</span>
         <div id="trends-story-chips" class="story-chips"></div>
       </div>
-      <p class="caption">Blue = our read near spikes (not math). Biggest: 2021-22 post-bubble spacing 11.1°. Use Space / ←→ to play.</p>
+      <p class="caption">Blue = our read near spikes (not math). Biggest: 2021-22 post-bubble spacing 11.1°. Use Space / ←→ to play. Swipe chips to jump years.</p>
     </div>
   </section>
 
-  <!-- WHAT CHANGED THIS SEASON — details that follow the top timeline -->
+  <!-- WHAT CHANGED THIS SEASON -->
   <section class="card" id="what-changed">
-    <div class="row" style="justify-content:space-between">
+    <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start">
       <div>
-        <h2>What changed in <span id="season-label" style="background:#F0E442;border:1.5px solid var(--ink);border-radius:999px;padding:1px 7px;margin-left:4px;font-size:11px">2025-26</span>?</h2>
-        <p class="sub">Gauge = degrees of drift, compass = which style the league tilted toward, bars = which stats changed meaning. All synced to the year above.</p>
+        <h2>What changed in <span id="season-label" class="pill" style="background:var(--yellow)">2025-26</span>?</h2>
+        <p class="sub">Gauge = degrees of drift, compass = which style the league tilted toward, bars = which stats changed meaning. All synced to year above.</p>
       </div>
     </div>
 
     <div class="viz-grid" style="margin-top:8px">
-      <div class="card" style="box-shadow:2px 2px 0 var(--ink);padding:8px"><div id="trends-rotation-gauge" class="trends-viz-svg"></div></div>
-      <div class="card" style="box-shadow:2px 2px 0 var(--ink);padding:8px"><div id="trends-tilt-compass" class="trends-viz-svg"></div></div>
-      <div class="card" style="box-shadow:2px 2px 0 var(--ink);padding:8px"><div id="trends-shift-bars" class="trends-viz-svg"></div></div>
+      <div class="card" style="box-shadow:2px 2px 0 var(--ink);padding:10px"><div id="trends-rotation-gauge" class="trends-viz-svg"></div></div>
+      <div class="card" style="box-shadow:2px 2px 0 var(--ink);padding:10px"><div id="trends-tilt-compass" class="trends-viz-svg"></div></div>
+      <div class="card" style="box-shadow:2px 2px 0 var(--ink);padding:10px"><div id="trends-shift-bars" class="trends-viz-svg"></div></div>
     </div>
 
-    <div id="trends-stat-narratives" style="margin-top:10px"></div>
+    <div id="trends-stat-narratives" style="margin-top:12px"></div>
 
-    <!-- hidden compat sliders/labels for existing viz code -->
+    <!-- hidden compat -->
     <div style="display:none">
       <input type="range" id="trends-season-slider" min="0" max="28" value="28">
       <span id="trends-season-label">2025-26</span>
     </div>
-    <p id="trends-viz-caption" class="caption" style="margin-top:8px">Loading…</p>
+    <p id="trends-viz-caption" class="caption" style="margin-top:10px">Loading…</p>
   </section>
 
   <section class="card">
     <h2>Biggest shifts — 5 summers where basketball reshaped</h2>
-    <div style="overflow-x:auto"><table class="slim-table" id="drift-shifts-table"><thead><tr><th>Pair</th><th>°</th><th>Res</th><th>Shared</th><th>Most-rotated</th><th>Read</th></tr></thead><tbody><tr><td colspan="6">Loading…</td></tr></tbody></table></div>
+    <div class="table-scroll"><table class="slim-table" id="drift-shifts-table"><thead><tr><th>Pair</th><th>°</th><th>Res</th><th>Shared</th><th>Most-rotated</th><th>Read</th></tr></thead><tbody><tr><td colspan="6">Loading…</td></tr></tbody></table></div>
   </section>
 
   <details class="collapse" open>
     <summary>Archetypes over 30 seasons — stream + court</summary>
     <div class="collapse-body">
-      <div class="season-story" style="margin-bottom:12px">
-        <p class="story-lede">From rim protection to spacing. This stream is every season broken into 8 player types — the thickness is how common that type was. <span class="story-interp">Paint-built → perimeter-built in 20 years.</span></p>
+      <div class="season-story" style="margin-bottom:14px">
+        <p class="story-lede">From rim protection to spacing. This stream is every season broken into 8 player types — thickness is how common that type was. <span class="story-interp">Paint-built → perimeter-built in 20 years.</span></p>
         <div id="archetype-era-narrative" style="margin-top:10px"></div>
       </div>
 
       <div id="archetype-stream-chart" class="drift-chart"></div>
-      <ul id="archetype-legend" class="era-legend" style="margin-top:8px"></ul>
+      <ul id="archetype-legend" class="era-legend" style="margin-top:10px"></ul>
 
-      <div style="display:grid;grid-template-columns:1.15fr .85fr;gap:14px;margin-top:14px">
+      <div class="court-heatmap" style="margin-top:18px">
         <div>
           <h3 style="margin:0 0 8px;font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:.04em">Where they live on the court</h3>
-          <div class="court-heatmap" id="archetype-court-heatmap" style="display:block;margin-top:0">
-            <div><canvas id="archetype-court-canvas" width="400" height="376" style="width:100%;border:1.5px solid var(--ink);border-radius:10px;background:#FFFEF7"></canvas><p id="archetype-court-caption" class="caption" style="margin-top:6px">Shot zones for the era — darker = more concentrated. Tab through eras below.</p></div>
-            <div>
-              <div id="archetype-court-era-tabs" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px"></div>
-              <div id="archetype-court-zone-list" style="font-family:var(--mono);font-size:11px;line-height:1.5"></div>
-              <div id="archetype-court-tags" style="margin-top:8px;display:flex;flex-wrap:wrap;gap:6px"></div>
-            </div>
-          </div>
+          <canvas id="archetype-court-canvas" width="400" height="376"></canvas>
+          <p id="archetype-court-caption" class="caption" style="margin-top:8px">Shot zones for the era — darker = more concentrated. Tab through eras below.</p>
         </div>
         <div>
-          <h3 style="margin:0 0 8px;font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:.04em">Biggest turnover — what disappeared</h3>
-          <div id="archetype-shifts-chart"></div>
-          <p class="caption" style="margin-top:8px">Early 5 seasons vs last 5 — positive = more common now, negative = vanished. Pure glass/rim archetype went 28%→0%.</p>
-          <div id="archetype-era-panels" style="margin-top:12px"></div>
+          <div id="archetype-court-era-tabs" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px"></div>
+          <div id="archetype-court-zone-list" style="font-family:var(--mono);font-size:11px;line-height:1.6"></div>
+          <div id="archetype-court-tags" style="margin-top:10px;display:flex;flex-wrap:wrap;gap:6px"></div>
         </div>
+      </div>
+
+      <div style="margin-top:18px">
+        <h3 style="margin:0 0 8px;font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:.04em">Biggest turnover — what disappeared</h3>
+        <div id="archetype-shifts-chart"></div>
+        <p class="caption" style="margin-top:8px">Early 5 seasons vs last 5 — positive = more common now, negative = vanished. Pure glass/rim archetype went 28%→0%.</p>
+        <div id="archetype-era-panels" style="margin-top:14px"></div>
       </div>
     </div>
   </details>
@@ -211,26 +333,25 @@ main#trends-app{width:min(1180px,calc(100% - 2*clamp(12px,3.2vw,24px)));margin:0
     <summary>Emergence & career shapes — did new roles show up?</summary>
     <div class="collapse-body">
       <div id="emergence-verdict"></div>
-      <div id="emergence-claims-viz" style="margin-top:10px"></div>
+      <div id="emergence-claims-viz" style="margin-top:12px"></div>
 
-      <h3 style="margin:16px 0 8px;font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:.04em">The numbers behind the verdict</h3>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-        <div>
+      <h3 style="margin:18px 0 10px;font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:.04em">The numbers behind the verdict</h3>
+      <div class="viz-duo-grid">
+        <div class="card" style="box-shadow:2px 2px 0 var(--ink)">
           <div id="emergence-role-chart"></div>
           <p class="caption">3-and-D + stretch big grew 6% → 11% from early to modern. Traditional big fell from 30% → 25% of minutes.</p>
         </div>
-        <div>
+        <div class="card" style="box-shadow:2px 2px 0 var(--ink)">
           <div id="trajectory-class-viz"></div>
-          <p class="caption">Career shapes: 64% stable specialist, 21% reinvent once, rest migrate. Reinventors play 8.4 seasons on average vs 5.1 for stable.</p>
+          <p class="caption">Career shapes: 64% stable specialist, 21% reinvent once, rest migrate. Reinventors play 8.4 seasons avg vs 5.1 for stable.</p>
         </div>
       </div>
 
-      <div style="margin-top:14px">
-        <h4 style="margin:0 0 8px;font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:#5A5248">Example reinventions — not just positions, archetype switches</h4>
+      <div style="margin-top:16px">
+        <h4 style="margin:0 0 10px;font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:#5A5248">Example reinventions — not just positions, archetype switches</h4>
         <div id="trajectory-path-gallery"></div>
       </div>
 
-      <!-- Keep these hidden for now — data available but story doesn't need them in main flow -->
       <div style="display:none">
         <div id="emergence-rolling-chart"></div>
         <div id="emergence-novel-badges"></div>
