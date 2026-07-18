@@ -217,8 +217,8 @@
         var top = sorted[0];
         return { idx:idx, name:pl?pl.name:null, season:pl?pl.season:null,
           mtnnGlobal: top.i, mtnnGlobalName: top.name, prob: top.p,
-          gameCluster: ass?ass.gameCluster||ass.gc:null, gameClusterName: ass?ass.gameClusterName||ass.gcn:top.name,
-          era: ass?ass.era:null, eraNativeName: ass?ass.eraNativeName||ass.enn:null, eraTags: ass?ass.eraTags||[],
+          gameCluster: ass ? (ass.gameCluster||ass.gc) : null, gameClusterName: ass ? (ass.gameClusterName||ass.gcn) : top.name,
+          era: ass ? ass.era : null, eraNativeName: ass ? (ass.eraNativeName||ass.enn) : null, eraTags: ass ? (ass.eraTags||[]) : [],
           probs: sorted,
           story: (pl?pl.name+' '+pl.season+': ':'')+'MTNN heads predict '+top.name+' '+(top.p*100).toFixed(1)+'%',
           tripleStory: sorted.slice(0,3).map(function(s){return s.name+' '+(s.p*100).toFixed(0)+'%';}),
@@ -252,8 +252,8 @@
       // fallback old scan if not ready
       return [];
     }
-    var qVec, qIdx=null;
-    if(typeof query==='number'){ qIdx=query; qVec=mtnn.rowVector(qIdx); exclude.add(qIdx); }
+    var qVec, qIdx=null, qNameLower='';
+    if(typeof query==='number'){ qIdx=query; qVec=mtnn.rowVector(qIdx); exclude.add(qIdx); if(DATA.players && DATA.players[qIdx]) qNameLower=DATA.players[qIdx].name.toLowerCase(); }
     else if(query instanceof Float32Array){ qVec=query; }
     else throw new Error('query idx or Float32Array');
     if(!qVec) return [];
@@ -264,19 +264,26 @@
       filterFn = function(i){
         if(exclude.has(i)) return false;
         var pl=DATA.players[i]; if(!pl) return false;
+        if(qNameLower && pl.name.toLowerCase()===qNameLower) return false; // never self across seasons
         var yr=parseInt(pl.season.split('-')[0],10);
         return Math.abs(yr-refYr)>=5;
       };
-    } else if(exclude.size>0){
-      filterFn = function(i){ return !exclude.has(i); };
+    } else {
+      filterFn = function(i){ 
+        if(exclude.has(i)) return false;
+        if(qNameLower){
+          var pl2=DATA.players[i]; if(pl2 && pl2.name.toLowerCase()===qNameLower) return false;
+        }
+        return true; 
+      };
     }
 
     var raw;
     if (typeof query === 'number') {
-      raw = mtnn.topK(query, k*2, filterFn);
+      raw = mtnn.topK(query, k*4, filterFn);
     } else {
       var exMap={}; exclude.forEach(function(id){exMap[id]=true;});
-      raw = mtnn.topKForVector(qVec, k*2, exMap);
+      raw = mtnn.topKForVector(qVec, k*4, exMap);
       if(filterFn){
         raw = raw.filter(function(r){return filterFn(r.id);});
       }
@@ -286,6 +293,7 @@
       var r=raw[i];
       var pl=DATA.players?DATA.players[r.id]:null;
       if(!pl) continue;
+      if(qNameLower && pl.name.toLowerCase()===qNameLower) continue;
       if(requireCrossEra && refSeason){
         var yr=parseInt(pl.season.split('-')[0],10);
         var refY=parseInt(refSeason.split('-')[0],10);
@@ -320,12 +328,16 @@
     if(!aEmb||!bEmb) throw new Error('bad idx '+aIdx+','+bIdx);
     var fused=mtnn.blend(aEmb,bEmb,0.5);
     var ex={}; ex[aIdx]=true; ex[bIdx]=true;
-    var nearestRaw=mtnn.topKForVector(fused,k,ex);
+    var nearestRaw=mtnn.topKForVector(fused,k*3,ex);
     var comps=[];
-    for(var i=0;i<nearestRaw.length;i++){
+    var nameA = DATA.players && DATA.players[aIdx] ? DATA.players[aIdx].name.toLowerCase() : '';
+    var nameB = DATA.players && DATA.players[bIdx] ? DATA.players[bIdx].name.toLowerCase() : '';
+    for(var i=0;i<nearestRaw.length && comps.length<k;i++){
       var r=nearestRaw[i];
       var pl=DATA.players?DATA.players[r.id]:null;
       if(!pl) continue;
+      // never allow same player from another season as closest in fusion either (prevents trivial self chimera)
+      if(pl.name && (pl.name.toLowerCase()===nameA || pl.name.toLowerCase()===nameB)) continue;
       comps.push({ idx:r.id, name:pl.name, season:pl.season, sim:r.sim, sim_pct:(r.sim*100).toFixed(1), dist:Math.sqrt(Math.max(0,2-2*r.sim)), x:pl.x,y:pl.y,z:pl.z,c:pl.c, player:pl });
     }
     var skillBlend=null, fuseHeads=null;

@@ -223,5 +223,42 @@
       if(navigator.clipboard){await navigator.clipboard.writeText(text+'\n'+url); return true;}
     }catch(e){console.warn('shareChimera fail',e);} return false;
   }
-  window.VHShare={shareUniverse:shareUniverse,shareChimera:shareChimera,sharePastModern:sharePastModern,drawTeamCard:drawTeamCard,drawChimeraCard:drawChimeraCard,drawPastModernCard:drawPastModernCard,drawPackCard:drawPackCard,sharePack:sharePack};
+  async function shareDailyCourt(opts){
+    try{
+      var W=1080,H=1350; var c=document.createElement('canvas'); c.width=W; c.height=H; var ctx=c.getContext('2d');
+      function rr(x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();}
+      ctx.fillStyle='#FFFEF7'; ctx.fillRect(0,0,W,H);
+      ctx.strokeStyle='#1A150F'; ctx.lineWidth=18; ctx.strokeRect(10,10,W-20,H-20);
+      ctx.fillStyle='#1A150F'; ctx.fillRect(0,0,W,110);
+      ctx.fillStyle='#fff'; ctx.font='900 30px ui-monospace,monospace'; ctx.fillText('VECTOR HOOPS · DAILY COURT 5×',28,42);
+      ctx.font='700 18px ui-monospace'; ctx.fillStyle='#F0E442'; ctx.fillText((opts.dayKey||'')+' · SAME FOR EVERYONE · '+opts.solved+'/5 · '+opts.totalGuesses+' guesses',28,76);
+      var y=150; ctx.fillStyle='#111'; ctx.font='900 36px ui-sans-serif'; ctx.fillText('Daily Court — '+(opts.solved||0)+'/5 '+ ((opts.solved>=5)?'🏆 Full Court':'') ,36,y); y+=46;
+      ctx.font='700 16px ui-monospace'; ctx.fillStyle='#555'; ctx.fillText('5 past All-Stars → 5 modern twins • build your starting 5 • refresh can\'t reroll',36,y); y+=30;
+      var gridEmoji = (opts.slotResults||[]).map(function(r){ if(!r) return '⬜'; if(r.won) return r.count<=2?'🟩🔥': r.count<=4?'🟩':'🟨'; return '❌'; }).join(' ');
+      ctx.font='700 28px ui-monospace'; ctx.fillStyle='#111'; ctx.fillText(gridEmoji,36,y+20); y+=56;
+      (opts.pool||[]).forEach(function(p,i){
+        var sd=(opts.slotResults||[])[i];
+        var status=!sd? '⬜' : sd.won? '✅ '+sd.count+'/6' : '❌ '+sd.count+'/6';
+        y+=8;
+        ctx.fillStyle = sd&&sd.won ? '#e8f5e9' : (!sd? '#fff' : '#fef4e8');
+        rr(ctx,36,y,W-72,56,14); ctx.fill(); ctx.strokeStyle='#111'; ctx.lineWidth=3; ctx.stroke();
+        ctx.fillStyle='#111'; ctx.font='800 20px ui-sans-serif'; ctx.fillText((i+1)+'. '+status+' '+p.n+' '+p.s,48,y+34);
+        y+=64;
+        if(y>1050) return;
+      });
+      // CTA
+      ctx.fillStyle='#F0E442'; ctx.strokeStyle='#111'; ctx.lineWidth=4; rr(ctx,36,H-110,W-72,70,18); ctx.fill(); ctx.stroke();
+      ctx.fillStyle='#111'; ctx.font='900 24px ui-sans-serif'; ctx.fillText('Play same court: hoops.dumbmodel.com/play?day='+(opts.dayKey||''),56,H-64);
+      var blob=await new Promise(function(r){c.toBlob(function(b){r(b);},'image/png');});
+      var file=new File([blob],'daily-court-'+(opts.dayKey||'')+'.png',{type:'image/png'});
+      var lines=(opts.pool||[]).map(function(p,i){ var sd=(opts.slotResults||[])[i]; return (sd&&sd.won?'✅':'❌')+' Slot '+(i+1)+': '+p.n+' '+(sd? sd.count+'/6':'—'); }).join('\n');
+      var url=opts.url||('https://hoops.dumbmodel.com/play?day='+(opts.dayKey||''));
+      var text='Vector Hoops Daily Court '+ (opts.dayKey||'')+' — '+opts.solved+'/5 in '+opts.totalGuesses+' guesses '+gridEmoji+'\n'+lines+'\nCan you beat my Starting 5? '+url;
+      if(navigator.canShare&&navigator.canShare({files:[file]})){ await navigator.share({title:'Daily Court '+opts.dayKey, text:text, files:[file]}); return true; }
+      if(navigator.share){ try{ await navigator.share({title:'Daily Court', text:text, url:url}); return true; }catch(e){} }
+      if(navigator.clipboard&&navigator.clipboard.writeText){ await navigator.clipboard.writeText(text); return 'copied'; }
+    }catch(e){ console.warn('shareDailyCourt fail',e); }
+    return false;
+  }
+  window.VHShare={shareUniverse:shareUniverse,shareChimera:shareChimera,sharePastModern:sharePastModern,drawTeamCard:drawTeamCard,drawChimeraCard:drawChimeraCard,drawPastModernCard:drawPastModernCard,drawPackCard:drawPackCard,sharePack:sharePack,shareDailyCourt:shareDailyCourt};
 })();
