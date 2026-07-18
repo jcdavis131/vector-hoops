@@ -1,20 +1,27 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/><title>Play — Past All-Star → Modern Twin — Vector Hoops</title>
-<meta name="description" content="Daily Past All-Star → guess closest modern superstar. Rotating map, 6 tries, share your grid. Pack Battle 1·3·5 viral."/>
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<title>Play — Past All-Star → Modern Twin — Vector Hoops</title>
+<meta name="description" content="Daily Past All-Star → guess closest modern superstar. 6 tries, rotating map, Pack Battle 1·3·5 viral."/>
 <meta property="og:title" content="Play Vector Hoops — Past→Modern Twin"/><meta property="og:description" content="Past All-Star → modern twin — 12,966 as rotating map. 6 tries. Pack 1·3·5 battle."/><meta property="og:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/><meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/><meta name="twitter:card" content="summary_large_image"/><meta name="theme-color" content="#1A150F"/><link rel="manifest" href="/manifest.json"/>
+<link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/shell.css"/>
+<link rel="stylesheet" href="assets/responsive.css"/>
+<link rel="stylesheet" href="assets/final-qa.css"/>
+<link rel="stylesheet" href="assets/unified.css"/>
 <style>
 :root{--paper:#FFFEF7;--ink:#1A150F;--blue:#0072B2;--verm:#D55E00;--yellow:#F0E442;--green:#009E73;--radius:14px;--shadow:4px 4px 0 var(--ink);--mono:ui-monospace,monospace;--sans:ui-sans-serif,system-ui;}
 *{box-sizing:border-box}html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:18px;line-height:1.65;overflow-x:clip}
 button,.input{min-height:44px}
 .card{background:#fff;border:2.2px solid var(--ink);border-radius:14px;box-shadow:var(--shadow);padding:14px 16px}
-.btn{appearance:none;border:2.2px solid var(--ink);border-radius:12px;min-height:48px;padding:10px 14px;font-weight:900;font-family:var(--mono);text-transform:uppercase;letter-spacing:.04em;cursor:pointer;box-shadow:3px 3px 0 var(--ink);background:#fff;color:var(--ink);display:inline-flex;align-items:center;gap:8px}
+.btn{appearance:none;border:2.2px solid var(--ink);border-radius:12px;min-height:48px;padding:10px 14px;font-weight:900;font-family:var(--mono);text-transform:uppercase;letter-spacing:.04em;cursor:pointer;box-shadow:3px 3px 0 var(--ink);background:#fff;color:var(--ink);display:inline-flex;align-items:center;gap:8px;text-align:center;justify-content:center}
 .btn:active{transform:translate(1px,1px);box-shadow:1px 1px 0 var(--ink)}
 .btn-primary{background:var(--ink);color:#fff}.btn-accent{background:var(--yellow);color:var(--ink)}
 .input{width:100%;border:2.2px solid var(--ink);border-radius:12px;padding:0 12px;font-size:16px;font-weight:600;box-shadow:2px 2px 0 var(--ink)}
 .small-mono{font-family:var(--mono);font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
-.pill{border:1.6px solid var(--ink);border-radius:999px;padding:4px 10px;background:#fff;font-family:var(--mono);font-size:11px;font-weight:800;box-shadow:1.5px 1.5px 0 var(--ink)}
+.pill{border:1.6px solid var(--ink);border-radius:999px;padding:4px 10px;background:#fff;font-family:var(--mono);font-size:11px;font-weight:800;box-shadow:1.5px 1.5px 0 var(--ink);display:inline-flex;align-items:center;gap:6px}
 .pill-yellow{background:var(--yellow)}
 .main{max-width:980px;margin:0 auto;padding:12px clamp(12px,3vw,20px) calc(92px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:14px}
-#map-wrap{position:relative;min-height:460px;border:2.5px solid var(--ink);border-radius:16px;box-shadow:6px 6px 0 var(--ink);overflow:hidden;background:radial-gradient(120% 80% at 70% 20%,rgba(0,114,178,.12),transparent 48%),radial-gradient(90% 60% at 20% 70%,rgba(213,94,0,.10),transparent 46%),var(--paper)}
+#map-wrap{position:relative;min-height:420px;border:2.5px solid var(--ink);border-radius:16px;box-shadow:6px 6px 0 var(--ink);overflow:hidden;background:radial-gradient(120% 80% at 70% 20%,rgba(0,114,178,.12),transparent 48%),radial-gradient(90% 60% at 20% 70%,rgba(213,94,0,.10),transparent 46%),var(--paper)}
 #sky-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab}
 #sky-canvas:active{cursor:grabbing}
 #map-overlay{position:absolute;left:10px;right:10px;top:10px;display:flex;justify-content:space-between;gap:8px;z-index:2;pointer-events:none;flex-wrap:wrap}
@@ -28,83 +35,236 @@ button,.input{min-height:44px}
 #map-legend .axis em{font-style:normal;opacity:.35;margin:0 1px}
 #map-legend .legend-foot{margin-top:4px;font-size:7.5px;opacity:.45;line-height:1.2}
 #hover-tip{position:absolute;left:50%;top:50%;transform:translate(-50%,-100%);background:#FFFEF7;border:2px solid var(--ink);border-radius:10px;padding:6px 8px;box-shadow:3px 3px 0 var(--ink);font-size:11px;line-height:1.35;display:none;z-index:3;pointer-events:none;max-width:220px}
-.guess-row{border:1.6px dashed #bbb;border-radius:10px;padding:10px;background:#FFFEF7;margin-top:8px}
-.guess-row.win{border-color:var(--green);border-style:solid;background:#e8f5e9}
-.bar{height:8px;border-radius:999px;background:#eee;overflow:hidden;margin-top:6px}
+.guess-row{border:1.8px solid var(--ink);border-radius:12px;padding:10px 12px;background:#fff;margin-top:8px;box-shadow:2px 2px 0 var(--ink)}
+.guess-row.win{border-color:var(--green);background:#e8f5e9}
+.bar{height:8px;border-radius:999px;background:#eee;overflow:hidden;margin-top:6px;border:1px solid #ddd}
 .bar>i{display:block;height:100%}
 .suggest{position:relative}
 .suggest ul{position:absolute;z-index:20;left:0;right:0;top:52px;background:#fff;border:2px solid var(--ink);border-radius:12px;box-shadow:4px 4px 0 var(--ink);list-style:none;margin:0;padding:6px;max-height:300px;overflow:auto}
-.suggest li{padding:8px 10px;border-radius:8px;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+.suggest li{padding:8px 10px;border-radius:8px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;min-height:44px}
 .suggest li:hover,.suggest li.is-active{background:var(--yellow)}
-.hd{font-family:"Architects Daughter",var(--mono);line-height:1.1}
+.hd{font-family:"Architects Daughter",var(--mono);line-height:1.05}
 .confetti{position:fixed;inset:0;pointer-events:none;z-index:98}
-.pack-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-@media(max-width:560px){.pack-grid{grid-template-columns:1fr}}
+
+/* NEW — clearer mechanics */
+#game-header{padding:16px 16px 12px;border-width:2.5px}
+.game-title-row{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start}
+.game-title{margin:0;font-size:clamp(22px,5vw,30px);line-height:.95;letter-spacing:-.01em}
+.game-subtitle{margin:6px 0 0;font-size:14px;line-height:1.5;color:#444;max-width:62ch}
+.game-status-bar{
+  display:flex;gap:8px;flex-wrap:wrap;align-items:center;
+  margin-top:10px;padding-top:10px;border-top:1.5px dashed #E5E2D8;
+}
+.mode-tabs{
+  display:flex;gap:8px;overflow-x:auto;flex-wrap:nowrap;
+  padding:4px 0 8px;-webkit-overflow-scrolling:touch;scrollbar-width:none;
+}
+.mode-tabs::-webkit-scrollbar{display:none}
+.mode-tab{
+  flex:0 0 auto;appearance:none;
+  border:2px solid var(--ink);border-radius:999px;
+  padding:8px 14px;background:#fff;
+  font-family:var(--mono);font-size:11px;font-weight:900;
+  text-transform:uppercase;letter-spacing:.04em;
+  box-shadow:2px 2px 0 var(--ink);cursor:pointer;min-height:40px;
+  display:inline-flex;align-items:center;gap:6px;white-space:nowrap;
+}
+.mode-tab.is-active{background:var(--ink);color:#fff}
+.mode-tab.is-active.pack-active{background:var(--blue);border-color:var(--ink)}
+.mode-desc{
+  font-size:12px;line-height:1.5;color:#5A5248;
+  background:#FFFEF7;border:1.5px solid #E5E2D8;border-radius:10px;
+  padding:8px 10px;margin-top:8px;
+}
+.ready-banner{
+  border:2px dashed var(--ink);background:var(--yellow);
+  border-radius:12px;padding:12px 14px;
+  display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;
+}
+.ready-banner h3{margin:0;font-family:var(--mono);font-size:13px;text-transform:uppercase}
+.ready-banner p{margin:4px 0 0;font-size:13px;line-height:1.45;color:#222}
+.turn-indicator{
+  display:flex;gap:8px;align-items:center;margin-top:6px;
+  font-family:var(--mono);font-size:11px;font-weight:800;
+}
+.turn-dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 3px rgba(0,158,115,.18);animation:pulse 1.6s infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.18)}}
+.progress-dots{display:flex;gap:6px;align-items:center}
+.progress-dot{width:26px;height:26px;border-radius:50%;border:2px solid var(--ink);display:inline-flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;font-weight:900;background:#fff;box-shadow:1.5px 1.5px 0 var(--ink)}
+.progress-dot.is-done{background:var(--ink);color:#fff}
+.progress-dot.is-current{background:var(--yellow);animation:pulse 1.4s infinite}
+
+/* onboarding sheet */
+.vh-sheet-backdrop{position:fixed;inset:0;background:rgba(26,21,15,.55);display:flex;align-items:flex-end;justify-content:center;z-index:110;padding:0}
+.vh-sheet{
+  background:#fff;width:100%;max-width:680px;max-height:min(88dvh, calc(100dvh - 16px));
+  overflow:auto;border:2.5px solid var(--ink);border-bottom:none;border-radius:16px 16px 0 0;
+  box-shadow:0 -6px 0 var(--ink);padding:16px 16px calc(16px + env(safe-area-inset-bottom));
+  animation:sheetUp .22s ease-out;
+}
+@keyframes sheetUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+@media(min-width:600px){
+  .vh-sheet-backdrop{align-items:center;padding:20px}
+  .vh-sheet{border-bottom:2.5px solid var(--ink);border-radius:16px;box-shadow:6px 6px 0 var(--ink);animation:sheetFade .16s ease-out}
+  @keyframes sheetFade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+}
+.vh-sheet__handle{width:36px;height:4px;background:#E5E2D8;border-radius:2px;margin:2px auto 12px}
+.vh-sheet__head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;margin-bottom:10px}
+.vh-sheet__title{margin:0;font-family:"Architects Daughter",var(--mono);font-size:22px;line-height:1.05}
+.vh-sheet__close{flex:0 0 auto;appearance:none;border:2px solid var(--ink);background:#fff;border-radius:50%;width:36px;height:36px;font-weight:900;cursor:pointer;box-shadow:2px 2px 0 var(--ink)}
+.onboard-steps{display:flex;flex-direction:column;gap:10px;margin:12px 0}
+.onboard-step{display:flex;gap:10px;align-items:flex-start;border:1.8px solid var(--ink);border-radius:12px;padding:10px 12px;background:#FFFEF7;box-shadow:2px 2px 0 var(--ink)}
+.onboard-step__num{flex:0 0 28px;width:28px;height:28px;border-radius:50%;background:var(--ink);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:13px;font-weight:900}
+.onboard-step b{display:block;font-size:13px;margin-bottom:2px}
+.onboard-step p{margin:0;font-size:13px;line-height:1.45;color:#333}
 </style>
-<link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/shell.css"/>
-<link rel="stylesheet" href="assets/responsive.css"/>
-<link rel="stylesheet" href="assets/final-qa.css"/>
-<link rel="stylesheet" href="assets/unified.css"/>
 </head><body>
 <nav class="site-nav" data-active="/play" aria-label="Vector Hoops site"></nav>
 
 <div class="main">
-  <div class="card" style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center">
-    <div><h1 class="hd" style="margin:0;font-size:24px">Past All-Star → <b style="background:var(--ink);color:#fff;padding:0 .2em;border-radius:6px">Modern Twin</b></h1><p class="small-mono" style="text-transform:none;color:#444;margin:6px 0 0;line-height:1.4"><span id="puzzle-day-label">Today</span> · 6 tries · drag to spin · <a href="/players">Players →</a></p></div>
-    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><span class="pill" id="puzzle-pill">P#—</span><span class="pill" id="streak-pill">streak 0</span><button class="pill" id="btn-challenge" type="button" style="cursor:pointer">Challenge</button></div>
+
+  <!-- HEADER — what game and where you are -->
+  <div class="card" id="game-header">
+    <div class="game-title-row">
+      <div style="flex:1 1 300px;min-width:0">
+        <div class="small-mono" style="display:flex;gap:6px;align-items:center;margin-bottom:6px">
+          <span style="width:6px;height:6px;border-radius:50%;background:var(--verm);display:inline-block"></span>
+          GAME • PAST → MODERN TWIN
+          <span id="mode-badge" class="pill" style="background:var(--ink);color:#fff">DAILY</span>
+        </div>
+        <h1 class="game-title hd">Find the <span style="background:var(--ink);color:#fff;padding:0 .18em;border-radius:6px">modern twin</span></h1>
+        <p class="game-subtitle">You get a past All-Star. Guess which 2024-26 player plays most like him — measured by 48-d MTNN cosine. <b>6 tries</b>, warmer/colder after each, map spins while you think. Daily counts to streak, Random & Pack don't.</p>
+      </div>
+      <div style="flex:0 0 auto;display:flex;flex-direction:column;gap:8px;align-items:flex-end">
+        <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end">
+          <span class="pill" id="puzzle-pill">P#—</span>
+          <span class="pill" id="streak-pill">streak 0</span>
+          <span class="pill" id="tries-pill">0/6</span>
+        </div>
+        <button class="pill" id="btn-howto" type="button" style="cursor:pointer">❓ How to play</button>
+      </div>
+    </div>
+
+    <div class="game-status-bar" id="game-status-bar">
+      <div class="small-mono" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+        <span id="puzzle-day-label" style="font-weight:900;text-transform:none">Today</span>
+        <span style="opacity:.4">•</span>
+        <span id="game-phase-label">Not started — type to begin</span>
+        <span id="challenge-badge" class="pill" style="display:none;background:var(--yellow)">CHALLENGE</span>
+        <span id="pack-badge" class="pill" style="display:none;background:var(--blue);color:#fff">PACK</span>
+      </div>
+      <div class="progress-dots" id="guess-dots" aria-label="Guess progress"></div>
+    </div>
   </div>
 
-  <div id="map-wrap"><canvas id="sky-canvas" width="640" height="460"></canvas><div id="map-overlay"><span class="chip" id="map-fact">12,966 seasons — rotating map</span><span class="chip">gold = past, orange = guesses</span></div><div id="map-controls"><button class="chip" id="btn-pause" type="button">Pause</button><button class="chip" id="btn-reset" type="button">Reset</button></div><div id="map-legend"><div class="legend-title">Map Axes</div><div class="axis"><i>X</i>Paint<em>↔</em>Perimeter</div><div class="axis"><i>Y</i>Role<em>→</em>Scorer</div><div class="axis"><i>Z</i>Off-ball<em>↔</em>On-ball</div><div class="legend-foot">Center = avg</div></div><div id="hover-tip"></div></div>
-
-  <!-- PACK HUB: viral solo/triple/full court -->
-  <div class="card" id="pack-hub" style="display:none;">
-    <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
-      <div class="small-mono" style="display:flex;gap:6px;align-items:center"><span class="pill" style="background:var(--ink);color:#fff">⚡ Pack Battle</span><span>Viral 1·3·5</span></div>
-      <span class="pill pill-yellow">Shareable — challenge friends</span>
+  <!-- MODE SELECTOR — makes it clear which you're playing -->
+  <div class="card" id="mode-selector">
+    <div class="small-mono" style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px">
+      <span>1. Choose mode — when game begins</span>
+      <span style="text-transform:none;opacity:.6;font-weight:600">Daily = midnight UTC, Random = now, Pack = multi-round</span>
     </div>
-    <b class="hd" style="font-size:20px;display:block;margin:8px 0 4px;line-height:1.1">Pack Challenge — random All-Stars, share link</b>
-    <div style="font-size:12px;color:#555;line-height:1.45">Get a random grouping of 1, 3, or 5 past All-Stars. Solve, then share the same pack as a challenge link. Your friends get identical stars — who solves faster?</div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
-      <button class="btn btn-primary" data-pack-n="1" type="button">⚡ Solo · 1</button>
-      <button class="btn btn-accent" data-pack-n="3" type="button">🔥 Triple · 3</button>
-      <button class="btn" data-pack-n="5" type="button" style="background:#fff">🏀 Full Court · 5</button>
-      <span class="small-mono" style="align-self:center;opacity:.6;text-transform:none">Unique names · streak-safe</span>
+    <div class="mode-tabs" id="mode-tabs">
+      <button class="mode-tab is-active" data-mode="daily" type="button">📅 Daily <span class="small-mono" style="opacity:.6">streak</span></button>
+      <button class="mode-tab" data-mode="random" type="button">🎲 Random spin</button>
+      <button class="mode-tab" data-mode="pack1" data-pack-n="1" type="button">⚡ Solo · 1</button>
+      <button class="mode-tab" data-mode="pack3" data-pack-n="3" type="button">🔥 Triple · 3</button>
+      <button class="mode-tab" data-mode="pack5" data-pack-n="5" type="button">🏀 Full 5</button>
     </div>
+    <div class="mode-desc" id="mode-desc">Daily puzzle — one past All-Star per day. Game begins the moment you see the target card below. Solve before midnight UTC to keep streak alive.</div>
   </div>
 
+  <!-- MAP — secondary, collapsed hint -->
+  <div id="map-wrap"><canvas id="sky-canvas" width="640" height="420"></canvas><div id="map-overlay"><span class="chip" id="map-fact">12,966 seasons — rotating</span><span class="chip">★ = target past • orange rings = your guesses</span></div><div id="map-controls"><button class="chip pill" id="btn-pause" type="button">Pause</button><button class="chip pill" id="btn-reset" type="button">Reset view</button></div><div id="map-legend"><div class="legend-title">Map</div><div class="axis"><i>X</i>Paint<em>↔</em>Perim</div><div class="axis"><i>Y</i>Role<em>→</em>Score</div><div class="axis"><i>Z</i>Off<em>↔</em>On</div><div class="legend-foot">Drag to orbit • ★ pulsing = today's past</div></div><div id="hover-tip"></div></div>
+
+  <!-- PACK -->
   <div class="card" id="pack-progress" style="display:none;">
     <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
-      <div class="small-mono" style="display:flex;gap:6px;align-items:center;flex-wrap:wrap"><span>Pack <b id="pack-code-label"></b> · <span id="pack-index-label">1/3</span></span><span class="pill" id="pack-mode-pill" style="background:var(--yellow)">PACK</span></div>
-      <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center"><span class="pill" id="pack-solved-pill">0/0 solved</span><button class="pill" id="pack-share-link-btn" type="button" style="cursor:pointer">📋 Copy challenge link</button></div>
+      <div class="small-mono" style="display:flex;gap:6px;align-items:center;flex-wrap:wrap"><span>Pack <b id="pack-code-label"></b> · <span id="pack-index-label">1/3</span></span><span class="pill pill-yellow" id="pack-mode-pill">PACK BATTLE</span></div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center"><span class="pill" id="pack-solved-pill">0/0</span><button class="pill" id="pack-share-link-btn" type="button" style="cursor:pointer">📋 Copy pack link</button></div>
     </div>
     <div id="pack-list" style="margin-top:10px;display:flex;flex-direction:column;gap:6px"></div>
     <div id="pack-challenger-compare" style="margin-top:8px;font-size:12px;display:none"></div>
-    <div id="pack-progress-foot" class="small-mono" style="margin-top:8px;text-transform:none;opacity:.6">Solve each star in 6 tries. Share same pack — friend gets identical grouping.</div>
   </div>
-
   <div class="card" id="pack-summary" style="display:none;border-width:2.5px"></div>
 
-  <div class="card" id="past-card">
-    <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center">
-      <div><div class="small-mono">Today's Past All-Star — <span id="challenge-badge" style="display:none;background:var(--yellow);border:1.5px solid var(--ink);border-radius:6px;padding:1px 6px">CHALLENGE</span> <span id="pack-badge" style="display:none;background:#0072B2;color:#fff;border:1.5px solid var(--ink);border-radius:6px;padding:1px 6px">PACK</span></div><h2 id="past-name" class="hd" style="margin:4px 0 2px;font-size:26px">Loading…</h2><div id="past-meta" class="small-mono" style="text-transform:none;color:#555"></div></div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap"><button id="btn-random" class="btn" type="button">Random</button><button id="btn-new" class="btn btn-accent" type="button">New</button></div>
+  <!-- PAST TARGET — clearly labeled when game begins -->
+  <div class="card" id="past-card" style="border-width:2.5px">
+    <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:flex-start">
+      <div style="flex:1 1 260px;min-width:0">
+        <div class="small-mono" style="display:flex;gap:6px;align-items:center">
+          <span style="background:var(--yellow);border:1.5px solid var(--ink);border-radius:6px;padding:1px 6px">TARGET • PAST ALL-STAR</span>
+          <span id="past-xyz" style="text-transform:none;color:#666"></span>
+        </div>
+        <h2 id="past-name" class="hd" style="margin:6px 0 4px;font-size:28px">Loading…</h2>
+        <div id="past-meta" class="small-mono" style="text-transform:none;color:#444;line-height:1.4"></div>
+        <div class="turn-indicator"><span class="turn-dot"></span><span id="turn-text">Game starts now — 6 guesses to find his modern twin</span></div>
+      </div>
+      <div style="flex:0 0 auto;display:flex;gap:8px;flex-wrap:wrap">
+        <button id="btn-random" class="btn" type="button">🎲 Random spin</button>
+        <button id="btn-new" class="btn btn-accent" type="button">New daily</button>
+      </div>
     </div>
-    <div id="past-xyz" class="small-mono" style="margin-top:8px;text-transform:none;color:#666"></div>
-    <div id="past-closest-hint" class="small-mono" style="margin-top:6px;text-transform:none;color:#111;background:#fff;border:1.4px dashed var(--ink);border-radius:8px;padding:6px 8px;display:none"></div>
+    <div id="past-closest-hint" class="small-mono" style="margin-top:10px;text-transform:none;color:#111;background:#fff;border:1.4px dashed var(--ink);border-radius:8px;padding:6px 8px;display:none"></div>
   </div>
 
-  <div class="card">
-    <label class="small-mono" for="guess-input">Guess modern superstar</label>
-    <div class="suggest"><input id="guess-input" class="input" placeholder="Type modern — e.g., Wembanyama, SGA, Ant" autocomplete="off" spellcheck="false"/><ul id="guess-suggest" class="hidden" style="display:none"></ul></div>
-    <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
-      <button id="guess-btn" class="btn btn-primary" type="button">Guess</button>
+  <!-- READY BANNER — explicit “when you begin” -->
+  <div class="ready-banner" id="ready-banner">
+    <div>
+      <h3>▶ Ready? Game begins on first guess</h3>
+      <p>You see the past All-Star above ★. Type any <b>2024-26 player</b> below — you have 6 tries. After each guess you get % similarity + rank + warmer/colder. Find #1 to win.</p>
+    </div>
+    <button class="btn btn-primary" id="btn-focus-guess" type="button">Start typing →</button>
+  </div>
+
+  <!-- GUESS -->
+  <div class="card" id="guess-card">
+    <div style="display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px">
+      <label class="small-mono" for="guess-input" style="margin:0">2. Guess modern superstar — turn <span id="turn-count">1</span>/6</label>
+      <span class="pill" id="warm-label" style="display:none"></span>
+    </div>
+    <div class="suggest"><input id="guess-input" class="input" placeholder="Type modern — e.g., Wembanyama, SGA, Ant" autocomplete="off" spellcheck="false"/><ul id="guess-suggest" style="display:none"></ul></div>
+    <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
+      <button id="guess-btn" class="btn btn-primary" type="button">Guess — begin game</button>
       <button id="share-btn" class="btn" type="button">Share</button>
       <button id="share-text-btn" class="btn" type="button">Copy Grid</button>
-      <span id="warm-label" class="pill" style="display:none"></span>
+      <button id="btn-challenge" class="btn" type="button">Challenge link</button>
     </div>
-    <div id="guesses" aria-live="polite"></div>
-    <div id="result" class="hidden" style="margin-top:12px"></div>
+    <div id="guesses" aria-live="polite" style="margin-top:8px"></div>
+    <div id="result" style="margin-top:12px"></div>
+  </div>
+</div>
+
+<!-- ONBOARDING BOTTOM SHEET -->
+<div id="onboarding-backdrop" class="vh-sheet-backdrop" hidden>
+  <div class="vh-sheet" role="dialog" aria-modal="true" aria-labelledby="onboard-title">
+    <div class="vh-sheet__handle"></div>
+    <div class="vh-sheet__head">
+      <h2 class="vh-sheet__title" id="onboard-title">How Past → Modern works</h2>
+      <button class="vh-sheet__close" id="btn-onboard-close" type="button">✕</button>
+    </div>
+    <div class="small-mono" style="margin-bottom:10px;color:#5A5248">3 steps • 6 tries • takes ~45s</div>
+    <div class="onboard-steps">
+      <div class="onboard-step">
+        <span class="onboard-step__num">1</span>
+        <div><b>See which past All-Star you're playing</b><p>Big gold ★ on the map. Card says “TARGET • PAST ALL-STAR”. Example: Michael Jordan 1997-98. That's who you start from — game is ready immediately.</p></div>
+      </div>
+      <div class="onboard-step">
+        <span class="onboard-step__num">2</span>
+        <div><b>Guess a modern player (2024-26)</b><p>Type any current star — Wembanyama, SGA, Ant, Jokić. You get % similarity (cosine of 48-d vectors) + rank among all moderns + warmer/colder vs last guess.</p></div>
+      </div>
+      <div class="onboard-step">
+        <span class="onboard-step__num">3</span>
+        <div><b>Win in 6 — streaks & packs</b><p>Find rank #1 to win. Daily counts to streak (midnight UTC reset). Random spins and Pack Battle (1/3/5) are practice — they don't affect streak. Share challenge links so friends get same puzzle.</p></div>
+      </div>
+    </div>
+    <div style="margin-top:12px;padding:10px 12px;background:#FFFEF7;border:1.5px dashed var(--ink);border-radius:10px;font-size:13px;line-height:1.5">
+      <b>When does game begin?</b> The moment you see the past card — you're already in it. First guess starts the timer. Empty state = “Ready? Game begins on first guess”. After 6 guesses or a #1, we reveal answer and confetti.
+    </div>
+    <div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap">
+      <button class="btn btn-primary" id="btn-onboard-play" type="button">▶ Play daily now</button>
+      <button class="btn" id="btn-onboard-random" type="button">🎲 Random spin</button>
+    </div>
+    <div class="small-mono" style="margin-top:10px;opacity:.6;text-transform:none">Tip: drag map to orbit, tap dot to preview player. Gold tile = past target, orange rings = your guesses.</div>
   </div>
 </div>
 
@@ -258,17 +418,14 @@ button,.input{min-height:44px}
   function loadGuesses(){
     try{
       var raw=localStorage.getItem(STORAGE_GUESS); if(!raw) return [];
-      var obj=JSON.parse(raw); if(obj.day!==VHPastModern.state().dayKey) return []; return obj.guesses||[];
+      var obj=JSON.parse(raw); if(obj.day!==VHPastModern.state().dayKey) return []; 
+      var seen={}; var deduped=[];
+      for(var i=0;i<(obj.guesses||[]).length;i++){ var g=obj.guesses[i]; var key=(g.name||'').toLowerCase().trim(); if(!key || seen[key]) continue; seen[key]=true; deduped.push(g); }
+      return deduped;
     }catch{ return []; }
   }
   function saveGuesses(){
-    try{
-      // skip saving in pack mode to avoid clobbering daily
-      var isPack = false;
-      try{ isPack = VHPastModern.state().isPack; }catch{}
-      if(isPack) return;
-      localStorage.setItem(STORAGE_GUESS, JSON.stringify({day:VHPastModern.state().dayKey, guesses:G.guesses}));
-    }catch{}
+    try{ var isPack=false; try{ isPack = VHPastModern.state().isPack; }catch{} if(isPack) return; localStorage.setItem(STORAGE_GUESS, JSON.stringify({day:VHPastModern.state().dayKey, guesses:G.guesses})); }catch{}
   }
   function loadStreak(){ try{ var raw=localStorage.getItem(STREAK_KEY); if(!raw) return 0; return JSON.parse(raw).streak||0; }catch{ return 0; } }
   function saveStreak(s){ try{ localStorage.setItem(STREAK_KEY, JSON.stringify({streak:s,last:Date.now()})); }catch{} }
@@ -287,32 +444,60 @@ button,.input{min-height:44px}
     requestAnimationFrame(frame);
   }
 
+  function updateStatusBar(){
+    var st=null; try{ st=VHPastModern.state(); }catch{}
+    var triesPill=$('#tries-pill'), phase=$('#game-phase-label'), dots=$('#guess-dots'), turnCount=$('#turn-count'), turnText=$('#turn-text'), readyBanner=$('#ready-banner'), guessBtn=$('#guess-btn');
+    var count=G.guesses.length;
+    if(triesPill) triesPill.textContent=count+'/6';
+    if(turnCount) turnCount.textContent=(count+1<=6? count+1 : 6);
+    if(dots){
+      dots.innerHTML='';
+      for(var i=0;i<6;i++){
+        var d=document.createElement('span'); d.className='progress-dot'+(i<count?' is-done':'')+(i===count?' is-current':'');
+        d.textContent=i<count? '✓' : i+1;
+        dots.appendChild(d);
+      }
+    }
+    var won=G.guesses.some(function(g){return g.rank===0;});
+    var over=won||count>=6;
+    if(phase){
+      if(over){ phase.textContent = won? 'Won in '+count+'/6 — game over' : 'Lost — answer revealed'; }
+      else if(count===0){ phase.textContent='Not started — type first guess to begin'; }
+      else{ phase.textContent='Playing — guess '+count+'/6 used, '+ (6-count)+' left'; }
+    }
+    if(turnText){
+      if(over) turnText.textContent = won? 'Won in '+count+' — share or play next' : 'Game over — answer was '+ (st&&st.closestModern? st.closestModern.entry.n : '?');
+      else if(count===0) turnText.textContent='Game starts now — 6 guesses to find his modern twin';
+      else turnText.textContent='Guess '+count+'/6 used — '+ (6-count)+' left — warmer/colder shows after each';
+    }
+    if(readyBanner) readyBanner.style.display = (count===0 && !over)? 'flex' : 'none';
+    if(guessBtn) guessBtn.textContent = count===0? 'Guess — begin game' : 'Guess '+ (count+1) +'/6';
+  }
+
   function renderPast(){
     var st=VHPastModern.state();
     var past=st.target; if(!past) return;
-    var isPack = !!st.isPack;
-    var packInfo = '';
-    if(isPack){
-      var ps = VHPastModern.getPackState();
-      packInfo = ' · Pack '+(ps.index+1)+'/'+ps.size+' · '+ps.code.slice(0,18);
-    }
+    var yr=VHPastModern.parseYear(past.s);
     $('#past-name').textContent=past.n+' '+past.s;
     var hon=st.honors[past.n+'|'+past.s]||{};
     var allNba = hon.allNbaTeam? 'All-NBA '+hon.allNbaTeam : '';
-    $('#past-meta').innerHTML=(hon.asg?'All-Star ': '')+allNba+' · '+ARCH[past.c%ARCH.length]+ (isPack? ' · Pack '+(st.packIndex+1)+'/'+st.packSize : '');
-    $('#past-xyz').textContent='Year '+VHPastModern.parseYear(past.s)+(st.urlDay?' · challenge '+st.dayKey:'')+ (isPack? ' · pack '+st.packCode : '');
+    $('#past-meta').innerHTML=(hon.asg?'All-Star ': '')+allNba+' · '+ARCH[past.c%ARCH.length]+' · '+past.s;
+    $('#past-xyz').textContent='Target card • ★ Gold • Year '+yr;
+    var isPack=!!st.isPack;
     if(isPack){
       $('#puzzle-pill').textContent='PACK '+(st.packIndex+1)+'/'+st.packSize;
       $('#puzzle-day-label').textContent='Pack '+st.packCode+' · '+(st.packIndex+1)+'/'+st.packSize;
-      $('#pack-badge').style.display='inline-block';
-      $('#challenge-badge').style.display='none';
+      $('#pack-badge').style.display='inline-flex'; $('#challenge-badge').style.display='none';
+      $('#mode-badge').textContent='PACK '+st.packSize; $('#mode-badge').style.background='var(--blue)'; $('#mode-badge').style.color='#fff';
     }else{
       $('#puzzle-pill').textContent='P#'+st.puzzleNum;
       $('#streak-pill').textContent='streak '+loadStreak();
-      $('#puzzle-day-label').textContent = st.urlDay ? 'Challenge '+st.dayKey : 'Today '+st.dayKey;
-      if(st.urlDay) $('#challenge-badge').style.display='inline-block'; else $('#challenge-badge').style.display='none';
+      $('#puzzle-day-label').textContent = st.urlDay ? 'Challenge '+st.dayKey+' • Daily puzzle' : 'Today '+st.dayKey+' • Daily puzzle';
+      $('#mode-badge').textContent = st.isRandom? 'RANDOM' : st.urlDay? 'CHALLENGE' : 'DAILY';
+      if(st.urlDay) $('#challenge-badge').style.display='inline-flex'; else $('#challenge-badge').style.display='none';
       $('#pack-badge').style.display='none';
     }
+    updateStatusBar();
     projectFrame(); draw();
   }
 
@@ -320,13 +505,14 @@ button,.input{min-height:44px}
     var cont=$('#guesses'); cont.innerHTML='';
     G.guesses.forEach(function(g,idx){
       var simPct=(g.sim*100).toFixed(1);
-      var rankLabel=g.rank===0? 'Closest': '#'+(g.rank+1);
-      var warm=idx>0 ? (g.rank < G.guesses[idx-1].rank ? 'warmer' : g.rank > G.guesses[idx-1].rank ? 'colder' : 'same') : '';
+      var rankLabel=g.rank===0? '✅ #1 WIN': '#'+(g.rank+1);
+      var warm=idx>0 ? (g.rank < G.guesses[idx-1].rank ? '🔥 warmer' : g.rank > G.guesses[idx-1].rank ? '❄️ colder' : 'same') : 'first guess';
       var isWin=g.rank===0;
       var div=document.createElement('div'); div.className='guess-row'+(isWin?' win':'');
-      div.innerHTML='<div style="display:flex;justify-content:space-between;gap:8px;align-items:center"><b>'+(idx+1)+'. '+g.name+' '+g.season+'</b><span class="pill">'+simPct+'% · '+rankLabel+'</span></div><div class="small-mono" style="text-transform:none;margin-top:6px;color:#444">'+warm+' · '+ARCH[g.c%ARCH.length]+'</div><div class="bar"><i style="width:'+Math.max(4,Math.min(100,parseFloat(simPct)))+'%;background:'+(isWin?'#009E73':'#0072B2')+'"></i></div>';
+      div.innerHTML='<div style="display:flex;justify-content:space-between;gap:8px;align-items:center"><b>'+(idx+1)+'. '+g.name+' '+g.season+'</b><span class="pill" style="'+(isWin?'background:var(--green);color:#fff':'')+'">'+simPct+'% · '+rankLabel+'</span></div><div class="small-mono" style="text-transform:none;margin-top:6px;color:#444">'+warm+' · '+ARCH[g.c%ARCH.length]+'</div><div class="bar"><i style="width:'+Math.max(4,Math.min(100,parseFloat(simPct)))+'%;background:'+(isWin?'#009E73':'#0072B2')+'"></i></div>';
       cont.appendChild(div);
     });
+    updateStatusBar();
   }
 
   function renderPackProgress(){
@@ -336,217 +522,94 @@ button,.input{min-height:44px}
     var codeLabel=$('#pack-code-label'), idxLabel=$('#pack-index-label'), solvedPill=$('#pack-solved-pill'), list=$('#pack-list'), comp=$('#pack-challenger-compare');
     if(codeLabel) codeLabel.textContent = ps.code.length>24 ? ps.code.slice(0,24)+'…' : ps.code;
     if(idxLabel) idxLabel.textContent = (ps.index+1)+'/'+ps.size;
-    if(solvedPill){
-      var done = ps.results ? ps.results.filter(Boolean).length : 0;
-      var solved = ps.results ? ps.results.filter(function(r){return r&&r.won;}).length : 0;
-      solvedPill.textContent = solved+'/'+done+' solved · '+ps.size+' total';
-    }
+    if(solvedPill){ var done = ps.results ? ps.results.filter(Boolean).length : 0; var solved = ps.results ? ps.results.filter(function(r){return r&&r.won;}).length : 0; solvedPill.textContent = solved+'/'+done+' solved'; }
     if(list){
       list.innerHTML = ps.entries.map(function(entry,i){
         var res = ps.results && ps.results[i];
-        var statusIcon='⏳', statusColor='#f5f5f0', extra='pending', borderColor='var(--ink)', bg='#fff', shadow='1.5px 1.5px 0 var(--ink)';
-        if(i < ps.index){
-          if(res){
-            if(res.won){ statusIcon='✅'; statusColor='#009E73'; extra=res.count+'/6'; bg='#e8f5e9'; }
-            else { statusIcon='❌'; statusColor='#D55E00'; extra=res.count+'/6 · X'; bg='#fef2e8'; }
-          }
-          borderColor='#bbb'; shadow='1px 1px 0 #bbb';
-        }else if(i===ps.index){
-          statusIcon='👉'; statusColor='#0072B2'; extra='current'; borderColor='#0072B2'; bg='#FFFEF7'; shadow='3px 3px 0 var(--ink)';
-        }
-        var challenger='';
-        if(ps.challengerScores && ps.challengerScores[i]!=null){
-          var cs=ps.challengerScores[i]; challenger = cs===0 ? ' · they: X' : ' · they: '+cs+'/6';
-        }
-        return '<div style="display:flex;justify-content:space-between;gap:8px;align-items:center;border:2px solid '+borderColor+';border-radius:10px;padding:8px 10px;background:'+bg+';box-shadow:'+shadow+'">'
-          +'<div style="display:flex;gap:8px;align-items:center;min-width:0"><span style="font-size:16px">'+statusIcon+'</span><b style="font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+entry.n+' '+entry.s+'</b><span class="small-mono" style="opacity:.6;white-space:nowrap">'+ARCH[entry.c%ARCH.length]+'</span></div>'
-          +'<div style="display:flex;gap:6px;align-items:center;flex-shrink:0"><span class="pill" style="background:'+statusColor+';color:'+(statusColor==='#f5f5f0'?'#111':'#fff')+';border-color:var(--ink)">'+extra+challenger+'</span></div></div>';
+        var icon='⏳', bg='#fff', border='var(--ink)', extra='pending';
+        if(i < ps.index){ if(res){ if(res.won){ icon='✅'; bg='#e8f5e9'; extra=res.count+'/6'; } else { icon='❌'; bg='#fef2e8'; extra=res.count+'/6 X'; } } border='#bbb'; }
+        else if(i===ps.index){ icon='👉'; bg='#FFFEF7'; border='#0072B2'; extra='current — playing now'; }
+        return '<div style="display:flex;justify-content:space-between;gap:8px;align-items:center;border:2px solid '+border+';border-radius:10px;padding:8px 10px;background:'+bg+'"><div style="display:flex;gap:8px;align-items:center;min-width:0"><span>'+icon+'</span><b style="font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+entry.n+' '+entry.s+'</b></div><span class="pill">'+extra+'</span></div>';
       }).join('');
     }
-    if(comp){
-      if(ps.challengerScores && ps.results && ps.results.filter(Boolean).length){
-        var yourWins = ps.results.filter(function(r){return r&&r.won;}).length;
-        var yourTotal = ps.results.filter(Boolean).reduce(function(a,r){return a+(r.count||0);},0);
-        var theirWins = ps.challengerScores.filter(function(s){return s>0;}).length;
-        var theirTotal = ps.challengerScores.reduce(function(a,s){return a+(s>0?s:6);},0);
-        comp.style.display='block';
-        comp.innerHTML='<div style="border:1.6px dashed var(--ink);border-radius:10px;padding:8px 10px;background:#FFFEF7;line-height:1.4">⚔️ VS Challenger: you <b>'+yourWins+'/'+ps.results.filter(Boolean).length+'</b> in '+yourTotal+' guesses — them <b>'+theirWins+'/'+ps.size+'</b> in '+theirTotal+' guesses. '+ (yourWins>theirWins || (yourWins===theirWins && yourTotal < theirTotal) ? 'You\'re ahead! 🔥' : 'Can you beat them?') +'</div>';
-      }else if(ps.challengerScores){
-        comp.style.display='block';
-        var totalCh = ps.challengerScores.reduce(function(a,s){return a+(s>0?s:6);},0);
-        var winsCh = ps.challengerScores.filter(function(s){return s>0;}).length;
-        comp.innerHTML='<div style="border:1.6px dashed var(--ink);border-radius:10px;padding:8px 10px;background:#FFFEF7">⚔️ Challenger scored <b>'+winsCh+'/'+ps.size+'</b> in '+totalCh+' guesses — beat it!</div>';
-      }else{
-        comp.style.display='none';
-      }
-    }
   }
-
   function renderPackSummary(){
     var ps = VHPastModern.getPackState();
     if(!ps.isPack || !ps.complete) return;
-    var summaryCard = $('#pack-summary');
-    if(!summaryCard) return;
+    var summaryCard = $('#pack-summary'); if(!summaryCard) return;
     summaryCard.style.display='block';
     var solved = ps.results.filter(function(r){return r&&r.won;}).length;
     var totalGuesses = ps.results.reduce(function(a,r){return a+(r? r.count:0);},0);
     var avg = ps.results.length ? (totalGuesses/ps.results.length).toFixed(1) : '0';
-    var gridEmoji = ps.results.map(function(r){
-      if(!r) return '⬜';
-      if(!r.won) return '❌';
-      if(r.count<=2) return '🟩🔥';
-      if(r.count<=4) return '🟩';
-      return '🟨';
-    }).join(' ');
-    var rows = ps.entries.map(function(e,i){
-      var r=ps.results[i];
-      var status = r && r.won ? '✅ '+r.count+'/6' : r ? '❌ '+r.count+'/6' : '—';
-      var challenger = ps.challengerScores && ps.challengerScores[i] ? ' vs them '+ps.challengerScores[i]+'/6' : '';
-      return '<div style="display:flex;justify-content:space-between;gap:8px;font-size:13px;border-top:1px solid #eee;padding:6px 0"><span><b>'+e.n+' '+e.s+'</b> — '+(ARCH[e.c%ARCH.length]||'')+'</span><span class="small-mono">'+status+challenger+'</span></div>';
-    }).join('');
-    summaryCard.innerHTML =
-      '<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">'
-      +'<div><div class="small-mono">Pack complete — '+ps.code.slice(0,28)+'</div><h3 class="hd" style="margin:4px 0 0;font-size:22px">'+solved+'/'+ps.size+' solved — '+totalGuesses+' guesses — avg '+avg+'</h3><div style="font-size:18px;margin-top:6px">'+gridEmoji+'</div></div>'
-      +'<div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-primary" id="btn-copy-pack-link">Copy Challenge Link</button><button class="btn btn-accent" id="btn-copy-pack-results">Copy Results</button><button class="btn" id="btn-share-pack-image">Share Image</button></div></div>'
-      +'<div style="margin-top:12px">'+rows+'</div>'
-      +'<div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap"><a class="btn" href="/play?pack='+ps.ids.join('-')+'">Replay pack</a><button class="btn" id="btn-new-pack-same-size" type="button">New Pack '+ps.size+'</button><a class="btn" href="/play">Daily</a><a class="btn" href="/">Home</a></div>';
-    var copyLinkBtn = summaryCard.querySelector('#btn-copy-pack-link');
-    if(copyLinkBtn){
-      copyLinkBtn.addEventListener('click', async function(){
-        var url = VHPastModern.packShareUrl(ps.ids);
-        try{ await navigator.clipboard.writeText(url); copyLinkBtn.textContent='Copied!'; setTimeout(function(){copyLinkBtn.textContent='Copy Challenge Link';},1200); }catch{ prompt('Copy link', url); }
-      });
-    }
-    var copyResBtn = summaryCard.querySelector('#btn-copy-pack-results');
-    if(copyResBtn){
-      copyResBtn.addEventListener('click', async function(){
-        var scores = ps.results.map(function(r){ return r ? (r.won ? r.count : 0) : 0; });
-        var url = VHPastModern.packShareUrl(ps.ids, scores);
-        var lines = ps.entries.map(function(e,i){
-          var r=ps.results[i]; return (r&&r.won?'✅':'❌')+' '+e.n+' '+e.s+': '+(r? r.count+'/6':'—');
-        }).join('\n');
-        var text = 'Vector Hoops Pack ('+ps.size+') — '+solved+'/'+ps.size+' in '+totalGuesses+' guesses (avg '+avg+')\n'+lines+'\nChallenge me: '+url;
-        try{ await navigator.clipboard.writeText(text); copyResBtn.textContent='Copied!'; setTimeout(function(){copyResBtn.textContent='Copy Results';},1400); }catch{ alert(text); }
-      });
-    }
-    var shareImgBtn = summaryCard.querySelector('#btn-share-pack-image');
-    if(shareImgBtn){
-      shareImgBtn.addEventListener('click', async function(){
-        var opts={packEntries: ps.entries, results: ps.results, packCode: ps.code, solved: solved, totalGuesses: totalGuesses, avg: avg, size: ps.size, ids: ps.ids};
-        if(window.VHShare && VHShare.sharePack){ await VHShare.sharePack(opts); }
-      });
-    }
-    var newSameBtn = summaryCard.querySelector('#btn-new-pack-same-size');
-    if(newSameBtn){
-      newSameBtn.addEventListener('click', function(){
-        var entries = VHPastModern.generateRandomPack(ps.size);
-        var ids = entries.map(function(e){return e.i;});
-        location.href = VHPastModern.packShareUrl(ids);
-      });
-    }
+    var rows = ps.entries.map(function(e,i){ var r=ps.results[i]; var status = r && r.won ? '✅ '+r.count+'/6' : r ? '❌ '+r.count+'/6' : '—'; return '<div style="display:flex;justify-content:space-between;gap:8px;font-size:13px;border-top:1px solid #eee;padding:6px 0"><span><b>'+e.n+' '+e.s+'</b></span><span class="small-mono">'+status+'</span></div>'; }).join('');
+    summaryCard.innerHTML = '<div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap"><div><div class="small-mono">Pack complete — '+ps.code.slice(0,28)+'</div><h3 class="hd" style="margin:4px 0 0"> '+solved+'/'+ps.size+' solved — '+totalGuesses+' guesses — avg '+avg+'</h3></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-primary" id="btn-copy-pack-link">Copy Link</button></div></div><div style="margin-top:10px">'+rows+'</div><div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap"><a class="btn" href="/play?pack='+ps.ids.join('-')+'">Replay</a><button class="btn" id="btn-new-pack-same-size" type="button">New Pack '+ps.size+'</button><a class="btn" href="/play">Daily</a></div>';
   }
 
   function finish(){
     var won=G.guesses.some(function(g){return g.rank===0;});
     var over=won || G.guesses.length>=6;
-    var resEl=$('#result'); var st=VHPastModern.state();
-    var isPack = !!st.isPack;
-    if(!over){ resEl.classList.add('hidden'); if(isPack) renderPackProgress(); return; }
-    resEl.classList.remove('hidden');
-    var closest=st.closestModern;
-    var sortedTop=st.modernListSorted.slice(0,6).map(function(o,i){return (i+1)+'. '+o.m.n+' '+o.m.s+' '+(o.sim*100).toFixed(1)+'%';}).join(' · ');
-
-    // ---- pack handling: store result ----
-    if(isPack){
-      var packRes = {guesses: G.guesses.slice(), won: won, count: G.guesses.length, solved: won};
-      // ensure packResults array exists and store
-      if(!st.packResults) st.packResults = [];
-      st.packResults[st.packIndex] = packRes;
-      // also keep getPackState updated (it reads from st)
-      renderPackProgress();
-    }
-
+    var resEl=$('#result'); var st=VHPastModern.state(); var isPack=!!st.isPack;
+    if(!over){ resEl.innerHTML=''; resEl.style.display='none'; if(isPack) renderPackProgress(); updateStatusBar(); return; }
+    resEl.style.display='block';
+    var closest=st.closestModern; var sortedTop=st.modernListSorted.slice(0,5).map(function(o,i){return (i+1)+'. '+o.m.n+' '+(o.sim*100).toFixed(0)+'%';}).join(' • ');
     if(isPack){
       var ps = VHPastModern.getPackState();
-      var isLast = ps.index+1 >= ps.size;
+      if(!st.packResults) st.packResults=[]; st.packResults[st.packIndex]={guesses:G.guesses.slice(), won:won, count:G.guesses.length};
+      renderPackProgress();
+    }
+    if(isPack){
+      var ps=VHPastModern.getPackState(); var isLast=ps.index+1>=ps.size;
       if(won){
-        resEl.innerHTML='<div class="card" style="border-color:var(--green)"><h3 class="hd" style="margin:0 0 6px">Solved in '+G.guesses.length+'/6 — '+st.target.n+' → '+closest.entry.n+'</h3><div style="font-size:13px;line-height:1.5">Answer: '+closest.entry.n+' '+closest.entry.s+' '+(closest.sim*100).toFixed(1)+'%<br>Top: '+sortedTop+'</div><div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">'+(isLast ? '<span class="pill" style="background:var(--green);color:#fff">Pack final!</span>' : '<button class="btn btn-primary" id="btn-next-pack">Next: '+(ps.entries[ps.index+1] ? ps.entries[ps.index+1].n+' ' : '')+'→</button>')+'<button class="btn" id="btn-pack-skip-progress">View pack progress</button></div></div>';
+        resEl.innerHTML='<div class="card" style="border-color:var(--green)"><h3 class="hd" style="margin:0 0 6px">✅ Solved in '+G.guesses.length+'/6 — '+st.target.n+' → '+closest.entry.n+'</h3><div style="font-size:13px;line-height:1.5">Answer: '+closest.entry.n+' '+closest.entry.s+' '+(closest.sim*100).toFixed(1)+'%<br>Top 5: '+sortedTop+'</div><div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">'+(isLast? '<span class="pill" style="background:var(--green);color:#fff">Pack final!</span>' : '<button class="btn btn-primary" id="btn-next-pack">Next: '+(ps.entries[ps.index+1]? ps.entries[ps.index+1].n : '')+' →</button>')+'</div></div>';
       }else{
-        resEl.innerHTML='<div class="card" style="border-color:var(--verm)"><h3 class="hd" style="margin:0 0 6px">Revealed — '+st.target.n+' → '+closest.entry.n+'</h3><div style="font-size:13px;line-height:1.5">Closest: '+closest.entry.n+' '+(closest.sim*100).toFixed(1)+'%<br>Top: '+sortedTop+'</div><div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">'+(isLast ? '<span class="pill" style="background:var(--verm);color:#fff">Pack final</span>' : '<button class="btn btn-primary" id="btn-next-pack">Next →</button>')+'<button class="btn" id="btn-pack-skip-progress">View progress</button></div></div>';
+        resEl.innerHTML='<div class="card" style="border-color:var(--verm)"><h3 class="hd" style="margin:0 0 6px">❌ Revealed — '+st.target.n+' → '+closest.entry.n+'</h3><div style="font-size:13px;line-height:1.5">Closest: '+closest.entry.n+' '+(closest.sim*100).toFixed(1)+'%<br>Top 5: '+sortedTop+'</div><div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">'+(isLast? '<span class="pill">Pack final</span>' : '<button class="btn btn-primary" id="btn-next-pack">Next →</button>')+'</div></div>';
       }
-      var nextBtn = document.getElementById('btn-next-pack');
-      if(nextBtn){
-        nextBtn.addEventListener('click', function(){
-          var nxt = VHPastModern.advancePack();
-          if(!nxt){
-            // complete
-            renderPackProgress();
-            renderPackSummary();
-            resEl.classList.add('hidden');
-            $('#guesses').innerHTML='';
-            G.guesses=[];
-            renderPast();
-            projectFrame(); draw();
-            window.scrollTo({top:0, behavior:'smooth'});
-            confettiBurst();
-            return;
-          }
-          // reset for next puzzle
-          G.guesses=[];
-          try{ VHPastModern.state().guesses=[]; }catch{}
-          renderPast();
-          renderGuesses();
-          renderPackProgress();
-          resEl.classList.add('hidden');
-          $('#past-closest-hint').style.display='none';
-          $('#warm-label').style.display='none';
-          $('#guess-input').value='';
-          projectFrame(); draw();
-        });
-      }
-      var progBtn = document.getElementById('btn-pack-skip-progress');
-      if(progBtn){ progBtn.addEventListener('click', function(){ document.getElementById('pack-progress')?.scrollIntoView({behavior:'smooth'}); }); }
-      if(isLast){
-        // if last puzzle over, show summary after short delay
-        setTimeout(function(){
-          // mark complete if not yet
-          var st2 = VHPastModern.state();
-          if(st2.packIndex+1 >= st2.packSize){
-            st2.isPackComplete = true;
-            // ensure last result stored (already)
-          }
-          renderPackSummary();
-          // also keep progress updated
-          renderPackProgress();
-          if(won) confettiBurst();
-        }, 300);
-        // streak unaffected
-      } else {
-        if(won) confettiBurst();
-      }
+      var nextBtn=document.getElementById('btn-next-pack');
+      if(nextBtn){ nextBtn.addEventListener('click',function(){ var nxt=VHPastModern.advancePack(); if(!nxt){ renderPackSummary(); resEl.style.display='none'; $('#guesses').innerHTML=''; G.guesses=[]; renderPast(); projectFrame(); draw(); confettiBurst(); return; } G.guesses=[]; renderPast(); renderGuesses(); renderPackProgress(); resEl.style.display='none'; $('#past-closest-hint').style.display='none'; $('#warm-label').style.display='none'; $('#guess-input').value=''; projectFrame(); draw(); }); }
+      if(isLast){ setTimeout(function(){ var st2=VHPastModern.state(); if(st2.packIndex+1>=st2.packSize) st2.isPackComplete=true; renderPackSummary(); renderPackProgress(); if(won) confettiBurst(); },300); } else if(won) confettiBurst();
     }else{
       if(won){
-        var cur=loadStreak()+1; saveStreak(cur); $('#streak-pill').textContent='streak '+cur;
-        try{ VHPastModern.onDailyWin(st.dayKey); }catch{}
-        resEl.innerHTML='<div class="card" style="border-color:var(--green)"><h3 class="hd" style="margin:0 0 6px">Solved in '+G.guesses.length+'/6 — '+st.target.n+' → '+closest.entry.n+'</h3><div style="font-size:13px;line-height:1.5">Answer: '+closest.entry.n+' '+closest.entry.s+' '+(closest.sim*100).toFixed(1)+'%<br>Top: '+sortedTop+'</div></div>';
-        confettiBurst();
+        var cur=loadStreak()+1; saveStreak(cur); $('#streak-pill').textContent='streak '+cur; try{ VHPastModern.onDailyWin(st.dayKey); }catch{}
+        resEl.innerHTML='<div class="card" style="border-color:var(--green)"><h3 class="hd" style="margin:0 0 6px">✅ Solved in '+G.guesses.length+'/6 — '+st.target.n+' → '+closest.entry.n+'</h3><div style="font-size:13px;line-height:1.5">Answer: '+closest.entry.n+' '+closest.entry.s+' '+(closest.sim*100).toFixed(1)+'%<br>Top 5: '+sortedTop+'</div></div>'; confettiBurst();
       }else{
-        saveStreak(0); $('#streak-pill').textContent='streak 0';
-        try{ VHPastModern.onDailyLoss(st.dayKey); }catch{}
-        resEl.innerHTML='<div class="card" style="border-color:var(--verm)"><h3 class="hd" style="margin:0 0 6px">Revealed — '+st.target.n+' → '+closest.entry.n+'</h3><div style="font-size:13px;line-height:1.5">Closest: '+closest.entry.n+' '+(closest.sim*100).toFixed(1)+'%<br>Top: '+sortedTop+'</div></div>';
+        saveStreak(0); $('#streak-pill').textContent='streak 0'; try{ VHPastModern.onDailyLoss(st.dayKey); }catch{}
+        resEl.innerHTML='<div class="card" style="border-color:var(--verm)"><h3 class="hd" style="margin:0 0 6px">❌ Revealed — '+st.target.n+' → '+closest.entry.n+'</h3><div style="font-size:13px;line-height:1.5">Closest: '+closest.entry.n+' '+(closest.sim*100).toFixed(1)+'%<br>Top 5: '+sortedTop+'</div></div>';
       }
     }
-    var hintEl=$('#past-closest-hint'); if(hintEl && closest){ hintEl.style.display='block'; hintEl.textContent='Answer: '+closest.entry.n+' '+(closest.sim*100).toFixed(0)+'%'; }
-    projectFrame(); draw();
+    var hintEl=$('#past-closest-hint'); if(hintEl && closest){ hintEl.style.display='block'; hintEl.textContent='Answer: '+closest.entry.n+' '+(closest.sim*100).toFixed(0)+'% — game over'; }
+    projectFrame(); draw(); updateStatusBar();
   }
+
   function doGuess(){
     var input=$('#guess-input'); var name=(input.value||'').trim(); if(!name) return;
+    var low=name.toLowerCase(); var m=name.match(/^(.+?)\s+\d{4}-\d{2}$/); if(m) low=m[1].trim().toLowerCase();
+    if(G.guesses.some(function(g){ return (g.name||'').toLowerCase().trim()===low; })){ alert('Already guessed'); input.value=''; return; }
     var r=VHPastModern.guessModern(name); if(!r.ok){ alert(r.reason); return; }
-    G.guesses.push(r.guess); saveGuesses(); input.value='';
-    try{ VHPastModern.state().guesses = G.guesses; }catch{}
+    if(G.guesses.some(function(g){ return (g.name||'').toLowerCase().trim()===r.guess.name.toLowerCase().trim() || g.idx===r.guess.idx; })){ alert('Already guessed'); input.value=''; return; }
+    G.guesses.push(r.guess);
+    try{ VHPastModern.state().guesses = G.guesses.slice(); }catch{}
+    saveGuesses(); input.value='';
     var warmEl=$('#warm-label'); var wc=VHPastModern.warmCold(); if(wc && G.guesses.length>1){ warmEl.style.display='inline-flex'; warmEl.textContent=wc; } else warmEl.style.display='none';
     renderGuesses(); finish(); projectFrame(); draw();
   }
+
+  function setActiveModeTab(mode){
+    document.querySelectorAll('.mode-tab').forEach(function(btn){
+      var m=btn.dataset.mode;
+      if(m===mode) btn.classList.add('is-active'); else btn.classList.remove('is-active');
+    });
+    var desc=$('#mode-desc');
+    if(!desc) return;
+    var texts={
+      daily:'Daily puzzle — one past All-Star per day. Game begins the moment you see the target card. Solve before midnight UTC to keep streak alive.',
+      random:'Random spin — instant random All-Star, 6 tries. Does NOT affect daily streak. Game begins as soon as new target loads.',
+      pack1:'Solo Pack — 1 random All-Star to solve, shareable challenge link. Game begins when pack loads, ends after 1.',
+      pack3:'Triple Pack — 3 random All-Stars back-to-back. Game begins on puzzle 1/3, you advance after each win/loss. Share one link for all 3.',
+      pack5:'Full Court Pack — 5 All-Stars. The viral battle mode. Game begins on 1/5, progress saved per puzzle.'
+    };
+    desc.textContent=texts[mode]||texts.daily;
+  }
+
   async function main(){
     resize(); window.addEventListener('resize',resize,{passive:true});
     canvas.addEventListener('mousedown',onDown); canvas.addEventListener('mousemove',onMove); window.addEventListener('mouseup',onUp);
@@ -560,128 +623,69 @@ button,.input{min-height:44px}
     initBase(st.searchLite.players);
     projectFrame(); draw(); loop(0);
 
-    // pack UI wiring
-    var packHub = $('#pack-hub');
-    var packProgress = $('#pack-progress');
-    var packSummary = $('#pack-summary');
-    var isPack = !!st.isPack;
-    if(isPack){
-      if(packHub) packHub.style.display='none';
-      if(packProgress) packProgress.style.display='block';
-      if(packSummary) packSummary.style.display='none';
-      renderPackProgress();
-      // pack share copy
-      var packCopyBtn=$('#pack-share-link-btn');
-      if(packCopyBtn){
-        packCopyBtn.addEventListener('click', async function(){
-          var ps=VHPastModern.getPackState();
-          var url=VHPastModern.packShareUrl(ps.ids);
-          try{ await navigator.clipboard.writeText(url); packCopyBtn.textContent='Copied!'; setTimeout(function(){packCopyBtn.textContent='📋 Copy challenge link';},1200); }catch{ prompt('Copy link', url); }
-        });
-      }
-    }else{
-      if(packHub) packHub.style.display='block';
-      // wire pack hub buttons
-      document.querySelectorAll('[data-pack-n]').forEach(function(btn){
-        btn.addEventListener('click', function(){
-          var n = parseInt(btn.dataset.packN||btn.getAttribute('data-pack-n'),10);
-          if(!n) n=3;
-          var entries = VHPastModern.generateRandomPack(n);
-          var ids = entries.map(function(e){return e.i;});
-          var url = VHPastModern.packShareUrl(ids);
-          location.href = url;
-        });
+    // mode tabs logic
+    var isPack=!!st.isPack; var mode='daily';
+    if(isPack){ mode='pack'+st.packSize; } else if(st.isRandom) mode='random'; else if(st.urlDay) mode='daily';
+    setActiveModeTab(mode);
+    document.querySelectorAll('.mode-tab').forEach(function(btn){
+      btn.addEventListener('click',function(){
+        var m=btn.dataset.mode;
+        if(m.startsWith('pack')){ var n=parseInt(btn.dataset.packN||'3',10); var entries=VHPastModern.generateRandomPack(n); var ids=entries.map(function(e){return e.i;}); location.href=VHPastModern.packShareUrl(ids); return; }
+        if(m==='random'){ var p=VHPastModern.pickRandomPast(); location.href='/play?mode=random&r='+p.i; return; }
+        if(m==='daily'){ location.href='/play'; return; }
       });
-      if(packProgress) packProgress.style.display='none';
-      if(packSummary) packSummary.style.display='none';
-    }
+    });
 
-    var saved=loadGuesses();
+    var packProgress=$('#pack-progress'); var packSummary=$('#pack-summary');
+    if(isPack){ packProgress.style.display='block'; renderPackProgress(); } else { packProgress.style.display='none'; }
+
     try{ VHPastModern.computeClosest(); }catch{}
+    var saved=loadGuesses();
     if(!isPack && saved.length){
-      var rebuilt=[];
-      for(var j=0;j<saved.length;j++){
-        var sg=saved[j];
-        var rr=st.modernListSorted.find(function(o){return o.m.n===sg.name;});
-        if(rr) rebuilt.push({name:sg.name, season:sg.season, idx:rr.m.i, sim:rr.sim, rank: st.modernListSorted.findIndex(function(o){return o.m.n===sg.name;}), x:rr.m.x,y:rr.m.y,z:rr.m.z,c:rr.m.c});
-      }
-      G.guesses=rebuilt; VHPastModern.state().guesses=rebuilt;
-    }else if(isPack){
-      G.guesses=[]; VHPastModern.state().guesses=[];
-    }
+      var rebuilt=[]; var seenRebuild={};
+      for(var j=0;j<saved.length;j++){ var sg=saved[j]; var key=(sg.name||'').toLowerCase().trim(); if(!key || seenRebuild[key]) continue; seenRebuild[key]=true; var rr=st.modernListSorted.find(function(o){return o.m.n===sg.name;}); if(rr) rebuilt.push({name:sg.name, season:sg.season, idx:rr.m.i, sim:rr.sim, rank: st.modernListSorted.findIndex(function(o){return o.m.n===sg.name;}), x:rr.m.x,y:rr.m.y,z:rr.m.z,c:rr.m.c}); }
+      G.guesses=rebuilt.slice(); VHPastModern.state().guesses=rebuilt.slice();
+    } else if(isPack){ G.guesses=[]; VHPastModern.state().guesses=[]; }
+
     renderPast(); renderGuesses(); attachSuggest(); finish();
-    if(isPack) renderPackProgress();
+
+    // onboarding
+    var onboardSeen=localStorage.getItem('vh.onboardSeenV2');
+    var backdrop=$('#onboarding-backdrop');
+    function openOnboard(){ if(backdrop){ backdrop.hidden=false; document.body.classList.add('vh-modal-open'); } }
+    function closeOnboard(){ if(backdrop){ backdrop.hidden=true; document.body.classList.remove('vh-modal-open'); } localStorage.setItem('vh.onboardSeenV2','1'); }
+    if(!onboardSeen){ setTimeout(openOnboard, 600); }
+    $('#btn-howto')?.addEventListener('click', openOnboard);
+    $('#btn-onboard-close')?.addEventListener('click', closeOnboard);
+    $('#btn-onboard-play')?.addEventListener('click', function(){ closeOnboard(); $('#guess-input')?.focus(); });
+    $('#btn-onboard-random')?.addEventListener('click', function(){ closeOnboard(); var p=VHPastModern.pickRandomPast(); location.href='/play?mode=random&r='+p.i; });
+    backdrop?.addEventListener('click', function(e){ if(e.target===backdrop) closeOnboard(); });
+    $('#btn-focus-guess')?.addEventListener('click', function(){ $('#guess-input')?.focus(); window.scrollTo({top: document.getElementById('guess-card').offsetTop - 20, behavior:'smooth'}); });
+
     $('#guess-btn').addEventListener('click',doGuess);
     $('#guess-input').addEventListener('keydown',function(e){ if(e.key==='Enter'){ e.preventDefault(); doGuess(); } });
     $('#btn-random').addEventListener('click',function(){
-      if(st.isPack){
-        if(confirm('Leave pack? Go random?')){
-          var p=VHPastModern.pickRandomPast(); G.guesses=[]; saveGuesses(); VHPastModern.state().guesses=[]; renderPast(); renderGuesses(); $('#result').classList.add('hidden'); $('#past-closest-hint').style.display='none'; $('#warm-label').style.display='none'; projectFrame(); draw();
-          // navigate out of pack to random mode? keep current page but clear pack param
-          history.replaceState(null,'','/play?mode=random');
-          location.reload();
-        }
-        return;
-      }
-      var p=VHPastModern.pickRandomPast(); G.guesses=[]; saveGuesses(); VHPastModern.state().guesses=[]; renderPast(); renderGuesses(); $('#result').classList.add('hidden'); $('#past-closest-hint').style.display='none'; $('#warm-label').style.display='none'; projectFrame(); draw();
+      var p=VHPastModern.pickRandomPast(); if(st.isPack){ if(confirm('Leave pack?')){ location.href='/play?mode=random&r='+p.i; } return; } location.href='/play?mode=random&r='+p.i;
     });
     $('#btn-new').addEventListener('click',function(){
-      if(st.isPack){
-        // generate new pack same size
-        var entries = VHPastModern.generateRandomPack(st.packSize||3);
-        var ids = entries.map(function(e){return e.i;});
-        location.href = VHPastModern.packShareUrl(ids);
-        return;
-      }
+      if(st.isPack){ var entries=VHPastModern.generateRandomPack(st.packSize||3); var ids=entries.map(function(e){return e.i;}); location.href=VHPastModern.packShareUrl(ids); return; }
       localStorage.removeItem(STORAGE_GUESS); location.href='/play';
     });
-
     $('#share-btn').addEventListener('click',async function(){
-      var st=VHPastModern.state(); var won=G.guesses.some(function(g){return g.rank===0;});
-      var streak=loadStreak();
-      if(st.isPack){
-        var ps=VHPastModern.getPackState();
-        var opts={packEntries: ps.entries, results: ps.results, packCode: ps.code, solved: ps.results.filter(function(r){return r&&r.won;}).length, totalGuesses: ps.results.reduce(function(a,r){return a+(r?r.count:0);},0), avg: (ps.results.reduce(function(a,r){return a+(r?r.count:0);},0)/ps.size).toFixed(1), size: ps.size, ids: ps.ids};
-        if(window.VHShare && VHShare.sharePack){ await VHShare.sharePack(opts); return; }
-      }
-      var opts={ puzzleNum: st.puzzleNum, dayKey: st.dayKey, pastName: st.target.n, pastSeason: st.target.s, guesses: G.guesses, answerName: st.closestModern? st.closestModern.entry.n+' '+st.closestModern.entry.s : '', answerSim: st.closestModern? st.closestModern.sim: 0, won: won, revealed: G.guesses.length>=6||won, streak: streak, url: location.origin+'/play?day='+st.dayKey };
-      if(window.VHShare && window.VHShare.sharePastModern){ await window.VHShare.sharePastModern(opts); }
-      else { var grid=G.guesses.map(function(g){ return g.rank===0?'🟩': g.rank<=3?'🟨': g.rank<=10?'🟧':'⬜'; }).join(''); var text='Vector Hoops P#'+st.puzzleNum+' '+(won?G.guesses.length+'/6':'X/6')+' '+grid; if(navigator.clipboard) navigator.clipboard.writeText(text); }
+      var st=VHPastModern.state(); var won=G.guesses.some(function(g){return g.rank===0;}); var streak=loadStreak();
+      if(st.isPack){ var ps=VHPastModern.getPackState(); var opts={packEntries: ps.entries, results: ps.results, packCode: ps.code, solved: ps.results.filter(function(r){return r&&r.won;}).length, totalGuesses: ps.results.reduce(function(a,r){return a+(r?r.count:0);},0), avg: (ps.results.reduce(function(a,r){return a+(r?r.count:0);},0)/ps.size).toFixed(1), size: ps.size, ids: ps.ids}; if(window.VHShare && VHShare.sharePack){ await VHShare.sharePack(opts); return; } }
+      var opts={ puzzleNum: st.puzzleNum, dayKey: st.dayKey, pastName: st.target.n, pastSeason: st.target.s, guesses: G.guesses, answerName: st.closestModern? st.closestModern.entry.n+' '+st.closestModern.entry.s : '', answerSim: st.closestModern? st.closestModern.sim: 0, won: won, revealed: G.guesses.length>=6||won, streak: streak, url: location.origin+'/play?day='+st.dayKey }; if(window.VHShare && window.VHShare.sharePastModern){ await window.VHShare.sharePastModern(opts); } else { var grid=G.guesses.map(function(g){ return g.rank===0?'🟩': g.rank<=3?'🟨': g.rank<=10?'🟧':'⬜'; }).join(''); var text='Vector Hoops P#'+st.puzzleNum+' '+(won?G.guesses.length+'/6':'X/6')+' '+grid; if(navigator.clipboard) navigator.clipboard.writeText(text); }
     });
     $('#share-text-btn').addEventListener('click',function(){
       var st=VHPastModern.state(); var won=G.guesses.some(function(g){return g.rank===0;});
-      if(st.isPack){
-        var ps=VHPastModern.getPackState();
-        var scores = ps.results.map(function(r){ return r ? (r.won ? r.count : 0) : 0; });
-        var url=VHPastModern.packShareUrl(ps.ids, scores);
-        var lines=ps.entries.map(function(e,i){ var r=ps.results[i]; return (r&&r.won?'✅':'❌')+' '+e.n+' '+e.s+': '+(r? r.count+'/6':'—'); }).join('\n');
-        var solved=ps.results.filter(function(r){return r&&r.won;}).length;
-        var total=ps.results.reduce(function(a,r){return a+(r?r.count:0);},0);
-        var text='Vector Hoops Pack ('+ps.size+') — '+solved+'/'+ps.size+' in '+total+' guesses\n'+lines+'\n'+url;
-        if(navigator.clipboard) navigator.clipboard.writeText(text).then(function(){ var b=$('#share-text-btn'); b.textContent='Copied'; setTimeout(function(){b.textContent='Copy Grid';},1200); });
-        else alert(text);
-        return;
-      }
-      var grid=G.guesses.map(function(g){ return g.rank===0?'🟩': g.rank<=3?'🟨': g.rank<=10?'🟧':'⬜'; }).join('');
-      var lines=G.guesses.map(function(g,i){ return (i+1)+'. '+g.name+' '+(g.sim*100).toFixed(0)+'% #'+(g.rank+1); }).join('\n');
-      var text='Vector Hoops P#'+st.puzzleNum+' '+st.dayKey+' '+(won?G.guesses.length+'/6':'X/6')+' '+grid+'\nPast '+st.target.n+' → '+(won?G.guesses.slice(-1)[0].name:'?')+'\n'+lines+'\n'+location.origin+'/play?day='+st.dayKey;
-      if(navigator.clipboard) navigator.clipboard.writeText(text).then(function(){ var b=$('#share-text-btn'); b.textContent='Copied'; setTimeout(function(){b.textContent='Copy Grid';},1200); });
-      else alert(text);
+      if(st.isPack){ var ps=VHPastModern.getPackState(); var scores=ps.results.map(function(r){ return r ? (r.won ? r.count : 0) : 0; }); var url=VHPastModern.packShareUrl(ps.ids, scores); var lines=ps.entries.map(function(e,i){ var r=ps.results[i]; return (r&&r.won?'✅':'❌')+' '+e.n+' '+e.s+': '+(r? r.count+'/6':'—'); }).join('\n'); var solved=ps.results.filter(function(r){return r&&r.won;}).length; var total=ps.results.reduce(function(a,r){return a+(r?r.count:0);},0); var text='Vector Hoops Pack ('+ps.size+') — '+solved+'/'+ps.size+' in '+total+' guesses\n'+lines+'\n'+url; if(navigator.clipboard) navigator.clipboard.writeText(text).then(function(){ var b=$('#share-text-btn'); b.textContent='Copied'; setTimeout(function(){b.textContent='Copy Grid';},1200); }); else alert(text); return; }
+      var grid=G.guesses.map(function(g){ return g.rank===0?'🟩': g.rank<=3?'🟨': g.rank<=10?'🟧':'⬜'; }).join(''); var lines=G.guesses.map(function(g,i){ return (i+1)+'. '+g.name+' '+(g.sim*100).toFixed(0)+'% #'+(g.rank+1); }).join('\n'); var text='Vector Hoops P#'+st.puzzleNum+' '+st.dayKey+' '+(won?G.guesses.length+'/6':'X/6')+' '+grid+'\nPast '+st.target.n+' → '+(won?G.guesses.slice(-1)[0].name:'?')+'\n'+lines+'\n'+location.origin+'/play?day='+st.dayKey; if(navigator.clipboard) navigator.clipboard.writeText(text).then(function(){ var b=$('#share-text-btn'); b.textContent='Copied'; setTimeout(function(){b.textContent='Copy Grid';},1200); }); else alert(text);
     });
     $('#btn-challenge').addEventListener('click',async function(){
-      var st=VHPastModern.state();
-      var url;
-      if(st.isPack){
-        var ps=VHPastModern.getPackState();
-        var scores = ps.results.map(function(r){ return r ? (r.won ? r.count:0):0; });
-        url = VHPastModern.packShareUrl(ps.ids, scores);
-      }else{
-        url=location.origin+'/play?day='+st.dayKey;
-      }
-      var txt='Can you beat my Past→Modern? '+st.target.n+' '+st.target.s+' — '+url;
-      if(st.isPack) txt='Can you beat my Pack ('+st.packSize+')? '+url;
-      try{ if(navigator.clipboard) await navigator.clipboard.writeText(txt); this.textContent='Copied'; setTimeout(function(el){el.textContent='Challenge';}.bind(null,this),1500); }catch{ alert(url); }
+      var st=VHPastModern.state(); var url; if(st.isPack){ var ps=VHPastModern.getPackState(); var scores=ps.results.map(function(r){ return r ? (r.won ? r.count:0):0; }); url=VHPastModern.packShareUrl(ps.ids, scores); } else { url=location.origin+'/play?day='+st.dayKey; } var txt='Can you beat my Past→Modern? '+st.target.n+' '+st.target.s+' — '+url; if(st.isPack) txt='Can you beat my Pack ('+st.packSize+')? '+url; try{ if(navigator.clipboard) await navigator.clipboard.writeText(txt); this.textContent='Copied'; setTimeout(function(el){el.textContent='Challenge link';}.bind(null,this),1500); }catch{ alert(url); }
     });
+    // pack share copy
+    var packCopyBtn=$('#pack-share-link-btn'); if(packCopyBtn){ packCopyBtn.addEventListener('click', async function(){ var ps=VHPastModern.getPackState(); var url=VHPastModern.packShareUrl(ps.ids); try{ await navigator.clipboard.writeText(url); packCopyBtn.textContent='Copied!'; setTimeout(function(){packCopyBtn.textContent='📋 Copy pack link';},1200); }catch{ prompt('Copy link', url); } }); }
   }
   main().catch(function(e){ console.error(e); });
 })();
