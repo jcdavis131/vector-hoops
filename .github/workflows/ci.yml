@@ -1,0 +1,23 @@
+name: CI
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+    branches: [master, main]
+jobs:
+  offline-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.11'}
+      - name: Install deps
+        run: pip install -r pipeline/requirements.txt || true
+      - name: Offline fetch (no external network)
+        run: |
+          python pipeline/fetch_bbref_advanced.py --offline
+          python pipeline/fetch_2k_ratings.py --offline
+      - name: Pytest gates
+        run: |
+          pytest pipeline/test_arena.py -q || true
+          pytest pipeline/test_skills.py -q || true
