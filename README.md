@@ -1,3 +1,19 @@
+# Vector Hoops — NBA Chimera Search over MTNN Embeddings
+
+![CI](https://github.com/jcdavis131/vector-hoops/actions/workflows/ci.yml/badge.svg)
+![Python 3.11](https://img.shields.io/badge/python-3.11-blue)
+![MLOps](https://img.shields.io/badge/MLOps-MTNN%20towers%20%2B%20eval%20gate-green)
+![Data](https://img.shields.io/badge/data-12%2C966%20player--seasons%20%E2%80%A2%2096%E2%80%932026-orange)
+![CQS](https://img.shields.io/badge/CQS-85.87%25%20%2B%20leakfree%20recall%400.977-blueviolet)
+
+**Daily NBA chimera puzzle over an era-honest embedding space.** MTNN v5_concat_b2_h160_t32_d48_mlp128: 120 feats, 17 tower families, concat 544+12→128 L2-norm, heads: 8 archetype + 5 pos + 14 next_profile + 18 skills tower. Leakfree eval: 0.977 recall@10 / 0.6717 purity@20 composite 0.7937 via --split player. Live at https://hoops.dumbmodel.com
+
+> Solo personal project, no connection to employer, built with public/free-tier only (free data pipeline, ONNX optional, static Vercel).
+
+**Live:** https://hoops.dumbmodel.com | **Campaign Lab:** [Chimera Campaign Lab Space](https://agent.meta.ai/s/vector-hoops-chimera-campaign-lab) | **Methods:** `/docs/METHODS.md`
+
+---
+
 # Vector Hoops
 
 Daily NBA chimera puzzle over an era-honest player embedding space.
