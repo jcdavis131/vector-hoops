@@ -60,14 +60,14 @@ export async function mountDriftVoid(canvas){
       const y=-1.8+share*5.2 + Math.random()*0.55;
       const z=getZ(si) + (Math.random()-0.5)*0.22;
       leaguePos[i*3]=x; leaguePos[i*3+1]=y; leaguePos[i*3+2]=z;
-      const col=new THREE.Color(OKABE[p.c%8]); col.lerp(new THREE.Color(0x1A1E26),0.68);
+      const col=new THREE.Color(OKABE[p.c%8]); col.lerp(new THREE.Color(0x1A1E26),0.42);
       leagueCol[i*3]=col.r; leagueCol[i*3+1]=col.g; leagueCol[i*3+2]=col.b;
     }
   }
   const leagueGeo=new THREE.BufferGeometry();
   leagueGeo.setAttribute('position', new THREE.BufferAttribute(leaguePos,3));
   leagueGeo.setAttribute('color', new THREE.BufferAttribute(leagueCol,3));
-  const leagueMat=new THREE.PointsMaterial({ size:isLowEnd?0.03:0.044, vertexColors:true, transparent:true, opacity:0.38, sizeAttenuation:true, depthWrite:false });
+  const leagueMat=new THREE.PointsMaterial({ size:isLowEnd?0.06:0.088, vertexColors:true, transparent:true, opacity:0.72, sizeAttenuation:true, depthWrite:false });
   const leagueCloud=new THREE.Points(leagueGeo, leagueMat);
   scene.add(leagueCloud);
 
@@ -76,9 +76,9 @@ export async function mountDriftVoid(canvas){
     const pts=[];
     for(let s=0;s<seasons.length;s++){ pts.push(new THREE.Vector3((a-3.5)*1.18, -1.8+(seasons[s].shares[a]||0)*5.2, getZ(s))); }
     const curve=new THREE.CatmullRomCurve3(pts);
-    const geo=new THREE.TubeGeometry(curve, seasons.length*2, 0.032, 5, false);
-    const col=new THREE.Color(OKABE[a]); col.lerp(new THREE.Color(0x1A1E26),0.78);
-    ribbonGroup.add(new THREE.Mesh(geo, new THREE.MeshBasicMaterial({ color:col, transparent:true, opacity:0.22, depthWrite:false })));
+    const geo=new THREE.TubeGeometry(curve, seasons.length*2, 0.048, 5, false);
+    const col=new THREE.Color(OKABE[a]); col.lerp(new THREE.Color(0x1A1E26),0.62);
+    ribbonGroup.add(new THREE.Mesh(geo, new THREE.MeshBasicMaterial({ color:col, transparent:true, opacity:0.32, depthWrite:false })));
   }
 
   // All-star pool
