@@ -1,13 +1,18 @@
-/* star-map-void.js — Lemmino combo: embedding map as stars in documentary void
-   12,966 player-seasons = stars, tungsten + cold rim, fog, grain, artifact
-   Interaction: drag rotate, wheel zoom, auto idle, pause/reset compatible
+/* star-map-void.js — Lemmino combo v2: CLEAN
+   Remove sphere, add XYZ glass plate orientation aids, easier to read
+   12,966 player-seasons as stars in documentary void
 */
 export async function mountStarMap(canvas, opts = {}) {
   if (!canvas) return;
   const THREE = await import('three');
 
   const OKABE = ['#0072B2','#D55E00','#009E73','#F0E442','#56B4E9','#CC79A7','#E69F00','#000000'];
-  const ARCH = ["Glass+Rim","LowVol Glass","Low Impact 3P Vol","Def Glass+Rim FT","Vol+3P Vol","3P Acc+Vol","Playmaking+Steals","Scoring Vol"];
+  const ARCH = ["Glass+Rim","LowVol Glass","Low Impact","Def Glass+Rim FT","Vol+3P","3P Acc+Vol","Playmaking","Scoring Vol"];
+  const AXIS_LABELS = [
+    { key:'X', label:'Paint ←→ Perim', short:'X: Paint ↔ Perim' },
+    { key:'Y', label:'Role → Score', short:'Y: Role → Score' },
+    { key:'Z', label:'Off ←→ On', short:'Z: Off ↔ On' }
+  ];
 
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const isLowEnd = (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4) || window.innerWidth < 500;
@@ -15,85 +20,149 @@ export async function mountStarMap(canvas, opts = {}) {
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: !isLowEnd, alpha: true, powerPreference: 'high-performance' });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio||1, 1.8));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
-  renderer.shadowMap.enabled = !isLowEnd;
-  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  renderer.shadowMap.enabled = false;
 
   const scene = new THREE.Scene();
   scene.background = new THREE.Color(0x0A0C10);
   scene.fog = new THREE.FogExp2(0x0A0C10, 0.022);
 
   const camera = new THREE.PerspectiveCamera(34, canvas.clientWidth / canvas.clientHeight, 0.1, 120);
-  camera.position.set(0, 0.8, 9.2);
+  camera.position.set(0, 0.8, 8.6);
 
-  // Lights — Lemmino documentary
-  const amb = new THREE.AmbientLight(0x252836, 0.58);
+  // Lights — documentary, softer now
+  const amb = new THREE.AmbientLight(0x252836, 0.62);
   scene.add(amb);
-  const key = new THREE.DirectionalLight(0xFFE4B2, 1.25);
+  const key = new THREE.DirectionalLight(0xFFE4B2, 0.85);
   key.position.set(4.5, 6, 3.2);
-  key.castShadow = true;
-  key.shadow.mapSize.set(1024,1024);
-  key.shadow.camera.near = 1; key.shadow.camera.far = 22;
-  key.shadow.camera.left = -8; key.shadow.camera.right = 8; key.shadow.camera.top = 8; key.shadow.camera.bottom = -8;
-  key.shadow.bias = -0.0006;
   scene.add(key);
-  const coldRim = new THREE.DirectionalLight(0x86BBFF, 0.72);
+  const coldRim = new THREE.DirectionalLight(0x86BBFF, 0.48);
   coldRim.position.set(-5, 2.5, -4);
   scene.add(coldRim);
-  const fillSpot = new THREE.SpotLight(0xF0E442, 0.85, 18, Math.PI*0.18, 0.32, 1.4);
-  fillSpot.position.set(0,7,1);
-  fillSpot.castShadow = !isLowEnd;
-  scene.add(fillSpot);
 
-  // Ground catcher — very faint, just for shadow
-  const groundGeo = new THREE.PlaneGeometry(80,80);
-  const groundMat = new THREE.MeshStandardMaterial({ color: 0x0E1117, roughness: 0.92, metalness: 0.04, transparent:true, opacity:0.6 });
-  const ground = new THREE.Mesh(groundGeo, groundMat);
-  ground.rotation.x = -Math.PI/2;
-  ground.position.y = -3.2;
-  ground.receiveShadow = true;
-  scene.add(ground);
-
-  // Root group that rotates with user drag — contains stars
+  // Root group that rotates with user drag — contains stars + glass plates
   const starGroup = new THREE.Group();
   scene.add(starGroup);
 
-  // Court fragments as faint evidence lines in void (deconstructed)
-  const courtGroup = new THREE.Group();
-  courtGroup.position.set(0,-0.2,0);
-  starGroup.add(courtGroup);
-  const lineMat = new THREE.LineBasicMaterial({ color: 0xEAE6DE, transparent:true, opacity:0.06 });
-  const lineMatBold = new THREE.LineBasicMaterial({ color: 0xFFFEF7, transparent:true, opacity:0.10 });
-  function wireBox(w,h,z=0,mat=lineMat){
-    const pts = [new THREE.Vector3(-w/2,-h/2,z), new THREE.Vector3(w/2,-h/2,z), new THREE.Vector3(w/2,h/2,z), new THREE.Vector3(-w/2,h/2,z), new THREE.Vector3(-w/2,-h/2,z)];
-    const geo = new THREE.BufferGeometry().setFromPoints(pts);
+  // --- GLASS PLATE ORIENTATION AIDS ---
+  const SPREAD = 4.2;
+  const WALL = SPREAD*1.05;
+  const PLATE_SIZE = WALL*2.2;
+
+  function makeGlassPlate(size, color, opacity=0.045){
+    const geo = new THREE.PlaneGeometry(size, size);
+    const mat = new THREE.MeshStandardMaterial({
+      color: new THREE.Color(color),
+      transparent: true,
+      opacity,
+      roughness: 0.92,
+      metalness: 0.02,
+      side: THREE.DoubleSide,
+      depthWrite: false
+    });
+    return new THREE.Mesh(geo, mat);
+  }
+  function makeGridLine(size, divisions, color, opacity=0.09){
+    const group = new THREE.Group();
+    const step = size / divisions;
+    const half = size/2;
+    const lineMat = new THREE.LineBasicMaterial({ color, transparent:true, opacity });
+    for(let i=-divisions/2;i<=divisions/2;i++){
+      const p = i*step;
+      // vertical
+      const pts1 = [new THREE.Vector3(p,-half,0), new THREE.Vector3(p,half,0)];
+      const g1 = new THREE.BufferGeometry().setFromPoints(pts1);
+      group.add(new THREE.Line(g1, lineMat));
+      // horizontal
+      const pts2 = [new THREE.Vector3(-half,p,0), new THREE.Vector3(half,p,0)];
+      const g2 = new THREE.BufferGeometry().setFromPoints(pts2);
+      group.add(new THREE.Line(g2, lineMat));
+    }
+    return group;
+  }
+  function makeLabelSprite(text, fontSize=18, bg='rgba(10,12,16,0.72)'){
+    const c=document.createElement('canvas'); c.width=420; c.height=56;
+    const ctx=c.getContext('2d');
+    ctx.clearRect(0,0,c.width,c.height);
+    ctx.fillStyle=bg; ctx.beginPath(); ctx.roundRect(4,4,c.width-8,c.height-8,10); ctx.fill();
+    ctx.strokeStyle='rgba(234,230,222,0.18)'; ctx.lineWidth=1.2; ctx.stroke();
+    ctx.fillStyle='#EAE6DE'; ctx.font=`900 ${fontSize}px ui-monospace,monospace`; ctx.textAlign='left'; ctx.textBaseline='middle';
+    ctx.fillText(text, 18, c.height/2+1);
+    const tex=new THREE.CanvasTexture(c); tex.colorSpace=THREE.SRGBColorSpace;
+    const mat=new THREE.SpriteMaterial({ map:tex, transparent:true, depthWrite:false });
+    const spr=new THREE.Sprite(mat); spr.scale.set(2.6,0.34,1);
+    return spr;
+  }
+
+  const orientationWalls = new THREE.Group();
+  starGroup.add(orientationWalls);
+
+  // XY back wall — at z = -WALL
+  const xyPlate = makeGlassPlate(PLATE_SIZE, 0xEAE6DE, 0.038);
+  xyPlate.position.set(0,0,-WALL);
+  orientationWalls.add(xyPlate);
+  const xyGrid = makeGridLine(PLATE_SIZE, isLowEnd?8:12, 0xEAE6DE, 0.07);
+  xyGrid.position.copy(xyPlate.position);
+  orientationWalls.add(xyGrid);
+
+  // XZ floor — at y = -WALL
+  const xzPlate = makeGlassPlate(PLATE_SIZE, 0x86BBFF, 0.035);
+  xzPlate.rotation.x = Math.PI/2;
+  xzPlate.position.set(0,-WALL,0);
+  orientationWalls.add(xzPlate);
+  const xzGrid = makeGridLine(PLATE_SIZE, isLowEnd?8:12, 0x86BBFF, 0.06);
+  xzGrid.rotation.x = Math.PI/2;
+  xzGrid.position.copy(xzPlate.position);
+  orientationWalls.add(xzGrid);
+
+  // YZ side wall — at x = -WALL
+  const yzPlate = makeGlassPlate(PLATE_SIZE, 0xF0E442, 0.032);
+  yzPlate.rotation.y = Math.PI/2;
+  yzPlate.position.set(-WALL,0,0);
+  orientationWalls.add(yzPlate);
+  const yzGrid = makeGridLine(PLATE_SIZE, isLowEnd?8:12, 0xF0E442, 0.055);
+  yzGrid.rotation.y = Math.PI/2;
+  yzGrid.position.copy(yzPlate.position);
+  orientationWalls.add(yzGrid);
+
+  // Edge lines for glass plates — crisp 2px ink border style
+  function addPlateEdges(plate){
+    const s=PLATE_SIZE/2;
+    const pts=[new THREE.Vector3(-s,-s,0), new THREE.Vector3(s,-s,0), new THREE.Vector3(s,s,0), new THREE.Vector3(-s,s,0), new THREE.Vector3(-s,-s,0)];
+    const geo=new THREE.BufferGeometry().setFromPoints(pts);
+    const mat=new THREE.LineBasicMaterial({ color:0xEAE6DE, transparent:true, opacity:0.12 });
+    const line=new THREE.Line(geo, mat);
+    line.position.copy(plate.position);
+    line.rotation.copy(plate.rotation);
+    orientationWalls.add(line);
+  }
+  addPlateEdges(xyPlate); addPlateEdges(xzPlate); addPlateEdges(yzPlate);
+
+  // Axis indicator — small RGB-style lines from center with labels
+  const axisLines = new THREE.Group();
+  starGroup.add(axisLines);
+  function axisLine(dir, color){
+    const geo=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,0,0), dir.clone().multiplyScalar(WALL*0.92)]);
+    const mat=new THREE.LineBasicMaterial({ color, transparent:true, opacity:0.42, linewidth:1.5 });
     return new THREE.Line(geo, mat);
   }
-  courtGroup.add(wireBox(7.8,5.4,0,lineMatBold));
-  courtGroup.add(wireBox(7.8,0.06,0,lineMat));
-  courtGroup.add(wireBox(0.06,5.4,0,lineMat));
+  const xLine = axisLine(new THREE.Vector3(1,0,0), 0x56B4E9);
+  const yLine = axisLine(new THREE.Vector3(0,1,0), 0xF0E442);
+  const zLine = axisLine(new THREE.Vector3(0,0,1), 0xD55E00);
+  axisLines.add(xLine,yLine,zLine);
 
-  // Basketball artifact — low-poly, matte, floats at center behind stars
-  const ballGeo = new THREE.IcosahedronGeometry(0.72,2);
-  const ballMat = new THREE.MeshStandardMaterial({ color: 0xC57A3A, roughness:0.88, metalness:0.03, flatShading:true, transparent:true, opacity:0.92 });
-  const ball = new THREE.Mesh(ballGeo, ballMat);
-  ball.position.set(0,0.25,0);
-  ball.castShadow = true;
-  ball.receiveShadow = true;
-  starGroup.add(ball);
-  const seamGeo = new THREE.IcosahedronGeometry(0.728,2);
-  const seamMat = new THREE.MeshBasicMaterial({ color:0x111111, transparent:true, opacity:0.08, wireframe:true });
-  const seam = new THREE.Mesh(seamGeo, seamMat);
-  ball.add(seam);
+  // Axis label sprites — placed at end of each axis
+  const xLab = makeLabelSprite('X: Paint ← → Perim   ',16,'rgba(86,180,233,0.18)');
+  xLab.position.set(WALL*1.02,0,0); axisLines.add(xLab);
+  const yLab = makeLabelSprite('Y: Role → Score   ',16,'rgba(240,228,66,0.18)');
+  yLab.position.set(0,WALL*1.02,0); axisLines.add(yLab);
+  const zLab = makeLabelSprite('Z: Off ← → On   ',16,'rgba(213,94,0,0.18)');
+  zLab.position.set(0,0,WALL*1.02); axisLines.add(zLab);
 
-  // God rays fake volumetrics
-  const rayGeo = new THREE.PlaneGeometry(6,18);
-  const rayMat = new THREE.MeshBasicMaterial({ color:0xFFD8A8, transparent:true, opacity:0.04, blending:THREE.AdditiveBlending, depthWrite:false, side:THREE.DoubleSide });
-  const ray1 = new THREE.Mesh(rayGeo, rayMat);
-  ray1.position.set(-1.2,3,-1.5); ray1.rotation.set(0,-0.4,0.18);
-  starGroup.add(ray1);
-  const ray2 = ray1.clone(); ray2.material = rayMat.clone(); ray2.material.opacity = 0.028;
-  ray2.position.set(1.8,3,-0.8); ray2.rotation.set(0,0.6,-0.12);
-  starGroup.add(ray2);
+  // Center origin dot
+  const originGeo = new THREE.SphereGeometry(0.045, 8,8);
+  const originMat = new THREE.MeshBasicMaterial({ color:0xEAE6DE, transparent:true, opacity:0.22 });
+  const originDot = new THREE.Mesh(originGeo, originMat);
+  starGroup.add(originDot);
 
   // Fetch lite dataset
   let players = [];
@@ -106,34 +175,27 @@ export async function mountStarMap(canvas, opts = {}) {
   const count = players.length || 12966;
   const positions = new Float32Array(count*3);
   const colors = new Float32Array(count*3);
-  const sizes = new Float32Array(count);
 
-  // Spread factor
-  const SPREAD = 4.2;
-
+  const SPREAD_SCALE = 4.2;
   for(let i=0;i<count;i++){
     const p = players[i] || {x:Math.random(), y:Math.random(), z:Math.random(), c:i%8};
-    const ox = (p.x-0.5)*2*SPREAD;
-    const oy = (p.y-0.5)*2*SPREAD;
-    const oz = (p.z-0.5)*2*SPREAD;
-    positions[i*3]=ox; positions[i*3+1]=oy; positions[i*3+2]=oz;
-
+    positions[i*3]=(p.x-0.5)*2*SPREAD_SCALE;
+    positions[i*3+1]=(p.y-0.5)*2*SPREAD_SCALE;
+    positions[i*3+2]=(p.z-0.5)*2*SPREAD_SCALE;
     const hex = OKABE[p.c % OKABE.length];
     const col = new THREE.Color(hex);
-    // mute for Lemmino — desaturate a bit
-    col.lerp(new THREE.Color(0xEAE6DE), 0.18);
+    col.lerp(new THREE.Color(0xEAE6DE), 0.28); // more muted for readability
     colors[i*3]=col.r; colors[i*3+1]=col.g; colors[i*3+2]=col.b;
-    sizes[i]=0.042 + Math.random()*0.018;
   }
 
   const starGeo = new THREE.BufferGeometry();
   starGeo.setAttribute('position', new THREE.BufferAttribute(positions,3));
   starGeo.setAttribute('color', new THREE.BufferAttribute(colors,3));
   const starMat = new THREE.PointsMaterial({
-    size: isLowEnd ? 0.055 : 0.075,
+    size: isLowEnd ? 0.062 : 0.082,
     vertexColors:true,
     transparent:true,
-    opacity:0.82,
+    opacity:0.76,
     sizeAttenuation:true,
     depthWrite:false,
     blending:THREE.AdditiveBlending
@@ -141,28 +203,27 @@ export async function mountStarMap(canvas, opts = {}) {
   const stars = new THREE.Points(starGeo, starMat);
   starGroup.add(stars);
 
-  // Extra dust motes for depth — not interactive
-  const dustCount = isLowEnd ? 600 : 1200;
+  // Reduced dust for cleanliness
+  const dustCount = isLowEnd ? 220 : 380;
   const dustPos = new Float32Array(dustCount*3);
   for(let i=0;i<dustCount;i++){
-    const r = 4.5 + Math.random()*9;
+    const r = 4.5 + Math.random()*6.5;
     const th = Math.random()*Math.PI*2;
-    dustPos[i*3]=Math.cos(th)*r; dustPos[i*3+1]=(Math.random()-0.5)*6+0.5; dustPos[i*3+2]=Math.sin(th)*r;
+    dustPos[i*3]=Math.cos(th)*r;
+    dustPos[i*3+1]=(Math.random()-0.5)*4.2;
+    dustPos[i*3+2]=Math.sin(th)*r;
   }
   const dustGeo = new THREE.BufferGeometry();
   dustGeo.setAttribute('position', new THREE.BufferAttribute(dustPos,3));
-  const dustMat = new THREE.PointsMaterial({ size:0.032, color:0xEAE6DE, transparent:true, opacity:0.18, depthWrite:false, sizeAttenuation:true });
+  const dustMat = new THREE.PointsMaterial({ size:0.028, color:0xEAE6DE, transparent:true, opacity:0.10, depthWrite:false, sizeAttenuation:true });
   const dust = new THREE.Points(dustGeo, dustMat);
   scene.add(dust);
 
-  // Interaction state — matches old 2D map api
+  // Interaction
   let rotY = Math.PI*0.18, rotX = 0.22;
-  let auto = true; let autoSpeed = 0.00022;
+  let auto = true; let autoSpeed = 0.00016;
   let isDragging=false,lastX=0,lastY=0,idleTimer=0;
-  let heroId = 672; // MJ 97-98
-  let hovered = null;
 
-  // Projection cache for hover
   const projectedCache = new Array(count);
   function projectCache(){
     const cy=Math.cos(rotY), sy=Math.sin(rotY), cx=Math.cos(rotX), sx=Math.sin(rotX);
@@ -178,12 +239,9 @@ export async function mountStarMap(canvas, opts = {}) {
       const scale = perspective / (perspective - zr*0.45);
       const sxr = W*0.5 + xr*scale*(W*0.38);
       const syr = H*0.5 - yr*scale*(H*0.38);
-      const depth=(zr+1)*0.5;
-      projectedCache[i]={sx:sxr, sy:syr, depth, xr, yr, zr, i, n:players[i]?.n, s:players[i]?.s, c:players[i]?.c};
+      projectedCache[i]={sx:sxr, sy:syr, depth:(zr+1)*0.5, i, n:players[i]?.n, s:players[i]?.s, c:players[i]?.c};
     }
   }
-
-  // Raycast for hero highlight — simple distance in screen space
   function findClosest(mx,my){
     let best=null, bd=18;
     for(let i=0;i<count;i++){
@@ -194,7 +252,6 @@ export async function mountStarMap(canvas, opts = {}) {
     return best;
   }
 
-  // DOM refs for overlay behavior (existing IDs)
   const factEl = document.getElementById('sky-fact');
   const factInline = document.getElementById('sky-fact-inline');
   const hoverTip = document.getElementById('hover-tip');
@@ -211,12 +268,10 @@ export async function mountStarMap(canvas, opts = {}) {
   ro.observe(canvas);
   onResize();
 
-  // Visibility
   let visible=true;
   const io = new IntersectionObserver(es=>{ visible=es[0]?.isIntersecting??true; }, {threshold:0.01});
   io.observe(canvas);
 
-  // pointer
   function onPointerDown(ev){
     isDragging=true; auto=false;
     lastX= ev.touches?ev.touches[0].clientX:ev.clientX;
@@ -229,7 +284,7 @@ export async function mountStarMap(canvas, opts = {}) {
     const y= ev.touches?ev.touches[0].clientY:ev.clientY;
     if(isDragging){
       const dx=x-lastX, dy=y-lastY;
-      rotY+=dx*0.008; rotX+=dy*0.006;
+      rotY+=dx*0.007; rotX+=dy*0.005;
       rotX=Math.max(-0.9,Math.min(0.9,rotX));
       lastX=x; lastY=y;
       projectCache();
@@ -243,15 +298,13 @@ export async function mountStarMap(canvas, opts = {}) {
         if(factEl) factEl.textContent=(best.n||'')+' '+(best.s||'')+' — '+(ARCH[best.c%ARCH.length]||'');
         if(factInline) factInline.textContent=(best.n||'')+' '+(best.s||'')+' — '+(ARCH[best.c%ARCH.length]||'');
         if(hoverChip) hoverChip.style.opacity='0';
-        hovered=best;
       } else {
         if(hoverTip) hoverTip.style.display='none';
-        if(hoverChip) hoverChip.style.opacity='0.7';
-        hovered=null;
+        if(hoverChip) hoverChip.style.opacity='0.68';
       }
     }
   }
-  function onPointerUp(){ if(isDragging){ isDragging=false; idleTimer=3200; canvas.style.cursor='grab'; } }
+  function onPointerUp(){ if(isDragging){ isDragging=false; idleTimer=4200; canvas.style.cursor='grab'; } }
 
   canvas.addEventListener('mousedown', onPointerDown);
   canvas.addEventListener('mousemove', onPointerMove);
@@ -259,12 +312,11 @@ export async function mountStarMap(canvas, opts = {}) {
   canvas.addEventListener('touchstart', onPointerDown, {passive:true});
   canvas.addEventListener('touchmove', onPointerMove, {passive:true});
   canvas.addEventListener('touchend', onPointerUp);
-  canvas.addEventListener('mouseleave', ()=>{ if(hoverTip) hoverTip.style.display='none'; if(hoverChip) hoverChip.style.opacity='0.7'; });
+  canvas.addEventListener('mouseleave', ()=>{ if(hoverTip) hoverTip.style.display='none'; if(hoverChip) hoverChip.style.opacity='0.68'; });
 
   if(btnPause){ btnPause.addEventListener('click', ()=>{ auto=!auto; btnPause.textContent=auto?'Pause':'Resume'; if(auto) idleTimer=0; }); }
   if(btnReset){ btnReset.addEventListener('click', ()=>{ rotY=Math.PI*0.18; rotX=0.22; auto=true; if(btnPause) btnPause.textContent='Pause'; }); }
 
-  // initial projection
   projectCache();
 
   let t0=performance.now();
@@ -277,41 +329,27 @@ export async function mountStarMap(canvas, opts = {}) {
 
     if(!isDragging && auto){
       rotY+=dt*autoSpeed;
-      rotX+=( (Math.sin(t*0.00018)*0.20 - rotX)*0.018 );
+      rotX+=( (Math.sin(t*0.00018)*0.16 - rotX)*0.014 );
     } else if(idleTimer){ idleTimer-=dt; if(idleTimer<=0){ auto=true; if(btnPause) btnPause.textContent='Pause'; } }
 
-    // apply rotation to starGroup
     starGroup.rotation.y = rotY;
     starGroup.rotation.x = rotX;
 
-    const now=performance.now();
-    const et=(now-t0)*0.001;
+    const et=(performance.now()-t0)*0.001;
     const slow = prefersReduced?0.18:1;
 
-    ball.rotation.y = et*0.14*slow;
-    ball.rotation.x = Math.sin(et*0.07*slow)*0.18;
-    ball.position.y = 0.25 + Math.sin(et*0.38*slow)*0.12;
+    // subtle breathe, easier to read
+    dust.rotation.y = et*0.008*slow;
+    camera.position.x = Math.sin(et*0.05*slow)*0.22;
+    camera.position.y = 0.8 + Math.sin(et*0.09*slow)*0.12;
+    camera.lookAt(0,0.1,0);
 
-    courtGroup.rotation.y = Math.sin(et*0.12)*0.08;
-
-    dust.rotation.y = et*0.012*slow;
-    ray1.rotation.z = 0.18 + Math.sin(et*0.08*slow)*0.06;
-    ray2.rotation.z = -0.12 + Math.cos(et*0.07*slow)*0.05;
-
-    // subtle camera breathe
-    camera.position.x = Math.sin(et*0.06*slow)*0.35;
-    camera.position.y = 0.8 + Math.sin(et*0.11*slow)*0.18;
-    camera.lookAt(0,0.15,0);
-
-    // hero pulse — make MJ star bigger via color boost
-    // we cheat by updating starMat opacity pulse
-    starMat.opacity = 0.78 + Math.sin(et*0.9)*0.06;
+    starMat.opacity = 0.74 + Math.sin(et*0.6)*0.04;
 
     renderer.render(scene, camera);
   }
   animate(0);
 
-  // expose for external (pause etc)
   return {
     renderer, scene, camera, starGroup,
     getRotation: ()=>({rotY, rotX}),
