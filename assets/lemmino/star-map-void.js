@@ -5,7 +5,8 @@
 */
 export async function mountStarMap(canvas){
   if(!canvas) return;
-  const THREE = await import('three');
+  let THREE;
+  try{ THREE = await import('three'); }catch{ THREE = await import('https://unpkg.com/three@0.160.0/build/three.module.js'); }
   const OKABE_RAW=['#0072B2','#D55E00','#009E73','#F0E442','#56B4E9','#CC79A7','#E69F00','#000000'];
   const OKABE_VISIBLE=['#0072B2','#D55E00','#009E73','#F0E442','#56B4E9','#CC79A7','#E69F00','#FFFEF7']; // last black->white for dark bg
   const ARCH=["Glass+Rim","LowVol Glass","Low Impact","Def Glass FT","Vol+3P","3P Acc+Vol","Playmaking","Scoring Vol"];

@@ -8,7 +8,8 @@
 */
 export async function mountDriftVoid(canvas){
   if(!canvas) return;
-  const THREE = await import('three');
+  let THREE;
+  try{ THREE = await import('three'); }catch{ THREE = await import('https://unpkg.com/three@0.160.0/build/three.module.js'); }
   const isLowEnd=(navigator.hardwareConcurrency&&navigator.hardwareConcurrency<=4)||window.innerWidth<560;
 
   const renderer=new THREE.WebGLRenderer({ canvas, antialias:!isLowEnd, alpha:false, powerPreference:'high-performance' });
