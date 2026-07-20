@@ -77,29 +77,38 @@
     var suggest = document.getElementById('landing-guess-suggest');
     var goBtn = document.getElementById('landing-guess-go');
 
+    var debounceT=null;
     function showSuggest(q){
       if(!q || q.length<1 || players.length===0){ suggest.style.display='none'; return; }
       var ql = q.toLowerCase();
       var matches = [];
+      // early exit fast path: loop but capped
       for(var i=0;i<playersLower.length && matches.length<6;i++){
         if(playersLower[i].indexOf(ql)!==-1){
           matches.push(players[i]);
         }
       }
-      if(!matches.length){ suggest.style.display='none'; return; }
-      suggest.innerHTML='';
+      if(!matches.length){ suggest.style.display='none'; suggest.textContent=''; return; }
+      // use fragment to reduce layout thrash
+      suggest.textContent='';
+      var frag=document.createDocumentFragment();
       matches.forEach(function(name){
         var row=document.createElement('button');
         row.type='button';
         row.textContent=name;
-        row.style.cssText='display:block; width:100%; text-align:left; padding:8px 10px; border:0; border-bottom:1px solid #eee; background:#FFFEF7; font-weight:800; font-size:12px; cursor:pointer;';
+        row.style.cssText='display:block; width:100%; text-align:left; padding:8px 10px; border:0; border-bottom:1px solid #eee; background:#FFFEF7; font-weight:800; font-size:12px; cursor:pointer; min-height:44px;';
         row.addEventListener('click', function(){ input.value=name; suggest.style.display='none'; commit(name); });
-        suggest.appendChild(row);
+        frag.appendChild(row);
       });
+      suggest.appendChild(frag);
       suggest.style.display='block';
     }
 
-    input.addEventListener('input', function(){ showSuggest(input.value.trim()); });
+    input.addEventListener('input', function(){
+      var v=input.value.trim();
+      clearTimeout(debounceT);
+      debounceT=setTimeout(function(){ showSuggest(v); }, 70);
+    });
     input.addEventListener('focus', function(){ showSuggest(input.value.trim()); });
     input.addEventListener('keydown', function(e){
       if(e.key==='Enter'){

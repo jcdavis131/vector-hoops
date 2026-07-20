@@ -29,24 +29,9 @@
   }
 
   function observe(){
-    var input = document.getElementById('landing-guess-input');
-    var suggestBox = document.getElementById('landing-guess-suggest');
-    if(!input || !suggestBox) return;
-    var mo = new MutationObserver(function(muts){
-      muts.forEach(function(m){
-        if(m.type==='childList'){
-          var items = suggestBox.querySelectorAll('li, button, div');
-          // try to map to player data via text
-          items.forEach(function(li){
-            // naive: find player name in text
-            var txt = li.textContent||'';
-            // attach dot if has gp or season hint
-            if(txt.length>2) enhanceSuggestionLI(li, {c: Math.floor(Math.random()*8)});
-          });
-        }
-      });
-    });
-    mo.observe(suggestBox, {childList:true});
+    // disabled for perf — landing typeahead already optimized, mutation observer was causing jank
+    return;
+    /* old observer removed */
   }
 
   function init(){
