@@ -73,24 +73,25 @@ export async function mountStarMap(canvas){
   }
 
   const walls=new THREE.Group(); starGroup.add(walls);
-  const xy=makeGlass(PLATE,0xFFFFFF,0.01); xy.position.set(0,0,-WALL); walls.add(xy);
-  const xyGrid=makeGrid(PLATE,12,0xFFFFFF,0.018); xyGrid.position.copy(xy.position); walls.add(xyGrid);
-  const xyE=makeEdge(PLATE,0xFFFFFF,0.03); xyE.position.copy(xy.position); walls.add(xyE);
-  const xz=makeGlass(PLATE,0xA8C4FF,0.008); xz.rotation.x=Math.PI/2; xz.position.set(0,-WALL,0); walls.add(xz);
-  const xzG=makeGrid(PLATE,12,0xA8C4FF,0.022); xzG.rotation.x=Math.PI/2; xzG.position.copy(xz.position); walls.add(xzG);
-  const xzE=makeEdge(PLATE,0xA8C4FF,0.035); xzE.rotation.x=Math.PI/2; xzE.position.copy(xz.position); walls.add(xzE);
-  const yz=makeGlass(PLATE,0xF0E442,0.007); yz.rotation.y=Math.PI/2; yz.position.set(-WALL,0,0); walls.add(yz);
-  const yzG=makeGrid(PLATE,12,0xF0E442,0.022); yzG.rotation.y=Math.PI/2; yzG.position.copy(yz.position); walls.add(yzG);
-  const yzE=makeEdge(PLATE,0xF0E442,0.035); yzE.rotation.y=Math.PI/2; yzE.position.copy(yz.position); walls.add(yzE);
+  // v22: grid borders toned way down — was wildly distracting black cube lines
+  const xy=makeGlass(PLATE,0xFFFFFF,0.003); xy.position.set(0,0,-WALL); walls.add(xy);
+  const xyGrid=makeGrid(PLATE,6,0xFFFFFF,0.006); xyGrid.position.copy(xy.position); walls.add(xyGrid);
+  const xyE=makeEdge(PLATE,0xFFFFFF,0.008); xyE.position.copy(xy.position); walls.add(xyE);
+  const xz=makeGlass(PLATE,0xA8C4FF,0.0025); xz.rotation.x=Math.PI/2; xz.position.set(0,-WALL,0); walls.add(xz);
+  const xzG=makeGrid(PLATE,6,0xA8C4FF,0.005); xzG.rotation.x=Math.PI/2; xzG.position.copy(xz.position); walls.add(xzG);
+  const xzE=makeEdge(PLATE,0xA8C4FF,0.008); xzE.rotation.x=Math.PI/2; xzE.position.copy(xz.position); walls.add(xzE);
+  const yz=makeGlass(PLATE,0xF0E442,0.002); yz.rotation.y=Math.PI/2; yz.position.set(-WALL,0,0); walls.add(yz);
+  const yzG=makeGrid(PLATE,6,0xF0E442,0.005); yzG.rotation.y=Math.PI/2; yzG.position.copy(yz.position); walls.add(yzG);
+  const yzE=makeEdge(PLATE,0xF0E442,0.008); yzE.rotation.y=Math.PI/2; yzE.position.copy(yz.position); walls.add(yzE);
 
   const axes=new THREE.Group(); starGroup.add(axes);
-  function axle(dir,color){ return new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,0,0), dir.clone().multiplyScalar(WALL*0.95)]), new THREE.LineBasicMaterial({ color:new THREE.Color(color), transparent:true, opacity:0.32 })); }
+  function axle(dir,color){ return new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,0,0), dir.clone().multiplyScalar(WALL*0.90)]), new THREE.LineBasicMaterial({ color:new THREE.Color(color), transparent:true, opacity:0.12 })); }
   axes.add(axle(new THREE.Vector3(1,0,0),0x56B4E9));
   axes.add(axle(new THREE.Vector3(0,1,0),0xF0E442));
   axes.add(axle(new THREE.Vector3(0,0,1),0xD55E00));
-  const xl=makeLabel('X: PAINT ↔ PERIM','#56B4E9','#081018',360,46,1.65); xl.position.set(WALL+0.28,0,0); axes.add(xl);
-  const yl=makeLabel('Y: ROLE → SCORE','#F0E442','#1A150F',360,46,1.65); yl.position.set(0,WALL+0.28,0); axes.add(yl);
-  const zl=makeLabel('Z: DEF ↔ OFF','#D55E00','#FFFEF7',340,46,1.6); zl.position.set(0,0,WALL+0.32); axes.add(zl);
+  const xl=makeLabel('X: PAINT ↔ PERIM','#56B4E9','#081018',360,46,1.35); xl.position.set(WALL+0.28,0,0); axes.add(xl);
+  const yl=makeLabel('Y: ROLE → SCORE','#F0E442','#1A150F',360,46,1.35); yl.position.set(0,WALL+0.28,0); axes.add(yl);
+  const zl=makeLabel('Z: DEF ↔ OFF','#D55E00','#FFFEF7',340,46,1.3); zl.position.set(0,0,WALL+0.32); axes.add(zl);
 
   function makeShapeTexture(shape){
     const S=128; const c=document.createElement('canvas'); c.width=S; c.height=S;
@@ -113,7 +114,7 @@ export async function mountStarMap(canvas){
   };
 
   async function cachedFetchJSON(url){
-    const CACHE_NAME='vector-hoops-v21-20260720-readable';
+    const CACHE_NAME='vector-hoops-v22-20260720-currentonly';
     try{
       if('caches' in window){
         const cache=await caches.open(CACHE_NAME);
@@ -131,24 +132,71 @@ export async function mountStarMap(canvas){
     return r.json();
   }
 
-  let players=[];
+  let players=[], rawAll=[];
+  let teamSeasonMap=null;
   try{
     try{
-      const j=await cachedFetchJSON('assets/vectors_search_lite_pos.json?v=21');
-      players=j.players||[]; 
+      const j=await cachedFetchJSON('assets/vectors_search_lite_pos.json?v=22');
+      rawAll=j.players||[];
     }catch(e){
-      const j2=await cachedFetchJSON('assets/vectors_search_lite.json?v=21');
-      players=j2.players||j2||[];
-      players.forEach(p=>{ if(p.p===undefined){ p.p=Math.floor(Math.random()*5); p.pl=POS_LABELS[p.p]; } });
+      const j2=await cachedFetchJSON('assets/vectors_search_lite.json?v=22');
+      rawAll=j2.players||j2||[];
+      rawAll.forEach(p=>{ if(p.p===undefined){ p.p=Math.floor(Math.random()*5); p.pl=POS_LABELS[p.p]; } });
     }
   }catch(e){ console.warn('lite fetch fail',e); }
 
-  // low-end LOD 6k
+  // v22: ONLY CURRENT PLAYERS + data from current/last season
+  // Determine current season logic: offseason July -> last completed 2024-25, if middle of season add current
+  // We load player_team_season to know who is active
+  try{
+    const ts=await cachedFetchJSON('assets/player_team_season.json?v=22').catch(()=>null);
+    teamSeasonMap=ts;
+  }catch{}
+  const ACTIVE_SEASONS = ['2024-25','2025-26']; // last + upcoming; in-season we add current
+  const LAST_SEASON='2024-25';
+  // If teamSeasonMap exists, active names = those in 2024-25 or 2025-26
+  let activeNames=new Set();
+  if(teamSeasonMap){
+    for(const key of Object.keys(teamSeasonMap)){
+      const [nm, sea]=key.split('|');
+      if(ACTIVE_SEASONS.includes(sea)) activeNames.add(nm);
+    }
+  }
+  // Fallback if no team map: infer from rawAll max seasons
+  if(activeNames.size===0){
+    rawAll.forEach(p=>{ if(p.s===LAST_SEASON) activeNames.add(p.n); });
+  }
+  // Build players = only active names, and only their data from current/last season
+  // Keep at most 2 per player (2024-25 + 2025-26) if both exist, else 1
+  const byNameActive=new Map();
+  for(const p of rawAll){
+    if(!activeNames.has(p.n)) continue;
+    if(!ACTIVE_SEASONS.includes(p.s)) continue;
+    if(!byNameActive.has(p.n)) byNameActive.set(p.n,[]);
+    byNameActive.get(p.n).push(p);
+  }
+  // Prefer latest per player, but allow up to 2 if you want trail; spec says current and/or last — so we pick latest only for clean map (548 points not 1100)
+  // If mid-season, you'd have both current+last -> we include both to show movement, capped 2
+  const INCLUDE_BOTH=false; // set true to show 2 dots per active player; false = 1 dot = latest
+  players=[];
+  for(const [nm, arr] of byNameActive.entries()){
+    arr.sort((a,b)=> a.s.localeCompare(b.s));
+    if(INCLUDE_BOTH){ players.push(...arr.slice(-2)); }
+    else { players.push(arr[arr.length-1]); }
+  }
+  console.log('star-map v22 current-only filter', rawAll.length,'->',players.length,'activeNames',activeNames.size);
+  // update eyebrow pill to reflect current-only
+  try{
+    const pill=document.querySelector('.pill-yellow');
+    if(pill){ pill.textContent=`${players.length} • CURRENT 24-25 STARS`; pill.title=`Filtered from ${rawAll.length} all-time to ${players.length} current players — ${ACTIVE_SEASONS.join(' + ')}`; }
+    const sub=document.getElementById('viral-today');
+    if(sub){ sub.textContent=`${players.length} current players as stars in void — last: ${LAST_SEASON} • shape=POS color=ARCH • documentary style`; }
+  }catch{}
+  // low-end not needed now (548 <6k)
   if(isLowEnd && players.length>6000){
     const step=Math.ceil(players.length/6000);
     const filtered=[];
     for(let i=0;i<players.length;i+=step) filtered.push(players[i]);
-    console.log('star-map low-end LOD', players.length,'->',filtered.length);
     players=filtered;
   }
 
