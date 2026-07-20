@@ -1,6 +1,6 @@
-/* vector-hoops PWA v10-20260718 — rotating 3D map + viral image share + steals/busts back */
+/* vector-hoops PWA v11-20260720 — embedding map #1 fix: bigger stars + bust cache */
 
-const CACHE_NAME = 'vector-hoops-v10-20260718-rotating-viral';
+const CACHE_NAME = 'vector-hoops-v11-20260720-embed-fix';
 const CORE = [
   '/',
   '/play',

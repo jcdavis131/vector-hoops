@@ -1,36 +1,39 @@
-/* star-map-void.js v4.1 — Force first frames + fallback resize (black void fix)
-   - Full-bleed 100vw mobile, 78vh, 56px safe-area, 44px touch
-   - Guarantees first render even if IO says not visible, handles w<h 10 fallback via parent rect
-   - vivid Okabe 0.145/0.09 lowEnd, fog 0.0038, glass 0.022
+/* star-map-void.js v5.0 — embedding map #1 fix: visible on Android, no black void
+   - root cause: PointsMaterial 0.09 world units invisible on mobile + OKABE[7]=#000000 on #080A0F background + fog 0.0022 + camera far 8.6 + SW stale cache
+   - fix: bigger stars 0.26/0.36, black->white, fog 0.0006, camera 5.4, spread 3.4, walls 0.012 opacity, no-store fetch + sw v11
+   - full-bleed 100vw/78vh, safe-area 56px, 44px touch, guaranteed resize
 */
 export async function mountStarMap(canvas){
   if(!canvas) return;
   const THREE = await import('three');
-  const OKABE=['#0072B2','#D55E00','#009E73','#F0E442','#56B4E9','#CC79A7','#E69F00','#000000'];
+  const OKABE_RAW=['#0072B2','#D55E00','#009E73','#F0E442','#56B4E9','#CC79A7','#E69F00','#000000'];
+  const OKABE_VISIBLE=['#0072B2','#D55E00','#009E73','#F0E442','#56B4E9','#CC79A7','#E69F00','#FFFEF7']; // last black->white for dark bg
   const ARCH=["Glass+Rim","LowVol Glass","Low Impact","Def Glass FT","Vol+3P","3P Acc+Vol","Playmaking","Scoring Vol"];
   const isLowEnd=(navigator.hardwareConcurrency&&navigator.hardwareConcurrency<=4)||window.innerWidth<520;
+  const isMobile = window.innerWidth<700;
 
   const renderer=new THREE.WebGLRenderer({ canvas, antialias:!isLowEnd, alpha:false, powerPreference:'high-performance' });
-  renderer.setPixelRatio(Math.min(devicePixelRatio||1, isLowEnd?1.2:1.7));
+  renderer.setPixelRatio(Math.min(devicePixelRatio||1, isLowEnd?1.25:1.6));
   renderer.outputColorSpace=THREE.SRGBColorSpace;
   renderer.setClearColor(0x080A0F,1);
 
   const scene=new THREE.Scene();
   scene.background=new THREE.Color(0x080A0F);
-  scene.fog=new THREE.FogExp2(0x080A0F, 0.0022);
+  scene.fog=new THREE.FogExp2(0x080A0F, 0.0007);
 
-  const camera=new THREE.PerspectiveCamera(32, 1, 0.1, 120);
-  camera.position.set(0,0.55,8.6);
+  const camera=new THREE.PerspectiveCamera(34, 1, 0.1, 90);
+  camera.position.set(0,0.42,5.6);
 
-  scene.add(new THREE.AmbientLight(0xFFFFFF, 0.92));
-  const dl=new THREE.DirectionalLight(0xFFFFFF,0.42); dl.position.set(3,5,4); scene.add(dl);
+  scene.add(new THREE.AmbientLight(0xFFFFFF, 1.15));
+  const dl=new THREE.DirectionalLight(0xFFFFFF,0.55); dl.position.set(3,5,4); scene.add(dl);
+  const dl2=new THREE.DirectionalLight(0xA8C4FF,0.28); dl2.position.set(-3,2,-4); scene.add(dl2);
 
   const starGroup=new THREE.Group(); scene.add(starGroup);
-  const SPREAD=4.2, WALL=3.9, PLATE=8.6;
+  const SPREAD=3.35, WALL=3.6, PLATE=8.8;
 
   function makeGlass(size,color,op){
     const geo=new THREE.PlaneGeometry(size,size);
-    const mat=new THREE.MeshStandardMaterial({ color:new THREE.Color(color), transparent:true, opacity:op, roughness:0.92, metalness:0.04, side:THREE.DoubleSide, depthWrite:false });
+    const mat=new THREE.MeshStandardMaterial({ color:new THREE.Color(color), transparent:true, opacity:op, roughness:0.94, metalness:0.03, side:THREE.DoubleSide, depthWrite:false });
     return new THREE.Mesh(geo,mat);
   }
   function makeGrid(size,div,color,op){
@@ -63,30 +66,32 @@ export async function mountStarMap(canvas){
   }
 
   const walls=new THREE.Group(); starGroup.add(walls);
-  const xy=makeGlass(PLATE,0xFFFFFF,0.022); xy.position.set(0,0,-WALL); walls.add(xy);
-  walls.add(Object.assign(makeGrid(PLATE,12,0xFFFFFF,0.05),{position:xy.position.clone()}));
-  const xyE=makeEdge(PLATE,0xFFFFFF,0.07); xyE.position.copy(xy.position); walls.add(xyE);
-  const xz=makeGlass(PLATE,0xA8C4FF,0.02); xz.rotation.x=Math.PI/2; xz.position.set(0,-WALL,0); walls.add(xz);
-  const xzG=makeGrid(PLATE,12,0xA8C4FF,0.055); xzG.rotation.x=Math.PI/2; xzG.position.copy(xz.position); walls.add(xzG);
-  const xzE=makeEdge(PLATE,0xA8C4FF,0.08); xzE.rotation.x=Math.PI/2; xzE.position.copy(xz.position); walls.add(xzE);
-  const yz=makeGlass(PLATE,0xF0E442,0.018); yz.rotation.y=Math.PI/2; yz.position.set(-WALL,0,0); walls.add(yz);
-  const yzG=makeGrid(PLATE,12,0xF0E442,0.055); yzG.rotation.y=Math.PI/2; yzG.position.copy(yz.position); walls.add(yzG);
-  const yzE=makeEdge(PLATE,0xF0E442,0.08); yzE.rotation.y=Math.PI/2; yzE.position.copy(yz.position); walls.add(yzE);
+  const xy=makeGlass(PLATE,0xFFFFFF,0.012); xy.position.set(0,0,-WALL); walls.add(xy);
+  walls.add(Object.assign(makeGrid(PLATE,12,0xFFFFFF,0.022),{position:xy.position.clone()}));
+  const xyE=makeEdge(PLATE,0xFFFFFF,0.035); xyE.position.copy(xy.position); walls.add(xyE);
+  const xz=makeGlass(PLATE,0xA8C4FF,0.01); xz.rotation.x=Math.PI/2; xz.position.set(0,-WALL,0); walls.add(xz);
+  const xzG=makeGrid(PLATE,12,0xA8C4FF,0.028); xzG.rotation.x=Math.PI/2; xzG.position.copy(xz.position); walls.add(xzG);
+  const xzE=makeEdge(PLATE,0xA8C4FF,0.04); xzE.rotation.x=Math.PI/2; xzE.position.copy(xz.position); walls.add(xzE);
+  const yz=makeGlass(PLATE,0xF0E442,0.009); yz.rotation.y=Math.PI/2; yz.position.set(-WALL,0,0); walls.add(yz);
+  const yzG=makeGrid(PLATE,12,0xF0E442,0.028); yzG.rotation.y=Math.PI/2; yzG.position.copy(yz.position); walls.add(yzG);
+  const yzE=makeEdge(PLATE,0xF0E442,0.04); yzE.rotation.y=Math.PI/2; yzE.position.copy(yz.position); walls.add(yzE);
 
   const axes=new THREE.Group(); starGroup.add(axes);
-  function axle(dir,color){ return new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,0,0), dir.clone().multiplyScalar(WALL*0.95)]), new THREE.LineBasicMaterial({ color:new THREE.Color(color), transparent:true, opacity:0.42 })); }
+  function axle(dir,color){ return new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,0,0), dir.clone().multiplyScalar(WALL*0.95)]), new THREE.LineBasicMaterial({ color:new THREE.Color(color), transparent:true, opacity:0.38 })); }
   axes.add(axle(new THREE.Vector3(1,0,0),0x56B4E9));
   axes.add(axle(new THREE.Vector3(0,1,0),0xF0E442));
   axes.add(axle(new THREE.Vector3(0,0,1),0xD55E00));
-  const xl=makeLabel('X: PAINT ↔ PERIM','#56B4E9','#081018',360,46,1.85); xl.position.set(WALL+0.22,0,0); axes.add(xl);
-  const yl=makeLabel('Y: ROLE → SCORE','#F0E442','#1A150F',360,46,1.85); yl.position.set(0,WALL+0.22,0); axes.add(yl);
-  const zl=makeLabel('Z: DEF ↔ OFF','#D55E00','#FFFEF7',340,46,1.75); zl.position.set(0,0,WALL+0.26); axes.add(zl);
+  const xl=makeLabel('X: PAINT ↔ PERIM','#56B4E9','#081018',360,46,1.85); xl.position.set(WALL+0.26,0,0); axes.add(xl);
+  const yl=makeLabel('Y: ROLE → SCORE','#F0E442','#1A150F',360,46,1.85); yl.position.set(0,WALL+0.26,0); axes.add(yl);
+  const zl=makeLabel('Z: DEF ↔ OFF','#D55E00','#FFFEF7',340,46,1.75); zl.position.set(0,0,WALL+0.32); axes.add(zl);
 
   let players=[];
   try{
-    const r=await fetch('assets/vectors_search_lite.json',{cache:'force-cache'});
+    // bust SW cache v10 -> v11, use no-store
+    const r=await fetch('assets/vectors_search_lite.json?v=11',{cache:'no-store'});
     const j=await r.json(); players=j.players||[];
-  }catch(e){ console.warn('lite',e); }
+    console.log('star-map v5 loaded players', players.length);
+  }catch(e){ console.warn('lite fetch fail, random fallback',e); }
 
   const count=players.length||12966;
   const positions=new Float32Array(count*3);
@@ -96,61 +101,86 @@ export async function mountStarMap(canvas){
     positions[i*3]=(p.x-0.5)*2*SPREAD;
     positions[i*3+1]=(p.y-0.5)*2*SPREAD;
     positions[i*3+2]=(p.z-0.5)*2*SPREAD;
-    const col=new THREE.Color(OKABE[(p.c||0)%8]);
+    const col=new THREE.Color(OKABE_VISIBLE[(p.c||0)%8]);
+    // boost low-end colors a bit so they pop on black
+    if((p.c||0)%8===7) { /* white star boost */ }
+    else col.lerp(new THREE.Color(0xFFFFFF),0.05);
     colors[i*3]=col.r; colors[i*3+1]=col.g; colors[i*3+2]=col.b;
   }
   const geo=new THREE.BufferGeometry();
   geo.setAttribute('position', new THREE.BufferAttribute(positions,3));
   geo.setAttribute('color', new THREE.BufferAttribute(colors,3));
-  const mat=new THREE.PointsMaterial({ size:isLowEnd?0.09:0.145, vertexColors:true, transparent:false, opacity:1, sizeAttenuation:true, depthWrite:false });
+  const pointSize = isMobile ? 0.26 : 0.34; // was 0.09 invisible
+  const mat=new THREE.PointsMaterial({ 
+    size: pointSize,
+    vertexColors:true, 
+    transparent:true, 
+    opacity:1, 
+    sizeAttenuation:true, 
+    depthWrite:false,
+    blending: THREE.NormalBlending
+  });
   const points=new THREE.Points(geo,mat);
+  points.renderOrder=10;
   starGroup.add(points);
 
-  let rotY=Math.PI*0.24, rotX=0.17, auto=true, autoSpeed=0.00018, dragging=false, lx=0, ly=0, idle=0;
+  // fallback bright core for MJ placeholder if needed
+  if(players.length===0){
+    console.warn('star-map v5: players empty, showing random cloud');
+  }
+
+  let rotY=Math.PI*0.24, rotX=0.18, auto=true, autoSpeed=0.00020, dragging=false, lx=0, ly=0, idle=0;
   const proj=new Array(count);
   function updProj(W,H){
-    W=W||canvas.clientWidth||canvas.parentElement?.clientWidth||640;
-    H=H||canvas.clientHeight||520;
+    W=W||canvas.getBoundingClientRect().width||canvas.parentElement?.getBoundingClientRect().width||640;
+    H=H||canvas.getBoundingClientRect().height||520;
     const cy=Math.cos(rotY), sy=Math.sin(rotY), cx=Math.cos(rotX), sx=Math.sin(rotX);
-    const persp=2.7;
+    const persp=2.2;
     for(let i=0;i<count;i++){
       const ox=positions[i*3], oy=positions[i*3+1], oz=positions[i*3+2];
       const xr=ox*cy+oz*sy, z1=-ox*sy+oz*cy, yr=oy*cx - z1*sx, zr=oy*sx + z1*cx;
-      const sc=persp/(persp - zr*0.42);
-      proj[i]={ sx:W*0.5+xr*sc*(W*0.38), sy:H*0.5-yr*sc*(H*0.38), n:players[i]?.n, s:players[i]?.s, c:players[i]?.c };
+      const sc=persp/(persp - zr*0.38);
+      proj[i]={ sx:W*0.5+xr*sc*(W*0.42), sy:H*0.5-yr*sc*(H*0.42), n:players[i]?.n, s:players[i]?.s, c:players[i]?.c };
     }
   }
   const hoverTip=document.getElementById('hover-tip');
 
   function getSize(){
-    let w=canvas.getBoundingClientRect().width || canvas.clientWidth, h=canvas.getBoundingClientRect().height || canvas.clientHeight;
+    const rect=canvas.getBoundingClientRect();
+    let w=rect.width, h=rect.height;
     if(w<10||h<10){
-      const r=canvas.parentElement?.getBoundingClientRect();
-      w=Math.max(w||0, r?.width||0, 320); h=Math.max(h||0, r?.height||0, 520);
+      const pr=canvas.parentElement?.getBoundingClientRect();
+      w=Math.max(w, pr?.width||0, 320); h=Math.max(h, pr?.height||0, 520);
       if(w<10) w= window.innerWidth || 390;
       if(h<10) h= Math.round((window.innerHeight||800)*0.78);
     }
-    return {w:Math.max(10,w), h:Math.max(10,h)};
+    return {w:Math.max(10,Math.round(w)), h:Math.max(10,Math.round(h))};
   }
   function onResize(){
     const {w,h}=getSize();
-    // force canvas style size for Safari/Android quirks
-    if(Math.abs(canvas.clientWidth - w) > 2 || Math.abs(canvas.clientHeight - h) > 2){
-      canvas.style.width=w+'px'; canvas.style.height=h+'px';
-    }
+    canvas.style.width=w+'px'; canvas.style.height=h+'px';
     renderer.setSize(w,h,false);
     camera.aspect=w/h; camera.updateProjectionMatrix();
     updProj(w,h);
     renderer.render(scene,camera);
   }
-  const ro=new ResizeObserver(onResize); ro.observe(canvas); ro.observe(canvas.parentElement||document.body);
-  onResize();
-  setTimeout(onResize, 120);
-  setTimeout(onResize, 650);
-
-  let visible=true; let firstFrames=90;
+  let ro;
   try{
-    const io=new IntersectionObserver(es=>{ visible=es[0]?.isIntersecting??true; if(visible) onResize(); },{threshold:0.01});
+    ro=new ResizeObserver(onResize); ro.observe(canvas); 
+    if(canvas.parentElement) ro.observe(canvas.parentElement);
+  }catch{}
+  onResize();
+  // android quirks double-call
+  setTimeout(onResize, 60);
+  setTimeout(onResize, 250);
+  setTimeout(onResize, 800);
+
+  let visible=true; let firstFrames=120;
+  try{
+    const io=new IntersectionObserver(es=>{ 
+      visible=es[0]?.isIntersecting??true; 
+      if(visible) onResize(); 
+    },{threshold:0.01});
     io.observe(canvas);
   }catch{}
 
@@ -161,7 +191,7 @@ export async function mountStarMap(canvas){
     if(dragging){ const dx=x-lx, dy=y-ly; rotY+=dx*0.0072; rotX+=dy*0.005; rotX=Math.max(-0.92,Math.min(0.92,rotX)); lx=x; ly=y; const s=getSize(); updProj(s.w,s.h); }
     else{
       const rect=canvas.getBoundingClientRect(); const mx=x-rect.left, my=y-rect.top;
-      let best=null,bd=isLowEnd?28:22;
+      let best=null,bd=isMobile?34:28;
       for(let i=0;i<count;i++){ const pr=proj[i]; if(!pr) continue; const d=Math.hypot(pr.sx-mx, pr.sy-my); if(d<bd){ bd=d; best=pr; } }
       if(best&&hoverTip){ hoverTip.style.display='block'; hoverTip.style.left=best.sx+'px'; hoverTip.style.top=(best.sy-30)+'px'; hoverTip.innerHTML=`<b>${best.n||''}</b> ${best.s||''}<br><span style="font-family:ui-monospace,monospace;font-size:10px;opacity:.68">${ARCH[best.c%8]||''}</span>`; }
       else if(hoverTip) hoverTip.style.display='none';
@@ -174,24 +204,26 @@ export async function mountStarMap(canvas){
 
   const btnPause=document.getElementById('btn-pause'), btnReset=document.getElementById('btn-reset');
   if(btnPause) btnPause.addEventListener('click',()=>{ auto=!auto; btnPause.textContent=auto?'Pause':'Resume'; if(auto) idle=0; });
-  if(btnReset) btnReset.addEventListener('click',()=>{ rotY=Math.PI*0.24; rotX=0.17; auto=true; if(btnPause) btnPause.textContent='Pause'; });
+  if(btnReset) btnReset.addEventListener('click',()=>{ rotY=Math.PI*0.24; rotX=0.18; auto=true; if(btnPause) btnPause.textContent='Pause'; });
 
   updProj(); renderer.render(scene,camera);
+  console.log('star-map v5 mounted, count',count,'size',pointSize);
 
   let last=0, t0=performance.now();
   function loop(t){
     requestAnimationFrame(loop);
     if(!visible && firstFrames<=0){ last=t; return; }
-    if(firstFrames>0) firstFrames--;
+    if(firstFrames>0){ firstFrames--; }
     if(!last) last=t;
     const dt=Math.min(50,t-last); last=t;
     if(!dragging&&auto) rotY+=dt*autoSpeed; else if(idle){ idle-=dt; if(idle<=0){ auto=true; if(btnPause) btnPause.textContent='Pause'; } }
     starGroup.rotation.y=rotY; starGroup.rotation.x=rotX;
     const et=(performance.now()-t0)*0.001;
-    camera.position.x=Math.sin(et*0.045)*0.12; camera.position.y=0.55+Math.sin(et*0.06)*0.07;
+    camera.position.x=Math.sin(et*0.045)*0.16; 
+    camera.position.y=0.42+Math.sin(et*0.06)*0.08;
     camera.lookAt(0,0.06,0);
     renderer.render(scene,camera);
   }
   loop(0);
-  return { dispose:()=>{ try{ro.disconnect();}catch{} renderer.dispose(); } };
+  return { dispose:()=>{ try{ro&&ro.disconnect();}catch{} renderer.dispose(); } };
 }
