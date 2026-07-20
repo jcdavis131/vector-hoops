@@ -1,6 +1,8 @@
-/* vector-hoops PWA v13-20260720 — embedding map #1 fix: Object.assign position read-only crash in THREE r160 */
+/* vector-hoops PWA v14-20260720 — dual encoding #1 + story clarity #2
+   #1: shape=POS (5 shapes) color=ARCH (8 Okabe) + zoom out 5.6->7.25
+   #2: story clarity, zoomed out 15.5->24, single current label, chapter pause, recent years visible */
 
-const CACHE_NAME = 'vector-hoops-v13-20260720-embed-readonly-fix';
+const CACHE_NAME = 'vector-hoops-v14-20260720-dual-encoding';
 const CORE = [
   '/',
   '/play',
