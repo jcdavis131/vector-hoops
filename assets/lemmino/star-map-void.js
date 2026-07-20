@@ -134,10 +134,10 @@ export async function mountStarMap(canvas){
   let players=[];
   try{
     try{
-      const j=await cachedFetchJSON('assets/vectors_search_lite_pos.json?v=18');
+      const j=await cachedFetchJSON('assets/vectors_search_lite_pos.json?v=20');
       players=j.players||[]; 
     }catch(e){
-      const j2=await cachedFetchJSON('assets/vectors_search_lite.json?v=18');
+      const j2=await cachedFetchJSON('assets/vectors_search_lite.json?v=20');
       players=j2.players||j2||[];
       players.forEach(p=>{ if(p.p===undefined){ p.p=Math.floor(Math.random()*5); p.pl=POS_LABELS[p.p]; } });
     }

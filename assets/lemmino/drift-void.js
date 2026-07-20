@@ -34,7 +34,7 @@ export async function mountDriftVoid(canvas){
   const ground=new THREE.Mesh(new THREE.PlaneGeometry(300,300), new THREE.MeshStandardMaterial({ color:0x0C0E14, roughness:0.96 }));
   ground.rotation.x=-Math.PI/2; ground.position.y=-2.9; scene.add(ground);
 
-  const CACHE_NAME='vector-hoops-v18-20260720-quad';
+  const CACHE_NAME='vector-hoops-v20-20260720-quad';
   async function cachedFetchJSON(url){
     try{
       if('caches' in window){
@@ -56,10 +56,10 @@ export async function mountDriftVoid(canvas){
   let timeData=null, liteData=null, vecData=null, skillsData=null;
   try{
     const [tData, lPosData, vData, sData] = await Promise.all([
-      cachedFetchJSON('assets/archetypes_time.json?v=18'),
-      cachedFetchJSON('assets/vectors_search_lite_pos.json?v=18').catch(()=> cachedFetchJSON('assets/vectors_search_lite.json?v=18')),
-      cachedFetchJSON('assets/vectors.json?v=18').catch(()=>null),
-      cachedFetchJSON('assets/skills_wide.json?v=18').catch(()=>null)
+      cachedFetchJSON('assets/archetypes_time.json?v=20'),
+      cachedFetchJSON('assets/vectors_search_lite_pos.json?v=20').catch(()=> cachedFetchJSON('assets/vectors_search_lite.json?v=20')),
+      cachedFetchJSON('assets/vectors.json?v=20').catch(()=>null),
+      cachedFetchJSON('assets/skills_wide.json?v=20').catch(()=>null)
     ]);
     timeData=tData; liteData=lPosData; vecData=vData; skillsData=sData;
   }catch(e){ console.warn('drift v8 fetch fail',e); return; }
