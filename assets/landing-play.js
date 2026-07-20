@@ -138,7 +138,7 @@
     }
   }
 
-  // Team locks counting
+  // Team locks counting (city-intro deprecated — no lock button)
   function bumpTeamLock(abbr){
     try{
       var raw = localStorage.getItem(LS_TEAM_LOCKS);
@@ -150,28 +150,9 @@
     }catch(e){}
   }
 
-  // Wire to city-intro lock button
+  // Wire to team lock removed — city-intro-lock no longer exists (fingerprint/arena deprecated)
   function wireLockCounter(){
-    var lockBtn = document.getElementById('city-intro-lock');
-    if(!lockBtn) return;
-    lockBtn.addEventListener('click', function(){
-      var abbr = null;
-      try{
-        var sel = document.querySelector('.city-pill.is-active');
-        if(sel) abbr = sel.dataset.abbr;
-      }catch(e){}
-      if(!abbr){
-        // fallback to favorite
-        try{ abbr = localStorage.getItem('vectorHoops.favoriteTeam') || 'CHI'; }catch(_){ abbr='CHI'; }
-      }
-      // only bump when locking (check class before toggle? we listen after toggle but check is-locked)
-      setTimeout(function(){
-        if(lockBtn.classList.contains('is-locked') && abbr){
-          bumpTeamLock(abbr);
-          updateViralStripWithLocal();
-        }
-      }, 50);
-    });
+    return;
   }
 
   function updateViralStripWithLocal(){

@@ -185,15 +185,10 @@
 
     // focus ring AAA
     var style = document.createElement('style');
-    style.textContent = ':focus-visible{outline:3px solid #0072B2; outline-offset:2px; box-shadow:0 0 0 5px rgba(0,114,178,.22);} .city-pill:focus-visible{outline:2px solid #1A150F; box-shadow:0 0 0 4px #F0E442;} .bottom-tabs button:focus-visible{outline:3px solid #F0E442; outline-offset:-3px;} @media(prefers-reduced-motion:reduce){*{animation-duration:.001ms !important; transition-duration:.001ms !important}';
+    style.textContent = ':focus-visible{outline:3px solid #0072B2; outline-offset:2px; box-shadow:0 0 0 5px rgba(0,114,178,.22);} .bottom-tabs button:focus-visible{outline:3px solid #F0E442; outline-offset:-3px;} @media(prefers-reduced-motion:reduce){*{animation-duration:.001ms !important; transition-duration:.001ms !important}';
     document.head.appendChild(style);
 
-    // pills tablist
-    var pills = document.getElementById('city-intro-pills');
-    if(pills){
-      pills.setAttribute('role','tablist');
-      pills.setAttribute('aria-label','Team filter — 30 NBA teams');
-    }
+    // city-intro-pills deprecated (arena tour removed v25) — nothing to enhance
 
     // ensure all buttons min-height 44px for AAA (check computed, add class if needed)
     try{

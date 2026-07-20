@@ -198,21 +198,7 @@ textarea{
   }
 }
 
-/* ---------- city-intro — unify clamps ---------- */
-#city-intro.city-intro{
-  width:100%;
-  max-width:100%;
-  min-width:0;
-  height:clamp(320px,42vh,440px) !important;
-  min-height:320px;
-  overflow:hidden;
-}
-#city-intro-canvas{
-  width:100% !important;
-  height:100% !important;
-  max-width:100%;
-  display:block;
-}
+/* arena tour removed v25 — no city-intro styles */
 
 /* ---------- play header — no overflow ---------- */
 .vh-header,
@@ -460,7 +446,6 @@ input[type="search"]{
 
 /* reduced motion */
 @media (prefers-reduced-motion: reduce){
-  #city-intro-canvas{ animation:none !important; }
   .site-nav__links{ -webkit-mask-image:none !important; mask-image:none !important; }
 }
 

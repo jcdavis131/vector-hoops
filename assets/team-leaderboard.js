@@ -131,21 +131,10 @@
       board.style.cssText='max-width:1120px; margin:0 auto; padding:0 var(--page-gutter); box-sizing:border-box;';
       anchor.parentNode.insertBefore(board, anchor.nextSibling);
     }
-    // patch landing-play's bump to also call daily
-    var lockBtn = document.getElementById('city-intro-lock');
-    if(lockBtn){
-      lockBtn.addEventListener('click', function(){
-        setTimeout(function(){
-          try{
-            var sel = document.querySelector('.city-pill.is-active');
-            var abbr = sel ? sel.dataset.abbr : null;
-            if(!abbr) abbr = localStorage.getItem('vectorHoops.favoriteTeam') || 'CHI';
-            if(lockBtn.classList.contains('is-locked')) bumpDaily(abbr);
-          }catch(e){}
-          refresh();
-        }, 100);
-      });
-    }
+    // city-intro-lock deprecated — board refreshes on team change event only
+    function attachDeprecatedLock(){ return; }
+    // patch landing-play's bump to also call daily — no DOM lock button anymore
+    var lockBtn = null;
 
     function refresh(){
       var local = loadLocal();

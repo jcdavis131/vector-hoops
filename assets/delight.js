@@ -79,7 +79,7 @@
   function init(){
     ensureStyles();
     document.addEventListener('click', function(e){
-      const lock = e.target.closest && e.target.closest('#city-intro-lock, [data-confetti="team"]');
+      const lock = e.target.closest && e.target.closest('[data-confetti="team"]');
       if(lock){
         setTimeout(function(){
           try{
