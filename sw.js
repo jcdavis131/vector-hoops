@@ -1,8 +1,10 @@
-/* vector-hoops PWA v14-20260720 — dual encoding #1 + story clarity #2
+/* vector-hoops PWA v16-20260720 — embed cache + paused default + click-to-play
    #1: shape=POS (5 shapes) color=ARCH (8 Okabe) + zoom out 5.6->7.25
-   #2: story clarity, zoomed out 15.5->24, single current label, chapter pause, recent years visible */
+   #2: story clarity, zoomed out 15.5->24, single current label
+   v15: pause on type to fix freeze
+   v16: cache embedding maps (pos json, archetypes_time, vectors_search_lite) + cache Three.js CDN + default paused + lazy mount */
 
-const CACHE_NAME = 'vector-hoops-v15-20260720-pause-on-type';
+const CACHE_NAME = 'vector-hoops-v16-20260720-embed-cache-paused';
 const CORE = [
   '/',
   '/play',
@@ -26,13 +28,18 @@ const CORE = [
   '/assets/viral-share.js',
   '/assets/past-modern-game.js',
   '/assets/vectors_search_lite.json',
+  '/assets/vectors_search_lite_pos.json',
+  '/assets/archetypes_time.json',
   '/assets/players_lite.json',
   '/assets/teams.json',
   '/assets/season_norms.json',
   '/assets/honors.json',
   '/assets/pedigree.json',
   '/assets/skills.json',
-  '/assets/skills_wide.json'
+  '/assets/skills_wide.json',
+  '/assets/lemmino/star-map-void.js',
+  '/assets/lemmino/drift-void.js',
+  '/assets/workers/modern-search.worker.js'
 ];
 const DENY_CACHE = [
   '/assets/playoff_paths.json',
@@ -65,6 +72,12 @@ self.addEventListener('install', e=>{
   self.skipWaiting();
   e.waitUntil(caches.open(CACHE_NAME).then(cache=>{
     return cache.addAll(CORE.map(u=> new Request(u,{cache:'reload'}))).catch(()=>Promise.allSettled(CORE.map(u=> cache.add(new Request(u,{cache:'reload'})))));
+  }).then(async ()=>{
+    // also pre-cache Three.js CDN for offline/embed cache perf
+    try{
+      const c=await caches.open(CACHE_NAME);
+      await c.add(new Request('https://unpkg.com/three@0.160.0/build/three.module.js',{mode:'no-cors'})).catch(()=>{});
+    }catch{}
   }));
 });
 self.addEventListener('activate', e=>{
@@ -75,8 +88,28 @@ self.addEventListener('activate', e=>{
 });
 function isImmutable(u){ return CORE.includes(u.pathname) || FULL_MTNN.includes(u.pathname); }
 function isAsset(u){ return u.pathname.startsWith('/assets/') && (u.pathname.endsWith('.js')||u.pathname.endsWith('.css')||u.pathname.endsWith('.json')||u.pathname.endsWith('.png')||u.pathname.endsWith('.webp')||u.pathname.endsWith('.svg')||u.pathname.endsWith('.f32')); }
+function isThreeCDN(url){ return url.hostname==='unpkg.com' && url.pathname.includes('three'); }
 self.addEventListener('fetch', e=>{
-  const req=e.request; if(req.method!=='GET') return; const url=new URL(req.url); if(url.origin!==location.origin) return;
+  const req=e.request; if(req.method!=='GET') return; const url=new URL(req.url);
+  // cache Three.js CDN externally
+  if(isThreeCDN(url)){
+    e.respondWith((async()=>{
+      const cache=await caches.open(CACHE_NAME);
+      const cached=await cache.match(req);
+      if(cached) return cached;
+      try{
+        const net=await fetch(req);
+        if(net&&net.ok) cache.put(req, net.clone()).catch(()=>{});
+        return net;
+      }catch{
+        return cached||Response.error();
+      }
+    })());
+    return;
+  }
+  if(url.origin!==location.origin){
+    return;
+  }
   if(isDenied(url.pathname)){ e.respondWith(fetch(req).catch(()=> new Response('',{status:504}))); return; }
   if(req.mode==='navigate' || (req.headers.get('accept')||'').includes('text/html')){
     e.respondWith((async()=>{

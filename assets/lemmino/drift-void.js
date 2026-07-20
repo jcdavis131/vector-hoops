@@ -35,13 +35,30 @@ export async function mountDriftVoid(canvas){
   ground.rotation.x=-Math.PI/2; ground.position.y=-2.9; scene.add(ground);
 
   let timeData=null, liteData=null;
+  async function cachedFetchJSON(url){
+    try{
+      if('caches' in window){
+        const cache=await caches.open('vector-hoops-v16-20260720-embed-cache-paused');
+        const hit=await cache.match(url);
+        if(hit) return await hit.json();
+      }
+    }catch{}
+    const r=await fetch(url,{cache:'default'});
+    try{
+      if('caches' in window){
+        const cache=await caches.open('vector-hoops-v16-20260720-embed-cache-paused');
+        cache.put(url, r.clone()).catch(()=>{});
+      }
+    }catch{}
+    return r.json();
+  }
   try{
-    const [tR,lR]=await Promise.all([
-      fetch('assets/archetypes_time.json?v=13',{cache:'no-store'}),
-      fetch('assets/vectors_search_lite.json?v=13',{cache:'no-store'})
+    const [tData,lData]=await Promise.all([
+      cachedFetchJSON('assets/archetypes_time.json?v=16'),
+      cachedFetchJSON('assets/vectors_search_lite.json?v=16')
     ]);
-    timeData=await tR.json(); liteData=await lR.json();
-  }catch(e){ console.warn('drift v6 fetch',e); return; }
+    timeData=tData; liteData=lData;
+  }catch(e){ console.warn('drift v6.1 cached fetch fail',e); return; }
 
   const seasons=timeData?.prevalence||[];
   const OKABE=['#0072B2','#D55E00','#009E73','#F0E442','#56B4E9','#CC79A7','#E69F00','#FFFEF7'];
@@ -176,19 +193,12 @@ export async function mountDriftVoid(canvas){
 
   function clear(g){ while(g.children.length){ const c=g.children[0]; g.remove(c); if(c.geometry) c.geometry.dispose(); if(c.material){ if(c.material.map) c.material.map.dispose(); c.material.dispose(); } } }
 
-  let current=null, tProg=0, paused=false, used=new Set(), lastSwitch=performance.now(), autoPauseUntil=0, lastChangeIdx=-1;
-  let embedPaused=false;
-  window.addEventListener('vh:pause-maps',()=>{ embedPaused=true; paused=true; if(btnPlay) btnPlay.textContent='▶'; });
-  window.addEventListener('vh:resume-maps',()=>{ embedPaused=false; paused=false; if(btnPlay) btnPlay.textContent='❚❚'; });
+  let current=null, tProg=0, paused=true, used=new Set(), lastSwitch=performance.now(), autoPauseUntil=0, lastChangeIdx=-1;
+  let embedPaused=true; // v16 default paused to save compute
+  window.addEventListener('vh:pause-maps',()=>{ embedPaused=true; paused=true; if(btnPlay) btnPlay.textContent='▶ Play drift'; });
   document.addEventListener('focusin',(e)=>{
     if(e.target && e.target.id==='guess-input'){
-      embedPaused=true; paused=true; if(btnPlay) btnPlay.textContent='▶';
-      try{ window.dispatchEvent(new CustomEvent('vh:pause-maps')); }catch{}
-    }
-  });
-  document.addEventListener('focusout',(e)=>{
-    if(e.target && e.target.id==='guess-input'){
-      setTimeout(()=>{ if(document.activeElement && document.activeElement.id!=='guess-input'){ embedPaused=false; paused=false; if(btnPlay) btnPlay.textContent='❚❚'; } }, 600);
+      embedPaused=true; paused=true; if(btnPlay) btnPlay.textContent='▶ Play drift';
     }
   });
   function pickRandom(ex){ let cands=pool.filter(n=>n!==ex&&!used.has(n)); if(cands.length<5){ used.clear(); cands=pool.filter(n=>n!==ex); } return cands[Math.floor(Math.random()*cands.length)]; }
@@ -250,6 +260,9 @@ export async function mountDriftVoid(canvas){
   }
 
   show(pool[Math.floor(Math.random()*pool.length)]||'Bo Outlaw');
+  // v16: render one static frame even when paused default
+  setTimeout(()=>{ try{ renderer.render(scene,camera); }catch{} }, 180);
+  setTimeout(()=>{ try{ renderer.render(scene,camera); }catch{} }, 600);
 
   if(scrub){
     let dragging=false;
@@ -257,14 +270,20 @@ export async function mountDriftVoid(canvas){
       const rect=scrub.getBoundingClientRect(); const p=Math.max(0,Math.min(1,(clientX-rect.left)/rect.width));
       tProg=p; renderFocus(); if(current){ const pt=current.curve.getPointAt(Math.max(0.0001,Math.min(0.999,tProg))); if(pt){ current.travellerGroup.position.copy(pt); current.travellerGroup.position.y+=0.05; } }
     }
-    scrub.addEventListener('pointerdown',e=>{ dragging=true; try{scrub.setPointerCapture(e.pointerId);}catch{} setFromX(e.clientX); paused=true; if(btnPlay) btnPlay.textContent='▶'; });
+    scrub.addEventListener('pointerdown',e=>{ dragging=true; try{scrub.setPointerCapture(e.pointerId);}catch{} setFromX(e.clientX); paused=true; embedPaused=false; if(btnPlay) btnPlay.textContent='▶ Play drift'; });
     scrub.addEventListener('pointermove',e=>{ if(dragging) setFromX(e.clientX); });
     scrub.addEventListener('pointerup',()=>{ dragging=false; });
     scrub.addEventListener('click',e=> setFromX(e.clientX));
   }
-  if(btnPlay) btnPlay.addEventListener('click',()=>{ paused=!paused; btnPlay.textContent=paused?'▶':'❚❚'; });
-  if(btnNext) btnNext.addEventListener('click',()=>{ if(!current) return; const idx=Math.floor(tProg*current.meta.length); for(let j=idx+1;j<current.meta.length;j++) if(current.meta[j].archeIdx!==current.meta[j-1].archeIdx){ tProg=j/current.meta.length; renderFocus(); return; } tProg=1; renderFocus(); });
-  if(btnPrev) btnPrev.addEventListener('click',()=>{ if(!current) return; const idx=Math.floor(tProg*current.meta.length); for(let j=idx-1;j>=1;j--) if(current.meta[j].archeIdx!==current.meta[j-1].archeIdx){ tProg=j/current.meta.length; renderFocus(); return; } tProg=0; renderFocus(); });
+  if(btnPlay){
+    btnPlay.textContent='▶ Play drift';
+    btnPlay.addEventListener('click',()=>{
+      if(paused||embedPaused){ paused=false; embedPaused=false; btnPlay.textContent='❚❚ Pause'; }
+      else{ paused=true; embedPaused=true; btnPlay.textContent='▶ Play drift'; }
+    });
+  }
+  if(btnNext) btnNext.addEventListener('click',()=>{ paused=false; embedPaused=false; if(btnPlay) btnPlay.textContent='❚❚ Pause'; if(!current) return; const idx=Math.floor(tProg*current.meta.length); for(let j=idx+1;j<current.meta.length;j++) if(current.meta[j].archeIdx!==current.meta[j-1].archeIdx){ tProg=j/current.meta.length; renderFocus(); return; } tProg=1; renderFocus(); });
+  if(btnPrev) btnPrev.addEventListener('click',()=>{ paused=false; embedPaused=false; if(btnPlay) btnPlay.textContent='❚❚ Pause'; if(!current) return; const idx=Math.floor(tProg*current.meta.length); for(let j=idx-1;j>=1;j--) if(current.meta[j].archeIdx!==current.meta[j-1].archeIdx){ tProg=j/current.meta.length; renderFocus(); return; } tProg=0; renderFocus(); });
 
   function onResize(){ const w=canvas.clientWidth,h=canvas.clientHeight; if(w<10||h<10) return; renderer.setSize(w,h,false); camera.aspect=w/h; camera.updateProjectionMatrix(); }
   const ro=new ResizeObserver(onResize); ro.observe(canvas); onResize();

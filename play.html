@@ -230,7 +230,18 @@ button,.input{min-height:44px}
   function resize(){ const r=canvas.getBoundingClientRect(); if(!r.width) return; W=r.width; H=r.height; const dpr=Math.min(devicePixelRatio||1,1.25); canvas.width=W*dpr; canvas.height=H*dpr; canvas.style.width=W+'px'; canvas.style.height=H+'px'; const ctx=canvas.getContext('2d'); ctx.setTransform(dpr,0,0,dpr,0,0); }
 
   function initBase(lite){
-    const N=lite.length;
+    const isLowEndMain = (navigator.hardwareConcurrency&&navigator.hardwareConcurrency<=4) || window.innerWidth<520;
+    // v16 low-end LOD: 6k cap to save memory + projection cost
+    let filtered = lite;
+    if(isLowEndMain && lite.length>6500){
+      // keep archetype distribution: sample every 2nd + shuffle? simple stride 2
+      const step = lite.length>9000 ? 2 : 1;
+      const sampled=[];
+      for(let i=0;i<lite.length;i+=step) sampled.push(lite[i]);
+      filtered = sampled.slice(0,6000);
+      console.log('play map low-end LOD', lite.length,'->',filtered.length);
+    }
+    const N=filtered.length;
     baseOx=new Float32Array(N);
     baseOy=new Float32Array(N);
     baseOz=new Float32Array(N);
@@ -240,7 +251,7 @@ button,.input{min-height:44px}
     baseS=new Array(N);
     projected=new Array(N);
     for(let i=0;i<N;i++){
-      const p=lite[i];
+      const p=filtered[i];
       baseOx[i]=(p.x-0.5)*2;
       baseOy[i]=(p.y-0.5)*2;
       baseOz[i]=(p.z-0.5)*2;
@@ -254,7 +265,6 @@ button,.input{min-height:44px}
     projById=new Int32Array(maxId+1);
     projById.fill(-1);
     for(let i=0;i<N;i++){ const id=baseI[i]; if(id>=0 && id<=maxId) projById[id]=i; }
-    // prebuild modernPoolLower once VHPastModern state ready later — also build now fallback
     try{
       const st=VHPastModern.state();
       if(st && st.modernPool && st.modernPool.length){
@@ -385,6 +395,25 @@ button,.input{min-height:44px}
   function onUp(){ if(isDragging){ isDragging=false; idleTimer=3400; } }
 
   // --- helpers ---
+  let searchWorker=null, workerReady=false, workerSeq=0, lastWorkerId=0;
+  function initSearchWorker(){
+    try{
+      if(!window.Worker) return null;
+      const w=new Worker('/assets/workers/modern-search.worker.js?v=16');
+      w.onmessage=(ev)=>{
+        const {type, results, id, q} = ev.data||{};
+        if(type==='ready'){ workerReady=true; return; }
+        if(type==='result'){
+          if(id!==lastWorkerId) return; // stale
+          // render results on main thread (passed via closure? need to trigger)
+          const renderFn=w.__renderCb;
+          if(renderFn) renderFn(results, q);
+        }
+      };
+      return w;
+    }catch(e){ console.warn('worker init fail',e); return null; }
+  }
+
   function filteredModern(q){
     q=(q||'').toLowerCase().trim(); if(!q) return [];
     ensureModernLower();
@@ -405,7 +434,6 @@ button,.input{min-height:44px}
     function render(list){
       last=list;
       if(!list.length){ ul.style.display='none'; return; }
-      // use DOM fragment to avoid innerHTML GC
       ul.textContent='';
       const frag=document.createDocumentFragment();
       for(let i=0;i<list.length;i++){
@@ -422,13 +450,24 @@ button,.input{min-height:44px}
       ul.style.display='block';
     }
 
+    // worker render callback bridge
+    function renderViaWorker(q){
+      if(searchWorker && workerReady){
+        workerSeq++; lastWorkerId=workerSeq;
+        searchWorker.__renderCb = (results)=>{ render(results); last=results; };
+        searchWorker.postMessage({type:'search', payload:{q, id: lastWorkerId}});
+      } else {
+        render(filteredModern(q));
+      }
+    }
+
     input.addEventListener('focus', function(){ isTyping=true; auto=false; mapPaused=true; ensureModernLower(); try{ window.dispatchEvent(new CustomEvent('vh:pause-maps')); }catch{} });
     input.addEventListener('blur', function(){ setTimeout(()=>{ isTyping=false; mapPaused=false; lastT=0; try{ window.dispatchEvent(new CustomEvent('vh:resume-maps')); }catch{} }, 350); });
     input.addEventListener('input', function(){
       active=-1;
       const val=this.value;
       clearTimeout(debounceTimer);
-      debounceTimer=setTimeout(()=>{ render(filteredModern(val)); }, 80);
+      debounceTimer=setTimeout(()=>{ renderViaWorker(val); }, 80);
     });
     input.addEventListener('keydown',function(e){
       if(ul.style.display==='none' && e.key!=='ArrowDown' && e.key!=='ArrowUp') return;
@@ -980,6 +1019,14 @@ button,.input{min-height:44px}
     await VHPastModern.init();
     const st=VHPastModern.state();
     initBase(st.searchLite.players); projectFrame(); draw(); loop(0);
+
+    // v16 worker + cache embed: offload search
+    try{
+      searchWorker=initSearchWorker();
+      if(searchWorker && st.modernPool){
+        searchWorker.postMessage({type:'init', payload:{pool: st.modernPool}});
+      }
+    }catch{}
 
     const isPack=!!st.isPack;
     let mode='daily'; if(isPack) mode='pack'; else if(st.isRandom) mode='random';

@@ -119,20 +119,37 @@ export async function mountStarMap(canvas){
   };
   // For option A (8 archetype shapes) — would need 8 textures, but we chose B so keep 5
 
+  // cached fetch helper — tries Cache API first for embed maps perf
+  async function cachedFetchJSON(url){
+    try{
+      if('caches' in window){
+        const cache=await caches.open('vector-hoops-v16-20260720-embed-cache-paused');
+        const hit=await cache.match(url);
+        if(hit){ const text=await hit.clone().json(); return text; }
+      }
+    }catch{}
+    const r=await fetch(url,{cache:'default'});
+    const clone=r.clone();
+    try{
+      if('caches' in window){
+        const cache=await caches.open('vector-hoops-v16-20260720-embed-cache-paused');
+        cache.put(url, clone).catch(()=>{});
+      }
+    }catch{}
+    return r.json();
+  }
+
   let players=[];
   try{
-    // prefer pos-enriched, fallback to lite
-    let r;
+    // prefer pos-enriched, fallback to lite — v16 cached, no no-store
     try{
-      r=await fetch('assets/vectors_search_lite_pos.json?v=13',{cache:'no-store'});
-      if(!r.ok) throw new Error('pos 404');
-      const j=await r.json(); players=j.players||[];
-      console.log('star-map v6 loaded pos-enriched', players.length);
+      const j=await cachedFetchJSON('assets/vectors_search_lite_pos.json?v=16');
+      players=j.players||[]; 
+      console.log('star-map v6.1 cached pos-enriched', players.length);
     }catch(e){
       console.warn('pos json fail, fallback lite',e);
-      const r2=await fetch('assets/vectors_search_lite.json?v=13',{cache:'no-store'});
-      const j2=await r2.json(); players=j2.players||[];
-      // assign random pos for fallback
+      const j2=await cachedFetchJSON('assets/vectors_search_lite.json?v=16');
+      players=j2.players||j2||[];
       players.forEach(p=>{ if(p.p===undefined){ p.p=Math.floor(Math.random()*5); p.pl=POS_LABELS[p.p]; } });
     }
   }catch(e){ console.warn('lite fetch fail',e); }
@@ -187,25 +204,21 @@ export async function mountStarMap(canvas){
 
   console.log('star-map v6 groups', pointGroups.map(g=>`${g.shape}:${g.list.length}`).join(' '), 'size', pointSize, 'cam', camera.position.z);
 
-  let rotY=Math.PI*0.24, rotX=0.18, auto=true, autoSpeed=0.00018, dragging=false, lx=0, ly=0, idle=0;
+  let rotY=Math.PI*0.24, rotX=0.18, auto=false, autoSpeed=0.00018, dragging=false, lx=0, ly=0, idle=0;
   const proj=[];
   for(let i=0;i<count;i++) proj[i]=null;
-  let embedPaused=false;
-  function setEmbedPaused(v){ embedPaused=v; auto=!v; const b=document.getElementById('btn-pause'); if(b) b.textContent= auto?'Pause':'Resume'; }
+  let embedPaused=true; // v16 default paused to save compute, click to play
+  function setEmbedPaused(v){ embedPaused=v; auto=!v; }
+  // wire custom events for pause/resume from game
   window.addEventListener('vh:pause-maps',()=> setEmbedPaused(true));
-  window.addEventListener('vh:resume-maps',()=> setEmbedPaused(false));
-  // also pause when any guess input focused on same page (landing has game too)
+  window.addEventListener('vh:resume-maps',()=>{ /* stay paused unless user clicked play */ });
+  // pause when guess input focused
   document.addEventListener('focusin',(e)=>{
     if(e.target && (e.target.id==='guess-input' || e.target.matches && e.target.matches('input.input'))){
       setEmbedPaused(true);
-      try{ window.dispatchEvent(new CustomEvent('vh:pause-maps')); }catch{}
     }
   });
-  document.addEventListener('focusout',(e)=>{
-    if(e.target && (e.target.id==='guess-input')){
-      setTimeout(()=>{ if(document.activeElement && document.activeElement.id!=='guess-input'){ setEmbedPaused(false); try{ window.dispatchEvent(new CustomEvent('vh:resume-maps')); }catch{} } }, 500);
-    }
-  });
+  // play button wired later — will call setEmbedPaused(false) on user intent
   function updProj(W,H){
     W=W||canvas.getBoundingClientRect().width||640;
     H=H||canvas.getBoundingClientRect().height||520;
@@ -267,10 +280,22 @@ export async function mountStarMap(canvas){
   canvas.addEventListener('mouseleave',()=>{ if(hoverTip) hoverTip.style.display='none'; });
 
   const btnPause=document.getElementById('btn-pause'), btnReset=document.getElementById('btn-reset');
-  if(btnPause) btnPause.addEventListener('click',()=>{ auto=!auto; btnPause.textContent=auto?'Pause':'Resume'; if(auto) idle=0; });
-  if(btnReset) btnReset.addEventListener('click',()=>{ rotY=Math.PI*0.24; rotX=0.18; auto=true; camera.position.set(0,0.38,7.25); if(btnPause) btnPause.textContent='Pause'; onResize(); });
+  // v16: default paused, buttons toggle play — saves compute
+  if(btnPause){
+    btnPause.textContent='▶ Play map';
+    btnPause.addEventListener('click',()=>{
+      if(embedPaused){
+        embedPaused=false; auto=true; btnPause.textContent='❚❚ Pause';
+        // ensure projection updated before render
+        const sz=getSize(); updProj(sz.w,sz.h);
+      }else{
+        embedPaused=true; auto=false; btnPause.textContent='▶ Play map';
+      }
+    });
+  }
+  if(btnReset) btnReset.addEventListener('click',()=>{ rotY=Math.PI*0.24; rotX=0.18; embedPaused=false; auto=true; camera.position.set(0,0.38,7.25); if(btnPause) btnPause.textContent='❚❚ Pause'; onResize(); });
 
-  updProj(); renderer.render(scene,camera);
+  updProj(); renderer.render(scene,camera); // one static frame even when paused
 
   let last=0, t0=performance.now();
   function loop(t){

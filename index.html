@@ -315,32 +315,51 @@
 })();
 </script>
 
-<!-- Lemmino 3D — professional documentary voids -->
+<!-- Lemmino 3D — professional documentary voids — v16 lazy + click-to-play + cached -->
 <script type="module">
-import { mountStarMap } from './assets/lemmino/star-map-void.js';
-import { mountDriftVoid } from './assets/lemmino/drift-void.js';
-
 const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if(prefersReduced){
+  console.log('prefers-reduced-motion: skip 3D embeds');
+} else {
+  const lazyMount = (selector, loader) => {
+    const el = document.querySelector(selector);
+    if(!el) return;
+    let mounted=false;
+    const mount = async ()=>{
+      if(mounted) return;
+      mounted=true;
+      observer&&observer.disconnect();
+      try{ await loader(); }catch(e){ console.warn('lemmino lazy fail',selector,e); }
+    };
+    const observer = new IntersectionObserver((entries)=>{
+      const ent=entries[0];
+      if(ent&&ent.isIntersecting){
+        // delay a bit to avoid blocking main thread during scroll
+        setTimeout(mount, 120);
+      }
+    },{rootMargin:'250px 0px', threshold:0.01});
+    observer.observe(el);
+    // also mount on user explicitly clicking play button before visible
+    const playBtn = selector.includes('sky') ? document.getElementById('btn-pause') : document.getElementById('drift-play');
+    if(playBtn){
+      playBtn.addEventListener('click', ()=>{ mount(); }, {once:true});
+    }
+  };
 
-async function initLemmino(){
-  const starCanvas = document.getElementById('sky-canvas');
-  const driftCanvas = document.getElementById('lemmino-drift-canvas');
-  if(starCanvas){
-    try{
-      await mountStarMap(starCanvas);
-      console.log('Lemmino star-map void mounted');
-    } catch(e){ console.warn('star-map void fail', e); }
-  }
-  if(driftCanvas){
-    try{
-      const api = await mountDriftVoid(driftCanvas);
-      console.log('Lemmino drift void mounted — v5 story with LEAGUE% pp delta handled inside module');
-    } catch(e){ console.warn('drift void fail', e); }
-  }
+  lazyMount('#sky-canvas', async ()=>{
+    const { mountStarMap } = await import('./assets/lemmino/star-map-void.js?v=16');
+    const c=document.getElementById('sky-canvas');
+    if(c) await mountStarMap(c);
+    console.log('Lemmino star-map lazy mounted — cached + paused default');
+  });
+
+  lazyMount('#lemmino-drift-canvas', async ()=>{
+    const { mountDriftVoid } = await import('./assets/lemmino/drift-void.js?v=16');
+    const c=document.getElementById('lemmino-drift-canvas');
+    if(c) await mountDriftVoid(c);
+    console.log('Lemmino drift lazy mounted — cached + paused default');
+  });
 }
-
-if(document.readyState==='complete') setTimeout(initLemmino, 420);
-else window.addEventListener('load', ()=> setTimeout(initLemmino, 420));
 </script>
 
 <footer class="site-footer"><div class="site-footer__links"><a href="/play">Play</a><a href="/model">Lab</a><a href="/methods">Methods</a><a href="/players">Players</a><a href="https://github.com/jcdavis131/vector-hoops" target="_blank" rel="noopener">GitHub</a></div><div class="site-footer__attribution">Every number recomputable from stats.nba.com · dumbmodel.com — Lemmino voids: Three.js 0.160 matte low-poly</div></footer>
