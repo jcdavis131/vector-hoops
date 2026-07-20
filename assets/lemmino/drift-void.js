@@ -227,14 +227,17 @@ export async function mountDriftVoid(canvas){
     const baseColor=new THREE.Color(OKABE[meta[Math.floor(meta.length/2)].archeIdx%8]); baseColor.lerp(new THREE.Color(0xFFFFFF),0.08);
 
     const nodes=new THREE.Group();
+    const nodeMeshes=[]; // keep refs for outline vs filled toggle
     for(let i=0;i<pts.length;i++){
       const isChange=i>0&&meta[i].archeIdx!==meta[i-1].archeIdx;
-      const g=new THREE.SphereGeometry(isChange?0.18:0.08,12,12);
-      const m=new THREE.MeshStandardMaterial({ color:isChange?0xFFFFFF:baseColor, emissive:baseColor, emissiveIntensity:isChange?0.90:0.30, transparent:true, opacity:isChange?1:0.78 });
-      const sph=new THREE.Mesh(g,m); sph.position.copy(pts[i]); nodes.add(sph);
+      const g=new THREE.SphereGeometry(isChange?0.18:0.10,14,14);
+      const m=new THREE.MeshStandardMaterial({ color:isChange?0xFFFFFF:baseColor, emissive:baseColor, emissiveIntensity:isChange?0.90:0.30, transparent:true, opacity:isChange?1:0.78, wireframe:false });
+      const sph=new THREE.Mesh(g,m); sph.position.copy(pts[i]); sph.userData.isChange=isChange; sph.userData.seasonIdx=i; nodes.add(sph); nodeMeshes.push(sph);
+      // ring for change stays, but opacity will be adjusted later
       if(isChange){
         const ring=new THREE.Mesh(new THREE.RingGeometry(0.22,0.29,22), new THREE.MeshBasicMaterial({ color:0xFFFFFF, transparent:true, opacity:0.88, side:THREE.DoubleSide }));
-        ring.position.copy(pts[i]); ring.position.y+=0.012; ring.rotation.x=Math.PI/2; nodes.add(ring);
+        ring.position.copy(pts[i]); ring.position.y+=0.012; ring.rotation.x=Math.PI/2; ring.userData.isRing=true; ring.userData.seasonIdx=i;
+        nodes.add(ring);
       }
     }
 
@@ -256,10 +259,10 @@ export async function mountDriftVoid(canvas){
 
     // full ghost line faint
     const ghostGeo=new THREE.BufferGeometry().setFromPoints(pts);
-    const ghostMat=new THREE.LineBasicMaterial({ color:0xFFFFFF, transparent:true, opacity:0.09 });
+    const ghostMat=new THREE.LineBasicMaterial({ color:0xFFFFFF, transparent:true, opacity:0.07 });
     const ghostLine=new THREE.Line(ghostGeo, ghostMat);
 
-    return { name, entries, pts, meta, curve, nodes, head, tail, currentLabel, traveller, travellerGroup, baseColor, changes, ghostLine };
+    return { name, entries, pts, meta, curve, nodes, nodeMeshes, head, tail, currentLabel, traveller, travellerGroup, baseColor, changes, ghostLine };
   }
 
   let current=null, tProg=0, paused=true, used=new Set(), lastSwitch=performance.now(), autoPauseUntil=0, lastChangeIdx=-1, lastSeasonIdx=-1;
@@ -292,21 +295,64 @@ export async function mountDriftVoid(canvas){
 
   function updateTrails(){
     if(!current) return;
-    // clear past/future
+    // clear past/future trails
     clear(trailPastGroup); clear(trailFutureGroup); clear(ghostLineGroup);
     ghostLineGroup.add(current.ghostLine);
     const idx=Math.min(Math.floor(tProg*current.meta.length), current.meta.length-1);
+
+    // nodes: prior = outlines only, current = filled solid, future = faint outline
+    if(current.nodeMeshes){
+      for(let i=0;i<current.nodeMeshes.length;i++){
+        const mesh=current.nodeMeshes[i];
+        const mat=mesh.material;
+        if(i===idx){
+          // current season — filled solid
+          mat.wireframe=false;
+          mat.color.set(current.baseColor);
+          mat.emissive.set(current.baseColor);
+          mat.emissiveIntensity=0.95;
+          mat.opacity=1.0;
+          mesh.scale.set(1.6,1.6,1.6);
+        } else if(i<idx){
+          // prior seasons — outlines only
+          mat.wireframe=true;
+          mat.color.set(0x9AA0AC);
+          mat.emissive.set(0x000000);
+          mat.emissiveIntensity=0;
+          mat.opacity= i===idx-1 ? 0.42 : 0.26; // most recent prior a bit stronger
+          mesh.scale.set(1.0,1.0,1.0);
+        } else {
+          // future seasons — very faint outline
+          mat.wireframe=true;
+          mat.color.set(0x4A4E58);
+          mat.emissive.set(0x000000);
+          mat.opacity=0.10;
+          mesh.scale.set(0.8,0.8,0.8);
+        }
+      }
+      // also dim rings for prior/future but keep current transition rings bright
+      for(const child of current.nodes.children){
+        if(child.userData.isRing){
+          const ri=child.userData.seasonIdx;
+          if(ri===idx || ri===idx+1) { child.visible=true; child.material.opacity=ri===idx?0.92:0.55; }
+          else if(ri<idx) { child.visible=true; child.material.opacity=0.18; }
+          else { child.visible=false; }
+        }
+      }
+    }
+
     if(idx>0){
       const pastPts=current.pts.slice(0, idx+1);
       if(pastPts.length>=2){
+        // outline trail: wireframe tube = looks like outlined path
         const pastCurve=new THREE.CatmullRomCurve3(pastPts);
-        const pastTube=new THREE.TubeGeometry(pastCurve, Math.max(pastPts.length*7, 40), 0.12, 10, false);
-        const mat=new THREE.MeshStandardMaterial({ color:0x9AA0AC, transparent:true, opacity:0.34, roughness:0.72, metalness:0.05 });
+        const pastTube=new THREE.TubeGeometry(pastCurve, Math.max(pastPts.length*7, 40), 0.095, 8, false);
+        const mat=new THREE.MeshBasicMaterial({ color:0xC2C6D0, transparent:true, opacity:0.22, wireframe:true });
         const mesh=new THREE.Mesh(pastTube, mat);
         trailPastGroup.add(mesh);
-        // dashed line overlay for history emphasis
+        // thin dashed line center for readability
         const lineGeo=new THREE.BufferGeometry().setFromPoints(pastPts);
-        const lineMat=new THREE.LineDashedMaterial({ color:0xFFFFFF, transparent:true, opacity:0.18, dashSize:0.22, gapSize:0.18, linewidth:1 });
+        const lineMat=new THREE.LineDashedMaterial({ color:0x9AA0AC, transparent:true, opacity:0.22, dashSize:0.22, gapSize:0.20, linewidth:1 });
         const line=new THREE.Line(lineGeo, lineMat); line.computeLineDistances(); trailPastGroup.add(line);
       }
     }
@@ -314,10 +360,10 @@ export async function mountDriftVoid(canvas){
       const futPts=current.pts.slice(idx);
       if(futPts.length>=2){
         const futCurve=new THREE.CatmullRomCurve3(futPts);
-        const futTube=new THREE.TubeGeometry(futCurve, Math.max(futPts.length*7, 30), 0.065, 8, false);
-        const mat=new THREE.MeshBasicMaterial({ color:current.baseColor, transparent:true, opacity:0.18, depthWrite:false });
-        const mesh=new THREE.Mesh(futTube, mat);
-        trailFutureGroup.add(mesh);
+        // future = even fainter outline dashed
+        const fLineGeo=new THREE.BufferGeometry().setFromPoints(futPts);
+        const fLineMat=new THREE.LineDashedMaterial({ color:current.baseColor, transparent:true, opacity:0.12, dashSize:0.14, gapSize:0.22 });
+        const fLine=new THREE.Line(fLineGeo, fLineMat); fLine.computeLineDistances(); trailFutureGroup.add(fLine);
       }
     }
   }
