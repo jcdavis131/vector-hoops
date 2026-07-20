@@ -343,18 +343,18 @@ button,.input{min-height:44px}
     }
   }
 
+  let mapPaused=false;
   function loop(t){
     animId=requestAnimationFrame(loop);
-    frameCount++;
-    // throttle when typing: 15fps, else 45fps approx
-    if(isTyping){
-      if(frameCount % 4 !== 0) return;
-    } else {
-      if(frameCount % 2 !== 0 && W<800) { /* 30fps on mobile */ if(frameCount % 3 ===1) {} }
+    if(isTyping || mapPaused){
+      // save bandwidth/compute when typing: pause entirely, no projection no draw
+      return;
     }
+    frameCount++;
+    if(frameCount % 2 !== 0 && W<800) { /* 30fps on mobile */ }
     if(!lastT) lastT=t;
     const dt=Math.min(48,t-lastT); lastT=t;
-    if(!isDragging && auto && !isTyping){
+    if(!isDragging && auto){
       rotY+=dt*autoSpeed;
       rotX+=(Math.sin(t*0.00018)*0.20 - rotX)*0.018;
     } else if(idleTimer){
@@ -363,6 +363,9 @@ button,.input{min-height:44px}
     }
     projectFrame(); draw();
   }
+  // expose global pause for embed maps on landing
+  window.addEventListener('vh:pause-maps',()=>{ mapPaused=true; auto=false; });
+  window.addEventListener('vh:resume-maps',()=>{ mapPaused=false; lastT=0; });
 
   function onDown(ev){ isDragging=true; auto=false; lastX=ev.touches?ev.touches[0].clientX:ev.clientX; lastY=ev.touches?ev.touches[0].clientY:ev.clientY; const bp=$('#btn-pause'); if(bp) bp.textContent='Resume'; }
   function onMove(ev){
@@ -416,13 +419,13 @@ button,.input{min-height:44px}
       ul.style.display='block';
     }
 
-    input.addEventListener('focus', function(){ isTyping=true; auto=false; ensureModernLower(); });
-    input.addEventListener('blur', function(){ setTimeout(()=>{ isTyping=false; }, 350); });
+    input.addEventListener('focus', function(){ isTyping=true; auto=false; mapPaused=true; ensureModernLower(); try{ window.dispatchEvent(new CustomEvent('vh:pause-maps')); }catch{} });
+    input.addEventListener('blur', function(){ setTimeout(()=>{ isTyping=false; mapPaused=false; lastT=0; try{ window.dispatchEvent(new CustomEvent('vh:resume-maps')); }catch{} }, 350); });
     input.addEventListener('input', function(){
       active=-1;
       const val=this.value;
       clearTimeout(debounceTimer);
-      debounceTimer=setTimeout(()=>{ render(filteredModern(val)); }, 45);
+      debounceTimer=setTimeout(()=>{ render(filteredModern(val)); }, 80);
     });
     input.addEventListener('keydown',function(e){
       if(ul.style.display==='none' && e.key!=='ArrowDown' && e.key!=='ArrowUp') return;

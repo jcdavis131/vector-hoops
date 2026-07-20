@@ -190,6 +190,22 @@ export async function mountStarMap(canvas){
   let rotY=Math.PI*0.24, rotX=0.18, auto=true, autoSpeed=0.00018, dragging=false, lx=0, ly=0, idle=0;
   const proj=[];
   for(let i=0;i<count;i++) proj[i]=null;
+  let embedPaused=false;
+  function setEmbedPaused(v){ embedPaused=v; auto=!v; const b=document.getElementById('btn-pause'); if(b) b.textContent= auto?'Pause':'Resume'; }
+  window.addEventListener('vh:pause-maps',()=> setEmbedPaused(true));
+  window.addEventListener('vh:resume-maps',()=> setEmbedPaused(false));
+  // also pause when any guess input focused on same page (landing has game too)
+  document.addEventListener('focusin',(e)=>{
+    if(e.target && (e.target.id==='guess-input' || e.target.matches && e.target.matches('input.input'))){
+      setEmbedPaused(true);
+      try{ window.dispatchEvent(new CustomEvent('vh:pause-maps')); }catch{}
+    }
+  });
+  document.addEventListener('focusout',(e)=>{
+    if(e.target && (e.target.id==='guess-input')){
+      setTimeout(()=>{ if(document.activeElement && document.activeElement.id!=='guess-input'){ setEmbedPaused(false); try{ window.dispatchEvent(new CustomEvent('vh:resume-maps')); }catch{} } }, 500);
+    }
+  });
   function updProj(W,H){
     W=W||canvas.getBoundingClientRect().width||640;
     H=H||canvas.getBoundingClientRect().height||520;
@@ -259,6 +275,7 @@ export async function mountStarMap(canvas){
   let last=0, t0=performance.now();
   function loop(t){
     requestAnimationFrame(loop);
+    if(embedPaused){ return; } // save bandwidth/compute when user typing
     if(!visible && firstFrames<=0){ last=t; return; }
     if(firstFrames>0) firstFrames--;
     if(!last) last=t;

@@ -177,6 +177,20 @@ export async function mountDriftVoid(canvas){
   function clear(g){ while(g.children.length){ const c=g.children[0]; g.remove(c); if(c.geometry) c.geometry.dispose(); if(c.material){ if(c.material.map) c.material.map.dispose(); c.material.dispose(); } } }
 
   let current=null, tProg=0, paused=false, used=new Set(), lastSwitch=performance.now(), autoPauseUntil=0, lastChangeIdx=-1;
+  let embedPaused=false;
+  window.addEventListener('vh:pause-maps',()=>{ embedPaused=true; paused=true; if(btnPlay) btnPlay.textContent='▶'; });
+  window.addEventListener('vh:resume-maps',()=>{ embedPaused=false; paused=false; if(btnPlay) btnPlay.textContent='❚❚'; });
+  document.addEventListener('focusin',(e)=>{
+    if(e.target && e.target.id==='guess-input'){
+      embedPaused=true; paused=true; if(btnPlay) btnPlay.textContent='▶';
+      try{ window.dispatchEvent(new CustomEvent('vh:pause-maps')); }catch{}
+    }
+  });
+  document.addEventListener('focusout',(e)=>{
+    if(e.target && e.target.id==='guess-input'){
+      setTimeout(()=>{ if(document.activeElement && document.activeElement.id!=='guess-input'){ embedPaused=false; paused=false; if(btnPlay) btnPlay.textContent='❚❚'; } }, 600);
+    }
+  });
   function pickRandom(ex){ let cands=pool.filter(n=>n!==ex&&!used.has(n)); if(cands.length<5){ used.clear(); cands=pool.filter(n=>n!==ex); } return cands[Math.floor(Math.random()*cands.length)]; }
 
   const focusEl=document.getElementById('lemmino-drift-focus');
@@ -258,6 +272,7 @@ export async function mountDriftVoid(canvas){
 
   function tick(){
     requestAnimationFrame(tick);
+    if(embedPaused){ return; } // save compute when typing
     if(!visible) return;
     const now=performance.now();
     if(!paused && now>autoPauseUntil){
