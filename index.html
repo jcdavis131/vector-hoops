@@ -92,34 +92,17 @@
   </div>
 
   <!-- LEMMINO COMBO: embedding map as stars -->
-  <div id="map-wrap" class="lemmino-map-void">
-    <canvas id="sky-canvas" width="640" height="580" aria-label="Lemmino void: 12,966 player-seasons as stars in documentary fog, floating basketball artifact"></canvas>
-    <div class="lemmino-vignette" aria-hidden="true"></div>
-    <div class="lemmino-grain" aria-hidden="true"></div>
-    <div class="lemmino-chapter">
-      <div class="kicker"><i></i> ARCHIVE // 12,966 STARS // EMBEDDING VOID</div>
-      <h2>Every season a star<br><em>in the dark</em></h2>
-      <p class="de" style="color:rgba(234,230,222,0.68)" >Lemmino doc: MTNN 48-D → 3-D. Glass plates = XYZ axes (Paint↔Perim, Role→Score, Off↔On). No sphere, no boxes — just stars = seasons, color = archetype, readable and grab-to-spin.</p>
+  <div id="map-wrap" class="lemmino-map-void" style="background:#080A0F">
+    <canvas id="sky-canvas" width="640" height="580" aria-label="12,966 player-seasons as points, XYZ glass plates for orientation"></canvas>
+    <!-- minimal controls only -->
+    <div id="map-controls" style="position:absolute;left:10px;bottom:10px;z-index:6;display:flex;gap:6px">
+      <button class="chip" id="btn-pause" type="button" style="background:rgba(255,254,247,0.96);border:2px solid #1A150F;border-radius:999px;padding:6px 10px;font-family:ui-monospace,monospace;font-size:10px;font-weight:800">Pause</button>
+      <button class="chip" id="btn-reset" type="button" style="background:rgba(255,254,247,0.96);border:2px solid #1A150F;border-radius:999px;padding:6px 10px;font-family:ui-monospace,monospace;font-size:10px;font-weight:800">Reset view</button>
     </div>
-    <div class="lemmino-doc-label">CASE FILE: STAR MAP // XYZ GLASS PLATES // 12,966 MOTES // NO BALL</div>
-    <div id="map-overlay" aria-hidden="true">
-      <span class="chip" id="sky-fact">loading 12,966 stars — rotating…</span>
-      <span class="chip" id="sky-hover-chip" style="opacity:.7">★ pulsing = MJ 97-98 placeholder</span>
-    </div>
-    <div id="map-controls">
-      <button class="chip" id="btn-pause" type="button">Pause</button>
-      <button class="chip" id="btn-reset" type="button">Reset</button>
-      <button class="chip" id="btn-share-board" type="button" style="background:#FFFEF7">Share Map</button>
-    </div>
-    <div id="map-legend" style="min-width:158px">
-      <div class="legend-title" style="margin-bottom:5px">Embedding — XYZ Glass</div>
-      <div style="font-size:9px;opacity:.75;line-height:1.35">X Paint↔Perim<br>Y Role→Score<br>Z Off↔On<br><br>8 archetypes = Okabe muted<br>walls = orientation aids</div>
-      <div style="margin-top:8px;border-top:1.2px solid var(--ink);padding-top:6px;display:flex;gap:6px;align-items:center"><span class="legend-star">★</span> <span id="legend-star-name" style="font-weight:800">MJ 97-98</span></div>
-    </div>
-    <div id="hover-tip"></div>
-    <div class="lemmino-ui">
-      <span class="lemmino-caption">● REC ● 24FPS ● TUNGSTEN 3200K</span>
-      <span class="lemmino-caption lemmino-caption--dark">FOG 0.022 / SPOT F0E442 / STARS 12,966</span>
+    <div id="hover-tip" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-100%);background:#FFFEF7;border:2px solid #1A150F;border-radius:10px;padding:7px 9px;box-shadow:3px 3px 0 #1A150F;font-size:12px;line-height:1.35;display:none;z-index:7;pointer-events:none;max-width:260px"></div>
+    <div id="map-axis-legend" style="position:absolute;right:10px;bottom:10px;z-index:5;background:rgba(255,254,247,0.96);border:2px solid #1A150F;border-radius:10px;padding:6px 8px;font-family:ui-monospace,monospace;font-size:9px;line-height:1.3;box-shadow:2px 2px 0 #1A150F">
+      <div style="font-weight:900;letter-spacing:.05em;margin-bottom:3px">X Paint ↔ Perim · Y Role → Score · Z Off ↔ On</div>
+      <div style="opacity:.75">drag to rotate · hover star for name · color = archetype</div>
     </div>
   </div>
 </div>
@@ -130,22 +113,15 @@
   <a class="card" href="/model" style="text-decoration:none;color:inherit"><div class="small-mono">Lab</div><b style="font-family:'Architects Daughter',mono;font-size:19px">Inside the model</b><div style="font-size:13px;color:#666;margin-top:5px;line-height:1.45">How the embedding is built, what it captures, and where it fails.</div></a>
 </div>
 
-<!-- LEMMINO 2 — THE GREAT MIGRATION — 30 seasons ribbon timeline -->
+<!-- LEMMINO 2 — Player career arcs through archetype drift — random all-star loop -->
 <div class="lemmino-section">
-  <div class="lemmino-drift" id="lemmino-drift">
-    <canvas id="lemmino-drift-canvas" width="1180" height="560" aria-label="Lemmino timeline: 30 seasons archetype ribbons drifting through void, prevalence as height"></canvas>
-    <div class="lemmino-vignette" aria-hidden="true"></div>
-    <div class="lemmino-scanline" aria-hidden="true"></div>
-    <div class="lemmino-grain" aria-hidden="true"></div>
-    <div class="lemmino-chapter" style="top:16px">
-      <div class="kicker"><i></i> EVIDENCE TAPE // 1996→2026 // MIGRATION + ARCS</div>
-      <h2>The game moved<br><em>— 4 careers ride the shift</em></h2>
-      <p class="de">Combined viz: 8 faint archetype ribbons = how the game drifted (height = prevalence) + 4 emissive player filaments = LeBron, Curry, Giannis, Jokic changing archetypes as they age. Follow one ribbon, then follow one career — no clutter.</p>
+  <div class="lemmino-drift" id="lemmino-drift" style="background:#080A0F">
+    <canvas id="lemmino-drift-canvas" width="1180" height="560" aria-label="Random all-star career arc through archetype drift"></canvas>
+    <div style="position:absolute;left:12px;top:12px;z-index:4;background:rgba(255,254,247,0.96);border:2px solid #1A150F;border-radius:10px;padding:6px 9px;font-family:ui-monospace,monospace;font-size:10px;font-weight:800;box-shadow:2px 2px 0 #1A150F">
+      <span id="lemmino-drift-focus">Loading all-star arc…</span>
     </div>
-    <div class="lemmino-doc-label">EXHIBIT B — DRIFT + ARCS / 30 SEASONS / 4 ICONIC TRAJECTORIES / TUNGSTEN</div>
-    <div class="lemmino-ui">
-      <span class="lemmino-caption" id="lemmino-drift-focus">● NOW: Playmaking 1999 — tracking</span>
-      <span class="lemmino-caption lemmino-caption--dark">CAMERA: DOLLY 0.12 • RIBBONS 8 FAINT • TRACES 4</span>
+    <div style="position:absolute;right:12px;bottom:12px;z-index:4;background:rgba(26,21,15,0.86);color:#FFFEF7;border:2px solid #1A150F;border-radius:10px;padding:5px 8px;font-family:ui-monospace,monospace;font-size:9px;line-height:1.3;max-width:220px">
+      <span id="lemmino-drift-meta">Random all-star career loops every 14s · ribbons = game prevalence</span>
     </div>
   </div>
 </div>
