@@ -227,7 +227,7 @@ button,.input{min-height:44px}
   let modernPoolLower=[]; // precomputed lower names for fast filter
   let isTyping=false;
 
-  function resize(){ const r=canvas.getBoundingClientRect(); if(!r.width) return; W=r.width; H=r.height; const dpr=Math.min(devicePixelRatio||1,1.8); canvas.width=W*dpr; canvas.height=H*dpr; canvas.style.width=W+'px'; canvas.style.height=H+'px'; const ctx=canvas.getContext('2d'); ctx.setTransform(dpr,0,0,dpr,0,0); }
+  function resize(){ const r=canvas.getBoundingClientRect(); if(!r.width) return; W=r.width; H=r.height; const dpr=Math.min(devicePixelRatio||1,1.25); canvas.width=W*dpr; canvas.height=H*dpr; canvas.style.width=W+'px'; canvas.style.height=H+'px'; const ctx=canvas.getContext('2d'); ctx.setTransform(dpr,0,0,dpr,0,0); }
 
   function initBase(lite){
     const N=lite.length;
@@ -344,8 +344,11 @@ button,.input{min-height:44px}
   }
 
   let mapPaused=false;
+  let mapVisible=true;
+  try{ const io=new IntersectionObserver(es=>{ mapVisible=es[0]?.isIntersecting??true; },{threshold:0.05}); io.observe(canvas); }catch{}
   function loop(t){
     animId=requestAnimationFrame(loop);
+    if(!mapVisible && !isDragging){ return; }
     if(isTyping || mapPaused){
       // save bandwidth/compute when typing: pause entirely, no projection no draw
       return;
