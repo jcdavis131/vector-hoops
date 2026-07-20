@@ -1,12 +1,12 @@
-/* drift-void.js v6 — story clarity + zoomed out for recent years
-   User feedback: bones ok but hard to follow narrative + can't see most current years (too zoomed in)
-   Fix:
-   - Zoom out: cam 15.5->24, FOV 34->44, SPAN 32->38, lookAt recent 70% biased, ground 180->260
-   - Story: single current label following traveller, not 6 floating pills; head/tail only permanent
-   - Role changes: big chapter card pausing 1.8s with league pp explanation, white ring + toast
-   - Recent years visible: tick labels every 2 seasons (was 3), last 6 seasons always labeled bold, tail at end visible
-   - Declutter: league cloud 0.62->0.32, ribbons 0.26->0.12, tube thicker 0.105->0.14, nodes smaller
-   - Narrative panel: focus + meta combined, shows progress 3/11 and next shift hint
+/* drift-void.js v7 — zoomed-out start + pinch zoom + season-context + history trail
+   #1: zoom out to 38, allow wheel + pinch zoom (12-60) into specific seasons/archetypes
+   #2: story readability fixes:
+     - show all dots for players that season (seasonCloud) = league snapshot for that year
+     - greyed historical trail for past + faint future + bright current
+     - show current team placeholder (wiring from roster_context when available)
+     - show role changes with from→to highlight, greyed trail, white ring markers
+     - season context: team role, league %, career stage, shift reason
+     - bigger labels, less clutter
 */
 export async function mountDriftVoid(canvas){
   if(!canvas) return;
@@ -22,23 +22,28 @@ export async function mountDriftVoid(canvas){
 
   const scene=new THREE.Scene();
   scene.background=new THREE.Color(0x080A0F);
-  scene.fog=new THREE.FogExp2(0x080A0F, 0.012);
+  scene.fog=new THREE.FogExp2(0x080A0F, 0.0095);
 
-  const camera=new THREE.PerspectiveCamera(44, 1, 0.1, 280);
-  camera.position.set(0,3.8,24);
+  const CAM_Z_DEFAULT=38, CAM_Z_MIN=12, CAM_Z_MAX=68;
+  const camera=new THREE.PerspectiveCamera(46, 1, 0.1, 320);
+  camera.position.set(0,4.2,CAM_Z_DEFAULT);
+  let camBaseZ=CAM_Z_DEFAULT;
+  function clampZ(z){ return Math.max(CAM_Z_MIN, Math.min(CAM_Z_MAX, z)); }
+  function setZ(z){ camBaseZ=clampZ(z); }
 
-  scene.add(new THREE.AmbientLight(0xFFFFFF,0.75));
+  scene.add(new THREE.AmbientLight(0xFFFFFF,0.78));
   const key=new THREE.DirectionalLight(0xFFE8C8,0.95); key.position.set(6,9,5); scene.add(key);
   const fill=new THREE.DirectionalLight(0xA8C4FF,0.35); fill.position.set(-5,3,-3); scene.add(fill);
 
-  const ground=new THREE.Mesh(new THREE.PlaneGeometry(260,260), new THREE.MeshStandardMaterial({ color:0x0C0E14, roughness:0.96 }));
+  const ground=new THREE.Mesh(new THREE.PlaneGeometry(300,300), new THREE.MeshStandardMaterial({ color:0x0C0E14, roughness:0.96 }));
   ground.rotation.x=-Math.PI/2; ground.position.y=-2.9; scene.add(ground);
 
   let timeData=null, liteData=null;
   async function cachedFetchJSON(url){
+    const CACHE_NAME='vector-hoops-v17-20260720-zoompersist';
     try{
       if('caches' in window){
-        const cache=await caches.open('vector-hoops-v16-20260720-embed-cache-paused');
+        const cache=await caches.open(CACHE_NAME);
         const hit=await cache.match(url);
         if(hit) return await hit.json();
       }
@@ -46,7 +51,7 @@ export async function mountDriftVoid(canvas){
     const r=await fetch(url,{cache:'default'});
     try{
       if('caches' in window){
-        const cache=await caches.open('vector-hoops-v16-20260720-embed-cache-paused');
+        const cache=await caches.open(CACHE_NAME);
         cache.put(url, r.clone()).catch(()=>{});
       }
     }catch{}
@@ -54,18 +59,36 @@ export async function mountDriftVoid(canvas){
   }
   try{
     const [tData,lData]=await Promise.all([
-      cachedFetchJSON('assets/archetypes_time.json?v=16'),
-      cachedFetchJSON('assets/vectors_search_lite.json?v=16')
+      cachedFetchJSON('assets/archetypes_time.json?v=17'),
+      cachedFetchJSON('assets/vectors_search_lite.json?v=17')
     ]);
     timeData=tData; liteData=lData;
-  }catch(e){ console.warn('drift v6.1 cached fetch fail',e); return; }
+  }catch(e){ console.warn('drift v7 fetch fail',e); return; }
 
   const seasons=timeData?.prevalence||[];
   const OKABE=['#0072B2','#D55E00','#009E73','#F0E442','#56B4E9','#CC79A7','#E69F00','#FFFEF7'];
   const shortNames=["Glass+Rim","LowVol Glass","Low Impact","Def Glass FT","Vol+3P","3P Acc+Vol","Playmaking","Scoring Vol"];
-  const SEASON_SPAN=38; // was 32, more breathing room for recent years
+  const longDesc=[
+    "Rim protection + glass, low perimeter creation",
+    "Low volume, high rebounding efficiency",
+    "Minimal box-score footprint that season, end-of-bench",
+    "Defensive glass + FT rate, low usage",
+    "High volume 3P + moderate creation",
+    "Efficient 3P accuracy + volume spacer",
+    "Primary playmaking, creation engine",
+    "High usage scoring volume"
+  ];
+  const SEASON_SPAN=44;
   const getZ=(idx)=>(idx/Math.max(1,seasons.length-1))*SEASON_SPAN - SEASON_SPAN/2;
   const seasonIdx=new Map(seasons.map((s,i)=>[s.season,i]));
+
+  // precompute per-season player positions for seasonCloud
+  const seasonPlayersMap=new Map(); // season -> {list, positions}
+  for(const s of seasons) seasonPlayersMap.set(s.season, []);
+  for(const p of (liteData.players||[])){
+    if(!seasonPlayersMap.has(p.s)) seasonPlayersMap.set(p.s, []);
+    seasonPlayersMap.get(p.s).push(p);
+  }
 
   const leagueGroup=new THREE.Group(); scene.add(leagueGroup);
   const count=liteData?.players?.length||0;
@@ -79,44 +102,76 @@ export async function mountDriftVoid(canvas){
     const y=-2.1+share*5.6 + Math.random()*0.5;
     const z=getZ(si)+(Math.random()-0.5)*0.22;
     positions[i*3]=x; positions[i*3+1]=y; positions[i*3+2]=z;
-    const col=new THREE.Color(OKABE[p.c%8]); col.lerp(new THREE.Color(0x151821),0.56);
+    const col=new THREE.Color(OKABE[p.c%8]); col.lerp(new THREE.Color(0x151821),0.68);
     colors[i*3]=col.r; colors[i*3+1]=col.g; colors[i*3+2]=col.b;
   }
   const leagueGeo=new THREE.BufferGeometry();
   leagueGeo.setAttribute('position', new THREE.BufferAttribute(positions,3));
   leagueGeo.setAttribute('color', new THREE.BufferAttribute(colors,3));
-  const leagueMat=new THREE.PointsMaterial({ size:isLowEnd?0.055:0.082, vertexColors:true, transparent:true, opacity:0.32, sizeAttenuation:true, depthWrite:false });
+  const leagueMat=new THREE.PointsMaterial({ size:isLowEnd?0.05:0.072, vertexColors:true, transparent:true, opacity:0.18, sizeAttenuation:true, depthWrite:false });
   leagueGroup.add(new THREE.Points(leagueGeo, leagueMat));
+
+  // season snapshot cloud — updated per season, bright peers
+  const seasonCloudGroup=new THREE.Group(); scene.add(seasonCloudGroup);
+  let seasonCloudPoints=null;
+  let seasonCloudGeo=new THREE.BufferGeometry();
+  let seasonCloudMat=new THREE.PointsMaterial({ size: isMobile?0.16:0.20, vertexColors:true, transparent:true, opacity:0.92, sizeAttenuation:true, depthWrite:false });
+  seasonCloudPoints=new THREE.Points(seasonCloudGeo, seasonCloudMat);
+  seasonCloudGroup.add(seasonCloudPoints);
+
+  function updateSeasonCloud(seasonStr, highlightName=null){
+    const list=seasonPlayersMap.get(seasonStr)||[];
+    if(!list.length) return;
+    // exclude highlighted player to avoid z-fighting (we render traveller)
+    const filtered=highlightName? list.filter(p=>p.n!==highlightName) : list;
+    const posArr=new Float32Array(filtered.length*3);
+    const colArr=new Float32Array(filtered.length*3);
+    for(let i=0;i<filtered.length;i++){
+      const p=filtered[i];
+      const si=seasonIdx.get(p.s); if(si===undefined) continue;
+      const share=seasons[si]?.shares[p.c]||0;
+      const x=(p.c-3.5)*1.20 + (Math.random()-0.5)*0.16;
+      const y=-2.1+share*5.6 + Math.random()*0.22;
+      const z=getZ(si)+(Math.random()-0.5)*0.10;
+      posArr[i*3]=x; posArr[i*3+1]=y; posArr[i*3+2]=z;
+      const col=new THREE.Color(OKABE[p.c%8]); col.lerp(new THREE.Color(0xFFFFFF),0.12);
+      colArr[i*3]=col.r; colArr[i*3+1]=col.g; colArr[i*3+2]=col.b;
+    }
+    seasonCloudGeo.setAttribute('position', new THREE.BufferAttribute(posArr,3));
+    seasonCloudGeo.setAttribute('color', new THREE.BufferAttribute(colArr,3));
+    seasonCloudGeo.computeBoundingSphere();
+  }
 
   const ribbonGroup=new THREE.Group(); scene.add(ribbonGroup);
   for(let a=0;a<8;a++){
     const pts=[]; for(let s=0;s<seasons.length;s++) pts.push(new THREE.Vector3((a-3.5)*1.20, -2.1+(seasons[s].shares[a]||0)*5.6, getZ(s)));
     const curve=new THREE.CatmullRomCurve3(pts);
-    const geo=new THREE.TubeGeometry(curve, seasons.length*2, isLowEnd?0.028:0.038, 6, false);
-    const col=new THREE.Color(OKABE[a]); col.lerp(new THREE.Color(0x12141A),0.62);
-    ribbonGroup.add(new THREE.Mesh(geo, new THREE.MeshBasicMaterial({ color:col, transparent:true, opacity:0.12, depthWrite:false })));
+    const geo=new THREE.TubeGeometry(curve, seasons.length*2, isLowEnd?0.024:0.034, 6, false);
+    const col=new THREE.Color(OKABE[a]); col.lerp(new THREE.Color(0x12141A),0.70);
+    ribbonGroup.add(new THREE.Mesh(geo, new THREE.MeshBasicMaterial({ color:col, transparent:true, opacity:0.10, depthWrite:false })));
   }
+
   function makeTickLabel(text,x,z,bold=false){
-    const c=document.createElement('canvas'); c.width=200; c.height=42;
+    const c=document.createElement('canvas'); c.width=220; c.height=44;
     const ctx=c.getContext('2d');
     ctx.fillStyle= bold? 'rgba(255,254,247,0.98)' : 'rgba(255,254,247,0.88)';
-    ctx.beginPath(); ctx.roundRect(2,4,196,34,8); ctx.fill();
+    ctx.beginPath(); ctx.roundRect(2,4,216,36,9); ctx.fill();
     ctx.fillStyle= bold? '#1A150F' : '#2A241E';
     ctx.font= bold? '900 13px ui-monospace,monospace' : '700 12px ui-monospace,monospace';
-    ctx.textAlign='center'; ctx.fillText(text,100,25);
+    ctx.textAlign='center'; ctx.fillText(text,110,26);
     const tex=new THREE.CanvasTexture(c); tex.colorSpace=THREE.SRGBColorSpace;
     const mat=new THREE.SpriteMaterial({ map:tex, transparent:true, depthWrite:false, depthTest:false });
-    const s=new THREE.Sprite(mat); s.scale.set(bold?1.05:0.85, bold?0.22:0.17,1); s.position.set(x,-2.75,z); return s;
+    const s=new THREE.Sprite(mat); s.scale.set(bold?1.12:0.92, bold?0.23:0.18,1); s.position.set(x,-2.75,z); return s;
   }
   const tickGroup=new THREE.Group(); scene.add(tickGroup);
   const recentThreshold = seasons.length - 8;
   seasons.forEach((s,i)=>{
     const isRecent = i>=recentThreshold;
-    const every = isRecent? 1 : 2; // recent years every season, older every 2
-    if(i%every===0){
-      const t=makeTickLabel(s.season,-5.8,getZ(i), isRecent);
+    const every = isRecent? 1 : 2;
+    if(i%every===0 || i===seasons.length-1){
+      const t=makeTickLabel(s.season,-6.2,getZ(i), isRecent);
       tickGroup.add(t);
-      const line=new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-4.9,-2.55,getZ(i)), new THREE.Vector3(5.4,-2.55,getZ(i))]), new THREE.LineBasicMaterial({ color:0xFFFFFF, transparent:true, opacity: isRecent?0.10:0.05 }));
+      const line=new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-5.2,-2.55,getZ(i)), new THREE.Vector3(5.7,-2.55,getZ(i))]), new THREE.LineBasicMaterial({ color:0xFFFFFF, transparent:true, opacity: isRecent?0.11:0.05 }));
       tickGroup.add(line);
     }
   });
@@ -124,22 +179,38 @@ export async function mountDriftVoid(canvas){
   const byName=new Map();
   for(const p of liteData.players){ if(!byName.has(p.n)) byName.set(p.n,[]); byName.get(p.n).push(p); }
   for(const arr of byName.values()) arr.sort((a,b)=> (a.s||'').localeCompare(b.s||''));
-  const CURATED=["LeBron James","Stephen Curry","Kevin Durant","Giannis Antetokounmpo","Nikola Jokic","James Harden","Russell Westbrook","Chris Paul","Kawhi Leonard","Damian Lillard","Luka Doncic","Jayson Tatum","Joel Embiid","Kobe Bryant","Tim Duncan","Dirk Nowitzki","Shaquille O'Neal","Kevin Garnett","Steve Nash","Dwyane Wade","Vince Carter","Chris Bosh","Paul Pierce","Anthony Edwards","Victor Wembanyama","Bo Outlaw"];
+  const CURATED=["LeBron James","Stephen Curry","Kevin Durant","Giannis Antetokounmpo","Nikola Jokic","James Harden","Russell Westbrook","Chris Paul","Kawhi Leonard","Damian Lillard","Luka Doncic","Jayson Tatum","Joel Embiid","Kobe Bryant","Tim Duncan","Dirk Nowitzki","Shaquille O'Neal","Kevin Garnett","Steve Nash","Dwyane Wade","Vince Carter","Chris Bosh","Paul Pierce","Anthony Edwards","Victor Wembanyama","Bo Outlaw","Anthony Davis","Devin Booker","Ja Morant"];
   let pool=CURATED.filter(n=>byName.has(n)&&byName.get(n).length>=4);
-  while(pool.length<36){ for(const [nm,arr] of byName.entries()) if(arr.length>=10&&!pool.includes(nm)) pool.push(nm); if(pool.length>=50) break; }
+  while(pool.length<40){ for(const [nm,arr] of byName.entries()) if(arr.length>=10&&!pool.includes(nm)) pool.push(nm); if(pool.length>=55) break; }
 
   const playerGroup=new THREE.Group(); scene.add(playerGroup);
+  const trailPastGroup=new THREE.Group(); scene.add(trailPastGroup);
+  const trailFutureGroup=new THREE.Group(); scene.add(trailFutureGroup);
+  const ghostLineGroup=new THREE.Group(); scene.add(ghostLineGroup);
 
-  function makePill(text,bg,fg,w=520,h=52,scale=2.2){
+  function makePill(text,bg,fg,w=540,h=56,scale=2.3){
     const c=document.createElement('canvas'); c.width=w; c.height=h;
     const ctx=c.getContext('2d'); ctx.clearRect(0,0,w,h);
-    ctx.fillStyle=bg; ctx.beginPath(); ctx.roundRect(4,4,w-8,h-8,10); ctx.fill();
+    ctx.fillStyle=bg; ctx.beginPath(); ctx.roundRect(4,4,w-8,h-8,11); ctx.fill();
     ctx.fillStyle=fg; ctx.font='800 13px ui-monospace,monospace'; ctx.textAlign='left'; ctx.textBaseline='middle';
-    let txt=text; if(txt.length>68) txt=txt.slice(0,66)+'…';
-    ctx.fillText(txt,12,h/2+1);
+    let txt=text; if(txt.length>74) txt=txt.slice(0,72)+'…';
+    ctx.fillText(txt,14,h/2+1);
     const tex=new THREE.CanvasTexture(c); tex.colorSpace=THREE.SRGBColorSpace;
     const mat=new THREE.SpriteMaterial({ map:tex, transparent:true, depthWrite:false, depthTest:false });
-    const s=new THREE.Sprite(mat); s.scale.set(scale, scale*0.12,1); return s;
+    const s=new THREE.Sprite(mat); s.scale.set(scale, scale*0.125,1); return s;
+  }
+
+  function clear(g){
+    while(g.children.length){
+      const child=g.children[0]; g.remove(child);
+      if(child.geometry) child.geometry.dispose();
+      if(child.material){
+        if(child.material.map) child.material.map.dispose?.();
+        child.material.dispose();
+      }
+      // recurse
+      if(child.isGroup && child.children) clear(child);
+    }
   }
 
   function buildArc(name){
@@ -149,58 +220,57 @@ export async function mountDriftVoid(canvas){
       const si=seasonIdx.get(e.s); if(si===undefined) continue;
       const share=seasons[si]?.shares[e.c]||0;
       pts.push(new THREE.Vector3((e.c-3.5)*1.20, -2.1+share*5.6+1.05, getZ(si)));
-      meta.push({ season:e.s, archeIdx:e.c, arche:shortNames[e.c], share, si, total:seasons[si]?.total||0 });
+      meta.push({ season:e.s, archeIdx:e.c, arche:shortNames[e.c], desc:longDesc[e.c], share, si, total:seasons[si]?.total||0 });
     }
     if(pts.length<3) return null;
     const curve=new THREE.CatmullRomCurve3(pts);
-    const tube=new THREE.TubeGeometry(curve, Math.max(pts.length*8,100), 0.14, 12, false);
-    const mid = meta[Math.floor(meta.length/2)];
-    const baseColor=new THREE.Color(OKABE[mid.archeIdx%8]); baseColor.lerp(new THREE.Color(0xFFFFFF),0.08);
-    const mesh=new THREE.Mesh(tube, new THREE.MeshStandardMaterial({ color:baseColor, emissive:baseColor, emissiveIntensity:0.32, roughness:0.34, transparent:true, opacity:0.96 }));
+    const baseColor=new THREE.Color(OKABE[meta[Math.floor(meta.length/2)].archeIdx%8]); baseColor.lerp(new THREE.Color(0xFFFFFF),0.08);
 
     const nodes=new THREE.Group();
     for(let i=0;i<pts.length;i++){
       const isChange=i>0&&meta[i].archeIdx!==meta[i-1].archeIdx;
-      const g=new THREE.SphereGeometry(isChange?0.16:0.07,12,12);
-      const m=new THREE.MeshStandardMaterial({ color:isChange?0xFFFFFF:baseColor, emissive:baseColor, emissiveIntensity:isChange?0.85:0.28, transparent:true, opacity:isChange?1:0.75 });
+      const g=new THREE.SphereGeometry(isChange?0.18:0.08,12,12);
+      const m=new THREE.MeshStandardMaterial({ color:isChange?0xFFFFFF:baseColor, emissive:baseColor, emissiveIntensity:isChange?0.90:0.30, transparent:true, opacity:isChange?1:0.78 });
       const sph=new THREE.Mesh(g,m); sph.position.copy(pts[i]); nodes.add(sph);
       if(isChange){
-        const ring=new THREE.Mesh(new THREE.RingGeometry(0.20,0.26,20), new THREE.MeshBasicMaterial({ color:0xFFFFFF, transparent:true, opacity:0.92, side:THREE.DoubleSide }));
+        const ring=new THREE.Mesh(new THREE.RingGeometry(0.22,0.29,22), new THREE.MeshBasicMaterial({ color:0xFFFFFF, transparent:true, opacity:0.88, side:THREE.DoubleSide }));
         ring.position.copy(pts[i]); ring.position.y+=0.012; ring.rotation.x=Math.PI/2; nodes.add(ring);
       }
     }
 
-    // only head and tail permanent, plus one current label that follows traveller
-    const head=makePill(`${name} — ${entries[0]?.s} → ${entries[entries.length-1]?.s} • ${entries.length} seasons`, '#1A150F','#FFFEF7', isMobile? 440: 640, 56, isMobile? 2.0: 2.9);
-    if(pts.length) head.position.set(pts[0].x-0.2, pts[0].y+1.25, pts[0].z-0.3);
+    const head=makePill(`${name} — ${entries[0]?.s} → ${entries[entries.length-1]?.s} • ${entries.length} seasons`, '#1A150F','#FFFEF7', isMobile? 460: 680, 58, isMobile? 2.1: 3.0);
+    if(pts.length) head.position.set(pts[0].x-0.2, pts[0].y+1.35, pts[0].z-0.35);
 
-    const tail=makePill(`${name.split(' ').pop()} now: ${meta[meta.length-1].arche} • LEAGUE ${(meta[meta.length-1].share*100).toFixed(1)}%`, baseColor.getStyle(), '#081018', isMobile? 360: 500, 52, isMobile? 1.7: 2.35);
-    if(pts.length) tail.position.set(pts[pts.length-1].x+0.7, pts[pts.length-1].y+0.95, pts[pts.length-1].z+0.4);
+    const tail=makePill(`${name.split(' ').pop()} now: ${meta[meta.length-1].arche} • LEAGUE ${(meta[meta.length-1].share*100).toFixed(1)}%`, baseColor.getStyle(), '#081018', isMobile? 380: 540, 54, isMobile? 1.8: 2.45);
+    if(pts.length) tail.position.set(pts[pts.length-1].x+0.7, pts[pts.length-1].y+1.05, pts[pts.length-1].z+0.45);
 
-    const currentLabel=makePill(`${meta[0].season}: ${meta[0].arche}`, 'rgba(255,254,247,0.98)','#1A150F', 420, 48, 1.9);
+    const currentLabel=makePill(`${meta[0].season}: ${meta[0].arche}`, 'rgba(255,254,247,0.98)','#1A150F', 460, 50, 2.0);
 
-    const traveller=new THREE.Mesh(new THREE.SphereGeometry(0.22,16,16), new THREE.MeshStandardMaterial({ color:0xFFFFFF, emissive:baseColor, emissiveIntensity:1.0 }));
-    const travellerHalo=new THREE.Mesh(new THREE.SphereGeometry(0.38,12,12), new THREE.MeshBasicMaterial({ color:baseColor, transparent:true, opacity:0.18 }));
+    const traveller=new THREE.Mesh(new THREE.SphereGeometry(0.26,18,18), new THREE.MeshStandardMaterial({ color:0xFFFFFF, emissive:baseColor, emissiveIntensity:1.15 }));
+    const travellerHalo=new THREE.Mesh(new THREE.SphereGeometry(0.44,14,14), new THREE.MeshBasicMaterial({ color:baseColor, transparent:true, opacity:0.22 }));
     const travellerGroup=new THREE.Group(); travellerGroup.add(traveller); travellerGroup.add(travellerHalo); travellerGroup.add(currentLabel);
-    currentLabel.position.set(0,0.85,0);
+    currentLabel.position.set(0,0.92,0);
 
-    // precompute changes for chaptering
     const changes=[];
     for(let i=1;i<meta.length;i++) if(meta[i].archeIdx!==meta[i-1].archeIdx) changes.push({ idx:i, from:meta[i-1], to:meta[i] });
 
-    return { name, entries, pts, meta, curve, mesh, nodes, head, tail, currentLabel, traveller, travellerGroup, baseColor, changes };
+    // full ghost line faint
+    const ghostGeo=new THREE.BufferGeometry().setFromPoints(pts);
+    const ghostMat=new THREE.LineBasicMaterial({ color:0xFFFFFF, transparent:true, opacity:0.09 });
+    const ghostLine=new THREE.Line(ghostGeo, ghostMat);
+
+    return { name, entries, pts, meta, curve, nodes, head, tail, currentLabel, traveller, travellerGroup, baseColor, changes, ghostLine };
   }
 
-  function clear(g){ while(g.children.length){ const c=g.children[0]; g.remove(c); if(c.geometry) c.geometry.dispose(); if(c.material){ if(c.material.map) c.material.map.dispose(); c.material.dispose(); } } }
-
-  let current=null, tProg=0, paused=true, used=new Set(), lastSwitch=performance.now(), autoPauseUntil=0, lastChangeIdx=-1;
-  let embedPaused=true; // v16 default paused to save compute
+  let current=null, tProg=0, paused=true, used=new Set(), lastSwitch=performance.now(), autoPauseUntil=0, lastChangeIdx=-1, lastSeasonIdx=-1;
+  let embedPaused=true;
   window.addEventListener('vh:pause-maps',()=>{ embedPaused=true; paused=true; if(btnPlay) btnPlay.textContent='▶ Play drift'; });
   document.addEventListener('focusin',(e)=>{
     if(e.target && e.target.id==='guess-input'){
       embedPaused=true; paused=true; if(btnPlay) btnPlay.textContent='▶ Play drift';
     }
   });
+
   function pickRandom(ex){ let cands=pool.filter(n=>n!==ex&&!used.has(n)); if(cands.length<5){ used.clear(); cands=pool.filter(n=>n!==ex); } return cands[Math.floor(Math.random()*cands.length)]; }
 
   const focusEl=document.getElementById('lemmino-drift-focus');
@@ -211,79 +281,169 @@ export async function mountDriftVoid(canvas){
   const btnNext=document.getElementById('drift-next');
   const btnPrev=document.getElementById('drift-prev');
 
+  function careerStage(idx,total){
+    const r=idx/Math.max(1,total-1);
+    if(r<0.18) return 'Rookie';
+    if(r<0.35) return 'Breakout';
+    if(r<0.62) return 'Prime';
+    if(r<0.84) return 'Veteran';
+    return 'Late';
+  }
+
+  function updateTrails(){
+    if(!current) return;
+    // clear past/future
+    clear(trailPastGroup); clear(trailFutureGroup); clear(ghostLineGroup);
+    ghostLineGroup.add(current.ghostLine);
+    const idx=Math.min(Math.floor(tProg*current.meta.length), current.meta.length-1);
+    if(idx>0){
+      const pastPts=current.pts.slice(0, idx+1);
+      if(pastPts.length>=2){
+        const pastCurve=new THREE.CatmullRomCurve3(pastPts);
+        const pastTube=new THREE.TubeGeometry(pastCurve, Math.max(pastPts.length*7, 40), 0.12, 10, false);
+        const mat=new THREE.MeshStandardMaterial({ color:0x9AA0AC, transparent:true, opacity:0.34, roughness:0.72, metalness:0.05 });
+        const mesh=new THREE.Mesh(pastTube, mat);
+        trailPastGroup.add(mesh);
+        // dashed line overlay for history emphasis
+        const lineGeo=new THREE.BufferGeometry().setFromPoints(pastPts);
+        const lineMat=new THREE.LineDashedMaterial({ color:0xFFFFFF, transparent:true, opacity:0.18, dashSize:0.22, gapSize:0.18, linewidth:1 });
+        const line=new THREE.Line(lineGeo, lineMat); line.computeLineDistances(); trailPastGroup.add(line);
+      }
+    }
+    if(idx < current.meta.length-1){
+      const futPts=current.pts.slice(idx);
+      if(futPts.length>=2){
+        const futCurve=new THREE.CatmullRomCurve3(futPts);
+        const futTube=new THREE.TubeGeometry(futCurve, Math.max(futPts.length*7, 30), 0.065, 8, false);
+        const mat=new THREE.MeshBasicMaterial({ color:current.baseColor, transparent:true, opacity:0.18, depthWrite:false });
+        const mesh=new THREE.Mesh(futTube, mat);
+        trailFutureGroup.add(mesh);
+      }
+    }
+  }
+
   function renderFocus(){
     if(!current||!focusEl) return;
     const idx=Math.min(Math.floor(tProg*current.meta.length), current.meta.length-1);
-    const m=current.meta[idx]; const first=current.meta[0]; const last=current.meta[current.meta.length-1];
-    const delta=((m.share-first.share)*100).toFixed(1); const sign=parseFloat(delta)>=0?'+':'';
+    const m=current.meta[idx];
+    const first=current.meta[0];
+    const last=current.meta[current.meta.length-1];
+    const total=current.meta.length;
+    const stage=careerStage(idx,total);
+
+    // season cloud update
+    if(lastSeasonIdx!==m.si){
+      lastSeasonIdx=m.si;
+      updateSeasonCloud(m.season, current.name);
+    }
+
+    // trail update only when idx changes
+    if(renderFocus._lastIdx!==idx){
+      renderFocus._lastIdx=idx;
+      updateTrails();
+    }
+
+    const delta=((m.share-first.share)*100).toFixed(1);
+    const sign=parseFloat(delta)>=0?'+':'';
     const change = current.changes.find(c=>c.idx===idx);
-    const progress = `${idx+1}/${current.meta.length}`;
+    const progress = `${idx+1}/${total}`;
     const nextChange = current.changes.find(c=>c.idx>idx);
-    const nextHint = nextChange? ` → next shift ${nextChange.to.season} ${nextChange.to.arche}` : ` → final ${last.season}`;
+    const nextHint = nextChange? `→ next ${nextChange.to.season} ${nextChange.to.arche}` : `→ final ${last.season}`;
+    const leagueTotal = m.total || 450;
 
     if(change && lastChangeIdx!==idx){
       lastChangeIdx=idx;
-      autoPauseUntil=performance.now()+1800;
-      // chapter flash
-      focusEl.innerHTML = `<span style="background:#F0E442;border:1.5px solid #1A150F;padding:1px 6px;border-radius:6px;margin-right:6px">SHIFT</span> ${current.name} — ${change.from.arche} → <b>${change.to.arche}</b> in ${change.to.season} — LEAGUE ${(change.to.share*100).toFixed(1)}% (${sign}${((change.to.share-change.from.share)*100).toFixed(1)}pp)`;
-      if(metaEl) metaEl.textContent = `${change.to.arche.toUpperCase()} became more common — that role grew from ${(change.from.share*100).toFixed(1)}% to ${(change.to.share*100).toFixed(1)}% league-wide`;
-    } else if(!change){
-      focusEl.textContent=`● ${current.name} — ${m.season} [${progress}] — ${m.arche.toUpperCase()} — LEAGUE ${(m.share*100).toFixed(1)}% (${sign}${delta}pp vs ${first.season})${nextHint}`;
+      autoPauseUntil=performance.now()+2100;
+      const fromPct=(change.from.share*100).toFixed(1), toPct=(change.to.share*100).toFixed(1);
+      const dpp=((change.to.share-change.from.share)*100).toFixed(1);
+      focusEl.innerHTML = `<span style="background:#F0E442;border:1.5px solid #1A150F;padding:1px 6px;border-radius:6px;margin-right:6px">SHIFT ${progress}</span> ${current.name} • ${stage.toUpperCase()} • ${change.from.season} ${change.from.arche} → <b>${change.to.season} ${change.to.arche}</b> — LEAGUE ${fromPct}%→${toPct}% (${dpp}pp) — ${change.to.desc}`;
+      if(metaEl) metaEl.textContent = `ROLE TRANSITION: was asked to play ${change.from.arche.toLowerCase()}, now ${change.to.arche.toLowerCase()}. Historical trail greyed behind shows where he came from; white dots = ${leagueTotal} peers in ${m.season}. Team: — (wiring roster_context, role model gives archetype).`;
+    } else {
+      const teamPlaceholder='—';
+      focusEl.textContent=`● ${current.name} [${progress} ${stage}] — ${m.season} — ${m.arche.toUpperCase()} — Team ${teamPlaceholder} — LEAGUE ${(m.share*100).toFixed(1)}% (${sign}${delta}pp vs ${first.season}) ${nextHint} — PEERS ${leagueTotal} dots`;
       if(metaEl){
-        const totalStr = `${current.entries.length} seasons • ${current.changes.length} role shifts • ${m.total||''} players in ${m.season} • white ring = shift`;
-        metaEl.textContent = totalStr;
+        const shiftCount=current.changes.length;
+        const lastShift=current.changes.length? `last shift ${current.changes[current.changes.length-1].to.season} ${current.changes[current.changes.length-1].from.arche}→${current.changes[current.changes.length-1].to.arche}` : 'no archetype shift';
+        metaEl.textContent = `${total} seasons • ${shiftCount} role shifts • ${lastShift} • ${m.desc} • Grey trail = history, white rings = transition, colored dots = ${m.season} peers, faint background = all ${seasons.length} seasons. Pinch to zoom, drag scrub below.`;
       }
     }
 
-    // current label near traveller
     if(current.currentLabel){
-      const labelText = change? `${m.season}: → ${m.arche}` : `${m.season}: ${m.arche}`;
-      // update texture if changed
+      const labelText = change? `${m.season}: → ${m.arche} [${stage}]` : `${m.season}: ${m.arche} • ${stage} • ${leagueTotal} peers`;
       if(current.currentLabel.userData.lastText!==labelText){
-        const c=document.createElement('canvas'); c.width=420; c.height=48;
-        const ctx=c.getContext('2d'); ctx.fillStyle='rgba(255,254,247,0.98)'; ctx.beginPath(); ctx.roundRect(4,4,412,40,10); ctx.fill();
-        ctx.fillStyle='#1A150F'; ctx.font='800 13px ui-monospace,monospace'; ctx.fillText(labelText,12,27);
+        const c=document.createElement('canvas'); c.width=520; c.height=52;
+        const ctx=c.getContext('2d'); ctx.fillStyle=change? '#F0E442' : 'rgba(255,254,247,0.98)'; ctx.beginPath(); ctx.roundRect(4,4,512,44,11); ctx.fill();
+        ctx.fillStyle='#1A150F'; ctx.font='800 12px ui-monospace,monospace'; ctx.fillText(labelText,12,29);
         const tex=new THREE.CanvasTexture(c); current.currentLabel.material.map.dispose(); current.currentLabel.material.map=tex; current.currentLabel.userData.lastText=labelText;
       }
     }
-
     if(scrubFill) scrubFill.style.width=`${(tProg*100).toFixed(1)}%`;
   }
+  renderFocus._lastIdx=-1;
 
   function show(name){
-    clear(playerGroup);
+    clear(playerGroup); clear(trailPastGroup); clear(trailFutureGroup); clear(ghostLineGroup);
+    renderFocus._lastIdx=-1; lastSeasonIdx=-1;
     const arc=buildArc(name);
     if(!arc){ const n=pickRandom(name); if(n) return show(n); return; }
-    playerGroup.add(arc.mesh); playerGroup.add(arc.nodes); playerGroup.add(arc.head); playerGroup.add(arc.tail); playerGroup.add(arc.travellerGroup);
-    current=arc; tProg=0; lastSwitch=performance.now(); lastChangeIdx=-1; used.add(name);
+    playerGroup.add(arc.nodes); playerGroup.add(arc.head); playerGroup.add(arc.tail); playerGroup.add(arc.travellerGroup);
+    // add ghost line initial
+    ghostLineGroup.add(arc.ghostLine);
+    current=arc; tProg=0; lastSwitch=performance.now(); lastChangeIdx=-1;
+    used.add(name);
+    updateSeasonCloud(arc.meta[0].season, arc.name);
+    updateTrails();
     renderFocus();
   }
 
   show(pool[Math.floor(Math.random()*pool.length)]||'Bo Outlaw');
-  // v16: render one static frame even when paused default
-  setTimeout(()=>{ try{ renderer.render(scene,camera); }catch{} }, 180);
-  setTimeout(()=>{ try{ renderer.render(scene,camera); }catch{} }, 600);
+  setTimeout(()=>{ try{ renderer.render(scene,camera); }catch{} }, 200);
+  setTimeout(()=>{ try{ renderer.render(scene,camera); }catch{} }, 650);
 
   if(scrub){
     let dragging=false;
     function setFromX(clientX){
       const rect=scrub.getBoundingClientRect(); const p=Math.max(0,Math.min(1,(clientX-rect.left)/rect.width));
-      tProg=p; renderFocus(); if(current){ const pt=current.curve.getPointAt(Math.max(0.0001,Math.min(0.999,tProg))); if(pt){ current.travellerGroup.position.copy(pt); current.travellerGroup.position.y+=0.05; } }
+      tProg=p; renderFocus();
+      if(current){ const pt=current.curve.getPointAt(Math.max(0.0001,Math.min(0.999,tProg))); if(pt){ current.travellerGroup.position.copy(pt); current.travellerGroup.position.y+=0.05; } }
     }
-    scrub.addEventListener('pointerdown',e=>{ dragging=true; try{scrub.setPointerCapture(e.pointerId);}catch{} setFromX(e.clientX); paused=true; embedPaused=false; if(btnPlay) btnPlay.textContent='▶ Play drift'; });
+    scrub.addEventListener('pointerdown',e=>{ dragging=true; try{scrub.setPointerCapture(e.pointerId);}catch{} setFromX(e.clientX); paused=true; embedPaused=false; if(btnPlay) btnPlay.textContent='❚❚ Pause'; });
     scrub.addEventListener('pointermove',e=>{ if(dragging) setFromX(e.clientX); });
     scrub.addEventListener('pointerup',()=>{ dragging=false; });
     scrub.addEventListener('click',e=> setFromX(e.clientX));
   }
   if(btnPlay){
-    btnPlay.textContent='▶ Play drift';
+    btnPlay.textContent='▶ Play drift (pinch zoom)';
     btnPlay.addEventListener('click',()=>{
-      if(paused||embedPaused){ paused=false; embedPaused=false; btnPlay.textContent='❚❚ Pause'; }
+      if(paused||embedPaused){ paused=false; embedPaused=false; btnPlay.textContent='❚❚ Pause — pinch/drag to explore'; }
       else{ paused=true; embedPaused=true; btnPlay.textContent='▶ Play drift'; }
     });
   }
-  if(btnNext) btnNext.addEventListener('click',()=>{ paused=false; embedPaused=false; if(btnPlay) btnPlay.textContent='❚❚ Pause'; if(!current) return; const idx=Math.floor(tProg*current.meta.length); for(let j=idx+1;j<current.meta.length;j++) if(current.meta[j].archeIdx!==current.meta[j-1].archeIdx){ tProg=j/current.meta.length; renderFocus(); return; } tProg=1; renderFocus(); });
-  if(btnPrev) btnPrev.addEventListener('click',()=>{ paused=false; embedPaused=false; if(btnPlay) btnPlay.textContent='❚❚ Pause'; if(!current) return; const idx=Math.floor(tProg*current.meta.length); for(let j=idx-1;j>=1;j--) if(current.meta[j].archeIdx!==current.meta[j-1].archeIdx){ tProg=j/current.meta.length; renderFocus(); return; } tProg=0; renderFocus(); });
+  if(btnNext) btnNext.addEventListener('click',()=>{ paused=false; embedPaused=false; if(btnPlay) btnPlay.textContent='❚❚ Pause'; if(!current) return; const idx=Math.floor(tProg*current.meta.length); for(let j=idx+1;j<current.meta.length;j++) if(current.meta[j].archeIdx!==current.meta[j-1].archeIdx){ tProg=j/current.meta.length; renderFocus(); const pt=current.curve.getPointAt(tProg); if(pt) current.travellerGroup.position.copy(pt); return; } tProg=1; renderFocus(); });
+  if(btnPrev) btnPrev.addEventListener('click',()=>{ paused=false; embedPaused=false; if(btnPlay) btnPlay.textContent='❚❚ Pause'; if(!current) return; const idx=Math.floor(tProg*current.meta.length); for(let j=idx-1;j>=1;j--) if(current.meta[j].archeIdx!==current.meta[j-1].archeIdx){ tProg=j/current.meta.length; renderFocus(); const pt=current.curve.getPointAt(tProg); if(pt) current.travellerGroup.position.copy(pt); return; } tProg=0; renderFocus(); });
+
+  // zoom handling
+  function onWheel(e){
+    e.preventDefault();
+    const delta=Math.sign(e.deltaY)*0.55 + e.deltaY*0.0032;
+    setZ(camBaseZ + delta);
+  }
+  canvas.addEventListener('wheel', onWheel, {passive:false});
+  let pinchStartDist=0, pinchStartZ=CAM_Z_DEFAULT;
+  function distTouches(touches){ const a=touches[0], b=touches[1]; return Math.hypot(a.clientX-b.clientX, a.clientY-b.clientY); }
+  canvas.addEventListener('touchstart', (e)=>{
+    if(e.touches && e.touches.length===2){
+      pinchStartDist=distTouches(e.touches); pinchStartZ=camBaseZ;
+    }
+  }, {passive:true});
+  canvas.addEventListener('touchmove', (e)=>{
+    if(e.touches && e.touches.length===2){
+      e.preventDefault();
+      const d=distTouches(e.touches);
+      const ratio=pinchStartDist/(d||1);
+      setZ(pinchStartZ * ratio);
+    }
+  }, {passive:false});
 
   function onResize(){ const w=canvas.clientWidth,h=canvas.clientHeight; if(w<10||h<10) return; renderer.setSize(w,h,false); camera.aspect=w/h; camera.updateProjectionMatrix(); }
   const ro=new ResizeObserver(onResize); ro.observe(canvas); onResize();
@@ -291,25 +451,26 @@ export async function mountDriftVoid(canvas){
 
   function tick(){
     requestAnimationFrame(tick);
-    if(embedPaused){ return; } // save compute when typing
+    if(embedPaused){ return; }
     if(!visible) return;
     const now=performance.now();
     if(!paused && now>autoPauseUntil){
-      tProg+=0.00036; if(tProg>1) tProg=0;
+      tProg+=0.00032; if(tProg>1) tProg=0;
     }
     if(current){
       const pt=current.curve.getPointAt(Math.max(0.0001,Math.min(0.999,tProg)));
       if(pt){ current.travellerGroup.position.copy(pt); current.travellerGroup.position.y+=0.06; }
     }
-    // zoomed out follow — bias toward recent years but always show full
     const t = current? tProg : 0;
-    const lookZ = current? current.curve.getPointAt(t).z * 0.65 + (SEASON_SPAN*0.18) : 0; // bias to recent
-    camera.position.x=Math.sin(now*0.00010)*1.4;
-    camera.position.y=3.9+Math.sin(now*0.00008)*0.22;
-    camera.position.z=24 + Math.sin(now*0.00007)*0.6; // farther than 15.5
+    const lookZ = current? current.curve.getPointAt(t).z * 0.62 + (SEASON_SPAN*0.14) : 0;
+    const wobbleX=Math.sin(now*0.00010)*1.2;
+    const wobbleY=4.0+Math.sin(now*0.00008)*0.26;
+    camera.position.x=wobbleX;
+    camera.position.y=wobbleY;
+    camera.position.z=camBaseZ + Math.sin(now*0.00007)*0.8;
     camera.lookAt(0, -0.2, lookZ);
     renderFocus();
-    if(now-lastSwitch>26000&&!paused){ const nxt=pickRandom(current?.name); if(nxt) show(nxt); lastSwitch=now; }
+    if(now-lastSwitch>30000&&!paused){ const nxt=pickRandom(current?.name); if(nxt) show(nxt); lastSwitch=now; }
     renderer.render(scene,camera);
   }
   tick();

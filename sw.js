@@ -1,10 +1,9 @@
-/* vector-hoops PWA v16-20260720 — embed cache + paused default + click-to-play
-   #1: shape=POS (5 shapes) color=ARCH (8 Okabe) + zoom out 5.6->7.25
-   #2: story clarity, zoomed out 15.5->24, single current label
-   v15: pause on type to fix freeze
-   v16: cache embedding maps (pos json, archetypes_time, vectors_search_lite) + cache Three.js CDN + default paused + lazy mount */
+/* vector-hoops PWA v17-20260720 — zoomout pinch + seasonCloud + grey history trail
+   #1: start zoomed out 11.2 + 38, wheel+pinch zoom (3.2-16 and 12-68), dblclick zoom
+   #2: drift v7: seasonCloud peers, grey past trail, future faint, ghost full, career stage, richer meta
+   v15: pause on type, v16: cache embed */
 
-const CACHE_NAME = 'vector-hoops-v16-20260720-embed-cache-paused';
+const CACHE_NAME = 'vector-hoops-v17-20260720-zoompersist';
 const CORE = [
   '/',
   '/play',

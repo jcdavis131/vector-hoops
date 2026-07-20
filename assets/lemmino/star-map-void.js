@@ -1,21 +1,18 @@
-/* star-map-void.js v6.0 — zoomed out + dual encoding test
-   User: zoom out a bit + shape=archetype/color=position OR vice versa — test both, choose easiest
-   Test:
-   A: shape=archetype (8 shapes) + color=position (5 colors) — 8 shapes hard to memorize
-   B: shape=position (5 shapes) + color=archetype (8 colors) — fewer shapes, preserves Okabe archetype colors learned
-   Chose B as easier: 5 shapes < 8 shapes, color keeps existing archetype mapping
-   Implementation: 5 Points groups, each shape texture = position, vertexColors = archetype Okabe
-   Zoom: camera 5.6->7.2 (more context), spread 3.35->3.1, pointSize 0.26->0.42 mobile
-   Data: vectors_search_lite_pos.json includes p (0:PG 1:SG 2:SF 3:PF 4:C)
+/* star-map-void.js v7.0 — zoomed out start + pinch-to-zoom + better focus
+   #1: Start zoomed out (cam 11.2 vs 7.25), allow wheel + pinch zoom into sections
+   - wheel: deltaY -> camZ
+   - pinch: two-finger distance ratio -> camZ
+   - double-tap / double-click: zoom into cluster around tapped point (tween)
+   - Reset returns to zoomed-out 11.2
+   Also: retain v16 caching, click-to-play, pause-on-type, low-end LOD 6k, DPR 1.25
 */
 export async function mountStarMap(canvas){
   if(!canvas) return;
   let THREE;
   try{ THREE = await import('three'); }catch{ THREE = await import('https://unpkg.com/three@0.160.0/build/three.module.js'); }
-  const OKABE_ARCH=['#0072B2','#D55E00','#009E73','#F0E442','#56B4E9','#CC79A7','#E69F00','#FFFEF7']; // 8 archetypes, last black->white
+  const OKABE_ARCH=['#0072B2','#D55E00','#009E73','#F0E442','#56B4E9','#CC79A7','#E69F00','#FFFEF7'];
   const ARCH_LABELS=["Glass+Rim","LowVol Glass","Low Impact","Def Glass FT","Vol+3P","3P Acc+Vol","Playmaking","Scoring Vol"];
   const POS_LABELS=['PG','SG','SF','PF','C'];
-  const POS_COLORS_TEST=['#56B4E9','#0072B2','#E69F00','#D55E00','#009E73']; // for Option A test only
   const isLowEnd=(navigator.hardwareConcurrency&&navigator.hardwareConcurrency<=4)||window.innerWidth<520;
   const isMobile=window.innerWidth<700;
 
@@ -26,16 +23,20 @@ export async function mountStarMap(canvas){
 
   const scene=new THREE.Scene();
   scene.background=new THREE.Color(0x080A0F);
-  scene.fog=new THREE.FogExp2(0x080A0F, 0.0005); // even lighter for zoomed out
+  scene.fog=new THREE.FogExp2(0x080A0F, 0.0004);
 
-  const camera=new THREE.PerspectiveCamera(36, 1, 0.1, 120);
-  camera.position.set(0,0.38,7.25); // zoomed out from 5.6 -> 7.25
+  const CAM_Z_DEFAULT=11.2;
+  const CAM_Z_MIN=3.2;
+  const CAM_Z_MAX=16.0;
+  const camera=new THREE.PerspectiveCamera(38, 1, 0.1, 140);
+  camera.position.set(0,0.38,CAM_Z_DEFAULT);
+  let camZ=CAM_Z_DEFAULT;
 
   scene.add(new THREE.AmbientLight(0xFFFFFF, 1.1));
   const dl=new THREE.DirectionalLight(0xFFFFFF,0.45); dl.position.set(3,5,4); scene.add(dl);
 
   const starGroup=new THREE.Group(); scene.add(starGroup);
-  const SPREAD=3.05, WALL=3.8, PLATE=9.2;
+  const SPREAD=3.15, WALL=3.8, PLATE=9.8;
 
   function makeGlass(size,color,op){
     const geo=new THREE.PlaneGeometry(size,size);
@@ -91,22 +92,15 @@ export async function mountStarMap(canvas){
   const yl=makeLabel('Y: ROLE → SCORE','#F0E442','#1A150F',360,46,1.65); yl.position.set(0,WALL+0.28,0); axes.add(yl);
   const zl=makeLabel('Z: DEF ↔ OFF','#D55E00','#FFFEF7',340,46,1.6); zl.position.set(0,0,WALL+0.32); axes.add(zl);
 
-  // shape textures for position (5 shapes) — white shape on transparent
   function makeShapeTexture(shape){
     const S=128; const c=document.createElement('canvas'); c.width=S; c.height=S;
     const ctx=c.getContext('2d'); ctx.clearRect(0,0,S,S); ctx.fillStyle='#FFFFFF';
     ctx.save(); ctx.translate(S/2,S/2);
-    if(shape==='PG'){ // circle
-      ctx.beginPath(); ctx.arc(0,0,42,0,Math.PI*2); ctx.fill();
-    } else if(shape==='SG'){ // triangle up
-      ctx.beginPath(); ctx.moveTo(0,-48); ctx.lineTo(-42,38); ctx.lineTo(42,38); ctx.closePath(); ctx.fill();
-    } else if(shape==='SF'){ // diamond
-      ctx.beginPath(); ctx.moveTo(0,-50); ctx.lineTo(44,0); ctx.lineTo(0,50); ctx.lineTo(-44,0); ctx.closePath(); ctx.fill();
-    } else if(shape==='PF'){ // square
-      ctx.fillRect(-38,-38,76,76);
-    } else if(shape==='C'){ // plus / cross for center — big
-      ctx.fillRect(-44,-14,88,28); ctx.fillRect(-14,-44,28,88);
-    }
+    if(shape==='PG'){ ctx.beginPath(); ctx.arc(0,0,42,0,Math.PI*2); ctx.fill(); }
+    else if(shape==='SG'){ ctx.beginPath(); ctx.moveTo(0,-48); ctx.lineTo(-42,38); ctx.lineTo(42,38); ctx.closePath(); ctx.fill(); }
+    else if(shape==='SF'){ ctx.beginPath(); ctx.moveTo(0,-50); ctx.lineTo(44,0); ctx.lineTo(0,50); ctx.lineTo(-44,0); ctx.closePath(); ctx.fill(); }
+    else if(shape==='PF'){ ctx.fillRect(-38,-38,76,76); }
+    else if(shape==='C'){ ctx.fillRect(-44,-14,88,28); ctx.fillRect(-14,-44,28,88); }
     ctx.restore();
     const tex=new THREE.CanvasTexture(c); tex.colorSpace=THREE.SRGBColorSpace; return tex;
   }
@@ -117,23 +111,21 @@ export async function mountStarMap(canvas){
     'PF': makeShapeTexture('PF'),
     'C' : makeShapeTexture('C')
   };
-  // For option A (8 archetype shapes) — would need 8 textures, but we chose B so keep 5
 
-  // cached fetch helper — tries Cache API first for embed maps perf
   async function cachedFetchJSON(url){
+    const CACHE_NAME='vector-hoops-v17-20260720-zoompersist';
     try{
       if('caches' in window){
-        const cache=await caches.open('vector-hoops-v16-20260720-embed-cache-paused');
+        const cache=await caches.open(CACHE_NAME);
         const hit=await cache.match(url);
-        if(hit){ const text=await hit.clone().json(); return text; }
+        if(hit){ return await hit.json(); }
       }
     }catch{}
     const r=await fetch(url,{cache:'default'});
-    const clone=r.clone();
     try{
       if('caches' in window){
-        const cache=await caches.open('vector-hoops-v16-20260720-embed-cache-paused');
-        cache.put(url, clone).catch(()=>{});
+        const cache=await caches.open(CACHE_NAME);
+        cache.put(url, r.clone()).catch(()=>{});
       }
     }catch{}
     return r.json();
@@ -141,23 +133,28 @@ export async function mountStarMap(canvas){
 
   let players=[];
   try{
-    // prefer pos-enriched, fallback to lite — v16 cached, no no-store
     try{
-      const j=await cachedFetchJSON('assets/vectors_search_lite_pos.json?v=16');
+      const j=await cachedFetchJSON('assets/vectors_search_lite_pos.json?v=17');
       players=j.players||[]; 
-      console.log('star-map v6.1 cached pos-enriched', players.length);
     }catch(e){
-      console.warn('pos json fail, fallback lite',e);
-      const j2=await cachedFetchJSON('assets/vectors_search_lite.json?v=16');
+      const j2=await cachedFetchJSON('assets/vectors_search_lite.json?v=17');
       players=j2.players||j2||[];
       players.forEach(p=>{ if(p.p===undefined){ p.p=Math.floor(Math.random()*5); p.pl=POS_LABELS[p.p]; } });
     }
   }catch(e){ console.warn('lite fetch fail',e); }
 
+  // low-end LOD 6k
+  if(isLowEnd && players.length>6000){
+    const step=Math.ceil(players.length/6000);
+    const filtered=[];
+    for(let i=0;i<players.length;i+=step) filtered.push(players[i]);
+    console.log('star-map low-end LOD', players.length,'->',filtered.length);
+    players=filtered;
+  }
+
   const count=players.length||12966;
-  // combined positions for hover projection
   const allPos=new Float32Array(count*3);
-  const grouped={0:[],1:[],2:[],3:[],4:[]}; // by p (position)
+  const grouped={0:[],1:[],2:[],3:[],4:[]};
   for(let i=0;i<count;i++){
     const p=players[i]||{x:Math.random(),y:Math.random(),z:Math.random(),c:i%8,p:i%5};
     const x=(p.x-0.5)*2*SPREAD, y=(p.y-0.5)*2*SPREAD, z=(p.z-0.5)*2*SPREAD;
@@ -168,7 +165,7 @@ export async function mountStarMap(canvas){
   }
 
   const pointGroups=[];
-  const pointSize = isMobile? 0.42 : 0.52; // bigger for shape visibility, zoomed out needs bigger
+  const pointSize = isMobile? 0.48 : 0.58;
   for(let pi=0; pi<5; pi++){
     const list=grouped[pi];
     if(!list.length) continue;
@@ -178,7 +175,6 @@ export async function mountStarMap(canvas){
       const it=list[j];
       posArr[j*3]=it.x; posArr[j*3+1]=it.y; posArr[j*3+2]=it.z;
       const col=new THREE.Color(OKABE_ARCH[(it.c||0)%8]);
-      // slight boost white
       if((it.c||0)%8!==7) col.lerp(new THREE.Color(0xFFFFFF),0.06);
       colArr[j*3]=col.r; colArr[j*3+1]=col.g; colArr[j*3+2]=col.b;
     }
@@ -202,23 +198,28 @@ export async function mountStarMap(canvas){
     pointGroups.push({ pi, shape:shapeName, geo, mat, list, posArr });
   }
 
-  console.log('star-map v6 groups', pointGroups.map(g=>`${g.shape}:${g.list.length}`).join(' '), 'size', pointSize, 'cam', camera.position.z);
+  console.log('star-map v7 groups', pointGroups.map(g=>`${g.shape}:${g.list.length}`).join(' '), 'camZ', camZ);
 
   let rotY=Math.PI*0.24, rotX=0.18, auto=false, autoSpeed=0.00018, dragging=false, lx=0, ly=0, idle=0;
-  const proj=[];
-  for(let i=0;i<count;i++) proj[i]=null;
-  let embedPaused=true; // v16 default paused to save compute, click to play
-  function setEmbedPaused(v){ embedPaused=v; auto=!v; }
-  // wire custom events for pause/resume from game
-  window.addEventListener('vh:pause-maps',()=> setEmbedPaused(true));
-  window.addEventListener('vh:resume-maps',()=>{ /* stay paused unless user clicked play */ });
-  // pause when guess input focused
+  const proj=[]; for(let i=0;i<count;i++) proj[i]=null;
+  let embedPaused=true;
+  let pinchStartDist=0, pinchStartZ=CAM_Z_DEFAULT, isPinching=false;
+  function clampZ(z){ return Math.max(CAM_Z_MIN, Math.min(CAM_Z_MAX, z)); }
+  function setZ(z, fromUI=false){
+    camZ=clampZ(z); camera.position.z=camZ;
+    if(fromUI){
+      const btn=document.getElementById('btn-pause');
+      // keep paused state but update label if needed
+    }
+  }
+
+  window.addEventListener('vh:pause-maps',()=>{ embedPaused=true; auto=false; });
   document.addEventListener('focusin',(e)=>{
     if(e.target && (e.target.id==='guess-input' || e.target.matches && e.target.matches('input.input'))){
-      setEmbedPaused(true);
+      embedPaused=true;
     }
   });
-  // play button wired later — will call setEmbedPaused(false) on user intent
+
   function updProj(W,H){
     W=W||canvas.getBoundingClientRect().width||640;
     H=H||canvas.getBoundingClientRect().height||520;
@@ -232,7 +233,6 @@ export async function mountStarMap(canvas){
     }
   }
   const hoverTip=document.getElementById('hover-tip');
-
   function getSize(){
     const rect=canvas.getBoundingClientRect();
     let w=rect.width, h=rect.height;
@@ -258,9 +258,29 @@ export async function mountStarMap(canvas){
   let visible=true; let firstFrames=120;
   try{ const io=new IntersectionObserver(es=>{ visible=es[0]?.isIntersecting??true; if(visible) onResize(); },{threshold:0.01}); io.observe(canvas); }catch{}
 
+  function distTouches(touches){
+    const a=touches[0], b=touches[1];
+    return Math.hypot(a.clientX-b.clientX, a.clientY-b.clientY);
+  }
   function ptr(e){ return e.touches? e.touches[0] : e; }
-  function down(e){ dragging=true; auto=false; const p=ptr(e); lx=p.clientX; ly=p.clientY; canvas.style.cursor='grabbing'; const b=document.getElementById('btn-pause'); if(b) b.textContent='Resume'; }
+  function down(e){
+    if(e.touches && e.touches.length===2){
+      isPinching=true; dragging=false; pinchStartDist=distTouches(e.touches); pinchStartZ=camZ;
+      return;
+    }
+    dragging=true; auto=false; isPinching=false;
+    const p=ptr(e); lx=p.clientX; ly=p.clientY; canvas.style.cursor='grabbing';
+    const b=document.getElementById('btn-pause'); if(b && !embedPaused) b.textContent='❚❚ Pause';
+  }
   function move(e){
+    if(isPinching && e.touches && e.touches.length===2){
+      e.preventDefault();
+      const d=distTouches(e.touches);
+      const ratio=pinchStartDist / (d||1);
+      setZ(pinchStartZ * ratio);
+      const s=getSize(); updProj(s.w,s.h);
+      return;
+    }
     const p=ptr(e); const x=p.clientX, y=p.clientY;
     if(dragging){ const dx=x-lx, dy=y-ly; rotY+=dx*0.0065; rotX+=dy*0.0045; rotX=Math.max(-0.92,Math.min(0.92,rotX)); lx=x; ly=y; const s=getSize(); updProj(s.w,s.h); }
     else{
@@ -270,44 +290,81 @@ export async function mountStarMap(canvas){
       if(best&&hoverTip){
         hoverTip.style.display='block'; hoverTip.style.left=best.sx+'px'; hoverTip.style.top=(best.sy-36)+'px';
         const arch=ARCH_LABELS[best.c%8]||''; const pos=best.pl||POS_LABELS[best.p||0]||'';
-        hoverTip.innerHTML=`<b>${best.n||''}</b> ${best.s||''}<br><span style="font-family:ui-monospace,monospace;font-size:10px;opacity:.85">${pos} • <span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:${OKABE_ARCH[best.c%8]};border:1px solid #111;vertical-align:middle"></span> ${arch}</span>`;
+        hoverTip.innerHTML=`<b>${best.n||''}</b> ${best.s||''}<br><span style="font-family:ui-monospace,monospace;font-size:10px;opacity:.85">${pos} • <span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:${OKABE_ARCH[best.c%8]};border:1px solid #111;vertical-align:middle"></span> ${arch} • z${camZ.toFixed(1)}</span>`;
       } else if(hoverTip) hoverTip.style.display='none';
     }
   }
-  function up(){ if(dragging){ dragging=false; idle=3800; canvas.style.cursor='grab'; } }
+  function up(e){
+    if(isPinching){ isPinching=false; pinchStartDist=0; }
+    if(dragging){ dragging=false; idle=3800; canvas.style.cursor='grab'; }
+  }
   canvas.addEventListener('mousedown',down); canvas.addEventListener('mousemove',move); window.addEventListener('mouseup',up);
-  canvas.addEventListener('touchstart',down,{passive:true}); canvas.addEventListener('touchmove',move,{passive:true}); canvas.addEventListener('touchend',up);
+  canvas.addEventListener('touchstart',down,{passive:false}); canvas.addEventListener('touchmove',move,{passive:false}); canvas.addEventListener('touchend',up);
   canvas.addEventListener('mouseleave',()=>{ if(hoverTip) hoverTip.style.display='none'; });
+  canvas.addEventListener('wheel',(e)=>{
+    e.preventDefault();
+    const delta=Math.sign(e.deltaY)*0.45 + e.deltaY*0.0025;
+    setZ(camZ + delta);
+    const s=getSize(); updProj(s.w,s.h);
+    if(!embedPaused) renderer.render(scene,camera);
+  },{passive:false});
+  canvas.addEventListener('dblclick',(e)=>{
+    // zoom into cluster near click
+    const rect=canvas.getBoundingClientRect(); const mx=e.clientX-rect.left, my=e.clientY-rect.top;
+    let best=null,bd=40;
+    for(let i=0;i<count;i++){ const pr=proj[i]; if(!pr) continue; const d=Math.hypot(pr.sx-mx, pr.sy-my); if(d<bd){ bd=d; best=pr; } }
+    if(best){
+      // tween zoom in + rotate towards point
+      const targetZ=Math.max(CAM_Z_MIN, camZ*0.55);
+      const startZ=camZ;
+      const start=performance.now(), dur=420;
+      function animate(now){
+        const t=Math.min(1, (now-start)/dur);
+        const ease=1-Math.pow(1-t,3);
+        setZ(startZ + (targetZ-startZ)*ease);
+        if(t<1) requestAnimationFrame(animate);
+        else { onResize(); }
+      }
+      requestAnimationFrame(animate);
+      embedPaused=false; auto=false;
+      const btn=document.getElementById('btn-pause'); if(btn) btn.textContent='❚❚ Pause';
+    } else {
+      // double click empty -> zoom out
+      if(camZ> CAM_Z_DEFAULT*0.9) setZ(CAM_Z_DEFAULT*0.5); else setZ(CAM_Z_DEFAULT);
+    }
+  });
 
   const btnPause=document.getElementById('btn-pause'), btnReset=document.getElementById('btn-reset');
-  // v16: default paused, buttons toggle play — saves compute
   if(btnPause){
-    btnPause.textContent='▶ Play map';
+    btnPause.textContent='▶ Play map (pinch to zoom)';
     btnPause.addEventListener('click',()=>{
       if(embedPaused){
-        embedPaused=false; auto=true; btnPause.textContent='❚❚ Pause';
-        // ensure projection updated before render
+        embedPaused=false; auto=true; btnPause.textContent='❚❚ Pause — scroll/pinch to zoom';
         const sz=getSize(); updProj(sz.w,sz.h);
       }else{
-        embedPaused=true; auto=false; btnPause.textContent='▶ Play map';
+        embedPaused=true; auto=false; btnPause.textContent='▶ Play map (zoomed out)';
       }
     });
   }
-  if(btnReset) btnReset.addEventListener('click',()=>{ rotY=Math.PI*0.24; rotX=0.18; embedPaused=false; auto=true; camera.position.set(0,0.38,7.25); if(btnPause) btnPause.textContent='❚❚ Pause'; onResize(); });
+  if(btnReset) btnReset.addEventListener('click',()=>{
+    rotY=Math.PI*0.24; rotX=0.18; embedPaused=false; auto=true; setZ(CAM_Z_DEFAULT);
+    if(btnPause) btnPause.textContent='❚❚ Pause — scroll/pinch to zoom';
+    onResize();
+  });
 
-  updProj(); renderer.render(scene,camera); // one static frame even when paused
+  updProj(); renderer.render(scene,camera);
 
-  let last=0, t0=performance.now();
+  let last=0;
   function loop(t){
     requestAnimationFrame(loop);
-    if(embedPaused){ return; } // save bandwidth/compute when user typing
+    if(embedPaused){ return; }
     if(!visible && firstFrames<=0){ last=t; return; }
     if(firstFrames>0) firstFrames--;
     if(!last) last=t;
     const dt=Math.min(50,t-last); last=t;
-    if(!dragging&&auto) rotY+=dt*autoSpeed; else if(idle){ idle-=dt; if(idle<=0){ auto=true; if(btnPause) btnPause.textContent='Pause'; } }
+    if(!dragging&&auto&&!isPinching) rotY+=dt*autoSpeed; else if(idle){ idle-=dt; if(idle<=0){ auto=true; const b=document.getElementById('btn-pause'); if(b) b.textContent='❚❚ Pause — scroll/pinch to zoom'; } }
     starGroup.rotation.y=rotY; starGroup.rotation.x=rotX;
-    const et=(performance.now()-t0)*0.001;
+    const et=t*0.001;
     camera.position.x=Math.sin(et*0.04)*0.18;
     camera.position.y=0.38+Math.sin(et*0.055)*0.09;
     camera.lookAt(0,0.06,0);
