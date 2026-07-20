@@ -62,10 +62,12 @@ from eligibility import (
     DEFAULT_MIN_GP,
     DEFAULT_MIN_TOTAL_MINUTES,
     gates_for_season,
+)
+from eligibility import (
     season_eligible as check_eligible,
 )
-from nba_http import fetch_stats_json, legacy_result_set_rows, patch_nba_api_session
 from name_utils import canonical_name, norm_name
+from nba_http import fetch_stats_json, legacy_result_set_rows, patch_nba_api_session
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "assets" / "vectors.json"
@@ -81,34 +83,90 @@ TRACKING_FIRST_SEASON = "2013-14"
 # (order matters: assets/game.js indexes into it). WIDE adds everything else.
 # ---------------------------------------------------------------------------
 
-GAME_FEATURES = ["PTS", "AST", "OREB", "DREB", "STL", "BLK", "TOV",
-                 "FG3A", "FGA", "FTA", "FG3_PCT", "FG_PCT", "FT_PCT", "PLUS_MINUS"]
+GAME_FEATURES = [
+    "PTS",
+    "AST",
+    "OREB",
+    "DREB",
+    "STL",
+    "BLK",
+    "TOV",
+    "FG3A",
+    "FGA",
+    "FTA",
+    "FG3_PCT",
+    "FG_PCT",
+    "FT_PCT",
+    "PLUS_MINUS",
+]
 LABELS = {
-    "PTS": "scoring volume", "AST": "playmaking", "OREB": "offensive glass",
-    "DREB": "defensive glass", "STL": "steals", "BLK": "rim protection",
-    "TOV": "turnovers", "FG3A": "three-point volume", "FGA": "shot volume",
-    "FTA": "rim pressure (FTs)", "FG3_PCT": "three-point accuracy",
-    "FG_PCT": "finishing", "FT_PCT": "free-throw touch", "PLUS_MINUS": "on-court impact",
+    "PTS": "scoring volume",
+    "AST": "playmaking",
+    "OREB": "offensive glass",
+    "DREB": "defensive glass",
+    "STL": "steals",
+    "BLK": "rim protection",
+    "TOV": "turnovers",
+    "FG3A": "three-point volume",
+    "FGA": "shot volume",
+    "FTA": "rim pressure (FTs)",
+    "FG3_PCT": "three-point accuracy",
+    "FG_PCT": "finishing",
+    "FT_PCT": "free-throw touch",
+    "PLUS_MINUS": "on-court impact",
 }
 
 # Desired columns per extra endpoint; intersected with what the API returns
 # so column drift never crashes a build (actual set recorded in the manifest).
-ADVANCED_COLS = ["TS_PCT", "EFG_PCT", "USG_PCT", "AST_PCT", "AST_TO",
-                 "OREB_PCT", "DREB_PCT", "REB_PCT", "TM_TOV_PCT",
-                 "OFF_RATING", "DEF_RATING", "NET_RATING", "PACE", "PIE"]
-SCORING_COLS = ["PCT_PTS_2PT", "PCT_PTS_2PT_MR", "PCT_PTS_3PT", "PCT_PTS_FB",
-                "PCT_PTS_FT", "PCT_PTS_OFF_TOV", "PCT_PTS_PAINT",
-                "PCT_AST_2PM", "PCT_UAST_2PM", "PCT_AST_3PM", "PCT_UAST_3PM",
-                "PCT_AST_FGM", "PCT_UAST_FGM"]
+ADVANCED_COLS = [
+    "TS_PCT",
+    "EFG_PCT",
+    "USG_PCT",
+    "AST_PCT",
+    "AST_TO",
+    "OREB_PCT",
+    "DREB_PCT",
+    "REB_PCT",
+    "TM_TOV_PCT",
+    "OFF_RATING",
+    "DEF_RATING",
+    "NET_RATING",
+    "PACE",
+    "PIE",
+]
+SCORING_COLS = [
+    "PCT_PTS_2PT",
+    "PCT_PTS_2PT_MR",
+    "PCT_PTS_3PT",
+    "PCT_PTS_FB",
+    "PCT_PTS_FT",
+    "PCT_PTS_OFF_TOV",
+    "PCT_PTS_PAINT",
+    "PCT_AST_2PM",
+    "PCT_UAST_2PM",
+    "PCT_AST_3PM",
+    "PCT_UAST_3PM",
+    "PCT_AST_FGM",
+    "PCT_UAST_FGM",
+]
 BIO_COLS = ["PLAYER_HEIGHT_INCHES", "PLAYER_WEIGHT", "AGE", "DRAFT_NUMBER"]
 TRACKING_SPECS = [  # (pt_measure_type, wanted columns)
     ("SpeedDistance", ["DIST_MILES", "AVG_SPEED"]),
     ("Drives", ["DRIVES", "DRIVE_PTS", "DRIVE_PASSES"]),
     ("CatchShoot", ["CATCH_SHOOT_FGA", "CATCH_SHOOT_PTS", "CATCH_SHOOT_FG3_PCT"]),
     ("PullUpShot", ["PULL_UP_FGA", "PULL_UP_PTS"]),
-    ("Possessions", ["TOUCHES", "FRONT_CT_TOUCHES", "TIME_OF_POSS",
-                     "AVG_SEC_PER_TOUCH", "PAINT_TOUCHES", "POST_TOUCHES",
-                     "ELBOW_TOUCHES"]),
+    (
+        "Possessions",
+        [
+            "TOUCHES",
+            "FRONT_CT_TOUCHES",
+            "TIME_OF_POSS",
+            "AVG_SEC_PER_TOUCH",
+            "PAINT_TOUCHES",
+            "POST_TOUCHES",
+            "ELBOW_TOUCHES",
+        ],
+    ),
     ("Passing", ["PASSES_MADE", "POTENTIAL_AST", "SECONDARY_AST"]),
 ]
 
@@ -116,40 +174,81 @@ TRACKING_SPECS = [  # (pt_measure_type, wanted columns)
 FAMILY_OF = {}
 for f in ["PTS", "FGA", "FTA", "FG3A", "USG_PCT"]:
     FAMILY_OF[f] = "volume"
-for f in ["AST", "TOV", "AST_PCT", "AST_TO", "TM_TOV_PCT",
-          "PASSES_MADE", "POTENTIAL_AST", "SECONDARY_AST",
-          "TOUCHES", "FRONT_CT_TOUCHES", "TIME_OF_POSS", "AVG_SEC_PER_TOUCH"]:
+for f in [
+    "AST",
+    "TOV",
+    "AST_PCT",
+    "AST_TO",
+    "TM_TOV_PCT",
+    "PASSES_MADE",
+    "POTENTIAL_AST",
+    "SECONDARY_AST",
+    "TOUCHES",
+    "FRONT_CT_TOUCHES",
+    "TIME_OF_POSS",
+    "AVG_SEC_PER_TOUCH",
+]:
     FAMILY_OF[f] = "playmaking"
 for f in ["OREB", "DREB", "OREB_PCT", "DREB_PCT", "REB_PCT"]:
     FAMILY_OF[f] = "rebounding"
 for f in ["STL", "BLK", "DEF_RATING"]:
     FAMILY_OF[f] = "defense"
-for f in ["FG3_PCT", "FG_PCT", "FT_PCT", "TS_PCT", "EFG_PCT", "PIE",
-          "OFF_RATING", "NET_RATING", "PLUS_MINUS", "PACE"]:
+for f in [
+    "FG3_PCT",
+    "FG_PCT",
+    "FT_PCT",
+    "TS_PCT",
+    "EFG_PCT",
+    "PIE",
+    "OFF_RATING",
+    "NET_RATING",
+    "PLUS_MINUS",
+    "PACE",
+]:
     FAMILY_OF[f] = "efficiency"
 for f in SCORING_COLS:
     FAMILY_OF[f] = "shotmix"
-for f in ["DIST_MILES", "AVG_SPEED", "DRIVES", "DRIVE_PTS", "DRIVE_PASSES",
-          "CATCH_SHOOT_FGA", "CATCH_SHOOT_PTS", "CATCH_SHOOT_FG3_PCT",
-          "PULL_UP_FGA", "PULL_UP_PTS",
-          "PAINT_TOUCHES", "POST_TOUCHES", "ELBOW_TOUCHES"]:
+for f in [
+    "DIST_MILES",
+    "AVG_SPEED",
+    "DRIVES",
+    "DRIVE_PTS",
+    "DRIVE_PASSES",
+    "CATCH_SHOOT_FGA",
+    "CATCH_SHOOT_PTS",
+    "CATCH_SHOOT_FG3_PCT",
+    "PULL_UP_FGA",
+    "PULL_UP_PTS",
+    "PAINT_TOUCHES",
+    "POST_TOUCHES",
+    "ELBOW_TOUCHES",
+]:
     FAMILY_OF[f] = "tracking"
 for f in BIO_COLS:
     FAMILY_OF[f] = "bio"
 FAMILY_OF["SALARY_LOG"] = "market"
 # Form features derived from local per-game logs (pipeline/data/gamelogs_*.jsonl)
-FORM_FEATURES = ["FORM_VOL", "FORM_CEIL", "FORM_DD_RATE", "FORM_TD_RATE",
-                 "FORM_GP", "FORM_MIN_AVG"]
+FORM_FEATURES = [
+    "FORM_VOL",
+    "FORM_CEIL",
+    "FORM_DD_RATE",
+    "FORM_TD_RATE",
+    "FORM_GP",
+    "FORM_MIN_AVG",
+]
 for f in FORM_FEATURES:
     FAMILY_OF[f] = "form"
 
-UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
-      "(KHTML, like Gecko) Chrome/126.0 Safari/537.36")
+UA = (
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+    "(KHTML, like Gecko) Chrome/126.0 Safari/537.36"
+)
 
 
 # ---------------------------------------------------------------------------
 # Cached fetch layer
 # ---------------------------------------------------------------------------
+
 
 def cache_path(tag: str, season: str) -> Path:
     return CACHE / f"{tag}_{season}.json"
@@ -157,8 +256,11 @@ def cache_path(tag: str, season: str) -> Path:
 
 # Older cache drops used short tags (e.g. base_1996-97.json); current code
 # writes dashbase_*.json. Accept both so offline rebuilds resume honestly.
-_CACHE_ALIASES = {"dashbase": "base", "dashadvanced": "advanced",
-                  "dashscoring": "scoring"}
+_CACHE_ALIASES = {
+    "dashbase": "base",
+    "dashadvanced": "advanced",
+    "dashscoring": "scoring",
+}
 
 
 def load_cached(tag: str, season: str):
@@ -182,7 +284,8 @@ def load_cached(tag: str, season: str):
 def save_cache(tag: str, season: str, rows) -> None:
     CACHE.mkdir(parents=True, exist_ok=True)
     cache_path(tag, season).write_text(
-        json.dumps(rows, separators=(",", ":")), encoding="utf-8")
+        json.dumps(rows, separators=(",", ":")), encoding="utf-8"
+    )
 
 
 def with_retries(fn, what: str, attempts: int = 5):
@@ -191,9 +294,11 @@ def with_retries(fn, what: str, attempts: int = 5):
         try:
             return fn()
         except Exception as e:
-            wait = min(120, (2 ** attempt) * 8) + random.uniform(0, 4)
-            print(f"  {what}: attempt {attempt + 1}/{attempts} failed "
-                  f"({type(e).__name__}); sleeping {wait:.0f}s")
+            wait = min(120, (2**attempt) * 8) + random.uniform(0, 4)
+            print(
+                f"  {what}: attempt {attempt + 1}/{attempts} failed "
+                f"({type(e).__name__}); sleeping {wait:.0f}s"
+            )
             time.sleep(wait)
     print(f"  {what}: EXHAUSTED retries -- skipping (cached later runs resume)")
     return None
@@ -218,7 +323,11 @@ def df_to_rows(df, id_col: str, wanted: list[str]) -> tuple[list[dict], list[str
         }
         for c in present:
             v = x[c]
-            row[c] = None if v is None or (isinstance(v, float) and math.isnan(v)) else float(v)
+            row[c] = (
+                None
+                if v is None or (isinstance(v, float) and math.isnan(v))
+                else float(v)
+            )
         rows.append(row)
     return rows, present
 
@@ -234,8 +343,11 @@ def fetch_dash(season: str, measure: str, wanted: list[str], offline: bool):
 
     def call():
         r = leaguedashplayerstats.LeagueDashPlayerStats(
-            season=season, per_mode_detailed="Per100Possessions",
-            measure_type_detailed_defense=measure, timeout=75)
+            season=season,
+            per_mode_detailed="Per100Possessions",
+            measure_type_detailed_defense=measure,
+            timeout=75,
+        )
         df = r.get_data_frames()[0]
         extra = ["MIN", "GP"] if measure == "Base" else []
         rows, _ = df_to_rows(df, "PLAYER_ID", wanted + extra)
@@ -310,10 +422,15 @@ def fetch_tracking(season: str, offline: bool):
     merged: dict[str, dict] = {}
     ok = True
     for measure, wanted in TRACKING_SPECS:
+
         def call(measure=measure, wanted=wanted):
             r = leaguedashptstats.LeagueDashPtStats(
-                season=season, pt_measure_type=measure,
-                per_mode_simple="PerGame", player_or_team="Player", timeout=75)
+                season=season,
+                pt_measure_type=measure,
+                per_mode_simple="PerGame",
+                player_or_team="Player",
+                timeout=75,
+            )
             df = r.get_data_frames()[0]
             rows, _ = df_to_rows(df, "PLAYER_ID", wanted)
             return rows
@@ -340,6 +457,7 @@ def fetch_tracking(season: str, offline: bool):
 # durability. pipeline/data/gamelogs_{season}.jsonl, one JSON row per
 # player-game with box stats.
 # ---------------------------------------------------------------------------
+
 
 def compute_form_features(season: str) -> dict[str, dict]:
     p = DATA_DIR / f"gamelogs_{season}.jsonl"
@@ -370,19 +488,22 @@ def compute_form_features(season: str) -> dict[str, dict]:
         ceil = pts_sorted[max(0, math.ceil(0.95 * len(pts_sorted)) - 1)]
         dd = td = 0
         for r in rows:
-            cats = [(r.get("PTS") or 0),
-                    (r.get("AST") or 0),
-                    (r.get("OREB") or 0) + (r.get("DREB") or 0),
-                    (r.get("STL") or 0), (r.get("BLK") or 0)]
+            cats = [
+                (r.get("PTS") or 0),
+                (r.get("AST") or 0),
+                (r.get("OREB") or 0) + (r.get("DREB") or 0),
+                (r.get("STL") or 0),
+                (r.get("BLK") or 0),
+            ]
             tens = sum(1 for c in cats if c >= 10)
             dd += tens >= 2
             td += tens >= 3
         out[str(pid)] = {
             "FORM_VOL": math.sqrt(var36) / max(1.0, mean36),  # CV of per-36 scoring
-            "FORM_CEIL": float(ceil),                          # 95th-pct game PTS
+            "FORM_CEIL": float(ceil),  # 95th-pct game PTS
             "FORM_DD_RATE": dd / len(rows),
             "FORM_TD_RATE": td / len(rows),
-            "FORM_GP": float(len(rows)),                       # durability
+            "FORM_GP": float(len(rows)),  # durability
             "FORM_MIN_AVG": sum(r["MIN"] for r in rows) / len(rows),
         }
     return out
@@ -391,6 +512,7 @@ def compute_form_features(season: str) -> dict[str, dict]:
 # ---------------------------------------------------------------------------
 # Salary sources
 # ---------------------------------------------------------------------------
+
 
 def load_salary_history() -> dict[tuple[str, str], float]:
     """Full-history salaries: prefers merge_salaries output, else raw CSV.
@@ -420,8 +542,10 @@ def load_salary_history() -> dict[tuple[str, str], float]:
             print(f"salary merged JSON: {len(out)} rows")
             return out
         except Exception as e:
-            print(f"salary merged JSON unreadable ({type(e).__name__}) — "
-                  "falling back to CSV")
+            print(
+                f"salary merged JSON unreadable ({type(e).__name__}) — "
+                "falling back to CSV"
+            )
 
     p = CACHE / "salaries_history.csv"
     out = {}
@@ -431,7 +555,8 @@ def load_salary_history() -> dict[tuple[str, str], float]:
         for row in csv.DictReader(f):
             try:
                 out[(norm_name(row["name"]), row["season"])] = float(
-                    re.sub(r"[^0-9.]", "", row["salary"]) or 0)
+                    re.sub(r"[^0-9.]", "", row["salary"]) or 0
+                )
             except Exception:
                 continue
     print(f"salary history CSV: {len(out)} rows")
@@ -447,31 +572,38 @@ def fetch_bbref_contracts(offline: bool) -> dict[tuple[str, str], float]:
     if offline:
         return {}
     import requests
+
     out: dict[tuple[str, str], float] = {}
     try:
-        r = requests.get("https://www.basketball-reference.com/contracts/players.html",
-                         headers={"User-Agent": UA}, timeout=40)
+        r = requests.get(
+            "https://www.basketball-reference.com/contracts/players.html",
+            headers={"User-Agent": UA},
+            timeout=40,
+        )
         r.raise_for_status()
         html = r.text
         # header: season columns like >2025-26<
         head = re.search(r"<thead>.*?</thead>", html, re.S)
         seasons = re.findall(r">(\d{4}-\d{2})<", head.group(0)) if head else []
         for m in re.finditer(
-                r'<tr[^>]*>.*?data-stat="player"[^>]*>.*?>([^<]+)</a>(.*?)</tr>',
-                html, re.S):
+            r'<tr[^>]*>.*?data-stat="player"[^>]*>.*?>([^<]+)</a>(.*?)</tr>', html, re.S
+        ):
             name, rest = m.group(1), m.group(2)
             sals = re.findall(r'data-stat="y\d+"[^>]*>\$?([\d,]+)', rest)
-            for i, s in enumerate(sals[:len(seasons)]):
+            for i, s in enumerate(sals[: len(seasons)]):
                 try:
                     out[(norm_name(name), seasons[i])] = float(s.replace(",", ""))
                 except ValueError:
                     continue
-        save_cache("salary_bbref", "current",
-                   {f"{k[0]}|{k[1]}": v for k, v in out.items()})
+        save_cache(
+            "salary_bbref", "current", {f"{k[0]}|{k[1]}": v for k, v in out.items()}
+        )
         print(f"bbref contracts: {len(out)} (name,season) salaries")
     except Exception as e:
-        print(f"bbref contracts fetch failed ({type(e).__name__}) -- salary "
-              "will rely on salaries_history.csv / cache")
+        print(
+            f"bbref contracts fetch failed ({type(e).__name__}) -- salary "
+            "will rely on salaries_history.csv / cache"
+        )
     return out
 
 
@@ -479,11 +611,15 @@ def fetch_bbref_contracts(offline: bool) -> dict[tuple[str, str], float]:
 # Cleaning helpers
 # ---------------------------------------------------------------------------
 
+
 def shrink_percentages(rows: list[dict]) -> None:
     """Empirical-Bayes: shrink noisy percentages toward the season mean,
     weighted by per-100 attempts. m = prior strength in attempts."""
-    for pct, att, m in (("FG3_PCT", "FG3A", 6.0), ("FT_PCT", "FTA", 6.0),
-                        ("FG_PCT", "FGA", 6.0)):
+    for pct, att, m in (
+        ("FG3_PCT", "FG3A", 6.0),
+        ("FT_PCT", "FTA", 6.0),
+        ("FG_PCT", "FGA", 6.0),
+    ):
         vals = [r[pct] for r in rows if r.get(pct) is not None]
         mu = sum(vals) / max(1, len(vals))
         for r in rows:
@@ -498,7 +634,9 @@ def dedupe_rows(rows: list[dict]) -> list[dict]:
     for r in rows:
         k = (r["PLAYER_ID"], r["season"])
         minutes = (r.get("MIN") or 0) * (r.get("GP") or 0)
-        if k not in best or minutes > (best[k].get("MIN") or 0) * (best[k].get("GP") or 0):
+        if k not in best or minutes > (best[k].get("MIN") or 0) * (
+            best[k].get("GP") or 0
+        ):
             best[k] = r
     return list(best.values())
 
@@ -507,32 +645,53 @@ def dedupe_rows(rows: list[dict]) -> list[dict]:
 # Main build
 # ---------------------------------------------------------------------------
 
+
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--offline", action="store_true",
-                    help="rebuild from pipeline/cache only; no network")
-    ap.add_argument("--fixed-gates", action="store_true",
-                    help="use fixed --min-gp/--min-minutes instead of schedule-aware")
-    ap.add_argument("--min-gp", type=int, default=None,
-                    help="fixed minimum GP (requires --fixed-gates)")
-    ap.add_argument("--min-minutes", type=int, default=None,
-                    help="fixed minimum total minutes GP*MIN (requires --fixed-gates)")
+    ap.add_argument(
+        "--offline",
+        action="store_true",
+        help="rebuild from pipeline/cache only; no network",
+    )
+    ap.add_argument(
+        "--fixed-gates",
+        action="store_true",
+        help="use fixed --min-gp/--min-minutes instead of schedule-aware",
+    )
+    ap.add_argument(
+        "--min-gp",
+        type=int,
+        default=None,
+        help="fixed minimum GP (requires --fixed-gates)",
+    )
+    ap.add_argument(
+        "--min-minutes",
+        type=int,
+        default=None,
+        help="fixed minimum total minutes GP*MIN (requires --fixed-gates)",
+    )
     args = ap.parse_args()
     schedule_aware = not args.fixed_gates
 
     if patch_nba_api_session():
         print("nba_http: nba_api routed through curl_cffi")
     else:
-        print("WARNING: curl_cffi not installed — pip install curl_cffi "
-              "(stats.nba.com often times out without it)")
+        print(
+            "WARNING: curl_cffi not installed — pip install curl_cffi "
+            "(stats.nba.com often times out without it)"
+        )
 
     salary_hist = load_salary_history()
     salary_bbref = fetch_bbref_contracts(args.offline)
 
     all_rows: list[dict] = []
-    extra_presence: dict[str, set] = {"advanced": set(), "scoring": set(),
-                                      "bio": set(), "tracking": set(),
-                                      "form": set()}
+    extra_presence: dict[str, set] = {
+        "advanced": set(),
+        "scoring": set(),
+        "bio": set(),
+        "tracking": set(),
+        "form": set(),
+    }
     fetched, missing = [], []
 
     for season in SEASONS:
@@ -540,12 +699,15 @@ def main() -> None:
         if not base:
             missing.append(season)
             continue
-        adv = {str(r["PLAYER_ID"]): r
-               for r in (fetch_dash(season, "Advanced", ADVANCED_COLS, args.offline) or [])}
-        sco = {str(r["PLAYER_ID"]): r
-               for r in (fetch_dash(season, "Scoring", SCORING_COLS, args.offline) or [])}
-        bio = {str(r["PLAYER_ID"]): r
-               for r in (fetch_bio(season, args.offline) or [])}
+        adv = {
+            str(r["PLAYER_ID"]): r
+            for r in (fetch_dash(season, "Advanced", ADVANCED_COLS, args.offline) or [])
+        }
+        sco = {
+            str(r["PLAYER_ID"]): r
+            for r in (fetch_dash(season, "Scoring", SCORING_COLS, args.offline) or [])
+        }
+        bio = {str(r["PLAYER_ID"]): r for r in (fetch_bio(season, args.offline) or [])}
         trk = fetch_tracking(season, args.offline) or {}
         form = compute_form_features(season)
         gate = gates_for_season(season, schedule_aware=schedule_aware)
@@ -554,16 +716,24 @@ def main() -> None:
             min_minutes = gate["min_total_minutes"]
         else:
             min_gp = args.min_gp if args.min_gp is not None else DEFAULT_MIN_GP
-            min_minutes = (args.min_minutes if args.min_minutes is not None
-                           else DEFAULT_MIN_TOTAL_MINUTES)
+            min_minutes = (
+                args.min_minutes
+                if args.min_minutes is not None
+                else DEFAULT_MIN_TOTAL_MINUTES
+            )
 
         n_kept = 0
         for r in base:
             gp = r.get("GP") or 0
             mpg = r.get("MIN") or 0
-            if not check_eligible(gp, mpg, season=season, min_gp=min_gp,
-                                  min_total_minutes=min_minutes,
-                                  schedule_aware=False):
+            if not check_eligible(
+                gp,
+                mpg,
+                season=season,
+                min_gp=min_gp,
+                min_total_minutes=min_minutes,
+                schedule_aware=False,
+            ):
                 continue
             total_min = float(gp) * float(mpg)
             pid = str(r["PLAYER_ID"])
@@ -594,8 +764,10 @@ def main() -> None:
         print(f"{season}: {n_kept} qualified (gp>={min_gp}, min>={min_minutes})")
 
     if not all_rows:
-        raise SystemExit("no data available (network throttled and no cache) "
-                         "-- aborting honestly; re-run later, cache resumes")
+        raise SystemExit(
+            "no data available (network throttled and no cache) "
+            "-- aborting honestly; re-run later, cache resumes"
+        )
     if missing:
         print(f"WARNING: seasons missing this run (throttled): {missing}")
         print("re-run when stats.nba.com cools down; cached seasons persist")
@@ -665,8 +837,11 @@ def main() -> None:
         top = np.argsort(-c)[:2]
         low = np.argsort(c)[0]
         a, b = LABELS[GAME_FEATURES[top[0]]], LABELS[GAME_FEATURES[top[1]]]
-        return f"{a} + {b}".title() if c[top[1]] > 0.35 else \
-            f"{a} (low {LABELS[GAME_FEATURES[low]]})".title()
+        return (
+            f"{a} + {b}".title()
+            if c[top[1]] > 0.35
+            else f"{a} (low {LABELS[GAME_FEATURES[low]]})".title()
+        )
 
     cluster_names = [name_cluster(cent[k]) for k in range(K)]
 
@@ -676,11 +851,14 @@ def main() -> None:
     for i, r in enumerate(all_rows):
         p = {
             "id": i,
-            "name": r["PLAYER_NAME"], "season": r["season"],
-            "gp": r["_gp"], "mpg": round(r["_mpg"], 1),
+            "name": r["PLAYER_NAME"],
+            "season": r["season"],
+            "gp": r["_gp"],
+            "mpg": round(r["_mpg"], 1),
             "total_min": round(r["_total_min"]),
             "v": [round(float(z), 3) for z in Zg[i]],
-            "x": round(float(P[i, 0]), 4), "y": round(float(P[i, 1]), 4),
+            "x": round(float(P[i, 0]), 4),
+            "y": round(float(P[i, 1]), 4),
             "z": round(float(P[i, 2]), 4),
             "c": int(lab[i]),
         }
@@ -689,29 +867,41 @@ def main() -> None:
         players.append(p)
 
     OUT.parent.mkdir(parents=True, exist_ok=True)
-    OUT.write_text(json.dumps({
-        "built": time.strftime("%Y-%m-%d"),
-        "seasons": [SEASONS[0], SEASONS[-1]],
-        "normalization": "per-100 possessions, z-scored within season (era-honest)",
-        "eligibility": {
-            "schedule_aware": schedule_aware,
-            "method": ("15% of season GP (clamp 10–15) + 6% of 48mpg schedule "
-                       "total minutes (floor 450)"),
-            "min_gp": args.min_gp,
-            "min_total_minutes": args.min_minutes,
-            "sample_gates": {s: gates_for_season(s, schedule_aware=schedule_aware)
-                             for s in ("1998-99", "2011-12", "2023-24")},
-        },
-        "features": GAME_FEATURES, "featureLabels": LABELS,
-        "clusters": cluster_names,
-        "players": players,
-    }, separators=(",", ":")), encoding="utf-8")
+    OUT.write_text(
+        json.dumps(
+            {
+                "built": time.strftime("%Y-%m-%d"),
+                "seasons": [SEASONS[0], SEASONS[-1]],
+                "normalization": "per-100 possessions, z-scored within season (era-honest)",
+                "eligibility": {
+                    "schedule_aware": schedule_aware,
+                    "method": (
+                        "15% of season GP (clamp 10–15) + 6% of 48mpg schedule "
+                        "total minutes (floor 450)"
+                    ),
+                    "min_gp": args.min_gp,
+                    "min_total_minutes": args.min_minutes,
+                    "sample_gates": {
+                        s: gates_for_season(s, schedule_aware=schedule_aware)
+                        for s in ("1998-99", "2011-12", "2023-24")
+                    },
+                },
+                "features": GAME_FEATURES,
+                "featureLabels": LABELS,
+                "clusters": cluster_names,
+                "players": players,
+            },
+            separators=(",", ":"),
+        ),
+        encoding="utf-8",
+    )
 
     # ---- wide training bundle for train_towers.py ----
     DATA_DIR.mkdir(parents=True, exist_ok=True)
     np.savez_compressed(
         DATA_DIR / "train_matrix.npz",
-        Z=Z.astype(np.float32), mask=mask,
+        Z=Z.astype(np.float32),
+        mask=mask,
         player_id=np.array([r["PLAYER_ID"] for r in all_rows]),
         season=np.array([r["season"] for r in all_rows]),
         name=np.array([r["PLAYER_NAME"] for r in all_rows]),
@@ -722,8 +912,10 @@ def main() -> None:
         "n_players": n,
         "eligibility": {
             "schedule_aware": schedule_aware,
-            "sample_gates": {s: gates_for_season(s, schedule_aware=schedule_aware)
-                             for s in ("1998-99", "2011-12", "2023-24")},
+            "sample_gates": {
+                s: gates_for_season(s, schedule_aware=schedule_aware)
+                for s in ("1998-99", "2011-12", "2023-24")
+            },
         },
         "features": wide_features,
         "families": {f: FAMILY_OF.get(f, "efficiency") for f in wide_features},
@@ -735,17 +927,21 @@ def main() -> None:
         "notes": "Z is era z-scored (NaN->season mean, clip 4); mask marks measured values",
     }
     (DATA_DIR / "feature_manifest.json").write_text(
-        json.dumps(manifest, indent=2), encoding="utf-8")
+        json.dumps(manifest, indent=2), encoding="utf-8"
+    )
 
     # ---- audit assertions: never ship a dirty file ----
     assert len({(p["name"], p["season"]) for p in players}) == len(players), "dupes"
     assert all(len(p["v"]) == 14 for p in players), "vector length"
     assert all(all(-4.0001 <= v <= 4.0001 for v in p["v"]) for p in players), "clip"
-    assert all(0 <= p["x"] <= 1 and 0 <= p["y"] <= 1 and 0 <= p["z"] <= 1
-               for p in players), "map range"
+    assert all(
+        0 <= p["x"] <= 1 and 0 <= p["y"] <= 1 and 0 <= p["z"] <= 1 for p in players
+    ), "map range"
 
-    print(f"wrote {OUT.name}: {len(players)} player-seasons, {K} archetypes, "
-          f"{d} wide features, salary coverage {manifest['salary_coverage']}")
+    print(
+        f"wrote {OUT.name}: {len(players)} player-seasons, {K} archetypes, "
+        f"{d} wide features, salary coverage {manifest['salary_coverage']}"
+    )
     for k, nm in enumerate(cluster_names):
         print(f"  cluster {k}: {nm} ({int((lab == k).sum())} players)")
 

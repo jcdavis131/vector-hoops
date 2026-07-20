@@ -13,27 +13,26 @@ Run:  pipeline/.venv/Scripts/python.exe pipeline/sweep_v5.py --device cuda
       pipeline/.venv/Scripts/python.exe pipeline/sweep_v5.py --device cuda \
           --only b3_h224_t48_d64 --seeds 7,13,21 --epochs 100
 """
+
 from __future__ import annotations
 
 import argparse
 import json
 import os
 
-import numpy as np
-import torch
-
 import ablate_v5 as AB
+import torch
 import train_mtnn as T  # promotion_composite: the repo's canonical objective
 
 OUT = AB.OUT
 
 # concat fusion + MLP heads held fixed; vary depth/width/dim.
-BASE = dict(fusion_mode="concat", mlp_heads=True, d_head_hidden=64)
+BASE = {"fusion_mode": "concat", "mlp_heads": True, "d_head_hidden": 64}
 
 # (tower_blocks, tower_hidden, d_tower, d_emb) + optional per-config overrides.
 GRID = {
     # --- depth / width / embedding dim, concat fusion -----------------------
-    "b1_h96_t24_d48":  (1, 96, 24, 48, {}),   # v4-scale control
+    "b1_h96_t24_d48": (1, 96, 24, 48, {}),  # v4-scale control
     "b2_h160_t32_d48": (2, 160, 32, 48, {}),  # zero-migration emb
     "b2_h160_t32_d64": (2, 160, 32, 64, {}),  # "B"
     "b3_h160_t32_d64": (3, 160, 32, 64, {}),  # deeper
@@ -46,11 +45,30 @@ GRID = {
     # cleaned matrix. The earlier "transformer hurts" result was measured with
     # leaked targets on a matrix with a dead tower, so it is not trustworthy.
     # Matched to b2_h160_t32_d64 so only the fusion differs.
-    "tx_b2_h160_t32_d64": (2, 160, 32, 64, dict(
-        fusion_mode="transformer", d_model=96, n_fusion_layers=4, n_attn_heads=4)),
-    "tx_b2_h160_t32_d64_L2": (2, 160, 32, 64, dict(
-        fusion_mode="transformer", d_model=96, n_fusion_layers=2, n_attn_heads=4)),
-
+    "tx_b2_h160_t32_d64": (
+        2,
+        160,
+        32,
+        64,
+        {
+            "fusion_mode": "transformer",
+            "d_model": 96,
+            "n_fusion_layers": 4,
+            "n_attn_heads": 4,
+        },
+    ),
+    "tx_b2_h160_t32_d64_L2": (
+        2,
+        160,
+        32,
+        64,
+        {
+            "fusion_mode": "transformer",
+            "d_model": 96,
+            "n_fusion_layers": 2,
+            "n_attn_heads": 4,
+        },
+    ),
     # --- Sweep A: the decode-head width, pinned at 64 in every run above even
     # though the head MLP is what separated b1 from the v4 control.
     #
@@ -62,54 +80,68 @@ GRID = {
     # b2_h160_t32_d48 (composite 0.8027, dim 48 => zero migration), which asks
     # the question that decides what ships: does head width help ON TOP OF a
     # purity-competitive tower stack?  hb64_d48 == b2_h160_t32_d48 (control).
-    "hb32_d48":  (2, 160, 32, 48, dict(d_head_hidden=32)),
-    "hb64_d48":  (2, 160, 32, 48, dict(d_head_hidden=64)),
-    "hb128_d48": (2, 160, 32, 48, dict(d_head_hidden=128)),
-    "hb256_d48": (2, 160, 32, 48, dict(d_head_hidden=256)),
+    "hb32_d48": (2, 160, 32, 48, {"d_head_hidden": 32}),
+    "hb64_d48": (2, 160, 32, 48, {"d_head_hidden": 64}),
+    "hb128_d48": (2, 160, 32, 48, {"d_head_hidden": 128}),
+    "hb256_d48": (2, 160, 32, 48, {"d_head_hidden": 256}),
     # depth x head interaction: is the head win depth-dependent?
     # (ha64_d48 == b1, already measured; these two complete the 2x2.)
-    "ha32_d48":  (1, 96, 24, 48, dict(d_head_hidden=32)),
-    "ha128_d48": (1, 96, 24, 48, dict(d_head_hidden=128)),
+    "ha32_d48": (1, 96, 24, 48, {"d_head_hidden": 32}),
+    "ha128_d48": (1, 96, 24, 48, {"d_head_hidden": 128}),
     # embedding dim was the one width that moved BOTH objectives
-    "hb128_d96": (2, 160, 32, 96, dict(d_head_hidden=128)),
-
+    "hb128_d96": (2, 160, 32, 96, {"d_head_hidden": 128}),
     # --- Sweep B: the fusion bottleneck. At the v4 default (256) this single
     # Linear is ~57% of all parameters and had no flag until now, so it has
     # never been swept. Highest-information axis available. Also based on b2
     # towers; d_head_hidden is re-pinned to Sweep A's winner before running.
-    "fh128_d48": (2, 160, 32, 48, dict(d_head_hidden=128, d_fusion_hidden=128)),
-    "fh256_d48": (2, 160, 32, 48, dict(d_head_hidden=128, d_fusion_hidden=256)),
-    "fh384_d48": (2, 160, 32, 48, dict(d_head_hidden=128, d_fusion_hidden=384)),
-    "fh512_d48": (2, 160, 32, 48, dict(d_head_hidden=128, d_fusion_hidden=512)),
-
+    "fh128_d48": (2, 160, 32, 48, {"d_head_hidden": 128, "d_fusion_hidden": 128}),
+    "fh256_d48": (2, 160, 32, 48, {"d_head_hidden": 128, "d_fusion_hidden": 256}),
+    "fh384_d48": (2, 160, 32, 48, {"d_head_hidden": 128, "d_fusion_hidden": 384}),
+    "fh512_d48": (2, 160, 32, 48, {"d_head_hidden": 128, "d_fusion_hidden": 512}),
     # --- The deployed v4 recipe, as a config. BASE pins mlp_heads=True, so no
     # grid entry above reproduces the incumbent. Without it in the SAME sweep
     # (same epochs, seeds, protocol, matrix) there is nothing to promote
     # against -- every "beats v4" claim so far compared across budgets.
-    "a_v4_ctrl": (1, 96, 24, 48, dict(mlp_heads=False)),
+    "a_v4_ctrl": (1, 96, 24, 48, {"mlp_heads": False}),
 }
 
 # Named batches so a run targets one question instead of re-mapping a plateau.
 SWEEP_SETS = {
-    "arch": ["b1_h96_t24_d48", "b2_h160_t32_d48", "b2_h160_t32_d64",
-             "b3_h160_t32_d64", "b2_h224_t32_d64", "b2_h160_t48_d64",
-             "b2_h160_t32_d96", "b3_h224_t48_d64", "b3_h160_t32_d96"],
+    "arch": [
+        "b1_h96_t24_d48",
+        "b2_h160_t32_d48",
+        "b2_h160_t32_d64",
+        "b3_h160_t32_d64",
+        "b2_h224_t32_d64",
+        "b2_h160_t48_d64",
+        "b2_h160_t32_d96",
+        "b3_h224_t48_d64",
+        "b3_h160_t32_d96",
+    ],
     "transformer": ["tx_b2_h160_t32_d64", "tx_b2_h160_t32_d64_L2"],
-    "head": ["hb32_d48", "hb64_d48", "hb128_d48", "hb256_d48",
-             "ha32_d48", "ha128_d48", "hb128_d96"],
+    "head": [
+        "hb32_d48",
+        "hb64_d48",
+        "hb128_d48",
+        "hb256_d48",
+        "ha32_d48",
+        "ha128_d48",
+        "hb128_d96",
+    ],
     "fusion": ["fh128_d48", "fh256_d48", "fh384_d48", "fh512_d48"],
-
     # Apples-to-apples finalists: one budget, one protocol, one seed set, with
     # the deployed v4 recipe measured inside the sweep. One representative per
     # axis that actually moved the gated composite (depth, dim, fusion width),
     # plus the transformer whose verdict is still unmeasured.
-    "final": ["a_v4_ctrl",          # incumbent
-              "hb64_d48",           # depth (2 blocks), v4 head width
-              "hb128_d48",          # depth + wider head
-              "b3_h224_t48_d64",    # deepest/widest (60-ep composite leader)
-              "b2_h160_t32_d96",    # embedding dim
-              "fh512_d48",          # fusion width (re-pinned by --head-hidden)
-              "tx_b2_h160_t32_d64"],  # transformer fusion
+    "final": [
+        "a_v4_ctrl",  # incumbent
+        "hb64_d48",  # depth (2 blocks), v4 head width
+        "hb128_d48",  # depth + wider head
+        "b3_h224_t48_d64",  # deepest/widest (60-ep composite leader)
+        "b2_h160_t32_d96",  # embedding dim
+        "fh512_d48",  # fusion width (re-pinned by --head-hidden)
+        "tx_b2_h160_t32_d64",
+    ],  # transformer fusion
 }
 
 
@@ -148,19 +180,32 @@ def main() -> None:
     ap.add_argument("--seeds", type=str, default="7")
     ap.add_argument("--device", choices=("auto", "cpu", "cuda"), default="auto")
     ap.add_argument("--only", type=str, default="", help="comma-separated grid names")
-    ap.add_argument("--set", type=str, default="", choices=("", *SWEEP_SETS),
-                    help="named batch: arch | transformer | head | fusion")
-    ap.add_argument("--head-hidden", type=int, default=0,
-                    help="override d_head_hidden for every config in this run "
-                         "(pin Sweep B's fusion arms to Sweep A's winner)")
-    ap.add_argument("--resume", action="store_true",
-                    help="reuse an existing per-config checkpoint instead of "
-                         "retraining it; long multi-seed sweeps keep getting killed")
+    ap.add_argument(
+        "--set",
+        type=str,
+        default="",
+        choices=("", *SWEEP_SETS),
+        help="named batch: arch | transformer | head | fusion",
+    )
+    ap.add_argument(
+        "--head-hidden",
+        type=int,
+        default=0,
+        help="override d_head_hidden for every config in this run "
+        "(pin Sweep B's fusion arms to Sweep A's winner)",
+    )
+    ap.add_argument(
+        "--resume",
+        action="store_true",
+        help="reuse an existing per-config checkpoint instead of "
+        "retraining it; long multi-seed sweeps keep getting killed",
+    )
     ap.add_argument("--protocol", choices=("legacy", "leakfree"), default="leakfree")
     ap.add_argument("--split", choices=("player", "temporal"), default="player")
     args = ap.parse_args()
     try:
         import sys
+
         sys.stdout.reconfigure(encoding="utf-8")
     except Exception:
         pass
@@ -168,8 +213,11 @@ def main() -> None:
     device = AB.resolve_device(args.device)
     if device == "cpu":
         torch.set_num_threads(max(1, os.cpu_count() or 1))
-    print(f"device: {device}"
-          + ("" if device == "cpu" else f" ({torch.cuda.get_device_name(0)})"), flush=True)
+    print(
+        f"device: {device}"
+        + ("" if device == "cpu" else f" ({torch.cuda.get_device_name(0)})"),
+        flush=True,
+    )
     OUT.mkdir(parents=True, exist_ok=True)
 
     only = {s.strip() for s in args.only.split(",") if s.strip()}
@@ -187,83 +235,139 @@ def main() -> None:
             ck = OUT / f"sweep_{name}#s{seed}.json"
             if args.resume and ck.exists():
                 m = json.loads(ck.read_text(encoding="utf-8"))
-                same = (m.get("epochs") == args.epochs
-                        and m.get("protocol") == args.protocol
-                        and m.get("split_mode") == args.split
-                        and m.get("cfg") == cfg)
+                same = (
+                    m.get("epochs") == args.epochs
+                    and m.get("protocol") == args.protocol
+                    and m.get("split_mode") == args.split
+                    and m.get("cfg") == cfg
+                )
                 if same:
                     per_seed[name][seed] = m
-                    print(f"=== {name} seed {seed}: RESUMED from checkpoint "
-                          f"({args.epochs} ep) ===", flush=True)
+                    print(
+                        f"=== {name} seed {seed}: RESUMED from checkpoint "
+                        f"({args.epochs} ep) ===",
+                        flush=True,
+                    )
                     continue
-                print(f"  checkpoint for {name}#s{seed} differs (budget/protocol/"
-                      f"config) — retraining", flush=True)
-            print(f"=== {name} seed {seed} ({args.epochs} ep, {args.protocol}, "
-                  f"{args.split}-split) {cfg} ===", flush=True)
-            m = AB.train_one(name, cfg, args.epochs, seed=seed, device=device,
-                             protocol=args.protocol, split_mode=args.split)
+                print(
+                    f"  checkpoint for {name}#s{seed} differs (budget/protocol/"
+                    f"config) — retraining",
+                    flush=True,
+                )
+            print(
+                f"=== {name} seed {seed} ({args.epochs} ep, {args.protocol}, "
+                f"{args.split}-split) {cfg} ===",
+                flush=True,
+            )
+            m = AB.train_one(
+                name,
+                cfg,
+                args.epochs,
+                seed=seed,
+                device=device,
+                protocol=args.protocol,
+                split_mode=args.split,
+            )
             m["cfg"] = cfg  # fingerprint so --resume can't reuse a mismatch
             per_seed[name][seed] = m
             pt = m.get("purity_at_20_test")
-            print(f"  -> params {m['params']:,} | recall {m['test_recall_at_10']} | "
-                  f"purity(test) {round(pt,4) if pt else None} | "
-                  f"next_rmse {AB._rmse(m['next_profile'],'test')} | {m['seconds']}s", flush=True)
+            print(
+                f"  -> params {m['params']:,} | recall {m['test_recall_at_10']} | "
+                f"purity(test) {round(pt, 4) if pt else None} | "
+                f"next_rmse {AB._rmse(m['next_profile'], 'test')} | {m['seconds']}s",
+                flush=True,
+            )
             # Checkpoint after every config: a long sweep must survive a kill.
             (OUT / f"sweep_{name}#s{seed}.json").write_text(
-                json.dumps(m, indent=2), encoding="utf-8")
+                json.dumps(m, indent=2), encoding="utf-8"
+            )
             (OUT / "sweep_partial.json").write_text(
-                json.dumps({"epochs": args.epochs, "protocol": args.protocol,
-                            "split": args.split, "per_seed": per_seed}, indent=2),
-                encoding="utf-8")
+                json.dumps(
+                    {
+                        "epochs": args.epochs,
+                        "protocol": args.protocol,
+                        "split": args.split,
+                        "per_seed": per_seed,
+                    },
+                    indent=2,
+                ),
+                encoding="utf-8",
+            )
 
-    report: dict = {"epochs": args.epochs, "seeds": seeds, "grid": GRID, "per_seed": per_seed}
+    report: dict = {
+        "epochs": args.epochs,
+        "seeds": seeds,
+        "grid": GRID,
+        "per_seed": per_seed,
+    }
 
     if multi:
         report["aggregate"] = AB.aggregate(per_seed)
-        (OUT / "sweep_report.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
+        (OUT / "sweep_report.json").write_text(
+            json.dumps(report, indent=2), encoding="utf-8"
+        )
         print("\n=== SWEEP (multi-seed aggregate) ===")
         ag = report["aggregate"]
-        for name, a in sorted(ag.items(),
-                              key=lambda kv: kv[1]["next_rmse_test"]["mean"] or 9.9):
-            pu = a["purity_at_20"]; nr = a["next_rmse_test"]
-            print(f"{name:<18} params {a['params']:>9,} | purity {pu['mean']}±{pu['std']} | "
-                  f"next_rmse {nr['mean']}±{nr['std']} | recall {a['test_recall_at_10']['mean']}")
+        for name, a in sorted(
+            ag.items(), key=lambda kv: kv[1]["next_rmse_test"]["mean"] or 9.9
+        ):
+            pu = a["purity_at_20"]
+            nr = a["next_rmse_test"]
+            print(
+                f"{name:<18} params {a['params']:>9,} | purity {pu['mean']}±{pu['std']} | "
+                f"next_rmse {nr['mean']}±{nr['std']} | recall {a['test_recall_at_10']['mean']}"
+            )
         return
 
     # single-seed ranking
     flat = {n: d[seeds[0]] for n, d in per_seed.items()}
     ranked = sorted(flat.items(), key=lambda kv: rank_key(kv[1]))
     report["ranking"] = [
-        {"name": n,
-         "params": m["params"],
-         "recall": m["test_recall_at_10"],
-         "purity_test": round(purity_of(m), 4),
-         "composite": round(composite_of(m), 4),
-         "next_rmse_test": AB._rmse(m["next_profile"], "test")}
-        for n, m in ranked]
-    (OUT / "sweep_report.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
+        {
+            "name": n,
+            "params": m["params"],
+            "recall": m["test_recall_at_10"],
+            "purity_test": round(purity_of(m), 4),
+            "composite": round(composite_of(m), 4),
+            "next_rmse_test": AB._rmse(m["next_profile"], "test"),
+        }
+        for n, m in ranked
+    ]
+    (OUT / "sweep_report.json").write_text(
+        json.dumps(report, indent=2), encoding="utf-8"
+    )
 
     print("\n=== SWEEP RANKING (repo composite = 0.4*recall + 0.6*purity) ===")
     print("    next-RMSE is shown but is in NO promotion gate; it is a tie-break only.")
-    print(f"{'rank':<5}{'config':<18}{'params':>10}{'recall':>8}{'purity':>9}"
-          f"{'composite':>11}{'next_rmse':>11}")
+    print(
+        f"{'rank':<5}{'config':<18}{'params':>10}{'recall':>8}{'purity':>9}"
+        f"{'composite':>11}{'next_rmse':>11}"
+    )
     for i, r in enumerate(report["ranking"], 1):
-        print(f"{i:<5}{r['name']:<18}{r['params']:>10,}{str(r['recall']):>8}"
-              f"{r['purity_test']:>9.4f}{r['composite']:>11.4f}"
-              f"{str(r['next_rmse_test']):>11}")
+        print(
+            f"{i:<5}{r['name']:<18}{r['params']:>10,}{r['recall']!s:>8}"
+            f"{r['purity_test']:>9.4f}{r['composite']:>11.4f}"
+            f"{r['next_rmse_test']!s:>11}"
+        )
     if report["ranking"]:
         top = report["ranking"][0]
         rmse_best = min(report["ranking"], key=lambda r: r["next_rmse_test"] or 9.9)
-        print(f"\nTOP by repo composite : {top['name']} "
-              f"(composite {top['composite']}, purity {top['purity_test']}, "
-              f"{top['params']:,} params)")
+        print(
+            f"\nTOP by repo composite : {top['name']} "
+            f"(composite {top['composite']}, purity {top['purity_test']}, "
+            f"{top['params']:,} params)"
+        )
         if rmse_best["name"] != top["name"]:
-            print(f"TOP by next-RMSE      : {rmse_best['name']} "
-                  f"(rmse {rmse_best['next_rmse_test']}) -- DIFFERENT winner; "
-                  "the objectives disagree, pick one deliberately")
+            print(
+                f"TOP by next-RMSE      : {rmse_best['name']} "
+                f"(rmse {rmse_best['next_rmse_test']}) -- DIFFERENT winner; "
+                "the objectives disagree, pick one deliberately"
+            )
         print("\nSingle seed. Confirm finalists before locking:")
-        print(f"  pipeline/.venv/Scripts/python.exe pipeline/sweep_v5.py --device {device} "
-              f"--only {top['name']} --seeds 7,13,21 --epochs 100")
+        print(
+            f"  pipeline/.venv/Scripts/python.exe pipeline/sweep_v5.py --device {device} "
+            f"--only {top['name']} --seeds 7,13,21 --epochs 100"
+        )
     print(f"\nwrote {OUT / 'sweep_report.json'}")
 
 

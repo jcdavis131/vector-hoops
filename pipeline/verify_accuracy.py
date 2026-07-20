@@ -65,8 +65,12 @@ def v2_clusters(data: dict) -> None:
     cents = {c: [s / counts[c] for s in sums[c]] for c in counts}
     mism = 0
     for p in data["players"]:
-        best = min(cents, key=lambda c: sum(
-            (a - b) ** 2 for a, b in zip(p["v"], cents[c])))
+        best = min(
+            cents,
+            key=lambda c: sum(
+                (a - b) ** 2 for a, b in zip(p["v"], cents[c], strict=False)
+            ),
+        )
         if best != p["c"]:
             mism += 1
     rate = mism / len(data["players"])
@@ -82,34 +86,39 @@ def v3_deadline() -> None:
     logs_by_season: dict[str, list] = {}
     for f in HERE.glob("data/gamelogs_*.jsonl"):
         season = f.stem.split("_")[1]
-        logs_by_season[season] = [json.loads(l) for l in
-                                  f.read_text(encoding="utf-8").splitlines()]
+        logs_by_season[season] = [
+            json.loads(line) for line in f.read_text(encoding="utf-8").splitlines()
+        ]
     checked = 0
     for m in quiz:
         logs = logs_by_season.get(m["season"])
         if logs is None:
             fail(f"no logs for {m['season']}")
             continue
-        games = sorted([g for g in logs if g["PLAYER_NAME"] == m["name"]],
-                       key=lambda g: g["GAME_DATE"])
+        games = sorted(
+            [g for g in logs if g["PLAYER_NAME"] == m["name"]],
+            key=lambda g: g["GAME_DATE"],
+        )
         teams = [g["TEAM_ID"] for g in games]
-        switch = next((i for i in range(1, len(teams))
-                       if teams[i] != teams[i - 1]), None)
+        switch = next(
+            (i for i in range(1, len(teams)) if teams[i] != teams[i - 1]), None
+        )
         if switch is None:
             fail(f"{m['name']} {m['season']}: no switch found")
             continue
         before = games[:switch]
-        after = [g for g in games[switch:]
-                 if g["TEAM_ID"] == games[switch]["TEAM_ID"]]
+        after = [g for g in games[switch:] if g["TEAM_ID"] == games[switch]["TEAM_ID"]]
         mb = sum(g["MIN"] for g in before)
         ma = sum(g["MIN"] for g in after)
         p36b = 36 * sum(g["PTS"] for g in before) / mb
         p36a = 36 * sum(g["PTS"] for g in after) / ma
         if abs((p36a - p36b) - m["dP36"]) > 0.011:
-            fail(f"{m['name']} {m['season']} dP36 {p36a-p36b:.2f} vs {m['dP36']}")
+            fail(f"{m['name']} {m['season']} dP36 {p36a - p36b:.2f} vs {m['dP36']}")
         if len(before) != m["gBefore"] or len(after) != m["gAfter"]:
-            fail(f"{m['name']} game counts {len(before)}/{len(after)} vs "
-                 f"{m['gBefore']}/{m['gAfter']}")
+            fail(
+                f"{m['name']} game counts {len(before)}/{len(after)} vs "
+                f"{m['gBefore']}/{m['gAfter']}"
+            )
         checked += 1
     print(f"  {checked}/{len(quiz)} movers recomputed from raw logs")
 
@@ -145,16 +154,18 @@ def v4_determinism(data: dict) -> None:
             t = ((t ^ (t >> 15)) * (t | 1)) & 0xFFFFFFFF
             t = (t ^ (t + ((t ^ (t >> 7)) * (t | 61) & 0xFFFFFFFF))) & 0xFFFFFFFF
             return ((t ^ (t >> 14)) & 0xFFFFFFFF) / 4294967296
+
         return rnd
 
     def cos(a, b):
-        num = sum(x * y for x, y in zip(a, b))
+        num = sum(x * y for x, y in zip(a, b, strict=False))
         da = math.sqrt(sum(x * x for x in a)) or 1
         db = math.sqrt(sum(x * x for x in b)) or 1
         return num / (da * db)
 
     players = data["players"]
     from datetime import date, timedelta
+
     base = date(2026, 7, 1)
     for d in range(30):
         ds = (base + timedelta(days=d)).isoformat()
@@ -164,7 +175,9 @@ def v4_determinism(data: dict) -> None:
             a = players[int(rnd() * len(players))]
             tries = 0
             b = players[int(rnd() * len(players))]
-            while (b["id"] == a["id"] or mtnn_sim(a["id"], b["id"]) >= 0.3) and tries < 2000:
+            while (
+                b["id"] == a["id"] or mtnn_sim(a["id"], b["id"]) >= 0.3
+            ) and tries < 2000:
                 b = players[int(rnd() * len(players))]
                 tries += 1
             picks.append((a["id"], b["id"]))
@@ -191,8 +204,10 @@ def v5_procrustes(data: dict) -> None:
                 dot = sum(M[i][k] * M[j][k] for k in range(n))
                 want = 1.0 if i == j else 0.0
                 if abs(dot - want) > 5e-3:
-                    fail(f"{season}: chained transform not orthogonal "
-                         f"({i},{j})={dot:.4f}")
+                    fail(
+                        f"{season}: chained transform not orthogonal "
+                        f"({i},{j})={dot:.4f}"
+                    )
                     break
             else:
                 continue
@@ -203,10 +218,13 @@ def v5_procrustes(data: dict) -> None:
     if missing:
         fail(f"pairs missing seasons: {missing}")
     if len(dj["chainedToRoot"]) != len(seasons):
-        fail(f"chainedToRoot covers {len(dj['chainedToRoot'])} of "
-             f"{len(seasons)} seasons")
-    print(f"  {len(dj['pairs'])} pairs, {len(dj['chainedToRoot'])} "
-          "chained transforms, all orthogonal")
+        fail(
+            f"chainedToRoot covers {len(dj['chainedToRoot'])} of {len(seasons)} seasons"
+        )
+    print(
+        f"  {len(dj['pairs'])} pairs, {len(dj['chainedToRoot'])} "
+        "chained transforms, all orthogonal"
+    )
 
 
 def v6_teams() -> None:
@@ -251,7 +269,9 @@ def v7_skills_alignment(data: dict) -> None:
         return
     sk = json.loads(path.read_text(encoding="utf-8"))
     if len(sk.get("grades", [])) != len(data["players"]):
-        fail(f"skills grades {len(sk.get('grades', []))} != vectors {len(data['players'])}")
+        fail(
+            f"skills grades {len(sk.get('grades', []))} != vectors {len(data['players'])}"
+        )
         return
     probe = ASSETS / "skill_probe.json"
     if not probe.exists():
@@ -297,8 +317,12 @@ def v9_wide_skills(data: dict) -> None:
         fail(f"skills_wide.json expects 6 wide skills, got {len(skills)}")
     keys = {s["key"] for s in skills}
     for required in (
-        "post", "transition", "motor",
-        "shooting_gravity", "rim_gravity", "disruption_gravity",
+        "post",
+        "transition",
+        "motor",
+        "shooting_gravity",
+        "rim_gravity",
+        "disruption_gravity",
     ):
         if required not in keys:
             fail(f"skills_wide.json missing wide skill key: {required}")
@@ -314,8 +338,10 @@ def v9_wide_skills(data: dict) -> None:
             if key in grades:
                 modern_hits += 1
     sample_n = min(100, modern_pool)
-    print(f"  {len(grades)} wide grades ({len(skills)} skills); "
-          f"key hit {hits}/{len(data['players'])} vector rows")
+    print(
+        f"  {len(grades)} wide grades ({len(skills)} skills); "
+        f"key hit {hits}/{len(data['players'])} vector rows"
+    )
     if modern_pool and sample_n:
         rate = modern_hits / modern_pool
         print(f"  2015-16+ coverage: {modern_hits}/{modern_pool} ({rate:.1%})")
@@ -365,17 +391,26 @@ def v11_mtnn_report_warn() -> None:
     purity = rep.get("cross_era_archetype_neighbor_purity_at_20")
     print(f"  test recall@10={test}  purity@20={purity}")
     arch = rep.get("archetype_top1_acc")
-    base = rep.get("held_out_recall", {}).get("test", {}).get("recall_at_10_transparent_14d")
+    base = (
+        rep.get("held_out_recall", {})
+        .get("test", {})
+        .get("recall_at_10_transparent_14d")
+    )
     eligible = (
-        test is not None and base is not None and test >= base + 0.05
+        test is not None
+        and base is not None
+        and test >= base + 0.05
         and (arch or 0) >= 0.55
-        and purity is not None and purity >= 0.63
+        and purity is not None
+        and purity >= 0.63
     )
     if eligible:
         print("  MTNN promotion gates PASS — client embeddings exported when present")
     else:
         if purity is not None and purity < 0.63:
-            print("  WARN: purity below 0.63 promotion gate — MTNN stays in pipeline/data/")
+            print(
+                "  WARN: purity below 0.63 promotion gate — MTNN stays in pipeline/data/"
+            )
         if test is not None and test < 0.95:
             print("  WARN: test recall below 0.95 — review before promotion")
 
@@ -425,17 +460,22 @@ def check_stamp(name: str, stamp: dict | None, arch: dict | None) -> None:
         fail(f"{name} carries no checkpoint stamp — re-run its export")
         return
     local = local_checkpoint_stamp()
-    if local and (stamp.get("mtime") != local["mtime"]
-                  or stamp.get("bytes") != local["bytes"]):
-        fail(f"{name} checkpoint stamp stale vs pipeline/data/mtnn_best.pt — "
-             f"re-run export_mtnn_jacobian.py after retraining")
+    if local and (
+        stamp.get("mtime") != local["mtime"] or stamp.get("bytes") != local["bytes"]
+    ):
+        fail(
+            f"{name} checkpoint stamp stale vs pipeline/data/mtnn_best.pt — "
+            f"re-run export_mtnn_jacobian.py after retraining"
+        )
         return
     if arch is None:
         return
     ac = arch.get("checkpoint")
     if not ac:
-        print(f"  note: mtnn_arch.json has no checkpoint stamp — the client-side "
-              f"provenance guard is INACTIVE until export_mtnn_viz.py is re-run")
+        print(
+            "  note: mtnn_arch.json has no checkpoint stamp — the client-side "
+            "provenance guard is INACTIVE until export_mtnn_viz.py is re-run"
+        )
     elif ac.get("mtime") != stamp.get("mtime") or ac.get("bytes") != stamp.get("bytes"):
         fail(f"{name} checkpoint stamp stale vs arch — re-run its export")
 
@@ -471,16 +511,23 @@ def v13_mtnn_jacobian(data: dict) -> None:
         af = set(arch.get("towerFamilies") or [])
         jf = set(jac.get("towerFamilies") or [])
         if af and jf and af != jf:
-            fail(f"jacobian towerFamilies != arch (stale export): "
-                 f"jac-only={sorted(jf - af)} arch-only={sorted(af - jf)}")
-        if jac.get("dEmb") is not None and arch.get("dEmb") is not None \
-                and jac["dEmb"] != arch["dEmb"]:
+            fail(
+                f"jacobian towerFamilies != arch (stale export): "
+                f"jac-only={sorted(jf - af)} arch-only={sorted(af - jf)}"
+            )
+        if (
+            jac.get("dEmb") is not None
+            and arch.get("dEmb") is not None
+            and jac["dEmb"] != arch["dEmb"]
+        ):
             fail(f"jacobian dEmb {jac['dEmb']} != arch dEmb {arch['dEmb']}")
         check_stamp("mtnn_jacobian.json", jac.get("checkpoint"), arch)
     else:
         check_stamp("mtnn_jacobian.json", jac.get("checkpoint"), None)
-    print(f"  jacobian: {shape[0]}×{shape[1]}×{shape[2]} "
-          f"({nbytes // 1024} KB), targets={jac.get('targets')}")
+    print(
+        f"  jacobian: {shape[0]}×{shape[1]}×{shape[2]} "
+        f"({nbytes // 1024} KB), targets={jac.get('targets')}"
+    )
 
 
 def v13b_mtnn_attribution(data: dict) -> None:
@@ -511,7 +558,7 @@ def v13b_mtnn_attribution(data: dict) -> None:
     if n_t != len(attr.get("targets") or []):
         fail(f"attribution targets {n_t} != listed {attr.get('targets')}")
 
-    expected = n_rows * n_t * k * 2 + n_rows * n_t * k * 4   # uint16 + float32
+    expected = n_rows * n_t * k * 2 + n_rows * n_t * k * 4  # uint16 + float32
     nbytes = bpath.stat().st_size
     if nbytes != expected:
         fail(f"mtnn_attr_topk.bin size {nbytes} != expected {expected}")
@@ -521,8 +568,9 @@ def v13b_mtnn_attribution(data: dict) -> None:
         idx = np.frombuffer(raw, dtype=np.uint16, count=count)
         val = np.frombuffer(raw, dtype=np.float32, count=count, offset=count * 2)
         if feats and int(idx.max()) >= len(feats):
-            fail(f"attribution index {idx.max()} out of range for "
-                 f"{len(feats)} features")
+            fail(
+                f"attribution index {idx.max()} out of range for {len(feats)} features"
+            )
         if not np.isfinite(val).all():
             fail("attribution values contain NaN/Inf")
 
@@ -531,15 +579,21 @@ def v13b_mtnn_attribution(data: dict) -> None:
     # If a zero-coverage feature ever shows a contribution, the mask broke.
     cov = attr.get("coverage") or {}
     pop_abs = attr.get("populationAbs") or {}
-    leaked = [f for f in feats
-              if cov.get(f) == 0.0
-              and any(abs(pop_abs.get(t, {}).get(f, 0.0)) > 0.0 for t in pop_abs)]
+    leaked = [
+        f
+        for f in feats
+        if cov.get(f) == 0.0
+        and any(abs(pop_abs.get(t, {}).get(f, 0.0)) > 0.0 for t in pop_abs)
+    ]
     if leaked:
         fail(f"never-measured features carry attribution (mask leak): {leaked[:5]}")
 
     # Fail closed on a retrain.
-    arch = (json.loads(arch_path.read_text(encoding="utf-8"))
-            if arch_path.exists() else None)
+    arch = (
+        json.loads(arch_path.read_text(encoding="utf-8"))
+        if arch_path.exists()
+        else None
+    )
     check_stamp("mtnn_attr_pop.json", attr.get("checkpoint"), arch)
 
     manifest = HERE / "data" / "feature_manifest.json"
@@ -549,13 +603,17 @@ def v13b_mtnn_attribution(data: dict) -> None:
         # was built for this checkpoint (a family-count change legitimately
         # re-shapes it; the checkpoint stamp above is the authority).
         if mf and len(mf) != len(feats):
-            print(f"  note: feature_manifest has {len(mf)} features, attribution "
-                  f"has {len(feats)} — matrix differs from checkpoint's")
+            print(
+                f"  note: feature_manifest has {len(mf)} features, attribution "
+                f"has {len(feats)} — matrix differs from checkpoint's"
+            )
 
     n_zero = sum(1 for f in feats if cov.get(f) == 0.0)
-    print(f"  attribution: {n_rows}×{n_t}×{k} top-k ({nbytes // 1024} KB), "
-          f"{len(feats)} features, {n_zero} never measured, "
-          f"targets={attr.get('targets')}")
+    print(
+        f"  attribution: {n_rows}×{n_t}×{k} top-k ({nbytes // 1024} KB), "
+        f"{len(feats)} features, {n_zero} never measured, "
+        f"targets={attr.get('targets')}"
+    )
 
 
 def v15_season_norms(data: dict) -> None:
@@ -610,12 +668,18 @@ def v15_season_norms(data: dict) -> None:
             checked += 1
 
     if doc.get("perMode") != "Per100Possessions":
-        fail(f"season_norms perMode={doc.get('perMode')!r} — the UI says per 100 possessions")
+        fail(
+            f"season_norms perMode={doc.get('perMode')!r} — the UI says per 100 possessions"
+        )
     if worst:
-        print(f"  note: {worst} pairs whose clipped mean drifts >0.35sd "
-              f"(max {worst_err:.2f}sd) — expected for clipped heavy tails")
-    print(f"  {checked} (season, feature) pairs invert cleanly; "
-          f"{len(shrunk)} shrunk features correctly withheld")
+        print(
+            f"  note: {worst} pairs whose clipped mean drifts >0.35sd "
+            f"(max {worst_err:.2f}sd) — expected for clipped heavy tails"
+        )
+    print(
+        f"  {checked} (season, feature) pairs invert cleanly; "
+        f"{len(shrunk)} shrunk features correctly withheld"
+    )
 
 
 def v16_draft_board(data: dict) -> None:
@@ -633,7 +697,9 @@ def v16_draft_board(data: dict) -> None:
          ran to pick 170, so a genuine #61 would be indistinguishable from a
          player nobody picked.
     """
-    print("\n[V16] draft board contract (steals include undrafted; busts include short careers)")
+    print(
+        "\n[V16] draft board contract (steals include undrafted; busts include short careers)"
+    )
     path = ASSETS / "pedigree.json"
     if not path.exists():
         print("  pedigree.json absent — board is dormant, nothing to check")
@@ -641,25 +707,42 @@ def v16_draft_board(data: dict) -> None:
     players = json.loads(path.read_text(encoding="utf-8"))["players"]
     charted = {p["name"] for p in data["players"]}
 
-    no_expect = [n for n, p in players.items()
-                 if n in charted and p.get("undrafted") and p.get("expect_slot") is None]
+    no_expect = [
+        n
+        for n, p in players.items()
+        if n in charted and p.get("undrafted") and p.get("expect_slot") is None
+    ]
     if no_expect:
-        fail(f"{len(no_expect)} undrafted players lack expect_slot (e.g. {no_expect[0]})")
+        fail(
+            f"{len(no_expect)} undrafted players lack expect_slot (e.g. {no_expect[0]})"
+        )
 
-    leaked_pick = [n for n, p in players.items()
-                   if n in charted and p.get("undrafted") and p.get("overall") is not None]
+    leaked_pick = [
+        n
+        for n, p in players.items()
+        if n in charted and p.get("undrafted") and p.get("overall") is not None
+    ]
     if leaked_pick:
-        fail(f"{len(leaked_pick)} undrafted players carry a pick number (e.g. {leaked_pick[0]})")
+        fail(
+            f"{len(leaked_pick)} undrafted players carry a pick number (e.g. {leaked_pick[0]})"
+        )
 
-    at_61 = [n for n, p in players.items()
-             if n in charted and not p.get("undrafted") and p.get("overall") == 61]
+    at_61 = [
+        n
+        for n, p in players.items()
+        if n in charted and not p.get("undrafted") and p.get("overall") == 61
+    ]
     if at_61:
         fail(f"pick #61 collides with the bio undrafted sentinel: {at_61}")
 
-    undrafted = sum(1 for n, p in players.items() if n in charted and p.get("undrafted"))
+    undrafted = sum(
+        1 for n, p in players.items() if n in charted and p.get("undrafted")
+    )
     max_pick = max((p.get("overall") or 0) for n, p in players.items() if n in charted)
-    print(f"  {undrafted} charted undrafted players eligible as steals; "
-          f"max real pick {max_pick}; sentinel 61 unoccupied")
+    print(
+        f"  {undrafted} charted undrafted players eligible as steals; "
+        f"max real pick {max_pick}; sentinel 61 unoccupied"
+    )
 
 
 def v14_stated_limitations(data: dict) -> None:
@@ -692,8 +775,10 @@ def v14_stated_limitations(data: dict) -> None:
         # (3a) No silent imputation: nothing observed where the mask says missing.
         leaked = float(np.abs(Z * (1.0 - M)).sum())
         if leaked > 1e-4:
-            fail(f"imputation under mask: |Z*(1-M)| = {leaked:.6f} (must be 0) — "
-                 "methods.html claims masked, not imputed")
+            fail(
+                f"imputation under mask: |Z*(1-M)| = {leaked:.6f} (must be 0) — "
+                "methods.html claims masked, not imputed"
+            )
         else:
             print("  no values under mask=0 (masked, not imputed)")
 
@@ -703,8 +788,10 @@ def v14_stated_limitations(data: dict) -> None:
             yr = np.array([int(str(s)[:4]) for s in seasons])
             pre = M[:, tcols][yr < 2013]
             if pre.size and pre.sum() > 0:
-                fail(f"tracking observed in {int((pre.sum(1) > 0).sum())} pre-2013-14 "
-                     "rows — methods.html claims 2013-14 onward only")
+                fail(
+                    f"tracking observed in {int((pre.sum(1) > 0).sum())} pre-2013-14 "
+                    "rows — methods.html claims 2013-14 onward only"
+                )
             else:
                 post = M[:, tcols][yr >= 2013]
                 cov = float((post.sum(1) > 0).mean()) if post.size else 0.0
@@ -715,8 +802,10 @@ def v14_stated_limitations(data: dict) -> None:
     unknown = sum(1 for p in players if int(p.get("p", -1)) < 0)
     cov = 1.0 - unknown / max(1, len(players))
     if unknown == 0:
-        fail("no position marked unknown — methods.html states 99.7% coverage; "
-             "unknowns must survive as -1, not be coerced to a position")
+        fail(
+            "no position marked unknown — methods.html states 99.7% coverage; "
+            "unknowns must survive as -1, not be coerced to a position"
+        )
     if cov < 0.99:
         fail(f"position coverage {cov:.2%} below the stated ~99.7%")
     print(f"  position coverage {cov:.2%} ({unknown} rows unknown, preserved as -1)")

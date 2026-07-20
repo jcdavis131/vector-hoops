@@ -59,8 +59,13 @@ POOL_SIZE = 2000
 POOL_MAX_PER_PLAYER = 6
 
 TAG_ORDER = [
-    "three_and_d", "stretch_big", "traditional_big", "spacing_role",
-    "two_way_perimeter", "primary_creator", "volume_scorer",
+    "three_and_d",
+    "stretch_big",
+    "traditional_big",
+    "spacing_role",
+    "two_way_perimeter",
+    "primary_creator",
+    "volume_scorer",
 ]
 
 
@@ -88,14 +93,16 @@ def main() -> None:
     heads = np.fromfile(HEADS, dtype=np.float32)
     if heads.size != n * HEAD_STRIDE:
         raise SystemExit(
-            f"mtnn_heads.f32 has {heads.size} floats, expected {n}x{HEAD_STRIDE}")
+            f"mtnn_heads.f32 has {heads.size} floats, expected {n}x{HEAD_STRIDE}"
+        )
     heads = heads.reshape(n, HEAD_STRIDE)
     arch_probs = softmax(heads[:, :N_ARCH].astype(np.float64))
 
     emb = np.fromfile(EMB, dtype=np.float32)
     if emb.size != n * EMB_DIM:
         raise SystemExit(
-            f"mtnn_embeddings.f32 has {emb.size} floats, expected {n}x{EMB_DIM}")
+            f"mtnn_embeddings.f32 has {emb.size} floats, expected {n}x{EMB_DIM}"
+        )
     emb = emb.reshape(n, EMB_DIM)
 
     # Archetype fingerprint = cosine to the 8 MTNN centroids. The softmax head
@@ -129,7 +136,10 @@ def main() -> None:
     # --- rows.bin ---------------------------------------------------------
     season_off = {s: i for i, s in enumerate(seasons)}
     buf = bytearray(n * ROW_BYTES)
-    q16 = lambda v: max(0, min(65535, int(round(v * 65535))))
+
+    def q16(v):
+        return max(0, min(65535, round(v * 65535)))
+
     for i, p in enumerate(players):
         a = assigns[i]
         if a["id"] != p["id"]:
@@ -146,7 +156,9 @@ def main() -> None:
             pos = None
         pulls = np.round((cent_cos[i] + 1.0) / 2.0 * 255).astype(int).clip(0, 255)
         struct.pack_into(
-            "<HBBBBBBHHH", buf, i * ROW_BYTES,
+            "<HBBBBBBHHH",
+            buf,
+            i * ROW_BYTES,
             name_idx[p["name"]],
             season_off[p["season"]],
             255 if pos is None else int(pos),
@@ -154,7 +166,9 @@ def main() -> None:
             int(np.argmax(arch_probs[i])),
             tag_bits,
             min(255, int(p.get("gp") or 0)),
-            q16(coords[i, 0]), q16(coords[i, 1]), q16(coords[i, 2]),
+            q16(coords[i, 0]),
+            q16(coords[i, 1]),
+            q16(coords[i, 2]),
         )
         base = i * ROW_BYTES + 14
         for j, g in enumerate(grades[i]):
@@ -166,8 +180,7 @@ def main() -> None:
     q8 = np.clip(np.round(emb * 127.0), -127, 127).astype(np.int8)
     deq = q8.astype(np.float64) / 127.0
     deq_norm = deq / np.maximum(np.linalg.norm(deq, axis=1, keepdims=True), 1e-9)
-    true_norm = emb / np.maximum(
-        np.linalg.norm(emb, axis=1, keepdims=True), 1e-9)
+    true_norm = emb / np.maximum(np.linalg.norm(emb, axis=1, keepdims=True), 1e-9)
     # Cosine drift on a deterministic sample of pairs (full 13k^2 is wasteful).
     rng = np.random.default_rng(20260715)
     ii = rng.integers(0, n, 20000)
@@ -196,8 +209,7 @@ def main() -> None:
         if len(pool) >= POOL_SIZE:
             break
     max_w = max(w for _, w in pool)
-    pool_out = [[i, max(1, min(255, int(round(w / max_w * 255))))]
-                for i, w in sorted(pool)]
+    pool_out = [[i, max(1, min(255, round(w / max_w * 255)))] for i, w in sorted(pool)]
 
     # --- honors keyed by row ------------------------------------------------
     row_of = {f"{p['name']}|{p['season']}": i for i, p in enumerate(players)}
@@ -206,8 +218,12 @@ def main() -> None:
         i = row_of.get(key)
         if i is None:
             continue
-        vals = [int(h.get("asg") or 0), int(h.get("allNbaTeam") or 0),
-                int(h.get("finalsMvp") or 0), int(h.get("allNbaVotePts") or 0)]
+        vals = [
+            int(h.get("asg") or 0),
+            int(h.get("allNbaTeam") or 0),
+            int(h.get("finalsMvp") or 0),
+            int(h.get("allNbaVotePts") or 0),
+        ]
         if any(vals):
             honors_out[str(i)] = vals
 
@@ -218,7 +234,8 @@ def main() -> None:
             "+ mtnn_heads.f32 (archetype argmax) + mtnn_embeddings.f32 x "
             "mtnn_meta.json centroids (archetype pull = cosine to each of the "
             "8 MTNN centroids) + player_meta.json puzzleWeight. Every value "
-            "traces to a committed asset."),
+            "traces to a committed asset."
+        ),
         "sources": {
             "vectors": vec.get("built"),
             "skills": skills_doc.get("built"),
@@ -232,13 +249,16 @@ def main() -> None:
             "<u16 nameIdx, u8 seasonOff, u8 pos(255=unk), u8 gameCluster, "
             "u8 mtnnTop, u8 tagBits, u8 gp, u16 x, u16 y, u16 z> "
             "+ 12xu8 skill grades + 8xu8 archetype-centroid cosine "
-            "(byte/127.5 - 1)"),
+            "(byte/127.5 - 1)"
+        ),
         "seasons": seasons,
         "players": names,
         "clusters": vec["clusters"],
         "positions": vec.get("positions") or ["PG", "SG", "SF", "PF", "C"],
-        "skillDefs": [{"key": s["key"], "label": s["label"], "badge": s["badge"]}
-                      for s in skills_doc["skills"]],
+        "skillDefs": [
+            {"key": s["key"], "label": s["label"], "badge": s["badge"]}
+            for s in skills_doc["skills"]
+        ],
         "badgeGrade": skills_doc.get("badgeGrade", 90),
         "goldGrade": skills_doc.get("goldGrade", 97),
         "tagOrder": TAG_ORDER,
@@ -248,14 +268,17 @@ def main() -> None:
         "poolRule": (
             f"top {POOL_SIZE} rows by player_meta puzzleWeight with gp >= "
             f"{POOL_MIN_GP}, max {POOL_MAX_PER_PLAYER} seasons per player; "
-            "daily pick = weight-proportional draw seeded by UTC day number"),
+            "daily pick = weight-proportional draw seeded by UTC day number"
+        ),
         "honors": honors_out,
         "embed": {
             "file": "emb_q8.bin",
             "dim": EMB_DIM,
             "scale": 127,
-            "note": ("int8 quantization of the L2-normalized 48-d MTNN v5 "
-                     "embedding; similarity = cosine after dequant+renorm"),
+            "note": (
+                "int8 quantization of the L2-normalized 48-d MTNN v5 "
+                "embedding; similarity = cosine after dequant+renorm"
+            ),
             "maxCosDrift": round(max_drift, 6),
             "meanCosDrift": round(mean_drift, 6),
         },
@@ -263,15 +286,22 @@ def main() -> None:
 
     ARENA.mkdir(parents=True, exist_ok=True)
     (ARENA / "core.json").write_text(
-        json.dumps(core, separators=(",", ":")), encoding="utf-8")
+        json.dumps(core, separators=(",", ":")), encoding="utf-8"
+    )
     (ARENA / "rows.bin").write_bytes(bytes(buf))
     (ARENA / "emb_q8.bin").write_bytes(q8.tobytes(order="C"))
 
-    kb = lambda p: (ARENA / p).stat().st_size / 1024
-    print(f"arena bundle: core.json {kb('core.json'):.0f} KB, "
-          f"rows.bin {kb('rows.bin'):.0f} KB, emb_q8.bin {kb('emb_q8.bin'):.0f} KB")
-    print(f"pool {len(pool_out)} rows across {len(per_player)} players; "
-          f"cos drift max {max_drift:.5f} mean {mean_drift:.5f}")
+    def kb(p):
+        return (ARENA / p).stat().st_size / 1024
+
+    print(
+        f"arena bundle: core.json {kb('core.json'):.0f} KB, "
+        f"rows.bin {kb('rows.bin'):.0f} KB, emb_q8.bin {kb('emb_q8.bin'):.0f} KB"
+    )
+    print(
+        f"pool {len(pool_out)} rows across {len(per_player)} players; "
+        f"cos drift max {max_drift:.5f} mean {mean_drift:.5f}"
+    )
 
 
 if __name__ == "__main__":

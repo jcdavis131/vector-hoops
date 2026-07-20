@@ -3,7 +3,7 @@
    #2: drift v7: seasonCloud peers, grey past trail, future faint, ghost full, career stage, richer meta
    v15: pause on type, v16: cache embed */
 
-const CACHE_NAME = 'vector-hoops-v18-20260720-quad';
+const CACHE_NAME = 'vector-hoops-v20-20260720-teamquad';
 const CORE = [
   '/',
   '/play',
@@ -36,6 +36,8 @@ const CORE = [
   '/assets/pedigree.json',
   '/assets/skills.json',
   '/assets/skills_wide.json',
+  '/assets/player_team_season.json',
+  '/assets/vectors.json',
   '/assets/lemmino/star-map-void.js',
   '/assets/lemmino/drift-void.js',
   '/assets/workers/modern-search.worker.js'

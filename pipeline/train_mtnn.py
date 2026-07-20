@@ -38,17 +38,17 @@ Requires: torch, numpy; pipeline/data/train_matrix.npz from build_vectors.py
 from __future__ import annotations
 
 import argparse
+import itertools
 import json
 import time
 from collections import defaultdict
 from pathlib import Path
 
+import composite_score as cqs
 import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-
-import composite_score as cqs
 from mtnn_validation import build_validation_report, role_labels_from_context
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -60,11 +60,16 @@ N_ARCHETYPES = 8
 
 # v4 auxiliary targets (must exist in feature_manifest.json when active)
 FORM_FEATURES = [
-    "FORM_VOL", "FORM_CEIL", "FORM_DD_RATE", "FORM_TD_RATE", "FORM_GP", "FORM_MIN_AVG",
+    "FORM_VOL",
+    "FORM_CEIL",
+    "FORM_DD_RATE",
+    "FORM_TD_RATE",
+    "FORM_GP",
+    "FORM_MIN_AVG",
 ]
 TEAM_FIT_FEATURE = "TM_NET_RTG"
 ROSTER_LIFT_FEATURE = "ROSTER_COMPLEMENT"  # proxy until ROSTER_TOP2_VORP lands
-CAREER_SLOPE_FEATURE = "CAREER_SLOPE_3Y"   # real 3y mean |Δ|; falls back below
+CAREER_SLOPE_FEATURE = "CAREER_SLOPE_3Y"  # real 3y mean |Δ|; falls back below
 COMPETITION_FEATURE = "SOS_NET_RTG"
 BBREF_FEATURES = ["WS48", "BPM"]
 HONORS_PRIMARY = "HON_ALL_NBA_VOTE_LAG"
@@ -93,9 +98,12 @@ DEFAULT_LOSS_WEIGHTS: dict[str, float] = {
 # Data
 # ---------------------------------------------------------------------------
 
+
 def load_bundle():
     npz = np.load(DATA_DIR / "train_matrix.npz", allow_pickle=False)
-    manifest = json.loads((DATA_DIR / "feature_manifest.json").read_text(encoding="utf-8"))
+    manifest = json.loads(
+        (DATA_DIR / "feature_manifest.json").read_text(encoding="utf-8")
+    )
     Z = npz["Z"].astype(np.float32)
     mask = npz["mask"].astype(np.float32)
     names = npz["name"]
@@ -114,7 +122,7 @@ def load_positions(names, seasons) -> np.ndarray:
         return pos
     vec = json.loads(VECTORS.read_text(encoding="utf-8"))
     lookup = {(p["name"], p["season"]): int(p.get("p", -1)) for p in vec["players"]}
-    for i, (n, s) in enumerate(zip(names, seasons)):
+    for i, (n, s) in enumerate(zip(names, seasons, strict=False)):
         pidx = lookup.get((str(n), str(s)), -1)
         if 0 <= pidx < len(POSITIONS):
             pos[i] = pidx
@@ -146,12 +154,12 @@ def adjacent_season_pairs(pids, seasons, names=None) -> list[tuple[int, int]]:
         return int(s[:4])
 
     by_key: dict[int, list[tuple[int, int]]] = defaultdict(list)
-    for i, (pid, s) in enumerate(zip(pids, seasons)):
+    for i, (pid, s) in enumerate(zip(pids, seasons, strict=False)):
         by_key[int(pid)].append((season_start(str(s)), i))
     pairs = []
     for rows in by_key.values():
         rows.sort()
-        for (y1, i1), (y2, i2) in zip(rows, rows[1:]):
+        for (y1, i1), (y2, i2) in itertools.pairwise(rows):
             if y2 - y1 == 1:
                 pairs.append((i1, i2))
     return pairs
@@ -176,11 +184,11 @@ def _join_skill_npz(path, names, seasons) -> tuple[np.ndarray, np.ndarray, list[
     keys = [str(k) for k in npz["keys"]]
     lookup = {
         (str(n), str(s)): g
-        for n, s, g in zip(npz["name"], npz["season"], npz["grades"])
+        for n, s, g in zip(npz["name"], npz["season"], npz["grades"], strict=False)
     }
     G = np.zeros((len(names), len(keys)), dtype=np.float32)
     M = np.zeros((len(names), len(keys)), dtype=np.float32)
-    for i, (n, s) in enumerate(zip(names, seasons)):
+    for i, (n, s) in enumerate(zip(names, seasons, strict=False)):
         g = lookup.get((str(n), str(s)))
         if g is not None:
             G[i] = g
@@ -197,8 +205,12 @@ def load_skill_labels(names, seasons) -> tuple[np.ndarray, np.ndarray, list[str]
     """
     core = DATA_DIR / "skill_labels.npz"
     if not core.exists():
-        return (np.zeros((len(names), 0), np.float32),
-                np.zeros((len(names), 0), np.float32), [], 0)
+        return (
+            np.zeros((len(names), 0), np.float32),
+            np.zeros((len(names), 0), np.float32),
+            [],
+            0,
+        )
     G, M, keys = _join_skill_npz(core, names, seasons)
     n_core = len(keys)
     wide = DATA_DIR / "wide_skill_labels.npz"
@@ -207,14 +219,14 @@ def load_skill_labels(names, seasons) -> tuple[np.ndarray, np.ndarray, list[str]
         G = np.concatenate([G, Gw], axis=1)
         M = np.concatenate([M, Mw], axis=1)
         keys = keys + kw
-        print(f"  wide skills joined: {kw} "
-              f"({int(Mw.any(axis=1).sum())} covered rows)")
+        print(f"  wide skills joined: {kw} ({int(Mw.any(axis=1).sum())} covered rows)")
     return G, M, keys, n_core
 
 
 # ---------------------------------------------------------------------------
 # Model
 # ---------------------------------------------------------------------------
+
 
 class _ResBlock(nn.Module):
     """Same-width residual MLP block (d -> hidden -> d) for stacking depth."""
@@ -231,8 +243,9 @@ class _ResBlock(nn.Module):
 
 
 class ResidualTower(nn.Module):
-    def __init__(self, d_in: int, d_out: int = 24, d_hidden: int = 96,
-                 n_blocks: int = 1):
+    def __init__(
+        self, d_in: int, d_out: int = 24, d_hidden: int = 96, n_blocks: int = 1
+    ):
         super().__init__()
         d_cat = d_in * 2
         self.fc1 = nn.Linear(d_cat, d_hidden)
@@ -242,7 +255,8 @@ class ResidualTower(nn.Module):
         self.skip = nn.Linear(d_cat, d_out) if d_cat != d_out else nn.Identity()
         # v5: optional extra same-width residual blocks for tower depth.
         self.blocks = nn.ModuleList(
-            [_ResBlock(d_out, d_hidden) for _ in range(max(0, n_blocks - 1))])
+            [_ResBlock(d_out, d_hidden) for _ in range(max(0, n_blocks - 1))]
+        )
 
     def forward(self, x: torch.Tensor, m: torch.Tensor) -> torch.Tensor:
         h = torch.cat([x * m, m], dim=-1)
@@ -255,21 +269,34 @@ class ResidualTower(nn.Module):
 class GatedFusion(nn.Module):
     """Attention-weighted tower mix + season context."""
 
-    def __init__(self, n_towers: int, d_tower: int, n_seasons: int,
-                 d_season: int = 12, d_emb: int = 48, d_hidden: int = 192):
+    def __init__(
+        self,
+        n_towers: int,
+        d_tower: int,
+        n_seasons: int,
+        d_season: int = 12,
+        d_emb: int = 48,
+        d_hidden: int = 192,
+    ):
         super().__init__()
         self.season_emb = nn.Embedding(n_seasons, d_season)
         d_in = d_tower + d_season
         self.gate = nn.Linear(d_tower, 1)
         self.attn = nn.Sequential(
-            nn.Linear(d_tower, d_tower), nn.Tanh(), nn.Linear(d_tower, 1),
+            nn.Linear(d_tower, d_tower),
+            nn.Tanh(),
+            nn.Linear(d_tower, 1),
         )
         self.fuse = nn.Sequential(
-            nn.Linear(d_in, d_hidden), nn.GELU(), nn.LayerNorm(d_hidden),
+            nn.Linear(d_in, d_hidden),
+            nn.GELU(),
+            nn.LayerNorm(d_hidden),
             nn.Linear(d_hidden, d_emb),
         )
 
-    def forward(self, tower_stack: torch.Tensor, season_ids: torch.Tensor) -> torch.Tensor:
+    def forward(
+        self, tower_stack: torch.Tensor, season_ids: torch.Tensor
+    ) -> torch.Tensor:
         # tower_stack: [B, T, D]
         scores = self.attn(tower_stack).squeeze(-1)
         weights = torch.softmax(scores, dim=-1)
@@ -288,17 +315,28 @@ class ConcatFusion(nn.Module):
     swept.
     """
 
-    def __init__(self, n_towers: int, d_tower: int, n_seasons: int,
-                 d_season: int = 12, d_emb: int = 48, d_hidden: int = 256):
+    def __init__(
+        self,
+        n_towers: int,
+        d_tower: int,
+        n_seasons: int,
+        d_season: int = 12,
+        d_emb: int = 48,
+        d_hidden: int = 256,
+    ):
         super().__init__()
         self.season_emb = nn.Embedding(n_seasons, d_season)
         d_in = n_towers * d_tower + d_season
         self.fuse = nn.Sequential(
-            nn.Linear(d_in, d_hidden), nn.GELU(), nn.LayerNorm(d_hidden),
+            nn.Linear(d_in, d_hidden),
+            nn.GELU(),
+            nn.LayerNorm(d_hidden),
             nn.Linear(d_hidden, d_emb),
         )
 
-    def forward(self, tower_stack: torch.Tensor, season_ids: torch.Tensor) -> torch.Tensor:
+    def forward(
+        self, tower_stack: torch.Tensor, season_ids: torch.Tensor
+    ) -> torch.Tensor:
         flat = tower_stack.reshape(tower_stack.size(0), -1)
         s = self.season_emb(season_ids)
         return F.normalize(self.fuse(torch.cat([flat, s], dim=-1)), dim=-1)
@@ -313,26 +351,45 @@ class TransformerFusion(nn.Module):
     [CLS] state becomes the embedding.
     """
 
-    def __init__(self, n_towers: int, d_tower: int, n_seasons: int,
-                 d_season: int = 12, d_emb: int = 48, d_model: int = 96,
-                 n_layers: int = 4, n_heads: int = 4, ff: int = 256,
-                 dropout: float = 0.1):
+    def __init__(
+        self,
+        n_towers: int,
+        d_tower: int,
+        n_seasons: int,
+        d_season: int = 12,
+        d_emb: int = 48,
+        d_model: int = 96,
+        n_layers: int = 4,
+        n_heads: int = 4,
+        ff: int = 256,
+        dropout: float = 0.1,
+    ):
         super().__init__()
         self.tower_proj = nn.Linear(d_tower, d_model)
         self.season_emb = nn.Embedding(n_seasons, d_season)
         self.season_proj = nn.Linear(d_season, d_model)
         self.cls = nn.Parameter(torch.randn(1, 1, d_model) * 0.02)
         layer = nn.TransformerEncoderLayer(
-            d_model=d_model, nhead=n_heads, dim_feedforward=ff,
-            dropout=dropout, activation="gelu", batch_first=True, norm_first=True)
+            d_model=d_model,
+            nhead=n_heads,
+            dim_feedforward=ff,
+            dropout=dropout,
+            activation="gelu",
+            batch_first=True,
+            norm_first=True,
+        )
         self.encoder = nn.TransformerEncoder(layer, num_layers=n_layers)
         self.out = nn.Linear(d_model, d_emb)
 
-    def forward(self, tower_stack: torch.Tensor, season_ids: torch.Tensor) -> torch.Tensor:
+    def forward(
+        self, tower_stack: torch.Tensor, season_ids: torch.Tensor
+    ) -> torch.Tensor:
         b = tower_stack.size(0)
-        tok = self.tower_proj(tower_stack)                            # [B, T, d_model]
-        s = self.season_proj(self.season_emb(season_ids)).unsqueeze(1)  # [B, 1, d_model]
-        cls = self.cls.expand(b, -1, -1)                              # [B, 1, d_model]
+        tok = self.tower_proj(tower_stack)  # [B, T, d_model]
+        s = self.season_proj(self.season_emb(season_ids)).unsqueeze(
+            1
+        )  # [B, 1, d_model]
+        cls = self.cls.expand(b, -1, -1)  # [B, 1, d_model]
         x = self.encoder(torch.cat([cls, s, tok], dim=1))
         return F.normalize(self.out(x[:, 0]), dim=-1)
 
@@ -347,11 +404,14 @@ class SkillTowers(nn.Module):
 
     def __init__(self, d_emb: int, n_skills: int, d_hidden: int = 16):
         super().__init__()
-        self.towers = nn.ModuleList([
-            nn.Sequential(nn.Linear(d_emb, d_hidden), nn.GELU(),
-                          nn.Linear(d_hidden, 1))
-            for _ in range(n_skills)
-        ])
+        self.towers = nn.ModuleList(
+            [
+                nn.Sequential(
+                    nn.Linear(d_emb, d_hidden), nn.GELU(), nn.Linear(d_hidden, 1)
+                )
+                for _ in range(n_skills)
+            ]
+        )
 
     def forward(self, emb: torch.Tensor) -> torch.Tensor:
         return torch.cat([t(emb) for t in self.towers], dim=-1)
@@ -382,35 +442,53 @@ class MTNN(nn.Module):
         super().__init__()
         self.families = sorted(fam_dims)
         self.fusion_mode = fusion_mode
-        self.towers = nn.ModuleDict({
-            fam: ResidualTower(
-                fam_dims[fam],
-                d_out=d_tower,
-                d_hidden=d_tower_hidden,
-                n_blocks=n_tower_blocks,
-            )
-            for fam in self.families
-        })
+        self.towers = nn.ModuleDict(
+            {
+                fam: ResidualTower(
+                    fam_dims[fam],
+                    d_out=d_tower,
+                    d_hidden=d_tower_hidden,
+                    n_blocks=n_tower_blocks,
+                )
+                for fam in self.families
+            }
+        )
         # d_fusion_hidden=None keeps each fusion's historical default exactly.
         if fusion_mode == "concat":
             self.fusion = ConcatFusion(
-                len(self.families), d_tower, n_seasons, d_emb=d_emb,
-                **({} if d_fusion_hidden is None else {"d_hidden": d_fusion_hidden}))
+                len(self.families),
+                d_tower,
+                n_seasons,
+                d_emb=d_emb,
+                **({} if d_fusion_hidden is None else {"d_hidden": d_fusion_hidden}),
+            )
         elif fusion_mode == "transformer":
             self.fusion = TransformerFusion(
-                len(self.families), d_tower, n_seasons, d_emb=d_emb,
-                d_model=d_model, n_layers=n_fusion_layers, n_heads=n_attn_heads,
-                **({} if d_fusion_hidden is None else {"ff": d_fusion_hidden}))
+                len(self.families),
+                d_tower,
+                n_seasons,
+                d_emb=d_emb,
+                d_model=d_model,
+                n_layers=n_fusion_layers,
+                n_heads=n_attn_heads,
+                **({} if d_fusion_hidden is None else {"ff": d_fusion_hidden}),
+            )
         else:
             self.fusion = GatedFusion(
-                len(self.families), d_tower, n_seasons, d_emb=d_emb,
-                **({} if d_fusion_hidden is None else {"d_hidden": d_fusion_hidden}))
+                len(self.families),
+                d_tower,
+                n_seasons,
+                d_emb=d_emb,
+                **({} if d_fusion_hidden is None else {"d_hidden": d_fusion_hidden}),
+            )
 
         def head(k: int) -> nn.Module:
             if mlp_heads:
                 return nn.Sequential(
-                    nn.Linear(d_emb, d_head_hidden), nn.GELU(),
-                    nn.Linear(d_head_hidden, k))
+                    nn.Linear(d_emb, d_head_hidden),
+                    nn.GELU(),
+                    nn.Linear(d_head_hidden, k),
+                )
             return nn.Linear(d_emb, k)
 
         self.archetype_head = head(N_ARCHETYPES)
@@ -428,13 +506,13 @@ class MTNN(nn.Module):
         self.playoff_head = nn.Linear(d_emb, 1)
         self.honors_head = nn.Linear(d_emb, 1)
         self.skill_towers = (
-            SkillTowers(d_emb, n_skills, d_hidden=d_skill_hidden)
-            if n_skills else None
+            SkillTowers(d_emb, n_skills, d_hidden=d_skill_hidden) if n_skills else None
         )
 
     def encode(self, xs, ms, season_ids):
         parts = torch.stack(
-            [self.towers[fam](xs[fam], ms[fam]) for fam in self.families], dim=1)
+            [self.towers[fam](xs[fam], ms[fam]) for fam in self.families], dim=1
+        )
         return self.fusion(parts, season_ids)
 
     def forward(self, xs, ms, season_ids):
@@ -465,6 +543,7 @@ class MTNN(nn.Module):
 # ---------------------------------------------------------------------------
 # Training helpers
 # ---------------------------------------------------------------------------
+
 
 def split_by_family(Z, M, fams, device):
     xs, ms = {}, {}
@@ -533,11 +612,11 @@ def info_nce(
         b = logits.shape[0]
         idx = torch.arange(b, device=logits.device)
         hard = (pos_a.unsqueeze(1) == pos_b.unsqueeze(0)) & (
-            idx.unsqueeze(0) != idx.unsqueeze(1))
+            idx.unsqueeze(0) != idx.unsqueeze(1)
+        )
         logits = logits + hard.float() * hard_neg_boost
     target = torch.arange(len(za), device=za.device)
-    return 0.5 * (F.cross_entropy(logits, target) +
-                  F.cross_entropy(logits.T, target))
+    return 0.5 * (F.cross_entropy(logits, target) + F.cross_entropy(logits.T, target))
 
 
 def supcon_archetype(
@@ -578,19 +657,31 @@ def contrastive_loss(
     """InfoNCE (player continuity), supcon-arch, or weighted hybrid."""
     if mode == "infonce":
         return info_nce(
-            za, zb, temp=temp,
-            pos_a=pos_a, pos_b=pos_b,
+            za,
+            zb,
+            temp=temp,
+            pos_a=pos_a,
+            pos_b=pos_b,
             hard_neg_boost=hard_neg_boost,
         )
     if mode == "supcon-arch":
         if arch_labels is None:
-            return info_nce(za, zb, temp=temp, pos_a=pos_a, pos_b=pos_b,
-                            hard_neg_boost=hard_neg_boost)
+            return info_nce(
+                za,
+                zb,
+                temp=temp,
+                pos_a=pos_a,
+                pos_b=pos_b,
+                hard_neg_boost=hard_neg_boost,
+            )
         return supcon_archetype(za, zb, labels=arch_labels, temp=temp)
     if mode == "hybrid":
         l_player = info_nce(
-            za, zb, temp=temp,
-            pos_a=pos_a, pos_b=pos_b,
+            za,
+            zb,
+            temp=temp,
+            pos_a=pos_a,
+            pos_b=pos_b,
             hard_neg_boost=hard_neg_boost,
         )
         if arch_labels is None or arch_weight <= 0:
@@ -618,14 +709,20 @@ def model_tag(args) -> str:
     describing itself as v4 in mtnn_report.json and, downstream, in the public
     manifest.json. A label is a claim; derive it from the knobs.
     """
-    v5 = (getattr(args, "tower_blocks", 1) > 1
-          or getattr(args, "mlp_heads", False)
-          or args.fusion == "transformer"
-          or getattr(args, "fusion_hidden", 0))
+    v5 = (
+        getattr(args, "tower_blocks", 1) > 1
+        or getattr(args, "mlp_heads", False)
+        or args.fusion == "transformer"
+        or getattr(args, "fusion_hidden", 0)
+    )
     if not v5:
         return "mtnn_v4_phase_b"
-    bits = [f"b{args.tower_blocks}", f"h{args.tower_hidden}",
-            f"t{args.tower_width}", f"d{args.dim}"]
+    bits = [
+        f"b{args.tower_blocks}",
+        f"h{args.tower_hidden}",
+        f"t{args.tower_width}",
+        f"d{args.dim}",
+    ]
     if args.mlp_heads:
         bits.append(f"mlp{args.d_head_hidden}")
     if getattr(args, "fusion_hidden", 0):
@@ -688,7 +785,8 @@ def build_lr_scheduler(
             opt,
             schedulers=[
                 torch.optim.lr_scheduler.LinearLR(
-                    opt, start_factor=0.01, total_iters=warmup_steps),
+                    opt, start_factor=0.01, total_iters=warmup_steps
+                ),
                 torch.optim.lr_scheduler.CosineAnnealingLR(opt, T_max=main_steps),
             ],
             milestones=[warmup_steps],
@@ -708,6 +806,7 @@ def embed_all(model: MTNN, xs, ms, seas_t) -> np.ndarray:
 # Evaluation
 # ---------------------------------------------------------------------------
 
+
 def season_start_year(season: str) -> int:
     return int(str(season)[:4])
 
@@ -723,7 +822,9 @@ def eval_split(season: str) -> str:
 
 
 def filter_pairs_by_split(
-    pairs: np.ndarray, seasons: np.ndarray, split: str,
+    pairs: np.ndarray,
+    seasons: np.ndarray,
+    split: str,
 ) -> np.ndarray:
     """Keep pairs whose target row (index b) falls in split."""
     if len(pairs) == 0:
@@ -756,8 +857,9 @@ def transparent_baseline_embeddings(Z: np.ndarray, game_cols: list[int]) -> np.n
     return G.astype(np.float32)
 
 
-def classification_acc(logits: np.ndarray, labels: np.ndarray,
-                       valid_mask: np.ndarray | None = None) -> float | None:
+def classification_acc(
+    logits: np.ndarray, labels: np.ndarray, valid_mask: np.ndarray | None = None
+) -> float | None:
     if valid_mask is None:
         valid_mask = np.ones(len(labels), dtype=bool)
     idx = np.where(valid_mask)[0]
@@ -767,9 +869,13 @@ def classification_acc(logits: np.ndarray, labels: np.ndarray,
     return float((pred == labels[idx]).mean())
 
 
-def cross_era_archetype_purity(E: np.ndarray, clusters: np.ndarray,
-                               seasons: np.ndarray, k: int = 20,
-                               n_sample: int = 400) -> float | None:
+def cross_era_archetype_purity(
+    E: np.ndarray,
+    clusters: np.ndarray,
+    seasons: np.ndarray,
+    k: int = 20,
+    n_sample: int = 400,
+) -> float | None:
     """Among cross-era neighbors, fraction sharing the same archetype."""
     season_year = np.array([int(str(s)[:4]) for s in seasons])
     rng = np.random.default_rng(7)
@@ -789,9 +895,13 @@ def cross_era_archetype_purity(E: np.ndarray, clusters: np.ndarray,
     return float(np.mean(purities)) if purities else None
 
 
-def skill_holdout_metrics(pred: np.ndarray, target: np.ndarray,
-                          mask: np.ndarray, seasons: np.ndarray,
-                          keys: list[str]) -> dict:
+def skill_holdout_metrics(
+    pred: np.ndarray,
+    target: np.ndarray,
+    mask: np.ndarray,
+    seasons: np.ndarray,
+    keys: list[str],
+) -> dict:
     """Per-skill R2 + MAE (grade points, 0-100) on held-out season splits.
 
     `mask` is the per-skill [n, K] coverage matrix — each skill scores only
@@ -805,14 +915,14 @@ def skill_holdout_metrics(pred: np.ndarray, target: np.ndarray,
         for j, key in enumerate(keys):
             rows = np.where((mask[:, j] > 0) & in_split)[0]
             if len(rows) < 5:
-                per[key] = {"r2": None, "mae_pts": None, "rows": int(len(rows))}
+                per[key] = {"r2": None, "mae_pts": None, "rows": len(rows)}
                 continue
             resid = target[rows, j] - pred[rows, j]
             ss_tot = float(((target[rows, j] - target[rows, j].mean()) ** 2).sum())
             per[key] = {
-                "r2": round(1.0 - float((resid ** 2).sum()) / max(ss_tot, 1e-9), 4),
+                "r2": round(1.0 - float((resid**2).sum()) / max(ss_tot, 1e-9), 4),
                 "mae_pts": round(float(np.abs(resid).mean()) * 100.0, 2),
-                "rows": int(len(rows)),
+                "rows": len(rows),
             }
         scored = [v["r2"] for v in per.values() if v["r2"] is not None]
         out[split] = {
@@ -822,9 +932,13 @@ def skill_holdout_metrics(pred: np.ndarray, target: np.ndarray,
     return out
 
 
-def skill_neighbor_consistency(E: np.ndarray, grades: np.ndarray,
-                               valid: np.ndarray, k: int = 10,
-                               n_sample: int = 400) -> float | None:
+def skill_neighbor_consistency(
+    E: np.ndarray,
+    grades: np.ndarray,
+    valid: np.ndarray,
+    k: int = 10,
+    n_sample: int = 400,
+) -> float | None:
     """Mean |grade(self) − mean grade(top-k NN)| across skills, in grade
     points — lower means neighbors in this space share craft."""
     rows = np.where(valid > 0)[0]
@@ -855,7 +969,9 @@ def next_profile_holdout_metrics(
     target_split = np.full(len(next_idx), "", dtype=object)
     valid = next_idx >= 0
     if valid.any():
-        target_split[valid] = np.array([eval_split(str(s)) for s in seasons[next_idx[valid]]])
+        target_split[valid] = np.array(
+            [eval_split(str(s)) for s in seasons[next_idx[valid]]]
+        )
     for split in ("val", "test"):
         rows = np.where(valid & (target_split == split))[0]
         if len(rows) == 0:
@@ -864,15 +980,15 @@ def next_profile_holdout_metrics(
         y = target[next_idx[rows]]
         p = pred[rows]
         resid = y - p
-        mse = float((resid ** 2).mean())
+        mse = float((resid**2).mean())
         rmse = float(np.sqrt(mse))
         mae = float(np.abs(resid).mean())
         ss_tot = float(((y - y.mean(axis=0, keepdims=True)) ** 2).sum())
-        r2 = 1.0 - float((resid ** 2).sum()) / max(ss_tot, 1e-9)
+        r2 = 1.0 - float((resid**2).sum()) / max(ss_tot, 1e-9)
         per_mae = np.abs(resid).mean(axis=0)
         top = np.argsort(-per_mae)[:5]
         out[split] = {
-            "rows": int(len(rows)),
+            "rows": len(rows),
             "mae_z": round(mae, 4),
             "rmse_z": round(rmse, 4),
             "r2": round(r2, 4),
@@ -888,85 +1004,172 @@ def next_profile_holdout_metrics(
 # Main
 # ---------------------------------------------------------------------------
 
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--epochs", type=int, default=40)
     ap.add_argument("--dim", type=int, default=48)
-    ap.add_argument("--tower-width", type=int, default=24,
-                    help="per-family tower output width before fusion")
-    ap.add_argument("--tower-hidden", type=int, default=96,
-                    help="per-family tower hidden width")
-    ap.add_argument("--skill-hidden", type=int, default=16,
-                    help="per-skill mini-tower hidden width")
+    ap.add_argument(
+        "--tower-width",
+        type=int,
+        default=24,
+        help="per-family tower output width before fusion",
+    )
+    ap.add_argument(
+        "--tower-hidden", type=int, default=96, help="per-family tower hidden width"
+    )
+    ap.add_argument(
+        "--skill-hidden", type=int, default=16, help="per-skill mini-tower hidden width"
+    )
     ap.add_argument("--batch", type=int, default=512)
     ap.add_argument("--lr", type=float, default=1.5e-3)
     ap.add_argument("--seed", type=int, default=7)
     ap.add_argument("--nce-temp", type=float, default=0.08)
     ap.add_argument("--drop-p", type=float, default=0.12)
-    ap.add_argument("--hard-neg-boost", type=float, default=0.3,
-                    help="same-position in-batch negative boost (0=off)")
-    ap.add_argument("--lr-schedule", choices=(
-        "legacy-epoch-cosine", "onecycle", "warmup-cosine"),
+    ap.add_argument(
+        "--hard-neg-boost",
+        type=float,
+        default=0.3,
+        help="same-position in-batch negative boost (0=off)",
+    )
+    ap.add_argument(
+        "--lr-schedule",
+        choices=("legacy-epoch-cosine", "onecycle", "warmup-cosine"),
         default="legacy-epoch-cosine",
-        help="onecycle mirrors Brain2Qwerty (arXiv:2502.17480); warmup-cosine is embed SOTA")
-    ap.add_argument("--warmup-pct", type=float, default=0.1,
-                    help="warmup fraction of optimizer steps (Brain2Qwerty uses 0.1)")
-    ap.add_argument("--anneal-strategy", choices=("cos", "linear"), default="linear",
-                    help="OneCycleLR anneal; paper uses linear decay after warmup")
+        help="onecycle mirrors Brain2Qwerty (arXiv:2502.17480); warmup-cosine is embed SOTA",
+    )
+    ap.add_argument(
+        "--warmup-pct",
+        type=float,
+        default=0.1,
+        help="warmup fraction of optimizer steps (Brain2Qwerty uses 0.1)",
+    )
+    ap.add_argument(
+        "--anneal-strategy",
+        choices=("cos", "linear"),
+        default="linear",
+        help="OneCycleLR anneal; paper uses linear decay after warmup",
+    )
     ap.add_argument("--weight-decay", type=float, default=1e-4)
-    ap.add_argument("--grad-accum", type=int, default=1,
-                    help="gradient accumulation steps (effective batch = batch * accum)")
-    ap.add_argument("--fusion", choices=("gated", "concat", "transformer"), default="gated",
-                    help="tower fusion: gated attention (default), concat MLP, or v5 transformer")
-    ap.add_argument("--tower-blocks", type=int, default=1,
-                    help="v5: residual blocks per family tower (depth)")
-    ap.add_argument("--mlp-heads", action="store_true",
-                    help="v5: 2-layer MLP decode heads instead of linear")
-    ap.add_argument("--d-head-hidden", type=int, default=64,
-                    help="v5: hidden width for MLP decode heads")
-    ap.add_argument("--d-model", type=int, default=96,
-                    help="v5: transformer fusion token width")
-    ap.add_argument("--n-fusion-layers", type=int, default=4,
-                    help="v5: transformer encoder layers")
-    ap.add_argument("--n-attn-heads", type=int, default=4,
-                    help="v5: transformer attention heads")
-    ap.add_argument("--fusion-hidden", type=int, default=0,
-                    help="fusion hidden width (0 = per-fusion default: concat 256, "
-                         "gated 192, transformer ff 256). At the default this layer "
-                         "is ~57%% of all params and was previously unswept.")
-    ap.add_argument("--nce-loss", choices=("infonce", "supcon-arch", "hybrid"),
-                    default="infonce",
-                    help="contrastive: player InfoNCE, archetype SupCon, or hybrid")
-    ap.add_argument("--nce-player-weight", type=float, default=0.75,
-                    help="hybrid: weight on adjacent-season player InfoNCE")
-    ap.add_argument("--nce-arch-weight", type=float, default=0.25,
-                    help="hybrid: weight on archetype SupCon (purity pressure)")
-    ap.add_argument("--checkpoint-metric", choices=("recall", "composite", "purity", "cqs"),
-                    default="cqs",
-                    help="save best checkpoint by val recall, purity@20, composite/cqs proxy")
-    ap.add_argument("--val-every", type=int, default=10,
-                    help="log held-out val recall every N epochs; 0=off")
-    ap.add_argument("--no-best-checkpoint", action="store_true",
-                    help="skip saving/restoring best-val checkpoint")
-    ap.add_argument("--exclude-families", type=str, default="",
-                    help="comma-separated tower families to drop (ablation)")
-    ap.add_argument("--phase", choices=("select", "final-refit", "auto"),
-                    default="select",
-                    help="select=honest held-out metrics (train-split rows only for loss); "
-                         "final-refit=fit all rows then ship; "
-                         "auto=select then full-corpus refit if promote ok")
-    ap.add_argument("--fit-rows", choices=("train", "all"), default=None,
-                    help="override which rows enter the loss (default: train for "
-                         "select/auto-selection, all for final-refit)")
-    ap.add_argument("--era-align", choices=("none", "procrustes"), default="none",
-                    help="v6: rotate the 14 game-feature dims into the 1996-97 root "
-                         "frame via assets/drift.json chainedToRoot before training")
-    ap.add_argument("--robust-scaling", action="store_true",
-                    help="v6: replace the season z-scores with per-season median/IQR "
-                         "scaling (RealMLP-style, clip [-3,3]) before training")
+    ap.add_argument(
+        "--grad-accum",
+        type=int,
+        default=1,
+        help="gradient accumulation steps (effective batch = batch * accum)",
+    )
+    ap.add_argument(
+        "--fusion",
+        choices=("gated", "concat", "transformer"),
+        default="gated",
+        help="tower fusion: gated attention (default), concat MLP, or v5 transformer",
+    )
+    ap.add_argument(
+        "--tower-blocks",
+        type=int,
+        default=1,
+        help="v5: residual blocks per family tower (depth)",
+    )
+    ap.add_argument(
+        "--mlp-heads",
+        action="store_true",
+        help="v5: 2-layer MLP decode heads instead of linear",
+    )
+    ap.add_argument(
+        "--d-head-hidden",
+        type=int,
+        default=64,
+        help="v5: hidden width for MLP decode heads",
+    )
+    ap.add_argument(
+        "--d-model", type=int, default=96, help="v5: transformer fusion token width"
+    )
+    ap.add_argument(
+        "--n-fusion-layers", type=int, default=4, help="v5: transformer encoder layers"
+    )
+    ap.add_argument(
+        "--n-attn-heads", type=int, default=4, help="v5: transformer attention heads"
+    )
+    ap.add_argument(
+        "--fusion-hidden",
+        type=int,
+        default=0,
+        help="fusion hidden width (0 = per-fusion default: concat 256, "
+        "gated 192, transformer ff 256). At the default this layer "
+        "is ~57%% of all params and was previously unswept.",
+    )
+    ap.add_argument(
+        "--nce-loss",
+        choices=("infonce", "supcon-arch", "hybrid"),
+        default="infonce",
+        help="contrastive: player InfoNCE, archetype SupCon, or hybrid",
+    )
+    ap.add_argument(
+        "--nce-player-weight",
+        type=float,
+        default=0.75,
+        help="hybrid: weight on adjacent-season player InfoNCE",
+    )
+    ap.add_argument(
+        "--nce-arch-weight",
+        type=float,
+        default=0.25,
+        help="hybrid: weight on archetype SupCon (purity pressure)",
+    )
+    ap.add_argument(
+        "--checkpoint-metric",
+        choices=("recall", "composite", "purity", "cqs"),
+        default="cqs",
+        help="save best checkpoint by val recall, purity@20, composite/cqs proxy",
+    )
+    ap.add_argument(
+        "--val-every",
+        type=int,
+        default=10,
+        help="log held-out val recall every N epochs; 0=off",
+    )
+    ap.add_argument(
+        "--no-best-checkpoint",
+        action="store_true",
+        help="skip saving/restoring best-val checkpoint",
+    )
+    ap.add_argument(
+        "--exclude-families",
+        type=str,
+        default="",
+        help="comma-separated tower families to drop (ablation)",
+    )
+    ap.add_argument(
+        "--phase",
+        choices=("select", "final-refit", "auto"),
+        default="select",
+        help="select=honest held-out metrics (train-split rows only for loss); "
+        "final-refit=fit all rows then ship; "
+        "auto=select then full-corpus refit if promote ok",
+    )
+    ap.add_argument(
+        "--fit-rows",
+        choices=("train", "all"),
+        default=None,
+        help="override which rows enter the loss (default: train for "
+        "select/auto-selection, all for final-refit)",
+    )
+    ap.add_argument(
+        "--era-align",
+        choices=("none", "procrustes"),
+        default="none",
+        help="v6: rotate the 14 game-feature dims into the 1996-97 root "
+        "frame via assets/drift.json chainedToRoot before training",
+    )
+    ap.add_argument(
+        "--robust-scaling",
+        action="store_true",
+        help="v6: replace the season z-scores with per-season median/IQR "
+        "scaling (RealMLP-style, clip [-3,3]) before training",
+    )
     for key in DEFAULT_LOSS_WEIGHTS:
-        ap.add_argument(f"--w-{key.replace('_', '-')}", type=float, default=None,
-                        dest=f"w_{key}")
+        ap.add_argument(
+            f"--w-{key.replace('_', '-')}", type=float, default=None, dest=f"w_{key}"
+        )
     args = ap.parse_args()
 
     weights = dict(DEFAULT_LOSS_WEIGHTS)
@@ -979,18 +1182,23 @@ def main() -> None:
     np.random.seed(args.seed)
     device = "cuda" if torch.cuda.is_available() else "cpu"
 
-    (Z, M, names, seasons, pids, clusters, positions, season_ids,
-     manifest) = load_bundle()
+    (Z, M, names, seasons, pids, clusters, positions, season_ids, manifest) = (
+        load_bundle()
+    )
 
     if args.era_align == "procrustes":
-        from era_procrustes_align import load_alignment, align_batch
+        from era_procrustes_align import align_batch, load_alignment
+
         chains = load_alignment()["chains"]
         Z = align_batch(Z, [str(s) for s in seasons], chains)
-        print(f"era-align procrustes: rotated {len(Z)} rows into 1996-97 root frame "
-              f"({len(chains)} season chains)")
+        print(
+            f"era-align procrustes: rotated {len(Z)} rows into 1996-97 root frame "
+            f"({len(chains)} season chains)"
+        )
 
     if args.robust_scaling:
         from realmlp_preproc import RealMLPPreprocessor
+
         preproc = RealMLPPreprocessor(manifest["features"])
         preproc.fit(Z, [str(s) for s in seasons], M, by_season=True)
         Z = preproc.transform(Z, [str(s) for s in seasons])
@@ -1005,8 +1213,10 @@ def main() -> None:
     game_z = torch.tensor(Z[:, game_cols], device=device)
     n_seasons = int(season_ids.max()) + 1
 
-    print(f"{len(Z)} rows, {Z.shape[1]} features, {len(fams)} towers, "
-          f"{n_seasons} seasons, device={device}")
+    print(
+        f"{len(Z)} rows, {Z.shape[1]} features, {len(fams)} towers, "
+        f"{n_seasons} seasons, device={device}"
+    )
     print(f"tower widths: { {k: len(v) for k, v in fams.items()} }")
     print(f"loss weights: {weights}")
 
@@ -1019,57 +1229,77 @@ def main() -> None:
         return feats.index(name) if name in feats else None
 
     sal_j = col_idx("SALARY_LOG")
-    sal_z, sal_m = (tensor_col(Z, M, sal_j, device) if sal_j is not None else (None, None))
+    sal_z, sal_m = (
+        tensor_col(Z, M, sal_j, device) if sal_j is not None else (None, None)
+    )
 
     ped_j = col_idx("PED_PICK_QUALITY")
-    ped_z, ped_m = (tensor_col(Z, M, ped_j, device) if ped_j is not None else (None, None))
+    ped_z, ped_m = (
+        tensor_col(Z, M, ped_j, device) if ped_j is not None else (None, None)
+    )
     if ped_j is not None:
         print(f"pedigree_expectation head: {int(M[:, ped_j].sum())} labeled rows")
 
     po_j = col_idx("PO_PTS_DELTA")
-    po_z, po_m = (tensor_col(Z, M, po_j, device) if po_j is not None else (None, None))
+    po_z, po_m = tensor_col(Z, M, po_j, device) if po_j is not None else (None, None)
     if po_j is not None:
         print(f"playoff_riser head: {int(M[:, po_j].sum())} labeled rows")
 
     hon_j = col_idx(HONORS_PRIMARY)
-    hon_z, hon_m = (tensor_col(Z, M, hon_j, device) if hon_j is not None else (None, None))
+    hon_z, hon_m = (
+        tensor_col(Z, M, hon_j, device) if hon_j is not None else (None, None)
+    )
     if hon_j is not None:
-        print(f"honors_recognition head ({HONORS_PRIMARY}): "
-              f"{int(M[:, hon_j].sum())} labeled rows")
+        print(
+            f"honors_recognition head ({HONORS_PRIMARY}): "
+            f"{int(M[:, hon_j].sum())} labeled rows"
+        )
 
     team_j = col_idx(TEAM_FIT_FEATURE)
-    team_z, team_m = (tensor_col(Z, M, team_j, device) if team_j is not None else (None, None))
+    team_z, team_m = (
+        tensor_col(Z, M, team_j, device) if team_j is not None else (None, None)
+    )
     if team_j is not None:
         print(f"team_fit head: {int(M[:, team_j].sum())} labeled rows")
 
     roster_j = col_idx(ROSTER_LIFT_FEATURE)
     roster_z, roster_m = (
-        tensor_col(Z, M, roster_j, device) if roster_j is not None else (None, None))
+        tensor_col(Z, M, roster_j, device) if roster_j is not None else (None, None)
+    )
     if roster_j is not None:
-        print(f"roster_lift head ({ROSTER_LIFT_FEATURE}): "
-              f"{int(M[:, roster_j].sum())} labeled rows")
+        print(
+            f"roster_lift head ({ROSTER_LIFT_FEATURE}): "
+            f"{int(M[:, roster_j].sum())} labeled rows"
+        )
 
     career_j = col_idx(CAREER_SLOPE_FEATURE)
     if career_j is None:
         career_j = col_idx("DELTA_NORM")  # legacy matrices pre-enrichment
     career_z, career_m = (
-        tensor_col(Z, M, career_j, device) if career_j is not None else (None, None))
+        tensor_col(Z, M, career_j, device) if career_j is not None else (None, None)
+    )
     if career_j is not None:
-        print(f"career_slope head ({manifest['features'][career_j]}): "
-              f"{int(M[:, career_j].sum())} labeled rows")
+        print(
+            f"career_slope head ({manifest['features'][career_j]}): "
+            f"{int(M[:, career_j].sum())} labeled rows"
+        )
 
     comp_j = col_idx(COMPETITION_FEATURE)
-    comp_z, comp_m = (tensor_col(Z, M, comp_j, device) if comp_j is not None else (None, None))
+    comp_z, comp_m = (
+        tensor_col(Z, M, comp_j, device) if comp_j is not None else (None, None)
+    )
 
     form_cols = feature_cols(manifest, FORM_FEATURES)
     form_z, form_m, form_row_m = (
-        tensor_cols(Z, M, form_cols, device) if form_cols else (None, None, None))
+        tensor_cols(Z, M, form_cols, device) if form_cols else (None, None, None)
+    )
     if form_cols:
         print(f"form_recon head: {int(form_row_m.sum())} labeled rows")
 
     bbref_cols = feature_cols(manifest, BBREF_FEATURES)
     bbref_z, bbref_m, bbref_row_m = (
-        tensor_cols(Z, M, bbref_cols, device) if bbref_cols else (None, None, None))
+        tensor_cols(Z, M, bbref_cols, device) if bbref_cols else (None, None, None)
+    )
     if bbref_cols:
         print(f"bbref_bridge head: {int(bbref_row_m.sum())} labeled rows")
 
@@ -1082,8 +1312,10 @@ def main() -> None:
     skill_t = torch.tensor(skill_g, device=device)
     skillm_t = torch.tensor(skill_m, device=device)
     skill_row_mask = skill_m.any(axis=1) if skill_m.ndim == 2 else skill_m > 0
-    print(f"{len(skill_keys)} skill towers ({n_core} core + "
-          f"{len(skill_keys) - n_core} wide), per-skill masked")
+    print(
+        f"{len(skill_keys)} skill towers ({n_core} core + "
+        f"{len(skill_keys) - n_core} wide), per-skill masked"
+    )
 
     n = len(Z)
     split_of = np.array([eval_split(str(s)) for s in seasons])
@@ -1093,10 +1325,11 @@ def main() -> None:
         fit_rows_mode = "train"
     else:
         fit_rows_mode = "all"
-    fit_mask = (split_of == "train") if fit_rows_mode == "train" else np.ones(n, dtype=bool)
+    fit_mask = (
+        (split_of == "train") if fit_rows_mode == "train" else np.ones(n, dtype=bool)
+    )
     fit_idx = np.where(fit_mask)[0]
-    print(f"phase={args.phase} fit_rows={fit_rows_mode} "
-          f"n_fit={len(fit_idx)}/{n}")
+    print(f"phase={args.phase} fit_rows={fit_rows_mode} n_fit={len(fit_idx)}/{n}")
 
     xs, ms = split_by_family(Z, M, fams, device)
     model = MTNN(
@@ -1119,8 +1352,7 @@ def main() -> None:
         n_attn_heads=args.n_attn_heads,
         d_fusion_hidden=(args.fusion_hidden or None),
     ).to(device)
-    opt = torch.optim.AdamW(
-        adamw_param_groups(model, args.weight_decay), lr=args.lr)
+    opt = torch.optim.AdamW(adamw_param_groups(model, args.weight_decay), lr=args.lr)
     steps_per_epoch = optimizer_steps_per_epoch(n, args.batch, args.grad_accum)
     total_steps = max(1, steps_per_epoch * args.epochs)
     sched, sched_mode = build_lr_scheduler(
@@ -1132,11 +1364,13 @@ def main() -> None:
         max_lr=args.lr,
         anneal_strategy=args.anneal_strategy,
     )
-    print(f"lr schedule: {args.lr_schedule} ({sched_mode}-level), "
-          f"steps/epoch={steps_per_epoch}, total_steps={total_steps}, "
-          f"fusion={args.fusion}, nce_loss={args.nce_loss}, "
-          f"tower={args.tower_width}/{args.tower_hidden}, "
-          f"skill_hidden={args.skill_hidden}")
+    print(
+        f"lr schedule: {args.lr_schedule} ({sched_mode}-level), "
+        f"steps/epoch={steps_per_epoch}, total_steps={total_steps}, "
+        f"fusion={args.fusion}, nce_loss={args.nce_loss}, "
+        f"tower={args.tower_width}/{args.tower_hidden}, "
+        f"skill_hidden={args.skill_hidden}"
+    )
 
     pair_arr = np.array(pairs) if pairs else np.zeros((0, 2), int)
     val_pairs = filter_pairs_by_split(pair_arr, seasons, "val")
@@ -1162,7 +1396,7 @@ def main() -> None:
         accum = 0
         opt.zero_grad(set_to_none=True)
         for s in range(0, n, args.batch):
-            idx = perm[s:s + args.batch]
+            idx = perm[s : s + args.batch]
             if len(idx) < 8:
                 continue
             idx_t = torch.tensor(idx, device=device)
@@ -1177,7 +1411,8 @@ def main() -> None:
             pos_batch = pos_t[idx_t]
             pos_partner = pos_t[partner_t]
             loss = contrastive_loss(
-                za, zb,
+                za,
+                zb,
                 mode=args.nce_loss,
                 temp=args.nce_temp,
                 pos_a=pos_batch,
@@ -1188,12 +1423,15 @@ def main() -> None:
                 arch_weight=args.nce_arch_weight,
             )
             loss = loss + weights["archetype"] * F.cross_entropy(
-                out_a["archetype"], arch_t[idx_t])
+                out_a["archetype"], arch_t[idx_t]
+            )
             if pos_mask[idx_t].any():
                 loss = loss + weights["position"] * F.cross_entropy(
-                    out_a["position"][pos_mask[idx_t]], pos_t[idx_t][pos_mask[idx_t]])
+                    out_a["position"][pos_mask[idx_t]], pos_t[idx_t][pos_mask[idx_t]]
+                )
             loss = loss + weights["profile"] * F.mse_loss(
-                out_a["profile"], game_z[idx_t])
+                out_a["profile"], game_z[idx_t]
+            )
             next_batch = next_idx_arr[idx]
             next_valid = next_batch >= 0
             if next_valid.any():
@@ -1202,7 +1440,8 @@ def main() -> None:
                 pred_next = out_a["next_profile"][next_valid_t]
                 # Target is next-season z-scored game profile (same 14-d contract).
                 loss = loss + weights["next_profile"] * F.smooth_l1_loss(
-                    pred_next, game_z[next_t])
+                    pred_next, game_z[next_t]
+                )
             if "skills" in out_a:
                 wm = skillm_t[idx_t]
                 if wm.sum() > 0:
@@ -1210,34 +1449,44 @@ def main() -> None:
                     loss = loss + weights["skills"] * (wm * se).sum() / wm.sum()
             if sal_z is not None and sal_m is not None:
                 loss = loss + weights["salary"] * masked_scalar_mse(
-                    out_a["salary"], sal_z[idx_t], sal_m[idx_t])
+                    out_a["salary"], sal_z[idx_t], sal_m[idx_t]
+                )
             if team_z is not None and team_m is not None:
                 loss = loss + weights["team_fit"] * masked_scalar_mse(
-                    out_a["team_fit"], team_z[idx_t], team_m[idx_t])
+                    out_a["team_fit"], team_z[idx_t], team_m[idx_t]
+                )
             if roster_z is not None and roster_m is not None:
                 loss = loss + weights["roster_lift"] * masked_scalar_mse(
-                    out_a["roster_lift"], roster_z[idx_t], roster_m[idx_t])
+                    out_a["roster_lift"], roster_z[idx_t], roster_m[idx_t]
+                )
             if form_z is not None and form_m is not None:
                 loss = loss + weights["form_recon"] * masked_vector_mse(
-                    out_a["form_recon"], form_z[idx_t], form_m[idx_t], form_row_m[idx_t])
+                    out_a["form_recon"], form_z[idx_t], form_m[idx_t], form_row_m[idx_t]
+                )
             if career_z is not None and career_m is not None:
                 loss = loss + weights["career_slope"] * masked_scalar_mse(
-                    out_a["career_slope"], career_z[idx_t], career_m[idx_t])
+                    out_a["career_slope"], career_z[idx_t], career_m[idx_t]
+                )
             if comp_z is not None and comp_m is not None:
                 loss = loss + weights["competition"] * masked_scalar_mse(
-                    out_a["competition"], comp_z[idx_t], comp_m[idx_t])
+                    out_a["competition"], comp_z[idx_t], comp_m[idx_t]
+                )
             if bbref_z is not None and bbref_m is not None and "bbref" in out_a:
                 loss = loss + weights["bbref"] * masked_vector_mse(
-                    out_a["bbref"], bbref_z[idx_t], bbref_m[idx_t], bbref_row_m[idx_t])
+                    out_a["bbref"], bbref_z[idx_t], bbref_m[idx_t], bbref_row_m[idx_t]
+                )
             if ped_z is not None and ped_m is not None:
                 loss = loss + weights["pedigree"] * masked_scalar_mse(
-                    out_a["pedigree"], ped_z[idx_t], ped_m[idx_t])
+                    out_a["pedigree"], ped_z[idx_t], ped_m[idx_t]
+                )
             if po_z is not None and po_m is not None:
                 loss = loss + weights["playoff"] * masked_scalar_mse(
-                    out_a["playoff"], po_z[idx_t], po_m[idx_t])
+                    out_a["playoff"], po_z[idx_t], po_m[idx_t]
+                )
             if hon_z is not None and hon_m is not None:
                 loss = loss + weights["honors"] * masked_scalar_mse(
-                    out_a["honors"], hon_z[idx_t], hon_m[idx_t])
+                    out_a["honors"], hon_z[idx_t], hon_m[idx_t]
+                )
 
             scaled = loss / args.grad_accum
             scaled.backward()
@@ -1275,8 +1524,10 @@ def main() -> None:
             val_pu = cross_era_archetype_purity(E_val, clusters, seasons)
             val_comp = promotion_composite(val_r, val_pu)
             pu_s = f" purity@20={val_pu:.3f}" if val_pu is not None else ""
-            log_line += (f"  val_recall@10={val_r:.3f} test_recall@10={test_r:.3f}"
-                         f"{pu_s} composite={val_comp:.3f}")
+            log_line += (
+                f"  val_recall@10={val_r:.3f} test_recall@10={test_r:.3f}"
+                f"{pu_s} composite={val_comp:.3f}"
+            )
             trace_row = {
                 "epoch": epoch,
                 "val_recall_at_10": val_r,
@@ -1289,52 +1540,50 @@ def main() -> None:
                 metric_val = None
                 if args.checkpoint_metric == "recall":
                     metric_val = val_r
-                    is_better = (
-                        metric_val is not None
-                        and (best_val_recall is None or metric_val > best_val_recall)
+                    is_better = metric_val is not None and (
+                        best_val_recall is None or metric_val > best_val_recall
                     )
                 elif args.checkpoint_metric == "purity":
                     metric_val = val_pu
-                    is_better = (
-                        metric_val is not None
-                        and (best_val_purity is None or metric_val > best_val_purity)
+                    is_better = metric_val is not None and (
+                        best_val_purity is None or metric_val > best_val_purity
                     )
                 else:
                     metric_val = val_comp
-                    is_better = (
-                        metric_val is not None
-                        and (best_val_composite is None or metric_val > best_val_composite)
+                    is_better = metric_val is not None and (
+                        best_val_composite is None or metric_val > best_val_composite
                     )
                 if is_better:
                     best_val_recall = val_r
                     best_val_purity = val_pu
                     best_val_composite = val_comp
                     best_epoch = epoch
-                    torch.save({
-                        "epoch": epoch,
-                        "model": model.state_dict(),
-                        "val_recall_at_10": val_r,
-                        "val_purity_at_20": val_pu,
-                        "val_composite": val_comp,
-                        "checkpoint_metric": args.checkpoint_metric,
-                        "args": vars(args),
-                        "weights": weights,
-                    }, BEST_CKPT)
+                    torch.save(
+                        {
+                            "epoch": epoch,
+                            "model": model.state_dict(),
+                            "val_recall_at_10": val_r,
+                            "val_purity_at_20": val_pu,
+                            "val_composite": val_comp,
+                            "checkpoint_metric": args.checkpoint_metric,
+                            "args": vars(args),
+                            "weights": weights,
+                        },
+                        BEST_CKPT,
+                    )
         if epoch % 5 == 0 or epoch == args.epochs - 1:
             print(log_line)
 
-    if (
-        not args.no_best_checkpoint
-        and BEST_CKPT.exists()
-        and best_epoch >= 0
-    ):
+    if not args.no_best_checkpoint and BEST_CKPT.exists() and best_epoch >= 0:
         ckpt = torch.load(BEST_CKPT, map_location=device, weights_only=False)
         model.load_state_dict(ckpt["model"])
         pu_s = f"{best_val_purity:.3f}" if best_val_purity is not None else "n/a"
         co_s = f"{best_val_composite:.3f}" if best_val_composite is not None else "n/a"
-        print(f"restored best checkpoint epoch {best_epoch} "
-              f"(metric={args.checkpoint_metric} "
-              f"recall={best_val_recall:.3f} purity={pu_s} composite={co_s})")
+        print(
+            f"restored best checkpoint epoch {best_epoch} "
+            f"(metric={args.checkpoint_metric} "
+            f"recall={best_val_recall:.3f} purity={pu_s} composite={co_s})"
+        )
 
     # ---- export ----
     model.eval()
@@ -1349,17 +1598,26 @@ def main() -> None:
     tower_values = tower_stack.cpu().numpy().astype(np.float32)
     arch_logits = heads["archetype"].cpu().numpy().astype(np.float32)
     pos_logits = heads["position"].cpu().numpy().astype(np.float32)
-    skill_pred = (heads["skills"].cpu().numpy().astype(np.float32)
-                  if "skills" in heads else np.zeros((len(E), 0), np.float32))
+    skill_pred = (
+        heads["skills"].cpu().numpy().astype(np.float32)
+        if "skills" in heads
+        else np.zeros((len(E), 0), np.float32)
+    )
     next_profile_pred = heads["next_profile"].cpu().numpy().astype(np.float32)
     game_feature_keys = np.array([manifest["features"][j] for j in game_cols])
 
     np.savez_compressed(
         DATA_DIR / "embedding_v3.npz",
-        E=E, player_id=pids, season=seasons, name=names,
-        cluster=clusters, position=positions,
-        archetype_logits=arch_logits, position_logits=pos_logits,
-        skill_pred=skill_pred, skill_keys=np.array(skill_keys),
+        E=E,
+        player_id=pids,
+        season=seasons,
+        name=names,
+        cluster=clusters,
+        position=positions,
+        archetype_logits=arch_logits,
+        position_logits=pos_logits,
+        skill_pred=skill_pred,
+        skill_keys=np.array(skill_keys),
         next_profile_pred=next_profile_pred,
         game_feature_keys=game_feature_keys,
     )
@@ -1396,9 +1654,9 @@ def main() -> None:
             resid = true[rows] - pred[rows]
             ss_tot = float(((true[rows] - true[rows].mean()) ** 2).sum())
             out[split] = {
-                "rows": int(len(rows)),
+                "rows": len(rows),
                 "mae_z": round(float(np.abs(resid).mean()), 4),
-                "r2": round(1.0 - float((resid ** 2).sum()) / max(ss_tot, 1e-9), 4),
+                "r2": round(1.0 - float((resid**2).sum()) / max(ss_tot, 1e-9), 4),
             }
         return out
 
@@ -1414,11 +1672,14 @@ def main() -> None:
     if skill_keys:
         skills_report = {
             "holdout": skill_holdout_metrics(
-                skill_pred, skill_g, skill_m, seasons, skill_keys),
+                skill_pred, skill_g, skill_m, seasons, skill_keys
+            ),
             "neighbor_consistency_pts_mtnn": skill_neighbor_consistency(
-                E, skill_g, skill_row_mask),
+                E, skill_g, skill_row_mask
+            ),
             "neighbor_consistency_pts_transparent_14d": skill_neighbor_consistency(
-                G_base, skill_g, skill_row_mask),
+                G_base, skill_g, skill_row_mask
+            ),
         }
     next_profile_report = next_profile_holdout_metrics(
         next_profile_pred,
@@ -1435,7 +1696,9 @@ def main() -> None:
         positions=positions,
         seasons=seasons,
         role_labels=role_labels_from_context(
-            names, seasons, DATA_DIR / "role_context.json",
+            names,
+            seasons,
+            DATA_DIR / "role_context.json",
         ),
         next_profile_pred=next_profile_pred,
         game_profile_target=Z[:, game_cols],
@@ -1445,9 +1708,13 @@ def main() -> None:
     )
     held_out = {}
     for split in ("train", "val", "test", "all"):
-        sub = pair_arr if split == "all" else filter_pairs_by_split(pair_arr, seasons, split)
+        sub = (
+            pair_arr
+            if split == "all"
+            else filter_pairs_by_split(pair_arr, seasons, split)
+        )
         held_out[split] = {
-            "pairs": int(len(sub)),
+            "pairs": len(sub),
             "recall_at_10_mtnn": recall_at_k(E, sub, k=10),
             "recall_at_10_transparent_14d": recall_at_k(G_base, sub, k=10),
         }
@@ -1525,8 +1792,10 @@ def main() -> None:
     report["deploy"] = {
         "mode": "selection_fit_rows_" + fit_rows_mode,
         "metrics_source": "selection_holdout",
-        "note": ("Held-out recall/CQS use val/test pairs; loss rows follow fit_rows. "
-                 "Use --phase auto to full-corpus refit after promote."),
+        "note": (
+            "Held-out recall/CQS use val/test pairs; loss rows follow fit_rows. "
+            "Use --phase auto to full-corpus refit after promote."
+        ),
     }
 
     do_refit = args.phase == "auto" and ok
@@ -1547,7 +1816,7 @@ def main() -> None:
             accum = 0
             opt.zero_grad(set_to_none=True)
             for s in range(0, len(perm), args.batch):
-                idx = perm[s:s + args.batch]
+                idx = perm[s : s + args.batch]
                 if len(idx) < 8:
                     continue
                 idx_t = torch.tensor(idx, device=device)
@@ -1558,7 +1827,8 @@ def main() -> None:
                 za, out_a = model(xa, ma, seas_t[idx_t])
                 zb, _ = model(xb, mb, seas_t[partner_t])
                 loss = contrastive_loss(
-                    za, zb,
+                    za,
+                    zb,
                     mode=args.nce_loss,
                     temp=args.nce_temp,
                     pos_a=pos_t[idx_t],
@@ -1569,21 +1839,26 @@ def main() -> None:
                     arch_weight=args.nce_arch_weight,
                 )
                 loss = loss + weights["archetype"] * F.cross_entropy(
-                    out_a["archetype"], arch_t[idx_t])
+                    out_a["archetype"], arch_t[idx_t]
+                )
                 if pos_mask[idx_t].any():
                     loss = loss + weights["position"] * F.cross_entropy(
                         out_a["position"][pos_mask[idx_t]],
-                        pos_t[idx_t][pos_mask[idx_t]])
+                        pos_t[idx_t][pos_mask[idx_t]],
+                    )
                 loss = loss + weights["profile"] * F.mse_loss(
-                    out_a["profile"], game_z[idx_t])
+                    out_a["profile"], game_z[idx_t]
+                )
                 next_batch = next_idx_arr[idx]
                 next_valid = next_batch >= 0
                 if next_valid.any():
                     next_t = torch.tensor(next_batch[next_valid], device=device)
                     next_valid_t = torch.tensor(
-                        next_valid, device=device, dtype=torch.bool)
+                        next_valid, device=device, dtype=torch.bool
+                    )
                     loss = loss + weights["next_profile"] * F.smooth_l1_loss(
-                        out_a["next_profile"][next_valid_t], game_z[next_t])
+                        out_a["next_profile"][next_valid_t], game_z[next_t]
+                    )
                 if "skills" in out_a:
                     wm = skillm_t[idx_t]
                     if wm.sum() > 0:
@@ -1610,15 +1885,19 @@ def main() -> None:
                 opt.zero_grad(set_to_none=True)
                 steps += 1
             if (epoch + 1) % 10 == 0 or epoch + 1 == refit_epochs:
-                print(f"  refit epoch {epoch+1}/{refit_epochs} "
-                      f"loss={total/max(1,steps):.4f}")
+                print(
+                    f"  refit epoch {epoch + 1}/{refit_epochs} "
+                    f"loss={total / max(1, steps):.4f}"
+                )
         report["deploy"] = {
             "mode": "final_refit_all_rows",
             "metrics_source": "selection_holdout",
             "refit_epochs": refit_epochs,
             "refit_n_fit": n,
-            "note": ("Held-out recall/CQS are from the train-split selection run; "
-                     "shipped embeddings are full-corpus refit."),
+            "note": (
+                "Held-out recall/CQS are from the train-split selection run; "
+                "shipped embeddings are full-corpus refit."
+            ),
         }
         model.eval()
         with torch.no_grad():
@@ -1627,15 +1906,24 @@ def main() -> None:
         E = emb.cpu().numpy().astype(np.float32)
         arch_logits = heads["archetype"].cpu().numpy().astype(np.float32)
         pos_logits = heads["position"].cpu().numpy().astype(np.float32)
-        skill_pred = (heads["skills"].cpu().numpy().astype(np.float32)
-                      if "skills" in heads else np.zeros((len(E), 0), np.float32))
+        skill_pred = (
+            heads["skills"].cpu().numpy().astype(np.float32)
+            if "skills" in heads
+            else np.zeros((len(E), 0), np.float32)
+        )
         next_profile_pred = heads["next_profile"].cpu().numpy().astype(np.float32)
         np.savez_compressed(
             DATA_DIR / "embedding_v3.npz",
-            E=E, player_id=pids, season=seasons, name=names,
-            cluster=clusters, position=positions,
-            archetype_logits=arch_logits, position_logits=pos_logits,
-            skill_pred=skill_pred, skill_keys=np.array(skill_keys),
+            E=E,
+            player_id=pids,
+            season=seasons,
+            name=names,
+            cluster=clusters,
+            position=positions,
+            archetype_logits=arch_logits,
+            position_logits=pos_logits,
+            skill_pred=skill_pred,
+            skill_keys=np.array(skill_keys),
             next_profile_pred=next_profile_pred,
             game_feature_keys=game_feature_keys,
         )
@@ -1646,18 +1934,22 @@ def main() -> None:
                 c = E[mask_k].mean(0)
                 centroids[k] = c / (np.linalg.norm(c) + 1e-8)
         np.savez_compressed(DATA_DIR / "mtnn_centroids.npz", centroids=centroids)
-        torch.save({
-            "epoch": best_epoch,
-            "model": model.state_dict(),
-            "checkpoint_metric": args.checkpoint_metric,
-            "args": vars(args),
-            "weights": weights,
-            "deploy": report["deploy"],
-        }, BEST_CKPT)
+        torch.save(
+            {
+                "epoch": best_epoch,
+                "model": model.state_dict(),
+                "checkpoint_metric": args.checkpoint_metric,
+                "args": vars(args),
+                "weights": weights,
+                "deploy": report["deploy"],
+            },
+            BEST_CKPT,
+        )
         print("rewrote embedding_v3.npz, mtnn_centroids.npz, mtnn_best.pt from refit")
 
     (DATA_DIR / "mtnn_report.json").write_text(
-        json.dumps(report, indent=2), encoding="utf-8")
+        json.dumps(report, indent=2), encoding="utf-8"
+    )
     print(json.dumps(report, indent=2))
     print(f"CQS {report['composite']['cqs']} · {why}")
     print("wrote embedding_v3.npz, mtnn_centroids.npz, mtnn_report.json")

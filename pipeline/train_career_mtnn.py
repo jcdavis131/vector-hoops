@@ -56,7 +56,8 @@ class CareerGRU(nn.Module):
 
     def forward(self, x: torch.Tensor, lengths: torch.Tensor) -> torch.Tensor:
         packed = nn.utils.rnn.pack_padded_sequence(
-            x, lengths.cpu(), batch_first=True, enforce_sorted=False)
+            x, lengths.cpu(), batch_first=True, enforce_sorted=False
+        )
         _, h = self.gru(packed)
         return self.head(h.squeeze(0))
 
@@ -65,8 +66,10 @@ def load_mpg_gp() -> dict[tuple[int, str], tuple[float, float]]:
     """(player_id, season) -> honest (MPG, GP) from build_min_gp.py."""
     path = DATA / "min_gp.json"
     if not path.exists():
-        raise SystemExit("missing min_gp.json — run build_min_gp.py first "
-                         "(vectors.json mpg is per-100-poss, unusable)")
+        raise SystemExit(
+            "missing min_gp.json — run build_min_gp.py first "
+            "(vectors.json mpg is per-100-poss, unusable)"
+        )
     doc = json.loads(path.read_text(encoding="utf-8"))
     return {
         (int(r["player_id"]), str(r["season"])): (float(r["MPG"]), float(r["GP"]))
@@ -74,7 +77,9 @@ def load_mpg_gp() -> dict[tuple[int, str], tuple[float, float]]:
     }
 
 
-def load_row_features() -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+def load_row_features() -> tuple[
+    np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray
+]:
     train = np.load(TRAIN_NPZ, allow_pickle=False)
     seasons = np.asarray([str(s) for s in train["season"]])
     names = np.asarray([str(n) for n in train["name"]])
@@ -110,20 +115,34 @@ def build_examples(seq, E, seasons, names, pids, sal, mpg_gp):
     # Per-step availability aux (injury proxy): scaled to ~unit range
     n_rows = E.shape[0]
     zeros = np.zeros(n_rows, dtype=np.float32)
-    aux = np.stack([
-        np.asarray(seq["aux_mpg"], dtype=np.float32) / 36.0
-        if "aux_mpg" in seq.files else zeros,
-        np.asarray(seq["aux_gp_pct"], dtype=np.float32)
-        if "aux_gp_pct" in seq.files else zeros,
-        np.asarray(seq["aux_miss_streak"], dtype=np.float32) / 40.0
-        if "aux_miss_streak" in seq.files else zeros,
-        np.asarray(seq["aux_streak_known"], dtype=np.float32)
-        if "aux_streak_known" in seq.files else zeros,
-    ], axis=1)
+    aux = np.stack(
+        [
+            np.asarray(seq["aux_mpg"], dtype=np.float32) / 36.0
+            if "aux_mpg" in seq.files
+            else zeros,
+            np.asarray(seq["aux_gp_pct"], dtype=np.float32)
+            if "aux_gp_pct" in seq.files
+            else zeros,
+            np.asarray(seq["aux_miss_streak"], dtype=np.float32) / 40.0
+            if "aux_miss_streak" in seq.files
+            else zeros,
+            np.asarray(seq["aux_streak_known"], dtype=np.float32)
+            if "aux_streak_known" in seq.files
+            else zeros,
+        ],
+        axis=1,
+    )
     E_in = np.concatenate([E, aux], axis=1).astype(np.float32)
 
     xs, y_delta, tip_mpg, tip_gp, splits, tip_rows, tip_sal = (
-        [], [], [], [], [], [], [])
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+    )
     for ci in range(len(length)):
         L = int(length[ci])
         idxs = [int(row_index[ci, t]) for t in range(L) if int(row_index[ci, t]) >= 0]
@@ -147,7 +166,8 @@ def build_examples(seq, E, seasons, names, pids, sal, mpg_gp):
             splits.append(eval_split(str(seasons[tip])))
             tip_rows.append(tip)
             tip_sal.append(
-                float(sal[tip]) if not math.isnan(float(sal[tip])) else float("nan"))
+                float(sal[tip]) if not math.isnan(float(sal[tip])) else float("nan")
+            )
     return (
         xs,
         np.asarray(y_delta, dtype=np.float32),
@@ -199,10 +219,14 @@ def main() -> None:
     E, seasons, names, pids, sal = load_row_features()
     mpg_gp = load_mpg_gp()
     xs, y_delta, tip_mpg, tip_gp, splits, tip_rows, tip_sal = build_examples(
-        seq, E, seasons, names, pids, sal, mpg_gp)
+        seq, E, seasons, names, pids, sal, mpg_gp
+    )
     y_abs = np.stack([tip_mpg + y_delta[:, 0], tip_gp + y_delta[:, 1]], axis=1)
-    print(f"career examples={len(xs)} device={device} d_in={xs[0].shape[1]} "
-          f"(residual dMPG/dGP)", flush=True)
+    print(
+        f"career examples={len(xs)} device={device} d_in={xs[0].shape[1]} "
+        f"(residual dMPG/dGP)",
+        flush=True,
+    )
 
     train_i = [i for i, s in enumerate(splits) if s == "train"]
     val_i = [i for i, s in enumerate(splits) if s == "val"]
@@ -222,7 +246,7 @@ def main() -> None:
         if train:
             np.random.shuffle(order)
         for start in range(0, len(order), args.batch):
-            bi = order[start: start + args.batch]
+            bi = order[start : start + args.batch]
             x, lengths = pad_batch([xs[i] for i in bi], device)
             y = torch.tensor(y_z[bi], device=device)
             with torch.set_grad_enabled(train):
@@ -247,12 +271,17 @@ def main() -> None:
         if va < best_val - 1e-4:
             best_val = va
             bad = 0
-            torch.save({
-                "model": model.state_dict(),
-                "mu": mu, "sd": sd,
-                "hid": args.hid, "seed": args.seed,
-                "mode": "residual",
-            }, OUT_PT)
+            torch.save(
+                {
+                    "model": model.state_dict(),
+                    "mu": mu,
+                    "sd": sd,
+                    "hid": args.hid,
+                    "seed": args.seed,
+                    "mode": "residual",
+                },
+                OUT_PT,
+            )
         else:
             bad += 1
         if ep % 5 == 0 or ep == 1:
@@ -269,14 +298,16 @@ def main() -> None:
         outs = []
         with torch.no_grad():
             for start in range(0, len(indices), args.batch):
-                bi = indices[start: start + args.batch]
+                bi = indices[start : start + args.batch]
                 x, lengths = pad_batch([xs[i] for i in bi], device)
                 pred_dz = model(x, lengths).cpu().numpy()
                 delta = pred_dz * sd + mu
                 mpg = np.clip(tip_mpg[bi] + delta[:, 0], 0.0, 42.0)
                 gp = np.clip(tip_gp[bi] + delta[:, 1], 0.0, 82.0)
                 outs.append(np.stack([mpg, gp], axis=1))
-        return np.concatenate(outs, axis=0) if outs else np.zeros((0, 2), dtype=np.float32)
+        return (
+            np.concatenate(outs, axis=0) if outs else np.zeros((0, 2), dtype=np.float32)
+        )
 
     def split_metrics(indices: list[int]) -> dict:
         if not indices:
@@ -292,7 +323,9 @@ def main() -> None:
             "gp_r2_persist": round(r2_score(persist[:, 1], tgt[:, 1]), 4),
             "mpg_mae": round(float(np.abs(pred[:, 0] - tgt[:, 0]).mean()), 3),
             "gp_mae": round(float(np.abs(pred[:, 1] - tgt[:, 1]).mean()), 3),
-            "mpg_mae_persist": round(float(np.abs(persist[:, 0] - tgt[:, 0]).mean()), 3),
+            "mpg_mae_persist": round(
+                float(np.abs(persist[:, 0] - tgt[:, 0]).mean()), 3
+            ),
             "gp_mae_persist": round(float(np.abs(persist[:, 1] - tgt[:, 1]).mean()), 3),
         }
 
@@ -314,25 +347,31 @@ def main() -> None:
     all_i = list(range(len(xs)))
     pred_all = predict_abs(all_i)
     # Value on predicted next box vs tip (improvement) + level
-    mpg_mu, mpg_sd = float(tip_mpg[train_i].mean()), float(tip_mpg[train_i].std()) or 1.0
+    mpg_mu, mpg_sd = (
+        float(tip_mpg[train_i].mean()),
+        float(tip_mpg[train_i].std()) or 1.0,
+    )
     gp_mu, gp_sd = float(tip_gp[train_i].mean()), float(tip_gp[train_i].std()) or 1.0
     value = 0.6 * ((pred_all[:, 0] - mpg_mu) / mpg_sd) + 0.4 * (
-        (pred_all[:, 1] - gp_mu) / gp_sd)
+        (pred_all[:, 1] - gp_mu) / gp_sd
+    )
     surplus_rows = []
-    for i, tip, s in zip(all_i, tip_rows, tip_sal):
+    for i, tip, s in zip(all_i, tip_rows, tip_sal, strict=False):
         if math.isnan(s):
             continue
-        surplus_rows.append({
-            "name": str(names[tip]),
-            "season": str(seasons[tip]),
-            "pred_mpg": round(float(pred_all[i, 0]), 2),
-            "pred_gp": round(float(pred_all[i, 1]), 1),
-            "tip_mpg": round(float(tip_mpg[i]), 2),
-            "tip_gp": round(float(tip_gp[i]), 1),
-            "salary_z": round(float(s), 3),
-            "surplus": round(float(value[i] - s), 3),
-            "split": splits[i],
-        })
+        surplus_rows.append(
+            {
+                "name": str(names[tip]),
+                "season": str(seasons[tip]),
+                "pred_mpg": round(float(pred_all[i, 0]), 2),
+                "pred_gp": round(float(pred_all[i, 1]), 1),
+                "tip_mpg": round(float(tip_mpg[i]), 2),
+                "tip_gp": round(float(tip_gp[i]), 1),
+                "salary_z": round(float(s), 3),
+                "surplus": round(float(value[i] - s), 3),
+                "split": splits[i],
+            }
+        )
     surplus_rows.sort(key=lambda r: -r["surplus"])
     latest: dict[str, dict] = {}
     for r in surplus_rows:
@@ -344,16 +383,22 @@ def main() -> None:
     recent = [r for r in board if str(r["season"]) >= "2022-23"]
     if len(recent) < 20:
         recent = board
-    OUT_SURPLUS.write_text(json.dumps({
-        "method": (
-            "Research surplus = 0.6*z(pred_MPG)+0.4*z(pred_GP) − SALARY_LOG z. "
-            "Residual career head vs persistence; not calibrated trade advice. "
-            "Contract years/options still missing."
+    OUT_SURPLUS.write_text(
+        json.dumps(
+            {
+                "method": (
+                    "Research surplus = 0.6*z(pred_MPG)+0.4*z(pred_GP) − SALARY_LOG z. "
+                    "Residual career head vs persistence; not calibrated trade advice. "
+                    "Contract years/options still missing."
+                ),
+                "n": len(recent),
+                "buy_low_top": recent[:40],
+                "sell_high_top": list(reversed(recent[-40:])),
+            },
+            indent=2,
         ),
-        "n": len(recent),
-        "buy_low_top": recent[:40],
-        "sell_high_top": list(reversed(recent[-40:])),
-    }, indent=2), encoding="utf-8")
+        encoding="utf-8",
+    )
     report["surplus_export"] = str(OUT_SURPLUS)
     report["surplus_n"] = len(recent)
 

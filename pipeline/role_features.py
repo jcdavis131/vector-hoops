@@ -34,10 +34,8 @@ def compute_role_raw(
 
     for f in sorted(DATA.glob("gamelogs_*.jsonl")):
         season = f.stem.split("_", 1)[1]
-        team_tot: dict[tuple[int, str], list[float]] = defaultdict(
-            lambda: [0.0, 0.0])
-        agg: dict[tuple[str, str], list] = defaultdict(
-            lambda: [0.0, 0.0, 0.0, 0])
+        team_tot: dict[tuple[int, str], list[float]] = defaultdict(lambda: [0.0, 0.0])
+        agg: dict[tuple[str, str], list] = defaultdict(lambda: [0.0, 0.0, 0.0, 0])
         for line in f.read_text(encoding="utf-8").splitlines():
             if not line.strip():
                 continue
@@ -56,7 +54,8 @@ def compute_role_raw(
             tt[1] += u
 
         pts_by_team: dict[tuple[int, str], list[tuple[float, tuple[str, str]]]] = (
-            defaultdict(list))
+            defaultdict(list)
+        )
         for k, (m, u, p, tid) in agg.items():
             if k not in vindex:
                 continue

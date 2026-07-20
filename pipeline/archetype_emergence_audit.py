@@ -17,16 +17,18 @@ import json
 import math
 import sys
 import time
-from collections import Counter, defaultdict
+from collections import Counter
 from pathlib import Path
 
 import numpy as np
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
-from trend_mtnn import (
-    ERAS,
+import itertools  # noqa: E402
+
+from trend_mtnn import (  # noqa: E402
     ERA_K_RANGE,
+    ERAS,
     GLOBAL_K,
     NOVELTY_THRESH,
     assign_cluster_names,
@@ -71,21 +73,25 @@ def player_role_prevalence(
     """Direct player-season counts for modern role shapes (era-relative grades)."""
     rows = []
     for era_name, s_lo, s_hi in ERAS:
-        idxs = [j for j, p in enumerate(players) if season_in_range(p["season"], s_lo, s_hi)]
+        idxs = [
+            j for j, p in enumerate(players) if season_in_range(p["season"], s_lo, s_hi)
+        ]
         pct = era_percentiles(grades, idxs)
         n = len(idxs)
         counts: Counter[str] = Counter()
         for j in idxs:
             for t in tag_player_roles(grades[j], idx, pct):
                 counts[t] += 1
-        rows.append({
-            "era": era_name,
-            "n": n,
-            "three_and_d": round(counts["three_and_d"] / n, 4),
-            "stretch_big": round(counts["stretch_big"] / n, 4),
-            "traditional_big": round(counts["traditional_big"] / n, 4),
-            "spacing_role": round(counts["spacing_role"] / n, 4),
-        })
+        rows.append(
+            {
+                "era": era_name,
+                "n": n,
+                "three_and_d": round(counts["three_and_d"] / n, 4),
+                "stretch_big": round(counts["stretch_big"] / n, 4),
+                "traditional_big": round(counts["traditional_big"] / n, 4),
+                "spacing_role": round(counts["spacing_role"] / n, 4),
+            }
+        )
     return rows
 
 
@@ -112,7 +118,9 @@ def build_era_native(
 ) -> list[dict]:
     by_era: list[dict] = []
     for era_name, s_lo, s_hi in ERAS:
-        idxs = [j for j, p in enumerate(players) if season_in_range(p["season"], s_lo, s_hi)]
+        idxs = [
+            j for j, p in enumerate(players) if season_in_range(p["season"], s_lo, s_hi)
+        ]
         pct = era_percentiles(grades, idxs)
         X = E[idxs]
         k_opt, k_sweep = optimal_k(X, ERA_K_RANGE)
@@ -128,31 +136,34 @@ def build_era_native(
             members = member_ids[i]
             mean_g = grades[members].mean(0) if members else np.zeros(len(skill_meta))
             tags = tag_cluster_from_profile(mean_g, idx, pct) or ["other"]
-            archetypes.append({
-                "name": names[i],
-                "share": round(counts[i] / len(idxs), 4),
-                "tags": tags,
-                "skillTop": [
-                    skill_meta[j]["label"]
-                    for j in np.argsort(-mean_g)[:3]
-                ],
-                "mtnnCentroid": cents[i],
-                "memberCount": counts[i],
-            })
+            archetypes.append(
+                {
+                    "name": names[i],
+                    "share": round(counts[i] / len(idxs), 4),
+                    "tags": tags,
+                    "skillTop": [
+                        skill_meta[j]["label"] for j in np.argsort(-mean_g)[:3]
+                    ],
+                    "mtnnCentroid": cents[i],
+                    "memberCount": counts[i],
+                }
+            )
         shares = [a["share"] for a in archetypes]
-        by_era.append({
-            "era": era_name,
-            "seasonLo": s_lo,
-            "seasonHi": s_hi,
-            "k": k_opt,
-            "kSweep": k_sweep,
-            "n": len(idxs),
-            "entropyBits": round(entropy_bits(shares), 4),
-            "effectiveN": round(effective_n(shares), 3),
-            "archetypes": archetypes,
-        })
+        by_era.append(
+            {
+                "era": era_name,
+                "seasonLo": s_lo,
+                "seasonHi": s_hi,
+                "k": k_opt,
+                "kSweep": k_sweep,
+                "n": len(idxs),
+                "entropyBits": round(entropy_bits(shares), 4),
+                "effectiveN": round(effective_n(shares), 3),
+                "archetypes": archetypes,
+            }
+        )
 
-    for prev, cur in zip(by_era, by_era[1:]):
+    for prev, cur in itertools.pairwise(by_era):
         for arch in cur["archetypes"]:
             cvec = arch["mtnnCentroid"]
             sims = [
@@ -171,20 +182,28 @@ def build_era_native(
 
 
 def global_prevalence_by_era(
-    players: list[dict], global_lab: np.ndarray, global_names: list[str],
+    players: list[dict],
+    global_lab: np.ndarray,
+    global_names: list[str],
 ) -> list[dict]:
     rows = []
     for era_name, s_lo, s_hi in ERAS:
-        idxs = [j for j, p in enumerate(players) if season_in_range(p["season"], s_lo, s_hi)]
+        idxs = [
+            j for j, p in enumerate(players) if season_in_range(p["season"], s_lo, s_hi)
+        ]
         counts = Counter(int(global_lab[j]) for j in idxs)
         n = len(idxs)
         shares = [counts[c] / n for c in range(GLOBAL_K)]
-        rows.append({
-            "era": era_name,
-            "entropyBits": round(entropy_bits(shares), 4),
-            "effectiveN": round(effective_n(shares), 3),
-            "shares": {global_names[c]: round(shares[c], 4) for c in range(GLOBAL_K)},
-        })
+        rows.append(
+            {
+                "era": era_name,
+                "entropyBits": round(entropy_bits(shares), 4),
+                "effectiveN": round(effective_n(shares), 3),
+                "shares": {
+                    global_names[c]: round(shares[c], 4) for c in range(GLOBAL_K)
+                },
+            }
+        )
     return rows
 
 
@@ -193,35 +212,44 @@ def tagged_prevalence_over_eras(eras: list[dict]) -> list[dict]:
     tag_names = ("three_and_d", "stretch_big", "traditional_big", "two_way_perimeter")
     rows = []
     for e in eras:
-        totals = {t: 0.0 for t in tag_names}
+        totals = dict.fromkeys(tag_names, 0.0)
         novel = []
         for a in e["archetypes"]:
             for t in a["tags"]:
                 if t in totals:
                     totals[t] += a["share"]
             if a.get("novel") and a["share"] >= NOVEL_SHARE_FLOOR:
-                novel.append({
-                    "name": a["name"],
-                    "share": a["share"],
-                    "similarity": a["ancestor"]["similarity"],
-                })
+                novel.append(
+                    {
+                        "name": a["name"],
+                        "share": a["share"],
+                        "similarity": a["ancestor"]["similarity"],
+                    }
+                )
         novel.sort(key=lambda x: x["share"], reverse=True)
-        rows.append({
-            "era": e["era"],
-            **{t: round(totals[t], 4) for t in tag_names},
-            "novelArchetypeCount": len(novel),
-            "novelArchetypes": novel[:6],
-        })
+        rows.append(
+            {
+                "era": e["era"],
+                **{t: round(totals[t], 4) for t in tag_names},
+                "novelArchetypeCount": len(novel),
+                "novelArchetypes": novel[:6],
+            }
+        )
     return rows
 
 
 def rolling_k_entropy(
-    E: np.ndarray, players: list[dict], seasons: list[str], width: int = 5,
+    E: np.ndarray,
+    players: list[dict],
+    seasons: list[str],
+    width: int = 5,
 ) -> list[dict]:
     rows = []
     lab8, _ = kmeans(E, 8, seed=42)
     for label, lo, hi in rolling_windows(seasons, width):
-        idxs = [j for j, p in enumerate(players) if season_in_range(p["season"], lo, hi)]
+        idxs = [
+            j for j, p in enumerate(players) if season_in_range(p["season"], lo, hi)
+        ]
         if len(idxs) < 200:
             continue
         X = E[idxs]
@@ -229,15 +257,17 @@ def rolling_k_entropy(
         lab, _ = kmeans(X, k_opt, seed=42)
         counts = Counter(lab.tolist())
         shares = [counts[i] / len(idxs) for i in range(k_opt)]
-        rows.append({
-            "window": label,
-            "endSeason": hi,
-            "k": k_opt,
-            "silhouetteK8": round(silhouette_sample(X, lab8[idxs]), 4),
-            "entropyBits": round(entropy_bits(shares), 4),
-            "effectiveN": round(effective_n(shares), 3),
-            "n": len(idxs),
-        })
+        rows.append(
+            {
+                "window": label,
+                "endSeason": hi,
+                "k": k_opt,
+                "silhouetteK8": round(silhouette_sample(X, lab8[idxs]), 4),
+                "entropyBits": round(entropy_bits(shares), 4),
+                "effectiveN": round(effective_n(shares), 3),
+                "n": len(idxs),
+            }
+        )
     return rows
 
 
@@ -245,12 +275,19 @@ def global_archetype_shifts(global_era: list[dict]) -> dict:
     """Early vs late share deltas on fixed global K=8 labels."""
     early, late = global_era[0]["shares"], global_era[-1]["shares"]
     deltas = [
-        {"name": name, "early": early[name], "late": late[name], "delta": round(late[name] - early[name], 4)}
+        {
+            "name": name,
+            "early": early[name],
+            "late": late[name],
+            "delta": round(late[name] - early[name], 4),
+        }
         for name in early
     ]
     deltas.sort(key=lambda d: -abs(d["delta"]))
 
-    def pick_delta(any_words: tuple[str, ...], all_words: tuple[str, ...] = ()) -> dict | None:
+    def pick_delta(
+        any_words: tuple[str, ...], all_words: tuple[str, ...] = ()
+    ) -> dict | None:
         cands = []
         for d in deltas:
             nm = d["name"].lower()
@@ -263,7 +300,9 @@ def global_archetype_shifts(global_era: list[dict]) -> dict:
         return cands[0]
 
     spacing = pick_delta(("perimeter", "three-point", "spacing"), ())
-    trad_big = pick_delta(("interior", "offensive glass", "rim protection", "defensive glass"), ())
+    trad_big = pick_delta(
+        ("interior", "offensive glass", "rim protection", "defensive glass"), ()
+    )
     return {
         "earlyEra": global_era[0]["era"],
         "lateEra": global_era[-1]["era"],
@@ -289,7 +328,8 @@ def exemplar_players(
         arch = max(candidates, key=lambda a: a["share"])
         cvec = arch["mtnnCentroid"]
         idxs = [
-            j for j, p in enumerate(players)
+            j
+            for j, p in enumerate(players)
             if season_in_range(p["season"], e["seasonLo"], e["seasonHi"])
         ]
         if not idxs:
@@ -303,12 +343,14 @@ def exemplar_players(
                 names.append(nm)
             if len(names) >= max_per_era:
                 break
-        out.append({
-            "era": e["era"],
-            "archetype": arch["name"],
-            "share": arch["share"],
-            "exemplars": names,
-        })
+        out.append(
+            {
+                "era": e["era"],
+                "archetype": arch["name"],
+                "share": arch["share"],
+                "exemplars": names,
+            }
+        )
     return out
 
 
@@ -332,11 +374,15 @@ def evaluate_hypothesis(
     early_trad = player_roles[0]["traditional_big"]
     late_trad = player_roles[-1]["traditional_big"]
     novel_early = sum(
-        1 for e in eras[:2] for a in e["archetypes"]
+        1
+        for e in eras[:2]
+        for a in e["archetypes"]
         if a.get("novel") and a["share"] >= NOVEL_SHARE_FLOOR
     )
     novel_late = sum(
-        1 for e in eras[2:] for a in e["archetypes"]
+        1
+        for e in eras[2:]
+        for a in e["archetypes"]
         if a.get("novel") and a["share"] >= NOVEL_SHARE_FLOOR
     )
 
@@ -348,75 +394,93 @@ def evaluate_hypothesis(
 
     claims = []
 
-    claims.append({
-        "claim": "Earliest era had strictly fewer archetypes (monotonic K decline)",
-        "supported": False,
-        "detail": (
-            f"Optimal K: {early['era']}={early['k']}, {min_era['era']}={min_era['k']} (min), "
-            f"{max_era['era']}={max_era['k']} (max), {late['era']}={late['k']}. "
-            f"Not a simple early-to-late shrink."
-        ),
-    })
+    claims.append(
+        {
+            "claim": "Earliest era had strictly fewer archetypes (monotonic K decline)",
+            "supported": False,
+            "detail": (
+                f"Optimal K: {early['era']}={early['k']}, {min_era['era']}={min_era['k']} (min), "
+                f"{max_era['era']}={max_era['k']} (max), {late['era']}={late['k']}. "
+                f"Not a simple early-to-late shrink."
+            ),
+        }
+    )
 
-    claims.append({
-        "claim": "Mid-2000s compression, then spacing-era expansion of distinct types",
-        "supported": bool(
-            roll_min and roll_max
-            and roll_min["endSeason"] < "2012-13"
-            and roll_max["endSeason"] > roll_min["endSeason"]
-            and roll_max["effectiveN"] - roll_min["effectiveN"] > 1.5
-        ),
-        "detail": (
-            f"Rolling 5-yr effective N trough {roll_min['effectiveN']:.2f} ({roll_min['window']}) "
-            f"-> peak {roll_max['effectiveN']:.2f} ({roll_max['window']})."
-            if roll_min and roll_max else "Rolling window data unavailable."
-        ),
-    })
+    claims.append(
+        {
+            "claim": "Mid-2000s compression, then spacing-era expansion of distinct types",
+            "supported": bool(
+                roll_min
+                and roll_max
+                and roll_min["endSeason"] < "2012-13"
+                and roll_max["endSeason"] > roll_min["endSeason"]
+                and roll_max["effectiveN"] - roll_min["effectiveN"] > 1.5
+            ),
+            "detail": (
+                f"Rolling 5-yr effective N trough {roll_min['effectiveN']:.2f} ({roll_min['window']}) "
+                f"-> peak {roll_max['effectiveN']:.2f} ({roll_max['window']})."
+                if roll_min and roll_max
+                else "Rolling window data unavailable."
+            ),
+        }
+    )
 
-    claims.append({
-        "claim": "3-and-D player-seasons became more common",
-        "supported": late_three > early_three + 0.015,
-        "detail": f"Player-season share {early_three:.1%} -> {late_three:.1%} (shooting + defense, low usage).",
-    })
+    claims.append(
+        {
+            "claim": "3-and-D player-seasons became more common",
+            "supported": late_three > early_three + 0.015,
+            "detail": f"Player-season share {early_three:.1%} -> {late_three:.1%} (shooting + defense, low usage).",
+        }
+    )
 
-    claims.append({
-        "claim": "Stretch big / spacing-big player-seasons grew",
-        "supported": late_stretch > early_stretch + 0.02,
-        "detail": f"Player-season share {early_stretch:.1%} -> {late_stretch:.1%}.",
-    })
+    claims.append(
+        {
+            "claim": "Stretch big / spacing-big player-seasons grew",
+            "supported": late_stretch > early_stretch + 0.02,
+            "detail": f"Player-season share {early_stretch:.1%} -> {late_stretch:.1%}.",
+        }
+    )
 
-    claims.append({
-        "claim": "Traditional glass-big roles declined",
-        "supported": late_trad < early_trad - 0.03,
-        "detail": f"Player-season share {early_trad:.1%} -> {late_trad:.1%}.",
-    })
+    claims.append(
+        {
+            "claim": "Traditional glass-big roles declined",
+            "supported": late_trad < early_trad - 0.03,
+            "detail": f"Player-season share {early_trad:.1%} -> {late_trad:.1%}.",
+        }
+    )
 
     peak_novel_era = max(
         eras[1:],
         key=lambda e: sum(
-            1 for a in e["archetypes"]
+            1
+            for a in e["archetypes"]
             if a.get("novel") and a["share"] >= NOVEL_SHARE_FLOOR
         ),
     )
-    claims.append({
-        "claim": "New MTNN cluster geometry appeared mid/post-2000s",
-        "supported": novel_late >= novel_early and peak_novel_era["era"] != late["era"],
-        "detail": (
-            f"Novel era-native clusters (ancestor sim < {NOVELTY_THRESH}): "
-            f"1996–2009={novel_early}, 2009–2026={novel_late}; "
-            f"counting only share >= {NOVEL_SHARE_FLOOR:.0%}; peak={peak_novel_era['era']}."
-        ),
-    })
+    claims.append(
+        {
+            "claim": "New MTNN cluster geometry appeared mid/post-2000s",
+            "supported": novel_late >= novel_early
+            and peak_novel_era["era"] != late["era"],
+            "detail": (
+                f"Novel era-native clusters (ancestor sim < {NOVELTY_THRESH}): "
+                f"1996–2009={novel_early}, 2009–2026={novel_late}; "
+                f"counting only share >= {NOVEL_SHARE_FLOOR:.0%}; peak={peak_novel_era['era']}."
+            ),
+        }
+    )
 
     if spacing and trad_big:
-        claims.append({
-            "claim": "Global K=8 vocabulary shifted toward spacing, away from traditional bigs",
-            "supported": spacing["delta"] > 0.03 and trad_big["delta"] < -0.05,
-            "detail": (
-                f"\"{spacing['name']}\" {spacing['early']:.1%}->{spacing['late']:.1%}; "
-                f"\"{trad_big['name']}\" {trad_big['early']:.1%}->{trad_big['late']:.1%}."
-            ),
-        })
+        claims.append(
+            {
+                "claim": "Global K=8 vocabulary shifted toward spacing, away from traditional bigs",
+                "supported": spacing["delta"] > 0.03 and trad_big["delta"] < -0.05,
+                "detail": (
+                    f'"{spacing["name"]}" {spacing["early"]:.1%}->{spacing["late"]:.1%}; '
+                    f'"{trad_big["name"]}" {trad_big["early"]:.1%}->{trad_big["late"]:.1%}.'
+                ),
+            }
+        )
 
     supported_n = sum(1 for c in claims if c["supported"])
     if supported_n >= 5:
@@ -435,8 +499,8 @@ def evaluate_hypothesis(
             "Evidence supports emergence with nuance: archetype count does not shrink monotonically "
             "from early eras, but role mix and geometry shift toward spacing-era forms after a "
             "mid-2000s compression."
-            if verdict != "not_supported" else
-            "Evidence is insufficient for emergence or early-era compression under current criteria."
+            if verdict != "not_supported"
+            else "Evidence is insufficient for emergence or early-era compression under current criteria."
         ),
     }
 
@@ -447,7 +511,9 @@ def strip_centroids(eras: list[dict]) -> list[dict]:
         archs = []
         for a in e["archetypes"]:
             archs.append({k: v for k, v in a.items() if k != "mtnnCentroid"})
-        out.append({**{k: v for k, v in e.items() if k != "archetypes"}, "archetypes": archs})
+        out.append(
+            {**{k: v for k, v in e.items() if k != "archetypes"}, "archetypes": archs}
+        )
     return out
 
 
@@ -460,7 +526,6 @@ def main() -> None:
     seasons = sorted({p["season"] for p in players})
 
     global_lab, _ = kmeans(E, GLOBAL_K, seed=42)
-    from trend_mtnn import assign_cluster_names
     global_names = assign_cluster_names(global_lab, GLOBAL_K, ids, grades, skill_meta)
 
     idx = skill_index(skill_meta)
@@ -473,7 +538,12 @@ def main() -> None:
     three_d_ex = exemplar_players(E, players, eras, "three_and_d")
     stretch_ex = exemplar_players(E, players, eras, "stretch_big")
     hypothesis = evaluate_hypothesis(
-        eras, tagged, player_roles, global_era, rolling, global_shifts,
+        eras,
+        tagged,
+        player_roles,
+        global_era,
+        rolling,
+        global_shifts,
     )
 
     report = {
@@ -519,7 +589,9 @@ def main() -> None:
     OUT_ASSET.write_text(json.dumps(asset, separators=(",", ":")), encoding="utf-8")
 
     print("Archetype emergence audit")
-    print(f"  Verdict: {hypothesis['verdict']} ({hypothesis['supportedClaims']}/{hypothesis['totalClaims']} claims)")
+    print(
+        f"  Verdict: {hypothesis['verdict']} ({hypothesis['supportedClaims']}/{hypothesis['totalClaims']} claims)"
+    )
     print(f"  {hypothesis['headline']}\n")
     for e in eras:
         nov = sum(1 for a in e["archetypes"] if a.get("novel"))

@@ -7,10 +7,12 @@ individual players. It is a training gate, not an export contract.
 from __future__ import annotations
 
 import json
-from pathlib import Path
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 import numpy as np
+
+if TYPE_CHECKING:
+    from pathlib import Path
 
 POSITION_NAMES = ("PG", "SG", "SF", "PF", "C")
 MIN_GROUP_ROWS = 10
@@ -34,7 +36,9 @@ def _sample_rows(rows: np.ndarray, limit: int) -> np.ndarray:
 
 
 def _recall_at_k(
-    embeddings: np.ndarray, pairs: np.ndarray, k: int = 10,
+    embeddings: np.ndarray,
+    pairs: np.ndarray,
+    k: int = 10,
 ) -> float | None:
     if len(pairs) == 0 or len(embeddings) <= k:
         return None
@@ -69,7 +73,9 @@ def _purity_at_k(
     return float(np.mean(values)) if values else None
 
 
-def _calibration(logits: np.ndarray, labels: np.ndarray) -> dict[str, float | int | None]:
+def _calibration(
+    logits: np.ndarray, labels: np.ndarray
+) -> dict[str, float | int | None]:
     if len(logits) == 0:
         return {"rows": 0, "ece_10": None, "brier": None, "mean_confidence": None}
     probabilities = _softmax(logits)
@@ -77,15 +83,17 @@ def _calibration(logits: np.ndarray, labels: np.ndarray) -> dict[str, float | in
     predicted = probabilities.argmax(axis=1)
     correct = (predicted == labels).astype(float)
     ece = 0.0
-    for lo, hi in zip(np.linspace(0, 1, 11)[:-1], np.linspace(0, 1, 11)[1:]):
-        in_bin = (confidence >= lo) & (
-            confidence < hi if hi < 1 else confidence <= hi
-        )
+    for lo, hi in zip(
+        np.linspace(0, 1, 11)[:-1], np.linspace(0, 1, 11)[1:], strict=False
+    ):
+        in_bin = (confidence >= lo) & (confidence < hi if hi < 1 else confidence <= hi)
         if in_bin.any():
-            ece += float(in_bin.mean() * abs(correct[in_bin].mean() - confidence[in_bin].mean()))
+            ece += float(
+                in_bin.mean() * abs(correct[in_bin].mean() - confidence[in_bin].mean())
+            )
     one_hot = np.eye(logits.shape[1], dtype=np.float32)[labels]
     return {
-        "rows": int(len(logits)),
+        "rows": len(logits),
         "ece_10": _round(ece),
         "brier": _round(float(((probabilities - one_hot) ** 2).sum(axis=1).mean())),
         "mean_confidence": _round(float(confidence.mean())),
@@ -105,7 +113,7 @@ def _next_profile_metrics(
     residual = y - prediction[valid_rows]
     ss_total = float(((y - y.mean(axis=0, keepdims=True)) ** 2).sum())
     return {
-        "rows": int(len(valid_rows)),
+        "rows": len(valid_rows),
         "r2": _round(1.0 - float((residual**2).sum()) / max(ss_total, 1e-9)),
         "mae_z": _round(float(np.abs(residual).mean())),
     }
@@ -128,7 +136,7 @@ def _summary(
 ) -> dict[str, Any]:
     next_report = _next_profile_metrics(prediction, target, next_index, next_rows)
     return {
-        "rows": int(len(distribution_rows)),
+        "rows": len(distribution_rows),
         "tower_spread": {
             "mean": _round(float(tower_spread[distribution_rows].mean())),
             "p05": _round(float(np.percentile(tower_spread[distribution_rows], 5))),
@@ -137,14 +145,18 @@ def _summary(
         "confidence": {
             "mean": _round(float(confidence[distribution_rows].mean())),
             "p95": _round(float(np.percentile(confidence[distribution_rows], 95))),
-            "fraction_ge_0_99": _round(float((confidence[distribution_rows] >= 0.99).mean())),
+            "fraction_ge_0_99": _round(
+                float((confidence[distribution_rows] >= 0.99).mean())
+            ),
         },
         "retrieval_recall_at_10": _round(_recall_at_k(embeddings, retrieval_pairs)),
         "archetype_purity_at_20": _round(
             _purity_at_k(embeddings, clusters, seasons, calibration_rows)
         ),
         "next_profile": next_report,
-        "calibration": _calibration(logits[calibration_rows], clusters[calibration_rows]),
+        "calibration": _calibration(
+            logits[calibration_rows], clusters[calibration_rows]
+        ),
     }
 
 
@@ -160,7 +172,9 @@ def _era_label(season: str) -> str:
 
 
 def role_labels_from_context(
-    names: np.ndarray, seasons: np.ndarray, context_path: Path,
+    names: np.ndarray,
+    seasons: np.ndarray,
+    context_path: Path,
 ) -> np.ndarray:
     """Assign coarse team-role cohorts from the existing role context.
 
@@ -172,10 +186,9 @@ def role_labels_from_context(
         return labels
     data = json.loads(context_path.read_text(encoding="utf-8"))
     rows = {
-        (str(row["name"]), str(row["season"])): row
-        for row in data.get("entries", [])
+        (str(row["name"]), str(row["season"])): row for row in data.get("entries", [])
     }
-    for i, (name, season) in enumerate(zip(names, seasons)):
+    for i, (name, season) in enumerate(zip(names, seasons, strict=False)):
         row = rows.get((str(name), str(season)))
         if row is None:
             continue
@@ -205,7 +218,9 @@ def _slice_summary(
         entry = _summary(
             distribution_rows=rows,
             calibration_rows=np.intersect1d(rows, held_out_pairs[:, 1]),
-            next_rows=group_pairs[:, 0] if len(group_pairs) else np.array([], dtype=int),
+            next_rows=group_pairs[:, 0]
+            if len(group_pairs)
+            else np.array([], dtype=int),
             retrieval_pairs=group_pairs,
             **kwargs,
         )
@@ -255,14 +270,18 @@ def build_validation_report(
     overall = _summary(
         distribution_rows=rows,
         calibration_rows=eval_targets,
-        next_rows=evaluation_pairs[:, 0] if len(evaluation_pairs) else np.array([], dtype=int),
+        next_rows=evaluation_pairs[:, 0]
+        if len(evaluation_pairs)
+        else np.array([], dtype=int),
         retrieval_pairs=evaluation_pairs,
         **inputs,
     )
-    position_labels = np.array([
-        POSITION_NAMES[p] if 0 <= int(p) < len(POSITION_NAMES) else "unknown"
-        for p in positions
-    ])
+    position_labels = np.array(
+        [
+            POSITION_NAMES[p] if 0 <= int(p) < len(POSITION_NAMES) else "unknown"
+            for p in positions
+        ]
+    )
     slice_values = {
         "archetype": np.array([f"archetype_{int(c)}" for c in clusters]),
         "position": position_labels,
@@ -281,9 +300,7 @@ def build_validation_report(
         if item["next_profile"]["rows"] >= MIN_NEXT_ROWS
         and item["next_profile"]["r2"] is not None
     ]
-    weak_next = [
-        item for item in eligible_next_groups if float(item["r2"]) <= 0.0
-    ]
+    weak_next = [item for item in eligible_next_groups if float(item["r2"]) <= 0.0]
     overall_next = overall["next_profile"]
     overall_next_weak = bool(
         overall_next["rows"] >= MIN_NEXT_ROWS

@@ -55,7 +55,7 @@ def norm_name(name: str) -> str:
 
 
 def vec_cos(a: list[float], b: list[float]) -> float:
-    num = sum(x * y for x, y in zip(a, b))
+    num = sum(x * y for x, y in zip(a, b, strict=False))
     na = math.sqrt(sum(x * x for x in a)) or 1.0
     nb = math.sqrt(sum(x * x for x in b)) or 1.0
     return num / (na * nb)
@@ -73,7 +73,7 @@ def linear_slope(ys: list[float]) -> float | None:
     mx = sum(xs) / n
     my = sum(ys) / n
     den = sum((x - mx) ** 2 for x in xs) or 1.0
-    return sum((x - mx) * (y - my) for x, y in zip(xs, ys)) / den
+    return sum((x - mx) * (y - my) for x, y in zip(xs, ys, strict=False)) / den
 
 
 def load_gp_ratios() -> dict[tuple[str, str], float]:
@@ -143,8 +143,7 @@ def load_availability() -> dict[tuple[int, str], dict]:
     if not path.exists():
         return {}
     doc = json.loads(path.read_text(encoding="utf-8"))
-    return {(int(r["player_id"]), str(r["season"])): r
-            for r in doc.get("players", [])}
+    return {(int(r["player_id"]), str(r["season"])): r for r in doc.get("players", [])}
 
 
 def load_team_by_name_season() -> dict[tuple[str, str], int]:
@@ -179,7 +178,7 @@ def main() -> None:
     pid_by_ns: dict[tuple[str, str], int] = {}
     if TRAIN_NPZ.exists():
         m_pids, m_names, m_seasons, _ = load_matrix_identity()
-        for pid, name, season in zip(m_pids, m_names, m_seasons):
+        for pid, name, season in zip(m_pids, m_names, m_seasons, strict=False):
             pid_by_ns[(str(name), str(season))] = int(pid)
 
     gp_ratios = load_gp_ratios()
@@ -187,8 +186,10 @@ def main() -> None:
     teams = load_team_by_name_season()
     min_gp = load_min_gp()
     if not min_gp:
-        print("WARN: min_gp.json missing — falling back to vectors.json mpg "
-              "(minutes/100 poss, NOT per-game). Run build_min_gp.py first.")
+        print(
+            "WARN: min_gp.json missing — falling back to vectors.json mpg "
+            "(minutes/100 poss, NOT per-game). Run build_min_gp.py first."
+        )
     avail = load_availability()
 
     # Attach pid + build by career
@@ -200,16 +201,18 @@ def main() -> None:
             # synthetic: hash name (rare for rows outside matrix)
             pid = abs(hash(norm_name(name))) % (10**9)
         honest = min_gp.get((pid, season))
-        rows_in.append({
-            "pid": pid,
-            "name": name,
-            "season": season,
-            "v": p.get("v") or [],
-            "gp": honest[1] if honest else float(p.get("gp") or 0),
-            "mpg": honest[0] if honest else 0.0,
-            "year": season_start(season),
-            "teamId": teams.get((name, season)),
-        })
+        rows_in.append(
+            {
+                "pid": pid,
+                "name": name,
+                "season": season,
+                "v": p.get("v") or [],
+                "gp": honest[1] if honest else float(p.get("gp") or 0),
+                "mpg": honest[0] if honest else 0.0,
+                "year": season_start(season),
+                "teamId": teams.get((name, season)),
+            }
+        )
 
     by_pid: dict[int, list[dict]] = defaultdict(list)
     for r in rows_in:
@@ -224,7 +227,7 @@ def main() -> None:
     row_index_by_ns: dict[tuple[str, str], int] = {}
     if TRAIN_NPZ.exists():
         _, m_names, m_seasons, m_idx = load_matrix_identity()
-        for i, name, season in zip(m_idx, m_names, m_seasons):
+        for i, name, season in zip(m_idx, m_names, m_seasons, strict=False):
             row_index_by_ns[(str(name), str(season))] = int(i)
 
     for pid, seq in by_pid.items():
@@ -250,8 +253,12 @@ def main() -> None:
                 feat["CAREER_GAP_YEARS"] = max(0.0, gap)
                 if cur["v"] and prev["v"] and len(cur["v"]) == len(prev["v"]):
                     feat["LAG1_COSINE"] = round(vec_cos(cur["v"], prev["v"]), 4)
-                    dnorm = math.sqrt(sum(
-                        (a - b) ** 2 for a, b in zip(cur["v"], prev["v"])))
+                    dnorm = math.sqrt(
+                        sum(
+                            (a - b) ** 2
+                            for a, b in zip(cur["v"], prev["v"], strict=False)
+                        )
+                    )
                     feat["DELTA_NORM"] = round(dnorm, 4)
                     deltas.append(dnorm)
                 if len(deltas) >= 1:
@@ -262,7 +269,7 @@ def main() -> None:
                     feat["CAREER_TEAM_CHANGE"] = 1.0 if int(pt) != int(ct) else 0.0
 
             # Trailing MPG / GP slopes (include current)
-            window = seq[max(0, i - 2): i + 1]
+            window = seq[max(0, i - 2) : i + 1]
             mpg_s = linear_slope([r["mpg"] for r in window])
             gp_s = linear_slope([r["gp"] for r in window])
             if mpg_s is not None:
@@ -284,7 +291,7 @@ def main() -> None:
                     feat["CAREER_MISS_STREAK"] = float(av["LONGEST_MISS_STREAK"])
                 trail = [
                     avail[(int(pid), s["season"])]["GP_PCT"]
-                    for s in seq[max(0, i - 2): i + 1]
+                    for s in seq[max(0, i - 2) : i + 1]
                     if (int(pid), s["season"]) in avail
                 ]
                 if trail:
@@ -327,7 +334,7 @@ def main() -> None:
         idx_pad = np.full((n_c, max_len), -1, dtype=np.int64)
         year_pad = np.zeros((n_c, max_len), dtype=np.int32)
         length = np.zeros(n_c, dtype=np.int32)
-        for i, (idxs, yrs) in enumerate(zip(seq_row_idx, seq_years)):
+        for i, (idxs, yrs) in enumerate(zip(seq_row_idx, seq_years, strict=False)):
             length[i] = len(idxs)
             idx_pad[i, : len(idxs)] = idxs
             year_pad[i, : len(yrs)] = yrs
@@ -376,8 +383,10 @@ def main() -> None:
             aux_miss_streak=aux_miss_streak,
             aux_streak_known=aux_streak_known,
         )
-        print(f"wrote {OUT_NPZ} careers={n_c} max_len={max_len} "
-              f"next_labeled={int(y_m.sum())}")
+        print(
+            f"wrote {OUT_NPZ} careers={n_c} max_len={max_len} "
+            f"next_labeled={int(y_m.sum())}"
+        )
 
 
 if __name__ == "__main__":

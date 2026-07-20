@@ -48,13 +48,15 @@ def main() -> None:
             continue
         prod = float((Z[i, prod_cols] * w).sum() / w.sum())
         sal = float(Z[i, sj])
-        rows.append({
-            "name": names[i],
-            "season": seasons[i],
-            "production_z": round(prod, 3),
-            "salary_z": round(sal, 3),
-            "surplus": round(prod - sal, 3),
-        })
+        rows.append(
+            {
+                "name": names[i],
+                "season": seasons[i],
+                "production_z": round(prod, 3),
+                "salary_z": round(sal, 3),
+                "surplus": round(prod - sal, 3),
+            }
+        )
 
     # Latest season per player, prefer 2022+
     latest: dict[str, dict] = {}
@@ -78,8 +80,10 @@ def main() -> None:
         "sell_high_top": list(reversed(recent[-40:])),
     }
     OUT.write_text(json.dumps(payload, indent=2), encoding="utf-8")
-    print(f"wrote {OUT} n={len(recent)} "
-          f"top={recent[0]['name']} surplus={recent[0]['surplus']}")
+    print(
+        f"wrote {OUT} n={len(recent)} "
+        f"top={recent[0]['name']} surplus={recent[0]['surplus']}"
+    )
 
 
 if __name__ == "__main__":

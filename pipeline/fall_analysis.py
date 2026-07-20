@@ -55,14 +55,18 @@ POSITIONS = ["PG", "SG", "SF", "PF", "C"]
 
 def norm_name(name: str) -> str:
     s = unicodedata.normalize("NFKD", name)
-    return re.sub(r"[^a-z0-9]", "", "".join(c for c in s if not unicodedata.combining(c)).lower())
+    return re.sub(
+        r"[^a-z0-9]", "", "".join(c for c in s if not unicodedata.combining(c)).lower()
+    )
 
 
 def season_start(season: str) -> int:
     return int(season[:4])
 
 
-def load_bio() -> tuple[dict[tuple[str, str], tuple[float, float]], set[tuple[str, str]]]:
+def load_bio() -> tuple[
+    dict[tuple[str, str], tuple[float, float]], set[tuple[str, str]]
+]:
     """Return (name, season) -> (draft_z, age_z) and set of rows with real bio."""
     out: dict[tuple[str, str], tuple[float, float]] = {}
     present: set[tuple[str, str]] = set()
@@ -72,17 +76,29 @@ def load_bio() -> tuple[dict[tuple[str, str], tuple[float, float]], set[tuple[st
             rows = json.loads(path.read_text(encoding="utf-8"))
         except Exception:
             continue
-        drafts = [float(r["DRAFT_NUMBER"]) for r in rows if r.get("DRAFT_NUMBER") is not None]
+        drafts = [
+            float(r["DRAFT_NUMBER"]) for r in rows if r.get("DRAFT_NUMBER") is not None
+        ]
         ages = [float(r["AGE"]) for r in rows if r.get("AGE") is not None]
-        d_mu, d_sd = (float(np.mean(drafts)), float(np.std(drafts)) or 1.0) if drafts else (30.5, 15.0)
-        a_mu, a_sd = (float(np.mean(ages)), float(np.std(ages)) or 1.0) if ages else (27.0, 4.0)
+        d_mu, d_sd = (
+            (float(np.mean(drafts)), float(np.std(drafts)) or 1.0)
+            if drafts
+            else (30.5, 15.0)
+        )
+        a_mu, a_sd = (
+            (float(np.mean(ages)), float(np.std(ages)) or 1.0) if ages else (27.0, 4.0)
+        )
         for r in rows:
             name = str(r.get("PLAYER_NAME", ""))
             if not name:
                 continue
             key = (name, season)
             present.add(key)
-            dz = (float(r["DRAFT_NUMBER"]) - d_mu) / d_sd if r.get("DRAFT_NUMBER") is not None else 0.0
+            dz = (
+                (float(r["DRAFT_NUMBER"]) - d_mu) / d_sd
+                if r.get("DRAFT_NUMBER") is not None
+                else 0.0
+            )
             az = (float(r["AGE"]) - a_mu) / a_sd if r.get("AGE") is not None else 0.0
             out[key] = (dz, az)
     return out, present
@@ -102,8 +118,9 @@ def load_gp() -> dict[tuple[str, str], int]:
     return gp
 
 
-def build_features(draft_z: float, age_z: float, pos: int,
-                   lag1: np.ndarray | None) -> np.ndarray | None:
+def build_features(
+    draft_z: float, age_z: float, pos: int, lag1: np.ndarray | None
+) -> np.ndarray | None:
     if pos < 0 or lag1 is None:
         return None
     onehot = np.zeros(len(POSITIONS))
@@ -123,7 +140,9 @@ def main() -> None:
     ap.add_argument("--dry-run", action="store_true", help="stats only; no write")
     args = ap.parse_args()
 
-    players = json.loads((ASSETS / "vectors.json").read_text(encoding="utf-8"))["players"]
+    players = json.loads((ASSETS / "vectors.json").read_text(encoding="utf-8"))[
+        "players"
+    ]
     bio, bio_present = load_bio()
     gp_map = load_gp()
 
@@ -133,28 +152,35 @@ def main() -> None:
 
     records: list[dict] = []
     for p in players:
-        history = sorted(by_name[norm_name(p["name"])], key=lambda x: season_start(x["season"]))
+        history = sorted(
+            by_name[norm_name(p["name"])], key=lambda x: season_start(x["season"])
+        )
         lag1 = next(
-            (np.array(x["v"], dtype=np.float64)
-             for x in reversed(history) if season_start(x["season"]) < season_start(p["season"])),
+            (
+                np.array(x["v"], dtype=np.float64)
+                for x in reversed(history)
+                if season_start(x["season"]) < season_start(p["season"])
+            ),
             None,
         )
         pos = int(p.get("p", -1))
         key = (p["name"], p["season"])
         draft_z, age_z = bio.get(key, (0.0, 0.0))
-        records.append({
-            "name": p["name"],
-            "season": p["season"],
-            "position": POSITIONS[pos] if 0 <= pos < len(POSITIONS) else None,
-            "pos": pos,
-            "lag1": lag1,
-            "actual": np.array(p["v"], dtype=np.float64),
-            "draft_z": draft_z,
-            "age_z": age_z,
-            "bioMissing": key not in bio_present,
-            "gp": gp_map.get(key, 0),
-            "x": build_features(draft_z, age_z, pos, lag1),
-        })
+        records.append(
+            {
+                "name": p["name"],
+                "season": p["season"],
+                "position": POSITIONS[pos] if 0 <= pos < len(POSITIONS) else None,
+                "pos": pos,
+                "lag1": lag1,
+                "actual": np.array(p["v"], dtype=np.float64),
+                "draft_z": draft_z,
+                "age_z": age_z,
+                "bioMissing": key not in bio_present,
+                "gp": gp_map.get(key, 0),
+                "x": build_features(draft_z, age_z, pos, lag1),
+            }
+        )
 
     train = [r for r in records if r["x"] is not None]
     use_ridge = len(train) >= 200
@@ -189,20 +215,22 @@ def main() -> None:
 
         residual = r["actual"] - expected
         gp = r["gp"]
-        scored.append({
-            "name": r["name"],
-            "season": r["season"],
-            "position": r["position"],
-            "gp": gp,
-            "gpQualified": gp >= MIN_GP,
-            "bioMissing": r["bioMissing"],
-            "modelUsed": model_used,
-            "residualNorm": round(float(np.linalg.norm(residual)), 4),
-            "underperfScore": underperf_score(r["actual"], expected),
-            "residual": [round(float(x), 4) for x in residual],
-            "expected": [round(float(x), 4) for x in expected],
-            "actual": [round(float(x), 4) for x in r["actual"]],
-        })
+        scored.append(
+            {
+                "name": r["name"],
+                "season": r["season"],
+                "position": r["position"],
+                "gp": gp,
+                "gpQualified": gp >= MIN_GP,
+                "bioMissing": r["bioMissing"],
+                "modelUsed": model_used,
+                "residualNorm": round(float(np.linalg.norm(residual)), 4),
+                "underperfScore": underperf_score(r["actual"], expected),
+                "residual": [round(float(x), 4) for x in residual],
+                "expected": [round(float(x), 4) for x in expected],
+                "actual": [round(float(x), 4) for x in r["actual"]],
+            }
+        )
 
     qualified = [s for s in scored if s["gpQualified"]]
     collapses = sorted(qualified, key=lambda s: s["underperfScore"])[:POOL_EACH]
@@ -229,13 +257,20 @@ def main() -> None:
         "quizPool": collapses + exceeded,
     }
 
-    print(f"fall_analysis: {len(scored)} scored ({payload['model']}) | "
-          f"GP>={MIN_GP}: {len(qualified)} | pool: {len(payload['quizPool'])}")
+    print(
+        f"fall_analysis: {len(scored)} scored ({payload['model']}) | "
+        f"GP>={MIN_GP}: {len(qualified)} | pool: {len(payload['quizPool'])}"
+    )
 
     if args.dry_run:
         if collapses:
-            print("sample collapse:", collapses[0]["name"], collapses[0]["season"],
-                  "underperf=", collapses[0]["underperfScore"])
+            print(
+                "sample collapse:",
+                collapses[0]["name"],
+                collapses[0]["season"],
+                "underperf=",
+                collapses[0]["underperfScore"],
+            )
         return
 
     DATA.mkdir(parents=True, exist_ok=True)

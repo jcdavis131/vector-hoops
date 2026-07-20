@@ -18,8 +18,8 @@ from typing import Any
 
 # Soft scales for 0–1 transforms (chosen so the 2026-07-09 v5 report sits
 # mid-high without collapsing every component to 1.0).
-SKILL_NN_SCALE = 25.0          # grade-point neighbor gap; lower is better
-NEXT_MAE_SCALE = 1.0           # z-units
+SKILL_NN_SCALE = 25.0  # grade-point neighbor gap; lower is better
+NEXT_MAE_SCALE = 1.0  # z-units
 AUX_MAE_SCALE = 0.5
 
 WEIGHTS = {
@@ -211,9 +211,9 @@ def should_promote(
         new_recall = _num(_held_out_test(new_report).get("recall_at_10_mtnn")) or 0.0
     new_purity = _num(block.get("purity_at_20"))
     if new_purity is None:
-        new_purity = _num(
-            new_report.get("cross_era_archetype_neighbor_purity_at_20")
-        ) or 0.0
+        new_purity = (
+            _num(new_report.get("cross_era_archetype_neighbor_purity_at_20")) or 0.0
+        )
 
     base_cqs = baseline_cqs if baseline_cqs is not None else BASELINE.get("cqs")
     base_r = baseline_recall if baseline_recall is not None else BASELINE.get("recall")
@@ -231,7 +231,8 @@ def should_promote(
     if not isinstance(flags, dict):
         return False, "population validation collapse flags missing"
     failed_flags = [
-        name for name, detail in flags.items()
+        name
+        for name, detail in flags.items()
         if isinstance(detail, dict) and detail.get("flagged") is True
     ]
     if failed_flags:

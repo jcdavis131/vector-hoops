@@ -113,7 +113,7 @@ export async function mountStarMap(canvas){
   };
 
   async function cachedFetchJSON(url){
-    const CACHE_NAME='vector-hoops-v18-20260720-quad';
+    const CACHE_NAME='vector-hoops-v20-20260720-teamquad';
     try{
       if('caches' in window){
         const cache=await caches.open(CACHE_NAME);

@@ -36,8 +36,10 @@ def load_matrix():
 
 def missingness_stress(seed: int = 42) -> dict:
     """Zero-mask 30% of rows per family; measure mean feature availability."""
-    manifest = json.loads((DATA_DIR / "feature_manifest.json").read_text(encoding="utf-8"))
-    Z, mask = load_matrix()
+    manifest = json.loads(
+        (DATA_DIR / "feature_manifest.json").read_text(encoding="utf-8")
+    )
+    _Z, mask = load_matrix()
     families = manifest.get("families", {})
     features = manifest["features"]
     fam_cols: dict[str, list[int]] = {}
@@ -61,8 +63,11 @@ def missingness_stress(seed: int = 42) -> dict:
     stress_rate = float(stressed.mean())
     return {
         "rows_stressed": sample_n,
-        "families_stressed": [f for f in fam_cols if f not in (
-            "volume", "playmaking", "rebounding", "defense", "efficiency")],
+        "families_stressed": [
+            f
+            for f in fam_cols
+            if f not in ("volume", "playmaking", "rebounding", "defense", "efficiency")
+        ],
         "mean_mask_before": round(base_rate, 4),
         "mean_mask_after": round(stress_rate, 4),
         "note": "Train-time robustness — compare recall before/after with stressed mask export (manual)",
@@ -78,26 +83,32 @@ def promotion_gates(report: dict) -> list[dict]:
     purity = report.get("cross_era_archetype_neighbor_purity_at_20")
 
     if mtnn_r is not None:
-        gates.append({
-            "gate": "S2_test_recall_at_10",
-            "value": mtnn_r,
-            "target": 0.80,
-            "pass": mtnn_r >= 0.80,
-        })
+        gates.append(
+            {
+                "gate": "S2_test_recall_at_10",
+                "value": mtnn_r,
+                "target": 0.80,
+                "pass": mtnn_r >= 0.80,
+            }
+        )
     if purity is not None:
-        gates.append({
-            "gate": "S4_purity_at_20",
-            "value": purity,
-            "target": GATE_PURITY,
-            "pass": purity >= GATE_PURITY,
-        })
+        gates.append(
+            {
+                "gate": "S4_purity_at_20",
+                "value": purity,
+                "target": GATE_PURITY,
+                "pass": purity >= GATE_PURITY,
+            }
+        )
     if mtnn_r is not None and raw_r is not None:
-        gates.append({
-            "gate": "S5_mtnn_vs_raw",
-            "value": round(mtnn_r - raw_r, 4),
-            "target": GATE_MTTN_VS_RAW,
-            "pass": (mtnn_r - raw_r) >= GATE_MTTN_VS_RAW,
-        })
+        gates.append(
+            {
+                "gate": "S5_mtnn_vs_raw",
+                "value": round(mtnn_r - raw_r, 4),
+                "target": GATE_MTTN_VS_RAW,
+                "pass": (mtnn_r - raw_r) >= GATE_MTTN_VS_RAW,
+            }
+        )
     return gates
 
 
@@ -112,27 +123,35 @@ def ablation_summary() -> dict | None:
         if name == "full" or baseline is None:
             continue
         dt = r["test_recall"] - baseline
-        drops.append({
-            "config": name,
-            "exclude": r.get("exclude"),
-            "delta_test_recall": round(dt, 4),
-            "family_helps": dt < -GATE_RECALL_DROP,
-        })
+        drops.append(
+            {
+                "config": name,
+                "exclude": r.get("exclude"),
+                "delta_test_recall": round(dt, 4),
+                "family_helps": dt < -GATE_RECALL_DROP,
+            }
+        )
     return {"baseline_test": baseline, "drop_one": drops}
 
 
 def run_quick_train(epochs: int = 5) -> dict:
     cmd = [
-        sys.executable, str(ROOT / "pipeline" / "train_mtnn.py"),
-        "--epochs", str(epochs),
+        sys.executable,
+        str(ROOT / "pipeline" / "train_mtnn.py"),
+        "--epochs",
+        str(epochs),
     ]
     subprocess.run(cmd, cwd=ROOT, check=True)
     return json.loads(MTNN_REPORT.read_text(encoding="utf-8"))
 
 
 def run_ablation(epochs: int = 25) -> None:
-    cmd = [sys.executable, str(ROOT / "pipeline" / "tower_ablation.py"),
-           "--epochs", str(epochs)]
+    cmd = [
+        sys.executable,
+        str(ROOT / "pipeline" / "tower_ablation.py"),
+        "--epochs",
+        str(epochs),
+    ]
     subprocess.run(cmd, cwd=ROOT, check=True)
 
 
@@ -157,10 +176,14 @@ def main() -> None:
         "promotion_gates": promotion_gates(report) if report else [],
         "ablation": ablation_summary(),
         "mtnn_snapshot": {
-            "test_recall_at_10": report.get("held_out_recall", {}).get("test", {}).get("recall_at_10_mtnn"),
+            "test_recall_at_10": report.get("held_out_recall", {})
+            .get("test", {})
+            .get("recall_at_10_mtnn"),
             "purity_at_20": report.get("cross_era_archetype_neighbor_purity_at_20"),
             "towers": report.get("towers"),
-        } if report else None,
+        }
+        if report
+        else None,
         "warnings": [],
     }
 
@@ -170,7 +193,9 @@ def main() -> None:
             f"{len(failed)} promotion gates not met — do not promote to assets/vectors.json"
         )
     if payload["ablation"] is None:
-        payload["warnings"].append("no tower_ablation.json — run tower_ablation.py or --ablate")
+        payload["warnings"].append(
+            "no tower_ablation.json — run tower_ablation.py or --ablate"
+        )
 
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(payload, indent=2), encoding="utf-8")

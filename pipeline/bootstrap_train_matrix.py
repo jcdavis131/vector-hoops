@@ -25,15 +25,35 @@ DATA_DIR = ROOT / "pipeline" / "data"
 
 # Must match build_vectors.py GAME_FEATURES + FAMILY_OF for tower grouping.
 GAME_FEATURES = [
-    "PTS", "AST", "OREB", "DREB", "STL", "BLK", "TOV",
-    "FG3A", "FGA", "FTA", "FG3_PCT", "FG_PCT", "FT_PCT", "PLUS_MINUS",
+    "PTS",
+    "AST",
+    "OREB",
+    "DREB",
+    "STL",
+    "BLK",
+    "TOV",
+    "FG3A",
+    "FGA",
+    "FTA",
+    "FG3_PCT",
+    "FG_PCT",
+    "FT_PCT",
+    "PLUS_MINUS",
 ]
 FAMILY_OF = {
-    "PTS": "volume", "FGA": "volume", "FTA": "volume", "FG3A": "volume",
-    "AST": "playmaking", "TOV": "playmaking",
-    "OREB": "rebounding", "DREB": "rebounding",
-    "STL": "defense", "BLK": "defense",
-    "FG3_PCT": "efficiency", "FG_PCT": "efficiency", "FT_PCT": "efficiency",
+    "PTS": "volume",
+    "FGA": "volume",
+    "FTA": "volume",
+    "FG3A": "volume",
+    "AST": "playmaking",
+    "TOV": "playmaking",
+    "OREB": "rebounding",
+    "DREB": "rebounding",
+    "STL": "defense",
+    "BLK": "defense",
+    "FG3_PCT": "efficiency",
+    "FG_PCT": "efficiency",
+    "FT_PCT": "efficiency",
     "PLUS_MINUS": "efficiency",
     "SALARY_LOG": "market",
 }
@@ -60,7 +80,7 @@ def main() -> None:
         seasons.append(p["season"])
         pids.append(p.get("player_id", p["id"]))
         clusters[i] = int(p["c"])
-        for j, f in enumerate(GAME_FEATURES):
+        for j, _f in enumerate(GAME_FEATURES):
             Z[i, j] = float(p["v"][j])
             mask[i, j] = 1.0
         if "SALARY_LOG" in wide_features and "sal" in p:
@@ -71,7 +91,8 @@ def main() -> None:
     DATA_DIR.mkdir(parents=True, exist_ok=True)
     np.savez_compressed(
         DATA_DIR / "train_matrix.npz",
-        Z=Z, mask=mask,
+        Z=Z,
+        mask=mask,
         player_id=np.array(pids),
         season=np.array(seasons),
         name=np.array(names),
@@ -87,8 +108,11 @@ def main() -> None:
         "notes": "Bootstrap only — re-run build_vectors.py when cache/API available for wide towers",
     }
     (DATA_DIR / "feature_manifest.json").write_text(
-        json.dumps(manifest, indent=2), encoding="utf-8")
-    print(f"wrote train_matrix.npz: {n} rows, {d} features (bootstrap from vectors.json)")
+        json.dumps(manifest, indent=2), encoding="utf-8"
+    )
+    print(
+        f"wrote train_matrix.npz: {n} rows, {d} features (bootstrap from vectors.json)"
+    )
 
 
 if __name__ == "__main__":

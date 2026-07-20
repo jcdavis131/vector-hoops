@@ -82,8 +82,10 @@ def main() -> None:
     ASSETS.mkdir(parents=True, exist_ok=True)
     out = ASSETS / "player_meta.json"
     out.write_text(json.dumps(payload, separators=(",", ":")), encoding="utf-8")
-    print(f"wrote {out} ({len(roster_map)} roster rows, "
-          f"{len(puzzle_weight)} puzzle weights, {len(honors_by_key)} honor keys)")
+    print(
+        f"wrote {out} ({len(roster_map)} roster rows, "
+        f"{len(puzzle_weight)} puzzle weights, {len(honors_by_key)} honor keys)"
+    )
 
 
 if __name__ == "__main__":

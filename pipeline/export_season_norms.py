@@ -31,13 +31,13 @@ verify_accuracy V15. A pair that fails is dropped, never shipped.
 
 Run: python pipeline/export_season_norms.py
 """
+
 from __future__ import annotations
 
 import json
 from pathlib import Path
 
 import numpy as np
-
 from name_utils import canonical_name
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -76,8 +76,10 @@ def main() -> None:
             dropped.append(f"{season}: only {len(keep)}/{len(rows)} matched raw cache")
             continue
 
-        X = np.array([[rawmap[names[i]].get(f, np.nan) for f in feats] for i in keep],
-                     dtype=float)
+        X = np.array(
+            [[rawmap[names[i]].get(f, np.nan) for f in feats] for i in keep],
+            dtype=float,
+        )
         Z = np.array([rows[i]["v"] for i in keep], dtype=float)
 
         mu = np.nanmean(X, axis=0)
@@ -109,14 +111,17 @@ def main() -> None:
         "notInvertibleReason": (
             "empirical-Bayes shrunk toward the league mean by attempts before "
             "z-scoring, so the raw value is not the number that was normalized; "
-            "show a percentile instead of a fabricated rate"),
+            "show a percentile instead of a fabricated rate"
+        ),
         "verified": f"round-trip |z_hat - z| <= {TOL} for every shipped pair",
         "seasons": seasons,
     }
     OUT.write_text(json.dumps(doc, separators=(",", ":")), encoding="utf-8")
 
     n_pairs = sum(len(s["features"]) for s in seasons.values())
-    print(f"season norms: {len(seasons)} seasons, {n_pairs} verified (season,feature) pairs")
+    print(
+        f"season norms: {len(seasons)} seasons, {n_pairs} verified (season,feature) pairs"
+    )
     print(f"  excluded (shrunk): {sorted(NOT_INVERTIBLE)}")
     if dropped:
         print(f"  dropped {len(dropped)}:")

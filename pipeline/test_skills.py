@@ -19,6 +19,7 @@ import numpy as np
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "pipeline"))
 from name_utils import canonical_name
+
 VECTORS = ROOT / "assets" / "vectors.json"
 SKILLS = ROOT / "assets" / "skills.json"
 PROBE = ROOT / "assets" / "skill_probe.json"
@@ -78,15 +79,19 @@ def main() -> None:
     for j, key in enumerate(keys):
         q = np.array(probe["quantiles"][key], dtype=np.float64)
         est = np.clip(np.interp(scores[:, j], q, knots_p), 0, 99)
-        exact = np.clip(
-            (scores[:, j].argsort().argsort() + 0.5) / n * 100.0, 0, 99)
+        exact = np.clip((scores[:, j].argsort().argsort() + 0.5) / n * 100.0, 0, 99)
         worst_fid = max(worst_fid, float(np.abs(est - exact).max()))
         r = float(np.corrcoef(est, grades[:, j])[0, 1])
         worst_corr = min(worst_corr, r)
         fid_ok &= worst_fid <= 1.0
         corr_ok &= r >= 0.978
-    check(fid_ok, f"probe within 1 pt of exact pooled percentile (worst {worst_fid:.2f})")
-    check(corr_ok, f"probe vs season-grade corr >= 0.978 per skill (worst {worst_corr:.4f})")
+    check(
+        fid_ok, f"probe within 1 pt of exact pooled percentile (worst {worst_fid:.2f})"
+    )
+    check(
+        corr_ok,
+        f"probe vs season-grade corr >= 0.978 per skill (worst {worst_corr:.4f})",
+    )
 
     print("face validity")
     gl = {(p["name"], p["season"]): grades[i] for i, p in enumerate(players)}
@@ -98,8 +103,10 @@ def main() -> None:
         if row is None:
             check(False, f"{name} {season} present")
             return
-        check(int(row[ki[skill]]) >= floor,
-              f"{name} {season} {skill} >= {floor} (got {int(row[ki[skill]])})")
+        check(
+            int(row[ki[skill]]) >= floor,
+            f"{name} {season} {skill} >= {floor} (got {int(row[ki[skill]])})",
+        )
 
     spot("Stephen Curry", "2015-16", "shooting", 95)
     spot("Shaquille O'Neal", "1999-00", "finishing", 95)

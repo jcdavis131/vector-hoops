@@ -19,17 +19,27 @@ REPORT = ROOT / "pipeline" / "data" / "mtnn_report.json"
 
 # All context / extension families in integrate_context.py (2026-07).
 CONTEXT_FAMS = (
-    "roster", "career", "competition", "market", "team",
-    "form", "pedigree", "playoffs",
+    "roster",
+    "career",
+    "competition",
+    "market",
+    "team",
+    "form",
+    "pedigree",
+    "playoffs",
 )
 
 
 def run_train(exclude: list[str], epochs: int, seed: int) -> dict:
     cmd = [
-        sys.executable, str(ROOT / "pipeline" / "train_mtnn.py"),
-        "--epochs", str(epochs),
-        "--seed", str(seed),
-        "--val-every", "0",
+        sys.executable,
+        str(ROOT / "pipeline" / "train_mtnn.py"),
+        "--epochs",
+        str(epochs),
+        "--seed",
+        str(seed),
+        "--val-every",
+        "0",
         "--no-best-checkpoint",
     ]
     if exclude:
@@ -79,12 +89,15 @@ def main() -> None:
 
     out = ROOT / "pipeline" / "data" / "tower_ablation.json"
     out.write_text(
-        json.dumps({
-            "baseline_test": baseline_test,
-            "epochs": args.epochs,
-            "seed": args.seed,
-            "runs": results,
-        }, indent=2),
+        json.dumps(
+            {
+                "baseline_test": baseline_test,
+                "epochs": args.epochs,
+                "seed": args.seed,
+                "runs": results,
+            },
+            indent=2,
+        ),
         encoding="utf-8",
     )
     print(f"\nwrote {out}")

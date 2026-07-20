@@ -27,7 +27,6 @@ import time
 import unicodedata
 import urllib.request
 from pathlib import Path
-from typing import Dict
 
 ROOT = Path(__file__).resolve().parent
 CACHE = ROOT / "cache"
@@ -70,7 +69,7 @@ def cache_path(season: str) -> Path:
     return CACHE / f"bbref_advanced_{season}.json"
 
 
-def parse_season_html(html: str) -> Dict[str, Dict[str, float]]:
+def parse_season_html(html: str) -> dict[str, dict[str, float]]:
     """Parse BBRef advanced table rows into norm_name -> stats dict.
 
     Production parser mirrors fetch_positions.py ROW_RE style: regex over
@@ -81,17 +80,20 @@ def parse_season_html(html: str) -> Dict[str, Dict[str, float]]:
     """
     # Fast check: if table comment-wrapped (BBRef hides tables in <!-- -->)
     if "advanced_stats" not in html:
-        print("[warn] advanced_stats table not in HTML — likely commented out or blocked, returning {} (use offline cache)", file=sys.stderr)
+        print(
+            "[warn] advanced_stats table not in HTML — likely commented out or blocked, returning {} (use offline cache)",
+            file=sys.stderr,
+        )
         return {}
 
-    out: Dict[str, Dict[str, float]] = {}
+    out: dict[str, dict[str, float]] = {}
     # Minimal safe parse: look for <tr> with data-stat="per" etc — production logic lives in operator notes docs/DATA_SOURCES_DEEP.md
     # This stub intentionally avoids crashing and keeps MLOps green.
     # Full parse available in archived operator_fetch_advanced.py (residential IP required).
     return out
 
 
-def fetch_season(season: str, offline: bool = False) -> Dict[str, Dict[str, float]]:
+def fetch_season(season: str, offline: bool = False) -> dict[str, dict[str, float]]:
     """HTTP GET season advanced page and parse player-season stats."""
     cpath = cache_path(season)
     if cpath.exists():
@@ -115,7 +117,10 @@ def fetch_season(season: str, offline: bool = False) -> Dict[str, Dict[str, floa
         with urllib.request.urlopen(req, timeout=30) as r:
             html = r.read().decode("utf-8", errors="ignore")
     except Exception as e:
-        print(f"[error] fetch {season} failed: {e} — returning cached if any", file=sys.stderr)
+        print(
+            f"[error] fetch {season} failed: {e} — returning cached if any",
+            file=sys.stderr,
+        )
         return {}
 
     data = parse_season_html(html)
@@ -129,12 +134,18 @@ def fetch_season(season: str, offline: bool = False) -> Dict[str, Dict[str, floa
 
 
 def main() -> None:
-    ap = argparse.ArgumentParser(description="Fetch BBRef advanced stats (resumable, rate-limited)")
+    ap = argparse.ArgumentParser(
+        description="Fetch BBRef advanced stats (resumable, rate-limited)"
+    )
     ap.add_argument("--season", help="Single season like 2023-24")
     ap.add_argument("--offline", action="store_true", help="Use cache only, no network")
     args = ap.parse_args()
 
-    seasons = [args.season] if args.season else [f"{y}-{str(y+1)[-2:]}" for y in range(1996, 2026)]
+    seasons = (
+        [args.season]
+        if args.season
+        else [f"{y}-{str(y + 1)[-2:]}" for y in range(1996, 2026)]
+    )
     CACHE.mkdir(parents=True, exist_ok=True)
     for s in seasons:
         fetch_season(s, offline=args.offline)

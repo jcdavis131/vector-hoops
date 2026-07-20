@@ -69,14 +69,22 @@ def main() -> None:
     html = fetch_html(URL)
     by = parse_finals_mvp(html)
     if len(by) < 50:
-        raise SystemExit(f"parsed only {len(by)} Finals MVP rows — page layout changed?")
+        raise SystemExit(
+            f"parsed only {len(by)} Finals MVP rows — page layout changed?"
+        )
     CACHE.mkdir(parents=True, exist_ok=True)
-    OUT.write_text(json.dumps({
-        "built": time.strftime("%Y-%m-%d"),
-        "source": URL,
-        "complete": True,
-        "bySeason": by,
-    }, separators=(",", ":")), encoding="utf-8")
+    OUT.write_text(
+        json.dumps(
+            {
+                "built": time.strftime("%Y-%m-%d"),
+                "source": URL,
+                "complete": True,
+                "bySeason": by,
+            },
+            separators=(",", ":"),
+        ),
+        encoding="utf-8",
+    )
     # sanity: Jordan three-peat + second three-peat
     for s in ("1990-91", "1991-92", "1992-93", "1995-96", "1996-97", "1997-98"):
         rec = by.get(s)

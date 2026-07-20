@@ -87,13 +87,15 @@ def main() -> None:
         abbr = abbrs.get(tid)
         if not abbr:
             continue
-        teams.append({
-            "id": tid,
-            "abbr": abbr,
-            "name": names[tid],
-            "primary": TEAM_COLORS.get(abbr, ("#eb6834", "#2a78d6"))[0],
-            "secondary": TEAM_COLORS.get(abbr, ("#eb6834", "#2a78d6"))[1],
-        })
+        teams.append(
+            {
+                "id": tid,
+                "abbr": abbr,
+                "name": names[tid],
+                "primary": TEAM_COLORS.get(abbr, ("#eb6834", "#2a78d6"))[0],
+                "secondary": TEAM_COLORS.get(abbr, ("#eb6834", "#2a78d6"))[1],
+            }
+        )
     teams.sort(key=lambda t: t["name"])
     payload = {
         "built": __import__("time").strftime("%Y-%m-%d"),

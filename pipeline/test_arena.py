@@ -92,14 +92,19 @@ def main() -> None:
     for i in range(0, n, 7):
         o = i * ROW_BYTES
         ni, so, _pos, _gc, _mt, _tg, _gp, x, y, z = struct.unpack_from(
-            "<HBBBBBBHHH", buf, o)
+            "<HBBBBBBHHH", buf, o
+        )
         p = players[i]
         name_ok &= names[ni] == p["name"]
         season_ok &= seasons[so] == p["season"]
-        skill_ok &= list(buf[o + 14:o + 26]) == [
-            max(0, min(99, g)) for g in grades[i]]
-        err = max(abs(x / 65535 - coords[i, 0]), abs(y / 65535 - coords[i, 1]),
-                  abs(z / 65535 - coords[i, 2]))
+        skill_ok &= list(buf[o + 14 : o + 26]) == [
+            max(0, min(99, g)) for g in grades[i]
+        ]
+        err = max(
+            abs(x / 65535 - coords[i, 0]),
+            abs(y / 65535 - coords[i, 1]),
+            abs(z / 65535 - coords[i, 2]),
+        )
         worst_coord = max(worst_coord, float(err))
         coord_ok &= err <= 1.0 / 65535 + 1e-9
     check(name_ok, "decoded names match vectors.json (every 7th row)")
@@ -110,8 +115,9 @@ def main() -> None:
     print("archetype pulls + model read")
     emb = np.fromfile(EMB, dtype=np.float32).reshape(n, EMB_DIM)
     emb_n = emb / np.maximum(np.linalg.norm(emb, axis=1, keepdims=True), 1e-9)
-    cents = np.asarray(json.loads(MTNN_META.read_text(encoding="utf-8"))
-                       ["centroids"], dtype=np.float64)
+    cents = np.asarray(
+        json.loads(MTNN_META.read_text(encoding="utf-8"))["centroids"], dtype=np.float64
+    )
     cents /= np.linalg.norm(cents, axis=1, keepdims=True)
     cos = emb_n @ cents.T
     heads = np.fromfile(HEADS, dtype=np.float32).reshape(n, -1)
@@ -121,21 +127,26 @@ def main() -> None:
     sampled, agree = 0, 0
     for i in range(0, n, 7):
         o = i * ROW_BYTES
-        stored = np.frombuffer(buf, dtype=np.uint8,
-                               count=8, offset=o + 26) / 127.5 - 1.0
+        stored = (
+            np.frombuffer(buf, dtype=np.uint8, count=8, offset=o + 26) / 127.5 - 1.0
+        )
         err = float(np.abs(stored - cos[i]).max())
         worst_pull = max(worst_pull, err)
         pull_ok &= err <= 1.0 / 127.5 + 1e-9
         sampled += 1
         agree += buf[o + 4] == top_head[i]
-    check(pull_ok, f"archetype pull within 1 quantum of true cosine "
-                   f"(worst {worst_pull:.2e})")
+    check(
+        pull_ok,
+        f"archetype pull within 1 quantum of true cosine (worst {worst_pull:.2e})",
+    )
     # Head argmax and nearest-centroid don't always coincide (two different
     # readings of the same embedding) — gate the agreement rate, not a
     # byte-exact match on every row.
     agree_rate = agree / sampled
-    check(agree_rate >= 0.9, f"mtnnTop == archetype head argmax on >=90% of "
-                              f"rows (got {agree_rate:.3f})")
+    check(
+        agree_rate >= 0.9,
+        f"mtnnTop == archetype head argmax on >=90% of rows (got {agree_rate:.3f})",
+    )
 
     print("embedding quantization honesty")
     q8 = np.fromfile(EMBQ, dtype=np.int8).reshape(n, EMB_DIM)
@@ -145,12 +156,15 @@ def main() -> None:
     ii = rng.integers(0, n, 20000)
     jj = rng.integers(0, n, 20000)
     drift = np.abs((emb_n[ii] * emb_n[jj]).sum(1) - (deq[ii] * deq[jj]).sum(1))
-    check(float(drift.max()) < 0.02,
-          f"cosine drift max < 0.02 (got {drift.max():.5f})")
-    check(float(drift.mean()) < 0.005,
-          f"cosine drift mean < 0.005 (got {drift.mean():.5f})")
-    check(abs(core["embed"]["maxCosDrift"] - float(drift.max())) < 1e-4,
-          "core.json states the measured drift")
+    check(float(drift.max()) < 0.02, f"cosine drift max < 0.02 (got {drift.max():.5f})")
+    check(
+        float(drift.mean()) < 0.005,
+        f"cosine drift mean < 0.005 (got {drift.mean():.5f})",
+    )
+    check(
+        abs(core["embed"]["maxCosDrift"] - float(drift.max())) < 1e-4,
+        "core.json states the measured drift",
+    )
 
     print("pool sanity")
     pool = core["pool"]
@@ -166,15 +180,22 @@ def main() -> None:
     check(pool_w_ok, "pool weights in [1, 255]")
     check(max(per_player.values()) <= 6, "max 6 seasons per player in pool")
     pool_names = set(per_player)
-    for famous in ("Stephen Curry", "LeBron James", "Michael Jordan",
-                   "Tim Duncan", "Nikola Jokic"):
+    for famous in (
+        "Stephen Curry",
+        "LeBron James",
+        "Michael Jordan",
+        "Tim Duncan",
+        "Nikola Jokic",
+    ):
         check(famous in pool_names, f"pool includes {famous}")
 
     print("daily determinism (node vs python mirror)")
     days = list(range(1, 61))
     py_picks = [pick_daily(pool, d) for d in days]
-    check(len(set(py_picks)) > 45, f"60 days draw >45 distinct rows "
-                                   f"(got {len(set(py_picks))})")
+    check(
+        len(set(py_picks)) > 45,
+        f"60 days draw >45 distinct rows (got {len(set(py_picks))})",
+    )
     try:
         script = (
             "const d=require(process.argv[1]);"
@@ -183,10 +204,17 @@ def main() -> None:
             "console.log(JSON.stringify(days.map(x=>d.pickDaily(core.pool,x))));"
             "console.log(d.dayNumber('2026-07-15', Date.UTC(2026,6,15,12)));"
         )
-        out = subprocess.run(
-            ["node", "-e", script, str(DAILY_JS), str(CORE)],
-            capture_output=True, text=True, timeout=60, check=True,
-        ).stdout.strip().splitlines()
+        out = (
+            subprocess.run(
+                ["node", "-e", script, str(DAILY_JS), str(CORE)],
+                capture_output=True,
+                text=True,
+                timeout=60,
+                check=True,
+            )
+            .stdout.strip()
+            .splitlines()
+        )
         js_picks = json.loads(out[0])
         check(js_picks == py_picks, "node daily.js picks == python mirror (60 days)")
         check(int(out[1]) == 1, "epoch date itself is day #1")
@@ -205,15 +233,19 @@ def main() -> None:
             check(False, f"{name} {season} present")
             return
         got = clusters[buf[i * ROW_BYTES + 4]]
-        check(needle.lower() in got.lower(),
-              f"{name} {season} model read contains '{needle}' (got '{got}')")
+        check(
+            needle.lower() in got.lower(),
+            f"{name} {season} model read contains '{needle}' (got '{got}')",
+        )
 
     spot_cluster("Stephen Curry", "2015-16", "Volume")
     spot_cluster("Dennis Rodman", "1996-97", "Glass")
     spot_cluster("Dikembe Mutombo", "1996-97", "Rim")
     spot_cluster("John Stockton", "1996-97", "Playmaking")
-    check(str(row_of[("Allen Iverson", "1996-97")]) in core["honors"],
-          "honors carry Iverson 1996-97")
+    check(
+        str(row_of[("Allen Iverson", "1996-97")]) in core["honors"],
+        "honors carry Iverson 1996-97",
+    )
 
     print()
     if FAILURES:

@@ -7,12 +7,11 @@ from pathlib import Path
 
 import numpy as np
 import torch
-
 from mtnn_validation import build_validation_report, role_labels_from_context
 from train_mtnn import (
     BBREF_FEATURES,
-    FORM_FEATURES,
     DATA_DIR,
+    FORM_FEATURES,
     MTNN,
     adjacent_season_pairs,
     family_slices,
@@ -37,7 +36,9 @@ def main() -> None:
     Z, M, names, seasons, pids, clusters, positions, _, manifest = load_bundle()
     families = family_slices(manifest)
     excluded = {
-        value.strip() for value in args.get("exclude_families", "").split(",") if value.strip()
+        value.strip()
+        for value in args.get("exclude_families", "").split(",")
+        if value.strip()
     }
     families = {name: cols for name, cols in families.items() if name not in excluded}
     game_cols = game_feature_cols(manifest)
@@ -87,7 +88,9 @@ def main() -> None:
         clusters=clusters,
         positions=positions,
         seasons=seasons,
-        role_labels=role_labels_from_context(names, seasons, DATA_DIR / "role_context.json"),
+        role_labels=role_labels_from_context(
+            names, seasons, DATA_DIR / "role_context.json"
+        ),
         next_profile_pred=heads["next_profile"].numpy().astype(np.float32),
         game_profile_target=Z[:, game_cols],
         next_index=next_index,

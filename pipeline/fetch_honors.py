@@ -26,8 +26,10 @@ ROOT = Path(__file__).resolve().parents[1]
 CACHE = ROOT / "pipeline" / "cache"
 AWARD_YEARS = list(range(1997, 2027))  # awards_1997 .. awards_2026
 BBREF_AWARDS = "https://www.basketball-reference.com/awards/awards_{year}.html"
-UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
-      "(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")
+UA = (
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+    "(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+)
 
 
 def norm_name(name: str) -> str:
@@ -50,11 +52,13 @@ def cache_path(year: int) -> Path:
 def fetch_html(url: str) -> str:
     try:
         from curl_cffi import requests as cr
+
         r = cr.get(url, impersonate="chrome120", headers={"User-Agent": UA}, timeout=60)
         r.raise_for_status()
         return r.text
     except ImportError:
         import urllib.request
+
         req = urllib.request.Request(url, headers={"User-Agent": UA})
         with urllib.request.urlopen(req, timeout=60) as resp:
             return resp.read().decode("utf-8", errors="replace")
@@ -113,8 +117,12 @@ def _html_section(html: str, start: str, end: str) -> str:
 
 
 _TIER_FROM_TM = {
-    "1T": 3, "2T": 2, "3T": 1,
-    "1ST": 3, "2ND": 2, "3RD": 1,  # pre-2022 BBRef label in # Tm column
+    "1T": 3,
+    "2T": 2,
+    "3T": 1,
+    "1ST": 3,
+    "2ND": 2,
+    "3RD": 1,  # pre-2022 BBRef label in # Tm column
 }
 
 
@@ -129,8 +137,9 @@ def _int_stat_cell(row: str, stat: str) -> int:
 def _tier_from_row(row: str) -> int:
     """All-NBA tier 3/2/1/0 from # Tm code or team-vote columns (legacy pages)."""
     tm_m = re.search(
-        r'data-stat="all_nba_team"[^>]*>([^<]+)</t[dh]>', row, re.IGNORECASE)
-    tier_code = (tm_m.group(1).strip().upper() if tm_m else "")
+        r'data-stat="all_nba_team"[^>]*>([^<]+)</t[dh]>', row, re.IGNORECASE
+    )
+    tier_code = tm_m.group(1).strip().upper() if tm_m else ""
     tier = _TIER_FROM_TM.get(tier_code, 0)
     if tier:
         return tier
@@ -154,7 +163,8 @@ def parse_all_nba_table(html: str) -> list[dict]:
     out: list[dict] = []
     for row in re.findall(r"<tr[^>]*>(.*?)</tr>", chunk, re.DOTALL | re.IGNORECASE):
         pm = re.search(
-            r'data-stat="player"[^>]*>\s*<a[^>]*>([^<]+)</a>', row, re.IGNORECASE)
+            r'data-stat="player"[^>]*>\s*<a[^>]*>([^<]+)</a>', row, re.IGNORECASE
+        )
         if not pm:
             continue
         name = re.sub(r"\s*\(\d+\)\s*$", "", pm.group(1)).strip()
@@ -162,28 +172,37 @@ def parse_all_nba_table(html: str) -> list[dict]:
             continue
         tier = _tier_from_row(row)
         pts_m = re.search(
-            r'data-stat="points_won"[^>]*>([^<]*)</td>', row, re.IGNORECASE)
+            r'data-stat="points_won"[^>]*>([^<]*)</td>', row, re.IGNORECASE
+        )
         vote_pts = 0
         if pts_m:
             digits = re.sub(r"\D", "", pts_m.group(1))
             vote_pts = int(digits) if digits else 0
-        out.append({
-            "name": name,
-            "norm": norm_name(name),
-            "vote_pts": vote_pts,
-            "all_nba_team": tier,
-        })
+        out.append(
+            {
+                "name": name,
+                "norm": norm_name(name),
+                "vote_pts": vote_pts,
+                "all_nba_team": tier,
+            }
+        )
     return out
 
 
 def parse_all_nba_voting(html: str) -> list[dict]:
     """Backward-compatible alias — returns rows with vote_pts (incl. ORV)."""
-    return [r for r in parse_all_nba_table(html) if r["vote_pts"] > 0 or r["all_nba_team"]]
+    return [
+        r for r in parse_all_nba_table(html) if r["vote_pts"] > 0 or r["all_nba_team"]
+    ]
 
 
 def parse_all_nba_teams(html: str) -> dict[str, int]:
     """norm_name -> team tier (3=1st, 2=2nd, 1=3rd)."""
-    return {r["norm"]: r["all_nba_team"] for r in parse_all_nba_table(html) if r["all_nba_team"]}
+    return {
+        r["norm"]: r["all_nba_team"]
+        for r in parse_all_nba_table(html)
+        if r["all_nba_team"]
+    }
 
 
 def parse_all_stars(html: str, award_year: int) -> set[str]:
@@ -193,18 +212,20 @@ def parse_all_stars(html: str, award_year: int) -> set[str]:
     if not chunk:
         chunk = _html_section(html, "All-Star", "Coach of the Year")
     for m in re.finditer(
-        r'data-stat="player"[^>]*>\s*<a[^>]*>([^<]+)</a>', chunk, re.IGNORECASE):
+        r'data-stat="player"[^>]*>\s*<a[^>]*>([^<]+)</a>', chunk, re.IGNORECASE
+    ):
         stars.add(norm_name(m.group(1)))
     if stars:
         return stars
     try:
         asg_html = fetch_html(
-            f"https://www.basketball-reference.com/allstar/NBA_{award_year}.html")
+            f"https://www.basketball-reference.com/allstar/NBA_{award_year}.html"
+        )
         for m in re.finditer(
-            r'data-stat="player"[^>]*>\s*<a[^>]*>([^<]+)</a>',
-            asg_html, re.IGNORECASE):
+            r'data-stat="player"[^>]*>\s*<a[^>]*>([^<]+)</a>', asg_html, re.IGNORECASE
+        ):
             stars.add(norm_name(m.group(1)))
-    except Exception:  # noqa: BLE001
+    except Exception:
         pass
     return stars
 
@@ -214,20 +235,27 @@ def build_year_cache(year: int) -> dict:
     html = fetch_html(url)
     season = award_year_to_season(year)
     table_rows = parse_all_nba_table(html)
-    teams = {r["norm"]: r["all_nba_team"] for r in table_rows if r["all_nba_team"]}
-    votes = [r for r in table_rows if r["vote_pts"] > 0]
+    {r["norm"]: r["all_nba_team"] for r in table_rows if r["all_nba_team"]}
+    [r for r in table_rows if r["vote_pts"] > 0]
     stars = parse_all_stars(html, year)
     players: dict[str, dict] = {}
     for row in table_rows:
         nn = row["norm"]
-        rec = players.setdefault(nn, {
-            "name": row["name"], "vote_pts": 0, "all_nba_team": 0, "asg": 0,
-        })
+        rec = players.setdefault(
+            nn,
+            {
+                "name": row["name"],
+                "vote_pts": 0,
+                "all_nba_team": 0,
+                "asg": 0,
+            },
+        )
         rec["vote_pts"] = max(rec["vote_pts"], row["vote_pts"])
         rec["all_nba_team"] = max(rec["all_nba_team"], row["all_nba_team"])
     for nn in stars:
-        rec = players.setdefault(nn, {"name": nn, "vote_pts": 0,
-                                      "all_nba_team": 0, "asg": 0})
+        rec = players.setdefault(
+            nn, {"name": nn, "vote_pts": 0, "all_nba_team": 0, "asg": 0}
+        )
         rec["asg"] = 1
     return {
         "built": time.strftime("%Y-%m-%d"),
@@ -245,8 +273,9 @@ def build_year_cache(year: int) -> dict:
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--offline", action="store_true")
-    ap.add_argument("--refresh", action="store_true",
-                    help="re-fetch even when cache file exists")
+    ap.add_argument(
+        "--refresh", action="store_true", help="re-fetch even when cache file exists"
+    )
     ap.add_argument("--year", type=int, default=None)
     args = ap.parse_args()
     years = [args.year] if args.year else AWARD_YEARS
@@ -265,10 +294,12 @@ def main() -> None:
         try:
             doc = build_year_cache(year)
             p.write_text(json.dumps(doc, separators=(",", ":")), encoding="utf-8")
-            print(f"award {year} ({doc['season']}): {doc['vote_getters']} vote-getters, "
-                  f"{doc['all_nba_selected']} All-NBA, {doc['all_stars']} ASG")
+            print(
+                f"award {year} ({doc['season']}): {doc['vote_getters']} vote-getters, "
+                f"{doc['all_nba_selected']} All-NBA, {doc['all_stars']} ASG"
+            )
             time.sleep(3.5)  # polite BBRef throttle
-        except Exception as e:  # noqa: BLE001
+        except Exception as e:
             print(f"award {year}: FAILED ({e})")
 
 

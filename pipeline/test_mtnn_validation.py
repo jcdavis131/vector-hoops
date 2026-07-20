@@ -148,7 +148,9 @@ class MTNNValidationTests(unittest.TestCase):
         )
 
         self.assertTrue(report["collapse_flags"]["near_zero_tower_spread"]["flagged"])
-        self.assertTrue(report["collapse_flags"]["universally_extreme_confidence"]["flagged"])
+        self.assertTrue(
+            report["collapse_flags"]["universally_extreme_confidence"]["flagged"]
+        )
 
 
 if __name__ == "__main__":

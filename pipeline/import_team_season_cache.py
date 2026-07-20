@@ -33,8 +33,10 @@ ADV_URL = (
     "https://raw.githubusercontent.com/Brescou/"
     "NBA-dataset-stats-player-team/main/team/team_stats_advanced_rs.csv"
 )
-UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
-      "(KHTML, like Gecko) Chrome/126.0 Safari/537.36")
+UA = (
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+    "(KHTML, like Gecko) Chrome/126.0 Safari/537.36"
+)
 
 BBREF_RECENT = (
     ("2024-25", 2025),
@@ -67,22 +69,26 @@ def import_cache(*, skip_existing: bool = True) -> tuple[int, int]:
     for r in trad_rows:
         season = r["SEASON"]
         team_id = int(r["TEAM_ID"])
-        base_by_season[season].append({
-            "TEAM_ID": team_id,
-            "TEAM_NAME": r["TEAM_NAME"],
-            "W": _float(r["W"]),
-            "L": _float(r["L"]),
-            "W_PCT": _float(r["W_PCT"]),
-        })
+        base_by_season[season].append(
+            {
+                "TEAM_ID": team_id,
+                "TEAM_NAME": r["TEAM_NAME"],
+                "W": _float(r["W"]),
+                "L": _float(r["L"]),
+                "W_PCT": _float(r["W_PCT"]),
+            }
+        )
         a = adv_by_season_team.get((season, team_id), {})
-        adv_by_season[season].append({
-            "TEAM_ID": team_id,
-            "TEAM_NAME": r["TEAM_NAME"],
-            "PACE": _float(a.get("PACE")),
-            "OFF_RATING": _float(a.get("OFF_RATING")),
-            "DEF_RATING": _float(a.get("DEF_RATING")),
-            "NET_RATING": _float(a.get("NET_RATING")),
-        })
+        adv_by_season[season].append(
+            {
+                "TEAM_ID": team_id,
+                "TEAM_NAME": r["TEAM_NAME"],
+                "PACE": _float(a.get("PACE")),
+                "OFF_RATING": _float(a.get("OFF_RATING")),
+                "DEF_RATING": _float(a.get("DEF_RATING")),
+                "NET_RATING": _float(a.get("NET_RATING")),
+            }
+        )
 
     CACHE.mkdir(parents=True, exist_ok=True)
     written, skipped = 0, 0
@@ -138,34 +144,42 @@ def import_bbref_recent(*, skip_existing: bool = True) -> int:
             r'data-stat="def_rtg"[^>]*>([\d.]+).*?'
             r'data-stat="pace"[^>]*>([\d.]+)'
         )
-        for name, w, l, ortg, drtg, pace in re.findall(pattern, m.group(0), re.S):
+        for name, w, losses, ortg, drtg, pace in re.findall(pattern, m.group(0), re.S):
             team_id = name_to_id.get(name)
             if team_id is None:
                 print(f"  {season}: unknown team {name!r} — skip")
                 continue
-            w_f, l_f = float(w), float(l)
+            w_f, l_f = float(w), float(losses)
             gp = w_f + l_f
-            base_rows.append({
-                "TEAM_ID": team_id,
-                "TEAM_NAME": name,
-                "W": w_f,
-                "L": l_f,
-                "W_PCT": round(w_f / gp, 3) if gp else None,
-            })
-            adv_rows.append({
-                "TEAM_ID": team_id,
-                "TEAM_NAME": name,
-                "PACE": float(pace),
-                "OFF_RATING": float(ortg),
-                "DEF_RATING": float(drtg),
-                "NET_RATING": round(float(ortg) - float(drtg), 1),
-            })
+            base_rows.append(
+                {
+                    "TEAM_ID": team_id,
+                    "TEAM_NAME": name,
+                    "W": w_f,
+                    "L": l_f,
+                    "W_PCT": round(w_f / gp, 3) if gp else None,
+                }
+            )
+            adv_rows.append(
+                {
+                    "TEAM_ID": team_id,
+                    "TEAM_NAME": name,
+                    "PACE": float(pace),
+                    "OFF_RATING": float(ortg),
+                    "DEF_RATING": float(drtg),
+                    "NET_RATING": round(float(ortg) - float(drtg), 1),
+                }
+            )
         if len(base_rows) < 25:
             print(f"  {season}: only {len(base_rows)} teams parsed — not writing")
             continue
         CACHE.mkdir(parents=True, exist_ok=True)
-        base_path.write_text(json.dumps(base_rows, separators=(",", ":")), encoding="utf-8")
-        adv_path.write_text(json.dumps(adv_rows, separators=(",", ":")), encoding="utf-8")
+        base_path.write_text(
+            json.dumps(base_rows, separators=(",", ":")), encoding="utf-8"
+        )
+        adv_path.write_text(
+            json.dumps(adv_rows, separators=(",", ":")), encoding="utf-8"
+        )
         written += 1
         print(f"  BBRef {season}: {len(base_rows)} teams")
     return written

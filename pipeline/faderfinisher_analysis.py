@@ -47,34 +47,52 @@ def main() -> None:
             m2 = sum(g["MIN"] for g in h2)
             if m1 / len(h1) < MIN_MPG or m2 / len(h2) < MIN_MPG:
                 continue
-            for stat, fn in (("scoring", lambda g: g["PTS"]),
-                             ("rebounding", lambda g: g["OREB"] + g["DREB"])):
+            for stat, fn in (
+                ("scoring", lambda g: g["PTS"]),
+                ("rebounding", lambda g: g["OREB"] + g["DREB"]),
+            ):
                 a = per36(sum(fn(g) for g in h1), m1)
                 b = per36(sum(fn(g) for g in h2), m2)
                 d = b - a
                 if MIN_D <= abs(d) <= MAX_D:
-                    questions.append({
-                        "name": games[0]["PLAYER_NAME"], "season": season,
-                        "stat": stat,
-                        "firstHalf": round(a, 1), "secondHalf": round(b, 1),
-                        "delta": round(d, 1), "g1": len(h1), "g2": len(h2),
-                        "verdict": "finisher" if d > 0 else "fader",
-                    })
+                    questions.append(
+                        {
+                            "name": games[0]["PLAYER_NAME"],
+                            "season": season,
+                            "stat": stat,
+                            "firstHalf": round(a, 1),
+                            "secondHalf": round(b, 1),
+                            "delta": round(d, 1),
+                            "g1": len(h1),
+                            "g2": len(h2),
+                            "verdict": "finisher" if d > 0 else "fader",
+                        }
+                    )
     finishers = [q for q in questions if q["verdict"] == "finisher"]
     faders = [q for q in questions if q["verdict"] == "fader"]
     n = min(len(finishers), len(faders), 300)
     finishers.sort(key=lambda q: -q["delta"])
     faders.sort(key=lambda q: q["delta"])
     pool = finishers[:n] + faders[:n]
-    OUT.write_text(json.dumps({
-        "method": ("split at each player-season's own game-sequence "
-                   "midpoint; >=25 games and >=12 mpg both halves; per-36 "
-                   "rates; quiz pool limited to unambiguous deltas "
-                   "(1.5-6.0 per-36); 2015-16 through 2025-26"),
-        "questions": pool,
-    }, separators=(",", ":")), encoding="utf-8")
-    print(f"{len(questions)} qualified splits -> pool {len(pool)} "
-          f"({n} finishers / {n} faders)")
+    OUT.write_text(
+        json.dumps(
+            {
+                "method": (
+                    "split at each player-season's own game-sequence "
+                    "midpoint; >=25 games and >=12 mpg both halves; per-36 "
+                    "rates; quiz pool limited to unambiguous deltas "
+                    "(1.5-6.0 per-36); 2015-16 through 2025-26"
+                ),
+                "questions": pool,
+            },
+            separators=(",", ":"),
+        ),
+        encoding="utf-8",
+    )
+    print(
+        f"{len(questions)} qualified splits -> pool {len(pool)} "
+        f"({n} finishers / {n} faders)"
+    )
     print("sample finisher:", finishers[0])
     print("sample fader:", faders[0])
 

@@ -40,8 +40,7 @@ def from_gamelogs(path: Path, season: str) -> list[dict]:
     # team -> ordered game ids; player -> team -> set(game ids); names
     team_games: dict[int, list[tuple[str, str]]] = defaultdict(list)
     seen_tg: set[tuple[int, str]] = set()
-    player_games: dict[int, dict[int, set[str]]] = defaultdict(
-        lambda: defaultdict(set))
+    player_games: dict[int, dict[int, set[str]]] = defaultdict(lambda: defaultdict(set))
     name_of: dict[int, str] = {}
 
     with path.open(encoding="utf-8") as fh:
@@ -95,17 +94,19 @@ def from_gamelogs(path: Path, season: str) -> list[dict]:
                 spells += 1
             longest = max(longest, run)
         n_sched = len(sched) or season_games(season)
-        rows.append({
-            "player_id": pid,
-            "name": name_of.get(pid, ""),
-            "season": season,
-            "GP": gp,
-            "TEAM_GAMES": n_sched,
-            "GP_PCT": round(min(1.0, gp / n_sched), 4),
-            "MISS_N": max(0, n_sched - gp),
-            "LONGEST_MISS_STREAK": longest,
-            "MISS_SPELLS": spells,
-        })
+        rows.append(
+            {
+                "player_id": pid,
+                "name": name_of.get(pid, ""),
+                "season": season,
+                "GP": gp,
+                "TEAM_GAMES": n_sched,
+                "GP_PCT": round(min(1.0, gp / n_sched), 4),
+                "MISS_N": max(0, n_sched - gp),
+                "LONGEST_MISS_STREAK": longest,
+                "MISS_SPELLS": spells,
+            }
+        )
     return rows
 
 
@@ -116,17 +117,19 @@ def from_min_gp(min_gp_rows: list[dict], season: str) -> list[dict]:
         if r["season"] != season:
             continue
         gp = int(r["GP"])
-        rows.append({
-            "player_id": int(r["player_id"]),
-            "name": r.get("name", ""),
-            "season": season,
-            "GP": gp,
-            "TEAM_GAMES": n,
-            "GP_PCT": round(min(1.0, gp / n), 4),
-            "MISS_N": max(0, n - gp),
-            "LONGEST_MISS_STREAK": None,
-            "MISS_SPELLS": None,
-        })
+        rows.append(
+            {
+                "player_id": int(r["player_id"]),
+                "name": r.get("name", ""),
+                "season": season,
+                "GP": gp,
+                "TEAM_GAMES": n,
+                "GP_PCT": round(min(1.0, gp / n), 4),
+                "MISS_N": max(0, n - gp),
+                "LONGEST_MISS_STREAK": None,
+                "MISS_SPELLS": None,
+            }
+        )
     return rows
 
 
@@ -144,21 +147,30 @@ def main() -> None:
             rows = from_min_gp(min_gp_rows, season)
             src = "min_gp"
         all_rows.extend(rows)
-        streaks = [r["LONGEST_MISS_STREAK"] for r in rows
-                   if r["LONGEST_MISS_STREAK"] is not None]
+        streaks = [
+            r["LONGEST_MISS_STREAK"]
+            for r in rows
+            if r["LONGEST_MISS_STREAK"] is not None
+        ]
         extra = f" max_streak={max(streaks)}" if streaks else ""
         print(f"{season}: {len(rows)} players via {src}{extra}", flush=True)
 
-    OUT.write_text(json.dumps({
-        "method": (
-            "Availability per player-season: GP_PCT vs primary-team schedule, "
-            "games missed, longest consecutive missed streak and >=3-game "
-            "spells (gamelogs era 2015-16+; earlier seasons GP_PCT only). "
-            "Injury proxy — no diagnosis source."
+    OUT.write_text(
+        json.dumps(
+            {
+                "method": (
+                    "Availability per player-season: GP_PCT vs primary-team schedule, "
+                    "games missed, longest consecutive missed streak and >=3-game "
+                    "spells (gamelogs era 2015-16+; earlier seasons GP_PCT only). "
+                    "Injury proxy — no diagnosis source."
+                ),
+                "n": len(all_rows),
+                "players": all_rows,
+            },
+            separators=(",", ":"),
         ),
-        "n": len(all_rows),
-        "players": all_rows,
-    }, separators=(",", ":")), encoding="utf-8")
+        encoding="utf-8",
+    )
     print(f"wrote {OUT} rows={len(all_rows)}")
 
 

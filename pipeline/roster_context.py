@@ -37,7 +37,7 @@ TOP_N_HHI = 5
 
 
 def cos(a: list[float], b: list[float]) -> float:
-    num = sum(x * y for x, y in zip(a, b))
+    num = sum(x * y for x, y in zip(a, b, strict=False))
     da = math.sqrt(sum(x * x for x in a)) or 1.0
     db = math.sqrt(sum(x * x for x in b)) or 1.0
     return num / (da * db)
@@ -64,10 +64,15 @@ def load_team_rosters(season: str) -> dict[int, list[dict]]:
             continue
         key = (g["TEAM_ID"], g["PLAYER_NAME"])
         cname = canonical_name(g["PLAYER_NAME"])
-        rec = by_key.setdefault(key, {
-            "name": cname, "team_id": g["TEAM_ID"],
-            "team": g["TEAM_ABBREVIATION"], "min": 0.0,
-        })
+        rec = by_key.setdefault(
+            key,
+            {
+                "name": cname,
+                "team_id": g["TEAM_ID"],
+                "team": g["TEAM_ABBREVIATION"],
+                "min": 0.0,
+            },
+        )
         rec["min"] += g["MIN"]
         rec["team"] = g["TEAM_ABBREVIATION"]
     by_team: dict[int, list[dict]] = defaultdict(list)
@@ -85,7 +90,8 @@ def compute_season(
         roster.sort(key=lambda r: -r["min"])
         usage_crowd = round(hhi_top_n([r["min"] for r in roster[:TOP_N_HHI]]), 4)
         charted = [
-            r for r in roster
+            r
+            for r in roster
             if r["min"] >= ROTATION_MIN and (r["name"], season) in vindex
         ]
         if not charted:
@@ -98,18 +104,23 @@ def compute_season(
             if star and (star["name"], season) in vindex:
                 star_gap = round(1.0 - cos(sv, vindex[(star["name"], season)]["v"]), 4)
             comp = [1.0 - abs(cos(sv, vindex[(m["name"], season)]["v"])) for m in mates]
-            entries.append({
-                "name": subject["name"],
-                "season": season,
-                "team": subject["team"],
-                "teamId": subject["team_id"],
-                "minutes": round(subject["min"], 1),
-                "ROSTER_MIN_RANK": 1 + sum(1 for r in roster if r["min"] > subject["min"]),
-                "ROSTER_USAGE_CROWD": usage_crowd,
-                "ROSTER_COMPLEMENT": round(statistics.mean(comp), 4) if comp else None,
-                "ROSTER_STAR_GAP": star_gap,
-                "ROSTER_MATES_N": len(mates),
-            })
+            entries.append(
+                {
+                    "name": subject["name"],
+                    "season": season,
+                    "team": subject["team"],
+                    "teamId": subject["team_id"],
+                    "minutes": round(subject["min"], 1),
+                    "ROSTER_MIN_RANK": 1
+                    + sum(1 for r in roster if r["min"] > subject["min"]),
+                    "ROSTER_USAGE_CROWD": usage_crowd,
+                    "ROSTER_COMPLEMENT": round(statistics.mean(comp), 4)
+                    if comp
+                    else None,
+                    "ROSTER_STAR_GAP": star_gap,
+                    "ROSTER_MATES_N": len(mates),
+                }
+            )
     return entries
 
 

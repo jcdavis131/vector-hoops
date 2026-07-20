@@ -61,17 +61,36 @@ Solo personal project, no connection to employer, built with public/free-tier on
 from __future__ import annotations
 
 import math
-from typing import List, Tuple, Dict, Optional, Union
+from typing import Dict, List, Optional, Tuple, Union
 
 # Try import manim, but keep file importable without it for CI/lint
 try:
     from manim import (
-        Scene, VGroup, VDict, Rectangle, RoundedRectangle, Circle, Dot,
-        Text, MarkupText, Code, Line, Arrow, DashedLine,
-        FadeIn, FadeOut, Create, Write, config,
+        DOWN,
+        LEFT,
+        RIGHT,
+        UP,
+        Arrow,
+        Circle,
+        Code,
+        Create,
+        DashedLine,
+        Dot,
+        FadeIn,
+        FadeOut,
+        Line,
         ManimColor,
-        UP, DOWN, LEFT, RIGHT,
+        MarkupText,
+        Rectangle,
+        RoundedRectangle,
+        Scene,
+        Text,
+        VDict,
+        VGroup,
+        Write,
+        config,
     )
+
     MANIM_AVAILABLE = True
 except ImportError:
     MANIM_AVAILABLE = False
@@ -85,25 +104,27 @@ except ImportError:
 # ──────────────────────────────────────────────────────────────────────────────
 
 # Paper & Ink
-BG: str = "#FFFEF7"          # primary warm paper
-BG_ALT: str = "#FFFEFA"      # alt warm paper (slightly whiter)
-INK: str = "#111111"         # 2px ink border
-PAPER_DOT: str = "#E8E0C8"   # faint blueprint dots
-CARD_FILL: str = "#FFFFFF"   # card fill white
-SHADOW: str = "#111111"      # hard shadow
-TEXT: str = "#111111"        # primary text
-SUBTLE: str = "#666666"     # subtle label — use only >=24px or replace with #585858 for AAA on 18px
+BG: str = "#FFFEF7"  # primary warm paper
+BG_ALT: str = "#FFFEFA"  # alt warm paper (slightly whiter)
+INK: str = "#111111"  # 2px ink border
+PAPER_DOT: str = "#E8E0C8"  # faint blueprint dots
+CARD_FILL: str = "#FFFFFF"  # card fill white
+SHADOW: str = "#111111"  # hard shadow
+TEXT: str = "#111111"  # primary text
+SUBTLE: str = (
+    "#666666"  # subtle label — use only >=24px or replace with #585858 for AAA on 18px
+)
 SUBTLE_AAA: str = "#585858"  # AAA-safe subtle for 18px — 7.03:1 on #FFFEF7 PASS AAA
 
 # Okabe-Ito — colorblind-safe flat palette (Sunni AAA gate)
-OKABE: Dict[str, str] = {
-    "orange":   "#E69F00",  # Okabe-Ito orange
-    "sky":      "#56B4E9",  # sky blue
-    "green":    "#009E73",  # bluish green
-    "yellow":   "#F0E442",  # yellow (needs ink text!)
-    "blue":     "#0072B2",  # blue
-    "verm":     "#D55E00",  # vermillion
-    "purple":   "#CC79A7",  # reddish purple
+OKABE: dict[str, str] = {
+    "orange": "#E69F00",  # Okabe-Ito orange
+    "sky": "#56B4E9",  # sky blue
+    "green": "#009E73",  # bluish green
+    "yellow": "#F0E442",  # yellow (needs ink text!)
+    "blue": "#0072B2",  # blue
+    "verm": "#D55E00",  # vermillion
+    "purple": "#CC79A7",  # reddish purple
     # Aliases for ergonomics
     "bluish_green": "#009E73",
     "reddish_purple": "#CC79A7",
@@ -111,7 +132,7 @@ OKABE: Dict[str, str] = {
 }
 
 # Semantic aliases for Cam system
-SEMANTIC: Dict[str, str] = {
+SEMANTIC: dict[str, str] = {
     "families": OKABE["orange"],
     "vectors": OKABE["sky"],
     "hoops": OKABE["green"],
@@ -127,49 +148,65 @@ CODE_SIZE: int = 20
 CAPTION_SIZE: int = 18
 
 # Neobrutalism metrics
-INK_STROKE_WIDTH: float = 6.0      # ≈2px visual at 1080p (manim stroke_width)
-SHADOW_OFFSET_X: float = 0.12      # ≈3-4px hard shadow offset X
-SHADOW_OFFSET_Y: float = -0.12     # Y negative = down-right shadow
+INK_STROKE_WIDTH: float = 6.0  # ≈2px visual at 1080p (manim stroke_width)
+SHADOW_OFFSET_X: float = 0.12  # ≈3-4px hard shadow offset X
+SHADOW_OFFSET_Y: float = -0.12  # Y negative = down-right shadow
 CORNER_RADIUS: float = 0.08
 CODE_CORNER_RADIUS: float = 0.05
 
 # Layout Grid — prevents overlap
 GRID_COLS: int = 12
 GRID_ROWS: int = 8
-SAFE_MARGIN: float = 0.55          # safe area from edge (56px tabs spirit)
-BOTTOM_SAFE: float = 0.9           # reserve bottom for 56px tab bar equivalent
+SAFE_MARGIN: float = 0.55  # safe area from edge (56px tabs spirit)
+BOTTOM_SAFE: float = 0.9  # reserve bottom for 56px tab bar equivalent
 DOT_SPACING: float = 0.55
 DOT_RADIUS: float = 0.012
 DOT_OPACITY: float = 0.55
 
 # Animation — reduced motion safe
-DEFAULT_RUN_TIME: float = 0.55     # no flash, gentle ease
-MAX_FLASH_HZ: float = 2.0          # never exceed 3Hz
+DEFAULT_RUN_TIME: float = 0.55  # no flash, gentle ease
+MAX_FLASH_HZ: float = 2.0  # never exceed 3Hz
 
 # Font families — attempt mono for labels
-MONO_STACK: List[str] = ["JetBrains Mono", "IBM Plex Mono", "SF Mono", "Courier New", "monospace"]
-SANS_STACK: List[str] = ["Inter", "IBM Plex Sans", "Helvetica Neue", "Arial", "sans-serif"]
+MONO_STACK: list[str] = [
+    "JetBrains Mono",
+    "IBM Plex Mono",
+    "SF Mono",
+    "Courier New",
+    "monospace",
+]
+SANS_STACK: list[str] = [
+    "Inter",
+    "IBM Plex Sans",
+    "Helvetica Neue",
+    "Arial",
+    "sans-serif",
+]
 
 
 # ──────────────────────────────────────────────────────────────────────────────
 # COLOR UTILS & ADA CONTRAST
 # ──────────────────────────────────────────────────────────────────────────────
 
-def _hex_to_rgb(hex_color: str) -> Tuple[float, float, float]:
+
+def _hex_to_rgb(hex_color: str) -> tuple[float, float, float]:
     h = hex_color.lstrip("#")
     if len(h) == 3:
-        h = "".join([c*2 for c in h])
+        h = "".join([c * 2 for c in h])
     r = int(h[0:2], 16) / 255.0
     g = int(h[2:4], 16) / 255.0
     b = int(h[4:6], 16) / 255.0
     return r, g, b
 
+
 def _linearize(c: float) -> float:
     return c / 12.92 if c <= 0.04045 else ((c + 0.055) / 1.055) ** 2.4
+
 
 def relative_luminance(hex_color: str) -> float:
     r, g, b = _hex_to_rgb(hex_color)
     return 0.2126 * _linearize(r) + 0.7152 * _linearize(g) + 0.0722 * _linearize(b)
+
 
 def contrast_ratio(fg: str, bg: str) -> float:
     """WCAG contrast ratio (L1+0.05)/(L2+0.05)"""
@@ -179,14 +216,20 @@ def contrast_ratio(fg: str, bg: str) -> float:
     darker = min(l1, l2)
     return (lighter + 0.05) / (darker + 0.05)
 
-def check_ada_contrast(fg: str, bg: str, threshold: float = 7.0, label: str = "") -> Dict:
+
+def check_ada_contrast(
+    fg: str, bg: str, threshold: float = 7.0, label: str = ""
+) -> dict:
     ratio = contrast_ratio(fg, bg)
     passed = ratio >= threshold
     if not passed:
-        print(f"[ADA WARN] {label} contrast {ratio:.2f}:1 {fg} on {bg} < {threshold} AAA")
+        print(
+            f"[ADA WARN] {label} contrast {ratio:.2f}:1 {fg} on {bg} < {threshold} AAA"
+        )
     return {"ratio": ratio, "pass": passed, "fg": fg, "bg": bg, "label": label}
 
-def ensure_ada_compliance() -> List[Dict]:
+
+def ensure_ada_compliance() -> list[dict]:
     """Run all critical contrast checks — call in CI or scene start."""
     checks = [
         check_ada_contrast(TEXT, BG, 7.0, "TEXT on BG"),
@@ -213,6 +256,7 @@ ADA_RATIOS = {
 # LAYOUT GRID — no overlap guarantee
 # ──────────────────────────────────────────────────────────────────────────────
 
+
 def get_grid_position(col: int, row: int, col_span: int = 1, row_span: int = 1):
     """Return (x_center, y_center, width, height) in scene coords for grid slot."""
     if not MANIM_AVAILABLE:
@@ -224,20 +268,21 @@ def get_grid_position(col: int, row: int, col_span: int = 1, row_span: int = 1):
     cell_w = usable_w / GRID_COLS
     cell_h = usable_h / GRID_ROWS
 
-    x0 = -fw/2 + SAFE_MARGIN + col * cell_w
-    y0 = fh/2 - SAFE_MARGIN - row * cell_h  # top origin
+    x0 = -fw / 2 + SAFE_MARGIN + col * cell_w
+    y0 = fh / 2 - SAFE_MARGIN - row * cell_h  # top origin
     w = cell_w * col_span
     h = cell_h * row_span
-    xc = x0 + w/2
-    yc = y0 - h/2
+    xc = x0 + w / 2
+    yc = y0 - h / 2
     return xc, yc, w, h
+
 
 def check_no_overlap(mobjects: list, padding: float = 0.12) -> bool:
     """Check bounding boxes don't overlap — AAA readability guard."""
     if not MANIM_AVAILABLE:
         return True
     for i in range(len(mobjects)):
-        for j in range(i+1, len(mobjects)):
+        for j in range(i + 1, len(mobjects)):
             a = mobjects[i]
             b = mobjects[j]
             try:
@@ -264,6 +309,7 @@ def check_no_overlap(mobjects: list, padding: float = 0.12) -> bool:
 # CORE BUILDERS
 # ──────────────────────────────────────────────────────────────────────────────
 
+
 def _make_shadow(width: float, height: float, corner: float = CORNER_RADIUS):
     if not MANIM_AVAILABLE:
         return None
@@ -277,7 +323,15 @@ def _make_shadow(width: float, height: float, corner: float = CORNER_RADIUS):
     ).shift([SHADOW_OFFSET_X, SHADOW_OFFSET_Y, 0])
     return shadow
 
-def _make_card_base(width: float, height: float, fill: str = CARD_FILL, corner: float = CORNER_RADIUS, stroke_color: str = INK, stroke_width: float = INK_STROKE_WIDTH):
+
+def _make_card_base(
+    width: float,
+    height: float,
+    fill: str = CARD_FILL,
+    corner: float = CORNER_RADIUS,
+    stroke_color: str = INK,
+    stroke_width: float = INK_STROKE_WIDTH,
+):
     if not MANIM_AVAILABLE:
         return None
     card = RoundedRectangle(
@@ -291,7 +345,17 @@ def _make_card_base(width: float, height: float, fill: str = CARD_FILL, corner: 
     )
     return card
 
-def cam_card(width: float = 4.0, height: float = 2.5, fill_color: str = CARD_FILL, corner_radius: float = CORNER_RADIUS, with_shadow: bool = True, stroke_color: str = INK, label: Optional[str] = None, accent_color: Optional[str] = None):
+
+def cam_card(
+    width: float = 4.0,
+    height: float = 2.5,
+    fill_color: str = CARD_FILL,
+    corner_radius: float = CORNER_RADIUS,
+    with_shadow: bool = True,
+    stroke_color: str = INK,
+    label: str | None = None,
+    accent_color: str | None = None,
+):
     """
     Neobrutalist Cam card: white fill + 2px ink border + 3px hard shadow offset.
     No glow, hard edges, Okabe flat.
@@ -307,9 +371,12 @@ def cam_card(width: float = 4.0, height: float = 2.5, fill_color: str = CARD_FIL
     """
     if not MANIM_AVAILABLE:
         raise RuntimeError("Manim not available — install manim to render cards")
-    from manim import VGroup  # noqa re-import for stub guard
+    from manim import VGroup
+
     shadow = _make_shadow(width, height, corner_radius) if with_shadow else None
-    card = _make_card_base(width, height, fill=fill_color, corner=corner_radius, stroke_color=stroke_color)
+    card = _make_card_base(
+        width, height, fill=fill_color, corner=corner_radius, stroke_color=stroke_color
+    )
 
     parts = []
     if shadow:
@@ -317,14 +384,18 @@ def cam_card(width: float = 4.0, height: float = 2.5, fill_color: str = CARD_FIL
     parts.append(card)
 
     if accent_color:
-        accent_bar = RoundedRectangle(
-            width=width - 0.04,
-            height=0.18,
-            corner_radius=corner_radius * 0.5,
-            fill_color=accent_color,
-            fill_opacity=1.0,
-            stroke_width=0,
-        ).move_to(card.get_top(), UP).shift(DOWN * 0.14)
+        accent_bar = (
+            RoundedRectangle(
+                width=width - 0.04,
+                height=0.18,
+                corner_radius=corner_radius * 0.5,
+                fill_color=accent_color,
+                fill_opacity=1.0,
+                stroke_width=0,
+            )
+            .move_to(card.get_top(), UP)
+            .shift(DOWN * 0.14)
+        )
         parts.append(accent_bar)
 
     group = VGroup(*parts)
@@ -336,7 +407,16 @@ def cam_card(width: float = 4.0, height: float = 2.5, fill_color: str = CARD_FIL
 
     return group
 
-def cam_label(text: str, font_size: int = LABEL_SIZE, color: str = TEXT, mono: bool = False, weight: str = "NORMAL", bg_fill: Optional[str] = None, with_border: bool = False):
+
+def cam_label(
+    text: str,
+    font_size: int = LABEL_SIZE,
+    color: str = TEXT,
+    mono: bool = False,
+    weight: str = "NORMAL",
+    bg_fill: str | None = None,
+    with_border: bool = False,
+):
     """
     High-contrast Cam label — ADA AAA, no overlap by default placement.
     mono=True => typewriter feel (JetBrains Mono stack).
@@ -362,22 +442,37 @@ def cam_label(text: str, font_size: int = LABEL_SIZE, color: str = TEXT, mono: b
             stroke_width=INK_STROKE_WIDTH * 0.45 if with_border else 0,
         ).move_to(txt)
         from manim import VGroup
+
         return VGroup(bg, txt)
 
     return txt
 
-def cam_code_box(code_str: str, width: float = 6.0, font_size: int = CODE_SIZE, language: str = "python", accent: str = OKABE["sky"]):
+
+def cam_code_box(
+    code_str: str,
+    width: float = 6.0,
+    font_size: int = CODE_SIZE,
+    language: str = "python",
+    accent: str = OKABE["sky"],
+):
     """
     Code box — neobrutalist card + mono code, INK border, subtle Okabe accent.
     """
     if not MANIM_AVAILABLE:
         raise RuntimeError("Manim not available")
     from manim import VGroup
+
     # Estimate height from lines
     lines = code_str.strip().split("\n")
     estimated_h = max(0.8, len(lines) * 0.28 + 0.5)
 
-    card = cam_card(width=width, height=estimated_h, fill_color=CARD_FILL, accent_color=accent, corner_radius=CODE_CORNER_RADIUS)
+    card = cam_card(
+        width=width,
+        height=estimated_h,
+        fill_color=CARD_FILL,
+        accent_color=accent,
+        corner_radius=CODE_CORNER_RADIUS,
+    )
 
     try:
         code = Code(
@@ -400,17 +495,35 @@ def cam_code_box(code_str: str, width: float = 6.0, font_size: int = CODE_SIZE, 
 
     return VGroup(card, code)
 
-def cam_sketch_arrow(start, end, color: str = INK, stroke_width: float = 4.0, with_tip: bool = True):
+
+def cam_sketch_arrow(
+    start, end, color: str = INK, stroke_width: float = 4.0, with_tip: bool = True
+):
     """Hand-drawn sketch arrow but clean — no glow, hard ink."""
     if not MANIM_AVAILABLE:
         raise RuntimeError("Manim not available")
     if with_tip:
-        arrow = Arrow(start, end, color=color, stroke_width=stroke_width, buff=0.08, tip_length=0.18)
+        arrow = Arrow(
+            start,
+            end,
+            color=color,
+            stroke_width=stroke_width,
+            buff=0.08,
+            tip_length=0.18,
+        )
     else:
         arrow = Line(start, end, color=color, stroke_width=stroke_width)
     return arrow
 
-def add_blueprint_dots(scene, spacing: float = DOT_SPACING, dot_radius: float = DOT_RADIUS, color: str = PAPER_DOT, opacity: float = DOT_OPACITY, z_index: int = -100):
+
+def add_blueprint_dots(
+    scene,
+    spacing: float = DOT_SPACING,
+    dot_radius: float = DOT_RADIUS,
+    color: str = PAPER_DOT,
+    opacity: float = DOT_OPACITY,
+    z_index: int = -100,
+):
     """
     Subtle blueprint dotted grid — light paper feel.
     Distinct from 3b1b dark void.
@@ -420,6 +533,7 @@ def add_blueprint_dots(scene, spacing: float = DOT_SPACING, dot_radius: float = 
         return None
 
     from manim import VGroup
+
     fw = config.frame_width
     fh = config.frame_height
 
@@ -427,9 +541,15 @@ def add_blueprint_dots(scene, spacing: float = DOT_SPACING, dot_radius: float = 
     rows = int(fh / spacing) + 2
 
     dots = VGroup()
-    for i in range(-cols//2, cols//2 + 1):
-        for j in range(-rows//2, rows//2 + 1):
-            dot = Dot(point=[i*spacing, j*spacing, 0], radius=dot_radius, color=color, fill_opacity=opacity, stroke_width=0)
+    for i in range(-cols // 2, cols // 2 + 1):
+        for j in range(-rows // 2, rows // 2 + 1):
+            dot = Dot(
+                point=[i * spacing, j * spacing, 0],
+                radius=dot_radius,
+                color=color,
+                fill_opacity=opacity,
+                stroke_width=0,
+            )
             dots.add(dot)
 
     dots.set_z_index(z_index)
@@ -440,6 +560,7 @@ def add_blueprint_dots(scene, spacing: float = DOT_SPACING, dot_radius: float = 
 # ──────────────────────────────────────────────────────────────────────────────
 # SCENE-LEVEL HELPERS
 # ──────────────────────────────────────────────────────────────────────────────
+
 
 def apply_cam_style(scene, bg: str = BG, add_dots: bool = True, check_ada: bool = True):
     """
@@ -472,7 +593,12 @@ def apply_cam_style(scene, bg: str = BG, add_dots: bool = True, check_ada: bool 
     # No glow / hard edges enforced globally via our builders — nothing else
 
 
-def create_cam_title(title: str, subtitle: Optional[str] = None, with_caption: bool = False, accent_color: str = OKABE["orange"]):
+def create_cam_title(
+    title: str,
+    subtitle: str | None = None,
+    with_caption: bool = False,
+    accent_color: str = OKABE["orange"],
+):
     """
     Cam title block — neobrutalist card with heavy title + mono subtitle.
     """
@@ -480,7 +606,9 @@ def create_cam_title(title: str, subtitle: Optional[str] = None, with_caption: b
         raise RuntimeError("Manim not available")
     from manim import VGroup
 
-    title_text = Text(title, font_size=TITLE_SIZE, color=TEXT, font=SANS_STACK[0], weight="BOLD")
+    title_text = Text(
+        title, font_size=TITLE_SIZE, color=TEXT, font=SANS_STACK[0], weight="BOLD"
+    )
     card_w = max(5.8, title_text.width + 1.2)
     card_h = 1.2 + (0.6 if subtitle else 0)
     card = cam_card(width=card_w, height=card_h, accent_color=accent_color)
@@ -490,7 +618,9 @@ def create_cam_title(title: str, subtitle: Optional[str] = None, with_caption: b
     items = [card, title_text]
 
     if subtitle:
-        sub = Text(subtitle, font_size=CAPTION_SIZE, color=SUBTLE_AAA, font=MONO_STACK[0])
+        sub = Text(
+            subtitle, font_size=CAPTION_SIZE, color=SUBTLE_AAA, font=MONO_STACK[0]
+        )
         sub.next_to(title_text, DOWN, buff=0.12)
         items.append(sub)
 
@@ -502,7 +632,12 @@ def create_cam_title(title: str, subtitle: Optional[str] = None, with_caption: b
     return group
 
 
-def create_family_chip(family_name: str = "Hoops Family", count: Optional[int] = None, color: str = OKABE["orange"], icon: str = "⬢"):
+def create_family_chip(
+    family_name: str = "Hoops Family",
+    count: int | None = None,
+    color: str = OKABE["orange"],
+    icon: str = "⬢",
+):
     """
     Small pill chip — family / category indicator with Okabe color + ink border + icon text.
     Triple encoding: shape (pill) + icon (unicode) + text.
@@ -516,7 +651,9 @@ def create_family_chip(family_name: str = "Hoops Family", count: Optional[int] =
     label = f"{icon} {family_name}" + (f" ({count})" if count is not None else "")
 
     # Core text
-    txt = Text(label, font_size=LABEL_SIZE - 2, color=INK, font=MONO_STACK[0], weight="BOLD")
+    txt = Text(
+        label, font_size=LABEL_SIZE - 2, color=INK, font=MONO_STACK[0], weight="BOLD"
+    )
 
     chip_w = txt.width + 0.6
     chip_h = txt.height + 0.32
@@ -524,7 +661,7 @@ def create_family_chip(family_name: str = "Hoops Family", count: Optional[int] =
     bg = RoundedRectangle(
         width=chip_w,
         height=chip_h,
-        corner_radius=chip_h/2,
+        corner_radius=chip_h / 2,
         fill_color=color,
         fill_opacity=1.0,
         stroke_color=INK,
@@ -535,7 +672,7 @@ def create_family_chip(family_name: str = "Hoops Family", count: Optional[int] =
     shadow = RoundedRectangle(
         width=chip_w,
         height=chip_h,
-        corner_radius=chip_h/2,
+        corner_radius=chip_h / 2,
         fill_color=SHADOW,
         fill_opacity=1.0,
         stroke_width=0,
@@ -546,7 +683,7 @@ def create_family_chip(family_name: str = "Hoops Family", count: Optional[int] =
     return VGroup(shadow, bg, txt)
 
 
-def create_okabe_legend(items: List[Tuple[str, str]], pos: Optional[List[float]] = None):
+def create_okabe_legend(items: list[tuple[str, str]], pos: list[float] | None = None):
     """
     Legend with Okabe colors, triple-encoded with shapes.
 
@@ -559,7 +696,13 @@ def create_okabe_legend(items: List[Tuple[str, str]], pos: Optional[List[float]]
     entries = VGroup()
     for label, okabe_key in items:
         col = OKABE.get(okabe_key, okabe_key)
-        dot = Circle(radius=0.12, fill_color=col, fill_opacity=1, stroke_color=INK, stroke_width=3)
+        dot = Circle(
+            radius=0.12,
+            fill_color=col,
+            fill_opacity=1,
+            stroke_color=INK,
+            stroke_width=3,
+        )
         txt = Text(label, font_size=CAPTION_SIZE, color=TEXT, font=MONO_STACK[0])
         entry = VGroup(dot, txt).arrange(RIGHT, buff=0.15)
         entries.add(entry)
@@ -581,16 +724,48 @@ def create_okabe_legend(items: List[Tuple[str, str]], pos: Optional[List[float]]
 # ──────────────────────────────────────────────────────────────────────────────
 
 __all__ = [
-    "BG", "BG_ALT", "INK", "PAPER_DOT", "CARD_FILL", "SHADOW", "TEXT", "SUBTLE", "SUBTLE_AAA",
-    "OKABE", "SEMANTIC",
-    "TITLE_SIZE", "LABEL_SIZE", "CODE_SIZE", "CAPTION_SIZE",
-    "INK_STROKE_WIDTH", "SHADOW_OFFSET_X", "SHADOW_OFFSET_Y", "CORNER_RADIUS",
-    "GRID_COLS", "GRID_ROWS", "SAFE_MARGIN", "BOTTOM_SAFE",
-    "DOT_SPACING", "DOT_RADIUS", "DOT_OPACITY",
+    "BG",
+    "BG_ALT",
+    "BOTTOM_SAFE",
+    "CAPTION_SIZE",
+    "CARD_FILL",
+    "CODE_SIZE",
+    "CORNER_RADIUS",
     "DEFAULT_RUN_TIME",
-    "MONO_STACK", "SANS_STACK",
-    "contrast_ratio", "check_ada_contrast", "ensure_ada_compliance", "relative_luminance",
-    "get_grid_position", "check_no_overlap",
-    "cam_card", "cam_label", "cam_code_box", "cam_sketch_arrow",
-    "add_blueprint_dots", "apply_cam_style", "create_cam_title", "create_family_chip", "create_okabe_legend",
+    "DOT_OPACITY",
+    "DOT_RADIUS",
+    "DOT_SPACING",
+    "GRID_COLS",
+    "GRID_ROWS",
+    "INK",
+    "INK_STROKE_WIDTH",
+    "LABEL_SIZE",
+    "MONO_STACK",
+    "OKABE",
+    "PAPER_DOT",
+    "SAFE_MARGIN",
+    "SANS_STACK",
+    "SEMANTIC",
+    "SHADOW",
+    "SHADOW_OFFSET_X",
+    "SHADOW_OFFSET_Y",
+    "SUBTLE",
+    "SUBTLE_AAA",
+    "TEXT",
+    "TITLE_SIZE",
+    "add_blueprint_dots",
+    "apply_cam_style",
+    "cam_card",
+    "cam_code_box",
+    "cam_label",
+    "cam_sketch_arrow",
+    "check_ada_contrast",
+    "check_no_overlap",
+    "contrast_ratio",
+    "create_cam_title",
+    "create_family_chip",
+    "create_okabe_legend",
+    "ensure_ada_compliance",
+    "get_grid_position",
+    "relative_luminance",
 ]

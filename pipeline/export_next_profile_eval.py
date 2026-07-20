@@ -33,7 +33,17 @@ VECTORS = ASSETS / "vectors.json"
 OUT = ASSETS / "next_profile_eval.json"
 
 # Compact UI set — full 14 stay in ``features``; these drive the default table.
-PRIMARY_FEATURES = ("PTS", "AST", "DREB", "STL", "BLK", "TOV", "FG3A", "FGA", "PLUS_MINUS")
+PRIMARY_FEATURES = (
+    "PTS",
+    "AST",
+    "DREB",
+    "STL",
+    "BLK",
+    "TOV",
+    "FG3A",
+    "FGA",
+    "PLUS_MINUS",
+)
 
 
 def next_season_label(season: str) -> str:
@@ -53,7 +63,9 @@ def main() -> None:
 
     emb = np.load(EMB, allow_pickle=True)
     if "next_profile_pred" not in emb.files:
-        raise SystemExit("embedding_v3.npz has no next_profile_pred — retrain/export MTNN")
+        raise SystemExit(
+            "embedding_v3.npz has no next_profile_pred — retrain/export MTNN"
+        )
 
     names = [str(x) for x in emb["name"]]
     seasons = [str(x) for x in emb["season"]]
@@ -85,7 +97,7 @@ def main() -> None:
     mae_sum = 0.0
     mae_n = 0
 
-    for i, (name, season) in enumerate(zip(names, seasons)):
+    for i, (name, season) in enumerate(zip(names, seasons, strict=False)):
         to_season = next_season_label(season)
         pred_row = [round_z(pred[i, j]) for j in range(len(feature_keys))]
         key = f"{name}|{season}"

@@ -81,8 +81,11 @@ def from_api(season: str, offline: bool) -> list[dict] | None:
     for attempt in range(5):
         try:
             r = leaguedashplayerstats.LeagueDashPlayerStats(
-                season=season, per_mode_detailed="PerGame",
-                measure_type_detailed_defense="Base", timeout=75)
+                season=season,
+                per_mode_detailed="PerGame",
+                measure_type_detailed_defense="Base",
+                timeout=75,
+            )
             df = r.get_data_frames()[0]
             rows = []
             for _, x in df.iterrows():
@@ -92,22 +95,28 @@ def from_api(season: str, offline: bool) -> list[dict] | None:
                     continue
                 if isinstance(mpg, float) and math.isnan(mpg):
                     continue
-                rows.append({
-                    "player_id": int(x["PLAYER_ID"]),
-                    "name": str(x.get("PLAYER_NAME") or ""),
-                    "season": season,
-                    "MPG": round(float(mpg), 2),
-                    "GP": int(gp),
-                })
+                rows.append(
+                    {
+                        "player_id": int(x["PLAYER_ID"]),
+                        "name": str(x.get("PLAYER_NAME") or ""),
+                        "season": season,
+                        "MPG": round(float(mpg), 2),
+                        "GP": int(gp),
+                    }
+                )
             CACHE.mkdir(parents=True, exist_ok=True)
             cache_p.write_text(
-                json.dumps(rows, separators=(",", ":")), encoding="utf-8")
+                json.dumps(rows, separators=(",", ":")), encoding="utf-8"
+            )
             time.sleep(1.2)
             return rows
         except Exception as e:
-            wait = min(120, (2 ** attempt) * 8) + random.uniform(0, 4)
-            print(f"  {season}: attempt {attempt + 1}/5 failed "
-                  f"({type(e).__name__}); sleeping {wait:.0f}s", flush=True)
+            wait = min(120, (2**attempt) * 8) + random.uniform(0, 4)
+            print(
+                f"  {season}: attempt {attempt + 1}/5 failed "
+                f"({type(e).__name__}); sleeping {wait:.0f}s",
+                flush=True,
+            )
             time.sleep(wait)
     print(f"  {season}: EXHAUSTED retries — skipped (rerun resumes)", flush=True)
     return None
@@ -134,22 +143,29 @@ def main() -> None:
         mx = max(r["MPG"] for r in rows)
         if mx > 48.0:
             raise SystemExit(
-                f"{season}: MPG max {mx} > 48 — source is not per-game, abort")
+                f"{season}: MPG max {mx} > 48 — source is not per-game, abort"
+            )
         all_rows.extend(rows)
         print(f"{season}: {len(rows)} players (max MPG {mx}) via {src}", flush=True)
 
     if missing:
         print(f"WARNING missing seasons: {missing}", flush=True)
 
-    OUT.write_text(json.dumps({
-        "method": (
-            "Honest per-game MPG/GP. gamelogs-derived where available "
-            "(2015-16+), LeagueDashPlayerStats PerGame otherwise. "
-            "vectors.json mpg is minutes/100 possessions — do not use."
+    OUT.write_text(
+        json.dumps(
+            {
+                "method": (
+                    "Honest per-game MPG/GP. gamelogs-derived where available "
+                    "(2015-16+), LeagueDashPlayerStats PerGame otherwise. "
+                    "vectors.json mpg is minutes/100 possessions — do not use."
+                ),
+                "n": len(all_rows),
+                "players": all_rows,
+            },
+            separators=(",", ":"),
         ),
-        "n": len(all_rows),
-        "players": all_rows,
-    }, separators=(",", ":")), encoding="utf-8")
+        encoding="utf-8",
+    )
     print(f"wrote {OUT} rows={len(all_rows)}")
 
 

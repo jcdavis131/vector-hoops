@@ -28,7 +28,8 @@ FAILURES: list[str] = []
 
 def check(cond: bool, msg: str) -> None:
     safe = msg.encode(sys.stdout.encoding or "utf-8", errors="backslashreplace").decode(
-        sys.stdout.encoding or "utf-8", errors="backslashreplace")
+        sys.stdout.encoding or "utf-8", errors="backslashreplace"
+    )
     print(f"  [{'PASS' if cond else 'FAIL'}] {safe}")
     if not cond:
         FAILURES.append(msg)
@@ -56,35 +57,52 @@ def main() -> None:
     print("lag rule + vote-getter coverage")
     # Award year 2023-24 -> lagged row on 2024-25 season
     jok_lag = by.get(("Nikola Jokić", "2024-25"))
-    check(jok_lag is not None, "Jokić 2024-25 has lagged honors row (from 2023-24 awards)")
+    check(
+        jok_lag is not None, "Jokić 2024-25 has lagged honors row (from 2023-24 awards)"
+    )
     if jok_lag:
-        check(jok_lag.get("HON_ALL_NBA_TEAM_LAG") == 3.0,
-              f"Jokić lag All-NBA first team == 3 ({jok_lag.get('HON_ALL_NBA_TEAM_LAG')})")
-        check(jok_lag.get("HON_ASG_LAG") == 1.0,
-              f"Jokić lag ASG == 1 ({jok_lag.get('HON_ASG_LAG')})")
+        check(
+            jok_lag.get("HON_ALL_NBA_TEAM_LAG") == 3.0,
+            f"Jokić lag All-NBA first team == 3 ({jok_lag.get('HON_ALL_NBA_TEAM_LAG')})",
+        )
+        check(
+            jok_lag.get("HON_ASG_LAG") == 1.0,
+            f"Jokić lag ASG == 1 ({jok_lag.get('HON_ASG_LAG')})",
+        )
 
     # Vote-getter without a top-3 All-NBA slot (ORV tier)
     iverson_cont = contemp.get("Allen Iverson|1996-97", {})
-    check(iverson_cont.get("allNbaVotePts", 0) > 0 and iverson_cont.get("allNbaTeam", 1) == 0,
-          "Iverson 1996-97 contemporaneous: vote pts without top-3 team slot")
+    check(
+        iverson_cont.get("allNbaVotePts", 0) > 0
+        and iverson_cont.get("allNbaTeam", 1) == 0,
+        "Iverson 1996-97 contemporaneous: vote pts without top-3 team slot",
+    )
 
     ed_lag = by.get(("Anthony Edwards", "2024-25"))
-    check(ed_lag is not None and ed_lag.get("HON_VOTE_RECOG") == 1.0,
-          "Edwards 2024-25 lagged vote recognition from prior season")
+    check(
+        ed_lag is not None and ed_lag.get("HON_VOTE_RECOG") == 1.0,
+        "Edwards 2024-25 lagged vote recognition from prior season",
+    )
 
     lebron_lag = by.get(("LeBron James", "2018-19"))
-    check(lebron_lag is not None and lebron_lag.get("HON_ALL_NBA_TEAM_LAG") == 3.0,
-          f"LeBron 2018-19 lag first team from 2017-18 awards "
-          f"(got {lebron_lag.get('HON_ALL_NBA_TEAM_LAG') if lebron_lag else None})")
+    check(
+        lebron_lag is not None and lebron_lag.get("HON_ALL_NBA_TEAM_LAG") == 3.0,
+        f"LeBron 2018-19 lag first team from 2017-18 awards "
+        f"(got {lebron_lag.get('HON_ALL_NBA_TEAM_LAG') if lebron_lag else None})",
+    )
 
     duncan_lag = by.get(("Tim Duncan", "2000-01"))
-    check(duncan_lag is not None and duncan_lag.get("HON_ALL_NBA_TEAM_LAG") == 3.0,
-          f"Duncan 2000-01 lag first team from 1999-00 awards "
-          f"(got {duncan_lag.get('HON_ALL_NBA_TEAM_LAG') if duncan_lag else None})")
+    check(
+        duncan_lag is not None and duncan_lag.get("HON_ALL_NBA_TEAM_LAG") == 3.0,
+        f"Duncan 2000-01 lag first team from 1999-00 awards "
+        f"(got {duncan_lag.get('HON_ALL_NBA_TEAM_LAG') if duncan_lag else None})",
+    )
 
     tier_lag_rows = sum(1 for r in rows if (r.get("HON_ALL_NBA_TEAM_LAG") or 0) > 0)
-    check(tier_lag_rows > 400,
-          f"lagged All-NBA team tiers backfilled ({tier_lag_rows} rows)")
+    check(
+        tier_lag_rows > 400,
+        f"lagged All-NBA team tiers backfilled ({tier_lag_rows} rows)",
+    )
     team_ok, vote_ok, asg_ok = True, True, True
     for r in rows:
         tier = r.get("HON_ALL_NBA_TEAM_LAG")
@@ -110,17 +128,23 @@ def main() -> None:
         check(ASSET.exists(), "complete cache wrote transparent assets/honors.json")
     else:
         check(doc["cache_complete"] is True, "fixture marked complete for gate run")
-        check(doc["coverage"]["contemporaneous_keys"] >= 8,
-              f"fixture has contemporaneous keys ({doc['coverage']['contemporaneous_keys']})")
-        check(not ASSET.exists() or doc["cache_complete"],
-              "partial cache must not ship game asset without complete flag")
+        check(
+            doc["coverage"]["contemporaneous_keys"] >= 8,
+            f"fixture has contemporaneous keys ({doc['coverage']['contemporaneous_keys']})",
+        )
+        check(
+            not ASSET.exists() or doc["cache_complete"],
+            "partial cache must not ship game asset without complete flag",
+        )
 
     print()
     if FAILURES:
         print(f"{len(FAILURES)} gate(s) FAILED")
         sys.exit(1)
-    print("all honors gates passed"
-          + ("" if real else " (fixture mode — run fetch_honors.py for full coverage)"))
+    print(
+        "all honors gates passed"
+        + ("" if real else " (fixture mode — run fetch_honors.py for full coverage)")
+    )
 
 
 if __name__ == "__main__":

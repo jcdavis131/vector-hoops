@@ -56,7 +56,7 @@ def main() -> None:
     skill_keys = [str(k) for k in emb.get("skill_keys", [])]
     next_profile_pred = emb.get("next_profile_pred")
     game_feature_keys = [str(k) for k in emb.get("game_feature_keys", [])]
-    game_clusters = emb["cluster"].astype(np.int32)
+    emb["cluster"].astype(np.int32)
 
     vec = json.loads(VECTORS.read_text(encoding="utf-8"))
     cluster_names = vec.get("clusters") or []
@@ -68,17 +68,21 @@ def main() -> None:
     skill_names = [sk["key"] for sk in skills_doc.get("skills", [])]
     grade_rows = skills_doc.get("grades") or []
 
-    assign_doc = json.loads(ASSIGN.read_text(encoding="utf-8")) if ASSIGN.exists() else {}
+    assign_doc = (
+        json.loads(ASSIGN.read_text(encoding="utf-8")) if ASSIGN.exists() else {}
+    )
     assign_rows = assign_doc.get("assignments") or []
     id_by_key: dict[str, int] = {}
     for p in vec["players"]:
         id_by_key[f"{p['name']}|{p['season']}"] = int(p["id"])
 
     rosters = json.loads(ROSTERS.read_text(encoding="utf-8"))
-    team_by_name = {a["name"]: a.get("team", "") for a in rosters.get("activePlayers", [])}
+    team_by_name = {
+        a["name"]: a.get("team", "") for a in rosters.get("activePlayers", [])
+    }
 
     index: dict[tuple[str, str], int] = {}
-    for i, (n, s) in enumerate(zip(names, seasons)):
+    for i, (n, s) in enumerate(zip(names, seasons, strict=False)):
         index[(n, s)] = i
 
     players = []
@@ -91,10 +95,14 @@ def main() -> None:
             continue
 
         arch_idx = int(np.argmax(arch_logits[i]))
-        game_arch = cluster_names[arch_idx] if arch_idx < len(cluster_names) else str(arch_idx)
+        game_arch = (
+            cluster_names[arch_idx] if arch_idx < len(cluster_names) else str(arch_idx)
+        )
         obs_key = f"{name}|{from_season}"
         assign = assign_rows[id_by_key[obs_key]] if obs_key in id_by_key else {}
-        mtnn_arch = assign.get("mtnnGlobalName") or assign.get("eraNativeName") or game_arch
+        mtnn_arch = (
+            assign.get("mtnnGlobalName") or assign.get("eraNativeName") or game_arch
+        )
 
         obs = {}
         if obs_key in id_by_key:
@@ -104,7 +112,7 @@ def main() -> None:
                 for j in range(min(len(skill_names), len(grade_row)))
             }
         proj_skills = {}
-        for k, sk in zip(skill_keys, skill_pred[i]):
+        for k, sk in zip(skill_keys, skill_pred[i], strict=False):
             if not np.isfinite(sk):
                 continue
             pct = float(np.clip(sk, 0, 1) * 100.0)
@@ -112,31 +120,39 @@ def main() -> None:
             proj_skills[k] = adaptive_round(min(pct, 99.99))
         proj_stats_z = {}
         if next_profile_pred is not None and len(game_feature_keys):
-            for k, z in zip(game_feature_keys, next_profile_pred[i]):
+            for k, z in zip(game_feature_keys, next_profile_pred[i], strict=False):
                 if not np.isfinite(z):
                     continue
                 proj_stats_z[k] = round(float(np.clip(z, -4, 4)), 3)
 
-        conf = float((lambda lg: (np.exp(lg - lg.max()) / np.exp(lg - lg.max()).sum())[arch_idx])(arch_logits[i]))
-        players.append({
-            "name": name,
-            "team": team_by_name.get(name, ""),
-            "fromSeason": from_season,
-            "toSeason": to_season,
-            "observed": {
-                "skills": obs,
-                "gameArchetype": assign.get("gameClusterName") or game_arch,
-                "mtnnArchetype": mtnn_arch,
-            },
-            "projected": {
-                "skills": proj_skills,
-                "gameStatsZ": proj_stats_z,
-                "gameArchetype": game_arch,
-                "gameArchetypeIdx": arch_idx,
-                "mtnnArchetype": mtnn_arch,
-                "archetypeConfidence": round(min(conf, 0.9999), 4),
-            },
-        })
+        conf = float(
+            (
+                lambda lg: (np.exp(lg - lg.max()) / np.exp(lg - lg.max()).sum())[
+                    arch_idx
+                ]
+            )(arch_logits[i])
+        )
+        players.append(
+            {
+                "name": name,
+                "team": team_by_name.get(name, ""),
+                "fromSeason": from_season,
+                "toSeason": to_season,
+                "observed": {
+                    "skills": obs,
+                    "gameArchetype": assign.get("gameClusterName") or game_arch,
+                    "mtnnArchetype": mtnn_arch,
+                },
+                "projected": {
+                    "skills": proj_skills,
+                    "gameStatsZ": proj_stats_z,
+                    "gameArchetype": game_arch,
+                    "gameArchetypeIdx": arch_idx,
+                    "mtnnArchetype": mtnn_arch,
+                    "archetypeConfidence": round(min(conf, 0.9999), 4),
+                },
+            }
+        )
 
     payload = {
         "built": time.strftime("%Y-%m-%d"),
@@ -160,14 +176,17 @@ def main() -> None:
     }
     ASSETS.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(payload, separators=(",", ":")), encoding="utf-8")
-    print(f"wrote {OUT} — {len(players)} charted players projected {from_season} -> {to_season}")
+    print(
+        f"wrote {OUT} — {len(players)} charted players projected {from_season} -> {to_season}"
+    )
 
     # Predicted-vs-actual eval for all seasons (pending on latest). Independent
     # of this roster slice — safe to run even if rosters are incomplete.
     try:
         from export_next_profile_eval import main as export_eval
+
         export_eval()
-    except Exception as exc:  # noqa: BLE001 — projection still succeeded
+    except Exception as exc:
         print(f"warn: next_profile_eval export skipped ({exc})")
 
 

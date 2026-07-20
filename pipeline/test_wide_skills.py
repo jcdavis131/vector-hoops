@@ -34,7 +34,9 @@ def check(cond: bool, msg: str) -> None:
 
 def rebuild() -> bool:
     real = bool(list(CACHE_DIR.glob("wide_skills_*.json")))
-    cmd = [sys.executable, "pipeline/build_wide_skills.py"] + ([] if real else ["--fixture"])
+    cmd = [sys.executable, "pipeline/build_wide_skills.py"] + (
+        [] if real else ["--fixture"]
+    )
     proc = subprocess.run(cmd, cwd=ROOT, capture_output=True, text=True)
     if proc.returncode != 0:
         print(proc.stdout + proc.stderr)
@@ -54,11 +56,22 @@ def main() -> None:
     by = {(names[i], seasons[i]): grades[i] for i in range(len(names))}
 
     print("coverage era")
-    check(keys == ["post", "transition", "motor", "shooting_gravity",
-                   "rim_gravity", "disruption_gravity"],
-          f"six wide skills ({keys})")
-    check(all(int(s[:4]) >= 2015 for s in seasons),
-          "every covered row is 2015-16 or later (masked before)")
+    check(
+        keys
+        == [
+            "post",
+            "transition",
+            "motor",
+            "shooting_gravity",
+            "rim_gravity",
+            "disruption_gravity",
+        ],
+        f"six wide skills ({keys})",
+    )
+    check(
+        all(int(s[:4]) >= 2015 for s in seasons),
+        "every covered row is 2015-16 or later (masked before)",
+    )
 
     print("bounds")
     check(grades.min() >= 0 and grades.max() <= 99, "grades in [0, 99]")
@@ -70,16 +83,20 @@ def main() -> None:
         if row is None:
             check(False, f"{name} {season} covered")
             return
-        check(int(row[ki[skill]]) >= floor,
-              f"{name} {season} {skill} >= {floor} (got {int(row[ki[skill]])})")
+        check(
+            int(row[ki[skill]]) >= floor,
+            f"{name} {season} {skill} >= {floor} (got {int(row[ki[skill]])})",
+        )
 
     def spot_low(name, season, skill, ceil):
         row = by.get((name, season))
         if row is None:
             check(False, f"{name} {season} covered")
             return
-        check(int(row[ki[skill]]) <= ceil,
-              f"{name} {season} {skill} <= {ceil} (got {int(row[ki[skill]])})")
+        check(
+            int(row[ki[skill]]) <= ceil,
+            f"{name} {season} {skill} <= {ceil} (got {int(row[ki[skill]])})",
+        )
 
     spot("Joel Embiid", "2022-23", "post", 80)
     spot("Nikola Jokić", "2022-23", "post", 60)
@@ -95,7 +112,7 @@ def main() -> None:
     spot("Victor Wembanyama", "2023-24", "rim_gravity", 85)
     spot("Rudy Gobert", "2023-24", "rim_gravity", 60)
     spot_low("DeAndre Jordan", "2015-16", "shooting_gravity", 30)  # never shoots
-    spot_low("Anthony Edwards", "2023-24", "rim_gravity", 50)      # not a rim protector
+    spot_low("Anthony Edwards", "2023-24", "rim_gravity", 50)  # not a rim protector
     # Perimeter disruption gravity — steals + deflections + charges.
     spot("Marcus Smart", "2015-16", "disruption_gravity", 85)
     spot("Draymond Green", "2022-23", "disruption_gravity", 75)
@@ -108,16 +125,24 @@ def main() -> None:
         check(ASSET.exists(), "complete cache wrote assets/skills_wide.json")
     else:
         check(len(names) == 18, f"fixture emits exactly its rows ({len(names)})")
-        check(not ASSET.exists(),
-              "partial cache did NOT write assets/skills_wide.json (game dormant)")
+        check(
+            not ASSET.exists(),
+            "partial cache did NOT write assets/skills_wide.json (game dormant)",
+        )
 
     print()
     if FAILURES:
         print(f"{len(FAILURES)} gate(s) FAILED")
         sys.exit(1)
-    print("all wide-skill gates passed"
-          + ("" if real else " (fixture mode — run fetch_wide_skills.py on an "
-             "operator machine for full coverage)"))
+    print(
+        "all wide-skill gates passed"
+        + (
+            ""
+            if real
+            else " (fixture mode — run fetch_wide_skills.py on an "
+            "operator machine for full coverage)"
+        )
+    )
 
 
 if __name__ == "__main__":
