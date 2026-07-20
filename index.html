@@ -21,22 +21,53 @@
 .pill{border:1.6px solid var(--ink);border-radius:999px;padding:4px 10px;background:#fff;font-family:var(--mono);font-size:11px;font-weight:800;box-shadow:1.5px 1.5px 0 var(--ink)}
 .pill-yellow{background:var(--yellow);transform:rotate(-1deg)}
 
-#map-wrap{position:relative;min-height:580px;border:2.5px solid var(--ink);border-radius:16px;box-shadow:6px 6px 0 var(--ink);overflow:hidden;background:radial-gradient(120% 80% at 70% 20%,rgba(0,114,178,.12),transparent 48%),radial-gradient(90% 60% at 20% 70%,rgba(213,94,0,.10),transparent 46%),#0A0C10}
-#sky-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab}
+#map-wrap{position:relative;min-height:580px;border:2.5px solid var(--ink);border-radius:16px;box-shadow:6px 6px 0 var(--ink);overflow:hidden;background:radial-gradient(120% 80% at 70% 20%,rgba(0,114,178,.12),transparent 48%),radial-gradient(90% 60% at 20% 70%,rgba(213,94,0,.10),transparent 46%),#0A0C10;width:100%}
+#sky-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab;touch-action:none}
 #sky-canvas:active{cursor:grabbing}
 
 /* overlay chips - keep for star-map void */
 #map-overlay{position:absolute;left:12px;right:12px;top:56px;display:flex;justify-content:space-between;gap:8px;z-index:5;pointer-events:none;flex-wrap:wrap}
 #map-overlay .chip{background:rgba(255,254,247,.92);border:2px solid var(--ink);border-radius:999px;padding:5px 10px;font-family:var(--mono);font-size:10px;box-shadow:1.5px 1.5px 0 var(--ink)}
-#map-controls{position:absolute;left:12px;bottom:12px;z-index:6;display:flex;gap:6px;flex-wrap:wrap}
-#map-controls .chip{pointer-events:auto;cursor:pointer;background:#fff;border:2px solid var(--ink);border-radius:999px;padding:6px 10px;font-family:var(--mono);font-size:10px;font-weight:800;box-shadow:1.5px 1.5px 0 var(--ink)}
-#map-legend{position:absolute;right:12px;bottom:12px;z-index:6;background:rgba(255,254,247,.97);border:2px solid var(--ink);border-radius:14px;padding:8px 9px 8px 8px;box-shadow:2px 2px 0 var(--ink);font-family:var(--mono);font-size:9px;line-height:1.35;pointer-events:auto;min-width:186px;max-width:214px}
+#map-controls{position:absolute;left:12px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:6;display:flex;gap:8px;flex-wrap:wrap}
+#map-controls .chip{pointer-events:auto;cursor:pointer;background:#fff;border:2px solid var(--ink);border-radius:999px;padding:8px 14px;font-family:var(--mono);font-size:11px;font-weight:800;box-shadow:2px 2px 0 var(--ink);min-height:44px;display:inline-flex;align-items:center}
+#map-legend{position:absolute;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:6;background:rgba(255,254,247,.97);border:2px solid var(--ink);border-radius:14px;padding:8px 9px 8px 8px;box-shadow:2px 2px 0 var(--ink);font-family:var(--mono);font-size:9px;line-height:1.35;pointer-events:auto;min-width:186px;max-width:214px}
 #map-legend .legend-title{font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:900;opacity:.65;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center;gap:6px}
 #hover-tip{position:absolute;left:50%;top:50%;transform:translate(-50%,-100%);background:#FFFEF7;border:2px solid var(--ink);border-radius:10px;padding:7px 9px;box-shadow:3px 3px 0 var(--ink);font-size:11px;line-height:1.35;display:none;z-index:7;pointer-events:none;max-width:260px}
 .legend-star{display:inline-flex;width:14px;height:14px;align-items:center;justify-content:center;background:var(--yellow);border:1.5px solid var(--ink);border-radius:4px;font-size:10px}
 
 .hero{max-width:1180px;margin:0 auto;padding:18px clamp(14px,3.5vw,28px) 10px;display:grid;grid-template-columns:1.08fr .92fr;gap:28px;align-items:start}
-@media(max-width:980px){.hero{grid-template-columns:1fr}#map-wrap{min-height:500px}}
+@media(max-width:980px){
+  .hero{grid-template-columns:1fr;max-width:none;margin:0;padding:0 0 10px;gap:0}
+  .hero-copy{padding:18px clamp(14px,3.5vw,28px) 12px}
+  #map-wrap{border-radius:0;border-left:0;border-right:0;width:100vw;margin-left:calc(50% - 50vw);box-shadow:none;min-height:78vh;min-height:78dvh;border-top:2.5px solid var(--ink);border-bottom:2.5px solid var(--ink)}
+  #map-controls{left:clamp(10px,3vw,16px);bottom:calc(14px + env(safe-area-inset-bottom))}
+  #map-legend{right:clamp(10px,3vw,16px);left:auto;max-width:68vw;bottom:calc(66px + env(safe-area-inset-bottom));font-size:8.5px}
+}
+.hd{font-family:"Architects Daughter",var(--mono);line-height:.92;letter-spacing:-.01em}
+.hero-copy{display:flex;flex-direction:column;gap:14px}
+.eyebrow{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.eyebrow #puzzle-meta{opacity:.65}
+.deck{color:#2E2A23;margin:0;line-height:1.5;font-size:18px;max-width:46ch}
+.deck b{color:var(--ink)}
+.cta-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:2px}
+.micro{color:#5A544D;text-transform:none;font-weight:600;font-size:11.5px;letter-spacing:.01em;line-height:1.5}
+.pulse-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--yellow);border:1.5px solid var(--ink);box-shadow:0 0 0 3px rgba(240,228,66,.35);animation:pulse 1.6s ease-in-out infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 3px rgba(240,228,66,.35);transform:scale(1)}50%{box-shadow:0 0 0 7px rgba(240,228,66,.18);transform:scale(1.08)}}
+.tri{max-width:1180px;margin:12px auto 0;padding:0 clamp(14px,3.5vw,28px) calc(20px + 88px);display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+@media(max-width:760px){.tri{grid-template-columns:1fr}}
+
+/* full-bleed drift */
+.lemmino-section{margin:0;padding:0}
+.lemmino-drift{position:relative;width:100%;background:#080A0F;min-height:560px;overflow:hidden;border-top:2.5px solid #1A150F;border-bottom:2.5px solid #1A150F}
+.lemmino-drift canvas{width:100%;height:72vh;display:block;touch-action:none}
+@media(min-width:981px){.lemmino-drift canvas{height:64vh;min-height:600px}}
+@media(max-width:980px){.lemmino-drift{width:100vw;margin-left:calc(50% - 50vw);border-left:0;border-right:0}.lemmino-drift canvas{height:84vh;height:84dvh;min-height:580px}}
+.drift-scrub{position:absolute;left:clamp(12px,2.5vw,18px);right:clamp(12px,2.5vw,18px);bottom:calc(16px + env(safe-area-inset-bottom));z-index:7;background:rgba(26,21,15,0.92);border:2px solid #1A150F;border-radius:999px;padding:6px 8px;display:flex;align-items:center;gap:8px;box-shadow:3px 3px 0 #1A150F}
+.drift-scrub-track{flex:1;height:14px;background:rgba(255,254,247,0.12);border-radius:999px;position:relative;overflow:hidden;cursor:pointer;touch-action:none}
+.drift-scrub-fill{position:absolute;left:0;top:0;bottom:0;width:0%;background:#F0E442;border-radius:999px;transition:width 0.08s linear}
+.drift-ctrl{appearance:none;min-width:44px;min-height:44px;border:2px solid #1A150F;border-radius:999px;background:#FFFEF7;font-family:ui-monospace,monospace;font-weight:900;font-size:11px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;box-shadow:2px 2px 0 #1A150F}
+.drift-ctrl:active{transform:translate(1px,1px);box-shadow:1px 1px 0 #1A150F}
+
 .hd{font-family:"Architects Daughter",var(--mono);line-height:.92;letter-spacing:-.01em}
 .hero-copy{display:flex;flex-direction:column;gap:14px}
 .eyebrow{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
@@ -117,11 +148,18 @@
 <div class="lemmino-section">
   <div class="lemmino-drift" id="lemmino-drift" style="background:#080A0F">
     <canvas id="lemmino-drift-canvas" width="1180" height="560" aria-label="Random all-star career arc through archetype drift"></canvas>
-    <div style="position:absolute;left:12px;top:12px;z-index:4;background:rgba(255,254,247,0.96);border:2px solid #1A150F;border-radius:10px;padding:6px 9px;font-family:ui-monospace,monospace;font-size:10px;font-weight:800;box-shadow:2px 2px 0 #1A150F">
+    <div style="position:absolute;left:clamp(12px,2.5vw,18px);top:calc(12px + env(safe-area-inset-top));z-index:4;background:rgba(255,254,247,0.98);border:2px solid #1A150F;border-radius:12px;padding:8px 12px;font-family:ui-monospace,monospace;font-size:11px;font-weight:800;box-shadow:3px 3px 0 #1A150F;max-width:min(92vw,680px);line-height:1.35">
       <span id="lemmino-drift-focus">Loading all-star arc…</span>
     </div>
-    <div style="position:absolute;right:12px;bottom:12px;z-index:4;background:rgba(26,21,15,0.86);color:#FFFEF7;border:2px solid #1A150F;border-radius:10px;padding:5px 8px;font-family:ui-monospace,monospace;font-size:9px;line-height:1.3;max-width:220px">
-      <span id="lemmino-drift-meta">Random all-star career loops every 14s · ribbons = game prevalence</span>
+    <div style="position:absolute;right:clamp(12px,2.5vw,18px);top:calc(52px + env(safe-area-inset-top));z-index:4;background:rgba(26,21,15,0.88);color:#FFFEF7;border:2px solid #1A150F;border-radius:10px;padding:6px 9px;font-family:ui-monospace,monospace;font-size:10px;line-height:1.35;max-width:min(88vw,320px)">
+      <span id="lemmino-drift-meta">Random all-star career loops · ribbons = game prevalence · dots = rest of league</span>
+    </div>
+    <div class="drift-scrub" id="drift-scrub-wrap">
+      <button class="drift-ctrl" id="drift-prev" aria-label="Previous role change">⟵</button>
+      <button class="drift-ctrl" id="drift-play" aria-label="Play pause">❚❚</button>
+      <button class="drift-ctrl" id="drift-next" aria-label="Next role change">⟶</button>
+      <div class="drift-scrub-track" id="drift-scrub"><div class="drift-scrub-fill" id="drift-scrub-fill"></div></div>
+      <span style="font-family:ui-monospace,monospace;font-size:9px;color:#FFFEF7;opacity:.7;min-width:46px;text-align:right" id="drift-hint">scrub</span>
     </div>
   </div>
 </div>
