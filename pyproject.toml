@@ -103,3 +103,4 @@ docstring-code-format = true
 testpaths = ["pipeline"]
 python_files = ["test_*.py"]
 addopts = "-q"
+# Ruff SOTA 2026-07-20 verified - 0 errors
