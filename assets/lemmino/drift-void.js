@@ -1,9 +1,8 @@
-/* drift-void.js v21 — re-imagined readable viz
-   - No 3D text chips, only clean trail nodes
-   - Left DOM timeline: outline = history, solid = current, faint = future (matches #1)
-   - Top focus big readable, right quad card: vs peers in POS+ARCH that season, MPG/GP distribution, percentile, plain English better/worse
-   - Team wiring from player_team_season.json, minutes from vectors.json, skills from skills_wide.json
-   - Keeps zoom-out 38 + pinch/wheel + seasonCloud
+/* drift-void.js v24 — AAA readable quad panel
+   - Left timeline outline past / filled current / faint future
+   - Right quad card: Pxx big badge, GP + MIN load bars with ▲ avg ● you, 12-bin histogram, plain English, closest peers
+   - Team from player_team_season.json, minutes inflated → label MIN load with tooltip, percentile stays accurate
+   - Keep zoom-out 38, pinch/wheel, seasonCloud, ghost trail
 */
 export async function mountDriftVoid(canvas){
   if(!canvas) return;
@@ -33,7 +32,7 @@ export async function mountDriftVoid(canvas){
   const ground=new THREE.Mesh(new THREE.PlaneGeometry(300,300), new THREE.MeshStandardMaterial({ color:0x0C0E14, roughness:0.96 }));
   ground.rotation.x=-Math.PI/2; ground.position.y=-3.0; scene.add(ground);
 
-  const CACHE_NAME='vector-hoops-v23-20260720-outline-filled';
+  const CACHE_NAME='vector-hoops-v24-20260720-quad';
   async function cachedFetchJSON(url){
     try{ if('caches' in window){ const c=await caches.open(CACHE_NAME); const hit=await c.match(url); if(hit) return await hit.json(); } }catch{}
     const r=await fetch(url,{cache:'default'});
@@ -43,21 +42,22 @@ export async function mountDriftVoid(canvas){
 
   let timeData=null, liteData=null, vecData=null, skillsData=null, teamData=null;
   try{
-    const [tData,lPos,vData,sData,tmData] = await Promise.all([
-      cachedFetchJSON('assets/archetypes_time.json?v=23'),
-      cachedFetchJSON('assets/vectors_search_lite_pos.json?v=23').catch(()=>cachedFetchJSON('assets/vectors_search_lite.json?v=23')),
-      cachedFetchJSON('assets/vectors.json?v=23').catch(()=>null),
-      cachedFetchJSON('assets/skills_wide.json?v=23').catch(()=>null),
-      cachedFetchJSON('assets/player_team_season.json?v=23').catch(()=>null)
+    const [tData, lPos, vData, sData, tmData] = await Promise.all([
+      cachedFetchJSON('assets/archetypes_time.json?v=24'),
+      cachedFetchJSON('assets/vectors_search_lite_pos.json?v=24').catch(()=>cachedFetchJSON('assets/vectors_search_lite.json?v=24')),
+      cachedFetchJSON('assets/vectors.json?v=24').catch(()=>null),
+      cachedFetchJSON('assets/skills_wide.json?v=24').catch(()=>null),
+      cachedFetchJSON('assets/player_team_season.json?v=24').catch(()=>null)
     ]);
-    timeData=tData; liteData=lPosData; vecData=vData; skillsData=sData; teamData=tmData;
-  }catch(e){ console.warn('drift v21 fetch fail',e); return; }
+    timeData=tData; liteData=lPos; vecData=vData; skillsData=sData; teamData=tmData;
+  }catch(e){ console.warn('drift v24 fetch fail',e); return; }
 
   const seasons=timeData?.prevalence||[];
   const OKABE=['#0072B2','#D55E00','#009E73','#F0E442','#56B4E9','#CC79A7','#E69F00','#FFFEF7'];
   const shortNames=["Glass+Rim","LowVol Glass","Low Impact","Def Glass FT","Vol+3P","3P Acc+Vol","Playmaking","Scoring Vol"];
   const longDesc=["Rim protection + glass","Low volume, high rebounding","Minimal box footprint","Def glass + FT rate","High vol 3P + creation","Efficient 3P spacer","Primary playmaking","High usage scoring"];
   const POS_LABELS=['PG','SG','SF','PF','C'];
+  const POS_ICON={ PG:'⬤', SG:'▲', SF:'⬥', PF:'■', C:'✚' };
   const getZ=idx=>(idx/Math.max(1,seasons.length-1))*44 - 22;
   const seasonIdx=new Map(seasons.map((s,i)=>[s.season,i]));
 
@@ -69,7 +69,7 @@ export async function mountDriftVoid(canvas){
 
   const seasonPlayersMap=new Map();
   for(const s of seasons) seasonPlayersMap.set(s.season,[]);
-  const tmpPlayers=liteData.players||liteData||[];
+  const tmpPlayers=liteData?.players||liteData||[];
   for(const p of tmpPlayers){ if(!seasonPlayersMap.has(p.s)) seasonPlayersMap.set(p.s,[]); seasonPlayersMap.get(p.s).push(p); }
 
   // league faint background
@@ -155,25 +155,48 @@ export async function mountDriftVoid(canvas){
 
   let quadEl=document.getElementById('drift-quad');
   if(!quadEl){ quadEl=document.createElement('div'); quadEl.id='drift-quad'; root.appendChild(quadEl); }
-  quadEl.style.cssText=`position:absolute;right:${isMobile? '10px':'14px'};top:84px;width:${isMobile? 'calc(100vw - 136px)':'340px'};max-width:${isMobile? '62vw':'360px'};z-index:6;background:rgba(18,16,12,0.94);border:2px solid #1A150F;border-radius:12px;padding:12px 12px 10px;box-shadow:4px 4px 0 #1A150F;display:flex;flex-direction:column;gap:10px;`;
+  quadEl.style.cssText=`position:absolute;right:${isMobile? '10px':'14px'};top:84px;width:${isMobile? 'calc(100vw - 132px)':'380px'};max-width:${isMobile? '62vw':'400px'};max-height:${isMobile? '62vh':'72vh'};overflow-y:auto;overflow-x:hidden;z-index:6;background:#12100C;border:2px solid #1A150F;border-radius:16px;padding:14px 14px 12px;box-shadow:6px 6px 0 #1A150F;display:flex;flex-direction:column;gap:12px;`;
 
   const styleEl=document.getElementById('drift-v21-style')||document.createElement('style');
   styleEl.id='drift-v21-style';
   styleEl.textContent=`
     #drift-timeline::-webkit-scrollbar{width:4px} #drift-timeline::-webkit-scrollbar-thumb{background:#2A241E;border-radius:99px}
-    .drift-tm-chip{border-radius:999px;padding:6px 10px;font-family:ui-monospace,monospace;font-size:${isMobile? '10px':'11px'};font-weight:800;letter-spacing:-0.01em;cursor:pointer;transition:all .14s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.1}
+    .drift-tm-chip{border-radius:999px;padding:6px 10px;font-family:ui-monospace,monospace;font-size:${isMobile? '10px':'11.5px'};font-weight:800;letter-spacing:-0.01em;cursor:pointer;transition:all .14s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.1}
     .drift-tm-chip.filled{background:#FFFEF7;color:#1A150F;border:2px solid #1A150F;box-shadow:2px 2px 0 #1A150F;transform:scale(1.04)}
-    .drift-tm-chip.outline-past{background:rgba(12,14,20,0.72);color:#9AA0AC;border:2px dashed #4A4E58;opacity:.92}
+    .drift-tm-chip.outline-past{background:rgba(12,14,20,0.78);color:#9AA0AC;border:2px dashed #4A4E58;opacity:.92}
     .drift-tm-chip.outline-future{background:transparent;color:#5A5E6A;border:1.5px dashed rgba(90,94,106,0.45);opacity:.48}
-    .drift-quad-title{font-family:ui-monospace,monospace;font-weight:900;font-size:12px;letter-spacing:0.02em;color:#FFFEF7;line-height:1.25}
-    .drift-quad-sub{font-family:ui-monospace,monospace;font-size:10px;color:#C2C6D0;line-height:1.35}
-    .drift-bar-wrap{height:10px;background:rgba(255,254,247,0.10);border-radius:999px;position:relative;overflow:visible}
-    .drift-bar-avg{position:absolute;top:-2px;bottom:-2px;width:2px;background:#F0E442;opacity:.95}
-    .drift-bar-cur{position:absolute;top:0;bottom:0;width:8px;margin-left:-4px;border-radius:999px;background:#FFFEF7;border:1.5px solid #1A150F;box-shadow:0 0 0 2px rgba(255,254,247,0.18)}
-    .drift-pill{border-radius:999px;padding:3px 8px;font-family:ui-monospace,monospace;font-size:10px;font-weight:800;border:1.5px solid #1A150F;display:inline-flex;align-items:center;gap:4px}
-    .drift-pill.good{background:#B8E6C8;color:#0A1A0F} .drift-pill.bad{background:#FFC8B8;color:#2A0F0A} .drift-pill.mid{background:#FFE8A0;color:#1A150F}
     #lemmino-drift-focus{font-family:ui-sans-serif,system-ui;font-weight:900;font-size:${isMobile? '13px':'15px'};line-height:1.22;letter-spacing:-0.01em}
     #lemmino-drift-meta{font-family:ui-monospace,monospace;font-size:10.5px;line-height:1.45}
+    /* v24 quad AAA */
+    #drift-quad::-webkit-scrollbar{width:5px} #drift-quad::-webkit-scrollbar-thumb{background:#2A241E;border-radius:99px}
+    .dq-kicker{font-family:ui-monospace,monospace;font-weight:900;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:#9AA0AC;display:flex;align-items:center;gap:6px}
+    .dq-title{font-family:ui-sans-serif,system-ui;font-weight:900;font-size:${isMobile? '15px':'18px'};line-height:1.15;letter-spacing:-0.02em;color:#FFFEF7;display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+    .dq-dot{width:10px;height:10px;border-radius:999px;border:1.5px solid #1A150F;display:inline-block;flex-shrink:0}
+    .dq-subtitle{font-family:ui-monospace,monospace;font-size:11px;line-height:1.4;color:#C2C6D0}
+    .dq-bigrow{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+    .dq-pct{font-family:ui-sans-serif,system-ui;font-weight:900;font-size:32px;line-height:0.95;letter-spacing:-0.03em;padding:8px 12px;border-radius:12px;border:2px solid #1A150F;min-width:86px;text-align:center}
+    .dq-pct.good{background:#B8E6C8;color:#0A1A0F} .dq-pct.bad{background:#FFC8B8;color:#2A0F0A} .dq-pct.mid{background:#FFE8A0;color:#1A150F}
+    .dq-pct small{display:block;font-family:ui-monospace,monospace;font-size:10px;font-weight:800;letter-spacing:0.06em;margin-top:2px}
+    .dq-pill{border-radius:999px;padding:5px 10px;font-family:ui-monospace,monospace;font-size:11px;font-weight:800;border:1.5px solid #1A150F;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+    .dq-pill.white{background:#FFFEF7;color:#1A150F} .dq-pill.dark{background:#1A150F;color:#FFFEF7;border-color:#FFFEF7}
+    .dq-pill.mid{background:#FFE8A0;color:#1A150F} .dq-pill.good{background:#B8E6C8;color:#0A1A0F} .dq-pill.bad{background:#FFC8B8;color:#2A0F0A}
+    .dq-section{border:1.5px solid #232018;border-radius:12px;padding:10px 10px 8px;background:rgba(255,254,247,0.04);display:flex;flex-direction:column;gap:6px}
+    .dq-label{font-family:ui-monospace,monospace;font-size:10px;font-weight:900;letter-spacing:0.08em;text-transform:uppercase;color:#E8E0D0;display:flex;justify-content:space-between;align-items:center}
+    .dq-numbers{font-family:ui-sans-serif,system-ui;font-weight:800;font-size:13px;color:#FFFEF7;display:flex;gap:8px;flex-wrap:wrap;align-items:baseline}
+    .dq-numbers b{font-size:15px}
+    .dq-track{height:12px;background:rgba(255,254,247,0.10);border-radius:999px;position:relative;overflow:visible;border:1px solid rgba(255,254,247,0.08)}
+    .dq-avg{position:absolute;top:-4px;bottom:-4px;width:0;display:flex;flex-direction:column;align-items:center;pointer-events:none}
+    .dq-avg-line{width:2px;height:100%;background:#F0E442;box-shadow:0 0 0 1px rgba(0,0,0,0.6)}
+    .dq-avg-lbl{font-family:ui-monospace,monospace;font-size:8px;font-weight:900;color:#F0E442;margin-top:1px;white-space:nowrap;background:#1A150F;padding:0 3px;border-radius:4px}
+    .dq-cur{position:absolute;top:50%;width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:999px;background:#FFFEF7;border:2px solid #1A150F;box-shadow:0 0 0 2px rgba(255,254,247,0.22), 0 1px 4px rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center}
+    .dq-hist-wrap{display:flex;flex-direction:column;gap:4px}
+    .dq-hist{display:flex;gap:2px;align-items:end;height:36px}
+    .dq-hist-bar{flex:1;border-radius:3px 3px 2px 2px;min-width:2px;transition:all .18s;position:relative}
+    .dq-hist-bar.is-cur{background:#FFFEF7 !important;box-shadow:0 0 0 1px #1A150F, 0 0 8px rgba(255,254,247,0.45);outline:1.5px solid #1A150F;z-index:1}
+    .dq-hist-axis{display:flex;justify-content:space-between;font-family:ui-monospace,monospace;font-size:9px;color:#8A8E9A}
+    .dq-sentence{font-family:ui-sans-serif,system-ui;font-size:${isMobile? '13px':'14.5px'};line-height:1.55;font-weight:600;color:#FFFEF7;background:rgba(255,254,247,0.07);border-radius:10px;padding:10px 11px;border:1px solid rgba(255,254,247,0.10)}
+    .dq-peers{font-family:ui-monospace,monospace;font-size:10.5px;line-height:1.45;color:#C2C6D0;background:rgba(18,16,12,0.6);border-radius:8px;padding:7px 9px;border:1px dashed #2A241E}
+    .dq-icon{font-size:12px;line-height:1}
   `;
   document.head.appendChild(styleEl);
 
@@ -187,7 +210,7 @@ export async function mountDriftVoid(canvas){
     let sameQuad=peers.filter(p=>{ const sameArch=p.c===archeIdx; const samePos=pIdx>=0&&p.p!==undefined? p.p===pIdx : (posLabel? p.pl===posLabel : true); return sameArch&&samePos; });
     if(sameQuad.length<6) sameQuad=peers.filter(p=>p.c===archeIdx);
     const vals=[];
-    for(const p of sameQuad){ const km=minutesMap.get(`${p.n}|${seasonStr}`); if(km&&km.mpg) vals.push({ name:p.n, mpg:km.mpg, gp:km.gp }); }
+    for(const p of sameQuad){ const km=minutesMap.get(`${p.n}|${seasonStr}`); if(km&&km.mpg) vals.push({ name:p.n, mpg:km.mpg, gp:km.gp, total_min:km.total_min }); }
     vals.sort((a,b)=>a.mpg-b.mpg);
     let avgMpg=0, avgGp=0, rank=-1;
     if(vals.length){ avgMpg=vals.reduce((s,v)=>s+v.mpg,0)/vals.length; avgGp=vals.reduce((s,v)=>s+v.gp,0)/vals.length; rank=vals.findIndex(v=>v.name===currentName); }
@@ -200,7 +223,6 @@ export async function mountDriftVoid(canvas){
   document.addEventListener('focusin',e=>{ if(e.target&&e.target.id==='guess-input'){ embedPaused=true; paused=true; if(btnPlay) btnPlay.textContent='▶'; } });
 
   function pickRandom(ex){ let cands=pool.filter(n=>n!==ex&&!used.has(n)); if(cands.length<5){ used.clear(); cands=pool.filter(n=>n!==ex); } return cands[Math.floor(Math.random()*cands.length)]; }
-
   function careerStage(idx,total){ const r=idx/Math.max(1,total-1); if(r<0.18) return 'Rookie'; if(r<0.35) return 'Breakout'; if(r<0.62) return 'Prime'; if(r<0.84) return 'Veteran'; return 'Late'; }
 
   function renderTimeline(){
@@ -215,51 +237,129 @@ export async function mountDriftVoid(canvas){
       chip.onclick=()=>{ tProg=i/current.meta.length; embedPaused=false; paused=false; if(btnPlay) btnPlay.textContent='❚❚'; };
       timelineEl.appendChild(chip);
     });
-    // autoscroll current into view
     const curEl=timelineEl.children[idx]; if(curEl) curEl.scrollIntoView({ block:'nearest', behavior:'smooth' });
   }
 
   function renderQuad(m, quad){
     if(!quadEl) return;
-    const pct=Math.round(quad.pct);
-    const better=quad.curMin && quad.curMin.mpg >= quad.avgMpg ? true : false;
-    const delta=quad.curMin? (quad.curMin.mpg - quad.avgMpg).toFixed(1) : '—';
-    const n=quad.n;
-    const curMpg=quad.curMin?.mpg?.toFixed(1) || '—';
-    const curGp=quad.curMin?.gp || '—';
-    const avgMpg=quad.avgMpg.toFixed(1);
-    const avgGp=quad.avgGp.toFixed(0);
-    // simple histogram of mpg
-    const vals=quad.vals.map(v=>v.mpg);
-    const min=Math.min(...vals), max=Math.max(...vals);
-    const bins=10; const hist=Array(bins).fill(0);
-    vals.forEach(v=>{ const b=Math.min(bins-1, Math.floor(((v-min)/Math.max(0.0001,max-min))*bins)); hist[b]++; });
+    const n=quad.n||0;
+    const vals=quad.vals||[];
+    const curMpg=quad.curMin?.mpg||0;
+    const curGp=quad.curMin?.gp||0;
+    const avgMpg=quad.avgMpg||0;
+    const avgGp=quad.avgGp||0;
+    const pct=Math.round(quad.pct||0);
+    const better=curMpg>=avgMpg;
+    const deltaMpg=(curMpg-avgMpg);
+    const deltaGp=(curGp-avgGp);
+    const pctState = pct>=67? 'good' : pct<=33? 'bad' : 'mid';
+    const arrow = better? '▲' : '▼';
+    const verb = better? 'more' : 'fewer';
+
+    // ranges
+    const mpgs=vals.map(v=>v.mpg).filter(v=>v>0);
+    const gps=vals.map(v=>v.gp).filter(v=>v>0);
+    const minMpg= mpgs.length? Math.min(...mpgs) : avgMpg*0.7;
+    const maxMpg= mpgs.length? Math.max(...mpgs) : avgMpg*1.3;
+    const minGp= gps.length? Math.min(...gps) : 0;
+    const maxGp= gps.length? Math.max(...gps) : 82;
+    const padMpg=(maxMpg-minMpg)*0.06||1;
+    const padGp=(maxGp-minGp)*0.08||1;
+    const rMinMpg=minMpg-padMpg, rMaxMpg=maxMpg+padMpg;
+    const rMinGp=Math.max(0,minGp-padGp), rMaxGp=maxGp+padGp;
+
+    // histogram 12 bins for MIN load
+    const bins=12;
+    const hist=Array(bins).fill(0);
+    mpgs.forEach(v=>{ const b=Math.min(bins-1, Math.max(0, Math.floor(((v-rMinMpg)/Math.max(0.0001,rMaxMpg-rMinMpg))*bins))); hist[b]++; });
     const maxBin=Math.max(...hist,1);
-    // build HTML
-    const pillClass= pct>=67? 'good' : (pct<=33? 'bad':'mid');
-    const summary = n<3 ? `${m.name} is one of few ${m.pl||''} ${m.arche} this season.` :
-      (better? `Plays more than avg ${m.pl||'pos'}+${m.arche} that year (+${delta} vs avg, P${pct})` : `Plays fewer minutes than avg ${m.pl||''} ${m.arche} that year (${delta} vs avg, P${pct})`) + ` — ${n} peers.`;
+    const curBin=Math.min(bins-1, Math.max(0, Math.floor(((curMpg-rMinMpg)/Math.max(0.0001,rMaxMpg-rMinMpg))*bins)));
+    const avgBin=Math.min(bins-1, Math.max(0, Math.floor(((avgMpg-rMinMpg)/Math.max(0.0001,rMaxMpg-rMinMpg))*bins)));
+    const avgPosPct=((avgMpg-rMinMpg)/Math.max(0.0001,rMaxMpg-rMinMpg))*100;
+    const curPosPct=((curMpg-rMinMpg)/Math.max(0.0001,rMaxMpg-rMinMpg))*100;
+
+    // closest peers
+    const closest = [...vals].filter(v=>v.name!==m.name).sort((a,b)=> Math.abs(a.mpg-curMpg)-Math.abs(b.mpg-curMpg)).slice(0,2);
+
+    // plain english
+    const posLabel=m.pl||'POS';
+    const archLabel=m.arche||'archetype';
+    let sentence='';
+    if(n<3){
+      sentence=`${m.name} is one of few ${posLabel} ${archLabel} in ${m.season} — only ${n} peers that year.`;
+    } else if(pct>=80){
+      sentence=`${m.name} played ${curGp} games vs ${avgGp.toFixed(0)} avg and carried heavy load — more than ${pct}% of ${posLabel} ${archLabel} peers. That is ${better? 'above':'below'} average by ${Math.abs(deltaMpg).toFixed(1)} load.`;
+    } else if(pct<=20){
+      sentence=`${m.name} played ${curGp} vs ${avgGp.toFixed(0)} avg GP, ${verb} minutes than ${100-pct}% of ${posLabel} ${archLabel} peers (P${pct} — ${Math.abs(deltaMpg).toFixed(1)} vs avg).`;
+    } else {
+      sentence=`${m.name} played ${curGp} vs ${avgGp.toFixed(0)} avg GP, ${verb} load than average — P${pct} among ${n} ${posLabel} ${archLabel} peers in ${m.season}. Δ ${deltaMpg>=0? '+':''}${deltaMpg.toFixed(1)} vs avg.`;
+    }
+
+    const archColor=OKABE[m.archeIdx%8]||'#FFFEF7';
+    const posIcon=POS_ICON[posLabel]||'⬤';
+
+    function barHTML(min,max,curAvg,curVal,pctState){
+      const curP=Math.max(2,Math.min(98, ((curVal-min)/Math.max(0.0001,max-min))*100 ));
+      const avgP=Math.max(2,Math.min(98, ((curAvg-min)/Math.max(0.0001,max-min))*100 ));
+      return `
+        <div class="dq-track">
+          <div class="dq-avg" style="left:${avgP}%"><div class="dq-avg-line"></div><div class="dq-avg-lbl">▲ avg</div></div>
+          <div class="dq-cur" style="left:${curP}%" title="you: ${curVal.toFixed(1)} vs avg ${curAvg.toFixed(1)}"></div>
+        </div>`;
+    }
 
     quadEl.innerHTML=`
-      <div class="drift-quad-title">QUAD ${m.season} • ${m.team} • ${m.pl||'POS'} + ${m.arche}</div>
-      <div class="drift-quad-sub">vs <b>${n} peers</b> in same quadrant of map that season. Dots in background = that season's full pool.</div>
-      <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center">
-        <span class="drift-pill ${pillClass}">${pct>=0? `P${pct} ${better? '↑ better':'↓ worse'}`:'—'}</span>
-        <span class="drift-pill mid">${curGp} GP vs ${avgGp} avg</span>
-        <span class="drift-pill" style="background:#FFFEF7;color:#1A150F">${curMpg} load vs ${avgMpg} avg</span>
-      </div>
-      <div>
-        <div style="display:flex;justify-content:space-between"><span class="drift-quad-sub">MPG load distribution (quad)</span><span class="drift-quad-sub">${min.toFixed(1)} → ${max.toFixed(1)}</span></div>
-        <div style="display:flex;gap:2px;align-items:end;height:22px;margin-top:4px">
-          ${hist.map((h,i)=>`<div style="flex:1;height:${4+ (h/maxBin)*18}px;background:${i===Math.floor(((quad.curMin?.mpg||min - min)/Math.max(0.0001,max-min))*bins)? '#FFFEF7':'#3A3A42'};border-radius:2px;opacity:${i===Math.floor(((quad.curMin?.mpg||min - min)/Math.max(0.0001,max-min))*bins)? '1':'0.7'}"></div>`).join('')}
+      <div class="dq-kicker"><span class="dq-dot" style="background:${archColor}"></span> Quad ${m.season} • Team ${m.team} • ${posLabel} ${archLabel} <span style="margin-left:auto;opacity:.7">${n} peers</span></div>
+      <div class="dq-title"><span class="dq-icon">${posIcon}</span> ${posLabel} <span style="opacity:.55">×</span> <span style="display:inline-flex;align-items:center;gap:6px"><span class="dq-dot" style="background:${archColor}"></span> ${archLabel}</span></div>
+      <div class="dq-subtitle">vs <b style="color:#FFFEF7">${n} peers</b> in same quadrant of embedding map that season. Background dots = full ${m.season} pool.</div>
+
+      <div class="dq-bigrow">
+        <div class="dq-pct ${pctState}" title="Percentile vs quad">
+          <div style="display:flex;align-items:center;justify-content:center;gap:4px">${arrow} P${pct}</div>
+          <small>${pct>=67? '▲ better': pct<=33? '▼ worse':'— mid'}</small>
         </div>
-        <div class="drift-bar-wrap" style="margin-top:8px">
-          <div class="drift-bar-avg" style="left:${ ((quad.avgMpg-min)/Math.max(0.0001,max-min))*100 }%"></div>
-          <div class="drift-bar-cur" style="left:${ (( (quad.curMin?.mpg||min) - min)/Math.max(0.0001,max-min))*100 }%"></div>
+        <div style="display:flex;flex-direction:column;gap:6px;flex:1;min-width:140px">
+          <div style="display:flex;gap:6px;flex-wrap:wrap">
+            <span class="dq-pill white" title="Games played">● ${curGp} GP <span style="opacity:.6">vs ${avgGp.toFixed(0)} avg ${deltaGp>=0? '+'+deltaGp.toFixed(0):deltaGp.toFixed(0)}</span></span>
+            <span class="dq-pill ${pctState}" title="MIN load — inflated scale but percentile accurate">■ ${curMpg.toFixed(1)} load <span style="opacity:.8">vs ${avgMpg.toFixed(1)} avg ${deltaMpg>=0? '+'+deltaMpg.toFixed(1):deltaMpg.toFixed(1)}</span></span>
+          </div>
+          <div class="dq-subtitle" style="font-size:10px;opacity:.8">MIN load is inflated (52 = 4264/82) — use as relative, not real MPG. Pxx accurate.</div>
         </div>
-        <div style="display:flex;justify-content:space-between;margin-top:4px"><span class="drift-quad-sub">▲ avg ${avgMpg}</span><span class="drift-quad-sub">● you ${curMpg}</span></div>
       </div>
-      <div class="drift-quad-sub" style="background:rgba(255,254,247,0.06);border-radius:8px;padding:6px 8px;line-height:1.4">${summary} ${m.desc}. <span style="opacity:.7">White trail = full career ghost, yellow bar = progress.</span></div>
+
+      <div class="dq-section">
+        <div class="dq-label"><span>Games played</span><span style="opacity:.7">${minGp.toFixed(0)} → ${maxGp.toFixed(0)} range</span></div>
+        <div class="dq-numbers"><b>${curGp}</b> you <span style="opacity:.6">vs</span> <b>${avgGp.toFixed(0)}</b> avg</div>
+        ${barHTML(rMinGp,rMaxGp,avgGp,curGp,pctState)}
+        <div class="dq-label" style="margin-top:2px"><span>▲ avg ${avgGp.toFixed(0)}</span><span>● you ${curGp}</span></div>
+      </div>
+
+      <div class="dq-section">
+        <div class="dq-label">
+          <span>Minutes load distribution (quad) — triple: color + shape + text</span>
+          <span style="opacity:.7" title="inflated scale">${rMinMpg.toFixed(1)} → ${rMaxMpg.toFixed(1)}</span>
+        </div>
+        <div class="dq-hist-wrap">
+          <div class="dq-hist" title="12-bin histogram, white=you, yellow=avg">
+            ${hist.map((h,i)=>{
+              const isCur=i===curBin;
+              const isAvg=i===avgBin;
+              const base= isCur? '#FFFEF7' : isAvg? '#F0E442' : '#3A3E4A';
+              const hPct= 8 + (h/maxBin)*28;
+              return `<div class="dq-hist-bar ${isCur? 'is-cur':''}" style="height:${hPct}px;background:${base};opacity:${isCur?1: isAvg?0.9:0.55}" title="bin ${i}: ${h} peers"></div>`;
+            }).join('')}
+          </div>
+          <div style="position:relative;height:12px;margin-top:2px;background:rgba(255,254,247,0.06);border-radius:999px;border:1px solid rgba(255,254,247,0.06)">
+            <div class="dq-avg" style="left:${avgPosPct}%"><div class="dq-avg-line" style="height:12px"></div></div>
+            <div class="dq-cur" style="left:${curPosPct}%"></div>
+          </div>
+          <div class="dq-hist-axis"><span>▲ avg ${avgMpg.toFixed(1)}</span><span style="opacity:.7">12 bins • ${n} peers</span><span>● you ${curMpg.toFixed(1)}</span></div>
+        </div>
+      </div>
+
+      ${closest.length? `<div class="dq-peers"><div style="font-weight:900;color:#E8E0D0;margin-bottom:2px">Closest peers in load ▲●■</div>${closest.map(p=>`⬤ ${p.name} — ${p.mpg.toFixed(1)} load, ${p.gp} GP (Δ ${(p.mpg-curMpg).toFixed(1)})`).join('<br>')}</div>`:''}
+
+      <div class="dq-sentence">${sentence}<br><span style="opacity:.75;font-weight:400;font-size:12px">${m.desc}. Outline chips = past, filled = current ${m.season}. White trail = full career ghost.</span></div>
     `;
   }
 
@@ -268,7 +368,6 @@ export async function mountDriftVoid(canvas){
     clearGroup(trailPastGroup); clearGroup(trailFutureGroup); clearGroup(ghostGroup);
     ghostGroup.add(current.ghostLine);
     const idx=Math.min(Math.floor(tProg*current.meta.length), current.meta.length-1);
-    // nodes outline vs filled
     for(let i=0;i<current.nodeMeshes.length;i++){
       const mesh=current.nodeMeshes[i]; const mat=mesh.material;
       if(i===idx){ mat.wireframe=false; mat.color.set(current.baseColor); mat.emissive.set(current.baseColor); mat.emissiveIntensity=1.0; mat.opacity=1; mesh.scale.set(1.85,1.85,1.85); }
@@ -313,12 +412,11 @@ export async function mountDriftVoid(canvas){
     const nextChange=current.changes.find(c=>c.idx>idx);
     const nextHint=nextChange? `→ next ${nextChange.to.season} ${nextChange.to.arche}` : `→ final ${last.season}`;
 
-    // focus readable
     if(change && lastChangeIdx!==idx){
       lastChangeIdx=idx; autoPauseUntil=performance.now()+2400;
       focusEl.innerHTML=`<div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center"><span style="background:#F0E442;border:2px solid #1A150F;padding:4px 10px;border-radius:999px;font-weight:900">SHIFT ${progress} ${stage}</span><span style="background:#FFFEF7;border:2px solid #1A150F;padding:4px 10px;border-radius:999px;font-weight:800;color:#1A150F">${current.name} • ${m.team} ${m.season}</span><span style="background:#1A150F;color:#FFFEF7;border:2px solid #FFFEF7;padding:4px 10px;border-radius:999px">${m.arche} ${m.pl? '• '+m.pl:''}</span></div><div style="margin-top:6px;font-size:${isMobile? '11px':'12px'};font-family:ui-monospace,monospace;color:#1A150F;background:rgba(255,254,247,0.92);border:2px solid #1A150F;border-radius:10px;padding:6px 10px;display:inline-block">LEAGUE ${ (m.share*100).toFixed(1)}% (${sign}${delta}pp) — ${m.team} ${m.season}: ${quad.curMin?.mpg?.toFixed(1)||'—'} load vs ${quad.avgMpg.toFixed(1)} avg, P${Math.round(quad.pct)} in quad • ${nextHint}</div>`;
     } else {
-      focusEl.innerHTML=`<div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center"><span style="background:#FFFEF7;border:2px solid #1A150F;padding:5px 12px;border-radius:999px;font-weight:900;color:#1A150F">${current.name} [${progress} ${stage}]</span><span style="background:#1A150F;color:#FFFEF7;border:2px solid #FFFEF7;padding:5px 12px;border-radius:999px">${m.season} ${m.team} • ${m.arche} ${m.pl? '• '+m.pl:''}</span></div><div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap"><span class="drift-pill" style="background:#FFFEF7;color:#1A150F">LEAGUE ${(m.share*100).toFixed(1)}% (${sign}${delta}pp)</span><span class="drift-pill ${quad.pct>=67? 'good':quad.pct<=33? 'bad':'mid'}">${quad.curMin?.mpg?.toFixed(1)||'—'} load P${Math.round(quad.pct)} vs ${quad.avgMpg.toFixed(1)} avg • ${quad.n} peers</span><span class="drift-pill" style="background:#1A150F;color:#FFFEF7">→ ${nextHint}</span></div>`;
+      focusEl.innerHTML=`<div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center"><span style="background:#FFFEF7;border:2px solid #1A150F;padding:5px 12px;border-radius:999px;font-weight:900;color:#1A150F">${current.name} [${progress} ${stage}]</span><span style="background:#1A150F;color:#FFFEF7;border:2px solid #FFFEF7;padding:5px 12px;border-radius:999px">${m.season} ${m.team} • ${m.arche} ${m.pl? '• '+m.pl:''}</span></div><div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap"><span class="dq-pill white">LEAGUE ${(m.share*100).toFixed(1)}% (${sign}${delta}pp)</span><span class="dq-pill ${quad.pct>=67? 'good':quad.pct<=33? 'bad':'mid'}">${quad.curMin?.mpg?.toFixed(1)||'—'} load P${Math.round(quad.pct)} vs ${quad.avgMpg.toFixed(1)} avg • ${quad.n} peers</span><span class="dq-pill dark">→ ${nextHint}</span></div>`;
     }
 
     if(metaEl){
