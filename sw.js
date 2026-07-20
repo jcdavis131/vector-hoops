@@ -1,6 +1,6 @@
-/* vector-hoops PWA v12-20260720 — embedding map #1 fix: robust three import fallback */
+/* vector-hoops PWA v13-20260720 — embedding map #1 fix: Object.assign position read-only crash in THREE r160 */
 
-const CACHE_NAME = 'vector-hoops-v12-20260720-embed-importfix';
+const CACHE_NAME = 'vector-hoops-v13-20260720-embed-readonly-fix';
 const CORE = [
   '/',
   '/play',

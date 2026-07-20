@@ -68,7 +68,7 @@ export async function mountStarMap(canvas){
 
   const walls=new THREE.Group(); starGroup.add(walls);
   const xy=makeGlass(PLATE,0xFFFFFF,0.012); xy.position.set(0,0,-WALL); walls.add(xy);
-  walls.add(Object.assign(makeGrid(PLATE,12,0xFFFFFF,0.022),{position:xy.position.clone()}));
+  const xyGrid=makeGrid(PLATE,12,0xFFFFFF,0.022); xyGrid.position.copy(xy.position); walls.add(xyGrid);
   const xyE=makeEdge(PLATE,0xFFFFFF,0.035); xyE.position.copy(xy.position); walls.add(xyE);
   const xz=makeGlass(PLATE,0xA8C4FF,0.01); xz.rotation.x=Math.PI/2; xz.position.set(0,-WALL,0); walls.add(xz);
   const xzG=makeGrid(PLATE,12,0xA8C4FF,0.028); xzG.rotation.x=Math.PI/2; xzG.position.copy(xz.position); walls.add(xzG);
