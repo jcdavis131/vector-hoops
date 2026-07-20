@@ -1,4 +1,4 @@
-/* drift-void.js v26.2 — left→right timeline, Y=role, Z=load distribution — fixed legibility */
+/* drift-void.js v27 — left→right timeline, Y=role, Z=load distribution — fixed legibility */
 export async function mountDriftVoid(canvas){
   if(!canvas) return;
   let THREE;
@@ -39,14 +39,14 @@ export async function mountDriftVoid(canvas){
   let timeData=null, liteData=null, vecData=null, skillsData=null, teamData=null;
   try{
     const [tData, lPos, vData, sData, tmData] = await Promise.all([
-      cachedFetchJSON('assets/archetypes_time.json?v=26'),
-      cachedFetchJSON('assets/vectors_search_lite_pos.json?v=26').catch(()=>cachedFetchJSON('assets/vectors_search_lite.json?v=26')),
-      cachedFetchJSON('assets/vectors.json?v=26').catch(()=>null),
-      cachedFetchJSON('assets/skills_wide.json?v=26').catch(()=>null),
-      cachedFetchJSON('assets/player_team_season.json?v=26').catch(()=>null)
+      cachedFetchJSON('assets/archetypes_time.json?v=27'),
+      cachedFetchJSON('assets/vectors_search_lite_pos.json?v=27').catch(()=>cachedFetchJSON('assets/vectors_search_lite.json?v=27')),
+      cachedFetchJSON('assets/vectors.json?v=27').catch(()=>null),
+      cachedFetchJSON('assets/skills_wide.json?v=27').catch(()=>null),
+      cachedFetchJSON('assets/player_team_season.json?v=27').catch(()=>null)
     ]);
     timeData=tData; liteData=lPos; vecData=vData; skillsData=sData; teamData=tmData;
-  }catch(e){ console.warn('drift v26.2 fetch fail',e); return; }
+  }catch(e){ console.warn('drift v27 fetch fail',e); return; }
 
   const seasons=timeData?.prevalence||[];
   const OKABE=['#0072B2','#D55E00','#009E73','#F0E442','#56B4E9','#CC79A7','#E69F00','#111111'];
@@ -110,7 +110,7 @@ export async function mountDriftVoid(canvas){
   header.innerHTML=`
     <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;padding:12px 14px;background:#FFFEF7;border-bottom:2px solid #1A150F">
       <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
-        <span style="font-family:ui-monospace,monospace;font-size:10px;font-weight:900;letter-spacing:.08em;background:#1A150F;color:#FFFEF7;border-radius:999px;padding:7px 11px">Career Arc v26.2 — X=time left→right • Y=role • Z=load</span>
+        <span style="font-family:ui-monospace,monospace;font-size:10px;font-weight:900;letter-spacing:.08em;background:#1A150F;color:#FFFEF7;border-radius:999px;padding:7px 11px">Career Arc v27 — X=time left→right • Y=role • Z=load</span>
         <span style="font-family:ui-monospace,monospace;font-size:10px;opacity:.7">peer dots = distribution per season in Y/Z • drag to rotate • pinch/wheel zoom</span>
       </div>
       <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;position:relative">
