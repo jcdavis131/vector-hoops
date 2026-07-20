@@ -9,6 +9,7 @@
 **Daily NBA chimera puzzle over an era-honest embedding space.** MTNN v5_concat_b2_h160_t32_d48_mlp128: 120 feats, 17 tower families, concat 544+12→128 L2-norm, heads: 8 archetype + 5 pos + 14 next_profile + 18 skills tower. Leakfree eval: 0.977 recall@10 / 0.6717 purity@20 composite 0.7937 via --split player. Live at https://hoops.dumbmodel.com
 
 > Solo personal project, no connection to employer, built with public/free-tier only (free data pipeline, ONNX optional, static Vercel).
+> **Built in raw WebGPU / WebGL / Canvas — no Unity/Unreal, just browser graphics APIs straight.** Zero engine, custom shaders + raw buffers, static hosting.
 
 **Live:** https://hoops.dumbmodel.com | **Campaign Lab:** [Chimera Campaign Lab Space](https://agent.meta.ai/s/vector-hoops-chimera-campaign-lab) | **Methods:** `/docs/METHODS.md`
 
