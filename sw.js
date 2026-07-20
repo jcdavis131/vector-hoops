@@ -1,6 +1,6 @@
-/* vector-hoops PWA v11-20260720 — embedding map #1 fix: bigger stars + bust cache */
+/* vector-hoops PWA v12-20260720 — embedding map #1 fix: robust three import fallback */
 
-const CACHE_NAME = 'vector-hoops-v11-20260720-embed-fix';
+const CACHE_NAME = 'vector-hoops-v12-20260720-embed-importfix';
 const CORE = [
   '/',
   '/play',
