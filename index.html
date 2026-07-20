@@ -7,7 +7,9 @@
 <meta name="description" content="12,966 NBA seasons as rotating embedding map. Daily Past→Modern."/><meta name="theme-color" content="#1A150F"/>
 <link rel="manifest" href="/manifest.json"/>
 <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/shell.css"/><link rel="stylesheet" href="assets/responsive.css"/><link rel="stylesheet" href="assets/final-qa.css"/><link rel="stylesheet" href="assets/unified.css"/>
+<link rel="stylesheet" href="assets/shell.css"/><link rel="stylesheet" href="assets/responsive.css"/><link rel="stylesheet" href="assets/final-qa.css"/><link rel="stylesheet" href="assets/unified.css"/><link rel="stylesheet" href="assets/lemmino/lemmino.css"/>
+<script async src="https://unpkg.com/es-module-shims@1.8.0/dist/es-module-shims.js"></script>
+<script type="importmap">{"imports":{"three":"https://unpkg.com/three@0.160.0/build/three.module.js","three/addons/":"https://unpkg.com/three@0.160.0/examples/jsm/"}}</script>
 <style>
 :root{--paper:#FFFEF7;--ink:#1A150F;--blue:#0072B2;--verm:#D55E00;--yellow:#F0E442;--green:#009E73;--radius:14px;--shadow:4px 4px 0 var(--ink);--mono:ui-monospace,monospace;--sans:ui-sans-serif,system-ui;}
 *{box-sizing:border-box}html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:18px;line-height:1.65;overflow-x:clip}
@@ -65,6 +67,26 @@
 <noscript><div role="alert" style="padding:16px;text-align:center">Enable JS — Vector Hoops needs JavaScript for Daily Court + Map</div></noscript>
 
 <nav class="site-nav" data-active="/" aria-label="Vector Hoops site"></nav>
+
+<!-- LEMMINO VOID — Documentary intro: floating basketball artifact + court debris in black fog -->
+<div class="lemmino-section">
+  <div class="lemmino-hero-void" id="lemmino-hero-void">
+    <canvas id="lemmino-hero-canvas" width="1180" height="520" aria-label="Lemmino-style void: floating basketball artifact and deconstructed court in fog"></canvas>
+    <div class="lemmino-vignette" aria-hidden="true"></div>
+    <div class="lemmino-grain" aria-hidden="true"></div>
+    <div class="lemmino-chapter">
+      <div class="kicker"><i></i> ARCHIVE // 12,966 RECORDS // ERA-HONEST</div>
+      <h2>Every season leaves <br> a trace <em>— in the dark</em></h2>
+      <p class="de">Lemmino documentary style: evidence floats in void. Court lines fracture, leather artifact hovers, 12,966 dust motes — each a player-season — drift in tungsten fog. No gloss. Just data, lit like a crime scene.</p>
+    </div>
+    <div class="lemmino-doc-label">CASE FILE: VECTOR-HOOPS // 1996-2026</div>
+    <div class="lemmino-ui">
+      <span class="lemmino-caption">● REC ● 24 FPS ● TUNGSTEN 3200K</span>
+      <span class="lemmino-caption lemmino-caption--dark" id="lemmino-hero-meta">FOG DENSITY 0.022 / SPOT F0E442 / DUST 2500</span>
+      <span class="lemmino-caption">MATERIAL: MATTE • FLAT SHADE • LOW-POLY</span>
+    </div>
+  </div>
+</div>
 
 <div class="hero">
   <div class="hero-copy">
@@ -126,6 +148,26 @@
   <a class="card" href="/trends" style="text-decoration:none;color:inherit"><div class="small-mono">Trends</div><b style="font-family:'Architects Daughter',mono;font-size:19px">How the game changed</b><div style="font-size:13px;color:#666;margin-top:5px;line-height:1.45">30 seasons of drift, archetype shifts, career shapes — one scrub to play it.</div></a>
   <a class="card" href="/players" style="text-decoration:none;color:inherit"><div class="small-mono">Players</div><b style="font-family:'Architects Daughter',mono;font-size:19px">Directory + Skills</b><div style="font-size:13px;color:#666;margin-top:5px;line-height:1.45">Every season graded, search any name, compare eras side-by-side.</div></a>
   <a class="card" href="/model" style="text-decoration:none;color:inherit"><div class="small-mono">Lab</div><b style="font-family:'Architects Daughter',mono;font-size:19px">Inside the model</b><div style="font-size:13px;color:#666;margin-top:5px;line-height:1.45">How the embedding is built, what it captures, and where it fails.</div></a>
+</div>
+
+<!-- LEMMINO MONOLITHS — Evidence room: 8 archetype artifacts in black fog, sweeping torch -->
+<div class="lemmino-section">
+  <div class="lemmino-monoliths" id="lemmino-monoliths">
+    <canvas id="lemmino-monoliths-canvas" width="1180" height="560" aria-label="Lemmino evidence room: eight monoliths for eight archetypes under sweeping spotlight"></canvas>
+    <div class="lemmino-vignette" aria-hidden="true"></div>
+    <div class="lemmino-scanline" aria-hidden="true"></div>
+    <div class="lemmino-grain" aria-hidden="true"></div>
+    <div class="lemmino-chapter" style="top:18px;">
+      <div class="kicker"><i></i> EVIDENCE ROOM // 8 ARCHETYPES // PREVALENCE AS HEIGHT</div>
+      <h2>8 monoliths, <br> one for each truth <em>that survived</em></h2>
+      <p class="de">Glass+Rim, LowVol Glass, Vol+3P, Playmaking… Each monolith's height = how common that shape is across 12,966 seasons. Torch sweeps. Matte, no shine. Documentary.</p>
+    </div>
+    <div class="lemmino-doc-label">EXHIBIT B — ARCHETYPE MONOLITHS / TUNGSTEN + COLD RIM / 16MM GRAIN</div>
+    <div class="lemmino-ui">
+      <span class="lemmino-caption" id="lemmino-mono-focus">● FOCUS: Glass+Rim — 14% prevalence</span>
+      <span class="lemmino-caption lemmino-caption--dark">CAMERA: 32MM • DOLLY 0.08 • FOG EXP2 0.028</span>
+    </div>
+  </div>
 </div>
 
 <div id="viral-row" style="max-width:1180px;margin:10px auto 0;padding:0 clamp(14px,3.5vw,28px) calc(28px + 88px);display:grid;grid-template-columns:1.1fr .9fr;gap:12px">
@@ -588,6 +630,44 @@ document.querySelectorAll('[data-pack-card]').forEach(function(btn){
   });
 });
 })();
+</script>
+<!-- Lemmino Documentary 3D — professional Three.js modules -->
+<script type="module">
+import { mountHeroVoid } from './assets/lemmino/hero-void.js';
+import { mountMonoliths } from './assets/lemmino/monoliths.js';
+
+const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+async function initLemmino() {
+  const heroCanvas = document.getElementById('lemmino-hero-canvas');
+  const monoCanvas = document.getElementById('lemmino-monoliths-canvas');
+  if (heroCanvas) {
+    try {
+      await mountHeroVoid(heroCanvas);
+      console.log('Lemmino hero void mounted');
+    } catch (e) { console.warn('Hero void mount fail', e); }
+  }
+  if (monoCanvas) {
+    try {
+      const api = await mountMonoliths(monoCanvas);
+      // live label update like documentary scanner
+      const focusEl = document.getElementById('lemmino-mono-focus');
+      if (focusEl && api && api.getFocused) {
+        setInterval(() => {
+          if (prefersReduced) return;
+          try {
+            const f = api.getFocused();
+            if (f) focusEl.textContent = `● SCAN // ${f.label} — ${f.name.toUpperCase()} — ${Math.round(f.count*100)}% ARCHIVE`;
+          } catch {}
+        }, 900);
+      }
+    } catch (e) { console.warn('Monoliths mount fail', e); }
+  }
+}
+
+// defer to not block LCP
+if (document.readyState === 'complete') setTimeout(initLemmino, 400);
+else window.addEventListener('load', () => setTimeout(initLemmino, 400));
 </script>
 <footer class="site-footer"><div class="site-footer__links"><a href="/play">Play</a><a href="/model">Lab</a><a href="/methods">Methods</a><a href="/players">Players</a><a href="https://github.com/jcdavis131/vector-hoops" target="_blank" rel="noopener">GitHub</a></div><div class="site-footer__attribution">Every number recomputable from stats.nba.com · dumbmodel.com</div></footer>
 <script>if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js').catch(()=>{})})}</script>
