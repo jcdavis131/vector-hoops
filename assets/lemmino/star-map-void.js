@@ -19,7 +19,7 @@ export async function mountStarMap(canvas){
 
   const scene = new THREE.Scene();
   scene.background = new THREE.Color(0x080A0F);
-  scene.fog = new THREE.FogExp2(0x080A0F, 0.010);
+  scene.fog = new THREE.FogExp2(0x080A0F, 0.004);
 
   const camera = new THREE.PerspectiveCamera(34, canvas.clientWidth/canvas.clientHeight, 0.1, 100);
   camera.position.set(0,0.6,8.2);
@@ -67,17 +67,17 @@ export async function mountStarMap(canvas){
 
   // Walls
   const walls=new THREE.Group(); starGroup.add(walls);
-  const xy=makeGlass(PLATE_SIZE,0xFFFFFF,0.065); xy.position.set(0,0,-WALL); walls.add(xy);
-  const xyG=makeGrid(PLATE_SIZE,10,0xFFFFFF,0.11); xyG.position.copy(xy.position); walls.add(xyG);
-  const xyE=makeEdge(PLATE_SIZE,0xFFFFFF,0.18); xyE.position.copy(xy.position); walls.add(xyE);
+  const xy=makeGlass(PLATE_SIZE,0xFFFFFF,0.032); xy.position.set(0,0,-WALL); walls.add(xy);
+  const xyG=makeGrid(PLATE_SIZE,10,0xFFFFFF,0.06); xyG.position.copy(xy.position); walls.add(xyG);
+  const xyE=makeEdge(PLATE_SIZE,0xFFFFFF,0.09); xyE.position.copy(xy.position); walls.add(xyE);
 
-  const xz=makeGlass(PLATE_SIZE,0xA8C4FF,0.055); xz.rotation.x=Math.PI/2; xz.position.set(0,-WALL,0); walls.add(xz);
-  const xzG=makeGrid(PLATE_SIZE,10,0xA8C4FF,0.14); xzG.rotation.x=Math.PI/2; xzG.position.copy(xz.position); walls.add(xzG);
-  const xzE=makeEdge(PLATE_SIZE,0xA8C4FF,0.20); xzE.rotation.x=Math.PI/2; xzE.position.copy(xz.position); walls.add(xzE);
+  const xz=makeGlass(PLATE_SIZE,0xA8C4FF,0.028); xz.rotation.x=Math.PI/2; xz.position.set(0,-WALL,0); walls.add(xz);
+  const xzG=makeGrid(PLATE_SIZE,10,0xA8C4FF,0.07); xzG.rotation.x=Math.PI/2; xzG.position.copy(xz.position); walls.add(xzG);
+  const xzE=makeEdge(PLATE_SIZE,0xA8C4FF,0.10); xzE.rotation.x=Math.PI/2; xzE.position.copy(xz.position); walls.add(xzE);
 
-  const yz=makeGlass(PLATE_SIZE,0xF0E442,0.05); yz.rotation.y=Math.PI/2; yz.position.set(-WALL,0,0); walls.add(yz);
-  const yzG=makeGrid(PLATE_SIZE,10,0xF0E442,0.13); yzG.rotation.y=Math.PI/2; yzG.position.copy(yz.position); walls.add(yzG);
-  const yzE=makeEdge(PLATE_SIZE,0xF0E442,0.20); yzE.rotation.y=Math.PI/2; yzE.position.copy(yz.position); walls.add(yzE);
+  const yz=makeGlass(PLATE_SIZE,0xF0E442,0.026); yz.rotation.y=Math.PI/2; yz.position.set(-WALL,0,0); walls.add(yz);
+  const yzG=makeGrid(PLATE_SIZE,10,0xF0E442,0.07); yzG.rotation.y=Math.PI/2; yzG.position.copy(yz.position); walls.add(yzG);
+  const yzE=makeEdge(PLATE_SIZE,0xF0E442,0.10); yzE.rotation.y=Math.PI/2; yzE.position.copy(yz.position); walls.add(yzE);
 
   // axes
   function axle(dir,color){ return new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,0,0), dir.clone().multiplyScalar(WALL*0.9)]), new THREE.LineBasicMaterial({ color:new THREE.Color(color), transparent:true, opacity:0.5 })); }
@@ -107,13 +107,13 @@ export async function mountStarMap(canvas){
     positions[i*3]=(p.x-0.5)*2*SPREAD;
     positions[i*3+1]=(p.y-0.5)*2*SPREAD;
     positions[i*3+2]=(p.z-0.5)*2*SPREAD;
-    const col=new THREE.Color(OKABE[(p.c||0)%8]); col.lerp(new THREE.Color(0xFFFFFF),0.08);
+    const col=new THREE.Color(OKABE[(p.c||0)%8]);
     colors[i*3]=col.r; colors[i*3+1]=col.g; colors[i*3+2]=col.b;
   }
   const geo=new THREE.BufferGeometry();
   geo.setAttribute('position', new THREE.BufferAttribute(positions,3));
   geo.setAttribute('color', new THREE.BufferAttribute(colors,3));
-  const pmat=new THREE.PointsMaterial({ size:isLowEnd?0.048:0.062, vertexColors:true, transparent:true, opacity:0.88, sizeAttenuation:true, depthWrite:false, blending:THREE.NormalBlending });
+  const pmat=new THREE.PointsMaterial({ size:isLowEnd?0.09:0.14, vertexColors:true, transparent:false, opacity:1.0, sizeAttenuation:true, depthWrite:false, blending:THREE.NormalBlending });
   const points=new THREE.Points(geo,pmat);
   starGroup.add(points);
 
