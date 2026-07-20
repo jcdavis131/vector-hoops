@@ -82,6 +82,20 @@
 @media(max-width:760px){.tri{grid-template-columns:1fr}}
 .tri .card{transition:transform .12s,box-shadow .12s}
 .tri .card:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--ink)}
+/* v4.2 overlap fixes */
+#map-wrap #map-controls{display:flex;flex-direction:row;align-items:center;gap:10px;flex-wrap:nowrap;bottom:calc(14px + env(safe-area-inset-bottom));left:12px}
+#map-wrap #map-controls .chip{flex:0 0 auto;white-space:nowrap;transform:none}
+#map-axis-legend{pointer-events:none;z-index:5}
+@media(max-width:560px){
+  #map-wrap #map-axis-legend{right:10px;left:auto;max-width:68vw;bottom:calc(68px + env(safe-area-inset-bottom));font-size:8.5px;line-height:1.28}
+  #map-wrap #map-controls{left:10px;bottom:calc(12px + env(safe-area-inset-bottom));gap:8px}
+  #map-wrap #map-controls .chip{min-height:40px;padding:7px 12px;font-size:10px}
+}
+@media(max-width:980px){
+  #lemmino-drift [id="lemmino-drift-focus"], #lemmino-drift [id="lemmino-drift-meta"]{max-width:min(92vw, 640px)}
+}
+#drift-info-stack{position:absolute;left:clamp(12px,2.5vw,18px);top:calc(12px + env(safe-area-inset-top,0px));z-index:4;display:flex;flex-direction:column;gap:8px;max-width:min(92vw, 680px);pointer-events:none}
+#drift-info-stack > div{pointer-events:auto}
 </style>
 </head><body>
 <noscript><div role="alert" style="padding:16px;text-align:center">Enable JS — Vector Hoops needs JavaScript for Daily Court + 3D void</div></noscript>
@@ -118,7 +132,7 @@
     </div>
 
     <div class="micro small-mono" style="text-transform:none;display:flex;gap:8px;align-items:center;margin-top:6px">
-      <span class="pulse-dot"></span><span id="sky-fact-inline">Drag to rotate · hover any star · ★ = MJ 97-98 placeholder</span>
+      <span class="pulse-dot"></span><span id="sky-fact-inline">Drag to rotate · hover any star · ★ = MJ 97-98</span>
     </div>
   </div>
 
@@ -148,11 +162,13 @@
 <div class="lemmino-section">
   <div class="lemmino-drift" id="lemmino-drift" style="background:#080A0F">
     <canvas id="lemmino-drift-canvas" width="1180" height="560" aria-label="Random all-star career arc through archetype drift"></canvas>
-    <div style="position:absolute;left:clamp(12px,2.5vw,18px);top:calc(12px + env(safe-area-inset-top));z-index:4;background:rgba(255,254,247,0.98);border:2px solid #1A150F;border-radius:12px;padding:8px 12px;font-family:ui-monospace,monospace;font-size:11px;font-weight:800;box-shadow:3px 3px 0 #1A150F;max-width:min(92vw,680px);line-height:1.35">
-      <span id="lemmino-drift-focus">Loading all-star arc…</span>
-    </div>
-    <div style="position:absolute;right:clamp(12px,2.5vw,18px);top:calc(52px + env(safe-area-inset-top));z-index:4;background:rgba(26,21,15,0.88);color:#FFFEF7;border:2px solid #1A150F;border-radius:10px;padding:6px 9px;font-family:ui-monospace,monospace;font-size:10px;line-height:1.35;max-width:min(88vw,320px)">
-      <span id="lemmino-drift-meta">Random all-star career loops · ribbons = game prevalence · dots = rest of league</span>
+    <div id="drift-info-stack">
+      <div style="background:rgba(255,254,247,0.98);border:2px solid #1A150F;border-radius:12px;padding:8px 12px;font-family:ui-monospace,monospace;font-size:11px;font-weight:800;box-shadow:3px 3px 0 #1A150F;line-height:1.35;max-width:100%">
+        <span id="lemmino-drift-focus">Loading all-star arc…</span>
+      </div>
+      <div style="background:rgba(26,21,15,0.88);color:#FFFEF7;border:2px solid #1A150F;border-radius:10px;padding:6px 9px;font-family:ui-monospace,monospace;font-size:10px;line-height:1.35;max-width:100%;width:fit-content">
+        <span id="lemmino-drift-meta">Random all-star career loops · ribbons = game prevalence · dots = rest of league</span>
+      </div>
     </div>
     <div class="drift-scrub" id="drift-scrub-wrap">
       <button class="drift-ctrl" id="drift-prev" aria-label="Previous role change">⟵</button>
@@ -245,6 +261,7 @@
         var cp0=document.getElementById('cta-past'); if(cp0) cp0.textContent='Michael Jordan';
         var cta0=document.getElementById('cta-primary'); if(cta0) cta0.href='/play?r='+HERO_MJ_ID;
         var lsn0=document.getElementById('legend-star-name'); if(lsn0) lsn0.textContent='Michael Jordan 97-98';
+        var sfi=document.getElementById('sky-fact-inline'); if(sfi) sfi.textContent='Drag to rotate · hover any star · ★ = MJ 97-98';
         var vt0=document.getElementById('viral-today'); if(vt0) vt0.textContent='12,966 stars in void — Today daily: '+st.target.n+' '+st.target.s+' — drag stars to spin';
         var vs=document.getElementById('viral-streak'); if(vs) vs.textContent = sInfo.streak>0 ? '🔥 '+sInfo.streak : 'streak 0';
         var rh=document.getElementById('random-hint'); if(rh) rh.textContent='Today: '+st.target.n+' '+st.target.s+' · Hero stars: MJ 97-98';

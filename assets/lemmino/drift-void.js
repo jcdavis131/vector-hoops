@@ -135,17 +135,29 @@ export async function mountDriftVoid(canvas){
     }
 
     const labels=new THREE.Group();
-    let changeIdx=0;
-    for(let i=1;i<meta.length;i++) if(meta[i].archeIdx!==meta[i-1].archeIdx){
-      const offY=(changeIdx%3)*0.24;
-      const lab=makePill(`${meta[i].season}: → ${meta[i].arche} (league ${(meta[i].share*100).toFixed(1)}% vs ${(meta[0].share*100).toFixed(1)}% in ${meta[0].season})`, 'rgba(255,254,247,0.98)','#1A150F', 600,46,2.15);
-      lab.position.set(pts[i].x+0.6, pts[i].y+0.42+offY, pts[i].z);
+    // v4.2 declutter: stagger X/Y, skip too-close changes, max 5 labels on mobile
+    const isMobile = window.innerWidth < 640;
+    let changeIdx=0; let lastZ = -999;
+    const changes=[]; for(let i=1;i<meta.length;i++) if(meta[i].archeIdx!==meta[i-1].archeIdx) changes.push(i);
+    const maxLabels = isMobile ? 4 : 6;
+    const step = changes.length > maxLabels ? Math.ceil(changes.length / maxLabels) : 1;
+    for(let c=0;c<changes.length;c+=step){
+      const i=changes[c];
+      const z=pts[i].z;
+      if(Math.abs(z-lastZ) < 0.55 && changeIdx>0) continue; // too close in season
+      lastZ=z;
+      const offY = 0.35 + (changeIdx % 4) * 0.62; // was 0.24 -> now spaced
+      const offX = (changeIdx % 2 === 0) ? 0.68 : -0.9; // alternate sides to avoid stack
+      const short = isMobile ? `${meta[i].season}: → ${meta[i].arche}` : `${meta[i].season}: → ${meta[i].arche} (${(meta[i].share*100).toFixed(1)}% ${((meta[i].share-meta[0].share)*100).toFixed(1)>0?'+':''}${((meta[i].share-meta[0].share)*100).toFixed(1)}pp)`;
+      const lab=makePill(short, 'rgba(255,254,247,0.98)','#1A150F', isMobile? 360: 520, 46, isMobile? 1.65: 2.0);
+      lab.position.set(pts[i].x+offX, pts[i].y+offY, pts[i].z+0.05);
       labels.add(lab); changeIdx++;
     }
-    const head=makePill(`${name} — ${entries[0]?.s} → ${entries[entries.length-1]?.s} — ${entries.length} seasons`, '#1A150F','#FFFEF7', 620,56,3.05);
-    if(pts.length) head.position.set(pts[0].x-0.1, pts[0].y+0.86, pts[0].z);
-    const tail=makePill(`${name} now: ${meta[meta.length-1].arche} — league ${(meta[meta.length-1].share*100).toFixed(1)}%`, baseColor.getStyle(), '#081018', 480,50,2.35);
-    if(pts.length) tail.position.set(pts[pts.length-1].x+0.58, pts[pts.length-1].y+0.52, pts[pts.length-1].z);
+    const head=makePill(`${name} — ${entries[0]?.s} → ${entries[entries.length-1]?.s} — ${entries.length} seasons`, '#1A150F','#FFFEF7', isMobile? 420: 620, 56, isMobile? 2.1: 3.05);
+    if(pts.length) head.position.set(pts[0].x-0.1, pts[0].y+1.05, pts[0].z);
+    const tailShort = isMobile ? `${name.split(' ').pop()} now: ${meta[meta.length-1].arche}` : `${name} now: ${meta[meta.length-1].arche} — ${(meta[meta.length-1].share*100).toFixed(1)}%`;
+    const tail=makePill(tailShort, baseColor.getStyle(), '#081018', isMobile? 340: 460, 50, isMobile? 1.6: 2.2);
+    if(pts.length) tail.position.set(pts[pts.length-1].x+0.62, pts[pts.length-1].y+0.72, pts[pts.length-1].z);
 
     const traveller=new THREE.Mesh(new THREE.SphereGeometry(0.19,14,14), new THREE.MeshStandardMaterial({ color:0xFFFFFF, emissive:baseColor, emissiveIntensity:0.95 }));
     return { name, entries, pts, meta, curve, mesh, nodes, labels, head, tail, traveller, baseColor };

@@ -17,7 +17,7 @@ export async function mountStarMap(canvas){
 
   const scene=new THREE.Scene();
   scene.background=new THREE.Color(0x080A0F);
-  scene.fog=new THREE.FogExp2(0x080A0F, 0.0038);
+  scene.fog=new THREE.FogExp2(0x080A0F, 0.0022);
 
   const camera=new THREE.PerspectiveCamera(32, 1, 0.1, 120);
   camera.position.set(0,0.55,8.6);
@@ -123,25 +123,34 @@ export async function mountStarMap(canvas){
   const hoverTip=document.getElementById('hover-tip');
 
   function getSize(){
-    let w=canvas.clientWidth, h=canvas.clientHeight;
+    let w=canvas.getBoundingClientRect().width || canvas.clientWidth, h=canvas.getBoundingClientRect().height || canvas.clientHeight;
     if(w<10||h<10){
       const r=canvas.parentElement?.getBoundingClientRect();
-      w=Math.max(w, r?.width||640); h=Math.max(h, r?.height||520);
+      w=Math.max(w||0, r?.width||0, 320); h=Math.max(h||0, r?.height||0, 520);
+      if(w<10) w= window.innerWidth || 390;
+      if(h<10) h= Math.round((window.innerHeight||800)*0.78);
     }
     return {w:Math.max(10,w), h:Math.max(10,h)};
   }
   function onResize(){
     const {w,h}=getSize();
+    // force canvas style size for Safari/Android quirks
+    if(Math.abs(canvas.clientWidth - w) > 2 || Math.abs(canvas.clientHeight - h) > 2){
+      canvas.style.width=w+'px'; canvas.style.height=h+'px';
+    }
     renderer.setSize(w,h,false);
     camera.aspect=w/h; camera.updateProjectionMatrix();
     updProj(w,h);
+    renderer.render(scene,camera);
   }
-  const ro=new ResizeObserver(onResize); ro.observe(canvas);
+  const ro=new ResizeObserver(onResize); ro.observe(canvas); ro.observe(canvas.parentElement||document.body);
   onResize();
+  setTimeout(onResize, 120);
+  setTimeout(onResize, 650);
 
-  let visible=true; let firstFrames=60;
+  let visible=true; let firstFrames=90;
   try{
-    const io=new IntersectionObserver(es=>{ visible=es[0]?.isIntersecting??true; },{threshold:0.01});
+    const io=new IntersectionObserver(es=>{ visible=es[0]?.isIntersecting??true; if(visible) onResize(); },{threshold:0.01});
     io.observe(canvas);
   }catch{}
 
