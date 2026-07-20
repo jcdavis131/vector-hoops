@@ -33,7 +33,7 @@ export async function mountDriftVoid(canvas){
   const ground=new THREE.Mesh(new THREE.PlaneGeometry(300,300), new THREE.MeshStandardMaterial({ color:0x0C0E14, roughness:0.96 }));
   ground.rotation.x=-Math.PI/2; ground.position.y=-3.0; scene.add(ground);
 
-  const CACHE_NAME='vector-hoops-v22-20260720-currentonly';
+  const CACHE_NAME='vector-hoops-v23-20260720-outline-filled';
   async function cachedFetchJSON(url){
     try{ if('caches' in window){ const c=await caches.open(CACHE_NAME); const hit=await c.match(url); if(hit) return await hit.json(); } }catch{}
     const r=await fetch(url,{cache:'default'});
@@ -44,11 +44,11 @@ export async function mountDriftVoid(canvas){
   let timeData=null, liteData=null, vecData=null, skillsData=null, teamData=null;
   try{
     const [tData,lPos,vData,sData,tmData] = await Promise.all([
-      cachedFetchJSON('assets/archetypes_time.json?v=22'),
-      cachedFetchJSON('assets/vectors_search_lite_pos.json?v=22').catch(()=>cachedFetchJSON('assets/vectors_search_lite.json?v=22')),
-      cachedFetchJSON('assets/vectors.json?v=22').catch(()=>null),
-      cachedFetchJSON('assets/skills_wide.json?v=22').catch(()=>null),
-      cachedFetchJSON('assets/player_team_season.json?v=22').catch(()=>null)
+      cachedFetchJSON('assets/archetypes_time.json?v=23'),
+      cachedFetchJSON('assets/vectors_search_lite_pos.json?v=23').catch(()=>cachedFetchJSON('assets/vectors_search_lite.json?v=23')),
+      cachedFetchJSON('assets/vectors.json?v=23').catch(()=>null),
+      cachedFetchJSON('assets/skills_wide.json?v=23').catch(()=>null),
+      cachedFetchJSON('assets/player_team_season.json?v=23').catch(()=>null)
     ]);
     timeData=tData; liteData=lPosData; vecData=vData; skillsData=sData; teamData=tmData;
   }catch(e){ console.warn('drift v21 fetch fail',e); return; }

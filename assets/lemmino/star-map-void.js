@@ -93,28 +93,47 @@ export async function mountStarMap(canvas){
   const yl=makeLabel('Y: ROLE → SCORE','#F0E442','#1A150F',360,46,1.35); yl.position.set(0,WALL+0.28,0); axes.add(yl);
   const zl=makeLabel('Z: DEF ↔ OFF','#D55E00','#FFFEF7',340,46,1.3); zl.position.set(0,0,WALL+0.32); axes.add(zl);
 
-  function makeShapeTexture(shape){
+  function makeShapeTexture(shape, filled=true){
     const S=128; const c=document.createElement('canvas'); c.width=S; c.height=S;
-    const ctx=c.getContext('2d'); ctx.clearRect(0,0,S,S); ctx.fillStyle='#FFFFFF';
+    const ctx=c.getContext('2d'); ctx.clearRect(0,0,S,S);
     ctx.save(); ctx.translate(S/2,S/2);
-    if(shape==='PG'){ ctx.beginPath(); ctx.arc(0,0,42,0,Math.PI*2); ctx.fill(); }
-    else if(shape==='SG'){ ctx.beginPath(); ctx.moveTo(0,-48); ctx.lineTo(-42,38); ctx.lineTo(42,38); ctx.closePath(); ctx.fill(); }
-    else if(shape==='SF'){ ctx.beginPath(); ctx.moveTo(0,-50); ctx.lineTo(44,0); ctx.lineTo(0,50); ctx.lineTo(-44,0); ctx.closePath(); ctx.fill(); }
-    else if(shape==='PF'){ ctx.fillRect(-38,-38,76,76); }
-    else if(shape==='C'){ ctx.fillRect(-44,-14,88,28); ctx.fillRect(-14,-44,28,88); }
+    if(filled){
+      ctx.fillStyle='#FFFFFF';
+      if(shape==='PG'){ ctx.beginPath(); ctx.arc(0,0,42,0,Math.PI*2); ctx.fill(); }
+      else if(shape==='SG'){ ctx.beginPath(); ctx.moveTo(0,-48); ctx.lineTo(-42,38); ctx.lineTo(42,38); ctx.closePath(); ctx.fill(); }
+      else if(shape==='SF'){ ctx.beginPath(); ctx.moveTo(0,-50); ctx.lineTo(44,0); ctx.lineTo(0,50); ctx.lineTo(-44,0); ctx.closePath(); ctx.fill(); }
+      else if(shape==='PF'){ ctx.fillRect(-38,-38,76,76); }
+      else if(shape==='C'){ ctx.fillRect(-44,-14,88,28); ctx.fillRect(-14,-44,28,88); }
+    }else{
+      // outline only — colored outline behavior
+      ctx.strokeStyle='#FFFFFF'; ctx.lineWidth=6; ctx.lineJoin='round'; ctx.lineCap='round';
+      if(shape==='PG'){ ctx.beginPath(); ctx.arc(0,0,36,0,Math.PI*2); ctx.stroke(); }
+      else if(shape==='SG'){ ctx.beginPath(); ctx.moveTo(0,-44); ctx.lineTo(-38,34); ctx.lineTo(38,34); ctx.closePath(); ctx.stroke(); }
+      else if(shape==='SF'){ ctx.beginPath(); ctx.moveTo(0,-46); ctx.lineTo(40,0); ctx.lineTo(0,46); ctx.lineTo(-40,0); ctx.closePath(); ctx.stroke(); }
+      else if(shape==='PF'){ ctx.strokeRect(-34,-34,68,68); }
+      else if(shape==='C'){ ctx.beginPath(); ctx.moveTo(-40,0); ctx.lineTo(40,0); ctx.stroke(); ctx.beginPath(); ctx.moveTo(0,-40); ctx.lineTo(0,40); ctx.stroke(); }
+    }
     ctx.restore();
     const tex=new THREE.CanvasTexture(c); tex.colorSpace=THREE.SRGBColorSpace; return tex;
   }
-  const shapeTextures = {
-    'PG': makeShapeTexture('PG'),
-    'SG': makeShapeTexture('SG'),
-    'SF': makeShapeTexture('SF'),
-    'PF': makeShapeTexture('PF'),
-    'C' : makeShapeTexture('C')
+  const shapeTexturesFilled = {
+    'PG': makeShapeTexture('PG', true),
+    'SG': makeShapeTexture('SG', true),
+    'SF': makeShapeTexture('SF', true),
+    'PF': makeShapeTexture('PF', true),
+    'C' : makeShapeTexture('C' , true)
   };
+  const shapeTexturesOutline = {
+    'PG': makeShapeTexture('PG', false),
+    'SG': makeShapeTexture('SG', false),
+    'SF': makeShapeTexture('SF', false),
+    'PF': makeShapeTexture('PF', false),
+    'C' : makeShapeTexture('C' , false)
+  };
+  const shapeTextures = shapeTexturesFilled; // legacy alias
 
   async function cachedFetchJSON(url){
-    const CACHE_NAME='vector-hoops-v22-20260720-currentonly';
+    const CACHE_NAME='vector-hoops-v23-20260720-outline-filled';
     try{
       if('caches' in window){
         const cache=await caches.open(CACHE_NAME);
@@ -136,10 +155,10 @@ export async function mountStarMap(canvas){
   let teamSeasonMap=null;
   try{
     try{
-      const j=await cachedFetchJSON('assets/vectors_search_lite_pos.json?v=22');
+      const j=await cachedFetchJSON('assets/vectors_search_lite_pos.json?v=23');
       rawAll=j.players||[];
     }catch(e){
-      const j2=await cachedFetchJSON('assets/vectors_search_lite.json?v=22');
+      const j2=await cachedFetchJSON('assets/vectors_search_lite.json?v=23');
       rawAll=j2.players||j2||[];
       rawAll.forEach(p=>{ if(p.p===undefined){ p.p=Math.floor(Math.random()*5); p.pl=POS_LABELS[p.p]; } });
     }
@@ -149,7 +168,7 @@ export async function mountStarMap(canvas){
   // Determine current season logic: offseason July -> last completed 2024-25, if middle of season add current
   // We load player_team_season to know who is active
   try{
-    const ts=await cachedFetchJSON('assets/player_team_season.json?v=22').catch(()=>null);
+    const ts=await cachedFetchJSON('assets/player_team_season.json?v=23').catch(()=>null);
     teamSeasonMap=ts;
   }catch{}
   const ACTIVE_SEASONS = ['2024-25','2025-26']; // last + upcoming; in-season we add current
@@ -184,46 +203,49 @@ export async function mountStarMap(canvas){
     if(INCLUDE_BOTH){ players.push(...arr.slice(-2)); }
     else { players.push(arr[arr.length-1]); }
   }
-  console.log('star-map v22 current-only filter', rawAll.length,'->',players.length,'activeNames',activeNames.size);
-  // update eyebrow pill to reflect current-only
+  console.log('star-map v23 current-only filter', rawAll.length,'->',players.length,'activeNames',activeNames.size);
+  // update eyebrow
   try{
     const pill=document.querySelector('.pill-yellow');
-    if(pill){ pill.textContent=`${players.length} • CURRENT 24-25 STARS`; pill.title=`Filtered from ${rawAll.length} all-time to ${players.length} current players — ${ACTIVE_SEASONS.join(' + ')}`; }
+    if(pill){ pill.textContent=`${rawAll.length} OUTLINE • ${players.length} CURRENT FILLED`; pill.title=`${rawAll.length} all-time as colored outlines, ${players.length} current 24-25 as filled`; }
     const sub=document.getElementById('viral-today');
-    if(sub){ sub.textContent=`${players.length} current players as stars in void — last: ${LAST_SEASON} • shape=POS color=ARCH • documentary style`; }
+    if(sub){ sub.textContent=`${rawAll.length} seasons as outline • ${players.length} current ${LAST_SEASON} filled • shape=POS color=ARCH`; }
   }catch{}
-  // low-end not needed now (548 <6k)
-  if(isLowEnd && players.length>6000){
-    const step=Math.ceil(players.length/6000);
-    const filtered=[];
-    for(let i=0;i<players.length;i+=step) filtered.push(players[i]);
-    players=filtered;
-  }
 
-  const count=players.length||12966;
-  const allPos=new Float32Array(count*3);
-  const grouped={0:[],1:[],2:[],3:[],4:[]};
-  for(let i=0;i<count;i++){
-    const p=players[i]||{x:Math.random(),y:Math.random(),z:Math.random(),c:i%8,p:i%5};
+  // Build positions for ALL (outline) and CURRENT (filled)
+  const rawCount=rawAll.length||12966;
+  const curCount=players.length||569;
+  // all positions for projection / hover — use rawAll for outline context
+  const allPos=new Float32Array(rawCount*3);
+  const groupedAll={0:[],1:[],2:[],3:[],4:[]};
+  for(let i=0;i<rawCount;i++){
+    const p=rawAll[i]||{x:0.5,y:0.5,z:0.5,c:i%8,p:i%5};
     const x=(p.x-0.5)*2*SPREAD, y=(p.y-0.5)*2*SPREAD, z=(p.z-0.5)*2*SPREAD;
     allPos[i*3]=x; allPos[i*3+1]=y; allPos[i*3+2]=z;
-    const posIdx = (p.p!==undefined? p.p : (p.pl? POS_LABELS.indexOf(p.pl) : 0));
-    const bucket = (posIdx>=0&&posIdx<5)? posIdx : 0;
+    const posIdx=(p.p!==undefined? p.p : (p.pl? POS_LABELS.indexOf(p.pl):0));
+    const bucket=(posIdx>=0&&posIdx<5)? posIdx:0;
+    groupedAll[bucket].push({ idx:i, x,y,z, c:p.c||0, n:p.n, s:p.s, pl:p.pl||POS_LABELS[bucket] });
+  }
+  const grouped={0:[],1:[],2:[],3:[],4:[]}; // current filled
+  for(let i=0;i<curCount;i++){
+    const p=players[i]||{x:0.5,y:0.5,z:0.5,c:i%8,p:i%5};
+    const x=(p.x-0.5)*2*SPREAD, y=(p.y-0.5)*2*SPREAD, z=(p.z-0.5)*2*SPREAD;
+    const posIdx=(p.p!==undefined? p.p : (p.pl? POS_LABELS.indexOf(p.pl):0));
+    const bucket=(posIdx>=0&&posIdx<5)? posIdx:0;
     grouped[bucket].push({ idx:i, x,y,z, c:p.c||0, n:p.n, s:p.s, pl:p.pl||POS_LABELS[bucket] });
   }
 
   const pointGroups=[];
-  const pointSize = isMobile? 0.48 : 0.58;
+  const pointSizeOutline = isMobile? 0.38 : 0.44;
+  const pointSizeFilled = isMobile? 0.58 : 0.72;
+  // 1) outline layer — every data point as colored outline
   for(let pi=0; pi<5; pi++){
-    const list=grouped[pi];
-    if(!list.length) continue;
+    const list=groupedAll[pi]; if(!list.length) continue;
     const posArr=new Float32Array(list.length*3);
     const colArr=new Float32Array(list.length*3);
     for(let j=0;j<list.length;j++){
-      const it=list[j];
-      posArr[j*3]=it.x; posArr[j*3+1]=it.y; posArr[j*3+2]=it.z;
-      const col=new THREE.Color(OKABE_ARCH[(it.c||0)%8]);
-      if((it.c||0)%8!==7) col.lerp(new THREE.Color(0xFFFFFF),0.06);
+      const it=list[j]; posArr[j*3]=it.x; posArr[j*3+1]=it.y; posArr[j*3+2]=it.z;
+      const col=new THREE.Color(OKABE_ARCH[(it.c||0)%8]); col.lerp(new THREE.Color(0xFFFFFF),0.04);
       colArr[j*3]=col.r; colArr[j*3+1]=col.g; colArr[j*3+2]=col.b;
     }
     const geo=new THREE.BufferGeometry();
@@ -231,25 +253,54 @@ export async function mountStarMap(canvas){
     geo.setAttribute('color', new THREE.BufferAttribute(colArr,3));
     const shapeName=POS_LABELS[pi];
     const mat=new THREE.PointsMaterial({
-      size: pointSize,
-      map: shapeTextures[shapeName],
+      size: pointSizeOutline,
+      map: shapeTexturesOutline[shapeName],
       vertexColors:true,
       transparent:true,
-      alphaTest:0.15,
+      alphaTest:0.08,
+      opacity:0.34,
+      sizeAttenuation:true,
+      depthWrite:false
+    });
+    const points=new THREE.Points(geo,mat);
+    points.renderOrder=5+pi;
+    starGroup.add(points);
+    pointGroups.push({ pi, shape:shapeName, layer:'outline', geo, mat, list, posArr });
+  }
+  // 2) filled layer — only current/latest season outlined + filled
+  for(let pi=0; pi<5; pi++){
+    const list=grouped[pi]; if(!list.length) continue;
+    const posArr=new Float32Array(list.length*3);
+    const colArr=new Float32Array(list.length*3);
+    for(let j=0;j<list.length;j++){
+      const it=list[j]; posArr[j*3]=it.x; posArr[j*3+1]=it.y; posArr[j*3+2]=it.z;
+      const col=new THREE.Color(OKABE_ARCH[(it.c||0)%8]);
+      colArr[j*3]=col.r; colArr[j*3+1]=col.g; colArr[j*3+2]=col.b;
+    }
+    const geo=new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.BufferAttribute(posArr,3));
+    geo.setAttribute('color', new THREE.BufferAttribute(colArr,3));
+    const shapeName=POS_LABELS[pi];
+    const mat=new THREE.PointsMaterial({
+      size: pointSizeFilled,
+      map: shapeTexturesFilled[shapeName],
+      vertexColors:true,
+      transparent:true,
+      alphaTest:0.12,
       opacity:1,
       sizeAttenuation:true,
       depthWrite:false
     });
     const points=new THREE.Points(geo,mat);
-    points.renderOrder=10+pi;
+    points.renderOrder=20+pi;
     starGroup.add(points);
-    pointGroups.push({ pi, shape:shapeName, geo, mat, list, posArr });
+    pointGroups.push({ pi, shape:shapeName, layer:'filled', geo, mat, list, posArr });
   }
 
-  console.log('star-map v7 groups', pointGroups.map(g=>`${g.shape}:${g.list.length}`).join(' '), 'camZ', camZ);
+  console.log('star-map v23 groups outline+filled', pointGroups.map(g=>`${g.layer}:${g.shape}:${g.list.length}`).join(' '), 'camZ', camZ);
 
   let rotY=Math.PI*0.24, rotX=0.18, auto=false, autoSpeed=0.00018, dragging=false, lx=0, ly=0, idle=0;
-  const proj=[]; for(let i=0;i<count;i++) proj[i]=null;
+  const proj=[]; for(let i=0;i<rawCount;i++) proj[i]=null;
   let embedPaused=true;
   let pinchStartDist=0, pinchStartZ=CAM_Z_DEFAULT, isPinching=false;
   function clampZ(z){ return Math.max(CAM_Z_MIN, Math.min(CAM_Z_MAX, z)); }
@@ -273,11 +324,12 @@ export async function mountStarMap(canvas){
     H=H||canvas.getBoundingClientRect().height||520;
     const cy=Math.cos(rotY), sy=Math.sin(rotY), cx=Math.cos(rotX), sx=Math.sin(rotX);
     const persp=2.0;
-    for(let i=0;i<count;i++){
+    const useCount=rawCount||curCount||12966;
+    for(let i=0;i<useCount;i++){
       const ox=allPos[i*3], oy=allPos[i*3+1], oz=allPos[i*3+2];
       const xr=ox*cy+oz*sy, z1=-ox*sy+oz*cy, yr=oy*cx - z1*sx, zr=oy*sx + z1*cx;
       const sc=persp/(persp - zr*0.32);
-      proj[i]={ sx:W*0.5+xr*sc*(W*0.40), sy:H*0.5-yr*sc*(H*0.40), n:players[i]?.n, s:players[i]?.s, c:players[i]?.c, p:players[i]?.p, pl:players[i]?.pl };
+      proj[i]={ sx:W*0.5+xr*sc*(W*0.40), sy:H*0.5-yr*sc*(H*0.40), n:rawAll[i]?.n, s:rawAll[i]?.s, c:rawAll[i]?.c, p:rawAll[i]?.p, pl:rawAll[i]?.pl };
     }
   }
   const hoverTip=document.getElementById('hover-tip');
@@ -334,11 +386,13 @@ export async function mountStarMap(canvas){
     else{
       const rect=canvas.getBoundingClientRect(); const mx=x-rect.left, my=y-rect.top;
       let best=null,bd=isMobile?36:30;
-      for(let i=0;i<count;i++){ const pr=proj[i]; if(!pr) continue; const d=Math.hypot(pr.sx-mx, pr.sy-my); if(d<bd){ bd=d; best=pr; } }
+      const searchCount=rawCount||curCount||12966;
+      for(let i=0;i<searchCount;i++){ const pr=proj[i]; if(!pr) continue; const d=Math.hypot(pr.sx-mx, pr.sy-my); if(d<bd){ bd=d; best=pr; } }
       if(best&&hoverTip){
         hoverTip.style.display='block'; hoverTip.style.left=best.sx+'px'; hoverTip.style.top=(best.sy-36)+'px';
         const arch=ARCH_LABELS[best.c%8]||''; const pos=best.pl||POS_LABELS[best.p||0]||'';
-        hoverTip.innerHTML=`<b>${best.n||''}</b> ${best.s||''}<br><span style="font-family:ui-monospace,monospace;font-size:10px;opacity:.85">${pos} • <span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:${OKABE_ARCH[best.c%8]};border:1px solid #111;vertical-align:middle"></span> ${arch} • z${camZ.toFixed(1)}</span>`;
+        const isCurrent=activeNames.has(best.n) && ACTIVE_SEASONS.includes(best.s);
+        hoverTip.innerHTML=`<b>${best.n||''}</b> ${best.s||''} ${isCurrent? '<span style="background:#F0E442;color:#111;padding:1px 5px;border-radius:6px;font-size:9px">CURRENT</span>':''}<br><span style="font-family:ui-monospace,monospace;font-size:10px;opacity:.85">${pos} • <span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:${OKABE_ARCH[best.c%8]};border:1px solid #111;vertical-align:middle"></span> ${arch} • z${camZ.toFixed(1)}</span>`;
       } else if(hoverTip) hoverTip.style.display='none';
     }
   }
@@ -360,7 +414,8 @@ export async function mountStarMap(canvas){
     // zoom into cluster near click
     const rect=canvas.getBoundingClientRect(); const mx=e.clientX-rect.left, my=e.clientY-rect.top;
     let best=null,bd=40;
-    for(let i=0;i<count;i++){ const pr=proj[i]; if(!pr) continue; const d=Math.hypot(pr.sx-mx, pr.sy-my); if(d<bd){ bd=d; best=pr; } }
+    const searchCount=rawCount||curCount||12966;
+    for(let i=0;i<searchCount;i++){ const pr=proj[i]; if(!pr) continue; const d=Math.hypot(pr.sx-mx, pr.sy-my); if(d<bd){ bd=d; best=pr; } }
     if(best){
       // tween zoom in + rotate towards point
       const targetZ=Math.max(CAM_Z_MIN, camZ*0.55);
