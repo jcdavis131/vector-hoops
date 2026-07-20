@@ -387,99 +387,108 @@
     });
 
     if (legendHost) {
+      // v25: readable chips with full names, wrapping flex, not tiny monospace, tooltip
+      legendHost.className = 'era-legend';
+      legendHost.id = 'archetype-legend';
       legendHost.innerHTML = names.map(function (nm, k) {
-        return '<li class="archetype-legend__item">' +
-          '<span class="archetype-legend__swatch" style="background:' + ARCH_PALETTE[k % ARCH_PALETTE.length] + '"></span>' +
-          escapeHtml(nm) + '</li>';
+        var col = ARCH_PALETTE[k % ARCH_PALETTE.length];
+        return '<li class="archetype-legend__item" title="' + escapeHtml(nm) + ' — full league share, click era to filter">' +
+          '<span class="archetype-legend__swatch" style="background:' + col + '"></span>' +
+          '<span>' + escapeHtml(nm) + '</span></li>';
       }).join('');
     }
   }
 
-  // Narrative-driven archetype narrative
+  // Narrative-driven archetype narrative — v25 clean readable, no aggressive truncation, proper spacing
   function renderArchetypeEraNarrative(host, data) {
     if (!host || !data || !data.eras) return;
     var eras = data.eras;
     var shifts = data.biggestShifts || [];
-    var early = shifts[0], late = shifts[1];
+    function topSorted(era){ return era.archetypes.slice().sort(function(a,b){return b.share - a.share;}); }
+    function glassPct(era){
+      return Math.round(era.archetypes.reduce(function(s,a){ return /Glass|Rim|Interior/i.test(a.name) ? s + a.share : s; },0)*100);
+    }
+    var s0 = eras[0] ? topSorted(eras[0])[0] : null;
+    var s1 = eras[1] ? topSorted(eras[1])[0] : null;
+    var s1b = eras[1] ? topSorted(eras[1])[1] : null;
+    var s2 = eras[2] ? topSorted(eras[2])[0] : null;
+    var s3 = eras[3] ? topSorted(eras[3]) : [];
+    var s4 = eras[4] ? topSorted(eras[4])[0] : null;
+
     var story = '';
-    story += '<p><span class="arch-era-kicker">1996–2003</span><span class="arch-era-sentence">League was still paint-built. <strong>' + escapeHtml(truncateName(eras[0].archetypes.slice().sort(function(a,b){return b.share-a.share;})[0].name, 36)) + '</strong> led at ' + Math.round(eras[0].archetypes.slice().sort(function(a,b){return b.share-a.share;})[0].share*100) + '%. Bigs who rebounded and blocked — ' + Math.round((eras[0].archetypes.reduce(function(s,a){ return /Glass|Rim|Interior/i.test(a.name)? s+a.share: s;},0))*100) + '% combined glass/rim types.</span></p>';
-    story += '<p><span class="arch-era-kicker">2003–2009</span><span class="arch-era-sentence">Transition. <strong>' + escapeHtml(truncateName(eras[1].archetypes.slice().sort(function(a,b){return b.share-a.share;})[0].name, 36)) + '</strong> on top, but playmaking guards held ' + Math.round(eras[1].archetypes.slice().sort(function(a,b){return b.share-a.share;})[1].share*100) + '%. Diversity peaked — effective types 7.7.</span></p>';
-    story += '<p><span class="arch-era-kicker">2009–2015</span><span class="arch-era-sentence">Protection still king: <strong>' + escapeHtml(truncateName(eras[2].archetypes.slice().sort(function(a,b){return b.share-a.share;})[0].name, 36)) + '</strong> 18% share. Spacing tags just 12% of league.</span></p>';
-    story += '<p><span class="arch-era-kicker">2015–2021</span><span class="arch-era-sentence"><strong>The flip.</strong> Top three are now all perimeter shooting — ' + eras[3].archetypes.slice().sort(function(a,b){return b.share-a.share;}).slice(0,3).map(function(a){return escapeHtml(truncateName(a.name,24))+' '+Math.round(a.share*100)+'%';}).join(', ') + '. That is the Warriors/Curry effect in the stream.</span></p>';
-    story += '<p><span class="arch-era-kicker">2021–2026</span><span class="arch-era-sentence">Modern hybrid: <strong>' + escapeHtml(truncateName(eras[4].archetypes.slice().sort(function(a,b){return b.share-a.share;})[0].name, 36)) + '</strong> 21% — bigs who shoot <em>and</em> board. ' + (shifts.length? 'Pure <em>Offensive Glass + Rim Protection</em> went 28%→0% (' + (shifts[0].delta*100).toFixed(1) + 'pp) replaced by ' + escapeHtml(truncateName(shifts[1].archetype,32)) + ' +'+(shifts[1].delta*100).toFixed(1)+'pp.' : '') + '</span></p>';
+
+    if (eras[0] && s0){
+      story += '<p><span class="arch-era-kicker">1996–2003</span> <span class="arch-era-sentence">League was still <strong>paint-built</strong>. <strong>' + escapeHtml(s0.name) + '</strong> led at <strong>' + Math.round(s0.share*100) + '%</strong>. Bigs who rebounded and blocked — ' + glassPct(eras[0]) + '% combined glass/rim types.</span></p>';
+    }
+    if (eras[1] && s1){
+      story += '<p><span class="arch-era-kicker">2003–2009</span> <span class="arch-era-sentence"><strong>Transition.</strong> <strong>' + escapeHtml(s1.name) + '</strong> on top' + (s1b ? ' ('+Math.round(s1b.share*100)+'%)' : '') + ' — diversity peaked, effective types 7.7. Playmaking guards held share.</span></p>';
+    }
+    if (eras[2] && s2){
+      story += '<p><span class="arch-era-kicker">2009–2015</span> <span class="arch-era-sentence">Protection still king: <strong>' + escapeHtml(s2.name) + '</strong> ' + Math.round(s2.share*100) + '% share. Spacing tags just 12% of league.</span></p>';
+    }
+    if (eras[3] && s3.length){
+      var top3 = s3.slice(0,3).map(function(a){ return escapeHtml(a.name)+' '+Math.round(a.share*100)+'%'; }).join(', ');
+      story += '<p><span class="arch-era-kicker">2015–2021</span> <span class="arch-era-sentence"><strong>The flip.</strong> Top three are now all perimeter shooting — ' + top3 + '. That is the Warriors/Curry effect in the stream.</span></p>';
+    }
+    if (eras[4] && s4){
+      var shiftLine = '';
+      if (shifts.length >= 2){
+        var pure = shifts.find(function(sh){ return /Glass.*Rim/i.test(sh.archetype); }) || shifts[0];
+        var newcomer = shifts.find(function(sh){ return sh.delta > 0; }) || shifts[1];
+        shiftLine = ' Pure <em>' + escapeHtml(pure.archetype) + '</em> went 28%→0% (' + (pure.delta*100).toFixed(1) + 'pp) replaced by <em>' + escapeHtml(newcomer.archetype) + '</em> +' + (newcomer.delta*100).toFixed(1) + 'pp.';
+      }
+      story += '<p><span class="arch-era-kicker">2021–2026</span> <span class="arch-era-sentence">Modern hybrid: <strong>' + escapeHtml(s4.name) + '</strong> ' + Math.round(s4.share*100) + '% — bigs who shoot <em>and</em> board.' + shiftLine + '</span></p>';
+    }
+
     host.innerHTML = story;
   }
 
   function renderArchetypeShiftsChart(host, shifts) {
     if (!host || !shifts || !shifts.length) return;
-    host.innerHTML = '';
-    var W = 440, LEFT = 12, RIGHT = 62, TOP = 6, BOT = 6;
-    var rowH = 38, gap = 10;
-    var H = TOP + shifts.length * (rowH + gap) + BOT;
-    var plotW = W - LEFT - RIGHT;
+    // v25: rewrite as HTML for readability — no SVG overlapping "-18.4pp" text. Row 44px, bar 14px rounded.
     var maxAbs = shifts.reduce(function (m, s) { return Math.max(m, Math.abs(s.delta)); }, 0.01);
-    var midX = LEFT + plotW / 2;
-
-    var svg = svgEl('svg', {
-      viewBox: '0 0 ' + W + ' ' + H,
-      role: 'img',
-      'aria-label': 'Archetype share change, early five seasons vs late five',
-      'font-family': getComputedStyle(document.body).fontFamily
-    }, host);
-
-    svgEl('line', {
-      x1: midX, y1: TOP, x2: midX, y2: H - BOT,
-      stroke: HAIRLINE, 'stroke-width': 1.2
-    }, svg);
-
-    shifts.forEach(function (s, i) {
-      var y = TOP + i * (rowH + gap) + rowH / 2;
+    var rows = shifts.map(function (s) {
       var up = s.delta >= 0;
-      var barW = (Math.abs(s.delta) / maxAbs) * (plotW / 2 - 8);
-      var x = up ? midX : midX - barW;
-      var color = up ? HOT_HEX : COLD_HEX;
-      var bar = svgEl('rect', {
-        x: x, y: y, width: barW, height: 10, fill: color, rx: 5, opacity: 0.92
-      }, svg);
+      var pct = Math.abs(s.delta) / maxAbs;
+      var barW = Math.max(6, Math.round(pct * 46)); // percent of total width (of half)
       var deltaText = (up ? '+' : '') + (s.delta * 100).toFixed(1) + 'pp';
-      var title = document.createElementNS(SVG_NS, 'title');
-      title.textContent = s.archetype + ': ' + pct1(s.early) + ' early → ' + pct1(s.late) + ' late (' + deltaText + ')';
-      bar.appendChild(title);
-      svgEl('text', {
-        x: up ? midX + barW + 8 : midX - barW - 8, y: y + 4,
-        'text-anchor': up ? 'start' : 'end', 'font-size': 10, 'font-weight': 800, fill: color
-      }, svg).textContent = deltaText;
-      // Split name into two lines via tspan if long
-      var name = s.archetype;
-      if (name.length > 26) {
-        var parts = name.split(' + ');
-        var l1 = parts.slice(0,2).join(' + ');
-        var l2 = parts.slice(2).join(' + ');
-        if (!l2) { l1 = name.slice(0,26); l2 = name.slice(26); }
-        svgEl('text', { x: LEFT, y: y - 2, 'font-size': 9.5, fill: INK, 'font-weight': 600 }, svg).textContent = l1;
-        svgEl('text', { x: LEFT, y: y + 9, 'font-size': 8.5, fill: INK_MUTED }, svg).textContent = l2;
+      var tooltip = s.archetype + ': ' + pct1(s.early) + ' early → ' + pct1(s.late) + ' late (' + deltaText + ')';
+      var barStyle;
+      if (up) {
+        barStyle = 'left:50%; width:' + barW + '%;';
       } else {
-        svgEl('text', {
-          x: LEFT, y: y + 4, 'text-anchor': 'start', 'font-size': 10, fill: INK, 'font-weight': 600
-        }, svg).textContent = name;
+        barStyle = 'right:50%; width:' + barW + '%; left:auto;';
       }
-    });
+      // full archetype name, 2 lines max via CSS clamp
+      return '<div class="arch-shift-row" title="' + escapeHtml(tooltip) + '">' +
+        '<div class="arch-shift-label">' + escapeHtml(s.archetype) + '</div>' +
+        '<div class="arch-shift-bar-wrap">' +
+          '<div class="arch-shift-bar-center" aria-hidden="true"></div>' +
+          '<div class="arch-shift-bar ' + (up ? 'arch-shift-bar--up' : 'arch-shift-bar--down') + '" style="' + barStyle + '"></div>' +
+        '</div>' +
+        '<div class="arch-shift-delta ' + (up ? 'arch-shift-delta--up' : 'arch-shift-delta--down') + '">' + escapeHtml(deltaText) + '</div>' +
+      '</div>';
+    }).join('');
+
+    host.innerHTML = '<div class="arch-shifts-list" role="list" aria-label="Archetype share change, early five vs late five">' + rows + '</div>';
   }
 
   function renderEraPanelsCompact(host, eras) {
     if (!host || !eras) return;
+    // v25: show full names, not 22 chars truncated, 2-line wrap via CSS
     host.innerHTML = eras.map(function (era) {
       var sorted = era.archetypes.slice().sort(function (a, b) { return b.share - a.share; });
       var top = sorted.slice(0, 3);
       var sentence = '';
-      if (era.era === '1996-2003') sentence = 'Early league was ' + Math.round(top[0].share*100) + '% ' + escapeHtml(truncateName(top[0].name,22)) + ' + ' + Math.round(top[1].share*100) + '% ' + escapeHtml(truncateName(top[1].name,20)) + ' — anchor bigs + score-first wings.';
-      else if (era.era === '2003-2009') sentence = 'Middle era mixed ' + top.map(function(t){ return escapeHtml(truncateName(t.name,18))+' '+Math.round(t.share*100)+'%';}).join(' / ') + '. Playmaking held.';
+      if (era.era === '1996-2003') sentence = 'Early league was ' + Math.round(top[0].share*100) + '% ' + escapeHtml(top[0].name) + ' + ' + Math.round(top[1].share*100) + '% ' + escapeHtml(top[1].name) + ' — anchor bigs + score-first wings.';
+      else if (era.era === '2003-2009') sentence = 'Middle era mixed ' + top.map(function(t){ return escapeHtml(t.name)+' '+Math.round(t.share*100)+'%';}).join(' / ') + '. Playmaking held.';
       else if (era.era === '2009-2015') sentence = 'Defense still paid: ' + escapeHtml(top[0].name) + ' ' + Math.round(top[0].share*100) + '%. Offense shifted to volume.';
-      else if (era.era === '2015-2021') sentence = 'Spacing era: ' + top.slice(0,2).map(function(t){return escapeHtml(truncateName(t.name,20))+' '+Math.round(t.share*100)+'%';}).join(' + ') + ' led.';
-      else sentence = 'Today: ' + top.map(function(t){return escapeHtml(truncateName(t.name,18))+' '+Math.round(t.share*100)+'%';}).join(', ') + ' — hybrids.';
+      else if (era.era === '2015-2021') sentence = 'Spacing era: ' + top.slice(0,2).map(function(t){return escapeHtml(t.name)+' '+Math.round(t.share*100)+'%';}).join(' + ') + ' led.';
+      else sentence = 'Today: ' + top.map(function(t){return escapeHtml(t.name)+' '+Math.round(t.share*100)+'%';}).join(', ') + ' — hybrids.';
       var bars = top.map(function (item) {
         var pct = Math.round(item.share * 100);
-        return '<div class="era-compact-bar" title="' + escapeHtml(item.name) + ' — ' + pct1(item.share) + '"><span class="era-compact-bar__name">' + escapeHtml(truncateName(item.name, 22)) + '</span><span class="era-compact-bar__track"><span class="era-compact-bar__fill" style="width:' + pct + '%"></span></span><span class="era-compact-bar__pct">' + pct + '%</span></div>';
+        // full name, CSS clamps to 2 lines
+        return '<div class="era-compact-bar" title="' + escapeHtml(item.name) + ' — ' + pct1(item.share) + '"><span class="era-compact-bar__name">' + escapeHtml(item.name) + '</span><span class="era-compact-bar__track"><span class="era-compact-bar__fill" style="width:' + pct + '%"></span></span><span class="era-compact-bar__pct">' + pct + '%</span></div>';
       }).join('');
       return '<div class="era-compact-card"><div class="era-compact-card__head">' + escapeHtml(era.era) + '<span>K=' + (era.k || 8) + '</span></div><p class="era-compact-sen">' + sentence + '</p>' + bars + '</div>';
     }).join('');
@@ -908,10 +917,15 @@
   }
 
   function bindCourtHeatmap(data) {
-    var root = document.getElementById('archetype-court-heatmap');
-    if (!root || !data || !data.courtHeatmap) {
-      if (root) root.hidden = true;
+    var root = document.getElementById('archetype-court-heatmap') || document.querySelector('.court-heatmap');
+    if (!data || !data.courtHeatmap) {
+      var hideRoot = document.getElementById('archetype-court-heatmap');
+      if (hideRoot) hideRoot.hidden = true;
       return;
+    }
+    if (!root) {
+      // allow drawing even if wrapper missing — canvas may still exist
+      root = null;
     }
     courtState.data = data;
     courtState.heat = data.courtHeatmap;
@@ -1265,6 +1279,7 @@
   function renderCareerPathGallery(host, classExamples, globalArchetypes) {
     if (!host) return;
     var classes = ['stable', 'reinvention', 'late-bloom', 'migrator', 'drifter'];
+    // v25: spaced, readable meta with pill • name • seasons, gap 6px, no concatenation
     host.innerHTML = classes.map(function (cls) {
       var ex = classExamples && classExamples[cls] && classExamples[cls][0];
       if (!ex) return '';
@@ -1272,18 +1287,19 @@
       var total = segs.reduce(function (s, seg) { return s + seg.count; }, 0) || 1;
       var blocks = segs.map(function (seg) {
         var idx = archIndex(seg.archetype, globalArchetypes);
-        var w = Math.max(4, Math.round((seg.count / total) * 100));
         return '<span class="path-block" style="flex:' + seg.count + ';background:' +
           ARCH_PALETTE[idx % ARCH_PALETTE.length] + '" title="' + escapeHtml(seg.archetype) +
           ' (' + seg.count + ' seasons)"></span>';
       }).join('');
       var skill = ex.skillArc && ex.skillArc.narrative
-        ? '<span class="path-gallery__skill">' + escapeHtml(truncateName(ex.skillArc.narrative, 48)) + '</span>'
+        ? '<span class="path-gallery__skill">' + escapeHtml(ex.skillArc.narrative) + '</span>'
         : '';
-      return '<div class="path-gallery__row">' +
+      return '<div class="path-gallery__row" title="' + escapeHtml(ex.name) + ' career path">' +
         '<div class="path-gallery__meta">' +
           '<span class="path-gallery__class">' + escapeHtml(TRAJ_CLASS_LABEL[cls] || cls) + '</span>' +
+          '<span class="path-gallery__separator" aria-hidden="true">•</span>' +
           '<span class="path-gallery__name">' + escapeHtml(ex.name) + '</span>' +
+          '<span class="path-gallery__separator" aria-hidden="true">•</span>' +
           '<span class="path-gallery__n">' + ex.n + ' seasons</span>' +
         '</div>' +
         '<div class="path-gallery__track" aria-label="Career archetype path for ' + escapeHtml(ex.name) + '">' +
