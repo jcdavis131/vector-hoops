@@ -40,7 +40,7 @@ export async function mountDriftVoid(canvas){
 
   let timeData=null, liteData=null;
   async function cachedFetchJSON(url){
-    const CACHE_NAME='vector-hoops-v17-20260720-zoompersist';
+    const CACHE_NAME='vector-hoops-v17.1-20260720-outline';
     try{
       if('caches' in window){
         const cache=await caches.open(CACHE_NAME);
