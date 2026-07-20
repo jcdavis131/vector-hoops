@@ -1,12 +1,8 @@
-/* drift-void.js v7 — zoomed-out start + pinch zoom + season-context + history trail
-   #1: zoom out to 38, allow wheel + pinch zoom (12-60) into specific seasons/archetypes
-   #2: story readability fixes:
-     - show all dots for players that season (seasonCloud) = league snapshot for that year
-     - greyed historical trail for past + faint future + bright current
-     - show current team placeholder (wiring from roster_context when available)
-     - show role changes with from→to highlight, greyed trail, white ring markers
-     - season context: team role, league %, career stage, shift reason
-     - bigger labels, less clutter
+/* drift-void.js v8 — v7 + outline chips + quadrant relative stats
+   - Outline chips: prior seasons outline only, current filled solid (matches #1)
+   - Quadrant compare: vs same POS+ARCH in that season — MPG percentile, GP vs avg, better/worse than avg
+   - Loads vectors.json for mpg/gp, pos json for p, skills_wide for skill context
+   - Keeps zoom-out 38 + pinch/wheel + seasonCloud + grey history trail
 */
 export async function mountDriftVoid(canvas){
   if(!canvas) return;
@@ -38,9 +34,8 @@ export async function mountDriftVoid(canvas){
   const ground=new THREE.Mesh(new THREE.PlaneGeometry(300,300), new THREE.MeshStandardMaterial({ color:0x0C0E14, roughness:0.96 }));
   ground.rotation.x=-Math.PI/2; ground.position.y=-2.9; scene.add(ground);
 
-  let timeData=null, liteData=null;
+  const CACHE_NAME='vector-hoops-v18-20260720-quad';
   async function cachedFetchJSON(url){
-    const CACHE_NAME='vector-hoops-v17.1-20260720-outline';
     try{
       if('caches' in window){
         const cache=await caches.open(CACHE_NAME);
@@ -57,13 +52,17 @@ export async function mountDriftVoid(canvas){
     }catch{}
     return r.json();
   }
+
+  let timeData=null, liteData=null, vecData=null, skillsData=null;
   try{
-    const [tData,lData]=await Promise.all([
-      cachedFetchJSON('assets/archetypes_time.json?v=17'),
-      cachedFetchJSON('assets/vectors_search_lite.json?v=17')
+    const [tData, lPosData, vData, sData] = await Promise.all([
+      cachedFetchJSON('assets/archetypes_time.json?v=18'),
+      cachedFetchJSON('assets/vectors_search_lite_pos.json?v=18').catch(()=> cachedFetchJSON('assets/vectors_search_lite.json?v=18')),
+      cachedFetchJSON('assets/vectors.json?v=18').catch(()=>null),
+      cachedFetchJSON('assets/skills_wide.json?v=18').catch(()=>null)
     ]);
-    timeData=tData; liteData=lData;
-  }catch(e){ console.warn('drift v7 fetch fail',e); return; }
+    timeData=tData; liteData=lPosData; vecData=vData; skillsData=sData;
+  }catch(e){ console.warn('drift v8 fetch fail',e); return; }
 
   const seasons=timeData?.prevalence||[];
   const OKABE=['#0072B2','#D55E00','#009E73','#F0E442','#56B4E9','#CC79A7','#E69F00','#FFFEF7'];
@@ -71,31 +70,43 @@ export async function mountDriftVoid(canvas){
   const longDesc=[
     "Rim protection + glass, low perimeter creation",
     "Low volume, high rebounding efficiency",
-    "Minimal box-score footprint that season, end-of-bench",
+    "Minimal box-score footprint that season",
     "Defensive glass + FT rate, low usage",
     "High volume 3P + moderate creation",
     "Efficient 3P accuracy + volume spacer",
     "Primary playmaking, creation engine",
     "High usage scoring volume"
   ];
-  const SEASON_SPAN=44;
-  const getZ=(idx)=>(idx/Math.max(1,seasons.length-1))*SEASON_SPAN - SEASON_SPAN/2;
+  const POS_LABELS=['PG','SG','SF','PF','C'];
+  const getZ=(idx)=>(idx/Math.max(1,seasons.length-1))*44 - 22;
   const seasonIdx=new Map(seasons.map((s,i)=>[s.season,i]));
 
-  // precompute per-season player positions for seasonCloud
-  const seasonPlayersMap=new Map(); // season -> {list, positions}
+  // minutes map from vectors.json
+  const minutesMap=new Map(); // key name|season -> {gp, mpg, total_min}
+  if(vecData && vecData.players){
+    for(const p of vecData.players){
+      minutesMap.set(`${p.name}|${p.season}`, { gp:p.gp||0, mpg:p.mpg||0, total_min:p.total_min||0, sal:p.sal||0 });
+    }
+  }
+  const skillsMap = skillsData?.grades || null;
+
+  // per-season player lists
+  const seasonPlayersMap=new Map();
   for(const s of seasons) seasonPlayersMap.set(s.season, []);
-  for(const p of (liteData.players||[])){
-    if(!seasonPlayersMap.has(p.s)) seasonPlayersMap.set(p.s, []);
-    seasonPlayersMap.get(p.s).push(p);
+  for(const p of (liteData.players||liteData||[])){
+    const season = p.s;
+    if(!seasonPlayersMap.has(season)) seasonPlayersMap.set(season, []);
+    seasonPlayersMap.get(season).push(p);
   }
 
+  // league faint background
   const leagueGroup=new THREE.Group(); scene.add(leagueGroup);
-  const count=liteData?.players?.length||0;
+  const count=(liteData.players||liteData||[]).length||0;
+  const tmpPlayers=liteData.players||liteData||[];
   const positions=new Float32Array(count*3);
   const colors=new Float32Array(count*3);
   for(let i=0;i<count;i++){
-    const p=liteData.players[i];
+    const p=tmpPlayers[i];
     const si=seasonIdx.get(p.s); if(si===undefined) continue;
     const share=seasons[si]?.shares[p.c]||0;
     const x=(p.c-3.5)*1.20 + (Math.random()-0.5)*0.44;
@@ -108,21 +119,17 @@ export async function mountDriftVoid(canvas){
   const leagueGeo=new THREE.BufferGeometry();
   leagueGeo.setAttribute('position', new THREE.BufferAttribute(positions,3));
   leagueGeo.setAttribute('color', new THREE.BufferAttribute(colors,3));
-  const leagueMat=new THREE.PointsMaterial({ size:isLowEnd?0.05:0.072, vertexColors:true, transparent:true, opacity:0.18, sizeAttenuation:true, depthWrite:false });
+  const leagueMat=new THREE.PointsMaterial({ size:isLowEnd?0.05:0.072, vertexColors:true, transparent:true, opacity:0.16, sizeAttenuation:true, depthWrite:false });
   leagueGroup.add(new THREE.Points(leagueGeo, leagueMat));
 
-  // season snapshot cloud — updated per season, bright peers
   const seasonCloudGroup=new THREE.Group(); scene.add(seasonCloudGroup);
-  let seasonCloudPoints=null;
   let seasonCloudGeo=new THREE.BufferGeometry();
   let seasonCloudMat=new THREE.PointsMaterial({ size: isMobile?0.16:0.20, vertexColors:true, transparent:true, opacity:0.92, sizeAttenuation:true, depthWrite:false });
-  seasonCloudPoints=new THREE.Points(seasonCloudGeo, seasonCloudMat);
+  let seasonCloudPoints=new THREE.Points(seasonCloudGeo, seasonCloudMat);
   seasonCloudGroup.add(seasonCloudPoints);
 
   function updateSeasonCloud(seasonStr, highlightName=null){
     const list=seasonPlayersMap.get(seasonStr)||[];
-    if(!list.length) return;
-    // exclude highlighted player to avoid z-fighting (we render traveller)
     const filtered=highlightName? list.filter(p=>p.n!==highlightName) : list;
     const posArr=new Float32Array(filtered.length*3);
     const colArr=new Float32Array(filtered.length*3);
@@ -148,13 +155,13 @@ export async function mountDriftVoid(canvas){
     const curve=new THREE.CatmullRomCurve3(pts);
     const geo=new THREE.TubeGeometry(curve, seasons.length*2, isLowEnd?0.024:0.034, 6, false);
     const col=new THREE.Color(OKABE[a]); col.lerp(new THREE.Color(0x12141A),0.70);
-    ribbonGroup.add(new THREE.Mesh(geo, new THREE.MeshBasicMaterial({ color:col, transparent:true, opacity:0.10, depthWrite:false })));
+    ribbonGroup.add(new THREE.Mesh(geo, new THREE.MeshBasicMaterial({ color:col, transparent:true, opacity:0.09, depthWrite:false })));
   }
 
   function makeTickLabel(text,x,z,bold=false){
     const c=document.createElement('canvas'); c.width=220; c.height=44;
     const ctx=c.getContext('2d');
-    ctx.fillStyle= bold? 'rgba(255,254,247,0.98)' : 'rgba(255,254,247,0.88)';
+    ctx.fillStyle= bold? 'rgba(255,254,247,0.98)' : 'rgba(255,254,247,0.78)';
     ctx.beginPath(); ctx.roundRect(2,4,216,36,9); ctx.fill();
     ctx.fillStyle= bold? '#1A150F' : '#2A241E';
     ctx.font= bold? '900 13px ui-monospace,monospace' : '700 12px ui-monospace,monospace';
@@ -171,15 +178,15 @@ export async function mountDriftVoid(canvas){
     if(i%every===0 || i===seasons.length-1){
       const t=makeTickLabel(s.season,-6.2,getZ(i), isRecent);
       tickGroup.add(t);
-      const line=new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-5.2,-2.55,getZ(i)), new THREE.Vector3(5.7,-2.55,getZ(i))]), new THREE.LineBasicMaterial({ color:0xFFFFFF, transparent:true, opacity: isRecent?0.11:0.05 }));
+      const line=new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-5.2,-2.55,getZ(i)), new THREE.Vector3(5.7,-2.55,getZ(i))]), new THREE.LineBasicMaterial({ color:0xFFFFFF, transparent:true, opacity: isRecent?0.10:0.045 }));
       tickGroup.add(line);
     }
   });
 
   const byName=new Map();
-  for(const p of liteData.players){ if(!byName.has(p.n)) byName.set(p.n,[]); byName.get(p.n).push(p); }
+  for(const p of tmpPlayers){ if(!byName.has(p.n)) byName.set(p.n,[]); byName.get(p.n).push(p); }
   for(const arr of byName.values()) arr.sort((a,b)=> (a.s||'').localeCompare(b.s||''));
-  const CURATED=["LeBron James","Stephen Curry","Kevin Durant","Giannis Antetokounmpo","Nikola Jokic","James Harden","Russell Westbrook","Chris Paul","Kawhi Leonard","Damian Lillard","Luka Doncic","Jayson Tatum","Joel Embiid","Kobe Bryant","Tim Duncan","Dirk Nowitzki","Shaquille O'Neal","Kevin Garnett","Steve Nash","Dwyane Wade","Vince Carter","Chris Bosh","Paul Pierce","Anthony Edwards","Victor Wembanyama","Bo Outlaw","Anthony Davis","Devin Booker","Ja Morant"];
+  const CURATED=["LeBron James","Stephen Curry","Kevin Durant","Giannis Antetokounmpo","Nikola Jokic","James Harden","Russell Westbrook","Chris Paul","Kawhi Leonard","Damian Lillard","Luka Doncic","Jayson Tatum","Joel Embiid","Kobe Bryant","Tim Duncan","Dirk Nowitzki","Shaquille O'Neal","Kevin Garnett","Steve Nash","Dwyane Wade","Vince Carter","Anthony Edwards","Victor Wembanyama","Bo Outlaw","Anthony Davis","Devin Booker","Ja Morant","Donovan Mitchell"];
   let pool=CURATED.filter(n=>byName.has(n)&&byName.get(n).length>=4);
   while(pool.length<40){ for(const [nm,arr] of byName.entries()) if(arr.length>=10&&!pool.includes(nm)) pool.push(nm); if(pool.length>=55) break; }
 
@@ -187,16 +194,24 @@ export async function mountDriftVoid(canvas){
   const trailPastGroup=new THREE.Group(); scene.add(trailPastGroup);
   const trailFutureGroup=new THREE.Group(); scene.add(trailFutureGroup);
   const ghostLineGroup=new THREE.Group(); scene.add(ghostLineGroup);
+  const chipGroup=new THREE.Group(); scene.add(chipGroup);
 
-  function makePill(text,bg,fg,w=540,h=56,scale=2.3){
+  function makePill(text,bg,fg,w=540,h=56,scale=2.3, filled=true, borderOp=1){
     const c=document.createElement('canvas'); c.width=w; c.height=h;
     const ctx=c.getContext('2d'); ctx.clearRect(0,0,w,h);
-    ctx.fillStyle=bg; ctx.beginPath(); ctx.roundRect(4,4,w-8,h-8,11); ctx.fill();
-    ctx.fillStyle=fg; ctx.font='800 13px ui-monospace,monospace'; ctx.textAlign='left'; ctx.textBaseline='middle';
+    if(filled){
+      ctx.fillStyle=bg; ctx.beginPath(); ctx.roundRect(4,4,w-8,h-8,11); ctx.fill();
+      ctx.fillStyle=fg;
+    } else {
+      ctx.strokeStyle=bg; ctx.lineWidth=2.2; ctx.globalAlpha=borderOp;
+      ctx.beginPath(); ctx.roundRect(4,4,w-8,h-8,11); ctx.stroke();
+      ctx.fillStyle=fg; ctx.globalAlpha=borderOp;
+    }
+    ctx.font='800 12px ui-monospace,monospace'; ctx.textAlign='left'; ctx.textBaseline='middle';
     let txt=text; if(txt.length>74) txt=txt.slice(0,72)+'…';
     ctx.fillText(txt,14,h/2+1);
     const tex=new THREE.CanvasTexture(c); tex.colorSpace=THREE.SRGBColorSpace;
-    const mat=new THREE.SpriteMaterial({ map:tex, transparent:true, depthWrite:false, depthTest:false });
+    const mat=new THREE.SpriteMaterial({ map:tex, transparent:true, depthWrite:false, depthTest:false, opacity: filled?1:borderOp });
     const s=new THREE.Sprite(mat); s.scale.set(scale, scale*0.125,1); return s;
   }
 
@@ -208,7 +223,6 @@ export async function mountDriftVoid(canvas){
         if(child.material.map) child.material.map.dispose?.();
         child.material.dispose();
       }
-      // recurse
       if(child.isGroup && child.children) clear(child);
     }
   }
@@ -219,21 +233,21 @@ export async function mountDriftVoid(canvas){
     for(const e of entries){
       const si=seasonIdx.get(e.s); if(si===undefined) continue;
       const share=seasons[si]?.shares[e.c]||0;
+      const pIdx = e.p!==undefined? e.p : (POS_LABELS.indexOf(e.pl||'')>=0? POS_LABELS.indexOf(e.pl): -1);
       pts.push(new THREE.Vector3((e.c-3.5)*1.20, -2.1+share*5.6+1.05, getZ(si)));
-      meta.push({ season:e.s, archeIdx:e.c, arche:shortNames[e.c], desc:longDesc[e.c], share, si, total:seasons[si]?.total||0 });
+      meta.push({ season:e.s, archeIdx:e.c, arche:shortNames[e.c], desc:longDesc[e.c], share, si, total:seasons[si]?.total||0, p:pIdx, pl:e.pl||POS_LABELS[pIdx]||'', name:e.n });
     }
     if(pts.length<3) return null;
     const curve=new THREE.CatmullRomCurve3(pts);
     const baseColor=new THREE.Color(OKABE[meta[Math.floor(meta.length/2)].archeIdx%8]); baseColor.lerp(new THREE.Color(0xFFFFFF),0.08);
 
     const nodes=new THREE.Group();
-    const nodeMeshes=[]; // keep refs for outline vs filled toggle
+    const nodeMeshes=[];
     for(let i=0;i<pts.length;i++){
       const isChange=i>0&&meta[i].archeIdx!==meta[i-1].archeIdx;
       const g=new THREE.SphereGeometry(isChange?0.18:0.10,14,14);
       const m=new THREE.MeshStandardMaterial({ color:isChange?0xFFFFFF:baseColor, emissive:baseColor, emissiveIntensity:isChange?0.90:0.30, transparent:true, opacity:isChange?1:0.78, wireframe:false });
       const sph=new THREE.Mesh(g,m); sph.position.copy(pts[i]); sph.userData.isChange=isChange; sph.userData.seasonIdx=i; nodes.add(sph); nodeMeshes.push(sph);
-      // ring for change stays, but opacity will be adjusted later
       if(isChange){
         const ring=new THREE.Mesh(new THREE.RingGeometry(0.22,0.29,22), new THREE.MeshBasicMaterial({ color:0xFFFFFF, transparent:true, opacity:0.88, side:THREE.DoubleSide }));
         ring.position.copy(pts[i]); ring.position.y+=0.012; ring.rotation.x=Math.PI/2; ring.userData.isRing=true; ring.userData.seasonIdx=i;
@@ -241,13 +255,12 @@ export async function mountDriftVoid(canvas){
       }
     }
 
-    const head=makePill(`${name} — ${entries[0]?.s} → ${entries[entries.length-1]?.s} • ${entries.length} seasons`, '#1A150F','#FFFEF7', isMobile? 460: 680, 58, isMobile? 2.1: 3.0);
-    if(pts.length) head.position.set(pts[0].x-0.2, pts[0].y+1.35, pts[0].z-0.35);
+    const head=makePill(`${name} — ${entries[0]?.s} → ${entries[entries.length-1]?.s} • ${entries.length} seasons`, '#1A150F','#FFFEF7', isMobile? 460: 680, 58, isMobile? 2.1: 3.0, true);
+    head.position.set(pts[0].x-0.2, pts[0].y+1.35, pts[0].z-0.35);
+    const tail=makePill(`${name.split(' ').pop()} now: ${meta[meta.length-1].arche} • LEAGUE ${(meta[meta.length-1].share*100).toFixed(1)}%`, baseColor.getStyle(), '#081018', isMobile? 380: 540, 54, isMobile? 1.8: 2.45, false, 0.45);
+    tail.position.set(pts[pts.length-1].x+0.7, pts[pts.length-1].y+1.05, pts[pts.length-1].z+0.45);
 
-    const tail=makePill(`${name.split(' ').pop()} now: ${meta[meta.length-1].arche} • LEAGUE ${(meta[meta.length-1].share*100).toFixed(1)}%`, baseColor.getStyle(), '#081018', isMobile? 380: 540, 54, isMobile? 1.8: 2.45);
-    if(pts.length) tail.position.set(pts[pts.length-1].x+0.7, pts[pts.length-1].y+1.05, pts[pts.length-1].z+0.45);
-
-    const currentLabel=makePill(`${meta[0].season}: ${meta[0].arche}`, 'rgba(255,254,247,0.98)','#1A150F', 460, 50, 2.0);
+    const currentLabel=makePill(`${meta[0].season}: ${meta[0].arche}`, 'rgba(255,254,247,0.98)','#1A150F', 460, 50, 2.0, true);
 
     const traveller=new THREE.Mesh(new THREE.SphereGeometry(0.26,18,18), new THREE.MeshStandardMaterial({ color:0xFFFFFF, emissive:baseColor, emissiveIntensity:1.15 }));
     const travellerHalo=new THREE.Mesh(new THREE.SphereGeometry(0.44,14,14), new THREE.MeshBasicMaterial({ color:baseColor, transparent:true, opacity:0.22 }));
@@ -257,12 +270,22 @@ export async function mountDriftVoid(canvas){
     const changes=[];
     for(let i=1;i<meta.length;i++) if(meta[i].archeIdx!==meta[i-1].archeIdx) changes.push({ idx:i, from:meta[i-1], to:meta[i] });
 
-    // full ghost line faint
     const ghostGeo=new THREE.BufferGeometry().setFromPoints(pts);
     const ghostMat=new THREE.LineBasicMaterial({ color:0xFFFFFF, transparent:true, opacity:0.07 });
     const ghostLine=new THREE.Line(ghostGeo, ghostMat);
 
-    return { name, entries, pts, meta, curve, nodes, nodeMeshes, head, tail, currentLabel, traveller, travellerGroup, baseColor, changes, ghostLine };
+    // chips for each season — outline vs filled later
+    const chipSprites=[];
+    for(let i=0;i<meta.length;i++){
+      const m=meta[i];
+      const filled = i===0;
+      const txt=`${m.season} ${m.arche} ${m.pl? '• '+m.pl:''}`;
+      const chip=makePill(txt, filled? 'rgba(255,254,247,0.98)' : '#9AA0AC', filled? '#1A150F' : '#9AA0AC', 420, 40, isMobile?1.4:1.75, filled, filled?1:0.32);
+      chip.position.set(pts[i].x+0.15, pts[i].y+0.62 + (i%2?0.12:0), pts[i].z+0.12);
+      chipSprites.push(chip);
+    }
+
+    return { name, entries, pts, meta, curve, nodes, nodeMeshes, head, tail, currentLabel, traveller, travellerGroup, baseColor, changes, ghostLine, chipSprites };
   }
 
   let current=null, tProg=0, paused=true, used=new Set(), lastSwitch=performance.now(), autoPauseUntil=0, lastChangeIdx=-1, lastSeasonIdx=-1;
@@ -293,44 +316,62 @@ export async function mountDriftVoid(canvas){
     return 'Late';
   }
 
+  function computeQuadStats(metaItem, currentName){
+    const seasonStr=metaItem.season;
+    const peers=seasonPlayersMap.get(seasonStr)||[];
+    const archeIdx=metaItem.archeIdx;
+    const pIdx=metaItem.p;
+    const posLabel=metaItem.pl;
+    const curKey=`${currentName}|${seasonStr}`;
+    const curMin=minutesMap.get(curKey);
+
+    let sameQuad=peers.filter(p=>{
+      const sameArch = p.c===archeIdx;
+      const samePos = pIdx>=0 && p.p!==undefined ? p.p===pIdx : (posLabel? p.pl===posLabel : true);
+      return sameArch && samePos;
+    });
+    if(sameQuad.length<3){
+      // relax pos if too small
+      sameQuad=peers.filter(p=>p.c===archeIdx);
+    }
+    const vals=[];
+    for(const p of sameQuad){
+      const km=minutesMap.get(`${p.n}|${seasonStr}`);
+      if(km && km.mpg) vals.push({ name:p.n, mpg:km.mpg, gp:km.gp, key:`${p.n}|${seasonStr}` });
+    }
+    vals.sort((a,b)=>a.mpg-b.mpg);
+    const n=vals.length;
+    let rank=-1, avgMpg=0, avgGp=0;
+    if(n){
+      avgMpg=vals.reduce((s,v)=>s+v.mpg,0)/n;
+      avgGp=vals.reduce((s,v)=>s+v.gp,0)/n;
+      const idx = vals.findIndex(v=>v.name===currentName);
+      rank=idx;
+    }
+    let pct=0;
+    if(rank>=0 && n>1) pct = (rank/(n-1))*100;
+    return { sameQuad, vals, n, rank, pct, avgMpg, avgGp, curMin };
+  }
+
   function updateTrails(){
     if(!current) return;
-    // clear past/future trails
-    clear(trailPastGroup); clear(trailFutureGroup); clear(ghostLineGroup);
+    clear(trailPastGroup); clear(trailFutureGroup); clear(ghostLineGroup); clear(chipGroup);
     ghostLineGroup.add(current.ghostLine);
     const idx=Math.min(Math.floor(tProg*current.meta.length), current.meta.length-1);
 
-    // nodes: prior = outlines only, current = filled solid, future = faint outline
+    // nodes outline vs filled
     if(current.nodeMeshes){
       for(let i=0;i<current.nodeMeshes.length;i++){
         const mesh=current.nodeMeshes[i];
         const mat=mesh.material;
         if(i===idx){
-          // current season — filled solid
-          mat.wireframe=false;
-          mat.color.set(current.baseColor);
-          mat.emissive.set(current.baseColor);
-          mat.emissiveIntensity=0.95;
-          mat.opacity=1.0;
-          mesh.scale.set(1.6,1.6,1.6);
+          mat.wireframe=false; mat.color.set(current.baseColor); mat.emissive.set(current.baseColor); mat.emissiveIntensity=0.95; mat.opacity=1.0; mesh.scale.set(1.6,1.6,1.6);
         } else if(i<idx){
-          // prior seasons — outlines only
-          mat.wireframe=true;
-          mat.color.set(0x9AA0AC);
-          mat.emissive.set(0x000000);
-          mat.emissiveIntensity=0;
-          mat.opacity= i===idx-1 ? 0.42 : 0.26; // most recent prior a bit stronger
-          mesh.scale.set(1.0,1.0,1.0);
+          mat.wireframe=true; mat.color.set(0x9AA0AC); mat.emissive.set(0x000000); mat.emissiveIntensity=0; mat.opacity= i===idx-1 ? 0.42 : 0.26; mesh.scale.set(1.0,1.0,1.0);
         } else {
-          // future seasons — very faint outline
-          mat.wireframe=true;
-          mat.color.set(0x4A4E58);
-          mat.emissive.set(0x000000);
-          mat.opacity=0.10;
-          mesh.scale.set(0.8,0.8,0.8);
+          mat.wireframe=true; mat.color.set(0x4A4E58); mat.opacity=0.10; mat.emissive.set(0x000000); mesh.scale.set(0.8,0.8,0.8);
         }
       }
-      // also dim rings for prior/future but keep current transition rings bright
       for(const child of current.nodes.children){
         if(child.userData.isRing){
           const ri=child.userData.seasonIdx;
@@ -341,28 +382,49 @@ export async function mountDriftVoid(canvas){
       }
     }
 
+    // chips: current filled solid, prior outline only
+    for(let i=0;i<current.chipSprites.length;i++){
+      const m=current.meta[i];
+      const filled = i===idx;
+      const prior = i<idx;
+      const opacity = filled?1 : (prior? (i===idx-1?0.44:0.28) : 0.13);
+      const bg = filled? 'rgba(255,254,247,0.98)' : '#9AA0AC';
+      const fg = filled? '#1A150F' : '#9AA0AC';
+      const txt=`${m.season} ${m.arche}${m.pl?' • '+m.pl:''}${filled?' • CURRENT':''}`;
+      // recreate texture cheap
+      const c=document.createElement('canvas'); c.width=420; c.height=40;
+      const ctx=c.getContext('2d'); ctx.clearRect(0,0,c.width,c.height);
+      if(filled){ ctx.fillStyle=bg; ctx.beginPath(); ctx.roundRect(4,4,412,32,8); ctx.fill(); ctx.fillStyle=fg; }
+      else { ctx.strokeStyle=bg; ctx.lineWidth=1.6; ctx.globalAlpha=opacity; ctx.beginPath(); ctx.roundRect(4,4,412,32,8); ctx.stroke(); ctx.fillStyle=fg; }
+      ctx.font='800 11px ui-monospace,monospace';
+      ctx.fillText(txt,12,24);
+      const tex=new THREE.CanvasTexture(c); tex.colorSpace=THREE.SRGBColorSpace;
+      current.chipSprites[i].material.map.dispose?.();
+      current.chipSprites[i].material.map=tex;
+      current.chipSprites[i].material.opacity=opacity;
+      current.chipSprites[i].material.needsUpdate=true;
+      // scale
+      current.chipSprites[i].scale.set(filled? (isMobile?1.9:2.2) : (isMobile?1.35:1.65), filled?0.36:0.30,1);
+      chipGroup.add(current.chipSprites[i]);
+    }
+
     if(idx>0){
       const pastPts=current.pts.slice(0, idx+1);
       if(pastPts.length>=2){
-        // outline trail: wireframe tube = looks like outlined path
         const pastCurve=new THREE.CatmullRomCurve3(pastPts);
         const pastTube=new THREE.TubeGeometry(pastCurve, Math.max(pastPts.length*7, 40), 0.095, 8, false);
-        const mat=new THREE.MeshBasicMaterial({ color:0xC2C6D0, transparent:true, opacity:0.22, wireframe:true });
-        const mesh=new THREE.Mesh(pastTube, mat);
-        trailPastGroup.add(mesh);
-        // thin dashed line center for readability
+        const mat=new THREE.MeshBasicMaterial({ color:0xC2C6D0, transparent:true, opacity:0.20, wireframe:true });
+        trailPastGroup.add(new THREE.Mesh(pastTube, mat));
         const lineGeo=new THREE.BufferGeometry().setFromPoints(pastPts);
-        const lineMat=new THREE.LineDashedMaterial({ color:0x9AA0AC, transparent:true, opacity:0.22, dashSize:0.22, gapSize:0.20, linewidth:1 });
+        const lineMat=new THREE.LineDashedMaterial({ color:0x9AA0AC, transparent:true, opacity:0.22, dashSize:0.22, gapSize:0.20 });
         const line=new THREE.Line(lineGeo, lineMat); line.computeLineDistances(); trailPastGroup.add(line);
       }
     }
     if(idx < current.meta.length-1){
       const futPts=current.pts.slice(idx);
       if(futPts.length>=2){
-        const futCurve=new THREE.CatmullRomCurve3(futPts);
-        // future = even fainter outline dashed
         const fLineGeo=new THREE.BufferGeometry().setFromPoints(futPts);
-        const fLineMat=new THREE.LineDashedMaterial({ color:current.baseColor, transparent:true, opacity:0.12, dashSize:0.14, gapSize:0.22 });
+        const fLineMat=new THREE.LineDashedMaterial({ color:current.baseColor, transparent:true, opacity:0.11, dashSize:0.14, gapSize:0.22 });
         const fLine=new THREE.Line(fLineGeo, fLineMat); fLine.computeLineDistances(); trailFutureGroup.add(fLine);
       }
     }
@@ -377,13 +439,10 @@ export async function mountDriftVoid(canvas){
     const total=current.meta.length;
     const stage=careerStage(idx,total);
 
-    // season cloud update
     if(lastSeasonIdx!==m.si){
       lastSeasonIdx=m.si;
       updateSeasonCloud(m.season, current.name);
     }
-
-    // trail update only when idx changes
     if(renderFocus._lastIdx!==idx){
       renderFocus._lastIdx=idx;
       updateTrails();
@@ -395,31 +454,46 @@ export async function mountDriftVoid(canvas){
     const progress = `${idx+1}/${total}`;
     const nextChange = current.changes.find(c=>c.idx>idx);
     const nextHint = nextChange? `→ next ${nextChange.to.season} ${nextChange.to.arche}` : `→ final ${last.season}`;
-    const leagueTotal = m.total || 450;
+
+    // quadrant stats
+    const quad = computeQuadStats(m, current.name);
+    const avgMpgStr = quad.n? `${quad.avgMpg.toFixed(1)} avg` : '';
+    const curMpg = quad.curMin?.mpg ? `${quad.curMin.mpg.toFixed(1)} mpg` : 'mpg —';
+    const vsAvg = quad.n && quad.curMin ? (quad.curMin.mpg - quad.avgMpg).toFixed(1) : '';
+    const better = parseFloat(vsAvg) >=0 ? 'better' : 'worse';
+    const pctStr = quad.n && quad.rank>=0 ? `P${Math.round(quad.pct)}` : '—';
+    const nStr = `${quad.n} peers`;
+    const gpInfo = quad.curMin ? `${quad.curMin.gp} GP vs ${quad.avgGp.toFixed(0)} avg` : '';
 
     if(change && lastChangeIdx!==idx){
       lastChangeIdx=idx;
-      autoPauseUntil=performance.now()+2100;
+      autoPauseUntil=performance.now()+2300;
       const fromPct=(change.from.share*100).toFixed(1), toPct=(change.to.share*100).toFixed(1);
       const dpp=((change.to.share-change.from.share)*100).toFixed(1);
-      focusEl.innerHTML = `<span style="background:#F0E442;border:1.5px solid #1A150F;padding:1px 6px;border-radius:6px;margin-right:6px">SHIFT ${progress}</span> ${current.name} • ${stage.toUpperCase()} • ${change.from.season} ${change.from.arche} → <b>${change.to.season} ${change.to.arche}</b> — LEAGUE ${fromPct}%→${toPct}% (${dpp}pp) — ${change.to.desc}`;
-      if(metaEl) metaEl.textContent = `ROLE TRANSITION: was asked to play ${change.from.arche.toLowerCase()}, now ${change.to.arche.toLowerCase()}. Historical trail greyed behind shows where he came from; white dots = ${leagueTotal} peers in ${m.season}. Team: — (wiring roster_context, role model gives archetype).`;
+      focusEl.innerHTML = `<span style="background:#F0E442;border:1.5px solid #1A150F;padding:1px 6px;border-radius:6px;margin-right:6px">SHIFT ${progress}</span> ${current.name} • ${stage} • ${change.from.season} ${change.from.arche} → <b>${change.to.season} ${change.to.arche}</b> — ${curMpg} (${pctStr}) ${better} than avg (${vsAvg} vs ${avgMpgStr}) — ${nStr} in quad • LEAGUE ${fromPct}%→${toPct}% (${dpp}pp)`;
+      if(metaEl) metaEl.textContent = `${gpInfo} • ${change.to.desc} • Historical trail grey outline shows past, current filled solid, white dots = ${m.total} peers in ${m.season}. Quad = ${m.pl||'POS'}+${m.arche}. Skills: see details.`;
     } else {
-      const teamPlaceholder='—';
-      focusEl.textContent=`● ${current.name} [${progress} ${stage}] — ${m.season} — ${m.arche.toUpperCase()} — Team ${teamPlaceholder} — LEAGUE ${(m.share*100).toFixed(1)}% (${sign}${delta}pp vs ${first.season}) ${nextHint} — PEERS ${leagueTotal} dots`;
+      focusEl.innerHTML = `● ${current.name} [${progress} ${stage}] — ${m.season} — ${m.arche.toUpperCase()}${m.pl?' • '+m.pl:''} — ${curMpg} <span style="opacity:.75">(${pctStr} in quad, ${better} than avg ${vsAvg} vs ${avgMpgStr})</span> — LEAGUE ${(m.share*100).toFixed(1)}% (${sign}${delta}pp) ${nextHint} — ${nStr}`;
       if(metaEl){
-        const shiftCount=current.changes.length;
         const lastShift=current.changes.length? `last shift ${current.changes[current.changes.length-1].to.season} ${current.changes[current.changes.length-1].from.arche}→${current.changes[current.changes.length-1].to.arche}` : 'no archetype shift';
-        metaEl.textContent = `${total} seasons • ${shiftCount} role shifts • ${lastShift} • ${m.desc} • Grey trail = history, white rings = transition, colored dots = ${m.season} peers, faint background = all ${seasons.length} seasons. Pinch to zoom, drag scrub below.`;
+        let skillTxt='';
+        if(skillsMap){
+          const sk=skillsMap[`${current.name}|${m.season}`];
+          if(sk){
+            const top=Object.entries(sk).sort((a,b)=>b[1]-a[1]).slice(0,2).map(([k,v])=>`${k}:${v}`).join(' ');
+            skillTxt=` • skills ${top}`;
+          }
+        }
+        metaEl.textContent = `${total} seasons • ${current.changes.length} shifts • ${lastShift} • ${gpInfo} • ${m.desc}${skillTxt} • Grey outline= history, solid= current ${m.season}, white dots= ${m.total} peers. Pinch to zoom.`;
       }
     }
 
     if(current.currentLabel){
-      const labelText = change? `${m.season}: → ${m.arche} [${stage}]` : `${m.season}: ${m.arche} • ${stage} • ${leagueTotal} peers`;
+      const labelText = `${m.season}: ${m.arche} • ${stage} • ${curMpg} ${pctStr} quad`;
       if(current.currentLabel.userData.lastText!==labelText){
-        const c=document.createElement('canvas'); c.width=520; c.height=52;
-        const ctx=c.getContext('2d'); ctx.fillStyle=change? '#F0E442' : 'rgba(255,254,247,0.98)'; ctx.beginPath(); ctx.roundRect(4,4,512,44,11); ctx.fill();
-        ctx.fillStyle='#1A150F'; ctx.font='800 12px ui-monospace,monospace'; ctx.fillText(labelText,12,29);
+        const c=document.createElement('canvas'); c.width=560; c.height=52;
+        const ctx=c.getContext('2d'); ctx.fillStyle=change? '#F0E442' : 'rgba(255,254,247,0.98)'; ctx.beginPath(); ctx.roundRect(4,4,552,44,11); ctx.fill();
+        ctx.fillStyle='#1A150F'; ctx.font='800 11px ui-monospace,monospace'; ctx.fillText(labelText,12,29);
         const tex=new THREE.CanvasTexture(c); current.currentLabel.material.map.dispose(); current.currentLabel.material.map=tex; current.currentLabel.userData.lastText=labelText;
       }
     }
@@ -428,12 +502,11 @@ export async function mountDriftVoid(canvas){
   renderFocus._lastIdx=-1;
 
   function show(name){
-    clear(playerGroup); clear(trailPastGroup); clear(trailFutureGroup); clear(ghostLineGroup);
+    clear(playerGroup); clear(trailPastGroup); clear(trailFutureGroup); clear(ghostLineGroup); clear(chipGroup);
     renderFocus._lastIdx=-1; lastSeasonIdx=-1;
     const arc=buildArc(name);
     if(!arc){ const n=pickRandom(name); if(n) return show(n); return; }
     playerGroup.add(arc.nodes); playerGroup.add(arc.head); playerGroup.add(arc.tail); playerGroup.add(arc.travellerGroup);
-    // add ghost line initial
     ghostLineGroup.add(arc.ghostLine);
     current=arc; tProg=0; lastSwitch=performance.now(); lastChangeIdx=-1;
     used.add(name);
@@ -468,7 +541,6 @@ export async function mountDriftVoid(canvas){
   if(btnNext) btnNext.addEventListener('click',()=>{ paused=false; embedPaused=false; if(btnPlay) btnPlay.textContent='❚❚ Pause'; if(!current) return; const idx=Math.floor(tProg*current.meta.length); for(let j=idx+1;j<current.meta.length;j++) if(current.meta[j].archeIdx!==current.meta[j-1].archeIdx){ tProg=j/current.meta.length; renderFocus(); const pt=current.curve.getPointAt(tProg); if(pt) current.travellerGroup.position.copy(pt); return; } tProg=1; renderFocus(); });
   if(btnPrev) btnPrev.addEventListener('click',()=>{ paused=false; embedPaused=false; if(btnPlay) btnPlay.textContent='❚❚ Pause'; if(!current) return; const idx=Math.floor(tProg*current.meta.length); for(let j=idx-1;j>=1;j--) if(current.meta[j].archeIdx!==current.meta[j-1].archeIdx){ tProg=j/current.meta.length; renderFocus(); const pt=current.curve.getPointAt(tProg); if(pt) current.travellerGroup.position.copy(pt); return; } tProg=0; renderFocus(); });
 
-  // zoom handling
   function onWheel(e){
     e.preventDefault();
     const delta=Math.sign(e.deltaY)*0.55 + e.deltaY*0.0032;
@@ -478,17 +550,10 @@ export async function mountDriftVoid(canvas){
   let pinchStartDist=0, pinchStartZ=CAM_Z_DEFAULT;
   function distTouches(touches){ const a=touches[0], b=touches[1]; return Math.hypot(a.clientX-b.clientX, a.clientY-b.clientY); }
   canvas.addEventListener('touchstart', (e)=>{
-    if(e.touches && e.touches.length===2){
-      pinchStartDist=distTouches(e.touches); pinchStartZ=camBaseZ;
-    }
+    if(e.touches && e.touches.length===2){ pinchStartDist=distTouches(e.touches); pinchStartZ=camBaseZ; }
   }, {passive:true});
   canvas.addEventListener('touchmove', (e)=>{
-    if(e.touches && e.touches.length===2){
-      e.preventDefault();
-      const d=distTouches(e.touches);
-      const ratio=pinchStartDist/(d||1);
-      setZ(pinchStartZ * ratio);
-    }
+    if(e.touches && e.touches.length===2){ e.preventDefault(); const d=distTouches(e.touches); const ratio=pinchStartDist/(d||1); setZ(pinchStartZ * ratio); }
   }, {passive:false});
 
   function onResize(){ const w=canvas.clientWidth,h=canvas.clientHeight; if(w<10||h<10) return; renderer.setSize(w,h,false); camera.aspect=w/h; camera.updateProjectionMatrix(); }
@@ -500,23 +565,19 @@ export async function mountDriftVoid(canvas){
     if(embedPaused){ return; }
     if(!visible) return;
     const now=performance.now();
-    if(!paused && now>autoPauseUntil){
-      tProg+=0.00032; if(tProg>1) tProg=0;
-    }
+    if(!paused && now>autoPauseUntil){ tProg+=0.00028; if(tProg>1) tProg=0; }
     if(current){
       const pt=current.curve.getPointAt(Math.max(0.0001,Math.min(0.999,tProg)));
       if(pt){ current.travellerGroup.position.copy(pt); current.travellerGroup.position.y+=0.06; }
     }
     const t = current? tProg : 0;
-    const lookZ = current? current.curve.getPointAt(t).z * 0.62 + (SEASON_SPAN*0.14) : 0;
-    const wobbleX=Math.sin(now*0.00010)*1.2;
-    const wobbleY=4.0+Math.sin(now*0.00008)*0.26;
-    camera.position.x=wobbleX;
-    camera.position.y=wobbleY;
+    const lookZ = current? current.curve.getPointAt(t).z * 0.62 + 6.2 : 0;
+    camera.position.x=Math.sin(now*0.00010)*1.2;
+    camera.position.y=4.0+Math.sin(now*0.00008)*0.26;
     camera.position.z=camBaseZ + Math.sin(now*0.00007)*0.8;
     camera.lookAt(0, -0.2, lookZ);
     renderFocus();
-    if(now-lastSwitch>30000&&!paused){ const nxt=pickRandom(current?.name); if(nxt) show(nxt); lastSwitch=now; }
+    if(now-lastSwitch>32000&&!paused){ const nxt=pickRandom(current?.name); if(nxt) show(nxt); lastSwitch=now; }
     renderer.render(scene,camera);
   }
   tick();

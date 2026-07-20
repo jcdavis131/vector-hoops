@@ -113,7 +113,7 @@ export async function mountStarMap(canvas){
   };
 
   async function cachedFetchJSON(url){
-    const CACHE_NAME='vector-hoops-v17.1-20260720-outline';
+    const CACHE_NAME='vector-hoops-v18-20260720-quad';
     try{
       if('caches' in window){
         const cache=await caches.open(CACHE_NAME);
@@ -134,10 +134,10 @@ export async function mountStarMap(canvas){
   let players=[];
   try{
     try{
-      const j=await cachedFetchJSON('assets/vectors_search_lite_pos.json?v=17');
+      const j=await cachedFetchJSON('assets/vectors_search_lite_pos.json?v=18');
       players=j.players||[]; 
     }catch(e){
-      const j2=await cachedFetchJSON('assets/vectors_search_lite.json?v=17');
+      const j2=await cachedFetchJSON('assets/vectors_search_lite.json?v=18');
       players=j2.players||j2||[];
       players.forEach(p=>{ if(p.p===undefined){ p.p=Math.floor(Math.random()*5); p.pl=POS_LABELS[p.p]; } });
     }
