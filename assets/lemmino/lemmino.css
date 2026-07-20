@@ -30,9 +30,35 @@
 @media(max-width:720px){ .lemmino-hero-void{ height:460px; } }
 
 .lemmino-hero-void canvas,
-.lemmino-monoliths canvas{
+.lemmino-monoliths canvas,
+.lemmino-map-void canvas,
+.lemmino-drift canvas{
   position:absolute; inset:0; width:100%; height:100%; display:block;
 }
+.lemmino-map-void{
+  position:relative;
+  width:100%;
+  min-height:560px;
+  border:2.5px solid #1A150F;
+  border-radius:16px;
+  overflow:hidden;
+  background:radial-gradient(120% 80% at 30% 20%, rgba(240,228,66,0.06), transparent 55%), radial-gradient(90% 60% at 80% 80%, rgba(0,114,178,0.10), transparent 50%), var(--lemmino-bg);
+  box-shadow:6px 6px 0 #1A150F;
+  isolation:isolate;
+}
+@media(max-width:720px){ .lemmino-map-void{ min-height:500px; } }
+.lemmino-drift{
+  position:relative;
+  width:100%;
+  height:560px;
+  border:2.5px solid #1A150F;
+  border-radius:16px;
+  overflow:hidden;
+  background:radial-gradient(130% 90% at 50% 12%, rgba(86,180,233,0.10), transparent 60%), radial-gradient(90% 70% at 80% 90%, rgba(0,114,178,0.12), transparent 50%), var(--lemmino-bg);
+  box-shadow:6px 6px 0 #1A150F;
+  isolation:isolate;
+}
+@media(max-width:720px){ .lemmino-drift{ height:520px; } }
 
 .lemmino-vignette{
   position:absolute; inset:0; pointer-events:none; z-index:2;

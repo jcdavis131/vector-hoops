@@ -1,10 +1,10 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
 <title>Vector Hoops — 12,966 seasons as rotating map — Past→Modern</title>
 <meta property="og:title" content="Vector Hoops — 12,966 as rotating map · Past→Modern Twin"/>
-<meta property="og:description" content="12,966 NBA seasons as rotating embedding map. One game: Past All-Star → guess modern twin."/>
+<meta property="og:description" content="12,966 NBA seasons as rotating embedding map — now in Lemmino documentary void. One game: Past All-Star → guess modern twin."/>
 <meta property="og:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/><meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/>
 <meta name="twitter:card" content="summary_large_image"/><meta name="twitter:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/>
-<meta name="description" content="12,966 NBA seasons as rotating embedding map. Daily Past→Modern."/><meta name="theme-color" content="#1A150F"/>
+<meta name="description" content="12,966 NBA seasons as rotating embedding map. Daily Past→Modern. Lemmino void style."/><meta name="theme-color" content="#0A0C10"/>
 <link rel="manifest" href="/manifest.json"/>
 <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/shell.css"/><link rel="stylesheet" href="assets/responsive.css"/><link rel="stylesheet" href="assets/final-qa.css"/><link rel="stylesheet" href="assets/unified.css"/><link rel="stylesheet" href="assets/lemmino/lemmino.css"/>
@@ -21,27 +21,19 @@
 .pill{border:1.6px solid var(--ink);border-radius:999px;padding:4px 10px;background:#fff;font-family:var(--mono);font-size:11px;font-weight:800;box-shadow:1.5px 1.5px 0 var(--ink)}
 .pill-yellow{background:var(--yellow);transform:rotate(-1deg)}
 
-#map-wrap{position:relative;min-height:560px;border:2.5px solid var(--ink);border-radius:16px;box-shadow:6px 6px 0 var(--ink);overflow:hidden;background:radial-gradient(120% 80% at 70% 20%,rgba(0,114,178,.12),transparent 48%),radial-gradient(90% 60% at 20% 70%,rgba(213,94,0,.10),transparent 46%),var(--paper)}
+#map-wrap{position:relative;min-height:580px;border:2.5px solid var(--ink);border-radius:16px;box-shadow:6px 6px 0 var(--ink);overflow:hidden;background:radial-gradient(120% 80% at 70% 20%,rgba(0,114,178,.12),transparent 48%),radial-gradient(90% 60% at 20% 70%,rgba(213,94,0,.10),transparent 46%),#0A0C10}
 #sky-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab}
 #sky-canvas:active{cursor:grabbing}
-#map-overlay{position:absolute;left:10px;right:10px;top:10px;display:flex;justify-content:space-between;gap:8px;z-index:2;pointer-events:none;flex-wrap:wrap}
+
+/* overlay chips - keep for star-map void */
+#map-overlay{position:absolute;left:12px;right:12px;top:56px;display:flex;justify-content:space-between;gap:8px;z-index:5;pointer-events:none;flex-wrap:wrap}
 #map-overlay .chip{background:rgba(255,254,247,.92);border:2px solid var(--ink);border-radius:999px;padding:5px 10px;font-family:var(--mono);font-size:10px;box-shadow:1.5px 1.5px 0 var(--ink)}
-#map-controls{position:absolute;left:10px;bottom:10px;z-index:3;display:flex;gap:6px;flex-wrap:wrap}
+#map-controls{position:absolute;left:12px;bottom:12px;z-index:6;display:flex;gap:6px;flex-wrap:wrap}
 #map-controls .chip{pointer-events:auto;cursor:pointer;background:#fff;border:2px solid var(--ink);border-radius:999px;padding:6px 10px;font-family:var(--mono);font-size:10px;font-weight:800;box-shadow:1.5px 1.5px 0 var(--ink)}
-#map-legend{position:absolute;right:10px;bottom:10px;z-index:3;background:rgba(255,254,247,.97);border:2px solid var(--ink);border-radius:14px;padding:8px 9px 8px 8px;box-shadow:2px 2px 0 var(--ink);font-family:var(--mono);font-size:9px;line-height:1.35;pointer-events:auto;min-width:186px;max-width:214px}
+#map-legend{position:absolute;right:12px;bottom:12px;z-index:6;background:rgba(255,254,247,.97);border:2px solid var(--ink);border-radius:14px;padding:8px 9px 8px 8px;box-shadow:2px 2px 0 var(--ink);font-family:var(--mono);font-size:9px;line-height:1.35;pointer-events:auto;min-width:186px;max-width:214px}
 #map-legend .legend-title{font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:900;opacity:.65;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center;gap:6px}
-#map-legend .legend-toggle-wrap{display:flex;gap:4px}
-#map-legend .chip-mini{pointer-events:auto;cursor:pointer;background:#fff;border:1.5px solid var(--ink);border-radius:999px;padding:3px 7px;font-family:var(--mono);font-size:7.5px;font-weight:900;letter-spacing:.04em;box-shadow:1px 1px 0 var(--ink);opacity:.7}
-#map-legend .chip-mini.is-active{background:var(--ink);color:#fff;opacity:1}
-#map-legend .axis{display:flex;gap:5px;align-items:center;margin:2.8px 0;white-space:nowrap;font-size:8.5px}
-#map-legend .axis i{font-style:normal;font-weight:900;width:13px;height:13px;display:inline-flex;align-items:center;justify-content:center;background:var(--ink);color:#fff;border-radius:4px;font-size:7px;line-height:1;flex-shrink:0}
-#map-legend .axis em{font-style:normal;opacity:.45;margin-left:auto;font-size:7px}
-#map-legend .legend-foot{margin-top:6px;font-size:7px;opacity:.55;line-height:1.25;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+#hover-tip{position:absolute;left:50%;top:50%;transform:translate(-50%,-100%);background:#FFFEF7;border:2px solid var(--ink);border-radius:10px;padding:7px 9px;box-shadow:3px 3px 0 var(--ink);font-size:11px;line-height:1.35;display:none;z-index:7;pointer-events:none;max-width:260px}
 .legend-star{display:inline-flex;width:14px;height:14px;align-items:center;justify-content:center;background:var(--yellow);border:1.5px solid var(--ink);border-radius:4px;font-size:10px}
-#orient-canvas{display:block;background:radial-gradient(100% 100% at 50% 50%,rgba(0,114,178,.08),transparent 70%),#FFFEF7;border:1.5px solid var(--ink);border-radius:9px;box-shadow:inset 1px 1px 0 rgba(0,0,0,.08)}
-#map-legend .pos-dots{display:flex;gap:3px;flex-wrap:wrap;margin-top:4px}
-#map-legend .pos-dot{width:8px;height:8px;border-radius:50%;border:1.2px solid var(--ink);display:inline-block}
-#hover-tip{position:absolute;left:50%;top:50%;transform:translate(-50%,-100%);background:#FFFEF7;border:2px solid var(--ink);border-radius:10px;padding:7px 9px;box-shadow:3px 3px 0 var(--ink);font-size:11px;line-height:1.35;display:none;z-index:3;pointer-events:none;max-width:260px}
 
 .hero{max-width:1180px;margin:0 auto;padding:18px clamp(14px,3.5vw,28px) 10px;display:grid;grid-template-columns:1.08fr .92fr;gap:28px;align-items:start}
 @media(max-width:980px){.hero{grid-template-columns:1fr}#map-wrap{min-height:500px}}
@@ -53,45 +45,22 @@
 .deck b{color:var(--ink)}
 .cta-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:2px}
 .micro{color:#5A544D;text-transform:none;font-weight:600;font-size:11.5px;letter-spacing:.01em;line-height:1.5}
-.micro-2{color:#8A867F;text-transform:none;font-weight:700;font-size:10.5px;letter-spacing:.02em;display:flex;gap:10px;flex-wrap:wrap}
 .pulse-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--yellow);border:1.5px solid var(--ink);box-shadow:0 0 0 3px rgba(240,228,66,.35);animation:pulse 1.6s ease-in-out infinite}
 @keyframes pulse{0%,100%{box-shadow:0 0 0 3px rgba(240,228,66,.35);transform:scale(1)}50%{box-shadow:0 0 0 7px rgba(240,228,66,.18);transform:scale(1.08)}}
-
 .tri{max-width:1180px;margin:12px auto 0;padding:0 clamp(14px,3.5vw,28px) calc(20px + 88px);display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
 @media(max-width:760px){.tri{grid-template-columns:1fr}}
 .tri .card{transition:transform .12s,box-shadow .12s}
 .tri .card:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--ink)}
-</style><meta property="og:type" content="website">
-<meta property="og:url" content="https://hoops.dumbmodel.com/">
+</style>
 </head><body>
-<noscript><div role="alert" style="padding:16px;text-align:center">Enable JS — Vector Hoops needs JavaScript for Daily Court + Map</div></noscript>
+<noscript><div role="alert" style="padding:16px;text-align:center">Enable JS — Vector Hoops needs JavaScript for Daily Court + 3D void</div></noscript>
 
 <nav class="site-nav" data-active="/" aria-label="Vector Hoops site"></nav>
-
-<!-- LEMMINO VOID — Documentary intro: floating basketball artifact + court debris in black fog -->
-<div class="lemmino-section">
-  <div class="lemmino-hero-void" id="lemmino-hero-void">
-    <canvas id="lemmino-hero-canvas" width="1180" height="520" aria-label="Lemmino-style void: floating basketball artifact and deconstructed court in fog"></canvas>
-    <div class="lemmino-vignette" aria-hidden="true"></div>
-    <div class="lemmino-grain" aria-hidden="true"></div>
-    <div class="lemmino-chapter">
-      <div class="kicker"><i></i> ARCHIVE // 12,966 RECORDS // ERA-HONEST</div>
-      <h2>Every season leaves <br> a trace <em>— in the dark</em></h2>
-      <p class="de">Lemmino documentary style: evidence floats in void. Court lines fracture, leather artifact hovers, 12,966 dust motes — each a player-season — drift in tungsten fog. No gloss. Just data, lit like a crime scene.</p>
-    </div>
-    <div class="lemmino-doc-label">CASE FILE: VECTOR-HOOPS // 1996-2026</div>
-    <div class="lemmino-ui">
-      <span class="lemmino-caption">● REC ● 24 FPS ● TUNGSTEN 3200K</span>
-      <span class="lemmino-caption lemmino-caption--dark" id="lemmino-hero-meta">FOG DENSITY 0.022 / SPOT F0E442 / DUST 2500</span>
-      <span class="lemmino-caption">MATERIAL: MATTE • FLAT SHADE • LOW-POLY</span>
-    </div>
-  </div>
-</div>
 
 <div class="hero">
   <div class="hero-copy">
     <div class="small-mono eyebrow">
-      <span class="pill pill-yellow">12,966 · ROTATING</span>
+      <span class="pill pill-yellow">12,966 · ROTATING STARS</span>
       <span id="viral-streak" class="pill" style="background:#1A150F;color:#FFFEF7">streak 0</span>
       <span id="puzzle-meta" style="opacity:.6">Daily puzzle</span>
     </div>
@@ -102,7 +71,7 @@
 
     <p class="deck" id="deck-line" style="margin-top:10px;font-size:17px;line-height:1.45">
       <b id="deck-name" style="font-weight:900">Michael Jordan 1997-98</b> → who plays most like them now?<br>
-      <span id="viral-today" style="opacity:.6;font-size:14px">Placeholder: Michael Jordan 1997-98 — daily inside</span>
+      <span id="viral-today" style="opacity:.6;font-size:14px">12,966 seasons as stars in Lemmino void — documentary style</span>
     </p>
 
     <div class="cta-row">
@@ -114,33 +83,44 @@
       <button class="btn" data-pack-hero="1" type="button" style="min-height:44px">⚡ Solo 1</button>
       <button class="btn btn-accent" data-pack-hero="3" type="button" style="min-height:44px">🔥 Triple 3</button>
       <button class="btn" data-pack-hero="5" type="button" style="min-height:44px;background:#fff">🏀 Full 5</button>
-      <span class="small-mono" id="pack-cta-hint" style="opacity:.55;text-transform:none;align-self:center">random grouping, same link = same stars</span>
+      <span class="small-mono" id="pack-cta-hint" style="opacity:.55;text-transform:none;align-self:center">same link = same stars</span>
     </div>
 
     <div class="micro small-mono" style="text-transform:none;display:flex;gap:8px;align-items:center;margin-top:6px">
-      <span class="pulse-dot"></span><span id="sky-fact-inline">Drag to rotate · hover any dot · ★ = Michael Jordan 97-98 placeholder</span>
+      <span class="pulse-dot"></span><span id="sky-fact-inline">Drag to rotate · hover any star · ★ = MJ 97-98 placeholder</span>
     </div>
   </div>
 
-  <div id="map-wrap">
-    <canvas id="sky-canvas" width="640" height="560"></canvas>
+  <!-- LEMMINO COMBO: embedding map as stars -->
+  <div id="map-wrap" class="lemmino-map-void">
+    <canvas id="sky-canvas" width="640" height="580" aria-label="Lemmino void: 12,966 player-seasons as stars in documentary fog, floating basketball artifact"></canvas>
+    <div class="lemmino-vignette" aria-hidden="true"></div>
+    <div class="lemmino-grain" aria-hidden="true"></div>
+    <div class="lemmino-chapter">
+      <div class="kicker"><i></i> ARCHIVE // 12,966 STARS // EMBEDDING VOID</div>
+      <h2>Every season a star<br><em>in the dark</em></h2>
+      <p class="de" style="color:rgba(234,230,222,0.68)" >Lemmino documentary: MTNN embedding becomes constellation. 12,966 player-seasons as stars, color = archetype, basketball artifact floats at center. No gloss. Just data, lit like crime scene.</p>
+    </div>
+    <div class="lemmino-doc-label">CASE FILE: STAR MAP // MTNN v5 48-D // 1996-2026</div>
     <div id="map-overlay" aria-hidden="true">
-      <span class="chip" id="sky-fact">loading 12,966 — rotating…</span>
-      <span class="chip" id="sky-hover-chip" style="opacity:.6">★ pulsing = Michael Jordan 97-98 (placeholder)</span>
+      <span class="chip" id="sky-fact">loading 12,966 stars — rotating…</span>
+      <span class="chip" id="sky-hover-chip" style="opacity:.7">★ pulsing = MJ 97-98 placeholder</span>
     </div>
     <div id="map-controls">
       <button class="chip" id="btn-pause" type="button">Pause</button>
       <button class="chip" id="btn-reset" type="button">Reset</button>
       <button class="chip" id="btn-share-board" type="button" style="background:#FFFEF7">Share Map</button>
     </div>
-    <div id="map-legend" style="min-width:128px;max-width:168px;padding:8px 8px">
-      <div class="legend-title" style="margin-bottom:5px">Map</div>
-      <div class="axis"><i>X</i> Paint ↔ Perim</div>
-      <div class="axis"><i>Y</i> Role → Score</div>
-      <div class="axis"><i>Z</i> Off ↔ On</div>
-      <div class="legend-foot" style="margin-top:8px;border-top:1.2px solid var(--ink);padding-top:6px"><span class="legend-star" style="display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;background:var(--yellow);border:1.5px solid var(--ink);border-radius:5px;font-size:11px;box-shadow:1px 1px 0 var(--ink)">★</span> <span id="legend-star-name" style="font-weight:800">Michael Jordan 97-98</span></div>
+    <div id="map-legend" style="min-width:158px">
+      <div class="legend-title" style="margin-bottom:5px">Embedding — Stars</div>
+      <div style="font-size:9px;opacity:.75;line-height:1.35">X Paint↔Perim<br>Y Role→Score<br>Z Off↔On<br><br>8 archetypes = Okabe colors<br>motes = 12,966 seasons</div>
+      <div style="margin-top:8px;border-top:1.2px solid var(--ink);padding-top:6px;display:flex;gap:6px;align-items:center"><span class="legend-star">★</span> <span id="legend-star-name" style="font-weight:800">MJ 97-98</span></div>
     </div>
     <div id="hover-tip"></div>
+    <div class="lemmino-ui">
+      <span class="lemmino-caption">● REC ● 24FPS ● TUNGSTEN 3200K</span>
+      <span class="lemmino-caption lemmino-caption--dark">FOG 0.022 / SPOT F0E442 / STARS 12,966</span>
+    </div>
   </div>
 </div>
 
@@ -150,22 +130,22 @@
   <a class="card" href="/model" style="text-decoration:none;color:inherit"><div class="small-mono">Lab</div><b style="font-family:'Architects Daughter',mono;font-size:19px">Inside the model</b><div style="font-size:13px;color:#666;margin-top:5px;line-height:1.45">How the embedding is built, what it captures, and where it fails.</div></a>
 </div>
 
-<!-- LEMMINO MONOLITHS — Evidence room: 8 archetype artifacts in black fog, sweeping torch -->
+<!-- LEMMINO 2 — THE GREAT MIGRATION — 30 seasons ribbon timeline -->
 <div class="lemmino-section">
-  <div class="lemmino-monoliths" id="lemmino-monoliths">
-    <canvas id="lemmino-monoliths-canvas" width="1180" height="560" aria-label="Lemmino evidence room: eight monoliths for eight archetypes under sweeping spotlight"></canvas>
+  <div class="lemmino-drift" id="lemmino-drift">
+    <canvas id="lemmino-drift-canvas" width="1180" height="560" aria-label="Lemmino timeline: 30 seasons archetype ribbons drifting through void, prevalence as height"></canvas>
     <div class="lemmino-vignette" aria-hidden="true"></div>
     <div class="lemmino-scanline" aria-hidden="true"></div>
     <div class="lemmino-grain" aria-hidden="true"></div>
-    <div class="lemmino-chapter" style="top:18px;">
-      <div class="kicker"><i></i> EVIDENCE ROOM // 8 ARCHETYPES // PREVALENCE AS HEIGHT</div>
-      <h2>8 monoliths, <br> one for each truth <em>that survived</em></h2>
-      <p class="de">Glass+Rim, LowVol Glass, Vol+3P, Playmaking… Each monolith's height = how common that shape is across 12,966 seasons. Torch sweeps. Matte, no shine. Documentary.</p>
+    <div class="lemmino-chapter" style="top:16px">
+      <div class="kicker"><i></i> EVIDENCE TAPE // 1996→2026 // THE GREAT MIGRATION</div>
+      <h2>The game moved<br><em>— follow the ribbons</em></h2>
+      <p class="de">30 seasons as flight path. 8 archetype ribbons, height = prevalence. Glass+Rim collapses, perimeter shooting rises. Camera drifts through time — Lemmino evidence tape style.</p>
     </div>
-    <div class="lemmino-doc-label">EXHIBIT B — ARCHETYPE MONOLITHS / TUNGSTEN + COLD RIM / 16MM GRAIN</div>
+    <div class="lemmino-doc-label">EXHIBIT B — DRIFT TIMELINE / 30 SEASONS / TUNGSTEN + BEAM / 16MM GRAIN</div>
     <div class="lemmino-ui">
-      <span class="lemmino-caption" id="lemmino-mono-focus">● FOCUS: Glass+Rim — 14% prevalence</span>
-      <span class="lemmino-caption lemmino-caption--dark">CAMERA: 32MM • DOLLY 0.08 • FOG EXP2 0.028</span>
+      <span class="lemmino-caption" id="lemmino-drift-focus">● NOW: Playmaking 1999 — tracking</span>
+      <span class="lemmino-caption lemmino-caption--dark">CAMERA: DOLLY 0.12 • FOG EXP2 0.032 • RIBBONS 8</span>
     </div>
   </div>
 </div>
@@ -198,477 +178,149 @@
       </div>
     </div>
     <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:2px">
-      <a class="btn btn-primary" href="/play" id="btn-continue-streak">▶ Play daily</a>
-      <button class="btn" id="btn-share-streak" type="button">Share streak</button>
+      <a class="btn btn-primary" id="btn-continue-streak" href="/play">Play Today</a>
+      <button class="btn" id="btn-share-streak" type="button">Share Streak</button>
+      <button class="btn" id="btn-challenge" type="button">Challenge Friend</button>
     </div>
   </div>
 </div>
 
-<div id="toast" style="position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom));transform:translateX(-50%);background:#1A150F;color:#FFFEF7;border:2px solid #1A150F;border-radius:12px;padding:10px 14px;box-shadow:4px 4px 0 #1A150F;font-family:var(--mono);font-size:11px;z-index:99;display:none;max-width:min(86vw,420px);text-align:center"></div>
+<div id="toast" style="position:fixed;left:50%;bottom:94px;transform:translateX(-50%);background:#1A150F;color:#FFFEF7;font-family:var(--mono);font-size:11px;font-weight:800;padding:9px 14px;border-radius:999px;box-shadow:4px 4px 0 var(--ink);z-index:40;display:none"></div>
 
-<script src="assets/error-boundary.js"></script>
-<script src="assets/keyboard-a11y.js"></script>
-<script src="assets/site-nav.js" defer></script>
-<script src="assets/pwa-install.js"></script>
-<script src="assets/mtnn.js"></script>
-<script src="assets/viral-share.js"></script>
-<script src="assets/past-modern-game.js"></script>
 <script>
+/* Minimal viral init — keeps MJ placeholder as hero map star per request */
 (function(){
-var c=document.getElementById('sky-canvas'), fact=document.getElementById('sky-fact'), factInline=document.getElementById('sky-fact-inline'), hoverEl=document.getElementById('hover-tip'), hoverChip=document.getElementById('sky-hover-chip');
-var btnPause=document.getElementById('btn-pause'), btnReset=document.getElementById('btn-reset');
-var HERO_MJ={i:672,n:'Michael Jordan',s:'1997-98',x:0.6445,y:0.2355,z:0.316,c:7};
-var HERO_MJ_ID=672;
-var OKABE=['#0072B2','#D55E00','#009E73','#F0E442','#56B4E9','#CC79A7','#E69F00','#000000'];
-var POS_COLORS=['#0072B2','#D55E00','#009E73','#F0E442','#CC79A7'];
-var POS_LABELS=['PG','SG','SF','PF','C'];
-var ARCH=["Glass+Rim","LowVol Glass","Low Impact 3P Vol","Def Glass+Rim FT","Vol+3P Vol","3P Acc+Vol","Playmaking+Steals","Scoring Vol"];
-var W=0,H=0,dpr=1;
-var base=[], projected=[];
-var rotY=Math.PI*0.18, rotX=0.22;
-var auto=true, autoSpeed=0.00022;
-var isDragging=false, lastX=0,lastY=0, idleTimer=0;
-var lastT=0;
-var colorMode = localStorage.getItem('vh.colorMode') || 'arch';
-var posCache = new Array(13000).fill(-1);
-
-function resize(){
-  if(!c) return; var rect=c.getBoundingClientRect(); W=rect.width; H=rect.height; dpr=Math.min(devicePixelRatio||1,2.5);
-  c.width=W*dpr; c.height=H*dpr; c.style.width=W+'px'; c.style.height=H+'px';
-  var ctx=c.getContext('2d'); ctx.setTransform(dpr,0,0,dpr,0,0);
-}
-function initBase(litePlayers){
-  base=[];
-  for(var i=0;i<litePlayers.length;i++){
-    var p=litePlayers[i];
-    base.push({ox:(p.x-0.5)*2.0, oy:(p.y-0.5)*2.0, oz:(p.z-0.5)*2.0, n:p.n, s:p.s, c:p.c, i:p.i, x:p.x, y:p.y, z:p.z});
+  const HERO_MJ_ID = 672;
+  function showToast(msg, ms){
+    var t=document.getElementById('toast'); if(!t) return;
+    t.textContent=msg; t.style.display='block'; clearTimeout(t._tm); t._tm=setTimeout(function(){ t.style.display='none'; }, ms||2600);
   }
-  projected=new Array(base.length);
-}
-function projectFrame(){
-  var cy=Math.cos(rotY), sy=Math.sin(rotY), cx=Math.cos(rotX), sx=Math.sin(rotX);
-  var perspective=2.8;
-  for(var i=0;i<base.length;i++){
-    var b=base[i];
-    var xr = b.ox*cy + b.oz*sy;
-    var z1 = -b.ox*sy + b.oz*cy;
-    var yr = b.oy*cx - z1*sx;
-    var zr = b.oy*sx + z1*cx;
-    var scale = perspective / (perspective - zr*0.55);
-    var sxr = W*0.5 + xr * scale * (W*0.40);
-    var syr = H*0.5 - yr * scale * (H*0.40);
-    var depth = (zr + 1.0)*0.5;
-    var alpha = 0.22 + depth*0.78;
-    var rad = (0.8 + depth*1.9) * (W < 600 ? 0.9 : 1.0);
-    projected[i]={i:b.i,n:b.n,s:b.s,c:b.c,x:b.x,y:b.y,z:b.z,sx:sxr,sy:syr,depth:depth,alpha:alpha,rad:rad, xr:xr, yr:yr, zr:zr};
-  }
-}
-function drawStarPath(ctx, cx, cy, spikes, outerR, innerR, rot){
-  ctx.beginPath();
-  for(var i=0;i<spikes*2;i++){
-    var r = (i%2===0)?outerR:innerR;
-    var a = rot + i*Math.PI/spikes;
-    var sx = cx + Math.cos(a)*r;
-    var sy = cy + Math.sin(a)*r;
-    if(i===0) ctx.moveTo(sx,sy); else ctx.lineTo(sx,sy);
-  }
-  ctx.closePath();
-}
-function getPointColor(p){
-  if(colorMode==='pos'){
-    var idx=p.i;
-    var pc = posCache[idx];
-    if(pc===-1){
-      if(window.VHMtnn && VHMtnn.isReady()){
-        try{ var pr=VHMtnn.predictPosition(idx); if(pr) { posCache[idx]=pr.argmax; pc=pr.argmax; } }catch(e){}
-      }
-    }
-    if(pc!==undefined && pc>=0) return POS_COLORS[pc%POS_COLORS.length];
-  }
-  return OKABE[p.c%OKABE.length];
-}
-function drawOrient(){
-  var oc=document.getElementById('orient-canvas'); if(!oc) return;
-  var octx=oc.getContext('2d');
-  var Ow=oc.width, Oh=oc.height, cx=Ow/2, cy=Oh/2;
-  octx.clearRect(0,0,Ow,Oh);
-  var cyR=Math.cos(rotY), syR=Math.sin(rotY), cxR=Math.cos(rotX), sxR=Math.sin(rotX);
-  var axes=[
-    {label:'X',vec:{x:1,y:0,z:0},color:'#0072B2',name:'Paint↔Perim'},
-    {label:'Y',vec:{x:0,y:1,z:0},color:'#009E73',name:'Role→Score'},
-    {label:'Z',vec:{x:0,y:0,z:1},color:'#D55E00',name:'Off↔On'}
-  ];
-  var proj=[];
-  for(var k=0;k<axes.length;k++){
-    var ax=axes[k];
-    var xr = ax.vec.x*cyR + ax.vec.z*syR;
-    var z1 = -ax.vec.x*syR + ax.vec.z*cyR;
-    var yr = ax.vec.y*cxR - z1*sxR;
-    var zr = ax.vec.y*sxR + z1*cxR;
-    var sxr = cx + xr*24;
-    var syr = cy - yr*24;
-    proj.push({x:sxr,y:syr,z:zr,label:ax.label,color:ax.color,name:ax.name,orig:ax});
-  }
-  proj.sort(function(a,b){return a.z-b.z;});
-  for(var i=0;i<proj.length;i++){
-    var p=proj[i];
-    var alpha = 0.38 + 0.62*(p.z+1)/2;
-    octx.globalAlpha=alpha;
-    octx.strokeStyle=p.color; octx.lineWidth=2.4;
-    octx.beginPath(); octx.moveTo(cx,cy); octx.lineTo(p.x,p.y); octx.stroke();
-    octx.fillStyle=p.color; octx.beginPath(); octx.arc(p.x,p.y,3.2,0,Math.PI*2); octx.fill();
-    octx.fillStyle='#1A150F'; octx.font='900 9px ui-monospace,monospace';
-    octx.fillText(p.label, p.x+4, p.y+3);
-    var dirEl=document.getElementById('axis-'+p.label.toLowerCase()+'-dir');
-    if(dirEl){
-      var depth = p.z>0.25 ? ' out' : p.z<-0.25 ? ' in' : '';
-      dirEl.textContent = (p.z>0?'↗':'↙')+depth;
-      dirEl.style.opacity = 0.4 + alpha*0.6;
-    }
-  }
-  octx.globalAlpha=1;
-  // center dot
-  octx.fillStyle='#1A150F'; octx.beginPath(); octx.arc(cx,cy,2,0,Math.PI*2); octx.fill();
-}
-function draw(t){
-  if(!c) return;
-  var ctx=c.getContext('2d');
-  ctx.clearRect(0,0,W,H);
-  var g=ctx.createRadialGradient(W*0.7,H*0.22,0,W*0.7,H*0.22,Math.max(W,H));
-  g.addColorStop(0,'rgba(0,114,178,0.09)'); g.addColorStop(1,'rgba(0,0,0,0)');
-  ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
-  if(!projected.length) return;
-  var order=projected.slice().sort(function(a,b){return a.depth - b.depth;});
-  for(var i=0;i<order.length;i++){
-    var p=order[i];
-    ctx.globalAlpha = Math.max(0.18, Math.min(0.95, p.alpha*0.82));
-    ctx.fillStyle = getPointColor(p);
-    ctx.beginPath(); ctx.arc(p.sx,p.sy,p.rad,0,Math.PI*2); ctx.fill();
-  }
-  ctx.globalAlpha=1;
-  try{
-    // HERO placeholder: always MJ 97-98 (id 672) per request
-    var heroIdx = HERO_MJ_ID;
-    var tp = projected.find(function(pp){return pp.i===heroIdx;});
-    // fallback to daily target if MJ not in current projection (should not happen)
-    if(!tp){
-      var st = window.VHPastModern ? window.VHPastModern.state() : null;
-      if(st && st.target) tp = projected.find(function(pp){return pp.i===st.target.i;});
-    }
-    if(tp){
-        var pulse = 0.5 + 0.5*Math.sin(t*0.0024);
-        var pulse2 = 0.5 + 0.5*Math.sin(t*0.0024 + 1.3);
-        // subtle non-rainbow glow: double aura, less distracting yet distinct
-        ctx.globalAlpha = 0.12 + pulse*0.09;
-        ctx.fillStyle = '#F0E442';
-        ctx.beginPath(); ctx.arc(tp.sx, tp.sy, 22 + pulse*9, 0, Math.PI*2); ctx.fill();
-        ctx.globalAlpha = 0.18 + pulse2*0.12;
-        ctx.fillStyle = '#FFFEF7';
-        ctx.beginPath(); ctx.arc(tp.sx, tp.sy, 12 + pulse*3.5, 0, Math.PI*2); ctx.fill();
-        var outer = 11.5 + pulse*1.8;
-        var inner = 5.2 + pulse*0.9;
-        ctx.globalAlpha = 1;
-        ctx.save();
-        ctx.shadowColor = 'rgba(240,228,66,0.50)';
-        ctx.shadowBlur = 10 + pulse*7;
-        ctx.fillStyle = '#F0E442';
-        ctx.strokeStyle = '#1A150F';
-        ctx.lineWidth = 2.2;
-        drawStarPath(ctx, tp.sx, tp.sy, 5, outer, inner, -Math.PI/2 + Math.sin(t*0.0006)*0.18);
-        ctx.fill(); ctx.stroke();
-        ctx.shadowBlur = 0;
-        ctx.restore();
-        var label = tp.n+' '+tp.s;
-        ctx.font='800 11px ui-monospace,monospace';
-        var tw = ctx.measureText(label).width;
-        var padX=8;
-        var lx = tp.sx + outer + 10, ly = tp.sy - 16;
-        if(lx + tw + padX*2 > W-6) lx = tp.sx - (tw+padX*2+outer+10);
-        if(ly<12) ly = tp.sy + outer + 12;
-        ctx.fillStyle='rgba(255,254,247,0.96)'; ctx.strokeStyle='#1A150F'; ctx.lineWidth=1.6;
-        ctx.beginPath();
-        var rx=9; var rw=tw+padX*2, rh=18;
-        ctx.moveTo(lx+rx, ly-rh); ctx.lineTo(lx+rw-rx, ly-rh); ctx.quadraticCurveTo(lx+rw, ly-rh, lx+rw, ly-rh+rx); ctx.lineTo(lx+rw, ly-rx); ctx.quadraticCurveTo(lx+rw, ly, lx+rw-rx, ly); ctx.lineTo(lx+rx, ly); ctx.quadraticCurveTo(lx, ly, lx, ly-rx); ctx.lineTo(lx, ly-rh+rx); ctx.quadraticCurveTo(lx, ly-rh, lx+rx, ly-rh); ctx.closePath();
-        ctx.fill(); ctx.stroke();
-        ctx.fillStyle='#1A150F';
-        ctx.fillText(label, lx+padX, ly-5.5);
-      }
-  }catch(e){ console.warn(e); }
-  if(document.getElementById('orient-canvas')) drawOrient();
-}
-function loop(t){
-  requestAnimationFrame(loop);
-  if(!lastT) lastT=t;
-  var dt=Math.min(48, t-lastT); lastT=t;
-  if(!isDragging && auto){
-    rotY += dt*autoSpeed;
-    rotX += ( (Math.sin(t*0.00018)*0.20 - rotX)*0.018 );
-  }else if(idleTimer){
-    idleTimer-=dt;
-    if(idleTimer<=0){ auto=true; if(btnPause) btnPause.textContent='Pause'; }
-  }
-  projectFrame();
-  draw(t);
-}
-function onPointerDown(ev){
-  isDragging=true; auto=false; lastX= ev.touches?ev.touches[0].clientX:ev.clientX; lastY= ev.touches?ev.touches[0].clientY:ev.clientY;
-  if(btnPause) btnPause.textContent='Resume';
-}
-function onPointerMove(ev){
-  var x= ev.touches?ev.touches[0].clientX:ev.clientX; var y=ev.touches?ev.touches[0].clientY:ev.clientY;
-  if(isDragging){
-    var dx=x-lastX, dy=y-lastY;
-    rotY += dx*0.008; rotX += dy*0.006;
-    rotX = Math.max(-0.9, Math.min(0.9, rotX));
-    lastX=x; lastY=y;
-  } else {
-    if(!projected.length) return;
-    var rect=c.getBoundingClientRect(); var mx=x-rect.left, my=y-rect.top;
-    var best=null,bd=16; for(var i=0;i<projected.length;i++){ var p=projected[i]; var d=Math.hypot(p.sx-mx,p.sy-my); if(d<bd){bd=d; best=p;} }
-    if(best && hoverEl){
-      hoverEl.style.display='block'; hoverEl.style.left=best.sx+'px'; hoverEl.style.top=(best.sy-38)+'px';
-      var posLbl = '';
-      if(colorMode==='pos' && posCache[best.i]>=0) posLbl = ' · '+POS_LABELS[posCache[best.i]];
-      hoverEl.innerHTML='<b>'+best.n+'</b> '+best.s+'<br><span class="small-mono" style="text-transform:none">'+ARCH[best.c%ARCH.length]+posLbl+'</span>';
-      fact.textContent=best.n+' '+best.s+' — '+ARCH[best.c%ARCH.length]+posLbl;
-      if(factInline) factInline.textContent=best.n+' '+best.s+' — '+ARCH[best.c%ARCH.length];
-      if(hoverChip) hoverChip.style.opacity='0';
-    } else {
-      if(hoverEl) hoverEl.style.display='none';
-      if(hoverChip) hoverChip.style.opacity='0.7';
-    }
-  }
-}
-function onPointerUp(){ if(isDragging){ isDragging=false; idleTimer=3200; } }
-function wire(){
-  c.addEventListener('mousedown',onPointerDown); c.addEventListener('mousemove',onPointerMove); window.addEventListener('mouseup',onPointerUp);
-  c.addEventListener('touchstart',onPointerDown,{passive:true}); c.addEventListener('touchmove',onPointerMove,{passive:true}); c.addEventListener('touchend',onPointerUp);
-  c.addEventListener('mouseleave',function(){ if(hoverEl) hoverEl.style.display='none'; if(hoverChip) hoverChip.style.opacity='0.7'; });
-  var bArch=document.getElementById('btn-arch'), bPos=document.getElementById('btn-pos');
-  function setMode(m){
-    colorMode=m; localStorage.setItem('vh.colorMode',m);
-    if(bArch) bArch.classList.toggle('is-active', m==='arch');
-    if(bPos) bPos.classList.toggle('is-active', m==='pos');
-    var lbl=document.getElementById('legend-color-label');
-    var archDots=document.getElementById('arch-dots'), posDots=document.getElementById('pos-dots');
-    if(lbl) lbl.textContent = m==='pos' ? '5 positions' : '8 archetypes';
-    if(archDots) archDots.style.display = m==='arch'?'flex':'none';
-    if(posDots) posDots.style.display = m==='pos'?'flex':'none';
-  }
-  if(bArch) bArch.addEventListener('click',function(){ setMode('arch'); });
-  if(bPos) bPos.addEventListener('click',function(){ setMode('pos'); if(window.VHMtnn && VHMtnn.isReady()){ /* trigger lazy build */ } });
-  setMode(colorMode);
-}
-async function load(){
-  resize(); wire();
-  // default hero placeholder = MJ 97-98 always
-  var dn0=document.getElementById('deck-name'); if(dn0) dn0.textContent='Michael Jordan 1997-98';
-  var cp0=document.getElementById('cta-past'); if(cp0) cp0.textContent='Michael Jordan';
-  var cta0=document.getElementById('cta-primary'); if(cta0) cta0.href='/play?r='+HERO_MJ_ID;
-  var lsn0=document.getElementById('legend-star-name'); if(lsn0) lsn0.textContent='Michael Jordan 97-98';
-  var vt0=document.getElementById('viral-today'); if(vt0) vt0.textContent='Placeholder: Michael Jordan 1997-98 — daily inside';
-  var hc0=document.getElementById('sky-hover-chip'); if(hc0) hc0.textContent='★ pulsing = Michael Jordan 97-98 (placeholder)';
-  try{
-    var r=await fetch('assets/vectors_search_lite.json',{cache:'force-cache'}); var j=await r.json();
-    initBase(j.players);
-    fact.textContent=j.players.length+' seasons — drag to spin · ★ MJ 97-98';
-    if(factInline) factInline.textContent='Drag to rotate · '+j.players.length+' seasons · ★ = Michael Jordan 97-98 placeholder';
-    if(window.VHPastModern){
-      await window.VHPastModern.init();
-      if(window.VHMtnn){ try{ await VHMtnn.loadAsync(); }catch(e){} }
-      var st=window.VHPastModern.state();
-      // keep hero map locked to MJ placeholder - do not overwrite with daily
-      var vt=document.getElementById('viral-today'); if(vt) vt.textContent='Placeholder: Michael Jordan 1997-98 · Today daily: '+st.target.n+' '+st.target.s;
-      var dn=document.getElementById('deck-name'); if(dn) dn.textContent='Michael Jordan 1997-98';
-      var cp=document.getElementById('cta-past'); if(cp) cp.textContent='Michael Jordan';
-      var cta=document.getElementById('cta-primary'); if(cta) cta.href='/play?r='+HERO_MJ_ID;
-      var lsn=document.getElementById('legend-star-name'); if(lsn) lsn.textContent='Michael Jordan 97-98';
-      try{ var s=VHPastModern.getStreak(); document.getElementById('viral-streak').textContent = s.streak>0 ? '🔥 '+s.streak : 'streak 0'; }catch{}
-      setupViral(st);
-    }
-    loop(0);
-  }catch(e){ fact.textContent='loading — '+e.message; console.warn(e); }
-  window.addEventListener('resize',resize,{passive:true});
-}
-function setupViral(st){
-  try{
-    var sInfo = VHPastModern.getStreak();
-    var big = document.getElementById('streak-big');
-    var title = document.getElementById('streak-title');
-    var desc = document.getElementById('streak-desc');
-    var bestPill = document.getElementById('streak-best-pill');
-    var track = document.getElementById('streak-track');
-    var countdownWrap = document.getElementById('next-countdown');
-    if(big) big.textContent = sInfo.streak;
-    if(bestPill) bestPill.textContent = 'best '+sInfo.best;
-    if(track){
-      track.innerHTML='';
-      for(var i=0;i<7;i++){
-        var dot=document.createElement('span');
-        dot.style.cssText='width:22px;height:6px;border-radius:999px;border:1.5px solid var(--ink);display:inline-block;'+(i < sInfo.streak%7 || (sInfo.streak>=7 && i<7) ? 'background:var(--yellow);box-shadow:1px 1px 0 var(--ink)' : 'background:#fff;opacity:.55');
-        track.appendChild(dot);
-      }
-    }
-    if(sInfo.streak===0){
-      if(title) title.textContent='Start your streak';
-      if(desc) desc.textContent='Win today\'s daily before midnight UTC to start. 7 in a row = Week Warrior badge. Random spins don\'t break streak.';
-    } else if(sInfo.streak>=7){
-      if(title) title.textContent='Week Warrior! '+sInfo.streak+'🔥';
-      if(desc) desc.textContent='Insane consistency. Keep it alive — daily resets at midnight UTC. Share your streak.';
-    } else {
-      if(title) title.textContent=sInfo.streak+' day'+(sInfo.streak===1?'':'s')+' — keep it alive';
-      if(desc) desc.textContent=(7-sInfo.streak)+' more to Week Warrior. Random doesn\'t affect streak.';
-    }
-    // check if daily already won today
-    var todayKey = st.todayKey || new Date().toISOString().slice(0,10);
-    var already = false;
+  async function initViral(){
     try{
-      var raw=localStorage.getItem('vh.pastmodern.v10');
-      if(raw){ var obj=JSON.parse(raw); if(obj.day===todayKey && obj.guesses && obj.guesses.some(function(g){return g.rank===0;})) already=true; }
-    }catch(e){}
-    var countdownEl=document.getElementById('countdown-hms');
-    if(already && countdownWrap){
-      countdownWrap.style.display='block';
-      function tick(){
-        var ms=VHPastModern.msToNextDaily(); if(countdownEl) countdownEl.textContent=VHPastModern.fmtHMS(ms);
+      if(window.VHPastModern){
+        await window.VHPastModern.init();
+        if(window.VHMtnn){ try{ await VHMtnn.loadAsync(); }catch(e){} }
+        var st=window.VHPastModern.state();
+        var sInfo = VHPastModern.getStreak();
+        var big = document.getElementById('streak-big');
+        var title = document.getElementById('streak-title');
+        var desc = document.getElementById('streak-desc');
+        var bestPill = document.getElementById('streak-best-pill');
+        var track = document.getElementById('streak-track');
+        if(big) big.textContent = sInfo.streak;
+        if(bestPill) bestPill.textContent='best '+sInfo.best;
+        if(track){
+          track.innerHTML='';
+          for(var i=0;i<7;i++){
+            var dot=document.createElement('span');
+            dot.style.cssText='width:22px;height:6px;border-radius:999px;border:1.5px solid var(--ink);display:inline-block;'+(i < sInfo.streak%7 || (sInfo.streak>=7 && i<7) ? 'background:var(--yellow);box-shadow:1px 1px 0 var(--ink)' : 'background:#fff;opacity:.55');
+            track.appendChild(dot);
+          }
+        }
+        if(sInfo.streak===0){
+          if(title) title.textContent='Start your streak';
+          if(desc) desc.textContent='Win today\'s daily before midnight UTC to start. 7 in a row = Week Warrior badge. Random spins don\'t break streak.';
+        } else if(sInfo.streak>=7){
+          if(title) title.textContent='Week Warrior! '+sInfo.streak+'🔥';
+          if(desc) desc.textContent='Insane consistency. Keep it alive — daily resets at midnight UTC.';
+        } else {
+          if(title) title.textContent=sInfo.streak+' day'+(sInfo.streak===1?'':'s')+' — keep it alive';
+          if(desc) desc.textContent=(7-sInfo.streak)+' more to Week Warrior.';
+        }
+        var dn0=document.getElementById('deck-name'); if(dn0) dn0.textContent='Michael Jordan 1997-98';
+        var cp0=document.getElementById('cta-past'); if(cp0) cp0.textContent='Michael Jordan';
+        var cta0=document.getElementById('cta-primary'); if(cta0) cta0.href='/play?r='+HERO_MJ_ID;
+        var lsn0=document.getElementById('legend-star-name'); if(lsn0) lsn0.textContent='Michael Jordan 97-98';
+        var vt0=document.getElementById('viral-today'); if(vt0) vt0.textContent='12,966 stars in void — Today daily: '+st.target.n+' '+st.target.s+' — drag stars to spin';
+        var vs=document.getElementById('viral-streak'); if(vs) vs.textContent = sInfo.streak>0 ? '🔥 '+sInfo.streak : 'streak 0';
+        var rh=document.getElementById('random-hint'); if(rh) rh.textContent='Today: '+st.target.n+' '+st.target.s+' · Hero stars: MJ 97-98';
       }
-      tick(); setInterval(tick,1000);
-      var btnContinue=document.getElementById('btn-continue-streak'); if(btnContinue){ btnContinue.textContent='Done today ✓'; btnContinue.href='/play?mode=random'; }
-    }
-    // random hint - keep MJ placeholder context
-    var rh=document.getElementById('random-hint'); if(rh && st.target){ rh.textContent='Hero map: Michael Jordan 97-98 · Today daily: '+st.target.n+' '+st.target.s; }
-  }catch(e){ console.warn('setupViral', e); }
-}
-function showToast(msg, ms){
-  var t=document.getElementById('toast'); if(!t) return;
-  t.textContent=msg; t.style.display='block'; clearTimeout(t._tm); t._tm=setTimeout(function(){ t.style.display='none'; }, ms||2600);
-}
-load();
-
-if(btnPause){ btnPause.addEventListener('click',function(){ auto=!auto; this.textContent = auto?'Pause':'Resume'; if(auto) idleTimer=0; }); }
-if(btnReset){ btnReset.addEventListener('click',function(){ rotY=Math.PI*0.18; rotX=0.22; auto=true; if(btnPause) btnPause.textContent='Pause'; }); }
-
-document.getElementById('btn-share-board').addEventListener('click',async function(){
-  try{
-    var snap=document.createElement('canvas'); snap.width=c.width; snap.height=c.height; var sctx=snap.getContext('2d');
-    sctx.drawImage(c,0,0);
-    var blob=await new Promise(function(res){snap.toBlob(function(b){res(b);},'image/png');});
-    if(window.VHShare && navigator.canShare && blob){
-      var file=new File([blob],'vector-hoops-map.png',{type:'image/png'});
-      if(navigator.canShare({files:[file]})){
-        await navigator.share({title:'Vector Hoops',text:'12,966 seasons as rotating map — hoops.dumbmodel.com',files:[file]});
-        return;
-      }
-    }
-    var url=snap.toDataURL('image/png');
-    var a=document.createElement('a'); a.href=url; a.download='vector-hoops-map.png'; a.click();
-    showToast('Map image saved');
-  }catch(e){ console.warn(e); }
-});
-document.getElementById('btn-challenge').addEventListener('click',async function(){
-  try{
-    var st=window.VHPastModern? window.VHPastModern.state(): null;
-    var day= st? st.dayKey : new Date().toISOString().slice(0,10);
-    var url=location.origin+'/play?day='+day;
-    var txt='Can you find the modern twin for '+ (st? st.target.n+' '+st.target.s : 'today')+'? '+url;
-    if(navigator.clipboard) await navigator.clipboard.writeText(txt);
-    this.textContent='Copied!'; showToast('Challenge link copied — daily streak resets at midnight UTC'); setTimeout(function(el){el.textContent='Challenge';}.bind(null,this),1500);
-  }catch(e){}
-});
-var btnRandomRush=document.getElementById('btn-random-rush'); if(btnRandomRush){ /* href already random */ btnRandomRush.addEventListener('click',function(e){ /* let navigate */ }); }
-var btnCopyRandom=document.getElementById('btn-copy-random');
-if(btnCopyRandom){
-  btnCopyRandom.addEventListener('click', async function(){
-    try{
-      var st=window.VHPastModern? window.VHPastModern.state(): null;
-      var pastId = st && st.target ? st.target.i : 672;
-      var url = location.origin + '/play?r='+pastId;
-      var txt = 'Random All-Star challenge — '+ (st? st.target.n+' '+st.target.s : 'past star') +' → modern twin? '+url;
-      if(navigator.clipboard) await navigator.clipboard.writeText(txt);
-      showToast('Challenge link copied — streak-free');
-      btnCopyRandom.textContent='Copied!'; setTimeout(function(){ btnCopyRandom.textContent='Copy last link'; },1500);
-    }catch(e){ showToast('Could not copy'); }
-  });
-}
-var btnShareStreak=document.getElementById('btn-share-streak');
-if(btnShareStreak){
-  btnShareStreak.addEventListener('click', async function(){
-    try{
-      var sInfo = window.VHPastModern ? VHPastModern.getStreak() : {streak:0,best:0};
-      var txt = 'Vector Hoops — 🔥 '+sInfo.streak+' day streak (best '+sInfo.best+') — 12,966 seasons as rotating map — '+location.origin;
-      if(navigator.clipboard) await navigator.clipboard.writeText(txt);
-      showToast('Streak copied — '+sInfo.streak+'🔥');
-    }catch(e){}
-  });
-}
-// --- PACK BATTLE wiring ---
-function makePackAndGo(n){
-  try{
-    if(!window.VHPastModern || !VHPastModern.generateRandomPack){
-      location.href = '/play?pack=random&n='+n;
-      return;
-    }
-    var entries = VHPastModern.generateRandomPack(n);
-    var ids = entries.map(function(e){return e.i;});
-    var url = (VHPastModern.packChallengeUrl ? VHPastModern.packChallengeUrl(ids) : VHPastModern.packShareUrl(ids));
-    location.href = url;
-  }catch(e){
-    console.warn('pack gen fail', e);
-    location.href = '/play?pack=random&n='+n;
+    }catch(e){ console.warn('viral init', e); }
   }
-}
-document.querySelectorAll('[data-pack-hero]').forEach(function(btn){
-  btn.addEventListener('click', function(){
-    var n=parseInt(btn.getAttribute('data-pack-hero')||btn.dataset.packHero,10)||3;
-    makePackAndGo(n);
-  });
-});
-document.querySelectorAll('[data-pack-card]').forEach(function(btn){
-  btn.addEventListener('click', function(){
-    var n=parseInt(btn.getAttribute('data-pack-card')||btn.dataset.packCard,10)||3;
-    makePackAndGo(n);
-  });
-});
+  function wirePacks(){
+    function makePackAndGo(n){
+      try{
+        if(!window.VHPastModern || !VHPastModern.generateRandomPack){ location.href='/play?pack=random&n='+n; return; }
+        var entries = VHPastModern.generateRandomPack(n);
+        var ids = entries.map(function(e){return e.i;});
+        var url = (VHPastModern.packChallengeUrl ? VHPastModern.packChallengeUrl(ids) : VHPastModern.packShareUrl(ids));
+        location.href=url;
+      }catch(e){ location.href='/play?pack=random&n='+n; }
+    }
+    document.querySelectorAll('[data-pack-hero]').forEach(function(btn){ btn.addEventListener('click', function(){ makePackAndGo(parseInt(btn.getAttribute('data-pack-hero'),10)||3); }); });
+    document.querySelectorAll('[data-pack-card]').forEach(function(btn){ btn.addEventListener('click', function(){ makePackAndGo(parseInt(btn.getAttribute('data-pack-card'),10)||3); }); });
+    var bShare=document.getElementById('btn-share-board');
+    if(bShare){
+      bShare.addEventListener('click', async function(){
+        try{
+          var c=document.getElementById('sky-canvas');
+          var snap=document.createElement('canvas'); snap.width=c.width; snap.height=c.height;
+          var sctx=snap.getContext('2d'); sctx.drawImage(c,0,0);
+          var blob=await new Promise(function(res){snap.toBlob(function(b){res(b);},'image/png');});
+          if(window.VHShare && navigator.canShare && blob){
+            var file=new File([blob],'vector-hoops-map.png',{type:'image/png'});
+            if(navigator.canShare({files:[file]})){ await navigator.share({title:'Vector Hoops',text:'12,966 seasons as stars — hoops.dumbmodel.com',files:[file]}); return; }
+          }
+          var url=snap.toDataURL('image/png'); var a=document.createElement('a'); a.href=url; a.download='vector-hoops-map.png'; a.click();
+          showToast('Map image saved');
+        }catch(e){ console.warn(e); }
+      });
+    }
+    var bChallenge=document.getElementById('btn-challenge');
+    if(bChallenge){ bChallenge.addEventListener('click', async function(){
+      try{
+        var st=window.VHPastModern? window.VHPastModern.state(): null;
+        var day= st? st.dayKey : new Date().toISOString().slice(0,10);
+        var url=location.origin+'/play?day='+day;
+        var txt='Can you find the modern twin for '+ (st? st.target.n+' '+st.target.s : 'today')+'? '+url;
+        if(navigator.clipboard) await navigator.clipboard.writeText(txt);
+        this.textContent='Copied!'; showToast('Challenge link copied'); setTimeout(function(el){el.textContent='Challenge';}.bind(null,this),1500);
+      }catch(e){}
+    });}
+  }
+  wirePacks();
+  window.addEventListener('load', function(){ setTimeout(initViral, 400); });
 })();
 </script>
-<!-- Lemmino Documentary 3D — professional Three.js modules -->
+
+<!-- Lemmino 3D — professional documentary voids -->
 <script type="module">
-import { mountHeroVoid } from './assets/lemmino/hero-void.js';
-import { mountMonoliths } from './assets/lemmino/monoliths.js';
+import { mountStarMap } from './assets/lemmino/star-map-void.js';
+import { mountDriftVoid } from './assets/lemmino/drift-void.js';
 
 const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-async function initLemmino() {
-  const heroCanvas = document.getElementById('lemmino-hero-canvas');
-  const monoCanvas = document.getElementById('lemmino-monoliths-canvas');
-  if (heroCanvas) {
-    try {
-      await mountHeroVoid(heroCanvas);
-      console.log('Lemmino hero void mounted');
-    } catch (e) { console.warn('Hero void mount fail', e); }
+async function initLemmino(){
+  const starCanvas = document.getElementById('sky-canvas');
+  const driftCanvas = document.getElementById('lemmino-drift-canvas');
+  if(starCanvas){
+    try{
+      await mountStarMap(starCanvas);
+      console.log('Lemmino star-map void mounted');
+    } catch(e){ console.warn('star-map void fail', e); }
   }
-  if (monoCanvas) {
-    try {
-      const api = await mountMonoliths(monoCanvas);
-      // live label update like documentary scanner
-      const focusEl = document.getElementById('lemmino-mono-focus');
-      if (focusEl && api && api.getFocused) {
-        setInterval(() => {
-          if (prefersReduced) return;
-          try {
-            const f = api.getFocused();
-            if (f) focusEl.textContent = `● SCAN // ${f.label} — ${f.name.toUpperCase()} — ${Math.round(f.count*100)}% ARCHIVE`;
-          } catch {}
+  if(driftCanvas){
+    try{
+      const api = await mountDriftVoid(driftCanvas);
+      const focusEl = document.getElementById('lemmino-drift-focus');
+      if(focusEl && api && api.getFocused){
+        setInterval(()=>{
+          if(prefersReduced) return;
+          try{
+            const f=api.getFocused();
+            if(f) focusEl.textContent = `● NOW: ${f.label.toUpperCase()} ${f.season} — ${(f.share*100).toFixed(1)}% PREVALENCE — tracking`;
+          }catch{}
         }, 900);
       }
-    } catch (e) { console.warn('Monoliths mount fail', e); }
+      console.log('Lemmino drift void mounted');
+    } catch(e){ console.warn('drift void fail', e); }
   }
 }
 
-// defer to not block LCP
-if (document.readyState === 'complete') setTimeout(initLemmino, 400);
-else window.addEventListener('load', () => setTimeout(initLemmino, 400));
+if(document.readyState==='complete') setTimeout(initLemmino, 420);
+else window.addEventListener('load', ()=> setTimeout(initLemmino, 420));
 </script>
-<footer class="site-footer"><div class="site-footer__links"><a href="/play">Play</a><a href="/model">Lab</a><a href="/methods">Methods</a><a href="/players">Players</a><a href="https://github.com/jcdavis131/vector-hoops" target="_blank" rel="noopener">GitHub</a></div><div class="site-footer__attribution">Every number recomputable from stats.nba.com · dumbmodel.com</div></footer>
+
+<footer class="site-footer"><div class="site-footer__links"><a href="/play">Play</a><a href="/model">Lab</a><a href="/methods">Methods</a><a href="/players">Players</a><a href="https://github.com/jcdavis131/vector-hoops" target="_blank" rel="noopener">GitHub</a></div><div class="site-footer__attribution">Every number recomputable from stats.nba.com · dumbmodel.com — Lemmino voids: Three.js 0.160 matte low-poly</div></footer>
 <script>if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js').catch(()=>{})})}</script>
 </body></html>
