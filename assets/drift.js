@@ -949,7 +949,7 @@
         var btn = ev.target.closest('[data-era]');
         if (!btn) return;
         if (courtState.mode !== 'era') courtState.mode = 'era';
-        root.querySelectorAll('.court-heatmap__mode').forEach(function (b) {
+        (root || document).querySelectorAll('.court-heatmap__mode').forEach(function (b) {
           var on = (b.getAttribute('data-mode') || '') === 'era';
           b.classList.toggle('is-active', on);
           b.setAttribute('aria-selected', on ? 'true' : 'false');
@@ -962,10 +962,10 @@
       };
     }
 
-    root.querySelectorAll('.court-heatmap__mode').forEach(function (btn) {
+    (root || document).querySelectorAll('.court-heatmap__mode').forEach(function (btn) {
       btn.onclick = function () {
         courtState.mode = btn.getAttribute('data-mode') || 'diff';
-        root.querySelectorAll('.court-heatmap__mode').forEach(function (b) {
+        (root || document).querySelectorAll('.court-heatmap__mode').forEach(function (b) {
           var on = b === btn;
           b.classList.toggle('is-active', on);
           b.setAttribute('aria-selected', on ? 'true' : 'false');
@@ -974,7 +974,7 @@
       };
     });
 
-    root.querySelectorAll('.court-heatmap__mode').forEach(function (b) {
+    (root || document).querySelectorAll('.court-heatmap__mode').forEach(function (b) {
       var on = (b.getAttribute('data-mode') || '') === courtState.mode;
       b.classList.toggle('is-active', on);
       b.setAttribute('aria-selected', on ? 'true' : 'false');
