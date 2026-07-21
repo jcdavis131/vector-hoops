@@ -18,8 +18,31 @@
   var NEXT_EVAL = null;
   var MTNN_READY = false;
   var current = { slug: '', season: '' };
+  var courtMounted = null;
+  var courtModulePromise = null;
 
   function esc(s) { return window.VHDossier.escapeHtml(s); }
+
+  function ensureCourtModule() {
+    if (!courtModulePromise) {
+      courtModulePromise = import('../lemmino/player-court-skill-story.js?v=31');
+    }
+    return courtModulePromise;
+  }
+
+  function mountCourtFor(name) {
+    var root = document.getElementById('pp-court-skill-root');
+    if (!root) return;
+    root.innerHTML = '<div style="padding:18px;border:3px dashed #1A150F;border-radius:16px;font-family:ui-monospace,monospace;font-size:12px">Loading career floor + skills evolution for '+esc(name)+'...</div>';
+    ensureCourtModule().then(function(mod){
+      return mod.mountPlayerCourtStory(root, name, { skillDefs: SKILLS ? SKILLS.skills : null });
+    }).then(function(inst){
+      courtMounted = inst;
+    }).catch(function(e){
+      console.warn('court story mount fail', e);
+      root.innerHTML = '<div style="padding:12px;font-family:ui-monospace,monospace;font-size:12px;color:#666">Court story unavailable</div>';
+    });
+  }
 
   function initDom() {
     els.search = document.getElementById('skills-search');
@@ -299,6 +322,7 @@
     renderNextProfile(rec.name, current.season);
     renderPlayoffs(rec.name, current.season);
     renderMtnnNeighbors(row.i);
+    mountCourtFor(rec.name);
 
     els.profile.hidden = false;
     if (els.ppEmptyWrap) els.ppEmptyWrap.hidden = true;

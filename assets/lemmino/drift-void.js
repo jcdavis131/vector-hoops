@@ -105,7 +105,8 @@ export async function mountDriftVoid(canvas){
   if(!wrap){ wrap=document.createElement('div'); wrap.id='drift-canvas-wrap-v26'; wrap.style.cssText='position:relative;width:100%;background:#FFFEF7;display:flex;flex-direction:column'; existingCanvas.parentNode.insertBefore(wrap, existingCanvas); wrap.appendChild(existingCanvas); }
   // make canvas card
   existingCanvas.style.width='100%';
-  existingCanvas.style.height=isMobile?'560px':'580px';
+  existingCanvas.style.height=isMobile?'72vh':'84vh';
+  existingCanvas.style.minHeight=isMobile?'620px':'820px';
   existingCanvas.style.display='block';
   existingCanvas.style.background='#FFFEF7';
   existingCanvas.style.borderBottom='3px solid #1A150F';
