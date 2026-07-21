@@ -17,7 +17,7 @@ export async function mountDriftVoid(canvas){
   ];
   const POS_LABELS=['PG','SG','SF','PF','C'];
   const POS_OFF={PG:{x:-7,y:6},SG:{x:7,y:5},SF:{x:10,y:2},PF:{x:2,y:-2},C:{x:0,y:-4}};
-  const CACHE='vector-hoops-v32-20260721';
+  const CACHE='vector-hoops-v33-20260721-homefix';
   async function cachedFetchJSON(url){
     try{ if('caches' in window){ const c=await caches.open(CACHE); const hit=await c.match(url); if(hit) return await hit.json(); } }catch{}
     const r=await fetch(url,{cache:'default'});
@@ -64,6 +64,23 @@ export async function mountDriftVoid(canvas){
 
   const root=document.getElementById('lemmino-drift');
   if(root){
+    // v33 FIX: remove legacy index.html chrome that was causing the overlap in screenshot
+    try{
+      const legacyStack = root.querySelector('#drift-info-stack');
+      if(legacyStack) legacyStack.remove();
+      const legacyScrubWrap = root.querySelector('#drift-scrub-wrap');
+      if(legacyScrubWrap) legacyScrubWrap.remove();
+      // also kill any stray old controls directly under root (id drift-scrub, etc) before we create new ones
+      root.querySelectorAll(':scope > #drift-scrub, :scope > #lemmino-drift-focus, :scope > #lemmino-drift-meta, :scope > #drift-info-stack, :scope > .drift-scrub').forEach(el=>el.remove());
+      // hide any remaining old meta lingering via CSS selector
+      document.querySelectorAll('#lemmino-drift-focus, #lemmino-drift-meta').forEach(el=>{
+        if(el.closest('#drift-info-stack')) return;
+        if(el.id==='lemmino-drift-focus' && el.parentElement && el.parentElement.id==='drift-info-stack') return;
+        // if it's inside new wrapper keep, else remove
+        if(!el.closest('#drift-canvas-wrap-v26') && !el.closest('#drift-header-v26')) el.remove();
+      });
+    }catch(e){ console.warn('legacy cleanup',e); }
+
     root.style.background='#ECE7DB';
     root.style.display='flex';
     root.style.flexDirection='column';

@@ -163,21 +163,6 @@
 <div class="lemmino-section">
   <div class="lemmino-drift" id="lemmino-drift" style="background:#080A0F">
     <canvas id="lemmino-drift-canvas" width="1180" height="560" aria-label="Random all-star career arc through archetype drift"></canvas>
-    <div id="drift-info-stack">
-      <div style="background:rgba(255,254,247,0.98);border:2px solid #1A150F;border-radius:12px;padding:8px 12px;font-family:ui-monospace,monospace;font-size:11px;font-weight:800;box-shadow:3px 3px 0 #1A150F;line-height:1.35;max-width:100%">
-        <span id="lemmino-drift-focus">Loading all-star arc…</span>
-      </div>
-      <div style="background:rgba(26,21,15,0.88);color:#FFFEF7;border:2px solid #1A150F;border-radius:10px;padding:6px 9px;font-family:ui-monospace,monospace;font-size:10px;line-height:1.35;max-width:100%;width:fit-content">
-        <span id="lemmino-drift-meta">Random all-star career loops · ribbons = game prevalence · dots = rest of league</span>
-      </div>
-    </div>
-    <div class="drift-scrub" id="drift-scrub-wrap">
-      <button class="drift-ctrl" id="drift-prev" aria-label="Previous role change">⟵</button>
-      <button class="drift-ctrl" id="drift-play" aria-label="Play pause">❚❚</button>
-      <button class="drift-ctrl" id="drift-next" aria-label="Next role change">⟶</button>
-      <div class="drift-scrub-track" id="drift-scrub"><div class="drift-scrub-fill" id="drift-scrub-fill"></div></div>
-      <span style="font-family:ui-monospace,monospace;font-size:9px;color:#FFFEF7;opacity:.7;min-width:46px;text-align:right" id="drift-hint">scrub</span>
-    </div>
   </div>
 </div>
 
@@ -347,14 +332,14 @@ if(prefersReduced){
   };
 
   lazyMount('#sky-canvas', async ()=>{
-    const { mountStarMap } = await import('./assets/lemmino/star-map-void.js?v=28');
+    const { mountStarMap } = await import('./assets/lemmino/star-map-void.js?v=33');
     const c=document.getElementById('sky-canvas');
     if(c) await mountStarMap(c);
     console.log('Lemmino star-map lazy mounted — cached + paused default');
   });
 
   lazyMount('#lemmino-drift-canvas', async ()=>{
-    const { mountDriftVoid } = await import('./assets/lemmino/drift-void.js?v=32');
+    const { mountDriftVoid } = await import('./assets/lemmino/drift-void.js?v=33');
     const c=document.getElementById('lemmino-drift-canvas');
     if(c) await mountDriftVoid(c);
     console.log('Lemmino drift lazy mounted — cached + paused default');
