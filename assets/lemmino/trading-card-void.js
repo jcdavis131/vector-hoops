@@ -1,7 +1,7 @@
-/* trading-card-void.js v35 — collectible trading card for career arc + skills */
+/* trading-card-void.js v36 — collectible trading card for career arc + skills */
 export async function mountTradingCardVoid(root){
   if(!root) return;
-  const CACHE='vector-hoops-v35-20260721-trading-card';
+  const CACHE='vector-hoops-v36-20260721-target-fix';
   const OKABE=['#0072B2','#D55E00','#009E73','#F0E442','#56B4E9','#CC79A7','#E69F00','#FFFEF7'];
   const ARCH_LABELS=["Glass+Rim","LowVol Glass","Low Impact","Def Glass FT","Vol+3P","3P Acc+Vol","Playmaking","Scoring Vol"];
 
@@ -59,16 +59,16 @@ export async function mountTradingCardVoid(root){
 
   try{
     const [searchPos, skills, archTime] = await Promise.all([
-      cachedFetchJSON('assets/vectors_search_lite_pos.json?v=35'),
-      cachedFetchJSON('assets/skills.json?v=35').catch(()=>null),
-      cachedFetchJSON('assets/archetypes_time.json?v=35').catch(()=>null)
+      cachedFetchJSON('assets/vectors_search_lite_pos.json?v=36'),
+      cachedFetchJSON('assets/skills.json?v=36').catch(()=>null),
+      cachedFetchJSON('assets/archetypes_time.json?v=36').catch(()=>null)
     ]);
     SEARCH=searchPos;
     SKILLS=skills;
     ARCH_TIME=archTime;
     archNames = (ARCH_TIME && ARCH_TIME.globalArchetypes) ? ARCH_TIME.globalArchetypes : ARCH_LABELS;
     // try assignments optional
-    try{ ASSIGN = await cachedFetchJSON('assets/archetype_assignments.json?v=35'); }catch{ ASSIGN=null; }
+    try{ ASSIGN = await cachedFetchJSON('assets/archetype_assignments.json?v=36'); }catch{ ASSIGN=null; }
 
     // build byName
     for(let i=0;i<SEARCH.players.length;i++){

@@ -155,7 +155,7 @@ button,.input{min-height:44px}
     <div class="small-mono" style="margin-top:8px;opacity:.6;text-transform:none">Each slot is fixed for the day — same for everyone. No reroll on refresh. Solve 3 to stay incentivized, 5 to dominate leaderboard.</div>
   </div>
 
-  <div id="map-wrap"><canvas id="sky-canvas" width="640" height="380"></canvas><div id="map-overlay"><span class="chip" id="map-fact">12,966 seasons • ★ target past</span><span class="chip">orange rings = your guesses</span></div><div id="map-controls"><button class="chip pill" id="btn-pause" type="button">Pause</button><button class="chip pill" id="btn-reset" type="button">Reset</button></div><div id="map-legend"><div style="font-family:var(--mono);font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:900;opacity:.55;margin-bottom:4px">Map</div><div style="font-family:var(--mono);font-size:9px">Drag to orbit • ★ = past</div></div><div id="hover-tip"></div></div>
+  <div id="map-wrap"><canvas id="sky-canvas" width="640" height="380"></canvas><div id="target-badge" style="position:absolute;left:0;top:0;transform:translate(-50%,-140%);background:#F0E442;border:2.2px solid #1A150F;border-radius:999px;padding:5px 10px;font-family:ui-monospace,monospace;font-size:10px;font-weight:900;box-shadow:2px 2px 0 #1A150F;z-index:4;display:none;pointer-events:none;white-space:nowrap">★ TARGET</div><div id="map-overlay"><span class="chip" id="map-fact">12,966 seasons • ★ target past</span><span class="chip">orange rings = your guesses • yellow = target</span></div><div id="map-controls"><button class="chip pill" id="btn-pause" type="button">Pause</button><button class="chip pill" id="btn-reset" type="button">Reset</button></div><div id="map-legend"><div style="font-family:var(--mono);font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:900;opacity:.55;margin-bottom:4px">Map</div><div style="font-family:var(--mono);font-size:9px">Drag to orbit • ★ = past target (auto-centered) • yellow halo always visible</div></div><div id="hover-tip"></div></div>
 
   <!-- PACK BATTLE v2 Production UI -->
   <div class="card" id="pack-progress" style="display:none;"></div>
@@ -226,21 +226,23 @@ button,.input{min-height:44px}
   let frameCount=0;
   let modernPoolLower=[]; // precomputed lower names for fast filter
   let isTyping=false;
+  function focusOnTarget(){
+    if(_targetIdCached<0||!baseOx||!projById) return;
+    const idx=projById[_targetIdCached];
+    if(idx<0) return;
+    const ox=baseOx[idx], oy=baseOy[idx], oz=baseOz[idx];
+    const desiredRotY = -Math.atan2(ox, oz);
+    const r = Math.sqrt(ox*ox+oz*oz) || 1;
+    const desiredRotX = -Math.atan2(oy, r)*0.85;
+    rotY = desiredRotY;
+    rotX = Math.max(-0.9, Math.min(0.9, desiredRotX));
+  }
 
   function resize(){ const r=canvas.getBoundingClientRect(); if(!r.width) return; W=r.width; H=r.height; const dpr=Math.min(devicePixelRatio||1,1.25); canvas.width=W*dpr; canvas.height=H*dpr; canvas.style.width=W+'px'; canvas.style.height=H+'px'; const ctx=canvas.getContext('2d'); ctx.setTransform(dpr,0,0,dpr,0,0); }
 
   function initBase(lite){
-    const isLowEndMain = (navigator.hardwareConcurrency&&navigator.hardwareConcurrency<=4) || window.innerWidth<520;
-    // v16 low-end LOD: 6k cap to save memory + projection cost
+    // v36 fix: keep full 12966 to guarantee target visible — low-end LOD was dropping target on phones
     let filtered = lite;
-    if(isLowEndMain && lite.length>6500){
-      // keep archetype distribution: sample every 2nd + shuffle? simple stride 2
-      const step = lite.length>9000 ? 2 : 1;
-      const sampled=[];
-      for(let i=0;i<lite.length;i+=step) sampled.push(lite[i]);
-      filtered = sampled.slice(0,6000);
-      console.log('play map low-end LOD', lite.length,'->',filtered.length);
-    }
     const N=filtered.length;
     baseOx=new Float32Array(N);
     baseOy=new Float32Array(N);
@@ -330,17 +332,30 @@ button,.input{min-height:44px}
       ctx.fillStyle=OKABE[p.c%8];
       ctx.beginPath(); ctx.arc(p.sx,p.sy,p.rad,0,Math.PI*2); ctx.fill();
     }
-    // target star
+    // target star — v36 always on top, larger halo for visibility
     let tProj=null;
     if(_targetIdCached>=0 && _targetIdCached<=maxId){
       const idx=projById[_targetIdCached];
       if(idx>=0) tProj=projected[idx];
     }
     if(tProj){
-      const pulse=0.5+0.5*Math.sin(t*0.0024);
-      ctx.globalAlpha=0.12+ pulse*0.10; ctx.fillStyle='#F0E442'; ctx.beginPath(); ctx.arc(tProj.sx,tProj.sy,22+ pulse*9,0,Math.PI*2); ctx.fill();
-      ctx.globalAlpha=1; ctx.save(); ctx.shadowColor='rgba(240,228,66,0.5)'; ctx.shadowBlur=10+ pulse*7; ctx.fillStyle='#F0E442'; ctx.strokeStyle='#1A150F'; ctx.lineWidth=2.4;
-      const outer=11.5+ pulse*1.8, inner=5.2+ pulse*0.9; drawStarPath(ctx,tProj.sx,tProj.sy,5,outer,inner,-Math.PI/2+Math.sin(t*0.0006)*0.18); ctx.fill(); ctx.stroke(); ctx.shadowBlur=0; ctx.restore();
+      const pulse=0.5+0.5*Math.sin(t*0.0021);
+      // outer glow 32-48px
+      ctx.globalAlpha=0.18+ pulse*0.14; ctx.fillStyle='#F0E442'; ctx.beginPath(); ctx.arc(tProj.sx,tProj.sy,36+ pulse*18,0,Math.PI*2); ctx.fill();
+      ctx.globalAlpha=0.32+ pulse*0.20; ctx.beginPath(); ctx.arc(tProj.sx,tProj.sy,20+ pulse*10,0,Math.PI*2); ctx.fill();
+      ctx.globalAlpha=1; ctx.save(); ctx.shadowColor='rgba(240,228,66,0.85)'; ctx.shadowBlur=16+ pulse*12; ctx.fillStyle='#F0E442'; ctx.strokeStyle='#1A150F'; ctx.lineWidth=3.2;
+      const outer=16+ pulse*3.5, inner=7.8+ pulse*1.8; drawStarPath(ctx,tProj.sx,tProj.sy,5,outer,inner,-Math.PI/2+Math.sin(t*0.0005)*0.15); ctx.fill(); ctx.stroke(); ctx.shadowBlur=0; ctx.restore();
+      // badge DOM
+      const badge=document.getElementById('target-badge');
+      if(badge){
+        badge.style.display='block';
+        badge.style.left=tProj.sx+'px';
+        badge.style.top=tProj.sy+'px';
+        try{ const n=tProj.n||''; const s=tProj.s||''; badge.textContent='★ '+(n+' '+s).slice(0,30); }catch{}
+      }
+    } else {
+      const badge=document.getElementById('target-badge');
+      if(badge) badge.style.display='none';
     }
     // guesses — use direct id map, no find()
     for(let gi=0;gi<G.guesses.length;gi++){
@@ -399,7 +414,7 @@ button,.input{min-height:44px}
   function initSearchWorker(){
     try{
       if(!window.Worker) return null;
-      const w=new Worker('/assets/workers/modern-search.worker.js?v=26');
+      const w=new Worker('/assets/workers/modern-search.worker.js?v=36');
       w.onmessage=(ev)=>{
         const {type, results, id, q} = ev.data||{};
         if(type==='ready'){ workerReady=true; return; }
@@ -421,8 +436,18 @@ button,.input{min-height:44px}
       const st=VHPastModern.state();
       const pool=st.modernPool; if(!pool||!pool.length) return [];
       const lowers=modernPoolLower.length===pool.length?modernPoolLower:pool.map(m=>m.n.toLowerCase());
-      const out=[]; for(let i=0;i<pool.length && out.length<8;i++){ if(lowers[i].indexOf(q)!==-1) out.push(pool[i]); }
-      return out;
+      // score: startsWith = 0, early index = 1, later = 2
+      const scored=[];
+      for(let i=0;i<pool.length;i++){
+        const low=lowers[i]||'';
+        const idx=low.indexOf(q);
+        if(idx===-1) continue;
+        const score = idx===0 ? 0 : (idx<=2?1:2);
+        scored.push({m:pool[i], score, idx});
+        if(scored.length>64) break;
+      }
+      scored.sort((a,b)=> a.score-b.score || a.idx-b.idx || a.m.n.localeCompare(b.m.n));
+      return scored.slice(0,8).map(x=>x.m);
     }catch{ return []; }
   }
 
@@ -433,7 +458,7 @@ button,.input{min-height:44px}
 
     function render(list){
       last=list;
-      if(!list.length){ ul.style.display='none'; return; }
+      if(!list.length){ ul.style.display='none'; active=-1; return; }
       ul.textContent='';
       const frag=document.createDocumentFragment();
       for(let i=0;i<list.length;i++){
@@ -450,37 +475,45 @@ button,.input{min-height:44px}
       ul.style.display='block';
     }
 
-    // worker render callback bridge
-    function renderViaWorker(q){
+    function searchAndRender(q){
+      const results=filteredModern(q);
+      render(results);
+      // optional worker enhancement — never blocks main search
       if(searchWorker && workerReady){
-        workerSeq++; lastWorkerId=workerSeq;
-        searchWorker.__renderCb = (results)=>{ render(results); last=results; };
-        searchWorker.postMessage({type:'search', payload:{q, id: lastWorkerId}});
-      } else {
-        render(filteredModern(q));
+        try{
+          workerSeq++; lastWorkerId=workerSeq;
+          searchWorker.__renderCb = (wResults)=>{
+            if(wResults && wResults.length) {
+              // merge worker results only if main found nothing, else keep main (more reliable)
+              if(!results.length) render(wResults);
+            }
+          };
+          searchWorker.postMessage({type:'search', payload:{q, id: lastWorkerId}});
+        }catch{}
       }
     }
 
-    input.addEventListener('focus', function(){ isTyping=true; auto=false; mapPaused=true; ensureModernLower(); try{ window.dispatchEvent(new CustomEvent('vh:pause-maps')); }catch{} });
+    input.addEventListener('focus', function(){ isTyping=true; auto=false; mapPaused=true; ensureModernLower(); try{ window.dispatchEvent(new CustomEvent('vh:pause-maps')); }catch{} setTimeout(()=>searchAndRender(this.value),30); });
     input.addEventListener('blur', function(){ setTimeout(()=>{ isTyping=false; mapPaused=false; lastT=0; try{ window.dispatchEvent(new CustomEvent('vh:resume-maps')); }catch{} }, 350); });
     input.addEventListener('input', function(){
       active=-1;
       const val=this.value;
       clearTimeout(debounceTimer);
-      debounceTimer=setTimeout(()=>{ renderViaWorker(val); }, 80);
+      debounceTimer=setTimeout(()=>{ searchAndRender(val); }, 45);
     });
+    input.addEventListener('click', function(){ if(this.value) searchAndRender(this.value); });
     input.addEventListener('keydown',function(e){
-      if(ul.style.display==='none' && e.key!=='ArrowDown' && e.key!=='ArrowUp') return;
+      if(ul.style.display==='none' && e.key!=='ArrowDown' && e.key!=='ArrowUp') { if(e.key==='Enter' && last.length===1){ e.preventDefault(); input.value=last[0].n; ul.style.display='none'; doGuess(); } return; }
       if(e.key==='ArrowDown'){ e.preventDefault(); active=Math.min(active+1,last.length-1); render(last); }
       else if(e.key==='ArrowUp'){ e.preventDefault(); active=Math.max(active-1,0); render(last); }
       else if(e.key==='Enter'){ if(active>=0&&last[active]){ e.preventDefault(); input.value=last[active].n; ul.style.display='none'; doGuess(); } else if(last.length===1){ e.preventDefault(); input.value=last[0].n; ul.style.display='none'; doGuess(); } }
-      else if(e.key==='Escape'){ ul.style.display='none'; }
+      else if(e.key==='Escape'){ ul.style.display='none'; active=-1; }
     });
     ul.addEventListener('click',function(e){
       const li=e.target.closest('li'); if(!li) return;
-      const i=parseInt(li.dataset.i,10); if(!isNaN(i)&&last[i]){ input.value=last[i].n; ul.style.display='none'; isTyping=false; doGuess(); }
+      const i=parseInt(li.dataset.i,10); if(!isNaN(i)&&last[i]){ input.value=last[i].n; ul.style.display='none'; active=-1; isTyping=false; doGuess(); }
     });
-    document.addEventListener('click',function(e){ if(!ul.contains(e.target)&&e.target!==input) ul.style.display='none'; });
+    document.addEventListener('click',function(e){ if(!ul.contains(e.target)&&e.target!==input) { ul.style.display='none'; active=-1; } });
   }
   function dailyKey(){ try{ return VHPastModern.state().dayKey; }catch{ return new Date().toISOString().slice(0,10); } }
   function dailySlotKey(dayKey,slot){ return `vh.daily.v2.${dayKey}.slot${slot}`; }
@@ -862,6 +895,7 @@ button,.input{min-height:44px}
     const archPill=$('#past-arch-pill'); if(archPill) archPill.textContent=archLabel;
     const slotPill=$('#past-slot-pill'); if(slotPill) slotPill.textContent=modeLabel;
     const xyz=$('#past-xyz'); if(xyz){ xyz.textContent=''; xyz.style.display='none'; }
+    try{ focusOnTarget(); projectFrame(); draw(); }catch{}
     if(st.isPack){
       const ps=VHPastModern.getPackState();
       $('#puzzle-pill').textContent=`PACK ${ps.index+1}/${ps.size}`;
@@ -1014,11 +1048,14 @@ button,.input{min-height:44px}
     canvas.addEventListener('touchstart',onDown,{passive:true}); canvas.addEventListener('touchmove',onMove,{passive:true}); canvas.addEventListener('touchend',onUp);
     canvas.addEventListener('mouseleave',()=>{ if(hoverEl) hoverEl.style.display='none'; });
     $('#btn-pause').addEventListener('click',function(){ auto=!auto; this.textContent=auto?'Pause':'Resume'; });
-    $('#btn-reset').addEventListener('click',()=>{ rotY=Math.PI*0.18; rotX=0.22; auto=true; $('#btn-pause').textContent='Pause'; });
+    $('#btn-reset').addEventListener('click',()=>{ try{ focusOnTarget(); }catch{ rotY=Math.PI*0.18; rotX=0.22; } auto=false; const b=$('#btn-pause'); if(b) b.textContent='Resume'; projectFrame(); draw(); });
 
     await VHPastModern.init();
     const st=VHPastModern.state();
-    initBase(st.searchLite.players); projectFrame(); draw(); loop(0);
+    initBase(st.searchLite.players); 
+    // focus camera on target before first projection so star starts centered
+    try{ focusOnTarget(); }catch{}
+    projectFrame(); draw(); loop(0);
 
     // v16 worker + cache embed: offload search
     try{

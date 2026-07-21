@@ -1,4 +1,4 @@
-/* modern-search.worker.js v16 — offload filteredModern to worker to unblock typing */
+/* modern-search.worker.js v36 — offload filteredModern to worker to unblock typing */
 let names=[]; // lowercased
 let pool=[]; // {n,s,i,c}
 self.onmessage = function(e){
