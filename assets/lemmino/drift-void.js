@@ -23,10 +23,10 @@ export async function mountDriftVoid(canvas){
   scene.add(new THREE.AmbientLight(0xFFFFFF,1.0));
   const key=new THREE.DirectionalLight(0xFFFFFF,0.72); key.position.set(6,10,8); scene.add(key);
 
-  const grid=new THREE.GridHelper(42, 21, 0xDAD5CA, 0xEDE8DC); grid.position.y=-3.55; scene.add(grid);
+  // #2 career arc map: only X/Y/Z axes — remove GridHelper extra lines per request 2026-07-20
   { const g=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-18.8,-3.53,0), new THREE.Vector3(18.8,-3.53,0)]); scene.add(new THREE.Line(g,new THREE.LineBasicMaterial({color:0x1A150F}))); }
-  { const g=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-18.8,-3.53,0), new THREE.Vector3(-18.8,9.2,0)]); scene.add(new THREE.Line(g,new THREE.LineBasicMaterial({color:0x1A150F, transparent:true, opacity:0.22}))); }
-  { const g=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-18.8,-3.53,-3), new THREE.Vector3(-18.8,-3.53,3.6)]); scene.add(new THREE.Line(g,new THREE.LineBasicMaterial({color:0x1A150F, transparent:true, opacity:0.18}))); }
+  { const g=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-18.8,-3.53,0), new THREE.Vector3(-18.8,9.2,0)]); scene.add(new THREE.Line(g,new THREE.LineBasicMaterial({color:0x1A150F, transparent:true, opacity:0.85}))); }
+  { const g=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-18.8,-3.53,-3), new THREE.Vector3(-18.8,-3.53,3.6)]); scene.add(new THREE.Line(g,new THREE.LineBasicMaterial({color:0x1A150F, transparent:true, opacity:0.85}))); }
 
   const CACHE_NAME='vector-hoops-v27-20260720-ltr-search-fix2';
   async function cachedFetchJSON(url){
