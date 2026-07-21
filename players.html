@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="assets/responsive.css"/>
 <link rel="stylesheet" href="assets/final-qa.css"/>
 <link rel="stylesheet" href="assets/unified.css"/>
+<link rel="stylesheet" href="assets/player-profile-v28.css?v=28"/>
 
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://hoops.dumbmodel.com/players">
@@ -53,19 +54,68 @@
 
   <section class="card" id="players-panel-profile" role="tabpanel" hidden>
     <div class="skills-panel">
-      <h2 class="hd" style="font-size:20px;margin:0">Player profile</h2>
-      <input class="input" id="skills-search" type="text" placeholder="Search a player name…" autocomplete="off" disabled>
-      <ul class="skills-suggest" id="skills-suggest"></ul>
-      <div id="skills-profile" hidden>
-        <p class="skills-player-meta" id="skills-player-meta"></p>
-        <div class="skills-seasons" id="skills-seasons" role="tablist" aria-label="Season"></div>
-        <div class="vh-skill-badges" id="skills-badges"></div>
-        <ul class="skillbar-list" id="skills-bars"></ul>
-        <div id="skills-next-profile" hidden></div>
-        <div id="skills-mtnn" hidden></div>
-        <div id="skills-playoffs" hidden></div>
+      <div class="pp-search-wrap">
+        <div class="pp-search-top">
+          <input class="input" id="skills-search" type="text" placeholder="Search 12,966 seasons — try Curry, Jokic, Wemby…" autocomplete="off" disabled>
+          <button class="pp-btn pp-btn--yellow" id="pp-random" type="button" title="Surprise me">🎲 Random</button>
+        </div>
+        <div class="pp-quick-row" id="pp-quick-row">
+          <span class="pp-quick-label">Try:</span>
+          <button class="pp-quick-chip" data-q="Victor Wembanyama">Wemby</button>
+          <button class="pp-quick-chip" data-q="Stephen Curry">Curry</button>
+          <button class="pp-quick-chip" data-q="Nikola Jokic">Jokic</button>
+          <button class="pp-quick-chip" data-q="LeBron James">LeBron</button>
+          <button class="pp-quick-chip" data-q="Giannis Antetokounmpo">Giannis</button>
+          <button class="pp-quick-chip" data-q="Luka Doncic">Luka</button>
+        </div>
+        <ul class="skills-suggest" id="skills-suggest"></ul>
       </div>
-      <p style="font-size:13px;color:#666;margin:0" id="skills-empty">Pick a player to see skill profile, season by season — including next-season predicted vs actual when following year is charted. Try “Curry”, “Smart”, or “Jokic”.</p>
+
+      <div id="skills-profile" hidden>
+        <div class="pp-shell" id="pp-shell">
+          <div class="pp-hero" id="pp-hero">
+            <div class="pp-name-row">
+              <h2 class="pp-name" id="pp-name">Victor Wembanyama</h2>
+              <span class="pp-grade-mega" id="pp-mega"><b>99</b> ×6</span>
+            </div>
+            <p class="skills-player-meta pp-meta-line" id="skills-player-meta"></p>
+            <div class="skills-seasons pp-seasons" id="skills-seasons" role="tablist" aria-label="Season"></div>
+            <div class="pp-rarity-row" id="pp-rarity"></div>
+          </div>
+
+          <div class="pp-section">
+            <div class="pp-section-head">Elite badges — 90+ era-normalized</div>
+            <div class="vh-skill-badges pp-badges-grid" id="skills-badges"></div>
+          </div>
+
+          <div class="pp-section">
+            <div class="pp-section-head">Skill grades — 0-99 vs league that year</div>
+            <ul class="skillbar-list pp-skills-grid" id="skills-bars"></ul>
+          </div>
+
+          <div id="pp-wide-wrap"></div>
+          <div id="skills-next-profile" hidden></div>
+          <div id="skills-mtnn" hidden></div>
+          <div id="skills-playoffs" hidden></div>
+
+          <div class="pp-discover" id="pp-discover">
+            <h3 class="pp-discover__title">Keep pulling cards</h3>
+            <p class="pp-discover__sub">Every season is era-normalized. Seen Wemby? See how Chet, Shaq, or Curry compare.</p>
+            <div class="pp-discover__row" id="pp-discover-row">
+              <button class="pp-discover__chip" data-q="Chet Holmgren">Chet Holmgren</button>
+              <button class="pp-discover__chip" data-q="Shaquille O'Neal">Shaq</button>
+              <button class="pp-discover__chip" data-q="Anthony Davis">AD</button>
+              <button class="pp-discover__chip" data-q="Kevin Durant">KD</button>
+              <button class="pp-discover__chip" data-q="Draymond Green">Draymond</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="pp-empty" style="margin-top:10px">
+        <p style="font-size:13px;color:#666;margin:0" id="skills-empty">Pick a player to see skill profile, season by season — including next-season predicted vs actual when following year is charted. Try “Curry”, “Smart”, or “Jokic”.</p>
+        <div class="pp-featured" id="pp-featured"></div>
+      </div>
     </div>
   </section>
 
@@ -97,10 +147,10 @@
 <script src="assets/keyboard-a11y.js"></script>
 <script src="assets/site-nav.js" defer></script>
 <script src="assets/pwa-install.js"></script>
-<script src="assets/dossier.js"></script>
-<script src="assets/player-roster.js"></script>
-<script src="assets/players-directory.js"></script>
-<script src="assets/players-skills.js"></script>
-<script src="assets/players-page.js"></script>
+<script src="assets/dossier.js?v=28"></script>
+<script src="assets/player-roster.js?v=28"></script>
+<script src="assets/players-directory.js?v=28"></script>
+<script src="assets/players-skills.js?v=28"></script>
+<script src="assets/players-page.js?v=28"></script>
 <script>if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js').catch(()=>{})})}</script>
 </body></html>

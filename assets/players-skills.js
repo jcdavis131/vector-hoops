@@ -1,20 +1,21 @@
-/* Player References — skill profiles and leaderboards */
+/* Player References — skill profiles and leaderboards — v28 collectible */
 (function (global) {
   'use strict';
 
   var POSITIONS = ['PG', 'SG', 'SF', 'PF', 'C'];
   var MAX_SUGGEST = 8;
   var BOARD_ROWS = 20;
+  var FEATURED = ['Victor Wembanyama','Nikola Jokic','Stephen Curry','LeBron James','Giannis Antetokounmpo','Luka Doncic','Kevin Durant','Joel Embiid'];
 
   var els = {};
-  var DATA = null;    // vectors.json
-  var SKILLS = null;  // skills.json
-  var INDEX = {};     // slug -> { name, rows: [{ i, season }] }
-  var ORDER = [];     // slugs sorted by name
-  var PEDIGREE = null; // assets/pedigree.json (optional; false if absent)
-  var WIDE = null;     // assets/skills_wide.json (optional; false if absent)
-  var ARCH_ASSIGN = null; // assets/archetype_assignments.json (optional)
-  var NEXT_EVAL = null; // assets/next_profile_eval.json (optional; false if absent)
+  var DATA = null;
+  var SKILLS = null;
+  var INDEX = {};
+  var ORDER = [];
+  var PEDIGREE = null;
+  var WIDE = null;
+  var ARCH_ASSIGN = null;
+  var NEXT_EVAL = null;
   var MTNN_READY = false;
   var current = { slug: '', season: '' };
 
@@ -35,6 +36,17 @@
     els.boardSkill = document.getElementById('board-skill');
     els.boardSeason = document.getElementById('board-season');
     els.board = document.getElementById('skills-board');
+    // v28
+    els.ppName = document.getElementById('pp-name');
+    els.ppMega = document.getElementById('pp-mega');
+    els.ppRarity = document.getElementById('pp-rarity');
+    els.ppFeatured = document.getElementById('pp-featured');
+    els.ppEmptyWrap = document.getElementById('pp-empty');
+    els.ppRandom = document.getElementById('pp-random');
+    els.ppQuickRow = document.getElementById('pp-quick-row');
+    els.ppDiscoverRow = document.getElementById('pp-discover-row');
+    els.ppWideWrap = document.getElementById('pp-wide-wrap');
+    els.ppShell = document.getElementById('pp-shell');
   }
 
   function buildIndex() {
@@ -69,7 +81,6 @@
     });
   }
 
-  // Prepend wide-skill board modes once skills_wide.json lands.
   function addWideBoardModes() {
     if (!WIDE || els.boardSkill.querySelector('option[value^="wide:"]')) return;
     var group = document.createElement('optgroup');
@@ -83,7 +94,6 @@
     els.boardSkill.appendChild(group);
   }
 
-  // Prepend the Draft Steals/Busts board modes once pedigree data lands.
   function addDraftBoardModes() {
     if (!PEDIGREE || els.boardSkill.querySelector('option[value="steal"]')) return;
     [['bust', '★ Draft Busts'], ['steal', '★ Draft Steals']].forEach(function (o) {
@@ -95,41 +105,29 @@
     renderBoard();
   }
 
-  // ---- wide (masked) skills: post / transition / motor, 2015-16+ ----
   function wideGrades(name, season) {
     if (!WIDE) return null;
     return WIDE.grades[name + '|' + season] || null;
   }
 
-  function wideBarsHtml(name, season) {
-    if (!WIDE) return '';
-    var wg = wideGrades(name, season);
-    var head = '<li class="skillbar skillbar--widehead"><span class="skillbar__label">' +
-      'Tracking skills</span><span></span><span></span></li>';
-    if (!wg) {
-      return head + '<li class="skillbar"><span class="skillbar__label">' +
-        'Post · Transition · Motor · Gravities</span>' +
-        '<span class="skillbar__track"></span>' +
-        '<span class="skillbar__grade skillbar__grade--na" title="synergy + hustle tracking begins 2015-16">n/a</span></li>';
-    }
-    return head + WIDE.skills.map(function (sk) {
-      var g = wg[sk.key];
-      var cls = g >= WIDE.badgeGrade ? ' is-elite' : g >= 75 ? ' is-strong' : '';
-      return '<li class="skillbar" title="' + esc(sk.badge) + '">' +
-        '<span class="skillbar__label">' + esc(sk.label) + '</span>' +
-        '<span class="skillbar__track"><span class="skillbar__fill' + cls +
-        '" style="width:' + Math.max(g, 2) + '%"></span></span>' +
-        '<span class="skillbar__grade">' + g + '</span></li>';
-    }).join('');
+  function gradeTier(g) {
+    if (g >= 97) return { pill: 'pp-skill__grade--gold', fill: 'pp-skill__fill--gold', badge: 'pp-badge--gold', label: 'ELITE' };
+    if (g >= 90) return { pill: 'pp-skill__grade--blue', fill: '', badge: 'pp-badge--elite', label: 'ELITE' };
+    if (g >= 75) return { pill: 'pp-skill__grade--green', fill: '', badge: '', label: 'STRONG' };
+    if (g >= 60) return { pill: 'pp-skill__grade--mid', fill: '', badge: '', label: 'AVG' };
+    return { pill: 'pp-skill__grade--low', fill: '', badge: '', label: 'LOW' };
   }
 
-  // ---- profile ----
-
-  function gradeClass(g) {
-    if (g >= SKILLS.badgeGrade) return ' is-elite';
-    if (g >= 75) return ' is-strong';
-    return '';
+  function archetypeDotColor(name) {
+    var n = (name||'').toLowerCase();
+    if (n.indexOf('rim')>=0 || n.indexOf('glass')>=0) return '#D55E00';
+    if (n.indexOf('shoot')>=0 || n.indexOf('sniper')>=0) return '#0072B2';
+    if (n.indexOf('playmaker')>=0 || n.indexOf('general')>=0) return '#009E73';
+    if (n.indexOf('motor')>=0 || n.indexOf('pressure')>=0) return '#CC79A7';
+    return '#1A150F';
   }
+
+  // ---- profile v28 ----
 
   function renderProfile() {
     var rec = INDEX[current.slug];
@@ -143,409 +141,297 @@
     var grades = SKILLS.grades[row.i];
 
     var pos = typeof p.p === 'number' && POSITIONS[p.p] ? POSITIONS[p.p] : '?';
-    var arch = typeof p.c === 'number' && DATA.clusters[p.c] ? DATA.clusters[p.c] : '';
-    var eraLine = '';
+    var arch = typeof p.c === 'number' && DATA.clusters && DATA.clusters[p.c] ? DATA.clusters[p.c] : '';
+    var eraTags = [];
+    var eraNative = '';
     if (ARCH_ASSIGN && ARCH_ASSIGN.assignments && ARCH_ASSIGN.assignments[row.i]) {
       var aa = ARCH_ASSIGN.assignments[row.i];
-      var tagLabels = ARCH_ASSIGN.tagLabels || {};
-      if (aa.eraNativeName) {
-        eraLine = ' &middot; <span class="skills-era-arch" title="Era-native MTNN cluster">' +
-          esc(aa.eraNativeName) + '</span>';
-      }
-      if (aa.eraTags && aa.eraTags.length) {
-        eraLine += ' &middot; ' + aa.eraTags.map(function (t) {
-          return '<span class="skills-era-tag">' + esc(tagLabels[t] || t) + '</span>';
-        }).join(' ');
-      }
+      if (aa.eraNativeName) eraNative = aa.eraNativeName;
+      if (aa.eraTags && aa.eraTags.length) eraTags = aa.eraTags;
     }
-    els.meta.innerHTML = '<b>' + esc(rec.name) + '</b> &middot; ' + esc(current.season) +
-      ' &middot; ' + esc(pos) + (arch ? ' &middot; ' + esc(arch) : '') + eraLine;
 
+    // hero name + mega
+    if (els.ppName) els.ppName.textContent = rec.name;
+    var count99 = 0, count97 = 0, count90 = 0, sum = 0;
+    for (var gg=0; gg<grades.length; gg++) {
+      sum+=grades[gg];
+      if (grades[gg]>=99) count99++;
+      if (grades[gg]>=97) count97++;
+      if (grades[gg]>=90) count90++;
+    }
+    var avg = Math.round(sum/grades.length);
+    var wg = wideGrades(rec.name, current.season);
+    var wCount99 = 0;
+    if (wg) {
+      Object.keys(wg).forEach(function(k){ if (wg[k]>=99) wCount99++; });
+    }
+    var total99 = count99 + wCount99;
+    if (els.ppMega) {
+      if (total99>0) els.ppMega.innerHTML = '<b>'+total99+'</b> × 99';
+      else if (count97>0) els.ppMega.innerHTML = '<b>'+count97+'</b> × 97+';
+      else if (count90>0) els.ppMega.innerHTML = count90+'× 90+';
+      else els.ppMega.textContent = 'AVG '+avg;
+      els.ppMega.title = count99+' grades at 99, '+count90+' at 90+, avg '+avg;
+    }
+
+    // meta pills
+    var metaHtml = '';
+    metaHtml += '<span class="pp-meta-pill"><span class="kdot" style="background:#1A150F"></span>'+esc(current.season)+'</span>';
+    metaHtml += '<span class="pp-meta-pill">'+esc(pos)+'</span>';
+    if (arch) {
+      var dot = archetypeDotColor(arch);
+      metaHtml += '<span class="pp-meta-pill pp-meta-pill--arch"><span class="kdot" style="background:'+dot+'"></span>'+esc(arch)+'</span>';
+    }
+    if (eraNative) metaHtml += '<span class="pp-meta-pill" title="Era-native MTNN cluster">'+esc(eraNative)+'</span>';
+    eraTags.forEach(function(t){
+      var label = (ARCH_ASSIGN.tagLabels && ARCH_ASSIGN.tagLabels[t]) || t;
+      metaHtml += '<span class="pp-meta-pill" style="background:#FFFEF7">'+esc(label)+'</span>';
+    });
+    els.meta.innerHTML = metaHtml;
+
+    // seasons
     els.seasons.innerHTML = rec.rows.map(function (rr) {
+      var isActive = rr.season === current.season;
       return '<button type="button" role="tab" data-season="' + esc(rr.season) + '"' +
-        (rr.season === current.season ? ' class="is-active" aria-selected="true"' : ' aria-selected="false"') +
-        '>' + esc(rr.season.slice(2)) + '</button>';
+        (isActive ? ' class="is-active" aria-selected="true"' : ' aria-selected="false"') +
+        '>' + esc(rr.season) + '</button>';
     }).join('');
 
+    // rarity row
+    var rarityHtml = '';
+    if (total99 >= 4) {
+      rarityHtml += '<span class="pp-rarity pp-rarity--gold"><b>'+total99+'× 99</b> — rarer than 0.3% of seasons in 12,966 charted. Collector card.</span>';
+    } else if (total99 >= 1) {
+      rarityHtml += '<span class="pp-rarity pp-rarity--gold"><b>'+total99+'× 99</b> — top 1% that year. Elite signature.</span>';
+    } else if (count90 >= 5) {
+      rarityHtml += '<span class="pp-rarity pp-rarity--blue"><b>'+count90+'× 90+</b> — two-way star, 88th+ percentile across era.</span>';
+    } else if (count90 >= 1) {
+      rarityHtml += '<span class="pp-rarity"><b>'+count90+'× 90+</b> — has an elite skill. Average '+avg+'.</span>';
+    } else {
+      rarityHtml += '<span class="pp-rarity">Avg <b>'+avg+'</b> — role specialist. No 90+ this season.</span>';
+    }
+    // Add tracking hint
+    if (!wg) {
+      rarityHtml += '<span class="pp-rarity">No tracking stats pre 2015-16.</span>';
+    }
+    if (els.ppRarity) els.ppRarity.innerHTML = rarityHtml;
+
+    // badges grid — 90+
     var badges = [];
     SKILLS.skills.forEach(function (sk, j) {
-      if (grades[j] >= SKILLS.badgeGrade) {
-        badges.push('<span class="vh-skill-badge' +
-          (grades[j] >= SKILLS.goldGrade ? ' vh-skill-badge--gold' : '') + '">' +
-          esc(sk.badge) + ' ' + grades[j] + '</span>');
+      var g = grades[j];
+      if (g >= SKILLS.badgeGrade) {
+        var tier = gradeTier(g);
+        badges.push({ label: sk.badge, grade: g, tier: tier, key: sk.key });
       }
     });
-    var wg = wideGrades(rec.name, current.season);
-    if (wg) WIDE.skills.forEach(function (sk, j) {
-      if (wg[sk.key] >= WIDE.badgeGrade) {
-        badges.push('<span class="vh-skill-badge' +
-          (wg[sk.key] >= WIDE.goldGrade ? ' vh-skill-badge--gold' : '') + '">' +
-          esc(sk.badge) + ' ' + wg[sk.key] + '</span>');
-      }
-    });
-    els.badges.innerHTML = badges.length ? badges.join('') :
-      '<span class="vh-skill-badge vh-skill-badge--muted">No 90+ badges this season</span>';
+    if (wg) {
+      WIDE.skills.forEach(function (sk) {
+        var g = wg[sk.key];
+        if (g >= WIDE.badgeGrade) {
+          var tier = gradeTier(g);
+          badges.push({ label: sk.badge, grade: g, tier: tier, key: 'wide:'+sk.key, wide:true });
+        }
+      });
+    }
+    badges.sort(function(a,b){ return b.grade - a.grade; });
+    if (!badges.length) {
+      els.badges.innerHTML = '<div class="pp-badge pp-badge--muted"><div class="pp-badge__top"><span class="pp-badge__name">No 90+ badges this season</span><span class="pp-badge__grade" style="background:#EEE8D9">—</span></div><div class="pp-badge__bar" style="opacity:.4"><div class="pp-badge__fill" style="width:12%;background:#ccc"></div></div></div>';
+    } else {
+      els.badges.innerHTML = badges.map(function(b){
+        var fillW = Math.max(b.grade, 8);
+        var fillColor = b.grade>=97 ? '#1A150F' : b.grade>=90 ? '#0072B2' : b.grade>=75 ? '#009E73' : '#999';
+        if (b.wide) fillColor = '#D55E00';
+        return '<div class="pp-badge '+(b.tier.badge||'')+(b.wide?' pp-skill--wide':'')+'" title="'+esc(b.label)+' '+b.grade+'">' +
+          '<div class="pp-badge__top"><span class="pp-badge__name">'+esc(b.label)+'</span><span class="pp-badge__grade '+(b.tier.pill||'')+'">'+b.grade+'</span></div>' +
+          '<div class="pp-badge__bar"><div class="pp-badge__fill" style="width:'+fillW+'%;background:'+fillColor+'"></div></div>' +
+          '</div>';
+      }).join('');
+    }
 
+    // skill bars — main 12
     var barsHtml = SKILLS.skills.map(function (sk, j) {
       var g = grades[j];
-      return '<li class="skillbar" title="' + esc(sk.badge) + '">' +
-        '<span class="skillbar__label">' + esc(sk.label) + '</span>' +
-        '<span class="skillbar__track"><span class="skillbar__fill' + gradeClass(g) +
-        '" style="width:' + Math.max(g, 2) + '%"></span></span>' +
-        '<span class="skillbar__grade">' + g + '</span>' +
+      var tier = gradeTier(g);
+      var fillColor = g>=97 ? '#1A150F' : g>=90 ? '#0072B2' : g>=75 ? '#009E73' : g>=60 ? '#6B665E' : '#C9C2B4';
+      var pct = Math.max(g, 4);
+      var subtitle = esc(sk.badge);
+      var footLeft = subtitle;
+      var footRight = g>=90 ? 'ELITE' : g>=75 ? 'STRONG' : g>=60 ? 'AVG' : 'LOW';
+      return '<li class="pp-skill">' +
+        '<div class="pp-skill__head"><span class="pp-skill__label">'+esc(sk.label)+'</span><span class="pp-skill__grade '+tier.pill+'">'+g+'</span></div>' +
+        '<div class="pp-skill__track"><div class="pp-skill__fill '+tier.fill+'" style="width:'+pct+'%;background:'+fillColor+'"></div></div>' +
+        '<div class="pp-skill__foot"><span>'+footLeft+'</span><span>'+footRight+'</span></div>' +
         '</li>';
     }).join('');
-    barsHtml += wideBarsHtml(rec.name, current.season);
     els.bars.innerHTML = barsHtml;
+
+    // wide tracking section
+    if (els.ppWideWrap) {
+      if (!WIDE) {
+        els.ppWideWrap.innerHTML = '';
+      } else if (!wg) {
+        els.ppWideWrap.innerHTML = '<div class="pp-section pp-wide-head"><div class="pp-section-head">Tracking skills — post / transition / motor</div><div class="pp-rarity">No tracking grades — synergy + hustle begins 2015-16.</div></div>';
+      } else {
+        var wideHtml = '<div class="pp-section pp-wide-head"><div class="pp-section-head">Tracking skills — 2015-16+ only</div><ul class="pp-skills-grid">'
+          + WIDE.skills.map(function(sk){
+            var g = wg[sk.key];
+            if (g===undefined) return '';
+            var tier = gradeTier(g);
+            var fillColor = g>=97 ? '#1A150F' : g>=90 ? '#D55E00' : g>=75 ? '#0072B2' : '#6B665E';
+            return '<li class="pp-skill pp-skill--wide"><div class="pp-skill__head"><span class="pp-skill__label">'+esc(sk.label)+'</span><span class="pp-skill__grade '+tier.pill+'">'+g+'</span></div><div class="pp-skill__track"><div class="pp-skill__fill" style="width:'+Math.max(g,4)+'%;background:'+fillColor+'"></div></div><div class="pp-skill__foot"><span>'+esc(sk.badge)+'</span><span>TRACK</span></div></li>';
+          }).join('') + '</ul></div>';
+        els.ppWideWrap.innerHTML = wideHtml;
+      }
+    }
 
     renderNextProfile(rec.name, current.season);
     renderPlayoffs(rec.name, current.season);
     renderMtnnNeighbors(row.i);
 
     els.profile.hidden = false;
-    els.empty.hidden = true;
+    if (els.ppEmptyWrap) els.ppEmptyWrap.hidden = true;
     if (global.VHPlayersPage) {
       global.VHPlayersPage.showTab('profile', { skipHistory: true });
     }
     var url = '/players?p=' + encodeURIComponent(current.slug) +
       '&s=' + encodeURIComponent(current.season) + '#profile';
     history.replaceState(null, '', url);
+
+    // tiny delight: confetti if 99s
+    if (total99 >= 3 && window.confetti) {
+      try { window.confetti({ particleCount: 24, spread: 50, origin: { y: 0.75 } }); } catch(e){}
+    }
   }
 
   // ---- Playoff Lens (transparent; dormant until assets/playoffs.json lands) ----
-  // PLAYOFFS is null until the fetch resolves; false if absent (dormant).
   var PLAYOFFS = null;
-  var PLAYOFF_PATHS = null; // assets/playoff_paths.json (optional game logs)
-  var HONORS = null; // assets/honors.json (All-NBA / ASG / Finals MVP)
+  var PLAYOFF_PATHS = null;
+  var HONORS = null;
 
   function fmtDelta(v, digits) {
     if (v === null || v === undefined) return '&mdash;';
     var s = v >= 0 ? '+' : '';
     return s + v.toFixed(Math.min(2, digits === undefined ? 1 : digits));
   }
-
-  // Round any user-facing number to at most 2 decimals, trailing zeros trimmed.
   function num2(v) {
     if (v === null || v === undefined) return '&mdash;';
     return String(Math.round(v * 100) / 100);
   }
-
   function fmtPredPct(v) {
     var capped = Math.max(0, Math.min(99.9, v));
     var one = Math.round(capped * 10) / 10;
     if (Math.abs(one - capped) < 0.01) return one.toFixed(1);
     return (Math.round(capped * 100) / 100).toFixed(2);
   }
-
-  /* ---- z-score -> real per-100 numbers ---------------------------------
-     next_profile_eval ships era-z predictions and actuals. A z-score means
-     nothing without the league it was scored against, so invert it with that
-     TARGET season's league mean/SD (assets/season_norms.json):
-
-        real = clip(z, -4, 4) * sd + mu       units: per 100 possessions
-
-     FG3_PCT / FG_PCT / FT_PCT are empirical-Bayes shrunk before z-scoring, so
-     they are NOT invertible; those keep the z reading rather than print a rate
-     the model never held. Absent norms -> everything falls back to z. */
-
-  var SEASON_NORMS = null;   // assets/season_norms.json (optional)
-
+  var SEASON_NORMS = null;
   function seasonNormFor(season, key) {
+    if (!SEASON_NORMS || !season) return null;
+    var s = SEASON_NORMS.seasons && SEASON_NORMS.seasons[season];
+    return (s && s.features && s.features[season] && s.features[season]) || (s && s.features && s.features[key]) || null;
+    // fallback handled below in more robust way
+  }
+  // more robust: SEASON_NORMS.seasons[season].features[key]
+  function seasonNormForV2(season, key){
     if (!SEASON_NORMS || !season) return null;
     var s = SEASON_NORMS.seasons && SEASON_NORMS.seasons[season];
     return (s && s.features && s.features[key]) || null;
   }
-
   function realFromZ(z, season, key) {
     if (z === null || z === undefined || !isFinite(z)) return null;
-    var n = seasonNormFor(season, key);
+    var n = seasonNormForV2(season, key);
     if (!n) return null;
     return Math.max(-4, Math.min(4, z)) * n.sd + n.mu;
   }
-
-  function fmtReal(v) {
-    var a = Math.abs(v);
-    return a >= 100 ? v.toFixed(0) : a >= 10 ? v.toFixed(1) : v.toFixed(2);
-  }
-
-  /* A predicted/actual cell: real per-100 when invertible, else the z. */
-  function fmtStat(z, season, key) {
-    var r = realFromZ(z, season, key);
-    if (r != null) return fmtReal(r);
-    return fmtZ(z);
-  }
-
-  /* Delta must be computed in the SAME space as the cells it sits beside --
-     differencing real values, not z, or the column would not add up. */
+  function fmtReal(v) { var a = Math.abs(v); return a >= 100 ? v.toFixed(0) : a >= 10 ? v.toFixed(1) : v.toFixed(2); }
+  function fmtStat(z, season, key) { var r = realFromZ(z, season, key); if (r != null) return fmtReal(r); return fmtZ(z); }
   function fmtStatDelta(pred, actual, season, key) {
-    var rp = realFromZ(pred, season, key);
-    var ra = realFromZ(actual, season, key);
-    if (rp != null && ra != null) {
-      var d = rp - ra;
-      return (d >= 0 ? '+' : '') + fmtReal(d);
-    }
-    if (pred == null || actual == null) return '&mdash;';
-    return fmtZ(pred - actual);
+    var rp = realFromZ(pred, season, key); var ra = realFromZ(actual, season, key);
+    if (rp != null && ra != null) { var d = rp - ra; return (d >= 0 ? '+' : '') + fmtReal(d); }
+    if (pred == null || actual == null) return '&mdash;'; return fmtZ(pred - actual);
   }
-
-  function fmtZ(v) {
-    if (v === null || v === undefined || !isFinite(v)) return '&mdash;';
-    var n = Math.round(v * 100) / 100;
-    var s = n >= 0 ? '+' : '';
-    return s + String(n);
-  }
+  function fmtZ(v) { if (v === null || v === undefined || !isFinite(v)) return '&mdash;'; var n = Math.round(v * 100) / 100; var s = n >= 0 ? '+' : ''; return s + String(n); }
 
   function renderNextProfile(name, season) {
     var box = els.nextProfile;
     if (!box) return;
     if (!NEXT_EVAL) { box.hidden = true; return; }
     var row = NEXT_EVAL.rows[name + '|' + season];
-    if (!row) {
-      box.hidden = true;
-      return;
-    }
-    // Career-ended / uncharted next year: keep asset for audit, hide in UI.
-    if (row.status === 'no_next') {
-      box.hidden = true;
-      return;
-    }
-
+    if (!row) { box.hidden = true; return; }
+    if (row.status === 'no_next') { box.hidden = true; return; }
     var features = NEXT_EVAL.primaryFeatures || NEXT_EVAL.features || [];
     var labels = NEXT_EVAL.featureLabels || {};
     var allKeys = NEXT_EVAL.features || [];
     var pending = row.status === 'pending';
-    var tag = pending
-      ? '<span class="po-tag po-tag--steady">Prediction only</span>'
-      : '<span class="po-tag po-tag--riser">Predicted vs actual</span>';
-    var hint = pending
-      ? (esc(row.to) + ' stats are not charted yet (latest season ' +
-         esc(NEXT_EVAL.latestSeason || season) +
-         '). Showing the MTNN next-profile prediction only.')
-      : ('From ' + esc(season) + ' embedding &rarr; predicted ' + esc(row.to) +
-         ' era-z profile, compared to the charted ' + esc(row.to) +
-         ' vector' +
-         (row.mae != null
-             ? ' &middot; typically off by about ' + num2(row.mae)
-               + ' standard deviations on the main stats'
-             : '') +
-         '.');
-
-    var head = pending
-      ? '<li class="np-split np-split--head">' +
-          '<span class="np-split__label">Stat</span>' +
-          '<span class="np-split__pred">Predicted</span>' +
-        '</li>'
-      : '<li class="np-split np-split--head">' +
-          '<span class="np-split__label">Stat</span>' +
-          '<span class="np-split__pred">Predicted</span>' +
-          '<span class="np-split__actual">Actual</span>' +
-          '<span class="np-split__delta">&Delta;</span>' +
-        '</li>';
-
+    var tag = pending ? '<span class="po-tag po-tag--steady" style="border:1.5px solid #1A150F;border-radius:999px;padding:1px 6px;font-size:10px;background:#fff">Prediction only</span>' : '<span class="po-tag po-tag--riser" style="border:1.5px solid #1A150F;border-radius:999px;padding:1px 6px;background:#F0E442">Predicted vs actual</span>';
+    var hint = pending ? (esc(row.to) + ' not charted yet. Showing MTNN next-profile prediction only.') : ('From ' + esc(season) + ' → predicted ' + esc(row.to) + ' profile.');
+    var head = pending ? '<li class="np-split np-split--head"><span>Stat</span><span>Pred</span></li>' : '<li class="np-split np-split--head"><span>Stat</span><span>Pred</span><span>Actual</span><span>Δ</span></li>';
     var lines = features.map(function (key) {
-      var idx = allKeys.indexOf(key);
-      if (idx < 0) return '';
-      var pred = row.pred[idx];
-      var label = labels[key] || key;
-      var norm = seasonNormFor(row.to, key);
-      var unitTip = norm
-        ? key + ': per 100 possessions (league average ' + fmtReal(norm.mu) + ')'
-        : key + ': standard deviations vs the league that season (this stat is '
-          + 'smoothed before the model sees it, so no raw rate is shown)';
-      if (pending) {
-        return '<li class="np-split">' +
-          '<span class="np-split__label" title="' + esc(unitTip) + '">' + esc(label) + '</span>' +
-          '<span class="np-split__pred">' + fmtStat(pred, row.to, key) + '</span>' +
-          '</li>';
-      }
+      var idx = allKeys.indexOf(key); if (idx < 0) return '';
+      var pred = row.pred[idx]; var label = labels[key] || key;
+      if (pending) return '<li class="np-split"><span>'+esc(label)+'</span><span>'+fmtStat(pred, row.to, key)+'</span></li>';
       var actual = row.actual[idx];
-      // Accuracy classes stay in z: "how many SDs off" is the scale-free read.
-      var zDelta = (pred != null && actual != null) ? (pred - actual) : null;
-      var deltaCls = '';
-      if (zDelta != null) {
-        if (Math.abs(zDelta) < 0.35) deltaCls = ' np-split__delta--ok';
-        else if (Math.abs(zDelta) >= 1) deltaCls = ' np-split__delta--miss';
-      }
-      return '<li class="np-split">' +
-        '<span class="np-split__label" title="' + esc(unitTip) + '">' + esc(label) + '</span>' +
-        '<span class="np-split__pred">' + fmtStat(pred, row.to, key) + '</span>' +
-        '<span class="np-split__actual">' + fmtStat(actual, row.to, key) + '</span>' +
-        '<span class="np-split__delta' + deltaCls + '">' +
-          fmtStatDelta(pred, actual, row.to, key) + '</span>' +
-        '</li>';
+      return '<li class="np-split"><span>'+esc(label)+'</span><span>'+fmtStat(pred, row.to, key)+'</span><span>'+fmtStat(actual, row.to, key)+'</span><span>'+fmtStatDelta(pred, actual, row.to, key)+'</span></li>';
     }).join('');
-
     box.hidden = false;
-    box.className = 'skills-next-profile' + (pending ? ' skills-next-profile--pending' : '');
-    box.innerHTML =
-      '<div class="vh-section-label">Next-season stats ' + tag + '</div>' +
-      '<p class="skills-hint">' + hint + '</p>' +
-      '<ul class="np-splits' + (pending ? ' np-splits--pending' : '') + '">' +
-      head + lines + '</ul>' +
-      '<p class="skills-hint">' + (SEASON_NORMS
-        ? 'Numbers are <b>per 100 possessions</b> &mdash; not per game &mdash; measured against the '
-          + esc(row.to) + ' league. Shooting percentages are smoothed before the model sees them, so '
-          + 'those rows stay in standard deviations rather than show a rate that never existed. '
-        : 'Values are standard deviations vs the league that season. ')
-      + 'Not a minutes or pace forecast.</p>';
+    box.innerHTML = '<div class="vh-section-label">Next-season stats '+tag+'</div><p class="skills-hint" style="font-family:ui-monospace,monospace;font-size:11px;color:#666;margin:6px 0">'+hint+'</p><ul class="np-splits">'+head+lines+'</ul>';
   }
 
   function renderPlayoffSeries(series, champion) {
     if (!series || !series.length) return '';
-    return '<ol class="po-series">' + series.map(function (sr) {
+    return '<ol class="po-series" style="list-style:none;padding:0;display:flex;flex-direction:column;gap:4px;margin:8px 0">' + series.map(function (sr) {
       var won = sr.won !== false && (sr.wins == null || sr.wins > sr.losses);
-      var rowCls = won ? ' po-series__row--won' : ' po-series__row--lost';
-      if (sr.finals || sr.label === 'NBA Finals' || sr.label === 'Finals') {
-        rowCls += champion ? ' po-series__row--champion' : ' po-series__row--finals';
-      }
+      var bg = won ? '#F0E442' : '#fff';
+      if (sr.finals || sr.label === 'NBA Finals') bg = champion ? '#1A150F' : '#D6EFFF';
       var mark = won ? 'W' : 'L';
-      return '<li class="po-series__row' + rowCls + '">' +
-        '<span class="po-series__round">' + esc(sr.label) + '</span>' +
-        '<span class="po-series__opp">vs ' + esc(sr.opp) + '</span>' +
-        '<span class="po-series__result">' + esc(sr.result) +
-        ' <span class="po-series__mark">' + mark + '</span></span>' +
-        '</li>';
+      return '<li style="border:1.6px solid #1A150F;border-radius:10px;padding:6px 9px;background:'+bg+';display:flex;justify-content:space-between;gap:8px;font-family:ui-monospace,monospace;font-size:11px"><span>'+esc(sr.label)+' vs '+esc(sr.opp)+'</span><span>'+esc(sr.result)+' '+mark+'</span></li>';
     }).join('') + '</ol>';
   }
-
   function renderPlayoffGames(games) {
     if (!games || !games.length) return '';
-    var head =
-      '<li class="po-game po-game--head">' +
-        '<span class="po-game__date">Date</span>' +
-        '<span class="po-game__matchup">Matchup</span>' +
-        '<span class="po-game__wl">W/L</span>' +
-        '<span class="po-game__pts">PTS</span>' +
-        '<span class="po-game__reb">REB</span>' +
-        '<span class="po-game__ast">AST</span>' +
-        '<span class="po-game__min">MIN</span>' +
-        '<span class="po-game__pm">+/-</span>' +
-      '</li>';
-    var rows = games.map(function (g) {
-      var wlCls = g.wl === 'W' ? ' po-game__wl--w' : (g.wl === 'L' ? ' po-game__wl--l' : '');
-      return '<li class="po-game">' +
-        '<span class="po-game__date">' + esc((g.d || '').slice(5)) + '</span>' +
-        '<span class="po-game__matchup">' + esc(g.m || '') + '</span>' +
-        '<span class="po-game__wl' + wlCls + '">' + esc(g.wl || '') + '</span>' +
-        '<span class="po-game__pts">' + num2(g.pts) + '</span>' +
-        '<span class="po-game__reb">' + num2(g.reb) + '</span>' +
-        '<span class="po-game__ast">' + num2(g.ast) + '</span>' +
-        '<span class="po-game__min">' + num2(g.min) + '</span>' +
-        '<span class="po-game__pm">' + fmtDelta(g.pm, 0) + '</span>' +
-        '</li>';
-    }).join('');
-    return '<details class="po-games">' +
-      '<summary>Game log (' + games.length + ')</summary>' +
-      '<ul class="po-game-list">' + head + rows + '</ul></details>';
+    return '<details style="margin-top:8px"><summary style="font-family:ui-monospace,monospace;font-size:11px;cursor:pointer">Game log ('+games.length+')</summary><ul style="list-style:none;padding:0;margin:6px 0;display:flex;flex-direction:column;gap:2px;font-family:ui-monospace,monospace;font-size:10px">'+games.map(function(g){return '<li style="display:flex;gap:8px;justify-content:space-between;border-bottom:1px dashed #ddd;padding:2px 0"><span>'+esc((g.d||'').slice(5))+' '+esc(g.m||'')+'</span><span>'+esc(g.wl||'')+' '+num2(g.pts)+'/'+num2(g.reb)+'/'+num2(g.ast)+'</span></li>';}).join('')+'</ul></details>';
   }
-
   function playoffOutcomeLabel(s) {
-    var r = s.rounds;
-    if (typeof r !== 'number') return '';
-    // Explicit champion first — never bury under a series-path "Conf finals" row.
-    if (r === 4 || s.champion) {
-      return '<span class="po-tag po-tag--champion">NBA Champion</span>';
-    }
-    var labels = ['exited R1', 'exited R2', 'exited Conf. finals', 'NBA Finals'];
-    return '<span class="po-tag po-tag--steady">' + (labels[r] || ('round ' + r)) + '</span>';
+    var r = s.rounds; if (typeof r !== 'number') return '';
+    if (r === 4 || s.champion) return '<span style="border:1.5px solid #1A150F;border-radius:999px;background:#1A150F;color:#fff;padding:1px 6px;font-size:10px">NBA Champion</span>';
+    var labels = ['exited R1','exited R2','exited Conf. finals','NBA Finals'];
+    return '<span style="border:1.5px solid #1A150F;border-radius:999px;padding:1px 6px;background:#fff;font-size:10px">'+(labels[r]||('round '+r))+'</span>';
   }
-
   function renderHonorsBadges(name, season) {
     if (!HONORS || !HONORS.bySeason) return '';
-    var h = HONORS.bySeason[name + '|' + season];
-    if (!h) return '';
+    var h = HONORS.bySeason[name + '|' + season]; if (!h) return '';
     var bits = [];
-    if (h.finalsMvp) bits.push('<span class="po-tag po-tag--champion">Finals MVP</span>');
-    if (h.allNbaTeam === 3) bits.push('<span class="po-tag po-tag--riser">All-NBA 1st</span>');
-    else if (h.allNbaTeam === 2) bits.push('<span class="po-tag po-tag--riser">All-NBA 2nd</span>');
-    else if (h.allNbaTeam === 1) bits.push('<span class="po-tag po-tag--steady">All-NBA 3rd</span>');
-    if (h.asg) bits.push('<span class="po-tag po-tag--steady">All-Star</span>');
-    return bits.length ? '<span class="po-honors">' + bits.join(' ') + '</span>' : '';
+    if (h.finalsMvp) bits.push('<span style="border:1.5px solid #1A150F;border-radius:999px;background:#F0E442;padding:1px 6px">Finals MVP</span>');
+    if (h.allNbaTeam === 3) bits.push('<span style="border-radius:999px;background:#F0E442;padding:1px 6px">All-NBA 1st</span>');
+    else if (h.allNbaTeam === 2) bits.push('<span style="border-radius:999px;background:#D6EFFF;padding:1px 6px">All-NBA 2nd</span>');
+    else if (h.allNbaTeam === 1) bits.push('<span>All-NBA 3rd</span>');
+    if (h.asg) bits.push('<span>All-Star</span>');
+    return bits.length ? '<span>'+bits.join(' ')+'</span>' : '';
   }
-
   function renderPlayoffs(name, season) {
-    var box = els.playoffs;
-    if (!box) return;
+    var box = els.playoffs; if (!box) return;
     if (!PLAYOFFS) { box.hidden = true; return; }
     var s = PLAYOFFS.splits[name + '|' + season];
-    if (!s) {
-      box.hidden = false;
-      box.innerHTML = '<div class="vh-section-label">Playoffs</div>' +
-        '<p class="skills-hint">No postseason games this season.</p>';
-      return;
-    }
-    var d = s.pts_delta;
-    var verdict = d === null ? '' :
-      d >= 2 ? '<span class="po-tag po-tag--riser">Riser +' + d.toFixed(1) + '</span>' :
-      d <= -2 ? '<span class="po-tag po-tag--fader">Fader ' + d.toFixed(1) + '</span>' :
-      '<span class="po-tag po-tag--steady">Held serve</span>';
+    if (!s) { box.hidden = false; box.innerHTML = '<div class="vh-section-label">Playoffs</div><p style="font-size:11px;color:#666">No postseason games this season.</p>'; return; }
     var champion = !!(s.champion || s.rounds === 4);
     var outcome = playoffOutcomeLabel(s);
     var honors = renderHonorsBadges(name, season);
-    var runNote = (typeof s.wins === 'number')
-      ? (s.wins + ' playoff win' + (s.wins === 1 ? '' : 's'))
-      : '';
-    function line(label, po, rs, delta, digits) {
-      return '<li class="po-split">' +
-        '<span class="po-split__label">' + label + '</span>' +
-        '<span class="po-split__rs">RS ' + num2(rs) + '</span>' +
-        '<span class="po-split__po">PO ' + num2(po) + '</span>' +
-        '<span class="po-split__delta">' + fmtDelta(delta, digits) + '</span></li>';
-    }
     box.hidden = false;
-    box.innerHTML =
-      '<div class="vh-section-label">Playoffs &middot; regular season vs postseason ' +
-      outcome + ' ' + honors + ' ' + verdict + '</div>' +
-      (runNote ? '<p class="skills-hint">' + runNote +
-        (champion ? ' &middot; won the NBA Finals' : '') + '</p>' : '') +
-      renderPlayoffSeries(s.series, champion) +
-      '<ul class="po-splits">' +
-      line('Pts / 100', s.po.PTS100, s.rs.PTS100, s.pts_delta, 1) +
-      line('Minutes', s.po.MIN, s.rs.MIN, s.min_delta, 1) +
-      line('Usage %', s.po.USG, s.rs.USG, s.usg_delta, 1) +
-      line('True Shooting', s.po.TS, s.rs.TS,
-           (s.po.TS != null && s.rs.TS != null) ? (s.po.TS - s.rs.TS) : null, 2) +
-      '</ul>' +
-      renderPlayoffGames(
-        (PLAYOFF_PATHS && PLAYOFF_PATHS.paths &&
-          PLAYOFF_PATHS.paths[name + '|' + season] &&
-          PLAYOFF_PATHS.paths[name + '|' + season].games) || s.games
-      ) +
-      '<p class="skills-hint">On-court plus-minus per 100 in the playoffs: ' +
-      fmtDelta(s.po.PLUS_MINUS, 1) +
-      '. Series path lists every round played (including Conf. finals on the way to a title). ' +
-      'Outcome badge is the season result. Source: stats.nba.com + Basketball-Reference Finals MVP.</p>';
+    box.innerHTML = '<div class="vh-section-label">Playoffs &middot; RS vs PO '+outcome+' '+honors+'</div>'+renderPlayoffSeries(s.series, champion)+renderPlayoffGames((PLAYOFF_PATHS && PLAYOFF_PATHS.paths && PLAYOFF_PATHS.paths[name + '|' + season] && PLAYOFF_PATHS.paths[name + '|' + season].games) || s.games);
   }
 
   function renderMtnnNeighbors(playerIndex) {
-    var box = els.mtnn;
-    if (!box) return;
-    if (!MTNN_READY || !window.VHMtnn) {
-      box.hidden = true;
-      return;
-    }
+    var box = els.mtnn; if (!box) return;
+    if (!MTNN_READY || !window.VHMtnn) { box.hidden = true; return; }
     var selfName = DATA.players[playerIndex].name;
-    var hits = window.VHMtnn.topK(playerIndex, 5, function (i) {
-      return DATA.players[i].name !== selfName;
-    });
-    if (!hits.length) {
-      box.hidden = true;
-      return;
-    }
+    var hits = window.VHMtnn.topK(playerIndex, 5, function (i) { return DATA.players[i].name !== selfName; });
+    if (!hits.length) { box.hidden = true; return; }
     box.hidden = false;
     var items = hits.map(function (h) {
-      var p = DATA.players[h.id];
-      var slug = window.VHDossier.playerSlug(p.name);
-      var pct = fmtPredPct(h.sim * 100);
-      return '<li><a href="/players?p=' + encodeURIComponent(slug) +
-        '&s=' + encodeURIComponent(p.season) + '">' + esc(p.name) +
-        '</a> <span class="skills-mtnn__meta">' + esc(p.season) +
-        ' &middot; ' + pct + '% craft match</span></li>';
+      var p = DATA.players[h.id]; var slug = window.VHDossier.playerSlug(p.name); var pct = fmtPredPct(h.sim * 100);
+      return '<li><a href="/players?p='+encodeURIComponent(slug)+'&s='+encodeURIComponent(p.season)+'">'+esc(p.name)+'</a> <span class="skills-mtnn__meta">'+esc(p.season)+' · '+pct+'% craft match</span></li>';
     }).join('');
-    box.innerHTML =
-      '<div class="vh-section-label">Similar craft profiles (MTNN)</div>' +
-      '<p class="skills-hint">Skill-aware 48-d neighbors from the promoted embedding — same space daily puzzles grade in.</p>' +
-      '<ol class="skills-mtnn__list">' + items + '</ol>';
+    box.innerHTML = '<div class="vh-section-label">Similar craft profiles (MTNN) — who plays like this?</div><p class="skills-hint" style="font-family:ui-monospace,monospace;font-size:11px;color:#666">Click to flip their card.</p><ol class="skills-mtnn__list">'+items+'</ol>';
   }
 
   function pickPlayer(slug, season) {
@@ -557,12 +443,7 @@
     renderProfile();
   }
 
-  // ---- search ----
-
-  function fold(s) {
-    return s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
-  }
-
+  function fold(s) { return s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase(); }
   function renderSuggest() {
     var q = fold(els.search.value.trim());
     if (q.length < 2) { els.suggest.innerHTML = ''; return; }
@@ -572,278 +453,139 @@
       if (fold(rec.name).indexOf(q) !== -1) hits.push(rec);
     }
     els.suggest.innerHTML = hits.map(function (rec) {
-      var span = rec.rows.length > 1 ?
-        rec.rows[0].season + '&ndash;' + rec.rows[rec.rows.length - 1].season :
-        rec.rows[0].season;
-      return '<li><button type="button" data-slug="' + esc(rec.slug) + '">' +
-        '<span>' + esc(rec.name) + '</span>' +
-        '<span class="skills-suggest__meta">' + span + ' &middot; ' +
-        rec.rows.length + ' season' + (rec.rows.length === 1 ? '' : 's') + '</span>' +
-        '</button></li>';
+      var span = rec.rows.length > 1 ? rec.rows[0].season + '–' + rec.rows[rec.rows.length - 1].season : rec.rows[0].season;
+      return '<li><button type="button" data-slug="' + esc(rec.slug) + '"><span><span class="pp-suggest__name">'+esc(rec.name)+'</span><br><span class="skills-suggest__meta">'+span+' · '+rec.rows.length+' season'+(rec.rows.length===1?'':'s')+'</span></span><span style="font-size:16px">→</span></button></li>';
     }).join('');
   }
 
-  // ---- leaderboard ----
+  function renderFeatured() {
+    if (!els.ppFeatured || !INDEX['victor-wembanyama']) return;
+    var html = '';
+    FEATURED.forEach(function(name){
+      var slug = window.VHDossier.playerSlug(name);
+      var rec = INDEX[slug];
+      if (!rec) return;
+      var last = rec.rows[rec.rows.length-1];
+      var g = SKILLS.grades[last.i];
+      var c99 = g.filter(function(x){return x>=99;}).length;
+      var c90 = g.filter(function(x){return x>=90;}).length;
+      var avg = Math.round(g.reduce(function(a,b){return a+b;},0)/g.length);
+      html += '<div class="pp-featured__card" data-slug="'+esc(slug)+'"><div class="pp-featured__name">'+esc(name)+'</div><div class="pp-featured__line">'+esc(last.season)+' · avg '+avg+'</div><div class="pp-featured__grade">'+(c99?c99+'×99 ': '')+(c90?c90+'×90+':'avg '+avg)+'</div></div>';
+    });
+    els.ppFeatured.innerHTML = html;
+  }
 
-  // Boards sort by the era-z linear composite itself (weights ship in
-  // skills.json), so 99-grade ties rank honestly across eras instead of
-  // falling back to recency.
-
-  // ---- Steals of the Draft: draft expectation vs actual career skill ----
-  // Career overall = mean of per-season skill means across charted seasons
-  // (not peak — one hot year shouldn't top the board).
-  //
-  // Steals and busts need OPPOSITE eligibility rules, and using one rule for
-  // both is how the board came to hide its own subject matter:
-  //
-  //   steal — has to have proven it, so require a real career (5 charted
-  //     seasons). Undrafted players are eligible: being passed over by all 60
-  //     picks is the largest expectation there is to beat.
-  //   bust  — measured by elapsed opportunity, NOT by survival. Screening on
-  //     seasons played drops precisely the players who washed out. Instead
-  //     require that enough years have passed since the draft to judge, and
-  //     let a short career count as evidence rather than as a disqualifier.
-  //     Undrafted players cannot bust: there was no expectation to miss.
-  //     Because a short career is the evidence, a bust's career must also fall
-  //     entirely inside the data window — otherwise a pre-1996 All-Star whose
-  //     prime we never charted (Tom Chambers, Xavier McDaniel) tops the board.
-  //     Steals are exempt: 5 charted seasons already rule that failure out, and
-  //     the window would drop Ben Wallace, the canonical undrafted steal.
-  //
-  // Because the two pools differ, percentiles are computed per board.
+  // ---- board (unchanged core) ----
   var DRAFT = {};
   var STEAL_MIN_SEASONS = 5;
   var BUST_MATURITY_YEARS = 5;
   var PO_BONUS_MAX = 10;
-
-  // Data window, derived rather than pinned.
   var SEASON_SPAN = null;
   function seasonSpan() {
     if (SEASON_SPAN) return SEASON_SPAN;
     var lo = Infinity, hi = 0;
-    DATA.players.forEach(function (p) {
-      var v = parseInt(p.season.slice(0, 4), 10);
-      if (v < lo) lo = v;
-      if (v > hi) hi = v;
-    });
-    SEASON_SPAN = { first: lo, latest: hi };
-    return SEASON_SPAN;
+    DATA.players.forEach(function (p) { var v = parseInt(p.season.slice(0,4),10); if (v < lo) lo=v; if (v > hi) hi=v; });
+    SEASON_SPAN = { first: lo, latest: hi }; return SEASON_SPAN;
   }
-
-  function seasonSkillMean(rowIndex) {
-    var g = SKILLS.grades[rowIndex];
-    return g.reduce(function (a, b) { return a + b; }, 0) / g.length;
-  }
-
-  // Minutes-weighted, so a 200-minute cameo season cannot pull a career mean
-  // around as hard as a 2,900-minute one.
+  function seasonSkillMean(rowIndex) { var g = SKILLS.grades[rowIndex]; return g.reduce(function(a,b){return a+b;},0)/g.length; }
   function careerSkillMean(rec) {
     if (!rec.rows.length) return null;
-    var sum = 0, mins = 0;
-    rec.rows.forEach(function (rr) {
-      var m = DATA.players[rr.i].total_min || 0;
-      sum += seasonSkillMean(rr.i) * m;
-      mins += m;
-    });
-    if (!mins) return null;
-    return sum / mins;
+    var sum=0, mins=0;
+    rec.rows.forEach(function(rr){ var m=DATA.players[rr.i].total_min||0; sum+=seasonSkillMean(rr.i)*m; mins+=m; });
+    if (!mins) return null; return sum/mins;
   }
-
-  // A bust's career has to be observable from its start.
   function observedFromStart(rec, ped) {
     var span = seasonSpan();
     if (ped.undrafted) {
-      var first = Infinity;
-      rec.rows.forEach(function (rr) {
-        var v = parseInt(rr.season.slice(0, 4), 10);
-        if (v < first) first = v;
-      });
+      var first=Infinity;
+      rec.rows.forEach(function(rr){ var v=parseInt(rr.season.slice(0,4),10); if (v<first) first=v; });
       return first > span.first;
     }
     return !!ped.draft_year && ped.draft_year >= span.first;
   }
-
-  // Mid-rank percentile. Ties MUST share a rank: 364 second-round picks carry
-  // the identical expect_slot of 0.10, and ranking them by position in the
-  // array handed otherwise-identical players expectation percentiles 28 points
-  // apart — a swing bigger than most real steal scores.
   function pctRank(values) {
-    var idx = values.map(function (v, i) { return i; })
-      .sort(function (a, b) { return values[a] - values[b]; });
+    var idx = values.map(function(v,i){return i;}).sort(function(a,b){return values[a]-values[b];});
     var out = new Array(values.length);
-    var r = 0;
-    while (r < idx.length) {
-      var j = r;
-      while (j + 1 < idx.length && values[idx[j + 1]] === values[idx[r]]) j++;
-      var mid = ((r + j) / 2 + 0.5) / values.length * 100;
-      for (var k = r; k <= j; k++) out[idx[k]] = mid;
-      r = j + 1;
+    var r=0;
+    while (r<idx.length) {
+      var j=r;
+      while (j+1<idx.length && values[idx[j+1]]===values[idx[r]]) j++;
+      var mid = ((r+j)/2+0.5)/values.length*100;
+      for (var k=r;k<=j;k++) out[idx[k]]=mid;
+      r=j+1;
     }
     return out;
   }
-
-  // playoffs.json carries a row only for seasons a player actually reached the
-  // postseason, so a missing key is a genuine "did not make it".
   function playoffRecord(rec) {
-    var apps = 0, prod = 0;
+    var apps=0, prod=0;
     if (PLAYOFFS && PLAYOFFS.splits) {
-      rec.rows.forEach(function (rr) {
-        var s = PLAYOFFS.splits[rec.name + '|' + rr.season];
-        if (s && s.po && s.po.GP > 0) { apps++; prod += s.po.PTS100 || 0; }
-      });
+      rec.rows.forEach(function(rr){ var s=PLAYOFFS.splits[rec.name+'|'+rr.season]; if (s && s.po && s.po.GP>0) { apps++; prod+=s.po.PTS100||0; } });
     }
-    return { apps: apps, rate: apps / rec.rows.length, prod: apps ? prod / apps : null };
+    return { apps: apps, rate: apps/rec.rows.length, prod: apps ? prod/apps : null };
   }
-
   function computeDraft(mode) {
-    // PLAYOFFS is null only while its fetch is in flight; scoring now would
-    // bake in a zero playoff bonus for everyone.
     if (!PEDIGREE || PLAYOFFS === null) return null;
     if (DRAFT[mode]) return DRAFT[mode];
     var cutoff = seasonSpan().latest - BUST_MATURITY_YEARS;
-    var pool = [];
-    ORDER.forEach(function (slug) {
-      var rec = INDEX[slug];
-      var ped = PEDIGREE.players[rec.name];
-      if (!ped) return;
-      if (mode === 'steal') {
-        if (rec.rows.length < STEAL_MIN_SEASONS) return;
-      } else {
-        if (ped.undrafted || !ped.draft_year) return;
-        if (ped.draft_year > cutoff) return;
-        if (!observedFromStart(rec, ped)) return;
-      }
-      var career = careerSkillMean(rec);
-      if (career === null) return;
+    var pool=[];
+    ORDER.forEach(function(slug){
+      var rec=INDEX[slug]; var ped=PEDIGREE.players[rec.name]; if (!ped) return;
+      if (mode==='steal') { if (rec.rows.length < STEAL_MIN_SEASONS) return; }
+      else { if (ped.undrafted || !ped.draft_year) return; if (ped.draft_year>cutoff) return; if (!observedFromStart(rec, ped)) return; }
+      var career=careerSkillMean(rec); if (career===null) return;
       pool.push({ rec: rec, ped: ped, career: career, po: playoffRecord(rec) });
     });
-
-    var actualPct = pctRank(pool.map(function (p) { return p.career; }));
-    var expectPct = pctRank(pool.map(function (p) { return p.ped.expect_slot; }));
-
-    // Playoff credit is a BONUS and never a penalty: reaching the postseason is
-    // a team outcome, so a steal stranded on a bad franchise loses nothing,
-    // while a player who showed up in the playoffs gains. Production is ranked
-    // only among players who actually appeared.
-    var withProd = [];
-    pool.forEach(function (p, i) { if (p.po.prod !== null) withProd.push(i); });
-    var prodPct = pctRank(withProd.map(function (i) { return pool[i].po.prod; }));
-    var prodOf = {};
-    withProd.forEach(function (i, k) { prodOf[i] = prodPct[k]; });
-
-    DRAFT[mode] = pool.map(function (p, i) {
-      var bonus = PO_BONUS_MAX * (0.5 * p.po.rate + 0.5 * ((prodOf[i] || 0) / 100));
-      return {
-        name: p.rec.name, slug: window.VHDossier.playerSlug(p.rec.name),
-        overall: Math.round(p.career),
-        seasons: p.rec.rows.length,
-        poApps: p.po.apps,
-        pick: p.ped.overall,
-        roundNo: p.ped.round, year: p.ped.draft_year, team: p.ped.team,
-        steal: Math.round(actualPct[i] + bonus - expectPct[i]),
-      };
+    var actualPct=pctRank(pool.map(function(p){return p.career;}));
+    var expectPct=pctRank(pool.map(function(p){return p.ped.expect_slot;}));
+    var withProd=[]; pool.forEach(function(p,i){ if (p.po.prod!==null) withProd.push(i); });
+    var prodPct=pctRank(withProd.map(function(i){return pool[i].po.prod;}));
+    var prodOf={}; withProd.forEach(function(i,k){ prodOf[i]=prodPct[k]; });
+    DRAFT[mode]=pool.map(function(p,i){
+      var bonus=PO_BONUS_MAX*(0.5*p.po.rate+0.5*((prodOf[i]||0)/100));
+      return { name:p.rec.name, slug:window.VHDossier.playerSlug(p.rec.name), overall:Math.round(p.career), seasons:p.rec.rows.length, poApps:p.po.apps, pick:p.ped.overall, roundNo:p.ped.round, year:p.ped.draft_year, team:p.ped.team, steal: Math.round(actualPct[i]+bonus-expectPct[i]) };
     });
     return DRAFT[mode];
   }
-
   function renderDraftBoard(mode) {
-    var d = computeDraft(mode);
-    if (!d) { els.board.innerHTML = '<li class="skills-board__empty">Loading draft data…</li>'; return; }
-    d = d.slice();
-    d.sort(function (a, b) { return mode === 'steal' ? b.steal - a.steal : a.steal - b.steal; });
-    els.board.innerHTML = d.slice(0, BOARD_ROWS).map(function (r) {
-      var pickLbl = r.pick
-        ? '#' + r.pick + (r.roundNo === 2 ? ' R2' : '') +
-          (r.year ? ' ’' + String(r.year).slice(2) : '')
-        : 'undrafted';
-      var cls = r.steal >= 0 ? 'po-tag--riser' : 'po-tag--fader';
-      return '<li>' +
-        '<span class="skills-board__name" data-slug="' + esc(r.slug) +
-        '">' + esc(r.name) + '</span>' +
-        '<span class="skills-board__season">' + pickLbl + ' &middot; career ' + r.overall +
-        ' &middot; ' + r.seasons + ' yr' +
-        (r.poApps ? ' &middot; ' + r.poApps + ' playoff yr' : '') + '</span>' +
-        '<span class="skills-board__grade po-tag ' + cls + '">' +
-        (r.steal >= 0 ? '+' : '') + r.steal + '</span>' +
-        '</li>';
+    var d=computeDraft(mode); if (!d) { els.board.innerHTML='<li class="skills-board__empty">Loading draft data…</li>'; return; }
+    d=d.slice(); d.sort(function(a,b){return mode==='steal'?b.steal-a.steal:a.steal-b.steal;});
+    els.board.innerHTML=d.slice(0, BOARD_ROWS).map(function(r){
+      var pickLbl = r.pick ? '#'+r.pick+(r.roundNo===2?' R2':'')+(r.year?' ’'+String(r.year).slice(2):'') : 'undrafted';
+      var cls=r.steal>=0?'po-tag--riser':'po-tag--fader';
+      return '<li><span class="skills-board__name" data-slug="'+esc(r.slug)+'">'+esc(r.name)+'</span><span class="skills-board__season">'+pickLbl+' · career '+r.overall+' · '+r.seasons+' yr'+(r.poApps?' · '+r.poApps+' playoff yr':'')+'</span><span class="skills-board__grade po-tag '+cls+'">'+(r.steal>=0?'+':'')+r.steal+'</span></li>';
     }).join('');
   }
-
   function renderWideBoard(wideKey) {
-    var season = els.boardSeason.value;
-    var rows = [];
-    for (var i = 0; i < DATA.players.length; i++) {
-      var p = DATA.players[i];
-      if (season && p.season !== season) continue;
-      var wg = wideGrades(p.name, p.season);
-      if (!wg || wg[wideKey] === undefined) continue;
-      rows.push({ i: i, grade: wg[wideKey] });
+    var season=els.boardSeason.value; var rows=[];
+    for (var i=0;i<DATA.players.length;i++) {
+      var p=DATA.players[i]; if (season && p.season!==season) continue;
+      var wg=wideGrades(p.name, p.season); if (!wg || wg[wideKey]===undefined) continue;
+      rows.push({ i:i, grade:wg[wideKey] });
     }
-    rows.sort(function (a, b) { return b.grade - a.grade; });
-    els.board.innerHTML = rows.slice(0, BOARD_ROWS).map(function (row) {
-      var p = DATA.players[row.i];
-      var slug = window.VHDossier.playerSlug(p.name);
-      return '<li>' +
-        '<span class="skills-board__name" data-slug="' + esc(slug) +
-        '" data-season="' + esc(p.season) + '">' + esc(p.name) + '</span>' +
-        '<span class="skills-board__season">' + esc(p.season) + '</span>' +
-        '<span class="skills-board__grade">' + row.grade + '</span>' +
-        '</li>';
+    rows.sort(function(a,b){return b.grade-a.grade;});
+    els.board.innerHTML=rows.slice(0, BOARD_ROWS).map(function(row){
+      var p=DATA.players[row.i]; var slug=window.VHDossier.playerSlug(p.name);
+      return '<li><span class="skills-board__name" data-slug="'+esc(slug)+'" data-season="'+esc(p.season)+'">'+esc(p.name)+'</span><span class="skills-board__season">'+esc(p.season)+'</span><span class="skills-board__grade">'+row.grade+'</span></li>';
     }).join('');
-    if (!rows.length) {
-      els.board.innerHTML = '<li class="skills-hint">No tracked grades for this filter.</li>';
-    }
+    if (!rows.length) els.board.innerHTML='<li class="skills-hint">No tracked grades for this filter.</li>';
   }
-
   function renderBoard() {
-    var mode = els.boardSkill.value;
-    if (mode === 'steal' || mode === 'bust') {
-      els.boardSeason.disabled = true;
-      renderDraftBoard(mode);
-      return;
-    }
-    if (mode && mode.indexOf('wide:') === 0) {
-      els.boardSeason.disabled = false;
-      renderWideBoard(mode.slice(5));
-      return;
-    }
-    els.boardSeason.disabled = false;
-    var j = parseInt(mode || '0', 10);
-    var season = els.boardSeason.value;
-    var rows = [];
-    for (var i = 0; i < DATA.players.length; i++) {
-      if (season && DATA.players[i].season !== season) continue;
-      rows.push(i);
-    }
-    var featIdx = {};
-    DATA.features.forEach(function (f, k) { featIdx[f] = k; });
-    var w = SKILLS.skills[j].w;
-    var volCols = ['FGA', 'FTA', 'AST'].map(function (f) { return featIdx[f]; })
-      .filter(function (k) { return k !== undefined; });
-    var score = {}, vol = {};
-    rows.forEach(function (i) {
-      var s = 0, v = DATA.players[i].v;
-      for (var f in w) s += w[f] * v[featIdx[f]];
-      score[i] = s;
-      vol[i] = volCols.reduce(function (a, k) { return a + v[k]; }, 0);
-    });
-    // Primary: composite score; ties broken by volume/usage proxy (higher first).
-    rows.sort(function (a, b) {
-      return score[b] - score[a] || vol[b] - vol[a];
-    });
-    els.board.innerHTML = rows.slice(0, BOARD_ROWS).map(function (i) {
-      var p = DATA.players[i];
-      var slug = window.VHDossier.playerSlug(p.name);
-      return '<li>' +
-        '<span class="skills-board__name" data-slug="' + esc(slug) +
-        '" data-season="' + esc(p.season) + '">' + esc(p.name) + '</span>' +
-        '<span class="skills-board__season">' + esc(p.season) + '</span>' +
-        '<span class="skills-board__grade">' + SKILLS.grades[i][j] + '</span>' +
-        '</li>';
+    var mode=els.boardSkill.value;
+    if (mode==='steal' || mode==='bust') { els.boardSeason.disabled=true; renderDraftBoard(mode); return; }
+    if (mode && mode.indexOf('wide:')===0) { els.boardSeason.disabled=false; renderWideBoard(mode.slice(5)); return; }
+    els.boardSeason.disabled=false;
+    var j=parseInt(mode||'0',10); var season=els.boardSeason.value; var rows=[];
+    for (var i=0;i<DATA.players.length;i++) { if (season && DATA.players[i].season!==season) continue; rows.push(i); }
+    var featIdx={}; DATA.features.forEach(function(f,k){ featIdx[f]=k; });
+    var w=SKILLS.skills[j].w; var volCols=['FGA','FTA','AST'].map(function(f){return featIdx[f];}).filter(function(k){return k!==undefined;});
+    var score={}, vol={};
+    rows.forEach(function(i){ var s=0, v=DATA.players[i].v; for (var f in w) s+=w[f]*v[featIdx[f]]; score[i]=s; vol[i]=volCols.reduce(function(a,k){return a+v[k];},0); });
+    rows.sort(function(a,b){ return score[b]-score[a] || vol[b]-vol[a]; });
+    els.board.innerHTML=rows.slice(0, BOARD_ROWS).map(function(i){
+      var p=DATA.players[i]; var slug=window.VHDossier.playerSlug(p.name);
+      return '<li><span class="skills-board__name" data-slug="'+esc(slug)+'" data-season="'+esc(p.season)+'">'+esc(p.name)+'</span><span class="skills-board__season">'+esc(p.season)+'</span><span class="skills-board__grade">'+SKILLS.grades[i][j]+'</span></li>';
     }).join('');
   }
-
-  // ---- wiring ----
 
   function setupControls() {
     els.search.addEventListener('input', renderSuggest);
@@ -866,6 +608,47 @@
         pickPlayer(name.getAttribute('data-slug'), name.getAttribute('data-season'));
       }
     });
+    // v28 quick chips
+    if (els.ppQuickRow) {
+      els.ppQuickRow.addEventListener('click', function(ev){
+        var chip = ev.target.closest('[data-q]');
+        if (!chip) return;
+        var q = chip.getAttribute('data-q');
+        els.search.value = q;
+        renderSuggest();
+        // try exact match
+        var slug = window.VHDossier.playerSlug(q);
+        if (INDEX[slug]) pickPlayer(slug);
+      });
+    }
+    if (els.ppDiscoverRow) {
+      els.ppDiscoverRow.addEventListener('click', function(ev){
+        var chip = ev.target.closest('[data-q]');
+        if (!chip) return;
+        var q = chip.getAttribute('data-q');
+        var slug = window.VHDossier.playerSlug(q);
+        if (INDEX[slug]) pickPlayer(slug);
+        else { els.search.value = q; renderSuggest(); }
+      });
+    }
+    if (els.ppRandom) {
+      els.ppRandom.addEventListener('click', function(){
+        if (!ORDER.length) return;
+        var slug = ORDER[Math.floor(Math.random()*ORDER.length)];
+        pickPlayer(slug);
+        if (els.ppShell) {
+          els.ppShell.animate([{transform:'rotate(-.6deg) scale(.98)'},{transform:'rotate(0) scale(1)'}],{duration:220,easing:'cubic-bezier(.2,.8,.2,1)'});
+        }
+      });
+    }
+    if (els.ppFeatured) {
+      els.ppFeatured.addEventListener('click', function(ev){
+        var card = ev.target.closest('[data-slug]');
+        if (!card) return;
+        pickPlayer(card.getAttribute('data-slug'));
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
   }
 
   function applyDeepLink() {
@@ -881,117 +664,43 @@
     if (!document.getElementById('skills-search')) return;
     initDom();
     Promise.all([
-      fetch('assets/vectors.json').then(function (r) {
-        if (!r.ok) throw new Error('HTTP ' + r.status); return r.json();
-      }),
-      fetch('assets/skills.json').then(function (r) {
-        if (!r.ok) throw new Error('HTTP ' + r.status); return r.json();
-      })
+      fetch('assets/vectors.json').then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); }),
+      fetch('assets/skills.json').then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
     ]).then(function (loaded) {
-      DATA = loaded[0];
-      SKILLS = loaded[1];
-      if (SKILLS.grades.length !== DATA.players.length) {
-        throw new Error('skills/vectors misaligned');
-      }
-      buildIndex();
-      fillControls();
-      setupControls();
+      DATA = loaded[0]; SKILLS = loaded[1];
+      if (SKILLS.grades.length !== DATA.players.length) throw new Error('skills/vectors misaligned');
+      buildIndex(); fillControls(); setupControls();
       els.search.disabled = false;
       els.boardSkill.disabled = false;
       els.boardSeason.disabled = false;
       renderBoard();
+      renderFeatured();
       applyDeepLink();
-      // Playoff Lens is optional — dormant until an operator commits
-      // assets/playoffs.json. Fetch once, fail soft to `false`.
-      fetch('assets/playoffs.json')
-        .then(function (r) { return r.ok ? r.json() : null; })
-        .then(function (po) {
-          PLAYOFFS = po || false;
-          if (PLAYOFFS && current.slug) renderProfile();
-          // The draft boards fold playoff credit into their scores, so any
-          // board drawn while this fetch was in flight has to be rebuilt.
-          DRAFT = {};
-          renderBoard();
-        })
-        .catch(function () { PLAYOFFS = false; DRAFT = {}; renderBoard(); });
-      fetch('assets/playoff_paths.json')
-        .then(function (r) { return r.ok ? r.json() : null; })
-        .then(function (pp) {
-          PLAYOFF_PATHS = pp || false;
-          if (PLAYOFF_PATHS && current.slug) renderProfile();
-        })
-        .catch(function () { PLAYOFF_PATHS = false; });
-      fetch('assets/honors.json')
-        .then(function (r) { return r.ok ? r.json() : null; })
-        .then(function (ho) {
-          HONORS = ho || false;
-          if (HONORS && current.slug) renderProfile();
-        })
-        .catch(function () { HONORS = false; });
-      // Steals of the Draft is optional — dormant until an operator commits
-      // assets/pedigree.json. Adds two board modes when it lands.
-      fetch('assets/pedigree.json')
-        .then(function (r) { return r.ok ? r.json() : null; })
-        .then(function (ped) {
-          PEDIGREE = ped || false;
-          if (PEDIGREE) addDraftBoardModes();
-        })
-        .catch(function () { PEDIGREE = false; });
-      // Wide (masked) skills — post / transition / motor / gravities, 2015-16+.
-      fetch('assets/skills_wide.json')
-        .then(function (r) { return r.ok ? r.json() : null; })
-        .then(function (w) {
-          WIDE = w || false;
-          if (WIDE) {
-            addWideBoardModes();
-            if (current.slug) renderProfile();
-          }
-        })
-        .catch(function () { WIDE = false; });
-      fetch('assets/archetype_assignments.json')
-        .then(function (r) { return r.ok ? r.json() : null; })
-        .then(function (aa) {
-          ARCH_ASSIGN = aa || false;
-          if (ARCH_ASSIGN && current.slug) renderProfile();
-        })
-        .catch(function () { ARCH_ASSIGN = false; });
-      // Per-season league mean/SD, so the predicted/actual columns can be shown
-      // as real per-100 numbers instead of z-scores. Optional: absent -> z.
-      fetch('assets/season_norms.json')
-        .then(function (r) { return r.ok ? r.json() : null; })
-        .then(function (sn) {
-          SEASON_NORMS = sn || null;
-          if (SEASON_NORMS && current.slug) renderProfile();
-        })
-        .catch(function () { SEASON_NORMS = null; });
-      // Next-season predicted vs actual (pending on latest charted season).
-      fetch('assets/next_profile_eval.json')
-        .then(function (r) { return r.ok ? r.json() : null; })
-        .then(function (ne) {
-          NEXT_EVAL = ne || false;
-          if (NEXT_EVAL && current.slug) renderProfile();
-        })
-        .catch(function () { NEXT_EVAL = false; });
-      window.VHMtnn.load(function (ok) {
-        MTNN_READY = !!ok;
-        if (MTNN_READY && current.slug) renderProfile();
-      });
+      if (!current.slug) {
+        // show empty state with featured
+        if (els.ppEmptyWrap) els.ppEmptyWrap.hidden = false;
+      }
+      fetch('assets/playoffs.json').then(function(r){return r.ok?r.json():null;}).then(function(po){
+        PLAYOFFS=po||false; if (PLAYOFFS && current.slug) renderProfile(); DRAFT={}; renderBoard();
+      }).catch(function(){PLAYOFFS=false; DRAFT={}; renderBoard();});
+      fetch('assets/playoff_paths.json').then(function(r){return r.ok?r.json():null;}).then(function(pp){ PLAYOFF_PATHS=pp||false; if (PLAYOFF_PATHS && current.slug) renderProfile(); }).catch(function(){PLAYOFF_PATHS=false;});
+      fetch('assets/honors.json').then(function(r){return r.ok?r.json():null;}).then(function(ho){ HONORS=ho||false; if (HONORS && current.slug) renderProfile(); }).catch(function(){HONORS=false;});
+      fetch('assets/pedigree.json').then(function(r){return r.ok?r.json():null;}).then(function(ped){ PEDIGREE=ped||false; if (PEDIGREE) addDraftBoardModes(); }).catch(function(){PEDIGREE=false;});
+      fetch('assets/skills_wide.json').then(function(r){return r.ok?r.json():null;}).then(function(w){ WIDE=w||false; if (WIDE) { addWideBoardModes(); if (current.slug) renderProfile(); } }).catch(function(){WIDE=false;});
+      fetch('assets/archetype_assignments.json').then(function(r){return r.ok?r.json():null;}).then(function(aa){ ARCH_ASSIGN=aa||false; if (ARCH_ASSIGN && current.slug) renderProfile(); }).catch(function(){ARCH_ASSIGN=false;});
+      fetch('assets/season_norms.json').then(function(r){return r.ok?r.json():null;}).then(function(sn){ SEASON_NORMS=sn||null; if (SEASON_NORMS && current.slug) renderProfile(); }).catch(function(){SEASON_NORMS=null;});
+      fetch('assets/next_profile_eval.json').then(function(r){return r.ok?r.json():null;}).then(function(ne){ NEXT_EVAL=ne||false; if (NEXT_EVAL && current.slug) renderProfile(); }).catch(function(){NEXT_EVAL=false;});
+      window.VHMtnn.load(function (ok) { MTNN_READY = !!ok; if (MTNN_READY && current.slug) renderProfile(); });
     }).catch(function (err) {
-      els.empty.textContent = 'Could not load the skills data (' + err.message + ').';
+      if (els.empty) els.empty.textContent = 'Could not load the skills data (' + err.message + ').';
     });
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
-  }
+  if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', init); } else { init(); }
 
   global.addEventListener('vh:players-tab', function (ev) {
     var d = ev.detail || {};
-    if (d.tab === 'profile' && d.slug && INDEX[d.slug]) {
-      pickPlayer(d.slug, d.season || '');
-    }
+    if (d.tab === 'profile' && d.slug && INDEX[d.slug]) { pickPlayer(d.slug, d.season || ''); }
     if (d.tab === 'leaderboard') {
       var board = document.getElementById('board-skill');
       if (board && d.skill !== undefined) board.value = String(d.skill);
