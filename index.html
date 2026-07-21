@@ -56,17 +56,15 @@
 .tri{max-width:1180px;margin:12px auto 0;padding:0 clamp(14px,3.5vw,28px) calc(20px + 88px);display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
 @media(max-width:760px){.tri{grid-template-columns:1fr}}
 
-/* full-bleed drift */
+/* full-bleed drift v34 — centered hero court */
 .lemmino-section{margin:0;padding:0}
-.lemmino-drift{position:relative;width:100%;background:#080A0F;min-height:560px;overflow:hidden;border-top:2.5px solid #1A150F;border-bottom:2.5px solid #1A150F}
+.lemmino-drift{position:relative;width:100%;background:#ECE7DB;min-height:560px;overflow:hidden;border-top:3px solid #1A150F;border-bottom:3px solid #1A150F;display:flex;flex-direction:column;align-items:center;padding:24px 0 36px}
 .lemmino-drift canvas{width:100%;height:72vh;display:block;touch-action:none}
 @media(min-width:981px){.lemmino-drift canvas{height:64vh;min-height:600px}}
 @media(max-width:980px){.lemmino-drift{width:100vw;margin-left:calc(50% - 50vw);border-left:0;border-right:0}.lemmino-drift canvas{height:84vh;height:84dvh;min-height:580px}}
-.drift-scrub{position:absolute;left:clamp(12px,2.5vw,18px);right:clamp(12px,2.5vw,18px);bottom:calc(16px + env(safe-area-inset-bottom));z-index:7;background:rgba(26,21,15,0.92);border:2px solid #1A150F;border-radius:999px;padding:6px 8px;display:flex;align-items:center;gap:8px;box-shadow:3px 3px 0 #1A150F}
-.drift-scrub-track{flex:1;height:14px;background:rgba(255,254,247,0.12);border-radius:999px;position:relative;overflow:hidden;cursor:pointer;touch-action:none}
-.drift-scrub-fill{position:absolute;left:0;top:0;bottom:0;width:0%;background:#F0E442;border-radius:999px;transition:width 0.08s linear}
-.drift-ctrl{appearance:none;min-width:44px;min-height:44px;border:2px solid #1A150F;border-radius:999px;background:#FFFEF7;font-family:ui-monospace,monospace;font-weight:900;font-size:11px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;box-shadow:2px 2px 0 #1A150F}
-.drift-ctrl:active{transform:translate(1px,1px);box-shadow:1px 1px 0 #1A150F}
+/* v34: hard kill legacy chrome that caused overlap — safe guard for cached SW HTML */
+#drift-info-stack, #drift-scrub-wrap, #lemmino-drift-focus, #lemmino-drift-meta{display:none !important}
+#lemmino-drift > .drift-scrub, #lemmino-drift > #drift-scrub{display:none !important}
 
 .hd{font-family:"Architects Daughter",var(--mono);line-height:.92;letter-spacing:-.01em}
 .hero-copy{display:flex;flex-direction:column;gap:14px}
@@ -91,11 +89,7 @@
   #map-wrap #map-controls{left:10px;bottom:calc(12px + env(safe-area-inset-bottom));gap:8px}
   #map-wrap #map-controls .chip{min-height:40px;padding:7px 12px;font-size:10px}
 }
-@media(max-width:980px){
-  #lemmino-drift [id="lemmino-drift-focus"], #lemmino-drift [id="lemmino-drift-meta"]{max-width:min(92vw, 640px)}
-}
-#drift-info-stack{position:absolute;left:clamp(12px,2.5vw,18px);top:calc(12px + env(safe-area-inset-top,0px));z-index:4;display:flex;flex-direction:column;gap:8px;max-width:min(92vw, 680px);pointer-events:none}
-#drift-info-stack > div{pointer-events:auto}
+/* v34 cleaned — legacy stack removed, only map-wrap overlap guard remains */
 </style>
 </head><body>
 <noscript><div role="alert" style="padding:16px;text-align:center">Enable JS — Vector Hoops needs JavaScript for Daily Court + 3D void</div></noscript>
@@ -332,14 +326,14 @@ if(prefersReduced){
   };
 
   lazyMount('#sky-canvas', async ()=>{
-    const { mountStarMap } = await import('./assets/lemmino/star-map-void.js?v=33');
+    const { mountStarMap } = await import('./assets/lemmino/star-map-void.js?v=34');
     const c=document.getElementById('sky-canvas');
     if(c) await mountStarMap(c);
     console.log('Lemmino star-map lazy mounted — cached + paused default');
   });
 
   lazyMount('#lemmino-drift-canvas', async ()=>{
-    const { mountDriftVoid } = await import('./assets/lemmino/drift-void.js?v=33');
+    const { mountDriftVoid } = await import('./assets/lemmino/drift-void.js?v=34');
     const c=document.getElementById('lemmino-drift-canvas');
     if(c) await mountDriftVoid(c);
     console.log('Lemmino drift lazy mounted — cached + paused default');

@@ -17,7 +17,7 @@ export async function mountDriftVoid(canvas){
   ];
   const POS_LABELS=['PG','SG','SF','PF','C'];
   const POS_OFF={PG:{x:-7,y:6},SG:{x:7,y:5},SF:{x:10,y:2},PF:{x:2,y:-2},C:{x:0,y:-4}};
-  const CACHE='vector-hoops-v33-20260721-homefix';
+  const CACHE='vector-hoops-v34-20260721-drift-clean';
   async function cachedFetchJSON(url){
     try{ if('caches' in window){ const c=await caches.open(CACHE); const hit=await c.match(url); if(hit) return await hit.json(); } }catch{}
     const r=await fetch(url,{cache:'default'});
@@ -27,11 +27,11 @@ export async function mountDriftVoid(canvas){
   let timeData, liteData, vecData, teamData, skillsData;
   try{
     const [tData, lPos, vData, tmData, sData] = await Promise.all([
-      cachedFetchJSON('assets/archetypes_time.json?v=32'),
-      cachedFetchJSON('assets/vectors_search_lite_pos.json?v=32').catch(()=>cachedFetchJSON('assets/vectors_search_lite.json?v=32')),
-      cachedFetchJSON('assets/vectors.json?v=32').catch(()=>null),
-      cachedFetchJSON('assets/player_team_season.json?v=32').catch(()=>null),
-      cachedFetchJSON('assets/skills.json?v=32').catch(()=>null),
+      cachedFetchJSON('assets/archetypes_time.json?v=34'),
+      cachedFetchJSON('assets/vectors_search_lite_pos.json?v=34').catch(()=>cachedFetchJSON('assets/vectors_search_lite.json?v=34')),
+      cachedFetchJSON('assets/vectors.json?v=34').catch(()=>null),
+      cachedFetchJSON('assets/player_team_season.json?v=34').catch(()=>null),
+      cachedFetchJSON('assets/skills.json?v=34').catch(()=>null),
     ]);
     timeData=tData; liteData=lPos; vecData=vData; teamData=tmData; skillsData=sData;
   }catch(e){ console.warn('court v32 fail',e); return; }

@@ -125,7 +125,7 @@ export async function mountStarMap(canvas){
   const shapeTextures = shapeTexturesFilled; // legacy alias
 
   async function cachedFetchJSON(url){
-    const CACHE_NAME='vector-hoops-v27-20260720-ltr-search-fix2';
+    const CACHE_NAME='vector-hoops-v34-20260721-drift-clean';
     try{
       if('caches' in window){
         const cache=await caches.open(CACHE_NAME);
@@ -147,10 +147,10 @@ export async function mountStarMap(canvas){
   let teamSeasonMap=null;
   try{
     try{
-      const j=await cachedFetchJSON('assets/vectors_search_lite_pos.json?v=27');
+      const j=await cachedFetchJSON('assets/vectors_search_lite_pos.json?v=34');
       rawAll=j.players||[];
     }catch(e){
-      const j2=await cachedFetchJSON('assets/vectors_search_lite.json?v=27');
+      const j2=await cachedFetchJSON('assets/vectors_search_lite.json?v=34');
       rawAll=j2.players||j2||[];
       rawAll.forEach(p=>{ if(p.p===undefined){ p.p=Math.floor(Math.random()*5); p.pl=POS_LABELS[p.p]; } });
     }
@@ -160,7 +160,7 @@ export async function mountStarMap(canvas){
   // Determine current season logic: offseason July -> last completed 2024-25, if middle of season add current
   // We load player_team_season to know who is active
   try{
-    const ts=await cachedFetchJSON('assets/player_team_season.json?v=27').catch(()=>null);
+    const ts=await cachedFetchJSON('assets/player_team_season.json?v=34').catch(()=>null);
     teamSeasonMap=ts;
   }catch{}
   const ACTIVE_SEASONS = ['2024-25','2025-26']; // last + upcoming; in-season we add current
