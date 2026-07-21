@@ -354,7 +354,7 @@ if(prefersReduced){
   });
 
   lazyMount('#lemmino-drift-canvas', async ()=>{
-    const { mountDriftVoid } = await import('./assets/lemmino/drift-void.js?v=31');
+    const { mountDriftVoid } = await import('./assets/lemmino/drift-void.js?v=32');
     const c=document.getElementById('lemmino-drift-canvas');
     if(c) await mountDriftVoid(c);
     console.log('Lemmino drift lazy mounted — cached + paused default');

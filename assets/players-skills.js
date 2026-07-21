@@ -25,7 +25,7 @@
 
   function ensureCourtModule() {
     if (!courtModulePromise) {
-      courtModulePromise = import('../lemmino/player-court-skill-story.js?v=31');
+      courtModulePromise = import('../lemmino/player-court-skill-story.js?v=32');
     }
     return courtModulePromise;
   }
