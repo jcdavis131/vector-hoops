@@ -8,6 +8,7 @@
 <link rel="manifest" href="/manifest.json"/>
 <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/shell.css"/><link rel="stylesheet" href="assets/responsive.css"/><link rel="stylesheet" href="assets/final-qa.css"/><link rel="stylesheet" href="assets/unified.css"/><link rel="stylesheet" href="assets/lemmino/lemmino.css"/>
+<link rel="stylesheet" href="assets/trading-card.css?v=35"/>
 <script src="https://unpkg.com/es-module-shims@1.8.0/dist/es-module-shims.js"></script>
 <script type="importmap">{"imports":{"three":"https://unpkg.com/three@0.160.0/build/three.module.js","three/addons/":"https://unpkg.com/three@0.160.0/examples/jsm/"}}</script>
 <style>
@@ -56,15 +57,11 @@
 .tri{max-width:1180px;margin:12px auto 0;padding:0 clamp(14px,3.5vw,28px) calc(20px + 88px);display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
 @media(max-width:760px){.tri{grid-template-columns:1fr}}
 
-/* full-bleed drift v34 — centered hero court */
-.lemmino-section{margin:0;padding:0}
-.lemmino-drift{position:relative;width:100%;background:#ECE7DB;min-height:560px;overflow:hidden;border-top:3px solid #1A150F;border-bottom:3px solid #1A150F;display:flex;flex-direction:column;align-items:center;padding:24px 0 36px}
-.lemmino-drift canvas{width:100%;height:72vh;display:block;touch-action:none}
-@media(min-width:981px){.lemmino-drift canvas{height:64vh;min-height:600px}}
-@media(max-width:980px){.lemmino-drift{width:100vw;margin-left:calc(50% - 50vw);border-left:0;border-right:0}.lemmino-drift canvas{height:84vh;height:84dvh;min-height:580px}}
-/* v34: hard kill legacy chrome that caused overlap — safe guard for cached SW HTML */
-#drift-info-stack, #drift-scrub-wrap, #lemmino-drift-focus, #lemmino-drift-meta{display:none !important}
-#lemmino-drift > .drift-scrub, #lemmino-drift > #drift-scrub{display:none !important}
+/* v35 trading card replaces drift — clean trading card void, legacy drift hard kill */
+.trading-card-void{ position:relative; width:100%; background:#ECE7DB; min-height:560px }
+@media(max-width:980px){ .trading-card-void{ width:100vw; margin-left:calc(50% - 50vw); border-left:0; border-right:0 } }
+/* legacy guard */
+#drift-info-stack, #drift-scrub-wrap, #lemmino-drift-focus, #lemmino-drift-meta, .lemmino-drift, #lemmino-drift{ display:none !important }
 
 .hd{font-family:"Architects Daughter",var(--mono);line-height:.92;letter-spacing:-.01em}
 .hero-copy{display:flex;flex-direction:column;gap:14px}
@@ -153,11 +150,9 @@
   <a class="card" href="/model" style="text-decoration:none;color:inherit"><div class="small-mono">Lab</div><b style="font-family:'Architects Daughter',mono;font-size:19px">Inside the model</b><div style="font-size:13px;color:#666;margin-top:5px;line-height:1.45">How the embedding is built, what it captures, and where it fails.</div></a>
 </div>
 
-<!-- LEMMINO 2 — Player career arcs through archetype drift — random all-star loop -->
-<div class="lemmino-section">
-  <div class="lemmino-drift" id="lemmino-drift" style="background:#080A0F">
-    <canvas id="lemmino-drift-canvas" width="1180" height="560" aria-label="Random all-star career arc through archetype drift"></canvas>
-  </div>
+<!-- TRADING CARD VOID — replaces heavy drift tube — career arc + skills trading card -->
+<div class="trading-card-void" id="trading-card-void">
+  <div style="padding:24px;font-family:ui-monospace;font-size:13px;text-align:center">Loading trading cards…</div>
 </div>
 
 <div id="viral-row" style="max-width:1180px;margin:10px auto 0;padding:0 clamp(14px,3.5vw,28px) calc(28px + 88px);display:grid;grid-template-columns:1.1fr .9fr;gap:12px">
@@ -294,7 +289,7 @@
 })();
 </script>
 
-<!-- Lemmino 3D — professional documentary voids — v16 lazy + click-to-play + cached -->
+<!-- Trading Cards — star map + career arc card — simplified, no heavy drift tube -->
 <script type="module">
 const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 if(prefersReduced){
@@ -312,31 +307,23 @@ if(prefersReduced){
     };
     const observer = new IntersectionObserver((entries)=>{
       const ent=entries[0];
-      if(ent&&ent.isIntersecting){
-        // delay a bit to avoid blocking main thread during scroll
-        setTimeout(mount, 120);
-      }
+      if(ent&&ent.isIntersecting){ setTimeout(mount, 120); }
     },{rootMargin:'250px 0px', threshold:0.01});
     observer.observe(el);
-    // also mount on user explicitly clicking play button before visible
-    const playBtn = selector.includes('sky') ? document.getElementById('btn-pause') : document.getElementById('drift-play');
-    if(playBtn){
-      playBtn.addEventListener('click', ()=>{ mount(); }, {once:true});
-    }
   };
 
   lazyMount('#sky-canvas', async ()=>{
-    const { mountStarMap } = await import('./assets/lemmino/star-map-void.js?v=34');
+    const { mountStarMap } = await import('./assets/lemmino/star-map-void.js?v=35');
     const c=document.getElementById('sky-canvas');
     if(c) await mountStarMap(c);
-    console.log('Lemmino star-map lazy mounted — cached + paused default');
+    console.log('Lemmino star-map lazy mounted');
   });
 
-  lazyMount('#lemmino-drift-canvas', async ()=>{
-    const { mountDriftVoid } = await import('./assets/lemmino/drift-void.js?v=34');
-    const c=document.getElementById('lemmino-drift-canvas');
-    if(c) await mountDriftVoid(c);
-    console.log('Lemmino drift lazy mounted — cached + paused default');
+  lazyMount('#trading-card-void', async ()=>{
+    const { mountTradingCardVoid } = await import('./assets/lemmino/trading-card-void.js?v=35');
+    const c=document.getElementById('trading-card-void');
+    if(c) await mountTradingCardVoid(c);
+    console.log('Trading card void mounted');
   });
 }
 </script>
