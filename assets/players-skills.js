@@ -66,19 +66,30 @@
   }
 
   function fillControls() {
+    if (els.boardSkill) {
+      // Clear placeholder "Loading skills..." — otherwise value is that text, parseInt -> NaN, SKILLS.skills[NaN] undefined, crash on .w
+      els.boardSkill.innerHTML = '';
+    }
     SKILLS.skills.forEach(function (sk, j) {
       var opt = document.createElement('option');
       opt.value = String(j);
       opt.textContent = sk.label;
       els.boardSkill.appendChild(opt);
     });
-    var seasons = {};
-    DATA.players.forEach(function (p) { seasons[p.season] = true; });
-    Object.keys(seasons).sort().reverse().forEach(function (s) {
-      var opt = document.createElement('option');
-      opt.value = s; opt.textContent = s;
-      els.boardSeason.appendChild(opt);
-    });
+    if (els.boardSkill) els.boardSkill.value = '0';
+    if (els.boardSeason) {
+      var existingSeasons = {};
+      Array.from(els.boardSeason.options).forEach(function(o){ existingSeasons[o.value]=true; });
+      var seasons = {};
+      DATA.players.forEach(function (p) { seasons[p.season] = true; });
+      Object.keys(seasons).sort().reverse().forEach(function (s) {
+        if (!existingSeasons[s]) {
+          var opt = document.createElement('option');
+          opt.value = s; opt.textContent = s;
+          els.boardSeason.appendChild(opt);
+        }
+      });
+    }
   }
 
   function addWideBoardModes() {
@@ -574,7 +585,9 @@
     if (mode==='steal' || mode==='bust') { els.boardSeason.disabled=true; renderDraftBoard(mode); return; }
     if (mode && mode.indexOf('wide:')===0) { els.boardSeason.disabled=false; renderWideBoard(mode.slice(5)); return; }
     els.boardSeason.disabled=false;
-    var j=parseInt(mode||'0',10); var season=els.boardSeason.value; var rows=[];
+    var j=parseInt(mode||'0',10);
+    if (isNaN(j) || j<0 || j>=SKILLS.skills.length) j=0;
+    var season=els.boardSeason.value; var rows=[];
     for (var i=0;i<DATA.players.length;i++) { if (season && DATA.players[i].season!==season) continue; rows.push(i); }
     var featIdx={}; DATA.features.forEach(function(f,k){ featIdx[f]=k; });
     var w=SKILLS.skills[j].w; var volCols=['FGA','FTA','AST'].map(function(f){return featIdx[f];}).filter(function(k){return k!==undefined;});
@@ -690,7 +703,7 @@
       fetch('assets/archetype_assignments.json').then(function(r){return r.ok?r.json():null;}).then(function(aa){ ARCH_ASSIGN=aa||false; if (ARCH_ASSIGN && current.slug) renderProfile(); }).catch(function(){ARCH_ASSIGN=false;});
       fetch('assets/season_norms.json').then(function(r){return r.ok?r.json():null;}).then(function(sn){ SEASON_NORMS=sn||null; if (SEASON_NORMS && current.slug) renderProfile(); }).catch(function(){SEASON_NORMS=null;});
       fetch('assets/next_profile_eval.json').then(function(r){return r.ok?r.json():null;}).then(function(ne){ NEXT_EVAL=ne||false; if (NEXT_EVAL && current.slug) renderProfile(); }).catch(function(){NEXT_EVAL=false;});
-      window.VHMtnn.load(function (ok) { MTNN_READY = !!ok; if (MTNN_READY && current.slug) renderProfile(); });
+      if (window.VHMtnn && window.VHMtnn.load) { window.VHMtnn.load(function (ok) { MTNN_READY = !!ok; if (MTNN_READY && current.slug) renderProfile(); }); } else { MTNN_READY=false; }
     }).catch(function (err) {
       if (els.empty) els.empty.textContent = 'Could not load the skills data (' + err.message + ').';
     });

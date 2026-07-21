@@ -464,6 +464,21 @@
   justify-content:space-between;
 }
 
+
+/* v28 hotfix: override legacy .skillbar-list li from unified.css that was collapsing tracks */
+.skillbar-list.pp-skills-grid li.pp-skill,
+#skills-bars.pp-skills-grid .pp-skill,
+.pp-skills-grid .pp-skill {
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:stretch !important;
+  gap:6px !important;
+}
+.pp-skills-grid .pp-skill__track {
+  width:100% !important;
+  min-width:0;
+}
+
 /* wide tracking section */
 .pp-wide-head{
   margin-top:12px;
