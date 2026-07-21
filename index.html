@@ -347,7 +347,7 @@ if(prefersReduced){
   };
 
   lazyMount('#sky-canvas', async ()=>{
-    const { mountStarMap } = await import('./assets/lemmino/star-map-void.js?v=27');
+    const { mountStarMap } = await import('./assets/lemmino/star-map-void.js?v=28');
     const c=document.getElementById('sky-canvas');
     if(c) await mountStarMap(c);
     console.log('Lemmino star-map lazy mounted — cached + paused default');

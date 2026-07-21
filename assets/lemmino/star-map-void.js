@@ -73,19 +73,11 @@ export async function mountStarMap(canvas){
   }
 
   const walls=new THREE.Group(); starGroup.add(walls);
-  // v22: grid borders toned way down — was wildly distracting black cube lines
-  const xy=makeGlass(PLATE,0xFFFFFF,0.003); xy.position.set(0,0,-WALL); walls.add(xy);
-  const xyGrid=makeGrid(PLATE,6,0xFFFFFF,0.006); xyGrid.position.copy(xy.position); walls.add(xyGrid);
-  const xyE=makeEdge(PLATE,0xFFFFFF,0.008); xyE.position.copy(xy.position); walls.add(xyE);
-  const xz=makeGlass(PLATE,0xA8C4FF,0.0025); xz.rotation.x=Math.PI/2; xz.position.set(0,-WALL,0); walls.add(xz);
-  const xzG=makeGrid(PLATE,6,0xA8C4FF,0.005); xzG.rotation.x=Math.PI/2; xzG.position.copy(xz.position); walls.add(xzG);
-  const xzE=makeEdge(PLATE,0xA8C4FF,0.008); xzE.rotation.x=Math.PI/2; xzE.position.copy(xz.position); walls.add(xzE);
-  const yz=makeGlass(PLATE,0xF0E442,0.002); yz.rotation.y=Math.PI/2; yz.position.set(-WALL,0,0); walls.add(yz);
-  const yzG=makeGrid(PLATE,6,0xF0E442,0.005); yzG.rotation.y=Math.PI/2; yzG.position.copy(yz.position); walls.add(yzG);
-  const yzE=makeEdge(PLATE,0xF0E442,0.008); yzE.rotation.y=Math.PI/2; yzE.position.copy(yz.position); walls.add(yzE);
+  // #1 embedding map: only X/Y/Z axes — remove all glass plates, grids, and box edges per request 2026-07-20
+  // (previously: xy/xz/yz makeGlass + makeGrid + makeEdge — now stripped)
 
   const axes=new THREE.Group(); starGroup.add(axes);
-  function axle(dir,color){ return new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,0,0), dir.clone().multiplyScalar(WALL*0.90)]), new THREE.LineBasicMaterial({ color:new THREE.Color(color), transparent:true, opacity:0.12 })); }
+  function axle(dir,color){ return new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,0,0), dir.clone().multiplyScalar(WALL*0.90)]), new THREE.LineBasicMaterial({ color:new THREE.Color(color), transparent:true, opacity:0.85 })); }
   axes.add(axle(new THREE.Vector3(1,0,0),0x56B4E9));
   axes.add(axle(new THREE.Vector3(0,1,0),0xF0E442));
   axes.add(axle(new THREE.Vector3(0,0,1),0xD55E00));
