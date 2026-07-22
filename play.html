@@ -270,16 +270,17 @@ button,.input{min-height:44px}
     try{
       const st=VHPastModern.state();
       if(st && st.modernPool && st.modernPool.length){
-        modernPoolLower=st.modernPool.map(m=>m.n.toLowerCase());
+        modernPoolLower=st.modernPool.map(m=>(m.n||'').toLowerCase());
       }
     }catch{}
+
   }
 
   function ensureModernLower(){
     if(modernPoolLower.length) return;
     try{
       const st=VHPastModern.state();
-      if(st && st.modernPool) modernPoolLower=st.modernPool.map(m=>m.n.toLowerCase());
+      if(st && st.modernPool) modernPoolLower=st.modernPool.map(m=>(m.n||'').toLowerCase());
     }catch{}
   }
 
@@ -414,7 +415,7 @@ button,.input{min-height:44px}
   function initSearchWorker(){
     try{
       if(!window.Worker) return null;
-      const w=new Worker('/assets/workers/modern-search.worker.js?v=40');
+      const w=new Worker('/assets/workers/modern-search.worker.js?v=41');
       w.onmessage=(ev)=>{
         const {type, results, id, q} = ev.data||{};
         if(type==='ready'){ workerReady=true; return; }
@@ -431,15 +432,18 @@ button,.input{min-height:44px}
 
   function filteredModern(q){
     q=(q||'').toLowerCase().trim(); if(!q) return [];
+    // guard: single-char queries like 't' match 200+ players and jank mobile + break perception — require >=2 chars
+    if(q.length<2) return [];
     ensureModernLower();
     try{
       const st=VHPastModern.state();
       const pool=st.modernPool; if(!pool||!pool.length) return [];
-      const lowers=modernPoolLower.length===pool.length?modernPoolLower:pool.map(m=>m.n.toLowerCase());
+      const lowers=modernPoolLower.length===pool.length?modernPoolLower:pool.map(m=>(m.n||'').toLowerCase());
       // score: startsWith = 0, early index = 1, later = 2
       const scored=[];
       for(let i=0;i<pool.length;i++){
         const low=lowers[i]||'';
+        if(!low) continue;
         const idx=low.indexOf(q);
         if(idx===-1) continue;
         const score = idx===0 ? 0 : (idx<=2?1:2);
@@ -448,7 +452,7 @@ button,.input{min-height:44px}
       }
       scored.sort((a,b)=> a.score-b.score || a.idx-b.idx || a.m.n.localeCompare(b.m.n));
       return scored.slice(0,8).map(x=>x.m);
-    }catch{ return []; }
+    }catch(e){ console.warn('filteredModern fail',e); return []; }
   }
 
   function attachSuggest(){
@@ -457,40 +461,49 @@ button,.input{min-height:44px}
     let active=-1,last=[]; let debounceTimer=null;
 
     function render(list){
-      last=list;
-      if(!list.length){ ul.style.display='none'; active=-1; return; }
-      ul.textContent='';
-      const frag=document.createDocumentFragment();
-      for(let i=0;i<list.length;i++){
-        const m=list[i];
-        const li=document.createElement('li');
-        li.dataset.i=i;
-        li.className= (i===active?'is-active':'');
-        const left=document.createElement('span'); left.innerHTML='<b>'+m.n+'</b> <span style="opacity:.6">'+m.s+'</span>';
-        const right=document.createElement('span'); right.className='small-mono'; right.textContent=m.i;
-        li.appendChild(left); li.appendChild(right);
-        frag.appendChild(li);
-      }
-      ul.appendChild(frag);
-      ul.style.display='block';
+      try{
+        last=list;
+        if(!list.length){ ul.style.display='none'; active=-1; return; }
+        ul.textContent='';
+        const frag=document.createDocumentFragment();
+        for(let i=0;i<list.length;i++){
+          const m=list[i];
+          if(!m || !m.n) continue;
+          const li=document.createElement('li');
+          li.dataset.i=i;
+          li.className= (i===active?'is-active':'');
+          const left=document.createElement('span'); left.innerHTML='<b>'+(m.n||'').replace(/</g,'&lt;')+'</b> <span style="opacity:.6">'+(m.s||'')+'</span>';
+          const right=document.createElement('span'); right.className='small-mono'; right.textContent=m.i;
+          li.appendChild(left); li.appendChild(right);
+          frag.appendChild(li);
+        }
+        ul.appendChild(frag);
+        ul.style.display='block';
+      }catch(e){ console.warn('suggest render fail',e); try{ ul.style.display='none'; }catch{} }
     }
 
     function searchAndRender(q){
-      const results=filteredModern(q);
-      render(results);
-      // optional worker enhancement — never blocks main search
-      if(searchWorker && workerReady){
-        try{
-          workerSeq++; lastWorkerId=workerSeq;
-          searchWorker.__renderCb = (wResults)=>{
-            if(wResults && wResults.length) {
-              // merge worker results only if main found nothing, else keep main (more reliable)
-              if(!results.length) render(wResults);
-            }
-          };
-          searchWorker.postMessage({type:'search', payload:{q, id: lastWorkerId}});
-        }catch{}
-      }
+      try{
+        const results=filteredModern(q);
+        render(results);
+        // optional worker enhancement — never blocks main search
+        if(searchWorker && workerReady){
+          try{
+            workerSeq++; lastWorkerId=workerSeq;
+            const mainResults=results;
+            const curId=lastWorkerId;
+            searchWorker.__renderCb = (wResults)=>{
+              try{
+                if(curId!==lastWorkerId) return;
+                if(wResults && wResults.length) {
+                  if(!mainResults.length) render(wResults);
+                }
+              }catch{}
+            };
+            searchWorker.postMessage({type:'search', payload:{q, id: lastWorkerId}});
+          }catch{}
+        }
+      }catch(e){ console.warn('searchAndRender fail',e); }
     }
 
     input.addEventListener('focus', function(){ isTyping=true; auto=false; mapPaused=true; ensureModernLower(); try{ window.dispatchEvent(new CustomEvent('vh:pause-maps')); }catch{} setTimeout(()=>searchAndRender(this.value),30); });
