@@ -125,7 +125,7 @@ export async function mountStarMap(canvas){
   const shapeTextures = shapeTexturesFilled; // legacy alias
 
   async function cachedFetchJSON(url){
-    const CACHE_NAME='vector-hoops-v42-20260722-pixel-avatar-fix';
+    const CACHE_NAME='vector-hoops-v43-20260722-tight-pulse-knn30';
     try{
       if('caches' in window){
         const cache=await caches.open(CACHE_NAME);
@@ -536,18 +536,14 @@ export async function mountStarMap(canvas){
     camera.position.x=Math.sin(et*0.04)*0.18;
     camera.position.y=0.38+Math.sin(et*0.055)*0.09;
     camera.lookAt(0,0.06,0);
-    // hero pulsate
-    try{
+    // hero pulsate — tightened per user: kNN<30 style, small pulse not huge glow
+  try{
       if(heroHighlight && heroHighlight.material){
-        const base=heroHighlight.userData && heroHighlight.userData.baseSize || (isMobile?11:14);
-        heroHighlight.material.size = base + Math.sin(et*2.2)*1.2;
+        const base=heroHighlight.userData && heroHighlight.userData.baseSize || pointSizeFilled;
+        heroHighlight.material.size = base + Math.sin(et*2.2)*0.12;
         if(heroHighlight.userData && heroHighlight.userData.glowMat){
-          heroHighlight.userData.glowMat.size = (isMobile?22:28) + Math.sin(et*2.2+1.1)*2.2;
-          heroHighlight.userData.glowMat.opacity = 0.32 + Math.sin(et*1.8)*0.08;
-        }
-        if(heroHighlight.userData && heroHighlight.userData.glow2Mat){
-          heroHighlight.userData.glow2Mat.size = (isMobile?34:42) + Math.sin(et*1.8+0.7)*3;
-          heroHighlight.userData.glow2Mat.opacity = 0.14 + Math.sin(et*1.2)*0.04;
+          heroHighlight.userData.glowMat.size = base*1.35 + Math.sin(et*2.2+1.1)*0.18;
+          heroHighlight.userData.glowMat.opacity = 0.10 + Math.sin(et*1.8)*0.03;
         }
       }
     }catch{}
