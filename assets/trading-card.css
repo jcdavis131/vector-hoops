@@ -181,27 +181,20 @@
 
 .tc-art{
   position:relative;
-  height:168px;
-  background:
-    radial-gradient(42% 56% at 24% 18%, rgba(0,114,178,.22), transparent 60%),
-    radial-gradient(36% 48% at 78% 72%, rgba(213,94,0,.18), transparent 58%),
-    #12100C;
+  height:184px;
+  background:#FFFEF7;
   border-bottom:2px solid #1A150F;
   overflow:hidden;
   display:flex;
   align-items:center;
   justify-content:center;
 }
-.tc-art canvas{ position:absolute; inset:0; width:100%; height:100%; display:block }
-.tc-art-initials{
-  font-family:"Architects Daughter", monospace;
-  font-size:72px;
-  font-weight:900;
-  color:rgba(255,254,247,.12);
-  letter-spacing:-.04em;
-  user-select:none;
-  pointer-events:none;
-}
+.tc-art--light{ background:#FFFEF7 }
+.tc-art canvas{ position:relative; width:100%; height:100%; display:block; z-index:1 }
+.tc-art-initials{ display:none !important }
+.tc-art-axis{ position:absolute; font-family:ui-monospace,monospace; font-size:9px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:#5A544D; z-index:2; line-height:1 }
+.tc-art-axis--x{ bottom:6px; left:12px; right:12px; text-align:center }
+.tc-art-axis--y{ left:6px; top:50%; transform:rotate(-90deg) translateX(-50%); transform-origin:left center; opacity:.7 }
 
 .tc-rarity{
   padding:7px 12px;
@@ -238,18 +231,24 @@
 }
 .tc-section-head::after{ content:''; flex:1; height:1.5px; background:#E9E2D6 }
 
-.tc-arc-row{ display:flex; gap:6px; overflow-x:auto; padding:4px 2px 6px; scrollbar-width:thin }
+.tc-arc-row{ display:flex; gap:8px; overflow-x:auto; padding:6px 2px 8px; scrollbar-width:thin }
 .tc-chip{
   border:1.8px solid #1A150F;
   border-radius:999px;
-  padding:5px 10px;
+  padding:10px 14px;
   font-family:ui-monospace,monospace;
-  font-size:11px;
+  font-size:12.5px;
   font-weight:800;
   white-space:nowrap;
   cursor:pointer;
   box-shadow:1.5px 1.5px 0 #1A150F;
   flex:0 0 auto;
+  min-height:44px;
+  min-width:44px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
   transition:transform .08s;
 }
 .tc-chip.is-active{ background:#1A150F; color:#fff; transform:translateY(-1px) }
@@ -297,13 +296,49 @@
 .tc-story b{ color:#1A150F }
 
 .tc-spark{
-  border:2px solid #1A150F;
-  border-radius:12px;
-  padding:8px 10px;
-  background:#fff;
-  box-shadow:2px 2px 0 #1A150F;
+  border:2.2px solid #1A150F;
+  border-radius:14px;
+  padding:10px 12px 10px;
+  background:#FFFEF7;
+  box-shadow:2.5px 2.5px 0 #1A150F;
 }
 .tc-spark canvas{ width:100%; height:56px; display:block }
+.tc-spark--tall{ min-height:96px; padding:12px }
+.tc-spark--tall canvas{ height:96px }
+.tc-footnote--clear{ font-size:11px; line-height:1.5; color:#3A332A; margin-top:8px; font-family:ui-sans-serif, system-ui; font-weight:600 }
+
+/* clean timeline v38 */
+.tc-timeline-clean{ display:flex; flex-direction:column; gap:10px; }
+.tc-timeline-stable{
+  display:flex; gap:12px; align-items:center;
+  border:2.5px solid #1A150F; border-radius:14px; padding:12px 14px;
+  background:#fff; box-shadow:3px 3px 0 #1A150F;
+  min-height:56px;
+}
+.tc-timeline-stable__icon{ width:36px; height:36px; border-radius:999px; display:flex; align-items:center; justify-content:center; border:2px solid #1A150F; flex:0 0 36px }
+.tc-timeline-stable__text{ font-family:ui-sans-serif,system-ui; font-size:14px; line-height:1.4; color:#1A150F }
+.tc-timeline-years{ display:flex; align-items:center; gap:10px; font-family:ui-monospace,monospace; font-size:11px; font-weight:800; color:#5A544D }
+.tc-timeline-years__line{ flex:1; height:4px; background:#E9E2D6; border-radius:999px; position:relative }
+.tc-timeline-years__dot{ position:absolute; left:50%; top:50%; width:14px; height:14px; border-radius:999px; border:2px solid #1A150F; transform:translate(-50%,-50%) }
+.tc-timeline-bar{ display:flex; gap:4px; width:100% }
+.tc-timeline-seg{
+  flex:1; border:2.5px solid #1A150F; border-radius:12px; padding:8px 10px;
+  background:#fff; box-shadow:2px 2px 0 #1A150F;
+  display:flex; flex-direction:column; gap:2px; min-width:0;
+}
+.tc-timeline-seg .seg-color{ height:8px; border-radius:999px; border:1.5px solid #1A150F }
+.tc-timeline-seg .seg-label{ font-family:ui-monospace,monospace; font-size:11px; font-weight:800; white-space:nowrap; overflow:hidden; text-overflow:ellipsis }
+.tc-timeline-seg .seg-years{ font-family:ui-monospace,monospace; font-size:10px; color:#6B665E }
+.tc-timeline-foot{ font-family:ui-monospace,monospace; font-size:11px; color:#5A544D; line-height:1.4 }
+.tc-detail-dots{ display:flex; gap:8px; overflow-x:auto; padding:6px 2px 4px; scrollbar-width:thin }
+.tc-season-dot{
+  border:1.8px solid #1A150F; border-radius:999px; background:#fff; min-height:44px; min-width:44px;
+  padding:6px 10px; display:inline-flex; flex-direction:column; align-items:center; justify-content:center; gap:2px;
+  font-family:ui-monospace,monospace; font-size:10px; font-weight:800; cursor:pointer; box-shadow:1.5px 1.5px 0 #1A150F; flex:0 0 auto;
+}
+.tc-season-dot .dot{ width:12px; height:12px; border-radius:50%; border:1.5px solid #1A150F; display:block }
+.tc-season-dot.is-active{ background:#1A150F; color:#fff }
+.tc-season-dot.is-active .yr{ color:#fff }
 
 .tc-actions{ display:flex; gap:8px; flex-wrap:wrap; margin-top:4px }
 

@@ -125,7 +125,7 @@ export async function mountStarMap(canvas){
   const shapeTextures = shapeTexturesFilled; // legacy alias
 
   async function cachedFetchJSON(url){
-    const CACHE_NAME='vector-hoops-v36-20260721-target-fix';
+    const CACHE_NAME='vector-hoops-v39-20260722-mj-gold';
     try{
       if('caches' in window){
         const cache=await caches.open(CACHE_NAME);
@@ -147,10 +147,10 @@ export async function mountStarMap(canvas){
   let teamSeasonMap=null;
   try{
     try{
-      const j=await cachedFetchJSON('assets/vectors_search_lite_pos.json?v=36');
+      const j=await cachedFetchJSON('assets/vectors_search_lite_pos.json?v=39');
       rawAll=j.players||[];
     }catch(e){
-      const j2=await cachedFetchJSON('assets/vectors_search_lite.json?v=36');
+      const j2=await cachedFetchJSON('assets/vectors_search_lite.json?v=39');
       rawAll=j2.players||j2||[];
       rawAll.forEach(p=>{ if(p.p===undefined){ p.p=Math.floor(Math.random()*5); p.pl=POS_LABELS[p.p]; } });
     }
@@ -160,7 +160,7 @@ export async function mountStarMap(canvas){
   // Determine current season logic: offseason July -> last completed 2024-25, if middle of season add current
   // We load player_team_season to know who is active
   try{
-    const ts=await cachedFetchJSON('assets/player_team_season.json?v=36').catch(()=>null);
+    const ts=await cachedFetchJSON('assets/player_team_season.json?v=39').catch(()=>null);
     teamSeasonMap=ts;
   }catch{}
   const ACTIVE_SEASONS = ['2024-25','2025-26']; // last + upcoming; in-season we add current
@@ -195,13 +195,22 @@ export async function mountStarMap(canvas){
     if(INCLUDE_BOTH){ players.push(...arr.slice(-2)); }
     else { players.push(arr[arr.length-1]); }
   }
-  console.log('star-map v23 current-only filter', rawAll.length,'->',players.length,'activeNames',activeNames.size);
+  // HERO: ensure Michael Jordan 97-98 is always present as highlighted star (even though not active)
+  const HERO_NAME='Michael Jordan';
+  const HERO_SEASON='1997-98';
+  let heroRaw = rawAll.find(p=> p.n===HERO_NAME && p.s===HERO_SEASON) || rawAll.find(p=> p.i===672);
+  if(heroRaw && !players.some(p=> p.n===HERO_NAME && p.s===HERO_SEASON)){
+    // keep hero in current list so he renders as filled + gets special highlight later
+    players.push(heroRaw);
+  }
+
+  console.log('star-map v23 current-only filter', rawAll.length,'->',players.length,'activeNames',activeNames.size, 'hero', !!heroRaw);
   // update eyebrow
   try{
     const pill=document.querySelector('.pill-yellow');
-    if(pill){ pill.textContent=`${rawAll.length} OUTLINE • ${players.length} CURRENT FILLED`; pill.title=`${rawAll.length} all-time as colored outlines, ${players.length} current 24-25 as filled`; }
+    if(pill){ pill.textContent=`${rawAll.length} OUTLINE • ${players.length} CURRENT FILLED (★ MJ)`; pill.title=`${rawAll.length} all-time as colored outlines, ${players.length} current 24-25 as filled inc MJ 97-98 hero`; }
     const sub=document.getElementById('viral-today');
-    if(sub){ sub.textContent=`${rawAll.length} seasons as outline • ${players.length} current ${LAST_SEASON} filled • shape=POS color=ARCH`; }
+    if(sub){ sub.textContent=`${rawAll.length} seasons as outline • ${players.length} current ${LAST_SEASON} filled • shape=POS color=ARCH • ★ = MJ 97-98`; }
   }catch{}
 
   // Build positions for ALL (outline) and CURRENT (filled)
@@ -289,7 +298,84 @@ export async function mountStarMap(canvas){
     pointGroups.push({ pi, shape:shapeName, layer:'filled', geo, mat, list, posArr });
   }
 
-  console.log('star-map v23 groups outline+filled', pointGroups.map(g=>`${g.layer}:${g.shape}:${g.list.length}`).join(' '), 'camZ', camZ);
+  // 3) HERO highlight — MJ 97-98 as large gold star on top
+  let heroHighlight=null;
+  try{
+    if(heroRaw){
+      const hx=(heroRaw.x-0.5)*2*SPREAD, hy=(heroRaw.y-0.5)*2*SPREAD, hz=(heroRaw.z-0.5)*2*SPREAD;
+      // make star texture from canvas
+      function makeStarTexture(){
+        const c=document.createElement('canvas'); c.width=128; c.height=128;
+        const ctx=c.getContext('2d');
+        ctx.clearRect(0,0,128,128);
+        ctx.fillStyle='#F0E442';
+        ctx.strokeStyle='#111'; ctx.lineWidth=3;
+        const cx=64, cy=60, spikes=5, outer=46, inner=18;
+        ctx.beginPath();
+        for(let i=0;i<spikes*2;i++){
+          const r=i%2===0?outer:inner;
+          const a=Math.PI/2 + i*Math.PI/spikes - Math.PI*2/spikes;
+          const x=cx+Math.cos(a)*r, y=cy+Math.sin(a)*r;
+          if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+        }
+        ctx.closePath(); ctx.fill(); ctx.stroke();
+        const tex=new THREE.CanvasTexture(c);
+        tex.minFilter=THREE.LinearFilter; tex.needsUpdate=true;
+        return tex;
+      }
+      const heroGeo=new THREE.BufferGeometry();
+      heroGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array([hx,hy,hz]),3));
+      const heroTex=makeStarTexture();
+      const heroMat=new THREE.PointsMaterial({
+        size: isMobile? 11 : 14,
+        map: heroTex,
+        color: new THREE.Color(0xF0E442),
+        transparent:true,
+        alphaTest:0.08,
+        opacity:1,
+        sizeAttenuation:true,
+        depthWrite:false,
+        depthTest:false
+      });
+      heroHighlight=new THREE.Points(heroGeo, heroMat);
+      heroHighlight.renderOrder=999;
+      starGroup.add(heroHighlight);
+      // outer glow layers — make it unmissable
+      const glowGeo=new THREE.BufferGeometry();
+      glowGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array([hx,hy,hz]),3));
+      const glowMat=new THREE.PointsMaterial({
+        size: isMobile? 22 : 28,
+        map: shapeTexturesFilled['PG'],
+        color: new THREE.Color(0xF0E442),
+        transparent:true,
+        opacity:0.32,
+        sizeAttenuation:true,
+        depthWrite:false,
+        depthTest:false
+      });
+      const glowPoints=new THREE.Points(glowGeo, glowMat);
+      glowPoints.renderOrder=998;
+      starGroup.add(glowPoints);
+      const glow2Geo=new THREE.BufferGeometry();
+      glow2Geo.setAttribute('position', new THREE.BufferAttribute(new Float32Array([hx,hy,hz]),3));
+      const glow2Mat=new THREE.PointsMaterial({
+        size: isMobile? 34 : 42,
+        map: shapeTexturesFilled['PG'],
+        color: new THREE.Color(0xFFEAA0),
+        transparent:true,
+        opacity:0.14,
+        sizeAttenuation:true,
+        depthWrite:false,
+        depthTest:false
+      });
+      const glow2Points=new THREE.Points(glow2Geo, glow2Mat);
+      glow2Points.renderOrder=997;
+      starGroup.add(glow2Points);
+      heroHighlight.userData={ baseSize: isMobile?11:14, glowMat, glow2Mat, hx,hy,hz };
+    }
+  }catch(e){ console.warn('hero highlight fail', e); }
+
+  console.log('star-map v23 groups outline+filled', pointGroups.map(g=>`${g.layer}:${g.shape}:${g.list.length}`).join(' '), 'camZ', camZ, 'hero', !!heroHighlight);
 
   let rotY=Math.PI*0.24, rotX=0.18, auto=false, autoSpeed=0.00018, dragging=false, lx=0, ly=0, idle=0;
   const proj=[]; for(let i=0;i<rawCount;i++) proj[i]=null;
@@ -383,8 +469,9 @@ export async function mountStarMap(canvas){
       if(best&&hoverTip){
         hoverTip.style.display='block'; hoverTip.style.left=best.sx+'px'; hoverTip.style.top=(best.sy-36)+'px';
         const arch=ARCH_LABELS[best.c%8]||''; const pos=best.pl||POS_LABELS[best.p||0]||'';
+        const isHero = best.n===HERO_NAME && best.s===HERO_SEASON;
         const isCurrent=activeNames.has(best.n) && ACTIVE_SEASONS.includes(best.s);
-        hoverTip.innerHTML=`<b>${best.n||''}</b> ${best.s||''} ${isCurrent? '<span style="background:#F0E442;color:#111;padding:1px 5px;border-radius:6px;font-size:9px">CURRENT</span>':''}<br><span style="font-family:ui-monospace,monospace;font-size:10px;opacity:.85">${pos} • <span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:${OKABE_ARCH[best.c%8]};border:1px solid #111;vertical-align:middle"></span> ${arch} • z${camZ.toFixed(1)}</span>`;
+        hoverTip.innerHTML=`<b>${best.n||''}</b> ${best.s||''} ${isHero? '<span style="background:#F0E442;color:#111;padding:1px 6px;border-radius:6px;font-size:10px">★ HERO</span>': isCurrent? '<span style="background:#F0E442;color:#111;padding:1px 5px;border-radius:6px;font-size:9px">CURRENT</span>':''}<br><span style="font-family:ui-monospace,monospace;font-size:10px;opacity:.85">${pos} • <span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:${OKABE_ARCH[best.c%8]};border:1px solid #111;vertical-align:middle"></span> ${arch} • z${camZ.toFixed(1)}</span>`;
       } else if(hoverTip) hoverTip.style.display='none';
     }
   }
@@ -463,6 +550,21 @@ export async function mountStarMap(canvas){
     camera.position.x=Math.sin(et*0.04)*0.18;
     camera.position.y=0.38+Math.sin(et*0.055)*0.09;
     camera.lookAt(0,0.06,0);
+    // hero pulsate
+    try{
+      if(heroHighlight && heroHighlight.material){
+        const base=heroHighlight.userData && heroHighlight.userData.baseSize || (isMobile?11:14);
+        heroHighlight.material.size = base + Math.sin(et*2.2)*1.2;
+        if(heroHighlight.userData && heroHighlight.userData.glowMat){
+          heroHighlight.userData.glowMat.size = (isMobile?22:28) + Math.sin(et*2.2+1.1)*2.2;
+          heroHighlight.userData.glowMat.opacity = 0.32 + Math.sin(et*1.8)*0.08;
+        }
+        if(heroHighlight.userData && heroHighlight.userData.glow2Mat){
+          heroHighlight.userData.glow2Mat.size = (isMobile?34:42) + Math.sin(et*1.8+0.7)*3;
+          heroHighlight.userData.glow2Mat.opacity = 0.14 + Math.sin(et*1.2)*0.04;
+        }
+      }
+    }catch{}
     renderer.render(scene,camera);
   }
   loop(0);

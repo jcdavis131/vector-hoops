@@ -8,7 +8,7 @@
 <link rel="manifest" href="/manifest.json"/>
 <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/shell.css"/><link rel="stylesheet" href="assets/responsive.css"/><link rel="stylesheet" href="assets/final-qa.css"/><link rel="stylesheet" href="assets/unified.css"/><link rel="stylesheet" href="assets/lemmino/lemmino.css"/>
-<link rel="stylesheet" href="assets/trading-card.css?v=36"/>
+<link rel="stylesheet" href="assets/trading-card.css?v=39"/>
 <script src="https://unpkg.com/es-module-shims@1.8.0/dist/es-module-shims.js"></script>
 <script type="importmap">{"imports":{"three":"https://unpkg.com/three@0.160.0/build/three.module.js","three/addons/":"https://unpkg.com/three@0.160.0/examples/jsm/"}}</script>
 <style>
@@ -313,14 +313,14 @@ if(prefersReduced){
   };
 
   lazyMount('#sky-canvas', async ()=>{
-    const { mountStarMap } = await import('./assets/lemmino/star-map-void.js?v=36');
+    const { mountStarMap } = await import('./assets/lemmino/star-map-void.js?v=39');
     const c=document.getElementById('sky-canvas');
     if(c) await mountStarMap(c);
     console.log('Lemmino star-map lazy mounted');
   });
 
   lazyMount('#trading-card-void', async ()=>{
-    const { mountTradingCardVoid } = await import('./assets/lemmino/trading-card-void.js?v=36');
+    const { mountTradingCardVoid } = await import('./assets/lemmino/trading-card-void.js?v=39');
     const c=document.getElementById('trading-card-void');
     if(c) await mountTradingCardVoid(c);
     console.log('Trading card void mounted');
