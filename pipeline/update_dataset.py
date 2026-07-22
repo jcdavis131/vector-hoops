@@ -201,6 +201,23 @@ def main() -> None:
             required=True,
         )
     )
+    # Eval scoreboard — held-out adjacent-season retrieval over the shipped
+    # embedding assets (assets/mtnn_embeddings.f32 + vectors.json). Pure
+    # derivation from committed assets, so both steps are hard requirements.
+    steps.append(
+        run_step(
+            "rebuild eval scoreboard",
+            [sys.executable, "pipeline/build_eval_scoreboard.py"],
+            required=True,
+        )
+    )
+    steps.append(
+        run_step(
+            "eval-scoreboard gates",
+            [sys.executable, "pipeline/test_eval_scoreboard.py"],
+            required=True,
+        )
+    )
     # Arena bundle — the /fingerprint game's compact repack of the assets
     # rebuilt above. Pure derivation, so both steps are hard requirements.
     steps.append(

@@ -329,6 +329,14 @@ a{color:inherit}
 <div class="cqs-badge"><b>0.998</b><span>pos top-1</span></div>
 </div>
 
+<div class="cqs-strip" id="eval-scoreboard-strip" aria-label="Held-out retrieval scoreboard">
+<div class="cqs-badge is-primary"><b id="evsb-top5">…</b><span>held-out top-5 retrieval</span></div>
+<div class="cqs-badge"><b id="evsb-top1">…</b><span>held-out top-1</span></div>
+<div class="cqs-badge"><b id="evsb-base5">…</b><span>14-d baseline top-5</span></div>
+<div class="cqs-badge"><b id="evsb-pairs">…</b><span>eligible pairs</span></div>
+</div>
+<p id="evsb-caption" class="mono" style="font-size:12px; line-height:1.6; color:#5A5248; margin:6px 0 0;">Loading assets/eval_scoreboard.json…</p>
+
 <nav class="anchor-nav" aria-label="Page sections">
 <a href="#training-cockpit">Training Cockpit</a>
 <a href="#manim-mtnn">Architecture</a>
@@ -555,7 +563,30 @@ a{color:inherit}
     if(!grid) return;
     grid.innerHTML = Object.entries(WEIGHTS).map(([k,v])=>`<div class="weight-chip"><b>${k}</b><span>${v}</span></div>`).join('');
   }
-  window.addEventListener('DOMContentLoaded', ()=>{ loadArch(); loadWeights(); });
+  async function loadScoreboard(){
+    const cap = document.getElementById('evsb-caption');
+    try{
+      const r = await fetch('assets/eval_scoreboard.json?v='+Date.now());
+      const j = await r.json();
+      const pct = x => (x*100).toFixed(1) + '%';
+      const test = j.results.mtnn.by_split.test;
+      const base = j.results.baseline_transparent_14d.by_split.test;
+      const rnd = j.results.baseline_random;
+      document.getElementById('evsb-top5').textContent = pct(test.top5);
+      document.getElementById('evsb-top1').textContent = pct(test.top1);
+      document.getElementById('evsb-base5').textContent = pct(base.top5);
+      document.getElementById('evsb-pairs').textContent = j.eligible_pairs.toLocaleString('en-US');
+      if(cap) cap.textContent =
+        'Held-out retrieval: query the shipped 48-d space with a player’s season N — does that same player’s season N+1 rank in the top-5 nearest neighbors among all ' +
+        j.embedding_asset.rows.toLocaleString('en-US') + ' player-seasons? Scored on ' + test.n.toLocaleString('en-US') +
+        ' pairs whose target season (2024+) was never a training positive; ' + j.eligible_pairs.toLocaleString('en-US') +
+        ' adjacent-season pairs total, keyed by stable PLAYER_ID. Baselines: transparent 14-d era-z profile (' + pct(base.top5) +
+        ') and random rank (' + (rnd.top5*100).toFixed(2) + '%). Recomputed + gated every rebuild — pipeline/build_eval_scoreboard.py.';
+    }catch(e){
+      if(cap) cap.textContent = 'Failed to load assets/eval_scoreboard.json — ' + e;
+    }
+  }
+  window.addEventListener('DOMContentLoaded', ()=>{ loadArch(); loadWeights(); loadScoreboard(); });
 })();
 </script>
 <script>if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js').catch(()=>{})})}</script>
