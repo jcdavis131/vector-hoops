@@ -490,6 +490,19 @@
       if(t){
         state.isPack=true; state.isDaily=false; state.isChallenge=false; state.isRandom=false; state.puzzleNum=1;
         if(state.targetIdx!=null){ try{ computeClosest(); }catch{} }
+        // v42: stabilize random pack URL — replace ?pack=random with actual IDs so refresh keeps same pack
+        try{
+          if(packParam && typeof packParam==='string' && packParam.toLowerCase()==='random'){
+            const realCode = (state.packIds||[]).join('-');
+            if(realCode){
+              const url=new URL(location.href);
+              url.searchParams.set('pack', realCode);
+              url.searchParams.delete('n'); // optional: keep n? keep but set pack already implies size
+              // keep n for UX but not needed
+              history.replaceState(null,'',url.toString());
+            }
+          }
+        }catch(e){ console.warn('pack random url replace fail', e); }
         return state;
       } else {
         // invalid pack
@@ -567,11 +580,11 @@
   function computeClosest(){
     if(!state.target||!state.modernPool.length) return null;
     // harden: if VHMtnn not ready (embeddings failed to load), fallback to 0-sim ranking to prevent crash on first guess
-    const hasVh = !!(window.VHMtnn && window.VHMtnn.sim);
+    const hasVh = !!(window.VHMtnn && window.VHMtnn.sim && window.VHMtnn.isReady && window.VHMtnn.isReady());
     if(!hasVh){
       console.warn('VHMtnn not ready, fallback 0-sim');
       const fallbackSims = state.modernPool.map(m=>({m, sim:0}));
-      fallbackSims.sort((a,b)=>a.m.n.localeCompare(b.m.n));
+      try{ fallbackSims.sort((a,b)=>(a.m.n||'').localeCompare(b.m.n||'')); }catch{}
       state.modernListSorted=fallbackSims;
       state.closestModern=fallbackSims[0]?{entry:fallbackSims[0].m, sim:0}:null;
       return state.closestModern;
@@ -579,11 +592,12 @@
     const targetNameLower=(state.target.n||'').toLowerCase().trim();
     let best=null,bestSim=-1; const sims=[];
     for(const m of state.modernPool){
+      if(!m||!m.n) continue;
       if(m.n && targetNameLower && m.n.toLowerCase().trim()===targetNameLower) continue;
-      let sim=0; try{ sim=window.VHMtnn.sim(state.target.i, m.i); }catch{ sim=-1; }
+      let sim=0; try{ sim=window.VHMtnn.sim(state.target.i, m.i); if(typeof sim!=='number'||isNaN(sim)) sim=0; }catch{ sim=-1; }
       sims.push({m,sim}); if(sim>bestSim){ bestSim=sim; best=m; }
     }
-    sims.sort((a,b)=>b.sim-a.sim);
+    try{ sims.sort((a,b)=> (b.sim||0)-(a.sim||0)); }catch{ }
     state.modernListSorted=sims; state.closestModern=best?{entry:best, sim:bestSim}: (sims[0]?{entry:sims[0].m, sim:sims[0].sim}:null);
     return state.closestModern;
   }
@@ -595,32 +609,47 @@
     const list = state.modernListSorted||[];
     if(!list.length){
       // if list empty but entry exists, return fallback rank using modernPool index
-      const idx = (state.modernPool||[]).findIndex(mm=>mm.n.toLowerCase()===low);
+      const idx = (state.modernPool||[]).findIndex(mm=>mm && mm.n && mm.n.toLowerCase()===low);
       if(idx>=0) return {rank: idx, sim:0, entry};
       return null;
     }
     for(let i=0;i<list.length;i++){ 
-      const mm = list[i] && list[i].m;
-      if(!mm || !mm.n) continue;
-      if(mm.n.toLowerCase()===low) return {rank:i, sim:list[i].sim||0, entry}; 
+      try{
+        const mm = list[i] && list[i].m;
+        if(!mm || !mm.n) continue;
+        if(mm.n.toLowerCase()===low) return {rank:i, sim:(typeof list[i].sim==='number'?list[i].sim:0), entry}; 
+      }catch{}
     }
     return null;
   }
   function guessModern(name){
-    const trimmed=(name||'').trim(); if(!trimmed) return {ok:false, reason:'Empty guess'};
-    let low=trimmed.toLowerCase(); let m=trimmed.match(/^(.+?)\s+\d{4}-\d{2}$/); if(m) low=m[1].trim().toLowerCase();
-    if(state.target && state.target.n && low===state.target.n.toLowerCase().trim()) return {ok:false, reason:'Target self excluded'};
-    const r=rankOfModernName(trimmed); if(!r) return {ok:false, reason:'Not a current 2024-26 player'};
-    const guesses = state.guesses||[];
-    const already=guesses.find(g=> g.idx===r.entry.i || (g.name&&g.name.toLowerCase().trim()===r.entry.n.toLowerCase().trim()));
-    if(already) return {ok:false, reason:'Already guessed'};
-    const g={name:r.entry.n, season:r.entry.s, idx:r.entry.i, sim:r.sim, rank:r.rank, x:r.entry.x,y:r.entry.y,z:r.entry.z,c:r.entry.c};
-    return {ok:true, guess:g, isWin:r.rank===0, rank:r.rank};
+    try{
+      const trimmed=(name||'').trim(); if(!trimmed) return {ok:false, reason:'Empty guess'};
+      let low=trimmed.toLowerCase(); let m=trimmed.match(/^(.+?)\s+\d{4}-\d{2}$/); if(m) low=m[1].trim().toLowerCase();
+      if(state.target && state.target.n && low===state.target.n.toLowerCase().trim()) return {ok:false, reason:'Target self excluded'};
+      const r=rankOfModernName(trimmed); if(!r) return {ok:false, reason:'Not a current 2024-26 player'};
+      const guesses = state.guesses||[];
+      const already=guesses.find(g=> {
+        try{
+          return g.idx===r.entry.i || (g.name&&g.name.toLowerCase().trim()===r.entry.n.toLowerCase().trim());
+        }catch{return false;}
+      });
+      if(already) return {ok:false, reason:'Already guessed'};
+      const g={name:r.entry.n, season:r.entry.s, idx:r.entry.i, sim:(typeof r.sim==='number'?r.sim:0), rank:(typeof r.rank==='number'?r.rank:999), x:r.entry.x,y:r.entry.y,z:r.entry.z,c:r.entry.c};
+      return {ok:true, guess:g, isWin:r.rank===0, rank:r.rank};
+    }catch(e){
+      console.warn('guessModern fail', e);
+      return {ok:false, reason:'Guess failed — try another'};
+    }
   }
   function warmCold(){
-    if(state.guesses.length<2) return null;
-    const last=state.guesses[state.guesses.length-1]; const prev=state.guesses[state.guesses.length-2];
-    if(last.rank<prev.rank) return 'warmer 🔥'; if(last.rank>prev.rank) return 'colder ❄️'; return 'same';
+    try{
+      const gs=state.guesses||[];
+      if(gs.length<2) return null;
+      const last=gs[gs.length-1]; const prev=gs[gs.length-2];
+      if(!last||!prev||typeof last.rank!=='number'||typeof prev.rank!=='number') return null;
+      if(last.rank<prev.rank) return 'warmer 🔥'; if(last.rank>prev.rank) return 'colder ❄️'; return 'same';
+    }catch{ return null; }
   }
 
   const STREAK_KEY='vh.streak.v2';
