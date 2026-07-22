@@ -1109,14 +1109,23 @@ button,.input{min-height:44px}
   }
 
   function doGuess(){
-    const input=$('#guess-input'); const name=(input.value||'').trim(); if(!name) return;
-    const low=name.toLowerCase(); const mm=name.match(/^(.+?)\s+\d{4}-\d{2}$/); const low2=mm? mm[1].trim().toLowerCase(): low;
-    if(G.guesses.some(g=> (g.name||'').toLowerCase().trim()===low2)){ alert('Already guessed'); input.value=''; return; }
-    const r=VHPastModern.guessModern(name); if(!r.ok){ alert(r.reason); return; }
-    if(G.guesses.some(g=> g.idx===r.guess.idx|| (g.name||'').toLowerCase().trim()===r.guess.name.toLowerCase().trim())){ alert('Already guessed'); input.value=''; return; }
-    G.guesses.push(r.guess); try{ VHPastModern.state().guesses=G.guesses.slice(); }catch{} saveGuesses(); input.value='';
-    const warmEl=$('#warm-label'); const wc=VHPastModern.warmCold(); if(wc&&G.guesses.length>1){ warmEl.style.display='inline-flex'; warmEl.textContent=wc; } else warmEl.style.display='none';
-    renderGuesses(); finish(); projectFrame(); draw(); renderPackProgress();
+    try{
+      const input=$('#guess-input'); if(!input) return; const name=(input.value||'').trim(); if(!name) return;
+      // v42 guard: require >=2 chars to guess, prevents single 't' crash spam
+      if(name.length<2){ alert('Type at least 2 letters'); return; }
+      const low=name.toLowerCase(); const mm=name.match(/^(.+?)\s+\d{4}-\d{2}$/); const low2=mm? mm[1].trim().toLowerCase(): low;
+      if(G.guesses.some(g=>{ try{return (g.name||'').toLowerCase().trim()===low2;}catch{return false;}})){ alert('Already guessed'); input.value=''; return; }
+      const r=VHPastModern.guessModern(name); if(!r.ok){ alert(r.reason); return; }
+      if(G.guesses.some(g=>{ try{return g.idx===r.guess.idx|| (g.name||'').toLowerCase().trim()===r.guess.name.toLowerCase().trim();}catch{return false;}})){ alert('Already guessed'); input.value=''; return; }
+      G.guesses.push(r.guess); try{ VHPastModern.state().guesses=G.guesses.slice(); }catch{} saveGuesses(); input.value='';
+      const warmEl=$('#warm-label'); let wc=null; try{ wc=VHPastModern.warmCold(); }catch{}
+      if(wc&&G.guesses.length>1){ if(warmEl){ warmEl.style.display='inline-flex'; warmEl.textContent=wc; }} else { if(warmEl) warmEl.style.display='none'; }
+      renderGuesses(); finish(); projectFrame(); draw(); renderPackProgress();
+    }catch(e){
+      console.warn('doGuess fail', e);
+      try{ if(window.VHErrorBoundary) VHErrorBoundary.log({type:'js', message:'doGuess '+e.message, stack:e.stack}); }catch{}
+      alert('Guess failed — try again (error logged)');
+    }
   }
 
   async function main(){
