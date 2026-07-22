@@ -164,17 +164,20 @@ button,.input{min-height:44px}
 
   <div class="card" id="past-card" style="border-width:2.5px">
     <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start">
-      <div style="flex:1 1 280px;min-width:0">
-        <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:8px">
-          <span class="pill pill-yellow">TARGET • PAST ALL-STAR</span>
-          <span class="pill" id="past-arch-pill" style="background:#fff">—</span>
-          <span class="pill" id="past-slot-pill">Slot 1/5</span>
-          <span id="past-xyz" class="small-mono" style="display:none"></span>
+      <div style="display:flex;gap:12px;align-items:flex-start;flex:1 1 280px;min-width:0">
+        <div id="past-avatar" style="width:64px;height:64px;flex:0 0 64px;background:#FFF6D5;border:2px solid #1A150F;border-radius:12px;box-shadow:2px 2px 0 #1A150F;image-rendering:pixelated;overflow:hidden;display:flex;align-items:center;justify-content:center"></div>
+        <div style="flex:1;min-width:0">
+          <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:8px">
+            <span class="pill pill-yellow">TARGET • PAST ALL-STAR</span>
+            <span class="pill" id="past-arch-pill" style="background:#fff">—</span>
+            <span class="pill" id="past-slot-pill">Slot 1/5</span>
+            <span id="past-xyz" class="small-mono" style="display:none"></span>
+          </div>
+          <h2 id="past-name" class="hd" style="margin:0 0 6px;font-size:clamp(24px,5vw,32px);line-height:1">Loading…</h2>
+          <div id="past-meta" class="small-mono" style="text-transform:none;color:#444;line-height:1.45"></div>
+          <div class="turn-indicator" style="margin-top:10px"><span class="turn-dot"></span><span id="turn-text">Game starts now — 6 guesses to find modern twin</span></div>
+          <div id="past-closest-hint" class="small-mono" style="margin-top:10px;text-transform:none;display:none"></div>
         </div>
-        <h2 id="past-name" class="hd" style="margin:0 0 6px;font-size:clamp(24px,5vw,32px);line-height:1">Loading…</h2>
-        <div id="past-meta" class="small-mono" style="text-transform:none;color:#444;line-height:1.45"></div>
-        <div class="turn-indicator" style="margin-top:10px"><span class="turn-dot"></span><span id="turn-text">Game starts now — 6 guesses to find modern twin</span></div>
-        <div id="past-closest-hint" class="small-mono" style="margin-top:10px;text-transform:none;display:none"></div>
       </div>
       <div style="flex:0 0 auto;display:flex;gap:8px;flex-wrap:wrap;align-self:flex-start">
         <button id="btn-random" class="btn" type="button">🎲 Random</button>
@@ -209,7 +212,7 @@ button,.input{min-height:44px}
 <script src="assets/error-boundary.js"></script>
 <script src="assets/keyboard-a11y.js"></script>
 <script src="assets/site-nav.js" defer></script>
-<script src="assets/pwa-install.js"></script><script src="assets/mtnn.js"></script><script src="assets/viral-share.js"></script><script src="assets/past-modern-game.js"></script>
+<script src="assets/pwa-install.js"></script><script src="assets/mtnn.js"></script><script src="assets/pixel-avatar.js?v=42"></script><script src="assets/viral-share.js"></script><script src="assets/past-modern-game.js"></script>
 <script>
 (function(){
   const $=s=>document.querySelector(s);
@@ -340,12 +343,15 @@ button,.input{min-height:44px}
       if(idx>=0) tProj=projected[idx];
     }
     if(tProj){
-      const pulse=0.5+0.5*Math.sin(t*0.0021);
-      // outer glow 32-48px
-      ctx.globalAlpha=0.18+ pulse*0.14; ctx.fillStyle='#F0E442'; ctx.beginPath(); ctx.arc(tProj.sx,tProj.sy,36+ pulse*18,0,Math.PI*2); ctx.fill();
-      ctx.globalAlpha=0.32+ pulse*0.20; ctx.beginPath(); ctx.arc(tProj.sx,tProj.sy,20+ pulse*10,0,Math.PI*2); ctx.fill();
-      ctx.globalAlpha=1; ctx.save(); ctx.shadowColor='rgba(240,228,66,0.85)'; ctx.shadowBlur=16+ pulse*12; ctx.fillStyle='#F0E442'; ctx.strokeStyle='#1A150F'; ctx.lineWidth=3.2;
-      const outer=16+ pulse*3.5, inner=7.8+ pulse*1.8; drawStarPath(ctx,tProj.sx,tProj.sy,5,outer,inner,-Math.PI/2+Math.sin(t*0.0005)*0.15); ctx.fill(); ctx.stroke(); ctx.shadowBlur=0; ctx.restore();
+      // FIXED per user: same size as other data points, no oversized halo
+      ctx.globalAlpha=Math.max(0.38,Math.min(1,tProj.alpha*0.96));
+      ctx.fillStyle='#F0E442';
+      ctx.beginPath(); ctx.arc(tProj.sx,tProj.sy,tProj.rad,0,Math.PI*2); ctx.fill();
+      const outer=Math.max(2.6,tProj.rad*1.22), inner=Math.max(1.2,tProj.rad*0.58);
+      ctx.globalAlpha=1; ctx.save();
+      ctx.fillStyle='#F0E442'; ctx.strokeStyle='#1A150F'; ctx.lineWidth=Math.max(1, tProj.rad*0.38);
+      drawStarPath(ctx,tProj.sx,tProj.sy,5,outer,inner,-Math.PI/2);
+      ctx.fill(); ctx.stroke(); ctx.restore();
       // badge DOM
       const badge=document.getElementById('target-badge');
       if(badge){
@@ -415,7 +421,7 @@ button,.input{min-height:44px}
   function initSearchWorker(){
     try{
       if(!window.Worker) return null;
-      const w=new Worker('/assets/workers/modern-search.worker.js?v=41');
+      const w=new Worker('/assets/workers/modern-search.worker.js?v=42');
       w.onmessage=(ev)=>{
         const {type, results, id, q} = ev.data||{};
         if(type==='ready'){ workerReady=true; return; }
@@ -484,23 +490,30 @@ button,.input{min-height:44px}
 
     function searchAndRender(q){
       try{
+        const trimmed=(q||'').trim();
+        // v42 guard: never show dropdown for <2 chars, and don't hit worker — prevents t-flood
+        if(!trimmed || trimmed.length<2){ render([]); return; }
         const results=filteredModern(q);
         render(results);
-        // optional worker enhancement — never blocks main search
+        // optional worker enhancement — never blocks main search, only if >=2 chars
         if(searchWorker && workerReady){
           try{
             workerSeq++; lastWorkerId=workerSeq;
             const mainResults=results;
             const curId=lastWorkerId;
-            searchWorker.__renderCb = (wResults)=>{
+            const curQ=trimmed.toLowerCase();
+            searchWorker.__renderCb = (wResults, wQ)=>{
               try{
                 if(curId!==lastWorkerId) return;
+                // v42: if query became <2 chars while worker was running, ignore
+                if(!wQ || wQ.length<2) return;
+                if(wQ!==curQ) return; // stale query check
                 if(wResults && wResults.length) {
                   if(!mainResults.length) render(wResults);
                 }
               }catch{}
             };
-            searchWorker.postMessage({type:'search', payload:{q, id: lastWorkerId}});
+            searchWorker.postMessage({type:'search', payload:{q: trimmed, id: lastWorkerId}});
           }catch{}
         }
       }catch(e){ console.warn('searchAndRender fail',e); }
@@ -908,6 +921,13 @@ button,.input{min-height:44px}
     const archPill=$('#past-arch-pill'); if(archPill) archPill.textContent=archLabel;
     const slotPill=$('#past-slot-pill'); if(slotPill) slotPill.textContent=modeLabel;
     const xyz=$('#past-xyz'); if(xyz){ xyz.textContent=''; xyz.style.display='none'; }
+    // pixel avatar — resembles player specifically
+    try{
+      const avEl=$('#past-avatar');
+      if(avEl && window.VHPixel){
+        VHPixel.mountAvatar(avEl, past.n, past.c, 64);
+      }
+    }catch(e){}
     try{ focusOnTarget(); projectFrame(); draw(); }catch{}
     if(st.isPack){
       const ps=VHPastModern.getPackState();
@@ -930,9 +950,37 @@ button,.input{min-height:44px}
   function renderGuesses(){
     const cont=$('#guesses'); cont.innerHTML='';
     G.guesses.forEach((g,idx)=>{
-      const simPct=(g.sim*100).toFixed(1); const rankLabel=g.rank===0? '✅ #1 WIN': '#'+(g.rank+1); const warm=idx>0? (g.rank < G.guesses[idx-1].rank?'🔥 warmer': g.rank > G.guesses[idx-1].rank?'❄️ colder':'same'):'first'; const isWin=g.rank===0;
-      const div=document.createElement('div'); div.className='guess-row'+(isWin?' win':''); div.innerHTML=`<div style="display:flex;justify-content:space-between;gap:8px;align-items:center"><b>${idx+1}. ${g.name} ${g.season}</b><span class="pill" style="${isWin?'background:var(--green);color:#fff':''}">${simPct}% • ${rankLabel}</span></div><div class="small-mono" style="text-transform:none;margin-top:6px;color:#444">${warm} • ${ARCH[g.c%ARCH.length]}</div><div class="bar"><i style="width:${Math.max(4,Math.min(100,parseFloat(simPct)))}%;background:${isWin?'#009E73':'#0072B2'}"></i></div>`;
-      cont.appendChild(div);
+      try{
+        const simVal = (typeof g.sim === 'number' && !isNaN(g.sim)) ? g.sim : 0;
+        const simPct=(simVal*100).toFixed(1);
+        const rankNum = (typeof g.rank === 'number' ? g.rank : 999);
+        const rankLabel=rankNum===0? '✅ #1 WIN': '#'+(rankNum+1);
+        let warm='first';
+        if(idx>0){
+          try{
+            const prevRank = G.guesses[idx-1] ? G.guesses[idx-1].rank : 9999;
+            if(typeof rankNum==='number' && typeof prevRank==='number'){
+              warm = rankNum < prevRank ? '🔥 warmer' : rankNum > prevRank ? '❄️ colder' : 'same';
+            }
+          }catch{}
+        }
+        const isWin=rankNum===0;
+        const archName = (typeof g.c==='number' && ARCH[g.c%ARCH.length]) ? ARCH[g.c%ARCH.length] : '—';
+        const safeName = (g.name||'').replace(/</g,'&lt;');
+        const safeSeason = (g.season||'').replace(/</g,'&lt;');
+        const div=document.createElement('div'); div.className='guess-row'+(isWin?' win':'');
+        // pixel avatar for each guess resembling player
+        const avatarId = `guess-av-${idx}-${Date.now()}`;
+        div.innerHTML=`<div style="display:flex;gap:10px;align-items:center"><div id="${avatarId}" style="width:36px;height:36px;flex:0 0 36px;background:#FFF6D5;border:1.5px solid #1A150F;border-radius:8px;overflow:hidden;image-rendering:pixelated"></div><div style="flex:1;min-width:0"><div style="display:flex;justify-content:space-between;gap:8px;align-items:center"><b>${idx+1}. ${safeName} ${safeSeason}</b><span class="pill" style="${isWin?'background:var(--green);color:#fff':''}">${simPct}% • ${rankLabel}</span></div><div class="small-mono" style="text-transform:none;margin-top:4px;color:#444">${warm} • ${archName}</div><div class="bar" style="margin-top:6px"><i style="width:${Math.max(4,Math.min(100,parseFloat(simPct)||0)}%;background:${isWin?'#009E73':'#0072B2'}"></i></div></div></div>`;
+        cont.appendChild(div);
+        // mount avatar after append
+        try{
+          const avEl=document.getElementById(avatarId);
+          if(avEl && window.VHPixel){
+            VHPixel.mountAvatar(avEl, g.name, g.c, 36);
+          }
+        }catch(e){}
+      }catch(e){ console.warn('renderGuesses item fail', e, g); }
     });
     updateStatusBar();
   }
@@ -951,7 +999,14 @@ button,.input{min-height:44px}
       resEl.innerHTML=`<div class="card"><h3 class="hd">⏳ Loading twin…</h3><div style="font-size:13px;line-height:1.5">Embeddings still loading (2.5MB). Your guess is saved (${G.guesses.length}/6).<br>Top: ${(list||[]).slice(0,3).map(o=>o.m && o.m.n || '').join(' • ')||'warming up'}<br><div style="margin-top:8px;display:flex;gap:8px"><button class="btn btn-primary" onclick="try{VHPastModern.computeClosest();}catch(e){} location.reload()">Retry</button><button class="btn" onclick="document.getElementById('result').style.display='none'">Keep playing</button></div></div></div>`;
       return;
     }
-    const sortedTop=(list||[]).slice(0,5).map((o,i)=>`${i+1}. ${o.m.n} ${ (o.sim*100).toFixed(0)}%`).join(' • ');
+    // v42 hardened: safe mapping for top 5, handles missing m/sim
+    const sortedTop=(list||[]).slice(0,5).map((o,i)=>{
+      try{
+        const name = o && o.m && o.m.n ? o.m.n : '—';
+        const sim = (o && typeof o.sim==='number') ? o.sim : 0;
+        return `${i+1}. ${name} ${(sim*100).toFixed(0)}%`;
+      }catch{ return `${i+1}. —`; }
+    }).join(' • ');
 
     if(isPack){
       const ps=VHPastModern.getPackState();
@@ -1078,6 +1133,20 @@ button,.input{min-height:44px}
     // focus camera on target before first projection so star starts centered
     try{ focusOnTarget(); }catch{}
     projectFrame(); draw(); loop(0);
+
+    // v42: if MTNN was fallback, recompute when real embeddings load
+    try{
+      window.addEventListener('vh:mtnn-loaded', ()=>{
+        try{
+          if(window.VHMtnn && VHMtnn.isReady && VHMtnn.isReady()){
+            VHPastModern.computeClosest();
+            // re-render closest hint if already finished
+            try{ finish(); }catch{}
+            projectFrame(); draw();
+          }
+        }catch(e){ console.warn('mtnn-loaded recompute fail', e); }
+      });
+    }catch{}
 
     // v16 worker + cache embed: offload search
     try{

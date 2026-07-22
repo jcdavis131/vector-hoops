@@ -125,7 +125,7 @@ export async function mountStarMap(canvas){
   const shapeTextures = shapeTexturesFilled; // legacy alias
 
   async function cachedFetchJSON(url){
-    const CACHE_NAME='vector-hoops-v41-20260722-steph-t-fix';
+    const CACHE_NAME='vector-hoops-v42-20260722-pixel-avatar-fix';
     try{
       if('caches' in window){
         const cache=await caches.open(CACHE_NAME);
@@ -327,7 +327,7 @@ export async function mountStarMap(canvas){
       heroGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array([hx,hy,hz]),3));
       const heroTex=makeStarTexture();
       const heroMat=new THREE.PointsMaterial({
-        size: isMobile? 11 : 14,
+        size: pointSizeFilled,
         map: heroTex,
         color: new THREE.Color(0xF0E442),
         transparent:true,
@@ -340,15 +340,16 @@ export async function mountStarMap(canvas){
       heroHighlight=new THREE.Points(heroGeo, heroMat);
       heroHighlight.renderOrder=999;
       starGroup.add(heroHighlight);
-      // outer glow layers — make it unmissable
+      // glows removed per user: star same size as other points, no oversized halo
+      // keep tiny subtle glow same size for visibility parity
       const glowGeo=new THREE.BufferGeometry();
       glowGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array([hx,hy,hz]),3));
       const glowMat=new THREE.PointsMaterial({
-        size: isMobile? 22 : 28,
+        size: pointSizeFilled*1.15,
         map: shapeTexturesFilled['PG'],
         color: new THREE.Color(0xF0E442),
         transparent:true,
-        opacity:0.32,
+        opacity:0.12,
         sizeAttenuation:true,
         depthWrite:false,
         depthTest:false
@@ -356,22 +357,7 @@ export async function mountStarMap(canvas){
       const glowPoints=new THREE.Points(glowGeo, glowMat);
       glowPoints.renderOrder=998;
       starGroup.add(glowPoints);
-      const glow2Geo=new THREE.BufferGeometry();
-      glow2Geo.setAttribute('position', new THREE.BufferAttribute(new Float32Array([hx,hy,hz]),3));
-      const glow2Mat=new THREE.PointsMaterial({
-        size: isMobile? 34 : 42,
-        map: shapeTexturesFilled['PG'],
-        color: new THREE.Color(0xFFEAA0),
-        transparent:true,
-        opacity:0.14,
-        sizeAttenuation:true,
-        depthWrite:false,
-        depthTest:false
-      });
-      const glow2Points=new THREE.Points(glow2Geo, glow2Mat);
-      glow2Points.renderOrder=997;
-      starGroup.add(glow2Points);
-      heroHighlight.userData={ baseSize: isMobile?11:14, glowMat, glow2Mat, hx,hy,hz };
+      heroHighlight.userData={ baseSize: pointSizeFilled, glowMat, hx,hy,hz };
     }
   }catch(e){ console.warn('hero highlight fail', e); }
 
