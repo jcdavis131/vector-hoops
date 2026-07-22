@@ -566,7 +566,16 @@
 
   function computeClosest(){
     if(!state.target||!state.modernPool.length) return null;
-    if(!window.VHMtnn||!window.VHMtnn.sim) throw new Error('VHMtnn not ready');
+    // harden: if VHMtnn not ready (embeddings failed to load), fallback to 0-sim ranking to prevent crash on first guess
+    const hasVh = !!(window.VHMtnn && window.VHMtnn.sim);
+    if(!hasVh){
+      console.warn('VHMtnn not ready, fallback 0-sim');
+      const fallbackSims = state.modernPool.map(m=>({m, sim:0}));
+      fallbackSims.sort((a,b)=>a.m.n.localeCompare(b.m.n));
+      state.modernListSorted=fallbackSims;
+      state.closestModern=fallbackSims[0]?{entry:fallbackSims[0].m, sim:0}:null;
+      return state.closestModern;
+    }
     const targetNameLower=(state.target.n||'').toLowerCase().trim();
     let best=null,bestSim=-1; const sims=[];
     for(const m of state.modernPool){
@@ -575,7 +584,7 @@
       sims.push({m,sim}); if(sim>bestSim){ bestSim=sim; best=m; }
     }
     sims.sort((a,b)=>b.sim-a.sim);
-    state.modernListSorted=sims; state.closestModern=best?{entry:best, sim:bestSim}:null;
+    state.modernListSorted=sims; state.closestModern=best?{entry:best, sim:bestSim}: (sims[0]?{entry:sims[0].m, sim:sims[0].sim}:null);
     return state.closestModern;
   }
   function rankOfModernName(name){
@@ -583,7 +592,18 @@
     let low=raw.toLowerCase(); let entry=state.modernByLower.get(low);
     if(!entry){ const m=raw.match(/^(.+?)\s+\d{4}-\d{2}$/); if(m){ low=m[1].trim().toLowerCase(); entry=state.modernByLower.get(low); } }
     if(!entry) return null;
-    for(let i=0;i<state.modernListSorted.length;i++){ if(state.modernListSorted[i].m.n.toLowerCase()===low) return {rank:i, sim:state.modernListSorted[i].sim, entry}; }
+    const list = state.modernListSorted||[];
+    if(!list.length){
+      // if list empty but entry exists, return fallback rank using modernPool index
+      const idx = (state.modernPool||[]).findIndex(mm=>mm.n.toLowerCase()===low);
+      if(idx>=0) return {rank: idx, sim:0, entry};
+      return null;
+    }
+    for(let i=0;i<list.length;i++){ 
+      const mm = list[i] && list[i].m;
+      if(!mm || !mm.n) continue;
+      if(mm.n.toLowerCase()===low) return {rank:i, sim:list[i].sim||0, entry}; 
+    }
     return null;
   }
   function guessModern(name){
@@ -591,7 +611,8 @@
     let low=trimmed.toLowerCase(); let m=trimmed.match(/^(.+?)\s+\d{4}-\d{2}$/); if(m) low=m[1].trim().toLowerCase();
     if(state.target && state.target.n && low===state.target.n.toLowerCase().trim()) return {ok:false, reason:'Target self excluded'};
     const r=rankOfModernName(trimmed); if(!r) return {ok:false, reason:'Not a current 2024-26 player'};
-    const already=state.guesses.find(g=> g.idx===r.entry.i || (g.name&&g.name.toLowerCase().trim()===r.entry.n.toLowerCase().trim()));
+    const guesses = state.guesses||[];
+    const already=guesses.find(g=> g.idx===r.entry.i || (g.name&&g.name.toLowerCase().trim()===r.entry.n.toLowerCase().trim()));
     if(already) return {ok:false, reason:'Already guessed'};
     const g={name:r.entry.n, season:r.entry.s, idx:r.entry.i, sim:r.sim, rank:r.rank, x:r.entry.x,y:r.entry.y,z:r.entry.z,c:r.entry.c};
     return {ok:true, guess:g, isWin:r.rank===0, rank:r.rank};

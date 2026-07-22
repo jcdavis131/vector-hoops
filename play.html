@@ -414,7 +414,7 @@ button,.input{min-height:44px}
   function initSearchWorker(){
     try{
       if(!window.Worker) return null;
-      const w=new Worker('/assets/workers/modern-search.worker.js?v=36');
+      const w=new Worker('/assets/workers/modern-search.worker.js?v=40');
       w.onmessage=(ev)=>{
         const {type, results, id, q} = ev.data||{};
         if(type==='ready'){ workerReady=true; return; }
@@ -925,11 +925,20 @@ button,.input{min-height:44px}
   }
 
   function finish(){
-    const won=G.guesses.some(g=>g.rank===0); const over=won||G.guesses.length>=6; const resEl=$('#result'); const st=VHPastModern.state(); const isPack=!!st.isPack;
+    const won=G.guesses.some(g=>g.rank===0); const over=won||G.guesses.length>=6; const resEl=$('#result'); let st=VHPastModern.state(); const isPack=!!st.isPack;
     if(!over){ resEl.innerHTML=''; resEl.style.display='none'; updateStatusBar(); renderDailyCourt(); renderPackProgress(); renderPackSummary(); return; }
     resEl.style.display='block';
-    const closest=st.closestModern;
-    const sortedTop=st.modernListSorted.slice(0,5).map((o,i)=>`${i+1}. ${o.m.n} ${ (o.sim*100).toFixed(0)}%`).join(' • ');
+    // harden: embeddings may still be loading → closest null would crash (repro for "breaks when i guess")
+    let closest=st.closestModern;
+    let list=st.modernListSorted||[];
+    if(!closest || !closest.entry || !list.length){
+      try{ if(window.VHMtnn && VHMtnn.isReady && VHMtnn.isReady()){ VHPastModern.computeClosest(); st=VHPastModern.state(); closest=st.closestModern; list=st.modernListSorted||[]; } }catch(e){ console.warn('computeClosest retry fail', e); }
+    }
+    if(!closest || !closest.entry){
+      resEl.innerHTML=`<div class="card"><h3 class="hd">⏳ Loading twin…</h3><div style="font-size:13px;line-height:1.5">Embeddings still loading (2.5MB). Your guess is saved (${G.guesses.length}/6).<br>Top: ${(list||[]).slice(0,3).map(o=>o.m && o.m.n || '').join(' • ')||'warming up'}<br><div style="margin-top:8px;display:flex;gap:8px"><button class="btn btn-primary" onclick="try{VHPastModern.computeClosest();}catch(e){} location.reload()">Retry</button><button class="btn" onclick="document.getElementById('result').style.display='none'">Keep playing</button></div></div></div>`;
+      return;
+    }
+    const sortedTop=(list||[]).slice(0,5).map((o,i)=>`${i+1}. ${o.m.n} ${ (o.sim*100).toFixed(0)}%`).join(' • ');
 
     if(isPack){
       const ps=VHPastModern.getPackState();

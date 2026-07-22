@@ -3,7 +3,7 @@
    #2: drift v7: seasonCloud peers, grey past trail, future faint, ghost full, career stage, richer meta
    v15: pause on type, v16: cache embed */
 
-const CACHE_NAME = 'vector-hoops-v39-20260722-mj-gold';
+const CACHE_NAME = 'vector-hoops-v40-20260722-pack-guess-fix';
 const CORE = [
   '/',
   '/play',

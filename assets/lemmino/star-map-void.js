@@ -125,7 +125,7 @@ export async function mountStarMap(canvas){
   const shapeTextures = shapeTexturesFilled; // legacy alias
 
   async function cachedFetchJSON(url){
-    const CACHE_NAME='vector-hoops-v39-20260722-mj-gold';
+    const CACHE_NAME='vector-hoops-v40-20260722-pack-guess-fix';
     try{
       if('caches' in window){
         const cache=await caches.open(CACHE_NAME);
