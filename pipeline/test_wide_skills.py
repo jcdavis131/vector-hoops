@@ -18,6 +18,9 @@ from pathlib import Path
 import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "pipeline"))
+from name_utils import canonical_name
+
 CACHE_DIR = ROOT / "pipeline" / "cache"
 LABELS = ROOT / "pipeline" / "data" / "wide_skill_labels.npz"
 ASSET = ROOT / "assets" / "skills_wide.json"
@@ -79,6 +82,8 @@ def main() -> None:
     print("face validity")
 
     def spot(name, season, skill, floor):
+        # rows carry vectors.json display names (ASCII-folded, suffix-stripped)
+        name = canonical_name(name)
         row = by.get((name, season))
         if row is None:
             check(False, f"{name} {season} covered")
@@ -89,6 +94,7 @@ def main() -> None:
         )
 
     def spot_low(name, season, skill, ceil):
+        name = canonical_name(name)
         row = by.get((name, season))
         if row is None:
             check(False, f"{name} {season} covered")

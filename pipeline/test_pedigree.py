@@ -20,6 +20,9 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "pipeline"))
+from name_utils import canonical_name
+
 CACHE = ROOT / "pipeline" / "cache" / "draft_history.json"
 PEDIGREE = ROOT / "pipeline" / "data" / "pedigree.json"
 
@@ -60,6 +63,8 @@ def main() -> None:
     print("known-pick joins (hand-checked)")
 
     def spot(name, season, field, want, tol=1e-6):
+        # rows carry vectors.json display names (ASCII-folded, suffix-stripped)
+        name = canonical_name(name)
         r = by.get((name, season))
         if r is None:
             check(False, f"{name} {season} covered")

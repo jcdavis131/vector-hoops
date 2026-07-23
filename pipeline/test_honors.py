@@ -18,6 +18,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "pipeline"))
 from build_honors import real_honor_cache_paths
+from name_utils import canonical_name
 
 CACHE_DIR = ROOT / "pipeline" / "cache"
 HONORS = ROOT / "pipeline" / "data" / "honors.json"
@@ -56,7 +57,8 @@ def main() -> None:
 
     print("lag rule + vote-getter coverage")
     # Award year 2023-24 -> lagged row on 2024-25 season
-    jok_lag = by.get(("Nikola Jokić", "2024-25"))
+    # rows carry vectors.json display names (ASCII-folded), so fold the key
+    jok_lag = by.get((canonical_name("Nikola Jokić"), "2024-25"))
     check(
         jok_lag is not None, "Jokić 2024-25 has lagged honors row (from 2023-24 awards)"
     )

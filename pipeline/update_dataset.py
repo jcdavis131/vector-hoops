@@ -218,20 +218,9 @@ def main() -> None:
             required=True,
         )
     )
-    # Arena bundle — the /fingerprint game's compact repack of the assets
-    # rebuilt above. Pure derivation, so both steps are hard requirements.
-    steps.append(
-        run_step(
-            "rebuild arena bundle",
-            [sys.executable, "pipeline/build_arena.py"],
-            required=True,
-        )
-    )
-    steps.append(
-        run_step(
-            "arena gates", [sys.executable, "pipeline/test_arena.py"], required=True
-        )
-    )
+    # Arena bundle steps removed 2026-07: build_arena.py and assets/arena
+    # were retired (c1b44d2 / db5370b); the required=True invocation of the
+    # deleted script SystemExited every run before the ledger write below.
 
     entry = {
         "run": time.strftime("%Y-%m-%d %H:%M UTC", time.gmtime()),
