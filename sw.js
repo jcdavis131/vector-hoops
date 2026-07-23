@@ -1,11 +1,12 @@
-/* vector-hoops PWA v51-light — P0 crash fix: minimal precache to prevent install OOM
+/* vector-hoops PWA v53 — review fixes on top of v51-light
    - CORE only shell (~14 files), no large JSON/models/CDN
-   - network-first for assets with 1MB cache cap to avoid caching vectors.json (3MB)
+   - network-first for js/css/img assets with 1MB cache cap
+   - JSON is deliberately never SW-cached (network only, browser HTTP cache still applies)
+     => offline mode is shell-only; data pages need a connection
    - stale-while-revalidate for immutable CORE
-   - no Three.js CDN caching
 */
 
-const CACHE_NAME = 'vector-hoops-v52-typing-fix';
+const CACHE_NAME = 'vector-hoops-v53-review-fixes';
 
 const CORE = [
   '/',
@@ -179,18 +180,9 @@ self.addEventListener('fetch', (e) => {
       try {
         const net = await fetch(req);
         if (net && net.ok) {
-          const cl = net.headers.get('content-length');
-          const size = cl ? parseInt(cl, 10) : 0;
-          // Only cache if size unknown or <1MB — prevents caching 3MB vectors.json if not denied
-          if (!cl || (size && size < 1_000_000) || (!size)) {
-            // extra guard: if content-length header says >1MB, skip
-            if (!cl || size < 1_000_000) {
-              // clone before put
-              cache.put(req, net.clone()).catch(() => {});
-            }
-          } else {
-            // Skip caching large asset
-          }
+          // cache only when size is unknown or <1MB
+          const size = parseInt(net.headers.get('content-length') || '0', 10);
+          if (size < 1_000_000) cache.put(req, net.clone()).catch(() => {});
         }
         return net;
       } catch {
@@ -209,7 +201,9 @@ self.addEventListener('fetch', (e) => {
     try {
       return await fetch(req);
     } catch {
-      return caches.match('/offline.html');
+      // non-navigate request: fail with a real error status, never offline.html
+      // (callers expect JSON/binary; an HTML 200 would poison r.ok/r.json())
+      return new Response('', { status: 504, statusText: 'Offline' });
     }
   })());
 });
@@ -235,7 +229,9 @@ self.addEventListener('push', (e) => {
 
 self.addEventListener('notificationclick', (e) => {
   e.notification.close();
-  const url = (e.notification.data && e.notification.data.url) || '/play?utm_source=push_click';
+  let url = (e.notification.data && e.notification.data.url) || '/play?utm_source=push_click';
+  // only allow same-origin paths — never open an arbitrary URL from a push payload
+  if (typeof url !== 'string' || !url.startsWith('/') || url.startsWith('//')) url = '/play?utm_source=push_click';
   e.waitUntil((async () => {
     const wins = await clients.matchAll({ type: 'window', includeUncontrolled: true });
     for (const w of wins) {
