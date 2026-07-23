@@ -1,7 +1,7 @@
 /* trading-card-void.js v40 — cleaned for Sunni AAA readability */
 export async function mountTradingCardVoid(root){
   if(!root) return;
-  const CACHE='vector-hoops-v41-20260722-steph-t-fix';
+  const CACHE='vector-hoops-v42-20260723-peaks-valleys';
   const OKABE=['#0072B2','#D55E00','#009E73','#F0E442','#56B4E9','#CC79A7','#E69F00','#111111'];
   const ARCH_LABELS=["Glass+Rim","LowVol Glass","Low Impact","Def Glass FT","Vol+3P","3P Acc+Vol","Playmaking","Scoring Vol"];
   const FULL_LABELS=["Offensive Glass + Rim Protection","Offensive Glass (Low Shot Volume)","Three-Point Volume (Low On-Court Impact)","Defensive Glass + Rim Pressure (Fts)","Shot Volume + Three-Point Volume","Three-Point Accuracy + Three-Point Volume","Playmaking + Steals","Scoring Volume + Shot Volume"];
@@ -60,10 +60,10 @@ export async function mountTradingCardVoid(root){
 
   try{
     const [searchPos, skills, archTime, vectors] = await Promise.all([
-      cachedFetchJSON('assets/vectors_search_lite_pos.json?v=39'),
-      cachedFetchJSON('assets/skills.json?v=39').catch(()=>null),
-      cachedFetchJSON('assets/archetypes_time.json?v=39').catch(()=>null),
-      cachedFetchJSON('assets/vectors.json?v=39').catch(()=>null)
+      cachedFetchJSON('assets/vectors_search_lite_pos.json?v=42'),
+      cachedFetchJSON('assets/skills.json?v=42').catch(()=>null),
+      cachedFetchJSON('assets/archetypes_time.json?v=42').catch(()=>null),
+      cachedFetchJSON('assets/vectors.json?v=42').catch(()=>null)
     ]);
     SEARCH=searchPos; SKILLS=skills; ARCH_TIME=archTime;
     if(vectors && vectors.clusters && vectors.clusters.length) archNames=vectors.clusters;
@@ -162,7 +162,7 @@ export async function mountTradingCardVoid(root){
         <div class="tc-art tc-art--light" id="tc-art">
           <canvas id="tc-arc-canvas" width="360" height="184" aria-label="career arc from rookie to now"></canvas>
           <div class="tc-art-axis tc-art-axis--x">ROOKIE → NOW • ${esc(earliest.season)} → ${esc(latest.season)}</div>
-          <div class="tc-art-axis tc-art-axis--y">COURT ROLE</div>
+          <div class="tc-art-axis tc-art-axis--y">PEAK = BEST · VALLEY = WORST</div>
         </div>
         <div class="tc-rarity ${count99?'tc-rarity--gold':'tc-rarity--blue'}">
           <span><b>${count99?count99+'×99':count90?count90+'×90+':'AVG '+avg}</b> — ${count99>=3?'Top 0.3% seasons':count99?'Top 1% that year':count90?'Two-way star':'Role specialist'}</span>
@@ -235,8 +235,8 @@ export async function mountTradingCardVoid(root){
         <div class="tc-detail-dots" id="tc-detail-dots">
           ${rec.rows.map((r,idx)=>`<button class="tc-season-dot ${idx===curSeasonIdx?'is-active':''}" data-idx="${idx}" style="--col:${OKABE[r.c%8]}" aria-label="${r.season}"><span class="dot" style="background:${OKABE[r.c%8]}"></span><span class="yr">${esc(r.season.slice(2,7))}</span></button>`).join('')}
         </div>
-        <div class="tc-spark tc-spark--tall"><canvas id="tc-detail-arc" width="520" height="${detailArcHeight}" aria-label="career timeline"></canvas><div class="tc-footnote tc-footnote--clear">Dot = season · Color = playing style · Rookie left, veteran right</div></div>
-        <p class="tc-story" style="font-size:15px;line-height:1.65"><b>Arc:</b> ${esc(earliest.season)} → ${esc(latest.season)} — ${rec.rows.length} seasons, ${shifts} position shifts, peak ${count99?count99+'×99':count90?count90+'×90+':'avg '+avg}. <b>Now:</b> ${esc(curArchName)}. ${shifts===0? 'Same style his whole career — rare consistency.' : shifts+' shifts show how his role changed over time.'}</p>
+        <div class="tc-spark tc-spark--tall"><canvas id="tc-detail-arc" width="520" height="${detailArcHeight}" aria-label="career timeline"></canvas><div class="tc-footnote tc-footnote--clear">Peak = best season · Valley = worst · Color = playing style · Rookie left, veteran right</div></div>
+        <p class="tc-story" style="font-size:15px;line-height:1.65"><b>Arc:</b> ${esc(earliest.season)} → ${esc(latest.season)} — ${rec.rows.length} seasons, ${shifts} position shifts, peak ${count99?count99+'×99':count90?count90+'×90+':'avg '+avg}. <b>Now:</b> ${esc(curArchName)}. ${shifts===0? 'Same style his whole career — rare consistency.' : shifts+' shifts show how his role changed over time.'} Peaks are his best seasons, valleys his worst — you can spot the prime years instantly.</p>
         <div class="tc-actions"><a class="tc-btn tc-btn--yellow" href="/players?p=${encodeURIComponent(slugName(curName))}#profile" style="min-height:44px">Open dossier</a><a class="tc-btn" href="/trends" style="min-height:44px">See league trends →</a></div>
         <div class="tc-footnote">Grades are 0–99 compared to other players that same season. Tracking stats from 2015-16 on.</div>
       `;
@@ -257,31 +257,56 @@ export async function mountTradingCardVoid(root){
     // grid
     ctx.strokeStyle='rgba(26,21,15,0.07)'; ctx.lineWidth=1;
     for(let i=1;i<4;i++){ ctx.beginPath(); ctx.moveTo(16, H*0.16 + (H*0.62*i/4.5)); ctx.lineTo(W-16, H*0.16 + (H*0.62*i/4.5)); ctx.stroke(); }
-    // axis baseline
-    ctx.strokeStyle='#1A150F'; ctx.lineWidth=1.5; ctx.beginPath(); ctx.moveTo(16, H*0.78); ctx.lineTo(W-16, H*0.78); ctx.stroke();
+    // soft baseline for valleys
+    ctx.strokeStyle='rgba(26,21,15,0.10)'; ctx.lineWidth=1.2; ctx.setLineDash([5,5]);
+    ctx.beginPath(); ctx.moveTo(16, H*0.46); ctx.lineTo(W-16, H*0.46); ctx.stroke();
+    ctx.setLineDash([]);
     const n=rec.rows.length; if(n<1) return;
+    // performance per season -> peaks & valleys
+    let perf = rec.rows.map(r=>{
+      if(SKILLS && SKILLS.grades && SKILLS.grades[r.i]){
+        const g=SKILLS.grades[r.i]; let s=0; for(let v of g) s+=v; return s/g.length;
+      }
+      return null;
+    });
+    let valid = perf.filter(v=>v!=null);
+    let minP = valid.length ? Math.min(...valid) : 60;
+    let maxP = valid.length ? Math.max(...valid) : 92;
+    if(maxP - minP < 9){ const mid=(maxP+minP)/2; minP=Math.max(0,mid-7); maxP=Math.min(99,mid+7); }
+    const range = Math.max(1, maxP - minP);
     const padX=18; const useW=W-padX*2;
     const pts=rec.rows.map((r,i)=>{
       const x= padX + useW * (i/(Math.max(1,n-1)));
-      const y = H*0.22 + (H*0.52) * (1 - (r.c/7.5)); // spread by archetype for visual separation but stable
-      // add small wave for readability when stable
-      const wob = Math.sin(i*0.75)*5;
-      return {x, y: y + wob, c:r.c};
+      let y;
+      if(perf[i]!=null){
+        const norm = (perf[i]-minP)/range; // 0=worst valley, 1=best peak
+        y = H*0.74 - norm * (H*0.52); // peak top ~0.22H, valley bottom ~0.74H
+      } else {
+        y = H*0.22 + (H*0.52) * (1 - (r.c/7.5));
+        y += Math.sin(i*0.75)*5;
+      }
+      return {x, y, c:r.c, avg: perf[i]};
     });
+    // mountain fill under line for feel
+    ctx.beginPath(); ctx.moveTo(pts[0].x, H*0.78);
+    pts.forEach(p=> ctx.lineTo(p.x, p.y));
+    ctx.lineTo(pts[pts.length-1].x, H*0.78);
+    ctx.closePath();
+    ctx.fillStyle='rgba(26,21,15,0.06)'; ctx.fill();
     // line
     ctx.beginPath(); ctx.moveTo(pts[0].x, pts[0].y);
     for(let i=1;i<pts.length;i++){ const mx=(pts[i-1].x+pts[i].x)/2; ctx.quadraticCurveTo(pts[i-1].x, pts[i-1].y, mx, (pts[i-1].y+pts[i].y)/2); if(i===pts.length-1) ctx.lineTo(pts[i].x, pts[i].y); }
-    ctx.strokeStyle='#1A150F'; ctx.lineWidth=2.4; ctx.lineCap='round'; ctx.lineJoin='round'; ctx.stroke();
-    // dots — 6px per spec, 8.5 active
+    ctx.strokeStyle='#1A150F'; ctx.lineWidth=2.6; ctx.lineCap='round'; ctx.lineJoin='round'; ctx.stroke();
+    // dots — 6px per spec, 8.5 active, color still = playing style
     pts.forEach((pt,idx)=>{
       const isCur=idx===curIdx;
-      ctx.beginPath(); ctx.arc(pt.x, pt.y, isCur?8.5:6, 0, Math.PI*2);
+      ctx.beginPath(); ctx.arc(pt.x, pt.y, isCur?8.8:6, 0, Math.PI*2);
       ctx.fillStyle=OKABE[pt.c % 8]; ctx.fill();
-      ctx.lineWidth=isCur?2.4:1.8; ctx.strokeStyle='#1A150F'; ctx.stroke();
-      // year label for first/last/active
-      if(idx===0 || idx===n-1 || isCur){
+      ctx.lineWidth=isCur?2.6:1.8; ctx.strokeStyle='#1A150F'; ctx.stroke();
+      if(idx===0 || idx===n-1 || isCur || pt.avg===maxP || pt.avg===minP){
         ctx.fillStyle='#1A150F'; ctx.font='800 11px ui-monospace,monospace'; ctx.textAlign='center';
-        ctx.fillText(rec.rows[idx].season.slice(2,7), pt.x, pt.y - (isCur?16:12));
+        const label = pt.avg!=null ? Math.round(pt.avg)+'' : rec.rows[idx].season.slice(2,7);
+        ctx.fillText(rec.rows[idx].season.slice(2,7), pt.x, pt.y - (isCur?18:14));
       }
     });
   }
@@ -331,27 +356,59 @@ export async function mountTradingCardVoid(root){
     ctx.clearRect(0,0,W,H);
     ctx.fillStyle='#FFFEF7'; ctx.fillRect(0,0,W,H);
     const n=rec.rows.length;
-    const pad=12; const useW=W-pad*2;
-    const pts=rec.rows.map((r,i)=>({x: pad + useW*(i/(Math.max(1,n-1))), y: H*0.5, c:r.c, season:r.season}));
-    // faint baseline
-    ctx.strokeStyle='rgba(26,21,15,0.12)'; ctx.lineWidth=6; ctx.lineCap='round';
-    ctx.beginPath(); ctx.moveTo(pts[0].x, pts[0].y); pts.slice(1).forEach(p=> ctx.lineTo(p.x,p.y)); ctx.stroke();
-    // colored segments for groups
-    const grps=groupsFor(rec);
-    let cursor=0;
-    grps.forEach(g=>{
-      const start=pts[cursor]; const end=pts[cursor+g.seasons.length-1];
-      ctx.strokeStyle=OKABE[g.c%8]; ctx.lineWidth=4.5; ctx.beginPath(); ctx.moveTo(start.x, start.y); ctx.lineTo(end.x, end.y); ctx.stroke();
-      cursor+=g.seasons.length;
+    // performance for peaks/valleys
+    let perf = rec.rows.map(r=>{
+      if(SKILLS && SKILLS.grades && SKILLS.grades[r.i]){
+        const g=SKILLS.grades[r.i]; let s=0; for(let v of g) s+=v; return s/g.length;
+      }
+      return 72;
     });
+    let minP=Math.min(...perf), maxP=Math.max(...perf);
+    if(maxP-minP<8){ const mid=(maxP+minP)/2; minP=Math.max(0,mid-6); maxP=Math.min(99,mid+6); }
+    const range=Math.max(1,maxP-minP);
+    const pad=12; const useW=W-pad*2;
+    const pts=rec.rows.map((r,i)=>{
+      const x = pad + useW*(i/(Math.max(1,n-1)));
+      const norm = (perf[i]-minP)/range;
+      const y = H*0.80 - norm * (H*0.62); // peak high, valley low
+      return {x, y, c:r.c, season:r.season, avg:perf[i]};
+    });
+    // soft valley fill
+    ctx.beginPath();
+    ctx.moveTo(pts[0].x, H*0.82);
+    pts.forEach(p=> ctx.lineTo(p.x, p.y));
+    ctx.lineTo(pts[pts.length-1].x, H*0.82);
+    ctx.closePath();
+    ctx.fillStyle='rgba(26,21,15,0.05)'; ctx.fill();
+    // baseline faint
+    ctx.strokeStyle='rgba(26,21,15,0.10)'; ctx.lineWidth=1; ctx.setLineDash([4,4]);
+    ctx.beginPath(); ctx.moveTo(pad, H*0.5); ctx.lineTo(W-pad, H*0.5); ctx.stroke();
+    ctx.setLineDash([]);
+    // colored line by archetype groups still, but now follows peaks
+    ctx.strokeStyle='#1A150F'; ctx.lineWidth=2.8; ctx.lineCap='round'; ctx.lineJoin='round';
+    ctx.beginPath(); ctx.moveTo(pts[0].x, pts[0].y);
+    for(let i=1;i<pts.length;i++){
+      const mx=(pts[i-1].x+pts[i].x)/2;
+      ctx.quadraticCurveTo(pts[i-1].x, pts[i-1].y, mx, (pts[i-1].y+pts[i].y)/2);
+      if(i===pts.length-1) ctx.lineTo(pts[i].x, pts[i].y);
+    }
+    ctx.stroke();
     // dots
     pts.forEach((pt,idx)=>{
       const isCur=idx===curIdx;
-      ctx.beginPath(); ctx.arc(pt.x, pt.y, isCur?8:6,0,Math.PI*2); ctx.fillStyle=OKABE[pt.c%8]; ctx.fill(); ctx.lineWidth=isCur?2.6:1.8; ctx.strokeStyle='#1A150F'; ctx.stroke();
-      if(n<=12 || idx===0 || idx===n-1 || isCur || idx%Math.ceil(n/6)===0){
-        ctx.fillStyle='#1A150F'; ctx.font='700 10px ui-monospace,monospace'; ctx.textAlign='center'; ctx.fillText(pt.season.slice(2,4), pt.x, pt.y+20);
+      ctx.beginPath(); ctx.arc(pt.x, pt.y, isCur?8.2:6,0,Math.PI*2); ctx.fillStyle=OKABE[pt.c%8]; ctx.fill(); ctx.lineWidth=isCur?2.6:1.8; ctx.strokeStyle='#1A150F'; ctx.stroke();
+      if(n<=14 || idx===0 || idx===n-1 || isCur || idx===perf.indexOf(maxP) || idx===perf.indexOf(minP)){
+        ctx.fillStyle='#1A150F'; ctx.font='700 10px ui-monospace,monospace'; ctx.textAlign='center';
+        ctx.fillText(pt.season.slice(2,4), pt.x, pt.y+22);
       }
     });
+    // peak / valley mini labels
+    const bestIdx = perf.indexOf(maxP); const worstIdx = perf.indexOf(minP);
+    if(n>2){
+      ctx.font='800 9px ui-monospace,monospace'; ctx.textAlign='center';
+      if(bestIdx>=0){ ctx.fillStyle='#0072B2'; ctx.fillText('PEAK '+Math.round(maxP), pts[bestIdx].x, pts[bestIdx].y-14); }
+      if(worstIdx>=0 && worstIdx!==bestIdx){ ctx.fillStyle='#5A544D'; ctx.fillText('LOW '+Math.round(minP), pts[worstIdx].x, pts[worstIdx].y+34); }
+    }
   }
 
   function renderSkillsIntoCard(rec, curIdx){
