@@ -14,11 +14,12 @@ export async function mountSharedMap(canvas, opts={}){
   const isMobile = (typeof window!=='undefined') && (window.innerWidth<700 || /Android|iPhone|iPad/i.test(navigator.userAgent||''));
   const maxRender = isMobile ? 4000 : 8000;
   const frameBudget = isMobile ? 42 : 33; // 24fps / 30fps
+  const reduceMotion = (typeof window!=='undefined') && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   // state
   let N=0, baseOx=null, baseOy=null, baseOz=null, baseC=null, baseI=null, baseN=[], baseS=[], baseP=[];
   let projected=[], projById=null, maxId=0;
-  let W=0,H=0, rotY=Math.PI*0.18, rotX=0.22, auto=true, lastT=0, isDragging=false, lastX=0,lastY=0, idleMs=0;
+  let W=0,H=0, rotY=Math.PI*0.18, rotX=0.22, auto=!reduceMotion, lastT=0, isDragging=false, lastX=0,lastY=0, idleMs=0;
   let embedPaused=false, lastRender=0;
   let targetId=highlightInit, guessIds=Array.isArray(opts.guessIds)?opts.guessIds.slice():[];
   let hoverEl=null; try{hoverEl=document.getElementById('hover-tip');}catch{}
@@ -198,23 +199,32 @@ export async function mountSharedMap(canvas, opts={}){
     }
   }
 
+  // single rAF chain that fully stops when paused or static; resume paths call scheduleLoop()
+  let rafPending=false;
+  function scheduleLoop(){ if(!rafPending){ rafPending=true; requestAnimationFrame(loop); } }
   function loop(t){
-    if(embedPaused){ requestAnimationFrame(loop); return; }
+    rafPending=false;
+    if(embedPaused) return;
     const now=t||performance.now();
-    if(now-lastRender < frameBudget){ requestAnimationFrame(loop); return; }
+    if(now-lastRender < frameBudget){ scheduleLoop(); return; }
     lastRender=now;
     if(!lastT) lastT=now;
     const dt=Math.min(50, now-lastT); lastT=now;
     if(!isDragging && auto){
       rotY+=dt*0.00022;
       idleMs+=dt;
-      if(idleMs>8000){ auto=false; embedPaused=true; console.log('map idle pause'); requestAnimationFrame(loop); return; }
+      if(idleMs>8000){ auto=false; embedPaused=true; console.log('map idle pause'); return; }
+    } else if(!isDragging && !auto){
+      // static scene: render once and stop burning frames
+      projectFrame();
+      try{ draw(); }catch(e){ console.warn('draw fail',e); }
+      return;
     } else {
       idleMs=0;
     }
     projectFrame();
     try{ draw(); }catch(e){ console.warn('draw fail',e); }
-    requestAnimationFrame(loop);
+    scheduleLoop();
   }
 
   // interaction
@@ -222,7 +232,7 @@ export async function mountSharedMap(canvas, opts={}){
     const pt=ev.touches? ev.touches[0]:ev;
     isDragging=true; auto=false; idleMs=0; lastX=pt.clientX; lastY=pt.clientY;
     canvas.style.cursor='grabbing';
-    embedPaused=false; lastT=0;
+    embedPaused=false; lastT=0; scheduleLoop();
     const bp=document.getElementById('btn-pause'); if(bp) bp.textContent='Pause';
   }
   function onMove(ev){
@@ -260,9 +270,9 @@ export async function mountSharedMap(canvas, opts={}){
 
   try{
     window.addEventListener('vh:pause-maps',()=>{ embedPaused=true; auto=false; });
-    window.addEventListener('vh:resume-maps',()=>{ embedPaused=false; auto=true; lastT=0; idleMs=0; });
+    window.addEventListener('vh:resume-maps',()=>{ embedPaused=false; auto=!reduceMotion; lastT=0; idleMs=0; scheduleLoop(); });
     document.addEventListener('focusin',(e)=>{ if(e.target && (e.target.id==='guess-input' || e.target.matches&&e.target.matches('input.input'))){ embedPaused=true; auto=false; } });
-    document.addEventListener('visibilitychange',()=>{ if(document.hidden){ embedPaused=true; } else { embedPaused=false; lastT=0; } });
+    document.addEventListener('visibilitychange',()=>{ if(document.hidden){ embedPaused=true; } else { embedPaused=false; lastT=0; scheduleLoop(); } });
   }catch{}
 
   canvas.addEventListener('mousedown', onDown);
@@ -275,18 +285,18 @@ export async function mountSharedMap(canvas, opts={}){
 
   const pauseBtn=document.getElementById('btn-pause');
   if(pauseBtn){
-    pauseBtn.addEventListener('click',()=>{ auto=!auto; embedPaused=!auto; pauseBtn.textContent=auto?'Pause':'Resume'; lastT=0; idleMs=0; if(auto) requestAnimationFrame(loop); });
+    pauseBtn.addEventListener('click',()=>{ auto=!auto; embedPaused=!auto; pauseBtn.textContent=auto?'Pause':'Resume'; lastT=0; idleMs=0; if(auto) scheduleLoop(); });
   }
   const resetBtn=document.getElementById('btn-reset');
   if(resetBtn){
-    resetBtn.addEventListener('click',()=>{ rotY=Math.PI*0.18; rotX=0.22; auto=true; embedPaused=false; idleMs=0; lastT=0; if(pauseBtn) pauseBtn.textContent='Pause'; resize(); });
+    resetBtn.addEventListener('click',()=>{ rotY=Math.PI*0.18; rotX=0.22; auto=!reduceMotion; embedPaused=false; idleMs=0; lastT=0; if(pauseBtn) pauseBtn.textContent=auto?'Pause':'Resume'; resize(); scheduleLoop(); });
   }
 
   // load and start
   resize();
   let ro=null; try{ ro=new ResizeObserver(resize); ro.observe(canvas); if(canvas.parentElement) ro.observe(canvas.parentElement); }catch{}
   const ok=await loadLite();
-  if(ok){ projectFrame(); draw(); requestAnimationFrame(loop); loadNamesLazy().then(()=>{ projectFrame(); draw(); }); }
+  if(ok){ projectFrame(); draw(); scheduleLoop(); loadNamesLazy().then(()=>{ projectFrame(); draw(); }); }
   else { ctx.fillStyle='#FFFEF7'; ctx.fillText('Map failed to load',14,22); }
 
   return {

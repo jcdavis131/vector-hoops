@@ -212,7 +212,7 @@ button,.input{min-height:44px}
 <script src="assets/error-boundary.js"></script>
 <script src="assets/keyboard-a11y.js"></script>
 <script src="assets/site-nav.js" defer></script>
-<script src="assets/pwa-install.js"></script><script src="assets/pixel-avatar.js?v=49"></script><script src="assets/viral-share.js"></script><script src="assets/past-modern-game.js?v=49"></script>
+<script src="assets/pwa-install.js"></script><script src="assets/pixel-avatar.js?v=49"></script><script src="assets/viral-share.js"></script><script src="assets/past-modern-game.js?v=53"></script>
 <script>
 (function(){
   const $=s=>document.querySelector(s);
@@ -232,16 +232,20 @@ button,.input{min-height:44px}
 
   function resize(){ try{ sharedMapApi && sharedMapApi.resize(); }catch{} }
   function projectFrame(){}
-  function draw(){ try{ if(sharedMapApi){ sharedMapApi.setGuesses((G&&G.guesses?G.guesses.map(g=>g.idx):[])); } }catch{} }
-  function focusOnTarget(){ try{ sharedMapApi && sharedMapApi.focusOnTarget && sharedMapApi.focusOnTarget(); }catch{} }
-  function initBase(lite){
+  let _lastGuessKey=null;
+  function draw(){
+    // pushes guesses to the map only when they changed — keeps the 900ms sync + the
+    // projectFrame();draw() idiom from forcing a full canvas redraw while idle-paused
     try{
-      const st=VHPastModern.state();
-      if(st && st.modernPool && st.modernPool.length){
-        modernPoolLower=st.modernPool.map(m=>(m.n||'').toLowerCase());
-      }
+      if(!sharedMapApi) return;
+      const ids=(G&&G.guesses)?G.guesses.map(g=>g.idx):[];
+      const key=ids.join(',');
+      if(key===_lastGuessKey) return;
+      _lastGuessKey=key;
+      sharedMapApi.setGuesses(ids);
     }catch{}
   }
+  function focusOnTarget(){ try{ sharedMapApi && sharedMapApi.focusOnTarget && sharedMapApi.focusOnTarget(); }catch{} }
   function ensureModernLower(){
     try{
       const st = (window.VHPastModern && VHPastModern.state) ? VHPastModern.state() : null;
@@ -253,7 +257,7 @@ button,.input{min-height:44px}
   }
   async function mountGameMap(){
     try{
-      const mod = await import('./assets/shared-map.js?v=52');
+      const mod = await import('./assets/shared-map.js?v=53');
       const canvasEl = document.querySelector('#sky-canvas');
       if(!canvasEl) return;
       const st = (window.VHPastModern && VHPastModern.state) ? VHPastModern.state() : null;
@@ -275,9 +279,7 @@ button,.input{min-height:44px}
         _targetIdCached=tid;
         if(sharedMapApi){ sharedMapApi.setTarget(tid); sharedMapApi.focusOnTarget(); }
       }
-      if(sharedMapApi && G && G.guesses){
-        sharedMapApi.setGuesses(G.guesses.map(g=>g.idx));
-      }
+      draw();
     }catch(e){ console.warn('syncMapFromState fail',e); }
   }
   // periodically sync in case target changes via pack/daily
@@ -403,7 +405,7 @@ button,.input{min-height:44px}
     input.addEventListener('compositionend', (e)=>{ isComposing=false; const val=e.target.value||''; clearTimeout(debounceTimer); debounceTimer=setTimeout(()=>searchAndRender(val),100); });
 
     input.addEventListener('focus', function(){ isTyping=true; auto=false; mapPaused=true; ensureModernLower(); try{ window.dispatchEvent(new CustomEvent('vh:pause-maps')); }catch{} setTimeout(()=>searchAndRender(this.value),30); });
-    input.addEventListener('blur', function(){ setTimeout(()=>{ isTyping=false; mapPaused=false; lastT=0; try{ window.dispatchEvent(new CustomEvent('vh:resume-maps')); }catch{} }, 350); });
+    input.addEventListener('blur', function(){ setTimeout(()=>{ isTyping=false; mapPaused=false; try{ window.dispatchEvent(new CustomEvent('vh:resume-maps')); }catch{} }, 350); });
     input.addEventListener('input', function(){
       if(isComposing) return;
       active=-1;
@@ -1077,23 +1079,12 @@ button,.input{min-height:44px}
       initOk=true;
     }catch(e){ console.warn('init fallback v47', e); }
     try{ st=VHPastModern.state(); }catch(e){ st={searchLite:{players:[]}}; }
-    try{
-      if(st && st.searchLite && st.searchLite.players && st.searchLite.players.length) initBase(st.searchLite.players);
-      else {
-        // try fetch lite directly as fallback if state empty
-        try{
-          const r=await fetch('assets/vectors_search_lite.json?v=49',{cache:'no-store'});
-          const j=await r.json();
-          if(j && j.players) initBase(j.players);
-        }catch{}
-      }
-    }catch(e){ console.warn('initBase fallback v47', e); }
+    try{ ensureModernLower(); }catch(e){ console.warn('modern pool seed fail', e); }
     try{ if(!watchdogFired) clearTimeout(loadingWatchdog); }catch{} 
     // focus camera on target before first projection so star starts centered
     try{ focusOnTarget(); }catch{}
     try{ projectFrame(); }catch(e){ console.warn(e); }
     try{ draw(); }catch(e){ console.warn(e); }
-    try{ loop(0); }catch(e){ console.warn(e); }
 
     // v47 hardened continuation — even if earlier failed, force UI to usable state
     try{
