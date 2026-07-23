@@ -1170,7 +1170,7 @@ button,.input{min-height:44px}
       else {
         // try fetch lite directly as fallback if state empty
         try{
-          const r=await fetch('assets/vectors_search_lite.json?v=47',{cache:'no-store'});
+          const r=await fetch('assets/vectors_search_lite.json?v=49',{cache:'no-store'});
           const j=await r.json();
           if(j && j.players) initBase(j.players);
         }catch{}
