@@ -313,14 +313,14 @@ if(prefersReduced){
   };
 
   lazyMount('#sky-canvas', async ()=>{
-    const { mountStarMap } = await import('./assets/lemmino/star-map-void.js?v=43');
+    const { mountStarMap } = await import('./assets/lemmino/star-map-void.js?v=44');
     const c=document.getElementById('sky-canvas');
     if(c) await mountStarMap(c);
     console.log('Lemmino star-map lazy mounted');
   });
 
   lazyMount('#trading-card-void', async ()=>{
-    const { mountTradingCardVoid } = await import('./assets/lemmino/trading-card-void.js?v=43');
+    const { mountTradingCardVoid } = await import('./assets/lemmino/trading-card-void.js?v=44');
     const c=document.getElementById('trading-card-void');
     if(c) await mountTradingCardVoid(c);
     console.log('Trading card void mounted');

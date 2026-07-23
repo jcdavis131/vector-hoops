@@ -212,7 +212,7 @@ button,.input{min-height:44px}
 <script src="assets/error-boundary.js"></script>
 <script src="assets/keyboard-a11y.js"></script>
 <script src="assets/site-nav.js" defer></script>
-<script src="assets/pwa-install.js"></script><script src="assets/mtnn.js"></script><script src="assets/pixel-avatar.js?v=43"></script><script src="assets/viral-share.js"></script><script src="assets/past-modern-game.js"></script>
+<script src="assets/pwa-install.js"></script><script src="assets/mtnn.js"></script><script src="assets/pixel-avatar.js?v=44"></script><script src="assets/viral-share.js"></script><script src="assets/past-modern-game.js"></script>
 <script>
 (function(){
   const $=s=>document.querySelector(s);
@@ -1136,9 +1136,26 @@ button,.input{min-height:44px}
     $('#btn-pause').addEventListener('click',function(){ auto=!auto; this.textContent=auto?'Pause':'Resume'; });
     $('#btn-reset').addEventListener('click',()=>{ try{ focusOnTarget(); }catch{ rotY=Math.PI*0.18; rotX=0.22; } auto=false; const b=$('#btn-pause'); if(b) b.textContent='Resume'; projectFrame(); draw(); });
 
-    await VHPastModern.init();
-    const st=VHPastModern.state();
-    initBase(st.searchLite.players); 
+    // watchdog — if still showing Loading after 4s, force ready so UI isn't stuck
+    let loadingWatchdog = setTimeout(()=>{
+      try{
+        const lbl=document.getElementById('game-phase-label');
+        if(lbl && /Loading/i.test(lbl.textContent)){
+          lbl.textContent='Ready — tap a card';
+          try{ renderDailyCourt(); updateStatusBar(); }catch{}
+        }
+      }catch{}
+    }, 4000);
+
+    try{
+      await VHPastModern.init();
+    }catch(e){ console.warn('init fallback', e); }
+    let st=null;
+    try{ st=VHPastModern.state(); }catch(e){ st={searchLite:{players:[]}}; }
+    try{
+      if(st && st.searchLite && st.searchLite.players) initBase(st.searchLite.players);
+    }catch(e){ console.warn('initBase fallback', e); }
+    try{ clearTimeout(loadingWatchdog); }catch{} 
     // focus camera on target before first projection so star starts centered
     try{ focusOnTarget(); }catch{}
     projectFrame(); draw(); loop(0);
