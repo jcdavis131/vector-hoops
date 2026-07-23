@@ -212,7 +212,7 @@ button,.input{min-height:44px}
 <script src="assets/error-boundary.js"></script>
 <script src="assets/keyboard-a11y.js"></script>
 <script src="assets/site-nav.js" defer></script>
-<script src="assets/pwa-install.js"></script><script src="assets/mtnn.js"></script><script src="assets/pixel-avatar.js?v=47"></script><script src="assets/viral-share.js"></script><script src="assets/past-modern-game.js?v=47"></script>
+<script src="assets/pwa-install.js"></script><script src="assets/mtnn.js"></script><script src="assets/pixel-avatar.js?v=48"></script><script src="assets/viral-share.js"></script><script src="assets/past-modern-game.js?v=48"></script>
 <script>
 (function(){
   const $=s=>document.querySelector(s);
@@ -421,7 +421,7 @@ button,.input{min-height:44px}
   function initSearchWorker(){
     try{
       if(!window.Worker) return null;
-      const w=new Worker('/assets/workers/modern-search.worker.js?v=47');
+      const w=new Worker('/assets/workers/modern-search.worker.js?v=48');
       w.onmessage=(ev)=>{
         const {type, results, id, q} = ev.data||{};
         if(type==='ready'){ workerReady=true; return; }
@@ -971,7 +971,7 @@ button,.input{min-height:44px}
         const div=document.createElement('div'); div.className='guess-row'+(isWin?' win':'');
         // pixel avatar for each guess resembling player
         const avatarId = `guess-av-${idx}-${Date.now()}`;
-        div.innerHTML=`<div style="display:flex;gap:10px;align-items:center"><div id="${avatarId}" style="width:36px;height:36px;flex:0 0 36px;background:#FFF6D5;border:1.5px solid #1A150F;border-radius:8px;overflow:hidden;image-rendering:pixelated"></div><div style="flex:1;min-width:0"><div style="display:flex;justify-content:space-between;gap:8px;align-items:center"><b>${idx+1}. ${safeName} ${safeSeason}</b><span class="pill" style="${isWin?'background:var(--green);color:#fff':''}">${simPct}% • ${rankLabel}</span></div><div class="small-mono" style="text-transform:none;margin-top:4px;color:#444">${warm} • ${archName}</div><div class="bar" style="margin-top:6px"><i style="width:${Math.max(4,Math.min(100,parseFloat(simPct)||0)}%;background:${isWin?'#009E73':'#0072B2'}"></i></div></div></div>`;
+        div.innerHTML=`<div style="display:flex;gap:10px;align-items:center"><div id="${avatarId}" style="width:36px;height:36px;flex:0 0 36px;background:#FFF6D5;border:1.5px solid #1A150F;border-radius:8px;overflow:hidden;image-rendering:pixelated"></div><div style="flex:1;min-width:0"><div style="display:flex;justify-content:space-between;gap:8px;align-items:center"><b>${idx+1}. ${safeName} ${safeSeason}</b><span class="pill" style="${isWin?'background:var(--green);color:#fff':''}">${simPct}% • ${rankLabel}</span></div><div class="small-mono" style="text-transform:none;margin-top:4px;color:#444">${warm} • ${archName}</div><div class="bar" style="margin-top:6px"><i style="width:${Math.max(4,Math.min(100,parseFloat(simPct)||0))}%;background:${isWin?'#009E73':'#0072B2'}"></i></div></div></div>`;
         cont.appendChild(div);
         // mount avatar after append
         try{
