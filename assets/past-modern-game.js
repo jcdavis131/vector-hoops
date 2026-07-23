@@ -47,6 +47,47 @@
     })().catch(e=>{ _mtnnP=null; throw e; });
     return _mtnnP;
   }
+
+  // v54 lite scoring core: subset of mtnn_embeddings.f32 (past all-stars + 2024+ seasons,
+  // ~300KB) built by pipeline/build_scoring_lite.py. Same L2-normalized rows, so sims are
+  // bit-identical to the full matrix. Loaded eagerly — small enough for any device.
+  let LITE=null, _liteP=null;
+  function loadScoringLite(){
+    if(_liteP) return _liteP;
+    _liteP=(async ()=>{
+      const idx=await fetchJSON('assets/scoring_lite_index.json?v=54');
+      const r=await fetch('assets/scoring_lite.f32?v=54',{cache:'force-cache'});
+      if(!r.ok) throw new Error('scoring_lite f32 '+r.status);
+      const E=new Float32Array(await r.arrayBuffer());
+      if(E.length!==idx.rows*idx.dim) throw new Error('scoring_lite length mismatch');
+      const map=new Map();
+      for(let k=0;k<idx.ids.length;k++) map.set(idx.ids[k],k);
+      LITE={dim:idx.dim, E, map};
+      return LITE;
+    })().catch(e=>{ _liteP=null; throw e; });
+    return _liteP;
+  }
+  // cosine sim by global row id from whichever source is available; null if neither covers the pair
+  function simById(a,b){
+    if(window.VHMtnn && window.VHMtnn.isReady && window.VHMtnn.isReady()){
+      try{ const s=window.VHMtnn.sim(a,b); if(typeof s==='number'&&!isNaN(s)) return s; }catch{}
+    }
+    if(LITE){
+      const ka=LITE.map.get(a), kb=LITE.map.get(b);
+      if(ka!=null && kb!=null){
+        const d=LITE.dim, E=LITE.E, oa=ka*d, ob=kb*d; let dot=0;
+        for(let k=0;k<d;k++) dot+=E[oa+k]*E[ob+k];
+        return dot>1?1:(dot<-1?-1:dot);
+      }
+    }
+    return null;
+  }
+  // lite first; full matrix only if the current target sits outside the lite subset
+  function ensureScoring(){
+    return loadScoringLite()
+      .then(()=>{ try{ computeClosest(); }catch{} if(!state.rankingReady) return ensureMtnn().then(()=>{ try{ computeClosest(); }catch{} }); })
+      .catch(()=> ensureMtnn().then(()=>{ try{ computeClosest(); }catch{} }));
+  }
   function hashStr(s){
     let h=0; for(let i=0;i<s.length;i++){ h=(h*31 + s.charCodeAt(i))>>>0; } return h;
   }
@@ -515,8 +556,8 @@
             }
           }
         }catch(e){ console.warn('pack random url replace fail', e); }
-        // bg MTNN for pack path too
-        try{ /* deferred */ }catch{}
+        // pack path returns early — kick scoring here too
+        try{ ensureScoring().catch(()=>{}); }catch{}
         return state;
       } else {
         // invalid pack
@@ -589,22 +630,19 @@
     state.target=targetPicked; state.targetIdx=state.target?state.target.i:null;
     if(state.targetIdx!=null){ try{ computeClosest(); }catch(e){ console.warn(e); } }
 
-    // v52 fix: DEFER MTNN load to avoid OOM on low-mem devices during typing - load only after first interaction or 12s idle
-    try{
-      let _mtnnTimer=setTimeout(()=>{ try{ ensureMtnn().then(()=>{ try{ computeClosest(); }catch{}; try{ window.dispatchEvent(new CustomEvent('vh:mtnn-loaded',{detail:{bg:true}})); }catch{} }).catch(()=>{}); }catch{} }, 12000);
-      const _deferredLoad=()=>{ try{ clearTimeout(_mtnnTimer); }catch{}; try{ ensureMtnn().then(()=>{ try{ computeClosest(); }catch{} }).catch(()=>{}); }catch{}; window.removeEventListener('vh:defer-mtnn', _deferredLoad); };
-      window.addEventListener('vh:defer-mtnn', _deferredLoad, {once:true});
-    }catch{}
+    // v54: eager lite scoring core (~300KB, safe on any device); no deferral needed
+    try{ ensureScoring().catch(()=>{}); }catch{}
+    try{ window.addEventListener('vh:defer-mtnn', ()=>{ try{ ensureScoring().catch(()=>{}); }catch{} }); }catch{}
     return state;
   }
 
   function computeClosest(){
     if(!state.target||!state.modernPool.length) return null;
-    // harden: if VHMtnn not ready (embeddings failed to load), fallback to 0-sim ranking to prevent crash on first guess
-    const hasVh = !!(window.VHMtnn && window.VHMtnn.sim && window.VHMtnn.isReady && window.VHMtnn.isReady());
-    if(!hasVh){
-      console.warn('VHMtnn not ready, fallback 0-sim');
-      // v53: alphabetical placeholder ranking — NOT valid for scoring; guessModern refuses until rankingReady
+    // probe: can any source score this target? (lite covers all modern rows by construction)
+    const probe=simById(state.target.i, state.modernPool[0].i);
+    if(probe==null){
+      console.warn('no embedding source yet, fallback 0-sim');
+      // alphabetical placeholder ranking — NOT valid for scoring; guessModern refuses until rankingReady
       state.rankingReady=false;
       const fallbackSims = state.modernPool.map(m=>({m, sim:0}));
       try{ fallbackSims.sort((a,b)=>(a.m.n||'').localeCompare(b.m.n||'')); }catch{}
@@ -617,12 +655,14 @@
     for(const m of state.modernPool){
       if(!m||!m.n) continue;
       if(m.n && targetNameLower && m.n.toLowerCase().trim()===targetNameLower) continue;
-      let sim=0; try{ sim=window.VHMtnn.sim(state.target.i, m.i); if(typeof sim!=='number'||isNaN(sim)) sim=0; }catch{ sim=-1; }
+      let sim=simById(state.target.i, m.i); if(typeof sim!=='number'||isNaN(sim)) sim=0;
       sims.push({m,sim}); if(sim>bestSim){ bestSim=sim; best=m; }
     }
     try{ sims.sort((a,b)=> (b.sim||0)-(a.sim||0)); }catch{ }
     state.modernListSorted=sims; state.closestModern=best?{entry:best, sim:bestSim}: (sims[0]?{entry:sims[0].m, sim:sims[0].sim}:null);
+    const wasReady=state.rankingReady===true;
     state.rankingReady=true;
+    if(!wasReady){ try{ window.dispatchEvent(new CustomEvent('vh:ranking-ready')); }catch{} }
     return state.closestModern;
   }
   function rankOfModernName(name){
@@ -660,10 +700,9 @@
       // v53: refuse to score against the alphabetical fallback ranking — rank there is
       // list position, so e.g. the alphabetically-first player would register a false win.
       if(!state.rankingReady){
-        try{ window.dispatchEvent(new CustomEvent('vh:defer-mtnn')); }catch{}
-        // kick the load directly too — the event listener is {once:true} and may be gone if a prior attempt failed
-        try{ ensureMtnn().then(()=>{ try{ computeClosest(); }catch{} }).catch(()=>{}); }catch{}
-        return {ok:false, reason:'Warming up scoring model… try again in a second'};
+        try{ ensureScoring().catch(()=>{}); }catch{}
+        // pending:true lets the UI queue this guess and auto-submit on vh:ranking-ready
+        return {ok:false, pending:true, reason:'Loading scoring…'};
       }
       let low=trimmed.toLowerCase(); let m=trimmed.match(/^(.+?)\s+\d{4}-\d{2}$/); if(m) low=m[1].trim().toLowerCase();
       if(state.target && state.target.n && low===state.target.n.toLowerCase().trim()) return {ok:false, reason:'Target self excluded'};
