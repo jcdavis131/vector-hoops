@@ -32,14 +32,20 @@
       }catch(e2){ throw e; }
     }
   }
+  let _mtnnP=null;
   async function ensureMtnn(){
-    if(window.VHMtnn && window.VHMtnn.loadAsync){
-      await window.VHMtnn.loadAsync(); return;
-    }
-    await new Promise((res,rej)=>{
-      const s=document.createElement('script'); s.src='assets/mtnn.js'; s.async=true; s.onload=res; s.onerror=rej; document.head.appendChild(s);
-    });
-    if(window.VHMtnn && window.VHMtnn.loadAsync) await window.VHMtnn.loadAsync();
+    // memoized: all callers share one in-flight load; cleared on failure so a later call retries
+    if(_mtnnP) return _mtnnP;
+    _mtnnP=(async ()=>{
+      if(window.VHMtnn && window.VHMtnn.loadAsync){
+        await window.VHMtnn.loadAsync(); return;
+      }
+      await new Promise((res,rej)=>{
+        const s=document.createElement('script'); s.src='assets/mtnn.js'; s.async=true; s.onload=res; s.onerror=rej; document.head.appendChild(s);
+      });
+      if(window.VHMtnn && window.VHMtnn.loadAsync) await window.VHMtnn.loadAsync();
+    })().catch(e=>{ _mtnnP=null; throw e; });
+    return _mtnnP;
   }
   function hashStr(s){
     let h=0; for(let i=0;i<s.length;i++){ h=(h*31 + s.charCodeAt(i))>>>0; } return h;
@@ -598,6 +604,8 @@
     const hasVh = !!(window.VHMtnn && window.VHMtnn.sim && window.VHMtnn.isReady && window.VHMtnn.isReady());
     if(!hasVh){
       console.warn('VHMtnn not ready, fallback 0-sim');
+      // v53: alphabetical placeholder ranking — NOT valid for scoring; guessModern refuses until rankingReady
+      state.rankingReady=false;
       const fallbackSims = state.modernPool.map(m=>({m, sim:0}));
       try{ fallbackSims.sort((a,b)=>(a.m.n||'').localeCompare(b.m.n||'')); }catch{}
       state.modernListSorted=fallbackSims;
@@ -614,6 +622,7 @@
     }
     try{ sims.sort((a,b)=> (b.sim||0)-(a.sim||0)); }catch{ }
     state.modernListSorted=sims; state.closestModern=best?{entry:best, sim:bestSim}: (sims[0]?{entry:sims[0].m, sim:sims[0].sim}:null);
+    state.rankingReady=true;
     return state.closestModern;
   }
   function rankOfModernName(name){
@@ -625,12 +634,8 @@
       if(!entry) return null;
       const list = state.modernListSorted||[];
       if(!list.length){
-        // if list empty but entry exists, return fallback rank using modernPool index — prevents crash when embeddings not ready
-        const pool = state.modernPool||[];
-        if(!pool.length) return {rank:0, sim:0, entry};
-        const idx = pool.findIndex(mm=>mm && mm.n && mm.n.toLowerCase()===low);
-        if(idx>=0) return {rank: idx, sim:0, entry};
-        return {rank:0, sim:0, entry};
+        // list empty but entry exists — placeholder rank only, never 0 (0 means win)
+        return {rank:999, sim:0, entry};
       }
       for(let i=0;i<list.length;i++){ 
         try{
@@ -651,6 +656,14 @@
       }
       if(!state.target){
         return {ok:false, reason:'Still loading court…'};
+      }
+      // v53: refuse to score against the alphabetical fallback ranking — rank there is
+      // list position, so e.g. the alphabetically-first player would register a false win.
+      if(!state.rankingReady){
+        try{ window.dispatchEvent(new CustomEvent('vh:defer-mtnn')); }catch{}
+        // kick the load directly too — the event listener is {once:true} and may be gone if a prior attempt failed
+        try{ ensureMtnn().then(()=>{ try{ computeClosest(); }catch{} }).catch(()=>{}); }catch{}
+        return {ok:false, reason:'Warming up scoring model… try again in a second'};
       }
       let low=trimmed.toLowerCase(); let m=trimmed.match(/^(.+?)\s+\d{4}-\d{2}$/); if(m) low=m[1].trim().toLowerCase();
       if(state.target && state.target.n && low===state.target.n.toLowerCase().trim()) return {ok:false, reason:'Target self excluded'};
