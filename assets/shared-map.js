@@ -117,6 +117,8 @@ export async function mountSharedMap(canvas, opts={}){
   // projection - only sampled subset for perf, but we need all for target/guess lookup; we project all but render sampled
   function projectFrame(){
     if(!baseOx||!N) return;
+    // self-heal: NaN rotation would collapse every dot to (0,0) via |0
+    if(!isFinite(rotY)||!isFinite(rotX)){ rotY=Math.PI*0.18; rotX=0.22; }
     const cy=Math.cos(rotY), sy=Math.sin(rotY), cx=Math.cos(rotX), sx=Math.sin(rotX);
     const persp=2.8;
     const W2=W*0.5, H2=H*0.5, W40=W*0.40, H40=H*0.40;
@@ -167,33 +169,41 @@ export async function mountSharedMap(canvas, opts={}){
       }
     }
 
-    // guesses: orange rings (cheap)
+    // guesses: orange rings with white underlay so they read on dark clusters
     if(guessIds && guessIds.length){
-      ctx.strokeStyle='#D55E00';
-      ctx.lineWidth=2;
       for(let gi=0;gi<guessIds.length;gi++){
         const gid=guessIds[gi]; if(gid==null||gid>maxId) continue;
         const idx=projById?projById[gid]:-1; if(idx<0) continue;
         const pr=projected[idx]; if(!pr) continue;
         if(pr.sx< -30 || pr.sx> W+30 || pr.sy< -30 || pr.sy> H+30) continue;
-        ctx.strokeRect((pr.sx|0)-5, (pr.sy|0)-5, 10,10);
+        const gx=(pr.sx|0), gy=(pr.sy|0);
+        ctx.strokeStyle='#FFFFFF'; ctx.lineWidth=4; ctx.strokeRect(gx-5, gy-5, 10,10);
+        ctx.strokeStyle='#D55E00'; ctx.lineWidth=2; ctx.strokeRect(gx-5, gy-5, 10,10);
       }
     }
 
-    // target: yellow halo
+    // target: bullseye + crosshair — a plain yellow dot vanishes inside the yellow
+    // archetype cluster, so shape+outline carries the signal, not color.
+    // (arc() is fine here: one marker per frame, unlike the 4-8k dots above)
     if(targetId!=null && projById && targetId<=maxId){
       const idx=projById[targetId];
       if(idx>=0){
         const pr=projected[idx];
         if(pr && pr.sx>= -20 && pr.sx<=W+20 && pr.sy>= -20 && pr.sy<=H+20){
           const x=pr.sx|0, y=pr.sy|0;
-          ctx.fillStyle='rgba(240,228,66,0.28)';
-          ctx.fillRect(x-9, y-9, 18,18);
+          ctx.lineWidth=3; ctx.strokeStyle='#FFFFFF';
+          ctx.beginPath(); ctx.arc(x,y,11,0,Math.PI*2); ctx.stroke();
+          ctx.lineWidth=2.4; ctx.strokeStyle='#1A150F';
+          ctx.beginPath(); ctx.arc(x,y,7.5,0,Math.PI*2); ctx.stroke();
           ctx.fillStyle='#F0E442';
-          ctx.fillRect(x-5, y-5, 10,10);
-          ctx.strokeStyle='#1A150F';
-          ctx.lineWidth=1;
-          ctx.strokeRect(x-5,y-5,10,10);
+          ctx.beginPath(); ctx.arc(x,y,3.4,0,Math.PI*2); ctx.fill();
+          ctx.lineWidth=1.2; ctx.strokeStyle='#1A150F';
+          ctx.beginPath(); ctx.arc(x,y,3.4,0,Math.PI*2); ctx.stroke();
+          ctx.lineWidth=2; ctx.strokeStyle='#1A150F';
+          ctx.beginPath();
+          ctx.moveTo(x-17,y); ctx.lineTo(x-11,y); ctx.moveTo(x+11,y); ctx.lineTo(x+17,y);
+          ctx.moveTo(x,y-17); ctx.lineTo(x,y-11); ctx.moveTo(x,y+11); ctx.lineTo(x,y+17);
+          ctx.stroke();
         }
       }
     }
@@ -303,11 +313,36 @@ export async function mountSharedMap(canvas, opts={}){
     setTarget(id){ targetId=id==null?null:id|0; draw(); },
     setGuesses(ids){ guessIds=Array.isArray(ids)?ids.slice():[]; draw(); },
     focusOnTarget(){
-      if(targetId==null||!projById) return;
-      const idx=projById[targetId]; if(idx<0) return;
+      // targetId>maxId would read past the Int32Array end: idx=undefined -> atan2(undefined)=NaN -> map collapses
+      if(targetId==null||!projById||targetId<0||targetId>maxId) return;
+      const idx=projById[targetId]; if(idx==null||idx<0) return;
       const ox=baseOx[idx], oy=baseOy[idx], oz=baseOz[idx];
-      rotY=-Math.atan2(ox,oz); const r=Math.sqrt(ox*ox+oz*oz)||1; rotX=-Math.atan2(oy,r)*0.85;
+      const ry=-Math.atan2(ox,oz); const r=Math.sqrt(ox*ox+oz*oz)||1; const rx=-Math.atan2(oy,r)*0.85;
+      if(isFinite(ry)&&isFinite(rx)){ rotY=ry; rotX=rx; }
       projectFrame(); draw();
+    },
+    hasPoint(id){ return !!(projById && id!=null && id>=0 && id<=maxId && projById[id]>=0); },
+    // append one row (e.g. a daily target outside the sampled lite map) so the bullseye always exists
+    addPoint(p){
+      try{
+        if(!p||p.i==null||!baseOx) return false;
+        const id=p.i|0;
+        if(id>=0 && id<=maxId && projById && projById[id]>=0) return true;
+        const n=N+1;
+        const nOx=new Float32Array(n), nOy=new Float32Array(n), nOz=new Float32Array(n);
+        const nC=new Uint8Array(n), nI=new Int32Array(n);
+        nOx.set(baseOx); nOy.set(baseOy); nOz.set(baseOz); nC.set(baseC); nI.set(baseI);
+        nOx[N]=((p.x??0.5)-0.5)*2; nOy[N]=((p.y??0.5)-0.5)*2; nOz[N]=((p.z??0.5)-0.5)*2;
+        nC[N]=(p.c|0)&7; nI[N]=id;
+        baseOx=nOx; baseOy=nOy; baseOz=nOz; baseC=nC; baseI=nI;
+        baseN[N]=p.n||''; baseS[N]=p.s||''; baseP[N]=p.p??0;
+        projected.push({sx:0,sy:0,depth:0,alpha:0.6,c:nC[N]});
+        N=n;
+        if(id>maxId){ const np=new Int32Array(id+1); np.fill(-1); if(projById) np.set(projById); projById=np; maxId=id; }
+        projById[id]=N-1;
+        projectFrame(); draw();
+        return true;
+      }catch(e){ console.warn('addPoint fail',e); return false; }
     },
     resize, getCount(){return N;},
     dispose(){ try{ro&&ro.disconnect();}catch{} }
