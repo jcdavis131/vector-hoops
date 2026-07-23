@@ -307,7 +307,7 @@ const lazyMount = (selector, loader) => {
   const c=document.getElementById('sky-canvas');
   if(!c) return;
   try{
-    const { mountSharedMap } = await import('./assets/shared-map.js?v=51');
+    const { mountSharedMap } = await import('./assets/shared-map.js?v=52');
     await mountSharedMap(c, { highlightId: 672, dark:true });
   }catch(e){ console.error('shared-map eager fail', e); }
 })();

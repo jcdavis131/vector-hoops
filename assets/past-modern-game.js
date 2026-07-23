@@ -510,7 +510,7 @@
           }
         }catch(e){ console.warn('pack random url replace fail', e); }
         // bg MTNN for pack path too
-        try{ ensureMtnn().then(()=>{ try{ computeClosest(); }catch{} }).catch(()=>{}); }catch{}
+        try{ /* deferred */ }catch{}
         return state;
       } else {
         // invalid pack
@@ -583,14 +583,11 @@
     state.target=targetPicked; state.targetIdx=state.target?state.target.i:null;
     if(state.targetIdx!=null){ try{ computeClosest(); }catch(e){ console.warn(e); } }
 
-    // v45 fix: load MTNN in background, never block court — fallback already computed
+    // v52 fix: DEFER MTNN load to avoid OOM on low-mem devices during typing - load only after first interaction or 12s idle
     try{
-      ensureMtnn().then(()=>{
-        try{ computeClosest(); }catch{}
-        try{ window.dispatchEvent(new CustomEvent('vh:mtnn-loaded',{detail:{bg:true}})); }catch{}
-      }).catch(()=>{});
-      // also race with timeout to avoid hanging fetch holding up later
-      setTimeout(()=>{ try{ if(window.VHMtnn && window.VHMtnn.isReady && window.VHMtnn.isReady()){ computeClosest(); } }catch{} }, 2500);
+      let _mtnnTimer=setTimeout(()=>{ try{ ensureMtnn().then(()=>{ try{ computeClosest(); }catch{}; try{ window.dispatchEvent(new CustomEvent('vh:mtnn-loaded',{detail:{bg:true}})); }catch{} }).catch(()=>{}); }catch{} }, 12000);
+      const _deferredLoad=()=>{ try{ clearTimeout(_mtnnTimer); }catch{}; try{ ensureMtnn().then(()=>{ try{ computeClosest(); }catch{} }).catch(()=>{}); }catch{}; window.removeEventListener('vh:defer-mtnn', _deferredLoad); };
+      window.addEventListener('vh:defer-mtnn', _deferredLoad, {once:true});
     }catch{}
     return state;
   }

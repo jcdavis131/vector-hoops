@@ -5,7 +5,7 @@
    - no Three.js CDN caching
 */
 
-const CACHE_NAME = 'vector-hoops-v51-light';
+const CACHE_NAME = 'vector-hoops-v52-typing-fix';
 
 const CORE = [
   '/',

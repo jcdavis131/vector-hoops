@@ -212,7 +212,7 @@ button,.input{min-height:44px}
 <script src="assets/error-boundary.js"></script>
 <script src="assets/keyboard-a11y.js"></script>
 <script src="assets/site-nav.js" defer></script>
-<script src="assets/pwa-install.js"></script><script src="assets/mtnn.js"></script><script src="assets/pixel-avatar.js?v=49"></script><script src="assets/viral-share.js"></script><script src="assets/past-modern-game.js?v=49"></script>
+<script src="assets/pwa-install.js"></script><script src="assets/pixel-avatar.js?v=49"></script><script src="assets/viral-share.js"></script><script src="assets/past-modern-game.js?v=49"></script>
 <script>
 (function(){
   const $=s=>document.querySelector(s);
@@ -253,7 +253,7 @@ button,.input{min-height:44px}
   }
   async function mountGameMap(){
     try{
-      const mod = await import('./assets/shared-map.js?v=51');
+      const mod = await import('./assets/shared-map.js?v=52');
       const canvasEl = document.querySelector('#sky-canvas');
       if(!canvasEl) return;
       const st = (window.VHPastModern && VHPastModern.state) ? VHPastModern.state() : null;
@@ -1025,6 +1025,7 @@ button,.input{min-height:44px}
   }
 
   function doGuess(){
+    try{ window.dispatchEvent(new CustomEvent('vh:defer-mtnn')); }catch{}
     try{
       const input=$('#guess-input'); if(!input) return; const name=(input.value||'').trim(); if(!name) return;
       // v42 guard: require >=2 chars to guess, prevents single 't' crash spam
