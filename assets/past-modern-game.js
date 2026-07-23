@@ -441,8 +441,6 @@
     const modern=Array.from(byName.values()).sort((a,b)=>a.n.localeCompare(b.n));
     state.modernPool=modern; state.modernByName=byName; state.modernByLower=new Map(modern.map(m=>[m.n.toLowerCase(),m]));
 
-    await ensureMtnn();
-
     let urlDay=null,urlRandomId=null,modeParam=null,packParam=null,packSizeParam=null,scoresParam=null,slotParam=null;
     try{
       const sp=new URLSearchParams(location.search);
@@ -503,6 +501,8 @@
             }
           }
         }catch(e){ console.warn('pack random url replace fail', e); }
+        // bg MTNN for pack path too
+        try{ ensureMtnn().then(()=>{ try{ computeClosest(); }catch{} }).catch(()=>{}); }catch{}
         return state;
       } else {
         // invalid pack
@@ -574,6 +574,16 @@
     }
     state.target=targetPicked; state.targetIdx=state.target?state.target.i:null;
     if(state.targetIdx!=null){ try{ computeClosest(); }catch(e){ console.warn(e); } }
+
+    // v45 fix: load MTNN in background, never block court — fallback already computed
+    try{
+      ensureMtnn().then(()=>{
+        try{ computeClosest(); }catch{}
+        try{ window.dispatchEvent(new CustomEvent('vh:mtnn-loaded',{detail:{bg:true}})); }catch{}
+      }).catch(()=>{});
+      // also race with timeout to avoid hanging fetch holding up later
+      setTimeout(()=>{ try{ if(window.VHMtnn && window.VHMtnn.isReady && window.VHMtnn.isReady()){ computeClosest(); } }catch{} }, 2500);
+    }catch{}
     return state;
   }
 
