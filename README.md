@@ -1,131 +1,51 @@
-# Vector Hoops — NBA Chimera Search over MTNN Embeddings
+# Vector Hoops
 
 ![CI](https://github.com/jcdavis131/vector-hoops/actions/workflows/ci.yml/badge.svg)
 ![Python 3.11](https://img.shields.io/badge/python-3.11-blue)
-![MLOps](https://img.shields.io/badge/MLOps-MTNN%20towers%20%2B%20eval%20gate-green)
-![Data](https://img.shields.io/badge/data-12%2C966%20player--seasons%20%E2%80%A2%2096%E2%80%932026-orange)
-![CQS](https://img.shields.io/badge/CQS-85.87%25%20%2B%20leakfree%20recall%400.977-blueviolet)
 
-**Daily NBA chimera puzzle over an era-honest embedding space.** MTNN v5_concat_b2_h160_t32_d48_mlp128: 120 feats, 17 tower families, concat 544+12→128 L2-norm, heads: 8 archetype + 5 pos + 14 next_profile + 18 skills tower. Leakfree eval: 0.977 recall@10 / 0.6717 purity@20 composite 0.7937 via --split player. Live at https://hoops.dumbmodel.com
+A daily NBA "chimera" puzzle played over an era-honest player-embedding space: guess the blend of real player-seasons behind each day's composite. Static site, no backend, live at https://hoops.dumbmodel.com.
 
 > Solo personal project, no connection to employer, built with public/free-tier only (free data pipeline, ONNX optional, static Vercel).
-> **Built in raw WebGPU / WebGL / Canvas — no Unity/Unreal, just browser graphics APIs straight.** Zero engine, custom shaders + raw buffers, static hosting.
 
-**Live:** https://hoops.dumbmodel.com | **Campaign Lab:** [Chimera Campaign Lab Space](https://agent.meta.ai/s/vector-hoops-chimera-campaign-lab) | **Methods:** `/docs/METHODS.md`
+> **Picking up in-progress work?** Start at [`docs/HANDOFF.md`](docs/HANDOFF.md) — current state, dormant data tracks and how to activate them, verification commands, and open follow-ups.
 
----
+## The embedding
 
-# Vector Hoops
+12,966 player-seasons (1996–2026), per-100-possession stats z-scored within season so eras compare honestly. A multi-tower neural net (MTNN v5: 120 features in 17 tower families, fused to a 48-dim L2-normalized embedding with archetype / position / next-profile / skills heads) produces the space the game scores in. On the player-split leak-free eval: 0.977 recall@10, 0.6717 purity@20, composite 0.7937 (see `docs/DATA_MODEL_2026-07-16.md`, `docs/MTNN_V5_PROMOTE_GATE.md`, and `assets/eval_scoreboard.json` for how the gate is defined — an earlier season-split eval that scored recall@10 = 1.0 was memorization and was replaced).
 
-Daily NBA chimera puzzle over an era-honest player embedding space.
-12,392 player-seasons (1996-2026), per-100-possession, z-scored within
-season; PCA(3) map; 8 auto-named archetypes. Static, zero backend, free.
+The shipped artifacts (`assets/mtnn_meta.json`, `assets/mtnn.onnx`, `assets/vectors.json`, `assets/skills.json`) are committed, so the site runs from a static host with client-side inference (ONNX optional).
 
-> **Picking up in-progress work?** Start at **[`docs/HANDOFF.md`](docs/HANDOFF.md)** —
-> current branch state, the four dormant data tracks and how to activate
-> them, verification commands, and open follow-ups.
+## The site
 
-## Name the Player (`fingerprint.html`, `docs/ARENA.md`)
+Plain HTML/JS/Canvas/WebGL, no framework or game engine, PWA-capable (`sw.js`, `offline.html`). Pages: the daily game (`play.html`), a 3D embedding map (`model.html`), player dossiers (`players.html`), trends, teams, leaderboard, and methods (`methods.html`). `knowledge/` holds a generated, interlinked markdown wiki page per charted player (AUTO block regenerated from data, CURATED block preserved) — contract in `knowledge/OKF.md`, rebuilt with `python pipeline/build_wiki.py`.
 
-The 9th daily mode, reachable from `/play`'s tab bar and the mode grid on
-`/`. One anonymized player-season shown as pure model output — MTNN
-constellation position, archetype pull, 12-skill DNA, no name/team/year —
-six guesses, warmth scored by true 48-d cosine. `pipeline/build_arena.py`
-repacks committed assets (vectors/skills/mtnn_map/mtnn_heads/
-mtnn_embeddings/mtnn_meta/player_meta) into a phone-sized bundle
-(`assets/arena/`); `pipeline/test_arena.py` gates every rebuild, wired
-into `pipeline/update_dataset.py`. Not to be confused with `/arena`, the
-3D chibi-court tour (`assets/arena.css`, Three.js) — different feature,
-similar name, worth a rename if it causes confusion.
+## Data pipeline
 
-## Skills Lens (`skills.html`, `docs/SKILLS_LENS.md`)
+```bash
+python pipeline/build_vectors.py     # frozen 14-dim game contract + wide training matrix
+python pipeline/build_skills.py      # 12-skill grades + client-side probe weights
+python pipeline/update_dataset.py    # growth loop: fetch -> rebuild -> gate -> ledger
+```
 
-Every charted player-season graded 0-99 on twelve skills — fixed linear
-composites of the era-z contract, percentile within season pool, badges
-at 90+. `pipeline/build_skills.py` emits `assets/skills.json` (grades,
-order-aligned with vectors.json), `assets/skill_probe.json` (weights +
-pooled quantile knots so the client grades the fused daily chimera), and
-MTNN training targets. `pipeline/test_skills.py` gates every rebuild;
-`pipeline/update_dataset.py` is the growth loop (fetch best-effort →
-rebuild → gate → ledger at `pipeline/cache/dataset_ledger.json`).
-`train_mtnn.py` (v4) adds a per-skill tower bank on the fused embedding
-with held-out per-skill R² in `mtnn_report.json` — research lane only;
-the site ships the transparent composites.
+Sources: stats.nba.com league dashboards (Base/Advanced/Scoring/bio/tracking) and Basketball-Reference contracts. Every response is cached under `pipeline/cache/`; stats.nba.com throttles hard, so reruns resume, and `--offline` rebuilds from cache only. Rebuilds are gated by `pipeline/test_skills.py` / `pipeline/test_arena.py` before anything ships.
 
-Two dormant data tracks extend the MTNN with distinct tower families,
-each cache-ready and gated on a committed fixture until one operator
-fetch on a non-datacenter IP (stats.nba.com blocks this environment):
+Three data tracks are built but dormant, each cache-ready and gated on a committed fixture until one operator fetch from a residential IP (stats.nba.com blocks datacenter IPs):
 
-- **Pedigree (Track H)** — draft slot, entry expectations, team-fit
-  prior + `pedigree_expectation` head. Activate: `bash
-  pipeline/operator_fetch_pedigree.sh`.
-- **Playoffs (Track I)** — postseason as a distinct regime:
-  playoff-vs-regular-season deltas (minutes, usage, scoring, efficiency)
-  + team wins/rounds + `playoff_riser` head, plus a transparent Playoff
-  Lens (RS vs PO splits + riser/fader) on `skills.html`. Activate: `bash
-  pipeline/operator_fetch_playoffs.sh`.
-- **Wide skills (Track J)** — post / transition / motor as masked skills
-  (2015-16+) from synergy + hustle feeds; Skills Lens bars + MTNN
-  skill-tower targets (per-skill mask matrix). Activate: `bash
-  pipeline/operator_fetch_wide_skills.sh`.
+- **Pedigree (Track H)** — draft slot and entry expectations: `bash pipeline/operator_fetch_pedigree.sh`
+- **Playoffs (Track I)** — postseason-vs-regular-season deltas: `bash pipeline/operator_fetch_playoffs.sh`
+- **Wide skills (Track J)** — post/transition/motor from synergy + hustle feeds: `bash pipeline/operator_fetch_wide_skills.sh`
 
-The Skills Lens also carries a **Steals of the Draft** board (draft
-expectation vs actual peak skill grade) that lights up with the Track H
-draft data.
+## Training
 
-## OKF LLM-Wiki (`knowledge/`)
+`train.sh` drives MTNN training (`pipeline/train_mtnn.py`, torch). Promotion of a new embedding into the game is a deliberate, separate step behind the leak-free gate above — the transparent 14-dim contract stays until a candidate beats it there. Research notes live in `docs/` (`MTNN_V5_DEEP_ARCHITECTURE.md`, `MTNN_V6_SOTA.md`, `RESEARCH.md`).
 
-One interlinked, machine-editable markdown page per charted player
-(2,293), plus archetype and position hubs. Two-layer contract: an AUTO
-block regenerated from the data, and a CURATED layer below the marker
-that humans/LLM agents extend and the generator never touches. Nearest-
-neighbor wikilinks make the graph walkable; the game's reveal card links
-each chimera component to its dossier. Contract: `knowledge/OKF.md`.
+## Running locally
 
-- `python pipeline/build_wiki.py` — idempotent regeneration
+```bash
+python -m http.server 8000   # static site, open http://localhost:8000
+python -m pytest pipeline/ -q   # pipeline gates (needs the dev extras in pyproject.toml)
+```
 
-## Enrichment (`pipeline/enrich_vectors.py`)
+## License
 
-Adds to `assets/vectors.json` without touching the game contract:
-
-- `proj` — exact affine recovery of the build-time PCA+minmax map, so
-  the client projects the fused Chimera vector into the 3D map honestly
-- `axes` — PC1/PC2/PC3 interpretations verified against feature
-  correlations (paint vs perimeter / scoring load / ball in hand)
-- `p` + `positions` — per-season PG/SG/SF/PF/C from Basketball-Reference
-  (`pipeline/fetch_positions.py`, 99.7% coverage), coloring the 3D map
-
-## Data pipeline (v2)
-
-`python pipeline/build_vectors.py` builds two artifacts:
-
-- `assets/vectors.json` — the frozen 14-dim game contract (+ optional
-  `sal` salary-z per player where payroll coverage exists)
-- `pipeline/data/train_matrix.npz` + `feature_manifest.json` — the wide
-  matrix: Base + Advanced + shot-mix (Scoring) + bio + player-tracking
-  (2013-14+, masked before) + salary, all era z-scored with missing
-  masks, grouped into tower families
-
-Sources: stats.nba.com (leaguedashplayerstats Base/Advanced/Scoring,
-leaguedashplayerbiostats, leaguedashptstats), basketball-reference
-current contracts, and an optional `pipeline/cache/salaries_history.csv`
-drop-in (name,season,salary) for full 1996+ payroll history.
-
-Every season/endpoint response is cached under `pipeline/cache/`;
-stats.nba.com throttles hard, so re-running resumes where it left off.
-`--offline` rebuilds from cache only.
-
-Cleaning: dedupe on (PLAYER_ID, season), NaN -> season mean with masks,
-attempt-weighted empirical-Bayes shrinkage of FG3%/FT%/FG%, z-clip ±4.
-
-## Embedding v2 (multi-tower net)
-
-`python pipeline/train_towers.py` (torch) trains per-family MLP towers
-(volume / playmaking / rebounding / defense / efficiency / shot-mix /
-tracking / bio / market) fused into a 32-dim contrastive embedding
-(InfoNCE; positives = same player in adjacent seasons + augmented
-views; auxiliary salary-regression head). Outputs
-`pipeline/data/embedding_v2.npz` + `tower_report.json` with a
-same-player-next-season recall@10 sanity metric. The game keeps the
-transparent 14-dim profile until v2 demonstrably beats it — promotion
-is a deliberate, separate step.
+MIT. Solo personal project, no connection to employer, built with public/free-tier only.

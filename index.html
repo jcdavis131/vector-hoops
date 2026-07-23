@@ -10,7 +10,6 @@
 <link rel="stylesheet" href="assets/shell.css"/><link rel="stylesheet" href="assets/responsive.css"/><link rel="stylesheet" href="assets/final-qa.css"/><link rel="stylesheet" href="assets/unified.css"/><link rel="stylesheet" href="assets/lemmino/lemmino.css"/>
 <link rel="stylesheet" href="assets/trading-card.css?v=42"/>
 <script src="https://unpkg.com/es-module-shims@1.8.0/dist/es-module-shims.js"></script>
-<script type="importmap">{"imports":{"three":"https://unpkg.com/three@0.160.0/build/three.module.js","three/addons/":"https://unpkg.com/three@0.160.0/examples/jsm/"}}</script>
 <style>
 :root{--paper:#FFFEF7;--ink:#1A150F;--blue:#0072B2;--verm:#D55E00;--yellow:#F0E442;--green:#009E73;--radius:14px;--shadow:4px 4px 0 var(--ink);--mono:ui-monospace,monospace;--sans:ui-sans-serif,system-ui;}
 *{box-sizing:border-box}html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:18px;line-height:1.65;overflow-x:clip}
@@ -289,44 +288,36 @@
 })();
 </script>
 
-<!-- Trading Cards — star map + career arc card — simplified, no heavy drift tube -->
+<!-- Unified shared map v2-light — same engine as game, LOD, DPR1, fillRect -->
 <script type="module">
-const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-if(prefersReduced){
-  console.log('prefers-reduced-motion: skip 3D embeds');
-} else {
-  const lazyMount = (selector, loader) => {
-    const el = document.querySelector(selector);
-    if(!el) return;
-    let mounted=false;
-    const mount = async ()=>{
-      if(mounted) return;
-      mounted=true;
-      observer&&observer.disconnect();
-      try{ await loader(); }catch(e){ console.warn('lemmino lazy fail',selector,e); }
-    };
-    const observer = new IntersectionObserver((entries)=>{
-      const ent=entries[0];
-      if(ent&&ent.isIntersecting){ setTimeout(mount, 120); }
-    },{rootMargin:'250px 0px', threshold:0.01});
-    observer.observe(el);
+const lazyMount = (selector, loader) => {
+  const el = document.querySelector(selector);
+  if(!el) return;
+  let mounted=false;
+  const mount = async ()=>{
+    if(mounted) return; mounted=true; observer&&observer.disconnect();
+    try{ await loader(); }catch(e){ console.warn('shared map lazy fail',selector,e); }
   };
-
-  lazyMount('#sky-canvas', async ()=>{
-    const { mountStarMap } = await import('./assets/lemmino/star-map-void.js?v=43');
-    const c=document.getElementById('sky-canvas');
-    if(c) await mountStarMap(c);
-    console.log('Lemmino star-map lazy mounted');
-  });
-
-  lazyMount('#trading-card-void', async ()=>{
-    const { mountTradingCardVoid } = await import('./assets/lemmino/trading-card-void.js?v=43');
-    const c=document.getElementById('trading-card-void');
-    if(c) await mountTradingCardVoid(c);
-    console.log('Trading card void mounted');
-  });
-}
+  const observer = new IntersectionObserver((entries)=>{
+    const ent=entries[0]; if(ent&&ent.isIntersecting){ setTimeout(mount, 80); }
+  },{rootMargin:'200px 0px', threshold:0.01});
+  observer.observe(el);
+};
+(async ()=>{
+  const c=document.getElementById('sky-canvas');
+  if(!c) return;
+  try{
+    const { mountSharedMap } = await import('./assets/shared-map.js?v=52');
+    await mountSharedMap(c, { highlightId: 672, dark:true });
+  }catch(e){ console.error('shared-map eager fail', e); }
+})();
+lazyMount('#trading-card-void', async ()=>{
+  const { mountTradingCardVoid } = await import('./assets/lemmino/trading-card-void.js?v=44');
+  const c=document.getElementById('trading-card-void');
+  if(c) await mountTradingCardVoid(c);
+});
 </script>
+
 
 <footer class="site-footer"><div class="site-footer__links"><a href="/play">Play</a><a href="/model">Lab</a><a href="/methods">Methods</a><a href="/players">Players</a><a href="https://github.com/jcdavis131/vector-hoops" target="_blank" rel="noopener">GitHub</a></div><div class="site-footer__attribution">Every number recomputable from stats.nba.com · dumbmodel.com — Lemmino voids: Three.js 0.160 matte low-poly</div></footer>
 <script>if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js').catch(()=>{})})}</script>

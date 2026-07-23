@@ -1,58 +1,41 @@
-/* vector-hoops PWA v17-20260720 — zoomout pinch + seasonCloud + grey history trail
-   #1: start zoomed out 11.2 + 38, wheel+pinch zoom (3.2-16 and 12-68), dblclick zoom
-   #2: drift v7: seasonCloud peers, grey past trail, future faint, ghost full, career stage, richer meta
-   v15: pause on type, v16: cache embed */
+/* vector-hoops PWA v51-light — P0 crash fix: minimal precache to prevent install OOM
+   - CORE only shell (~14 files), no large JSON/models/CDN
+   - network-first for assets with 1MB cache cap to avoid caching vectors.json (3MB)
+   - stale-while-revalidate for immutable CORE
+   - no Three.js CDN caching
+*/
 
-const CACHE_NAME = 'vector-hoops-v43-20260722-tight-pulse-knn30';
+const CACHE_NAME = 'vector-hoops-v52-typing-fix';
+
 const CORE = [
   '/',
   '/play',
-  '/players',
-  '/trends',
-  '/model',
-  '/methods',
   '/manifest.json',
   '/offline.html',
-  '/assets/og-embed.png',
-  '/assets/og-1200x630.png',
   '/assets/shell.css',
   '/assets/responsive.css',
   '/assets/final-qa.css',
   '/assets/unified.css',
   '/assets/player-profile-v28.css',
+  '/assets/trading-card.css',
+  '/assets/site-nav.js',
   '/assets/error-boundary.js',
   '/assets/keyboard-a11y.js',
   '/assets/pwa-install.js',
-  '/assets/site-nav.js',
-  '/assets/mtnn.js',
-  '/assets/viral-share.js',
-  '/assets/past-modern-game.js',
-  '/assets/vectors_search_lite.json',
-  '/assets/vectors_search_lite_pos.json',
-  '/assets/archetypes_time.json',
-  '/assets/players_lite.json',
-  '/assets/teams.json',
-  '/assets/season_norms.json',
-  '/assets/honors.json',
-  '/assets/pedigree.json',
-  '/assets/skills.json',
-  '/assets/skills_wide.json',
-  '/assets/player_team_season.json',
-  '/assets/vectors.json',
-  '/assets/lemmino/star-map-void.js',
-  '/assets/lemmino/trading-card-void.js',
-  '/assets/trading-card.css',
-  '/assets/workers/modern-search.worker.js'
+  '/assets/og-embed.png',
+  '/assets/og-1200x630.png'
 ];
+
 const DENY_CACHE = [
-  '/assets/playoff_paths.json',
-  '/assets/next_profile_eval.json',
+  '/assets/vectors.json',
   '/assets/mtnn.onnx',
   '/assets/mtnn.onnx.data',
   '/assets/mtnn_heads.f32',
   '/assets/mtnn_embeddings.f32',
-  '/assets/vectors.json'
+  '/assets/playoff_paths.json'
 ];
+
+// kept for reference / isImmutable checks history, NOT precached in v51-light
 const FULL_MTNN = [
   '/assets/mtnn_embeddings.f32',
   '/assets/mtnn_heads.f32',
@@ -70,88 +53,210 @@ const FULL_MTNN = [
   '/assets/playoffs.json',
   '/assets/pedigree.json'
 ];
-function isDenied(p){ return DENY_CACHE.some(x=> p.includes(x)); }
-self.addEventListener('install', e=>{
+
+function isDenied(p) {
+  return DENY_CACHE.some(x => p.includes(x));
+}
+
+function isImmutable(url) {
+  // v51-light: only CORE is immutable (stale-while-revalidate)
+  // url is URL object
+  return CORE.includes(url.pathname);
+}
+
+function isAsset(url) {
+  const p = url.pathname;
+  if (!p.startsWith('/assets/')) return false;
+  return (
+    p.endsWith('.js') ||
+    p.endsWith('.css') ||
+    p.endsWith('.png') ||
+    p.endsWith('.svg') ||
+    p.endsWith('.webp')
+  );
+}
+
+self.addEventListener('install', (e) => {
   self.skipWaiting();
-  e.waitUntil(caches.open(CACHE_NAME).then(cache=>{
-    return cache.addAll(CORE.map(u=> new Request(u,{cache:'reload'}))).catch(()=>Promise.allSettled(CORE.map(u=> cache.add(new Request(u,{cache:'reload'})))));
-  }).then(async ()=>{
-    // also pre-cache Three.js CDN for offline/embed cache perf
-    try{
-      const c=await caches.open(CACHE_NAME);
-      await c.add(new Request('https://unpkg.com/three@0.160.0/build/three.module.js',{mode:'no-cors'})).catch(()=>{});
-    }catch{}
-  }));
-});
-self.addEventListener('activate', e=>{
-  e.waitUntil((async()=>{
-    if('navigationPreload' in self.registration){ try{ await self.registration.navigationPreload.enable(); }catch{} }
-    const keys=await caches.keys(); await Promise.all(keys.filter(k=>k!==CACHE_NAME).map(k=>caches.delete(k))); await self.clients.claim();
+  e.waitUntil((async () => {
+    const cache = await caches.open(CACHE_NAME);
+    // Use allSettled to avoid failing whole install if one CORE asset 404s
+    // cache:reload ensures fresh shell on install
+    const results = await Promise.allSettled(
+      CORE.map((u) => cache.add(new Request(u, { cache: 'reload' })))
+    );
+    // Optional logging for debugging (non-blocking)
+    const failed = results.filter(r => r.status === 'rejected');
+    if (failed.length) {
+      console.warn('[sw v51-light] CORE precache partial failures:', failed.length);
+    }
   })());
 });
-function isImmutable(u){ return CORE.includes(u.pathname) || FULL_MTNN.includes(u.pathname); }
-function isAsset(u){ return u.pathname.startsWith('/assets/') && (u.pathname.endsWith('.js')||u.pathname.endsWith('.css')||u.pathname.endsWith('.json')||u.pathname.endsWith('.png')||u.pathname.endsWith('.webp')||u.pathname.endsWith('.svg')||u.pathname.endsWith('.f32')); }
-function isThreeCDN(url){ return url.hostname==='unpkg.com' && url.pathname.includes('three'); }
-self.addEventListener('fetch', e=>{
-  const req=e.request; if(req.method!=='GET') return; const url=new URL(req.url);
-  // cache Three.js CDN externally
-  if(isThreeCDN(url)){
-    e.respondWith((async()=>{
-      const cache=await caches.open(CACHE_NAME);
-      const cached=await cache.match(req);
-      if(cached) return cached;
-      try{
-        const net=await fetch(req);
-        if(net&&net.ok) cache.put(req, net.clone()).catch(()=>{});
+
+self.addEventListener('activate', (e) => {
+  e.waitUntil((async () => {
+    if ('navigationPreload' in self.registration) {
+      try {
+        await self.registration.navigationPreload.enable();
+      } catch {}
+    }
+    const keys = await caches.keys();
+    await Promise.all(keys.filter((k) => k !== CACHE_NAME).map((k) => caches.delete(k)));
+    await self.clients.claim();
+  })());
+});
+
+self.addEventListener('fetch', (e) => {
+  const req = e.request;
+  if (req.method !== 'GET') return;
+
+  const url = new URL(req.url);
+
+  // Only handle same-origin
+  if (url.origin !== location.origin) return;
+
+  // 1. Denied large assets -> network only, never cache
+  if (isDenied(url.pathname)) {
+    e.respondWith(
+      fetch(req).catch(() => new Response('', { status: 504, statusText: 'Denied asset offline' }))
+    );
+    return;
+  }
+
+  // 2. Navigate -> network first, fallback to cache / offline.html
+  const isNavigate = req.mode === 'navigate' || (req.headers.get('accept') || '').includes('text/html');
+  if (isNavigate) {
+    e.respondWith((async () => {
+      try {
+        const preload = await e.preloadResponse;
+        if (preload) {
+          const c = await caches.open(CACHE_NAME);
+          c.put(req, preload.clone()).catch(() => {});
+          return preload;
+        }
+        const net = await fetch(req);
+        if (net && net.ok) {
+          const c = await caches.open(CACHE_NAME);
+          c.put(req, net.clone()).catch(() => {});
+        }
         return net;
-      }catch{
-        return cached||Response.error();
+      } catch {
+        const cached = await caches.match(req);
+        if (cached) return cached;
+        const off = await caches.match('/offline.html');
+        if (off) return off;
+        return caches.match('/') || new Response('Offline', { status: 503 });
       }
     })());
     return;
   }
-  if(url.origin!==location.origin){
+
+  // 3. Immutable CORE -> stale-while-revalidate (instant cache, update bg)
+  if (isImmutable(url)) {
+    e.respondWith((async () => {
+      const cache = await caches.open(CACHE_NAME);
+      const cached = await cache.match(req);
+      const fetchPromise = fetch(req)
+        .then((r) => {
+          if (r && r.ok) cache.put(req, r.clone()).catch(() => {});
+          return r;
+        })
+        .catch(() => null);
+      if (cached) {
+        e.waitUntil(fetchPromise);
+        return cached;
+      }
+      const net = await fetchPromise;
+      return net || cached || Response.error();
+    })());
     return;
   }
-  if(isDenied(url.pathname)){ e.respondWith(fetch(req).catch(()=> new Response('',{status:504}))); return; }
-  if(req.mode==='navigate' || (req.headers.get('accept')||'').includes('text/html')){
-    e.respondWith((async()=>{
-      try{
-        const preload=await e.preloadResponse; if(preload){ const c=await caches.open(CACHE_NAME); c.put(req,preload.clone()).catch(()=>{}); return preload; }
-        const net=await fetch(req); if(net&&net.ok){ const c=await caches.open(CACHE_NAME); c.put(req,net.clone()).catch(()=>{}); } return net;
-      }catch{
-        const cached=await caches.match(req); if(cached) return cached;
-        const off=await caches.match('/offline.html'); if(off) return off; return caches.match('/')||new Response('Offline',{status:503});
+
+  // 4. Asset (js/css/png/svg/webp) -> network-first, cache only if <1MB
+  if (isAsset(url)) {
+    e.respondWith((async () => {
+      const cache = await caches.open(CACHE_NAME);
+      try {
+        const net = await fetch(req);
+        if (net && net.ok) {
+          const cl = net.headers.get('content-length');
+          const size = cl ? parseInt(cl, 10) : 0;
+          // Only cache if size unknown or <1MB — prevents caching 3MB vectors.json if not denied
+          if (!cl || (size && size < 1_000_000) || (!size)) {
+            // extra guard: if content-length header says >1MB, skip
+            if (!cl || size < 1_000_000) {
+              // clone before put
+              cache.put(req, net.clone()).catch(() => {});
+            }
+          } else {
+            // Skip caching large asset
+          }
+        }
+        return net;
+      } catch {
+        const cached = await cache.match(req);
+        if (cached) return cached;
+        return new Response('', { status: 504, statusText: 'Asset offline' });
       }
-    })()); return;
+    })());
+    return;
   }
-  if(isImmutable(url)){
-    e.respondWith((async()=>{
-      const cache=await caches.open(CACHE_NAME); const cached=await cache.match(req);
-      const fp=fetch(req).then(r=>{ if(r&&r.ok) cache.put(req,r.clone()).catch(()=>{}); return r; }).catch(()=>null);
-      if(cached){ e.waitUntil(fp); return cached; }
-      const net=await fp; return net||cached||Response.error();
-    })()); return;
-  }
-  if(isAsset(url)){
-    e.respondWith((async()=>{
-      const cache=await caches.open(CACHE_NAME); const cached=await cache.match(req);
-      const fp=fetch(req).then(r=>{
-        if(r&&r.ok){ const cl=r.headers.get('content-length'); if(!cl||parseInt(cl,10)<4000000) cache.put(req,r.clone()).catch(()=>{}); }
-        return r;
-      }).catch(()=>null);
-      if(cached){ e.waitUntil(fp); return cached; }
-      const net=await fp; return net||cached||new Response('',{status:504});
-    })()); return;
-  }
-  e.respondWith((async()=>{ const c=await caches.match(req); if(c) return c; try{ return await fetch(req);}catch{ return c||caches.match('/offline.html'); }})());
+
+  // 5. Everything else (e.g. /assets/*.json not in CORE) -> try cache then network
+  e.respondWith((async () => {
+    const cached = await caches.match(req);
+    if (cached) return cached;
+    try {
+      return await fetch(req);
+    } catch {
+      return caches.match('/offline.html');
+    }
+  })());
 });
-self.addEventListener('push', e=>{
-  let d={}; try{ d=e.data?e.data.json():{};}catch{} const t=d.title||'Vector Hoops'; const b=d.body||'Daily Past→Modern rotating 3D map live — guess twin 🔥';
-  e.waitUntil(self.registration.showNotification(t,{body:b,icon:'/assets/og-embed.png',badge:'/assets/og-embed.png',tag:'vector-hoops-daily',data:{url:d.url||'/play?utm_source=push'}}));
+
+// Push notification handlers — kept from v49
+self.addEventListener('push', (e) => {
+  let d = {};
+  try {
+    d = e.data ? e.data.json() : {};
+  } catch {}
+  const title = d.title || 'Vector Hoops';
+  const body = d.body || 'Daily Past→Modern rotating 3D map live — guess twin 🔥';
+  e.waitUntil(
+    self.registration.showNotification(title, {
+      body: body,
+      icon: '/assets/og-embed.png',
+      badge: '/assets/og-embed.png',
+      tag: 'vector-hoops-daily',
+      data: { url: d.url || '/play?utm_source=push' }
+    })
+  );
 });
-self.addEventListener('notificationclick', e=>{
-  e.notification.close(); const url=(e.notification.data&&e.notification.data.url)||'/play?utm_source=push_click';
-  e.waitUntil((async()=>{ const wins=await clients.matchAll({type:'window',includeUncontrolled:true}); for(const w of wins){ if(w.url.includes(self.location.origin)){ await w.focus(); if('navigate' in w) try{ await w.navigate(url);}catch{ w.location=url;} else w.location=url; return; } } return clients.openWindow(url); })());
+
+self.addEventListener('notificationclick', (e) => {
+  e.notification.close();
+  const url = (e.notification.data && e.notification.data.url) || '/play?utm_source=push_click';
+  e.waitUntil((async () => {
+    const wins = await clients.matchAll({ type: 'window', includeUncontrolled: true });
+    for (const w of wins) {
+      if (w.url.includes(self.location.origin)) {
+        await w.focus();
+        if ('navigate' in w) {
+          try {
+            await w.navigate(url);
+          } catch {
+            w.location = url;
+          }
+        } else {
+          w.location = url;
+        }
+        return;
+      }
+    }
+    return clients.openWindow(url);
+  })());
 });
-self.addEventListener('message', e=>{ if(e.data&&e.data.type==='SKIP_WAITING') self.skipWaiting(); });
+
+self.addEventListener('message', (e) => {
+  if (e.data && e.data.type === 'SKIP_WAITING') self.skipWaiting();
+});

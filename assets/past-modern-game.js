@@ -20,9 +20,17 @@
     return isNaN(y)?0:y;
   }
   async function fetchJSON(url){
-    const r = await fetch(url, {cache:'force-cache'});
-    if(!r.ok) throw new Error('fetch '+url+' '+r.status);
-    return r.json();
+    try{
+      const r = await fetch(url, {cache:'force-cache'});
+      if(!r.ok) throw new Error('fetch '+url+' '+r.status);
+      return await r.json();
+    }catch(e){
+      try{
+        const r2=await fetch(url, {cache:'no-store'});
+        if(!r2.ok) throw e;
+        return await r2.json();
+      }catch(e2){ throw e; }
+    }
   }
   async function ensureMtnn(){
     if(window.VHMtnn && window.VHMtnn.loadAsync){
@@ -441,8 +449,6 @@
     const modern=Array.from(byName.values()).sort((a,b)=>a.n.localeCompare(b.n));
     state.modernPool=modern; state.modernByName=byName; state.modernByLower=new Map(modern.map(m=>[m.n.toLowerCase(),m]));
 
-    await ensureMtnn();
-
     let urlDay=null,urlRandomId=null,modeParam=null,packParam=null,packSizeParam=null,scoresParam=null,slotParam=null;
     try{
       const sp=new URLSearchParams(location.search);
@@ -503,6 +509,8 @@
             }
           }
         }catch(e){ console.warn('pack random url replace fail', e); }
+        // bg MTNN for pack path too
+        try{ /* deferred */ }catch{}
         return state;
       } else {
         // invalid pack
@@ -574,6 +582,13 @@
     }
     state.target=targetPicked; state.targetIdx=state.target?state.target.i:null;
     if(state.targetIdx!=null){ try{ computeClosest(); }catch(e){ console.warn(e); } }
+
+    // v52 fix: DEFER MTNN load to avoid OOM on low-mem devices during typing - load only after first interaction or 12s idle
+    try{
+      let _mtnnTimer=setTimeout(()=>{ try{ ensureMtnn().then(()=>{ try{ computeClosest(); }catch{}; try{ window.dispatchEvent(new CustomEvent('vh:mtnn-loaded',{detail:{bg:true}})); }catch{} }).catch(()=>{}); }catch{} }, 12000);
+      const _deferredLoad=()=>{ try{ clearTimeout(_mtnnTimer); }catch{}; try{ ensureMtnn().then(()=>{ try{ computeClosest(); }catch{} }).catch(()=>{}); }catch{}; window.removeEventListener('vh:defer-mtnn', _deferredLoad); };
+      window.addEventListener('vh:defer-mtnn', _deferredLoad, {once:true});
+    }catch{}
     return state;
   }
 
@@ -602,29 +617,41 @@
     return state.closestModern;
   }
   function rankOfModernName(name){
-    const raw=(name||'').trim(); if(!raw) return null;
-    let low=raw.toLowerCase(); let entry=state.modernByLower.get(low);
-    if(!entry){ const m=raw.match(/^(.+?)\s+\d{4}-\d{2}$/); if(m){ low=m[1].trim().toLowerCase(); entry=state.modernByLower.get(low); } }
-    if(!entry) return null;
-    const list = state.modernListSorted||[];
-    if(!list.length){
-      // if list empty but entry exists, return fallback rank using modernPool index
-      const idx = (state.modernPool||[]).findIndex(mm=>mm && mm.n && mm.n.toLowerCase()===low);
-      if(idx>=0) return {rank: idx, sim:0, entry};
+    try{
+      const raw=(name||'').trim(); if(!raw) return null;
+      if(!state || !state.modernByLower) return null;
+      let low=raw.toLowerCase(); let entry=state.modernByLower.get(low);
+      if(!entry){ const m=raw.match(/^(.+?)\s+\d{4}-\d{2}$/); if(m){ low=m[1].trim().toLowerCase(); entry=state.modernByLower.get(low); } }
+      if(!entry) return null;
+      const list = state.modernListSorted||[];
+      if(!list.length){
+        // if list empty but entry exists, return fallback rank using modernPool index — prevents crash when embeddings not ready
+        const pool = state.modernPool||[];
+        if(!pool.length) return {rank:0, sim:0, entry};
+        const idx = pool.findIndex(mm=>mm && mm.n && mm.n.toLowerCase()===low);
+        if(idx>=0) return {rank: idx, sim:0, entry};
+        return {rank:0, sim:0, entry};
+      }
+      for(let i=0;i<list.length;i++){ 
+        try{
+          const mm = list[i] && list[i].m;
+          if(!mm || !mm.n) continue;
+          if(mm.n.toLowerCase()===low) return {rank:i, sim:(typeof list[i].sim==='number'?list[i].sim:0), entry}; 
+        }catch{}
+      }
       return null;
-    }
-    for(let i=0;i<list.length;i++){ 
-      try{
-        const mm = list[i] && list[i].m;
-        if(!mm || !mm.n) continue;
-        if(mm.n.toLowerCase()===low) return {rank:i, sim:(typeof list[i].sim==='number'?list[i].sim:0), entry}; 
-      }catch{}
-    }
-    return null;
+    }catch(e){ console.warn('rankOfModernName fail', e); return null; }
   }
   function guessModern(name){
     try{
       const trimmed=(name||'').trim(); if(!trimmed) return {ok:false, reason:'Empty guess'};
+      if(trimmed.length<2) return {ok:false, reason:'Type at least 2 letters'};
+      if(!state || !state.modernPool || !state.modernPool.length){
+        return {ok:false, reason:'Still loading players… try again in a sec'};
+      }
+      if(!state.target){
+        return {ok:false, reason:'Still loading court…'};
+      }
       let low=trimmed.toLowerCase(); let m=trimmed.match(/^(.+?)\s+\d{4}-\d{2}$/); if(m) low=m[1].trim().toLowerCase();
       if(state.target && state.target.n && low===state.target.n.toLowerCase().trim()) return {ok:false, reason:'Target self excluded'};
       const r=rankOfModernName(trimmed); if(!r) return {ok:false, reason:'Not a current 2024-26 player'};
