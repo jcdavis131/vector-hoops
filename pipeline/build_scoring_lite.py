@@ -3,8 +3,10 @@ actually needs for scoring — past all-stars (1996..PAST_MAX, asg==1) plus ever
 2024+ season. ~1/6 the size of mtnn_embeddings.f32, so the game can load real
 scoring eagerly on mobile instead of deferring the full matrix.
 
-Filters mirror past-modern-game.js init() exactly; rerun after update_dataset.py
-or whenever mtnn_embeddings.f32 / honors.json / vectors_search_lite.json change.
+Filters mirror past-modern-game.js init() exactly. update_dataset.py runs this
+automatically at the end of its rebuild flow (test_scoring_lite.py gates it);
+rerun by hand only when mtnn_embeddings.f32 / honors.json /
+vectors_search_lite.json change outside that flow.
 """
 import json
 from array import array
