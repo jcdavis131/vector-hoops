@@ -212,7 +212,7 @@ button,.input{min-height:44px}
 <script src="assets/error-boundary.js"></script>
 <script src="assets/keyboard-a11y.js"></script>
 <script src="assets/site-nav.js" defer></script>
-<script src="assets/pwa-install.js"></script><script src="assets/mtnn.js"></script><script src="assets/pixel-avatar.js?v=48"></script><script src="assets/viral-share.js"></script><script src="assets/past-modern-game.js?v=48"></script>
+<script src="assets/pwa-install.js"></script><script src="assets/mtnn.js"></script><script src="assets/pixel-avatar.js?v=49"></script><script src="assets/viral-share.js"></script><script src="assets/past-modern-game.js?v=49"></script>
 <script>
 (function(){
   const $=s=>document.querySelector(s);
@@ -380,11 +380,13 @@ button,.input{min-height:44px}
   try{ const io=new IntersectionObserver(es=>{ mapVisible=es[0]?.isIntersecting??true; },{threshold:0.05}); io.observe(canvas); }catch{}
   function loop(t){
     animId=requestAnimationFrame(loop);
+    // emergency mobile guard: if many tabs/low mem, drop frames
     if(!mapVisible && !isDragging){ return; }
     if(isTyping || mapPaused){
-      // save bandwidth/compute when typing: pause entirely, no projection no draw
       return;
     }
+    // throttle on mobile to 12fps
+    if(window.innerWidth<700 && t-lastT < 80){ return; }
     frameCount++;
     if(frameCount % 2 !== 0 && W<800) { /* 30fps on mobile */ }
     if(!lastT) lastT=t;
@@ -421,7 +423,7 @@ button,.input{min-height:44px}
   function initSearchWorker(){
     try{
       if(!window.Worker) return null;
-      const w=new Worker('/assets/workers/modern-search.worker.js?v=48');
+      const w=new Worker('/assets/workers/modern-search.worker.js?v=49');
       w.onmessage=(ev)=>{
         const {type, results, id, q} = ev.data||{};
         if(type==='ready'){ workerReady=true; return; }

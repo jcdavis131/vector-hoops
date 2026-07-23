@@ -13,11 +13,14 @@ export async function mountStarMap(canvas){
   const OKABE_ARCH=['#0072B2','#D55E00','#009E73','#F0E442','#56B4E9','#CC79A7','#E69F00','#FFFEF7'];
   const ARCH_LABELS=["Glass+Rim","LowVol Glass","Low Impact","Def Glass FT","Vol+3P","3P Acc+Vol","Playmaking","Scoring Vol"];
   const POS_LABELS=['PG','SG','SF','PF','C'];
-  const isLowEnd=(navigator.hardwareConcurrency&&navigator.hardwareConcurrency<=4)||window.innerWidth<520;
-  const isMobile=window.innerWidth<700;
+  const isLowEnd=(navigator.hardwareConcurrency&&navigator.hardwareConcurrency<=4)||window.innerWidth<520||/Android|iPhone|iPad/i.test(navigator.userAgent);
+  const isMobile=window.innerWidth<700||/Android|iPhone|iPad/i.test(navigator.userAgent);
+  const isVeryMobile=window.innerWidth<520||/Android.*Chrome/i.test(navigator.userAgent);
 
-  const renderer=new THREE.WebGLRenderer({ canvas, antialias:!isLowEnd, alpha:false, powerPreference:'high-performance' });
-  renderer.setPixelRatio(Math.min(devicePixelRatio||1, isLowEnd?1.25:1.5));
+
+  const renderer=new THREE.WebGLRenderer({ canvas, antialias: !isMobile, alpha:false, powerPreference:'low-power' });
+  const dpr = isMobile ? (isVeryMobile ? 0.75 : 0.9) : Math.min(devicePixelRatio||1, isLowEnd?1.25:1.5);
+  renderer.setPixelRatio(dpr);
   renderer.outputColorSpace=THREE.SRGBColorSpace;
   renderer.setClearColor(0x080A0F,1);
 
@@ -125,7 +128,7 @@ export async function mountStarMap(canvas){
   const shapeTextures = shapeTexturesFilled; // legacy alias
 
   async function cachedFetchJSON(url){
-    const CACHE_NAME='vector-hoops-v48-20260723-fix-syntax';
+    const CACHE_NAME='vector-hoops-v49-20260723-fix-crash';
     try{
       if('caches' in window){
         const cache=await caches.open(CACHE_NAME);
@@ -237,9 +240,12 @@ export async function mountStarMap(canvas){
   }
 
   const pointGroups=[];
-  const pointSizeOutline = isMobile? 0.38 : 0.44;
-  const pointSizeFilled = isMobile? 0.58 : 0.72;
-  // 1) outline layer — every data point as colored outline
+  const pointSizeOutline = isMobile? 0.32 : 0.44;
+  const pointSizeFilled = isMobile? 0.48 : 0.72;
+  // 1) outline layer — every data point as colored outline (skip on mobile to avoid crash)
+  const SKIP_OUTLINE = isMobile;
+
+  if(!SKIP_OUTLINE){
   for(let pi=0; pi<5; pi++){
     const list=groupedAll[pi]; if(!list.length) continue;
     const posArr=new Float32Array(list.length*3);
@@ -352,7 +358,9 @@ export async function mountStarMap(canvas){
       heroHighlight=new THREE.Points(heroGeo, heroMat);
       heroHighlight.renderOrder=999;
       starGroup.add(heroHighlight);
-      // inner glow — tight yellow halo
+      // inner glow — tight yellow halo (skip on mobile)
+      const SKIP_HALO = isMobile;
+      if(!SKIP_HALO){
       const glowGeo=new THREE.BufferGeometry();
       glowGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array([hx,hy,hz]),3));
       const glowMat=new THREE.PointsMaterial({
@@ -384,6 +392,7 @@ export async function mountStarMap(canvas){
       const outerPoints=new THREE.Points(outerGeo, outerMat);
       outerPoints.renderOrder=997;
       starGroup.add(outerPoints);
+      }
       heroHighlight.userData={ baseSize: baseStarSize, glowMat, outerMat, hx,hy,hz };
     }
   }catch(e){ console.warn('hero highlight fail', e); }
@@ -550,10 +559,21 @@ export async function mountStarMap(canvas){
   updProj(); renderer.render(scene,camera);
 
   let last=0;
+  let frameCounter=0;
+  let lastRender=0;
+  // pause when tab hidden to save memory
+  document.addEventListener('visibilitychange',()=>{ if(document.hidden){ embedPaused=true; } });
   function loop(t){
     requestAnimationFrame(loop);
+    frameCounter++;
     if(embedPaused){ return; }
     if(!visible && firstFrames<=0){ last=t; return; }
+    // throttle to ~30fps on mobile
+    if(isMobile){
+      if(frameCounter%2===0) return;
+      if(t-lastRender < 33){ return; }
+      lastRender=t;
+    }
     if(firstFrames>0) firstFrames--;
     if(!last) last=t;
     const dt=Math.min(50,t-last); last=t;
@@ -563,8 +583,9 @@ export async function mountStarMap(canvas){
     camera.position.x=Math.sin(et*0.04)*0.18;
     camera.position.y=0.38+Math.sin(et*0.055)*0.09;
     camera.lookAt(0,0.06,0);
-    // hero pulsate — v46 obvious pulse
+    // hero pulsate — v46 obvious pulse (lighter on mobile)
   try{
+      if(isMobile && frameCounter%3!==0){ /* skip pulse most frames */ } else {
       if(heroHighlight && heroHighlight.material){
         const base=heroHighlight.userData && heroHighlight.userData.baseSize || pointSizeFilled*2.8;
         // strong pulse 2.2Hz + slower second harmonic
@@ -580,8 +601,9 @@ export async function mountStarMap(canvas){
           heroHighlight.userData.outerMat.opacity = 0.20 + Math.sin(et*1.4+2.0)*0.11;
         }
       }
+      }
     }catch{}
-    renderer.render(scene,camera);
+    try{ renderer.render(scene,camera); }catch(e){ embedPaused=true; console.warn('render fail — pausing', e); }
   }
   loop(0);
   return { dispose:()=>{ try{ro&&ro.disconnect();}catch{} renderer.dispose(); } };
