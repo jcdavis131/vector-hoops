@@ -212,7 +212,7 @@ button,.input{min-height:44px}
 <script src="assets/error-boundary.js"></script>
 <script src="assets/keyboard-a11y.js"></script>
 <script src="assets/site-nav.js" defer></script>
-<script src="assets/pwa-install.js"></script><script src="assets/mtnn.js"></script><script src="assets/pixel-avatar.js?v=46"></script><script src="assets/viral-share.js"></script><script src="assets/past-modern-game.js?v=46"></script>
+<script src="assets/pwa-install.js"></script><script src="assets/mtnn.js"></script><script src="assets/pixel-avatar.js?v=47"></script><script src="assets/viral-share.js"></script><script src="assets/past-modern-game.js?v=47"></script>
 <script>
 (function(){
   const $=s=>document.querySelector(s);
@@ -421,7 +421,7 @@ button,.input{min-height:44px}
   function initSearchWorker(){
     try{
       if(!window.Worker) return null;
-      const w=new Worker('/assets/workers/modern-search.worker.js?v=46');
+      const w=new Worker('/assets/workers/modern-search.worker.js?v=47');
       w.onmessage=(ev)=>{
         const {type, results, id, q} = ev.data||{};
         if(type==='ready'){ workerReady=true; return; }
@@ -1136,32 +1136,54 @@ button,.input{min-height:44px}
     $('#btn-pause').addEventListener('click',function(){ auto=!auto; this.textContent=auto?'Pause':'Resume'; });
     $('#btn-reset').addEventListener('click',()=>{ try{ focusOnTarget(); }catch{ rotY=Math.PI*0.18; rotX=0.22; } auto=false; const b=$('#btn-pause'); if(b) b.textContent='Resume'; projectFrame(); draw(); });
 
-    // watchdog — if still showing Loading after 4s, force ready so UI isn't stuck
+    // watchdog v47 — aggressive: always force ready after 4s even if init hung
+    let watchdogFired=false;
     let loadingWatchdog = setTimeout(()=>{
+      watchdogFired=true;
       try{
         const lbl=document.getElementById('game-phase-label');
         if(lbl && /Loading/i.test(lbl.textContent)){
-          lbl.textContent='Ready — tap a card';
-          try{ renderDailyCourt(); updateStatusBar(); }catch{}
+          lbl.textContent='Ready — tap a card (watchdog)';
         }
+        const pn=document.getElementById('past-name');
+        if(pn && /Loading/i.test(pn.textContent)){
+          pn.textContent='Tap Daily Court card to start';
+        }
+        try{ renderDailyCourt(); updateStatusBar(); }catch{}
       }catch{}
     }, 4000);
 
-    try{
-      await VHPastModern.init();
-    }catch(e){ console.warn('init fallback', e); }
     let st=null;
+    let initOk=false;
+    try{
+      // race init with 6s timeout so court never blocks forever
+      const initP = VHPastModern.init();
+      const timeoutP = new Promise((_,rej)=>setTimeout(()=>rej(new Error('init timeout 6s')),6000));
+      await Promise.race([initP, timeoutP]);
+      initOk=true;
+    }catch(e){ console.warn('init fallback v47', e); }
     try{ st=VHPastModern.state(); }catch(e){ st={searchLite:{players:[]}}; }
     try{
-      if(st && st.searchLite && st.searchLite.players) initBase(st.searchLite.players);
-    }catch(e){ console.warn('initBase fallback', e); }
-    try{ clearTimeout(loadingWatchdog); }catch{} 
+      if(st && st.searchLite && st.searchLite.players && st.searchLite.players.length) initBase(st.searchLite.players);
+      else {
+        // try fetch lite directly as fallback if state empty
+        try{
+          const r=await fetch('assets/vectors_search_lite.json?v=47',{cache:'no-store'});
+          const j=await r.json();
+          if(j && j.players) initBase(j.players);
+        }catch{}
+      }
+    }catch(e){ console.warn('initBase fallback v47', e); }
+    try{ if(!watchdogFired) clearTimeout(loadingWatchdog); }catch{} 
     // focus camera on target before first projection so star starts centered
     try{ focusOnTarget(); }catch{}
-    projectFrame(); draw(); loop(0);
+    try{ projectFrame(); }catch(e){ console.warn(e); }
+    try{ draw(); }catch(e){ console.warn(e); }
+    try{ loop(0); }catch(e){ console.warn(e); }
 
-    // v42: if MTNN was fallback, recompute when real embeddings load
+    // v47 hardened continuation — even if earlier failed, force UI to usable state
     try{
+      // v42: if MTNN was fallback, recompute when real embeddings load
       window.addEventListener('vh:mtnn-loaded', ()=>{
         try{
           if(window.VHMtnn && VHMtnn.isReady && VHMtnn.isReady()){

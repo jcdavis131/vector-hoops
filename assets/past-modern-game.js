@@ -20,9 +20,17 @@
     return isNaN(y)?0:y;
   }
   async function fetchJSON(url){
-    const r = await fetch(url, {cache:'force-cache'});
-    if(!r.ok) throw new Error('fetch '+url+' '+r.status);
-    return r.json();
+    try{
+      const r = await fetch(url, {cache:'force-cache'});
+      if(!r.ok) throw new Error('fetch '+url+' '+r.status);
+      return await r.json();
+    }catch(e){
+      try{
+        const r2=await fetch(url, {cache:'no-store'});
+        if(!r2.ok) throw e;
+        return await r2.json();
+      }catch(e2){ throw e; }
+    }
   }
   async function ensureMtnn(){
     if(window.VHMtnn && window.VHMtnn.loadAsync){
