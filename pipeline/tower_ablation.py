@@ -37,6 +37,9 @@ NON_TOWER_FAMS = {"injury"}
 
 # The shipping recipe (train.sh v5 winner). Ablation must measure families
 # against the architecture we actually deploy, not argparse defaults.
+# Keep flag/value pairs on one line each; ruff format would give one token per
+# line and make the recipe unreadable.
+# fmt: off
 ARCH = [
     "--dim", "48",
     "--tower-width", "32",
@@ -57,6 +60,7 @@ ARCH = [
     "--anneal-strategy", "linear",
     "--batch", "512",
 ]
+# fmt: on
 
 
 def manifest_families() -> list[str]:
@@ -115,11 +119,18 @@ def main() -> None:
         rep = run_train(excl, args.epochs, args.seed)
         test = rep["held_out_recall"]["test"]["recall_at_10_mtnn"]
         val = rep["held_out_recall"]["val"]["recall_at_10_mtnn"]
+        # test is only ~790 pairs and swings ~0.2 between seeds; the all-pairs
+        # figure is ~10k pairs, so its sampling noise is ~3.5x smaller. Record it
+        # so context families (which purity structurally cannot judge -- the
+        # archetype labels are k-means over the box-score features themselves)
+        # can be settled on retrieval instead.
+        all_recall = rep["held_out_recall"].get("all", {}).get("recall_at_10_mtnn")
         purity = rep.get("cross_era_archetype_neighbor_purity_at_20")
         results[name] = {
             "exclude": excl,
             "test_recall": test,
             "val_recall": val,
+            "all_recall": all_recall,
             "purity": purity,
             "towers": rep.get("towers"),
             "loss_weights": rep.get("loss_weights"),
