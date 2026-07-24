@@ -83,7 +83,7 @@ export async function mountSharedMap(canvas, opts={}){
           baseI[i]=p.i!=null? (p.i|0) : i;
           baseN[i]=p.n||'';
           baseS[i]=p.s||'';
-          baseP[i]=p.p??0;
+          baseP[i]=p.p??-1;
           projected[i].c=baseC[i];
           if(baseI[i]>localMax) localMax=baseI[i];
         }
@@ -97,20 +97,44 @@ export async function mountSharedMap(canvas, opts={}){
     return false;
   }
 
+  function mergeNames(arr){
+    const map=new Map();
+    for(const p of arr){ if(p.i!=null) map.set(p.i,{n:p.n,s:p.s,p:p.p}); }
+    for(let i=0;i<N;i++){ const id=baseI[i]; const hit=map.get(id); if(hit){ baseN[i]=hit.n; baseS[i]=hit.s; baseP[i]=hit.p??baseP[i]; } }
+    return map.size;
+  }
+  function gameSearchLite(timeoutMs){
+    // resolves with the game's already-fetched search pool, or null on pages without it
+    if(!(window.VHPastModern&&VHPastModern.state)) return Promise.resolve(null);
+    return new Promise(res=>{
+      const t0=Date.now();
+      (function poll(){
+        try{
+          const sl=VHPastModern.state().searchLite;
+          const arr=sl&&(sl.players||sl);
+          if(Array.isArray(arr)&&arr.length) return res(arr);
+        }catch{}
+        if(Date.now()-t0>timeoutMs) return res(null);
+        setTimeout(poll,250);
+      })();
+    });
+  }
   async function loadNamesLazy(){
     // if we already have names (from search_lite_pos), skip
     if(baseN[0] && baseN[0].length) return;
+    // the game page already holds vectors_search_lite.json in memory — merging
+    // from it saves the 1.26MB search_lite_pos fetch (positions stay unknown)
+    try{
+      const game=await gameSearchLite(6000);
+      if(game){ console.log('shared-map v2 names merged from game state', mergeNames(game)); return; }
+    }catch{}
     try{
       const r=await fetch('assets/vectors_search_lite_pos.json?v=51',{cache:'default'});
       if(!r.ok) return;
       const j=await r.json();
       const arr=j.players||j;
       if(!Array.isArray(arr)) return;
-      // build map id->name
-      const map=new Map();
-      for(const p of arr){ if(p.i!=null) map.set(p.i,{n:p.n,s:p.s,p:p.p}); }
-      for(let i=0;i<N;i++){ const id=baseI[i]; const hit=map.get(id); if(hit){ baseN[i]=hit.n; baseS[i]=hit.s; baseP[i]=hit.p??baseP[i]; } }
-      console.log('shared-map v2 names lazy merged', map.size);
+      console.log('shared-map v2 names lazy merged', mergeNames(arr));
     }catch(e){ console.warn('names lazy fail',e); }
   }
 
@@ -271,7 +295,8 @@ export async function mountSharedMap(canvas, opts={}){
       hoverEl.style.top=(projected[best].sy-42)+'px';
       const n=baseN[best]||''; const s=baseS[best]||''; const c=baseC[best];
       const arch=ARCH[c%8]||'';
-      hoverEl.innerHTML=`<b>${(n||'').replace(/</g,'&lt;')}</b> ${(s||'').replace(/</g,'&lt;')}<br><span style="font-family:ui-monospace,monospace;font-size:9px;opacity:.8">${POS[(baseP[best]|0)%5]||''} • ${arch}</span>`;
+      const pos=baseP[best]>=0?(POS[(baseP[best]|0)%5]||''):'';
+      hoverEl.innerHTML=`<b>${(n||'').replace(/</g,'&lt;')}</b> ${(s||'').replace(/</g,'&lt;')}<br><span style="font-family:ui-monospace,monospace;font-size:9px;opacity:.8">${pos?pos+' • ':''}${arch}</span>`;
     } else {
       hoverEl.style.display='none';
     }
@@ -335,7 +360,7 @@ export async function mountSharedMap(canvas, opts={}){
         nOx[N]=((p.x??0.5)-0.5)*2; nOy[N]=((p.y??0.5)-0.5)*2; nOz[N]=((p.z??0.5)-0.5)*2;
         nC[N]=(p.c|0)&7; nI[N]=id;
         baseOx=nOx; baseOy=nOy; baseOz=nOz; baseC=nC; baseI=nI;
-        baseN[N]=p.n||''; baseS[N]=p.s||''; baseP[N]=p.p??0;
+        baseN[N]=p.n||''; baseS[N]=p.s||''; baseP[N]=p.p??-1;
         projected.push({sx:0,sy:0,depth:0,alpha:0.6,c:nC[N]});
         N=n;
         if(id>maxId){ const np=new Int32Array(id+1); np.fill(-1); if(projById) np.set(projById); projById=np; maxId=id; }

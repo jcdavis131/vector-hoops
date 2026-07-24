@@ -3,6 +3,7 @@
 <meta name="description" content="Daily Court: 5 past All-Stars → 5 modern twins. 6 tries each, build your modern starting 5. Pack Battle — share same link, battle friends."/>
 <meta property="og:title" content="Play Vector Hoops — Daily Court 5× + Pack Battle"/>
 <meta name="theme-color" content="#1A150F"/><link rel="manifest" href="/manifest.json"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/shell.css"/><link rel="stylesheet" href="assets/responsive.css"/><link rel="stylesheet" href="assets/final-qa.css"/><link rel="stylesheet" href="assets/unified.css"/>
 <style>
@@ -257,7 +258,7 @@ button,.input{min-height:44px}
   }
   async function mountGameMap(){
     try{
-      const mod = await import('./assets/shared-map.js?v=54');
+      const mod = await import('./assets/shared-map.js?v=55');
       const canvasEl = document.querySelector('#sky-canvas');
       if(!canvasEl) return;
       const st = (window.VHPastModern && VHPastModern.state) ? VHPastModern.state() : null;

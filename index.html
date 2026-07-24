@@ -6,6 +6,7 @@
 <meta name="twitter:card" content="summary_large_image"/><meta name="twitter:image" content="https://hoops.dumbmodel.com/assets/og-1200x630.png"/>
 <meta name="description" content="12,966 NBA seasons as rotating embedding map. Daily Past→Modern. Lemmino void style."/><meta name="theme-color" content="#0A0C10"/>
 <link rel="manifest" href="/manifest.json"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/shell.css"/><link rel="stylesheet" href="assets/responsive.css"/><link rel="stylesheet" href="assets/final-qa.css"/><link rel="stylesheet" href="assets/unified.css"/><link rel="stylesheet" href="assets/lemmino/lemmino.css"/>
 <link rel="stylesheet" href="assets/trading-card.css?v=42"/>
@@ -306,7 +307,7 @@ const lazyMount = (selector, loader) => {
   const c=document.getElementById('sky-canvas');
   if(!c) return;
   try{
-    const { mountSharedMap } = await import('./assets/shared-map.js?v=54');
+    const { mountSharedMap } = await import('./assets/shared-map.js?v=55');
     await mountSharedMap(c, { highlightId: 672, dark:true });
   }catch(e){ console.error('shared-map eager fail', e); }
 })();
