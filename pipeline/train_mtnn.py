@@ -1018,6 +1018,59 @@ def next_profile_holdout_metrics(
 # ---------------------------------------------------------------------------
 
 
+_TRAIN_RUN_ID = None
+
+
+def emit_training_snapshot(args, weights, fams, history, val_trace, status) -> None:
+    """Live per-epoch telemetry for the /model training cockpit.
+
+    Writes assets/mtnn_training/live.json each val_every epoch (status
+    'training', or 'done' on the final epoch). Wrapped so telemetry can never
+    break a training run.
+    """
+    global _TRAIN_RUN_ID
+    try:
+        excl = {s.strip() for s in args.exclude_families.split(",") if s.strip()}
+        out_dir = ROOT / "assets" / "mtnn_training"
+        out_dir.mkdir(parents=True, exist_ok=True)
+        if _TRAIN_RUN_ID is None:
+            _TRAIN_RUN_ID = time.strftime("%Y%m%d-%H%M%S")
+        doc = {
+            "run_id": _TRAIN_RUN_ID,
+            "status": status,
+            "updated": time.strftime("%Y-%m-%dT%H:%M:%S"),
+            "arch": {
+                "dim": args.dim,
+                "tower_width": args.tower_width,
+                "tower_hidden": args.tower_hidden,
+                "tower_blocks": args.tower_blocks,
+                "fusion": args.fusion,
+                "n_towers": len(fams),
+                "families": sorted(fams),
+                "epochs_target": args.epochs,
+                "durability_w": (
+                    weights.get("durability") if "injury" not in excl else None
+                ),
+            },
+            "loss": [round(float(x), 4) for x in history],
+            "val": [
+                {
+                    "epoch": r.get("epoch"),
+                    "val_recall_at_10": r.get("val_recall_at_10"),
+                    "test_recall_at_10": r.get("test_recall_at_10"),
+                    "purity_at_20": r.get("val_purity_at_20"),
+                    "cqs": r.get("val_composite"),
+                }
+                for r in val_trace
+            ],
+        }
+        (out_dir / "live.json").write_text(
+            json.dumps(doc, separators=(",", ":")), encoding="utf-8"
+        )
+    except Exception:
+        pass
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--epochs", type=int, default=40)
@@ -1568,6 +1621,14 @@ def main() -> None:
                 "val_composite": val_comp,
             }
             val_trace.append(trace_row)
+            emit_training_snapshot(
+                args,
+                weights,
+                fams,
+                history,
+                val_trace,
+                "done" if epoch == args.epochs - 1 else "training",
+            )
             if not args.no_best_checkpoint:
                 metric_val = None
                 if args.checkpoint_metric == "recall":
