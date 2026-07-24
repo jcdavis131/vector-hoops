@@ -43,7 +43,9 @@ def main() -> None:
 
     print("shape")
     ids = idx.get("ids", [])
-    check(idx.get("dim") == meta.get("dim"), f"dim matches mtnn_meta ({idx.get('dim')})")
+    check(
+        idx.get("dim") == meta.get("dim"), f"dim matches mtnn_meta ({idx.get('dim')})"
+    )
     check(len(ids) == idx.get("rows"), f"rows == len(ids) ({idx.get('rows')})")
     check(len(ids) > 0, "lite subset non-empty")
     check(

@@ -38,7 +38,11 @@ def check(cond: bool, msg: str) -> None:
 
 def rates_ok(block: dict) -> bool:
     ok = True
-    for bucket in (block["overall"], *block["by_split"].values(), *block["by_decade"].values()):
+    for bucket in (
+        block["overall"],
+        *block["by_split"].values(),
+        *block["by_decade"].values(),
+    ):
         t1, t5 = bucket["top1"], bucket["top5"]
         if t1 is None or t5 is None:
             continue
