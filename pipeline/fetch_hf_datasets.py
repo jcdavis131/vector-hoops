@@ -77,7 +77,11 @@ def load_frame(repo_id: str, sub_path: str):
             head = lf.head(5).collect().to_dicts()
             n = lf.select(pl.len()).collect().item()
             return cols, dtypes, n, head
-        df = pl.read_csv(uri) if sub_path.endswith((".csv", ".tsv")) else pl.read_ndjson(uri)
+        df = (
+            pl.read_csv(uri)
+            if sub_path.endswith((".csv", ".tsv"))
+            else pl.read_ndjson(uri)
+        )
         return df.columns, [str(t) for t in df.dtypes], df.height, df.head(5).to_dicts()
     except Exception as exc:  # pragma: no cover - env dependent
         print(f"  polars path failed ({exc}); trying pandas")
