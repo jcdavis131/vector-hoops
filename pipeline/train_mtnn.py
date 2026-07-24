@@ -1199,6 +1199,13 @@ def main() -> None:
         help="skip saving/restoring best-val checkpoint",
     )
     ap.add_argument(
+        "--mask-families",
+        type=str,
+        default="",
+        help="comma-separated families to zero out (values + mask) while "
+        "keeping their towers, so ablation arms share one architecture",
+    )
+    ap.add_argument(
         "--exclude-families",
         type=str,
         default="",
@@ -1271,6 +1278,24 @@ def main() -> None:
         print("robust-scaling: replaced season z-scores with median/IQR clip[-3,3]")
 
     fams = family_slices(manifest)
+    mask_fams = {s.strip() for s in args.mask_families.split(",") if s.strip()}
+    if mask_fams:
+        # Ablate by zeroing a family's values AND its mask bits while keeping the
+        # tower. --exclude-families deletes the tower, which also re-shapes the
+        # fusion input (17x32 -> 16x32), so every arm becomes a different
+        # architecture and the delta confounds "family carries signal" with
+        # "fusion was re-sized". Masking holds the architecture fixed.
+        all_slices = family_slices(manifest)
+        zeroed = 0
+        for fam in sorted(mask_fams):
+            for c in all_slices.get(fam) or []:
+                Z[:, c] = 0.0
+                M[:, c] = 0.0
+                zeroed += 1
+        print(
+            f"masked families: {sorted(mask_fams)} -> {zeroed} columns zeroed, "
+            f"towers kept (fusion width unchanged)"
+        )
     exclude = {s.strip() for s in args.exclude_families.split(",") if s.strip()}
     # Injury never feeds an input tower — the A/B proved it regresses retrieval.
     # It survives only as the durability head's target (predicted FROM the
@@ -1342,7 +1367,11 @@ def main() -> None:
         )
 
     career_j = col_idx(CAREER_SLOPE_FEATURE)
-    if career_j is None:
+    # Existence is not enough: integrate_context materializes a column for every
+    # declared feature, so a feature with no source lands as an all-masked
+    # column. Testing `is None` let that pass and the head silently trained
+    # against zero labels. Fall back when the column carries no observations.
+    if career_j is None or float(M[:, career_j].sum()) == 0.0:
         career_j = col_idx("DELTA_NORM")  # legacy matrices pre-enrichment
     career_z, career_m = (
         tensor_col(Z, M, career_j, device) if career_j is not None else (None, None)

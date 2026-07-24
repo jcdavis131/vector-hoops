@@ -209,6 +209,11 @@ def main() -> None:
                 "v": p.get("v") or [],
                 "gp": honest[1] if honest else float(p.get("gp") or 0),
                 "mpg": honest[0] if honest else 0.0,
+                # min_gp.json only covers the gamelog era; without it mpg is a
+                # placeholder 0.0, and a slope over placeholder zeros would be
+                # emitted as an OBSERVED zero (mask=1) instead of "never
+                # measured". Track availability so the slope stays masked.
+                "has_mpg": honest is not None,
                 "year": season_start(season),
                 "teamId": teams.get((name, season)),
             }
@@ -270,7 +275,8 @@ def main() -> None:
 
             # Trailing MPG / GP slopes (include current)
             window = seq[max(0, i - 2) : i + 1]
-            mpg_s = linear_slope([r["mpg"] for r in window])
+            mpg_known = [r["mpg"] for r in window if r.get("has_mpg")]
+            mpg_s = linear_slope(mpg_known) if len(mpg_known) >= 2 else None
             gp_s = linear_slope([r["gp"] for r in window])
             if mpg_s is not None:
                 feat["CAREER_MPG_SLOPE"] = round(float(mpg_s), 4)

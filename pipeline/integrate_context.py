@@ -77,9 +77,14 @@ V4_FEATURES: dict[str, str] = {
     "CAREER_MPG_SLOPE": "career",
     "CAREER_GP_SLOPE": "career",
     "CAREER_ACTIVE_FRAC": "career",
-    "CAREER_GP_PCT": "career",
-    "CAREER_MISS_STREAK": "career",
-    "CAREER_AVAIL_3Y": "career",
+    # CAREER_GP_PCT / CAREER_MISS_STREAK / CAREER_AVAIL_3Y are deliberately NOT
+    # here. build_career_context reads them from the same availability.json the
+    # injury family uses (measured r=+0.9999 / +0.9996 against INJ_GP_PCT /
+    # INJ_MAX_MISS_STREAK), so putting them in the career tower would (a) feed
+    # the durability head's own target back in as an input, making the head
+    # trivially solvable, and (b) reintroduce availability-as-input, which the
+    # A/B measured at -0.088 test recall. Career tower = trajectory shape;
+    # durability head = availability. See RETIRED_FEATURES below.
     # competition (VH-111)
     "SOS_NET_RTG": "competition",
     "B2B_RATE": "competition",
@@ -141,6 +146,14 @@ V4_FEATURES: dict[str, str] = {
     "INJ_MAX_MISS_STREAK": "injury",
     "INJ_MISS_SPELLS": "injury",
     **{f"GK_{k.upper()}": "game_ratings" for k in _GAME_ATTR_KEYS},
+}
+
+# Columns a previous build materialized that are no longer tower inputs. Merge
+# drops them, otherwise an orphan column survives in train_matrix.npz forever.
+RETIRED_FEATURES = {
+    "CAREER_GP_PCT",
+    "CAREER_MISS_STREAK",
+    "CAREER_AVAIL_3Y",
 }
 
 PO_FEATURES = [f for f, fam in V4_FEATURES.items() if fam == "playoffs"]
@@ -332,6 +345,7 @@ def merge_v4_context(
     # Declining to re-add them is not enough — drop them, or the dead tower
     # survives in the matrix (game_ratings: 14 cols, 28 observed cells).
     stale = [f for f in feats if V4_FEATURES.get(f) in gated]
+    stale += [f for f in feats if f in RETIRED_FEATURES and f not in stale]
     # Soft-subset shrinks: drop MATCH_* columns no longer in merge_features.
     stale += [
         f
