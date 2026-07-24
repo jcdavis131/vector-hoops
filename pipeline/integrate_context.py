@@ -38,6 +38,7 @@ PEDIGREE_JSON = DATA_DIR / "pedigree.json"
 PLAYOFFS_JSON = DATA_DIR / "playoffs.json"
 HONORS_JSON = DATA_DIR / "honors.json"
 GAME_RATINGS_JSON = DATA_DIR / "game_ratings.json"
+AVAILABILITY_JSON = DATA_DIR / "availability.json"
 
 _GAME_ATTR_KEYS = (
     "overall",
@@ -132,6 +133,13 @@ V4_FEATURES: dict[str, str] = {
     "HON_ASG_LAG": "honors",
     "HON_ASG_CUM": "honors",
     "HON_VOTE_RECOG": "honors",
+    # injury / durability (Track D Tier-1) — per-season availability from
+    # build_availability.py: acute games-missed signal, distinct from the
+    # career-aggregate availability in the career family. Masked pre-gamelog era.
+    "INJ_GP_PCT": "injury",
+    "INJ_MISS_N": "injury",
+    "INJ_MAX_MISS_STREAK": "injury",
+    "INJ_MISS_SPELLS": "injury",
     **{f"GK_{k.upper()}": "game_ratings" for k in _GAME_ATTR_KEYS},
 }
 
@@ -227,6 +235,15 @@ def load_game_ratings_by_player_season() -> dict[tuple[str, str], dict]:
     data = json.loads(GAME_RATINGS_JSON.read_text(encoding="utf-8"))
     rows = data.get("players", data.get("rows", []))
     return {(r["name"], r["season"]): r for r in rows}
+
+
+def load_availability_by_player_season() -> dict[tuple[str, str], dict]:
+    """(name, season) -> availability row from build_availability.py; only
+    gamelog-era rows carry streak/spells (pre-2015 rows absent == masked)."""
+    if not AVAILABILITY_JSON.exists():
+        return {}
+    data = json.loads(AVAILABILITY_JSON.read_text(encoding="utf-8"))
+    return {(r["name"], r["season"]): r for r in data.get("players", [])}
 
 
 def load_salary_market_by_player_season() -> dict[tuple[str, str], dict]:
@@ -402,6 +419,7 @@ def build_row_values(
     playoffs: dict,
     honors: dict,
     game_ratings: dict,
+    availability: dict,
 ) -> list[dict[str, float | None]]:
     rows: list[dict[str, float | None]] = []
     for name, season in zip(names, seasons, strict=False):
@@ -414,6 +432,7 @@ def build_row_values(
         po = playoffs.get(key, {})
         hon = honors.get(key, {})
         gk = game_ratings.get(key, {})
+        av = availability.get(key, {})
         mkt = salary_market.get(key, {})
         team_row = (
             team_index.get((str(season), int(r["teamId"]))) if r.get("teamId") else {}
@@ -471,6 +490,10 @@ def build_row_values(
                 "HON_ASG_LAG": hon.get("HON_ASG_LAG"),
                 "HON_ASG_CUM": hon.get("HON_ASG_CUM"),
                 "HON_VOTE_RECOG": hon.get("HON_VOTE_RECOG"),
+                "INJ_GP_PCT": av.get("GP_PCT"),
+                "INJ_MISS_N": av.get("MISS_N"),
+                "INJ_MAX_MISS_STREAK": av.get("LONGEST_MISS_STREAK"),
+                "INJ_MISS_SPELLS": av.get("MISS_SPELLS"),
                 **{f: po.get(f) for f in PO_FEATURES},
                 **{f: gk.get(f) for f in GK_FEATURES},
             }
@@ -523,13 +546,15 @@ def main() -> None:
     playoffs = load_playoffs_by_player_season()
     honors = load_honors_by_player_season()
     game_ratings = load_game_ratings_by_player_season()
+    availability = load_availability_by_player_season()
 
     print(
         f"artifacts: roster={len(roster)} career={len(career)} "
         f"competition={len(competition)} salary_market={len(salary_market)} "
         f"team_season={len(team_index)} "
         f"form={len(form)} pedigree={len(pedigree)} playoffs={len(playoffs)} "
-        f"honors={len(honors)} game_ratings={len(game_ratings)}"
+        f"honors={len(honors)} game_ratings={len(game_ratings)} "
+        f"availability={len(availability)}"
     )
 
     row_vals = build_row_values(
@@ -545,6 +570,7 @@ def main() -> None:
         playoffs,
         honors,
         game_ratings,
+        availability,
     )
     Z2, M2, man2 = merge_v4_context(Z, M, manifest, names, seasons, row_vals)
     v4_cols = v4_column_indices(man2)

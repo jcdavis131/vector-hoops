@@ -67,6 +67,14 @@ FORM_FEATURES = [
     "FORM_GP",
     "FORM_MIN_AVG",
 ]
+# Durability head targets — availability read off the embedding, never fed in as
+# an input tower (the A/B proved injury-as-input regresses style retrieval).
+INJURY_FEATURES = [
+    "INJ_GP_PCT",
+    "INJ_MISS_N",
+    "INJ_MAX_MISS_STREAK",
+    "INJ_MISS_SPELLS",
+]
 TEAM_FIT_FEATURE = "TM_NET_RTG"
 ROSTER_LIFT_FEATURE = "ROSTER_COMPLEMENT"  # proxy until ROSTER_TOP2_VORP lands
 CAREER_SLOPE_FEATURE = "CAREER_SLOPE_3Y"  # real 3y mean |Δ|; falls back below
@@ -85,6 +93,7 @@ DEFAULT_LOSS_WEIGHTS: dict[str, float] = {
     "team_fit": 0.08,
     "roster_lift": 0.08,
     "form_recon": 0.10,
+    "durability": 0.10,
     "career_slope": 0.05,
     "competition": 0.05,
     "pedigree": 0.08,
@@ -429,6 +438,7 @@ class MTNN(nn.Module):
         n_skills: int = 0,
         d_skill_hidden: int = 16,
         n_form: int = 0,
+        n_injury: int = 0,
         n_bbref: int = 0,
         fusion_mode: str = "gated",
         n_tower_blocks: int = 1,
@@ -499,6 +509,7 @@ class MTNN(nn.Module):
         self.team_fit_head = nn.Linear(d_emb, 1)
         self.roster_lift_head = nn.Linear(d_emb, 1)
         self.form_recon_head = nn.Linear(d_emb, n_form) if n_form else None
+        self.durability_head = nn.Linear(d_emb, n_injury) if n_injury else None
         self.career_slope_head = nn.Linear(d_emb, 1)
         self.competition_head = nn.Linear(d_emb, 1)
         self.bbref_bridge_head = nn.Linear(d_emb, n_bbref) if n_bbref else None
@@ -533,6 +544,8 @@ class MTNN(nn.Module):
         }
         if self.form_recon_head is not None:
             out["form_recon"] = self.form_recon_head(emb)
+        if self.durability_head is not None:
+            out["durability"] = self.durability_head(emb)
         if self.bbref_bridge_head is not None:
             out["bbref"] = self.bbref_bridge_head(emb)
         if self.skill_towers is not None:
@@ -1206,8 +1219,11 @@ def main() -> None:
 
     fams = family_slices(manifest)
     exclude = {s.strip() for s in args.exclude_families.split(",") if s.strip()}
+    # Injury never feeds an input tower — the A/B proved it regresses retrieval.
+    # It survives only as the durability head's target (predicted FROM the
+    # embedding), so drop it from the tower set unconditionally.
+    fams = {k: v for k, v in fams.items() if k not in exclude and k != "injury"}
     if exclude:
-        fams = {k: v for k, v in fams.items() if k not in exclude}
         print(f"excluded families: {sorted(exclude)} -> {len(fams)} towers")
     game_cols = game_feature_cols(manifest)
     game_z = torch.tensor(Z[:, game_cols], device=device)
@@ -1296,6 +1312,14 @@ def main() -> None:
     if form_cols:
         print(f"form_recon head: {int(form_row_m.sum())} labeled rows")
 
+    injury_cols = feature_cols(manifest, INJURY_FEATURES)
+    injury_active = bool(injury_cols) and "injury" not in exclude
+    injury_z, injury_m, injury_row_m = (
+        tensor_cols(Z, M, injury_cols, device) if injury_active else (None, None, None)
+    )
+    if injury_active:
+        print(f"durability head: {int(injury_row_m.sum())} labeled rows")
+
     bbref_cols = feature_cols(manifest, BBREF_FEATURES)
     bbref_z, bbref_m, bbref_row_m = (
         tensor_cols(Z, M, bbref_cols, device) if bbref_cols else (None, None, None)
@@ -1342,6 +1366,7 @@ def main() -> None:
         n_skills=len(skill_keys),
         d_skill_hidden=args.skill_hidden,
         n_form=len(form_cols) if form_cols else 0,
+        n_injury=len(injury_cols) if injury_active else 0,
         n_bbref=len(bbref_cols) if bbref_cols else 0,
         fusion_mode=args.fusion,
         n_tower_blocks=args.tower_blocks,
@@ -1462,6 +1487,13 @@ def main() -> None:
             if form_z is not None and form_m is not None:
                 loss = loss + weights["form_recon"] * masked_vector_mse(
                     out_a["form_recon"], form_z[idx_t], form_m[idx_t], form_row_m[idx_t]
+                )
+            if injury_z is not None and injury_m is not None and "durability" in out_a:
+                loss = loss + weights["durability"] * masked_vector_mse(
+                    out_a["durability"],
+                    injury_z[idx_t],
+                    injury_m[idx_t],
+                    injury_row_m[idx_t],
                 )
             if career_z is not None and career_m is not None:
                 loss = loss + weights["career_slope"] * masked_scalar_mse(
