@@ -8,6 +8,7 @@ automatically at the end of its rebuild flow (test_scoring_lite.py gates it);
 rerun by hand only when mtnn_embeddings.f32 / honors.json /
 vectors_search_lite.json change outside that flow.
 """
+
 import json
 from array import array
 from pathlib import Path
@@ -51,7 +52,7 @@ def main():
         emb.fromfile(f, rows * dim)
     out = array("f")
     for i in ids:
-        out.extend(emb[i * dim:(i + 1) * dim])
+        out.extend(emb[i * dim : (i + 1) * dim])
 
     (ASSETS / "scoring_lite.f32").write_bytes(out.tobytes())
     index = {
@@ -62,7 +63,9 @@ def main():
         "note": "L2-normalized rows for past all-stars 1996-2023 + all 2024+ seasons; dot=cosine; ids[k] = global row id of lite row k",
         "ids": ids,
     }
-    (ASSETS / "scoring_lite_index.json").write_text(json.dumps(index, separators=(",", ":")), encoding="utf-8")
+    (ASSETS / "scoring_lite_index.json").write_text(
+        json.dumps(index, separators=(",", ":")), encoding="utf-8"
+    )
     print(f"scoring_lite: {len(ids)} rows, {len(out) * 4} bytes f32")
 
 

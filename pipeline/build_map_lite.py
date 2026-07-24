@@ -7,6 +7,7 @@ every id-based lookup — hover names, guess rings, the target bullseye for
 ids < 4322 — pointed at the wrong player. Rerun whenever
 vectors_search_lite.json changes.
 """
+
 import json
 from pathlib import Path
 
@@ -31,8 +32,12 @@ def main():
     ]
 
     out = ASSETS / "vectors_map_lite.json"
-    out.write_text(json.dumps({"players": rows}, separators=(",", ":")), encoding="utf-8")
-    print(f"map_lite: {len(rows)} rows (stride {STRIDE} of {len(players)}), {out.stat().st_size} bytes")
+    out.write_text(
+        json.dumps({"players": rows}, separators=(",", ":")), encoding="utf-8"
+    )
+    print(
+        f"map_lite: {len(rows)} rows (stride {STRIDE} of {len(players)}), {out.stat().st_size} bytes"
+    )
 
 
 if __name__ == "__main__":

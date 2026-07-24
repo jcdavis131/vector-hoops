@@ -93,9 +93,7 @@ def load_space() -> tuple[list[dict], np.ndarray, np.ndarray, dict]:
     n, dim = int(meta["rows"]), int(meta["dim"])
     raw = EMB.read_bytes()
     if len(raw) != n * dim * 4:
-        raise SystemExit(
-            f"{EMB.name}: {len(raw)} bytes != rows*dim*4 ({n}x{dim}x4)"
-        )
+        raise SystemExit(f"{EMB.name}: {len(raw)} bytes != rows*dim*4 ({n}x{dim}x4)")
     if n != len(players):
         raise SystemExit(f"row mismatch: meta {n} vs vectors {len(players)}")
     E = np.frombuffer(raw, dtype=np.float32).reshape(n, dim).astype(np.float64)
@@ -167,9 +165,7 @@ def retrieval_ranks(space: np.ndarray, pairs: np.ndarray) -> np.ndarray:
     return ranks
 
 
-def bucket_rates(
-    ranks: np.ndarray, pairs: np.ndarray, players: list[dict]
-) -> dict:
+def bucket_rates(ranks: np.ndarray, pairs: np.ndarray, players: list[dict]) -> dict:
     def rates(idx: np.ndarray) -> dict:
         sub = ranks[idx]
         out = {"n": int(len(sub))}
