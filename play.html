@@ -45,6 +45,18 @@ button,.input{min-height:44px}
 .ready-banner{border:2px dashed var(--ink);background:var(--yellow);border-radius:12px;padding:12px 14px;display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
 .turn-indicator{display:flex;gap:8px;align-items:center;margin-top:6px;font-family:var(--mono);font-size:11px;font-weight:800}
 .turn-dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 3px rgba(0,158,115,.18);animation:pulse 1.6s infinite}
+.guess-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:4px 0 2px}
+.guess-tile{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-height:60px;padding:9px 6px;border:2px solid var(--ink,#1A150F);border-radius:12px;background:#fff;font-family:inherit;font-size:13px;font-weight:800;line-height:1.15;color:var(--ink,#1A150F);text-align:center;cursor:pointer;box-shadow:2px 2px 0 var(--ink,#1A150F);transition:transform .07s,box-shadow .07s}
+.guess-tile:hover:not([disabled]){background:#FFFEF0}
+.guess-tile:active:not([disabled]){transform:translate(1px,1px);box-shadow:1px 1px 0 var(--ink,#1A150F)}
+.guess-tile .tile-dot{width:15px;height:15px;border-radius:50%;border:1.5px solid var(--ink,#1A150F);flex:0 0 auto}
+.guess-tile .tile-name{word-break:break-word}
+.guess-tile .tile-rank{font-size:10px;font-weight:700;opacity:.85;text-transform:uppercase;letter-spacing:.03em}
+.guess-tile.is-picked{opacity:.55;cursor:default;box-shadow:none;background:#F1EFE8}
+.guess-tile.is-twin{opacity:1;background:var(--green,#009E73);color:#fff;border-color:var(--ink,#1A150F);box-shadow:2px 2px 0 var(--ink,#1A150F)}
+.guess-tile.is-twin .tile-dot{border-color:#fff}
+.guess-tile[disabled]{cursor:default}
+.grid-loading{grid-column:1/-1;text-align:center;padding:22px 8px;font-family:var(--mono);font-size:12px;color:#6B665E}
 @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.18)}}
 .progress-dots{display:flex;gap:6px;align-items:center}
 .progress-dot{width:26px;height:26px;border-radius:50%;border:2px solid var(--ink);display:inline-flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;font-weight:900;background:#fff;box-shadow:1.5px 1.5px 0 var(--ink)}
@@ -188,10 +200,10 @@ button,.input{min-height:44px}
   </div>
 
   <div class="card" id="guess-card" style="border-width:2.5px">
-    <div class="ready-banner" id="ready-banner" style="margin:-2px -2px 14px;border-style:dashed"><div style="min-width:0"><h3 style="margin:0 0 4px;font-size:16px;line-height:1.2">▶ Ready? First guess begins game</h3><p style="margin:0;font-size:13px;line-height:1.45;opacity:.9">Same 5 puzzles for everyone today. You see past All-Star ★. Type a 2024–26 modern player below — 6 tries. Warmer/colder after each.</p></div><button class="btn btn-primary" id="btn-focus-guess" type="button" style="flex:0 0 auto">Start typing →</button></div>
-    <div style="display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px"><label class="small-mono" for="guess-input" style="margin:0">Guess modern — turn <span id="turn-count">1</span>/6 • <span id="slot-label-wrap">slot <span id="slot-label">1</span>/5</span></label><span class="pill" id="warm-label" style="display:none"></span></div>
-    <div class="suggest"><input id="guess-input" class="input" placeholder="Type modern — e.g., Wembanyama, SGA, Ant" autocomplete="off" spellcheck="false"/><ul id="guess-suggest" style="display:none"></ul></div>
-    <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap"><button id="guess-btn" class="btn btn-primary" type="button">Guess</button><button id="share-btn" class="btn" type="button">Share</button><button id="share-text-btn" class="btn" type="button">Copy Grid</button><button id="btn-challenge" class="btn" type="button">Challenge</button></div>
+    <div class="ready-banner" id="ready-banner" style="margin:-2px -2px 14px;border-style:dashed"><div style="min-width:0"><h3 style="margin:0 0 4px;font-size:16px;line-height:1.2">▶ Ready? First guess begins game</h3><p style="margin:0;font-size:13px;line-height:1.45;opacity:.9">Same 5 puzzles for everyone today. You see past All-Star ★. Type a 2024–26 modern player below — 6 tries. Warmer/colder after each.</p></div><button class="btn btn-primary" id="btn-focus-guess" type="button" style="flex:0 0 auto">Tap a player→</button></div>
+    <div style="display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px"><label class="small-mono" style="margin:0">Pick the modern twin — turn <span id="turn-count">1</span>/6 • <span id="slot-label-wrap">slot <span id="slot-label">1</span>/5</span></label><span class="pill" id="warm-label" style="display:none"></span></div>
+    <div id="guess-grid" class="guess-grid" role="group" aria-label="Pick the modern twin"><div class="grid-loading">Loading players…</div></div>
+    <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap"><button id="share-btn" class="btn" type="button">Share</button><button id="share-text-btn" class="btn" type="button">Copy Grid</button><button id="btn-challenge" class="btn" type="button">Challenge</button></div>
     <div id="guesses" style="margin-top:8px"></div><div id="result" style="margin-top:12px"></div>
   </div>
 </div>
@@ -982,7 +994,7 @@ button,.input{min-height:44px}
           G.guesses=[];
           // try restore if next slot had saved currentGuesses (should be empty)
           renderPast(); renderGuesses(); resEl.style.display='none';
-          $('#past-closest-hint').style.display='none'; $('#warm-label').style.display='none'; $('#guess-input').value='';
+          $('#past-closest-hint').style.display='none'; $('#warm-label').style.display='none'; renderGuessGrid();
           renderPackProgress(); renderPackSummary(); updateStatusBar(); projectFrame(); draw();
         });
       }
@@ -1060,6 +1072,58 @@ button,.input{min-height:44px}
       if(tone!=='sticky') el._t=setTimeout(()=>{ el.style.display='none'; }, 4000);
     }catch{}
   }
+  // --- multi-choice grid (replaces the typeahead; removes the RESULT_CODE_HUNG path) ---
+  let _gridCandidates=null, _gridTargetKey=null;
+  function _seededShuffle(arr, seed){
+    const a=arr.slice(); let s=(seed>>>0)||1;
+    const rnd=()=>{ s=(s*1103515245+12345)&0x7fffffff; return s/0x7fffffff; };
+    for(let i=a.length-1;i>0;i--){ const j=Math.floor(rnd()*(i+1)); const t=a[i]; a[i]=a[j]; a[j]=t; }
+    return a;
+  }
+  function buildGridCandidates(){
+    try{
+      const st=VHPastModern.state(); const list=st&&st.modernListSorted||[];
+      if(list.length<6) return null;
+      const seed=(st.target&&st.target.i)||1;
+      const twin=list[0];                       // rank 0 = the correct modern twin
+      const contenders=list.slice(1,4);         // 3 close decoys (same neighborhood)
+      const fillerPool=_seededShuffle(list.slice(18), seed);  // far-away, clearly different
+      const used=new Set([twin.m.i, ...contenders.map(c=>c.m.i)]);
+      const filler=[];
+      for(const f of fillerPool){ if(filler.length>=5) break; if(f&&f.m&&!used.has(f.m.i)){ filler.push(f); used.add(f.m.i); } }
+      return _seededShuffle([twin, ...contenders, ...filler].filter(Boolean), seed^0x5bd1e995).map(x=>x.m);
+    }catch(e){ console.warn('buildGridCandidates fail', e); return null; }
+  }
+  function renderGuessGrid(){
+    const grid=$('#guess-grid'); if(!grid) return;
+    try{
+      const st=VHPastModern.state();
+      if(!st||!st.rankingReady){ grid.innerHTML='<div class="grid-loading">Loading players…</div>'; return; }
+      const key=st.targetIdx;
+      if(!_gridCandidates||_gridTargetKey!==key){ _gridCandidates=buildGridCandidates(); _gridTargetKey=key; }
+      if(!_gridCandidates){ grid.innerHTML='<div class="grid-loading">Loading players…</div>'; return; }
+      const byId=new Map((G.guesses||[]).map(g=>[g.idx,g]));
+      const won=(G.guesses||[]).some(g=>g.rank===0);
+      const over=won||(G.guesses||[]).length>=6;
+      grid.textContent='';
+      const frag=document.createDocumentFragment();
+      for(const m of _gridCandidates){
+        const g=byId.get(m.i);
+        const btn=document.createElement('button'); btn.type='button'; btn.className='guess-tile';
+        const c=(typeof m.c==='number')?m.c:0;
+        if(g){ btn.classList.add('is-picked'); if(g.rank===0) btn.classList.add('is-twin'); }
+        if(over||g) btn.disabled=true;
+        const dot=document.createElement('span'); dot.className='tile-dot'; dot.style.background=OKABE[c%8];
+        const nm=document.createElement('span'); nm.className='tile-name'; nm.textContent=m.n||'';
+        btn.appendChild(dot); btn.appendChild(nm);
+        if(g){ const rk=document.createElement('span'); rk.className='tile-rank'; rk.textContent=(g.rank===0)?'✓ twin':('#'+(g.rank+1)+' close'); btn.appendChild(rk); }
+        if(!g&&!over){ btn.addEventListener('click', ()=>{ if(btn.disabled) return; btn.disabled=true; doGuess(m.n); }); }
+        frag.appendChild(btn);
+      }
+      grid.appendChild(frag);
+    }catch(e){ console.warn('renderGuessGrid fail', e); }
+  }
+
   function doGuess(nameArg){
     try{
       const input=$('#guess-input');
@@ -1082,7 +1146,7 @@ button,.input{min-height:44px}
       G.guesses.push(r.guess); try{ VHPastModern.state().guesses=G.guesses.slice(); }catch{} saveGuesses(); if(fromInput&&input) input.value='';
       const warmEl=$('#warm-label'); let wc=null; try{ wc=VHPastModern.warmCold(); }catch{}
       if(wc&&G.guesses.length>1){ if(warmEl){ warmEl.style.display='inline-flex'; warmEl.textContent=wc; }} else { if(warmEl) warmEl.style.display='none'; }
-      renderGuesses(); finish(); projectFrame(); draw(); renderPackProgress();
+      renderGuesses(); finish(); projectFrame(); draw(); renderPackProgress(); renderGuessGrid();
     }catch(e){
       console.warn('doGuess fail', e);
       try{ if(window.VHErrorBoundary) VHErrorBoundary.log({type:'js', message:'doGuess '+e.message, stack:e.stack}); }catch{}
@@ -1092,6 +1156,7 @@ button,.input{min-height:44px}
   // a guess made before scoring was ready auto-submits the moment it is
   window.addEventListener('vh:ranking-ready', ()=>{
     try{
+      renderGuessGrid();
       if(pendingGuess){ const n=pendingGuess; pendingGuess=null; setGuessStatus(''); doGuess(n); }
       else { projectFrame(); draw(); }
     }catch(e){ console.warn('ranking-ready flush fail', e); }
@@ -1196,7 +1261,7 @@ button,.input{min-height:44px}
       }
     }
 
-    renderPast(); renderGuesses(); attachSuggest(); finish(); renderDailyCourt(); renderPackProgress(); renderPackSummary();
+    renderPast(); renderGuesses(); renderGuessGrid(); finish(); renderDailyCourt(); renderPackProgress(); renderPackSummary();
 
     const onboardSeen=localStorage.getItem('vh.onboardSeenV3');
     const backdrop=$('#onboarding-backdrop');
@@ -1210,8 +1275,7 @@ button,.input{min-height:44px}
     backdrop?.addEventListener('click', e=>{ if(e.target===backdrop) closeOnboard(); });
 
     $('#btn-focus-guess')?.addEventListener('click', ()=>{ $('#guess-input')?.focus(); window.scrollTo({top: $('#guess-card').offsetTop-20, behavior:'smooth'}); });
-    $('#guess-btn').addEventListener('click', doGuess);
-    $('#guess-input').addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); doGuess(); } });
+    // grid mode: tiles call doGuess(name) directly — no free-text input / keydown handlers
     $('#btn-random').addEventListener('click', ()=>{ const p=VHPastModern.pickRandomPast(); location.href='/play?mode=random&r='+p.i; });
     $('#btn-new').addEventListener('click', ()=>{ if(st.isPack){ VHPastModern.abandonPack(); } location.href='/play'; });
     $('#btn-copy-court')?.addEventListener('click', async ()=>{
