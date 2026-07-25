@@ -1,18 +1,18 @@
 .PHONY: sync offline train eval test ci
 
 sync:
-	python3 -m pip install -r pipeline/requirements.txt || true
+	python3 -m pip install -e .[dev]
 
 offline:
 	python3 pipeline/fetch_bbref_advanced.py --offline
 	python3 pipeline/fetch_2k_ratings.py --offline
-	python3 pipeline/build_vectors.py --offline --quick || true
+	python3 pipeline/build_vectors.py --offline --quick
 
 train:
-	python3 pipeline/train_towers.py --quick || true
+	./train.sh --quick
 
 eval:
-	python3 -m pytest pipeline/tests -q || true
+	python3 -m pytest pipeline -q
 
 test: eval
 

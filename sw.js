@@ -35,25 +35,6 @@ const DENY_CACHE = [
   '/assets/playoff_paths.json'
 ];
 
-// kept for reference / isImmutable checks history, NOT precached in v51-light
-const FULL_MTNN = [
-  '/assets/mtnn_embeddings.f32',
-  '/assets/mtnn_heads.f32',
-  '/assets/mtnn_arch.json',
-  '/assets/mtnn_meta.json',
-  '/assets/mtnn_map.json',
-  '/assets/mtnn-full.js',
-  '/assets/mtnn-worker.js',
-  '/assets/mtnn-onnx.js',
-  '/assets/vectors_lite.json',
-  '/assets/archetype_lite.json',
-  '/assets/vectors.json',
-  '/assets/skills.json',
-  '/assets/archetype_assignments.json',
-  '/assets/playoffs.json',
-  '/assets/pedigree.json'
-];
-
 function isDenied(p) {
   return DENY_CACHE.some(x => p.includes(x));
 }
