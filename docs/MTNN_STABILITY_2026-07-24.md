@@ -1,0 +1,202 @@
+# MTNN stability + generalization review — 2026-07-24
+
+> **Scope:** why the 2026-07-24 16:07 run scored `test recall@10 = 0.000`, what
+> actually limits model quality right now, and what the config sweep says.
+> **Nothing was promoted.** Live `assets/mtnn_*` are untouched (built 2026-07-14).
+> **Evidence:** `pipeline/data/diagnostics/collapsed_run_20260724_1607/`,
+> `pipeline/data/sweep_stability/`.
+
+---
+
+## 1. The zero-recall run: diagnosed and reproduced
+
+The run reported `train 0.995 / val 0.438 / test 0.000`. Reproduced exactly from
+its own `embedding_v3.npz`, so the number was real, not a reporting artifact.
+
+Two hypotheses were tested and **rejected**:
+
+* *2024+ embeddings collapsed to a point* — no. Mean pairwise cosine among 2024+
+  rows is 0.26 (max 0.97); they occupy a normal spread. The model even retrieves
+  the right era (52% of top-10 are 2024+ against a 7.6% base rate) — it just
+  cannot find the right *player*, ranking the true target at median 650 of 991
+  era-mates, worse than random within that cohort.
+* *2024+ rows are missing features* — no. Coverage is **richer** in recent
+  seasons (tracking 0.997 vs 0.370 pre-2021). No family collapses after 2024.
+
+The diagnostic that localizes it is **same-player continuity**: mean cosine
+between one player's consecutive seasons, per season boundary.
+
+| transition | collapsed run | shipped v5 |
+|---|---|---|
+| 2019→2020 | 0.907 | 0.824 |
+| 2021→2022 | 0.867 | 0.836 |
+| 2022→2023 | 0.494 | 0.829 |
+| **2023→2024** | **0.182** | 0.785 |
+| 2024→2025 | 0.620 | 0.804 |
+
+Shipped holds ~0.80 flat across every era. The collapsed run holds ~0.90 *inside
+its training window* (targets ≤2021) and falls off a cliff the moment it leaves.
+That is memorization of training pairs, not a learned identity axis — which is
+exactly what `train 0.995` beside `test 0.000` means. Per-epoch history confirms
+it never generalized rather than degrading late: test recall was 0.002 at epoch 10.
+
+**Cause: the architecture, not the data and not the branch's modeling work.** The
+durability head weight (0.10) and all 17 towers are identical between the healthy
+ablation arm at test 0.84 and the collapsed run. The deltas were
+`fusion concat→gated`, `tower_width 32→24`, `tower_hidden 160→96`,
+`tower_blocks 2→1`, `epochs 20→40`.
+
+This is now a **reproducible experiment**, not a story: `sweep_stability.py` arm
+`gated_narrow` rebuilds that exact geometry and reproduces the collapse
+(test 0.000, continuity 0.242).
+
+---
+
+## 2. Position labels were silently absent — every row, every run
+
+`load_positions()` joins `p` off `assets/vectors.json`. Those player records
+**have no `p` key**, so all 12,966 rows defaulted to `-1`:
+
+* the position head (loss weight **0.15**) trained with zero supervision,
+* `position_top1_acc` was `None`, which the composite coerces to **0.0**,
+* so CQS was permanently docked its 0.05 position weight.
+
+Root cause is the same stale-artifact pattern as `career_arc`: `enrich_vectors.py`
+writes `p` into `vectors.json`, but `build_vectors.py` had since rebuilt that file
+and the enrich step never re-ran. `enrich_vectors.py` silently skips when its
+cache is missing — the cache was present, it just was never re-run.
+
+**Fixed** by re-running `enrich_vectors.py` (additive by construction; verified
+0 rows changed on `name/season/v/x/y/z/c`, `p` coverage 12,925/12,966 = 99.7%).
+
+Effect, identical config and seed:
+
+| | test recall | purity@20 | position acc | CQS |
+|---|---|---|---|---|
+| before | 0.840 | 0.7349 | — (None) | 70.25 |
+| after | 0.838 | 0.7341 | **0.791** | **74.15** |
+
+Retrieval is unchanged (within seed noise); the gain is a real head coming online
+and +3.9 CQS.
+
+---
+
+## 3. Config sweep (seed 7, 20 epochs unless noted)
+
+`continuity_spread` = max−min same-player continuity across modern transitions.
+Low spread means the model generalizes evenly across eras; high spread is the
+memorization signature from §1.
+
+| arm | test | val | purity | CQS | cont 23→24 | spread |
+|---|---|---|---|---|---|---|
+| **long** (concat 32/160/2, 40 ep) | **0.840** | 0.852 | **0.7757** | **77.29** | 0.800 | 0.062 |
+| base (shipping recipe) | 0.838 | 0.866 | 0.7341 | 74.15 | 0.822 | **0.046** |
+| reg_up (drop 0.2, wd 1e-3) | 0.822 | 0.844 | 0.7178 | 73.47 | 0.824 | 0.050 |
+| wide (40/192/2) | 0.798 | 0.798 | 0.7407 | 73.53 | 0.801 | 0.091 |
+| wide_reg | 0.798 | 0.764 | 0.7172 | 72.99 | 0.803 | 0.106 |
+| big (48/224/2) | 0.778 | 0.854 | 0.7455 | 73.06 | 0.793 | 0.076 |
+| deep (32/160/3) | 0.632 | 0.856 | 0.7410 | 70.34 | 0.779 | 0.139 |
+| gated_fair (gated 32/160/2) | 0.530 | 0.454 | 0.6700 | 61.09 | 0.790 | 0.291 |
+| gated_narrow (the collapsed run) | 0.000 | 0.436 | 0.6729 | 43.50 | 0.242 | 0.646 |
+
+Readings:
+
+1. **Gated fusion is harmful on its own terms**, not merely at the narrow width.
+   At the full shipping geometry it still scores 0.530 against concat's 0.838.
+   Width rehabilitates it from 0.000 to 0.530 — it does not make it competitive.
+2. **Extra capacity hurts generalization.** wide / big / deep all fall below base
+   on test while holding train ≈0.97. More parameters buy more memorization.
+   `deep` is the clearest case: val 0.856 but test 0.632, spread 0.139.
+3. **Epoch count was never the culprit.** 40 epochs on the *concat* architecture
+   (`long`) improves purity 0.734→0.776 and CQS 74.15→77.29 while holding test
+   recall — the mirror image of what 40 epochs did to the gated/narrow run.
+4. `continuity_spread` ranks the arms in the same order as test recall while
+   being computed from ~4,000 pairs rather than 790, so it is the more reliable
+   signal. It is worth promoting to a first-class gate metric.
+
+### 3b. Stability — top three arms × 4 seeds (7, 13, 21, 42)
+
+Single-seed results do not survive contact with seed noise, so the top three
+were re-run across four seeds each:
+
+| arm | test mean | test sd | CQS mean | CQS sd | purity mean | purity sd |
+|---|---|---|---|---|---|---|
+| **long** | **0.768** | **0.088** | **75.87** | **1.61** | **0.7795** | **0.0046** |
+| base | 0.758 | 0.092 | 72.39 | 1.83 | 0.7264 | 0.0143 |
+| reg_up | 0.727 | 0.122 | 71.41 | 2.30 | 0.7106 | 0.0061 |
+
+test recall by seed — long `{7: 0.840, 13: 0.640, 21: 0.792, 42: 0.800}`,
+base `{7: 0.838, 13: 0.642, 21: 0.726, 42: 0.826}`.
+
+**`long` wins every axis, including every stability axis.** Best mean test
+recall *and* the lowest spread on it; best CQS with the tightest variance; and
+purity 3× more stable than base (sd 0.0046 vs 0.0143). Adding regularization
+(`reg_up`) made results both worse and *less* stable — the opposite of the usual
+intuition, and a reason not to reach for dropout/weight-decay here.
+
+**Recommended recipe: `concat`, tower 32/160, 2 blocks, 40 epochs, dim 48**
+— i.e. the shipping architecture trained twice as long, with position labels
+restored. Expected CQS ≈ 75.9 against the current live model's regime.
+
+One caveat that governs how to read all of this: **test recall carries sd
+0.09–0.12 across every arm** — seed 13 is a low outlier for all three. That is
+790-pair sampling noise, not model quality. CQS (sd 1.6–2.3) and purity
+(sd 0.005–0.014) are the trustworthy selectors; a single-seed test-recall
+comparison is not decision-grade. This is the same conclusion the `all_recall`
+field added to `tower_ablation.py` was reaching for.
+
+---
+
+## 4. The promote gate cannot currently pass — it is anchored to leaked numbers
+
+`pipeline/composite_score.py`:
+
+```python
+BASELINE = {"cqs": 85.87, "recall": 1.0, "purity": 0.8726}
+```
+
+The rule is `test recall@10 >= baseline_recall - 0.02`, i.e. **≥ 0.98**.
+
+But `docs/MTNN_V5_PROMOTE_GATE.md` §2 states plainly that the pre-protocol-change
+loop "trained on 1,551 held-out pair positives and 1,551 held-out next-season
+targets, and fit k-means over val/test rows. Old `recall@10 = 1.0` was
+memorization." The README says the same.
+
+So the gate's `recall: 1.0` **is** the memorization artifact the project already
+disowned, and `cqs: 85.87` / `purity: 0.8726` come from that same regime. No
+honest, leak-free model can clear a 0.98 retrieval bar — the best measured here is
+0.840. **The gate will reject every future model on principle until the baseline
+is re-anchored to a leak-free run.**
+
+This is an operator decision, not a code fix: re-anchoring the baseline redefines
+what "promote" means. Recommended: adopt the best leak-free run as the new
+baseline and record the protocol alongside it, so the constants can never again be
+compared across incompatible regimes.
+
+---
+
+## 5. What actually moved quality
+
+Neither headline win came from hyperparameters:
+
+* **position labels** — a 0.15-weight head with no supervision (+3.9 CQS),
+* **career features** — 10 of 15 at 0% coverage, fixed in `3306bf6` (26.5%→74.1%).
+
+Both were silent: a declared, weighted head quietly training on nothing. The
+sweep's spread (CQS 70.3–77.3 across every architecture tried) is smaller than the
+combined cost of those two data bugs. **Audit coverage before tuning.**
+
+Guardrail added: `load_positions()` now prints an explicit warning naming the
+head, its loss weight, and the fix command whenever the join covers <50% of
+rows — verified by simulating the pre-fix state, which reports
+`position labels cover only 0.0% of 12966 rows`. The failure can no longer be
+silent.
+
+**Next steps, in value order**
+
+1. Re-anchor `BASELINE` in `composite_score.py` to a leak-free run (§4) —
+   until then no model can promote, so nothing else matters.
+2. Audit the remaining heads the way position and career were audited. Both
+   silent-zero bugs were found by checking label coverage, not by tuning.
+3. Consider promoting `continuity_spread` into the gate, since it is computed
+   from ~5× more pairs than test recall and ordered the arms identically.
