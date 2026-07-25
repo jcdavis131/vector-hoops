@@ -218,20 +218,28 @@ def main() -> None:
             required=True,
         )
     )
-    # Arena bundle — the /fingerprint game's compact repack of the assets
-    # rebuilt above. Pure derivation, so both steps are hard requirements.
+    # Lite scoring core — the subset of mtnn_embeddings.f32 the play page
+    # scores against. Pure derivation from committed assets (mtnn_meta.json,
+    # honors.json, vectors_search_lite.json), so both steps are hard
+    # requirements; the gate pins the index's build stamp to mtnn_meta's so
+    # a skipped rebuild can't ship stale scoring vectors.
     steps.append(
         run_step(
-            "rebuild arena bundle",
-            [sys.executable, "pipeline/build_arena.py"],
+            "rebuild scoring lite",
+            [sys.executable, "pipeline/build_scoring_lite.py"],
             required=True,
         )
     )
     steps.append(
         run_step(
-            "arena gates", [sys.executable, "pipeline/test_arena.py"], required=True
+            "scoring-lite gates",
+            [sys.executable, "pipeline/test_scoring_lite.py"],
+            required=True,
         )
     )
+    # Arena bundle steps removed 2026-07: build_arena.py and assets/arena
+    # were retired (c1b44d2 / db5370b); the required=True invocation of the
+    # deleted script SystemExited every run before the ledger write below.
 
     entry = {
         "run": time.strftime("%Y-%m-%d %H:%M UTC", time.gmtime()),

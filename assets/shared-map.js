@@ -14,11 +14,12 @@ export async function mountSharedMap(canvas, opts={}){
   const isMobile = (typeof window!=='undefined') && (window.innerWidth<700 || /Android|iPhone|iPad/i.test(navigator.userAgent||''));
   const maxRender = isMobile ? 4000 : 8000;
   const frameBudget = isMobile ? 42 : 33; // 24fps / 30fps
+  const reduceMotion = (typeof window!=='undefined') && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   // state
   let N=0, baseOx=null, baseOy=null, baseOz=null, baseC=null, baseI=null, baseN=[], baseS=[], baseP=[];
   let projected=[], projById=null, maxId=0;
-  let W=0,H=0, rotY=Math.PI*0.18, rotX=0.22, auto=true, lastT=0, isDragging=false, lastX=0,lastY=0, idleMs=0;
+  let W=0,H=0, rotY=Math.PI*0.18, rotX=0.22, auto=!reduceMotion, lastT=0, isDragging=false, lastX=0,lastY=0, idleMs=0;
   let embedPaused=false, lastRender=0;
   let targetId=highlightInit, guessIds=Array.isArray(opts.guessIds)?opts.guessIds.slice():[];
   let hoverEl=null; try{hoverEl=document.getElementById('hover-tip');}catch{}
@@ -82,7 +83,7 @@ export async function mountSharedMap(canvas, opts={}){
           baseI[i]=p.i!=null? (p.i|0) : i;
           baseN[i]=p.n||'';
           baseS[i]=p.s||'';
-          baseP[i]=p.p??0;
+          baseP[i]=p.p??-1;
           projected[i].c=baseC[i];
           if(baseI[i]>localMax) localMax=baseI[i];
         }
@@ -96,26 +97,52 @@ export async function mountSharedMap(canvas, opts={}){
     return false;
   }
 
+  function mergeNames(arr){
+    const map=new Map();
+    for(const p of arr){ if(p.i!=null) map.set(p.i,{n:p.n,s:p.s,p:p.p}); }
+    for(let i=0;i<N;i++){ const id=baseI[i]; const hit=map.get(id); if(hit){ baseN[i]=hit.n; baseS[i]=hit.s; baseP[i]=hit.p??baseP[i]; } }
+    return map.size;
+  }
+  function gameSearchLite(timeoutMs){
+    // resolves with the game's already-fetched search pool, or null on pages without it
+    if(!(window.VHPastModern&&VHPastModern.state)) return Promise.resolve(null);
+    return new Promise(res=>{
+      const t0=Date.now();
+      (function poll(){
+        try{
+          const sl=VHPastModern.state().searchLite;
+          const arr=sl&&(sl.players||sl);
+          if(Array.isArray(arr)&&arr.length) return res(arr);
+        }catch{}
+        if(Date.now()-t0>timeoutMs) return res(null);
+        setTimeout(poll,250);
+      })();
+    });
+  }
   async function loadNamesLazy(){
     // if we already have names (from search_lite_pos), skip
     if(baseN[0] && baseN[0].length) return;
+    // the game page already holds vectors_search_lite.json in memory — merging
+    // from it saves the 1.26MB search_lite_pos fetch (positions stay unknown)
+    try{
+      const game=await gameSearchLite(6000);
+      if(game){ console.log('shared-map v2 names merged from game state', mergeNames(game)); return; }
+    }catch{}
     try{
       const r=await fetch('assets/vectors_search_lite_pos.json?v=51',{cache:'default'});
       if(!r.ok) return;
       const j=await r.json();
       const arr=j.players||j;
       if(!Array.isArray(arr)) return;
-      // build map id->name
-      const map=new Map();
-      for(const p of arr){ if(p.i!=null) map.set(p.i,{n:p.n,s:p.s,p:p.p}); }
-      for(let i=0;i<N;i++){ const id=baseI[i]; const hit=map.get(id); if(hit){ baseN[i]=hit.n; baseS[i]=hit.s; baseP[i]=hit.p??baseP[i]; } }
-      console.log('shared-map v2 names lazy merged', map.size);
+      console.log('shared-map v2 names lazy merged', mergeNames(arr));
     }catch(e){ console.warn('names lazy fail',e); }
   }
 
   // projection - only sampled subset for perf, but we need all for target/guess lookup; we project all but render sampled
   function projectFrame(){
     if(!baseOx||!N) return;
+    // self-heal: NaN rotation would collapse every dot to (0,0) via |0
+    if(!isFinite(rotY)||!isFinite(rotX)){ rotY=Math.PI*0.18; rotX=0.22; }
     const cy=Math.cos(rotY), sy=Math.sin(rotY), cx=Math.cos(rotX), sx=Math.sin(rotX);
     const persp=2.8;
     const W2=W*0.5, H2=H*0.5, W40=W*0.40, H40=H*0.40;
@@ -166,55 +193,72 @@ export async function mountSharedMap(canvas, opts={}){
       }
     }
 
-    // guesses: orange rings (cheap)
+    // guesses: orange rings with white underlay so they read on dark clusters
     if(guessIds && guessIds.length){
-      ctx.strokeStyle='#D55E00';
-      ctx.lineWidth=2;
       for(let gi=0;gi<guessIds.length;gi++){
         const gid=guessIds[gi]; if(gid==null||gid>maxId) continue;
         const idx=projById?projById[gid]:-1; if(idx<0) continue;
         const pr=projected[idx]; if(!pr) continue;
         if(pr.sx< -30 || pr.sx> W+30 || pr.sy< -30 || pr.sy> H+30) continue;
-        ctx.strokeRect((pr.sx|0)-5, (pr.sy|0)-5, 10,10);
+        const gx=(pr.sx|0), gy=(pr.sy|0);
+        ctx.strokeStyle='#FFFFFF'; ctx.lineWidth=4; ctx.strokeRect(gx-5, gy-5, 10,10);
+        ctx.strokeStyle='#D55E00'; ctx.lineWidth=2; ctx.strokeRect(gx-5, gy-5, 10,10);
       }
     }
 
-    // target: yellow halo
+    // target: bullseye + crosshair — a plain yellow dot vanishes inside the yellow
+    // archetype cluster, so shape+outline carries the signal, not color.
+    // (arc() is fine here: one marker per frame, unlike the 4-8k dots above)
     if(targetId!=null && projById && targetId<=maxId){
       const idx=projById[targetId];
       if(idx>=0){
         const pr=projected[idx];
         if(pr && pr.sx>= -20 && pr.sx<=W+20 && pr.sy>= -20 && pr.sy<=H+20){
           const x=pr.sx|0, y=pr.sy|0;
-          ctx.fillStyle='rgba(240,228,66,0.28)';
-          ctx.fillRect(x-9, y-9, 18,18);
+          ctx.lineWidth=3; ctx.strokeStyle='#FFFFFF';
+          ctx.beginPath(); ctx.arc(x,y,11,0,Math.PI*2); ctx.stroke();
+          ctx.lineWidth=2.4; ctx.strokeStyle='#1A150F';
+          ctx.beginPath(); ctx.arc(x,y,7.5,0,Math.PI*2); ctx.stroke();
           ctx.fillStyle='#F0E442';
-          ctx.fillRect(x-5, y-5, 10,10);
-          ctx.strokeStyle='#1A150F';
-          ctx.lineWidth=1;
-          ctx.strokeRect(x-5,y-5,10,10);
+          ctx.beginPath(); ctx.arc(x,y,3.4,0,Math.PI*2); ctx.fill();
+          ctx.lineWidth=1.2; ctx.strokeStyle='#1A150F';
+          ctx.beginPath(); ctx.arc(x,y,3.4,0,Math.PI*2); ctx.stroke();
+          ctx.lineWidth=2; ctx.strokeStyle='#1A150F';
+          ctx.beginPath();
+          ctx.moveTo(x-17,y); ctx.lineTo(x-11,y); ctx.moveTo(x+11,y); ctx.lineTo(x+17,y);
+          ctx.moveTo(x,y-17); ctx.lineTo(x,y-11); ctx.moveTo(x,y+11); ctx.lineTo(x,y+17);
+          ctx.stroke();
         }
       }
     }
   }
 
+  // single rAF chain that fully stops when paused or static; resume paths call scheduleLoop()
+  let rafPending=false;
+  function scheduleLoop(){ if(!rafPending){ rafPending=true; requestAnimationFrame(loop); } }
   function loop(t){
-    if(embedPaused){ requestAnimationFrame(loop); return; }
+    rafPending=false;
+    if(embedPaused) return;
     const now=t||performance.now();
-    if(now-lastRender < frameBudget){ requestAnimationFrame(loop); return; }
+    if(now-lastRender < frameBudget){ scheduleLoop(); return; }
     lastRender=now;
     if(!lastT) lastT=now;
     const dt=Math.min(50, now-lastT); lastT=now;
     if(!isDragging && auto){
       rotY+=dt*0.00022;
       idleMs+=dt;
-      if(idleMs>8000){ auto=false; embedPaused=true; console.log('map idle pause'); requestAnimationFrame(loop); return; }
+      if(idleMs>8000){ auto=false; embedPaused=true; console.log('map idle pause'); return; }
+    } else if(!isDragging && !auto){
+      // static scene: render once and stop burning frames
+      projectFrame();
+      try{ draw(); }catch(e){ console.warn('draw fail',e); }
+      return;
     } else {
       idleMs=0;
     }
     projectFrame();
     try{ draw(); }catch(e){ console.warn('draw fail',e); }
-    requestAnimationFrame(loop);
+    scheduleLoop();
   }
 
   // interaction
@@ -222,7 +266,7 @@ export async function mountSharedMap(canvas, opts={}){
     const pt=ev.touches? ev.touches[0]:ev;
     isDragging=true; auto=false; idleMs=0; lastX=pt.clientX; lastY=pt.clientY;
     canvas.style.cursor='grabbing';
-    embedPaused=false; lastT=0;
+    embedPaused=false; lastT=0; scheduleLoop();
     const bp=document.getElementById('btn-pause'); if(bp) bp.textContent='Pause';
   }
   function onMove(ev){
@@ -251,7 +295,8 @@ export async function mountSharedMap(canvas, opts={}){
       hoverEl.style.top=(projected[best].sy-42)+'px';
       const n=baseN[best]||''; const s=baseS[best]||''; const c=baseC[best];
       const arch=ARCH[c%8]||'';
-      hoverEl.innerHTML=`<b>${(n||'').replace(/</g,'&lt;')}</b> ${(s||'').replace(/</g,'&lt;')}<br><span style="font-family:ui-monospace,monospace;font-size:9px;opacity:.8">${POS[(baseP[best]|0)%5]||''} • ${arch}</span>`;
+      const pos=baseP[best]>=0?(POS[(baseP[best]|0)%5]||''):'';
+      hoverEl.innerHTML=`<b>${(n||'').replace(/</g,'&lt;')}</b> ${(s||'').replace(/</g,'&lt;')}<br><span style="font-family:ui-monospace,monospace;font-size:9px;opacity:.8">${pos?pos+' • ':''}${arch}</span>`;
     } else {
       hoverEl.style.display='none';
     }
@@ -260,9 +305,9 @@ export async function mountSharedMap(canvas, opts={}){
 
   try{
     window.addEventListener('vh:pause-maps',()=>{ embedPaused=true; auto=false; });
-    window.addEventListener('vh:resume-maps',()=>{ embedPaused=false; auto=true; lastT=0; idleMs=0; });
+    window.addEventListener('vh:resume-maps',()=>{ embedPaused=false; auto=!reduceMotion; lastT=0; idleMs=0; scheduleLoop(); });
     document.addEventListener('focusin',(e)=>{ if(e.target && (e.target.id==='guess-input' || e.target.matches&&e.target.matches('input.input'))){ embedPaused=true; auto=false; } });
-    document.addEventListener('visibilitychange',()=>{ if(document.hidden){ embedPaused=true; } else { embedPaused=false; lastT=0; } });
+    document.addEventListener('visibilitychange',()=>{ if(document.hidden){ embedPaused=true; } else { embedPaused=false; lastT=0; scheduleLoop(); } });
   }catch{}
 
   canvas.addEventListener('mousedown', onDown);
@@ -275,29 +320,54 @@ export async function mountSharedMap(canvas, opts={}){
 
   const pauseBtn=document.getElementById('btn-pause');
   if(pauseBtn){
-    pauseBtn.addEventListener('click',()=>{ auto=!auto; embedPaused=!auto; pauseBtn.textContent=auto?'Pause':'Resume'; lastT=0; idleMs=0; if(auto) requestAnimationFrame(loop); });
+    pauseBtn.addEventListener('click',()=>{ auto=!auto; embedPaused=!auto; pauseBtn.textContent=auto?'Pause':'Resume'; lastT=0; idleMs=0; if(auto) scheduleLoop(); });
   }
   const resetBtn=document.getElementById('btn-reset');
   if(resetBtn){
-    resetBtn.addEventListener('click',()=>{ rotY=Math.PI*0.18; rotX=0.22; auto=true; embedPaused=false; idleMs=0; lastT=0; if(pauseBtn) pauseBtn.textContent='Pause'; resize(); });
+    resetBtn.addEventListener('click',()=>{ rotY=Math.PI*0.18; rotX=0.22; auto=!reduceMotion; embedPaused=false; idleMs=0; lastT=0; if(pauseBtn) pauseBtn.textContent=auto?'Pause':'Resume'; resize(); scheduleLoop(); });
   }
 
   // load and start
   resize();
   let ro=null; try{ ro=new ResizeObserver(resize); ro.observe(canvas); if(canvas.parentElement) ro.observe(canvas.parentElement); }catch{}
   const ok=await loadLite();
-  if(ok){ projectFrame(); draw(); requestAnimationFrame(loop); loadNamesLazy().then(()=>{ projectFrame(); draw(); }); }
+  if(ok){ projectFrame(); draw(); scheduleLoop(); loadNamesLazy().then(()=>{ projectFrame(); draw(); }); }
   else { ctx.fillStyle='#FFFEF7'; ctx.fillText('Map failed to load',14,22); }
 
   return {
     setTarget(id){ targetId=id==null?null:id|0; draw(); },
     setGuesses(ids){ guessIds=Array.isArray(ids)?ids.slice():[]; draw(); },
     focusOnTarget(){
-      if(targetId==null||!projById) return;
-      const idx=projById[targetId]; if(idx<0) return;
+      // targetId>maxId would read past the Int32Array end: idx=undefined -> atan2(undefined)=NaN -> map collapses
+      if(targetId==null||!projById||targetId<0||targetId>maxId) return;
+      const idx=projById[targetId]; if(idx==null||idx<0) return;
       const ox=baseOx[idx], oy=baseOy[idx], oz=baseOz[idx];
-      rotY=-Math.atan2(ox,oz); const r=Math.sqrt(ox*ox+oz*oz)||1; rotX=-Math.atan2(oy,r)*0.85;
+      const ry=-Math.atan2(ox,oz); const r=Math.sqrt(ox*ox+oz*oz)||1; const rx=-Math.atan2(oy,r)*0.85;
+      if(isFinite(ry)&&isFinite(rx)){ rotY=ry; rotX=rx; }
       projectFrame(); draw();
+    },
+    hasPoint(id){ return !!(projById && id!=null && id>=0 && id<=maxId && projById[id]>=0); },
+    // append one row (e.g. a daily target outside the sampled lite map) so the bullseye always exists
+    addPoint(p){
+      try{
+        if(!p||p.i==null||!baseOx) return false;
+        const id=p.i|0;
+        if(id>=0 && id<=maxId && projById && projById[id]>=0) return true;
+        const n=N+1;
+        const nOx=new Float32Array(n), nOy=new Float32Array(n), nOz=new Float32Array(n);
+        const nC=new Uint8Array(n), nI=new Int32Array(n);
+        nOx.set(baseOx); nOy.set(baseOy); nOz.set(baseOz); nC.set(baseC); nI.set(baseI);
+        nOx[N]=((p.x??0.5)-0.5)*2; nOy[N]=((p.y??0.5)-0.5)*2; nOz[N]=((p.z??0.5)-0.5)*2;
+        nC[N]=(p.c|0)&7; nI[N]=id;
+        baseOx=nOx; baseOy=nOy; baseOz=nOz; baseC=nC; baseI=nI;
+        baseN[N]=p.n||''; baseS[N]=p.s||''; baseP[N]=p.p??-1;
+        projected.push({sx:0,sy:0,depth:0,alpha:0.6,c:nC[N]});
+        N=n;
+        if(id>maxId){ const np=new Int32Array(id+1); np.fill(-1); if(projById) np.set(projById); projById=np; maxId=id; }
+        projById[id]=N-1;
+        projectFrame(); draw();
+        return true;
+      }catch(e){ console.warn('addPoint fail',e); return false; }
     },
     resize, getCount(){return N;},
     dispose(){ try{ro&&ro.disconnect();}catch{} }

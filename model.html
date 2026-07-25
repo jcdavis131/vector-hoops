@@ -320,9 +320,10 @@ a{color:inherit}
 <span class="stats-chip">heads 8/5/14/18</span>
 </div>
 
-<div class="cqs-strip" aria-label="Composite Quality Score">
-<div class="cqs-badge is-primary"><b>85.87</b><span>CQS composite</span></div>
-<div class="cqs-badge"><b>1.0</b><span>recall@10 same-player</span></div>
+<p class="mono" style="font-size:12px; color:#5A5248; margin:6px 0 2px;">Transductive (train-set) diagnostics — measured on the same vectors the model was fit on, so recall@10 = 1.0 is memorization, not generalization. For generalization see the held-out scoreboard below.</p>
+<div class="cqs-strip" aria-label="Composite Quality Score (transductive / train-set)">
+<div class="cqs-badge is-primary"><b>85.87</b><span>CQS composite (transductive)</span></div>
+<div class="cqs-badge"><b>1.0</b><span>recall@10 same-player (memorization)</span></div>
 <div class="cqs-badge"><b>0.8726</b><span>purity@20 archetype</span></div>
 <div class="cqs-badge"><b>0.802</b><span>skills R²</span></div>
 <div class="cqs-badge"><b>0.651</b><span>next R² per-100</span></div>

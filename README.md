@@ -27,7 +27,7 @@ python pipeline/build_skills.py      # 12-skill grades + client-side probe weigh
 python pipeline/update_dataset.py    # growth loop: fetch -> rebuild -> gate -> ledger
 ```
 
-Sources: stats.nba.com league dashboards (Base/Advanced/Scoring/bio/tracking) and Basketball-Reference contracts. Every response is cached under `pipeline/cache/`; stats.nba.com throttles hard, so reruns resume, and `--offline` rebuilds from cache only. Rebuilds are gated by `pipeline/test_skills.py` / `pipeline/test_arena.py` before anything ships.
+Sources: stats.nba.com league dashboards (Base/Advanced/Scoring/bio/tracking) and Basketball-Reference contracts. Every response is cached under `pipeline/cache/`; stats.nba.com throttles hard, so reruns resume, and `--offline` rebuilds from cache only. Rebuilds are gated by `pipeline/test_skills.py` before anything ships.
 
 Three data tracks are built but dormant, each cache-ready and gated on a committed fixture until one operator fetch from a residential IP (stats.nba.com blocks datacenter IPs):
 

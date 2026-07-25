@@ -3,6 +3,7 @@
 <meta name="description" content="Daily Court: 5 past All-Stars → 5 modern twins. 6 tries each, build your modern starting 5. Pack Battle — share same link, battle friends."/>
 <meta property="og:title" content="Play Vector Hoops — Daily Court 5× + Pack Battle"/>
 <meta name="theme-color" content="#1A150F"/><link rel="manifest" href="/manifest.json"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/shell.css"/><link rel="stylesheet" href="assets/responsive.css"/><link rel="stylesheet" href="assets/final-qa.css"/><link rel="stylesheet" href="assets/unified.css"/>
 <style>
@@ -44,6 +45,18 @@ button,.input{min-height:44px}
 .ready-banner{border:2px dashed var(--ink);background:var(--yellow);border-radius:12px;padding:12px 14px;display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
 .turn-indicator{display:flex;gap:8px;align-items:center;margin-top:6px;font-family:var(--mono);font-size:11px;font-weight:800}
 .turn-dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 3px rgba(0,158,115,.18);animation:pulse 1.6s infinite}
+.guess-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:4px 0 2px}
+.guess-tile{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-height:60px;padding:9px 6px;border:2px solid var(--ink,#1A150F);border-radius:12px;background:#fff;font-family:inherit;font-size:13px;font-weight:800;line-height:1.15;color:var(--ink,#1A150F);text-align:center;cursor:pointer;box-shadow:2px 2px 0 var(--ink,#1A150F);transition:transform .07s,box-shadow .07s}
+.guess-tile:hover:not([disabled]){background:#FFFEF0}
+.guess-tile:active:not([disabled]){transform:translate(1px,1px);box-shadow:1px 1px 0 var(--ink,#1A150F)}
+.guess-tile .tile-dot{width:15px;height:15px;border-radius:50%;border:1.5px solid var(--ink,#1A150F);flex:0 0 auto}
+.guess-tile .tile-name{word-break:break-word}
+.guess-tile .tile-rank{font-size:10px;font-weight:700;opacity:.85;text-transform:uppercase;letter-spacing:.03em}
+.guess-tile.is-picked{opacity:.55;cursor:default;box-shadow:none;background:#F1EFE8}
+.guess-tile.is-twin{opacity:1;background:var(--green,#009E73);color:#fff;border-color:var(--ink,#1A150F);box-shadow:2px 2px 0 var(--ink,#1A150F)}
+.guess-tile.is-twin .tile-dot{border-color:#fff}
+.guess-tile[disabled]{cursor:default}
+.grid-loading{grid-column:1/-1;text-align:center;padding:22px 8px;font-family:var(--mono);font-size:12px;color:#6B665E}
 @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.18)}}
 .progress-dots{display:flex;gap:6px;align-items:center}
 .progress-dot{width:26px;height:26px;border-radius:50%;border:2px solid var(--ink);display:inline-flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;font-weight:900;background:#fff;box-shadow:1.5px 1.5px 0 var(--ink)}
@@ -155,7 +168,7 @@ button,.input{min-height:44px}
     <div class="small-mono" style="margin-top:8px;opacity:.6;text-transform:none">Each slot is fixed for the day — same for everyone. No reroll on refresh. Solve 3 to stay incentivized, 5 to dominate leaderboard.</div>
   </div>
 
-  <div id="map-wrap"><canvas id="sky-canvas" width="640" height="380"></canvas><div id="target-badge" style="position:absolute;left:0;top:0;transform:translate(-50%,-140%);background:#F0E442;border:2.2px solid #1A150F;border-radius:999px;padding:5px 10px;font-family:ui-monospace,monospace;font-size:10px;font-weight:900;box-shadow:2px 2px 0 #1A150F;z-index:4;display:none;pointer-events:none;white-space:nowrap">★ TARGET</div><div id="map-overlay"><span class="chip" id="map-fact">12,966 seasons • ★ target past</span><span class="chip">orange rings = your guesses • yellow = target</span></div><div id="map-controls"><button class="chip pill" id="btn-pause" type="button">Pause</button><button class="chip pill" id="btn-reset" type="button">Reset</button></div><div id="map-legend"><div style="font-family:var(--mono);font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:900;opacity:.55;margin-bottom:4px">Map</div><div style="font-family:var(--mono);font-size:9px">Drag to orbit • ★ = past target (auto-centered) • yellow halo always visible</div></div><div id="hover-tip"></div></div>
+  <div id="map-wrap"><canvas id="sky-canvas" width="640" height="380"></canvas><div id="target-badge" style="position:absolute;left:0;top:0;transform:translate(-50%,-140%);background:#F0E442;border:2.2px solid #1A150F;border-radius:999px;padding:5px 10px;font-family:ui-monospace,monospace;font-size:10px;font-weight:900;box-shadow:2px 2px 0 #1A150F;z-index:4;display:none;pointer-events:none;white-space:nowrap">★ TARGET</div><div id="map-overlay"><span class="chip" id="map-fact">12,966 seasons • ★ target past</span><span class="chip">orange rings = your guesses • ◎ bullseye = target</span></div><div id="map-controls"><button class="chip pill" id="btn-pause" type="button">Pause</button><button class="chip pill" id="btn-reset" type="button">Reset</button></div><div id="map-legend"><div style="font-family:var(--mono);font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:900;opacity:.55;margin-bottom:4px">Map</div><div style="font-family:var(--mono);font-size:9px">Drag to orbit • ◎ bullseye = past target (auto-centered)</div></div><div id="hover-tip"></div></div>
 
   <!-- PACK BATTLE v2 Production UI -->
   <div class="card" id="pack-progress" style="display:none;"></div>
@@ -188,9 +201,9 @@ button,.input{min-height:44px}
 
   <div class="card" id="guess-card" style="border-width:2.5px">
     <div id="subset-wrap" style="margin:-2px -2px 14px;border:2.2px solid var(--ink);border-radius:12px;background:#FFFEF7;box-shadow:3px 3px 0 var(--ink);overflow:hidden"><div style="display:flex;justify-content:space-between;gap:8px;align-items:center;padding:8px 10px;border-bottom:1.8px solid var(--ink);background:#fff"><div class="small-mono" style="display:flex;gap:6px;align-items:center"><span class="pill" style="background:var(--ink);color:#fff">MODEL LENS</span><span class="pill pill-yellow" id="subset-arch-pill">—</span><span id="subset-count" class="small-mono" style="opacity:.7;text-transform:none">subset</span></div><div style="display:flex;gap:6px"><button class="chip pill" id="btn-subset-pause" type="button" style="font-size:10px">Pause</button><button class="chip pill" id="btn-subset-focus" type="button" style="font-size:10px">★ Focus</button></div></div><canvas id="subset-canvas" width="560" height="200" style="width:100%;height:200px;display:block;background:#FFFEF7"></canvas><div class="small-mono" style="padding:6px 10px;opacity:.65;text-transform:none;font-size:10px">Subset of same archetype — drag to orbit, ★ = target. Seen through MTNN 48-d → 3-d projection. Yellow halo = past star, orange rings = your guesses.</div></div>
-    <div style="display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px"><label class="small-mono" for="guess-input" style="margin:0">Guess modern — turn <span id="turn-count">1</span>/6 • <span id="slot-label-wrap">slot <span id="slot-label">1</span>/5</span></label><span class="pill" id="warm-label" style="display:none"></span></div>
-    <div class="suggest"><input id="guess-input" class="input" placeholder="Type modern — e.g., Wembanyama, SGA, Ant" autocomplete="off" spellcheck="false"/><ul id="guess-suggest" style="display:none"></ul></div>
-    <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap"><button id="guess-btn" class="btn btn-primary" type="button">Guess</button><button id="share-btn" class="btn" type="button">Share</button><button id="share-text-btn" class="btn" type="button">Copy Grid</button><button id="btn-challenge" class="btn" type="button">Challenge</button></div>
+    <div style="display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px"><label class="small-mono" style="margin:0">Pick the modern twin — turn <span id="turn-count">1</span>/6 • <span id="slot-label-wrap">slot <span id="slot-label">1</span>/5</span></label><span class="pill" id="warm-label" style="display:none"></span></div>
+    <div id="guess-grid" class="guess-grid" role="group" aria-label="Pick the modern twin"><div class="grid-loading">Loading players…</div></div>
+    <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap"><button id="share-btn" class="btn" type="button">Share</button><button id="share-text-btn" class="btn" type="button">Copy Grid</button><button id="btn-challenge" class="btn" type="button">Challenge</button></div>
     <div id="guesses" style="margin-top:8px"></div><div id="result" style="margin-top:12px"></div>
   </div>
 </div>
@@ -212,14 +225,14 @@ button,.input{min-height:44px}
 <script src="assets/error-boundary.js"></script>
 <script src="assets/keyboard-a11y.js"></script>
 <script src="assets/site-nav.js" defer></script>
-<script src="assets/pwa-install.js"></script><script src="assets/pixel-avatar.js?v=49"></script><script src="assets/team-logo.js?v=50"></script><script src="assets/subset-map.js?v=50"></script><script src="assets/viral-share.js"></script><script src="assets/past-modern-game.js?v=49"></script>
+<script src="assets/pwa-install.js"></script><script src="assets/pixel-avatar.js?v=49"></script><script src="assets/team-logo.js?v=55"></script><script src="assets/subset-map.js?v=55"></script><script src="assets/viral-share.js"></script><script src="assets/past-modern-game.js?v=55"></script>
 <script>
 (function(){
   const $=s=>document.querySelector(s);
   const OKABE=['#0072B2','#D55E00','#009E73','#F0E442','#56B4E9','#CC79A7','#E69F00','#000000'];
   const ARCH=["Glass+Rim","LowVol Glass","Low Impact 3P Vol","Def Glass+Rim FT","Vol+3P Vol","3P Acc+Vol","Playmaking+Steals","Scoring Vol"];
   let G={guesses:[]};
-  // team logo map: player|season -> abbr
+  // team logo map + subset MODEL LENS — HOME-only free-tier
   let _teamMap=null, _teamMapLoading=false;
   let subsetMapApi=null;
   let _subsetNeighCache=[];
@@ -228,18 +241,16 @@ button,.input{min-height:44px}
     _teamMapLoading=true;
     try{
       const r=await fetch('assets/player_team_season.json',{cache:'default'});
-      if(r.ok){ _teamMap=await r.json(); console.log('team map loaded', Object.keys(_teamMap).length); }
-    }catch(e){ console.warn('team map fail', e); }
+      if(r.ok){ _teamMap=await r.json();}
+    }catch{}
     _teamMapLoading=false;
   }
-  // kick early
   setTimeout(loadTeamMap, 20);
   function getTeamAbbr(name, season){
     try{
       if(!_teamMap) return null;
       if(!name||!season) return null;
-      const key = `${name}|${season}`;
-      return _teamMap[key]||null;
+      return _teamMap[`${name}|${season}`]||null;
     }catch{ return null; }
   }
   async function mountSubset(){
@@ -248,12 +259,10 @@ button,.input{min-height:44px}
       if(!canvas || !window.VHSubsetMap) return;
       if(subsetMapApi) return;
       subsetMapApi = await window.VHSubsetMap.mountSubsetMap(canvas, {targetId:null, targetC:0, guessIds:[], rotY:0.22});
-      console.log('subset map mounted');
       const focusBtn=document.getElementById('btn-subset-focus');
       const pauseBtn=document.getElementById('btn-subset-pause');
       if(focusBtn){ focusBtn.addEventListener('click',()=>{ try{ if(subsetMapApi){ const st=VHPastModern.state(); const tid=st.target?st.target.i:null; const c=st.target?st.target.c:null; subsetMapApi.setTarget(tid,c); } }catch{} }); }
-      if(pauseBtn){ let paused=false; pauseBtn.addEventListener('click',()=>{ paused=!paused; pauseBtn.textContent=paused?'Resume':'Pause'; try{ // toggle auto inside – simple via class?
-      }catch{} }); }
+      if(pauseBtn){ let paused=false; pauseBtn.addEventListener('click',()=>{ paused=!paused; pauseBtn.textContent=paused?'Resume':'Pause'; }); }
     }catch(e){ console.warn('subset mount fail',e); }
   }
   setTimeout(mountSubset, 120);
@@ -263,20 +272,16 @@ button,.input{min-height:44px}
       const st=VHPastModern.state(); if(!st||!st.target) return;
       const tid=st.target.i; const c=st.target.c;
       subsetMapApi.setTarget(tid,c);
-      // arch pill
       const pill=document.getElementById('subset-arch-pill');
       if(pill){ pill.textContent=ARCH[c%ARCH.length]||'—'; }
       const cntEl=document.getElementById('subset-count');
       if(cntEl){
-        // estimate count of same archetype from subset map internal if available
         try{
           const total = (subsetMapApi._players||[]).filter(p=> (p.c|0)===c).length;
           cntEl.textContent = `${total} in archetype`;
         }catch{ cntEl.textContent='subset'; }
       }
-      // guesses
       if(G && G.guesses){ subsetMapApi.setGuesses(G.guesses.map(g=>g.idx)); }
-      // closests: if modernListSorted ready, set neighbors
       try{
         const list=st.modernListSorted||[];
         if(list.length){
@@ -287,7 +292,6 @@ button,.input{min-height:44px}
       }catch{}
     }catch(e){ console.warn('syncSubset fail',e); }
   }
-  // sync subset whenever target changes
   setInterval(syncSubsetFromState, 950);
     // --- shared map v1 — unified simple 2D canvas, replaces old inline engine ---
   let sharedMapApi = null;
@@ -302,16 +306,20 @@ button,.input{min-height:44px}
 
   function resize(){ try{ sharedMapApi && sharedMapApi.resize(); }catch{} }
   function projectFrame(){}
-  function draw(){ try{ if(sharedMapApi){ sharedMapApi.setGuesses((G&&G.guesses?G.guesses.map(g=>g.idx):[])); } }catch{} }
-  function focusOnTarget(){ try{ sharedMapApi && sharedMapApi.focusOnTarget && sharedMapApi.focusOnTarget(); }catch{} }
-  function initBase(lite){
+  let _lastGuessKey=null;
+  function draw(){
+    // pushes guesses to the map only when they changed — keeps the 900ms sync + the
+    // projectFrame();draw() idiom from forcing a full canvas redraw while idle-paused
     try{
-      const st=VHPastModern.state();
-      if(st && st.modernPool && st.modernPool.length){
-        modernPoolLower=st.modernPool.map(m=>(m.n||'').toLowerCase());
-      }
+      if(!sharedMapApi) return;
+      const ids=(G&&G.guesses)?G.guesses.map(g=>g.idx):[];
+      const key=ids.join(',');
+      if(key===_lastGuessKey) return;
+      _lastGuessKey=key;
+      sharedMapApi.setGuesses(ids);
     }catch{}
   }
+  function focusOnTarget(){ try{ sharedMapApi && sharedMapApi.focusOnTarget && sharedMapApi.focusOnTarget(); }catch{} }
   function ensureModernLower(){
     try{
       const st = (window.VHPastModern && VHPastModern.state) ? VHPastModern.state() : null;
@@ -323,7 +331,7 @@ button,.input{min-height:44px}
   }
   async function mountGameMap(){
     try{
-      const mod = await import('./assets/shared-map.js?v=52');
+      const mod = await import('./assets/shared-map.js?v=55');
       const canvasEl = document.querySelector('#sky-canvas');
       if(!canvasEl) return;
       const st = (window.VHPastModern && VHPastModern.state) ? VHPastModern.state() : null;
@@ -335,19 +343,29 @@ button,.input{min-height:44px}
     }catch(e){ console.warn('mountGameMap fail',e); }
   }
   setTimeout(mountGameMap, 80);
+  let _mapAddFailedId=null;
   function syncMapFromState(){
     try{
       const st=(window.VHPastModern && VHPastModern.state)?VHPastModern.state():null;
       if(!st) return;
       let tid=null;
       if(st.target && typeof st.target.i==='number') tid=st.target.i;
-      if(tid!=null && tid!==_targetIdCached){
+      if(tid!=null && sharedMapApi){
+        const firstSee = tid!==_targetIdCached;
         _targetIdCached=tid;
-        if(sharedMapApi){ sharedMapApi.setTarget(tid); sharedMapApi.focusOnTarget(); }
+        let added=false;
+        // the lite map is a sample — inject the target row from searchLite so the bullseye always exists
+        if(tid!==_mapAddFailedId && sharedMapApi.hasPoint && !sharedMapApi.hasPoint(tid)){
+          try{
+            const sl=st.searchLite && st.searchLite.players;
+            const row=sl && sl.find(p=>p && p.i===tid);
+            if(row && sharedMapApi.addPoint) added=sharedMapApi.addPoint(row);
+            if(!added) _mapAddFailedId=tid;
+          }catch{ _mapAddFailedId=tid; }
+        }
+        if(firstSee||added){ sharedMapApi.setTarget(tid); sharedMapApi.focusOnTarget(); }
       }
-      if(sharedMapApi && G && G.guesses){
-        sharedMapApi.setGuesses(G.guesses.map(g=>g.idx));
-      }
+      draw();
     }catch(e){ console.warn('syncMapFromState fail',e); }
   }
   // periodically sync in case target changes via pack/daily
@@ -473,7 +491,7 @@ button,.input{min-height:44px}
     input.addEventListener('compositionend', (e)=>{ isComposing=false; const val=e.target.value||''; clearTimeout(debounceTimer); debounceTimer=setTimeout(()=>searchAndRender(val),100); });
 
     input.addEventListener('focus', function(){ isTyping=true; auto=false; mapPaused=true; ensureModernLower(); try{ window.dispatchEvent(new CustomEvent('vh:pause-maps')); }catch{} setTimeout(()=>searchAndRender(this.value),30); });
-    input.addEventListener('blur', function(){ setTimeout(()=>{ isTyping=false; mapPaused=false; lastT=0; try{ window.dispatchEvent(new CustomEvent('vh:resume-maps')); }catch{} }, 350); });
+    input.addEventListener('blur', function(){ setTimeout(()=>{ isTyping=false; mapPaused=false; try{ window.dispatchEvent(new CustomEvent('vh:resume-maps')); }catch{} }, 350); });
     input.addEventListener('input', function(){
       if(isComposing) return;
       active=-1;
@@ -877,9 +895,8 @@ button,.input{min-height:44px}
       else if(over) phase.textContent=won? `Won in ${count}/6`:'Game over';
       else phase.textContent = count===0? 'See model lens' : `Playing — ${count}/6 used`;
     }
-    // ready-banner removed – subset map stays visible
+    // subset map stays visible — was ready-banner
     try{ syncSubsetFromState(); }catch{}
-    const guessBtn=$('#guess-btn'); if(guessBtn) guessBtn.textContent = count===0? 'Guess — begin' : `Guess ${count+1}/6`;
     const turnText=$('#turn-text'); if(turnText){
       if(st.isPack){
         const ps=VHPastModern.getPackState();
@@ -889,7 +906,7 @@ button,.input{min-height:44px}
         else turnText.textContent=`Guess ${count}/6 used — ${6-count} left — Pack ${ps.index+1}/${ps.size}`;
       } else {
         if(over) turnText.textContent=won? `Won in ${count} — switch slot for next` : `Failed — answer was ${st.closestModern?st.closestModern.entry.n:'?'}`;
-        else if(count===0) turnText.textContent=`Model lens: ${st.target.n} archetype • team logo shows ${(()=>(getTeamAbbr(st.target.n,st.target.s)||'team'))()} • ${6-count} left`;
+        else if(count===0) turnText.textContent=`Model lens: ${st.target.n} archetype • team logo shows ${(()=>(getTeamAbbr(st.target.n,st.target.s)||'team'))()} • picks left`;
         else turnText.textContent=`Guess ${count}/6 used — ${6-count} left`;
       }
     }
@@ -903,9 +920,7 @@ button,.input{min-height:44px}
     const modeLabel = st.isPack ? `PACK ${slotNum}/${totalSlots}` : `Slot ${slotNum}/${totalSlots}`;
     $('#past-name').textContent=past.n+' '+past.s;
     const hon=st.honors[past.n+'|'+past.s]||{}; const allNba=hon.allNbaTeam? 'All-NBA '+hon.allNbaTeam : '';
-    // team abbr from map – show where he finished season
-    let teamAbbr=null;
-    try{ teamAbbr=getTeamAbbr(past.n, past.s); }catch{}
+    let teamAbbr=null; try{ teamAbbr=getTeamAbbr(past.n, past.s); }catch{}
     if(teamAbbr){
       $('#past-meta').innerHTML=(hon.asg?'All-Star ':'')+(allNba? allNba+' • ' : '')+archLabel+` • ${past.s} • `+modeLabel+` • <span style="display:inline-flex;align-items:center;gap:6px"><span class="pill" style="background:var(--ink);color:#fff">${teamAbbr}</span> finished with</span>`;
     } else {
@@ -915,19 +930,16 @@ button,.input{min-height:44px}
     const archPill=$('#past-arch-pill'); if(archPill) archPill.textContent=archLabel;
     const slotPill=$('#past-slot-pill'); if(slotPill) slotPill.textContent=modeLabel;
     const xyz=$('#past-xyz'); if(xyz){ xyz.textContent=''; xyz.style.display='none'; }
-    // TEAM LOGO pixel art – replaces player avatar per request (team they finished season with)
+    // TEAM LOGO pixel art – team they finished season with
     try{
       const avEl=$('#past-avatar');
       if(avEl){
         if(teamAbbr && window.VHTeamLogo){
           VHTeamLogo.mountLogo(avEl, teamAbbr, 64);
         } else if(window.VHTeamLogo){
-          // fallback: if no mapping, show generic
           VHTeamLogo.mountLogo(avEl, 'NBA', 64);
-          // kick load and retry
           if(!_teamMap) loadTeamMap().then(()=>{ try{ const ab=getTeamAbbr(past.n,past.s); if(ab) VHTeamLogo.mountLogo(avEl, ab, 64);}catch{} });
         } else if(window.VHPixel){
-          // fallback old behavior
           VHPixel.mountAvatar(avEl, past.n, past.c, 64);
         }
       }
@@ -1056,7 +1068,7 @@ button,.input{min-height:44px}
           G.guesses=[];
           // try restore if next slot had saved currentGuesses (should be empty)
           renderPast(); renderGuesses(); resEl.style.display='none';
-          $('#past-closest-hint').style.display='none'; $('#warm-label').style.display='none'; $('#guess-input').value='';
+          $('#past-closest-hint').style.display='none'; $('#warm-label').style.display='none'; renderGuessGrid();
           renderPackProgress(); renderPackSummary(); updateStatusBar(); projectFrame(); draw();
         });
       }
@@ -1113,26 +1125,116 @@ button,.input{min-height:44px}
     projectFrame(); draw(); updateStatusBar(); renderDailyCourt();
   }
 
-  function doGuess(){
-    try{ window.dispatchEvent(new CustomEvent('vh:defer-mtnn')); }catch{}
+  // inline, non-blocking guess feedback — alert() on mobile reads as "the game broke"
+  let pendingGuess=null;
+  function setGuessStatus(msg, tone){
     try{
-      const input=$('#guess-input'); if(!input) return; const name=(input.value||'').trim(); if(!name) return;
-      // v42 guard: require >=2 chars to guess, prevents single 't' crash spam
-      if(name.length<2){ alert('Type at least 2 letters'); return; }
+      let el=document.getElementById('guess-status');
+      if(!el){
+        const anchor=document.querySelector('.suggest'); if(!anchor) return;
+        el=document.createElement('div');
+        el.id='guess-status'; el.className='small-mono';
+        el.setAttribute('role','status'); el.setAttribute('aria-live','polite');
+        el.style.cssText='margin-top:6px;font-size:11px;font-weight:800;text-transform:none;display:none';
+        anchor.insertAdjacentElement('afterend', el);
+      }
+      clearTimeout(el._t);
+      if(!msg){ el.style.display='none'; el.textContent=''; return; }
+      el.textContent=msg;
+      el.style.color = tone==='warn' ? '#D55E00' : '#1A150F';
+      el.style.display='block';
+      if(tone!=='sticky') el._t=setTimeout(()=>{ el.style.display='none'; }, 4000);
+    }catch{}
+  }
+  // --- multi-choice grid (replaces the typeahead; removes the RESULT_CODE_HUNG path) ---
+  let _gridCandidates=null, _gridTargetKey=null;
+  function _seededShuffle(arr, seed){
+    const a=arr.slice(); let s=(seed>>>0)||1;
+    const rnd=()=>{ s=(s*1103515245+12345)&0x7fffffff; return s/0x7fffffff; };
+    for(let i=a.length-1;i>0;i--){ const j=Math.floor(rnd()*(i+1)); const t=a[i]; a[i]=a[j]; a[j]=t; }
+    return a;
+  }
+  function buildGridCandidates(){
+    try{
+      const st=VHPastModern.state(); const list=st&&st.modernListSorted||[];
+      if(list.length<6) return null;
+      const seed=(st.target&&st.target.i)||1;
+      const twin=list[0];                       // rank 0 = the correct modern twin
+      const contenders=list.slice(1,4);         // 3 close decoys (same neighborhood)
+      const fillerPool=_seededShuffle(list.slice(18), seed);  // far-away, clearly different
+      const used=new Set([twin.m.i, ...contenders.map(c=>c.m.i)]);
+      const filler=[];
+      for(const f of fillerPool){ if(filler.length>=5) break; if(f&&f.m&&!used.has(f.m.i)){ filler.push(f); used.add(f.m.i); } }
+      return _seededShuffle([twin, ...contenders, ...filler].filter(Boolean), seed^0x5bd1e995).map(x=>x.m);
+    }catch(e){ console.warn('buildGridCandidates fail', e); return null; }
+  }
+  function renderGuessGrid(){
+    const grid=$('#guess-grid'); if(!grid) return;
+    try{
+      const st=VHPastModern.state();
+      if(!st||!st.rankingReady){ grid.innerHTML='<div class="grid-loading">Loading players…</div>'; return; }
+      const key=st.targetIdx;
+      if(!_gridCandidates||_gridTargetKey!==key){ _gridCandidates=buildGridCandidates(); _gridTargetKey=key; }
+      if(!_gridCandidates){ grid.innerHTML='<div class="grid-loading">Loading players…</div>'; return; }
+      const byId=new Map((G.guesses||[]).map(g=>[g.idx,g]));
+      const won=(G.guesses||[]).some(g=>g.rank===0);
+      const over=won||(G.guesses||[]).length>=6;
+      grid.textContent='';
+      const frag=document.createDocumentFragment();
+      for(const m of _gridCandidates){
+        const g=byId.get(m.i);
+        const btn=document.createElement('button'); btn.type='button'; btn.className='guess-tile';
+        const c=(typeof m.c==='number')?m.c:0;
+        if(g){ btn.classList.add('is-picked'); if(g.rank===0) btn.classList.add('is-twin'); }
+        if(over||g) btn.disabled=true;
+        const dot=document.createElement('span'); dot.className='tile-dot'; dot.style.background=OKABE[c%8];
+        const nm=document.createElement('span'); nm.className='tile-name'; nm.textContent=m.n||'';
+        btn.appendChild(dot); btn.appendChild(nm);
+        if(g){ const rk=document.createElement('span'); rk.className='tile-rank'; rk.textContent=(g.rank===0)?'✓ twin':('#'+(g.rank+1)+' close'); btn.appendChild(rk); }
+        if(!g&&!over){ btn.addEventListener('click', ()=>{ if(btn.disabled) return; btn.disabled=true; doGuess(m.n); }); }
+        frag.appendChild(btn);
+      }
+      grid.appendChild(frag);
+    }catch(e){ console.warn('renderGuessGrid fail', e); }
+  }
+
+  function doGuess(nameArg){
+    try{
+      const input=$('#guess-input');
+      const fromInput = nameArg==null;
+      const name=((fromInput ? (input&&input.value) : nameArg)||'').trim(); if(!name) return;
+      if(name.length<2){ setGuessStatus('Type at least 2 letters','warn'); return; }
       const low=name.toLowerCase(); const mm=name.match(/^(.+?)\s+\d{4}-\d{2}$/); const low2=mm? mm[1].trim().toLowerCase(): low;
-      if(G.guesses.some(g=>{ try{return (g.name||'').toLowerCase().trim()===low2;}catch{return false;}})){ alert('Already guessed'); input.value=''; return; }
-      const r=VHPastModern.guessModern(name); if(!r.ok){ alert(r.reason); return; }
-      if(G.guesses.some(g=>{ try{return g.idx===r.guess.idx|| (g.name||'').toLowerCase().trim()===r.guess.name.toLowerCase().trim();}catch{return false;}})){ alert('Already guessed'); input.value=''; return; }
-      G.guesses.push(r.guess); try{ VHPastModern.state().guesses=G.guesses.slice(); }catch{} saveGuesses(); input.value='';
+      if(G.guesses.some(g=>{ try{return (g.name||'').toLowerCase().trim()===low2;}catch{return false;}})){ setGuessStatus('Already guessed','warn'); if(fromInput&&input) input.value=''; return; }
+      const r=VHPastModern.guessModern(name);
+      if(!r.ok){
+        if(r.pending){
+          pendingGuess=name;
+          setGuessStatus('Scoring "'+name+'" as soon as the model finishes loading…','sticky');
+          return;
+        }
+        setGuessStatus(r.reason||'Guess failed — try another','warn'); return;
+      }
+      if(G.guesses.some(g=>{ try{return g.idx===r.guess.idx|| (g.name||'').toLowerCase().trim()===r.guess.name.toLowerCase().trim();}catch{return false;}})){ setGuessStatus('Already guessed','warn'); if(fromInput&&input) input.value=''; return; }
+      setGuessStatus('');
+      G.guesses.push(r.guess); try{ VHPastModern.state().guesses=G.guesses.slice(); }catch{} saveGuesses(); if(fromInput&&input) input.value='';
       const warmEl=$('#warm-label'); let wc=null; try{ wc=VHPastModern.warmCold(); }catch{}
       if(wc&&G.guesses.length>1){ if(warmEl){ warmEl.style.display='inline-flex'; warmEl.textContent=wc; }} else { if(warmEl) warmEl.style.display='none'; }
-      renderGuesses(); finish(); projectFrame(); draw(); renderPackProgress();
+      renderGuesses(); finish(); projectFrame(); draw(); renderPackProgress(); renderGuessGrid();
     }catch(e){
       console.warn('doGuess fail', e);
       try{ if(window.VHErrorBoundary) VHErrorBoundary.log({type:'js', message:'doGuess '+e.message, stack:e.stack}); }catch{}
-      alert('Guess failed — try again (error logged)');
+      setGuessStatus('Guess failed — try another (error logged)','warn');
     }
   }
+  // a guess made before scoring was ready auto-submits the moment it is
+  window.addEventListener('vh:ranking-ready', ()=>{
+    try{
+      renderGuessGrid();
+      if(pendingGuess){ const n=pendingGuess; pendingGuess=null; setGuessStatus(''); doGuess(n); }
+      else { projectFrame(); draw(); }
+    }catch(e){ console.warn('ranking-ready flush fail', e); }
+  });
 
   async function main(){
     // shared-map handles resize/drag/hover/pause internally — legacy listeners removed
@@ -1166,23 +1268,12 @@ button,.input{min-height:44px}
       initOk=true;
     }catch(e){ console.warn('init fallback v47', e); }
     try{ st=VHPastModern.state(); }catch(e){ st={searchLite:{players:[]}}; }
-    try{
-      if(st && st.searchLite && st.searchLite.players && st.searchLite.players.length) initBase(st.searchLite.players);
-      else {
-        // try fetch lite directly as fallback if state empty
-        try{
-          const r=await fetch('assets/vectors_search_lite.json?v=49',{cache:'no-store'});
-          const j=await r.json();
-          if(j && j.players) initBase(j.players);
-        }catch{}
-      }
-    }catch(e){ console.warn('initBase fallback v47', e); }
+    try{ ensureModernLower(); }catch(e){ console.warn('modern pool seed fail', e); }
     try{ if(!watchdogFired) clearTimeout(loadingWatchdog); }catch{} 
     // focus camera on target before first projection so star starts centered
     try{ focusOnTarget(); }catch{}
     try{ projectFrame(); }catch(e){ console.warn(e); }
     try{ draw(); }catch(e){ console.warn(e); }
-    try{ loop(0); }catch(e){ console.warn(e); }
 
     // v47 hardened continuation — even if earlier failed, force UI to usable state
     try{
@@ -1244,7 +1335,7 @@ button,.input{min-height:44px}
       }
     }
 
-    renderPast(); renderGuesses(); attachSuggest(); finish(); renderDailyCourt(); renderPackProgress(); renderPackSummary();
+    renderPast(); renderGuesses(); renderGuessGrid(); finish(); renderDailyCourt(); renderPackProgress(); renderPackSummary();
 
     const onboardSeen=localStorage.getItem('vh.onboardSeenV3');
     const backdrop=$('#onboarding-backdrop');
@@ -1253,23 +1344,19 @@ button,.input{min-height:44px}
     if(!onboardSeen){ setTimeout(openOnboard, 700); }
     $('#btn-howto')?.addEventListener('click', openOnboard);
     $('#btn-onboard-close')?.addEventListener('click', closeOnboard);
-    $('#btn-onboard-play')?.addEventListener('click', ()=>{ closeOnboard(); $('#guess-input')?.focus(); });
+    $('#btn-onboard-play')?.addEventListener('click', ()=>{ closeOnboard(); });
     $('#btn-onboard-random')?.addEventListener('click', ()=>{ closeOnboard(); const p=VHPastModern.pickRandomPast(); location.href='/play?mode=random&r='+p.i; });
     backdrop?.addEventListener('click', e=>{ if(e.target===backdrop) closeOnboard(); });
 
-    // focus guess button removed – subset map stays
     $('#btn-subset-focus')?.addEventListener('click', ()=>{
       if(subsetMapApi && subsetMapApi.focusOnTarget) subsetMapApi.focusOnTarget();
-      else if(window.VHPastModern){ try{ window.VHPastModern.state(); }catch{} }
-      $('#guess-input')?.focus();
+      try{ document.getElementById('guess-grid')?.scrollIntoView({behavior:'smooth'}); }catch{}
     });
     $('#btn-subset-pause')?.addEventListener('click', function(){
       this.textContent = this.textContent==='Pause' ? 'Resume' : 'Pause';
-      // simple toggle via CSS class not needed – map auto-rotates via subset-map loop pause handling
     });
-
-    $('#guess-btn').addEventListener('click', doGuess);
-    $('#guess-input').addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); doGuess(); } });
+    // grid mode: tiles call doGuess(name) directly
+    $('#btn-random').addEventListener('click', ()=>{ const p=VHPastModern.pickRandomPast(); location.href='/play?mode=random&r='+p.i; });
     $('#btn-random').addEventListener('click', ()=>{ const p=VHPastModern.pickRandomPast(); location.href='/play?mode=random&r='+p.i; });
     $('#btn-new').addEventListener('click', ()=>{ if(st.isPack){ VHPastModern.abandonPack(); } location.href='/play'; });
     $('#btn-copy-court')?.addEventListener('click', async ()=>{
