@@ -200,7 +200,7 @@ button,.input{min-height:44px}
   </div>
 
   <div class="card" id="guess-card" style="border-width:2.5px">
-    <div class="ready-banner" id="ready-banner" style="margin:-2px -2px 14px;border-style:dashed"><div style="min-width:0"><h3 style="margin:0 0 4px;font-size:16px;line-height:1.2">▶ Ready? First guess begins game</h3><p style="margin:0;font-size:13px;line-height:1.45;opacity:.9">Same 5 puzzles for everyone today. You see past All-Star ★. Type a 2024–26 modern player below — 6 tries. Warmer/colder after each.</p></div><button class="btn btn-primary" id="btn-focus-guess" type="button" style="flex:0 0 auto">Tap a player→</button></div>
+    <div id="subset-wrap" style="margin:-2px -2px 14px;border:2.2px solid var(--ink);border-radius:12px;background:#FFFEF7;box-shadow:3px 3px 0 var(--ink);overflow:hidden"><div style="display:flex;justify-content:space-between;gap:8px;align-items:center;padding:8px 10px;border-bottom:1.8px solid var(--ink);background:#fff"><div class="small-mono" style="display:flex;gap:6px;align-items:center"><span class="pill" style="background:var(--ink);color:#fff">MODEL LENS</span><span class="pill pill-yellow" id="subset-arch-pill">—</span><span id="subset-count" class="small-mono" style="opacity:.7;text-transform:none">subset</span></div><div style="display:flex;gap:6px"><button class="chip pill" id="btn-subset-pause" type="button" style="font-size:10px">Pause</button><button class="chip pill" id="btn-subset-focus" type="button" style="font-size:10px">★ Focus</button></div></div><canvas id="subset-canvas" width="560" height="200" style="width:100%;height:200px;display:block;background:#FFFEF7"></canvas><div class="small-mono" style="padding:6px 10px;opacity:.65;text-transform:none;font-size:10px">Subset of same archetype — drag to orbit, ★ = target. Seen through MTNN 48-d → 3-d projection. Yellow halo = past star, orange rings = your guesses.</div></div>
     <div style="display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px"><label class="small-mono" style="margin:0">Pick the modern twin — turn <span id="turn-count">1</span>/6 • <span id="slot-label-wrap">slot <span id="slot-label">1</span>/5</span></label><span class="pill" id="warm-label" style="display:none"></span></div>
     <div id="guess-grid" class="guess-grid" role="group" aria-label="Pick the modern twin"><div class="grid-loading">Loading players…</div></div>
     <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap"><button id="share-btn" class="btn" type="button">Share</button><button id="share-text-btn" class="btn" type="button">Copy Grid</button><button id="btn-challenge" class="btn" type="button">Challenge</button></div>
@@ -225,13 +225,74 @@ button,.input{min-height:44px}
 <script src="assets/error-boundary.js"></script>
 <script src="assets/keyboard-a11y.js"></script>
 <script src="assets/site-nav.js" defer></script>
-<script src="assets/pwa-install.js"></script><script src="assets/pixel-avatar.js?v=49"></script><script src="assets/viral-share.js"></script><script src="assets/past-modern-game.js?v=54"></script>
+<script src="assets/pwa-install.js"></script><script src="assets/pixel-avatar.js?v=49"></script><script src="assets/team-logo.js?v=55"></script><script src="assets/subset-map.js?v=55"></script><script src="assets/viral-share.js"></script><script src="assets/past-modern-game.js?v=55"></script>
 <script>
 (function(){
   const $=s=>document.querySelector(s);
   const OKABE=['#0072B2','#D55E00','#009E73','#F0E442','#56B4E9','#CC79A7','#E69F00','#000000'];
   const ARCH=["Glass+Rim","LowVol Glass","Low Impact 3P Vol","Def Glass+Rim FT","Vol+3P Vol","3P Acc+Vol","Playmaking+Steals","Scoring Vol"];
   let G={guesses:[]};
+  // team logo map + subset MODEL LENS — HOME-only free-tier
+  let _teamMap=null, _teamMapLoading=false;
+  let subsetMapApi=null;
+  let _subsetNeighCache=[];
+  async function loadTeamMap(){
+    if(_teamMap || _teamMapLoading) return;
+    _teamMapLoading=true;
+    try{
+      const r=await fetch('assets/player_team_season.json',{cache:'default'});
+      if(r.ok){ _teamMap=await r.json();}
+    }catch{}
+    _teamMapLoading=false;
+  }
+  setTimeout(loadTeamMap, 20);
+  function getTeamAbbr(name, season){
+    try{
+      if(!_teamMap) return null;
+      if(!name||!season) return null;
+      return _teamMap[`${name}|${season}`]||null;
+    }catch{ return null; }
+  }
+  async function mountSubset(){
+    try{
+      const canvas=document.getElementById('subset-canvas');
+      if(!canvas || !window.VHSubsetMap) return;
+      if(subsetMapApi) return;
+      subsetMapApi = await window.VHSubsetMap.mountSubsetMap(canvas, {targetId:null, targetC:0, guessIds:[], rotY:0.22});
+      const focusBtn=document.getElementById('btn-subset-focus');
+      const pauseBtn=document.getElementById('btn-subset-pause');
+      if(focusBtn){ focusBtn.addEventListener('click',()=>{ try{ if(subsetMapApi){ const st=VHPastModern.state(); const tid=st.target?st.target.i:null; const c=st.target?st.target.c:null; subsetMapApi.setTarget(tid,c); } }catch{} }); }
+      if(pauseBtn){ let paused=false; pauseBtn.addEventListener('click',()=>{ paused=!paused; pauseBtn.textContent=paused?'Resume':'Pause'; }); }
+    }catch(e){ console.warn('subset mount fail',e); }
+  }
+  setTimeout(mountSubset, 120);
+  function syncSubsetFromState(){
+    try{
+      if(!subsetMapApi) return;
+      const st=VHPastModern.state(); if(!st||!st.target) return;
+      const tid=st.target.i; const c=st.target.c;
+      subsetMapApi.setTarget(tid,c);
+      const pill=document.getElementById('subset-arch-pill');
+      if(pill){ pill.textContent=ARCH[c%ARCH.length]||'—'; }
+      const cntEl=document.getElementById('subset-count');
+      if(cntEl){
+        try{
+          const total = (subsetMapApi._players||[]).filter(p=> (p.c|0)===c).length;
+          cntEl.textContent = `${total} in archetype`;
+        }catch{ cntEl.textContent='subset'; }
+      }
+      if(G && G.guesses){ subsetMapApi.setGuesses(G.guesses.map(g=>g.idx)); }
+      try{
+        const list=st.modernListSorted||[];
+        if(list.length){
+          const topIds=list.slice(0,80).map(o=> o.m? o.m.i : null).filter(v=>v!=null);
+          _subsetNeighCache=topIds;
+          if(subsetMapApi.setNeighbors) subsetMapApi.setNeighbors(topIds,'closest');
+        }
+      }catch{}
+    }catch(e){ console.warn('syncSubset fail',e); }
+  }
+  setInterval(syncSubsetFromState, 950);
     // --- shared map v1 — unified simple 2D canvas, replaces old inline engine ---
   let sharedMapApi = null;
   let isTyping = false;
@@ -832,20 +893,20 @@ button,.input{min-height:44px}
         phase.textContent= over? (won? `Pack ${ps.index+1}/${ps.size} won in ${count}/6`:`Pack ${ps.index+1}/${ps.size} failed`) : `Pack Battle ${ps.code.slice(0,24)} • ${ps.index+1}/${ps.size} • ${count}/6 • vs friends`;
       } else if(st.isDaily) phase.textContent= over? (won? `Slot ${safeSlotDaily} won in ${count}/6`:`Slot ${safeSlotDaily} failed`) : `Slot ${safeSlotDaily}/5 • ${count}/6 • same 5 for everyone today`;
       else if(over) phase.textContent=won? `Won in ${count}/6`:'Game over';
-      else phase.textContent = count===0? 'Ready — first guess begins' : `Playing — ${count}/6 used`;
+      else phase.textContent = count===0? 'See model lens' : `Playing — ${count}/6 used`;
     }
-    const readyBanner=$('#ready-banner'); if(readyBanner) readyBanner.style.display = (count===0 && !over && !st.isPackComplete)? 'flex':'none';
-    const guessBtn=$('#guess-btn'); if(guessBtn) guessBtn.textContent = count===0? 'Guess — begin' : `Guess ${count+1}/6`;
+    // subset map stays visible — was ready-banner
+    try{ syncSubsetFromState(); }catch{}
     const turnText=$('#turn-text'); if(turnText){
       if(st.isPack){
         const ps=VHPastModern.getPackState();
         if(ps.complete) turnText.textContent=`Pack ${ps.solved}/${ps.size} • Final summary below`;
         else if(over) turnText.textContent=won? `Won in ${count} — Next pack slot` : `Failed — answer was ${st.closestModern?st.closestModern.entry.n:'?'}`;
-        else if(count===0) turnText.textContent=`Pack ${ps.index+1}/${ps.size} • ${st.target.n} • 6 guesses`;
+        else if(count===0) turnText.textContent=`Pack ${ps.index+1}/${ps.size} • ${st.target.n} • model lens shows teammates`;
         else turnText.textContent=`Guess ${count}/6 used — ${6-count} left — Pack ${ps.index+1}/${ps.size}`;
       } else {
         if(over) turnText.textContent=won? `Won in ${count} — switch slot for next` : `Failed — answer was ${st.closestModern?st.closestModern.entry.n:'?'}`;
-        else if(count===0) turnText.textContent=`Slot ${safeSlotDaily}/5 • Game starts now — 6 guesses`;
+        else if(count===0) turnText.textContent=`Model lens: ${st.target.n} archetype • team logo shows ${(()=>(getTeamAbbr(st.target.n,st.target.s)||'team'))()} • picks left`;
         else turnText.textContent=`Guess ${count}/6 used — ${6-count} left`;
       }
     }
@@ -859,19 +920,31 @@ button,.input{min-height:44px}
     const modeLabel = st.isPack ? `PACK ${slotNum}/${totalSlots}` : `Slot ${slotNum}/${totalSlots}`;
     $('#past-name').textContent=past.n+' '+past.s;
     const hon=st.honors[past.n+'|'+past.s]||{}; const allNba=hon.allNbaTeam? 'All-NBA '+hon.allNbaTeam : '';
-    $('#past-meta').innerHTML=(hon.asg?'All-Star ':'')+(allNba? allNba+' • ' : '')+archLabel+' • '+past.s+' • '+modeLabel;
+    let teamAbbr=null; try{ teamAbbr=getTeamAbbr(past.n, past.s); }catch{}
+    if(teamAbbr){
+      $('#past-meta').innerHTML=(hon.asg?'All-Star ':'')+(allNba? allNba+' • ' : '')+archLabel+` • ${past.s} • `+modeLabel+` • <span style="display:inline-flex;align-items:center;gap:6px"><span class="pill" style="background:var(--ink);color:#fff">${teamAbbr}</span> finished with</span>`;
+    } else {
+      $('#past-meta').innerHTML=(hon.asg?'All-Star ':'')+(allNba? allNba+' • ' : '')+archLabel+' • '+past.s+' • '+modeLabel;
+    }
     // new pills
     const archPill=$('#past-arch-pill'); if(archPill) archPill.textContent=archLabel;
     const slotPill=$('#past-slot-pill'); if(slotPill) slotPill.textContent=modeLabel;
     const xyz=$('#past-xyz'); if(xyz){ xyz.textContent=''; xyz.style.display='none'; }
-    // pixel avatar — resembles player specifically
+    // TEAM LOGO pixel art – team they finished season with
     try{
       const avEl=$('#past-avatar');
-      if(avEl && window.VHPixel){
-        VHPixel.mountAvatar(avEl, past.n, past.c, 64);
+      if(avEl){
+        if(teamAbbr && window.VHTeamLogo){
+          VHTeamLogo.mountLogo(avEl, teamAbbr, 64);
+        } else if(window.VHTeamLogo){
+          VHTeamLogo.mountLogo(avEl, 'NBA', 64);
+          if(!_teamMap) loadTeamMap().then(()=>{ try{ const ab=getTeamAbbr(past.n,past.s); if(ab) VHTeamLogo.mountLogo(avEl, ab, 64);}catch{} });
+        } else if(window.VHPixel){
+          VHPixel.mountAvatar(avEl, past.n, past.c, 64);
+        }
       }
     }catch(e){}
-    try{ focusOnTarget(); projectFrame(); draw(); }catch{}
+    try{ focusOnTarget(); projectFrame(); draw(); syncSubsetFromState(); }catch{}
     if(st.isPack){
       const ps=VHPastModern.getPackState();
       $('#puzzle-pill').textContent=`PACK ${ps.index+1}/${ps.size}`;
@@ -926,6 +999,7 @@ button,.input{min-height:44px}
       }catch(e){ console.warn('renderGuesses item fail', e, g); }
     });
     updateStatusBar();
+    try{ if(subsetMapApi) subsetMapApi.setGuesses(G.guesses.map(g=>g.idx)); }catch{}
   }
 
   function finish(){
@@ -1270,12 +1344,19 @@ button,.input{min-height:44px}
     if(!onboardSeen){ setTimeout(openOnboard, 700); }
     $('#btn-howto')?.addEventListener('click', openOnboard);
     $('#btn-onboard-close')?.addEventListener('click', closeOnboard);
-    $('#btn-onboard-play')?.addEventListener('click', ()=>{ closeOnboard(); $('#guess-input')?.focus(); });
+    $('#btn-onboard-play')?.addEventListener('click', ()=>{ closeOnboard(); });
     $('#btn-onboard-random')?.addEventListener('click', ()=>{ closeOnboard(); const p=VHPastModern.pickRandomPast(); location.href='/play?mode=random&r='+p.i; });
     backdrop?.addEventListener('click', e=>{ if(e.target===backdrop) closeOnboard(); });
 
-    $('#btn-focus-guess')?.addEventListener('click', ()=>{ $('#guess-input')?.focus(); window.scrollTo({top: $('#guess-card').offsetTop-20, behavior:'smooth'}); });
-    // grid mode: tiles call doGuess(name) directly — no free-text input / keydown handlers
+    $('#btn-subset-focus')?.addEventListener('click', ()=>{
+      if(subsetMapApi && subsetMapApi.focusOnTarget) subsetMapApi.focusOnTarget();
+      try{ document.getElementById('guess-grid')?.scrollIntoView({behavior:'smooth'}); }catch{}
+    });
+    $('#btn-subset-pause')?.addEventListener('click', function(){
+      this.textContent = this.textContent==='Pause' ? 'Resume' : 'Pause';
+    });
+    // grid mode: tiles call doGuess(name) directly
+    $('#btn-random').addEventListener('click', ()=>{ const p=VHPastModern.pickRandomPast(); location.href='/play?mode=random&r='+p.i; });
     $('#btn-random').addEventListener('click', ()=>{ const p=VHPastModern.pickRandomPast(); location.href='/play?mode=random&r='+p.i; });
     $('#btn-new').addEventListener('click', ()=>{ if(st.isPack){ VHPastModern.abandonPack(); } location.href='/play'; });
     $('#btn-copy-court')?.addEventListener('click', async ()=>{
