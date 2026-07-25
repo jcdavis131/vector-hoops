@@ -218,11 +218,126 @@ rows — verified by simulating the pre-fix state, which reports
 `position labels cover only 0.0% of 12966 rows`. The failure can no longer be
 silent.
 
+---
+
+## 6. Hill-climb: inputs, features, architecture, fusion
+
+All four climbs used mean CQS over seeds 7+13, guards on purity/recall, and an
+accept bar of +1.2 (≈ the noise on a 2-seed mean). **Nothing cleared the bar.**
+
+**Family inputs** (masked, tower kept so fusion width is fixed; 6 of 18 arms):
+
+| arm | CQS | Δ |
+|---|---|---|
+| drop_efficiency | 73.15 | +0.86 |
+| drop_competition | 72.62 | +0.34 |
+| full | 72.28 | — |
+| drop_career | 71.94 | −0.34 |
+| drop_defense | 70.89 | −1.39 |
+| drop_bio | 70.13 | −2.16 |
+
+`bio` carries the most signal. No family earns removal.
+
+**Features** (`--mask-features`, the two audit findings from §7):
+
+| arm | CQS | Δ | test |
+|---|---|---|---|
+| baseline | 72.28 | — | 0.740 |
+| drop FORM_GP | 72.27 | −0.02 | 0.738 |
+| drop DRAFT_NUMBER | 72.28 | +0.00 | 0.746 |
+| drop both | 72.35 | +0.06 | 0.747 |
+
+Retiring the duplicate and the leak is **free** — neither costs nor gains
+anything measurable. Do it for correctness, not for score.
+
+**Fusion / universal MTNN:**
+
+| arm | CQS | test | purity | spread |
+|---|---|---|---|---|
+| concat 256 d64 | 73.10 | 0.752 | 0.7370 | 0.0832 |
+| concat 384 d64 | 73.09 | 0.719 | 0.7586 | 0.0872 |
+| concat 384 d48 | 72.42 | 0.731 | 0.7606 | 0.0825 |
+| concat 256 d48 (current) | 72.28 | 0.740 | 0.7358 | 0.0870 |
+| concat 256 d32 | 70.92 | 0.737 | 0.7347 | 0.0833 |
+| transformer 256 d48 | 68.95 | **0.841** | 0.6911 | **0.0676** |
+| gated 256 d48 | 52.32 | 0.265 | 0.6631 | 0.3322 |
+
+Two readings worth keeping:
+
+1. **`gated` is not just weak, it is unstable** — per-seed CQS 61.09 vs 43.55.
+   It is the wrong fusion for this problem at any width tried.
+2. **CQS may be mis-weighted for the product.** `transformer` has the best test
+   recall (0.841) *and* the flattest continuity (0.0676) — the best
+   generalization profile in the sweep — yet ranks 7th of 8 on CQS, because
+   purity 0.16 + archetype 0.08 outweigh recall 0.18. The game scores by cosine
+   retrieval, not cluster purity. Whether the promote metric should track the
+   thing the product does is an open question for the operator, not a change to
+   make silently.
+
+---
+
+## 7. Two more silent-plumbing bugs (`pipeline/audit_features.py`)
+
+* **`DRAFT_NUMBER ~ DRAFT_SLOT_Z`, r = +1.0000.** The identical number sits in
+  two towers (`bio` and `career`), so draft position is double-counted at
+  fusion and both towers look wider than they are.
+* **`FORM_GP` leaks the durability head's target** (r = +0.9676 with
+  `INJ_GP_PCT`, −0.9665 with `INJ_MISS_N`). Commit `3306bf6` retired
+  `CAREER_GP_PCT` / `CAREER_MISS_STREAK` / `CAREER_AVAIL_3Y` for precisely this
+  reason and missed `FORM_GP`.
+
+**Why the gate cannot see the second one:** `aux_r2` averages team_fit,
+roster_lift, career_slope, competition, pedigree_expectation, playoff_riser and
+honors_recognition. Durability is not among them. The durability head carries
+loss weight 0.10, is fed a proxy of its own label, and is scored by nothing —
+so "leak" and "no leak" are indistinguishable by construction. That is the same
+shape as the position bug in §2: a weighted head with broken plumbing and no
+metric watching it.
+
+Also found: 13 redundant pairs at |r| ≥ 0.98 (`PCT_AST_FGM`/`PCT_UAST_FGM` are
+complements at −0.9986; `OREB`/`OREB_PCT` 0.9949; `PLUS_MINUS`/`NET_RATING`
+0.9922), and `market` at mean |r| = 0.897 across only 4 features. Zero dead
+columns; zero coverage cliffs at the 2024 boundary.
+
+---
+
+## 8. The defaults were the collapsing config
+
+`train_mtnn.py`'s argparse defaults **were** the §1a collapse: bare
+`python pipeline/train_mtnn.py` produced test recall 0.000. Fixed — defaults
+are now the measured winner, verified by a bare invocation reproducing the
+explicit recipe exactly (test 0.838, purity 0.7341, CQS 74.15, position 0.791).
+
+---
+
+## 9. What this session actually establishes
+
+Four hill-climbs — family inputs, individual features, capacity, fusion —
+produced **no change that beats seed noise**. Every real gain came from
+plumbing that was quietly broken:
+
+| fix | effect |
+|---|---|
+| position labels dead (§2) | +3.9 CQS |
+| career features 0% coverage (`3306bf6`) | 26.5% → 74.1% tower coverage |
+| defaults = collapse (§8) | test 0.000 → 0.838 on bare invocation |
+| gate anchored to memorization (§4) | gate went from unpassable to usable |
+
+**The model is not hyperparameter-limited.** Audit the plumbing before tuning.
+
 **Next steps, in value order**
 
-1. Re-anchor `BASELINE` in `composite_score.py` to a leak-free run (§4) —
-   until then no model can promote, so nothing else matters.
-2. Audit the remaining heads the way position and career were audited. Both
-   silent-zero bugs were found by checking label coverage, not by tuning.
-3. Consider promoting `continuity_spread` into the gate, since it is computed
-   from ~5× more pairs than test recall and ordered the arms identically.
+1. **Measure the durability head** (§7). Add it to `_aux_test_r2s` or report it
+   separately. Until it is scored, the `FORM_GP` leak cannot be evaluated and
+   a 0.10-weight head runs unwatched.
+2. **Retire `FORM_GP` and one of `DRAFT_NUMBER`/`DRAFT_SLOT_Z`** (§6 shows it
+   is free). This rebuilds `train_matrix.npz`, which moves the matrix the
+   baseline was measured on — so re-measure `BASELINE` and update
+   `BASELINE_PROVENANCE` in the same commit, per the warning in that block.
+3. **Decide what the promote metric should track** (§6). `transformer` gives
+   the best retrieval and the flattest continuity but loses on CQS. The game
+   ranks by cosine retrieval; the gate ranks mostly by cluster structure.
+4. Consider promoting `continuity_spread` into the gate, since it is computed
+   from ~5× more pairs than test recall and ordered every arm identically.
+5. Consolidate the three rival recipes (§1a) now that defaults are correct —
+   `rebuild_all.py` still trains a transformer at dim 64.
