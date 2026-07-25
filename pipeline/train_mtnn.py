@@ -1828,6 +1828,46 @@ def main() -> None:
             }
         return out
 
+    def vector_head_report(head_key: str, cols: list[int] | None) -> dict | None:
+        """Held-out val/test R2 per column + mean, for a masked multi-target head.
+
+        The durability head predicts 4 injury columns, so regression_head_report
+        (single col_j) cannot score it. Until 2026-07-24 nothing scored it at
+        all: it carried loss weight 0.10 and was absent from every metric, which
+        is why the FORM_GP leak (r=+0.9676 with INJ_GP_PCT) was invisible.
+        """
+        if not cols or head_key not in heads:
+            return None
+        pred = heads[head_key].cpu().numpy().astype(np.float32)
+        if pred.ndim != 2 or pred.shape[1] != len(cols):
+            return None
+        out: dict = {}
+        for split in ("val", "test"):
+            per_col = {}
+            r2s = []
+            for i, col_j in enumerate(cols):
+                rows = np.where((M[:, col_j] > 0) & (split_of == split))[0]
+                if len(rows) == 0:
+                    continue
+                true = Z[rows, col_j]
+                resid = true - pred[rows, i]
+                ss_tot = float(((true - true.mean()) ** 2).sum())
+                r2 = 1.0 - float((resid**2).sum()) / max(ss_tot, 1e-9)
+                per_col[manifest["features"][col_j]] = {
+                    "rows": len(rows),
+                    "mae_z": round(float(np.abs(resid).mean()), 4),
+                    "r2": round(float(r2), 4),
+                }
+                r2s.append(r2)
+            out[split] = (
+                {"per_column": per_col, "r2": round(float(np.mean(r2s)), 4)}
+                if r2s
+                else None
+            )
+        return out
+
+    durability_report = vector_head_report("durability", injury_cols)
+
     pedigree_report = regression_head_report("pedigree", ped_j)
     playoff_report = regression_head_report("playoff", po_j)
     honors_report = regression_head_report("honors", hon_j)
@@ -1939,6 +1979,10 @@ def main() -> None:
         "roster_lift": roster_lift_report,
         "career_slope": career_slope_report,
         "competition": competition_report,
+        # Reported but deliberately NOT in composite_score._aux_test_r2s: adding
+        # it would change what CQS means and invalidate the promote baseline.
+        # Scoring policy is an operator decision; measurement is not.
+        "durability": durability_report,
         "pedigree_expectation": pedigree_report,
         "playoff_riser": playoff_report,
         "honors_recognition": honors_report,

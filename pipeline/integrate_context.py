@@ -106,7 +106,6 @@ V4_FEATURES: dict[str, str] = {
     "FORM_CEIL": "form",
     "FORM_DD_RATE": "form",
     "FORM_TD_RATE": "form",
-    "FORM_GP": "form",
     "FORM_MIN_AVG": "form",
     # pedigree (VH-115) — draft + entry expectations, leak-free by construction
     "PED_PICK_QUALITY": "pedigree",
@@ -154,6 +153,16 @@ RETIRED_FEATURES = {
     "CAREER_GP_PCT",
     "CAREER_MISS_STREAK",
     "CAREER_AVAIL_3Y",
+    # Same reason as the CAREER_* three above, missed at the time: FORM_GP is
+    # availability, not form. It measures r=+0.9676 against INJ_GP_PCT and
+    # -0.9665 against INJ_MISS_N, so the durability head was reading its own
+    # target off the form tower. Masking it drops durability test R2 on exactly
+    # those two columns (INJ_GP_PCT 0.699 -> 0.590, INJ_MISS_N 0.674 -> 0.571)
+    # and leaves the other two flat -- the leak signature. Retrieval is
+    # unaffected (CQS 72.28 -> 72.27), so this is a correctness fix, not a
+    # score fix. Doctrine (3306bf6): form tower = shape, durability head =
+    # availability.
+    "FORM_GP",
 }
 
 PO_FEATURES = [f for f, fam in V4_FEATURES.items() if fam == "playoffs"]
