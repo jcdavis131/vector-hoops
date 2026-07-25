@@ -125,9 +125,18 @@ def load_bundle():
 
 
 def load_positions(names, seasons) -> np.ndarray:
-    """Join position index from vectors.json; -1 = unknown."""
+    """Join position index from vectors.json; -1 = unknown.
+
+    `p` is written by enrich_vectors.py, which runs *after* build_vectors.py.
+    A vectors.json rebuilt without re-running enrich carries no `p` at all, and
+    this join then returns -1 for every row -- the position head (loss weight
+    0.15) trains on nothing and position_top1_acc goes None -> 0.0 in the
+    composite, silently docking CQS. That shipped undetected until 2026-07-24,
+    so a zero/near-zero join is now loud rather than silent.
+    """
     pos = np.full(len(names), -1, dtype=np.int64)
     if not VECTORS.exists():
+        print(f"WARNING: {VECTORS.name} missing — position head has no labels")
         return pos
     vec = json.loads(VECTORS.read_text(encoding="utf-8"))
     lookup = {(p["name"], p["season"]): int(p.get("p", -1)) for p in vec["players"]}
@@ -135,6 +144,16 @@ def load_positions(names, seasons) -> np.ndarray:
         pidx = lookup.get((str(n), str(s)), -1)
         if 0 <= pidx < len(POSITIONS):
             pos[i] = pidx
+    coverage = float((pos >= 0).mean()) if len(pos) else 0.0
+    if coverage < 0.5:
+        print(
+            f"WARNING: position labels cover only {coverage:.1%} of "
+            f"{len(pos)} rows. The position head (weight "
+            f"{DEFAULT_LOSS_WEIGHTS['position']}) will train on little or nothing and "
+            f"the CQS position component will read ~0. Run "
+            f"`python pipeline/enrich_vectors.py` to rejoin `p` into "
+            f"{VECTORS.name}."
+        )
     return pos
 
 
