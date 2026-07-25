@@ -13,6 +13,7 @@ Run:  python -m unittest pipeline.test_composite_gate
 
 from __future__ import annotations
 
+import json
 import sys
 import unittest
 from pathlib import Path
@@ -78,6 +79,33 @@ class BaselineProvenanceTests(unittest.TestCase):
         for key in ("recipe", "seeds", "protocol", "recorded"):
             self.assertTrue(prov.get(key), f"BASELINE_PROVENANCE missing {key}")
         self.assertGreaterEqual(len(prov["seeds"]), 2)
+
+
+class ReportContractTests(unittest.TestCase):
+    """The gate can only guard on fields train_mtnn actually emits.
+
+    `continuity_spread` shipped in should_promote while train_mtnn emitted
+    nothing of the sort, so the guard silently never fired -- the same shape as
+    the position head that trained with no labels. If a real report is on disk,
+    hold train_mtnn to the contract the gate depends on.
+    """
+
+    REPORT = Path(__file__).resolve().parent / "data" / "mtnn_report.json"
+
+    def test_report_carries_the_fields_the_gate_guards_on(self) -> None:
+        if not self.REPORT.exists():
+            self.skipTest("no mtnn_report.json on disk — run train_mtnn.py first")
+        report = json.loads(self.REPORT.read_text(encoding="utf-8"))
+        self.assertIsNotNone(
+            report.get("continuity_spread"),
+            "train_mtnn must emit continuity_spread or should_promote's "
+            "continuity guard is dead code",
+        )
+        self.assertIsNotNone(
+            report.get("durability"),
+            "durability head must be reported; it carries loss weight 0.10 and "
+            "went unmeasured until 2026-07-25",
+        )
 
 
 class ThresholdScalingTests(unittest.TestCase):

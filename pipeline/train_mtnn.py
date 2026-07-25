@@ -1828,6 +1828,45 @@ def main() -> None:
             }
         return out
 
+    def continuity_report() -> dict:
+        """Same-player consecutive-season cosine, per season boundary.
+
+        A model that generalizes holds this roughly flat across eras; one that
+        memorizes the training window peaks inside it and falls off a cliff at
+        the split boundary. The 2026-07-24 collapse read 0.182 at 2023->2024
+        against the shipping recipe's 0.785 while val recall still looked fine,
+        so this localized the failure where retrieval recall alone hid it (test
+        is only ~790 pairs, sd ~0.13 between seeds).
+
+        composite_score.should_promote guards on `continuity_spread`; before
+        this existed the field was never emitted, so that guard silently never
+        fired.
+        """
+        by_player: dict[int, dict[int, int]] = defaultdict(dict)
+        for i, (p, s) in enumerate(zip(pids, seasons, strict=False)):
+            by_player[int(p)][season_start_year(str(s))] = i
+        per_year: dict[int, list[tuple[int, int]]] = defaultdict(list)
+        for mm in by_player.values():
+            for y, i in mm.items():
+                j = mm.get(y + 1)
+                if j is not None:
+                    per_year[y].append((i, j))
+        vals: dict[int, float] = {}
+        for y, prs in per_year.items():
+            if len(prs) < 30:
+                continue
+            P = np.array(prs)
+            vals[y] = float((E[P[:, 0]] * E[P[:, 1]]).sum(1).mean())
+        modern = [v for y, v in vals.items() if y >= 2016]
+        return {
+            "by_transition": {str(k): round(v, 4) for k, v in sorted(vals.items())},
+            "modern_min": round(min(modern), 4) if modern else None,
+            "modern_max": round(max(modern), 4) if modern else None,
+            "spread": round(max(modern) - min(modern), 4) if modern else None,
+        }
+
+    continuity = continuity_report()
+
     def vector_head_report(head_key: str, cols: list[int] | None) -> dict | None:
         """Held-out val/test R2 per column + mean, for a masked multi-target head.
 
@@ -1983,6 +2022,10 @@ def main() -> None:
         # it would change what CQS means and invalidate the promote baseline.
         # Scoring policy is an operator decision; measurement is not.
         "durability": durability_report,
+        # Flat across eras = generalizing; a cliff at the split boundary = memorizing.
+        # composite_score.should_promote guards on continuity_spread.
+        "continuity": continuity,
+        "continuity_spread": continuity.get("spread"),
         "pedigree_expectation": pedigree_report,
         "playoff_riser": playoff_report,
         "honors_recognition": honors_report,
