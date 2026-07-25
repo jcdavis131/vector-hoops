@@ -134,8 +134,21 @@ def from_min_gp(min_gp_rows: list[dict], season: str) -> list[dict]:
 
 
 def main() -> None:
-    min_gp_doc = json.loads((DATA / "min_gp.json").read_text(encoding="utf-8"))
-    min_gp_rows = min_gp_doc.get("players", [])
+    # min_gp.json is the pre-gamelog (pre 2015-16) fallback source; the gamelog
+    # era carries the richer streak/spell signal. Treat it as optional so a
+    # missing fallback never blocks the primary build.
+    min_gp_path = DATA / "min_gp.json"
+    if min_gp_path.exists():
+        min_gp_rows = json.loads(min_gp_path.read_text(encoding="utf-8")).get(
+            "players", []
+        )
+    else:
+        print(
+            "note: pipeline/data/min_gp.json missing — pre-gamelog seasons "
+            "(pre 2015-16) will be skipped (GP_PCT-only fallback unavailable)",
+            flush=True,
+        )
+        min_gp_rows = []
 
     all_rows: list[dict] = []
     for season in SEASONS:

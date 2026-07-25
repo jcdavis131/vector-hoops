@@ -25,7 +25,7 @@
   <div class="card">
     <div class="kicker"><span class="kdot"></span> Methods · every number recomputable · no vibes</div>
     <h1 class="hd" style="font-size:clamp(28px,5vw,42px);margin:8px 0 6px">Method & data sources</h1>
-    <p style="margin:0;font-size:15px;line-height:1.5;color:#3A332A;max-width:70ch">Doctrine: every number a player sees must be <b>recomputable from source</b>. Games use <b>14 era-z per-100 features</b> for speed + honesty. The research model <b>MTNN v4</b> expands to <b>120 feats / 17 families → 48-d L2</b> for neighbor search. <a href="/model" style="font-weight:800;border-bottom:2px solid var(--ink);text-decoration:none">Inside the Network → 17×160→32 towers</a></p>
+    <p style="margin:0;font-size:15px;line-height:1.5;color:#3A332A;max-width:70ch">Doctrine: every number a player sees must be <b>recomputable from source</b>. Games use <b>14 era-z per-100 features</b> for speed + honesty. The research model <b>MTNN v4</b> expands to <b>130 feats / 17 towers → 48-d L2</b> for neighbor search. <a href="/model" style="font-weight:800;border-bottom:2px solid var(--ink);text-decoration:none">Inside the Network → 17×160→32 towers</a></p>
     <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:10px">
       <a class="pill" href="#vector-space">Vector space</a><a class="pill" href="#mtnn-v4">MTNN v4</a><a class="pill" href="#the-map">The map</a><a class="pill" href="#archetypes">Archetypes</a><a class="pill" href="#drift">League Drift</a><a class="pill" href="#skills">Skills Lens</a><a class="pill" href="#accuracy-harness">Harness</a>
     </div>
@@ -48,18 +48,18 @@
       <p class="method-p">Cleaning: dedupe, missing→season mean + mask m, attempt-weighted EB on %, clip ±4σ.</p>
     </div>
     <div class="card">
-      <div class="small-mono">MTNN v4 expanded — 120 feats / 17 families</div>
+      <div class="small-mono">MTNN v4 expanded — 130 feats / 17 towers</div>
       <h3 class="hd" style="margin:6px 0">Richer research model</h3>
       <p class="method-p">Same 12,966 seasons but richer: volume, playmaking, rebounding, defense, efficiency, shotmix, bio, tracking (2013+ masked), form, market, roster, career, competition, team, pedigree, playoffs, honors. Each family = own tower.</p>
-      <div class="cqs-strip"><span class="cqs-badge"><b>120</b> feats</span><span class="cqs-badge"><b>17</b> families</span><span class="cqs-badge"><b>30</b> seasons</span><span class="cqs-badge"><b>8</b> types</span><span class="cqs-badge"><b>48-d</b> L2</span></div>
+      <div class="cqs-strip"><span class="cqs-badge"><b>130</b> feats</span><span class="cqs-badge"><b>17</b> towers</span><span class="cqs-badge"><b>30</b> seasons</span><span class="cqs-badge"><b>8</b> types</span><span class="cqs-badge"><b>48-d</b> L2</span></div>
       <div class="card" style="box-shadow:2px 2px 0 var(--ink);margin-top:8px"><b class="small-mono">Plainly:</b><div style="font-size:12px;line-height:1.5;margin-top:4px"><b>z-score</b> = how far above avg. 0=avg, +2 elite. <b>era-z</b> = vs own season only. <b>mask</b> = “never measured” vs zero. <b>per 100</b> = with ball he gets.</div></div>
     </div>
   </div>
 
   <div class="card" id="mtnn-v4">
     <h2 class="method-h2">MTNN v4 — the model behind every guess</h2>
-    <p class="method-p">17 families → residual towers → 48-d fingerprint L2-normalized, cosine = similarity → decode archetype 8 / position 5 / skills.</p>
-    <div class="arch-diagram">Input 120 feats, mask m∈{0,1}
+    <p class="method-p">17 towers → residual towers → 48-d fingerprint L2-normalized, cosine = similarity → decode archetype 8 / position 5 / skills. An 18th family, injury, feeds a durability read-out head rather than an input tower — as an input it measured −0.088 test recall, because durability is not a style axis.</p>
+    <div class="arch-diagram">Input 130 feats, mask m∈{0,1}
 h = cat([x·m,m]) → 2·d_in per family
 Tower 17×: 2d_in→160 LN GELU → 160→32 LN + skip ×2 → 32-d (544 total)
 + season_emb 12-d → 556 → 556→128 GELU → <b>48 L2</b>

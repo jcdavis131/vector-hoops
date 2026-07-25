@@ -12,7 +12,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E🏀%3C/text%3E%3C/svg%3E">
 <meta property="og:type" content="website">
 <meta property="og:title" content="How the vector knows — MTNN Training Cockpit">
-<meta property="og:description" content="12,966 seasons → 120 feats → 17 families → 48-d embedding → 8 archetypes. Model training cockpit, flow, and explorer.">
+<meta property="og:description" content="12,966 seasons → 130 feats → 17 towers → 48-d embedding → 8 archetypes. Model training cockpit, flow, and explorer.">
 <meta property="og:image" content="/assets/og.svg">
 <link rel="stylesheet" href="assets/shell.css">
 <link rel="stylesheet" href="assets/responsive.css">
@@ -307,12 +307,12 @@ a{color:inherit}
 
 <div class="research-head network-head">
 <h1>How the vector knows</h1>
-<p class="network-hero">Every player-season is a fingerprint: <b>120 raw stats → 17 families with masking → 17 residual towers → fusion → 48-d unit sphere where cosine = similarity</b>. Training cockpit, architecture, and glass-box debugger — same source of truth for v4 now and v6 next.</p>
+<p class="network-hero">Every player-season is a fingerprint: <b>130 raw stats → 18 families with masking → 17 residual towers → fusion → 48-d unit sphere where cosine = similarity</b>. Training cockpit, architecture, and glass-box debugger — same source of truth for v4 now and v6 next.</p>
 
 <div class="stats-strip" aria-label="MTNN stats">
 <span class="stats-chip">12,966 seasons</span>
 <span class="stats-chip">1996–2026</span>
-<span class="stats-chip">120 feats × 17 families</span>
+<span class="stats-chip">130 feats × 17 towers</span>
 <span class="stats-chip">cat([x·m,m]) masked</span>
 <span class="stats-chip">17× 160→32 ×2 =544+12</span>
 <span class="stats-chip">556→128→48 L2</span>
@@ -320,15 +320,15 @@ a{color:inherit}
 <span class="stats-chip">heads 8/5/14/18</span>
 </div>
 
-<p class="mono" style="font-size:12px; color:#5A5248; margin:6px 0 2px;">Transductive (train-set) diagnostics — measured on the same vectors the model was fit on, so recall@10 = 1.0 is memorization, not generalization. For generalization see the held-out scoreboard below.</p>
-<div class="cqs-strip" aria-label="Composite Quality Score (transductive / train-set)">
-<div class="cqs-badge is-primary"><b>85.87</b><span>CQS composite (transductive)</span></div>
-<div class="cqs-badge"><b>1.0</b><span>recall@10 same-player (memorization)</span></div>
-<div class="cqs-badge"><b>0.8726</b><span>purity@20 archetype</span></div>
-<div class="cqs-badge"><b>0.802</b><span>skills R²</span></div>
-<div class="cqs-badge"><b>0.651</b><span>next R² per-100</span></div>
-<div class="cqs-badge"><b>0.998</b><span>pos top-1</span></div>
+<p class="mono" style="font-size:12px; color:#5A5248; margin:6px 0 2px;">Promote-gate baseline, re-anchored 2026-07-24. The old baseline (CQS 85.87, recall@10 1.0, purity 0.8726) was measured on the pre-protocol loop that trained on held-out positives — that 1.0 was memorization, so the gate demanded ≥0.98 and no honest model could ever pass it. These numbers are leak-free, averaged over 4 seeds.</p>
+<div class="cqs-strip" aria-label="Promote gate baseline (leak-free, 4 seeds)">
+<div class="cqs-badge is-primary"><b>75.62</b><span>CQS baseline (leak-free)</span></div>
+<div class="cqs-badge"><b>0.742</b><span>test recall@10 (sd 0.128)</span></div>
+<div class="cqs-badge"><b>0.7822</b><span>purity@20 archetype</span></div>
+<div class="cqs-badge"><b>0.119</b><span>continuity spread (guard)</span></div>
+<div class="cqs-badge"><b>6</b><span>seeds averaged</span></div>
 </div>
+<p class="mono" style="font-size:12px; color:#5A5248; margin:8px 0 2px;">Deployed model is still the 2026-07-14 build (<code>mtnn_v5_concat_b2_h160_t32_d48_mlp128</code>) — nothing has been promoted since. Its generalization is the held-out scoreboard below; the baseline above is what a candidate must beat.</p>
 
 <div class="cqs-strip" id="eval-scoreboard-strip" aria-label="Held-out retrieval scoreboard">
 <div class="cqs-badge is-primary"><b id="evsb-top5">…</b><span>held-out top-5 retrieval</span></div>
@@ -357,7 +357,7 @@ a{color:inherit}
 <h3>Current deployed — mtnn_v5_concat_b2_h160_t32_d48_mlp128</h3>
 <div id="arch-current-meta" class="mono" style="font-size:12px; line-height:1.6;">Loading mtnn_arch.json…</div>
 <div class="weights-grid" id="weights-grid"></div>
-<p style="font-size:13px; line-height:1.6; margin-top:12px; color:#333;">Baseline from <code>pipeline/composite_score.py</code>: recall 0.18, purity 0.16, margin_14d 0.08, archetype 0.08, position 0.05, skills_r2 0.14, skill_nn 0.05, next_r2 0.12, next_mae 0.06, aux_r2 0.08 = CQS 85.87. Promote if CQS ≥ baseline+0.5 and recall/purity floors hold.</p>
+<p style="font-size:13px; line-height:1.6; margin-top:12px; color:#333;">CQS weights from <code>pipeline/composite_score.py</code>: recall 0.18, purity 0.16, margin_14d 0.08, archetype 0.08, position 0.05, skills_r2 0.14, skill_nn 0.05, next_r2 0.12, next_mae 0.06, aux_r2 0.08. <b>Gate re-anchored 2026-07-25</b> to a leak-free baseline (CQS 75.62 / recall 0.742 / purity 0.7822, 6 seeds, 130-feature matrix). Thresholds are now 2× the standard error of the seed mean rather than a flat 0.02 — measured seed sd is 0.088 on test recall alone, so the old slack was adjudicating sampling noise. A candidate must also hold same-player continuity spread under its bar, which is what catches a model that memorizes the training window instead of generalizing.</p>
 </div>
 <div class="cockpit-panel">
 <h3>Hill-climb 01→05 + loss weights</h3>
@@ -388,7 +388,7 @@ a{color:inherit}
 <div class="manim-grid">
 <div class="manim-card">
 <video autoplay loop muted playsinline controls preload="metadata" src="assets/manim/MTNNFlow.mp4" aria-label="MTNNFlow"></video>
-<div class="manim-caption"><b>MTNNFlow — glass box</b><br>17 families 120 feats cat([x·m,m]) → 17× 160→32 LN+GELU×2 → 544 +12 season → 556→128→48 L2 → heads 8/5/14/18. Every box is real dimension.</div>
+<div class="manim-caption"><b>MTNNFlow — glass box</b><br>17 towers, 120 feats cat([x·m,m]) → 17× 160→32 LN+GELU×2 → 544 +12 season → 556→128→48 L2 → heads 8/5/14/18. Every box is real dimension. <em>Render shows the 120-feature v4 matrix; it now carries 131 across 18 families (injury is a durability read-out, not an input tower).</em></div>
 </div>
 <div class="manim-card">
 <video autoplay loop muted playsinline controls preload="metadata" src="assets/manim/ChimeraEquation.mp4" aria-label="ChimeraEquation"></video>

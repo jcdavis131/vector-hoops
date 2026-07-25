@@ -67,6 +67,14 @@ FORM_FEATURES = [
     "FORM_GP",
     "FORM_MIN_AVG",
 ]
+# Durability head targets — availability read off the embedding, never fed in as
+# an input tower (the A/B proved injury-as-input regresses style retrieval).
+INJURY_FEATURES = [
+    "INJ_GP_PCT",
+    "INJ_MISS_N",
+    "INJ_MAX_MISS_STREAK",
+    "INJ_MISS_SPELLS",
+]
 TEAM_FIT_FEATURE = "TM_NET_RTG"
 ROSTER_LIFT_FEATURE = "ROSTER_COMPLEMENT"  # proxy until ROSTER_TOP2_VORP lands
 CAREER_SLOPE_FEATURE = "CAREER_SLOPE_3Y"  # real 3y mean |Δ|; falls back below
@@ -85,6 +93,7 @@ DEFAULT_LOSS_WEIGHTS: dict[str, float] = {
     "team_fit": 0.08,
     "roster_lift": 0.08,
     "form_recon": 0.10,
+    "durability": 0.10,
     "career_slope": 0.05,
     "competition": 0.05,
     "pedigree": 0.08,
@@ -116,9 +125,18 @@ def load_bundle():
 
 
 def load_positions(names, seasons) -> np.ndarray:
-    """Join position index from vectors.json; -1 = unknown."""
+    """Join position index from vectors.json; -1 = unknown.
+
+    `p` is written by enrich_vectors.py, which runs *after* build_vectors.py.
+    A vectors.json rebuilt without re-running enrich carries no `p` at all, and
+    this join then returns -1 for every row -- the position head (loss weight
+    0.15) trains on nothing and position_top1_acc goes None -> 0.0 in the
+    composite, silently docking CQS. That shipped undetected until 2026-07-24,
+    so a zero/near-zero join is now loud rather than silent.
+    """
     pos = np.full(len(names), -1, dtype=np.int64)
     if not VECTORS.exists():
+        print(f"WARNING: {VECTORS.name} missing — position head has no labels")
         return pos
     vec = json.loads(VECTORS.read_text(encoding="utf-8"))
     lookup = {(p["name"], p["season"]): int(p.get("p", -1)) for p in vec["players"]}
@@ -126,6 +144,16 @@ def load_positions(names, seasons) -> np.ndarray:
         pidx = lookup.get((str(n), str(s)), -1)
         if 0 <= pidx < len(POSITIONS):
             pos[i] = pidx
+    coverage = float((pos >= 0).mean()) if len(pos) else 0.0
+    if coverage < 0.5:
+        print(
+            f"WARNING: position labels cover only {coverage:.1%} of "
+            f"{len(pos)} rows. The position head (weight "
+            f"{DEFAULT_LOSS_WEIGHTS['position']}) will train on little or nothing and "
+            f"the CQS position component will read ~0. Run "
+            f"`python pipeline/enrich_vectors.py` to rejoin `p` into "
+            f"{VECTORS.name}."
+        )
     return pos
 
 
@@ -429,6 +457,7 @@ class MTNN(nn.Module):
         n_skills: int = 0,
         d_skill_hidden: int = 16,
         n_form: int = 0,
+        n_injury: int = 0,
         n_bbref: int = 0,
         fusion_mode: str = "gated",
         n_tower_blocks: int = 1,
@@ -499,6 +528,7 @@ class MTNN(nn.Module):
         self.team_fit_head = nn.Linear(d_emb, 1)
         self.roster_lift_head = nn.Linear(d_emb, 1)
         self.form_recon_head = nn.Linear(d_emb, n_form) if n_form else None
+        self.durability_head = nn.Linear(d_emb, n_injury) if n_injury else None
         self.career_slope_head = nn.Linear(d_emb, 1)
         self.competition_head = nn.Linear(d_emb, 1)
         self.bbref_bridge_head = nn.Linear(d_emb, n_bbref) if n_bbref else None
@@ -533,6 +563,8 @@ class MTNN(nn.Module):
         }
         if self.form_recon_head is not None:
             out["form_recon"] = self.form_recon_head(emb)
+        if self.durability_head is not None:
+            out["durability"] = self.durability_head(emb)
         if self.bbref_bridge_head is not None:
             out["bbref"] = self.bbref_bridge_head(emb)
         if self.skill_towers is not None:
@@ -1005,6 +1037,59 @@ def next_profile_holdout_metrics(
 # ---------------------------------------------------------------------------
 
 
+_TRAIN_RUN_ID = None
+
+
+def emit_training_snapshot(args, weights, fams, history, val_trace, status) -> None:
+    """Live per-epoch telemetry for the /model training cockpit.
+
+    Writes assets/mtnn_training/live.json each val_every epoch (status
+    'training', or 'done' on the final epoch). Wrapped so telemetry can never
+    break a training run.
+    """
+    global _TRAIN_RUN_ID
+    try:
+        excl = {s.strip() for s in args.exclude_families.split(",") if s.strip()}
+        out_dir = ROOT / "assets" / "mtnn_training"
+        out_dir.mkdir(parents=True, exist_ok=True)
+        if _TRAIN_RUN_ID is None:
+            _TRAIN_RUN_ID = time.strftime("%Y%m%d-%H%M%S")
+        doc = {
+            "run_id": _TRAIN_RUN_ID,
+            "status": status,
+            "updated": time.strftime("%Y-%m-%dT%H:%M:%S"),
+            "arch": {
+                "dim": args.dim,
+                "tower_width": args.tower_width,
+                "tower_hidden": args.tower_hidden,
+                "tower_blocks": args.tower_blocks,
+                "fusion": args.fusion,
+                "n_towers": len(fams),
+                "families": sorted(fams),
+                "epochs_target": args.epochs,
+                "durability_w": (
+                    weights.get("durability") if "injury" not in excl else None
+                ),
+            },
+            "loss": [round(float(x), 4) for x in history],
+            "val": [
+                {
+                    "epoch": r.get("epoch"),
+                    "val_recall_at_10": r.get("val_recall_at_10"),
+                    "test_recall_at_10": r.get("test_recall_at_10"),
+                    "purity_at_20": r.get("val_purity_at_20"),
+                    "cqs": r.get("val_composite"),
+                }
+                for r in val_trace
+            ],
+        }
+        (out_dir / "live.json").write_text(
+            json.dumps(doc, separators=(",", ":")), encoding="utf-8"
+        )
+    except Exception:
+        pass
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--epochs", type=int, default=40)
@@ -1012,11 +1097,11 @@ def main() -> None:
     ap.add_argument(
         "--tower-width",
         type=int,
-        default=24,
+        default=32,
         help="per-family tower output width before fusion",
     )
     ap.add_argument(
-        "--tower-hidden", type=int, default=96, help="per-family tower hidden width"
+        "--tower-hidden", type=int, default=160, help="per-family tower hidden width"
     )
     ap.add_argument(
         "--skill-hidden", type=int, default=16, help="per-skill mini-tower hidden width"
@@ -1035,7 +1120,7 @@ def main() -> None:
     ap.add_argument(
         "--lr-schedule",
         choices=("legacy-epoch-cosine", "onecycle", "warmup-cosine"),
-        default="legacy-epoch-cosine",
+        default="onecycle",
         help="onecycle mirrors Brain2Qwerty (arXiv:2502.17480); warmup-cosine is embed SOTA",
     )
     ap.add_argument(
@@ -1060,24 +1145,27 @@ def main() -> None:
     ap.add_argument(
         "--fusion",
         choices=("gated", "concat", "transformer"),
-        default="gated",
-        help="tower fusion: gated attention (default), concat MLP, or v5 transformer",
+        default="concat",
+        help="tower fusion: concat MLP (default), gated attention, or v5 transformer. "
+        "gated measured 0.530 test recall against concat's 0.838 at the same "
+        "geometry (docs/MTNN_STABILITY_2026-07-24.md §3)",
     )
     ap.add_argument(
         "--tower-blocks",
         type=int,
-        default=1,
+        default=2,
         help="v5: residual blocks per family tower (depth)",
     )
     ap.add_argument(
         "--mlp-heads",
-        action="store_true",
-        help="v5: 2-layer MLP decode heads instead of linear",
+        action=argparse.BooleanOptionalAction,
+        default=True,
+        help="v5: 2-layer MLP decode heads instead of linear (--no-mlp-heads to disable)",
     )
     ap.add_argument(
         "--d-head-hidden",
         type=int,
-        default=64,
+        default=128,
         help="v5: hidden width for MLP decode heads",
     )
     ap.add_argument(
@@ -1100,19 +1188,19 @@ def main() -> None:
     ap.add_argument(
         "--nce-loss",
         choices=("infonce", "supcon-arch", "hybrid"),
-        default="infonce",
+        default="hybrid",
         help="contrastive: player InfoNCE, archetype SupCon, or hybrid",
     )
     ap.add_argument(
         "--nce-player-weight",
         type=float,
-        default=0.75,
+        default=0.7,
         help="hybrid: weight on adjacent-season player InfoNCE",
     )
     ap.add_argument(
         "--nce-arch-weight",
         type=float,
-        default=0.25,
+        default=0.3,
         help="hybrid: weight on archetype SupCon (purity pressure)",
     )
     ap.add_argument(
@@ -1131,6 +1219,20 @@ def main() -> None:
         "--no-best-checkpoint",
         action="store_true",
         help="skip saving/restoring best-val checkpoint",
+    )
+    ap.add_argument(
+        "--mask-families",
+        type=str,
+        default="",
+        help="comma-separated families to zero out (values + mask) while "
+        "keeping their towers, so ablation arms share one architecture",
+    )
+    ap.add_argument(
+        "--mask-features",
+        type=str,
+        default="",
+        help="comma-separated individual features to zero out (values + mask), "
+        "for testing a single column without rebuilding train_matrix.npz",
     )
     ap.add_argument(
         "--exclude-families",
@@ -1205,9 +1307,47 @@ def main() -> None:
         print("robust-scaling: replaced season z-scores with median/IQR clip[-3,3]")
 
     fams = family_slices(manifest)
+    mask_fams = {s.strip() for s in args.mask_families.split(",") if s.strip()}
+    if mask_fams:
+        # Ablate by zeroing a family's values AND its mask bits while keeping the
+        # tower. --exclude-families deletes the tower, which also re-shapes the
+        # fusion input (17x32 -> 16x32), so every arm becomes a different
+        # architecture and the delta confounds "family carries signal" with
+        # "fusion was re-sized". Masking holds the architecture fixed.
+        all_slices = family_slices(manifest)
+        zeroed = 0
+        for fam in sorted(mask_fams):
+            for c in all_slices.get(fam) or []:
+                Z[:, c] = 0.0
+                M[:, c] = 0.0
+                zeroed += 1
+        print(
+            f"masked families: {sorted(mask_fams)} -> {zeroed} columns zeroed, "
+            f"towers kept (fusion width unchanged)"
+        )
+    mask_feats = {s.strip() for s in args.mask_features.split(",") if s.strip()}
+    if mask_feats:
+        # Same trick one level down: zero individual columns so a single feature
+        # can be tested without rebuilding train_matrix.npz. Rebuilding would
+        # change the matrix the promote baseline was measured on, and
+        # BASELINE_PROVENANCE exists precisely to stop cross-matrix comparison.
+        by_name = {f: j for j, f in enumerate(manifest["features"])}
+        unknown = sorted(mask_feats - set(by_name))
+        if unknown:
+            raise SystemExit(f"--mask-features: unknown feature(s) {unknown}")
+        for f in sorted(mask_feats):
+            Z[:, by_name[f]] = 0.0
+            M[:, by_name[f]] = 0.0
+        print(
+            f"masked features: {sorted(mask_feats)} -> {len(mask_feats)} columns "
+            f"zeroed (towers and fusion width unchanged)"
+        )
     exclude = {s.strip() for s in args.exclude_families.split(",") if s.strip()}
+    # Injury never feeds an input tower — the A/B proved it regresses retrieval.
+    # It survives only as the durability head's target (predicted FROM the
+    # embedding), so drop it from the tower set unconditionally.
+    fams = {k: v for k, v in fams.items() if k not in exclude and k != "injury"}
     if exclude:
-        fams = {k: v for k, v in fams.items() if k not in exclude}
         print(f"excluded families: {sorted(exclude)} -> {len(fams)} towers")
     game_cols = game_feature_cols(manifest)
     game_z = torch.tensor(Z[:, game_cols], device=device)
@@ -1273,7 +1413,11 @@ def main() -> None:
         )
 
     career_j = col_idx(CAREER_SLOPE_FEATURE)
-    if career_j is None:
+    # Existence is not enough: integrate_context materializes a column for every
+    # declared feature, so a feature with no source lands as an all-masked
+    # column. Testing `is None` let that pass and the head silently trained
+    # against zero labels. Fall back when the column carries no observations.
+    if career_j is None or float(M[:, career_j].sum()) == 0.0:
         career_j = col_idx("DELTA_NORM")  # legacy matrices pre-enrichment
     career_z, career_m = (
         tensor_col(Z, M, career_j, device) if career_j is not None else (None, None)
@@ -1295,6 +1439,14 @@ def main() -> None:
     )
     if form_cols:
         print(f"form_recon head: {int(form_row_m.sum())} labeled rows")
+
+    injury_cols = feature_cols(manifest, INJURY_FEATURES)
+    injury_active = bool(injury_cols) and "injury" not in exclude
+    injury_z, injury_m, injury_row_m = (
+        tensor_cols(Z, M, injury_cols, device) if injury_active else (None, None, None)
+    )
+    if injury_active:
+        print(f"durability head: {int(injury_row_m.sum())} labeled rows")
 
     bbref_cols = feature_cols(manifest, BBREF_FEATURES)
     bbref_z, bbref_m, bbref_row_m = (
@@ -1342,6 +1494,7 @@ def main() -> None:
         n_skills=len(skill_keys),
         d_skill_hidden=args.skill_hidden,
         n_form=len(form_cols) if form_cols else 0,
+        n_injury=len(injury_cols) if injury_active else 0,
         n_bbref=len(bbref_cols) if bbref_cols else 0,
         fusion_mode=args.fusion,
         n_tower_blocks=args.tower_blocks,
@@ -1463,6 +1616,13 @@ def main() -> None:
                 loss = loss + weights["form_recon"] * masked_vector_mse(
                     out_a["form_recon"], form_z[idx_t], form_m[idx_t], form_row_m[idx_t]
                 )
+            if injury_z is not None and injury_m is not None and "durability" in out_a:
+                loss = loss + weights["durability"] * masked_vector_mse(
+                    out_a["durability"],
+                    injury_z[idx_t],
+                    injury_m[idx_t],
+                    injury_row_m[idx_t],
+                )
             if career_z is not None and career_m is not None:
                 loss = loss + weights["career_slope"] * masked_scalar_mse(
                     out_a["career_slope"], career_z[idx_t], career_m[idx_t]
@@ -1536,6 +1696,14 @@ def main() -> None:
                 "val_composite": val_comp,
             }
             val_trace.append(trace_row)
+            emit_training_snapshot(
+                args,
+                weights,
+                fams,
+                history,
+                val_trace,
+                "done" if epoch == args.epochs - 1 else "training",
+            )
             if not args.no_best_checkpoint:
                 metric_val = None
                 if args.checkpoint_metric == "recall":
@@ -1660,6 +1828,46 @@ def main() -> None:
             }
         return out
 
+    def vector_head_report(head_key: str, cols: list[int] | None) -> dict | None:
+        """Held-out val/test R2 per column + mean, for a masked multi-target head.
+
+        The durability head predicts 4 injury columns, so regression_head_report
+        (single col_j) cannot score it. Until 2026-07-24 nothing scored it at
+        all: it carried loss weight 0.10 and was absent from every metric, which
+        is why the FORM_GP leak (r=+0.9676 with INJ_GP_PCT) was invisible.
+        """
+        if not cols or head_key not in heads:
+            return None
+        pred = heads[head_key].cpu().numpy().astype(np.float32)
+        if pred.ndim != 2 or pred.shape[1] != len(cols):
+            return None
+        out: dict = {}
+        for split in ("val", "test"):
+            per_col = {}
+            r2s = []
+            for i, col_j in enumerate(cols):
+                rows = np.where((M[:, col_j] > 0) & (split_of == split))[0]
+                if len(rows) == 0:
+                    continue
+                true = Z[rows, col_j]
+                resid = true - pred[rows, i]
+                ss_tot = float(((true - true.mean()) ** 2).sum())
+                r2 = 1.0 - float((resid**2).sum()) / max(ss_tot, 1e-9)
+                per_col[manifest["features"][col_j]] = {
+                    "rows": len(rows),
+                    "mae_z": round(float(np.abs(resid).mean()), 4),
+                    "r2": round(float(r2), 4),
+                }
+                r2s.append(r2)
+            out[split] = (
+                {"per_column": per_col, "r2": round(float(np.mean(r2s)), 4)}
+                if r2s
+                else None
+            )
+        return out
+
+    durability_report = vector_head_report("durability", injury_cols)
+
     pedigree_report = regression_head_report("pedigree", ped_j)
     playoff_report = regression_head_report("playoff", po_j)
     honors_report = regression_head_report("honors", hon_j)
@@ -1771,6 +1979,10 @@ def main() -> None:
         "roster_lift": roster_lift_report,
         "career_slope": career_slope_report,
         "competition": competition_report,
+        # Reported but deliberately NOT in composite_score._aux_test_r2s: adding
+        # it would change what CQS means and invalidate the promote baseline.
+        # Scoring policy is an operator decision; measurement is not.
+        "durability": durability_report,
         "pedigree_expectation": pedigree_report,
         "playoff_riser": playoff_report,
         "honors_recognition": honors_report,

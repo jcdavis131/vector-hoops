@@ -38,6 +38,7 @@ PEDIGREE_JSON = DATA_DIR / "pedigree.json"
 PLAYOFFS_JSON = DATA_DIR / "playoffs.json"
 HONORS_JSON = DATA_DIR / "honors.json"
 GAME_RATINGS_JSON = DATA_DIR / "game_ratings.json"
+AVAILABILITY_JSON = DATA_DIR / "availability.json"
 
 _GAME_ATTR_KEYS = (
     "overall",
@@ -76,9 +77,14 @@ V4_FEATURES: dict[str, str] = {
     "CAREER_MPG_SLOPE": "career",
     "CAREER_GP_SLOPE": "career",
     "CAREER_ACTIVE_FRAC": "career",
-    "CAREER_GP_PCT": "career",
-    "CAREER_MISS_STREAK": "career",
-    "CAREER_AVAIL_3Y": "career",
+    # CAREER_GP_PCT / CAREER_MISS_STREAK / CAREER_AVAIL_3Y are deliberately NOT
+    # here. build_career_context reads them from the same availability.json the
+    # injury family uses (measured r=+0.9999 / +0.9996 against INJ_GP_PCT /
+    # INJ_MAX_MISS_STREAK), so putting them in the career tower would (a) feed
+    # the durability head's own target back in as an input, making the head
+    # trivially solvable, and (b) reintroduce availability-as-input, which the
+    # A/B measured at -0.088 test recall. Career tower = trajectory shape;
+    # durability head = availability. See RETIRED_FEATURES below.
     # competition (VH-111)
     "SOS_NET_RTG": "competition",
     "B2B_RATE": "competition",
@@ -100,7 +106,6 @@ V4_FEATURES: dict[str, str] = {
     "FORM_CEIL": "form",
     "FORM_DD_RATE": "form",
     "FORM_TD_RATE": "form",
-    "FORM_GP": "form",
     "FORM_MIN_AVG": "form",
     # pedigree (VH-115) — draft + entry expectations, leak-free by construction
     "PED_PICK_QUALITY": "pedigree",
@@ -132,7 +137,32 @@ V4_FEATURES: dict[str, str] = {
     "HON_ASG_LAG": "honors",
     "HON_ASG_CUM": "honors",
     "HON_VOTE_RECOG": "honors",
+    # injury / durability (Track D Tier-1) — per-season availability from
+    # build_availability.py: acute games-missed signal, distinct from the
+    # career-aggregate availability in the career family. Masked pre-gamelog era.
+    "INJ_GP_PCT": "injury",
+    "INJ_MISS_N": "injury",
+    "INJ_MAX_MISS_STREAK": "injury",
+    "INJ_MISS_SPELLS": "injury",
     **{f"GK_{k.upper()}": "game_ratings" for k in _GAME_ATTR_KEYS},
+}
+
+# Columns a previous build materialized that are no longer tower inputs. Merge
+# drops them, otherwise an orphan column survives in train_matrix.npz forever.
+RETIRED_FEATURES = {
+    "CAREER_GP_PCT",
+    "CAREER_MISS_STREAK",
+    "CAREER_AVAIL_3Y",
+    # Same reason as the CAREER_* three above, missed at the time: FORM_GP is
+    # availability, not form. It measures r=+0.9676 against INJ_GP_PCT and
+    # -0.9665 against INJ_MISS_N, so the durability head was reading its own
+    # target off the form tower. Masking it drops durability test R2 on exactly
+    # those two columns (INJ_GP_PCT 0.699 -> 0.590, INJ_MISS_N 0.674 -> 0.571)
+    # and leaves the other two flat -- the leak signature. Retrieval is
+    # unaffected (CQS 72.28 -> 72.27), so this is a correctness fix, not a
+    # score fix. Doctrine (3306bf6): form tower = shape, durability head =
+    # availability.
+    "FORM_GP",
 }
 
 PO_FEATURES = [f for f, fam in V4_FEATURES.items() if fam == "playoffs"]
@@ -229,6 +259,15 @@ def load_game_ratings_by_player_season() -> dict[tuple[str, str], dict]:
     return {(r["name"], r["season"]): r for r in rows}
 
 
+def load_availability_by_player_season() -> dict[tuple[str, str], dict]:
+    """(name, season) -> availability row from build_availability.py; only
+    gamelog-era rows carry streak/spells (pre-2015 rows absent == masked)."""
+    if not AVAILABILITY_JSON.exists():
+        return {}
+    data = json.loads(AVAILABILITY_JSON.read_text(encoding="utf-8"))
+    return {(r["name"], r["season"]): r for r in data.get("players", [])}
+
+
 def load_salary_market_by_player_season() -> dict[tuple[str, str], dict]:
     """(name, season) -> SALARY_* row from build_salary_market.py."""
     if not SALARY_MARKET_JSON.exists():
@@ -315,6 +354,7 @@ def merge_v4_context(
     # Declining to re-add them is not enough — drop them, or the dead tower
     # survives in the matrix (game_ratings: 14 cols, 28 observed cells).
     stale = [f for f in feats if V4_FEATURES.get(f) in gated]
+    stale += [f for f in feats if f in RETIRED_FEATURES and f not in stale]
     # Soft-subset shrinks: drop MATCH_* columns no longer in merge_features.
     stale += [
         f
@@ -402,6 +442,7 @@ def build_row_values(
     playoffs: dict,
     honors: dict,
     game_ratings: dict,
+    availability: dict,
 ) -> list[dict[str, float | None]]:
     rows: list[dict[str, float | None]] = []
     for name, season in zip(names, seasons, strict=False):
@@ -414,6 +455,7 @@ def build_row_values(
         po = playoffs.get(key, {})
         hon = honors.get(key, {})
         gk = game_ratings.get(key, {})
+        av = availability.get(key, {})
         mkt = salary_market.get(key, {})
         team_row = (
             team_index.get((str(season), int(r["teamId"]))) if r.get("teamId") else {}
@@ -471,6 +513,10 @@ def build_row_values(
                 "HON_ASG_LAG": hon.get("HON_ASG_LAG"),
                 "HON_ASG_CUM": hon.get("HON_ASG_CUM"),
                 "HON_VOTE_RECOG": hon.get("HON_VOTE_RECOG"),
+                "INJ_GP_PCT": av.get("GP_PCT"),
+                "INJ_MISS_N": av.get("MISS_N"),
+                "INJ_MAX_MISS_STREAK": av.get("LONGEST_MISS_STREAK"),
+                "INJ_MISS_SPELLS": av.get("MISS_SPELLS"),
                 **{f: po.get(f) for f in PO_FEATURES},
                 **{f: gk.get(f) for f in GK_FEATURES},
             }
@@ -523,13 +569,15 @@ def main() -> None:
     playoffs = load_playoffs_by_player_season()
     honors = load_honors_by_player_season()
     game_ratings = load_game_ratings_by_player_season()
+    availability = load_availability_by_player_season()
 
     print(
         f"artifacts: roster={len(roster)} career={len(career)} "
         f"competition={len(competition)} salary_market={len(salary_market)} "
         f"team_season={len(team_index)} "
         f"form={len(form)} pedigree={len(pedigree)} playoffs={len(playoffs)} "
-        f"honors={len(honors)} game_ratings={len(game_ratings)}"
+        f"honors={len(honors)} game_ratings={len(game_ratings)} "
+        f"availability={len(availability)}"
     )
 
     row_vals = build_row_values(
@@ -545,6 +593,7 @@ def main() -> None:
         playoffs,
         honors,
         game_ratings,
+        availability,
     )
     Z2, M2, man2 = merge_v4_context(Z, M, manifest, names, seasons, row_vals)
     v4_cols = v4_column_indices(man2)
