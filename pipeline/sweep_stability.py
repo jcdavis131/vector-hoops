@@ -91,6 +91,19 @@ ARMS: dict[str, list[str]] = {
     "wide_reg":  ["--tower-width", "40", "--tower-hidden", "192", "--tower-blocks", "2",
                   "--fusion", "concat", "--drop-p", "0.2", "--weight-decay", "0.001",
                   "--epochs", "20"],
+    # --- model-selection head-to-head, all at the winner's 40-epoch schedule ---
+    # The 2026-07-24 fusion sweep ran at 20 epochs and one seed, which is not
+    # decision-grade: transformer led retrieval (0.841) and continuity (0.0676)
+    # while concat led purity, and seed noise on test recall is sd ~0.13.
+    # These arms differ only in fusion/dim so the comparison is attributable.
+    "sel_concat_d48":      ["--tower-width", "32", "--tower-hidden", "160", "--tower-blocks", "2",
+                            "--fusion", "concat", "--dim", "48", "--epochs", "40"],
+    "sel_concat_d64":      ["--tower-width", "32", "--tower-hidden", "160", "--tower-blocks", "2",
+                            "--fusion", "concat", "--dim", "64", "--epochs", "40"],
+    "sel_transformer_d48": ["--tower-width", "32", "--tower-hidden", "160", "--tower-blocks", "2",
+                            "--fusion", "transformer", "--dim", "48", "--epochs", "40"],
+    "sel_transformer_d64": ["--tower-width", "32", "--tower-hidden", "160", "--tower-blocks", "2",
+                            "--fusion", "transformer", "--dim", "64", "--epochs", "40"],
 }
 # fmt: on
 

@@ -328,7 +328,7 @@ a{color:inherit}
 <div class="cqs-badge"><b>0.119</b><span>continuity spread (guard)</span></div>
 <div class="cqs-badge"><b>6</b><span>seeds averaged</span></div>
 </div>
-<p class="mono" style="font-size:12px; color:#5A5248; margin:8px 0 2px;">Deployed model is still the 2026-07-14 build (<code>mtnn_v5_concat_b2_h160_t32_d48_mlp128</code>) — nothing has been promoted since. Its generalization is the held-out scoreboard below; the baseline above is what a candidate must beat.</p>
+<p class="mono" style="font-size:12px; color:#5A5248; margin:8px 0 2px;">Promoted 2026-07-25: <code>mtnn_v5_concat_b2_h160_t32_d64_mlp128_fus256</code>, replacing the 2026-07-14 build. On the identical held-out protocol it more than doubles top-5 retrieval on never-trained 2024+ pairs — <b>0.363 → 0.757</b> (top-1 0.163 → 0.438). The previous model predated the position-label, career-feature and durability-leak fixes.</p>
 
 <div class="cqs-strip" id="eval-scoreboard-strip" aria-label="Held-out retrieval scoreboard">
 <div class="cqs-badge is-primary"><b id="evsb-top5">…</b><span>held-out top-5 retrieval</span></div>
@@ -354,10 +354,10 @@ a{color:inherit}
 
 <div class="cockpit-grid">
 <div class="cockpit-panel">
-<h3>Current deployed — mtnn_v5_concat_b2_h160_t32_d48_mlp128</h3>
+<h3>Current deployed — mtnn_v5_concat_b2_h160_t32_d64_mlp128_fus256</h3>
 <div id="arch-current-meta" class="mono" style="font-size:12px; line-height:1.6;">Loading mtnn_arch.json…</div>
 <div class="weights-grid" id="weights-grid"></div>
-<p style="font-size:13px; line-height:1.6; margin-top:12px; color:#333;">CQS weights from <code>pipeline/composite_score.py</code>: recall 0.18, purity 0.16, margin_14d 0.08, archetype 0.08, position 0.05, skills_r2 0.14, skill_nn 0.05, next_r2 0.12, next_mae 0.06, aux_r2 0.08. <b>Gate re-anchored 2026-07-25</b> to a leak-free baseline (CQS 75.62 / recall 0.742 / purity 0.7822, 6 seeds, 130-feature matrix). Thresholds are now 2× the standard error of the seed mean rather than a flat 0.02 — measured seed sd is 0.088 on test recall alone, so the old slack was adjudicating sampling noise. A candidate must also hold same-player continuity spread under its bar, which is what catches a model that memorizes the training window instead of generalizing.</p>
+<p style="font-size:13px; line-height:1.6; margin-top:12px; color:#333;">CQS weights from <code>pipeline/composite_score.py</code>: recall 0.18, purity 0.16, margin_14d 0.08, archetype 0.08, position 0.05, skills_r2 0.14, skill_nn 0.05, next_r2 0.12, next_mae 0.06, aux_r2 0.08. <b>Gate re-anchored 2026-07-25</b> to a leak-free baseline (CQS 75.62 / recall 0.742 / purity 0.7822, 6 seeds, 130-feature matrix). Thresholds are now 2× the standard error of the seed mean rather than a flat 0.02 — measured seed sd is 0.128 on test recall alone, so the old slack was adjudicating sampling noise. A candidate must also hold same-player continuity spread under its bar, which is what catches a model that memorizes the training window instead of generalizing.</p>
 </div>
 <div class="cockpit-panel">
 <h3>Hill-climb 01→05 + loss weights</h3>
