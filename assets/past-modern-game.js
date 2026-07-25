@@ -492,7 +492,7 @@
     });
     state.pastPool=past;
 
-    const modernCandidates=lite.players.filter(p=>parseYear(p.s)>=2024);
+    const modernCandidates=lite.players.filter(p=>parseYear(p.s)>=2025);
     const byName=new Map();
     for(const p of modernCandidates){
       const yr=parseYear(p.s); const ex=byName.get(p.n);

@@ -334,21 +334,7 @@ button,.input{min-height:44px}
   // --- helpers ---
   let searchWorker=null, workerReady=false, workerSeq=0, lastWorkerId=0;
   function initSearchWorker(){
-    try{
-      if(!window.Worker) return null;
-      const w=new Worker('/assets/workers/modern-search.worker.js?v=49');
-      w.onmessage=(ev)=>{
-        const {type, results, id, q} = ev.data||{};
-        if(type==='ready'){ workerReady=true; return; }
-        if(type==='result'){
-          if(id!==lastWorkerId) return; // stale
-          // render results on main thread (passed via closure? need to trigger)
-          const renderFn=w.__renderCb;
-          if(renderFn) renderFn(results, q);
-        }
-      };
-      return w;
-    }catch(e){ console.warn('worker init fail',e); return null; }
+    return null; // disabled — main thread 8-item scan is plenty and avoids structured-clone jank on mobile
   }
 
   function filteredModern(q){
@@ -359,149 +345,55 @@ button,.input{min-height:44px}
       if(!st) return [];
       const pool = st.modernPool;
       if(!pool || !pool.length) return [];
-      ensureModernLower();
-      const lowers = modernPoolLower.length===pool.length ? modernPoolLower : pool.map(m=>(m.n||'').toLowerCase());
-      // score: startsWith = 0, early index = 1, later = 2
-      const scored=[];
-      for(let i=0;i<pool.length;i++){
-        const low=lowers[i]||'';
-        if(!low) continue;
-        const idx=low.indexOf(q);
-        if(idx===-1) continue;
-        const score = idx===0 ? 0 : (idx<=2?1:2);
-        scored.push({m:pool[i], score, idx});
-        if(scored.length>96) break;
+      // lightweight — no lower cache rebuild thrash, break after 8
+      const out=[];
+      for(let i=0;i<pool.length && out.length<8;i++){
+        const m=pool[i]; if(!m||!m.n) continue;
+        const low=(m.n||'').toLowerCase();
+        if(low.indexOf(q)!==-1) out.push(m);
       }
-      scored.sort((a,b)=> a.score-b.score || a.idx-b.idx || (a.m.n||'').localeCompare(b.m.n||''));
-      return scored.slice(0,8).map(x=>x.m);
-    }catch(e){ console.warn('filteredModern fail',e); return []; }
+      return out;
+    }catch(e){ return []; }
   }
   function attachSuggest(){
-    const input=$('#guess-input'), ul=$('#guess-suggest');
+    const input=document.getElementById('guess-input'), ul=document.getElementById('guess-suggest');
     if(!input||!ul) return;
-    let active=-1,last=[]; let debounceTimer=null; let isComposing=false;
-
+    let active=-1,last=[]; let debounceTimer=null;
     function render(list){
-      try{
-        last = Array.isArray(list) ? list.filter(m=>m && m.n) : [];
-        if(!last.length){ ul.style.display='none'; ul.textContent=''; active=-1; return; }
-        if(active>=last.length) active=last.length-1;
-        ul.textContent='';
-        const frag=document.createDocumentFragment();
-        for(let i=0;i<last.length;i++){
-          const m=last[i];
-          if(!m || !m.n) continue;
-          const li=document.createElement('li');
-          li.dataset.i=String(i);
-          if(i===active) li.classList.add('is-active');
-          const left=document.createElement('span');
-          const b=document.createElement('b');
-          b.textContent=m.n||'';
-          left.appendChild(b);
-          const sSpan=document.createElement('span');
-          sSpan.style.opacity='0.6';
-          sSpan.textContent=' '+(m.s||'');
-          left.appendChild(sSpan);
-          const right=document.createElement('span');
-          right.className='small-mono';
-          right.textContent=String(m.i ?? '');
-          li.appendChild(left);
-          li.appendChild(right);
-          frag.appendChild(li);
-        }
-        ul.appendChild(frag);
-        ul.style.display='block';
-      }catch(e){ console.warn('suggest render fail',e); try{ ul.style.display='none'; ul.textContent=''; }catch{} active=-1; last=[]; }
+      last = Array.isArray(list) ? list.filter(m=>m && m.n) : [];
+      if(!last.length){ ul.style.display='none'; ul.textContent=''; active=-1; return; }
+      ul.textContent='';
+      const frag=document.createDocumentFragment();
+      for(let i=0;i<Math.min(last.length,8);i++){
+        const m=last[i]; if(!m||!m.n) continue;
+        const li=document.createElement('li');
+        li.dataset.i=String(i);
+        if(i===active) li.classList.add('is-active');
+        li.textContent=m.n+' '+(m.s||'');
+        frag.appendChild(li);
+      }
+      ul.appendChild(frag);
+      ul.style.display='block';
     }
-
     function searchAndRender(q){
-      try{
-        const trimmed=(q||'').trim();
-        active=-1;
-        if(!trimmed || trimmed.length<2){ render([]); return; }
-        const results=filteredModern(trimmed);
-        render(results);
-        if(searchWorker && workerReady){
-          try{
-            workerSeq++; lastWorkerId=workerSeq;
-            const mainResults=results;
-            const curId=lastWorkerId;
-            const curQ=trimmed.toLowerCase();
-            searchWorker.__renderCb = (wResults, wQ)=>{
-              try{
-                if(curId!==lastWorkerId) return;
-                if(!wQ || wQ.length<2) return;
-                if(wQ!==curQ) return;
-                const currentVal=(input.value||'').trim().toLowerCase();
-                if(currentVal!==curQ) return;
-                if(wResults && wResults.length && !mainResults.length) {
-                  render(wResults);
-                }
-              }catch{}
-            };
-            searchWorker.postMessage({type:'search', payload:{q: trimmed, id: lastWorkerId}});
-          }catch{}
-        }
-      }catch(e){ console.warn('searchAndRender fail',e); render([]); }
+      const t=(q||'').trim(); active=-1;
+      if(!t||t.length<2){ render([]); return; }
+      render(filteredModern(t));
     }
-
-    input.addEventListener('compositionstart', ()=>{ isComposing=true; });
-    input.addEventListener('compositionend', (e)=>{ isComposing=false; const val=e.target.value||''; clearTimeout(debounceTimer); debounceTimer=setTimeout(()=>searchAndRender(val),100); });
-
-    input.addEventListener('focus', function(){ isTyping=true; auto=false; mapPaused=true; ensureModernLower(); try{ window.dispatchEvent(new CustomEvent('vh:pause-maps')); }catch{} setTimeout(()=>searchAndRender(this.value),30); });
-    input.addEventListener('blur', function(){ setTimeout(()=>{ isTyping=false; mapPaused=false; try{ window.dispatchEvent(new CustomEvent('vh:resume-maps')); }catch{} }, 350); });
     input.addEventListener('input', function(){
-      if(isComposing) return;
-      active=-1;
-      const val=this.value;
-      clearTimeout(debounceTimer);
-      debounceTimer=setTimeout(()=>{ searchAndRender(val); }, 100);
+      const v=this.value; clearTimeout(debounceTimer); debounceTimer=setTimeout(()=>searchAndRender(v),120);
     });
-    input.addEventListener('click', function(){ const v=(this.value||'').trim(); if(v.length>=2) searchAndRender(v); });
     input.addEventListener('keydown',function(e){
-      try{
-        if(isComposing) return;
-        if(e.key==='ArrowDown'){
-          if(!last.length) return;
-          e.preventDefault();
-          active=Math.min(active+1,last.length-1);
-          render(last);
-        } else if(e.key==='ArrowUp'){
-          if(!last.length) return;
-          e.preventDefault();
-          active=Math.max(active-1,0);
-          render(last);
-        } else if(e.key==='Enter'){
-          const hasActive = active>=0 && last[active];
-          const hasSingle = last.length===1;
-          const typed=(input.value||'').trim();
-          if(hasActive || hasSingle || typed.length>=2){
-            e.preventDefault();
-            e.stopImmediatePropagation();
-            if(hasActive){
-              input.value=last[active].n;
-            } else if(hasSingle){
-              input.value=last[0].n;
-            }
-            ul.style.display='none';
-            ul.textContent='';
-            active=-1;
-            doGuess();
-          }
-        } else if(e.key==='Escape'){
-          ul.style.display='none';
-          ul.textContent='';
-          active=-1;
-        }
-      }catch(err){ console.warn('keydown handler fail', err); }
+      if(e.key==='ArrowDown'){ if(!last.length) return; e.preventDefault(); active=Math.min(active+1,last.length-1); render(last); }
+      else if(e.key==='ArrowUp'){ if(!last.length) return; e.preventDefault(); active=Math.max(active-1,0); render(last); }
+      else if(e.key==='Enter'){
+        const hasActive = active>=0 && last[active];
+        if(hasActive){ e.preventDefault(); input.value=last[active].n; ul.style.display='none'; active=-1; doGuess(); return; }
+        if((input.value||'').trim().length>=2){ e.preventDefault(); ul.style.display='none'; doGuess(); }
+      } else if(e.key==='Escape'){ ul.style.display='none'; active=-1; }
     });
-    ul.addEventListener('click',function(e){
-      try{
-        const li=e.target.closest('li'); if(!li) return;
-        const i=parseInt(li.dataset.i,10); if(!isNaN(i)&&last[i]){ input.value=last[i].n; ul.style.display='none'; ul.textContent=''; active=-1; isTyping=false; doGuess(); }
-      }catch(err){ console.warn('suggest click fail',err); }
-    });
-    document.addEventListener('click',function(e){ if(!ul.contains(e.target)&&e.target!==input) { ul.style.display='none'; active=-1; } });
+    ul.addEventListener('click',function(e){ const li=e.target.closest('li'); if(!li) return; const i=parseInt(li.dataset.i,10); if(!isNaN(i)&&last[i]){ input.value=last[i].n; ul.style.display='none'; active=-1; doGuess(); } });
+    document.addEventListener('click',function(e){ if(!ul.contains(e.target)&&e.target!==input) ul.style.display='none'; });
   }
   function dailyKey(){ try{ return VHPastModern.state().dayKey; }catch{ return new Date().toISOString().slice(0,10); } }
   function dailySlotKey(dayKey,slot){ return `vh.daily.v2.${dayKey}.slot${slot}`; }
