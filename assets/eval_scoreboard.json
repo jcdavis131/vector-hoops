@@ -8,18 +8,18 @@
   "splits": "target season: train <=2021, val 2022-23, test >=2024",
   "decades": "keyed on the query season start year"
  },
- "computed_at": "2026-07-22T19:13:48Z",
+ "computed_at": "2026-07-25T14:43:37Z",
  "embedding_asset": {
   "path": "assets/mtnn_embeddings.f32",
-  "sha256": "eb2b7484ab9d692dbe8fadf923a2def35cd4cbded1e087bad03ad4428c2efe0e",
+  "sha256": "2574ef581ac3d3ee0f793447c26c5c48b82ec309985d6afcf177ed08510458f4",
   "rows": 12966,
-  "dim": 48,
-  "model": "mtnn_v5_concat_b2_h160_t32_d48_mlp128",
-  "built": "2026-07-14"
+  "dim": 64,
+  "model": "mtnn_v5_concat_b2_h160_t32_d64_mlp128_fus256",
+  "built": "2026-07-25"
  },
  "vectors_asset": {
   "path": "assets/vectors.json",
-  "sha256": "368f66e4e38362294dd601c12129b717da08b9052cc7618a2136b429f82b1071",
+  "sha256": "21f33221880cd3695fa7fd2b45e42213aac07a49bf539a160e8b3f33034d3803",
   "rows": 12966
  },
  "eligible_pairs": 10104,
@@ -34,46 +34,46 @@
   "mtnn": {
    "overall": {
     "n": 10104,
-    "top1": 0.2661,
-    "top5": 0.5243
+    "top1": 0.5081,
+    "top5": 0.9339
    },
    "by_split": {
     "test": {
      "n": 790,
-     "top1": 0.1633,
-     "top5": 0.3633
+     "top1": 0.438,
+     "top5": 0.757
     },
     "train": {
      "n": 8553,
-     "top1": 0.277,
-     "top5": 0.5399
+     "top1": 0.5361,
+     "top5": 0.9728
     },
     "val": {
      "n": 761,
-     "top1": 0.251,
-     "top5": 0.5164
+     "top1": 0.2668,
+     "top5": 0.6807
     }
    },
    "by_decade": {
     "1996-1999": {
      "n": 1266,
-     "top1": 0.2899,
-     "top5": 0.5671
+     "top1": 0.6161,
+     "top5": 0.9803
     },
     "2000s": {
      "n": 3325,
-     "top1": 0.283,
-     "top5": 0.5615
+     "top1": 0.5477,
+     "top5": 0.9823
     },
     "2010s": {
      "n": 3572,
-     "top1": 0.2688,
-     "top5": 0.5165
+     "top1": 0.5,
+     "top5": 0.9628
     },
     "2020s": {
      "n": 1941,
-     "top1": 0.2169,
-     "top5": 0.4472
+     "top1": 0.3849,
+     "top5": 0.7676
     }
    }
   },

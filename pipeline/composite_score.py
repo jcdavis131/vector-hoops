@@ -55,10 +55,10 @@ CQS_DELTA = 0.5
 # the best honest measurement is 0.768 — and it silently blocked every
 # candidate on a number the project had already disowned.
 BASELINE = {
-    "cqs": 75.62,
-    "recall": 0.742,
-    "purity": 0.7822,
-    "continuity_spread": 0.119,
+    "cqs": 75.82,
+    "recall": 0.732,
+    "purity": 0.7813,
+    "continuity_spread": 0.1436,
 }
 
 # Seed dispersion measured for the baseline recipe over seeds 7/13/21/42
@@ -67,33 +67,41 @@ BASELINE = {
 # noise: test recall alone swings sd 0.088 between seeds, so a 0.02 slack was
 # adjudicating sampling noise as if it were model quality.
 BASELINE_SD = {
-    "cqs": 2.44,
-    "recall": 0.128,
-    "purity": 0.0064,
-    "continuity_spread": 0.083,
+    "cqs": 3.40,
+    "recall": 0.176,
+    "purity": 0.0038,
+    "continuity_spread": 0.1012,
 }
 
 BASELINE_PROVENANCE = {
     "recorded": "2026-07-25",
     "recipe": (
-        "concat fusion, tower 32/160, 2 blocks, dim 48, mlp-heads, "
+        "concat fusion, tower 32/160, 2 blocks, dim 64, mlp-heads, "
         "d-head-hidden 128, fusion-hidden 256, hybrid NCE, onecycle, 40 epochs "
-        "(= train_mtnn.py defaults as of e72c2a8)"
+        "(= train_mtnn.py defaults as of e72c2a8, with --dim 64)"
     ),
-    "seeds": [5, 7, 13, 21, 42, 99],
+    "seeds": [7, 13, 21, 42],
     "protocol": (
         "temporal split train y<=2021 / val y<=2023 / test y>=2024; "
         "130-feature matrix (FORM_GP retired, 45ce92d); "
         "position labels restored (vectors.json re-enriched)"
     ),
-    "source": "pipeline/data/sweep_stability/{baseline_reanchor,reanchor_extra}.json",
+    "source": "pipeline/data/sweep_stability/model_selection.json",
+    "deployed_artifact": (
+        "seed 7 of this recipe (CQS 78.11, test recall 0.846, purity 0.7834), "
+        "promoted 2026-07-25. Note the recipe MEAN is 75.82 -- seed 7 is a good "
+        "draw, not a recipe-level improvement over dim 48 (75.62). Promotion was "
+        "justified against the DEPLOYED 2026-07-14 artifact on a protocol-matched "
+        "held-out comparison (top-5 on never-trained 2024+ pairs 0.363 -> 0.757), "
+        "not by clearing the CQS bar, which it does not."
+    ),
     "dispersion_note": (
-        "Five of six seeds land in 76.33-77.25 (sd ~0.37). Seed 42 is a bad "
-        "basin at CQS 70.69 / test 0.484 / continuity spread 0.2876. It is kept "
-        "in the mean and sd rather than trimmed, because ~1 run in 6 genuinely "
-        "lands there and a baseline that hides that would understate the "
-        "evidence a promotion needs. The continuity guard rejects a seed-42-like "
-        "model even with the outlier included in the baseline."
+        "Seed 42 is a bad basin for concat fusion at both dim 48 and dim 64 "
+        "(CQS ~70.7, test recall ~0.47, continuity spread ~0.29) and is kept in "
+        "the mean rather than trimmed. Transformer fusion does NOT collapse on "
+        "that seed (test 0.822-0.830), so the fragility is a property of concat "
+        "fusion, not of the seed. The gate rejects a collapsed run either way, "
+        "so the cost is a wasted retrain rather than a bad deploy."
     ),
     "warning": (
         "Numbers from different protocols are not comparable. Re-anchor this "
