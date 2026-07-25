@@ -14,6 +14,7 @@ Promote rule:
 
 from __future__ import annotations
 
+import math
 from typing import Any
 
 # Soft scales for 0–1 transforms (chosen so the 2026-07-09 v5 report sits
@@ -35,18 +36,80 @@ WEIGHTS = {
     "aux_r2": 0.08,
 }
 
-# Soft floors used by should_promote (absolute, not CQS components).
+# Minimum floors used by should_promote. These are *floors*, not the whole
+# story: the effective threshold widens with measured seed noise (see
+# _threshold), so a decision made from one seed has to clear a taller bar than
+# one averaged over four.
 RECALL_SLACK = 0.02
-PURITY_SLACK = 0.02
+PURITY_SLACK = 0.015
 CQS_DELTA = 0.5
 
 # Promoted baseline — update when a trial promotes under the CQS gate.
-# Seeded from pipeline/data/mtnn_report.json (mtnn_v5_concat_b2… 2026-07-09).
+#
+# 2026-07-24 re-anchor. The previous constants were
+# {"cqs": 85.87, "recall": 1.0, "purity": 0.8726}, seeded 2026-07-09 from the
+# pre-protocol loop. docs/MTNN_V5_PROMOTE_GATE.md §2 documents that loop as
+# leaking: it trained on 1,551 held-out pair positives and fit k-means over
+# val/test rows, so "recall@10 = 1.0" was memorization, not skill. A gate
+# demanding recall >= 0.98 was therefore unpassable by any leak-free model —
+# the best honest measurement is 0.768 — and it silently blocked every
+# candidate on a number the project had already disowned.
 BASELINE = {
-    "cqs": 85.87,  # Bet D promote 2026-07-10; floors below are soft
-    "recall": 1.0,
-    "purity": 0.8726,
+    "cqs": 75.87,
+    "recall": 0.768,
+    "purity": 0.7795,
+    "continuity_spread": 0.100,
 }
+
+# Seed dispersion measured for the baseline recipe over seeds 7/13/21/42
+# (docs/MTNN_STABILITY_2026-07-24.md §3b). Thresholds are derived from these
+# rather than hand-picked, because the old 0.02 slacks sat far below the real
+# noise: test recall alone swings sd 0.088 between seeds, so a 0.02 slack was
+# adjudicating sampling noise as if it were model quality.
+BASELINE_SD = {
+    "cqs": 1.61,
+    "recall": 0.088,
+    "purity": 0.0046,
+    "continuity_spread": 0.030,
+}
+
+BASELINE_PROVENANCE = {
+    "recorded": "2026-07-24",
+    "recipe": (
+        "concat fusion, tower 32/160, 2 blocks, dim 48, mlp-heads, "
+        "d-head-hidden 128, fusion-hidden 256, hybrid NCE, onecycle, 40 epochs"
+    ),
+    "seeds": [7, 13, 21, 42],
+    "protocol": (
+        "temporal split train y<=2021 / val y<=2023 / test y>=2024; "
+        "position labels restored (vectors.json re-enriched)"
+    ),
+    "source": "pipeline/data/sweep_stability/{sweep_results,seed_stability2}.json",
+    "warning": (
+        "Numbers from different protocols are not comparable. Re-anchor this "
+        "block only from a run whose protocol is recorded here, and update "
+        "BASELINE_SD in the same commit."
+    ),
+}
+
+# A promote decision from a single seed is not decision-grade; below this the
+# gate still runs but the CQS bar is widened by the seed noise (see _threshold).
+PROMOTE_SEEDS_TARGET = 4
+
+
+def _threshold(metric: str, n_seeds: int, floor: float) -> float:
+    """Effective slack: max(hand floor, 2 x standard error of the seed mean).
+
+    With one seed the standard error is the full seed sd, so the bar is wide;
+    averaging over PROMOTE_SEEDS_TARGET seeds shrinks it back toward the floor.
+    This is what stops the gate adjudicating sampling noise -- measured test
+    recall sd is 0.088, more than 4x the old hand-picked 0.02 slack.
+    """
+    sd = BASELINE_SD.get(metric)
+    if not sd:
+        return floor
+    sem = float(sd) / math.sqrt(max(1, int(n_seeds)))
+    return max(floor, 2.0 * sem)
 
 
 def _clip01(x: float) -> float:
@@ -161,10 +224,15 @@ def composite_quality(report: dict[str, Any]) -> dict[str, Any]:
         "weights": dict(WEIGHTS),
         "promote_metric": "cqs",
         "promote_rule": (
-            "promote if CQS >= baseline_cqs + 0.5 "
-            "and test recall@10 >= baseline_recall - 0.02 "
-            "and purity@20 >= baseline_purity - 0.02"
+            "promote if CQS >= baseline_cqs + delta, test recall@10 and "
+            "purity@20 stay within their floors, and continuity spread stays "
+            "under its bar. Thresholds are 2x the standard error of the seed "
+            "mean (measured seed sd: recall 0.088, CQS 1.61, purity 0.0046), "
+            "so they widen when a decision rests on few seeds and tighten "
+            f"toward the hand floors at {PROMOTE_SEEDS_TARGET} seeds."
         ),
+        "baseline_provenance": dict(BASELINE_PROVENANCE),
+        "baseline_sd": dict(BASELINE_SD),
         "baseline_cqs": BASELINE.get("cqs"),
         "baseline_recall": BASELINE.get("recall"),
         "baseline_purity": BASELINE.get("purity"),
@@ -203,6 +271,7 @@ def should_promote(
     cqs_delta: float = CQS_DELTA,
     recall_slack: float = RECALL_SLACK,
     purity_slack: float = PURITY_SLACK,
+    n_seeds: int = 1,
 ) -> tuple[bool, str]:
     block = new_report.get("composite") or composite_quality(new_report)
     new_cqs = float(block["cqs"])
@@ -238,22 +307,50 @@ def should_promote(
     if failed_flags:
         return False, "population validation failed: " + ", ".join(failed_flags)
 
-    if new_recall < float(base_r) - recall_slack:
+    eff_recall = _threshold("recall", n_seeds, recall_slack)
+    eff_purity = _threshold("purity", n_seeds, purity_slack)
+    eff_cqs = _threshold("cqs", n_seeds, cqs_delta)
+
+    if new_recall < float(base_r) - eff_recall:
         return False, (
-            f"recall {new_recall:.3f} < floor {float(base_r) - recall_slack:.3f}"
+            f"recall {new_recall:.3f} < floor {float(base_r) - eff_recall:.3f} "
+            f"(n_seeds={n_seeds})"
         )
-    if new_purity < float(base_p) - purity_slack:
+    if new_purity < float(base_p) - eff_purity:
         return False, (
-            f"purity {new_purity:.3f} < floor {float(base_p) - purity_slack:.3f}"
+            f"purity {new_purity:.3f} < floor {float(base_p) - eff_purity:.3f} "
+            f"(n_seeds={n_seeds})"
         )
-    if new_cqs < float(base_cqs) + cqs_delta:
+    # Direct guard on the failure mode that actually shipped: the 2026-07-24 run
+    # held val recall 0.438 while test went to 0.000, because same-player
+    # continuity fell off a cliff outside the training window (spread 0.646 vs
+    # 0.100 baseline). Recall alone did not catch it early; this does.
+    new_spread = _num(new_report.get("continuity_spread"))
+    base_spread = _num(BASELINE.get("continuity_spread"))
+    if new_spread is not None and base_spread is not None:
+        spread_bar = base_spread + _threshold("continuity_spread", n_seeds, 0.02)
+        if new_spread > spread_bar:
+            return False, (
+                f"continuity spread {new_spread:.3f} > bar {spread_bar:.3f} — "
+                "model is memorizing the training window, not generalizing "
+                f"(n_seeds={n_seeds})"
+            )
+    if new_cqs < float(base_cqs) + eff_cqs:
         return False, (
-            f"CQS {new_cqs:.2f} < promote bar {float(base_cqs) + cqs_delta:.2f}"
+            f"CQS {new_cqs:.2f} < promote bar {float(base_cqs) + eff_cqs:.2f} "
+            f"(n_seeds={n_seeds}; bar widens when seeds are few)"
         )
-    return True, (
-        f"CQS {new_cqs:.2f} >= {float(base_cqs) + cqs_delta:.2f} "
-        f"and recall/purity floors ok"
+    verdict = (
+        f"CQS {new_cqs:.2f} >= {float(base_cqs) + eff_cqs:.2f} "
+        f"and recall/purity/continuity floors ok (n_seeds={n_seeds})"
     )
+    if n_seeds < PROMOTE_SEEDS_TARGET:
+        verdict += (
+            f" — NOTE: measured seed sd is recall {BASELINE_SD['recall']}, "
+            f"CQS {BASELINE_SD['cqs']}; re-check across "
+            f"{PROMOTE_SEEDS_TARGET} seeds before promoting for real"
+        )
+    return True, verdict
 
 
 def seed_baseline_from_report(report: dict[str, Any]) -> dict[str, float]:
