@@ -1097,11 +1097,11 @@ def main() -> None:
     ap.add_argument(
         "--tower-width",
         type=int,
-        default=24,
+        default=32,
         help="per-family tower output width before fusion",
     )
     ap.add_argument(
-        "--tower-hidden", type=int, default=96, help="per-family tower hidden width"
+        "--tower-hidden", type=int, default=160, help="per-family tower hidden width"
     )
     ap.add_argument(
         "--skill-hidden", type=int, default=16, help="per-skill mini-tower hidden width"
@@ -1120,7 +1120,7 @@ def main() -> None:
     ap.add_argument(
         "--lr-schedule",
         choices=("legacy-epoch-cosine", "onecycle", "warmup-cosine"),
-        default="legacy-epoch-cosine",
+        default="onecycle",
         help="onecycle mirrors Brain2Qwerty (arXiv:2502.17480); warmup-cosine is embed SOTA",
     )
     ap.add_argument(
@@ -1145,24 +1145,27 @@ def main() -> None:
     ap.add_argument(
         "--fusion",
         choices=("gated", "concat", "transformer"),
-        default="gated",
-        help="tower fusion: gated attention (default), concat MLP, or v5 transformer",
+        default="concat",
+        help="tower fusion: concat MLP (default), gated attention, or v5 transformer. "
+        "gated measured 0.530 test recall against concat's 0.838 at the same "
+        "geometry (docs/MTNN_STABILITY_2026-07-24.md §3)",
     )
     ap.add_argument(
         "--tower-blocks",
         type=int,
-        default=1,
+        default=2,
         help="v5: residual blocks per family tower (depth)",
     )
     ap.add_argument(
         "--mlp-heads",
-        action="store_true",
-        help="v5: 2-layer MLP decode heads instead of linear",
+        action=argparse.BooleanOptionalAction,
+        default=True,
+        help="v5: 2-layer MLP decode heads instead of linear (--no-mlp-heads to disable)",
     )
     ap.add_argument(
         "--d-head-hidden",
         type=int,
-        default=64,
+        default=128,
         help="v5: hidden width for MLP decode heads",
     )
     ap.add_argument(
@@ -1185,19 +1188,19 @@ def main() -> None:
     ap.add_argument(
         "--nce-loss",
         choices=("infonce", "supcon-arch", "hybrid"),
-        default="infonce",
+        default="hybrid",
         help="contrastive: player InfoNCE, archetype SupCon, or hybrid",
     )
     ap.add_argument(
         "--nce-player-weight",
         type=float,
-        default=0.75,
+        default=0.7,
         help="hybrid: weight on adjacent-season player InfoNCE",
     )
     ap.add_argument(
         "--nce-arch-weight",
         type=float,
-        default=0.25,
+        default=0.3,
         help="hybrid: weight on archetype SupCon (purity pressure)",
     )
     ap.add_argument(
@@ -1223,6 +1226,13 @@ def main() -> None:
         default="",
         help="comma-separated families to zero out (values + mask) while "
         "keeping their towers, so ablation arms share one architecture",
+    )
+    ap.add_argument(
+        "--mask-features",
+        type=str,
+        default="",
+        help="comma-separated individual features to zero out (values + mask), "
+        "for testing a single column without rebuilding train_matrix.npz",
     )
     ap.add_argument(
         "--exclude-families",
@@ -1314,6 +1324,23 @@ def main() -> None:
         print(
             f"masked families: {sorted(mask_fams)} -> {zeroed} columns zeroed, "
             f"towers kept (fusion width unchanged)"
+        )
+    mask_feats = {s.strip() for s in args.mask_features.split(",") if s.strip()}
+    if mask_feats:
+        # Same trick one level down: zero individual columns so a single feature
+        # can be tested without rebuilding train_matrix.npz. Rebuilding would
+        # change the matrix the promote baseline was measured on, and
+        # BASELINE_PROVENANCE exists precisely to stop cross-matrix comparison.
+        by_name = {f: j for j, f in enumerate(manifest["features"])}
+        unknown = sorted(mask_feats - set(by_name))
+        if unknown:
+            raise SystemExit(f"--mask-features: unknown feature(s) {unknown}")
+        for f in sorted(mask_feats):
+            Z[:, by_name[f]] = 0.0
+            M[:, by_name[f]] = 0.0
+        print(
+            f"masked features: {sorted(mask_feats)} -> {len(mask_feats)} columns "
+            f"zeroed (towers and fusion width unchanged)"
         )
     exclude = {s.strip() for s in args.exclude_families.split(",") if s.strip()}
     # Injury never feeds an input tower — the A/B proved it regresses retrieval.
