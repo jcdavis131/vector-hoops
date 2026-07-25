@@ -1,9 +1,11 @@
 # Handoff: Skills Lens + dormant data tracks
 
 > **Purpose:** let another agent (or future you) pick up this work without
-> re-deriving context. **Latest session:** [`HANDOFF_2026-07-07.md`](./HANDOFF_2026-07-07.md)
+> re-deriving context. **Latest session:** [`HANDOFF_2026-07-25.md`](./HANDOFF_2026-07-25.md)
+> (four silent-plumbing bugs, promote gate re-anchored, hill-climbs all
+> noise-bound; PR #9 open, nothing promoted).
+> Prior: [`HANDOFF_2026-07-07.md`](./HANDOFF_2026-07-07.md)
 > (wide skills live, disruption gravity, fetch fix, HP sweep).
-> Snapshot as of 2026-07-07.
 > **v5 research gate (live):** [`MTNN_V5_PROMOTE_GATE.md`](./MTNN_V5_PROMOTE_GATE.md)
 > — promote/hold checklist + comparison shell while Fable 5 runs ablations;
 > **no overwrite of promoted v4** until operator sign-off.
