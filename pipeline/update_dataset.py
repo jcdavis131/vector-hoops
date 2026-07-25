@@ -237,6 +237,24 @@ def main() -> None:
             required=True,
         )
     )
+    # Catches the class of bug that shipped three times in July 2026 without
+    # breaking a build: a retired feature reappearing, a column going dead, a
+    # new duplicate, or an input drifting within r=0.95 of the durability
+    # head's own target. Cheap (matrix-only, no training).
+    steps.append(
+        run_step(
+            "feature-hygiene gates",
+            [sys.executable, "pipeline/test_feature_hygiene.py"],
+            required=True,
+        )
+    )
+    steps.append(
+        run_step(
+            "promote-gate tests",
+            [sys.executable, "pipeline/test_composite_gate.py"],
+            required=True,
+        )
+    )
     # Arena bundle steps removed 2026-07: build_arena.py and assets/arena
     # were retired (c1b44d2 / db5370b); the required=True invocation of the
     # deleted script SystemExited every run before the ledger write below.
