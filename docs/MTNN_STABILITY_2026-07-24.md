@@ -46,6 +46,32 @@ ablation arm at test 0.84 and the collapsed run. The deltas were
 `fusion concat→gated`, `tower_width 32→24`, `tower_hidden 160→96`,
 `tower_blocks 2→1`, `epochs 20→40`.
 
+### 1a. The collapsed run was `train_mtnn.py` with no flags
+
+Those "deltas" are not an experiment someone chose — **they are the argparse
+defaults.** Every field of the collapsed run matches `train_mtnn.py`'s defaults
+exactly:
+
+| field | collapsed run | argparse default |
+|---|---|---|
+| dim | 48 | 48 |
+| tower_width | 24 | 24 |
+| tower_hidden | 96 | 96 |
+| tower_blocks | 1 | 1 |
+| fusion | gated | gated |
+| epochs | 40 | 40 |
+| nce_loss | infonce | infonce |
+| lr_schedule | legacy-epoch-cosine | legacy-epoch-cosine |
+
+**Running the trainer with no architecture flags produces a model that scores
+test recall 0.000.** The defaults are a trap, and they are the single most
+likely way for a future run to silently produce a broken model.
+
+Compounding it, the repo carries **three** different recipes with no single
+source of truth: the argparse defaults (collapse), `tower_ablation.ARCH` /
+`sweep_stability` (concat 32/160/2 — the good one), and `rebuild_all.py`
+(transformer 40/192/3 at dim 64). Any of them can be invoked by accident.
+
 This is now a **reproducible experiment**, not a story: `sweep_stability.py` arm
 `gated_narrow` rebuilds that exact geometry and reproduces the collapse
 (test 0.000, continuity 0.242).
