@@ -55,10 +55,10 @@ CQS_DELTA = 0.5
 # the best honest measurement is 0.768 — and it silently blocked every
 # candidate on a number the project had already disowned.
 BASELINE = {
-    "cqs": 75.87,
-    "recall": 0.768,
-    "purity": 0.7795,
-    "continuity_spread": 0.100,
+    "cqs": 75.62,
+    "recall": 0.742,
+    "purity": 0.7822,
+    "continuity_spread": 0.119,
 }
 
 # Seed dispersion measured for the baseline recipe over seeds 7/13/21/42
@@ -67,24 +67,34 @@ BASELINE = {
 # noise: test recall alone swings sd 0.088 between seeds, so a 0.02 slack was
 # adjudicating sampling noise as if it were model quality.
 BASELINE_SD = {
-    "cqs": 1.61,
-    "recall": 0.088,
-    "purity": 0.0046,
-    "continuity_spread": 0.030,
+    "cqs": 2.44,
+    "recall": 0.128,
+    "purity": 0.0064,
+    "continuity_spread": 0.083,
 }
 
 BASELINE_PROVENANCE = {
-    "recorded": "2026-07-24",
+    "recorded": "2026-07-25",
     "recipe": (
         "concat fusion, tower 32/160, 2 blocks, dim 48, mlp-heads, "
-        "d-head-hidden 128, fusion-hidden 256, hybrid NCE, onecycle, 40 epochs"
+        "d-head-hidden 128, fusion-hidden 256, hybrid NCE, onecycle, 40 epochs "
+        "(= train_mtnn.py defaults as of e72c2a8)"
     ),
-    "seeds": [7, 13, 21, 42],
+    "seeds": [5, 7, 13, 21, 42, 99],
     "protocol": (
         "temporal split train y<=2021 / val y<=2023 / test y>=2024; "
+        "130-feature matrix (FORM_GP retired, 45ce92d); "
         "position labels restored (vectors.json re-enriched)"
     ),
-    "source": "pipeline/data/sweep_stability/{sweep_results,seed_stability2}.json",
+    "source": "pipeline/data/sweep_stability/{baseline_reanchor,reanchor_extra}.json",
+    "dispersion_note": (
+        "Five of six seeds land in 76.33-77.25 (sd ~0.37). Seed 42 is a bad "
+        "basin at CQS 70.69 / test 0.484 / continuity spread 0.2876. It is kept "
+        "in the mean and sd rather than trimmed, because ~1 run in 6 genuinely "
+        "lands there and a baseline that hides that would understate the "
+        "evidence a promotion needs. The continuity guard rejects a seed-42-like "
+        "model even with the outlier included in the baseline."
+    ),
     "warning": (
         "Numbers from different protocols are not comparable. Re-anchor this "
         "block only from a run whose protocol is recorded here, and update "

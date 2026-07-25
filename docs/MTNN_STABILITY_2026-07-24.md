@@ -67,10 +67,13 @@ exactly:
 test recall 0.000.** The defaults are a trap, and they are the single most
 likely way for a future run to silently produce a broken model.
 
-Compounding it, the repo carries **three** different recipes with no single
-source of truth: the argparse defaults (collapse), `tower_ablation.ARCH` /
-`sweep_stability` (concat 32/160/2 — the good one), and `rebuild_all.py`
-(transformer 40/192/3 at dim 64). Any of them can be invoked by accident.
+*Correction (2026-07-25):* an earlier draft of this section claimed the repo
+carried **three** rival recipes. That was wrong. `rebuild_all.py`'s production
+path already matches the good recipe flag-for-flag (plus four production-only
+flags: `--checkpoint-metric cqs`, `--phase final-refit`, `--era-align
+procrustes`, `--robust-scaling`), and its transformer/dim-64 variant is behind
+an opt-in `--v6` branch. The argparse defaults were the only rogue recipe, and
+they are fixed (§8).
 
 This is now a **reproducible experiment**, not a story: `sweep_stability.py` arm
 `gated_narrow` rebuilds that exact geometry and reproduces the collapse
@@ -325,19 +328,66 @@ plumbing that was quietly broken:
 
 **The model is not hyperparameter-limited.** Audit the plumbing before tuning.
 
-**Next steps, in value order**
+---
 
-1. **Measure the durability head** (§7). Add it to `_aux_test_r2s` or report it
-   separately. Until it is scored, the `FORM_GP` leak cannot be evaluated and
-   a 0.10-weight head runs unwatched.
-2. **Retire `FORM_GP` and one of `DRAFT_NUMBER`/`DRAFT_SLOT_Z`** (§6 shows it
-   is free). This rebuilds `train_matrix.npz`, which moves the matrix the
-   baseline was measured on — so re-measure `BASELINE` and update
-   `BASELINE_PROVENANCE` in the same commit, per the warning in that block.
-3. **Decide what the promote metric should track** (§6). `transformer` gives
-   the best retrieval and the flattest continuity but loses on CQS. The game
-   ranks by cosine retrieval; the gate ranks mostly by cluster structure.
-4. Consider promoting `continuity_spread` into the gate, since it is computed
-   from ~5× more pairs than test recall and ordered every arm identically.
-5. Consolidate the three rival recipes (§1a) now that defaults are correct —
-   `rebuild_all.py` still trains a transformer at dim 64.
+## 10. Closing the loop (2026-07-25)
+
+**Durability is now measured.** `vector_head_report()` reports per-column and
+mean val/test R² for the 4-target durability head — `regression_head_report`
+only handled single-target heads, which is why nothing scored it. It is
+deliberately **not** added to `_aux_test_r2s`: that would change what CQS means
+and invalidate the baseline. Measurement is not scoring policy.
+
+With it measurable, the `FORM_GP` leak is confirmed (seed 7, 20ep):
+
+| column | with FORM_GP | masked | Δ |
+|---|---|---|---|
+| INJ_GP_PCT | 0.6993 | 0.5900 | **−0.109** |
+| INJ_MISS_N | 0.6742 | 0.5710 | **−0.103** |
+| INJ_MAX_MISS_STREAK | 0.1483 | 0.1207 | −0.028 |
+| INJ_MISS_SPELLS | 0.3334 | 0.3317 | −0.002 |
+
+The two leaked columns lose ~0.10 R²; the other two are flat. **`FORM_GP` is
+retired** (matrix 131 → 130). `DRAFT_NUMBER`/`DRAFT_SLOT_Z` is left in place:
+removing it means editing `build_vectors.BIO_COLS`, which rebuilds the live
+`vectors.json` for a measured-zero gain. It is allowlisted in the hygiene gate
+with that reason instead.
+
+**Baseline re-anchored on the 130-feature matrix, 6 seeds:**
+
+| seed | CQS | test | purity | spread |
+|---|---|---|---|---|
+| 5 | 76.33 | 0.774 | 0.7836 | 0.0850 |
+| 7 | 77.25 | 0.834 | 0.7766 | 0.0865 |
+| 13 | 76.37 | 0.790 | 0.7764 | 0.0729 |
+| 21 | 76.51 | 0.786 | 0.7838 | 0.0917 |
+| **42** | **70.69** | **0.484** | 0.7794 | **0.2876** |
+| 99 | 76.56 | 0.782 | 0.7934 | 0.0901 |
+
+`BASELINE` = CQS 75.62 / recall 0.742 / purity 0.7822 / spread 0.119;
+`BASELINE_SD` = 2.44 / 0.128 / 0.0064 / 0.083.
+
+Five of six seeds sit in 76.33–77.25 (sd ≈ 0.37). **Seed 42 is a bad basin** —
+and it is kept in the mean rather than trimmed, because roughly 1 run in 6
+genuinely lands there and a baseline that hides that understates the evidence a
+promotion needs. Verified the continuity guard still rejects a seed-42-like
+model with the outlier included (`recall 0.484 < floor 0.614`).
+
+**Gates added.** `test_composite_gate.py` (15 tests) pins the promote gate,
+including a regression test that fails if `BASELINE['recall']` ever returns to
+the memorization value. `test_feature_hygiene.py` turns this whole bug class
+into an exit code — retired features staying retired, no dead columns, no new
+input duplicates, no input within r=0.95 of the durability target. Both are
+wired into `update_dataset.py` as required gates and both are matrix-only.
+
+**Next steps**
+
+1. **Decide what the promote metric should track** (§6) — operator call.
+   `transformer` gives the best retrieval and flattest continuity but loses on
+   CQS. The game ranks by cosine retrieval; the gate ranks mostly by cluster
+   structure.
+2. Investigate the seed-42 basin. Five seeds are tight; one is not. Worth
+   knowing whether it is initialization or a data-order interaction.
+3. Consider promoting `continuity_spread` from guard to scored component,
+   since it is computed from ~5× more pairs than test recall and ordered every
+   arm in §6 identically.
