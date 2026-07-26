@@ -1,7 +1,7 @@
 """auto-generated test gap mapper for build_skills - coverage <80%"""
 
 import json
-import pathlib
+
 import pytest
 
 try:
@@ -22,7 +22,7 @@ def sample_data():
 def test_build_skills_basic(input_val, expected, tmp_path):
     """Basic functionality smoke test - currently unimplemented (gap)."""
     if target_module is None:
-        pytest.skip(f"pipeline.build_skills not importable")
+        pytest.skip("pipeline.build_skills not importable")
     pytest.skip("TODO: fill assert - auto-generated stub requires implementation")
 
 
@@ -33,12 +33,12 @@ def test_build_skills_edge_cases():
 @pytest.mark.parametrize("bad_input", ["", None, {}])
 def test_build_skills_invalid_inputs(bad_input, tmp_path):
     if target_module is None:
-        pytest.skip(f"pipeline.build_skills not importable")
+        pytest.skip("pipeline.build_skills not importable")
     pytest.skip("TODO: implement invalid-input handling")
 
 
 def test_build_skills_integration(sample_data, tmp_path):
-    tmp_file = tmp_path / f"build_skills_sample.json"
+    tmp_file = tmp_path / "build_skills_sample.json"
     tmp_file.write_text(json.dumps(sample_data))
     assert tmp_file.exists()
     pytest.skip("TODO: implement integration - build_skills")
