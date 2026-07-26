@@ -1170,6 +1170,13 @@ def main() -> None:
         ap.add_argument(
             f"--w-{key.replace('_', '-')}", type=float, default=None, dest=f"w_{key}"
         )
+    # --- Expanding window CV args (Task 3) ---
+    ap.add_argument("--cv", choices=("none", "expanding", "static"), default="expanding", help="cross-validation mode: expanding window (time-series, no lookahead) vs static train/val split")
+    ap.add_argument("--min-train-years", type=int, default=5, help="min years in train before first fold")
+    ap.add_argument("--val-years", type=int, default=1, help="future years in val per fold")
+    ap.add_argument("--cv-step", type=int, default=1, help="step size in years between folds")
+    ap.add_argument("--cv-max-folds", type=int, default=0, help="max folds to run (0=all)")
+    ap.add_argument("--cv-final-full", action="store_true", default=True, help="train final model on all data after CV")
     args = ap.parse_args()
 
     weights = dict(DEFAULT_LOSS_WEIGHTS)
@@ -1381,6 +1388,52 @@ def main() -> None:
     if len(pair_arr):
         lookup = {int(a): int(b) for a, b in pair_arr}
         lookup.update({int(b): int(a) for a, b in pair_arr})
+
+    # --- Expanding Window CV (Task 3) ---
+    cv_report = None
+    if getattr(args, "cv", "none") == "expanding":
+        try:
+            from expanding_cv_runner import run_expanding_cv
+
+            print("\n[CV] Running expanding window cross-validation before final training...")
+            cv_report = run_expanding_cv(
+                args=args,
+                Z=Z,
+                M=M,
+                names=names,
+                seasons=seasons,
+                pids=pids,
+                clusters=clusters,
+                positions=positions,
+                season_ids=season_ids,
+                manifest=manifest,
+                fams=fams,
+                game_cols=game_cols,
+                pair_arr=pair_arr,
+                next_idx_arr=next_idx_arr,
+                family_slices_fn=family_slices,
+                split_by_family_fn=split_by_family,
+                batch_views_fn=batch_views,
+                MTNN_cls=MTNN,
+                adamw_param_groups_fn=adamw_param_groups,
+                optimizer_steps_per_epoch_fn=optimizer_steps_per_epoch,
+                build_lr_scheduler_fn=build_lr_scheduler,
+                contrastive_loss_fn=contrastive_loss,
+                weights=weights,
+                device=device,
+                ROOT=ROOT,
+            )
+            # For final training after CV, use full data if requested
+            if getattr(args, "cv_final_full", True):
+                print("[CV] Switching final training to full data (all rows)")
+                fit_idx = np.arange(n)
+                fit_rows_mode = "all"
+        except Exception as e:
+            print(f"[CV] Expanding window CV failed: {e}")
+            import traceback
+
+            traceback.print_exc()
+            print("[CV] Continuing with static split training")
 
     best_val_recall: float | None = None
     best_val_purity: float | None = None
@@ -1778,7 +1831,23 @@ def main() -> None:
             "Promote only if multi-task CQS >= baseline + 0.5 AND test recall@10 "
             "and purity@20 stay within 0.02 of baseline (not auto-promoted to assets/)."
         ),
+        "cv": {
+            "mode": getattr(args, "cv", "none"),
+            "min_train_years": getattr(args, "min_train_years", None),
+            "val_years": getattr(args, "val_years", None),
+            "step": getattr(args, "cv_step", None),
+            "expanding_window_report_path": "mtnn_cv_report.json" if getattr(args, "cv", "none") == "expanding" else None,
+        },
     }
+    # Attach expanding window aggregates if available
+    try:
+        if cv_report is not None:
+            report["expanding_window_cv"] = cv_report
+            # Promote composite from CV aggregate for transparency
+            agg = cv_report.get("aggregate", {})
+            report["cv_aggregate"] = agg
+    except NameError:
+        pass
     report["composite"] = cqs.composite_quality(report)
     ok, why = cqs.should_promote(report)
     report["promote"] = {"ok": ok, "reason": why}

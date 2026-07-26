@@ -269,3 +269,93 @@ def seed_baseline_from_report(report: dict[str, Any]) -> dict[str, float]:
         "recall": float(recall),
         "purity": float(purity),
     }
+
+
+# --- Expanding Window CV extensions (Task 3) ---
+
+
+def composite_across_folds(cv_report: dict[str, Any]) -> dict[str, Any] | None:
+    """Compute CQS-like aggregate across expanding window folds.
+
+    Uses recall_at_10 and purity_at_20 per fold if available; aggregates mean/std
+    and computes temporal stability penalty.
+    """
+    if not cv_report:
+        return None
+    folds = cv_report.get("folds") or cv_report.get("per_fold_breakdown") or []
+    if not folds:
+        return None
+
+    def _extract(key):
+        vals = []
+        for f in folds:
+            v = f.get(key)
+            if v is None:
+                continue
+            try:
+                fv = float(v)
+                if fv == fv and not (fv == float("inf") or fv == float("-inf")):
+                    vals.append(fv)
+            except Exception:
+                continue
+        return vals
+
+    recall_vals = _extract("recall_at_10")
+    purity_vals = _extract("purity_at_20")
+
+    aggregate = cv_report.get("aggregate", {})
+
+    # Use aggregate if provided
+    recall_mean = None
+    purity_mean = None
+    if "recall_at_10" in aggregate:
+        rm = aggregate["recall_at_10"]
+        recall_mean = rm.get("mean") if isinstance(rm, dict) else rm
+    elif recall_vals:
+        recall_mean = sum(recall_vals) / len(recall_vals)
+
+    if "purity_at_20" in aggregate:
+        pm = aggregate["purity_at_20"]
+        purity_mean = pm.get("mean") if isinstance(pm, dict) else pm
+    elif purity_vals:
+        purity_mean = sum(purity_vals) / len(purity_vals)
+
+    # Simple CQS proxy across folds = 0.55*recall + 0.45*purity scaled to 0-100
+    cqs_folds = None
+    if recall_mean is not None and purity_mean is not None:
+        cqs_folds = 100.0 * (0.55 * recall_mean + 0.45 * purity_mean)
+
+    temporal = cv_report.get("temporal_stability", {})
+
+    return {
+        "n_folds": len(folds),
+        "recall_at_10_mean": recall_mean,
+        "purity_at_20_mean": purity_mean,
+        "cqs_proxy": round(cqs_folds, 2) if cqs_folds is not None else None,
+        "recall_vals": recall_vals,
+        "purity_vals": purity_vals,
+        "temporal_stability": temporal,
+        "aggregate_detail": aggregate,
+    }
+
+
+def cqs_with_expanding_window(report: dict[str, Any]) -> dict[str, Any]:
+    """Enriched composite that includes expanding window aggregate if present.
+
+    Keeps original CQS as primary, but adds cv_cqs_proxy and stability penalty.
+    """
+    base = composite_quality(report)
+    cv_data = report.get("expanding_window_cv") or report.get("expanding_window_validation")
+    cv_summary = composite_across_folds(cv_data) if cv_data else None
+
+    if cv_summary:
+        base["cv"] = cv_summary
+        # Optional stability adjustment: if temporal slope strongly negative, flag
+        stable = True
+        for metric in ("recall_at_10", "purity_at_20"):
+            stab = cv_summary.get("temporal_stability", {}).get(metric, {})
+            if isinstance(stab, dict) and stab.get("stable") is False:
+                stable = False
+        base["cv_stable"] = stable
+
+    return base

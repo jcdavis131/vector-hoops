@@ -341,3 +341,71 @@ def build_validation_report(
         "slices": slices,
         "collapse_flags": flags,
     }
+
+
+def build_expanding_window_report(cv_report_path) -> dict[str, Any] | None:
+    """Build expanding window section from mtnn_cv_report.json.
+
+    Returns structured report with per-fold breakdown and temporal stability,
+    used by train_mtnn to enrich mtnn_report.json and for validation UI.
+    """
+    from pathlib import Path
+
+    p = Path(cv_report_path)
+    if not p.exists():
+        return None
+    try:
+        data = json.loads(p.read_text(encoding="utf-8"))
+    except Exception:
+        return None
+
+    folds = data.get("folds", [])
+    agg = data.get("aggregate", {})
+    temporal = data.get("temporal_stability", {})
+
+    # Per-fold breakdown table
+    per_fold = []
+    for f in folds:
+        per_fold.append(
+            {
+                "fold": f.get("fold"),
+                "train_years": f.get("train_years") or [f.get("train_start"), f.get("train_end")],
+                "val_years": f.get("val_years") or [f.get("val_start"), f.get("val_end")],
+                "train_start": f.get("train_start"),
+                "train_end": f.get("train_end"),
+                "val_start": f.get("val_start"),
+                "val_end": f.get("val_end"),
+                "n_train": f.get("n_train"),
+                "n_val": f.get("n_val"),
+                "n_val_pairs": f.get("n_val_pairs"),
+                "recall_at_10": f.get("recall_at_10"),
+                "purity_at_20": f.get("purity_at_20"),
+                # generic catch-all for other metrics
+                **{k: v for k, v in f.items() if k not in ("fold", "train_years", "val_years", "train_start", "train_end", "val_start", "val_end", "n_train", "n_val", "n_val_pairs", "recall_at_10", "purity_at_20", "train_contexts", "hold_context")},
+            }
+        )
+
+    # Temporal stability already computed, but enrich with simple trend if missing
+    # Compute mean/std already in aggregate
+    return {
+        "version": 1,
+        "source_file": str(p),
+        "mode": data.get("mode", "expanding_window"),
+        "unique_years": data.get("unique_years"),
+        "min_train_years": data.get("min_train_years"),
+        "val_years": data.get("val_years"),
+        "step": data.get("step"),
+        "n_folds": data.get("n_folds", len(folds)),
+        "per_fold_breakdown": per_fold,
+        "aggregate": agg,
+        "temporal_stability": temporal,
+        "note": data.get("note", "Expanding window CV ensures no lookahead: train [start,t], val t+1..t+val_years"),
+    }
+
+
+def attach_expanding_window_to_report(report: dict[str, Any], cv_report_path) -> dict[str, Any]:
+    """Attach expanding window section to existing mtnn_report dict in-place."""
+    section = build_expanding_window_report(cv_report_path)
+    if section:
+        report["expanding_window_validation"] = section
+    return report

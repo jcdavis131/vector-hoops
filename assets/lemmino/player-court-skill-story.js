@@ -16,12 +16,42 @@ export async function mountPlayerCourtStory(rootEl, playerName, opts = {}) {
   ];
   const POS_LABELS=['PG','SG','SF','PF','C'];
   const POS_OFF={PG:{x:-7,y:6},SG:{x:7,y:5},SF:{x:10,y:2},PF:{x:2,y:-2},C:{x:0,y:-4}};
-  const CACHE='vector-hoops-v32-player-top-20260721';
+  const CACHE='vector-hoops-v33-badges-20260723';
   async function cachedFetchJSON(url){
     try{ if('caches' in window){ const c=await caches.open(CACHE); const h=await c.match(url); if(h) return await h.json(); } }catch{}
     const r=await fetch(url,{cache:'default'});
+    if(!r.ok) throw new Error('fetch '+url+' '+r.status);
     try{ if('caches' in window){ const c=await caches.open(CACHE); c.put(url,r.clone()).catch(()=>{});} }catch{}
     return r.json();
+  }
+  function normName(s){
+    try{
+      let x=s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
+      x=x.replace(/[.'’\-]/g,'').replace(/\s+(jr|sr|ii|iii|iv|v)$/,'').trim();
+      return x.replace(/\s+/g,' ');
+    }catch{ return (s||'').toLowerCase(); }
+  }
+  function badgeStyle(type){
+    // gold for MVPs / Titles, blue for All-NBA
+    if(type==='title' || type==='finals' || type==='mvp' || type==='fmvp'){
+      return 'background:#F0E442;color:#1A150F;border:1.8px solid #1A150F';
+    }
+    if(type==='allnba1'){
+      return 'background:#0072B2;color:#FFFEF7;border:1.8px solid #1A150F';
+    }
+    if(type==='allnba2'){
+      return 'background:#56B4E9;color:#1A150F;border:1.8px solid #1A150F';
+    }
+    if(type==='allnba3'){
+      return 'background:#D6EFFF;color:#1A150F;border:1.8px solid #1A150F';
+    }
+    if(type==='allstar'){
+      return 'background:#FFFEF7;color:#1A150F;border:1.8px solid #1A150F';
+    }
+    return 'background:#fff;color:#1A150F;border:1.5px solid #1A150F';
+  }
+  function renderBadgePill(label, type){
+    return `<span style="display:inline-flex;align-items:center;gap:2px;border-radius:999px;padding:2px 7px;font-family:ui-monospace,monospace;font-size:10px;font-weight:900;letter-spacing:.02em;white-space:nowrap;line-height:1.2;${badgeStyle(type)}">${label}</span>`;
   }
 
   // centered hero wrapper — max-width 980 centered
@@ -69,17 +99,76 @@ export async function mountPlayerCourtStory(rootEl, playerName, opts = {}) {
 
   function resize(){ const rect=canvas.getBoundingClientRect(); const w=Math.max(340,Math.floor(rect.width)); const h=Math.max(520,Math.floor(rect.height)); const pw=Math.floor(w*dpr), ph=Math.floor(h*dpr); if(canvas.width!==pw||canvas.height!==ph){canvas.width=pw; canvas.height=ph;} ctx.setTransform(dpr,0,0,dpr,0,0); return {cssW:w, cssH:h}; }
 
-  let timeData,liteData,vecData,teamData,skillsData;
+  let timeData,liteData,vecData,teamData,skillsData,honorsData,playoffsData,mvpData,fmvpData;
   try{
-    const [tData,lPos,vData,tmData,sData]=await Promise.all([
-      cachedFetchJSON('assets/archetypes_time.json?v=32'),
-      cachedFetchJSON('assets/vectors_search_lite_pos.json?v=32').catch(()=>cachedFetchJSON('assets/vectors_search_lite.json?v=32')),
-      cachedFetchJSON('assets/vectors.json?v=32').catch(()=>null),
-      cachedFetchJSON('assets/player_team_season.json?v=32').catch(()=>null),
-      cachedFetchJSON('assets/skills.json?v=32').catch(()=>null),
+    const [tData,lPos,vData,tmData,sData,hData,pData,mData,fData]=await Promise.all([
+      cachedFetchJSON('assets/archetypes_time.json?v=33'),
+      cachedFetchJSON('assets/vectors_search_lite_pos.json?v=33').catch(()=>cachedFetchJSON('assets/vectors_search_lite.json?v=33')),
+      cachedFetchJSON('assets/vectors.json?v=33').catch(()=>null),
+      cachedFetchJSON('assets/player_team_season.json?v=33').catch(()=>null),
+      cachedFetchJSON('assets/skills.json?v=33').catch(()=>null),
+      cachedFetchJSON('assets/honors.json?v=33').catch(()=>null),
+      cachedFetchJSON('assets/playoffs.json?v=33').catch(()=>null),
+      cachedFetchJSON('assets/mvp.json?v=33').catch(()=>null),
+      cachedFetchJSON('assets/honors_finals_mvp.json?v=33').catch(()=>null),
     ]);
     timeData=tData; liteData=lPos; vecData=vData; teamData=tmData; skillsData=sData;
+    honorsData=hData; playoffsData=pData; mvpData=mData; fmvpData=fData;
   }catch(e){ rootEl.innerHTML='<div style="padding:20px">Failed loading</div>'; return; }
+
+  // Build lookup maps
+  const honorsByKey = (honorsData && honorsData.bySeason) || {};
+  const playoffsByKey = (playoffsData && playoffsData.splits) || {};
+  const mvpBySeason = (mvpData && mvpData.bySeason) || {};
+  const fmvpBySeason = (fmvpData && fmvpData.bySeason) || {};
+
+  function getBadgesFor(entry){
+    const key = `${entry.n||entry.name||playerName}|${entry.s||entry.season}`;
+    const list=[];
+    // playoffs champion
+    const po = playoffsByKey[key];
+    if(po && po.champion){
+      list.push({label:'NBA Title', type:'title'});
+    }
+    // honors
+    const h = honorsByKey[key];
+    if(h){
+      if(h.finalsMvp) list.push({label:'Finals MVP', type:'finals'});
+      if(h.allNbaTeam===3) list.push({label:'All-NBA 1st', type:'allnba1'});
+      else if(h.allNbaTeam===2) list.push({label:'All-NBA 2nd', type:'allnba2'});
+      else if(h.allNbaTeam===1) list.push({label:'All-NBA 3rd', type:'allnba3'});
+      if(h.asg) list.push({label:'All-Star', type:'allstar'});
+    }
+    // MVP via mvp.json (season -> norm). Need norm match for player.
+    const seasonId = entry.s || entry.season;
+    const mvpRec = mvpBySeason[seasonId];
+    if(mvpRec){
+      const playerNorm = normName(entry.n||entry.name||playerName);
+      if(mvpRec.norm===playerNorm){
+        // prepend MVP as most important
+        list.unshift({label:'MVP', type:'mvp'});
+      }
+    }
+    // also finals MVP from fmvp cache (redundant but ensures coverage if honors missing)
+    const fmvpRec = fmvpBySeason[seasonId];
+    if(fmvpRec && !list.some(b=>b.type==='finals')){
+      if(fmvpRec.norm===normName(entry.n||entry.name||playerName)){
+        list.unshift({label:'Finals MVP', type:'finals'});
+      }
+    }
+    // dedupe labels
+    const seen=new Set();
+    const out=[];
+    for(const b of list){
+      if(!seen.has(b.label)){ seen.add(b.label); out.push(b); }
+    }
+    return out;
+  }
+  function badgesHtmlFor(entry){
+    const badges = getBadgesFor(entry);
+    if(!badges.length) return '';
+    return badges.map(b=>renderBadgePill(b.label, b.type)).join(' ');
+  }
 
   const seasonIdx=new Map((timeData?.prevalence||[]).map((s,i)=>[s.season,i]));
   const tmpPlayers=liteData?.players||liteData||[];
@@ -152,18 +241,33 @@ export async function mountPlayerCourtStory(rootEl, playerName, opts = {}) {
     const roster=teamSeasonRoster.get(`${cur.team}|${cur.season}`)||[];
     const rankIdx=roster.findIndex(r=> r.name===current.name); const rank=rankIdx>=0? rankIdx+1:null; const total=roster.length||15; const isStarter=rank!==null && rank<=5;
     const stage=(()=>{ const r=idx/Math.max(1,current.meta.length-1); if(r<0.18) return 'Rookie'; if(r<0.35) return 'Breakout'; if(r<0.62) return 'Prime'; if(r<0.84) return 'Veteran'; return 'Late'; })();
+    // badges for current
+    const curLite = byName.get(current.name)?.find(e=> e.s===cur.season) || {n:current.name, s:cur.season};
+    const curBadges = getBadgesFor(curLite);
+    const curBadgesHtml = curBadges.map(b=>renderBadgePill(b.label,b.type)).join(' ');
 
     focusEl.innerHTML=`
       <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center">
         <div style="display:flex;gap:12px;align-items:center;border:3px solid #1A150F;border-radius:16px;padding:10px 14px;background:#fff;box-shadow:4px 4px 0 #1A150F">
           <div style="width:52px;height:52px;border-radius:999px;background:${cur.color};border:3px solid #1A150F;display:flex;align-items:center;justify-content:center;font-weight:900;font-family:ui-monospace,monospace;font-size:16px">${cur.pl}</div>
-          <div><div style="font-weight:900;font-size:20px;line-height:1.1">${current.name} • ${cur.team} ${cur.season} • ${stage}</div><div style="font-family:ui-monospace,monospace;font-size:12px;opacity:.7">${cur.archLabel} • ${cur.role} • ${cur.gp} GP • ${cur.mpg.toFixed(1)} MPG • O${cur.off} D${cur.def}</div></div>
+          <div><div style="font-weight:900;font-size:20px;line-height:1.1">${current.name} • ${cur.team} ${cur.season} • ${stage}</div><div style="font-family:ui-monospace,monospace;font-size:12px;opacity:.7">${cur.archLabel} • ${cur.role} • ${cur.gp} GP • ${cur.mpg.toFixed(1)} MPG • O${cur.off} D${cur.def}</div>${curBadgesHtml? `<div style="display:flex;flex-wrap:wrap;gap:5px;margin-top:6px">${curBadgesHtml}</div>`:''}</div>
         </div>
         <span style="border-radius:999px;padding:10px 16px;border:3px solid #1A150F;background:${isStarter?'#F0E442':'#1A150F'};color:${isStarter?'#1A150F':'#FFFEF7'};font-family:ui-monospace,monospace;font-weight:900;font-size:13px;box-shadow:3px 3px 0 #1A150F">${isStarter?`1 of 5 starter #${rank}`:`1 of 15 #${rank} (1 of 5 when in)`}</span>
         ${current.changes.find(c=>c.idx===idx)? `<span style="border-radius:999px;padding:10px 16px;border:3px solid #1A150F;background:#F0E442;font-family:ui-monospace,monospace;font-weight:900;font-size:12px">SHIFT ${current.changes.find(c=>c.idx===idx).from.archLabel}→${current.changes.find(c=>c.idx===idx).to.archLabel}</span>`:''}
       </div>`;
 
-    seasonChips.innerHTML=''; current.meta.forEach((m,i)=>{ const b=document.createElement('button'); b.style.cssText=`border-radius:999px;padding:12px 16px;font-family:ui-monospace,monospace;font-size:13px;font-weight:800;border:3px solid #1A150F;flex:0 0 auto;cursor:pointer;${i===idx?'background:#1A150F;color:#FFFEF7;box-shadow:4px 4px 0 #1A150F;transform:translateY(-2px)': i<idx?'background:#fff;color:#1A150F;box-shadow:2px 2px 0 #1A150F':'background:#ECE7DB;color:#6B6760;border-style:dashed'}`; b.innerHTML=`<span style="display:inline-block;width:10px;height:10px;border-radius:999px;background:${m.color};border:1.5px solid #1A150F;margin-right:6px"></span>${m.season} ${m.team} ${m.archLabel} • ${m.mpg.toFixed(0)} MPG`; b.onclick=()=>{ tProg=i/current.meta.length; paused=false; btnPlay.textContent='❚❚ Pause'; draw(); }; seasonChips.appendChild(b); });
+    seasonChips.innerHTML=''; current.meta.forEach((m,i)=>{
+      const b=document.createElement('button');
+      b.style.cssText=`border-radius:999px;padding:12px 16px;font-family:ui-monospace,monospace;font-size:13px;font-weight:800;border:3px solid #1A150F;flex:0 0 auto;cursor:pointer;display:inline-flex;flex-wrap:wrap;align-items:center;gap:6px;max-width:420px;${i===idx?'background:#1A150F;color:#FFFEF7;box-shadow:4px 4px 0 #1A150F;transform:translateY(-2px)': i<idx?'background:#fff;color:#1A150F;box-shadow:2px 2px 0 #1A150F':'background:#ECE7DB;color:#6B6760;border-style:dashed'}`;
+      const dot=`<span style="display:inline-block;width:10px;height:10px;border-radius:999px;background:${m.color};border:1.5px solid #1A150F"></span>`;
+      const baseText=`${m.season} ${m.team} ${m.archLabel} • ${m.mpg.toFixed(0)} MPG`;
+      // find original lite entry to get badges (need n,s)
+      const lookupEntry = byName.get(current.name)?.find(e=> e.s===m.season) || {n:current.name, s:m.season};
+      const badgesHtml = badgesHtmlFor(lookupEntry);
+      b.innerHTML=`${dot}<span>${baseText}</span>${badgesHtml? `<span style="display:inline-flex;flex-wrap:wrap;gap:4px;margin-left:4px">${badgesHtml}</span>`:''}`;
+      b.onclick=()=>{ tProg=i/current.meta.length; paused=false; btnPlay.textContent='❚❚ Pause'; draw(); };
+      seasonChips.appendChild(b);
+    });
 
     // narrative + skills
     if(narrativeEl) narrativeEl.innerHTML=`<div style="border:3px solid #1A150F;border-radius:16px;background:#1A150F;color:#FFFEF7;padding:14px 16px;font-family:ui-sans-serif,system-ui;font-size:14px;line-height:1.55;font-weight:600">${buildNarrative()}</div>`;
