@@ -1,7 +1,7 @@
 """auto-generated test gap mapper for audit_unicode_names - coverage <80%"""
 
 import json
-import pathlib
+
 import pytest
 
 # Import target module – try both styles for robustness
@@ -28,7 +28,7 @@ def sample_data():
 def test_audit_unicode_names_basic(input_val, expected, tmp_path):
     """Basic functionality smoke test – currently unimplemented (gap)."""
     if target_module is None:
-        pytest.skip(f"pipeline.audit_unicode_names not importable in test env")
+        pytest.skip("pipeline.audit_unicode_names not importable in test env")
     # TODO: replace skip with real assertions
     # Example placeholder for real logic:
     # result = target_module.some_function(input_val)
@@ -39,14 +39,16 @@ def test_audit_unicode_names_basic(input_val, expected, tmp_path):
 def test_audit_unicode_names_edge_cases():
     """Edge case coverage for audit_unicode_names – must fail until implemented."""
     # Intentionally fails to indicate missing coverage / edge handling
-    assert False, "TODO: implement edge case – empty input, malformed json, missing file"
+    assert False, (
+        "TODO: implement edge case – empty input, malformed json, missing file"
+    )
 
 
 @pytest.mark.parametrize("bad_input", ["", None, {}])
 def test_audit_unicode_names_invalid_inputs(bad_input, tmp_path):
     """Invalid input handling – should raise or handle gracefully."""
     if target_module is None:
-        pytest.skip(f"pipeline.audit_unicode_names not importable")
+        pytest.skip("pipeline.audit_unicode_names not importable")
     # Replace with real validation once module API is known
     # with pytest.raises((ValueError, TypeError, FileNotFoundError)):
     #     target_module.main(bad_input)
@@ -56,11 +58,13 @@ def test_audit_unicode_names_invalid_inputs(bad_input, tmp_path):
 def test_audit_unicode_names_integration(sample_data, tmp_path):
     """Integration test linking audit_unicode_names to pipeline outputs – stub."""
     # Demonstrates tmp_path usage
-    tmp_file = tmp_path / f"audit_unicode_names_sample.json"
+    tmp_file = tmp_path / "audit_unicode_names_sample.json"
     tmp_file.write_text(json.dumps(sample_data))
     assert tmp_file.exists()
     # Real integration would invoke pipeline step and check artifacts
-    pytest.skip("TODO: implement integration – run audit_unicode_names against sample_data")
+    pytest.skip(
+        "TODO: implement integration – run audit_unicode_names against sample_data"
+    )
 
 
 def test_audit_unicode_names_file_io(tmp_path):
@@ -70,4 +74,6 @@ def test_audit_unicode_names_file_io(tmp_path):
     data = json.loads(p.read_text())
     assert data["module"] == "audit_unicode_names"
     # After verifying IO works, force gap visibility
-    pytest.skip("TODO: wire file IO into actual audit_unicode_names logic – stub intentionally incomplete")
+    pytest.skip(
+        "TODO: wire file IO into actual audit_unicode_names logic – stub intentionally incomplete"
+    )
