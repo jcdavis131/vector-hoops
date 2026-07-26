@@ -1,12 +1,11 @@
 """real tests for pipeline.deadline_analysis - wired from coverage gap mapper"""
 
-import sys
-import pathlib
 import importlib.util
 import json
-import math
+import pathlib
+import sys
+
 import pytest
-import numpy as np
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 PIPE = ROOT / "pipeline"
@@ -18,7 +17,9 @@ if str(PIPE) not in sys.path:
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-spec = importlib.util.spec_from_file_location(f"pipeline.deadline_analysis", str(MOD_PATH))
+spec = importlib.util.spec_from_file_location(
+    "pipeline.deadline_analysis", str(MOD_PATH)
+)
 mod = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(mod)
 
@@ -26,33 +27,36 @@ spec.loader.exec_module(mod)
 def test_import():
     assert mod is not None
 
+
 def test_has_expected_attrs():
     # at least one function or constant exists
     attrs = [a for a in dir(mod) if not a.startswith("_")]
     assert len(attrs) > 0
 
+
 def test_module_callables_exist():
     # ensure discovered funcs are present
-    for name in ['per36', 'main']:
+    for name in ["per36", "main"]:
         assert hasattr(mod, name)
 
 
 def test_per36():
     if hasattr(mod, "per36"):
         try:
-            assert mod.per36(18,36) == pytest.approx(18.0)
+            assert mod.per36(18, 36) == pytest.approx(18.0)
         except TypeError:
             # signature (v,m) or (pts,mins)
-            assert mod.per36(100,20) != 0
+            assert mod.per36(100, 20) != 0
 
 
 def test_tmp_path_integration(tmp_path):
     sample = {"module": "deadline_analysis", "input": 1, "season": "2023-24"}
-    p = tmp_path / f"deadline_analysis.json"
+    p = tmp_path / "deadline_analysis.json"
     p.write_text(json.dumps(sample))
     assert p.exists()
     data = json.loads(p.read_text())
     assert data["module"] == "deadline_analysis"
+
 
 def test_edge_empty_inputs():
     # Edge: module should handle empty dicts/lists without crashing on import-level helpers

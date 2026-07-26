@@ -232,23 +232,49 @@ button,.input{min-height:44px}
   const OKABE=['#0072B2','#D55E00','#009E73','#F0E442','#56B4E9','#CC79A7','#E69F00','#000000'];
   const ARCH=["Glass+Rim","LowVol Glass","Low Impact 3P Vol","Def Glass+Rim FT","Vol+3P Vol","3P Acc+Vol","Playmaking+Steals","Scoring Vol"];
   let G={guesses:[]};
-  // team logo map — HOME-only free-tier
-  let _teamMap=null, _teamMapLoading=false;
+  // team logo map — HOME-only free-tier, restored latest 2025-26
+  let _teamMap=null, _teamMapLoading=null, _latestByPlayer=new Map();
+  function buildLatestTeamIndex(){
+    _latestByPlayer.clear();
+    if(!_teamMap) return;
+    for(const k in _teamMap){
+      const sep=k.lastIndexOf('|'); if(sep<=0) continue;
+      const name=k.slice(0,sep); const season=k.slice(sep+1); const team=_teamMap[k];
+      const cur=_latestByPlayer.get(name);
+      if(!cur || season>cur.season) _latestByPlayer.set(name,{team,season});
+    }
+  }
   async function loadTeamMap(){
-    if(_teamMap || _teamMapLoading) return;
-    _teamMapLoading=true;
-    try{
-      const r=await fetch('assets/player_team_season.json',{cache:'default'});
-      if(r.ok){ _teamMap=await r.json();}
-    }catch{}
-    _teamMapLoading=false;
+    if(_teamMap) return _teamMap;
+    if(_teamMapLoading) return _teamMapLoading;
+    _teamMapLoading=fetch('assets/player_team_season.json',{cache:'default'})
+      .then(r=>{ if(!r.ok) throw new Error('team '+r.status); return r.json(); })
+      .then(j=>{ _teamMap=j||{}; buildLatestTeamIndex(); return _teamMap; })
+      .catch(()=>{ _teamMap=_teamMap||{}; return _teamMap; })
+      .finally(()=>{ _teamMapLoading=null; });
+    return _teamMapLoading;
   }
   setTimeout(loadTeamMap, 20);
+  function getLatestTeam(name){
+    if(!name) return null;
+    if(_latestByPlayer.has(name)) return _latestByPlayer.get(name).team;
+    if(!_teamMap) return null;
+    let best=null,bestSeason=''; const pref=name+'|';
+    for(const k in _teamMap){ if(k.indexOf(pref)===0){ const season=k.slice(pref.length); if(season>bestSeason){ bestSeason=season; best=_teamMap[k]; } } }
+    if(best) _latestByPlayer.set(name,{team:best,season:bestSeason});
+    return best;
+  }
   function getTeamAbbr(name, season){
     try{
-      if(!_teamMap) return null;
-      if(!name||!season) return null;
-      return _teamMap[`${name}|${season}`]||null;
+      if(!name) return null;
+      const want=season||'2025-26';
+      if(_teamMap){
+        const direct=_teamMap[name+'|'+want]; if(direct) return direct;
+        const latest2025=_teamMap[name+'|2025-26']; if(latest2025) return latest2025;
+        const latest=getLatestTeam(name); if(latest) return latest;
+        if(season){ const alt=_teamMap[name+'|'+season]; if(alt) return alt; }
+      }
+      const lc=_latestByPlayer.get(name); return lc?lc.team:null;
     }catch{ return null; }
   }
     // --- shared map v1 — unified simple 2D canvas, replaces old inline engine ---
@@ -345,10 +371,13 @@ button,.input{min-height:44px}
       if(!st) return [];
       const pool = st.modernPool;
       if(!pool || !pool.length) return [];
-      // lightweight — no lower cache rebuild thrash, break after 8
+      // unified fast typeahead: 8 results, 120ms debounce filtered to 2025-26 latest season
+      const LATEST='2025-26';
+      const latestOnly = pool.filter(function(m){ return m && m.s===LATEST; });
+      const searchPool = latestOnly.length>=8 ? latestOnly : pool;
       const out=[];
-      for(let i=0;i<pool.length && out.length<8;i++){
-        const m=pool[i]; if(!m||!m.n) continue;
+      for(let i=0;i<searchPool.length && out.length<8;i++){
+        const m=searchPool[i]; if(!m||!m.n) continue;
         const low=(m.n||'').toLowerCase();
         if(low.indexOf(q)!==-1) out.push(m);
       }

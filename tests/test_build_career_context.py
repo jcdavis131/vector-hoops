@@ -1,12 +1,11 @@
 """real tests for pipeline.build_career_context - wired from coverage gap mapper"""
 
-import sys
-import pathlib
 import importlib.util
 import json
-import math
+import pathlib
+import sys
+
 import pytest
-import numpy as np
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 PIPE = ROOT / "pipeline"
@@ -18,7 +17,9 @@ if str(PIPE) not in sys.path:
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-spec = importlib.util.spec_from_file_location(f"pipeline.build_career_context", str(MOD_PATH))
+spec = importlib.util.spec_from_file_location(
+    "pipeline.build_career_context", str(MOD_PATH)
+)
 mod = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(mod)
 
@@ -26,14 +27,16 @@ spec.loader.exec_module(mod)
 def test_import():
     assert mod is not None
 
+
 def test_has_expected_attrs():
     # at least one function or constant exists
     attrs = [a for a in dir(mod) if not a.startswith("_")]
     assert len(attrs) > 0
 
+
 def test_module_callables_exist():
     # ensure discovered funcs are present
-    for name in ['norm_name', 'vec_cos', 'season_start', 'linear_slope']:
+    for name in ["norm_name", "vec_cos", "season_start", "linear_slope"]:
         assert hasattr(mod, name)
 
 
@@ -46,17 +49,26 @@ def test_norm_name():
     except Exception:
         pass
 
+
 def test_cos_similarity():
     func = getattr(mod, "cos", None) or getattr(mod, "vec_cos", None)
     if func:
-        assert func([1,0],[1,0]) == pytest.approx(1.0, rel=1e-2)
-        assert abs(func([1,0],[0,1])) < 0.01
-        assert func([1,0],[0,0]) == 0 or func([1,0],[0,0]) == pytest.approx(0.0, abs=1e-6)
+        assert func([1, 0], [1, 0]) == pytest.approx(1.0, rel=1e-2)
+        assert abs(func([1, 0], [0, 1])) < 0.01
+        assert func([1, 0], [0, 0]) == 0 or func([1, 0], [0, 0]) == pytest.approx(
+            0.0, abs=1e-6
+        )
+
 
 def test_linear_slope():
-    assert mod.linear_slope([1,2,3]) == pytest.approx(1.0, rel=1e-2)
-    assert mod.linear_slope([5,5,5]) == pytest.approx(0.0, abs=1e-6)
-    assert mod.linear_slope([]) is None or isinstance(mod.linear_slope([1]), float) or mod.linear_slope([]) is None
+    assert mod.linear_slope([1, 2, 3]) == pytest.approx(1.0, rel=1e-2)
+    assert mod.linear_slope([5, 5, 5]) == pytest.approx(0.0, abs=1e-6)
+    assert (
+        mod.linear_slope([]) is None
+        or isinstance(mod.linear_slope([1]), float)
+        or mod.linear_slope([]) is None
+    )
+
 
 def test_season_start():
     assert mod.season_start("2023-24") == 2023
@@ -65,11 +77,12 @@ def test_season_start():
 
 def test_tmp_path_integration(tmp_path):
     sample = {"module": "build_career_context", "input": 1, "season": "2023-24"}
-    p = tmp_path / f"build_career_context.json"
+    p = tmp_path / "build_career_context.json"
     p.write_text(json.dumps(sample))
     assert p.exists()
     data = json.loads(p.read_text())
     assert data["module"] == "build_career_context"
+
 
 def test_edge_empty_inputs():
     # Edge: module should handle empty dicts/lists without crashing on import-level helpers

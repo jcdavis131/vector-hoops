@@ -1,12 +1,11 @@
 """real tests for pipeline.build_teams - wired from coverage gap mapper"""
 
-import sys
-import pathlib
 import importlib.util
 import json
-import math
+import pathlib
+import sys
+
 import pytest
-import numpy as np
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 PIPE = ROOT / "pipeline"
@@ -18,7 +17,7 @@ if str(PIPE) not in sys.path:
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-spec = importlib.util.spec_from_file_location(f"pipeline.build_teams", str(MOD_PATH))
+spec = importlib.util.spec_from_file_location("pipeline.build_teams", str(MOD_PATH))
 mod = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(mod)
 
@@ -28,6 +27,7 @@ def test_import():
     assert hasattr(mod, "TEAM_COLORS")
     assert hasattr(mod, "abbr_from_gamelogs")
     assert hasattr(mod, "latest_team_names")
+
 
 def test_team_colors():
     colors = mod.TEAM_COLORS
@@ -39,11 +39,13 @@ def test_team_colors():
         # colors are hex strings
         assert pair[0].startswith("#")
 
+
 def test_abbr_from_gamelogs_no_data(tmp_path):
     # No gamelog files -> should return empty dict without crashing
     # Patch DATA glob by calling with empty dir? The function uses global DATA, so we test type
     result = mod.abbr_from_gamelogs()
     assert isinstance(result, dict)
+
 
 def test_latest_team_names_type():
     # May be empty if no cache, but should be dict
@@ -52,6 +54,7 @@ def test_latest_team_names_type():
         assert isinstance(result, dict)
     except Exception as e:
         pytest.skip(f"no cache data: {e}")
+
 
 def test_tmp_path_write(tmp_path):
     sample = {"teams": [{"id": 1, "abbr": "ATL", "name": "Atlanta Hawks"}]}
