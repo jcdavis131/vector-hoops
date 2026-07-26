@@ -11,7 +11,7 @@ A daily NBA "chimera" puzzle played over an era-honest player-embedding space: g
 
 ## The embedding
 
-12,966 player-seasons (1996–2026), per-100-possession stats z-scored within season so eras compare honestly. A multi-tower neural net (MTNN v5: 120 features in 17 tower families, fused to a 48-dim L2-normalized embedding with archetype / position / next-profile / skills heads) produces the space the game scores in. On the player-split leak-free eval: 0.977 recall@10, 0.6717 purity@20, composite 0.7937 (see `docs/DATA_MODEL_2026-07-16.md`, `docs/MTNN_V5_PROMOTE_GATE.md`, and `assets/eval_scoreboard.json` for how the gate is defined — an earlier season-split eval that scored recall@10 = 1.0 was memorization and was replaced).
+12,966 player-seasons (1996–2026), per-100-possession stats z-scored within season so eras compare honestly. A multi-tower neural net (MTNN v5: 130 features in 18 families, 17 of them towers (injury feeds a durability head, not an input tower), fused to a 64-dim L2-normalized embedding with archetype / position / next-profile / skills heads) produces the space the game scores in. On the player-split leak-free eval: 0.977 recall@10, 0.6717 purity@20, composite 0.7937 (see `docs/DATA_MODEL_2026-07-16.md`, `docs/MTNN_V5_PROMOTE_GATE.md`, and `assets/eval_scoreboard.json` for how the gate is defined — an earlier season-split eval that scored recall@10 = 1.0 was memorization and was replaced).
 
 The shipped artifacts (`assets/mtnn_meta.json`, `assets/mtnn.onnx`, `assets/vectors.json`, `assets/skills.json`) are committed, so the site runs from a static host with client-side inference (ONNX optional).
 

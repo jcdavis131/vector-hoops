@@ -1,7 +1,7 @@
 /**
- * MTNN client — 48-d embeddings + heads arch8 skill18 pos5 next14
+ * MTNN client — 64-d embeddings + heads arch8 skill18 pos5 next14
  * Mean abs diff 0 vs pipeline ground truth
- * Model: 17 families cat([x·m,m]) towers 160→32, 556→128→48 L2-norm, leakfree
+ * Model: 17 families cat([x·m,m]) towers 160→32, 556→256→64 L2-norm, leakfree
  * Assets: mtnn_meta.json, mtnn_arch.json, embeddings, heads edge-cached
  * ONNX optional lazy
  */
@@ -36,7 +36,7 @@ function loadAll(cb){
     fetchRetry('assets/mtnn_heads.f32').then(function(r){return r.arrayBuffer();}).catch(function(){return null;})
   ]).then(function(arr){
     var meta=arr[0], arch=arr[1], embBuf=arr[2], headsBuf=arr[3];
-    var dim=meta.dim||48, rows=meta.rows||12966;
+    var dim=meta.dim||64, rows=meta.rows||12966;
     var E=new Float32Array(embBuf);
     if(E.length!==rows*dim) throw new Error('emb len mismatch '+E.length+' vs '+rows*dim);
     var H=null;
@@ -100,7 +100,7 @@ function predictArchetypeProbs(idx){ var h=getHeads(idx); return h?h.archProbs:n
 
 function skillToGrade(raw){
   // skill_pred in npz are sigmoid-like 0-1 raw? In sample 0.13-0.6 — map to 0-99 grade: raw*100 clamped? Previous grade mapping raw*? Use linear 0-1→0-99
-  // Check npz skill_pred distribution: 0-1 presumably from sigmoid after 48→16→1 per-skill towers, then grade = raw*100? Transparent grades 0-99
+  // Check npz skill_pred distribution: 0-1 presumably from sigmoid after 64→16→1 per-skill towers, then grade = raw*100? Transparent grades 0-99
   // So grade = Math.round(raw*100) clamped
   var g = Math.round(raw*100);
   if(g<0) g=0; if(g>99) g=99; return g;

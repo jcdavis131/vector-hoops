@@ -3,7 +3,7 @@
   "model": "mtnn_v4_phase_b",
   "fusion": "concat",
   "dTower": 32,
-  "dEmb": 48,
+  "dEmb": 64,
   "checkpoint": {
     "mtime": 1784061762,
     "bytes": 1563083
@@ -214,5 +214,17 @@
       "label": "Decode heads",
       "detail": "8 archetype + 18 skill + 5 position + 14 next-profile"
     }
-  ]
+  ],
+  "_stale": {
+    "note": "GENERATED FILE, only dEmb was hand-corrected. Regenerate from a trainer run.",
+    "corrected_2026-07-26": {
+      "dEmb": "48 -> 64, verified from assets/mtnn_embeddings.f32 = 12966*64*4 = 3319296 bytes"
+    },
+    "still_wrong": {
+      "model": "says mtnn_v4_phase_b; model_tag() reports mtnn_v5_concat_b2_h160_t32_d64_mlp128_fus256",
+      "towerFamilies": "lists 11; the live manifest has 18 families, 17 of them towers",
+      "layers": "fusion shape predates the 64-d artifact (556->256->64)"
+    },
+    "built": "2026-07-14"
+  }
 }
