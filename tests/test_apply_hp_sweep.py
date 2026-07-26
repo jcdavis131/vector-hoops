@@ -1,7 +1,7 @@
 """auto-generated test gap mapper for apply_hp_sweep - coverage <80%"""
 
 import json
-import pathlib
+
 import pytest
 
 # Import target module – try both styles for robustness
@@ -28,7 +28,7 @@ def sample_data():
 def test_apply_hp_sweep_basic(input_val, expected, tmp_path):
     """Basic functionality smoke test – currently unimplemented (gap)."""
     if target_module is None:
-        pytest.skip(f"pipeline.apply_hp_sweep not importable in test env")
+        pytest.skip("pipeline.apply_hp_sweep not importable in test env")
     # TODO: replace skip with real assertions
     # Example placeholder for real logic:
     # result = target_module.some_function(input_val)
@@ -39,14 +39,16 @@ def test_apply_hp_sweep_basic(input_val, expected, tmp_path):
 def test_apply_hp_sweep_edge_cases():
     """Edge case coverage for apply_hp_sweep – must fail until implemented."""
     # Intentionally fails to indicate missing coverage / edge handling
-    assert False, "TODO: implement edge case – empty input, malformed json, missing file"
+    assert False, (
+        "TODO: implement edge case – empty input, malformed json, missing file"
+    )
 
 
 @pytest.mark.parametrize("bad_input", ["", None, {}])
 def test_apply_hp_sweep_invalid_inputs(bad_input, tmp_path):
     """Invalid input handling – should raise or handle gracefully."""
     if target_module is None:
-        pytest.skip(f"pipeline.apply_hp_sweep not importable")
+        pytest.skip("pipeline.apply_hp_sweep not importable")
     # Replace with real validation once module API is known
     # with pytest.raises((ValueError, TypeError, FileNotFoundError)):
     #     target_module.main(bad_input)
@@ -56,7 +58,7 @@ def test_apply_hp_sweep_invalid_inputs(bad_input, tmp_path):
 def test_apply_hp_sweep_integration(sample_data, tmp_path):
     """Integration test linking apply_hp_sweep to pipeline outputs – stub."""
     # Demonstrates tmp_path usage
-    tmp_file = tmp_path / f"apply_hp_sweep_sample.json"
+    tmp_file = tmp_path / "apply_hp_sweep_sample.json"
     tmp_file.write_text(json.dumps(sample_data))
     assert tmp_file.exists()
     # Real integration would invoke pipeline step and check artifacts
@@ -70,4 +72,6 @@ def test_apply_hp_sweep_file_io(tmp_path):
     data = json.loads(p.read_text())
     assert data["module"] == "apply_hp_sweep"
     # After verifying IO works, force gap visibility
-    pytest.skip("TODO: wire file IO into actual apply_hp_sweep logic – stub intentionally incomplete")
+    pytest.skip(
+        "TODO: wire file IO into actual apply_hp_sweep logic – stub intentionally incomplete"
+    )
