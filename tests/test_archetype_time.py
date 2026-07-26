@@ -1,73 +1,60 @@
-"""auto-generated test gap mapper for archetype_time - coverage <80%"""
+"""real tests for pipeline.archetype_time - wired from coverage gap mapper"""
 
-import json
+import sys
 import pathlib
+import importlib.util
+import json
+import math
 import pytest
+import numpy as np
 
-# Import target module – try both styles for robustness
-try:
-    from pipeline import archetype_time as target_module
-except ImportError:
-    try:
-        import pipeline.archetype_time as target_module
-    except ImportError:
-        target_module = None  # module not importable in isolation – tests will skip/fail accordingly
+ROOT = pathlib.Path(__file__).resolve().parents[1]
+PIPE = ROOT / "pipeline"
+MOD_PATH = PIPE / "archetype_time.py"
 
+if str(PIPE) not in sys.path:
+    sys.path.insert(0, str(PIPE))
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
 
-@pytest.fixture
-def sample_data():
-    """Shared sample data for archetype_time tests."""
-    return {"input": 1, "expected": 2}
-
-
-# NOTE: tmp_path is a built-in pytest fixture providing a temporary directory pathlib.Path
-# Usage: def test_xxx(tmp_path): tmp_path / "file.json" ...
+spec = importlib.util.spec_from_file_location(f"pipeline.archetype_time", str(MOD_PATH))
+mod = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(mod)
 
 
-@pytest.mark.parametrize("input_val,expected", [(1, 2), (None, None), (0, 0)])
-def test_archetype_time_basic(input_val, expected, tmp_path):
-    """Basic functionality smoke test – currently unimplemented (gap)."""
-    if target_module is None:
-        pytest.skip(f"pipeline.archetype_time not importable in test env")
-    # TODO: replace skip with real assertions
-    # Example placeholder for real logic:
-    # result = target_module.some_function(input_val)
-    # assert result == expected
-    pytest.skip("TODO: fill assert – auto-generated stub requires implementation")
+def test_import():
+    assert mod is not None
+    assert hasattr(mod, "game_prevalence")
 
+def test_game_prevalence_basic():
+    # game_prevalence expects players with season and c (cluster id)
+    players = [
+        {"season": "2023-24", "c": 0},
+        {"season": "2023-24", "c": 0},
+        {"season": "2023-24", "c": 1},
+        {"season": "2022-23", "c": 2},
+    ]
+    result = mod.game_prevalence(players, [])
+    assert isinstance(result, list)
+    assert len(result) >= 1
+    # check shares sum ~1
+    for entry in result:
+        assert "season" in entry and "shares" in entry and "n" in entry
+        assert abs(sum(entry["shares"]) - 1.0) < 0.01
+        assert entry["n"] > 0
 
-def test_archetype_time_edge_cases():
-    """Edge case coverage for archetype_time – must fail until implemented."""
-    # Intentionally fails to indicate missing coverage / edge handling
-    assert False, "TODO: implement edge case – empty input, malformed json, missing file"
+def test_game_prevalence_empty():
+    result = mod.game_prevalence([], [])
+    assert isinstance(result, list)
+    assert result == []
 
+def test_constants():
+    assert hasattr(mod, "GAME_K")
+    assert mod.GAME_K == 8
 
-@pytest.mark.parametrize("bad_input", ["", None, {}])
-def test_archetype_time_invalid_inputs(bad_input, tmp_path):
-    """Invalid input handling – should raise or handle gracefully."""
-    if target_module is None:
-        pytest.skip(f"pipeline.archetype_time not importable")
-    # Replace with real validation once module API is known
-    # with pytest.raises((ValueError, TypeError, FileNotFoundError)):
-    #     target_module.main(bad_input)
-    pytest.skip("TODO: implement invalid-input handling")
-
-
-def test_archetype_time_integration(sample_data, tmp_path):
-    """Integration test linking archetype_time to pipeline outputs – stub."""
-    # Demonstrates tmp_path usage
-    tmp_file = tmp_path / f"archetype_time_sample.json"
-    tmp_file.write_text(json.dumps(sample_data))
-    assert tmp_file.exists()
-    # Real integration would invoke pipeline step and check artifacts
-    pytest.skip("TODO: implement integration – run archetype_time against sample_data")
-
-
-def test_archetype_time_file_io(tmp_path):
-    """File-IO round-trip placeholder – ensures coverage tooling sees file access."""
-    p = tmp_path / "out.json"
-    p.write_text(json.dumps({"module": "archetype_time"}))
-    data = json.loads(p.read_text())
-    assert data["module"] == "archetype_time"
-    # After verifying IO works, force gap visibility
-    pytest.skip("TODO: wire file IO into actual archetype_time logic – stub intentionally incomplete")
+def test_tmp_path_integration(tmp_path):
+    sample = {"eras": [{"era": "2020-24", "prevalence": 0.5}]}
+    p = tmp_path / "archetype_time_sample.json"
+    p.write_text(json.dumps(sample))
+    assert p.exists()
+    assert json.loads(p.read_text())["eras"][0]["prevalence"] == 0.5
