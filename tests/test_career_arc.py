@@ -5,17 +5,19 @@ Generated: 2026-07-26
 Branch: test-gap/2026-07-26
 Note: stubs must fail/skip until filled – never fake passing tests.
 """
+
 import pytest
 
 # TODO: ensure package importability – adjust sys.path if repo lacks pyproject package layout
 try:
-    import pipeline
+    pass
 except Exception:
     pass
 
 # Attempt to import target module – if fails, tests will skip clearly
 try:
     from importlib import import_module
+
     TARGET = import_module("pipeline.career_arc")
 except Exception as exc:  # pragma: no cover
     TARGET = None
@@ -37,7 +39,9 @@ def tmp_output(tmp_path):
 
 def _require_target():
     if TARGET is None:
-        pytest.skip(f"Target module pipeline.career_arc not importable: {_IMPORT_ERROR} – TODO: fix import path")
+        pytest.skip(
+            f"Target module pipeline.career_arc not importable: {_IMPORT_ERROR} – TODO: fix import path"
+        )
 
 
 # 2-5 parametrized tests with clear names and TODO asserts
@@ -46,6 +50,7 @@ def test_career_arc_basic_parametrized(value, sample_data):
     """Basic sanity – parametrized on career_arc."""
     _require_target()
     pytest.skip("TODO: fill assert – auto-generated gap mapper")
+
 
 @pytest.mark.parametrize("case", ["empty", "minimal", "typical"])
 def test_career_arc_handles_cases(case, tmp_output):
@@ -57,6 +62,7 @@ def test_career_arc_handles_cases(case, tmp_output):
     result = None  # TODO: TARGET.your_func(data)
     # assert
     pytest.skip(f"TODO: fill assert for case={case} – got {result}")
+
 
 def test_career_arc_smoke_import():
     """Smoke import & attributes exist."""
@@ -73,6 +79,6 @@ def test_career_arc_main_contract(sample_data):
     """Contract test for main – TODO: replace with real behavior."""
     _require_target()
     if not hasattr(TARGET, "main"):
-        pytest.skip(f"TARGET missing main – TODO verify name")
-    fn = getattr(TARGET, "main")
+        pytest.skip("TARGET missing main – TODO verify name")
+    fn = TARGET.main
     pytest.skip(f"TODO: call {fn} with sample_data and assert – auto-generated")

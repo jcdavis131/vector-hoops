@@ -5,17 +5,19 @@ Generated: 2026-07-26
 Branch: test-gap/2026-07-26
 Note: stubs must fail/skip until filled – never fake passing tests.
 """
+
 import pytest
 
 # TODO: ensure package importability – adjust sys.path if repo lacks pyproject package layout
 try:
-    import pipeline
+    pass
 except Exception:
     pass
 
 # Attempt to import target module – if fails, tests will skip clearly
 try:
     from importlib import import_module
+
     TARGET = import_module("pipeline.competition_context")
 except Exception as exc:  # pragma: no cover
     TARGET = None
@@ -37,7 +39,9 @@ def tmp_output(tmp_path):
 
 def _require_target():
     if TARGET is None:
-        pytest.skip(f"Target module pipeline.competition_context not importable: {_IMPORT_ERROR} – TODO: fix import path")
+        pytest.skip(
+            f"Target module pipeline.competition_context not importable: {_IMPORT_ERROR} – TODO: fix import path"
+        )
 
 
 # 2-5 parametrized tests with clear names and TODO asserts
@@ -46,6 +50,7 @@ def test_competition_context_basic_parametrized(value, sample_data):
     """Basic sanity – parametrized on competition_context."""
     _require_target()
     pytest.skip("TODO: fill assert – auto-generated gap mapper")
+
 
 @pytest.mark.parametrize("case", ["empty", "minimal", "typical"])
 def test_competition_context_handles_cases(case, tmp_output):
@@ -58,6 +63,7 @@ def test_competition_context_handles_cases(case, tmp_output):
     # assert
     pytest.skip(f"TODO: fill assert for case={case} – got {result}")
 
+
 def test_competition_context_smoke_import():
     """Smoke import & attributes exist."""
     _require_target()
@@ -66,13 +72,15 @@ def test_competition_context_smoke_import():
     # Example dynamic check:
     #   expected = ['team_net', 'conf_avg', 'from_logs', 'main']
     #   for name in expected: assert hasattr(TARGET, name), f"missing {name}"
-    pytest.skip("TODO: enumerate expected API – ['team_net', 'conf_avg', 'from_logs'] []")
+    pytest.skip(
+        "TODO: enumerate expected API – ['team_net', 'conf_avg', 'from_logs'] []"
+    )
 
 
 def test_competition_context_team_net_contract(sample_data):
     """Contract test for team_net – TODO: replace with real behavior."""
     _require_target()
     if not hasattr(TARGET, "team_net"):
-        pytest.skip(f"TARGET missing team_net – TODO verify name")
-    fn = getattr(TARGET, "team_net")
+        pytest.skip("TARGET missing team_net – TODO verify name")
+    fn = TARGET.team_net
     pytest.skip(f"TODO: call {fn} with sample_data and assert – auto-generated")

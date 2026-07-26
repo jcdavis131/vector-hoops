@@ -5,17 +5,19 @@ Generated: 2026-07-26
 Branch: test-gap/2026-07-26
 Note: stubs must fail/skip until filled – never fake passing tests.
 """
+
 import pytest
 
 # TODO: ensure package importability – adjust sys.path if repo lacks pyproject package layout
 try:
-    import pipeline
+    pass
 except Exception:
     pass
 
 # Attempt to import target module – if fails, tests will skip clearly
 try:
     from importlib import import_module
+
     TARGET = import_module("pipeline.build_wiki")
 except Exception as exc:  # pragma: no cover
     TARGET = None
@@ -37,7 +39,9 @@ def tmp_output(tmp_path):
 
 def _require_target():
     if TARGET is None:
-        pytest.skip(f"Target module pipeline.build_wiki not importable: {_IMPORT_ERROR} – TODO: fix import path")
+        pytest.skip(
+            f"Target module pipeline.build_wiki not importable: {_IMPORT_ERROR} – TODO: fix import path"
+        )
 
 
 # 2-5 parametrized tests with clear names and TODO asserts
@@ -46,6 +50,7 @@ def test_build_wiki_basic_parametrized(value, sample_data):
     """Basic sanity – parametrized on build_wiki."""
     _require_target()
     pytest.skip("TODO: fill assert – auto-generated gap mapper")
+
 
 @pytest.mark.parametrize("case", ["empty", "minimal", "typical"])
 def test_build_wiki_handles_cases(case, tmp_output):
@@ -57,6 +62,7 @@ def test_build_wiki_handles_cases(case, tmp_output):
     result = None  # TODO: TARGET.your_func(data)
     # assert
     pytest.skip(f"TODO: fill assert for case={case} – got {result}")
+
 
 def test_build_wiki_smoke_import():
     """Smoke import & attributes exist."""
@@ -73,6 +79,6 @@ def test_build_wiki_slugify_contract(sample_data):
     """Contract test for slugify – TODO: replace with real behavior."""
     _require_target()
     if not hasattr(TARGET, "slugify"):
-        pytest.skip(f"TARGET missing slugify – TODO verify name")
-    fn = getattr(TARGET, "slugify")
+        pytest.skip("TARGET missing slugify – TODO verify name")
+    fn = TARGET.slugify
     pytest.skip(f"TODO: call {fn} with sample_data and assert – auto-generated")
