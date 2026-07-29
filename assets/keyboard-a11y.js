@@ -93,23 +93,46 @@
       input.setAttribute('aria-expanded','false');
       input.setAttribute('aria-haspopup','listbox');
 
+      // This observer watches `ul` with {attributes:true, subtree:true}. The
+      // callback below used to write `role` and `aria-selected` on its own
+      // descendants UNCONDITIONALLY — every one of those writes is itself an
+      // attribute mutation inside the observed subtree, so it re-queues the
+      // same observer callback, which writes the same attributes again,
+      // forever. MutationObserver callbacks run as microtasks, so this loop
+      // never yields to a macrotask: no repaint, no requestAnimationFrame, no
+      // CDP/DevTools command, nothing — the tab looks frozen because the
+      // main thread genuinely never comes up for air.
+      // It fires the moment any <li> exists inside `ul`, i.e. the first time
+      // a suggestion renders — which is the guess input's autocomplete list,
+      // and matches "freezes while typing" exactly.
+      // Fix: every write below is now guarded to be a no-op when the DOM
+      // already reflects that state, so a callback pass that changes nothing
+      // does not requeue itself. Verified by removing the eager row-creation
+      // in play.html's typeahead and confirming Page.loadEventFired /
+      // Runtime.evaluate stopped hanging.
       var observer = new MutationObserver(function(){
         var visible = !ul.classList.contains('hidden');
-        input.setAttribute('aria-expanded', visible ? 'true' : 'false');
+        var wantExpanded = visible ? 'true' : 'false';
+        if(input.getAttribute('aria-expanded') !== wantExpanded) input.setAttribute('aria-expanded', wantExpanded);
         // ensure children have role option
         Array.from(ul.children).forEach(function(li, idx){
           if(!li.id) li.id = ul.id + '-opt-' + idx;
-          li.setAttribute('role','option');
+          if(li.getAttribute('role') !== 'option') li.setAttribute('role','option');
           if(!li.hasAttribute('aria-selected')) li.setAttribute('aria-selected','false');
         });
         // handle active descendant
         var active = ul.querySelector('.is-active');
         if(active && visible){
-          input.setAttribute('aria-activedescendant', active.id);
-          active.setAttribute('aria-selected','true');
-        } else {
+          if(input.getAttribute('aria-activedescendant') !== active.id) input.setAttribute('aria-activedescendant', active.id);
+          if(active.getAttribute('aria-selected') !== 'true') active.setAttribute('aria-selected','true');
+        } else if(input.hasAttribute('aria-activedescendant')){
           input.removeAttribute('aria-activedescendant');
         }
+        // a row that lost .is-active must lose aria-selected too, or it stays
+        // marked selected forever once any row has ever been active
+        Array.from(ul.children).forEach(function(li){
+          if(li!==active && li.getAttribute('aria-selected')==='true') li.setAttribute('aria-selected','false');
+        });
       });
       observer.observe(ul, {childList:true, attributes:true, subtree:true});
 

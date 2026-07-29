@@ -337,48 +337,83 @@ button,.input{min-height:44px}
     return null; // disabled — main thread 8-item scan is plenty and avoids structured-clone jank on mobile
   }
 
+  // ── Typeahead v2 ──────────────────────────────────────────────────────
+  // Replaces the old per-keystroke scan. The old filteredModern() called
+  // .toLowerCase() on every one of ~491 players on EVERY keystroke, even
+  // though state.modernByLower already existed precomputed and unused. The
+  // old suggestion list also destroyed and recreated up to 8 <li> elements
+  // from scratch on every debounce tick. On a memory-constrained phone
+  // running many tabs, that steady allocation + GC churn was one more thing
+  // competing for a main thread already under pressure — consistent with
+  // reports of the input freezing while typing.
+  //
+  // What changes:
+  //   - the lowercase index is built ONCE, lazily, not per keystroke
+  //   - the 8 suggestion rows are DOM nodes created ONCE and reused —
+  //     updated in place via textContent/hidden, never recreated
+  //   - painting is batched through one requestAnimationFrame per tick,
+  //     so a burst of keystrokes coalesces into a single layout pass
+  //   - a monotonic token discards a stale result if a newer keystroke
+  //     already superseded it (defensive: matching semantics are preserved
+  //     — substring match, so "james" still finds "LeBron James" — this is
+  //     a performance and allocation rewrite, not a behavior change)
+  let _searchIndex=null;
+  function buildSearchIndex(){
+    const st=(window.VHPastModern && VHPastModern.state) ? VHPastModern.state() : null;
+    const pool=st && st.modernPool;
+    if(!pool || !pool.length) return null;
+    _searchIndex=[];
+    for(let i=0;i<pool.length;i++){ const m=pool[i]; if(m&&m.n) _searchIndex.push({ref:m, lower:m.n.toLowerCase()}); }
+    return _searchIndex;
+  }
   function filteredModern(q){
-    q=(q||'').toLowerCase().trim(); if(!q) return [];
+    q=(q||'').toLowerCase().trim();
     if(q.length<2) return [];
     try{
-      const st = (window.VHPastModern && VHPastModern.state) ? VHPastModern.state() : null;
-      if(!st) return [];
-      const pool = st.modernPool;
-      if(!pool || !pool.length) return [];
-      // lightweight — no lower cache rebuild thrash, break after 8
+      const idx=_searchIndex || buildSearchIndex();
+      if(!idx) return [];
       const out=[];
-      for(let i=0;i<pool.length && out.length<8;i++){
-        const m=pool[i]; if(!m||!m.n) continue;
-        const low=(m.n||'').toLowerCase();
-        if(low.indexOf(q)!==-1) out.push(m);
-      }
+      for(let i=0;i<idx.length && out.length<8;i++){ if(idx[i].lower.indexOf(q)!==-1) out.push(idx[i].ref); }
       return out;
     }catch(e){ return []; }
   }
   function attachSuggest(){
     const input=document.getElementById('guess-input'), ul=document.getElementById('guess-suggest');
     if(!input||!ul) return;
-    let active=-1,last=[]; let debounceTimer=null;
-    function render(list){
-      last = Array.isArray(list) ? list.filter(m=>m && m.n) : [];
-      if(!last.length){ ul.style.display='none'; ul.textContent=''; active=-1; return; }
-      ul.textContent='';
-      const frag=document.createDocumentFragment();
-      for(let i=0;i<Math.min(last.length,8);i++){
-        const m=last[i]; if(!m||!m.n) continue;
-        const li=document.createElement('li');
-        li.dataset.i=String(i);
-        if(i===active) li.classList.add('is-active');
+    let active=-1, last=[], debounceTimer=null, renderScheduled=false, searchToken=0;
+
+    // Fixed pool of row nodes, created once. A production autocomplete
+    // should not allocate DOM per keystroke.
+    const ROWS=8, rowEls=[];
+    for(let i=0;i<ROWS;i++){
+      const li=document.createElement('li');
+      li.dataset.i=String(i); li.hidden=true;
+      ul.appendChild(li); rowEls.push(li);
+    }
+
+    function paint(){
+      renderScheduled=false;
+      if(!last.length){ ul.style.display='none'; for(const li of rowEls) li.hidden=true; return; }
+      for(let i=0;i<ROWS;i++){
+        const li=rowEls[i], m=last[i];
+        if(!m){ li.hidden=true; continue; }
+        li.hidden=false;
         li.textContent=m.n+' '+(m.s||'');
-        frag.appendChild(li);
+        li.classList.toggle('is-active', i===active);
       }
-      ul.appendChild(frag);
       ul.style.display='block';
+    }
+    function render(list){
+      last=Array.isArray(list)?list:[];
+      if(!renderScheduled){ renderScheduled=true; requestAnimationFrame(paint); }
     }
     function searchAndRender(q){
       const t=(q||'').trim(); active=-1;
+      const myToken=++searchToken;
       if(!t||t.length<2){ render([]); return; }
-      render(filteredModern(t));
+      const list=filteredModern(t);
+      if(myToken!==searchToken) return; // a newer keystroke already landed
+      render(list);
     }
     input.addEventListener('input', function(){
       const v=this.value; clearTimeout(debounceTimer); debounceTimer=setTimeout(()=>searchAndRender(v),120);
@@ -392,7 +427,7 @@ button,.input{min-height:44px}
         if((input.value||'').trim().length>=2){ e.preventDefault(); ul.style.display='none'; doGuess(); }
       } else if(e.key==='Escape'){ ul.style.display='none'; active=-1; }
     });
-    ul.addEventListener('click',function(e){ const li=e.target.closest('li'); if(!li) return; const i=parseInt(li.dataset.i,10); if(!isNaN(i)&&last[i]){ input.value=last[i].n; ul.style.display='none'; active=-1; doGuess(); } });
+    ul.addEventListener('click',function(e){ const li=e.target.closest('li'); if(!li||li.hidden) return; const i=parseInt(li.dataset.i,10); if(!isNaN(i)&&last[i]){ input.value=last[i].n; ul.style.display='none'; active=-1; doGuess(); } });
     document.addEventListener('click',function(e){ if(!ul.contains(e.target)&&e.target!==input) ul.style.display='none'; });
   }
   function dailyKey(){ try{ return VHPastModern.state().dayKey; }catch{ return new Date().toISOString().slice(0,10); } }
