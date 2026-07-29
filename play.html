@@ -168,7 +168,7 @@ button,.input{min-height:44px}
     <div class="small-mono" style="margin-top:8px;opacity:.6;text-transform:none">Each slot is fixed for the day — same for everyone. No reroll on refresh. Solve 3 to stay incentivized, 5 to dominate leaderboard.</div>
   </div>
 
-  <div id="map-wrap"><canvas id="sky-canvas" width="640" height="380"></canvas><div id="target-badge" style="position:absolute;left:0;top:0;transform:translate(-50%,-140%);background:#F0E442;border:2.2px solid #1A150F;border-radius:999px;padding:5px 10px;font-family:ui-monospace,monospace;font-size:10px;font-weight:900;box-shadow:2px 2px 0 #1A150F;z-index:4;display:none;pointer-events:none;white-space:nowrap">★ TARGET</div><div id="map-overlay"><span class="chip" id="map-fact">12,966 seasons • ★ target past</span><span class="chip">orange rings = your guesses • ◎ bullseye = target</span></div><div id="map-controls"><button class="chip pill" id="btn-pause" type="button">Pause</button><button class="chip pill" id="btn-reset" type="button">Reset</button></div><div id="map-legend"><div style="font-family:var(--mono);font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:900;opacity:.55;margin-bottom:4px">Map</div><div style="font-family:var(--mono);font-size:9px">Drag to orbit • ◎ bullseye = past target (auto-centered)</div></div><div id="hover-tip"></div></div>
+  <div id="map-wrap"><canvas id="sky-canvas" width="640" height="380"></canvas><div id="target-badge" style="position:absolute;left:0;top:0;transform:translate(-50%,-140%);background:#F0E442;border:2.2px solid #1A150F;border-radius:999px;padding:5px 10px;font-family:ui-monospace,monospace;font-size:10px;font-weight:900;box-shadow:2px 2px 0 #1A150F;z-index:4;display:none;pointer-events:none;white-space:nowrap">★ TARGET</div><div id="map-overlay"><span class="chip" id="map-fact">12,966 seasons • ★ target past</span><span class="chip">orange rings = your guesses • line = distance • ◎ bullseye = target</span></div><div id="map-controls"><button class="chip pill" id="btn-pause" type="button">Pause</button><button class="chip pill" id="btn-reset" type="button">Reset</button></div><div id="map-legend"><div style="font-family:var(--mono);font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:900;opacity:.55;margin-bottom:4px">Map</div><div style="font-family:var(--mono);font-size:9px">Drag to orbit • ◎ bullseye = past target (auto-centered)</div></div><div id="hover-tip"></div></div>
 
   <!-- PACK BATTLE v2 Production UI -->
   <div class="card" id="pack-progress" style="display:none;"></div>
@@ -270,11 +270,13 @@ button,.input{min-height:44px}
     // projectFrame();draw() idiom from forcing a full canvas redraw while idle-paused
     try{
       if(!sharedMapApi) return;
-      const ids=(G&&G.guesses)?G.guesses.map(g=>g.idx):[];
-      const key=ids.join(',');
+      const guesses=(G&&G.guesses)?G.guesses:[];
+      // key on ids only — sim/rank never change for a guess once it exists,
+      // so identity of the id list is enough to detect "something changed"
+      const key=guesses.map(g=>g.idx).join(',');
       if(key===_lastGuessKey) return;
       _lastGuessKey=key;
-      sharedMapApi.setGuesses(ids);
+      sharedMapApi.setGuesses(guesses);
     }catch{}
   }
   function focusOnTarget(){ try{ sharedMapApi && sharedMapApi.focusOnTarget && sharedMapApi.focusOnTarget(); }catch{} }
@@ -289,13 +291,15 @@ button,.input{min-height:44px}
   }
   async function mountGameMap(){
     try{
-      const mod = await import('./assets/shared-map.js?v=56');
+      const mod = await import('./assets/shared-map.js?v=57');
       const canvasEl = document.querySelector('#sky-canvas');
       if(!canvasEl) return;
       const st = (window.VHPastModern && VHPastModern.state) ? VHPastModern.state() : null;
       let tid = _targetIdCached;
       if(st && st.target && typeof st.target.i==='number'){ tid = st.target.i; _targetIdCached = tid; }
-      sharedMapApi = await mod.mountSharedMap(canvasEl, { highlightId: tid>=0?tid:null, guessIds: (G.guesses||[]).map(g=>g.idx), dark:false });
+      // pass full guess objects (idx/sim/rank), not just ids, so a resumed
+      // in-progress slot still shows the distance line + label immediately
+      sharedMapApi = await mod.mountSharedMap(canvasEl, { highlightId: tid>=0?tid:null, guessIds: (G.guesses||[]).slice(), dark:false });
       console.log('shared-map mounted play', sharedMapApi?sharedMapApi.getCount():0);
       window._sharedMapApi = sharedMapApi;
     }catch(e){ console.warn('mountGameMap fail',e); }

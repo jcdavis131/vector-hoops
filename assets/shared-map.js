@@ -21,7 +21,27 @@ export async function mountSharedMap(canvas, opts={}){
   let projected=[], projById=null, maxId=0;
   let W=0,H=0, rotY=Math.PI*0.18, rotX=0.22, auto=!reduceMotion, lastT=0, isDragging=false, lastX=0,lastY=0, idleMs=0;
   let embedPaused=false, lastRender=0;
-  let targetId=highlightInit, guessIds=Array.isArray(opts.guessIds)?opts.guessIds.slice():[];
+  // guesses are stored as {idx, sim, rank} — idx is the external player id
+  // (same id space as targetId, translated through projById below), sim is
+  // 0..1 similarity, rank is 0-based (0 = exact match). A plain array of
+  // numbers is still accepted for back-compat and normalized to {idx} only,
+  // which just means no distance line/label for those entries.
+  function normalizeGuesses(list){
+    if(!Array.isArray(list)) return [];
+    const out=[];
+    for(const g of list){
+      if(g==null) continue;
+      if(typeof g==='object'){
+        const idx=g.idx!=null?g.idx|0:(g.id!=null?g.id|0:null);
+        if(idx==null) continue;
+        out.push({ idx, sim:(typeof g.sim==='number'?g.sim:null), rank:(typeof g.rank==='number'?g.rank:null) });
+      } else {
+        out.push({ idx:g|0, sim:null, rank:null });
+      }
+    }
+    return out;
+  }
+  let targetId=highlightInit, guessIds=normalizeGuesses(opts.guessIds);
   let hoverEl=null; try{hoverEl=document.getElementById('hover-tip');}catch{}
   let ctx=null;
   try{ ctx=canvas.getContext('2d',{alpha:false}); }catch{ ctx=canvas.getContext('2d'); }
@@ -201,16 +221,41 @@ export async function mountSharedMap(canvas, opts={}){
       }
     }
 
-    // guesses: orange rings with white underlay so they read on dark clusters
+    // target screen position, computed early so guess lines can reach it —
+    // the bullseye itself still draws later/on top, in its original spot
+    let targetPr=null;
+    if(targetId!=null && projById && targetId<=maxId){
+      const tIdx=projById[targetId];
+      if(tIdx>=0){
+        const p=projected[tIdx];
+        if(p && p.sx>=-20 && p.sx<=W+20 && p.sy>=-20 && p.sy<=H+20) targetPr=p;
+      }
+    }
+
+    // guesses: a line to the target (how far off you were), then the orange
+    // ring on top. The latest guess reads solid; earlier ones fade to dashed
+    // so the map doesn't turn into a spiderweb after six tries.
+    let latestGuessPr=null, latestGuessMeta=null;
     if(guessIds && guessIds.length){
       for(let gi=0;gi<guessIds.length;gi++){
-        const gid=guessIds[gi]; if(gid==null||gid>maxId) continue;
-        const idx=projById?projById[gid]:-1; if(idx<0) continue;
+        const gm=guessIds[gi]; if(!gm||gm.idx==null||gm.idx>maxId) continue;
+        const idx=projById?projById[gm.idx]:-1; if(idx<0) continue;
         const pr=projected[idx]; if(!pr) continue;
         if(pr.sx< -30 || pr.sx> W+30 || pr.sy< -30 || pr.sy> H+30) continue;
         const gx=(pr.sx|0), gy=(pr.sy|0);
+        const isLatest=gi===guessIds.length-1;
+        if(targetPr){
+          ctx.save();
+          ctx.globalAlpha=isLatest?0.85:0.25;
+          ctx.strokeStyle=dark?'#F0E442':'#1A150F';
+          ctx.lineWidth=isLatest?1.6:1;
+          if(!isLatest) ctx.setLineDash([3,3]);
+          ctx.beginPath(); ctx.moveTo(gx,gy); ctx.lineTo(targetPr.sx|0, targetPr.sy|0); ctx.stroke();
+          ctx.restore();
+        }
         ctx.strokeStyle='#FFFFFF'; ctx.lineWidth=4; ctx.strokeRect(gx-5, gy-5, 10,10);
         ctx.strokeStyle='#D55E00'; ctx.lineWidth=2; ctx.strokeRect(gx-5, gy-5, 10,10);
+        if(isLatest){ latestGuessPr={x:gx,y:gy}; latestGuessMeta=gm; }
       }
     }
 
@@ -238,6 +283,24 @@ export async function mountSharedMap(canvas, opts={}){
           ctx.stroke();
         }
       }
+    }
+
+    // latest-guess readout — the one number that answers "how close?",
+    // drawn on top of everything else so it's never hidden behind a point
+    if(latestGuessPr && latestGuessMeta && (latestGuessMeta.sim!=null || latestGuessMeta.rank!=null)){
+      const g=latestGuessMeta;
+      const label = g.rank===0 ? '★ #1 WIN'
+        : (g.sim!=null ? Math.round(g.sim*100)+'% match':'') + (g.rank!=null ? ' · #'+(g.rank+1) : '');
+      ctx.font='800 10px ui-monospace,monospace';
+      const tw=ctx.measureText(label).width+10;
+      let lx=latestGuessPr.x - tw/2, ly=latestGuessPr.y-26;
+      lx=Math.max(4, Math.min(W-tw-4, lx));
+      ly=Math.max(4, ly);
+      ctx.fillStyle=dark?'rgba(8,10,15,.88)':'rgba(255,254,247,.92)';
+      ctx.fillRect(lx, ly, tw, 16);
+      ctx.strokeStyle=dark?'#F0E442':'#1A150F'; ctx.lineWidth=1; ctx.strokeRect(lx,ly,tw,16);
+      ctx.fillStyle=dark?'#F0E442':'#1A150F';
+      ctx.fillText(label, lx+5, ly+11);
     }
   }
 
@@ -304,7 +367,18 @@ export async function mountSharedMap(canvas, opts={}){
       const n=baseN[best]||''; const s=baseS[best]||''; const c=baseC[best];
       const arch=ARCH[c%8]||'';
       const pos=baseP[best]>=0?(POS[(baseP[best]|0)%5]||''):'';
-      hoverEl.innerHTML=`<b>${(n||'').replace(/</g,'&lt;')}</b> ${(s||'').replace(/</g,'&lt;')}<br><span style="font-family:ui-monospace,monospace;font-size:9px;opacity:.8">${pos?pos+' • ':''}${arch}</span>`;
+      // if the hovered point is one of the player's own guesses, show its
+      // distance-to-target info instead of only the generic point info
+      const hitId=baseI?baseI[best]:null;
+      const guessHit=hitId!=null?guessIds.find(g=>g.idx===hitId):null;
+      let extra='';
+      if(guessHit){
+        const bits=[];
+        if(guessHit.sim!=null) bits.push(Math.round(guessHit.sim*100)+'% match');
+        if(guessHit.rank!=null) bits.push(guessHit.rank===0?'✅ #1 WIN':'#'+(guessHit.rank+1));
+        if(bits.length) extra=`<br><span style="font-family:ui-monospace,monospace;font-size:9px;color:#D55E00;font-weight:800">YOUR GUESS · ${bits.join(' · ')}</span>`;
+      }
+      hoverEl.innerHTML=`<b>${(n||'').replace(/</g,'&lt;')}</b> ${(s||'').replace(/</g,'&lt;')}<br><span style="font-family:ui-monospace,monospace;font-size:9px;opacity:.8">${pos?pos+' • ':''}${arch}</span>${extra}`;
     } else {
       hoverEl.style.display='none';
     }
@@ -358,7 +432,7 @@ export async function mountSharedMap(canvas, opts={}){
 
   return {
     setTarget(id){ targetId=id==null?null:id|0; draw(); },
-    setGuesses(ids){ guessIds=Array.isArray(ids)?ids.slice():[]; draw(); },
+    setGuesses(ids){ guessIds=normalizeGuesses(ids); draw(); },
     focusOnTarget(){
       // targetId>maxId would read past the Int32Array end: idx=undefined -> atan2(undefined)=NaN -> map collapses
       if(targetId==null||!projById||targetId<0||targetId>maxId) return;

@@ -6,7 +6,7 @@
    - stale-while-revalidate for immutable CORE
 */
 
-const CACHE_NAME = 'vector-hoops-v61-a11y-loop-fix';
+const CACHE_NAME = 'vector-hoops-v62-guess-distance';
 
 const CORE = [
   '/',
