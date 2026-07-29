@@ -41,10 +41,18 @@ export async function mountSharedMap(canvas, opts={}){
 
   function resize(){
     if(!canvas) return;
-    const sz=getSize(); W=sz.w; H=sz.h;
+    const sz=getSize();
+    // A ResizeObserver below watches this canvas, and this function writes the
+    // canvas's own size — so every call could feed the observer that called it,
+    // and each pass reprojects the whole point cloud. Bail when nothing actually
+    // changed so that loop cannot sustain itself, and skip the style writes when
+    // they would be no-ops (writing an identical value still dirties layout).
+    if(W===sz.w && H===sz.h && canvas.width===sz.w && canvas.height===sz.h) return;
+    W=sz.w; H=sz.h;
     // DPR=1 to cut memory
     canvas.width=W; canvas.height=H;
-    canvas.style.width=W+'px'; canvas.style.height=H+'px';
+    if(canvas.style.width!==W+'px') canvas.style.width=W+'px';
+    if(canvas.style.height!==H+'px') canvas.style.height=H+'px';
     if(ctx) ctx.setTransform(1,0,0,1,0,0);
     projectFrame();
     draw();
@@ -329,7 +337,21 @@ export async function mountSharedMap(canvas, opts={}){
 
   // load and start
   resize();
-  let ro=null; try{ ro=new ResizeObserver(resize); ro.observe(canvas); if(canvas.parentElement) ro.observe(canvas.parentElement); }catch{}
+  // Coalesce observer callbacks through one frame. Submitting a guess mutates
+  // the DOM around the map (guess rows, result panel), which can fire this
+  // repeatedly in a single layout pass; without the rAF gate each notification
+  // ran a full reproject on the main thread.
+  let ro=null, roPending=false;
+  try{
+    const onResizeObserved=()=>{
+      if(roPending) return;
+      roPending=true;
+      requestAnimationFrame(()=>{ roPending=false; resize(); });
+    };
+    ro=new ResizeObserver(onResizeObserved);
+    ro.observe(canvas);
+    if(canvas.parentElement) ro.observe(canvas.parentElement);
+  }catch{}
   const ok=await loadLite();
   if(ok){ projectFrame(); draw(); scheduleLoop(); loadNamesLazy().then(()=>{ projectFrame(); draw(); }); }
   else { ctx.fillStyle='#FFFEF7'; ctx.fillText('Map failed to load',14,22); }
