@@ -6,7 +6,7 @@
    - stale-while-revalidate for immutable CORE
 */
 
-const CACHE_NAME = 'vector-hoops-v56-mtnn-d64';
+const CACHE_NAME = 'vector-hoops-v57-motion';
 
 const CORE = [
   '/',
@@ -17,6 +17,7 @@ const CORE = [
   '/assets/responsive.css',
   '/assets/final-qa.css',
   '/assets/unified.css',
+  '/assets/motion.css',
   '/assets/player-profile-v28.css',
   '/assets/trading-card.css',
   '/assets/site-nav.js',
