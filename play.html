@@ -976,6 +976,39 @@ button,.input{min-height:44px}
 
   // inline, non-blocking guess feedback — alert() on mobile reads as "the game broke"
   let pendingGuess=null;
+
+  /* Crash breadcrumbs.
+     The Aw-Snap on guess is a renderer crash, so nothing in memory survives it
+     and the try/catch in doGuess never sees it — the process is simply gone.
+     localStorage does survive. Stamping the step we are about to attempt means
+     the next load can say which one died, which is the one thing we have not
+     been able to learn from the outside. Cleared on a clean finish, so a
+     leftover crumb always means "this step did not return". */
+  const VH_CRUMB='vh:guess-crumb';
+  function crumb(step, extra){
+    try{ localStorage.setItem(VH_CRUMB, JSON.stringify({
+      step, extra: extra===undefined?null:extra,
+      guesses: (G&&G.guesses)?G.guesses.length:0,
+      w: window.innerWidth, h: window.innerHeight,
+      dpr: window.devicePixelRatio||1,
+      mem: (navigator.deviceMemory||null),
+      at: new Date().toISOString()
+    })); }catch{}
+  }
+  function crumbClear(){ try{ localStorage.removeItem(VH_CRUMB); }catch{} }
+  function crumbReport(){
+    try{
+      const raw=localStorage.getItem(VH_CRUMB); if(!raw) return;
+      localStorage.removeItem(VH_CRUMB);
+      const c=JSON.parse(raw);
+      console.warn('[vh] previous guess did not finish — died at step:', c.step, c);
+      try{ if(window.VHErrorBoundary) VHErrorBoundary.log({type:'crash-crumb',
+        message:'guess died at step '+c.step, stack:JSON.stringify(c)}); }catch{}
+      // surfaced in the UI too: this has to be readable on the phone it happens on
+      setTimeout(()=>setGuessStatus('Recovered — last guess stopped at: '+c.step,'sticky'), 1200);
+    }catch{}
+  }
+
   function setGuessStatus(msg, tone){
     try{
       let el=document.getElementById('guess-status');
@@ -1055,8 +1088,11 @@ button,.input{min-height:44px}
       if(name.length<2){ setGuessStatus('Type at least 2 letters','warn'); return; }
       const low=name.toLowerCase(); const mm=name.match(/^(.+?)\s+\d{4}-\d{2}$/); const low2=mm? mm[1].trim().toLowerCase(): low;
       if(G.guesses.some(g=>{ try{return (g.name||'').toLowerCase().trim()===low2;}catch{return false;}})){ setGuessStatus('Already guessed','warn'); if(fromInput&&input) input.value=''; return; }
+      // scoring runs against the whole pool, so it is stamped too
+      crumb('score', name);
       const r=VHPastModern.guessModern(name);
       if(!r.ok){
+        crumbClear();
         if(r.pending){
           pendingGuess=name;
           setGuessStatus('Scoring "'+name+'" as soon as the model finishes loading…','sticky');
@@ -1064,13 +1100,22 @@ button,.input{min-height:44px}
         }
         setGuessStatus(r.reason||'Guess failed — try another','warn'); return;
       }
-      if(G.guesses.some(g=>{ try{return g.idx===r.guess.idx|| (g.name||'').toLowerCase().trim()===r.guess.name.toLowerCase().trim();}catch{return false;}})){ setGuessStatus('Already guessed','warn'); if(fromInput&&input) input.value=''; return; }
+      if(G.guesses.some(g=>{ try{return g.idx===r.guess.idx|| (g.name||'').toLowerCase().trim()===r.guess.name.toLowerCase().trim();}catch{return false;}})){ crumbClear(); setGuessStatus('Already guessed','warn'); if(fromInput&&input) input.value=''; return; }
       setGuessStatus('');
       G.guesses.push(r.guess); try{ VHPastModern.state().guesses=G.guesses.slice(); }catch{} saveGuesses(); if(fromInput&&input) input.value='';
       const warmEl=$('#warm-label'); let wc=null; try{ wc=VHPastModern.warmCold(); }catch{}
       if(wc&&G.guesses.length>1){ if(warmEl){ warmEl.style.display='inline-flex'; warmEl.textContent=wc; }} else { if(warmEl) warmEl.style.display='none'; }
-      renderGuesses(); finish(); projectFrame(); draw(); renderPackProgress(); renderGuessGrid();
+      // Each step is stamped before it runs; whichever stamp survives a crash
+      // is the step that killed the renderer.
+      crumb('renderGuesses');  renderGuesses();
+      crumb('finish');         finish();
+      crumb('draw');           projectFrame(); draw();
+      crumb('packProgress');   renderPackProgress();
+      crumb('guessGrid');      renderGuessGrid();
+      crumbClear();
     }catch(e){
+      // a caught exception is not the crash we are chasing, so drop the crumb
+      crumbClear();
       console.warn('doGuess fail', e);
       try{ if(window.VHErrorBoundary) VHErrorBoundary.log({type:'js', message:'doGuess '+e.message, stack:e.stack}); }catch{}
       setGuessStatus('Guess failed — try another (error logged)','warn');
@@ -1086,6 +1131,8 @@ button,.input{min-height:44px}
   });
 
   async function main(){
+    // if the last guess never finished, say which step it was on
+    crumbReport();
     // shared-map handles resize/drag/hover/pause internally — legacy listeners removed
     window.addEventListener('resize',()=>{ try{ resize(); }catch{} },{passive:true});
 
