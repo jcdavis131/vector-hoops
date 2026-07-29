@@ -1004,8 +1004,30 @@ button,.input{min-height:44px}
       console.warn('[vh] previous guess did not finish — died at step:', c.step, c);
       try{ if(window.VHErrorBoundary) VHErrorBoundary.log({type:'crash-crumb',
         message:'guess died at step '+c.step, stack:JSON.stringify(c)}); }catch{}
-      // surfaced in the UI too: this has to be readable on the phone it happens on
-      setTimeout(()=>setGuessStatus('Recovered — last guess stopped at: '+c.step,'sticky'), 1200);
+
+      /* A banner, not the status line. This is the only channel that survives
+         the crash, it has to be read on a phone, and the status line sits
+         behind the intro sheet on a fresh load. Fixed, top, and it stays up
+         until it is dismissed. */
+      const bar=document.createElement('div');
+      bar.setAttribute('role','status');
+      bar.style.cssText='position:fixed;left:0;right:0;top:0;z-index:99999;'+
+        'background:#1A150F;color:#FFFEF7;font:700 13px/1.45 ui-monospace,monospace;'+
+        'padding:10px 44px 10px 12px;border-bottom:3px solid #D55E00;'+
+        'box-shadow:0 3px 0 rgba(0,0,0,.35);word-break:break-word';
+      bar.textContent='Last guess stopped at: '+c.step+
+        '  ·  '+(c.w||'?')+'x'+(c.h||'?')+' dpr'+(c.dpr||'?')+
+        (c.mem?(' · '+c.mem+'GB'):'')+' · after '+(c.guesses||0)+' guesses';
+      const x=document.createElement('button');
+      x.textContent='x';
+      x.setAttribute('aria-label','Dismiss');
+      x.style.cssText='position:absolute;right:8px;top:6px;width:30px;height:30px;'+
+        'background:transparent;color:#FFFEF7;border:2px solid #FFFEF7;border-radius:6px;'+
+        'font:700 13px ui-monospace,monospace;cursor:pointer';
+      x.addEventListener('click',()=>bar.remove());
+      bar.appendChild(x);
+      const mount=()=>document.body && document.body.appendChild(bar);
+      if(document.body) mount(); else document.addEventListener('DOMContentLoaded',mount);
     }catch{}
   }
 
