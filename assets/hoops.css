@@ -5,16 +5,22 @@
    status greens/reds for match heat. */
 
 :root{
-  --paper: #fafaf8;
+  /* Note: this file is linked BEFORE unified.css, so the --paper and --ink
+     below lose to that file's values on every page. They are kept in step
+     with it so this block does not read as a second, contradicting ground. */
+  --paper: #f7f5f0;
   --surface: #ffffff;
-  --ink: #111111;
+  --ink: #14181d;
   --ink-soft: #52514e;
   --ink-muted: #898781;
   --hairline: #e1e0d9;
   --panel-dark: #131312;
 
-  --data-orange: #eb6834;  /* Chimera / offense */
-  --data-blue: #2a78d6;    /* your guess / defense */
+  /* Fargekart. These three are the categorical set for this app — 43 uses in
+     this file, and the only place they are defined. Sampled from a Norwegian
+     design shop; see vector-hub/assets/hub.css for the full rationale. */
+  --data-orange: #d8452a;  /* korall — Chimera / offense */
+  --data-blue: #1b45a7;    /* fjord — your guess / defense */
   --hot: #006300;
   --warm: #7a5b00;
   --cold: #d03b3b;
@@ -22,7 +28,7 @@
   --identified-bg: #fff8e0;
   --silver: #8f96a3;          /* Mashup "close enough" (>=92%) win state — a second, distinct WON color, never red */
   --silver-bg: #eef1f4;
-  --data-purple: #7d5cc9;     /* Archetype slot accent — a third color alongside orange/blue, not a status color */
+  --data-purple: #9b6bc4;     /* lavendel — Archetype slot accent, a third color alongside orange/blue, not a status color */
 
   --shadow-block: 4px 4px 0 var(--ink);
   --shadow-block-sm: 3px 3px 0 var(--ink);

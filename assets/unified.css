@@ -1,5 +1,8 @@
 :root{
-  --paper:#FFFEF7; --ink:#1A150F; --blue:#0072B2; --verm:#D55E00; --orange:#D55E00;
+  /* Ground is the Fargekart wall: a warmer white and a blue-black ink, shared
+     with the rest of the family. 16.36:1. This block is loaded last, so these
+     two govern every page — including the ones that also load hoops.css. */
+  --paper:#f7f5f0; --ink:#14181d; --blue:#0072B2; --verm:#D55E00; --orange:#D55E00;
   --yellow:#F0E442; --green:#009E73; --radius:14px; --shadow:4px 4px 0 var(--ink);
   --mono:ui-monospace,monospace; --sans:ui-sans-serif,system-ui; --hd:"Architects Daughter",var(--mono);
 }
