@@ -6,7 +6,7 @@
    - stale-while-revalidate for immutable CORE
 */
 
-const CACHE_NAME = 'vector-hoops-v63-storage-guard';
+const CACHE_NAME = 'vector-hoops-v64-pwa-icons';
 
 const CORE = [
   '/',
@@ -25,7 +25,9 @@ const CORE = [
   '/assets/keyboard-a11y.js',
   '/assets/pwa-install.js',
   '/assets/og-embed.png',
-  '/assets/og-1200x630.png'
+  '/assets/og-1200x630.png',
+  '/assets/icon-192.png',
+  '/assets/icon-512.png'
 ];
 
 const DENY_CACHE = [
@@ -220,8 +222,8 @@ self.addEventListener('push', (e) => {
   e.waitUntil(
     self.registration.showNotification(title, {
       body: body,
-      icon: '/assets/og-embed.png',
-      badge: '/assets/og-embed.png',
+      icon: '/assets/icon-192.png',
+      badge: '/assets/icon-192.png',
       tag: 'vector-hoops-daily',
       data: { url: d.url || '/play?utm_source=push' }
     })
