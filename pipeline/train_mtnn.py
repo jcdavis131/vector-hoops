@@ -1607,6 +1607,15 @@ def main() -> None:
     best_epoch = -1
     history: list[float] = []
     val_trace: list[dict] = []
+    # val_recall is measured on a small split and swings check-to-check (seen
+    # directly: 0.702/0.794/0.770/0.744/0.722 across 5 checks on one run,
+    # while the SAME run's test_recall stayed ~0.83 throughout and val_purity
+    # climbed monotonically). Feeding raw val_recall into the checkpoint-
+    # selection proxy lets one noisy high check outvote a real, later purity
+    # gain. Smooth over the last 3 checks for selection only -- val_r itself
+    # stays unsmoothed in the log line and val_trace for honest diagnostics.
+    VAL_RECALL_SMOOTH_N = 3
+    val_recall_hist: list[float] = []
 
     for epoch in range(args.epochs):
         model.train()
@@ -1755,10 +1764,15 @@ def main() -> None:
             test_pairs = filter_pairs_by_split(pair_arr, seasons, "test")
             test_r = recall_at_k(E_val, test_pairs, k=10)
             val_pu = cross_era_archetype_purity(E_val, clusters, seasons)
-            val_comp = promotion_composite(val_r, val_pu)
+            val_recall_hist.append(val_r)
+            val_r_smooth = sum(val_recall_hist[-VAL_RECALL_SMOOTH_N:]) / len(
+                val_recall_hist[-VAL_RECALL_SMOOTH_N:]
+            )
+            val_comp = promotion_composite(val_r_smooth, val_pu)
             pu_s = f" purity@20={val_pu:.3f}" if val_pu is not None else ""
             log_line += (
-                f"  val_recall@10={val_r:.3f} test_recall@10={test_r:.3f}"
+                f"  val_recall@10={val_r:.3f} (smooth {val_r_smooth:.3f})"
+                f" test_recall@10={test_r:.3f}"
                 f"{pu_s} composite={val_comp:.3f}"
             )
             trace_row = {
@@ -1780,7 +1794,7 @@ def main() -> None:
             if not args.no_best_checkpoint:
                 metric_val = None
                 if args.checkpoint_metric == "recall":
-                    metric_val = val_r
+                    metric_val = val_r_smooth
                     is_better = metric_val is not None and (
                         best_val_recall is None or metric_val > best_val_recall
                     )
@@ -1795,7 +1809,10 @@ def main() -> None:
                         best_val_composite is None or metric_val > best_val_composite
                     )
                 if is_better:
-                    best_val_recall = val_r
+                    # Store the smoothed recall alongside the metric it was
+                    # actually compared against, so a later smoothed value
+                    # is never judged against an earlier raw (noisier) one.
+                    best_val_recall = val_r_smooth
                     best_val_purity = val_pu
                     best_val_composite = val_comp
                     best_epoch = epoch

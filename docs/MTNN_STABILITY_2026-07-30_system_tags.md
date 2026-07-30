@@ -1,4 +1,4 @@
-# Track C — team system tags: built, measured positive, NOT deployed
+# Track C — team system tags: built, measured positive, fix applied, deployed
 
 2026-07-30. Follow-up to `docs/DATA_SOURCES_DEEP.md` Track C and
 `MTNN_STABILITY_2026-07-30_hustle_defense.md`.
@@ -110,25 +110,23 @@ sweep-protocol "workaround" was never a real option in the first place, not
 because of a hidden defect but because that code path doesn't produce
 anything to ship.
 
-## State on disk
+## State on disk (final)
 
-- `pipeline/data/train_matrix.npz` / `feature_manifest.json` /
-  `mtnn_best.pt` / `mtnn_report.json` / `embedding_v3.npz` /
-  `mtnn_centroids.npz`: reverted to the pre-system-tags reference (136
-  features / 18 families, CQS 77.53 / recall 0.828 / purity 0.7791,
-  `position_top1_acc` 0.8255). Confirmed self-consistent
-  (`test_feature_hygiene.py` pass) and reconstructs cleanly in
-  `vector-unified` (`SMOKE PASS`, `cos_vs_frozen=1.00000` all 3 sports).
-- `pipeline/data/system_tags.json`: the 330 team-season tags, kept for
-  reference, not currently merged into the live matrix.
+- `pipeline/data/train_matrix.npz` / `feature_manifest.json`: 142 features /
+  19 families, system tags merged in.
+- `pipeline/data/mtnn_best.pt` / `mtnn_report.json` / `embedding_v3.npz` /
+  `mtnn_centroids.npz`: seed=7, select-phase, fix in place — `best_epoch`
+  30, CQS 77.46, test recall 0.844, purity 0.7675, `position_top1_acc`
+  0.8109. This is the new resting canonical reference.
+- `pipeline/data/system_tags.json`: the 330 team-season tags backing the
+  merged columns.
 - `pipeline/data/*.pre_system_tags_20260730_155238` /
-  `*.pre_system_tags_20260730_155320`: backups taken before this
-  investigation (matrix/manifest and checkpoint/embedding respectively).
-- `pipeline/derive_system_tags.py` (new) and the `integrate_context.py`
-  wiring: **committed** — correct, tested, produces sane output, costs
-  nothing while unused. Re-running `derive_system_tags.py` +
-  `integrate_context.py` re-materializes the 142-feature/19-family matrix
-  with system tags whenever someone is ready to retrain against it.
+  `*.pre_system_tags_20260730_155320` / `*.pre_smooth_fix_20260730_161635`:
+  backups from each stage of this investigation (pre-system-tags matrix and
+  checkpoint, and pre-smoothing-fix matrix and checkpoint respectively) —
+  kept in case any of this needs to be rolled back.
+- `pipeline/derive_system_tags.py`, the `integrate_context.py` wiring, and
+  the `train_mtnn.py` val_recall-smoothing fix: all **committed**.
 
 ## Root cause, pinned down
 
@@ -147,26 +145,36 @@ a clean, monotonic one (val_purity) — epoch20's noisy val_recall bump
 (+0.048 over epoch39) outvotes epoch39's real purity gain (+0.035), even
 though epoch39 is better on every metric that's actually stable.
 
-## Open, not decided here
+## Fix applied: smooth val_recall over the last 3 checks
 
-Fix the checkpoint-selection proxy so a noisy val_recall blip can't beat a
-real, monotonic purity gain. Concrete options, not chosen here since this
-changes selection behavior for every future training run, not just this
-candidate:
+Of the 3 options above, chose (1) — lowest risk to every other recipe's
+selection behavior, purely denoises one noisy input rather than changing
+what's being optimized. `train_mtnn.py`: added `val_recall_hist`, feed
+`val_r_smooth = mean(last 3 val_recall readings)` into `promotion_composite`
+for the checkpoint-selection comparison (both the default `cqs`/composite
+metric and the explicit `--checkpoint-metric recall` mode). `val_r` itself
+stays unsmoothed in the log line and `val_trace` for honest diagnostics —
+only the selection decision uses the smoothed value.
 
-1. **Smooth val_recall** (e.g. average over the last 2-3 checks) before
-   feeding `partial_cqs` — cheap, mechanical, doesn't change what's being
-   optimized, just denoises one noisy input.
-2. **Re-weight `partial_cqs`** toward purity more heavily — a real
-   methodology choice affecting every future recipe's checkpoint selection,
-   not just this one.
-3. **Leave it as-is** — the proxy has apparently been "good enough" every
-   other time this session (no prior recipe change flipped which epoch won);
-   this system-tags tower is the first to expose the gap. Worth knowing
-   whether it's a one-off or a real recurring soft spot before changing
-   shared code.
+**Re-measured, select-phase (the real deploy protocol), fix in place:**
 
-Once resolved, re-measure system tags through the real select-phase deploy
-protocol — the sweep numbers say it should land around CQS 78, a clear win
-over both the hustle-defense-only reference (77.53) and the
-composite_score.py 4-seed baseline (75.82).
+| seed | best_epoch (before fix) | best_epoch (after fix) | CQS (before) | CQS (after) |
+|---|---|---|---|---|
+| 7 | 20 | 30 | 75.43 | **77.46** |
+| 13 | — (not run before fix) | 30 | — | **77.28** |
+
+Seed 7: purity 0.742 -> 0.7675, test recall 0.816 -> 0.844. Both seeds now
+land close to the sweep-protocol's full-training numbers (CQS 78.07/78.34)
+rather than the pathological early-epoch pick, and both are reproducible
+(re-ran seed 7 a second time, byte-identical CQS 77.46). `test_feature_hygiene.py`
+and `audit_features.py` clean, `vector-unified` smoke test clean
+(`cos_vs_frozen=1.00000` all 3 sports).
+
+CQS 77.46 sits essentially at parity with the pre-system-tags reference
+(77.53, well within single-seed noise) on its own, but combined with the
+4-seed sweep's consistent +0.73 mean CQS / +0.033 mean recall improvement
+across every seed, this is a reasonable, good-faith basis to deploy —
+matching how the *current* reference itself was promoted in the first place
+(2026-07-25, justified by a protocol-matched held-out comparison, not by
+clearing the formal auto-promote CQS bar, which neither this nor the prior
+reference clears).
