@@ -193,6 +193,21 @@ for f in ["OREB", "DREB", "OREB_PCT", "DREB_PCT", "REB_PCT"]:
     FAMILY_OF[f] = "rebounding"
 for f in ["STL", "BLK", "DEF_RATING"]:
     FAMILY_OF[f] = "defense"
+# Real hustle-tracking defense (fetch_wide_skills.py, stats.nba.com,
+# 2015-16+ only -- masked pre-2015-16, never fabricated). Previously only
+# fed the skill-grade display + motor/disruption_gravity/rim_gravity
+# skill-tower targets, never the tower inputs that shape the embedding.
+HUSTLE_FEATURES = [
+    "HUSTLE_DEFLECTIONS",
+    "HUSTLE_LOOSE_BALLS",
+    "HUSTLE_CHARGES",
+    "HUSTLE_BOX_OUTS",
+    "HUSTLE_SCREEN_AST",
+    "HUSTLE_CONTESTED_SHOTS",
+    "HUSTLE_D_FG_PCT",
+]
+for f in HUSTLE_FEATURES:
+    FAMILY_OF[f] = "defense"
 for f in [
     "FG3_PCT",
     "FG_PCT",
@@ -452,6 +467,48 @@ def fetch_tracking(season: str, offline: bool):
 
 
 # ---------------------------------------------------------------------------
+# Wide-skills hustle stats (fetch_wide_skills.py): deflections, loose balls,
+# charges drawn, box-outs, screen assists, contested shots, defended FG%.
+# Already fully cached 2015-16..2025-26 (pipeline/cache/wide_skills_{season}.
+# json, all "complete": true) -- these currently only feed the skill-grade
+# display (assets/skills_wide.json) and the motor/disruption_gravity/
+# rim_gravity skill-tower TARGETS (pipeline/data/wide_skill_labels.npz), never
+# the tower INPUTS, so the "defense" family stays 3 features (STL/BLK/
+# DEF_RATING) even though real hustle data already exists. Read-only here --
+# no new fetch, the cache is already complete. Pre-2015-16 seasons get an
+# empty dict (masked downstream), same discipline as fetch_tracking above.
+# ---------------------------------------------------------------------------
+
+WIDE_SKILLS_FIRST_SEASON = "2015-16"
+
+
+def load_wide_skills_defense(season: str) -> dict[str, dict]:
+    if season < WIDE_SKILLS_FIRST_SEASON:
+        return {}
+    p = CACHE / f"wide_skills_{season}.json"
+    if not p.exists():
+        return {}
+    try:
+        d = json.loads(p.read_text(encoding="utf-8"))
+    except Exception:
+        return {}
+    if not d.get("complete"):
+        return {}
+    out = {}
+    for nn, v in d.get("players", {}).items():
+        out[nn] = {
+            "HUSTLE_DEFLECTIONS": v.get("deflections"),
+            "HUSTLE_LOOSE_BALLS": v.get("loose_balls"),
+            "HUSTLE_CHARGES": v.get("charges"),
+            "HUSTLE_BOX_OUTS": v.get("box_outs"),
+            "HUSTLE_SCREEN_AST": v.get("screen_ast"),
+            "HUSTLE_CONTESTED_SHOTS": v.get("contested_shots"),
+            "HUSTLE_D_FG_PCT": v.get("d_fg_pct") or None,  # 0.0 means "no data" in the source, not a real 0%
+        }
+    return out
+
+
+# ---------------------------------------------------------------------------
 # Form features from local per-game logs (offline, unique to this dataset):
 # game-to-game volatility, scoring ceiling, double/triple-double rates,
 # durability. pipeline/data/gamelogs_{season}.jsonl, one JSON row per
@@ -690,6 +747,7 @@ def main() -> None:
         "scoring": set(),
         "bio": set(),
         "tracking": set(),
+        "hustle": set(),
         "form": set(),
     }
     fetched, missing = [], []
@@ -710,6 +768,7 @@ def main() -> None:
         bio = {str(r["PLAYER_ID"]): r for r in (fetch_bio(season, args.offline) or [])}
         trk = fetch_tracking(season, args.offline) or {}
         form = compute_form_features(season)
+        hustle = load_wide_skills_defense(season)
         gate = gates_for_season(season, schedule_aware=schedule_aware)
         if schedule_aware:
             min_gp = gate["min_gp"]
@@ -754,6 +813,10 @@ def main() -> None:
             for k, v in (form.get(pid) or {}).items():
                 row[k] = v
                 extra_presence["form"].add(k)
+            for k, v in (hustle.get(norm_name(row["PLAYER_NAME"])) or {}).items():
+                if v is not None:
+                    row[k] = v
+                    extra_presence["hustle"].add(k)
             # salary
             key = (norm_name(row["PLAYER_NAME"]), season)
             sal = salary_hist.get(key, salary_bbref.get(key))
@@ -783,7 +846,7 @@ def main() -> None:
 
     # ---- wide feature list: game contract first (frozen order) ----
     wide_features = list(GAME_FEATURES)
-    for name in ("advanced", "scoring", "bio", "tracking", "form"):
+    for name in ("advanced", "scoring", "bio", "tracking", "form", "hustle"):
         for c in sorted(extra_presence[name]):
             if c not in wide_features:
                 wide_features.append(c)
