@@ -39,6 +39,7 @@ PLAYOFFS_JSON = DATA_DIR / "playoffs.json"
 HONORS_JSON = DATA_DIR / "honors.json"
 GAME_RATINGS_JSON = DATA_DIR / "game_ratings.json"
 AVAILABILITY_JSON = DATA_DIR / "availability.json"
+SYSTEM_TAGS_JSON = DATA_DIR / "system_tags.json"
 
 _GAME_ATTR_KEYS = (
     "overall",
@@ -101,6 +102,16 @@ V4_FEATURES: dict[str, str] = {
     "TM_DEF_RTG": "team",
     "TM_NET_RTG": "team",
     "TM_WIN_PCT": "team",
+    # system (VH-Track-C) — derive_system_tags.py, joined via roster_context
+    # teamId same as team env. One-hot over 6 k-means-derived offensive
+    # style tags; 0.0 on all 6 when a team-season has a tag but this isn't
+    # it, None (masked) when the team-season itself has no tag at all.
+    "SYSTEM_PACE_SPACE": "system",
+    "SYSTEM_MOREYBALL": "system",
+    "SYSTEM_GRIND": "system",
+    "SYSTEM_POST_HEAVY": "system",
+    "SYSTEM_TRANSITION": "system",
+    "SYSTEM_BALANCED": "system",
     # form (VH-101 / build_vectors FORM_FEATURES)
     "FORM_VOL": "form",
     "FORM_CEIL": "form",
@@ -167,6 +178,7 @@ RETIRED_FEATURES = {
 
 PO_FEATURES = [f for f, fam in V4_FEATURES.items() if fam == "playoffs"]
 GK_FEATURES = [f for f, fam in V4_FEATURES.items() if fam == "game_ratings"]
+SYSTEM_TAGS = [f for f, fam in V4_FEATURES.items() if fam == "system"]
 
 
 def load_train_bundle():
@@ -289,6 +301,17 @@ def load_team_season_index() -> dict[tuple[str, int], dict]:
         for row in rows:
             out[(season, int(row["TEAM_ID"]))] = row
     return out
+
+
+def load_system_tags_index() -> dict[tuple[str, int], str]:
+    """(season, TEAM_ID) -> SYSTEM_* tag from derive_system_tags.py."""
+    if not SYSTEM_TAGS_JSON.exists():
+        return {}
+    data = json.loads(SYSTEM_TAGS_JSON.read_text(encoding="utf-8"))
+    return {
+        (r["season"], int(r["team_id"])): r["tag"]
+        for r in data.get("team_seasons", [])
+    }
 
 
 # A family below this row-coverage never earns a tower — merging it would
@@ -437,6 +460,7 @@ def build_row_values(
     competition: dict,
     salary_market: dict,
     team_index: dict[tuple[str, int], dict],
+    system_index: dict[tuple[str, int], str],
     form: dict,
     pedigree: dict,
     playoffs: dict,
@@ -459,6 +483,14 @@ def build_row_values(
         mkt = salary_market.get(key, {})
         team_row = (
             team_index.get((str(season), int(r["teamId"]))) if r.get("teamId") else {}
+        )
+        system_tag = (
+            system_index.get((str(season), int(r["teamId"]))) if r.get("teamId") else None
+        )
+        system_vals = (
+            {t: (1.0 if t == system_tag else 0.0) for t in SYSTEM_TAGS}
+            if system_tag is not None
+            else {t: None for t in SYSTEM_TAGS}
         )
         rows.append(
             {
@@ -519,6 +551,7 @@ def build_row_values(
                 "INJ_MISS_SPELLS": av.get("MISS_SPELLS"),
                 **{f: po.get(f) for f in PO_FEATURES},
                 **{f: gk.get(f) for f in GK_FEATURES},
+                **system_vals,
             }
         )
     return rows
@@ -564,6 +597,7 @@ def main() -> None:
     competition = load_competition_by_player_season()
     salary_market = load_salary_market_by_player_season()
     team_index = load_team_season_index()
+    system_index = load_system_tags_index()
     form = load_form_by_player_season()
     pedigree = load_pedigree_by_player_season()
     playoffs = load_playoffs_by_player_season()
@@ -574,7 +608,7 @@ def main() -> None:
     print(
         f"artifacts: roster={len(roster)} career={len(career)} "
         f"competition={len(competition)} salary_market={len(salary_market)} "
-        f"team_season={len(team_index)} "
+        f"team_season={len(team_index)} system_tags={len(system_index)} "
         f"form={len(form)} pedigree={len(pedigree)} playoffs={len(playoffs)} "
         f"honors={len(honors)} game_ratings={len(game_ratings)} "
         f"availability={len(availability)}"
@@ -588,6 +622,7 @@ def main() -> None:
         competition,
         salary_market,
         team_index,
+        system_index,
         form,
         pedigree,
         playoffs,
