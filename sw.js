@@ -6,7 +6,7 @@
    - stale-while-revalidate for immutable CORE
 */
 
-const CACHE_NAME = 'vector-hoops-v65-canvas-labels';
+const CACHE_NAME = 'vector-hoops-v66-dedupe-slot-label';
 
 const CORE = [
   '/',

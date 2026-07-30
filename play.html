@@ -753,14 +753,17 @@ button,.input{min-height:44px}
 
   function updateStatusBar(){
     const st=VHPastModern.state();
-    const triesPill=$('#tries-pill'), phase=$('#game-phase-label'), dots=$('#guess-dots'), turnCount=$('#turn-count'), slotLabel=$('#slot-label'), slotWrap=$('#slot-label-wrap');
+    const triesPill=$('#tries-pill'), phase=$('#game-phase-label'), dots=$('#guess-dots'), turnCount=$('#turn-count'), slotWrap=$('#slot-label-wrap');
     const count=G.guesses.length;
     if(triesPill) triesPill.textContent=count+'/6';
     if(turnCount) turnCount.textContent=(count+1<=6?count+1:6);
-    if(slotLabel){
-      if(st.isPack) slotLabel.textContent=(st.packIndex+1)+'/'+st.packSize;
-      else slotLabel.textContent=(st.dailySlot!=null? st.dailySlot+1:1)+'/5';
-    }
+    // was: also wrote slotLabel.textContent here first, then immediately
+    // overwrote the same node via slotWrap.innerHTML below — every call threw
+    // away that write and rebuilt a brand-new #slot-label node from scratch,
+    // which is what put the same id in the source twice with no purpose.
+    // slotWrap.innerHTML already sets the number correctly (and it's the only
+    // place that can also swap the "slot"/"pack" prefix word), so the
+    // textContent branch was pure redundant DOM churn on every guess.
     if(slotWrap){
       if(st.isPack) slotWrap.innerHTML=`pack <span id="slot-label">${st.packIndex+1}</span>/${st.packSize}`;
       else slotWrap.innerHTML=`slot <span id="slot-label">${st.dailySlot!=null?st.dailySlot+1:1}</span>/5`;
