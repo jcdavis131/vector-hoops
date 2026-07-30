@@ -637,8 +637,15 @@ def info_nce(
     pos_a: torch.Tensor | None = None,
     pos_b: torch.Tensor | None = None,
     hard_neg_boost: float = 0.0,
+    pair_weight: torch.Tensor | None = None,
 ):
-    """Symmetric InfoNCE with optional same-position hard-negative boost."""
+    """Symmetric InfoNCE with optional same-position hard-negative boost.
+
+    pair_weight (batch,), when given, down-weights low-signal adjacent-season
+    pairs (e.g. low-GP bench rows) instead of letting every pair count equally
+    -- see --reliability-weight. Weight is per anchor row and reused for the
+    transposed (zb-as-anchor) direction since it is the same underlying pair.
+    """
     logits = za @ zb.T / temp
     if hard_neg_boost > 0 and pos_a is not None and pos_b is not None:
         b = logits.shape[0]
@@ -648,6 +655,12 @@ def info_nce(
         )
         logits = logits + hard.float() * hard_neg_boost
     target = torch.arange(len(za), device=za.device)
+    if pair_weight is not None:
+        w = pair_weight
+        denom = w.sum().clamp_min(1e-6)
+        ce_a = F.cross_entropy(logits, target, reduction="none")
+        ce_b = F.cross_entropy(logits.T, target, reduction="none")
+        return 0.5 * ((ce_a * w).sum() / denom + (ce_b * w).sum() / denom)
     return 0.5 * (F.cross_entropy(logits, target) + F.cross_entropy(logits.T, target))
 
 
@@ -685,6 +698,7 @@ def contrastive_loss(
     arch_labels: torch.Tensor | None = None,
     player_weight: float = 0.75,
     arch_weight: float = 0.25,
+    pair_weight: torch.Tensor | None = None,
 ) -> torch.Tensor:
     """InfoNCE (player continuity), supcon-arch, or weighted hybrid."""
     if mode == "infonce":
@@ -695,6 +709,7 @@ def contrastive_loss(
             pos_a=pos_a,
             pos_b=pos_b,
             hard_neg_boost=hard_neg_boost,
+            pair_weight=pair_weight,
         )
     if mode == "supcon-arch":
         if arch_labels is None:
@@ -705,6 +720,7 @@ def contrastive_loss(
                 pos_a=pos_a,
                 pos_b=pos_b,
                 hard_neg_boost=hard_neg_boost,
+                pair_weight=pair_weight,
             )
         return supcon_archetype(za, zb, labels=arch_labels, temp=temp)
     if mode == "hybrid":
@@ -715,6 +731,7 @@ def contrastive_loss(
             pos_a=pos_a,
             pos_b=pos_b,
             hard_neg_boost=hard_neg_boost,
+            pair_weight=pair_weight,
         )
         if arch_labels is None or arch_weight <= 0:
             return l_player
@@ -1118,6 +1135,17 @@ def main() -> None:
         help="same-position in-batch negative boost (0=off)",
     )
     ap.add_argument(
+        "--reliability-weight",
+        type=float,
+        default=0.0,
+        help="0=off (default, unchanged behavior). >0 down-weights the player "
+        "InfoNCE loss for adjacent-season pairs where either row is low-GP "
+        "(sigmoid of z-scored INJ_GP_PCT; rows with no injury coverage keep "
+        "weight 1.0). 1.0 = full down-weight by that signal. Tests the "
+        "hypothesis from probe_seed_sensitivity.py that some seeds' bad "
+        "basins are bench/low-signal-player fragility, not generic noise.",
+    )
+    ap.add_argument(
         "--lr-schedule",
         choices=("legacy-epoch-cosine", "onecycle", "warmup-cosine"),
         default="onecycle",
@@ -1448,6 +1476,23 @@ def main() -> None:
     if injury_active:
         print(f"durability head: {int(injury_row_m.sum())} labeled rows")
 
+    # Per-row reliability weight for --reliability-weight: sigmoid of z-scored
+    # INJ_GP_PCT (index 0 of INJURY_FEATURES), squashed to (0,1) so below-average
+    # games-played rows get down-weighted and above-average rows stay near 1.
+    # Rows with no injury coverage default to 1.0 (don't penalize what we can't
+    # measure). Computed unconditionally (cheap) but only used if the flag > 0.
+    if injury_active:
+        row_reliability = torch.where(
+            injury_row_m.bool(), torch.sigmoid(injury_z[:, 0]), torch.ones_like(injury_z[:, 0])
+        )
+    else:
+        row_reliability = None
+    if args.reliability_weight > 0 and row_reliability is not None:
+        print(
+            f"reliability weighting ON (alpha={args.reliability_weight}): "
+            f"mean={float(row_reliability.mean()):.3f} p10={float(row_reliability.quantile(0.1)):.3f}"
+        )
+
     bbref_cols = feature_cols(manifest, BBREF_FEATURES)
     bbref_z, bbref_m, bbref_row_m = (
         tensor_cols(Z, M, bbref_cols, device) if bbref_cols else (None, None, None)
@@ -1563,6 +1608,12 @@ def main() -> None:
 
             pos_batch = pos_t[idx_t]
             pos_partner = pos_t[partner_t]
+            pair_w = None
+            if args.reliability_weight > 0 and row_reliability is not None:
+                r_a = row_reliability[idx_t]
+                r_b = row_reliability[partner_t]
+                rel = torch.minimum(r_a, r_b)
+                pair_w = 1.0 - args.reliability_weight * (1.0 - rel)
             loss = contrastive_loss(
                 za,
                 zb,
@@ -1574,6 +1625,7 @@ def main() -> None:
                 arch_labels=arch_t[idx_t],
                 player_weight=args.nce_player_weight,
                 arch_weight=args.nce_arch_weight,
+                pair_weight=pair_w,
             )
             loss = loss + weights["archetype"] * F.cross_entropy(
                 out_a["archetype"], arch_t[idx_t]
@@ -2081,6 +2133,10 @@ def main() -> None:
                 xb, mb = batch_views(xs, ms, partner_t, drop_p=args.drop_p)
                 za, out_a = model(xa, ma, seas_t[idx_t])
                 zb, _ = model(xb, mb, seas_t[partner_t])
+                pair_w = None
+                if args.reliability_weight > 0 and row_reliability is not None:
+                    rel = torch.minimum(row_reliability[idx_t], row_reliability[partner_t])
+                    pair_w = 1.0 - args.reliability_weight * (1.0 - rel)
                 loss = contrastive_loss(
                     za,
                     zb,
@@ -2092,6 +2148,7 @@ def main() -> None:
                     arch_labels=arch_t[idx_t],
                     player_weight=args.nce_player_weight,
                     arch_weight=args.nce_arch_weight,
+                    pair_weight=pair_w,
                 )
                 loss = loss + weights["archetype"] * F.cross_entropy(
                     out_a["archetype"], arch_t[idx_t]
