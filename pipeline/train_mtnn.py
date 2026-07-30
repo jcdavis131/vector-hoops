@@ -1152,9 +1152,19 @@ def main() -> None:
         "alpha=0.4 seed42 CQS 70.77->71.87, recall 0.47->0.522, continuity "
         "0.5556->0.5953 (~18%% of the gap -- roughly half of alpha=1.0's "
         "gain) but seed7 CQS 78.11->77.78, recall 0.846->0.82 (~3.5x "
-        "cheaper than alpha=1.0's cost). alpha~0.4 is the better default "
-        "candidate: most of the floor-raise, a fraction of the ceiling-"
-        "cost. Still not a 4-seed-confirmed promotion case either way.",
+        "cheaper than alpha=1.0's cost). "
+        "FULL 4-seed sweep at alpha=0.4 (seeds 7/13/21/42, matching the "
+        "recorded-baseline protocol): CQS 75.96+/-2.38 (baseline 75.82"
+        "+/-3.4), recall 0.730+/-0.121 (baseline 0.732+/-0.176), purity "
+        "0.7862+/-0.0028 (baseline 0.7813+/-0.0038). VERDICT: means are "
+        "statistically flat vs baseline (does NOT clear the CQS>=+0.5 "
+        "promote bar) but seed-to-seed spread drops ~30%% on both CQS and "
+        "recall, and purity ticks up slightly. This is a variance-"
+        "reduction lever, not a mean-improvement one: same expected "
+        "quality, meaningfully less seed-lottery risk. Worth defaulting "
+        "to for future retrains where avoiding a seed-42-style draw "
+        "matters more than squeezing peak CQS -- not a promotion case by "
+        "itself.",
     )
     ap.add_argument(
         "--lr-schedule",
