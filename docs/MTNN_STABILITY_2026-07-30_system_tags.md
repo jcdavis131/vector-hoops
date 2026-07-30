@@ -84,26 +84,31 @@ exactly). The proxy formula training selects on isn't the same 10-term blend
 change this session to expose that gap widely enough to flip which epoch
 wins.
 
-**2. `--no-best-checkpoint` output has its own, separate, pre-existing
-reconstruction bug — not caused by system tags.** Tried using the
-sweep-protocol run's final-epoch state as a workaround for (1). It trains
-fine (CQS 78.07) but `vector-unified`'s `load_live_encoders.py` smoke test
-failed on it: `cos_vs_frozen=0.93294` instead of ~1.0 (gridiron/pitch stayed
-clean at 1.00000). Isolated the cause directly: re-ran the *same* seed=7
-recipe through the normal select-phase path (best-checkpoint saving on) and
-it reconstructed perfectly (`cos_vs_frozen=1.00000`, SMOKE PASS) despite
-also having the new system tower. So the mismatch tracks `--no-best-checkpoint`
-specifically, not the new family — some part of what that flag skips when
-saving `mtnn_best.pt` isn't reproduced correctly by `load_live_encoders.py`'s
-reconstruction. This is a latent bug that predates this session's work; it
-was never exposed before because sweep-protocol output has never previously
-been kept as the resting canonical checkpoint (always discarded after
-reading off the printed metrics).
+**2. (Corrected below — not a real bug.) Tried using the sweep-protocol
+run's final-epoch state as a workaround for (1)** and initially found
+`vector-unified`'s smoke test failing on it (`cos_vs_frozen=0.93294`
+instead of ~1.0). Traced it to the actual cause rather than leaving it as
+an open bug: `train_mtnn.py` has exactly two `torch.save(..., BEST_CKPT)`
+call sites in the whole file — the per-epoch best-checkpoint save (gated by
+`if not args.no_best_checkpoint`) and the `--phase auto` full-corpus-refit
+save. Neither fires when `--val-every 0 --no-best-checkpoint` is passed
+without `--phase auto` — meaning **`mtnn_best.pt` is never written at all**
+in that mode; only `embedding_v3.npz`/`mtnn_report.json` get refreshed from
+the in-memory final-epoch model. So "frozen" (freshly-written
+`embedding_v3.npz`) and "live" (reconstructed from whatever stale
+`mtnn_best.pt` happened to already be on disk from an earlier run) were
+never the same model to begin with — the smoke test correctly caught that
+mismatch; there is no reconstruction defect to fix. `--no-best-checkpoint`
+mode was simply never designed to produce a file worth reloading — it's a
+read-the-printed-metrics-and-discard tool for seed sweeps, not a source of
+deployable checkpoints. Confirmed by re-running the identical seed=7 recipe
+through the normal select-phase path (which does hit the guarded save):
+`cos_vs_frozen=1.00000`, clean.
 
-Shipping through the sweep-protocol workaround would have swapped one real
-problem (checkpoint-selection-proxy) for another (silent reconstruction
-drift that `vector-unified`'s Stage-2 fine-tuning depends on being exact).
-Not an acceptable trade.
+So this is really only **one** blocker, not two. Shipping via the
+sweep-protocol "workaround" was never a real option in the first place, not
+because of a hidden defect but because that code path doesn't produce
+anything to ship.
 
 ## State on disk
 
@@ -125,22 +130,43 @@ Not an acceptable trade.
   `integrate_context.py` re-materializes the 142-feature/19-family matrix
   with system tags whenever someone is ready to retrain against it.
 
+## Root cause, pinned down
+
+`promotion_composite` (train_mtnn.py) delegates to `composite_score.partial_cqs`,
+which blends **val** recall and **val** purity roughly equally (legacy term
+0.3/0.3 when val recall < 0.85, which every epoch in this run was; CQS-share
+term ~0.53/0.47). Verified the exact numbers reproduce the trace
+(epoch20 blended=0.6052, epoch39 blended=0.5988, matching what training
+printed). The problem: val_recall (measured on a small val split) swings
+0.702->0.794(pk)->0.770->0.744->0.722 while **test** recall — the number CQS
+and the sweep actually care about — stays essentially flat 0.83-ish the
+whole time (0.728/0.834/0.824/0.840/0.830 across the same 5 checkpoints).
+val_purity climbs monotonically and is NOT noisy. So the proxy is casting a
+roughly-equal vote between a noisy, unrepresentative signal (val_recall) and
+a clean, monotonic one (val_purity) — epoch20's noisy val_recall bump
+(+0.048 over epoch39) outvotes epoch39's real purity gain (+0.035), even
+though epoch39 is better on every metric that's actually stable.
+
 ## Open, not decided here
 
-1. Fix the checkpoint-selection proxy (`val_composite` in `train_mtnn.py`)
-   so it doesn't stop training before purity converges when a new tower is
-   present — likely means weighting purity higher in the in-training proxy,
-   or reducing val-split noise, or just not trusting a peak that isn't held
-   for multiple checks. Touches every future training run, not just this
-   candidate.
-2. Fix `--no-best-checkpoint`'s save path so its output reconstructs
-   correctly in `vector-unified` — orthogonal bug, but worth fixing since
-   sweep-protocol is the tool this whole session's stability work depends on
-   for seed comparisons.
-3. Once (1) is fixed, re-measure system tags through the *real* deploy
-   protocol — the sweep numbers say it should land around CQS 78, a clear
-   win over both the hustle-defense-only reference (77.53) and the
-   composite_score.py 4-seed baseline (75.82).
+Fix the checkpoint-selection proxy so a noisy val_recall blip can't beat a
+real, monotonic purity gain. Concrete options, not chosen here since this
+changes selection behavior for every future training run, not just this
+candidate:
 
-Both are training/reconstruction-pipeline changes with broader blast radius
-than "add a feature family," so left flagged rather than fixed inline.
+1. **Smooth val_recall** (e.g. average over the last 2-3 checks) before
+   feeding `partial_cqs` — cheap, mechanical, doesn't change what's being
+   optimized, just denoises one noisy input.
+2. **Re-weight `partial_cqs`** toward purity more heavily — a real
+   methodology choice affecting every future recipe's checkpoint selection,
+   not just this one.
+3. **Leave it as-is** — the proxy has apparently been "good enough" every
+   other time this session (no prior recipe change flipped which epoch won);
+   this system-tags tower is the first to expose the gap. Worth knowing
+   whether it's a one-off or a real recurring soft spot before changing
+   shared code.
+
+Once resolved, re-measure system tags through the real select-phase deploy
+protocol — the sweep numbers say it should land around CQS 78, a clear win
+over both the hustle-defense-only reference (77.53) and the
+composite_score.py 4-seed baseline (75.82).
