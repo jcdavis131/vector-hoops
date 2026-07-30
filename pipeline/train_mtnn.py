@@ -1144,13 +1144,17 @@ def main() -> None:
         "weight 1.0). 1.0 = full down-weight by that signal. Tests the "
         "hypothesis from probe_seed_sensitivity.py that some seeds' bad "
         "basins are bench/low-signal-player fragility, not generic noise. "
-        "2026-07-30 check at 1.0: seed 42 (the known-bad basin) CQS "
-        "70.77->72.51, recall 0.47->0.536, 2024-25 transition continuity "
-        "0.5556->0.6397 -- but seed 7 (already-healthy) CQS 78.11->76.96, "
-        "recall 0.846->0.76 -- a real floor-raising/ceiling-lowering "
-        "tradeoff, not a free win. Only checked at alpha=1.0 on 2 seeds; "
-        "an intermediate alpha (~0.3-0.5) is untried and may keep more of "
-        "the seed-42 gain while costing less on healthy seeds.",
+        "2026-07-30 check, seed42/seed7, alpha 1.0 vs 0.4 (2 seeds only, "
+        "no full 4-seed sweep): "
+        "alpha=1.0 seed42 CQS 70.77->72.51, recall 0.47->0.536, 2024-25 "
+        "continuity 0.5556->0.6397 (closes ~39%% of the gap to a healthy "
+        "seed) but seed7 CQS 78.11->76.96, recall 0.846->0.76 (real cost). "
+        "alpha=0.4 seed42 CQS 70.77->71.87, recall 0.47->0.522, continuity "
+        "0.5556->0.5953 (~18%% of the gap -- roughly half of alpha=1.0's "
+        "gain) but seed7 CQS 78.11->77.78, recall 0.846->0.82 (~3.5x "
+        "cheaper than alpha=1.0's cost). alpha~0.4 is the better default "
+        "candidate: most of the floor-raise, a fraction of the ceiling-"
+        "cost. Still not a 4-seed-confirmed promotion case either way.",
     )
     ap.add_argument(
         "--lr-schedule",
