@@ -1298,7 +1298,7 @@ button,.input{min-height:44px}
     const onboardSeen=localStorage.getItem('vh.onboardSeenV3');
     const backdrop=$('#onboarding-backdrop');
     function openOnboard(){ if(backdrop){ backdrop.hidden=false; document.body.style.overflow='hidden'; } }
-    function closeOnboard(){ if(backdrop){ backdrop.hidden=true; document.body.style.overflow=''; } localStorage.setItem('vh.onboardSeenV3','1'); }
+    function closeOnboard(){ if(backdrop){ backdrop.hidden=true; document.body.style.overflow=''; } try{ localStorage.setItem('vh.onboardSeenV3','1'); }catch{} }
     if(!onboardSeen){ setTimeout(openOnboard, 700); }
     $('#btn-howto')?.addEventListener('click', openOnboard);
     $('#btn-onboard-close')?.addEventListener('click', closeOnboard);
