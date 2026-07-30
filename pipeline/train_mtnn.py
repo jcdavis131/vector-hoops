@@ -1143,7 +1143,14 @@ def main() -> None:
         "(sigmoid of z-scored INJ_GP_PCT; rows with no injury coverage keep "
         "weight 1.0). 1.0 = full down-weight by that signal. Tests the "
         "hypothesis from probe_seed_sensitivity.py that some seeds' bad "
-        "basins are bench/low-signal-player fragility, not generic noise.",
+        "basins are bench/low-signal-player fragility, not generic noise. "
+        "2026-07-30 check at 1.0: seed 42 (the known-bad basin) CQS "
+        "70.77->72.51, recall 0.47->0.536, 2024-25 transition continuity "
+        "0.5556->0.6397 -- but seed 7 (already-healthy) CQS 78.11->76.96, "
+        "recall 0.846->0.76 -- a real floor-raising/ceiling-lowering "
+        "tradeoff, not a free win. Only checked at alpha=1.0 on 2 seeds; "
+        "an intermediate alpha (~0.3-0.5) is untried and may keep more of "
+        "the seed-42 gain while costing less on healthy seeds.",
     )
     ap.add_argument(
         "--lr-schedule",
