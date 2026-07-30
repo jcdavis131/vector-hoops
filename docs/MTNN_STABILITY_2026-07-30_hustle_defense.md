@@ -73,31 +73,61 @@ also improved over the pre-hustle baseline's 0.7946, up to a 0.818-0.827
 range — hustle stats (box-outs, screen assists) apparently carry real
 positional signal too.
 
-## Promote-gate math, run as-is
+## 6-seed extension: an apples-to-apples comparison
 
-`_threshold` widens the bar using `BASELINE_SD`, which is still the
-*pre-hustle* dispersion (that constant was not touched by this change):
+The 4-seed sd (0.50) was flagged above as possibly a lucky draw. Extended to
+the exact same 6 seeds `MTNN_STABILITY_2026-07-24.md` §"Baseline re-anchored"
+used (5, 7, 13, 21, 42, 99) — same recipe, same protocol, only the matrix
+differs (130-feature pre-hustle vs. 136-feature hustle-defense). This is a
+cleaner comparison than the one above: same seeds, not just same recipe.
 
-- recall: need ≥ 0.732 − max(0.02, 2·0.176/√4) = 0.732 − 0.176 = 0.556 →
-  **clears easily** (0.7985)
-- purity: need ≥ 0.7813 − max(0.015, 2·0.0038/√4) = 0.7813 − 0.015 = 0.7663 →
-  **clears** (0.7792)
-- CQS: need ≥ 75.82 + max(0.5, 2·3.40/√4) = 75.82 + 3.4 = 79.22 →
-  **does not clear** (76.94)
+| seed | CQS (pre-hustle) | CQS (hustle) | Δ | recall (pre) | recall (hustle) | Δ |
+|---|---|---|---|---|---|---|
+| 5 | 76.33 | 75.03 | **−1.30** | 0.774 | 0.676 | **−0.098** |
+| 7 | 77.25 | 77.06 | −0.19 | 0.834 | 0.800 | −0.034 |
+| 13 | 76.37 | 77.60 | +1.23 | 0.790 | 0.834 | +0.044 |
+| 21 | 76.51 | 76.49 | −0.02 | 0.786 | 0.782 | −0.004 |
+| 42 | 70.69 | 76.62 | **+5.93** | 0.484 | 0.778 | **+0.294** |
+| 99 | 76.56 | 78.08 | +1.52 | 0.782 | 0.850 | +0.068 |
+| **mean** | **75.62** | **76.81** | **+1.19** | **0.742** | **0.7867** | **+0.045** |
+| **sd** | **2.44** | **1.06** | — | **0.128** | **0.0613** | — |
 
-The CQS bar is wide because it's sized off concat fusion's *old*, seed-42-
-inflated dispersion. This run's own dispersion (sd 0.50) is 6.8x tighter than
-that. The gate, as currently written, doesn't know the new recipe is
-inherently more stable — it's still charging the old noise premium against a
-mean that's actually improved.
+The sd-0.50 read from 4 seeds was too optimistic — real sd across 6 is 1.06,
+not 0.50. Still a real ~56% reduction (2.44 → 1.06 on CQS, 0.128 → 0.0613 on
+recall), just not as dramatic as the smaller sample suggested. The seed-42
+basin is genuinely and substantially fixed (+5.93 CQS, +0.294 recall — this
+was the whole point of the historical "bad basin" write-up in `07-24`). The
+honest flip side: **seed 5 gets worse** (−1.30 CQS, −0.098 recall) — a real,
+if smaller, cost on a seed that used to be one of the *good* draws. Net: the
+distribution is narrower and the mean moved up, but it isn't a strict
+improvement on every seed, and it isn't the near-elimination-of-all-variance
+story the 4-seed sample implied.
+
+## Promote-gate math
+
+Using the exact-match 6-seed baseline above (more rigorous than
+`composite_score.py`'s current 4-seed `BASELINE`/`BASELINE_SD`, which mixes
+seeds 7/13/21/42 only):
+
+- recall: need ≥ 0.742 − max(0.02, 2·0.128/√6) = 0.742 − 0.1045 = 0.6375 →
+  **clears** (0.7867)
+- purity: need ≥ 0.7822 − max(0.015, 2·0.0064/√6) = 0.7822 − 0.015 = 0.7672 →
+  **clears** (0.7809)
+- CQS: need ≥ 75.62 + max(0.5, 2·2.44/√6) = 75.62 + 1.992 = 77.61 →
+  **does not clear** (76.81, short by 0.80)
+
+Closer than the 4-seed read suggested (that one was short by 2.28) — the
+6-seed dispersion is real, not a lucky draw, and hustle-defense sits just
+under its own properly-scaled bar rather than well under it.
 
 **Open call, not made here:** whether `BASELINE`/`BASELINE_SD` should be
-re-anchored on this recipe (mirroring the 07-24/07-25 re-anchors), which
-would very likely let hustle-defense clear its own gate — or whether the
-existing wide margin should stand until a 6-seed run (matching the 07-24
-methodology) confirms sd 0.50 isn't itself a lucky draw. Recalibrating the
-gate changes what promotes for every future candidate, not just this one, so
-it's flagged here rather than done inline.
+re-anchored on this recipe (mirroring the 07-24/07-25 re-anchors) — the 6-seed
+number above (CQS 76.81, sd 1.06) is the honest post-re-anchor starting point
+if so — or whether hustle-defense should run a few more seeds first, since
+it's within 1 CQS point of its own gate and one or two more data points could
+land it either side. Recalibrating the gate changes what promotes for every
+future candidate, not just this one, so it's flagged here rather than done
+inline.
 
 ## State on disk
 
@@ -110,5 +140,5 @@ it's flagged here rather than done inline.
   (position-label-broken) runs, kept for reference, not deployed.
 - `pipeline/data/*.pre_hustle_20260730_142101`: the true pre-hustle
   reference (130 features), kept for reference, not deployed.
-- `pipeline/data/sweep_stability/report_seed{7,13,21,42}_hustle_fixed.json`:
-  the corrected 4-seed sweep reports backing the table above.
+- `pipeline/data/sweep_stability/report_seed{5,7,13,21,42,99}_hustle_fixed.json`:
+  the corrected 6-seed sweep reports backing the tables above.
