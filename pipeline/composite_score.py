@@ -46,62 +46,80 @@ CQS_DELTA = 0.5
 
 # Promoted baseline — update when a trial promotes under the CQS gate.
 #
-# 2026-07-24 re-anchor. The previous constants were
-# {"cqs": 85.87, "recall": 1.0, "purity": 0.8726}, seeded 2026-07-09 from the
-# pre-protocol loop. docs/MTNN_V5_PROMOTE_GATE.md §2 documents that loop as
-# leaking: it trained on 1,551 held-out pair positives and fit k-means over
-# val/test rows, so "recall@10 = 1.0" was memorization, not skill. A gate
-# demanding recall >= 0.98 was therefore unpassable by any leak-free model —
-# the best honest measurement is 0.768 — and it silently blocked every
-# candidate on a number the project had already disowned.
+# 2026-07-31 re-anchor (systems-thinking pass: a stale rule, not a stale
+# parameter -- the prior baseline's dispersion was sized off concat fusion's
+# OLD seed-42-inflated noise, a property of the 130-feature recipe. Two
+# feature additions since (hustle-tracking defense, docs/MTNN_STABILITY_
+# 2026-07-30_hustle_defense.md; team system tags, docs/MTNN_STABILITY_2026-
+# 07-30_system_tags.md) plus the val_recall checkpoint-selection smoothing
+# fix collapsed that dispersion by 82% on CQS -- the gate was still charging
+# a noise premium against a recipe that had already gotten far more stable.
+# Previous constants were {"cqs": 75.82, "recall": 0.732, "purity": 0.7813},
+# recorded 2026-07-25 over the 130-feature matrix.
 BASELINE = {
-    "cqs": 75.82,
-    "recall": 0.732,
-    "purity": 0.7813,
-    "continuity_spread": 0.1436,
+    "cqs": 77.74,
+    "recall": 0.835,
+    "purity": 0.7820,
+    "continuity_spread": 0.1436,  # not re-measured this round, carried forward
 }
 
-# Seed dispersion measured for the baseline recipe over seeds 7/13/21/42
-# (docs/MTNN_STABILITY_2026-07-24.md §3b). Thresholds are derived from these
-# rather than hand-picked, because the old 0.02 slacks sat far below the real
-# noise: test recall alone swings sd 0.088 between seeds, so a 0.02 slack was
-# adjudicating sampling noise as if it were model quality.
+# Seed dispersion measured over seeds 5/7/13/21/42/99, 142-feature matrix
+# (hustle-defense + system-tags), sweep protocol (--val-every 0
+# --no-best-checkpoint, forces full 40 epochs so the internal checkpoint-
+# selection proxy can't skew the cross-seed comparison). cqs/recall/purity
+# sd all dropped sharply vs the 2026-07-25 baseline (cqs 3.40->0.60, recall
+# 0.176->0.031, purity 0.0038->0.0055 -- purity ticked up slightly but
+# remains tiny). continuity_spread sd carried forward, not re-measured this
+# round (single spot-check on seed 99: 0.108, consistent with the old
+# baseline's range).
 BASELINE_SD = {
-    "cqs": 3.40,
-    "recall": 0.176,
-    "purity": 0.0038,
+    "cqs": 0.60,
+    "recall": 0.031,
+    "purity": 0.0055,
     "continuity_spread": 0.1012,
 }
 
 BASELINE_PROVENANCE = {
-    "recorded": "2026-07-25",
+    "recorded": "2026-07-31",
     "recipe": (
         "concat fusion, tower 32/160, 2 blocks, dim 64, mlp-heads, "
         "d-head-hidden 128, fusion-hidden 256, hybrid NCE, onecycle, 40 epochs "
-        "(= train_mtnn.py defaults as of e72c2a8, with --dim 64)"
+        "(= train_mtnn.py defaults as of dfbdd54, --dim 64); 142-feature "
+        "matrix (hustle-tracking defense + team system tags); val_recall "
+        "smoothed over last 3 checks for select-phase checkpoint selection"
     ),
-    "seeds": [7, 13, 21, 42],
+    "seeds": [5, 7, 13, 21, 42, 99],
     "protocol": (
         "temporal split train y<=2021 / val y<=2023 / test y>=2024; "
-        "130-feature matrix (FORM_GP retired, 45ce92d); "
-        "position labels restored (vectors.json re-enriched)"
+        "142-feature matrix; position labels restored (vectors.json "
+        "re-enriched); sweep protocol (--val-every 0 --no-best-checkpoint) "
+        "for cross-seed comparability, matching the 2026-07-24 methodology"
     ),
-    "source": "pipeline/data/sweep_stability/model_selection.json",
+    "source": (
+        "docs/MTNN_STABILITY_2026-07-30_hustle_defense.md, "
+        "docs/MTNN_STABILITY_2026-07-30_system_tags.md, and this session's "
+        "6-seed completion (5/99 added 2026-07-31)"
+    ),
     "deployed_artifact": (
-        "seed 7 of this recipe (CQS 78.11, test recall 0.846, purity 0.7834), "
-        "promoted 2026-07-25. Note the recipe MEAN is 75.82 -- seed 7 is a good "
-        "draw, not a recipe-level improvement over dim 48 (75.62). Promotion was "
-        "justified against the DEPLOYED 2026-07-14 artifact on a protocol-matched "
-        "held-out comparison (top-5 on never-trained 2024+ pairs 0.363 -> 0.757), "
-        "not by clearing the CQS bar, which it does not."
+        "seed 7 of this recipe, select-phase with the smoothed checkpoint "
+        "selector (CQS 77.46, test recall 0.844, purity 0.7675, best_epoch "
+        "30), deployed 2026-07-30/31. Sits close to but slightly below the "
+        "6-seed sweep mean (77.74) -- a representative draw, not cherry-"
+        "picked, unlike the 2026-07-25 baseline's seed 7 (78.11, a good draw "
+        "over a 75.82 recipe mean). Re-anchoring the gate on the sweep mean "
+        "means the deployed artifact itself sits almost exactly at the new "
+        "baseline rather than comfortably above it -- expected once the gate "
+        "reflects the recipe's own real performance instead of a stale, "
+        "wider one."
     ),
     "dispersion_note": (
-        "Seed 42 is a bad basin for concat fusion at both dim 48 and dim 64 "
-        "(CQS ~70.7, test recall ~0.47, continuity spread ~0.29) and is kept in "
-        "the mean rather than trimmed. Transformer fusion does NOT collapse on "
-        "that seed (test 0.822-0.830), so the fragility is a property of concat "
-        "fusion, not of the seed. The gate rejects a collapsed run either way, "
-        "so the cost is a wasted retrain rather than a bad deploy."
+        "Seed 42's historical bad-basin collapse for concat fusion (CQS "
+        "~70.7, recall ~0.47 under the 130-feature recipe) is gone under "
+        "this recipe -- 76.72 / 0.786, in line with the other 5 seeds. "
+        "Whether hustle-defense, system-tags, or their combination is "
+        "responsible for fixing that basin specifically was not isolated "
+        "further; both additions independently reduced dispersion in their "
+        "own before/after sweeps (see the two 07-30 docs)."
     ),
     "warning": (
         "Numbers from different protocols are not comparable. Re-anchor this "
