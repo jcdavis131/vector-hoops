@@ -1,6 +1,7 @@
 # Archetype Era Research — Distinctness, Drift, and Model Separability
 
-> **Status:** 2026-07-06 audit · **Data:** 12,392 player-seasons, 1996-97 → 2025-26  
+> **Status:** numbers regenerated from artifacts 2026-08-03 · **Data:** 12,966 player-seasons, 1996-97 → 2025-26  
+> **Gated:** `python scripts/check_doc_numbers.py --check` verifies every figure below against `assets/`. It found 22 drifted figures on 2026-08-03, including all eight archetype NAMES — the doc was describing a different model.  
 > **Artifacts:** `assets/archetypes_time.json`, `assets/trajectories.json`, `pipeline/data/archetype_era_audit.json`
 
 ---
@@ -25,19 +26,24 @@ The league **does** change how players are utilized. We already measure this in 
 
 Built in `pipeline/build_vectors.py`: k-means K=8 on all era-z game vectors, Lloyd 40 iters, seed 7.
 
-| ID | Name | Role in modern NBA (2021-26 share) |
-|----|------|-------------------------------------|
-| 0 | Three-Point Accuracy (Low Turnovers) | **21.3%** ↑ — floor-spacing, low-usage snipers |
-| 1 | Scoring Volume + Shot Volume | 12.1% ↑ — high-usage scorers |
-| 2 | Defensive Glass + Rim Pressure (Fts) | 9.2% ↓ — traditional bigs |
-| 3 | Three-Point Volume + Three-Point Accuracy | 18.0% — pull-up / volume shooters |
-| 4 | Offensive Glass (Low On-Court Impact) | 12.6% ↑ — energy bigs, limited minutes impact |
-| 5 | Rim Protection + Offensive Glass | 9.0% — switchable/rim bigs |
-| 6 | Offensive Glass + Defensive Glass | **6.3%** ↓ — classic rebounding big |
-| 7 | Playmaking + Steals | 11.7% ↓ — primary ballhandlers |
+| ID | Name | 2021-26 share | first-5-season share | Δ pp |
+|----|------|---------------|----------------------|------|
+| 7 | Perimeter Shooting + Free-Throw Shooting + Ball Pressure | **25.2%** | 0.0% | **+25.2** |
+| 4 | Perimeter Shooting + Ball Pressure | 18.1% | 10.6% | +7.5 |
+| 1 | Offensive Glass + Rim Protection + Scoring Efficiency | 17.0% | 0.8% | +16.2 |
+| 3 | Scoring Volume + Free-Throw Shooting | 15.7% | 5.6% | +10.1 |
+| 5 | Perimeter Shooting + Free-Throw Shooting | 10.3% | 12.4% | −2.1 |
+| 2 | Playmaking + Ball Pressure | 10.1% | 20.8% | −10.6 |
+| 6 | Defensive Glass + Rim Protection | 3.6% | 21.9% | **−18.4** |
+| 0 | Offensive Glass + Rim Protection | 0.0% | 27.9% | **−27.9** |
 
-**Biggest prevalence shift (first 5 vs last 5 seasons):**  
-`Three-Point Accuracy (Low Turnovers)` **+9.5 pp** · `Offensive Glass + Defensive Glass` **−7.9 pp**
+Shares are the mean over the first five and last five seasons. Cluster 0 going to 0.0%
+and cluster 7 from 0.0% to 25.2% is a real re-partition of the space, not a rename: the
+K=8 fit is global over era-z vectors, so a centroid can empty out as the league moves.
+
+**Biggest prevalence shift:** `Perimeter Shooting + FT + Ball Pressure` **+25.2 pp**,
+`Offensive Glass + Rim Protection` **−27.9 pp** — spacing era in, glass-eating bigs out.
+
 
 This matches known league narrative: spacing era, fewer traditional glass eaters, more low-turnover role players.
 
@@ -97,20 +103,29 @@ From `assets/trajectories.json` (≥4 charted seasons):
 
 | Class | Share | Mean career length | Mean PM z |
 |-------|-------|-------------------|-----------|
-| stable | 44.4% | 8.0 | +0.03 |
-| migrator | 24.1% | 9.0 | −0.09 |
-| drifter | 17.3% | 7.8 | −0.08 |
-| reinvention | 9.4% | 9.1 | +0.12 |
-| late-bloom | 4.7% | 9.6 | +0.08 |
+| stable | 58.9% | 7.1 | −0.089 |
+| reinvention | 21.6% | 10.5 | +0.111 |
+| migrator | 8.3% | 11.8 | +0.180 |
+| drifter | 6.6% | 8.4 | −0.003 |
+| late-bloom | 4.7% | 9.3 | +0.073 |
 
-**Era transition rate** (archetype changes per season-pair):  
-1990s **0.369** → 2020s **0.397** (careers migrate slightly more now).
+1,308 careers with ≥4 charted seasons.
+
+**Era transition rate** (archetype changes per season-pair, by career-midpoint decade):
+1990s **0.141** · 2000s **0.147** · 2010s **0.178** · 2020s **0.162**
+
+**It peaks in the 2010s and falls back in the 2020s.** The earlier version of this file
+read "1990s 0.369 → 2020s 0.397, careers migrate slightly more now", which was wrong in
+magnitude AND in shape — it asserted a monotone rise that the artifact does not show.
+Note also that no null model has been fitted to these rates: transition rate rises
+mechanically when a season's prevalence is more evenly spread, so the 2010s peak is not
+yet established as career behaviour rather than assignment volatility.
 
 **Top reinvention motifs:**
 
-1. `3PT Volume+Accuracy` → `3PT Accuracy (Low TOV)` (22 careers)
-2. `Rim Protection+OREB` → `OREB+DREB` (14)
-3. `3PT Accuracy (Low TOV)` → `3PT Volume+Accuracy` (11)
+1. `Perimeter Shooting + Ball Pressure` → `Perimeter Shooting + Free-Throw Shooting` (103 careers)
+2. `Defensive Glass + Rim Protection` → `Offensive Glass + Rim Protection + Scoring Efficiency` (52)
+3. `Offensive Glass + Rim Protection` → `Perimeter Shooting + Free-Throw Shooting` (26)
 
 ---
 
