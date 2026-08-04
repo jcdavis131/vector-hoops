@@ -146,5 +146,47 @@
    "next_r2": 0.5855,
    "best_epoch": 30
   }
- ]
+ ],
+ "denser_checkpoint_selection_refuted": {
+  "hypothesis": "best_epoch is picked from validation points only and --val-every defaults to 10, so over 40 epochs the trainer chooses from 5 candidates (0,10,20,30,39). A seed peaking at epoch 25 gets epoch-20 or epoch-30 weights, which would inflate the seed spread.",
+  "test": "same matrix, same config, seeds 7/11/13/23/29, only --val-every 2 vs 10",
+  "result_spread": {
+   "val_every_10_sd": 0.1096,
+   "val_every_2_sd": 0.0924,
+   "verdict": "NO REDUCTION \u2014 0.0924 vs 0.0942 on the same 5 seeds"
+  },
+  "result_backfire": {
+   "best_epoch_val_every_10": [
+    30,
+    30,
+    30,
+    39,
+    30
+   ],
+   "best_epoch_val_every_2": [
+    6,
+    6,
+    6,
+    38,
+    6
+   ],
+   "cqs_val_every_10": [
+    77.01,
+    73.37,
+    76.97,
+    74.22,
+    72.72
+   ],
+   "cqs_val_every_2": [
+    67.04,
+    63.4,
+    67.3,
+    74.49,
+    66.18
+   ],
+   "what_happened": "best_epoch collapsed from 30 to 6 for 4 of 5 seeds and CQS fell from ~75 to 63-67. Denser validation lets the selector chase an early transient peak in a noisy val metric; at val_every=10 epoch 6 was never a candidate. The coarse grid was accidentally PROTECTIVE, and making selection finer made the model worse."
+  },
+  "why_it_cannot_work": "corr(val_recall, test_recall) across the 8 floor seeds is +0.336 \u2014 about 11% of variance, and at n=8 not distinguishable from zero. val (n=761) and test (n=790) are near-identical in size, so this is not a sampling-size artefact. Selecting on a metric that barely tracks the reported one cannot control the reported one at ANY cadence.",
+  "what_would": "purity (MDE 0.0158), archetype (0.0142) and next_r2 (0.0092) are an order of magnitude more stable than recall. Selection and small A/Bs should use those. Note corr(cqs, test_recall) = +0.980 \u2014 CQS is essentially test recall wearing a composite's name, so it inherits the same instability and is no safer to select on."
+ }
 }
