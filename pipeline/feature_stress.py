@@ -80,6 +80,7 @@ def promotion_gates(report: dict) -> list[dict]:
     test = ho.get("test", {})
     mtnn_r = test.get("recall_at_10_mtnn")
     raw_r = test.get("recall_at_10_raw")
+    transparent_r = test.get("recall_at_10_transparent_14d")
     purity = report.get("cross_era_archetype_neighbor_purity_at_20")
 
     if mtnn_r is not None:
@@ -107,6 +108,28 @@ def promotion_gates(report: dict) -> list[dict]:
                 "value": round(mtnn_r - raw_r, 4),
                 "target": GATE_MTTN_VS_RAW,
                 "pass": (mtnn_r - raw_r) >= GATE_MTTN_VS_RAW,
+            }
+        )
+    elif transparent_r is not None and mtnn_r is not None:
+        # S5 HAS NEVER FIRED. It guards on held_out_recall.test.recall_at_10_raw, and the
+        # trainer writes recall_at_10_transparent_14d — the key was renamed and the gate was
+        # not. `raw_r` is therefore always None, the branch above never appends, and
+        # promotion_gates() has been returning TWO gates while reading as though it returns
+        # three. A check that silently does not run is worse than no check: the list looks
+        # complete.
+        #
+        # Wired to the key that exists. It PASSES comfortably — mtnn 0.844 vs transparent
+        # 0.244, margin 0.600 against a 0.05 bar — so this restores a real check rather than
+        # introducing a new failure. That it passes is not the point; that it now runs is.
+        gates.append(
+            {
+                "gate": "S5_mtnn_vs_transparent_14d",
+                "value": round(mtnn_r - transparent_r, 4),
+                "target": GATE_MTTN_VS_RAW,
+                "pass": (mtnn_r - transparent_r) >= GATE_MTTN_VS_RAW,
+                "note": ("was S5_mtnn_vs_raw, which never fired: it read "
+                         "recall_at_10_raw and the trainer writes "
+                         "recall_at_10_transparent_14d"),
             }
         )
     return gates

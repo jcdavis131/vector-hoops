@@ -2143,9 +2143,24 @@ def main() -> None:
         "pedigree_expectation": pedigree_report,
         "playoff_riser": playoff_report,
         "honors_recognition": honors_report,
+        # STATES WHAT feature_stress.py ACTUALLY ENFORCES. The previous text described a
+        # relative rule — "test recall@10 and purity@20 stay within 0.02 of baseline" —
+        # that no code applies. promotion_gates() checks ABSOLUTE thresholds, so a reader of
+        # this report was being told a criterion that does not run.
+        #
+        # The 0.02 figure was also unusable on its own terms: pipeline/seed_floor.json
+        # measures test_recall sd 0.0942 over 8 seeds of this config, so a rerun with no
+        # change at all moves further than that tolerance most of the time.
         "promotion_gate": (
-            "Promote only if multi-task CQS >= baseline + 0.5 AND test recall@10 "
-            "and purity@20 stay within 0.02 of baseline (not auto-promoted to assets/)."
+            "ENFORCED by pipeline/feature_stress.py promotion_gates(): "
+            "S2 test recall@10 >= 0.80 (ABSOLUTE, not relative to baseline); "
+            "S4 cross-era archetype purity@20 >= 0.63; "
+            "S5 mtnn recall@10 minus transparent-14d recall@10 >= 0.05. "
+            "Not auto-promoted to assets/. "
+            "CAUTION: this config's 8-seed mean test recall is 0.7582 (sd 0.0942, "
+            "pipeline/seed_floor.json), which is BELOW S2. Individual seeds clear it about "
+            "half the time by chance, so a single run is not evidence the gate is met — "
+            "use pipeline/evaluate_multiseed.py and judge the K-seed mean."
         ),
     }
     report["composite"] = cqs.composite_quality(report)
