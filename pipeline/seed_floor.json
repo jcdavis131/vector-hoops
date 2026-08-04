@@ -291,6 +291,47 @@
   },
   "consequence": "test_recall was declared 'NOT usable at small K' with an MDE of 0.2138. The paired MDE over the same 8 seeds is 0.0196 \u2014 6.7x tighter and perfectly usable. cqs goes from 2.6122 to 0.2998, which is BELOW the +0.5 promote bar, so that rule becomes decidable rather than hopeless. purity gains least (1.9x) because it was already stable and its seed effects were small to begin with.",
   "what_still_stands": "The instability itself is real and unexplained \u2014 3 of 8 seeds still land in a bad basin, and four candidate fixes are still refuted. The enforced S2 gate (test_recall >= 0.80 ABSOLUTE) is unaffected: it compares one run to a fixed threshold, not two arms to each other, so pairing does not help it and the config's 0.7582 mean is still below the bar.",
-  "found_by": "An adversarial verifier in the per-model hill-climb workflow, which flagged that the estate had been budgeting experiments against a floor 7x too pessimistic for the designs actually being run."
+  "found_by": "An adversarial verifier in the per-model hill-climb workflow, which flagged that the estate had been budgeting experiments against a floor 7x too pessimistic for the designs actually being run.",
+  "rejudged_both_experiments": {
+   "what_was_done": "Both A/Bs re-analysed with a paired t-test on the per-seed differences \u2014 the test their design called for. Nothing re-run; the per-seed numbers were already on disk.",
+   "honors_mask_a5c20b0_n3": {
+    "cqs": {
+     "mean_delta": -0.56,
+     "p": 0.094
+    },
+    "recall": {
+     "mean_delta": -0.004,
+     "p": 0.626
+    },
+    "purity": {
+     "mean_delta": -0.0014,
+     "p": 0.641
+    },
+    "archetype": {
+     "mean_delta": 0.0016,
+     "p": 0.142
+    },
+    "next_r2": {
+     "mean_delta": -0.0014,
+     "p": 0.146
+    }
+   },
+   "reliability_weight_2d894fd_n8": {
+    "test_recall": {
+     "mean_delta": -0.0148,
+     "p": 0.125
+    },
+    "cqs": {
+     "mean_delta": -0.1575,
+     "p": 0.264
+    },
+    "purity": {
+     "mean_delta": 0.0049,
+     "p": 0.06
+    }
+   },
+   "verdict": "BOTH ORIGINAL CONCLUSIONS SURVIVE. Not one metric reaches p<0.05 under the correct test. The floor was wrong and the answers were right \u2014 which is worth stating plainly, because the tempting move after finding a 7x method error is to assume the results flip.",
+   "one_near_miss_worth_naming": "purity under reliability-weight 0.4: +0.0049 at p=0.060 over 8 paired seeds. 2d894fd reported that purity VARIANCE got worse (F=0.47) and did not test the MEAN, which is the closest thing to a real effect in either experiment. It is still not significant and --reliability-weight stays at 0.0, but it is the one thread a future run could pull."
+  }
  }
 }
