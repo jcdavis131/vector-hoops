@@ -188,5 +188,39 @@
   },
   "why_it_cannot_work": "corr(val_recall, test_recall) across the 8 floor seeds is +0.336 \u2014 about 11% of variance, and at n=8 not distinguishable from zero. val (n=761) and test (n=790) are near-identical in size, so this is not a sampling-size artefact. Selecting on a metric that barely tracks the reported one cannot control the reported one at ANY cadence.",
   "what_would": "purity (MDE 0.0158), archetype (0.0142) and next_r2 (0.0092) are an order of magnitude more stable than recall. Selection and small A/Bs should use those. Note corr(cqs, test_recall) = +0.980 \u2014 CQS is essentially test recall wearing a composite's name, so it inherits the same instability and is no safer to select on."
+ },
+ "reliability_weight_does_not_reproduce": {
+  "claim_in_the_code": "train_mtnn.py's --reliability-weight help text records a 4-seed sweep (7/13/21/42) at alpha=0.4: 'seed-to-seed spread drops ~30% on both CQS and recall' and 'Worth defaulting to for future retrains where avoiding a seed-42-style draw matters'.",
+  "test": "Same matrix, same config, 8 INDEPENDENT seeds (7,11,13,17,19,23,29,31), only --reliability-weight 0.4 vs 0.0.",
+  "result": {
+   "test_recall": {
+    "sd_baseline": 0.0942,
+    "sd_rw04": 0.0819,
+    "F": 1.32,
+    "p_variance": 0.722,
+    "mean_delta": -0.0148,
+    "p_mean_paired_t": 0.125
+   },
+   "cqs": {
+    "sd_baseline": 1.8793,
+    "sd_rw04": 1.7578,
+    "F": 1.14,
+    "p_variance": 0.865,
+    "mean_delta": -0.1575,
+    "p_mean_paired_t": 0.264
+   },
+   "purity": {
+    "sd_baseline": 0.007,
+    "sd_rw04": 0.0101,
+    "F": 0.47,
+    "p_variance": 0.344,
+    "mean_delta": 0.0049,
+    "p_mean_paired_t": 0.06
+   }
+  },
+  "verdict": "DOES NOT REPRODUCE. test_recall sd 0.0942 -> 0.0819 is a 13% reduction, not 30%, and F=1.32 at p=0.722 \u2014 indistinguishable from chance. CQS sd falls 6.5% (p=0.865). purity variance gets WORSE. No mean improves (p = 0.125 / 0.264 / 0.060).",
+  "bimodality_untouched": "Seeds below 0.75 test_recall go from [11,23,29] to [11,17,23,29] \u2014 the same three bad seeds plus a fourth. The lever does not rescue the bad basin it was designed for.",
+  "why_the_original_claim_looked_real": "It was estimated from 4 seeds. An F-test on variance with df 3,3 has a 5% critical value near 15, so a 4-seed sweep cannot distinguish a 30% variance change from noise at all. The number was real; the confidence in it was not available from that sample size.",
+  "consequence": "Do NOT default --reliability-weight to 0.4 on this evidence. The help text's 'worth defaulting to' recommendation is not supported at 8 seeds and is left at 0.0."
  }
 }
