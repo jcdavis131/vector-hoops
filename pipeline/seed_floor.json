@@ -249,5 +249,48 @@
   "why": "corr(2024-25, 2025-26) across seeds is +0.035 \u2014 the two halves are independent noise sources, so averaging them already halves the variance. Predicted sd for independent averaging is 0.0917; observed 0.0932.",
   "bad_seeds_fail_on_different_halves": "seed 11 collapses on the COMPLETE season (0.537 vs 0.771); seeds 23 and 29 collapse on the partial one (0.499 each). There is no single fragile slice \u2014 probe_seed_sensitivity.py's finding was true OF SEED 42 and does not generalise.",
   "what_this_leaves": "The instability is broad rather than localised, so no reweighting or re-splitting of the existing test set fixes it. The variance is dominated by which pairs a given seed happens to get right. Two levers remain untried: more test pairs (widening the test window shrinks train/val and changes the model, so not free), and reporting a K-seed mean, which costs only compute \u2014 at sd 0.0942, K=8 gives a standard error of 0.033."
+ },
+ "CORRECTION_paired_floor": {
+  "what_was_wrong": "This file and 8ddb3eb reported an MDE computed with the UNPAIRED two-sample formula (2.78 * sd * sqrt(2/n)) and used it to judge A/Bs that were PAIRED \u2014 the same seeds run in both arms. Seed effects cancel in a paired comparison, so the relevant spread is the sd of the per-seed DIFFERENCE, not the sd of either arm.",
+  "measured_over_8_paired_seeds": {
+   "test_recall": {
+    "unpaired_sd": 0.0942,
+    "unpaired_mde": 0.1309,
+    "paired_sd_of_delta": 0.024,
+    "paired_mde": 0.0196,
+    "tighter_x": 6.7
+   },
+   "cqs": {
+    "unpaired_sd": 1.8793,
+    "unpaired_mde": 2.6122,
+    "paired_sd_of_delta": 0.3671,
+    "paired_mde": 0.2998,
+    "tighter_x": 8.7
+   },
+   "purity": {
+    "unpaired_sd": 0.007,
+    "unpaired_mde": 0.0097,
+    "paired_sd_of_delta": 0.0062,
+    "paired_mde": 0.0051,
+    "tighter_x": 1.9
+   },
+   "archetype": {
+    "unpaired_sd": 0.0062,
+    "unpaired_mde": 0.0087,
+    "paired_sd_of_delta": 0.0065,
+    "paired_mde": 0.0053,
+    "tighter_x": 1.6
+   },
+   "next_r2": {
+    "unpaired_sd": 0.004,
+    "unpaired_mde": 0.0056,
+    "paired_sd_of_delta": 0.0018,
+    "paired_mde": 0.0015,
+    "tighter_x": 3.7
+   }
+  },
+  "consequence": "test_recall was declared 'NOT usable at small K' with an MDE of 0.2138. The paired MDE over the same 8 seeds is 0.0196 \u2014 6.7x tighter and perfectly usable. cqs goes from 2.6122 to 0.2998, which is BELOW the +0.5 promote bar, so that rule becomes decidable rather than hopeless. purity gains least (1.9x) because it was already stable and its seed effects were small to begin with.",
+  "what_still_stands": "The instability itself is real and unexplained \u2014 3 of 8 seeds still land in a bad basin, and four candidate fixes are still refuted. The enforced S2 gate (test_recall >= 0.80 ABSOLUTE) is unaffected: it compares one run to a fixed threshold, not two arms to each other, so pairing does not help it and the config's 0.7582 mean is still below the bar.",
+  "found_by": "An adversarial verifier in the per-model hill-climb workflow, which flagged that the estate had been budgeting experiments against a floor 7x too pessimistic for the designs actually being run."
  }
 }
