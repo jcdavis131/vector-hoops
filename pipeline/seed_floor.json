@@ -1,0 +1,150 @@
+{
+ "question": "How much does a hoops metric move when ONLY the random seed changes?",
+ "design": "8 runs, identical train_matrix.npz and identical config (mtnn_v5_concat_b2_h160_t32_d64_mlp128_fus256, 40 epochs). Seeds 7,11,13,17,19,23,29,31. Nothing else varies, so every difference below is reproducibility, not signal.",
+ "headline": "test_recall has sd 0.0942 and range 0.226 across seeds. The binomial sampling sd at n=790 test pairs would be 0.0152, so the observed spread is 6.2x what a small test set explains. This is TRAINING instability.",
+ "bimodal": "3 of 8 seeds land below 0.75 test recall (0.624, 0.662, 0.668) and 5 land above 0.80. That is two clusters, not scatter \u2014 roughly 37% of runs converge to a materially worse solution with no change to data or code.",
+ "promotion_gate_is_unsatisfiable": "mtnn_report.json's promotion_gate requires test recall@10 to stay within 0.02 of baseline. The measured seed range is 0.226 \u2014 11x that tolerance. Under a normal approximation, a rerun with NO CHANGE AT ALL misses the gate with probability 0.83. The gate reads as 'is the model still as good' and actually asks 'did you draw a lucky seed'.",
+ "what_this_means_for_feature_work": "The minimum detectable effect for a 3-vs-3 seed A/B is 0.2138 on test_recall and 4.27 on CQS. Both hoops feature experiments run so far reported effects near 0.004 and 0.56 \u2014 roughly 50x and 8x below what the design could resolve. Those verdicts ('inside seed noise') were correct and nearly uninformative. purity (MDE 0.0158), archetype (0.0142) and next_r2 (0.0092) are an order of magnitude more stable and are the metrics a small A/B can actually use.",
+ "n_runs": 8,
+ "test_pairs": 790,
+ "binomial_sd_expected": 0.0152,
+ "observed_sd_over_binomial": 6.18,
+ "per_metric": {
+  "cqs": {
+   "mean": 75.4663,
+   "sd": 1.8793,
+   "min": 72.72,
+   "max": 77.9,
+   "range": 5.18,
+   "mde_3v3": 4.2657,
+   "usable_at_3_seeds": false
+  },
+  "test_recall": {
+   "mean": 0.7582,
+   "sd": 0.0942,
+   "min": 0.624,
+   "max": 0.85,
+   "range": 0.226,
+   "mde_3v3": 0.2138,
+   "usable_at_3_seeds": false
+  },
+  "val_recall": {
+   "mean": 0.7843,
+   "sd": 0.0804,
+   "min": 0.678,
+   "max": 0.884,
+   "range": 0.206,
+   "mde_3v3": 0.1824,
+   "usable_at_3_seeds": false
+  },
+  "purity": {
+   "mean": 0.7739,
+   "sd": 0.007,
+   "min": 0.7662,
+   "max": 0.7847,
+   "range": 0.0185,
+   "mde_3v3": 0.0158,
+   "usable_at_3_seeds": true
+  },
+  "archetype": {
+   "mean": 0.9609,
+   "sd": 0.0062,
+   "min": 0.9505,
+   "max": 0.9691,
+   "range": 0.0186,
+   "mde_3v3": 0.0142,
+   "usable_at_3_seeds": true
+  },
+  "next_r2": {
+   "mean": 0.5847,
+   "sd": 0.004,
+   "min": 0.5784,
+   "max": 0.5901,
+   "range": 0.0117,
+   "mde_3v3": 0.0092,
+   "usable_at_3_seeds": true
+  }
+ },
+ "runs": [
+  {
+   "seed": 7,
+   "cqs": 77.01,
+   "test_recall": 0.848,
+   "val_recall": 0.726,
+   "purity": 0.7662,
+   "archetype": 0.9606,
+   "next_r2": 0.5887,
+   "best_epoch": 30
+  },
+  {
+   "seed": 11,
+   "cqs": 73.37,
+   "test_recall": 0.662,
+   "val_recall": 0.71,
+   "purity": 0.7706,
+   "archetype": 0.9606,
+   "next_r2": 0.584,
+   "best_epoch": 30
+  },
+  {
+   "seed": 13,
+   "cqs": 76.97,
+   "test_recall": 0.85,
+   "val_recall": 0.802,
+   "purity": 0.7741,
+   "archetype": 0.9605,
+   "next_r2": 0.5784,
+   "best_epoch": 30
+  },
+  {
+   "seed": 17,
+   "cqs": 75.28,
+   "test_recall": 0.764,
+   "val_recall": 0.858,
+   "purity": 0.7742,
+   "archetype": 0.9505,
+   "next_r2": 0.5796,
+   "best_epoch": 30
+  },
+  {
+   "seed": 19,
+   "cqs": 77.9,
+   "test_recall": 0.85,
+   "val_recall": 0.884,
+   "purity": 0.7847,
+   "archetype": 0.9691,
+   "next_r2": 0.5901,
+   "best_epoch": 39
+  },
+  {
+   "seed": 23,
+   "cqs": 74.22,
+   "test_recall": 0.668,
+   "val_recall": 0.872,
+   "purity": 0.7835,
+   "archetype": 0.9688,
+   "next_r2": 0.5862,
+   "best_epoch": 39
+  },
+  {
+   "seed": 29,
+   "cqs": 72.72,
+   "test_recall": 0.624,
+   "val_recall": 0.678,
+   "purity": 0.7666,
+   "archetype": 0.9552,
+   "next_r2": 0.5849,
+   "best_epoch": 30
+  },
+  {
+   "seed": 31,
+   "cqs": 76.26,
+   "test_recall": 0.8,
+   "val_recall": 0.744,
+   "purity": 0.7711,
+   "archetype": 0.9621,
+   "next_r2": 0.5855,
+   "best_epoch": 30
+  }
+ ]
+}
