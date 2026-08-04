@@ -2,9 +2,9 @@
  "question": "How much does a hoops metric move when ONLY the random seed changes?",
  "design": "8 runs, identical train_matrix.npz and identical config (mtnn_v5_concat_b2_h160_t32_d64_mlp128_fus256, 40 epochs). Seeds 7,11,13,17,19,23,29,31. Nothing else varies, so every difference below is reproducibility, not signal.",
  "headline": "test_recall has sd 0.0942 and range 0.226 across seeds. The binomial sampling sd at n=790 test pairs would be 0.0152, so the observed spread is 6.2x what a small test set explains. This is TRAINING instability.",
- "bimodal": "3 of 8 seeds land below 0.75 test recall (0.624, 0.662, 0.668) and 5 land above 0.80. That is two clusters, not scatter \u2014 roughly 37% of runs converge to a materially worse solution with no change to data or code.",
- "promotion_gate_is_unsatisfiable": "mtnn_report.json's promotion_gate requires test recall@10 to stay within 0.02 of baseline. The measured seed range is 0.226 \u2014 11x that tolerance. Under a normal approximation, a rerun with NO CHANGE AT ALL misses the gate with probability 0.83. The gate reads as 'is the model still as good' and actually asks 'did you draw a lucky seed'.",
- "what_this_means_for_feature_work": "The minimum detectable effect for a 3-vs-3 seed A/B is 0.2138 on test_recall and 4.27 on CQS. Both hoops feature experiments run so far reported effects near 0.004 and 0.56 \u2014 roughly 50x and 8x below what the design could resolve. Those verdicts ('inside seed noise') were correct and nearly uninformative. purity (MDE 0.0158), archetype (0.0142) and next_r2 (0.0092) are an order of magnitude more stable and are the metrics a small A/B can actually use.",
+ "bimodal": "3 of 8 seeds land below 0.75 test recall (0.624, 0.662, 0.668) and 5 land above 0.80. That is two clusters, not scatter — roughly 37% of runs converge to a materially worse solution with no change to data or code.",
+ "promotion_gate_is_unsatisfiable": "mtnn_report.json's promotion_gate requires test recall@10 to stay within 0.02 of baseline. The measured seed range is 0.226 — 11x that tolerance. Under a normal approximation, a rerun with NO CHANGE AT ALL misses the gate with probability 0.83. The gate reads as 'is the model still as good' and actually asks 'did you draw a lucky seed'.",
+ "what_this_means_for_feature_work": "The minimum detectable effect for a 3-vs-3 seed A/B is 0.2138 on test_recall and 4.27 on CQS. Both hoops feature experiments run so far reported effects near 0.004 and 0.56 — roughly 50x and 8x below what the design could resolve. Those verdicts ('inside seed noise') were correct and nearly uninformative. purity (MDE 0.0158), archetype (0.0142) and next_r2 (0.0092) are an order of magnitude more stable and are the metrics a small A/B can actually use.",
  "n_runs": 8,
  "test_pairs": 790,
  "binomial_sd_expected": 0.0152,
@@ -153,7 +153,7 @@
   "result_spread": {
    "val_every_10_sd": 0.1096,
    "val_every_2_sd": 0.0924,
-   "verdict": "NO REDUCTION \u2014 0.0924 vs 0.0942 on the same 5 seeds"
+   "verdict": "NO REDUCTION — 0.0924 vs 0.0942 on the same 5 seeds"
   },
   "result_backfire": {
    "best_epoch_val_every_10": [
@@ -186,8 +186,8 @@
    ],
    "what_happened": "best_epoch collapsed from 30 to 6 for 4 of 5 seeds and CQS fell from ~75 to 63-67. Denser validation lets the selector chase an early transient peak in a noisy val metric; at val_every=10 epoch 6 was never a candidate. The coarse grid was accidentally PROTECTIVE, and making selection finer made the model worse."
   },
-  "why_it_cannot_work": "corr(val_recall, test_recall) across the 8 floor seeds is +0.336 \u2014 about 11% of variance, and at n=8 not distinguishable from zero. val (n=761) and test (n=790) are near-identical in size, so this is not a sampling-size artefact. Selecting on a metric that barely tracks the reported one cannot control the reported one at ANY cadence.",
-  "what_would": "purity (MDE 0.0158), archetype (0.0142) and next_r2 (0.0092) are an order of magnitude more stable than recall. Selection and small A/Bs should use those. Note corr(cqs, test_recall) = +0.980 \u2014 CQS is essentially test recall wearing a composite's name, so it inherits the same instability and is no safer to select on."
+  "why_it_cannot_work": "corr(val_recall, test_recall) across the 8 floor seeds is +0.336 — about 11% of variance, and at n=8 not distinguishable from zero. val (n=761) and test (n=790) are near-identical in size, so this is not a sampling-size artefact. Selecting on a metric that barely tracks the reported one cannot control the reported one at ANY cadence.",
+  "what_would": "purity (MDE 0.0158), archetype (0.0142) and next_r2 (0.0092) are an order of magnitude more stable than recall. Selection and small A/Bs should use those. Note corr(cqs, test_recall) = +0.980 — CQS is essentially test recall wearing a composite's name, so it inherits the same instability and is no safer to select on."
  },
  "reliability_weight_does_not_reproduce": {
   "claim_in_the_code": "train_mtnn.py's --reliability-weight help text records a 4-seed sweep (7/13/21/42) at alpha=0.4: 'seed-to-seed spread drops ~30% on both CQS and recall' and 'Worth defaulting to for future retrains where avoiding a seed-42-style draw matters'.",
@@ -218,8 +218,8 @@
     "p_mean_paired_t": 0.06
    }
   },
-  "verdict": "DOES NOT REPRODUCE. test_recall sd 0.0942 -> 0.0819 is a 13% reduction, not 30%, and F=1.32 at p=0.722 \u2014 indistinguishable from chance. CQS sd falls 6.5% (p=0.865). purity variance gets WORSE. No mean improves (p = 0.125 / 0.264 / 0.060).",
-  "bimodality_untouched": "Seeds below 0.75 test_recall go from [11,23,29] to [11,17,23,29] \u2014 the same three bad seeds plus a fourth. The lever does not rescue the bad basin it was designed for.",
+  "verdict": "DOES NOT REPRODUCE. test_recall sd 0.0942 -> 0.0819 is a 13% reduction, not 30%, and F=1.32 at p=0.722 — indistinguishable from chance. CQS sd falls 6.5% (p=0.865). purity variance gets WORSE. No mean improves (p = 0.125 / 0.264 / 0.060).",
+  "bimodality_untouched": "Seeds below 0.75 test_recall go from [11,23,29] to [11,17,23,29] — the same three bad seeds plus a fourth. The lever does not rescue the bad basin it was designed for.",
   "why_the_original_claim_looked_real": "It was estimated from 4 seeds. An F-test on variance with df 3,3 has a 5% critical value near 15, so a 4-seed sweep cannot distinguish a 30% variance change from noise at all. The number was real; the confidence in it was not available from that sample size.",
   "consequence": "Do NOT default --reliability-weight to 0.4 on this evidence. The help text's 'worth defaulting to' recommendation is not supported at 8 seeds and is left at 0.0."
  },
@@ -246,12 +246,12 @@
    }
   },
   "verdict": "REFUTED, AND BACKWARDS. The COMPLETE season is nearly as unstable as the partial one (sd 0.1009 vs 0.1527), and BOTH are less stable than their average (0.0942). Splitting the metric would make it worse, not better.",
-  "why": "corr(2024-25, 2025-26) across seeds is +0.035 \u2014 the two halves are independent noise sources, so averaging them already halves the variance. Predicted sd for independent averaging is 0.0917; observed 0.0932.",
-  "bad_seeds_fail_on_different_halves": "seed 11 collapses on the COMPLETE season (0.537 vs 0.771); seeds 23 and 29 collapse on the partial one (0.499 each). There is no single fragile slice \u2014 probe_seed_sensitivity.py's finding was true OF SEED 42 and does not generalise.",
-  "what_this_leaves": "The instability is broad rather than localised, so no reweighting or re-splitting of the existing test set fixes it. The variance is dominated by which pairs a given seed happens to get right. Two levers remain untried: more test pairs (widening the test window shrinks train/val and changes the model, so not free), and reporting a K-seed mean, which costs only compute \u2014 at sd 0.0942, K=8 gives a standard error of 0.033."
+  "why": "corr(2024-25, 2025-26) across seeds is +0.035 — the two halves are independent noise sources, so averaging them already halves the variance. Predicted sd for independent averaging is 0.0917; observed 0.0932.",
+  "bad_seeds_fail_on_different_halves": "seed 11 collapses on the COMPLETE season (0.537 vs 0.771); seeds 23 and 29 collapse on the partial one (0.499 each). There is no single fragile slice — probe_seed_sensitivity.py's finding was true OF SEED 42 and does not generalise.",
+  "what_this_leaves": "The instability is broad rather than localised, so no reweighting or re-splitting of the existing test set fixes it. The variance is dominated by which pairs a given seed happens to get right. Two levers remain untried: more test pairs (widening the test window shrinks train/val and changes the model, so not free), and reporting a K-seed mean, which costs only compute — at sd 0.0942, K=8 gives a standard error of 0.033."
  },
  "CORRECTION_paired_floor": {
-  "what_was_wrong": "This file and 8ddb3eb reported an MDE computed with the UNPAIRED two-sample formula (2.78 * sd * sqrt(2/n)) and used it to judge A/Bs that were PAIRED \u2014 the same seeds run in both arms. Seed effects cancel in a paired comparison, so the relevant spread is the sd of the per-seed DIFFERENCE, not the sd of either arm.",
+  "what_was_wrong": "This file and 8ddb3eb reported an MDE computed with the UNPAIRED two-sample formula (2.78 * sd * sqrt(2/n)) and used it to judge A/Bs that were PAIRED — the same seeds run in both arms. Seed effects cancel in a paired comparison, so the relevant spread is the sd of the per-seed DIFFERENCE, not the sd of either arm.",
   "measured_over_8_paired_seeds": {
    "test_recall": {
     "unpaired_sd": 0.0942,
@@ -289,11 +289,11 @@
     "tighter_x": 3.7
    }
   },
-  "consequence": "test_recall was declared 'NOT usable at small K' with an MDE of 0.2138. The paired MDE over the same 8 seeds is 0.0196 \u2014 6.7x tighter and perfectly usable. cqs goes from 2.6122 to 0.2998, which is BELOW the +0.5 promote bar, so that rule becomes decidable rather than hopeless. purity gains least (1.9x) because it was already stable and its seed effects were small to begin with.",
-  "what_still_stands": "The instability itself is real and unexplained \u2014 3 of 8 seeds still land in a bad basin, and four candidate fixes are still refuted. The enforced S2 gate (test_recall >= 0.80 ABSOLUTE) is unaffected: it compares one run to a fixed threshold, not two arms to each other, so pairing does not help it and the config's 0.7582 mean is still below the bar.",
+  "consequence": "test_recall was declared 'NOT usable at small K' with an MDE of 0.2138. The paired MDE over the same 8 seeds is 0.0196 — 6.7x tighter and perfectly usable. cqs goes from 2.6122 to 0.2998, which is BELOW the +0.5 promote bar, so that rule becomes decidable rather than hopeless. purity gains least (1.9x) because it was already stable and its seed effects were small to begin with.",
+  "what_still_stands": "The instability itself is real and unexplained — 3 of 8 seeds still land in a bad basin, and four candidate fixes are still refuted. The enforced S2 gate (test_recall >= 0.80 ABSOLUTE) is unaffected: it compares one run to a fixed threshold, not two arms to each other, so pairing does not help it and the config's 0.7582 mean is still below the bar.",
   "found_by": "An adversarial verifier in the per-model hill-climb workflow, which flagged that the estate had been budgeting experiments against a floor 7x too pessimistic for the designs actually being run.",
   "rejudged_both_experiments": {
-   "what_was_done": "Both A/Bs re-analysed with a paired t-test on the per-seed differences \u2014 the test their design called for. Nothing re-run; the per-seed numbers were already on disk.",
+   "what_was_done": "Both A/Bs re-analysed with a paired t-test on the per-seed differences — the test their design called for. Nothing re-run; the per-seed numbers were already on disk.",
    "honors_mask_a5c20b0_n3": {
     "cqs": {
      "mean_delta": -0.56,
@@ -330,7 +330,7 @@
      "p": 0.06
     }
    },
-   "verdict": "BOTH ORIGINAL CONCLUSIONS SURVIVE. Not one metric reaches p<0.05 under the correct test. The floor was wrong and the answers were right \u2014 which is worth stating plainly, because the tempting move after finding a 7x method error is to assume the results flip.",
+   "verdict": "BOTH ORIGINAL CONCLUSIONS SURVIVE. Not one metric reaches p<0.05 under the correct test. The floor was wrong and the answers were right — which is worth stating plainly, because the tempting move after finding a 7x method error is to assume the results flip.",
    "one_near_miss_worth_naming": "purity under reliability-weight 0.4: +0.0049 at p=0.060 over 8 paired seeds. 2d894fd reported that purity VARIANCE got worse (F=0.47) and did not test the MEAN, which is the closest thing to a real effect in either experiment. It is still not significant and --reliability-weight stays at 0.0, but it is the one thread a future run could pull."
   }
  },
@@ -339,11 +339,36 @@
   "detail": {
    "live_train_matrix_mask_mean": 0.672705,
    "matrix_the_report_describes_mask_mean": 0.641649,
-   "report_metrics": "test recall 0.844 / CQS 77.46 \u2014 these are the A_prefix seed-7 row of the honors A/B, i.e. the PRE-honors-fix matrix"
+   "report_metrics": "test recall 0.844 / CQS 77.46 — these are the A_prefix seed-7 row of the honors A/B, i.e. the PRE-honors-fix matrix"
   },
   "why": "f3b2c7c corrected the HON_* mask encoding (8.7% -> 96.9% coverage) and deliberately kept the corrected matrix, because the old values were wrong. a5c20b0 then measured no gain and restored mtnn_report.json to the shipped pre-fix numbers. Both decisions were right individually; together they leave the matrix and the report out of step.",
   "consequence": "Anyone re-running train_mtnn.py to 'reproduce the shipped model' will train on the corrected matrix and get different numbers, and may read the difference as a regression rather than as a different input.",
-  "also_destroyed": "pipeline/data/embedding_v3.npz (mtime 2026-08-04 09:40) is the seed-31 leftover of the byseason A/B loop, NOT the shipped model. Independently confirmed: its full-population recall@10 is exactly 635/790 = 0.8038, which matches seed 31 uniquely (seed 7 gives 0.8354, 13 gives 0.8532). pipeline/data is gitignored and there is no backup, so the shipped model's embeddings are gone. SIX export scripts read that file \u2014 export_assets.py and export_mtnn_embeddings.py among them \u2014 so an export now would ship a seed-31 A/B variant. assets/ is NOT affected: mtnn_embeddings.f32 and mtnn_meta.json are both untouched from 2026-07-25.",
+  "also_destroyed": "pipeline/data/embedding_v3.npz (mtime 2026-08-04 09:40) is the seed-31 leftover of the byseason A/B loop, NOT the shipped model. Independently confirmed: its full-population recall@10 is exactly 635/790 = 0.8038, which matches seed 31 uniquely (seed 7 gives 0.8354, 13 gives 0.8532). pipeline/data is gitignored and there is no backup, so the shipped model's embeddings are gone. SIX export scripts read that file — export_assets.py and export_mtnn_embeddings.py among them — so an export now would ship a seed-31 A/B variant. assets/ is NOT affected: mtnn_embeddings.f32 and mtnn_meta.json are both untouched from 2026-07-25.",
   "found_by": "The adversarial verifier in the per-model hill-climb workflow. I caused all of it, backed up three files and missed the fourth, and did not notice the matrix/report mismatch across two commits that each made sense alone."
+ },
+ "CORRECTION_embedding_v3_backups_exist": {
+  "corrects": "An earlier note in this session said pipeline/data/embedding_v3.npz was overwritten by a seed-31 A/B with NO BACKUP. That was wrong. Eight backups sit beside it in the same directory.",
+  "current_file": {
+   "mtime": "2026-08-04 09:40",
+   "sha256_16": "64c5ad92153fb09c",
+   "matches_any_backup": false,
+   "reading": "matches none of the eight, which confirms it IS the A/B leftover rather than a restored state"
+  },
+  "backups_present": {
+   "embedding_v3.npz.clean_reference_seed7_20260730_143914": "8dd880e25fc90a26",
+   "embedding_v3.npz.pre_smooth_fix_20260730_161635": "8dd880e25fc90a26",
+   "embedding_v3.npz.pre_system_tags_20260730_155320": "8dd880e25fc90a26",
+   "embedding_v3.npz.pre_reanchor_sweep_20260731_060212": "4a8bd385578b51dd",
+   "embedding_v3.npz.pre_hustle_20260730_142101": "02580f8b17267d59",
+   "embedding_v3.npz.confounded_no_position_20260730_143726": "148effc1a0bdcf45",
+   "embedding_v3.npz.pre_transformer_promote_20260730_031156": "53f46f55890fab42",
+   "embedding_v3.npz.sweep_bak": "59649c3ace0affd2"
+  },
+  "note_on_the_three_identical_shas": "clean_reference_seed7, pre_smooth_fix and pre_system_tags are byte-identical (8dd880e2), so that is a stable seed-7 state reached on 2026-07-30 and unchanged across two subsequent checkpoints.",
+  "no_shipped_asset_was_affected": {
+   "checked": "every assets/*.json mtime",
+   "result": "all predate 2026-08-01 except assets/mtnn_training/live.json, whose mtime is 08-04 09:41 but whose CONTENT is run_id 20260730-162011 / updated 2026-07-30T16:21:12 / status done. The file was touched, not rewritten. Its mtime is a real value answering a different question than the one it appears to answer -- reading the mtime alone would have reported a shipped asset as damaged when it is not."
+  },
+  "still_an_operator_decision": "WHICH backup to restore, if any. Most recent is pre_reanchor_sweep_20260731_060212 (07-31 06:02). Whether anything ran between 07-31 06:02 and 08-04 09:40 is not recorded anywhere, so no backup can be proven to equal the pre-A/B state. The stakes are lower than first stated: nothing published depends on it, and six export scripts read the file but none of their outputs postdate 08-01."
  }
 }
