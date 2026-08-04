@@ -1,0 +1,74 @@
+[
+ {
+  "arm": "A_prefix",
+  "seed": 7,
+  "cqs": 77.46,
+  "recall": 0.844,
+  "purity": 0.7675,
+  "archetype": 0.9602,
+  "position": 0.8109,
+  "skill_nn": 0.5632,
+  "next_r2": 0.5913,
+  "best_val_recall": 0.7693333333333333
+ },
+ {
+  "arm": "A_prefix",
+  "seed": 11,
+  "cqs": 74.29,
+  "recall": 0.68,
+  "purity": 0.7765,
+  "archetype": 0.9579,
+  "position": 0.8134,
+  "skill_nn": 0.5612,
+  "next_r2": 0.5849,
+  "best_val_recall": 0.7706666666666667
+ },
+ {
+  "arm": "A_prefix",
+  "seed": 13,
+  "cqs": 77.28,
+  "recall": 0.848,
+  "purity": 0.7711,
+  "archetype": 0.9589,
+  "position": 0.8084,
+  "skill_nn": 0.5632,
+  "next_r2": 0.5791,
+  "best_val_recall": 0.8380000000000001
+ },
+ {
+  "arm": "B_postfix",
+  "seed": 7,
+  "cqs": 77.01,
+  "recall": 0.848,
+  "purity": 0.7662,
+  "archetype": 0.9606,
+  "position": 0.8081,
+  "skill_nn": 0.5608,
+  "next_r2": 0.5887,
+  "best_val_recall": 0.7639999999999999
+ },
+ {
+  "arm": "B_postfix",
+  "seed": 11,
+  "cqs": 73.37,
+  "recall": 0.662,
+  "purity": 0.7706,
+  "archetype": 0.9606,
+  "position": 0.8141,
+  "skill_nn": 0.5584,
+  "next_r2": 0.584,
+  "best_val_recall": 0.7706666666666667
+ },
+ {
+  "arm": "B_postfix",
+  "seed": 13,
+  "cqs": 76.97,
+  "recall": 0.85,
+  "purity": 0.7741,
+  "archetype": 0.9605,
+  "position": 0.8108,
+  "skill_nn": 0.5648,
+  "next_r2": 0.5784,
+  "best_val_recall": 0.8326666666666668
+ }
+]
