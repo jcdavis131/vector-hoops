@@ -2056,6 +2056,30 @@ def main() -> None:
             "recall_at_10_transparent_14d": recall_at_k(G_base, sub, k=10),
         }
 
+    # TEST BROKEN OUT BY TARGET SEASON, because `test` blends a COMPLETE season with a
+    # PARTIAL one and the two behave very differently.
+    #
+    # eval_split() sends every season from 2024-25 onward to test, which is 393 pairs
+    # targeting 2024-25 and 397 targeting the in-progress 2025-26 — a 50/50 split. That 397
+    # is the same cohort probe_seed_sensitivity.py identified as where bad seeds collapse:
+    # median cosine 0.783 -> 0.565 for that season alone, concentrated on deep bench,
+    # rookie and two-way players, while purity and every earlier transition stay normal.
+    #
+    # A single blended number therefore mixes a stable measurement with a fragile one and
+    # reports their average as though it were one quantity. pipeline/seed_floor.json
+    # measured the blend at sd 0.0942 over 8 seeds — 11x the promotion gate's own 0.02
+    # tolerance. Splitting it does not fix the instability; it makes visible which half
+    # carries it, so the stable half can be used for judging changes.
+    test_sub = filter_pairs_by_split(pair_arr, seasons, "test")
+    by_target: dict[str, list] = {}
+    for pr in test_sub:
+        yr = season_start_year(str(seasons[pr[1]]))
+        by_target.setdefault(str(yr), []).append(pr)
+    held_out["test_by_target_season"] = {
+        yr: {"pairs": len(v), "recall_at_10_mtnn": recall_at_k(E, np.array(v), k=10)}
+        for yr, v in sorted(by_target.items())
+    }
+
     report = {
         "trained": time.strftime("%Y-%m-%d %H:%M"),
         "model": model_tag(args),

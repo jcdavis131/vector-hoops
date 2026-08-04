@@ -222,5 +222,32 @@
   "bimodality_untouched": "Seeds below 0.75 test_recall go from [11,23,29] to [11,17,23,29] \u2014 the same three bad seeds plus a fourth. The lever does not rescue the bad basin it was designed for.",
   "why_the_original_claim_looked_real": "It was estimated from 4 seeds. An F-test on variance with df 3,3 has a 5% critical value near 15, so a 4-seed sweep cannot distinguish a 30% variance change from noise at all. The number was real; the confidence in it was not available from that sample size.",
   "consequence": "Do NOT default --reliability-weight to 0.4 on this evidence. The help text's 'worth defaulting to' recommendation is not supported at 8 seeds and is left at 0.0."
+ },
+ "partial_season_hypothesis_refuted": {
+  "hypothesis": "eval_split() sends 2024-25 AND the in-progress 2025-26 to test (393 and 397 pairs, 50/50). probe_seed_sensitivity.py found seed 42's collapse confined to the 2025-26 cohort, so the blended test_recall looked like a stable half averaged with a fragile one. Splitting it should expose a usable stable metric.",
+  "measured_8_seeds": {
+   "complete_2024_25": {
+    "mean": 0.7793,
+    "sd": 0.1009,
+    "range": 0.313,
+    "pairs": 393
+   },
+   "partial_2025_26": {
+    "mean": 0.7321,
+    "sd": 0.1527,
+    "range": 0.3753,
+    "pairs": 397
+   },
+   "blended": {
+    "mean": 0.7582,
+    "sd": 0.0942,
+    "range": 0.226,
+    "pairs": 790
+   }
+  },
+  "verdict": "REFUTED, AND BACKWARDS. The COMPLETE season is nearly as unstable as the partial one (sd 0.1009 vs 0.1527), and BOTH are less stable than their average (0.0942). Splitting the metric would make it worse, not better.",
+  "why": "corr(2024-25, 2025-26) across seeds is +0.035 \u2014 the two halves are independent noise sources, so averaging them already halves the variance. Predicted sd for independent averaging is 0.0917; observed 0.0932.",
+  "bad_seeds_fail_on_different_halves": "seed 11 collapses on the COMPLETE season (0.537 vs 0.771); seeds 23 and 29 collapse on the partial one (0.499 each). There is no single fragile slice \u2014 probe_seed_sensitivity.py's finding was true OF SEED 42 and does not generalise.",
+  "what_this_leaves": "The instability is broad rather than localised, so no reweighting or re-splitting of the existing test set fixes it. The variance is dominated by which pairs a given seed happens to get right. Two levers remain untried: more test pairs (widening the test window shrinks train/val and changes the model, so not free), and reporting a K-seed mean, which costs only compute \u2014 at sd 0.0942, K=8 gives a standard error of 0.033."
  }
 }
