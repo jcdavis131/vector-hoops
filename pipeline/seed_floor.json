@@ -333,5 +333,17 @@
    "verdict": "BOTH ORIGINAL CONCLUSIONS SURVIVE. Not one metric reaches p<0.05 under the correct test. The floor was wrong and the answers were right \u2014 which is worth stating plainly, because the tempting move after finding a 7x method error is to assume the results flip.",
    "one_near_miss_worth_naming": "purity under reliability-weight 0.4: +0.0049 at p=0.060 over 8 paired seeds. 2d894fd reported that purity VARIANCE got worse (F=0.47) and did not test the MEAN, which is the closest thing to a real effect in either experiment. It is still not significant and --reliability-weight stays at 0.0, but it is the one thread a future run could pull."
   }
+ },
+ "REPO_STATE_WARNING": {
+  "what": "pipeline/data/train_matrix.npz and pipeline/data/mtnn_report.json currently describe DIFFERENT models, and nothing else records it.",
+  "detail": {
+   "live_train_matrix_mask_mean": 0.672705,
+   "matrix_the_report_describes_mask_mean": 0.641649,
+   "report_metrics": "test recall 0.844 / CQS 77.46 \u2014 these are the A_prefix seed-7 row of the honors A/B, i.e. the PRE-honors-fix matrix"
+  },
+  "why": "f3b2c7c corrected the HON_* mask encoding (8.7% -> 96.9% coverage) and deliberately kept the corrected matrix, because the old values were wrong. a5c20b0 then measured no gain and restored mtnn_report.json to the shipped pre-fix numbers. Both decisions were right individually; together they leave the matrix and the report out of step.",
+  "consequence": "Anyone re-running train_mtnn.py to 'reproduce the shipped model' will train on the corrected matrix and get different numbers, and may read the difference as a regression rather than as a different input.",
+  "also_destroyed": "pipeline/data/embedding_v3.npz (mtime 2026-08-04 09:40) is the seed-31 leftover of the byseason A/B loop, NOT the shipped model. Independently confirmed: its full-population recall@10 is exactly 635/790 = 0.8038, which matches seed 31 uniquely (seed 7 gives 0.8354, 13 gives 0.8532). pipeline/data is gitignored and there is no backup, so the shipped model's embeddings are gone. SIX export scripts read that file \u2014 export_assets.py and export_mtnn_embeddings.py among them \u2014 so an export now would ship a seed-31 A/B variant. assets/ is NOT affected: mtnn_embeddings.f32 and mtnn_meta.json are both untouched from 2026-07-25.",
+  "found_by": "The adversarial verifier in the per-model hill-climb workflow. I caused all of it, backed up three files and missed the fourth, and did not notice the matrix/report mismatch across two commits that each made sense alone."
  }
 }
