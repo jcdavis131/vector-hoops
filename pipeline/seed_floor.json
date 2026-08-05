@@ -373,6 +373,17 @@
   },
   "still_an_operator_decision": "WHICH backup to restore, if any. Most recent is pre_reanchor_sweep_20260731_060212 (07-31 06:02). Whether anything ran between 07-31 06:02 and 08-04 09:40 is not recorded anywhere, so no backup can be proven to equal the pre-A/B state. The stakes are lower than first stated: nothing published depends on it, and six export scripts read the file but none of their outputs postdate 08-01.",
   "corrects_field": "REPO_STATE_WARNING.also_destroyed",
-  "why_corrects_field_exists": "This block PARAPHRASES the claim it corrects rather than quoting it, so check_corrections_landed.py's verbatim-match arm could not find the target and the gate went green over nothing. Declaring the exact path removes the guessing."
+  "why_corrects_field_exists": "This block PARAPHRASES the claim it corrects rather than quoting it, so check_corrections_landed.py's verbatim-match arm could not find the target and the gate went green over nothing. Declaring the exact path removes the guessing.",
+  "RESOLVED_2026_08_04": {
+   "how": "vector-unified/pipeline/data/unified_matrix.npz holds E_hoops, built from whichever embedding_v3.npz was live at build time. Comparing E_hoops against all 8 backups by cosine identifies that file exactly — no guessing.",
+   "result": {
+    "embedding_v3.npz.pre_reanchor_sweep_20260731_060212": "cosine 1.0000 min AND mean over 2,000 rows — EXACT MATCH",
+    "every_other_backup": "cosine mean between -0.0164 and 0.0246, i.e. unrelated",
+    "the_live_file_before_restore": "matched nothing (mean 0.0246), confirming it was the seed-31 A/B leftover"
+   },
+   "action_taken": "Backed up the seed-31 leftover to embedding_v3.npz.seed31_ab_leftover_20260804_preRestore (sha 64c5ad92153fb09c, nothing lost), then restored embedding_v3.npz from pre_reanchor_sweep_20260731_060212 (sha 4a8bd385578b51dd). Verified after: cosine(E_hoops, embedding_v3.E) is 1.0000 over 2,000 rows.",
+   "reversible": "Yes, exactly. Copy embedding_v3.npz.seed31_ab_leftover_20260804_preRestore back over embedding_v3.npz.",
+   "what_this_does_not_claim": "That pre_reanchor_sweep is the model that produced assets/. It is the model unified_matrix.npz was built from, which is what the cross-repo join needs. assets/mtnn_embeddings.f32 and mtnn_meta.json were already verified untouched from 2026-07-25 and are not affected either way."
+  }
  }
 }
