@@ -332,7 +332,8 @@
    },
    "verdict": "BOTH ORIGINAL CONCLUSIONS SURVIVE. Not one metric reaches p<0.05 under the correct test. The floor was wrong and the answers were right — which is worth stating plainly, because the tempting move after finding a 7x method error is to assume the results flip.",
    "one_near_miss_worth_naming": "purity under reliability-weight 0.4: +0.0049 at p=0.060 over 8 paired seeds. 2d894fd reported that purity VARIANCE got worse (F=0.47) and did not test the MEAN, which is the closest thing to a real effect in either experiment. It is still not significant and --reliability-weight stays at 0.0, but it is the one thread a future run could pull."
-  }
+  },
+  "no_corrects_field_on_purpose": "This block corrects a COMPUTATION — an MDE derived with the unpaired formula — not a sentence. There is no single prose field carrying the wrong claim, so it declares no corrects_field. I briefly set it to 'headline' while wiring check_corrections_landed.py's declared-target arm; headline states the observed seed spread (sd 0.0942, range 0.226), which is not what was corrected, and the check immediately fired on it. A wrong declaration is worse than none: it turns a green gate into a gate that reports non-defects."
  },
  "REPO_STATE_WARNING": {
   "what": "pipeline/data/train_matrix.npz and pipeline/data/mtnn_report.json currently describe DIFFERENT models, and nothing else records it.",
@@ -370,6 +371,8 @@
    "checked": "every assets/*.json mtime",
    "result": "all predate 2026-08-01 except assets/mtnn_training/live.json, whose mtime is 08-04 09:41 but whose CONTENT is run_id 20260730-162011 / updated 2026-07-30T16:21:12 / status done. The file was touched, not rewritten. Its mtime is a real value answering a different question than the one it appears to answer -- reading the mtime alone would have reported a shipped asset as damaged when it is not."
   },
-  "still_an_operator_decision": "WHICH backup to restore, if any. Most recent is pre_reanchor_sweep_20260731_060212 (07-31 06:02). Whether anything ran between 07-31 06:02 and 08-04 09:40 is not recorded anywhere, so no backup can be proven to equal the pre-A/B state. The stakes are lower than first stated: nothing published depends on it, and six export scripts read the file but none of their outputs postdate 08-01."
+  "still_an_operator_decision": "WHICH backup to restore, if any. Most recent is pre_reanchor_sweep_20260731_060212 (07-31 06:02). Whether anything ran between 07-31 06:02 and 08-04 09:40 is not recorded anywhere, so no backup can be proven to equal the pre-A/B state. The stakes are lower than first stated: nothing published depends on it, and six export scripts read the file but none of their outputs postdate 08-01.",
+  "corrects_field": "REPO_STATE_WARNING.also_destroyed",
+  "why_corrects_field_exists": "This block PARAPHRASES the claim it corrects rather than quoting it, so check_corrections_landed.py's verbatim-match arm could not find the target and the gate went green over nothing. Declaring the exact path removes the guessing."
  }
 }
