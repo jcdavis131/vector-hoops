@@ -39,6 +39,14 @@ Three data tracks are built but dormant, each cache-ready and gated on a committ
 
 `train.sh` drives MTNN training (`pipeline/train_mtnn.py`, torch). Promotion of a new embedding into the game is a deliberate, separate step behind the leak-free gate above — the transparent 14-dim contract stays until a candidate beats it there. Research notes live in `docs/` (`MTNN_V5_DEEP_ARCHITECTURE.md`, `MTNN_V6_SOTA.md`, `RESEARCH.md`).
 
+### v6 transformer fusion candidate (not shipped, 2026-08-05)
+
+- **Arch:** 17 towers `cat([x·m,m])→96h→24d` LayerNorm skip L2 `d_in×2→40→192→40 ×3 blocks`, tokens 17×40→proj 128, fusion `CLS + season 12-d→128 + 17 tokens = 19 tokens` transformer `d_model128 n_layers4 n_heads4 ff512 pre-LN dropout0.15` → `CLS 128→512→64 L2` (shared lib `towers.py` ResidualTower + `TransformerFusion` 128d 4-head CLS→64-d)
+- **Losses:** InfoNCE hybrid player 0.65 arch 0.35 hard_neg_boost 0.4 SupCon + CORAL/GRL λ0.3 VICReg var25 cov1 w0.05, mask fix (B,1) expand (B,D)
+- **Shipped eval (v5, player-split leak-free, season-split 1.0 replaced):** recall@10 0.977, purity@20 0.6717, composite 0.7937, adjacent-season retrieval test `n=790` top1 0.438 top5 0.757 (overall top1 0.5081 top5 0.9339), val `n=761` top1 0.2668 — see `assets/eval_scoreboard.json` computed 2026-07-25
+- **Target v6:** composite 0.7937→0.85, test top1 0.438→0.55, CQS 85.87→87.5-88.0, purity@20 0.8726→0.89-0.91 — requires `train_mtnn_v6.py --epochs 150` on local GPU (Hatch OOM, torch wheel). Candidate gates `candidate.json` first, promote only if beats shipped on leak-free player-split (no season leak).
+- **Status:** Code scaffolded (`pipeline/train_mtnn_v6.py` forwards to `train_mtnn.py` with v6 defaults, `pipeline/towers.py` shared lib), local training claimed by LOCAL-GPU lane `local/hoops-v6-gpu`, no push to main until eval passes.
+
 ## Running locally
 
 ```bash
