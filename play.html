@@ -42,7 +42,7 @@ button,.input{min-height:44px}
 .mode-tab.is-active{background:var(--ink);color:#fff}
 .mode-tab.is-active.daily-active{background:var(--blue)}
 .mode-desc{font-size:12px;line-height:1.5;color:#5A5248;background:#FFFEF7;border:1.5px solid #E5E2D8;border-radius:10px;padding:8px 10px;margin-top:8px}
-.ready-banner{border:2px dashed var(--ink);background:var(--yellow);border-radius:12px;padding:12px 14px;display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
+.ready-banner{border:2px dashed var(--ink);background:var(--yellow);border-radius:12px;padding:12px 14px;display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;box-sizing:border-box}
 .turn-indicator{display:flex;gap:8px;align-items:center;margin-top:6px;font-family:var(--mono);font-size:11px;font-weight:800}
 .turn-dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 3px rgba(0,158,115,.18);animation:pulse 1.6s infinite}
 .guess-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:4px 0 2px}
@@ -126,12 +126,12 @@ button,.input{min-height:44px}
   <div class="card" id="game-header">
     <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start">
       <div style="flex:1 1 300px;min-width:0">
-        <div class="small-mono" style="display:flex;gap:6px;align-items:center;margin-bottom:6px"><span style="width:6px;height:6px;border-radius:50%;background:var(--verm);display:inline-block"></span> <span id="header-mode-label">DAILY COURT • 5× PAST → MODERN</span> <span id="mode-badge" class="pill" style="background:var(--blue);color:#fff">DAILY 5</span></div>
-        <h1 class="game-title hd" id="game-title">Build your <span style="background:var(--ink);color:#fff;padding:0 .18em;border-radius:6px">modern starting 5</span></h1>
-        <p class="game-subtitle" id="game-subtitle">5 past All-Stars every day — same for everyone, fixed at midnight UTC. Can't cheat by refresh. Solve 1 to save streak, 3 to unlock Sharpshooter, 5 for Full Court perfect. Each solved past gives you its modern twin for your lineup.</p>
+        <div class="small-mono" style="display:flex;gap:6px;align-items:center;margin-bottom:6px"><span style="width:6px;height:6px;border-radius:50%;background:var(--verm);display:inline-block"></span> <span id="header-mode-label">DAILY COURT • 5×</span> <span id="mode-badge" class="pill" style="background:var(--blue);color:#fff">DAILY 5</span></div>
+        <h1 class="game-title hd" id="game-title">Find the <span style="background:var(--ink);color:#fff;padding:0 .18em;border-radius:6px">modern twin</span></h1>
+        <p class="game-subtitle" id="game-subtitle">Same 5 for everyone today. 6 tries each. Solve 1 to save streak.</p>
       </div>
       <div style="flex:0 0 auto;display:flex;flex-direction:column;gap:8px;align-items:flex-end">
-        <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end"><span class="pill" id="puzzle-pill">P#—</span><span class="pill" id="streak-pill">streak 0</span><span class="pill" id="tries-pill">0/6</span></div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end"><span class="pill" id="puzzle-pill">P#—</span><span class="pill" id="streak-pill">streak 0</span></div>
         <button class="pill" id="btn-howto" type="button">❓ How to play</button>
       </div>
     </div>
@@ -156,7 +156,7 @@ button,.input{min-height:44px}
   <div class="card" id="daily-court" style="display:none;">
     <div class="court-top">
       <div><div class="small-mono">Daily Court — <span id="court-day-label">Today</span> • same for everyone • refresh-proof</div><h3 class="hd" style="margin:4px 0 0;font-size:20px"><span id="court-solved">0</span>/5 solved • <span id="court-guesses">0</span> guesses</h3></div>
-      <div style="display:flex;gap:6px;flex-wrap:wrap"><span class="pill" id="court-ip-badge">IP: …</span><button class="pill" id="btn-copy-court" type="button">📋 Copy court</button></div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap"><span class="pill" id="court-ip-badge" aria-hidden="true">Same for everyone</span><button class="pill" id="btn-copy-court" type="button">📋 Copy court</button></div>
     </div>
     <div class="court-grid" id="court-grid"></div>
     <div class="lineup-bar" id="lineup-bar"></div>
@@ -499,7 +499,7 @@ button,.input{min-height:44px}
     if(st.isPack){ $('#daily-court').style.display='none'; return; }
     $('#daily-court').style.display='block';
     if(label) label.textContent=st.dayKey;
-    if(ipBadge) ipBadge.textContent = st.ip ? `IP slot ${st.dailyAssignedSlot!=null?st.dailyAssignedSlot+1:'?'} • ${st.ip.slice(0,12)}` : 'Same for everyone • refresh-proof';
+    if(ipBadge) ipBadge.textContent = st.ip ? `Slot ${st.dailyAssignedSlot!=null?st.dailyAssignedSlot+1:'?'} • same for everyone` : 'Same for everyone • refresh-proof';
     const dayKey=st.dayKey;
     let totalSolved=0, totalGuesses=0;
     const slotData=[];
