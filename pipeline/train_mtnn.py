@@ -467,6 +467,7 @@ class MTNN(nn.Module):
         n_fusion_layers: int = 4,
         n_attn_heads: int = 4,
         d_fusion_hidden: int | None = None,
+        token_dropout: float = 0.0,
     ):
         super().__init__()
         self.families = sorted(fam_dims)
@@ -538,11 +539,26 @@ class MTNN(nn.Module):
         self.skill_towers = (
             SkillTowers(d_emb, n_skills, d_hidden=d_skill_hidden) if n_skills else None
         )
+        self.token_dropout = token_dropout
 
     def encode(self, xs, ms, season_ids):
         parts = torch.stack(
             [self.towers[fam](xs[fam], ms[fam]) for fam in self.families], dim=1
         )
+        # v6 token dropout: drop whole family tokens during train
+        if self.training and self.token_dropout > 0:
+            # Bernoulli keep ~ 1-p, ensure at least one token kept per sample
+            B, T, D = parts.shape
+            keep = (torch.rand(B, T, 1, device=parts.device) > self.token_dropout).float()
+            # ensure at least one tower per row
+            all_zero = keep.sum(dim=1, keepdim=True) == 0
+            if all_zero.any():
+                # force first tower to stay
+                keep = keep.clone()
+                keep[all_zero.squeeze(-1), 0] = 1.0
+            parts = parts * keep
+            # rescale to keep expectation (inverted dropout)
+            parts = parts / (1.0 - self.token_dropout + 1e-8)
         return self.fusion(parts, season_ids)
 
     def forward(self, xs, ms, season_ids):
@@ -686,6 +702,35 @@ def supcon_archetype(
     return loss[has_pos].mean()
 
 
+def vicreg_loss(
+    z: torch.Tensor,
+    lambda_var: float = 25.0,
+    lambda_cov: float = 1.0,
+    eps: float = 1e-4,
+) -> torch.Tensor:
+    """VICReg variance hinge 1-std + cov off-diag sum/D λ_var 25 λ_cov 1.
+
+    Mirrors vector-equities / vector-unified shared lib + Dottie scout-cli.
+
+    z: [B, D] embeddings (not necessarily L2-normalized for variance).
+    Variance term: hinge on std > 1, mean over dims.
+    Covariance term: off-diagonal squared Frobenius / D.
+    """
+    if z.size(0) < 2:
+        return z.sum() * 0.0
+    # variance hinge
+    std = torch.sqrt(z.var(dim=0, unbiased=False) + eps)
+    var_loss = torch.mean(F.relu(1.0 - std))
+    # covariance off-diag
+    B, D = z.shape
+    z_center = z - z.mean(dim=0, keepdim=True)
+    cov = (z_center.T @ z_center) / (B - 1 + eps)
+    # off-diag mask
+    off_diag = cov - torch.diag(torch.diag(cov))
+    cov_loss = (off_diag ** 2).sum() / max(D, 1)
+    return lambda_var * var_loss + lambda_cov * cov_loss
+
+
 def contrastive_loss(
     za,
     zb,
@@ -757,14 +802,25 @@ def model_tag(args) -> str:
     (stacked tower blocks / MLP decode heads / transformer fusion) shipped
     describing itself as v4 in mtnn_report.json and, downstream, in the public
     manifest.json. A label is a claim; derive it from the knobs.
+
+    v6 adds transformer fusion 128d 4-head 4-layer CLS→64-d + tower_blocks 3
+    width 40 hidden 192 out 40 fusion_hidden 512 + VICReg.
     """
+    is_v6 = (
+        args.fusion == "transformer"
+        and getattr(args, "dim", 48) == 64
+        and getattr(args, "tower_blocks", 2) == 3
+        and getattr(args, "tower_width", 32) == 40
+        and getattr(args, "tower_hidden", 160) == 192
+        and getattr(args, "d_model", 96) == 128
+    )
     v5 = (
         getattr(args, "tower_blocks", 1) > 1
         or getattr(args, "mlp_heads", False)
         or args.fusion == "transformer"
         or getattr(args, "fusion_hidden", 0)
     )
-    if not v5:
+    if not v5 and not is_v6:
         return "mtnn_v4_phase_b"
     bits = [
         f"b{args.tower_blocks}",
@@ -776,7 +832,14 @@ def model_tag(args) -> str:
         bits.append(f"mlp{args.d_head_hidden}")
     if getattr(args, "fusion_hidden", 0):
         bits.append(f"fus{args.fusion_hidden}")
-    return f"mtnn_v5_{args.fusion}_" + "_".join(bits)
+    # VICReg tag — era-honest anti-collapse
+    if getattr(args, "w_vicreg", 0) and args.w_vicreg > 0:
+        bits.append(f"vicreg{args.w_vicreg}")
+    # SupCon hybrid tag — archetype coherence
+    if getattr(args, "nce_loss", "hybrid") == "hybrid":
+        bits.append(f"hyb{args.nce_player_weight}-{args.nce_arch_weight}")
+    prefix = "mtnn_v6" if is_v6 else "mtnn_v5"
+    return f"{prefix}_{args.fusion}_" + "_".join(bits)
 
 
 def adamw_param_groups(model: nn.Module, weight_decay: float) -> list[dict]:
@@ -1131,8 +1194,32 @@ def main() -> None:
     ap.add_argument(
         "--hard-neg-boost",
         type=float,
-        default=0.3,
-        help="same-position in-batch negative boost (0=off)",
+        default=0.4,
+        help="same-position in-batch negative boost (0=off) — v6 SOTA 0.4",
+    )
+    ap.add_argument(
+        "--token-dropout",
+        type=float,
+        default=0.1,
+        help="v6: drop whole family tokens during train (0=off, 0.1 SOTA)",
+    )
+    ap.add_argument(
+        "--w-vicreg",
+        type=float,
+        default=0.05,
+        help="v6: VICReg variance+cov anti-collapse weight (0=off, 0.05 SOTA)",
+    )
+    ap.add_argument(
+        "--vicreg-var-w",
+        type=float,
+        default=25.0,
+        help="VICReg λ_var hinge 1-std (default 25)",
+    )
+    ap.add_argument(
+        "--vicreg-cov-w",
+        type=float,
+        default=1.0,
+        help="VICReg λ_cov off-diag sum/D (default 1)",
     )
     ap.add_argument(
         "--reliability-weight",
@@ -1243,14 +1330,14 @@ def main() -> None:
     ap.add_argument(
         "--nce-player-weight",
         type=float,
-        default=0.7,
-        help="hybrid: weight on adjacent-season player InfoNCE",
+        default=0.65,
+        help="hybrid: weight on adjacent-season player InfoNCE — v6 SOTA 0.65",
     )
     ap.add_argument(
         "--nce-arch-weight",
         type=float,
-        default=0.3,
-        help="hybrid: weight on archetype SupCon (purity pressure)",
+        default=0.35,
+        help="hybrid: weight on archetype SupCon (purity pressure) — v6 SOTA 0.35",
     )
     ap.add_argument(
         "--checkpoint-metric",
@@ -1570,6 +1657,7 @@ def main() -> None:
         n_fusion_layers=args.n_fusion_layers,
         n_attn_heads=args.n_attn_heads,
         d_fusion_hidden=(args.fusion_hidden or None),
+        token_dropout=getattr(args, "token_dropout", 0.0),
     ).to(device)
     opt = torch.optim.AdamW(adamw_param_groups(model, args.weight_decay), lr=args.lr)
     steps_per_epoch = optimizer_steps_per_epoch(n, args.batch, args.grad_accum)
@@ -1657,6 +1745,19 @@ def main() -> None:
                 arch_weight=args.nce_arch_weight,
                 pair_weight=pair_w,
             )
+            # v6 VICReg anti-collapse — variance hinge 1-std + cov off-diag sum/D
+            if getattr(args, "w_vicreg", 0) and args.w_vicreg > 0:
+                v_a = vicreg_loss(
+                    za,
+                    lambda_var=getattr(args, "vicreg_var_w", 25.0),
+                    lambda_cov=getattr(args, "vicreg_cov_w", 1.0),
+                )
+                v_b = vicreg_loss(
+                    zb,
+                    lambda_var=getattr(args, "vicreg_var_w", 25.0),
+                    lambda_cov=getattr(args, "vicreg_cov_w", 1.0),
+                )
+                loss = loss + args.w_vicreg * 0.5 * (v_a + v_b)
             loss = loss + weights["archetype"] * F.cross_entropy(
                 out_a["archetype"], arch_t[idx_t]
             )
@@ -2188,6 +2289,18 @@ def main() -> None:
                     arch_weight=args.nce_arch_weight,
                     pair_weight=pair_w,
                 )
+                if getattr(args, "w_vicreg", 0) and args.w_vicreg > 0:
+                    v_a = vicreg_loss(
+                        za,
+                        lambda_var=getattr(args, "vicreg_var_w", 25.0),
+                        lambda_cov=getattr(args, "vicreg_cov_w", 1.0),
+                    )
+                    v_b = vicreg_loss(
+                        zb,
+                        lambda_var=getattr(args, "vicreg_var_w", 25.0),
+                        lambda_cov=getattr(args, "vicreg_cov_w", 1.0),
+                    )
+                    loss = loss + args.w_vicreg * 0.5 * (v_a + v_b)
                 loss = loss + weights["archetype"] * F.cross_entropy(
                     out_a["archetype"], arch_t[idx_t]
                 )
