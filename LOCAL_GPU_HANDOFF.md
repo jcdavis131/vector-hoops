@@ -119,3 +119,37 @@ And Hatch will pick it up via `bundles/coordination/active-tasks.md` mirror.
 3. Log even no-op
 4. Provenance-honest numbers — cite source file in json
 
+### 2026-08-06 03:02 CDT — vector-hoops heavy 150ep — MLOps operator lane3
+
+**Why heavy:** Hatch VM 2.1G tmpfs — torch wheel OOMs, local GPU needed.
+
+**Run on your GPU (CUDA 12.1/12.4):**
+```bash
+cd vector-hoops
+pip install torch --index-url https://download.pytorch.org/whl/cu121
+pip install -r requirements.txt  # or pyproject.toml extras
+
+# smoke first (proves wiring, no OOM)
+python3 pipeline/train_mtnn.py --epochs 2 --dim 64  # or v6 shim for hoops
+
+# heavy
+python3 pipeline/train_mtnn_v6.py --epochs 150 --dim 64 --tower-width 40 --tower-hidden 192 --tower-blocks 3 --fusion transformer --d-model 128 --n-fusion-layers 4 --n-attn-heads 4 --fusion-hidden 512 --nce-loss hybrid --nce-player-weight 0.65 --nce-arch-weight 0.35 --hard-neg-boost 0.4 --token-dropout 0.1 --w-vicreg 0.05 --era-align procrustes --robust-scaling
+
+# eval + candidate
+python3 pipeline/build_eval_scoreboard.py  # hoops | or eval_sector_coherence.py equities | etc
+python -m json.tool assets/eval_scoreboard.json > /dev/null && echo "eval OK"
+python -m json.tool assets/eval_scoreboard_v6.json > /dev/null 2>&1 && echo "v6 OK" || echo "v6 candidate only"
+
+# gate / promote
+# candidate.json → promote only if beats current + gate passes
+# hoops: composite 0.7937→0.85, test top1 0.438→0.55 (Recall@10 0.977 path)
+# equities: 0.7057 lift 6.32 verified
+# pitch: 633 WC-only 92.9%
+# gridiron: 4.268→3.8
+```
+
+**Target:** composite 0.7937→0.85, Recall@10 0.977 path test top1 0.438→0.55, purity@20 0.6717→0.72, CQS 85.87→87.5-88.0
+**Status:** handed off 2026-08-06T03:02:07Z by scout/mlops-operator
+**Smoke in Hatch:** ok dry-run (no torch pip), heavy via LOCAL
+**Coordination:** update COORDINATION.md row to done, mirror to bundles/coordination/active-tasks.md
+
