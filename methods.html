@@ -18,6 +18,7 @@
 <meta property="og:title" content="Methods — How Vector Hoops is built">
 <meta property="og:description" content="Every number recomputable — vector space, MTNN, map, archetypes, drift.">
 <meta property="og:image" content="/assets/og-1200x630.png">
+<meta name="twitter:card" content="summary_large_image"/>
 </head><body>
 <noscript><div role="alert" style="padding:16px;text-align:center">Enable JS — Vector Hoops needs JavaScript for Daily Court + Map</div></noscript>
 
@@ -69,7 +70,7 @@ Heads: 8 arch / 5 pos / 14 next / 18 skills (64→16→1)
   </div>
 
   <div class="method-grid">
-    <div class="card" id="the-map"><h2 class="method-h2">The map</h2><p class="method-p">3D league map projects 14-d or 64-d down to 3 axes via PCA, minmax [0,1]. Axes named from correlations:</p><ul style="font-size:14px;line-height:1.5;margin:6px 0"><li><b>X Paint↔Perimeter:</b> boards/blocks ↔ shooters</li><li><b>Y Role→Scorer:</b> high-usage ↔ low-usage</li><li><b>Z Off-ball↔On-ball:</b> off-ball ↔ handlers</li></ul><p class="method-p" style="color:#6B665E">Center = league avg.</p></div>
+    <div class="card" id="the-map"><h2 class="method-h2">The map</h2><p class="method-p">3D league map projects 14-d or 64-d down to 3 axes via PCA, minmax [0,1]. Axes named from correlations:</p><ul style="font-size:14px;line-height:1.5;margin:6px 0"><li><b>X Paint↔Perimeter:</b> boards/blocks ↔ shooters</li><li><b>Y Role→Scorer:</b> high-usage ↔ low-usage</li><li><b>Z Def↔Off / Off-ball↔On-ball:</b> defense ↔ offense, off-ball ↔ handlers — correlated axis, center=avg</li></ul><p class="method-p" style="color:#6B665E">Center = league avg.</p></div>
     <div class="card" id="archetypes"><h2 class="method-h2">Archetypes — 8 types</h2><p class="method-p">k-means K=8 on era-z vectors, seeded reproducible.</p><ul style="font-size:13px;line-height:1.5"><li>Three-Point Accuracy (Low TOV)</li><li>Scoring + Shot Volume</li><li>Def Glass + Rim Pressure</li><li>Three-Point Vol + Acc</li><li>Off Glass (Low On-Court)</li><li>Rim Protection + Off Glass</li><li>Off Glass + Def Glass</li><li>Playmaking + Steals</li></ul></div>
   </div>
 
