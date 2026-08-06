@@ -32,14 +32,49 @@ export async function mountSharedMap(canvas, opts={}){
     for(const g of list){
       if(g==null) continue;
       if(typeof g==='object'){
-        const idx=g.idx!=null?g.idx|0:(g.id!=null?g.id|0:null);
+        const idx=g.idx!=null?g.idx|0:(g.id!=null?g.id|0:(g.i!=null?g.i|0:null));
         if(idx==null) continue;
-        out.push({ idx, sim:(typeof g.sim==='number'?g.sim:null), rank:(typeof g.rank==='number'?g.rank:null) });
+        out.push({
+          idx,
+          sim:(typeof g.sim==='number'?g.sim:null),
+          rank:(typeof g.rank==='number'?g.rank:null),
+          x:(typeof g.x==='number'?g.x:null),
+          y:(typeof g.y==='number'?g.y:null),
+          z:(typeof g.z==='number'?g.z:null),
+          c:(typeof g.c==='number'?g.c:null),
+          n:g.name||g.n||null,
+          s:g.season||g.s||null,
+          p:(typeof g.p==='number'?g.p:null)
+        });
       } else {
-        out.push({ idx:g|0, sim:null, rank:null });
+        out.push({ idx:g|0, sim:null, rank:null, x:null, y:null, z:null, c:null, n:null, s:null, p:null });
       }
     }
     return out;
+  }
+
+  // internal point injector — used by setGuesses so modern guesses outside the
+  // 4322-pt lite sample still get an orange ring immediately
+  function _injectPoint(p){
+    try{
+      if(!p||p.i==null||!baseOx) return false;
+      const id=p.i|0;
+      if(id>=0 && id<=maxId && projById && projById[id]>=0) return true;
+      const n=N+1;
+      const nOx=new Float32Array(n), nOy=new Float32Array(n), nOz=new Float32Array(n);
+      const nC=new Uint8Array(n), nI=new Int32Array(n);
+      nOx.set(baseOx); nOy.set(baseOy); nOz.set(baseOz); nC.set(baseC); nI.set(baseI);
+      nOx[N]=((p.x??0.5)-0.5)*2; nOy[N]=((p.y??0.5)-0.5)*2; nOz[N]=((p.z??0.5)-0.5)*2;
+      nC[N]=(p.c|0)&7; nI[N]=id;
+      baseOx=nOx; baseOy=nOy; baseOz=nOz; baseC=nC; baseI=nI;
+      baseN[N]=p.n||''; baseS[N]=p.s||''; baseP[N]=p.p??-1;
+      projected.push({sx:0,sy:0,depth:0,alpha:0.6,c:nC[N]});
+      N=n;
+      if(id>maxId){ const np=new Int32Array(id+1); np.fill(-1); if(projById) np.set(projById); projById=np; maxId=id; }
+      projById[id]=N-1;
+      projectFrame();
+      return true;
+    }catch(e){ console.warn('_injectPoint fail',e); return false; }
   }
   let targetId=highlightInit, guessIds=normalizeGuesses(opts.guessIds);
   let hoverEl=null; try{hoverEl=document.getElementById('hover-tip');}catch{}
@@ -235,6 +270,7 @@ export async function mountSharedMap(canvas, opts={}){
     // guesses: a line to the target (how far off you were), then the orange
     // ring on top. The latest guess reads solid; earlier ones fade to dashed
     // so the map doesn't turn into a spiderweb after six tries.
+    // v58: show ALL guesses with numbered badges — user asked for "all guesses on map as they happen"
     let latestGuessPr=null, latestGuessMeta=null;
     if(guessIds && guessIds.length){
       for(let gi=0;gi<guessIds.length;gi++){
@@ -246,15 +282,28 @@ export async function mountSharedMap(canvas, opts={}){
         const isLatest=gi===guessIds.length-1;
         if(targetPr){
           ctx.save();
-          ctx.globalAlpha=isLatest?0.85:0.25;
+          ctx.globalAlpha=isLatest?0.85:0.28;
           ctx.strokeStyle=dark?'#F0E442':'#1A150F';
           ctx.lineWidth=isLatest?1.6:1;
           if(!isLatest) ctx.setLineDash([3,3]);
           ctx.beginPath(); ctx.moveTo(gx,gy); ctx.lineTo(targetPr.sx|0, targetPr.sy|0); ctx.stroke();
           ctx.restore();
         }
+        // orange ring
         ctx.strokeStyle='#FFFFFF'; ctx.lineWidth=4; ctx.strokeRect(gx-5, gy-5, 10,10);
         ctx.strokeStyle='#D55E00'; ctx.lineWidth=2; ctx.strokeRect(gx-5, gy-5, 10,10);
+        // numbered badge — tiny black pill with white 1..6 so you can match list ↔ map
+        const num=(gi+1).toString();
+        ctx.font='800 9px ui-monospace,monospace';
+        const tw=ctx.measureText(num).width+6;
+        let bx=gx+7, by=gy-10;
+        // keep badge inside canvas
+        if(bx+tw>W-2) bx=gx-tw-7;
+        if(by<2) by=gy+7;
+        ctx.fillStyle='#1A150F';
+        ctx.fillRect(bx, by, tw, 11);
+        ctx.fillStyle='#FFFEF7';
+        ctx.fillText(num, bx+3, by+8);
         if(isLatest){ latestGuessPr={x:gx,y:gy}; latestGuessMeta=gm; }
       }
     }
@@ -432,7 +481,28 @@ export async function mountSharedMap(canvas, opts={}){
 
   return {
     setTarget(id){ targetId=id==null?null:id|0; draw(); },
-    setGuesses(ids){ guessIds=normalizeGuesses(ids); draw(); },
+    setGuesses(ids){
+      guessIds=normalizeGuesses(ids);
+      // ensure every guess exists in the point cloud — modern pool (2024-26)
+      // is often outside the 4322-pt lite sample, so we inject on the fly
+      try{
+        for(const gm of guessIds){
+          if(!gm||gm.idx==null) continue;
+          if(projById && gm.idx>=0 && gm.idx<=maxId && projById[gm.idx]>=0) continue;
+          if(gm.x!=null && gm.y!=null && gm.z!=null){
+            _injectPoint({i:gm.idx, x:gm.x, y:gm.y, z:gm.z, c:gm.c??0, n:gm.n||'', s:gm.s||'', p:gm.p??-1});
+          } else if(window.VHPastModern && VHPastModern.state){
+            try{
+              const sl=VHPastModern.state().searchLite;
+              const arr=sl&&(sl.players||sl);
+              const row=Array.isArray(arr)&&arr.find(p=>p&&p.i===gm.idx);
+              if(row) _injectPoint(row);
+            }catch{}
+          }
+        }
+      }catch(e){ console.warn('setGuesses inject fail',e); }
+      draw();
+    },
     focusOnTarget(){
       // targetId>maxId would read past the Int32Array end: idx=undefined -> atan2(undefined)=NaN -> map collapses
       if(targetId==null||!projById||targetId<0||targetId>maxId) return;
@@ -444,27 +514,7 @@ export async function mountSharedMap(canvas, opts={}){
     },
     hasPoint(id){ return !!(projById && id!=null && id>=0 && id<=maxId && projById[id]>=0); },
     // append one row (e.g. a daily target outside the sampled lite map) so the bullseye always exists
-    addPoint(p){
-      try{
-        if(!p||p.i==null||!baseOx) return false;
-        const id=p.i|0;
-        if(id>=0 && id<=maxId && projById && projById[id]>=0) return true;
-        const n=N+1;
-        const nOx=new Float32Array(n), nOy=new Float32Array(n), nOz=new Float32Array(n);
-        const nC=new Uint8Array(n), nI=new Int32Array(n);
-        nOx.set(baseOx); nOy.set(baseOy); nOz.set(baseOz); nC.set(baseC); nI.set(baseI);
-        nOx[N]=((p.x??0.5)-0.5)*2; nOy[N]=((p.y??0.5)-0.5)*2; nOz[N]=((p.z??0.5)-0.5)*2;
-        nC[N]=(p.c|0)&7; nI[N]=id;
-        baseOx=nOx; baseOy=nOy; baseOz=nOz; baseC=nC; baseI=nI;
-        baseN[N]=p.n||''; baseS[N]=p.s||''; baseP[N]=p.p??-1;
-        projected.push({sx:0,sy:0,depth:0,alpha:0.6,c:nC[N]});
-        N=n;
-        if(id>maxId){ const np=new Int32Array(id+1); np.fill(-1); if(projById) np.set(projById); projById=np; maxId=id; }
-        projById[id]=N-1;
-        projectFrame(); draw();
-        return true;
-      }catch(e){ console.warn('addPoint fail',e); return false; }
-    },
+    addPoint(p){ const ok=_injectPoint(p); if(ok){ draw(); } return ok; },
     resize, getCount(){return N;},
     dispose(){ try{ro&&ro.disconnect();}catch{} }
   };
