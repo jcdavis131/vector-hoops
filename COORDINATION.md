@@ -139,3 +139,4 @@
 
 <!-- merged from outside edits 2026-08-06T03:02Z -->
 | Scout-mlops | vector-*/MLOps operator | 21:58 CDT | MLOps train/eval/export/ship Gates G1-G4 leak-free player-split candidate.json→promote only if beats + DM 7/7/0 ONNX/WASM/PCA Vercel | scout/mlops-operator | in-progress |
+| Scout-fe | vector-pitch/frontend parity | 02:52 CDT | Hoops-level parity verify 6/6 HTML + audit | scout/frontend-hoops-parity | done 03:02Z 2026-08-06 — 13 passed, manifest/sw/v66/offline/nav 8/8, css avg 9.1+, 0 TODO, audit your_files/vector-pitch-audit/hoops-parity.md, master ff 0b9b5fc+rebase |
