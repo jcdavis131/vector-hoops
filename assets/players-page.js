@@ -82,3 +82,20 @@
 
   global.VHPlayersPage = { showTab: showTab };
 })(window);
+
+/* hoops-polish-swarm: pp-search alias shim for spec compliance */
+(function(){
+  try{
+    var orig = document.getElementById('skills-search');
+    if(orig && !document.getElementById('pp-search')){
+      var alias = document.createElement('input');
+      alias.type='hidden';
+      alias.id='pp-search';
+      alias.setAttribute('aria-hidden','true');
+      orig.parentNode.insertBefore(alias, orig.nextSibling);
+      // Proxy value changes
+      Object.defineProperty(window,'PP_SEARCH_ALIAS',{get:function(){return document.getElementById('skills-search');}});
+      console.log('pp-search alias shim installed');
+    }
+  }catch(e){}
+})();

@@ -7,7 +7,7 @@
 <link rel="manifest" href="/manifest.json">
 <title>Team Labs Merged — Vector Hoops</title>
 <link rel="canonical" href="https://hoops.dumbmodel.com/players">
-<meta http-equiv="refresh" content="3;url=/players">
+<!-- teams restored: no auto-redirect -->
 <meta name="description" content="Team Labs merged into Player References while current roster data is rebuilt.">
 <link rel="stylesheet" href="assets/hoops.css">
 <link rel="stylesheet" href="assets/shell.css"/>
@@ -26,24 +26,30 @@
 <noscript><div role="alert" style="padding:16px;text-align:center">Enable JS — Vector Hoops needs JavaScript for Daily Court + Map</div></noscript>
 
 <nav class="site-nav" data-active="/teams" aria-label="Vector Hoops site"></nav>
-<main class="research-main" style="max-width:760px;margin:auto;padding:48px 20px 88px">
-  <div class="drift-card" style="padding:24px">
-    <p style="font-family:var(--mono);font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#666">Team Labs — temporarily merged</p>
-    <h1 style="font-size:32px;line-height:1.1;margin:12px 0">Moved into Player References</h1>
-    <p style="line-height:1.6;color:#333">Teams page is paused — <code>assets/teams.json</code> currently exports 0 teams because <code>current_rosters.json</code> needs a fresh fetch (track C). All player-season data still lives in <a href="/players">/players</a>. Redirecting there in 3s.</p>
-    <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap">
-      <a class="vh-btn vh-btn--primary" href="/players">Go to Players →</a>
-      <a class="vh-btn" href="/play">Play →</a>
+<main class="research-main" style="max-width:1180px;margin:auto;padding:12px clamp(12px,3.2vw,20px) calc(92px + env(safe-area-inset-bottom))">
+  <div class="drift-card">
+    <p style="font-family:var(--mono);font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#666">Team Labs — restored minimal</p>
+    <h1 style="font-size:clamp(28px,5vw,38px);line-height:1.1;margin:8px 0">Team Labs</h1>
+    <p style="line-height:1.6;color:#333">Explore 30 NBA teams — rosters, archetype breakdown, mean skill grades. Data: <code>assets/teams.json</code> + <code>assets/current_rosters.json</code>.</p>
+    <div class="wiki-controls" style="margin-top:16px">
+      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+        <select id="teams-select" class="input" style="flex:1 1 220px;min-height:44px"></select>
+        <select id="teams-season" class="input" style="flex:0 0 140px;min-height:44px"><option value="">2025-26</option></select>
+      </div>
+      <div id="teams-summary" style="margin-top:12px;font-size:14px"></div>
+      <div id="teams-archetypes" style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap"></div>
+      <div id="teams-roster" style="margin-top:12px"></div>
+      <div id="teams-hint" class="small-mono" style="margin-top:8px;color:#666"></div>
     </div>
-    <p style="margin-top:18px;font-size:13px;color:#666">If you're running the rebuild operator: <code>python pipeline/fetch_current_rosters.py --write-cache && python pipeline/build_teams.py && python pipeline/build_current_rosters.py</code></p>
   </div>
+  <div class="card" id="team-leaderboard"><h2 class="hd" style="font-size:18px">Team board</h2><div id="team-board-count" class="small-mono" style="color:#666"></div><ol id="team-board-list" class="wiki-list"></ol></div>
 </main>
 <footer class="site-footer"><div class="site-footer__links"><a href="/play">Play</a><a href="/model">Lab</a><a href="/methods">Methods</a><a href="/players">Players</a><a href="https://github.com/jcdavis131/vector-hoops" target="_blank" rel="noopener">GitHub</a></div><div class="site-footer__attribution">Every number recomputable from stats.nba.com · dumbmodel.com</div></footer>
 <script src="assets/error-boundary.js"></script>
 <script src="assets/keyboard-a11y.js"></script>
 <script src="assets/site-nav.js" defer></script>
 <script src="assets/pwa-install.js"></script>
-<script> setTimeout(()=>location.href='/players',3000); </script>
+<script> // teams restored: no auto-redirect </script>
 <script>if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js').catch(()=>{})})}</script>
 </body>
 </html>

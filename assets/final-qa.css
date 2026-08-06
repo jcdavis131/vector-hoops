@@ -8,3 +8,29 @@ img,svg,canvas,video{ max-width:100%; height:auto; }
 .site-nav{ box-sizing:border-box; max-width:100vw; }
 .bottom-tabs{ position:fixed; bottom:0; left:0; right:0; z-index:60; padding-bottom: env(safe-area-inset-bottom); }
 .card, .btn{ overflow-wrap:break-word; word-break:break-word; }
+
+/* hoops-polish-swarm: safe-area consolidation + mobile edge-to-edge guard */
+.site-nav{
+  padding-top:calc(10px + env(safe-area-inset-top,0));
+  z-index:100;
+}
+#map-wrap{
+  /* ensure mobile edge-to-edge already handled in index.html @media 980px, but guard overflow */
+  max-width:100%;
+}
+#map-controls{
+  z-index:6;
+  bottom:calc(12px + env(safe-area-inset-bottom,0));
+}
+#map-legend{
+  z-index:6;
+  bottom:calc(12px + env(safe-area-inset-bottom,0));
+}
+#hover-tip{
+  z-index:7;
+}
+.toast, #toast{
+  z-index:40;
+}
+/* nav active match guard - ensure pills don't overflow */
+.site-nav::-webkit-scrollbar{display:none}

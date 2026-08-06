@@ -1,4 +1,4 @@
-/* vector-hoops PWA v53 — review fixes on top of v51-light
+/* vector-hoops PWA v66 — PWA shell-only, CORE immutable stale-while-revalidate, large JSON_ONNX deny-cached
    - CORE only shell (~14 files), no large JSON/models/CDN
    - network-first for js/css/img assets with 1MB cache cap
    - JSON is deliberately never SW-cached (network only, browser HTTP cache still applies)
@@ -63,7 +63,7 @@ function isDenied(p) {
 }
 
 function isImmutable(url) {
-  // v51-light: only CORE is immutable (stale-while-revalidate)
+  // v66-light: only CORE is immutable (stale-while-revalidate)
   // url is URL object
   return CORE.includes(url.pathname);
 }

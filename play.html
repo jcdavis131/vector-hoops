@@ -117,6 +117,7 @@ button,.input{min-height:44px}
 <meta property="og:url" content="https://hoops.dumbmodel.com/play">
 <meta property="og:description" content="Daily Court: 5 past All-Stars → 5 modern twins. 6 tries each, build your modern starting 5. Pack Battle — share same link, battle friends.">
 <meta property="og:image" content="/assets/og-1200x630.png">
+<meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/>
 </head><body>
 <noscript><div role="alert" style="padding:16px;text-align:center">Enable JS — Vector Hoops needs JavaScript for Daily Court + Map</div></noscript>
 
@@ -274,7 +275,16 @@ button,.input{min-height:44px}
       // key on ids only — sim/rank never change for a guess once it exists,
       // so identity of the id list is enough to detect "something changed"
       const key=guesses.map(g=>g.idx).join(',');
-      if(key===_lastGuessKey) return;
+      // force if any guess missing from lite sample (modern 2024-26 often outside 4322-pt map)
+      let needsForce=false;
+      if(key===_lastGuessKey){
+        try{
+          for(const g of guesses){
+            if(g&&g.idx!=null && sharedMapApi.hasPoint && !sharedMapApi.hasPoint(g.idx)){ needsForce=true; break; }
+          }
+        }catch{}
+        if(!needsForce) return;
+      }
       _lastGuessKey=key;
       sharedMapApi.setGuesses(guesses);
     }catch{}
@@ -291,7 +301,7 @@ button,.input{min-height:44px}
   }
   async function mountGameMap(){
     try{
-      const mod = await import('./assets/shared-map.js?v=57');
+      const mod = await import('./assets/shared-map.js?v=58');
       const canvasEl = document.querySelector('#sky-canvas');
       if(!canvasEl) return;
       const st = (window.VHPastModern && VHPastModern.state) ? VHPastModern.state() : null;
@@ -327,6 +337,24 @@ button,.input{min-height:44px}
         }
         if(firstSee||added){ sharedMapApi.setTarget(tid); sharedMapApi.focusOnTarget(); }
       }
+      // guesses: modern 2024-26 players are often outside the 4322-pt lite map —
+      // inject any missing so orange rings show up as you type
+      try{
+        if(sharedMapApi && G && G.guesses && G.guesses.length){
+          const sl=st.searchLite && st.searchLite.players;
+          for(const gm of G.guesses){
+            if(!gm||gm.idx==null) continue;
+            if(sharedMapApi.hasPoint && sharedMapApi.hasPoint(gm.idx)) continue;
+            let row=null;
+            if(gm.x!=null && gm.y!=null && gm.z!=null){
+              row={i:gm.idx, x:gm.x, y:gm.y, z:gm.z, c:gm.c??0, n:gm.name||'', s:gm.season||''};
+            } else if(sl){
+              row=sl.find(p=>p&&p.i===gm.idx);
+            }
+            if(row) sharedMapApi.addPoint(row);
+          }
+        }
+      }catch(e){ console.warn('sync guesses inject fail',e); }
       draw();
     }catch(e){ console.warn('syncMapFromState fail',e); }
   }
