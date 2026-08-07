@@ -375,25 +375,39 @@ def main() -> None:
             print("roles.json failed to parse -- skipping team-standing lines")
             roles_index = {}
 
-    # ---- group player-seasons by name (the dataset carries no person id;
-    #      same-name players are flagged, see `ambiguous`) ----
-    by_name: dict[str, list[dict]] = defaultdict(list)
+    # ---- group player-seasons by unique person: pid (name+dob) if present, else name
+    # Prevents Gary Payton / Gary Payton II merging; pid is unique per person like dob.
+    by_person: dict[str, list[dict]] = defaultdict(list)
+    person_display: dict[str, str] = {}
     for p in players:
-        by_name[p["name"]].append(p)
+        pid = p.get("pid") or p.get("player_id")
+        birth = p.get("birthYear") or p.get("dob") or ""
+        base_name = p["name"]
+        if pid:
+            key = f"{base_name}||{pid}"
+        elif birth:
+            key = f"{base_name}||{birth}"
+        else:
+            key = base_name
+        by_person[key].append(p)
+        person_display[key] = base_name
 
     careers = {}
-    for name, rows in by_name.items():
+    for key, rows in by_person.items():
+        name = person_display[key]  # display name (e.g., "Gary Payton II")
         rows.sort(key=lambda r: r["season"])
         seasons = [r["season"] for r in rows]
         ambiguous = len(seasons) != len(set(seasons))
         mean_v = np.mean([r["v"] for r in rows], axis=0)
-        # signature season: the most extreme statistical identity
         sig_row = max(rows, key=lambda r: float(np.linalg.norm(r["v"])))
-        pos_seen = [
-            positions[r["p"]] for r in rows if positions and r.get("p", -1) >= 0
-        ]
+        pos_seen = [positions[r["p"]] for r in rows if positions and r.get("p", -1) >= 0]
         arch_seen = [clusters[r["c"]] for r in rows]
-        careers[name] = {
+        # use display name as careers key, but disambiguate if same display name appears twice with different pid
+        careers_key = name
+        if careers_key in careers:
+            # same display name collision (two different people with identical full name) -> disambiguate via dob/pid
+            careers_key = key.replace('||','--')
+        careers[careers_key] = {
             "slug": slugify(name),
             "rows": rows,
             "mean_v": mean_v,
@@ -401,16 +415,26 @@ def main() -> None:
             "positions": [p for p, _ in Counter(pos_seen).most_common()],
             "archetypes": [a for a, _ in Counter(arch_seen).most_common()],
             "ambiguous": ambiguous,
+            "person_key": key,
+            "display_name": name,
         }
 
-    # slug collisions across *different* names (extremely rare) -> suffix
+    # slug collisions across *different* display names that slugify to same (extremely rare) or same name different person -> suffix
     used: dict[str, str] = {}
     for name, c in sorted(careers.items()):
         if c["slug"] in used and used[c["slug"]] != name:
-            c["slug"] = c["slug"] + "-" + slugify(c["rows"][0]["season"])
+            # for same display name collisions, add dob/pid hint to slug to keep distinct (e.g., gary-payton-ii vs gary-payton already distinct via name)
+            # for identical full-name collisions, suffix with first season
+            suffix = c["rows"][0]["season"]
+            if "||" in c.get("person_key",""):
+                # use birth year / pid if available for readability
+                try:
+                    suffix = c["person_key"].split("||",1)[1][:4]
+                except Exception:
+                    pass
+            c["slug"] = c["slug"] + "-" + slugify(suffix)
         used[c["slug"]] = name
 
-    # ---- nearest statistical neighbors on career-mean vectors ----
     names = sorted(careers)
     M = np.array([careers[n]["mean_v"] for n in names])
     Mn = M / np.maximum(np.linalg.norm(M, axis=1, keepdims=True), 1e-9)

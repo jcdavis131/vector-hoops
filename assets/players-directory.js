@@ -27,28 +27,39 @@
   }
 
   function buildPlayerIndex(data) {
-    var bySlug = {};
+    var byKey = {};
     var order = [];
     for (var i = 0; i < data.players.length; i++) {
       var p = data.players[i];
       var slug = global.VHDossier.playerSlug(p.name);
-      var rec = bySlug[slug];
+      var pid = p.pid || p.player_id || null;
+      var birth = p.birthYear || p.dob || '';
+      var key = slug;
+      if (pid && byKey[key] && byKey[key].pid && byKey[key].pid!==pid) {
+        key = slug + '--' + pid;
+      } else if (birth && byKey[key] && byKey[key].birthYear && String(byKey[key].birthYear)!==String(birth)) {
+        key = slug + '--' + String(birth).slice(0,4);
+      }
+      var rec = byKey[key];
       if (!rec) {
-        rec = { name: p.name, slug: slug, seasons: [], positions: {}, archetypes: {} };
-        bySlug[slug] = rec;
-        order.push(slug);
+        rec = { name: p.name, slug: slug, key: key, pid: pid, birthYear: birth, seasons: [], positions: {}, archetypes: {} };
+        byKey[key] = rec;
+        order.push(key);
       }
       rec.seasons.push(p.season);
       if (typeof p.p === 'number' && POSITIONS[p.p]) rec.positions[POSITIONS[p.p]] = true;
       if (typeof p.c === 'number' && data.clusters[p.c]) rec.archetypes[data.clusters[p.c]] = true;
     }
-    return order.map(function (slug) {
-      var rec = bySlug[slug];
+    return order.map(function (key) {
+      var rec = byKey[key];
       var seasons = rec.seasons.slice().sort();
       var teams = global.VHPlayerRoster.teamsForSeasons(rec.name, seasons);
       return {
         name: rec.name,
         slug: rec.slug,
+        key: rec.key,
+        pid: rec.pid,
+        birthYear: rec.birthYear,
         span: seasons.length > 1 ? seasons[0] + '\u2013' + seasons[seasons.length - 1] : seasons[0],
         seasonCount: seasons.length,
         teams: teams,
@@ -56,7 +67,15 @@
         positions: Object.keys(rec.positions).sort(),
         archetypes: Object.keys(rec.archetypes).sort()
       };
-    }).sort(function (a, b) { return a.name.localeCompare(b.name); });
+    }).sort(function (a, b) {
+      var an=a.name.toLowerCase(), bn=b.name.toLowerCase();
+      if (an===bn) {
+        var ab=a.birthYear||0, bb=b.birthYear||0;
+        if (ab!==bb) return ab-bb;
+        return (a.pid||0)-(b.pid||0);
+      }
+      return a.name.localeCompare(b.name);
+    });
   }
 
   function populateFilters(data) {

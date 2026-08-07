@@ -73,18 +73,52 @@
   }
 
   function buildIndex() {
+    // Unique key = slug (name) + disambiguation via pid/birthYear if needed.
+    // Fixes Gary Payton (1996-2007) vs Gary Payton II (2017-2026) which previously
+    // merged because canonical_name stripped Jr/II.
+    // User wants name+dob uniqueness — we use pid (unique per person) + birthYear as dob proxy.
     for (var i = 0; i < DATA.players.length; i++) {
       var p = DATA.players[i];
-      var slug = window.VHDossier.playerSlug(p.name);
-      if (!INDEX[slug]) {
-        INDEX[slug] = { name: p.name, slug: slug, rows: [] };
-        ORDER.push(slug);
+      var baseSlug = window.VHDossier.playerSlug(p.name);
+      var pid = p.pid || p.player_id || null;
+      var birth = p.birthYear || p.dob || '';
+      var key = baseSlug;
+      // If same slug already taken by a different pid/birth, disambiguate
+      if (INDEX[key] && pid && INDEX[key].pid && INDEX[key].pid!==pid) {
+        key = baseSlug + '--' + pid; // e.g., gary-payton--1627780
+      } else if (INDEX[key] && birth && INDEX[key].birthYear && String(INDEX[key].birthYear)!==String(birth)) {
+        key = baseSlug + '--' + String(birth).slice(0,4);
       }
-      INDEX[slug].rows.push({ i: i, season: p.season });
+      // also if slug collision but same person (same pid) keep same
+      if (!INDEX[key]) {
+        INDEX[key] = { name: p.name, slug: baseSlug, key: key, pid: pid, birthYear: birth, rows: [], canonicalSlug: baseSlug };
+        ORDER.push(key);
+      }
+      // ensure pid stored on rec for later checks
+      if (pid && !INDEX[key].pid) INDEX[key].pid=pid;
+      if (birth && !INDEX[key].birthYear) INDEX[key].birthYear=birth;
+      INDEX[key].rows.push({ i: i, season: p.season });
     }
-    ORDER.sort(function (a, b) { return INDEX[a].name.localeCompare(INDEX[b].name); });
-    Object.keys(INDEX).forEach(function (slug) {
-      INDEX[slug].rows.sort(function (a, b) { return a.season < b.season ? -1 : 1; });
+    // Also create alias so lookup by baseSlug still works when unique
+    var aliasMap={};
+    Object.keys(INDEX).forEach(function(k){
+      var rec=INDEX[k];
+      var base=rec.slug;
+      if (!aliasMap[base]) aliasMap[base]=k; // first wins
+    });
+    // attach alias map for resolve
+    window.__playerAliasMap=aliasMap;
+    ORDER.sort(function (a, b) {
+      var an=INDEX[a].name.toLowerCase(), bn=INDEX[b].name.toLowerCase();
+      if (an===bn) {
+        var ab=INDEX[a].birthYear||0, bb=INDEX[b].birthYear||0;
+        if (ab!==bb) return ab-bb;
+        return (INDEX[a].pid||0)-(INDEX[b].pid||0);
+      }
+      return INDEX[a].name.localeCompare(INDEX[b].name);
+    });
+    Object.keys(INDEX).forEach(function (k) {
+      INDEX[k].rows.sort(function (a, b) { return a.season < b.season ? -1 : 1; });
     });
   }
 
@@ -469,11 +503,23 @@
     box.innerHTML = '<div class="vh-section-label">Similar craft profiles (MTNN) — who plays like this?</div><p class="skills-hint" style="font-family:ui-monospace,monospace;font-size:11px;color:#666">Click to flip their card.</p><ol class="skills-mtnn__list">'+items+'</ol>';
   }
 
+  function resolveKey(slugOrKey){
+    if (INDEX[slugOrKey]) return slugOrKey;
+    // alias fallback for old URLs / bare slug when disambiguated
+    if (window.__playerAliasMap && window.__playerAliasMap[slugOrKey]) return window.__playerAliasMap[slugOrKey];
+    // also try base slug without pid suffix
+    var base = String(slugOrKey).split('--')[0];
+    if (INDEX[base]) return base;
+    if (window.__playerAliasMap && window.__playerAliasMap[base]) return window.__playerAliasMap[base];
+    return null;
+  }
+
   function pickPlayer(slug, season) {
-    if (!INDEX[slug]) return;
-    current.slug = slug;
-    current.season = season || INDEX[slug].rows[INDEX[slug].rows.length - 1].season;
-    els.search.value = INDEX[slug].name;
+    var key=resolveKey(slug);
+    if (!key) return;
+    current.slug = key;
+    current.season = season || INDEX[key].rows[INDEX[key].rows.length - 1].season;
+    els.search.value = INDEX[key].name;
     els.suggest.innerHTML = '';
     renderProfile();
   }
@@ -489,7 +535,10 @@
     }
     els.suggest.innerHTML = hits.map(function (rec) {
       var span = rec.rows.length > 1 ? rec.rows[0].season + '–' + rec.rows[rec.rows.length - 1].season : rec.rows[0].season;
-      return '<li><button type="button" data-slug="' + esc(rec.slug) + '"><span><span class="pp-suggest__name">'+esc(rec.name)+'</span><br><span class="skills-suggest__meta">'+span+' · '+rec.rows.length+' season'+(rec.rows.length===1?'':'s')+'</span></span><span style="font-size:16px">→</span></button></li>';
+      var keyForClick = rec.key || rec.slug;
+      var label = rec.name + (rec.birthYear ? ' ('+String(rec.birthYear).slice(0,4)+')' : '');
+      // show dob hint only when same name collision
+      return '<li><button type="button" data-slug="' + esc(keyForClick) + '"><span><span class="pp-suggest__name">'+esc(rec.name)+'</span><br><span class="skills-suggest__meta">'+span+' · '+rec.rows.length+' season'+(rec.rows.length===1?'':'s')+(rec.birthYear?' · '+String(rec.birthYear).slice(0,4):'')+'</span></span><span style="font-size:16px">→</span></button></li>';
     }).join('');
   }
 

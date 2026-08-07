@@ -910,8 +910,32 @@ def main() -> None:
 
     # ---- assets/vectors.json: frozen game contract + additive extras ----
     sal_col = wide_features.index("SALARY_LOG")
+    # build pid -> birthYear map from bio caches for name+dob uniqueness
+    pid_birth = {}
+    try:
+        import glob, json as _j
+        for bf in glob.glob(str((ROOT / "pipeline" / "cache" / "bio_*.json").resolve())):
+            try:
+                rows=_j.loads(open(bf).read())
+                # file may be list of dicts
+                season = bf.split("bio_")[-1].split(".json")[0]
+                sy = int(season.split("-")[0])
+                for r in rows if isinstance(rows, list) else []:
+                    pid=str(r.get("PLAYER_ID") or r.get("id") or "")
+                    age=r.get("AGE")
+                    if pid and isinstance(age,(int,float)):
+                        by = int(sy - float(age))
+                        if pid not in pid_birth:
+                            pid_birth[pid]=by
+            except Exception:
+                pass
+    except Exception:
+        pass
+
     players = []
     for i, r in enumerate(all_rows):
+        pid_str = str(r.get("PLAYER_ID") or "")
+        birthYear = pid_birth.get(pid_str)
         p = {
             "id": i,
             "name": r["PLAYER_NAME"],
@@ -925,6 +949,11 @@ def main() -> None:
             "z": round(float(P[i, 2]), 4),
             "c": int(lab[i]),
         }
+        if pid_str:
+            p["pid"] = int(pid_str) if pid_str.isdigit() else pid_str
+        if birthYear:
+            p["birthYear"] = birthYear
+            p["dob"] = f"{birthYear}-01-01"
         if mask[i, sal_col]:
             p["sal"] = round(float(Z[i, sal_col]), 3)  # salary z (era-honest)
         players.append(p)

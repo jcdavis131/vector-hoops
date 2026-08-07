@@ -42,25 +42,34 @@ export async function mountSharedMap(canvas, opts={}){
     for(const p of arr){ const y=seasonEndYear(p.s); if(y && y>maxYear) maxYear=y; }
     if(!maxYear) maxYear = (new Date()).getFullYear(); // fallback
     const recentMin = maxYear - 2; // last 3 seasons inclusive
-    const byName=new Map();
+    // unique person key = pid if present (name+dob proxy) else name
+    // fixes Gary Payton (pid 56, 1996-07 11 seasons) vs Gary Payton II (pid 1627780, 2017-26 7 seasons)
+    // previously counted together as 18 seasons → kept incorrectly; now separate.
+    const byPerson=new Map();
     for(const p of arr){
-      const name=(p.n||'').trim();
-      if(!name) continue;
-      let rec=byName.get(name);
-      if(!rec){ rec={count:0, maxY:0, minY:9999, years:[]}; byName.set(name,rec); }
+      const pid = p.pid!=null ? String(p.pid) : (p.player_id!=null ? String(p.player_id) : '');
+      const rawName=(p.n||'').trim();
+      if(!rawName && !pid) continue;
+      const key = pid ? ('pid:'+pid) : ('name:'+rawName.toLowerCase());
+      let rec=byPerson.get(key);
+      if(!rec){ rec={count:0, maxY:0, minY:9999, years:[], displayName: rawName, pid}; byPerson.set(key,rec); }
       rec.count++;
       const y=seasonEndYear(p.s)||0;
       if(y){ if(y>rec.maxY) rec.maxY=y; if(y<rec.minY) rec.minY=y; rec.years.push(y); }
     }
-    const keepNames=new Set();
-    for(const [name, rec] of byName){
-      if(rec.count>=3) keepNames.add(name);
-      else if(rec.maxY && rec.maxY>=recentMin) keepNames.add(name); // rookie / new last 3 seasons
+    const keepKeys=new Set();
+    for(const [k, rec] of byPerson){
+      if(rec.count>=3) keepKeys.add(k);
+      else if(rec.maxY && rec.maxY>=recentMin) keepKeys.add(k); // rookie / new last 3 seasons
     }
     // stats for log
-    let kept=0; for(const p of arr){ if(keepNames.has((p.n||'').trim())) kept++; }
-    console.log('season filter: maxYear',maxYear,'recentMin',recentMin,'keptNames',keepNames.size,'keptPts',kept,'/',arr.length);
-    return {keepNames, maxYear, recentMin, kept, raw:arr.length};
+    let kept=0; for(const p of arr){
+      const pid = p.pid!=null ? String(p.pid) : (p.player_id!=null ? String(p.player_id) : '');
+      const key = pid ? ('pid:'+pid) : ('name:'+(p.n||'').trim().toLowerCase());
+      if(keepKeys.has(key)) kept++;
+    }
+    console.log('season filter v5 pid-aware: maxYear',maxYear,'recentMin',recentMin,'keptPersons',keepKeys.size,'keptPts',kept,'/',arr.length);
+    return {keepKeys, maxYear, recentMin, kept, raw:arr.length};
   }
 
   function normalizeGuesses(list){
@@ -171,13 +180,14 @@ export async function mountSharedMap(canvas, opts={}){
       const arr=j.players||j;
       if(!Array.isArray(arr)||arr.length<1000){ fullLoading=false; return; }
       totalRaw=arr.length;
-      // build filter
-      const {keepNames, maxYear, recentMin, kept, raw} = buildSeasonFilter(arr);
+      // build filter (pid-aware keeps Gary Payton 11 and Gary Payton II 7 separate)
+      const {keepKeys, maxYear, recentMin, kept, raw} = buildSeasonFilter(arr);
       filteredCount=kept;
       // actually filter array
       const filtered = arr.filter(p=>{
-        const name=(p.n||'').trim();
-        return keepNames.has(name);
+        const pid = p.pid!=null ? String(p.pid) : (p.player_id!=null ? String(p.player_id) : '');
+        const key = pid ? ('pid:'+pid) : ('name:'+(p.n||'').trim().toLowerCase());
+        return keepKeys.has(key);
       });
       // If filtering would be too aggressive (keeps <2000), fall back to full
       const useArr = (filtered.length>=1500)? filtered : arr;
