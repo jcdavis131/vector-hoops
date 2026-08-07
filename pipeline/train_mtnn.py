@@ -1290,6 +1290,14 @@ def main() -> None:
         help="comma-separated tower families to drop (ablation)",
     )
     ap.add_argument(
+        "--write-artifacts",
+        action="store_true",
+        help="permit the export to overwrite pipeline/data/embedding_v3.npz, "
+        "mtnn_centroids.npz and mtnn_report.json. Off by default since "
+        "2026-08-06, when a 1-epoch smoke run destroyed the shipped embedding "
+        "because the export was unconditional.",
+    )
+    ap.add_argument(
         "--phase",
         choices=("select", "final-refit", "auto"),
         default="select",
@@ -1863,6 +1871,28 @@ def main() -> None:
     )
     next_profile_pred = heads["next_profile"].cpu().numpy().astype(np.float32)
     game_feature_keys = np.array([manifest["features"][j] for j in game_cols])
+
+    # WRITE GATE. This export used to be unconditional, so ANY invocation --
+    # including `--epochs 1` under the default `--phase select`, whose whole
+    # advertised purpose is "honest held-out metrics" -- overwrote the shipped
+    # embedding. On 2026-08-06 a 1-epoch smoke test did exactly that: the
+    # canonical 64-dim embedding_v3.npz was replaced by a 48-dim 1-epoch model
+    # (CQS 44.49, population validation FAILED). pipeline/data/ is gitignored
+    # so git could not restore it; recovery relied on the dated .npz backups
+    # and the cosine identification recorded in 0578ad6.
+    #
+    # A run that is MEASURING must not also be SHIPPING.
+    _may_write = getattr(args, "write_artifacts", False) or args.phase in (
+        "final-refit",
+        "auto",
+    )
+    if not _may_write:
+        print(
+            f"phase={args.phase}: metrics only, artifacts NOT written. "
+            f"Pass --write-artifacts (or --phase final-refit) to export. "
+            f"{DATA_DIR / 'embedding_v3.npz'} left untouched."
+        )
+        return
 
     np.savez_compressed(
         DATA_DIR / "embedding_v3.npz",
