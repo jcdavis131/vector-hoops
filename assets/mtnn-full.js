@@ -1,5 +1,5 @@
 /* Vector Hoops — MTNN Full — embeddings + heads + jacobian + arch
- * 12,966 seasons, residual towers, 48-d L2
+ * 12,966 seasons, residual towers, 64-d L2
  * Assets: embeddings, heads, inputs aggregated, jacobian
  * Edge cache immutable
  */
@@ -144,7 +144,7 @@
       skillDelta: skillDelta,
       posT: posT, posG: posG,
       bullets: [
-        '48-d cosine '+(cos*100).toFixed(1)+'% — '+(cos>0.9?'same island':cos>0.8?'nearby cluster':'distant craft')+'. Full MTNN 48-d L2, not map xyz.',
+        '64-d cosine '+(cos*100).toFixed(1)+'% — '+(cos>0.9?'same island':cos>0.8?'nearby cluster':'distant craft')+'. Full MTNN 64-d L2, not map xyz.',
         skillDelta ? 'Tower skills Δ (48→16→1 per-skill MLP): '+skillDelta.top3.map(function(d){ return d.skill+' '+d.from.toFixed(0)+'→'+d.to.toFixed(0)+' ('+(d.delta>0?'+':'')+d.delta.toFixed(0)+')'; }).join(', ')+' — '+skillDelta.closeness+'% closeness' : 'Skill towers loading…',
         archT && archG ? 'Archetype: '+archG.label+' '+(archT.argmax===archG.argmax?'same global':'→ '+archT.label)+' — prob '+(archG.probs ? (archG.probs[archG.argmax]*100).toFixed(0) : '?')+'% vs '+(archT.probs ? (archT.probs[archT.argmax]*100).toFixed(0) : '?')+'% (8-way MLP 48→64→8).' : 'Archetype loading…'
       ]

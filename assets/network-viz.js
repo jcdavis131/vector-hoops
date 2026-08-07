@@ -61,11 +61,11 @@
     },
     {
       id: 'fusion',
-      caption: '17×32=544 tower outputs concat with learned season embedding 12-d → 556-d → 128 GELU LN → 48-d → L2 norm.'
+      caption: '17×32=544 tower outputs concat with learned season embedding 12-d → 556-d → 128 GELU LN → 64-d → L2 norm.'
     },
     {
       id: 'embedding',
-      caption: '48-d L2-normalized fingerprint — that is where similarity, recall@10, and purity are measured.'
+      caption: '64-d L2-normalized fingerprint — that is where similarity, recall@10, and purity are measured.'
     },
     {
       id: 'heads',
@@ -630,7 +630,7 @@
     ctx.beginPath(); ctx.roundRect(panelX, panelY, panelW, panelH, 8); ctx.fill(); ctx.stroke();
     ctx.fillStyle = '#111111';
     ctx.font = '700 10px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace';
-    ctx.fillText('PCA Axes (MTNN 48-d) — Cam\'s Lab light paper', panelX + 8, panelY + 13);
+    ctx.fillText('PCA Axes (MTNN 64-d) — Cam\'s Lab light paper', panelX + 8, panelY + 13);
     axes.forEach(function (ax, i) {
       var y = panelY + 30 + i * (lineH + 12);
       ctx.fillStyle = '#111111';
@@ -784,7 +784,7 @@
         '<div class="network-story-stage' + clsF + '">' +
           '<div class="network-story-stage__head">Fuse &amp; embed</div>' +
           '<div class="network-story-stage__chips">' +
-            '<span class="network-story-chip">544+12 → 48 L2</span>' +
+            '<span class="network-story-chip">544+12 → 64 L2</span>' +
           '</div>' +
         '</div>' +
         '<div class="network-story-arrow" aria-hidden="true">→</div>' +
@@ -1203,8 +1203,8 @@ function buildFlowSvg(host) {
     if (!host || !state.arch) return;
     host.innerHTML = '';
     // AAA readable: taller canvas, larger fonts, no clip. Truthful W1380 H880 v4 baseline.
-    // Input mask m∈{0,1} • cat([x·m,m]) • 2 residual blocks per tower 160→32 LN GELU + skip • season 12-d concat • L2 embed 48-d • MLP heads 8/5/14/18
-    // Truthful invariants: 12,392 seasons, 120 feats, 17 families cat([x·m,m]) 17×160→32×2 544+12=556→128→48 L2, MAX_INPUT_NODES 17 truthful
+    // Input mask m∈{0,1} • cat([x·m,m]) • 2 residual blocks per tower 160→32 LN GELU + skip • season 12-d concat • L2 embed 64-d • MLP heads 8/5/14/18
+    // Truthful invariants: 12,392 seasons, 120 feats, 17 families cat([x·m,m]) 17×160→32×2 544+12=556→256→64 L2, MAX_INPUT_NODES 17 truthful
     var W = 1380;
     var H = 880;
     var TOP_LABEL_Y = 28;
@@ -1244,7 +1244,7 @@ function buildFlowSvg(host) {
       { x: COLS.input, label: 'Input 120 feats 17 families' },
       { x: COLS.b2o, label: 'Towers 17×2 ResBlocks 160→32' },
       { x: COLS.fusion, label: 'Concat 544+12=556 + season 12-d' },
-      { x: COLS.embed, label: 'Embed 48-d L2' },
+      { x: COLS.embed, label: 'Embed 64-d L2' },
       { x: COLS.heads, label: 'Heads MLP 48→64→k' }
     ];
     topLabels.forEach(function(o){
@@ -1263,7 +1263,7 @@ function buildFlowSvg(host) {
       { x: COLS.cat, y: TOP_LABEL_Y+16, txt: 'cat([x·m, m])  2·d_in' },
       { x: (COLS.b1h+COLS.b1o)/2, y: TOP_LABEL_Y+16, txt: 'B1 LN+GELU + skip' },
       { x: (COLS.b2h+COLS.b2o)/2, y: TOP_LABEL_Y+16, txt: 'B2 32→160→32 res' },
-      { x: COLS.fusion, y: TOP_LABEL_Y+16, txt: '556→128 GELU LN →48' }
+      { x: COLS.fusion, y: TOP_LABEL_Y+16, txt: '556→256 GELU LN →64' }
     ];
     subs.forEach(function(su){
       var t = document.createElementNS(SVG_NS, 'text');
@@ -1516,7 +1516,7 @@ function buildFlowSvg(host) {
     fusion.setAttribute('id', 'flow-fusion');
     fusion.setAttribute('style','fill:#FFFFFF;stroke:#111111;stroke-width:2.5px;');
     var fusionTitle = document.createElementNS(SVG_NS, 'title');
-    fusionTitle.textContent = 'Concat fusion: flatten 17×32=544 + season 12 =556 → Linear 556→128 GELU LayerNorm';
+    fusionTitle.textContent = 'Concat fusion: flatten 17×32=544 + season 12 =556 → Linear 556→256 GELU LayerNorm';
     fusion.appendChild(fusionTitle);
     svg.appendChild(fusion);
 
@@ -1526,7 +1526,7 @@ function buildFlowSvg(host) {
     fusionLabel.setAttribute('text-anchor','middle');
     fusionLabel.setAttribute('class','network-flow-col-label');
     fusionLabel.setAttribute('style','font-size:11px;fill:#585858;font-weight:700;');
-    fusionLabel.textContent = '556→128';
+    fusionLabel.textContent = '556→256';
     svg.appendChild(fusionLabel);
 
     // Fusion hidden 128
@@ -1538,7 +1538,7 @@ function buildFlowSvg(host) {
     fusionH.setAttribute('id','flow-fusion-hidden');
     fusionH.setAttribute('style','fill:#FFFFFF;stroke:#111111;stroke-width:2.5px;');
     var fhTitle = document.createElementNS(SVG_NS, 'title');
-    fhTitle.textContent = 'Fusion hidden 128-d: GELU + LayerNorm, then Linear 128→48';
+    fhTitle.textContent = 'Fusion hidden 256-d: GELU + LayerNorm, then Linear 256→64';
     fusionH.appendChild(fhTitle);
     svg.appendChild(fusionH);
 
@@ -1550,7 +1550,7 @@ function buildFlowSvg(host) {
     eFH.setAttribute('style','stroke:#111111;stroke-width:2;');
     edgeG.appendChild(eFH);
 
-    // Embed node 48-d
+    // Embed node 64-d
     var embed = document.createElementNS(SVG_NS, 'circle');
     embed.setAttribute('cx', String(COLS.embed));
     embed.setAttribute('cy', String(midY));
@@ -1559,7 +1559,7 @@ function buildFlowSvg(host) {
     embed.setAttribute('id', 'flow-embed');
     embed.setAttribute('style','fill:#FFFFFF;stroke:#111111;stroke-width:2.5px;');
     var embedTitle = document.createElementNS(SVG_NS, 'title');
-    embedTitle.textContent = 'Embedding 48-d L2-normalized: output of Linear 128→48 then F.normalize, cosine similarity';
+    embedTitle.textContent = 'Embedding 64-d L2-normalized: output of Linear 256→64 then F.normalize, cosine similarity';
     embed.appendChild(embedTitle);
     svg.appendChild(embed);
 
@@ -1875,7 +1875,7 @@ function buildFlowSvg(host) {
       addSpine();
       addAllHeads();
       summary = capWords((famLabel||'input '+(i+1)).replace(/_/g,' ')) + ' → Tower ' + (t + 1) +
-        ' → fusion (544+12=556→128→48 L2) → embedding → all ' + headDefs.length + ' heads';
+        ' → fusion (544+12=556→256→64 L2) → embedding → all ' + headDefs.length + ' heads';
     } else if (node.type === 'tower') {
       var t2 = node.index;
       origin = '[data-tower="' + t2 + '"]';

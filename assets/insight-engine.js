@@ -1,5 +1,5 @@
 /* Vector Hoops — Insight Engine
- * Full MTNN: 12,966 seasons, 48-d L2, heads for archetype, position, next, skills
+ * Full MTNN: 12,966 seasons, 64-d L2, heads for archetype, position, next, skills
  * Assets are immutable edge-cached
  */
 (function (global) {
@@ -8,7 +8,7 @@
     players: null, features: null, featureLabels: null,
     skillsList: null, grades: null, assignments: null, seasonNorms: null,
     mtnnMap: null, mtnnArch: null, skillProbe: null,
-    N:0, DIM:48, loaded:false, criticalLoaded:false,
+    N:0, DIM:64, loaded:false, criticalLoaded:false,
     searchLite:null
   };
   const EPOCH = new Date('2026-07-01T00:00:00Z');
@@ -73,7 +73,7 @@
       DATA.featureLabels={PTS:'Scoring',FGA:'Shot Attempt',FG_PCT:'FG%',FG3A:'3PA',FG3_PCT:'3P%',FTA:'FTA',FT_PCT:'FT%',OREB:'Off Glass',DREB:'Def Glass',AST:'Playmaking',TOV:'Turnover',STL:'Steals',BLK:'Blocks',PLUS_MINUS:'PlusMinus'};
       DATA.mtnnArch=arch;
       DATA.skillProbe=probe;
-      // Ensure full MTNN 48-d embeddings + 45-d heads loaded (real trained model)
+      // Ensure full MTNN 64-d embeddings + 45-d heads loaded (real trained model)
       await ensureMtnnLoaded();
       DATA.criticalLoaded=true;
       return DATA;
@@ -322,7 +322,7 @@
     k=k||6;
     var mtnn = global.VHMtnn;
     if(!mtnn || !mtnn.isReady || !mtnn.isReady()){
-      return { nearest:[], skillBlend:null, xyz:{x:0,y:0,z:0}, summary:'MTNN loading — full 48-d embeddings' };
+      return { nearest:[], skillBlend:null, xyz:{x:0,y:0,z:0}, summary:'MTNN loading — full 64-d embeddings' };
     }
     var aEmb=mtnn.rowVector(aIdx), bEmb=mtnn.rowVector(bIdx);
     if(!aEmb||!bEmb) throw new Error('bad idx '+aIdx+','+bIdx);
@@ -360,7 +360,7 @@
       sorted.sort(function(a,b){return b.p-a.p;});
       archExplain=sorted.slice(0,3);
     }
-    return { aIdx:aIdx,bIdx:bIdx,fused:fused,xyz:fusedXYZ,nearest:comps,skillBlend:skillBlend, fuseHeads:fuseHeads, archetypeBlend:archExplain, summary: (pa.name+' + '+pb.name+' → closest: '+(top?top.name+' '+top.season:'?')+' '+(top?top.sim_pct:'?')+'%'), source:'full MTNN 48-d L2 + 45-d heads' };
+    return { aIdx:aIdx,bIdx:bIdx,fused:fused,xyz:fusedXYZ,nearest:comps,skillBlend:skillBlend, fuseHeads:fuseHeads, archetypeBlend:archExplain, summary: (pa.name+' + '+pb.name+' → closest: '+(top?top.name+' '+top.season:'?')+' '+(top?top.sim_pct:'?')+'%'), source:'full MTNN 64-d L2 + 45-d heads' };
   }
 
   function dailyIndex(){

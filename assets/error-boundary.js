@@ -189,7 +189,7 @@
 
   function handleVHCustomFailures(){
     window.addEventListener('vh:mtnn-failed', function(){
-      showFallbackCard('daily-guesses','Embeddings failed to load','48-d MTNN 2.5MB embeddings took too long. Daily cosine still works offline from cache if previously visited. Retrying 1s/2s/4s.', function(){
+      showFallbackCard('daily-guesses','Embeddings failed to load','64-d MTNN 2.5MB embeddings took too long. Daily cosine still works offline from cache if previously visited. Retrying 1s/2s/4s.', function(){
         if(window.VHMtnn && VHMtnn.load){
           return new Promise(function(res){
             var tries=0;

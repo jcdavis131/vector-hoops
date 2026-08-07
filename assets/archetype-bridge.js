@@ -1,5 +1,5 @@
 /* Archetype Bridge — MTNN v5 8 archetypes visual proof
- * Real: mtnn_arch.json gameArchetypes 8, mtnn_meta.json centroids 8x48, archetype_assignments.json 12966, mtnn_heads.f32 8-logit distribution
+ * Real: mtnn_arch.json gameArchetypes 8, mtnn_meta.json centroids 8x64, archetype_assignments.json 12966, mtnn_heads.f32 8-logit distribution
  */
 (function(global){
   'use strict';
@@ -108,7 +108,7 @@
     if(topF.length){
       html+=`<div style="margin-top:2px;padding:10px;border:2.2px dashed #1A150F;border-radius:10px;background:#fff"><div style="font-family:ui-monospace,monospace;font-size:11px;font-weight:900">= Fused predicts: ${topF.map(f=> `${(f.p*100).toFixed(0)}% ${f.name}`).join(' + ')}</div>
       <div style="display:flex;gap:4px;margin-top:6px">${topF.map(f=> `<span style="flex:${f.p};height:8px;border-radius:999px;background:${PAL[f.i%PAL.length]}" title="${f.name} ${(f.p*100).toFixed(0)}%"></span>`).join('')}</div>
-      <div style="font-size:11px;line-height:1.45;margin-top:8px">Why bridge matters: <b>Archetype centroids 8×48</b> in mtnn_meta.json are L2 means of real seasons. Fusion <i>(embA+embB)/2 normalized</i> lives between A and B centroids — nearest real season reveals latent type that pure box score misses. Example: 68% Playmaking+Steals +22% Shot Volume = crafty volume shooter (Haliburton-type).</div></div>`;
+      <div style="font-size:11px;line-height:1.45;margin-top:8px">Why bridge matters: <b>Archetype centroids 8×64</b> in mtnn_meta.json are L2 means of real seasons. Fusion <i>(embA+embB)/2 normalized</i> lives between A and B centroids — nearest real season reveals latent type that pure box score misses. Example: 68% Playmaking+Steals +22% Shot Volume = crafty volume shooter (Haliburton-type).</div></div>`;
     }
     if(fusedData && fusedData.nearest && fusedData.nearest[0]){
       html+=`<div style="font-size:11px;font-family:ui-monospace,monospace">Nearest real after fuse: <b>${fusedData.nearest[0].name} ${fusedData.nearest[0].season}</b> ${fusedData.nearest[0].sim_pct}% cosine · PC ${fusedData.xyz.x.toFixed(2)},${fusedData.xyz.y.toFixed(2)},${fusedData.xyz.z.toFixed(2)} = island where A+B chemistry lands.</div>`;
@@ -124,7 +124,7 @@
     containerEl.innerHTML='';
     containerEl.style.cssText='display:flex;flex-wrap:wrap;gap:6px';
     [
-      {label:`Global: ${assign.mtnnGlobalName}`, color:PAL[assign.mtnnGlobal%PAL.length], title:'mtnn_meta centroid 48-d mean'},
+      {label:`Global: ${assign.mtnnGlobalName}`, color:PAL[assign.mtnnGlobal%PAL.length], title:'mtnn_meta centroid 64-d mean'},
       {label:`Game: ${assign.gameClusterName}`, color:'#1A150F'},
       {label:`Era ${assign.era}: ${assign.eraNativeName}`, color:'#6B6256'},
       ...(assign.eraTags||[]).map(t=>({label:t, color:'#0072B2'}))

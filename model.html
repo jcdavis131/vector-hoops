@@ -8,11 +8,11 @@
 <title>How the vector knows — MTNN Training Cockpit — Vector Hoops</title>
 <link rel="canonical" href="https://hoops.dumbmodel.com/model">
 <meta property="og:url" content="https://hoops.dumbmodel.com/model">
-<meta name="description" content="From 12,966 player-seasons to a 48-d fingerprint: training cockpit, architecture, truthful flow, and Model explorer for MTNN v4→v6.">
+<meta name="description" content="From 12,966 player-seasons to a 64-d fingerprint: training cockpit, architecture, truthful flow, and Model explorer for MTNN v4→v6.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E🏀%3C/text%3E%3C/svg%3E">
 <meta property="og:type" content="website">
 <meta property="og:title" content="How the vector knows — MTNN Training Cockpit">
-<meta property="og:description" content="12,966 seasons → 130 feats → 17 towers → 48-d embedding → 8 archetypes. Model training cockpit, flow, and explorer.">
+<meta property="og:description" content="12,966 seasons → 130 feats → 17 towers → 64-d embedding → 8 archetypes. Model training cockpit, flow, and explorer.">
 <meta property="og:image" content="/assets/og-1200x630.png">
 <link rel="stylesheet" href="assets/shell.css">
 <link rel="stylesheet" href="assets/responsive.css">
@@ -308,7 +308,7 @@ a{color:inherit}
 
 <div class="research-head network-head">
 <h1>How the vector knows</h1>
-<p class="network-hero">Every player-season is a fingerprint: <b>130 raw stats → 18 families with masking → 17 residual towers → fusion → 48-d unit sphere where cosine = similarity</b>. Training cockpit, architecture, and glass-box debugger — same source of truth for v4 now and v6 next.</p>
+<p class="network-hero">Every player-season is a fingerprint: <b>130 raw stats → 18 families with masking → 17 residual towers → fusion → 64-d unit sphere where cosine = similarity</b>. Training cockpit, architecture, and glass-box debugger — same source of truth for v4 now and v6 next.</p>
 
 <div class="stats-strip" aria-label="MTNN stats">
 <span class="stats-chip">12,966 seasons</span>
@@ -316,7 +316,7 @@ a{color:inherit}
 <span class="stats-chip">130 feats × 17 towers</span>
 <span class="stats-chip">cat([x·m,m]) masked</span>
 <span class="stats-chip">17× 160→32 ×2 =544+12</span>
-<span class="stats-chip">556→128→48 L2</span>
+<span class="stats-chip">556→256→64 L2</span>
 <span class="stats-chip">~224K params</span>
 <span class="stats-chip">heads 8/5/14/18</span>
 </div>
@@ -366,10 +366,10 @@ a{color:inherit}
 <div class="pipe-step is-done"><span class="step-num">01</span><b>Gather</b><i>stats.nba 12,966</i></div><div class="pipe-arrow">→</div>
 <div class="pipe-step is-done"><span class="step-num">02</span><b>Vectors</b><i>per-season z ±4 + mask</i></div><div class="pipe-arrow">→</div>
 <div class="pipe-step is-done"><span class="step-num">03</span><b>Towers</b><i>17×160→32×2</i></div><div class="pipe-arrow">→</div>
-<div class="pipe-step is-done"><span class="step-num">04</span><b>Fusion</b><i>556→128→48 L2 224K</i></div><div class="pipe-arrow">→</div>
+<div class="pipe-step is-done"><span class="step-num">04</span><b>Fusion</b><i>556→256→64 L2 224K</i></div><div class="pipe-arrow">→</div>
 <div class="pipe-step is-done"><span class="step-num">05</span><b>Deploy</b><i>ONNX + WASM</i></div>
 </div>
-<p style="font-size:13px; margin-top:12px; line-height:1.6;">v4 is shallow: 4 linear layers to embedding, 57% of params in one fusion layer, concat with no cross-family attention, 48-d shared for 8+5+14+18 heads. Capacity caps around 86.0–86.5.</p>
+<p style="font-size:13px; margin-top:12px; line-height:1.6;">v4 is shallow: 4 linear layers to embedding, 57% of params in one fusion layer, concat with no cross-family attention, 64-d shared for 8+5+14+18 heads. Capacity caps around 86.0–86.5.</p>
 <p style="font-size:13px; margin-top:8px; line-height:1.6;"><b>v6 upgrade:</b> 120 feats → robust median/IQR clip[-3,3] → 17 families cat([x·m,m]) → towers d40 h192 ×3 → 17×40 tokens → CLS + season 12→128 + 17 tokens =19 tokens → Transformer 128-d 4L 4H FF512 drop0.15 → CLS 128→512→64 L2. ~1.2M params, target CQS 87.5–88.0, purity 0.89–0.91.</p>
 </div>
 </div>
@@ -389,11 +389,11 @@ a{color:inherit}
 <div class="manim-grid">
 <div class="manim-card">
 <video autoplay loop muted playsinline controls preload="metadata" src="assets/manim/MTNNFlow.mp4" aria-label="MTNNFlow"></video>
-<div class="manim-caption"><b>MTNNFlow — glass box</b><br>17 towers, 120 feats cat([x·m,m]) → 17× 160→32 LN+GELU×2 → 544 +12 season → 556→128→48 L2 → heads 8/5/14/18. Every box is real dimension. <em>Render shows the 120-feature v4 matrix; it now carries 131 across 18 families (injury is a durability read-out, not an input tower).</em></div>
+<div class="manim-caption"><b>MTNNFlow — glass box</b><br>17 towers, 120 feats cat([x·m,m]) → 17× 160→32 LN+GELU×2 → 544 +12 season → 556→256→64 L2 → heads 8/5/14/18. Every box is real dimension. <em>Render shows the 120-feature v4 matrix; it now carries 131 across 18 families (injury is a durability read-out, not an input tower).</em></div>
 </div>
 <div class="manim-card">
 <video autoplay loop muted playsinline controls preload="metadata" src="assets/manim/ChimeraEquation.mp4" aria-label="ChimeraEquation"></video>
-<div class="manim-caption"><b>ChimeraEquation — how Chimera scores</b><br>Donor A + Donor B → fuse in 48-d → nearest real among 12,966 by cosine. The argmin behind daily puzzle.</div>
+<div class="manim-caption"><b>ChimeraEquation — how Chimera scores</b><br>Donor A + Donor B → fuse in 64-d → nearest real among 12,966 by cosine. The argmin behind daily puzzle.</div>
 </div>
 <div class="manim-card">
 <video autoplay loop muted playsinline controls preload="metadata" src="assets/manim/InputFamilies.mp4" aria-label="InputFamilies"></video>
@@ -401,7 +401,7 @@ a{color:inherit}
 </div>
 <div class="manim-card">
 <video autoplay loop muted playsinline controls preload="metadata" src="assets/manim/EmbeddingL2.mp4" aria-label="EmbeddingL2"></video>
-<div class="manim-caption"><b>EmbeddingL2 — 48-d → L2 → unit sphere</b><br>v̂ = v/||v||₂, ||v̂||=1, cos = v̂·ŵ. 12,966 points on sphere powers Chimera + Era Twin.</div>
+<div class="manim-caption"><b>EmbeddingL2 — 64-d → L2 → unit sphere</b><br>v̂ = v/||v||₂, ||v̂||=1, cos = v̂·ŵ. 12,966 points on sphere powers Chimera + Era Twin.</div>
 </div>
 </div>
 </section>
@@ -409,7 +409,7 @@ a{color:inherit}
 <!-- 3. FLOW -->
 <section class="drift-card" id="network-flow" aria-label="Network data flow">
 <div class="network-section__head">
-<div><p class="viz-panel__label" style="margin:0;">Data flow — truthful boxes measured</p><p class="network-flow-subhead">Input mask m∈{0,1} • cat([x·m,m]) → 2 residual blocks per tower 160→32 LN GELU + skip → season 12-d concat → L2 embed 48-d → MLP heads 8/5/14/18. Tap any node.</p></div>
+<div><p class="viz-panel__label" style="margin:0;">Data flow — truthful boxes measured</p><p class="network-flow-subhead">Input mask m∈{0,1} • cat([x·m,m]) → 2 residual blocks per tower 160→32 LN GELU + skip → season 12-d concat → L2 embed 64-d → MLP heads 8/5/14/18. Tap any node.</p></div>
 <div class="network-flow-tools"><span id="network-trace-status" class="network-trace-status">Tap a node to see what fed it.</span><button type="button" id="network-trace-clear" class="network-trace-clear" hidden>✕ Clear</button></div>
 </div>
 <div class="network-flow-layout">
@@ -421,7 +421,7 @@ a{color:inherit}
 </div>
 
 <div class="network-flow-outputs" id="network-output-card">
-<div class="network-flow-outputs__head"><p class="viz-panel__label">Guess & grade — heads decode 48-d</p><p style="font-size:12px; color:#666; margin-top:4px;">Same MLP heads as rightmost column. Tap a row to lock trace back through network.</p></div>
+<div class="network-flow-outputs__head"><p class="viz-panel__label">Guess & grade — heads decode 64-d</p><p style="font-size:12px; color:#666; margin-top:4px;">Same MLP heads as rightmost column. Tap a row to lock trace back through network.</p></div>
 <div class="viz-duo-grid network-flow-outputs__grid">
 <div class="viz-panel"><p class="viz-panel__label">Archetype — 8</p><div id="network-arch-out" class="network-arch-out"></div></div>
 <div class="viz-panel"><p class="viz-panel__label">Position — 5</p><div id="network-pos-out" class="network-arch-out"></div></div>
@@ -468,7 +468,7 @@ a{color:inherit}
 <div id="network-timebar-range" class="network-timebar__range"></div>
 </div>
 
-<p id="network-step-caption" class="network-step-caption">Loading architecture… 17×160→32 LN GELU ×2, 12-d season emb, 544+12=556→128→48 L2 ~224K. Era-honest sigma per-season, masked, Procrustes-aligned.</p>
+<p id="network-step-caption" class="network-step-caption">Loading architecture… 17×160→32 LN GELU ×2, 12-d season emb, 544+12=556→256→64 L2 ~224K. Era-honest sigma per-season, masked, Procrustes-aligned.</p>
 
 <div id="network-story" class="network-story"><p class="drift-loading">Loading story…</p></div>
 <div id="network-compare-summary" class="network-insights" style="margin-top:12px;"><p class="drift-loading">Compare off — toggle to diff two seasons.</p></div>
@@ -481,8 +481,8 @@ a{color:inherit}
 <div id="attr-population" hidden></div>
 </section>
 
-<section class="drift-card network-map-card" aria-label="48-d embedding map">
-<div class="network-section__head"><div><p class="viz-panel__label" style="margin:0;">Embedding map — 48-d rendered in 3D</p><p style="font-size:12px; color:#666; margin-top:6px;">Slow auto-rotate • drag to orbit • scroll to zoom • orange=selected — 12,966 points L2-normalized.</p></div></div>
+<section class="drift-card network-map-card" aria-label="64-d embedding map">
+<div class="network-section__head"><div><p class="viz-panel__label" style="margin:0;">Embedding map — 64-d rendered in 3D</p><p style="font-size:12px; color:#666; margin-top:6px;">Slow auto-rotate • drag to orbit • scroll to zoom • orange=selected — 12,966 points L2-normalized.</p></div></div>
 <div class="network-map-layout">
 <div class="network-map-stage">
 <canvas id="network-map-canvas" class="network-map-canvas" aria-label="3D MTNN embedding map"></canvas>
@@ -507,7 +507,7 @@ a{color:inherit}
 </div>
 <div class="cockpit-panel">
 <h3>03 Train → 04 Export → 05 Deploy</h3>
-<p style="font-size:14px; line-height:1.6;">Residual towers 17×160→32 ×2 LN GELU + skip =544, +12 season =556, concat fusion 556→128→48 L2 ~224K. Next: transformer tokens 17×40→128, CLS token, 4 layers attend, 128→512→64. Heads MLP decode. ONNX WASM 2MB, ExecuTorch mobile. Drift uses Procrustes chained RᵀR=I root frame 1996-97 so Era Twin compares directly.</p>
+<p style="font-size:14px; line-height:1.6;">Residual towers 17×160→32 ×2 LN GELU + skip =544, +12 season =556, concat fusion 556→256→64 L2 ~224K. Next: transformer tokens 17×40→128, CLS token, 4 layers attend, 128→512→64. Heads MLP decode. ONNX WASM 2MB, ExecuTorch mobile. Drift uses Procrustes chained RᵀR=I root frame 1996-97 so Era Twin compares directly.</p>
 </div>
 </div>
 </section>
@@ -579,7 +579,7 @@ a{color:inherit}
       document.getElementById('evsb-base5').textContent = pct(base.top5);
       document.getElementById('evsb-pairs').textContent = j.eligible_pairs.toLocaleString('en-US');
       if(cap) cap.textContent =
-        'Held-out retrieval: query the shipped 48-d space with a player’s season N — does that same player’s season N+1 rank in the top-5 nearest neighbors among all ' +
+        'Held-out retrieval: query the shipped 64-d space with a player’s season N — does that same player’s season N+1 rank in the top-5 nearest neighbors among all ' +
         j.embedding_asset.rows.toLocaleString('en-US') + ' player-seasons? Scored on ' + test.n.toLocaleString('en-US') +
         ' pairs whose target season (2024+) was never a training positive; ' + j.eligible_pairs.toLocaleString('en-US') +
         ' adjacent-season pairs total, keyed by stable PLAYER_ID. Baselines: transparent 14-d era-z profile (' + pct(base.top5) +

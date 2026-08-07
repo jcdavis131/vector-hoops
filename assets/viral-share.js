@@ -59,7 +59,7 @@
       ctx.fillText('Can you find the modern twin?',36,y+30);
     }
     ctx.font='600 16px ui-monospace'; ctx.fillStyle='#666';
-    var insight = '48-d MTNN recall@10 0.977 \u00B7 PC1 paint\u2192perim PC2 load PC3 ball \u00B7 '+ (opts.streak?'streak '+opts.streak+' \u00B7 ':'') +'hoops.dumbmodel.com/play';
+    var insight = '64-d MTNN recall@10 0.977 \u00B7 PC1 paint\u2192perim PC2 load PC3 ball \u00B7 '+ (opts.streak?'streak '+opts.streak+' \u00B7 ':'') +'hoops.dumbmodel.com/play';
     ctx.fillText(insight.slice(0,92),36,y+60);
     ctx.fillStyle='#F0E442'; ctx.strokeStyle='#111'; ctx.lineWidth=4; roundedRect(ctx,36,H-140,W-72,76,18); ctx.fill(); ctx.stroke();
     ctx.fillStyle='#111'; ctx.font='900 28px ui-sans-serif'; ctx.fillText('Play today: hoops.dumbmodel.com/play \u2192',56,H-92);
@@ -180,7 +180,7 @@
     var footerY = H-210;
     ctx.fillText('Can you beat this pack? Same All-Stars, share link challenge.',36,footerY);
     ctx.font='600 15px ui-monospace'; ctx.fillStyle='#444';
-    ctx.fillText(sizeLabel+' past All-Stars • Past→Modern MTNN 48-d recall@10 0.977 • streak-safe',36,footerY+26);
+    ctx.fillText(sizeLabel+' past All-Stars • Past→Modern MTNN 64-d recall@10 0.977 • streak-safe',36,footerY+26);
     ctx.fillStyle='#1A150F'; ctx.font='700 14px ui-monospace'; ctx.fillText('12,966 seasons as rotating 3D map · daily court 5× same for everyone',36,footerY+48);
 
     // CTA box

@@ -1,6 +1,6 @@
 /**
  * Vector Hoops — MTNN Worker for 100M DAU
- * Offloads 12,966 × 48-d dot products off main thread.
+ * Offloads 12,966 × 64-d dot products off main thread.
  * Loads mtnn_embeddings.f32 once, handles topK queries via postMessage.
  */
 self._cache = null;
@@ -12,10 +12,10 @@ function loadF32(url) {
 async function ensure() {
   if (self._cache) return self._cache;
   const [metaJson, E] = await Promise.all([
-    fetch('assets/mtnn_meta.json').then(r=>r.json()).catch(()=>({dim:48, rows:12966})),
+    fetch('assets/mtnn_meta.json').then(r=>r.json()).catch(()=>({dim:64, rows:12966})),
     loadF32('assets/mtnn_embeddings.f32')
   ]);
-  var dim = metaJson.dim || 48;
+  var dim = metaJson.dim || 64;
   var rows = metaJson.rows || Math.floor(E.length/dim);
   self._cache = { dim: dim, rows: rows, E: E, meta: metaJson };
   return self._cache;

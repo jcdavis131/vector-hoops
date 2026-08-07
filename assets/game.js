@@ -1,5 +1,5 @@
 /* Vector Hoops — game.js vNext simplified 2-loop pivot
- * Daily — Guess + Insight: 1 mystery per day, 6 guesses, 48-d cosine, era-z skill delta, archetype bridge, cross-era neighbors
+ * Daily — Guess + Insight: 1 mystery per day, 6 guesses, 64-d cosine, era-z skill delta, archetype bridge, cross-era neighbors
  * Lab — Fusion A+B=C chimera: blend skill DNA, archetype, next profile, position fit
  * Data: 12966 seasons, grades per season, embeddings
  */
@@ -40,7 +40,7 @@
       archT, archG,
       eraT, eraG,
       bullets: [
-        `48-d cosine ${(sim*100).toFixed(1)}% — PC1 paint→perim Δ${dx}, PC2 scoring load Δ${dy}, PC3 ball-in-hand Δ${dz}`,
+        `64-d cosine ${(sim*100).toFixed(1)}% — PC1 paint→perim Δ${dx}, PC2 scoring load Δ${dy}, PC3 ball-in-hand Δ${dz}`,
         skillD ? `Skill delta: ${skillD.top3.slice(0,2).map(d=>`${d.skill} ${d.from}→${d.to} (${d.delta>0?'+':''}${d.delta})`).join(', ')} — ${skillD.closeness.score}% close` : 'Skill delta n/a',
         archT && archG ? `Archetype bridge: ${archG.gameClusterName} / ${archG.mtnnGlobalName} → ${archT.gameClusterName} / ${archT.mtnnGlobalName} — ${archT.mtnnGlobal===archG.mtnnGlobal?'same global archetype':'cross-archetype bridge'}` : 'Archetype n/a'
       ]

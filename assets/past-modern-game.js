@@ -1,6 +1,6 @@
 /* past-modern-game.js — Past All-Star -> Guess Modern Twin | 100M DAU prod
    Loads: vectors_search_lite.json (12966 xyz), honors.json (asg), mtnn_embeddings via VHMtnn
-   Game: daily past all-star (asg=1, season<2024) -> closest modern (2024-25/2025-26) by 48-d cosine
+   Game: daily past all-star (asg=1, season<2024) -> closest modern (2024-25/2025-26) by 64-d cosine
    Daily Court = 5 deterministic puzzles per day, broader meta game
    Pack Battle v2 — production-grade: progress, persistence, battle vs challenger, share with scores
 */

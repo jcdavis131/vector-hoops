@@ -203,7 +203,7 @@
       row.style.cssText='padding:4px 0';
       containerEl.appendChild(row);
     });
-    const foot = createEl('div','','<span style="font-family:ui-monospace,monospace;font-size:10px;opacity:.6">Archetype head softmax 8-way from mtnn_heads.f32 logits — real trained MTNN 48-d v5.</span>');
+    const foot = createEl('div','','<span style="font-family:ui-monospace,monospace;font-size:10px;opacity:.6">Archetype head softmax 8-way from mtnn_heads.f32 logits — real trained MTNN 64-d v5.</span>');
     containerEl.appendChild(foot);
   }
 
@@ -252,7 +252,7 @@
     render: function(container, skills, keys, opts){ return render18(container, skills, keys, opts); },
     renderComparison: function(a,b,fused,keys,containers){
       try{
-        if(containers && containers.fused) render18(containers.fused, fused, keys, {title:'Fused skill DNA — (A+B)/2 normalized 48-d → 18 towers'});
+        if(containers && containers.fused) render18(containers.fused, fused, keys, {title:'Fused skill DNA — (A+B)/2 normalized 64-d → 18 towers'});
       }catch(e){}
     },
     gradeFromRaw: gradeFromRaw
