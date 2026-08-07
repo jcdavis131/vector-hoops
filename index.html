@@ -109,20 +109,31 @@
       <span id="viral-today" style="opacity:.6;font-size:14px">12,966 seasons as stars in Lemmino void — documentary style</span>
     </p>
 
-    <div class="cta-row">
-      <a class="btn btn-primary btn-xl" href="/play?r=672" id="cta-primary">▶ Play — <span id="cta-past">Michael Jordan</span></a>
-      <a class="btn" href="/play?mode=random" id="btn-random-hero" style="min-height:54px">🎲 Random</a>
-    </div>
-    <div class="cta-row" id="pack-cta-row" style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap;align-items:center">
-      <span class="small-mono" style="opacity:.7;text-transform:none;font-weight:800">Pack Battle — viral:</span>
-      <button class="btn" data-pack-hero="1" type="button" style="min-height:44px">⚡ Solo 1</button>
-      <button class="btn btn-accent" data-pack-hero="3" type="button" style="min-height:44px">🔥 Triple 3</button>
-      <button class="btn" data-pack-hero="5" type="button" style="min-height:44px;background:#fff">🏀 Full 5</button>
-      <span class="small-mono" id="pack-cta-hint" style="opacity:.55;text-transform:none;align-self:center">same link = same stars</span>
+    <div class="cta-row" style="margin-top:12px">
+      <button class="btn btn-primary btn-xl" id="btn-focus-mj" type="button">★ Show Jordan on map</button>
+      <a class="btn" href="/play" style="min-height:54px">▶ Play daily</a>
     </div>
 
-    <div class="micro small-mono" style="text-transform:none;display:flex;gap:8px;align-items:center;margin-top:6px">
-      <span class="pulse-dot"></span><span id="sky-fact-inline">Drag to rotate · hover any star · ★ = MJ 97-98</span>
+    <div class="micro small-mono" style="text-transform:none;display:flex;gap:8px;align-items:center;margin-top:8px">
+      <span class="pulse-dot"></span><span id="sky-fact-inline">Drag to rotate · hover any star · ★ = MJ 97-98 — click a name below to jump</span>
+    </div>
+
+    <div id="popular-row" style="margin-top:14px;display:flex;flex-direction:column;gap:8px">
+      <div class="small-mono" style="opacity:.7;text-transform:none;font-weight:800;letter-spacing:.02em">Popular — tap to show on map:</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="pill pill-yellow popular-btn" data-id="672" type="button" style="cursor:pointer">MJ 97-98</button>
+        <button class="pill popular-btn" data-id="2977" type="button" style="cursor:pointer">LeBron 03-04</button>
+        <button class="pill popular-btn" data-id="5600" type="button" style="cursor:pointer">Curry 09-10</button>
+        <button class="pill popular-btn" data-id="8127" type="button" style="cursor:pointer">Jokic 15-16</button>
+        <button class="pill popular-btn" data-id="7073" type="button" style="cursor:pointer">Giannis 13-14</button>
+        <button class="pill popular-btn" data-id="229" type="button" style="cursor:pointer">Kobe 96-97</button>
+        <button class="pill popular-btn" data-id="1507" type="button" style="cursor:pointer">Shaq 99-00</button>
+        <button class="pill popular-btn" data-id="4635" type="button" style="cursor:pointer">KD 07-08</button>
+        <button class="pill popular-btn" data-id="11960" type="button" style="cursor:pointer">Wemby 23-24</button>
+        <button class="pill popular-btn" data-id="9441" type="button" style="cursor:pointer">Luka 18-19</button>
+        <button class="pill" type="button" onclick="location.href='/players'" style="cursor:pointer;opacity:.7">More →</button>
+      </div>
+      <div id="popular-current" class="small-mono" style="text-transform:none;opacity:.6;font-size:11px"></div>
     </div>
   </div>
 
@@ -288,7 +299,7 @@
 })();
 </script>
 
-<!-- Unified shared map v2-light — same engine as game, LOD, DPR1, fillRect -->
+<!-- Unified shared map v2-light — simplified homepage, MJ as map anchor -->
 <script type="module">
 const lazyMount = (selector, loader) => {
   const el = document.querySelector(selector);
@@ -303,14 +314,78 @@ const lazyMount = (selector, loader) => {
   },{rootMargin:'200px 0px', threshold:0.01});
   observer.observe(el);
 };
+
+let hoopsMap = null;
+
+function showToastLocal(msg, ms){
+  var t=document.getElementById('toast');
+  if(!t) return;
+  t.textContent=msg; t.style.display='block';
+  clearTimeout(t._tm);
+  t._tm=setTimeout(()=>{ t.style.display='none'; }, ms||2400);
+}
+
+async function focusPlayer(id, label){
+  if(!hoopsMap){
+    showToastLocal('Map still loading — one sec');
+    return;
+  }
+  try{
+    const pid = parseInt(id,10);
+    // if not in lite, try to inject from search lite pool if available
+    if(!hoopsMap.hasPoint(pid)){
+      if(window.VHPastModern && VHPastModern.state){
+        try{
+          const sl=VHPastModern.state().searchLite;
+          const arr=sl && (sl.players||sl);
+          const row=Array.isArray(arr) && arr.find(p=>p && p.i===pid);
+          if(row) hoopsMap.addPoint(row);
+        }catch{}
+      }
+    }
+    hoopsMap.setTarget(pid);
+    if(typeof hoopsMap.focusOnTarget==='function') hoopsMap.focusOnTarget();
+    if(label){
+      const cur=document.getElementById('popular-current');
+      if(cur) cur.textContent='Showing '+label+' — ★ on map · drag to explore';
+      showToastLocal('★ '+label+' — on map');
+    }
+    document.getElementById('map-wrap')?.scrollIntoView({behavior:'smooth', block:'center'});
+  }catch(e){ console.warn('focus fail', e); }
+}
+
+window.__focusHoopsPlayer = focusPlayer;
+
 (async ()=>{
   const c=document.getElementById('sky-canvas');
   if(!c) return;
   try{
     const { mountSharedMap } = await import('./assets/shared-map.js?v=57');
-    await mountSharedMap(c, { highlightId: 672, dark:true });
+    hoopsMap = await mountSharedMap(c, { highlightId: 672, dark:true });
+    window.__hoopsMap = hoopsMap;
+
+    // wire new homepage buttons
+    document.getElementById('btn-focus-mj')?.addEventListener('click', ()=>{
+      focusPlayer(672,'Michael Jordan 1997-98');
+    });
+
+    document.querySelectorAll('.popular-btn[data-id]').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const id=btn.getAttribute('data-id');
+        const label=btn.textContent.trim();
+        // toggle active style
+        document.querySelectorAll('.popular-btn').forEach(b=>{ b.style.background='#fff'; b.style.color='#1A150F'; });
+        btn.style.background='#1A150F'; btn.style.color='#FFFEF7';
+        focusPlayer(id,label);
+      });
+    });
+
+    // default highlight MJ
+    setTimeout(()=>{ focusPlayer(672,'Michael Jordan 1997-98'); }, 900);
+
   }catch(e){ console.error('shared-map eager fail', e); }
 })();
+
 lazyMount('#trading-card-void', async ()=>{
   const { mountTradingCardVoid } = await import('./assets/lemmino/trading-card-void.js?v=53');
   const c=document.getElementById('trading-card-void');
