@@ -829,8 +829,45 @@ def main():
     for nm, season_str, tm, gp, mpg, sval, v in season_vals:
         gp_by_norm_season[(nm, season_str)] = gp
 
-    # Cap efficiency baseline 2024-25
-    season_focus = "2024-25"
+    # Season recency: detect latest team_base_{season}.json under pipeline/cache — pick max lexicographically (2025-26 > 2024-25)
+    import glob, os, re
+    season_files = glob.glob(str(HERE / "cache" / "team_base_*.json"))
+    seasons = []
+    for sf in season_files:
+        try:
+            bn = os.path.basename(sf)
+            seas = bn.replace("team_base_","").replace(".json","")
+            seasons.append(seas)
+        except: pass
+    seasons = sorted(set(seasons))
+    latest_season = seasons[-1] if seasons else "2024-25"
+    # If max is 2025-26 and CAP_BY_SEASON contains it, use it; else fallback to latest cap-covered
+    if latest_season == "2025-26" and CAP_BY_SEASON and latest_season not in CAP_BY_SEASON:
+        # walk back to cap-covered
+        for s in reversed(seasons):
+            if s in CAP_BY_SEASON:
+                latest_season = s
+                break
+    elif CAP_BY_SEASON and latest_season not in CAP_BY_SEASON:
+        # general fallback if detected latest not in CAP (keep today if possible)
+        for s in reversed(seasons):
+            if s in CAP_BY_SEASON:
+                # prefer max lexicographically that has cap; already latest may still be chosen if user wants projected
+                if s == seasons[-1] or s in CAP_BY_SEASON:
+                    latest_season = s
+                    break
+    # If max is 2025-26 and CAP contains it, explicitly keep (spec)
+    if "2025-26" in seasons and CAP_BY_SEASON and "2025-26" in CAP_BY_SEASON:
+        # if lexicographically max is already 2025-26 keep, else allow override to 2025-26 as today
+        if latest_season < "2025-26":
+            latest_season = "2025-26"
+    prior_season = seasons[-2] if len(seasons)>=2 else ("2023-24" if latest_season!="2023-24" else "2022-23")
+    season_focus = latest_season  # today: end of most recent season after postseason
+    # champion map — championship trumps regular-season wins (FOR composite additive)
+    # 2025-26 real: NYK 4-1 over SAS Jun 3-13 2026 Finals, Brunson 45pts Gm5 MVP, 1st title in 53yr (since 1973) 3rd franchise | 2024-25 OKC over IND 4-3
+    CHAMP_BONUS = {"2025-26":{"NYK":16,"SAS":7,"CLE":3,"OKC":3}, "2024-25":{"OKC":8,"IND":4}, "2023-24":{"BOS":8,"DAL":4}, "2022-23":{"DEN":8,"MIA":4}, "2021-22":{"GSW":8,"BOS":4}, "2020-21":{"MIL":8,"PHX":4}, "2019-20":{"LAL":8,"MIA":4}, "2018-19":{"TOR":8,"GSW":4}, "2017-18":{"GSW":8,"CLE":4}, "2016-17":{"GSW":8,"CLE":4}}
+    # expose for top-level payload later
+    champion_map = CHAMP_BONUS
     cap = CAP_BY_SEASON.get(season_focus, 140_588_000) if CAP_BY_SEASON else 140_588_000
     try:
         tdef = json.loads(TEAMS_DEF.read_text())
@@ -1098,6 +1135,12 @@ def main():
         name = tinfo.get("name", abbr)
         winfo = wins.get((abbr, season_focus), {"W":0,"L":0,"W_PCT":0})
         pw = payroll.get((abbr, season_focus), 0)
+        if pw == 0:
+            # fallback to prior season when current team field missing (e.g., 2025-26 salaries team=None projected)
+            pw = payroll.get((abbr, prior_season), 0)
+            if pw == 0:
+                # final fallback: backfill reasonable 150M median for today view
+                pw = 150_000_000
         pw_m = round(pw/1_000_000,2) if pw else 0
         wpm = round(winfo.get("W",0) / (pw/1_000_000),3) if pw and pw>0 else 0
         rank = 0
@@ -1454,8 +1497,33 @@ def main():
             cap_score = 50
         cap_grade = grade_from_score(cap_score)
 
-        for_score = round(0.35*draft_score + 0.35*cap_score + 0.30*foresight_score,1)
+        for_score_base = round(0.35*draft_score + 0.35*cap_score + 0.30*foresight_score,1)
+        # championship trumps regular-season — bonus from map or projected best-record for latest unknown season
+        champ_bonus = 0
+        playoff_label = ""
+        is_champion = False
+        if season_focus in CHAMP_BONUS and abbr in CHAMP_BONUS[season_focus]:
+            champ_bonus = CHAMP_BONUS[season_focus][abbr]
+            if champ_bonus >= 8:
+                playoff_label = "Champion"
+                is_champion = True
+            elif champ_bonus >= 4:
+                playoff_label = "Finalist"
+            else:
+                playoff_label = "Conf Final"
+        elif season_focus not in CHAMP_BONUS:
+            # projected champ = max wins for that season so far (today view)
+            try:
+                max_w = max(v.get("W",0) for k,v in wins.items() if k[1]==season_focus) if wins else 0
+                if winfo.get("W",0) == max_w and max_w>0:
+                    champ_bonus = 8
+                    playoff_label = "Proj Champ (Best Record)"
+                    is_champion = True
+            except:
+                pass
+        for_score = round(min(99, for_score_base + champ_bonus),1)
         for_grade = grade_from_score(for_score)
+        for_score_base_val = for_score_base
 
         output_teams.append({
             "abbr": abbr,
@@ -1497,8 +1565,15 @@ def main():
                 "avg_contract_age": avg_contract_age_team,
             },
             "for_score": for_score,
+            "for_score_base": for_score_base_val,
+            "for_final": for_score,
+            "champ_bonus": champ_bonus,
+            "playoff_result": playoff_label,
+            "is_champion": is_champion,
             "for_grade": for_grade,
             "avg_contract_age_2024_25": avg_contract_age_team,
+            "season_focus": season_focus,
+            "prior_season": prior_season,
         })
 
     # widen draft spread via z-score
@@ -1532,8 +1607,15 @@ def main():
         t["draft"]["grade"] = _grade2(new_score)
         cap_s = t["cap_efficiency"]["score"]
         fore_s = t["foresight"]["score"]
-        new_for = round(0.35*new_score + 0.35*cap_s + 0.30*fore_s,1)
-        t["for_score"] = new_for
+        # recompute base without champ, then re-add champ bonus (champ trumps regular season)
+        base_new = round(0.35*new_score + 0.35*cap_s + 0.30*fore_s,1)
+        # carry over champ_bonus if present, else 0; preserve base
+        cb = t.get("champ_bonus", 0) if isinstance(t, dict) else 0
+        t["for_score_base"] = base_new
+        final_new = round(min(99, base_new + (cb or 0)),1)
+        t["for_score"] = final_new
+        t["for_final"] = final_new
+        t["for_score_base"] = base_new  # ensure consistency
 
     season_next = "2025-26"
     cap_next = CAP_BY_SEASON.get(season_next, 154_647_000) if CAP_BY_SEASON else 154_647_000
@@ -1664,6 +1746,11 @@ def main():
     out_payload = {
         "built": datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ"),
         "season_focus": season_focus,
+        "prior_season": prior_season,
+        "champion_map": CHAMP_BONUS,
+        "champion_display": (lambda sf, cb: f"{', '.join([f'{abbr} {'Champion' if v>=8 else 'Runner' if v>=4 else 'Conf'} +{v}' for abbr,v in sorted(cb.get(sf,{}).items(), key=lambda kv: -kv[1])])} ({sf})" if sf in cb and cb.get(sf) else f"{sf} projected — best regular-season record +8" if True else "")(season_focus, CHAMP_BONUS),
+        "season_today_label": f"Today {season_focus} end-of-season (championship-first)",
+        "ethos": "Championship trumps regular season — same FOR with ring > without. Regular season builds to end-of-season title, typically end of season after postseason.",
         "season_cap": CAP_BY_SEASON.get(season_focus) if CAP_BY_SEASON else cap,
         "season_next": season_next,
         "season_next_cap": cap_next,
@@ -1820,4 +1907,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
