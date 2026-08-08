@@ -124,6 +124,14 @@
       <span id="tm-wpm" class="pill">—</span>
       <span id="tm-cap" class="pill">—</span>
     </div>
+    <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;background:#FFFEF7;border:1.6px dashed var(--ink);border-radius:999px;padding:8px 10px">
+      <span class="small-mono" style="opacity:.7">2025-26 PROJECTION →</span>
+      <span id="tm-payroll-next" class="pill">—</span>
+      <span id="tm-cap-next" class="pill">—</span>
+      <span id="tm-space-next" class="pill">—</span>
+      <span id="tm-flex-next" class="pill">—</span>
+      <span id="tm-top-next" class="pill" style="background:#fff">—</span>
+    </div>
   </div>
 
   <div class="card" id="fo-board">
@@ -133,8 +141,8 @@
     </div>
     <div style="overflow:auto;margin-top:10px">
       <table class="table" id="board-table">
-        <thead><tr><th>#</th><th>Team</th><th>FOR</th><th>G</th><th>W</th><th>Payroll</th><th>W/$M</th><th>Draft</th><th>Cap</th><th>Fore</th></tr></thead>
-        <tbody id="board-body"><tr><td colspan="10" style="text-align:center;padding:22px">Loading front office…</td></tr></tbody>
+        <thead><tr><th>#</th><th>Team</th><th>FOR</th><th>G</th><th>W</th><th>Payroll '24-25</th><th>Payroll '25-26</th><th>W/$M</th><th>Draft</th><th>Cap</th><th>Fore</th><th>Flex</th></tr></thead>
+        <tbody id="board-body"><tr><td colspan="12" style="text-align:center;padding:22px">Loading front office…</td></tr></tbody>
       </table>
     </div>
   </div>
@@ -197,7 +205,9 @@ function renderBoard(teams){
     const tr=document.createElement('tr');
     tr.className='leader-row';
     tr.dataset.abbr=t.abbr;
-    tr.innerHTML=`<td>${t.for_rank}</td><td><span class="team-dot" style="background:${t.primary||'#fff'};border-color:${t.secondary||'#1A150F'}"></span> <b>${t.abbr}</b> <span style="opacity:.6;font-size:11px">${t.name.replace(' ',' ').split(' ').slice(-1)[0]||''}</span></td><td><b>${t.for_score}</b></td><td>${t.for_grade}</td><td>${t.wins||0}</td><td>$${t.payroll_m||0}M</td><td>${t.w_per_m||0}</td><td>${t.draft.score} ${t.draft.grade}</td><td>${t.cap_efficiency.score} ${t.cap_efficiency.grade}</td><td>${t.foresight.score} ${t.foresight.grade}</td>`;
+    const nextM = t.payroll_m_2025_26 ?? 0;
+    const flex = t.flexibility_2025_26?.grade || '—';
+    tr.innerHTML=`<td>${t.for_rank}</td><td><span class="team-dot" style="background:${t.primary||'#fff'};border-color:${t.secondary||'#1A150F'}"></span> <b>${t.abbr}</b> <span style="opacity:.6;font-size:11px">${t.name.replace(' ',' ').split(' ').slice(-1)[0]||''}</span></td><td><b>${t.for_score}</b></td><td>${t.for_grade}</td><td>${t.wins||0}</td><td>$${t.payroll_m||0}M</td><td>$${nextM||0}M</td><td>${t.w_per_m||0}</td><td>${t.draft.score} ${t.draft.grade}</td><td>${t.cap_efficiency.score} ${t.cap_efficiency.grade}</td><td>${t.foresight.score} ${t.foresight.grade}</td><td>${flex}</td>`;
     tr.addEventListener('click',()=>selectTeam(t.abbr));
     body.appendChild(tr);
   });
@@ -223,10 +233,10 @@ function selectTeam(abbr){
   $('#tm-for').textContent=t.for_score;
   // glasses
   $('#g-draft-grade').textContent=t.draft.grade;
-  $('#g-draft-score').textContent=t.draft.score;
+  $('#g-draft-score').textContent=`${t.draft.score} (z ${t.draft.score_raw_z??''})`;
   $('#g-draft-bar').style.width=Math.max(8, Math.min(100, t.draft.score))+'%';
-  $('#g-draft-meta').textContent=`${t.draft.picks_5yr_count} picks 20-24 · avg surplus ${t.draft.avg_surplus_min} min · total ${t.draft.total_surplus_min} min`;
-  $('#g-draft-detail').textContent=`Expected career total_min curve by pick 1-60 (1996-2022 baseline, trimmed mean). Surplus = projected − expected, projected = actual/completion where completion = min(1, seasons/5.5). Score = 50 + avg_surplus/35 (capped). Picks listed below.`;
+  $('#g-draft-meta').textContent=`${t.draft.picks_5yr_count} picks 20-24 · avg surplus ${t.draft.avg_surplus_min} min · z ${t.draft.score_raw_z??'—'} · wide ${FO.median?.draft_mean_surplus? 'μ '+FO.median.draft_mean_surplus.toFixed(0)+' σ '+FO.median.draft_stdev.toFixed(0) : ''}`;
+  $('#g-draft-detail').textContent=`Expected career total_min curve by pick 1-60 (1996-2022 baseline, trimmed). Surplus = projected − expected, projected = actual/completion completion=min(1,seasons/5.5). Draft now z-scored across league: score=50+z*18 (mean ${FO.median?.draft_mean_surplus?.toFixed(0)||'—'} sd ${FO.median?.draft_stdev?.toFixed(0)||'—'}) for wide spread 12→95. Picks listed below.`;
   $('#g-cap-grade').textContent=t.cap_efficiency.grade;
   $('#g-cap-score').textContent=t.cap_efficiency.score;
   $('#g-cap-bar').style.width=Math.max(8, Math.min(100, t.cap_efficiency.score))+'%';
@@ -236,7 +246,7 @@ function selectTeam(abbr){
   $('#g-fore-score').textContent=t.foresight.score;
   $('#g-fore-bar').style.width=Math.max(8, Math.min(100, t.foresight.score))+'%';
   $('#g-fore-meta').textContent=`${t.foresight.surplus_count} bargains · $${t.foresight.surplus_total_m}M surplus · top ${t.foresight.bargain_deals.length} shows`;
-  $('#g-fore-detail').textContent=`Expected salary = median_sal × (0.4 + 0.8 × tm / median_tm). Surplus $ = expected − actual. Retained bonus 1.25× if same team last year and salary growth ≤ cap growth +5%. Cap rises $123M→$140.5M (+14%) → $154M (+9.7%), so early locks get more valuable.`;
+  $('#g-fore-detail').textContent=`Expected salary = median_sal × (0.4 + 0.8 × tm / median_tm). Surplus $ = expected − actual. Retained bonus 1.25× if same team last year and salary growth ≤ cap growth +5%. Cap rises $136M→$140.5M→$154M, so early locks get more valuable.`;
 
   // tables
   const dOut=$('#draft-table-out');
@@ -254,6 +264,19 @@ function selectTeam(abbr){
   $('#tm-wins').textContent=`${t.wins}-${t.losses} · ${t.w_per_m} W/$M`;
   $('#tm-wpm').textContent=`Median W/$M ${t.cap_efficiency.median_wpm}`;
   $('#tm-cap').textContent=`Rank pct ${(t.cap_efficiency.rank_pct*100).toFixed(0)}%`;
+
+  // 2025-26 projection
+  const nextM = t.payroll_m_2025_26 ?? 0;
+  const capPctN = t.cap_pct_2025_26;
+  const spaceM = t.cap_space_m_2025_26;
+  const flex = t.flexibility_2025_26?.grade || '—';
+  const committed = t.committed_2025_26 ?? 0;
+  const top = t.top_earner_2025_26;
+  $('#tm-payroll-next').textContent = nextM ? `2025-26 payroll $${nextM}M (${committed} committed)` : `2025-26 payroll —`;
+  $('#tm-cap-next').textContent = capPctN ? `${(capPctN*100).toFixed(0)}% cap` : `cap —`;
+  $('#tm-space-next').textContent = (spaceM!==null && spaceM!==undefined) ? (spaceM>=0 ? `+$${spaceM}M space` : `-$${Math.abs(spaceM)}M over`) : `space —`;
+  $('#tm-flex-next').textContent = `flex ${flex}`;
+  $('#tm-top-next').textContent = top ? `top ${top.name} $${top.salary_m}M` : `top —`;
 
   // archetype chips (if we had) placeholder
   $('#team-archetypes').innerHTML=`<span class="pill pill-yellow">#${t.for_rank} ${t.abbr}</span><span class="pill">FOR ${t.for_score} ${t.for_grade}</span><span class="pill">W ${t.wins}</span><span class="pill">Draft ${t.draft.grade} ${t.draft.score}</span><span class="pill">Cap ${t.cap_efficiency.grade}</span><span class="pill">Fore ${t.foresight.grade}</span>`;

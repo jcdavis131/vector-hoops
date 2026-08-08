@@ -319,9 +319,10 @@ def main():
                 "seasons": seasons_played
             })
         avg_surplus = round(sum(draft_surpluses)/len(draft_surpluses),1) if draft_surpluses else 0
-        # draft score 0-100 mapping: 50 = breakeven, scaled to spread grades
-        # avg_surplus in total_min; 1 season ~1500 min, so 1000 min ~ 2/3 season surplus
-        draft_score = max(0, min(100, 50 + avg_surplus/35))  # 350 min ~ +10 pts, 1000 ~ +28 pts
+        # draft score temp — will be z-scored across league for wide spread later
+        # raw 50+surplus/35 but keep raw for z
+        draft_score_raw = 50 + avg_surplus/35
+        draft_score = max(0, min(100, draft_score_raw))  # temp placeholder, overwritten after league z
         # grade
         def grade_from_score(s):
             if s>=90: return "A+"
@@ -484,6 +485,120 @@ def main():
             "for_grade": for_grade
         })
 
+    # ---- widen draft spread via z-score then recompute FOR ----
+    import statistics as _stats
+    try:
+        raw_surps = [t["draft"]["avg_surplus_min"] for t in output_teams]
+        mean_s = _stats.mean(raw_surps) if raw_surps else 0
+        stdev_s = _stats.stdev(raw_surps) if len(raw_surps)>1 else 800
+        if stdev_s < 200: stdev_s = 800
+    except:
+        mean_s = -2930
+        stdev_s = 2573
+    for t in output_teams:
+        z = (t["draft"]["avg_surplus_min"] - mean_s) / stdev_s if stdev_s else 0
+        # z mapping  -2..+2 => 14..86 (+ spread), allow tails to 0-100
+        new_score = 50 + z*18
+        new_score = max(0, min(100, new_score))
+        t["draft"]["score"] = round(new_score,1)
+        t["draft"]["score_raw_z"] = round(z,2)
+        # update grade via same curve
+        def _grade2(s):
+            if s>=90: return "A+"
+            if s>=82: return "A"
+            if s>=75: return "A-"
+            if s>=68: return "B+"
+            if s>=60: return "B"
+            if s>=52: return "B-"
+            if s>=45: return "C+"
+            if s>=38: return "C"
+            if s>=30: return "C-"
+            if s>=20: return "D"
+            return "F"
+        t["draft"]["grade"] = _grade2(new_score)
+        # recompute FOR with new draft
+        cap_s = t["cap_efficiency"]["score"]
+        fore_s = t["foresight"]["score"]
+        new_for = round(0.35*new_score + 0.35*cap_s + 0.30*fore_s,1)
+        t["for_score"] = new_for
+
+    # ---- add 2025-26 payroll projection ----
+    season_next = "2025-26"
+    cap_next = CAP_BY_SEASON.get(season_next, 154_647_000)
+    # infer team for 2025-26 salaries where team missing (HoopsHype future years often blank) via 2024-25 team
+    # rebuild payroll_next inferred
+    payroll_next_inferred = collections.defaultdict(float)
+    payroll_counts_next_inferred = collections.defaultdict(int)
+    by_team_next_inferred = collections.defaultdict(list)  # (team,season) -> list
+    # sal_raw is already the inner salaries dict (16678 entries) from load_salaries; fallback to outer if needed
+    if isinstance(sal_raw, dict) and "_meta" in sal_raw:
+        salaries_dict = sal_raw.get("salaries", {})
+    else:
+        salaries_dict = sal_raw if isinstance(sal_raw, dict) else {}
+    for key, v in salaries_dict.items():
+        if v.get("season") != season_next:
+            continue
+        nm = v.get("norm_name") or norm_name(v.get("name",""))
+        amt = float(v.get("salary") or 0)
+        if amt < 10000:
+            continue
+        team = (v.get("team") or "").strip().upper()
+        if not team:
+            # fallback to 2024-25 team for same player, then 2023-24, etc
+            for back_season in ["2024-25","2023-24","2022-23","2021-22"]:
+                prev = by_norm_season.get((nm, back_season))
+                if prev and prev.get("team"):
+                    team = prev["team"]
+                    break
+        if not team:
+            continue
+        payroll_next_inferred[(team, season_next)] += amt
+        payroll_counts_next_inferred[(team, season_next)] += 1
+        by_team_next_inferred[(team, season_next)].append((nm, amt, v.get("name")))
+    # merge inferred into main payroll structures for future use (so board shows)
+    for k,v in payroll_next_inferred.items():
+        payroll[k] = v
+    for k,v in payroll_counts_next_inferred.items():
+        payroll_counts[k] = v
+    for k,v in by_team_next_inferred.items():
+        by_team_season_player[k] = v
+
+    for t in output_teams:
+        abbr = t["abbr"]
+        pw_next = payroll.get((abbr, season_next), 0)
+        pw_next_m = round(pw_next/1_000_000,2) if pw_next else 0
+        cap_pct_next = round(pw_next/cap_next,3) if cap_next and pw_next else None
+        cap_space_next = cap_next - pw_next if cap_next else None
+        cap_space_m = round(cap_space_next/1_000_000,2) if cap_space_next is not None else None
+        committed = payroll_counts.get((abbr, season_next), 0)
+        # team_next players
+        plist_next = by_team_season_player.get((abbr, season_next), [])
+        # avg salary next, top earner
+        if plist_next:
+            top = max(plist_next, key=lambda x: x[1])
+        else:
+            top = None
+        t["payroll_2025_26"] = pw_next
+        t["payroll_m_2025_26"] = pw_next_m
+        t["cap_pct_2025_26"] = cap_pct_next
+        t["cap_space_m_2025_26"] = cap_space_m
+        t["cap_2025_26"] = cap_next
+        t["committed_2025_26"] = committed
+        t["top_earner_2025_26"] = {"name": top[2], "salary_m": round(top[1]/1_000_000,2)} if top else None
+        # flexibility: lower cap_pct is more flexible for future success
+        # store simple projection grade
+        # e.g., <90% cap = A flexibility, >110% = D (over cap but can still sign)
+        flex_pct = cap_pct_next or 0
+        if flex_pct == 0:
+            flex_grade = "—"
+        elif flex_pct < 0.80: flex_grade = "A+"
+        elif flex_pct < 0.92: flex_grade = "A"
+        elif flex_pct < 1.00: flex_grade = "B+"
+        elif flex_pct < 1.10: flex_grade = "B"
+        elif flex_pct < 1.25: flex_grade = "B-"
+        else: flex_grade = "C"
+        t["flexibility_2025_26"] = {"cap_pct": cap_pct_next, "grade": flex_grade}
+
     # sort by for_score desc for leaderboard
     output_teams_sorted = sorted(output_teams, key=lambda x: x["for_score"], reverse=True)
     for i, t in enumerate(output_teams_sorted):
@@ -503,22 +618,22 @@ def main():
         return "D"
     for t in output_teams_sorted:
         t["for_grade"] = rank_grade(t["for_rank"])  # overwrite to show spread
-        # also curve component grades to be relative-ish (keep original absolute but boost visibility)
-        # for display we keep original component grades but add rank variant
-
 
     out_payload = {
         "built": datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ"),
         "season_focus": season_focus,
         "season_cap": CAP_BY_SEASON.get(season_focus),
+        "season_next": season_next,
+        "season_next_cap": cap_next,
         "method": {
-            "draft": "Expected career total_min by overall pick (1996-2022 baseline, median trimmed). Surplus = actual career total_min - expected. 5yr rolling 2020-2024, 50 = breakeven. Grade curve A+ >=90.",
-            "cap": "Wins per $1M payroll. Score 50 = median W/$M. Cap% = payroll/cap. Rank pct vs league.",
-            "foresight": "For 2024-25 retained players 20+ GP, expected salary = median_sal*(0.4+0.8*tm/median_tm). Surplus = exp - actual. Retention bonus 1.25x if same team and salary growth <= cap growth+5%. Score 50 + surplus/20M*10.",
-            "composite": "FOR = 0.35*draft + 0.35*cap + 0.30*foresight",
-            "sources": "draft_history.json, vectors.json total_min, salaries_merged.json, team_base_*.json, teams.json"
+            "draft": "Expected career total_min by overall pick 1996-2022 baseline trimmed. Projected = actual/completion completion=min(1,seasons/5.5) bust -0.6*exp. Surplus = projected-exp. 5yr 2020-24 avg surplus z-scored across 30 teams: score=50+z*18 capped 0-100 wider spread. Grade A+ 90 etc.",
+            "cap": "Wins per $1M payroll 2024-25. Score 50=median W/$M. Cap% payroll/cap $140.588M. Rank pct vs league.",
+            "foresight": "2024-25 players 20+GP expected salary=median_sal*(0.4+0.8*tm/median_tm) capped 3x. Surplus=exp-actual >$1M kept. Retained bonus 1.25x if same team and sal growth <= cap growth+5%. Score 50+surplus/6M*10. Cap rise $136M→$140.5M→$154M boosts retained locks.",
+            "cap_2025_26": "Payroll sum for 2025-26 from salaries_merged 16678 rows. cap_pct=payroll/cap_next $154.647M, cap_space=cap-payroll, committed count. Flexibility grade A+ <80% cap (room) to C >125% (deep over). Indicates future win-dollars runway.",
+            "composite": "FOR = 0.35*zDraft + 0.35*cap + 0.30*foresight rank-curved A+ top 7%",
+            "sources": "draft_history.json person_id+overall+team_abbr, vectors.json total_min gp mpg c, salaries_merged.json norm|season salary+team 16678, team_base_*.json W/L, CAP_BY_SEASON 1996-97..2025-26"
         },
-        "median": {"wpm": round(median_wpm,3), "median_sal_m": round(median_sal/1_000_000,2) if 'median_sal' in locals() else None},
+        "median": {"wpm": round(median_wpm,3), "median_sal_m": round(median_sal/1_000_000,2) if 'median_sal' in locals() else None, "draft_mean_surplus": round(mean_s,1) if 'mean_s' in locals() else None, "draft_stdev": round(stdev_s,1) if 'stdev_s' in locals() else None},
         "expected_pick": expected_pick,
         "teams": output_teams_sorted,
         "teams_by_abbr": {t["abbr"]: t for t in output_teams_sorted}
