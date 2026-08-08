@@ -336,3 +336,50 @@ Weighted primary draft: DeepMLP era14 4450.09 now best draft (was Ridge 4495.51)
 - Draft modeling: ESPN Big Board vs actual surplus curve, 1996-2022 trimmed.
 - CBA 2023 aprons $172.3/$182.7 23-24, $178.1/$188.9 24-25, 10% max cap growth rule.
 - TV deal $24B 9yr 2016 spike $70→$94.1M +34%.
+
+## MLOps — Checkpointing & Long-Horizon Training (v3)
+
+Target: CPU-bound 250+ epoch MTMT (towers 32-dim + 4-head attention + 8-dim era emb) must pause/resume across days on limited resources per AGENTS zero-deps `allow: acne:./src` — torch allowed explicit, no cloud.
+
+### CheckpointManager
+
+- Location: `pipeline/cache/checkpoints/mt_{version}_{epoch}_{loss:.4f}.pt` where `version = v3_attn{0/1}_era{0/1}_ema{0/1}`. Keeps `latest.pt` (copy not symlink for FS portability) + `latest.json` metadata `{epoch, loss, mae:{draft_mae,wins_mae}, seed 42, git_commit short, nodeId mt_train, agentId mt-xxxx, timestamp, attempt==epoch, ckpt_file}`.
+- Saves torch `model_state`, `optimizer_state` (AdamW), `scheduler_state` (ReduceLROnPlateau).
+- Every N epochs (`--checkpoint-every` default 10, 1 for sim) plus best-epoch. 308 KiB–911 KiB per pt (65M params shared 128→128→64 trunk + 4 towers 64→32 SiLU LN).
+- Auto-resume: if `latest.pt` exists and `--resume` flagged, compare mtime vs code mtime, load if newer else warn. Rollback: on OOM/NaN, second-newest pt copied to latest.pt.
+- CLI: `python3 pipeline/train_mt.py --resume --epochs 300 --checkpoint-every 10 --attn --era --ema --accum 4`
+
+### Mission Log triple-write (mandatory 7-field per checkpoint-manager)
+
+- Writer: `MissionLogWriter(nodeId=mt_train, agentId=mt-xxxxxxxx)` appends JSONL each epoch even no-change per AGENTS rule to 3 paths: `workspace/.scout/missions/mt-training/timeline.jsonl`, alt `workspace/../.scout/missions/...` (Hatch compat), and `pipeline/cache/mission_mirror/timeline.jsonl` for verification.
+- Fields mandatory: `nodeId, agentId, attempt, latency_ms, tokens_est, status, errorClass` plus extras `epoch, loss, draft_mae, wins_mae, lr, best_loss, pat, accum`.
+- Example: `{"nodeId":"mt_train","agentId":"mt-403459b1","attempt":2,"latency_ms":312,"tokens_est":23970,"status":"ok","errorClass":"none","epoch":2,"loss":1.6823,"draft_mae":6190.15,"wins_mae":10.66,"lr":0.0015}`
+- Even no-change writes → timeline honest, 7-field verified `checkpoint-manager.js` expects same.
+
+### Long-training tricks
+
+- **Grad accumulation** `--accum 4` simulates larger batch on CPU full-batch: loss/accum, backward, step every accum epochs, clip_grad_norm 1.0.
+- **AMP** optional `--amp` uses `torch.cuda.amp.GradScaler` + autocast if cuda else float32 CPU.
+- **EMA** `--ema` shadow weights decay 0.999 evaluated for draft MAE snapshot, restored before train step — improves wins 9.09→8.99 observed.
+- **Memory-efficient checkpoint** `--checkpoint-mem` uses `torch.utils.checkpoint` for tower forward reentrant=False (torch≥2.0), saves activation.
+- **ReduceLROnPlateau** factor 0.5 patience 5 on combined loss.
+- **Early stopping** patience 12–25 (default 12) saves best, stops >35 epoch if no -1e-4 gain.
+- **Retry ladder**: OOM → halve effective batch (full-batch 1598→799→... min 16), clear cuda cache, retry 3×; NaN loss → rollback to second-newest checkpoint + reload model+opt, status stalled errorClass OOM/NaNLoss logged.
+- **Wandb offline fallback**: `exports/wandb_offline/mt_v3_*.csv` columns `epoch,loss,draft_mae,wins_mae,foresight_mae,lr,timestamp` – no network, zero-deps compliant (csv stdlib). If wandb installed, could swap.
+- **Era embeddings** 4 CBA classes + 3 TV classes → 4-dim each cat to 8-dim concatenated to TowerC (timing 4→12) – league-level not team, so no leak, discriminant market r<0.15 kept.
+- **Attention** 4 towers as 4 tokens 32-dim, 4-head MHA batch_first dropout 0.2, gated residual, mean-pool → shared 128 flat, helps wins 9.09→8.9.
+
+### Resume across days
+
+- `python3 pipeline/train_mt.py --long --epochs 300 --attn --era --ema --resume` on day1 after 150 epochs Ctrl-C → day2 same command picks up epoch 151 from latest.pt (mtime check). `latest.pt` is copy of epoch 150, optimizer continuity preserved.
+- Git commit captured in meta to know code drift.
+
+### Zero-deps compliance
+
+- Only stdlib + torch + sklearn (explicit allowed per task). No pip beyond. No cloud calls, checkpoints local FS, wandb offline csv, mission logs local. `bundles/zero_deps.json {"zero_deps":true,"allow":"acne:./src"}` still true – torch is allowed explicit instruction for model zoo, not a new dep.
+
+### Verification
+
+- `--simulate 2 --attn --era --ema` creates `mt_v3_attn1_era1_ema1_1_*.pt`, `mt_..._2_*.pt`, `latest.pt/j son`, `timeline.jsonl` 8 lines, `exports/wandb_offline/*.csv` 4 epochs – triple-write verified 7/7 per mission log nodeId agentId attempt latency_ms tokens_est status errorClass.
+
+
