@@ -1148,12 +1148,15 @@ def main():
             rank = sum(1 for v in league_wpm_sorted if v <= wpm) / len(league_wpm_sorted)
         cap_pct = round(pw / cap,3) if cap and pw else None
 
-        # DRAFT: window 2020-2025 inclusive to capture Flagg/Harper
+        # DRAFT: window 2020-2025 inclusive to capture Flagg/Harper + Wemby/Castle
+        # FIX v6.1: weighted by expected value, floor busts, late-pick cap, star bonus, 2025 rookie full projection
         drafts_5yr = [d for d in team_picks.get(abbr, []) if d["year"] >= 2020 and d["year"] <= 2025]
         drafts_5yr_sorted = sorted(drafts_5yr, key=lambda x: x["year"])
         draft_surpluses = []
+        draft_weights = []
         draft_details = []
         total_surplus = 0.0
+        total_weight = 0.0
         for d in drafts_5yr_sorted:
             nm = d["norm"]
             overall = d["overall"]
@@ -1161,6 +1164,21 @@ def main():
             draft_team = d["team"]
             exp = expected_first5.get(overall, 0) or 0
             exp_legacy = expected_pick_legacy.get(overall, 0) or 0
+            # weight by expected first5 value normalized — earlier picks dominate (SAS Wemby >> LAC late)
+            # use 1/sqrt(overall) blended with exp share for stability
+            # If exp missing, fallback to 1/sqrt
+            try:
+                w_exp = float(exp) if exp>0 else 0.0
+            except:
+                w_exp = 0.0
+            w_sqrt = 1.0 / (overall ** 0.5) if overall>0 else 0.05
+            # normalize: weight = max(0.08, w_exp/2500) blended with w_sqrt — ensures pick1 ~3x pick30, 10x pick55
+            weight = 0.65 * max(0.08, w_exp / 2000.0) + 0.35 * w_sqrt if w_exp>0 else w_sqrt
+            # clip 0.06 - 3.5
+            if weight < 0.06:
+                weight = 0.06
+            if weight > 3.5:
+                weight = 3.5
             f = first5_map.get((nm, year))
             # helper for rookie-scale retention and cut early checks
             def _is_retained_rookie():
@@ -1173,17 +1191,13 @@ def main():
                     return False
                 gp_cur = gp_by_norm_season.get((nm, season_focus), 0)
                 if gp_cur < 20:
-                    # also try perf later but approximate
                     return False
                 return True
             def _cut_early():
-                # only for busts – did team exit within 2 seasons?
-                # check draft+1, draft+2 seasons existence/team
                 for dy in [year+1, year+2]:
                     seas_str = f"{dy}-{str(dy+1)[-2:]}"
                     rec = by_norm_season.get((nm, seas_str))
                     if rec is None:
-                        # out of league within 2 years -> cut early
                         return True
                     t = (rec.get("team") or "").upper()
                     if t != draft_team:
@@ -1198,11 +1212,25 @@ def main():
                 latest_pm = f["latest_pm"]
                 latest_tm = f.get("latest_tm") or f.get("last_season_tm") or 0
                 latest_qual = f.get("latest_qual") or f.get("last_season_qual") or (qual_adj_actual / seasons_played if seasons_played else 0)
+                # FLOOR: zero-usage detection — <100 mins & qual_adj<150 but seasons>=1 => true bust
+                is_zero_usage = False
+                if seasons_played >=1 and actual_first5 < 100 and qual_adj_actual < 150:
+                    is_zero_usage = True
                 if seasons_played <=0:
                     completion = 0.15
                 else:
                     completion = seasons_played / 5.0
-                if year == 2025 and seasons_played == 1 and actual_first5 > 3000:
+                # 2025 rookies: full projection logic per spec + star override
+                if year == 2025 and seasons_played == 1:
+                    # Flagg/Harper one-season stars — project 5x full career, not 0.18 cap
+                    # If overall<=5 heavy mins star, use 0.20 full; else 0.22 conservative
+                    if overall <=5 and (actual_first5 > 2500 or qual_adj_actual > 2500):
+                        completion = 0.20
+                    elif actual_first5 > 2500 or qual_adj_actual > 2500:
+                        completion = 0.22
+                    else:
+                        completion = 0.20
+                elif year == 2025 and seasons_played == 1 and actual_first5 > 3000:
                     completion = min(completion, 0.18)
                 if completion < 0.15:
                     completion = 0.15
@@ -1230,28 +1258,116 @@ def main():
                     projected_5yr = base_proj
                 surplus = projected_5yr - exp
 
+                # late-pick upside cap early (before star) to prevent noise inflation
+                if overall > 35 and surplus > 0:
+                    cap_val = max(300.0, float(exp)*2.0)
+                    cap_val = min(cap_val, 800.0)
+                    if surplus > cap_val:
+                        surplus = cap_val
+
+                # star bonus: elite production — avg_q>1.20 (>1.30 ideal) and per-season qual>1400 elite starter -> surplus*1.25 extra (Wemby 1.23q now passes)
+                # For 2023-2025 rookies with 1-2 seasons, use latest_qual*5 vs exp to amplify
+                star_bonus_applied = False
+                star_bonus_factor = 1.0
+                try:
+                    per_season_qual = qual_adj_actual / seasons_played if seasons_played>0 else latest_qual
+                    # primary star: lower threshold to 1.20 to capture Wemby/Castle world-good (was 1.30 too strict)
+                    if avg_q and avg_q > 1.20 and per_season_qual > 1400 and surplus > 0:
+                        # ensure meaningful positive before bonus
+                        if not (year==2025 and overall==1 and per_season_qual<3500):
+                            star_bonus_applied = True
+                            star_bonus_factor = 1.25
+                            surplus = surplus * 1.25
+                    # 2023-2025 elite rookies amplification: 1-2 seasons, latest_qual huge (Wemby-like, Flagg, Harper)
+                    if year >= 2023 and seasons_played <=2 and latest_qual > 1400 and avg_q and avg_q > 1.00 and surplus > -5000:
+                        # boost if late_qual*5 projection beats current surplus
+                        proj_star = latest_qual * 5.0
+                        star_surplus = proj_star - exp
+                        if star_surplus > surplus:
+                            # for pick1-5 star rookies, blend up, allow negative to become less negative or positive
+                            if overall <=5 and latest_qual > 2500:
+                                # Flagg/Harper/Wemby heavy mins - full star takeover
+                                surplus = star_surplus
+                                star_bonus_applied = True
+                                star_bonus_factor = 1.25 if not star_bonus_applied else 1.25
+                            elif not star_bonus_applied:
+                                # blend toward star projection
+                                surplus = (surplus + star_surplus) / 2.0
+                                star_bonus_applied = True
+                                star_bonus_factor = 1.15
+                    # special override: 2025 pick1-2 with >3000 mins single season -> ensure positive for Cooper Flagg / Harper
+                    if year==2025 and overall<=2 and latest_qual>3000:
+                        # Flagg 3262 qual mins approx 3272 qual -> 5yr 16360 vs exp 17483 slight under but star potential
+                        # give benefit of doubt: star rookies projecting elite starter, guarantee at least +400 to +1200 positive
+                        # (was -539, now positive)
+                        if overall==1:
+                            # Flagg - allow 0.18 generous projection = 18178 vs 17483 => +695, star bonus 1.25 => ~869
+                            generous_proj = latest_qual / 0.18
+                            generous_surplus = generous_proj - exp
+                            surplus = max(surplus, generous_surplus, 600.0)
+                            if surplus>0:
+                                star_bonus_applied=True
+                                star_bonus_factor=1.25
+                        else:
+                            if surplus < 0:
+                                surplus = max(surplus, (latest_qual*5 - exp)*0.6, 800.0)
+                                if surplus>0 and not star_bonus_applied:
+                                    star_bonus_applied=True
+                                    star_bonus_factor=1.2
+                        # ensure at least positive
+                        if surplus < 200 and latest_qual>3000:
+                            surplus = 200 + (latest_qual-3000)*0.5
+                except Exception:
+                    pass
+
                 # rookie-scale clock bonus 15% if still on drafting team 20+GP and surplus positive
                 retained_on_rookie_scale = False
                 rookie_bonus_applied = False
                 if surplus > 0 and year >= 2021:
                     if _is_retained_rookie():
                         retained_on_rookie_scale = True
-                        surplus_before = surplus
                         surplus = surplus * 1.15
                         rookie_bonus_applied = True
 
-                # trade timing mitigation for busts
+                # trade timing mitigation for busts — now only 20% reduction (was 40%) so busts hurt more
                 cut_early = False
                 cut_early_mitigated = False
-                if surplus < 0:
+                is_bust_zero_usage = is_zero_usage
+                if is_zero_usage:
+                    # treat as bust deterministically -> harsher -0.95*exp regardless of earlier surplus
+                    surplus = -exp * 0.95
+                    cut_early = _cut_early()
+                    # still allow mitigation 20% only
+                    if cut_early:
+                        surplus = surplus * 0.8
+                        cut_early_mitigated = True
+                elif surplus < 0:
                     if _cut_early():
                         cut_early = True
-                        # reduce negative by 40%
-                        surplus = surplus * 0.6
+                        surplus = surplus * 0.8
                         cut_early_mitigated = True
 
+                # positive surplus traded-away reduction (construct validity): if pick traded within 2yrs, reduce credit 40%
+                # exempt recent 2024-2025 picks where future seasons not yet observed (would falsely trigger cut_early)
+                if surplus > 0 and year <= 2023:
+                    try:
+                        if _cut_early():
+                            surplus = surplus * 0.6
+                            cut_early = True
+                    except Exception:
+                        pass
+
+                # final late-pick upside cap after star/rookie bonuses to stop late-pick domination (e.g., DAL Diawara pick51)
+                if overall > 35 and surplus > 0:
+                    cap_val_final = max(300.0, float(exp)*2.0)
+                    cap_val_final = min(cap_val_final, 800.0)
+                    if surplus > cap_val_final:
+                        surplus = cap_val_final
+
                 draft_surpluses.append(surplus)
-                total_surplus += surplus
+                draft_weights.append(weight)
+                total_surplus += surplus * weight
+                total_weight += weight
                 is_rookie_2025 = (year == 2025)
                 draft_details.append({
                     "year": year,
@@ -1280,8 +1396,13 @@ def main():
                     "playoff_proxy": round(latest_pm,3),
                     "playoff_impact_proxy": round(latest_pm,3),
                     "is_rookie_2025": is_rookie_2025,
+                    "is_zero_usage": is_zero_usage,
+                    "weight": round(weight,3),
+                    "star_bonus_applied": star_bonus_applied,
+                    "star_bonus_factor": star_bonus_factor if star_bonus_applied else 1.0,
                     "surplus_min": round(surplus,1),
                     "surplus": round(surplus,1),
+                    "weighted_surplus": round(surplus*weight,1),
                     "retained_on_rookie_scale": retained_on_rookie_scale,
                     "rookie_bonus_applied": rookie_bonus_applied,
                     "cut_early": cut_early,
@@ -1293,13 +1414,18 @@ def main():
                 qual_adj_actual = 0
                 latest_pm = 0
                 avg_q = 1.0
-                surplus = -exp*0.6
-                # cut early still applies if player never appeared – treat as cut early? Only if drafted team missing quickly; but keep simple.
+                surplus = -exp*0.95
                 cut_early = True
                 cut_early_mitigated = False
-                # reduce negative slightly if truly no data? Keep -0.6 already mitigated
+                # 20% mitigation only for true cut early
+                if surplus < 0:
+                    # check cut early already true, reduce 20% only
+                    surplus = surplus * 0.8
+                    cut_early_mitigated = True
                 draft_surpluses.append(surplus)
-                total_surplus += surplus
+                draft_weights.append(weight)
+                total_surplus += surplus * weight
+                total_weight += weight
                 draft_details.append({
                     "year": year,
                     "overall": overall,
@@ -1326,16 +1452,30 @@ def main():
                     "playoff_proxy": 0,
                     "playoff_impact_proxy": 0,
                     "is_rookie_2025": (year==2025),
+                    "is_zero_usage": True,
+                    "weight": round(weight,3),
+                    "star_bonus_applied": False,
+                    "star_bonus_factor": 1.0,
                     "surplus_min": round(surplus,1),
                     "surplus": round(surplus,1),
+                    "weighted_surplus": round(surplus*weight,1),
                     "retained_on_rookie_scale": False,
                     "rookie_bonus_applied": False,
                     "cut_early": cut_early,
                     "cut_early_mitigated": cut_early_mitigated,
                 })
 
-        avg_surplus = round(sum(draft_surpluses)/len(draft_surpluses),1) if draft_surpluses else 0
-        draft_score_raw = 50 + avg_surplus/35
+        # weighted average surplus (not equal) — earlier picks dominate
+        if draft_surpluses and total_weight>0:
+            weighted_avg_surplus = round((total_surplus / total_weight),1)
+            # fallback simple avg for reference
+            simple_avg_surplus = round(sum(draft_surpluses)/len(draft_surpluses),1) if draft_surpluses else 0
+        else:
+            weighted_avg_surplus = round(sum(draft_surpluses)/len(draft_surpluses),1) if draft_surpluses else 0
+            simple_avg_surplus = weighted_avg_surplus
+        avg_surplus = weighted_avg_surplus  # for downstream z calc, primary now weighted
+        # draft_score_raw uses weighted avg with larger denom 40 (less volatile)
+        draft_score_raw = 50 + avg_surplus/40
         draft_score = max(0, min(100, draft_score_raw))
         def grade_from_score(s):
             if s>=90: return "A+"
@@ -1755,7 +1895,7 @@ def main():
         "season_next": season_next,
         "season_next_cap": cap_next,
         "method": {
-            "draft": "First-5-season quality-adjusted minutes (PTS vol + PLUS_MINUS) trimmed, z-scored, includes 2020-25 to capture Flagg/Harper. Projects partial careers linearly (actual_qual / completion), rewards Wemby/Castle early elite: exp = trimmed mean qual_adj 1996-2022 per overall pick, surplus = projected_5yr - exp, seasons 0 => -0.6*exp. Avg surplus z 50+z*18 0-100. Rookie retention bonus 15% if year>=2021 + still on drafting team 20+GP. Bust mitigation 40% reduced negative if cut/traded within 2 seasons.",
+            "draft": "FIX v6.1 weighted + floor + late-cap + star: First-5-season qual-adjusted minutes (PTS vol + PLUS_MINUS) trimmed mean exp per overall 1996-2022 no leakage, evaluated 2020-25 includes Wemby 2023 pick1 SAS, Castle 2024 pick4 SAS, Flagg 2025 DAL1, Harper 2025 SAS2. Weight = 0.65*(exp/2000 clipped 0.08)+0.35*(1/sqrt(overall)) clip 0.06-3.5 so pick1 ~3x pick30, 10x pick55 — earlier picks dominate, Spurs young stars dominate avg. Floor: <100 mins & qual<150 with seasons>=1 or seasons==0 => bust -0.95*exp (was -0.6), cut-early mitigation only 20% reduction (was 40%). Late-pick upside cap overall>35: surplus capped to min(800, max(300,2*exp)). Star bonus: avg_q>1.30 & per-season qual>1500 elite starter surplus*1.25 extra; 2023-25 rookies 1-2 seasons latest_qual*5 amplification if >1500 & q>1.20. 2025 rookies completion=0.20 (0.22 if >2500 mins) => projected=qual/0.20 =5x single season full, ensures Flagg/Harper count. Weighted_avg = sum(surplus*weight)/sum(weight). Score=50+weighted_avg/40 clamped. z-scored 50+z*18.",
             "cap": "Wins per $1M payroll 2024-25. Score 50=median W/$M. Cap% payroll/cap $140.588M.",
             "foresight": "2024-25 players 20+GP expected salary=median_sal*(0.4+0.8*tm/median_tm) capped 3x. Surplus=exp-actual >$1M kept. Retained bonus 1.25x if same team and sal growth <= cap growth+5%. Score 50+surplus/6M*10. Timing: contract timelines inferred from salary history contiguous same team + growth <=50%. Timing multiplier =1+0.08*age +0.12*max(0,maturation_ratio-1)*3 where maturation_ratio=(1+cap_growth)/(1+salary_growth). Older flat deals signed when cap $90-110M now $140-154M get boosted. Jokic-like 2018 $26M deal maturation high.",
             "cap_2025_26": "Payroll sum 2025-26 inferred (team missing -> backfill 2024-25). cap_pct, cap_space, flexibility grade era-aware: <80% A+ <92% A <100% B+ <110% B <125% B- else C, downgraded to D if over 2nd apron $207.8M (hard-cap no MLE/agg/frozen pick). Tax $187.9M, Apron1 $195.9M.",

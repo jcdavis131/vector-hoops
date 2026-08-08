@@ -27,7 +27,11 @@ const CORE = [
   '/assets/og-embed.png',
   '/assets/og-1200x630.png',
   '/assets/icon-192.png',
-  '/assets/icon-512.png'
+  '/assets/icon-512.png',
+  '/assets/data/hoops.json',
+  '/assets/data/cap_rules.json',
+  '/assets/data/front_office.json',
+  '/assets/play-core.css'
 ];
 
 const DENY_CACHE = [
