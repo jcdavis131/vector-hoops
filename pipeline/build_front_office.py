@@ -1405,6 +1405,9 @@ def main():
                 regular_season_impact_val = round(qual_adj_actual,1)
                 playoff_mins_est = 0.0
                 playoff_impact_val = 0.0
+                matchup_factor = 1.0
+                matchup_tag = "neutral"
+                closing_risk = "low"
                 playoff_series_total_for_team = 0
                 playoff_wins_total_for_team = 0
                 try:
@@ -1421,13 +1424,38 @@ def main():
                             playoff_games_window += pg
                             playoff_series_total_for_team += sw
                             playoff_wins_total_for_team += pw
+                    # matchup dependency — some guys get benched late because they're easy to hunt
+                    if seasons_played >=2 and (avg_q or 1.0) >= 1.18 and (latest_pm or 0) >= 0.8:
+                        matchup_tag = "closer"
+                        matchup_factor = 1.28
+                        closing_risk = "low"
+                    elif seasons_played >=2 and (avg_q or 1.0) >= 1.08 and (latest_pm or 0) >= 0.15:
+                        matchup_tag = "starter-closer"
+                        matchup_factor = 1.12
+                        closing_risk = "low"
+                    elif seasons_played <=1 and overall <=10:
+                        matchup_tag = "rookie-unknown"
+                        matchup_factor = 0.95
+                        closing_risk = "mid"
+                    elif (avg_q or 1.0) < 0.90 and (latest_pm or 0) < -0.45:
+                        matchup_tag = "exploitable"
+                        matchup_factor = 0.62
+                        closing_risk = "high"
+                    elif (avg_q or 1.0) < 0.98 and (latest_pm or 0) < -0.15:
+                        matchup_tag = "matchup-dependent"
+                        matchup_factor = 0.81
+                        closing_risk = "high"
+                    else:
+                        matchup_tag = "neutral"
+                        matchup_factor = 1.0
+                        closing_risk = "mid" if seasons_played<3 else "low"
                     if playoff_games_window>0 and avg_per_season>0:
                         playoff_mins_est = avg_per_season * (playoff_games_window/82.0)
-                        # quality multiplier — players with higher avg_q and plus_minus contribute more in clutch
+                        playoff_mins_est = playoff_mins_est * matchup_factor
                         q_mult = max(0.8, min(1.6, (avg_q or 1.0)))
-                        pm_mult = 1.0 + max(0.0, (latest_pm or 0)/4.0)  # +25% per +1 PM, star wings get boost
-                        # playoff weight 2.5x importance per user: playoff mins = more valuable
-                        playoff_impact_val = playoff_mins_est * q_mult * pm_mult * 2.5
+                        pm_mult = 1.0 + max(0.0, (latest_pm or 0)/4.0)
+                        playoff_impact_val = playoff_mins_est * q_mult * pm_mult * 2.5 * matchup_factor
+
                 except Exception:
                     playoff_impact_val = 0.0
                     playoff_mins_est = 0.0
@@ -1466,6 +1494,9 @@ def main():
                     "playoff_mins_est": round(playoff_mins_est,1),
                     "playoff_series_wins_for_team": playoff_series_total_for_team,
                     "playoff_wins_for_team": playoff_wins_total_for_team,
+                    "matchup_factor": round(matchup_factor,2),
+                    "matchup_tag": matchup_tag,
+                    "closing_risk": closing_risk,
                     "is_rookie_2025": is_rookie_2025,
                     "is_zero_usage": is_zero_usage,
                     "weight": round(weight,3),
@@ -1525,6 +1556,9 @@ def main():
                     "playoff_mins_est": 0,
                     "playoff_series_wins_for_team": 0,
                     "playoff_wins_for_team": 0,
+                    "matchup_factor": 1.0,
+                    "matchup_tag": "no-data",
+                    "closing_risk": "high",
                     "is_rookie_2025": (year==2025),
                     "is_zero_usage": True,
                     "weight": round(weight,3),
