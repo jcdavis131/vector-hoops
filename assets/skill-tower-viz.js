@@ -5,7 +5,7 @@
   'use strict';
   const OK = {
     blue:'#0072B2', verm:'#D55E00', green:'#009E73', yellow:'#F0E442',
-    sky:'#56B4E9', magenta:'#CC79A7', orange:'#E69F00', black:'#000000',
+    sky:'#56B4E9', magenta:'#CC79A7', orange:'#E69F00', black:'#FFFEF7',
     paper:'#FFFEF7', ink:'#1A150F'
   };
   const PAL = [OK.blue, OK.verm, OK.green, OK.yellow, OK.sky, OK.magenta, OK.orange, OK.black,
@@ -233,7 +233,7 @@
     // if 18, render via simple custom (since SkillTowerViz expects 12 maybe)
     container.innerHTML='';
     container.style.cssText='display:grid;grid-template-columns:repeat(auto-fill,minmax(138px,1fr));gap:8px;';
-    var PAL = ['#0072B2','#D55E00','#009E73','#F0E442','#56B4E9','#CC79A7','#E69F00','#000000','#332288','#88CCEE','#44AA99','#117733','#999933','#DDCC77','#CC6677','#882255','#661100','#888'];
+    var PAL = ['#0072B2','#D55E00','#009E73','#F0E442','#56B4E9','#CC79A7','#E69F00','#FFFEF7','#332288','#88CCEE','#44AA99','#117733','#999933','#DDCC77','#CC6677','#882255','#661100','#888'];
     arr.forEach(function(raw,i){
       var k=skKeys[i]||('s'+i);
       var grade=gradeFromRaw(raw);

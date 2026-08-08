@@ -3,7 +3,7 @@
  */
 (function(){
   const REDUCED = typeof window!=='undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const OKABE = ['#D55E00','#0072B2','#009E73','#E69F00','#CC79A7','#56B4E9','#F0E442','#000000'];
+  const OKABE = ['#D55E00','#0072B2','#009E73','#E69F00','#CC79A7','#56B4E9','#F0E442','#FFFEF7'];
 
   function spawnConfetti(teamPrimary){
     if(REDUCED){

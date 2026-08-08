@@ -9,7 +9,7 @@
   const HAIRS = {'black':'#101010','brown':'#4A2E1A','blond':'#E8C86A','red':'#8B2E1A','white':'#E6E6E6','blue':'#1A3A8A'};
   const JERSEYS = {
     'gsw':['#006BB6','#FFC72C'], 'lal':['#552583','#FDB927'], 'bos':['#007A33','#FFFFFF'],
-    'phi':['#006BB6','#ED174C'], 'chi':['#CE1141','#000000'], 'mia':['#98002E','#F9A01B'],
+    'phi':['#006BB6','#ED174C'], 'chi':['#CE1141','#FFFEF7'], 'mia':['#98002E','#F9A01B'],
     'default':['#0072B2','#F0E442']
   };
   // Famous overrides — resembling actual player (googled: hair, skin, beard, headband, jersey era)

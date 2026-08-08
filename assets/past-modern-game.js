@@ -9,7 +9,7 @@
   const SEARCH_LITE_URL = 'assets/vectors_search_lite.json';
   const MODERN_CUTOFF = 2023;
   const PAST_MAX = 2023;
-  const OKABE = ['#0072B2','#D55E00','#009E73','#F0E442','#56B4E9','#CC79A7','#E69F00','#000000'];
+  const OKABE = ['#0072B2','#D55E00','#009E73','#F0E442','#56B4E9','#CC79A7','#E69F00','#FFFEF7'];
   const ARCH_NAMES=["Glass+Rim","LowVol Glass","Low Impact 3P Vol","Def Glass+Rim FT","Vol+3P Vol","3P Acc+Vol","Playmaking+Steals","Scoring Vol"];
   const PACK_PREFIX = 'vh.pack.';
   const PACK_CURRENT_KEY = 'vh.pack.current';

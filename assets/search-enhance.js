@@ -5,7 +5,7 @@
  */
 (function(){
   // patch landing-play.js suggestions to include okabe dot
-  var OKABE = ['#0072B2','#D55E00','#009E73','#CC79A7','#F0E442','#56B4E9','#E69F00','#000000'];
+  var OKABE = ['#0072B2','#D55E00','#009E73','#CC79A7','#F0E442','#56B4E9','#E69F00','#FFFEF7'];
   var ICONS = ['⬢','■','▲','◆','★','●','◼','⬣'];
 
   function enhanceSuggestionLI(li, player){
