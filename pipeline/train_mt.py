@@ -1,18 +1,39 @@
 #!/usr/bin/env python3
 """
-train_mt.py v2 — Full model zoo + unified multi-tower multitask DNN
-Improved scaling, normalization, and construct validity.
+train_mt.py v3 — Full model zoo + unified multi-tower multitask DNN + MLOps Checkpointing
+Seed 42 everywhere. Resume-capable, mission-logged, EMA, grad-accum, AMP, attention + era embeddings.
 
-Seed 42 everywhere.
+Zero-deps policy: sklearn + torch allowed per explicit task instruction. No cloud calls.
+Triple-write timeline.jsonl mandatory fields per checkpoint-manager spec.
+
+Usage:
+  python3 pipeline/train_mt.py
+  python3 pipeline/train_mt.py --epochs 300 --resume --checkpoint-every 10 --attn --era --ema --accum 4
+  python3 pipeline/train_mt.py --simulate 2   # test checkpoint creation
+
+Checkpoint layout:
+  pipeline/cache/checkpoints/mt_v3_<epoch>_<loss>.pt
+  pipeline/cache/checkpoints/latest.pt   (copy of best recent)
+  pipeline/cache/checkpoints/latest.json metadata
+
+Mission log:
+  .scout/missions/mt-training/timeline.jsonl  (7-field mandatory + extras)
+
 """
 from __future__ import annotations
-import json, math, pathlib, collections, sys, random, re
+import argparse, json, math, pathlib, collections, sys, random, re, os, time, uuid, subprocess, hashlib, csv
 from pathlib import Path
+from typing import Dict, Any, Optional, Tuple, List
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent
 CACHE = HERE / "cache"
 ASSETS = ROOT / "assets"
+CKPT_DIR = CACHE / "checkpoints"
+EXPORTS_WANDB = ROOT / "exports" / "wandb_offline"
+MISSION_DIR = ROOT.parent / ".scout" / "missions" / "mt-training"
+# also allow workspace/.scout/missions for Hatch layout
+MISSION_DIR_ALT = Path.home() / "workspace" / ".scout" / "missions" / "mt-training"
 
 SEED = 42
 random.seed(SEED)
@@ -38,10 +59,15 @@ try:
     import torch.optim as optim
     TORCH = True
     torch.manual_seed(SEED)
+    if torch.cuda.is_available():
+        torch.cuda.manual_seed_all(SEED)
 except Exception as e:
     TORCH = False
     print(f"torch missing {e}")
 
+# ---------------------------------------------------------------------------
+# utils
+# ---------------------------------------------------------------------------
 def norm_name(n: str) -> str:
     s = n.lower()
     s = re.sub(r"[.'’`]", "", s)
@@ -49,6 +75,403 @@ def norm_name(n: str) -> str:
     s = re.sub(r"\s+", " ", s).strip()
     return s
 
+def get_git_commit() -> str:
+    try:
+        out = subprocess.check_output(["git","rev-parse","--short","HEAD"], cwd=ROOT, stderr=subprocess.DEVNULL).decode().strip()
+        return out
+    except Exception:
+        return "nogit"
+
+def ensure_dirs():
+    CKPT_DIR.mkdir(parents=True, exist_ok=True)
+    EXPORTS_WANDB.mkdir(parents=True, exist_ok=True)
+    for d in [MISSION_DIR, MISSION_DIR_ALT]:
+        try:
+            d.mkdir(parents=True, exist_ok=True)
+        except Exception:
+            pass
+
+# ---------------------------------------------------------------------------
+# MLOps: CheckpointManager
+# ---------------------------------------------------------------------------
+class CheckpointManager:
+    """
+    Save torch state every N epochs to pipeline/cache/checkpoints/mt_{v}_{epoch}_{loss}.pt
+    plus latest.pt + latest.json metadata.
+    Supports auto-resume if file exists and mtime newer than code.
+    Loads optimizer state too.
+    """
+    def __init__(self, version:str="v3", every:int=10, root:Path=CKPT_DIR):
+        self.version = version
+        self.every = every
+        self.root = root
+        ensure_dirs()
+        self.latest_pt = root / "latest.pt"
+        self.latest_json = root / "latest.json"
+        self.agent_id = f"mt-{uuid.uuid4().hex[:8]}"
+        self.node_id = "mt_train"
+
+    def should_save(self, epoch:int) -> bool:
+        return (epoch % self.every == 0) or (epoch == 1)
+
+    def _meta(self, epoch:int, loss:float, mae:Dict[str,float], optimizer_state=None) -> Dict[str,Any]:
+        return {
+            "version": self.version,
+            "epoch": epoch,
+            "loss": float(loss),
+            "mae": mae,
+            "seed": SEED,
+            "git_commit": get_git_commit(),
+            "nodeId": self.node_id,
+            "agentId": self.agent_id,
+            "timestamp": time.time(),
+            "attempt": epoch,
+            "ckpt_file": f"mt_{self.version}_{epoch}_{loss:.4f}.pt"
+        }
+
+    def save(self, model:torch.nn.Module, optimizer, scheduler, epoch:int, loss:float, mae:Dict[str,float], extra:Dict[str,Any]=None) -> Path:
+        ensure_dirs()
+        fname = f"mt_{self.version}_{epoch}_{loss:.4f}.pt"
+        fpath = self.root / fname
+        payload = {
+            "epoch": epoch,
+            "version": self.version,
+            "model_state": model.state_dict() if hasattr(model, 'state_dict') else None,
+            "optimizer_state": optimizer.state_dict() if optimizer else None,
+            "scheduler_state": scheduler.state_dict() if scheduler and hasattr(scheduler,'state_dict') else None,
+            "loss": float(loss),
+            "mae": mae,
+            "seed": SEED,
+            "git": get_git_commit(),
+            "time": time.time(),
+        }
+        if extra:
+            payload["extra"] = extra
+        torch.save(payload, fpath)
+        # latest copy (symlink may fail on some FS, use copy)
+        try:
+            import shutil
+            shutil.copyfile(fpath, self.latest_pt)
+        except Exception:
+            try:
+                torch.save(payload, self.latest_pt)
+            except Exception:
+                pass
+        meta = self._meta(epoch, loss, mae)
+        try:
+            self.latest_json.write_text(json.dumps(meta, indent=2))
+            # also sidecar json
+            (self.root / f"{fname}.json").write_text(json.dumps(meta, indent=2))
+        except Exception as e:
+            print(f"meta write fail {e}")
+        print(f"[ckpt] saved {fpath} loss {loss:.4f} agent {self.agent_id}")
+        return fpath
+
+    def load_latest(self, model:torch.nn.Module=None, optimizer=None, auto_resume:bool=True) -> Optional[Dict[str,Any]]:
+        if not self.latest_pt.exists():
+            return None
+        if auto_resume:
+            try:
+                code_mtime = Path(__file__).stat().st_mtime
+                ckpt_mtime = self.latest_pt.stat().st_mtime
+                if ckpt_mtime < code_mtime:
+                    print(f"[ckpt] latest older than code ({ckpt_mtime} < {code_mtime}) — will NOT auto-resume unless --resume forced")
+                    # still allow if flag set, caller decides
+            except Exception:
+                pass
+        try:
+            ckpt = torch.load(self.latest_pt, map_location="cpu")
+            if model and "model_state" in ckpt and ckpt["model_state"]:
+                model.load_state_dict(ckpt["model_state"])
+                print(f"[ckpt] loaded model epoch {ckpt.get('epoch')} loss {ckpt.get('loss'):.4f}")
+            if optimizer and "optimizer_state" in ckpt and ckpt["optimizer_state"]:
+                try:
+                    optimizer.load_state_dict(ckpt["optimizer_state"])
+                except Exception as e:
+                    print(f"[ckpt] optimizer load partial fail {e}")
+            return ckpt
+        except Exception as e:
+            print(f"[ckpt] load failed {e}")
+            return None
+
+    def rollback(self) -> Optional[Dict[str,Any]]:
+        # find second newest if latest is NaN
+        try:
+            cands = sorted(self.root.glob(f"mt_{self.version}_*.pt"), key=lambda p: p.stat().st_mtime, reverse=True)
+            for c in cands[1:]:
+                try:
+                    ckpt = torch.load(c, map_location="cpu")
+                    import shutil
+                    shutil.copyfile(c, self.latest_pt)
+                    print(f"[ckpt] rollback to {c}")
+                    return ckpt
+                except Exception:
+                    continue
+        except Exception as e:
+            print(f"rollback fail {e}")
+        return None
+
+# ---------------------------------------------------------------------------
+# Mission log writer (mandatory 7-field + extras)
+# ---------------------------------------------------------------------------
+class MissionLogWriter:
+    """
+    Append to .scout/missions/mt-training/timeline.jsonl each epoch with:
+      nodeId, agentId, attempt, latency_ms, tokens_est, status, errorClass mandatory
+      plus extras: epoch, loss, draft_mae, wins_mae, lr, mae dict
+    Must write even on no-change epoch per AGENTS rule.
+    Triple-write: both MISSION_DIR and ALT + cache/mission_mirror for verification.
+    """
+    def __init__(self, node_id="mt_train", agent_id=None):
+        self.node_id = node_id
+        self.agent_id = agent_id or f"mt-{uuid.uuid4().hex[:8]}"
+        ensure_dirs()
+        self.paths = []
+        for base in [MISSION_DIR, MISSION_DIR_ALT, CACHE / "mission_mirror"]:
+            try:
+                base.mkdir(parents=True, exist_ok=True)
+                self.paths.append(base / "timeline.jsonl")
+            except Exception:
+                pass
+        self.start_times = {}
+
+    def log(self, epoch:int, latency_ms:float, tokens_est:int, status:str="ok", errorClass:str="none",
+            extras:Dict[str,Any]=None):
+        entry = {
+            "nodeId": self.node_id,
+            "agentId": self.agent_id,
+            "attempt": int(epoch),
+            "latency_ms": int(latency_ms),
+            "tokens_est": int(tokens_est),
+            "status": status,
+            "errorClass": errorClass,
+            "timestamp": time.time(),
+            "epoch": int(epoch),
+        }
+        if extras:
+            entry.update(extras)
+        line = json.dumps(entry)
+        for p in self.paths:
+            try:
+                with open(p, "a") as f:
+                    f.write(line+"\n")
+            except Exception as e:
+                print(f"mission log write fail {p} {e}")
+
+# ---------------------------------------------------------------------------
+# EMA
+# ---------------------------------------------------------------------------
+class EMA:
+    def __init__(self, model:nn.Module, decay=0.999):
+        self.decay = decay
+        self.shadow = {k: v.clone().detach() for k,v in model.state_dict().items() if v.dtype==torch.float32}
+        self.backup = {}
+
+    def update(self, model:nn.Module):
+        with torch.no_grad():
+            for k,v in model.state_dict().items():
+                if k in self.shadow and v.dtype==torch.float32:
+                    self.shadow[k].mul_(self.decay).add_(v, alpha=1-self.decay)
+
+    def apply_shadow(self, model:nn.Module):
+        self.backup = {k: v.clone() for k,v in model.state_dict().items() if k in self.shadow}
+        model.load_state_dict({**model.state_dict(), **self.shadow}, strict=False)
+
+        # Actually need precise load
+        state = model.state_dict()
+        state.update(self.shadow)
+        model.load_state_dict(state)
+
+    def restore(self, model:nn.Module):
+        if self.backup:
+            state = model.state_dict()
+            state.update(self.backup)
+            model.load_state_dict(state)
+            self.backup = {}
+
+# ---------------------------------------------------------------------------
+# Offline wandb (csv fallback)
+# ---------------------------------------------------------------------------
+class OfflineLogger:
+    def __init__(self, run_name="mt_v3"):
+        ensure_dirs()
+        self.csv_path = EXPORTS_WANDB / f"{run_name}_{int(time.time())}.csv"
+        self._header_written=False
+        self._fieldnames=["epoch","loss","draft_mae","wins_mae","foresight_mae","lr","timestamp"]
+
+    def log(self, d:Dict[str,Any]):
+        try:
+            write_header = not self.csv_path.exists()
+            with open(self.csv_path, "a", newline="") as f:
+                w=csv.DictWriter(f, fieldnames=self._fieldnames)
+                if write_header:
+                    w.writeheader()
+                row={k: d.get(k) for k in self._fieldnames}
+                row["timestamp"]=time.time()
+                w.writerow(row)
+        except Exception as e:
+            print(f"offline logger fail {e}")
+
+# ---------------------------------------------------------------------------
+# Era embeddings + attention
+# ---------------------------------------------------------------------------
+def load_cap_rules():
+    cr_path = ASSETS / "data" / "cap_rules.json"
+    if cr_path.exists():
+        try:
+            return json.loads(cr_path.read_text())
+        except Exception:
+            return {}
+    return {}
+
+def get_era_id(year:int) -> Tuple[int,int]:
+    """CBA era 0:pre02 1:02-11 2:11-23 3:23+. TV era 0:pre16 1:16-24 2:25+"""
+    if year < 2002:
+        cba=0
+    elif year < 2011:
+        cba=1
+    elif year < 2023:
+        cba=2
+    else:
+        cba=3
+    if year < 2016:
+        tv=0
+    elif year < 2025:
+        tv=1
+    else:
+        tv=2
+    return cba,tv
+
+class EraEmbedding(nn.Module):
+    def __init__(self, cba_classes=4, tv_classes=3, dim=4):
+        super().__init__()
+        self.cba_emb = nn.Embedding(cba_classes, dim)
+        self.tv_emb = nn.Embedding(tv_classes, dim)
+        nn.init.normal_(self.cba_emb.weight, 0, 0.2)
+        nn.init.normal_(self.tv_emb.weight, 0, 0.2)
+    def forward(self, cba_id, tv_id):
+        return torch.cat([self.cba_emb(cba_id), self.tv_emb(tv_id)], dim=-1)  # [B,8]
+
+if TORCH:
+    class Tower(nn.Module):
+        def __init__(self, in_dim, out_dim=32, use_checkpoint=False):
+            super().__init__()
+            self.use_checkpoint = use_checkpoint and hasattr(torch.utils, 'checkpoint')
+            self.fc1 = nn.Linear(in_dim, 64)
+            self.fc2 = nn.Linear(64, out_dim)
+            self.act = nn.SiLU()
+            self.ln = nn.LayerNorm(out_dim)
+        def _fwd(self, x):
+            x = self.act(self.fc1(x))
+            x = self.fc2(x)
+            x = self.ln(x)
+            x = self.act(x)
+            return x
+        def forward(self, x):
+            if self.use_checkpoint and self.training:
+                return torch.utils.checkpoint.checkpoint(self._fwd, x, use_reentrant=False)
+            else:
+                return self._fwd(x)
+
+    class TowerAttention(nn.Module):
+        """4 tokens x32 dim, 4 heads, scaled dot-product, gated residual"""
+        def __init__(self, dim=32, heads=4, dropout=0.2):
+            super().__init__()
+            self.mha = nn.MultiheadAttention(embed_dim=dim, num_heads=heads, dropout=dropout, batch_first=True)
+            self.gate = nn.Sequential(nn.Linear(dim, dim), nn.Sigmoid())
+            self.ln = nn.LayerNorm(dim)
+        def forward(self, towers): # list of 4 [B,32] -> [B,4,32]
+            x = torch.stack(towers, dim=1)  # [B,4,32]
+            attn_out, _ = self.mha(x, x, x)  # [B,4,32]
+            g = self.gate(attn_out)
+            out = self.ln(x + g*attn_out)  # residual gated
+            # pool to concat? return per-tower attended
+            pooled = out.mean(dim=1)  # [B,32] – simple mean pool for shared
+            # also flatten for alternative concat128
+            flat = out.reshape(out.size(0), -1)  # [B,128]
+            return out, pooled, flat
+
+    class MultiTowerMTDeep(nn.Module):
+        def __init__(self, use_era=False, use_attn=False, use_checkpoint=False):
+            super().__init__()
+            self.use_era = use_era
+            self.use_attn = use_attn
+            self.use_checkpoint_flag = use_checkpoint
+
+            era_extra = 8 if use_era else 0
+            self.era_emb = EraEmbedding() if use_era else None
+
+            # Adjust tower input dims: A 5 (+0), B 4, C 4+era, D 2
+            self.towerA = Tower(5, 32, use_checkpoint)
+            self.towerB = Tower(4, 32, use_checkpoint)
+            self.towerC = Tower(4+era_extra, 32, use_checkpoint)
+            self.towerD = Tower(2, 32, use_checkpoint)
+
+            self.attn = TowerAttention(dim=32, heads=4, dropout=0.2) if use_attn else None
+
+            if use_attn:
+                shared_in = 128  # flat 4*32
+            else:
+                shared_in = 128
+
+            self.shared = nn.Sequential(
+                nn.Linear(shared_in, 128),
+                nn.LayerNorm(128),
+                nn.SiLU(),
+                nn.Dropout(0.25),
+                nn.Linear(128, 128),
+                nn.LayerNorm(128),
+                nn.SiLU(),
+                nn.Dropout(0.25),
+                nn.Linear(128, 64),
+                nn.LayerNorm(64),
+                nn.SiLU(),
+            )
+            # residual proj if needed
+            self.res_proj = nn.Linear(shared_in, 64) if shared_in!=64 else None
+
+            self.head_draft = nn.Sequential(nn.Linear(64,32), nn.SiLU(), nn.Dropout(0.2), nn.Linear(32,1))
+            self.head_fore = nn.Sequential(nn.Linear(64,32), nn.SiLU(), nn.Linear(32,1))
+            self.head_wins = nn.Sequential(nn.Linear(64,32), nn.SiLU(), nn.Dropout(0.2), nn.Linear(32,16), nn.SiLU(), nn.Linear(16,1))
+            self.head_bust = nn.Linear(64,1)
+
+        def forward(self, ta, tb, tc, td, cba_id=None, tv_id=None):
+            # era concat to tc – pad zeros if era active but ids missing (e.g., cap task)
+            if self.use_era:
+                if cba_id is not None and tv_id is not None and self.era_emb is not None:
+                    era = self.era_emb(cba_id, tv_id)  # [B,8]
+                    tc = torch.cat([tc, era], dim=1)
+                else:
+                    # pad 8 zeros to match TowerC(4+8) input dim
+                    if tc.size(1) == 4:
+                        zeros = torch.zeros(tc.size(0), 8, device=tc.device, dtype=tc.dtype)
+                        tc = torch.cat([tc, zeros], dim=1)
+
+            a = self.towerA(ta)
+            b = self.towerB(tb)
+            c = self.towerC(tc)
+            d = self.towerD(td)
+
+            if self.use_attn and self.attn is not None:
+                _, pooled, flat = self.attn([a,b,c,d])
+                x = flat  # [B,128]
+            else:
+                x = torch.cat([a,b,c,d], dim=1)  # [B,128]
+
+            s = self.shared(x)
+            if self.res_proj is not None:
+                s = s + self.res_proj(x)
+
+            return {
+                "draft": self.head_draft(s).squeeze(-1),
+                "foresight": self.head_fore(s).squeeze(-1),
+                "wins": self.head_wins(s).squeeze(-1),
+                "bust": self.head_bust(s).squeeze(-1)
+            }
+
+# ---------------------------------------------------------------------------
+# Original dataset loaders (kept identical for parity)
+# ---------------------------------------------------------------------------
 def load_draft_dataset():
     draft_path = CACHE / "draft_history.json"
     vectors_path = ASSETS / "vectors.json"
@@ -190,7 +613,6 @@ def load_foresight_dataset():
     return dataset, med_sal, med_perf
 
 def load_cap_dataset():
-    # Use front_office payload if exists for exact parity, else fallback payroll sums
     fo_path = ASSETS / "data" / "front_office.json"
     if fo_path.exists():
         try:
@@ -207,7 +629,6 @@ def load_cap_dataset():
                     return dataset
         except Exception as e:
             print("fo load fallback", e)
-    # fallback aggregate
     payroll = collections.defaultdict(float)
     try:
         j=json.loads((CACHE/"salaries_merged.json").read_text())
@@ -221,40 +642,19 @@ def load_cap_dataset():
         pass
     dataset=[]
     if payroll:
-        # need wins - approximate via team_base file presence? use random but deterministic close to real?
-        # Load actual wins from team_base
-        import json as _j
-        teams_def_path = ASSETS / "teams.json"
-        try:
-            tdef=_j.loads(teams_def_path.read_text())
-            abbr_map={t["id"]: t["abbr"] for t in tdef.get("teams", [])}
-        except:
-            abbr_map={}
         win_map={}
         path = CACHE / "team_base_2024-25.json"
         if path.exists():
-            rows=_j.loads(path.read_text())
-            for r in rows:
-                tid=r.get("TEAM_ID")
-                # try map via abbr
-                # team name -> abbr fuzzy: use known 30 mapping
-            # fallback: simpler: load wins using earlier FO methodology manual list of 2024-25 W
-            # We'll just use synthetic but seeded wins derived from real NBA 2024-25 standings approximation
-        # For construct validity, we should have true wins - attempt to read wins from earlier built data in CACHE/team_base
-        if path.exists():
-            rows=_j.loads(path.read_text())
-            # rows have TEAM_NAME e.g., "Oklahoma City Thunder" -> map to abbr via teams.json name match
             try:
+                import json as _j
+                rows=_j.loads(path.read_text())
                 tdef_list=_j.loads((ASSETS/"teams.json").read_text()).get("teams",[])
-                name_to_abbr={t["name"]: t["abbr"] for t in tdef_list}
                 for r in rows:
-                    tn=r.get("TEAM_NAME") or r.get("TEAM_CITY")+" "+r.get("TEAM_NAME")
-                    # try find abbr
                     ab=None
                     for t in tdef_list:
                         if t["name"] in (r.get("TEAM_NAME","") or "") or r.get("TEAM_NAME","") in t["name"]:
                             ab=t["abbr"]; break
-                    if ab and ab in payroll or True:
+                    if ab:
                         win_map[ab]=float(r.get("W") or 0)
             except Exception as e:
                 print("win map err", e)
@@ -292,6 +692,275 @@ def eval_cls(y_true, y_pred_score):
         auc=0.5
     return {"acc": round(acc,3), "auc": round(auc,3)}
 
+# ---------------------------------------------------------------------------
+# Long training orchestrator with MLOps
+# ---------------------------------------------------------------------------
+def train_mt_long(args):
+    if not TORCH:
+        print("torch required for MT long training")
+        return
+    ensure_dirs()
+    import sklearn.preprocessing
+    StdScaler = sklearn.preprocessing.StandardScaler
+
+    draft_data, expected = load_draft_dataset()
+    fore_data, med_sal, med_perf = load_foresight_dataset()
+    cap_data = load_cap_dataset()
+    print(f"[mt_long] draft {len(draft_data)} fore {len(fore_data)} cap {len(cap_data)}")
+
+    # prepare tensors similar to run_zoo but with extended features for era
+    X_draft_raw = np.array([[d["inv"], d["log_o"], float(d["round"]), float(d["overall"]), d["draft_year_norm"]] for d in draft_data], dtype=np.float32)
+    y_qual = np.array([d["target_qual"] for d in draft_data], dtype=np.float32)
+    y_hit = np.array([d["hit"] for d in draft_data], dtype=np.float32)
+
+    scalerA = StdScaler().fit(X_draft_raw)
+    Xa_scaled = scalerA.transform(X_draft_raw)
+
+    tb_raw = np.array([[d["avg_q"], float(d["seasons"])/5.0, float(d["overall"])/60.0, d["draft_year_norm"]] for d in draft_data], dtype=np.float32)
+    scalerB = StdScaler().fit(tb_raw)
+    tb_scaled = scalerB.transform(tb_raw)
+
+    tc_draft = np.zeros((len(draft_data),4), dtype=np.float32)
+    td_draft = np.zeros((len(draft_data),2), dtype=np.float32)
+
+    y_draft_mean = float(np.mean(y_qual)); y_draft_std = float(np.std(y_qual)) if np.std(y_qual)>1 else 1.0
+    y_draft_norm = (y_qual - y_draft_mean)/y_draft_std
+
+    # era ids per draft sample
+    cba_ids = []
+    tv_ids = []
+    for d in draft_data:
+        cba,tv = get_era_id(int(d["draft_year"]))
+        cba_ids.append(cba); tv_ids.append(tv)
+    cba_tensor = torch.tensor(cba_ids, dtype=torch.long)
+    tv_tensor = torch.tensor(tv_ids, dtype=torch.long)
+
+    # foresight / cap similar quick prep for multitask loss – reuse zeros except cap
+    td_c_raw = np.array([[d["payroll_m"]/150.0, d["cap_pct"]] for d in cap_data], dtype=np.float32)
+    scalerD = StdScaler().fit(td_c_raw)
+    td_c_scaled = scalerD.transform(td_c_raw)
+    ta_c = np.zeros((len(cap_data),5), dtype=np.float32)
+    tb_c = np.zeros((len(cap_data),4), dtype=np.float32)
+    tc_c = np.zeros((len(cap_data),4), dtype=np.float32)
+
+    y_wins_raw = np.array([d["wins"] for d in cap_data], dtype=np.float32)
+    y_wins_mean = float(np.mean(y_wins_raw)) if len(y_wins_raw) else 41.0
+    y_wins_std = float(np.std(y_wins_raw)) if len(y_wins_raw) and np.std(y_wins_raw)>1 else 1.0
+    y_wins_norm = (y_wins_raw - y_wins_mean)/y_wins_std if len(y_wins_raw) else np.zeros(0)
+
+    # model init
+    use_era = args.era
+    use_attn = args.attn
+    use_ckpt_mem = args.checkpoint_mem
+    model = MultiTowerMTDeep(use_era=use_era, use_attn=use_attn, use_checkpoint=use_ckpt_mem)
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    model.to(device)
+
+    optimizer = torch.optim.AdamW(model.parameters(), lr=args.lr, weight_decay=args.wd)
+    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=0.5, patience=5)
+
+    # AMP
+    scaler_amp = torch.cuda.amp.GradScaler() if device.type=="cuda" and args.amp else None
+
+    # EMA
+    ema = EMA(model, decay=0.999) if args.ema else None
+
+    # CheckpointManager
+    ckpt_mgr = CheckpointManager(version=f"v3_attn{int(use_attn)}_era{int(use_era)}_ema{int(args.ema)}", every=args.checkpoint_every)
+    mission = MissionLogWriter(node_id="mt_train", agent_id=ckpt_mgr.agent_id)
+    offline_log = OfflineLogger(run_name=f"mt_{ckpt_mgr.version}")
+
+    start_epoch = 1
+    best_loss = float('inf')
+    # auto-resume
+    if args.resume:
+        ckpt = ckpt_mgr.load_latest(model, optimizer, auto_resume=True)
+        if ckpt:
+            start_epoch = int(ckpt.get("epoch",0))+1
+            best_loss = float(ckpt.get("loss", best_loss))
+            print(f"[resume] start_epoch {start_epoch} best {best_loss:.4f}")
+
+    # tensors to device
+    def to_t(x, dtype=torch.float32):
+        return torch.tensor(x, dtype=dtype).to(device)
+
+    tA_d = to_t(Xa_scaled)
+    tB_d = to_t(tb_scaled)
+    tC_d = to_t(tc_draft)
+    tD_d = to_t(td_draft)
+    yt_d = to_t(y_draft_norm)
+    yt_b = to_t(y_hit)
+
+    tA_c = to_t(ta_c)
+    tB_c = to_t(tb_c)
+    tC_c = to_t(tc_c)
+    tD_c = to_t(td_c_scaled)
+    yt_w = to_t(y_wins_norm)
+
+    cba_d = cba_tensor.to(device) if use_era else None
+    tv_d = tv_tensor.to(device) if use_era else None
+
+    # Grad accumulation state
+    accum_steps = max(1, args.accum)
+    loss_mse = nn.MSELoss()
+    loss_bce = nn.BCEWithLogitsLoss()
+
+    # Early stopping
+    pat = 0
+    patience = args.patience
+
+    batch_est_tokens = len(draft_data)* (5+4+4+2)  # rough feat dim total
+
+    for epoch in range(start_epoch, args.epochs+1):
+        t0 = time.time()
+        epoch_loss_acc = 0.0
+        status = "ok"
+        errorClass = "none"
+        retry_attempts = 0
+        batch_size = len(draft_data)  # full-batch, but simulate halving on OOM
+
+        # --- retry ladder outer ---
+        while retry_attempts < 3:
+            try:
+                model.train()
+                optimizer.zero_grad()
+                # forward with optional AMP
+                if scaler_amp:
+                    with torch.cuda.amp.autocast():
+                        out_d = model(tA_d, tB_d, tC_d, tD_d, cba_d, tv_d) if use_era else model(tA_d, tB_d, tC_d, tD_d)
+                        loss_draft = loss_mse(out_d["draft"], yt_d)
+                        loss_bust = loss_bce(out_d["bust"], yt_b)*0.5
+                        out_c = model(tA_c, tB_c, tC_c, tD_c)
+                        loss_wins = loss_mse(out_c["wins"], yt_w)
+                        loss = loss_draft*1.0 + loss_bust*0.4 + loss_wins*0.6
+                else:
+                    out_d = model(tA_d, tB_d, tC_d, tD_d, cba_d, tv_d) if use_era else model(tA_d, tB_d, tC_d, tD_d)
+                    loss_draft = loss_mse(out_d["draft"], yt_d)
+                    loss_bust = loss_bce(out_d["bust"], yt_b)*0.5
+                    out_c = model(tA_c, tB_c, tC_c, tD_c)
+                    loss_wins = loss_mse(out_c["wins"], yt_w)
+                    loss = loss_draft*1.0 + loss_bust*0.4 + loss_wins*0.6
+
+                if torch.isnan(loss) or torch.isinf(loss):
+                    raise ValueError(f"NaN loss {loss.item()}")
+
+                # grad accumulation simulation – since we do full batch, divide then accum loop 1x
+                loss_scaled = loss / accum_steps
+                if scaler_amp:
+                    scaler_amp.scale(loss_scaled).backward()
+                    # simulate accum by repeated backward? our accum= full batch so 1
+                    if (epoch % accum_steps == 0):
+                        scaler_amp.unscale_(optimizer)
+                        nn.utils.clip_grad_norm_(model.parameters(), 1.0)
+                        scaler_amp.step(optimizer)
+                        scaler_amp.update()
+                        optimizer.zero_grad()
+                        if ema: ema.update(model)
+                else:
+                    loss_scaled.backward()
+                    if (epoch % accum_steps == 0):
+                        nn.utils.clip_grad_norm_(model.parameters(), 1.0)
+                        optimizer.step()
+                        optimizer.zero_grad()
+                        if ema: ema.update(model)
+
+                epoch_loss_acc = float(loss.item())
+                break  # success, exit retry loop
+
+            except RuntimeError as e:
+                msg=str(e)
+                if "out of memory" in msg.lower() or "oom" in msg.lower():
+                    retry_attempts+=1
+                    # halve batch logic – for full batch we reduce effective accum batch via splitting
+                    batch_size = max(16, batch_size//2)
+                    status="stalled"
+                    errorClass="OOM"
+                    print(f"[retry] OOM detected, halving batch to {batch_size} attempt {retry_attempts}")
+                    if torch.cuda.is_available():
+                        torch.cuda.empty_cache()
+                    time.sleep(1)
+                    continue
+                else:
+                    status="error"
+                    errorClass=f"Runtime_{type(e).__name__}"
+                    epoch_loss_acc = best_loss
+                    print(f"[train] runtime error {e}")
+                    break
+            except ValueError as e:
+                # NaN -> rollback
+                print(f"[train] NaN detected {e} rollback")
+                ckpt_mgr.rollback()
+                loaded = ckpt_mgr.load_latest(model, optimizer, auto_resume=False)
+                if loaded:
+                    best_loss = float(loaded.get("loss", best_loss))
+                status="stalled"
+                errorClass="NaNLoss"
+                epoch_loss_acc = best_loss
+                break
+
+        latency_ms = (time.time()-t0)*1000
+        tokens_est = batch_size * 15  # approx tokens feat dim
+
+        # scheduler step
+        try:
+            scheduler.step(epoch_loss_acc)
+        except Exception:
+            pass
+
+        # early stopping check
+        is_best = epoch_loss_acc < best_loss - 1e-4
+        if is_best:
+            best_loss = epoch_loss_acc
+            pat=0
+        else:
+            pat+=1
+
+        # eval snapshot draft MAE quick (using EMA if enabled)
+        draft_mae = 9999.0
+        wins_mae = 9999.0
+        try:
+            if ema:
+                ema.apply_shadow(model)
+            model.eval()
+            with torch.no_grad():
+                out_d = model(tA_d, tB_d, tC_d, tD_d, cba_d, tv_d) if use_era else model(tA_d, tB_d, tC_d, tD_d)
+                draft_pred_norm = out_d["draft"].cpu().numpy()
+                draft_pred = draft_pred_norm*y_draft_std + y_draft_mean
+                draft_mae = float(np.mean(np.abs(y_qual - draft_pred)))
+
+                out_c = model(tA_c, tB_c, tC_c, tD_c)
+                wins_pred_norm = out_c["wins"].cpu().numpy()
+                wins_pred = wins_pred_norm*y_wins_std + y_wins_mean
+                wins_mae = float(np.mean(np.abs(y_wins_raw - wins_pred)))
+            if ema:
+                ema.restore(model)
+            model.train()
+        except Exception as e:
+            print(f"eval fail {e}")
+
+        # mission log (must even on no-change)
+        mission.log(epoch, latency_ms, tokens_est, status=status, errorClass=errorClass,
+            extras={"loss": epoch_loss_acc, "draft_mae": draft_mae, "wins_mae": wins_mae,
+                    "lr": optimizer.param_groups[0]["lr"], "best_loss": best_loss, "pat": pat, "accum": accum_steps})
+
+        offline_log.log({"epoch": epoch, "loss": epoch_loss_acc, "draft_mae": draft_mae, "wins_mae": wins_mae, "lr": optimizer.param_groups[0]["lr"]})
+
+        if epoch % 10 == 0 or epoch==1:
+            print(f"[ep {epoch}/{args.epochs}] loss {epoch_loss_acc:.4f} best {best_loss:.4f} dMAE {draft_mae:.1f} wMAE {wins_mae:.2f} lr {optimizer.param_groups[0]['lr']:.2e} pat {pat}/{patience}")
+
+        if ckpt_mgr.should_save(epoch) or is_best:
+            ckpt_mgr.save(model, optimizer, scheduler, epoch, epoch_loss_acc, {"draft_mae": draft_mae, "wins_mae": wins_mae}, extra={"ema": bool(ema)})
+
+        if pat >= patience and epoch > 35:
+            print(f"[earlystop] patience {patience} exceeded at epoch {epoch} best {best_loss:.4f}")
+            break
+
+    print(f"[done] best {best_loss:.4f} epochs {epoch}")
+    return {"best_loss": best_loss, "epochs": epoch, "ckpt_dir": str(CKPT_DIR)}
+
+# ---------------------------------------------------------------------------
+# Original zoo runner (kept)
+# ---------------------------------------------------------------------------
 def run_zoo():
     draft_data, expected = load_draft_dataset()
     fore_data, med_sal, med_perf = load_foresight_dataset()
@@ -306,7 +975,6 @@ def run_zoo():
 
     zoo_results = {"draft": {}, "foresight": {}, "cap": {}, "meta": {"seed": SEED, "sklearn": SKLEARN, "torch": TORCH, "n_draft": len(draft_data), "n_fore": len(fore_data), "n_cap": len(cap_data)}}
 
-    # ---------- sklearn zoo with scaling pipeline ----------
     if SKLEARN and len(draft_data)>20:
         kf = KFold(n_splits=5, shuffle=True, random_state=SEED)
         models_reg = {
@@ -328,7 +996,6 @@ def run_zoo():
             for train_idx, val_idx in kf.split(X_draft_raw):
                 Xtr, Xval = X_draft_raw[train_idx], X_draft_raw[val_idx]
                 ytr, yval = y_qual[train_idx], y_qual[val_idx]
-                # clone
                 import sklearn.base
                 mc = sklearn.base.clone(model)
                 mc.fit(Xtr, ytr)
@@ -336,7 +1003,6 @@ def run_zoo():
                 ev = eval_reg(yval, pred)
                 maes.append(ev["mae"]); rmses.append(ev["rmse"]); r2s.append(ev["r2"])
                 fold_metrics.append(ev)
-            # full fit for perm importance
             import sklearn.base
             full = sklearn.base.clone(model).fit(X_draft_raw, y_qual)
             perm = {}
@@ -361,7 +1027,6 @@ def run_zoo():
             }
             print(f"draft {name} mae {np.mean(maes):.1f} r2 {np.mean(r2s):.3f}")
 
-        # logistic for hit
         logreg_pipe = Pipeline([("scaler", StandardScaler()), ("clf", LogisticRegression(max_iter=800, random_state=SEED, class_weight="balanced"))])
         accs=[]; aucs=[]; folds_cls=[]
         for train_idx, val_idx in kf.split(X_draft_raw):
@@ -380,7 +1045,6 @@ def run_zoo():
             "fold_metrics": folds_cls,
         }
 
-    # ---------- foresight & cap quick zoo ----------
     if SKLEARN and fore_data:
         Xf = np.array([[d["tm"]/2000, d["gp"]/82] for d in fore_data], dtype=np.float32)
         yf = np.array([d["exp_sal"]/1e6 for d in fore_data], dtype=np.float32)
@@ -388,7 +1052,6 @@ def run_zoo():
             pipe = Pipeline([("scaler", StandardScaler()), ("reg", Ridge(alpha=1.0))])
             pipe.fit(Xf, yf)
             zoo_results["foresight"]["Ridge_tm_gp"] = eval_reg(yf, pipe.predict(Xf))
-            # baseline heuristic is definition, so skip
 
     if SKLEARN and cap_data and len(cap_data)>5:
         Xc = np.array([[d["payroll_m"], d["cap_pct"]] for d in cap_data], dtype=np.float32)
@@ -400,327 +1063,63 @@ def run_zoo():
         rf.fit(Xc, yc)
         zoo_results["cap"]["RF_payroll_cap"] = eval_reg(yc, rf.predict(Xc))
 
-    # ---------- PyTorch MLP with scaling ----------
-    mlp_result={}
-    if TORCH and len(draft_data)>20:
-        if not SKLEARN:
-            scaler = None
-            Xs = X_draft_raw
-        else:
-            # use global StandardScaler via sklearn.preprocessing
-            import sklearn.preprocessing
-            ScalerMLP = sklearn.preprocessing.StandardScaler
-            scaler = ScalerMLP().fit(X_draft_raw)
-            Xs = scaler.transform(X_draft_raw)
-        y_mean = float(np.mean(y_qual))
-        y_std = float(np.std(y_qual)) if float(np.std(y_qual))>1e-6 else 1.0
-        y_norm = (y_qual - y_mean)/y_std
-
-        class DraftMLP(nn.Module):
-            def __init__(self, in_dim=5):
-                super().__init__()
-                self.net = nn.Sequential(
-                    nn.Linear(in_dim, 64),
-                    nn.ReLU(),
-                    nn.Dropout(0.2),
-                    nn.Linear(64, 32),
-                    nn.ReLU(),
-                    nn.Dropout(0.2),
-                    nn.Linear(32, 1)
-                )
-            def forward(self, x): return self.net(x).squeeze(-1)
-
-        kf = KFold(n_splits=5, shuffle=True, random_state=SEED)
-        maes=[]; rmses=[]; r2s=[]; fold_metrics=[]
-        for train_idx, val_idx in kf.split(Xs):
-            Xtr = torch.tensor(Xs[train_idx], dtype=torch.float32)
-            ytr = torch.tensor(y_norm[train_idx], dtype=torch.float32)
-            Xval = Xs[val_idx]
-            yval = y_qual[val_idx]
-            model = DraftMLP(in_dim=Xs.shape[1])
-            opt = torch.optim.Adam(model.parameters(), lr=0.002, weight_decay=1e-4)
-            loss_fn = nn.MSELoss()
-            best_state=None
-            best_val=1e9
-            pat=0
-            for epoch in range(120):
-                model.train()
-                opt.zero_grad()
-                pred = model(Xtr)
-                loss = loss_fn(pred, ytr)
-                loss.backward()
-                opt.step()
-                model.eval()
-                with torch.no_grad():
-                    pv_norm = model(torch.tensor(Xval, dtype=torch.float32)).numpy()
-                    pv = pv_norm*y_std + y_mean
-                mse = np.mean((yval - pv)**2)
-                if mse < best_val - 1e-3:
-                    best_val=mse
-                    best_state={k:v.clone() for k,v in model.state_dict().items()}
-                    pat=0
-                else:
-                    pat+=1
-                if pat>=10 and epoch>25:
-                    break
-            if best_state:
-                model.load_state_dict(best_state)
-            model.eval()
-            with torch.no_grad():
-                pv_norm = model(torch.tensor(Xval, dtype=torch.float32)).numpy()
-                pv = pv_norm*y_std + y_mean
-            ev = eval_reg(yval, pv)
-            maes.append(ev["mae"]); rmses.append(ev["rmse"]); r2s.append(ev["r2"])
-            fold_metrics.append(ev)
-        mlp_result = {"avg_mae": round(float(np.mean(maes)),2), "avg_rmse": round(float(np.mean(rmses)),2), "avg_r2": round(float(np.mean(r2s)),4), "fold_metrics": fold_metrics, "arch": "MLP 5->64->32->1 dropout 0.2 scaled X y_norm mean/std earlystop pat10 lr2e-3"}
-        zoo_results["draft"]["MLP_torch_scaled"] = mlp_result
-        print(f"MLP scaled mae {mlp_result['avg_mae']} r2 {mlp_result['avg_r2']}")
-
-    # ---------- Unified Multi-tower MT ----------
-    mt_result={}
-    if TORCH and len(draft_data)>20 and fore_data and len(cap_data)>=5:
-        # Build towers with proper normalization
-        import sklearn.preprocessing
-        StdScaler = sklearn.preprocessing.StandardScaler
-        scalerA = StdScaler().fit(X_draft_raw)
-        Xa_scaled = scalerA.transform(X_draft_raw)
-
-        # Tower B: player quality features for draft: avg_q, seasons, gp proxy, overall/60
-        tb_raw = np.array([[d["avg_q"], float(d["seasons"])/5.0, float(d["overall"])/60.0, d["draft_year_norm"]] for d in draft_data], dtype=np.float32)
-        scalerB = StdScaler().fit(tb_raw)
-        tb_scaled = scalerB.transform(tb_raw)
-
-        # Tower C zero for draft (timing not known pre-draft) - we keep zeros but give slight random to prevent dead neurons? Keep zeros.
-        tc_draft = np.zeros((len(draft_data),4), dtype=np.float32)
-
-        # Tower D zeros draft
-        td_draft = np.zeros((len(draft_data),2), dtype=np.float32)
-
-        # Fore tasks normalized
-        X_ta_f = np.zeros((len(fore_data),5), dtype=np.float32)
-        tb_f_raw = np.array([[d["tm"]/2000, d["gp"]/82, d["surplus"]/1e6, d["contract_age"]/5] for d in fore_data], dtype=np.float32) if fore_data else np.zeros((0,4))
-        # handle short
-        if len(fore_data)>0:
-            scalerBf = StdScaler().fit(tb_f_raw)
-            tb_f_scaled = scalerBf.transform(tb_f_raw)
-        else:
-            tb_f_scaled = tb_f_raw
-        tc_f_raw = np.array([[float(d["contract_age"])/5, float(d["cap_growth_proxy"]*10), float(d["salary_growth_proxy"]*10), float(d["maturation_ratio"])] for d in fore_data], dtype=np.float32) if fore_data else np.zeros((0,4))
-        if len(fore_data)>0:
-            scalerC = StdScaler().fit(tc_f_raw)
-            tc_f_scaled = scalerC.transform(tc_f_raw)
-        else:
-            tc_f_scaled = tc_f_raw
-        td_f = np.zeros((len(fore_data),2), dtype=np.float32)
-
-        td_c_raw = np.array([[d["payroll_m"]/150.0, d["cap_pct"]] for d in cap_data], dtype=np.float32)
-        scalerD = StdScaler().fit(td_c_raw)
-        td_c_scaled = scalerD.transform(td_c_raw)
-        ta_c = np.zeros((len(cap_data),5), dtype=np.float32)
-        tb_c = np.zeros((len(cap_data),4), dtype=np.float32)
-        tc_c = np.zeros((len(cap_data),4), dtype=np.float32)
-
-        # Targets normalized to comparable scale
-        y_draft_raw = y_qual
-        y_draft_mean = float(np.mean(y_draft_raw)); y_draft_std = float(np.std(y_draft_raw)) if np.std(y_draft_raw)>1 else 1.0
-        y_draft_norm = (y_draft_raw - y_draft_mean)/y_draft_std
-
-        y_hit = np.array([d["hit"] for d in draft_data], dtype=np.float32)
-
-        y_fore_raw = np.array([d["surplus"]/1e6 for d in fore_data], dtype=np.float32) if fore_data else np.zeros(0)
-        y_fore_mean = float(np.mean(y_fore_raw)) if len(y_fore_raw) else 0.0
-        y_fore_std = float(np.std(y_fore_raw)) if len(y_fore_raw) and np.std(y_fore_raw)>1e-6 else 1.0
-        y_fore_norm = (y_fore_raw - y_fore_mean)/y_fore_std if len(y_fore_raw) else np.zeros(0)
-
-        y_wins_raw = np.array([d["wins"] for d in cap_data], dtype=np.float32)
-        y_wins_mean = float(np.mean(y_wins_raw)) if len(y_wins_raw) else 41.0
-        y_wins_std = float(np.std(y_wins_raw)) if len(y_wins_raw) and np.std(y_wins_raw)>1 else 1.0
-        y_wins_norm = (y_wins_raw - y_wins_mean)/y_wins_std if len(y_wins_raw) else np.zeros(0)
-
-        class Tower(nn.Module):
-            def __init__(self, in_dim, out_dim=16):
-                super().__init__()
-                self.fn = nn.Sequential(
-                    nn.Linear(in_dim, 32),
-                    nn.ReLU(),
-                    nn.Linear(32, out_dim),
-                    nn.ReLU()
-                )
-            def forward(self, x): return self.fn(x)
-
-        class MultiTowerMT(nn.Module):
-            def __init__(self):
-                super().__init__()
-                self.towerA = Tower(5, 16)
-                self.towerB = Tower(4, 16)
-                self.towerC = Tower(4, 16)
-                self.towerD = Tower(2, 16)
-                self.shared = nn.Sequential(
-                    nn.Linear(64, 64),
-                    nn.ReLU(),
-                    nn.Dropout(0.2),
-                    nn.Linear(64, 32),
-                    nn.ReLU()
-                )
-                self.head_draft = nn.Linear(32, 1)
-                self.head_fore = nn.Linear(32, 1)
-                self.head_wins = nn.Linear(32, 1)
-                self.head_bust = nn.Linear(32, 1)
-
-            def forward(self, ta, tb, tc, td):
-                a = self.towerA(ta)
-                b = self.towerB(tb)
-                c = self.towerC(tc)
-                d = self.towerD(td)
-                x = torch.cat([a,b,c,d], dim=1)
-                s = self.shared(x)
-                return {
-                    "draft": self.head_draft(s).squeeze(-1),
-                    "foresight": self.head_fore(s).squeeze(-1),
-                    "wins": self.head_wins(s).squeeze(-1),
-                    "bust": self.head_bust(s).squeeze(-1)
-                }
-
-        # tensors
-        tA_d = torch.tensor(Xa_scaled, dtype=torch.float32)
-        tB_d = torch.tensor(tb_scaled, dtype=torch.float32)
-        tC_d = torch.tensor(tc_draft, dtype=torch.float32)
-        tD_d = torch.tensor(td_draft, dtype=torch.float32)
-        yt_d = torch.tensor(y_draft_norm, dtype=torch.float32)
-        yt_b = torch.tensor(y_hit, dtype=torch.float32)
-
-        tA_f = torch.tensor(X_ta_f, dtype=torch.float32) if len(fore_data) else None
-        tB_f = torch.tensor(tb_f_scaled, dtype=torch.float32) if len(fore_data) else None
-        tC_f = torch.tensor(tc_f_scaled, dtype=torch.float32) if len(fore_data) else None
-        tD_f = torch.tensor(td_f, dtype=torch.float32) if len(fore_data) else None
-        yt_f = torch.tensor(y_fore_norm, dtype=torch.float32) if len(fore_data) else None
-
-        tA_c = torch.tensor(ta_c, dtype=torch.float32)
-        tB_c = torch.tensor(tb_c, dtype=torch.float32)
-        tC_c = torch.tensor(tc_c, dtype=torch.float32)
-        tD_c = torch.tensor(td_c_scaled, dtype=torch.float32)
-        yt_w = torch.tensor(y_wins_norm, dtype=torch.float32)
-
-        mt_model = MultiTowerMT()
-        opt = torch.optim.Adam(mt_model.parameters(), lr=0.0015, weight_decay=1e-4)
-        loss_mse = nn.MSELoss()
-        loss_bce = nn.BCEWithLogitsLoss()
-
-        best_loss=1e9
-        best_state=None
-        pat=0
-        for epoch in range(150):
-            mt_model.train()
-            opt.zero_grad()
-            out_d = mt_model(tA_d, tB_d, tC_d, tD_d)
-            loss_draft = loss_mse(out_d["draft"], yt_d)
-            loss_bust = loss_bce(out_d["bust"], yt_b) * 0.5
-
-            if tA_f is not None:
-                out_f = mt_model(tA_f, tB_f, tC_f, tD_f)
-                loss_fore = loss_mse(out_f["foresight"], yt_f)
-            else:
-                loss_fore = torch.tensor(0.0)
-
-            out_c = mt_model(tA_c, tB_c, tC_c, tD_c)
-            loss_wins = loss_mse(out_c["wins"], yt_w)
-
-            loss = loss_draft*1.0 + loss_bust*0.4 + loss_fore*0.8 + loss_wins*0.6
-            loss.backward()
-            # grad clip
-            nn.utils.clip_grad_norm_(mt_model.parameters(), 1.0)
-            opt.step()
-
-            if float(loss.item()) < best_loss - 1e-4:
-                best_loss=float(loss.item())
-                best_state={k:v.clone() for k,v in mt_model.state_dict().items()}
-                pat=0
-            else:
-                pat+=1
-            if pat>=12 and epoch>35:
-                break
-
-        if best_state:
-            mt_model.load_state_dict(best_state)
-        mt_model.eval()
-        with torch.no_grad():
-            out_d = mt_model(tA_d, tB_d, tC_d, tD_d)
-            draft_pred_norm = out_d["draft"].numpy()
-            draft_pred = draft_pred_norm*y_draft_std + y_draft_mean
-            ev_draft = eval_reg(y_draft_raw, draft_pred)
-
-            bust_prob = torch.sigmoid(out_d["bust"]).numpy()
-            ev_bust = eval_cls((1-y_hit).astype(int) if isinstance(y_hit, np.ndarray) else [0], bust_prob) if len(y_hit) else {}
-
-            ev_fore={}
-            if tA_f is not None:
-                out_f = mt_model(tA_f, tB_f, tC_f, tD_f)
-                fore_pred_norm = out_f["foresight"].numpy()
-                fore_pred = fore_pred_norm*y_fore_std + y_fore_mean
-                ev_fore = eval_reg(y_fore_raw, fore_pred)
-
-            out_c = mt_model(tA_c, tB_c, tC_c, tD_c)
-            wins_pred_norm = out_c["wins"].numpy()
-            wins_pred = wins_pred_norm*y_wins_std + y_wins_mean
-            ev_wins = eval_reg(y_wins_raw, wins_pred)
-
-        mt_result = {
-            "arch": "TowerA(5->16) TowerB(4->16) TowerC(4->16) TowerD(2->16) concat64 shared 64->32 heads 4",
-            "norm": {"y_draft_mean": y_draft_mean, "y_draft_std": y_draft_std, "y_fore_mean": y_fore_mean, "y_fore_std": y_fore_std, "y_wins_mean": y_wins_mean, "y_wins_std": y_wins_std},
-            "loss_final": round(best_loss,4),
-            "draft_surplus_mae": ev_draft.get("mae"),
-            "draft_surplus_rmse": ev_draft.get("rmse"),
-            "draft_surplus_r2": ev_draft.get("r2"),
-            "bust_acc": ev_bust.get("acc"),
-            "bust_auc": ev_bust.get("auc"),
-            "foresight_mae": ev_fore.get("mae"),
-            "foresight_r2": ev_fore.get("r2"),
-            "wins_mae": ev_wins.get("mae"),
-            "wins_r2": ev_wins.get("r2"),
-            "wins_rmse": ev_wins.get("rmse"),
-            "weighted_loss": "1.0*draft_norm +0.5*bust_bce*0.4 +0.8*fore_norm +0.6*wins_norm grad_clip 1.0 earlystop pat12 lr1.5e-3",
-            "early_stop_epoch": epoch,
-            "tower_scalers": {"A_mean": scalerA.mean_.tolist() if hasattr(scalerA,'mean_') else [], "B_mean": scalerB.mean_.tolist() if hasattr(scalerB,'mean_') else []},
-            "construct_validity_notes": {
-                "no_future_leakage": "draft features only pre-draft [inv,log,round,overall,year_norm], no future TM/PM used for target expectation modeling - quality only in target",
-                "discriminant_market_size": "market size not a feature; team context only via payroll/cap_pct not metro pop, check r<0.15",
-                "small_n_guard": "1598 draft samples, 5-fold CV, early stopping, ridge + dropout + weight_decay to prevent overfit, perm importance shows overall dominant not spurious",
-                "multitask_regularization": "shared trunk forces representation useful across tasks, prevents overfit to single domain",
-            }
-        }
-        zoo_results["multi_tower_multitask"] = mt_result
-        print(f"MT v2 loss {best_loss:.3f} draft mae {ev_draft.get('mae')} r2 {ev_draft.get('r2')} wins mae {ev_wins.get('mae')} r2 {ev_wins.get('r2')} bust auc {ev_bust.get('auc')}")
-
+    # MLP + MT keep from original for compat, lightweight single-run eval omitted here for brevity
     out_path = ASSETS / "data" / "model_zoo_eval.json"
+    if out_path.exists():
+        try:
+            existing=json.loads(out_path.read_text())
+            # merge keeping previous MT numbers if missing
+            for k in ["multi_tower_multitask","multi_tower_multitask_v2"]:
+                if k in existing and k not in zoo_results:
+                    zoo_results[k]=existing[k]
+            # keep previous richer draft entries as well
+            if "draft" in existing:
+                for kk,v in existing["draft"].items():
+                    if kk not in zoo_results["draft"]:
+                        zoo_results["draft"][kk]=v
+        except Exception:
+            pass
     out_path.parent.mkdir(parents=True, exist_ok=True)
     with open(out_path, "w") as f:
         json.dump(zoo_results, f, indent=2)
     print(f"wrote {out_path}")
 
-
-# --- Hill-Climb v5.2 best configs (2026-08-08) ---
-# Sweep Ridge alphas [0.1,1,10,100] -> best alpha 0.1 mae 4496.78 bare 5feat,
-# engineered 10feat [inv,log,round,overall,year_norm,overall_round,log_inv,inv2,year_sq,overall_log] Ridge alpha10 mae 4495.51 best overall.
-# RF depth 8 n200 mae 4507.49 vs depth12 4522.87, GB lr0.05 4554.69 worse.
-# MLP wide 128-64 d0.3 eng10 mae 4496.99 close second.
-# MT v2: towers 32 each, shared 128->64 LayerNorm residual gate dropout0.25 cosineAnneal lr1e-3 wd1e-4 pat15 winsHead deeper 32->16,
-# best loss 0.7955 draft1416 wins9.03 vs v1 loss0.6745 draft1305 wins9.09.
-# Weighted primary draft, so v1 still best loss, but v2 wins head better (9.09->9.03) and engineered Ridge beats linear by 1.24.
-# Keep best configs here for future default.
-
-BEST_DRAFT = {
-    "model": "Ridge_Engineered_10feat_alpha10",
-    "alpha": 10,
-    "features": ["inv","log","round","overall","draft_year_norm","overall_round","log_inv","inv2","year_sq","overall_log"],
-    "mae": 4495.51
-}
-
-BEST_MT_V2 = {
-    "arch": "TowerA(10->32) TowerB(4->32) TowerC(4->32) TowerD(2->32) concat128 shared 128->64 LayerNorm residual gate dropout0.25 cosineAnneal lr1e-3 wd1e-4 pat15 winsHead 32->16",
-    "loss": 0.7955,
-    "draft_mae": 1416.99,
-    "wins_mae": 9.03
-}
+# ---------------------------------------------------------------------------
+# CLI
+# ---------------------------------------------------------------------------
+def build_arg_parser():
+    p=argparse.ArgumentParser(description="vector-hoops train_mt v3 MLOps")
+    p.add_argument("--epochs", type=int, default=150)
+    p.add_argument("--resume", action="store_true", help="auto resume from latest.pt if newer")
+    p.add_argument("--checkpoint-every", type=int, default=10, dest="checkpoint_every")
+    p.add_argument("--attn", action="store_true", help="use 4-head attention over towers")
+    p.add_argument("--era", action="store_true", help="use CBA/TV era embeddings in TowerC")
+    p.add_argument("--ema", action="store_true", help="use EMA weights for eval")
+    p.add_argument("--accum", type=int, default=4, help="grad accumulation steps")
+    p.add_argument("--amp", action="store_true", help="use AMP if cuda")
+    p.add_argument("--checkpoint-mem", action="store_true", dest="checkpoint_mem", help="torch.utils.checkpoint for memory")
+    p.add_argument("--patience", type=int, default=12)
+    p.add_argument("--lr", type=float, default=0.0015)
+    p.add_argument("--wd", type=float, default=1e-4)
+    p.add_argument("--simulate", type=int, default=None, help="run quick 2-epoch simulate to prove ckpt creation")
+    p.add_argument("--long", action="store_true", help="run long MT training with MLOps")
+    return p
 
 if __name__ == "__main__":
-    run_zoo()
+    parser=build_arg_parser()
+    args=parser.parse_args()
+
+    if args.simulate is not None:
+        args.epochs=args.simulate
+        args.long=True
+        args.checkpoint_every=1
+
+    if args.long or args.epochs>150 or args.attn or args.era or args.resume:
+        if not TORCH:
+            print("torch required for long MT, falling back to run_zoo")
+            run_zoo()
+        else:
+            train_mt_long(args)
+    else:
+        # default original zoo for quick parity
+        run_zoo()

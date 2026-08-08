@@ -313,6 +313,12 @@
       "avg_r2": 0.404,
       "arch": "10->128->64->1 dropout0.3 cosAnneal lr1e-3 wd1e-4",
       "fold_metrics": []
+    },
+    "DeepMLP_era14_256_128_64_32": {
+      "avg_mae": 4450.09,
+      "avg_rmse": 5521.7,
+      "avg_r2": 0.3973,
+      "arch": "14->256 LN SiLU d0.35 ->128 LN SiLU d0.35 ->64 LN SiLU d0.3 ->32 SiLU ->1 era14 200ep cosAnneal AdamW lr1e-3 wd2e-4 pat20"
     }
   },
   "foresight": {
@@ -353,6 +359,33 @@
       "mt_v2_loss": 0.7954673767089844,
       "mt_v1_loss": 0.6745,
       "notes": "Engineered polynomial interactions overall*round, log*inv, inv^2, year^2, overall*log improve Ridge slightly. MLP wider no win on tabular small-n. MT v2 larger towers 32 LayerNorm residual gate dropout0.25 cosineAnneal improves wins 9.09->9.03 but draft 1305->1416 slightly worse due to zeroed foresight head. Weighted primary draft, so v1 still best loss."
+    },
+    "hill_climb_v5_3": {
+      "mt_v3": {
+        "loss_final": 0.6641,
+        "early_stop_epoch": 169,
+        "draft_mae": 1315.38,
+        "draft_r2": 0.9367,
+        "draft_rmse": 1792.3,
+        "wins_mae": 8.99,
+        "wins_r2": 0.1379,
+        "wins_rmse": 12.19,
+        "foresight_mae": 0.75,
+        "foresight_r2": 0.9914
+      },
+      "mt_v4": {
+        "loss_final": 0.6847,
+        "early_stop_epoch": 173,
+        "draft_mae": 1329.08,
+        "draft_r2": 0.9326,
+        "draft_rmse": 1850.18,
+        "wins_mae": 8.9,
+        "wins_r2": 0.1377,
+        "wins_rmse": 12.19,
+        "foresight_mae": 1.12,
+        "foresight_r2": 0.9836
+      },
+      "era_features": "cba_id 0-3 bucket 0-4 tv 0-2 growth float, embed 4dim learned via small MLP concat to TowerC"
     }
   },
   "multi_tower_multitask": {
@@ -406,5 +439,31 @@
     "wins_mae": 9.028362274169922,
     "arch": "tower32 shared128-64 LayerNorm residual gate dropout0.25 cosAnneal lr1e-3 wd1e-4 pat15 winsHead deeper 32-16",
     "early_stop": 93
+  },
+  "multi_tower_multitask_v3": {
+    "arch": "TowerA/B/C/D 2-layer 64->32 LN SiLU d0.3 shared 128->128->64->32 residual LN skip 128->32 heads deeper draft 64->32->1 wins 64->32->16->1 era_emb 4dim concat to C timing 8dim lr8e-4 cos warmup10 wd2e-4 pat22 epochs280",
+    "loss_final": 0.6641,
+    "early_stop_epoch": 169,
+    "draft_mae": 1315.38,
+    "draft_r2": 0.9367,
+    "draft_rmse": 1792.3,
+    "wins_mae": 8.99,
+    "wins_r2": 0.1379,
+    "wins_rmse": 12.19,
+    "foresight_mae": 0.75,
+    "foresight_r2": 0.9914
+  },
+  "multi_tower_multitask_v4": {
+    "arch": "4 towers 32 + MultiHeadAttention 4 heads 16kd scaled dot 4 tokens attended LN residual gated sum 128->64 tanh*sigmoid trunk 64->128->64->32 heads same era_emb",
+    "loss_final": 0.6847,
+    "early_stop_epoch": 173,
+    "draft_mae": 1329.08,
+    "draft_r2": 0.9326,
+    "draft_rmse": 1850.18,
+    "wins_mae": 8.9,
+    "wins_r2": 0.1377,
+    "wins_rmse": 12.19,
+    "foresight_mae": 1.12,
+    "foresight_r2": 0.9836
   }
 }

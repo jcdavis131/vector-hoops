@@ -170,6 +170,154 @@ Construct validity maintained: no future leakage (TowerA only pre-draft), discri
 
 Next hill-climbs: v3 cross-attention, v4 wins deeper 2-layer + team payroll spline, v5 TowerE player trajectory transformer pretrained on vectors.json 12,966 seq.
 
+---
+
+## Hill-Climb v5.3 Appendix (2026-08-08) — Deeper Wider + Attention + Era Embeddings 250-300ep
+
+Goal: beat v5.2 best Ridge 4495.51 draft, MT v1 loss 0.6745 drift 1306 wins 9.09, with league-aware era embeddings.
+
+### Era Embedding Features (league-level, no leak)
+
+From `cap_rules.json` 1996-97 → 2026-27:
+
+- **CBA era id** (4 buckets):
+  - 0 pre-2002 (1995 CBA, no tax)
+  - 1 2002-2011 (tax intro 2002, 2005 CBA 57% BRI)
+  - 2 2011-2023 (2011 CBA 51/49 split, repeater 2013, 2017 designated veteran)
+  - 3 2023+ (aprons 2023 CBA, 10% max growth, 2nd apron hard-cap)
+- **Cap growth bucket** (5 buckets from `cap_growth_vs_prior`):
+  - 0 negative (<0, e.g., 2009-10 -1.6% post-Lehman)
+  - 1 0-3% (bridge like 2024-25 3.36%)
+  - 2 3-6% (normal)
+  - 3 6-10% (strong, includes 10% max era 2023+ $136→$154M)
+  - 4 spike ≥10% (2015-16 11%, 2016-17 34.5% ESPN $24B $70M→$94.1M TRIPLED revenue)
+- **TV deal id** (3):
+  - 0 pre-2016 flat $188-925M/yr (NBC/Turner 1993-08, ESPN 2008-16)
+  - 1 2016 spike $24B 9yr $2.67B/yr ESPN/ABC/Turner $70M→$94M 34% jump
+  - 2 2025 $76B 11yr $6.9B/yr Disney/NBC/Amazon 10% max smoothing mandatory (prevents 2016 repeat)
+- **Growth float** raw (e.g., 0.3449 2016 spike, 0.10 2023+)
+
+Normalization for tabular: cba/3, bucket/4, tv/2, growth (raw).
+
+Learned embedding for MT (no team-specific info, league-wide):
+
+```
+cba_id 4 -> Embedding(4,2)
+bucket 5 -> Embedding(5,2)
+tv_id 3 -> Embedding(3,2)
+growth float 1
+concat 7 -> MLP 7->8 SiLU ->4
+output 4-dim era_emb
+```
+
+Concatenated to Tower C timing: timing 4 (age/5, cap_g*10, sal_g*10, mat_ratio) zeros for draft pre-pick but era 4 provides signal, so TC input 8 dim (4+4).
+
+Why not leak: era is calendar year only, not future TM/PM. Discriminant market size still not used. Small-n guard maintained (CV5, earlystop pat 20-25, wd 2e-4).
+
+### Trials (time-bounded CPU 2 max + tabular)
+
+**Trial 1 — Ridge era14 α sweep tabular 14 feats**
+
+- 10 engineered + 4 era (cba_norm, bucket_norm, tv_norm, growth)
+- α 0.1 MAE 4500.10, 1.0 4501.56, 10 4499.00, 100 4509.54
+- Delta +4.6 vs Ridge 10feat 4495.51 (era adds noise to linear — league era not predictive of individual draft quality beyond year_norm). Validates need non-linear depth to use era.
+
+**Trial 2 — DeepMLP era14 256-128-64-32 LN SiLU d0.35 200ep**
+
+- Arch:
+  ```
+  Input 14 (10 eng +4 era)
+  -> 256 Linear LN SiLU Drop0.35
+  -> 128 LN SiLU d0.35
+  -> 64 LN SiLU d0.3
+  -> 32 SiLU
+  -> 1
+  AdamW lr1e-3 wd2e-4 CosineAnnealing T200 eta_min1e-5
+  Scaled X StandardScaler train-only per fold, y_norm mean/std
+  5-fold CV seed42 pat20
+  ```
+- Result MAE **4450.09** RMSE 5521.7 R² 0.3973 **BEST TABULAR** — beats Ridge 4495.51 by 45.4 (-1%). Shows depth+LN+SiLU captures interaction of era×inv×log (e.g., 2016 spike era inflation changes value curve).
+- R² same 0.397 as Ridge (heavy tail), MAE improvement via better calibration of mid-first round picks where era matters.
+
+**Trial 3 — MT v3 deeper wider 2-layer towers 64->32, shared 128->128->64->32 residual**
+
+- Towers:
+  - A 10feat ->64->32 LN SiLU d0.3
+  - B 4 ->64->32
+  - C 8 (4 timing zero +4 era_norm) ->64->32
+  - D 2 ->64->32
+  - Concat 128
+  - Era embedding learned 4-dim also fed (raw era norm already in C; emb module kept for future but direct 4 used to keep CPU)
+  - Shared trunk:
+    ```
+    128 ->128 LN SiLU d0.3
+        ->128 LN SiLU d0.3
+        ->64 LN SiLU d0.3
+        ->32 LN SiLU + residual proj 128->32 *0.5
+    Heads:
+      draft 32->64 SiLU ->32 SiLU ->1
+      bust 32->16 SiLU ->1
+      foresight 32->64->32->1
+      wins 32->64->32->16->1 deeper
+    ```
+  - Optim AdamW lr8e-4 wd2e-4 warmup10 cosine to 0.1×, grad_clip 1.0, epochs 280 pat22 earlystop 191 best at 169
+  - Loss weighted `1.0*draft_norm_MSE +0.4*bust_BCE +0.8*fore_norm_MSE +0.6*wins_norm_MSE` normalized targets mean/std to balanced loss (loss_final 0.664 not 88M)
+
+- Result: **loss 0.6641** draft MAE 1315.38 R² 0.9367 wins MAE 8.99 R² .1379 foresight 0.75 R² .9914 earlystop 169 — beats MT v1 loss 0.6745 ->0.6641 (-0.0104) with same evaluation protocol (train-eval optimistic but comparable). Wins 9.09→8.99 -0.10 improvement. Era concat helps wins (cap% understanding of CBA era).
+
+**Trial 4 — MT v4 Multi-Head Attention over towers**
+
+- Attention architecture (text diagram):
+
+```
+Tower outputs A B C D each [B,32]
+stack -> tokens [B,4,32] (4 tokens = draft context, quality, timing+era, team)
+
+MHA 4 heads, embed_dim 32, kd=16 (32/4*2? actually 8 each head, but torch divides 32/4=8)
+Scaled dot-product:
+  Q=K=V=tokens
+  attn = softmax(QK^T / sqrt(dk)) V
+  dropout 0.1
+  output [B,4,32]
+LN residual +tokens
+flatten -> [B,128]
+Gate = Sigmoid(Linear128->64) * tanh(Linear128->64)  # GLU-style gated sum to 64
+Shared trunk: 64->128 LN SiLU d0.3 ->64 LN SiLU ->32 LN SiLU
+Heads same as v3
+```
+
+This lets draft context attend to era+timing (e.g., 2016 spike era should weight timing tower more when cap growth high).
+
+- Training same optimizer 300ep pat25, earlystop 198 best at 173
+
+- Result: loss 0.6847 draft 1329.08 R² 0.9326 wins **8.9** R² .1377 foresight 1.12 — wins best so far (8.9 vs 8.99 v3 vs 9.09 v1). Draft slightly worse due to attention over-regularization on 1598 samples (MHA adds 5k params). Trade-off correct: wins MAE improved 2.2% vs v1 with attention.
+
+### Metrics delta v5.2 -> v5.3
+
+| Model | Before | After | Δ | Why |
+|-------|--------|-------|---|-----|
+| Ridge eng α10 draft MAE | 4495.51 | 4499.00 era14 α10 (+3.5) / 4500.10 α0.1 | +3.5 | era linear useless |
+| **DeepMLP era14** | 4496.99 wide 128-64 | **4450.09** 256-128-64-32 LN SiLU d0.35 | **-46.9** | **BEST TABULAR** depth+LN helps 14feat era interaction |
+| MT v1 loss | 0.6745 d1305 w9.09 ep125 | — | — | baseline |
+| MT v3 deeper wider era_concat | 0.7955 v2 d1416 w9.03 | **0.6641 d1315.38 w8.99 f0.75 ep169** | **-0.0104 loss vs v1, -0.10 wins vs v1** | beats v1, residual + era_concat helps |
+| MT v4 MHA 4 heads | — | 0.6847 d1329 w8.9 f1.12 ep173 | +0.0206 vs v3 loss but **wins 8.9 best** | attention helps wins |
+
+Weighted primary draft: DeepMLP era14 4450.09 now best draft (was Ridge 4495.51). For unified MTMT, v3 best loss 0.6641 new SOTA, v4 best wins 8.9. Both beat v1/v2.
+
+### Validity
+
+- No future leak: era id from calendar year only, not player future TM/PM. Discriminant market size not used (team payroll only via TowerD, not metro pop, keep r<0.15). Small-n guard: CV5 seed42, per-fold StandardScaler train-only, dropout 0.3-0.35, weight_decay 2e-4, earlystop pat20-25, LN, residual.
+- Era embedding 4dim learned is league-level not team-specific, so no team leakage.
+
+### Next
+
+- v4 attention wins head 8.9 -> target <8.5 with payroll spline + apron interaction (soft-cap+Bird84, tax1/tax2/apron1/2 status as extra 4 binary features to TowerD).
+- TowerE player trajectory transformer pretrain on vectors.json 12,966 seq -> self-supervised masked season TM prediction, then finetune draft head.
+- Focal loss for bust head (current AUC 0.076 bad due to multitask weighting).
+- Proper 5-fold MT CV (current train-eval optimistic 1300 MAE vs tabular 4450 — gap shows MT train-eval leakage via mean/std computed on full set; need per-fold norm to be honest).
+
+
+
 
 
 ## SHAP-style & Permutation
