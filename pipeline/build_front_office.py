@@ -880,6 +880,20 @@ def main():
         PLAYOFF_WINS[seas] = {abbr: sw*4 for abbr, sw in dct.items()}  # 4 wins per series avg; runner 12, champ 16
     # playoff weighted wins multiplier — playoff win = 2.5x regular season win for weighted ranking
     PLAYOFF_WIN_WEIGHT = 2.5
+    # === Vegas over/under expectation baseline (user added 2026-08-08) ===
+    vegas_path = ROOT/"assets"/"data"/"preseason_win_totals.json"
+    vegas_by_season={}
+    if vegas_path.exists():
+        try:
+            import json as _js; doc=_js.loads(vegas_path.read_text()); vegas_by_season=doc.get("seasons",{})
+        except Exception as e:
+            print("vegas load fail", e)
+    props_path = ROOT/"assets"/"data"/"player_season_props.json"
+    props_by_season={}
+    if props_path.exists():
+        try:
+            import json as _js2; doc=_js2.loads(props_path.read_text()); props_by_season=doc.get("seasons",{})
+        except: pass
 
     # expose for top-level payload later
     champion_map = CHAMP_BONUS
@@ -1178,6 +1192,17 @@ def main():
         # weighted wins playoff matter more
         playoff_series = PLAYOFF_SERIES_WINS.get(season_focus, {}).get(abbr, 0)
         playoff_wins = PLAYOFF_WINS.get(season_focus, {}).get(abbr, 0)
+        # Vegas over/under delta — front office alpha vs market expectation (user added)
+        vegas_ou = None
+        vegas_delta = None
+        vegas_f = lambda: None  # placeholder
+        try:
+            v_season = vegas_by_season.get(season_focus, {})
+            if isinstance(v_season, dict):
+                vegas_ou = v_season.get(abbr) or v_season.get(abbr.replace("GSW","GS"))
+                if vegas_ou is not None:
+                    vegas_delta = float(winfo.get("W",0)) - float(vegas_ou)
+        except: pass
         weighted_wins = round(float(winfo.get("W",0)) + playoff_wins * PLAYOFF_WIN_WEIGHT,1)
         weighted_wpm = round(weighted_wins / (pw/1_000_000),3) if pw and pw>0 else 0
         rank = 0
@@ -1745,7 +1770,13 @@ def main():
             cap_score = 50
         cap_grade = grade_from_score(cap_score)
 
-        for_score_base = round(0.35*draft_score + 0.35*cap_score + 0.30*foresight_score,1)
+        # Vegas expectation alpha: beating the over/under by X wins signals FO + coaching exceeding market Bayesian prior
+        # Blend into base as small but meaningful lift (up to ~+5) for overperform vs expectation
+        vegas_alpha=0
+        if vegas_delta is not None:
+            # Normalize: +10 over = +3.5 FO pts, +17.5 max SAS 2025-26 = +5 cap
+            vegas_alpha = max(-3.0, min(5.0, float(vegas_delta)*0.35))
+        for_score_base = round(0.35*draft_score + 0.35*cap_score + 0.30*foresight_score + 0.15*vegas_alpha,1)
         # championship trumps regular-season — bonus from map or projected best-record for latest unknown season
         champ_bonus = 0
         playoff_label = ""
@@ -1786,7 +1817,11 @@ def main():
             "playoff_series_wins": PLAYOFF_SERIES_WINS.get(season_focus, {}).get(abbr, 0),
             "playoff_wins": PLAYOFF_WINS.get(season_focus, {}).get(abbr, 0),
             "weighted_wins": weighted_wins,
+            "vegas_over_under": vegas_ou,
+            "vegas_delta": round(vegas_delta,1) if vegas_delta is not None else None,
+            "vegas_beat": (vegas_delta>0) if vegas_delta is not None else None,
             "weighted_wpm": weighted_wpm,
+            "market_expectation_beat": (vegas_delta>0) if vegas_delta is not None else None,
             "payroll_m": pw_m,
             "payroll": pw,
             "cap_pct": cap_pct,
@@ -1798,6 +1833,9 @@ def main():
                 "median_wpm": round(median_wpm,3),
                 "payroll_m": pw_m,
                 "weighted_wins": weighted_wins,
+            "vegas_over_under": vegas_ou,
+            "vegas_delta": round(vegas_delta,1) if vegas_delta is not None else None,
+            "vegas_beat": (vegas_delta>0) if vegas_delta is not None else None,
                 "weighted_wpm": weighted_wpm
             },
             "draft": {
