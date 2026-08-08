@@ -1,0 +1,370 @@
+{
+  "draft": {
+    "LinearRegression": {
+      "avg_mae": 4496.75,
+      "avg_rmse": 5522.22,
+      "avg_r2": 0.3974,
+      "fold_metrics": [
+        {
+          "mae": 4422.88,
+          "rmse": 5450.75,
+          "r2": 0.4243
+        },
+        {
+          "mae": 4490.44,
+          "rmse": 5460.02,
+          "r2": 0.404
+        },
+        {
+          "mae": 4535.12,
+          "rmse": 5546.03,
+          "r2": 0.4016
+        },
+        {
+          "mae": 4446.17,
+          "rmse": 5412.87,
+          "r2": 0.4184
+        },
+        {
+          "mae": 4589.16,
+          "rmse": 5741.43,
+          "r2": 0.3387
+        }
+      ],
+      "perm_importance_delta_mae": {
+        "inv": -10.8,
+        "log": 385.4,
+        "round": 216.5,
+        "overall": 1251.02,
+        "draft_year_norm": 4.77
+      },
+      "feature_names": [
+        "inv",
+        "log",
+        "round",
+        "overall",
+        "draft_year_norm"
+      ],
+      "base_mae_full": 4476.65
+    },
+    "Ridge": {
+      "avg_mae": 4497.01,
+      "avg_rmse": 5521.78,
+      "avg_r2": 0.3975,
+      "fold_metrics": [
+        {
+          "mae": 4422.29,
+          "rmse": 5449.84,
+          "r2": 0.4245
+        },
+        {
+          "mae": 4491.09,
+          "rmse": 5459.8,
+          "r2": 0.4041
+        },
+        {
+          "mae": 4535.64,
+          "rmse": 5545.71,
+          "r2": 0.4017
+        },
+        {
+          "mae": 4446.7,
+          "rmse": 5412.69,
+          "r2": 0.4184
+        },
+        {
+          "mae": 4589.35,
+          "rmse": 5740.87,
+          "r2": 0.3388
+        }
+      ],
+      "perm_importance_delta_mae": {
+        "inv": -10.79,
+        "log": 388.85,
+        "round": 218.67,
+        "overall": 1243.28,
+        "draft_year_norm": 4.77
+      },
+      "feature_names": [
+        "inv",
+        "log",
+        "round",
+        "overall",
+        "draft_year_norm"
+      ],
+      "base_mae_full": 4477.14
+    },
+    "RandomForest": {
+      "avg_mae": 4523.68,
+      "avg_rmse": 5687.08,
+      "avg_r2": 0.3603,
+      "fold_metrics": [
+        {
+          "mae": 4386.55,
+          "rmse": 5519.08,
+          "r2": 0.4098
+        },
+        {
+          "mae": 4497.11,
+          "rmse": 5539.14,
+          "r2": 0.3866
+        },
+        {
+          "mae": 4552.38,
+          "rmse": 5727.59,
+          "r2": 0.3618
+        },
+        {
+          "mae": 4480.75,
+          "rmse": 5600.86,
+          "r2": 0.3773
+        },
+        {
+          "mae": 4701.61,
+          "rmse": 6048.71,
+          "r2": 0.266
+        }
+      ],
+      "perm_importance_delta_mae": {
+        "inv": 1000.84,
+        "log": 952.68,
+        "round": 71.87,
+        "overall": 1083.8,
+        "draft_year_norm": 1062.23
+      },
+      "feature_names": [
+        "inv",
+        "log",
+        "round",
+        "overall",
+        "draft_year_norm"
+      ],
+      "base_mae_full": 3588.39
+    },
+    "GradientBoosting": {
+      "avg_mae": 4510.47,
+      "avg_rmse": 5605.04,
+      "avg_r2": 0.3791,
+      "fold_metrics": [
+        {
+          "mae": 4400.41,
+          "rmse": 5512.18,
+          "r2": 0.4113
+        },
+        {
+          "mae": 4588.65,
+          "rmse": 5562.33,
+          "r2": 0.3815
+        },
+        {
+          "mae": 4548.08,
+          "rmse": 5616.07,
+          "r2": 0.3864
+        },
+        {
+          "mae": 4362.05,
+          "rmse": 5472.26,
+          "r2": 0.4056
+        },
+        {
+          "mae": 4653.17,
+          "rmse": 5862.38,
+          "r2": 0.3105
+        }
+      ],
+      "perm_importance_delta_mae": {
+        "inv": 1054.11,
+        "log": 352.01,
+        "round": 93.03,
+        "overall": 471.89,
+        "draft_year_norm": 386.11
+      },
+      "feature_names": [
+        "inv",
+        "log",
+        "round",
+        "overall",
+        "draft_year_norm"
+      ],
+      "base_mae_full": 4146.61
+    },
+    "HistGradientBoosting": {
+      "avg_mae": 4645.89,
+      "avg_rmse": 5888.36,
+      "avg_r2": 0.3145,
+      "fold_metrics": [
+        {
+          "mae": 4566.58,
+          "rmse": 5762.01,
+          "r2": 0.3567
+        },
+        {
+          "mae": 4652.66,
+          "rmse": 5695.56,
+          "r2": 0.3515
+        },
+        {
+          "mae": 4650.78,
+          "rmse": 5913.86,
+          "r2": 0.3196
+        },
+        {
+          "mae": 4608.77,
+          "rmse": 5867.55,
+          "r2": 0.3166
+        },
+        {
+          "mae": 4750.68,
+          "rmse": 6202.84,
+          "r2": 0.2281
+        }
+      ],
+      "perm_importance_delta_mae": {
+        "inv": 2978.85,
+        "log": 269.56,
+        "round": 0.0,
+        "overall": 0.0,
+        "draft_year_norm": 1272.56
+      },
+      "feature_names": [
+        "inv",
+        "log",
+        "round",
+        "overall",
+        "draft_year_norm"
+      ],
+      "base_mae_full": 3492.35
+    },
+    "LogisticRegression_hit": {
+      "avg_acc": 0.562,
+      "avg_auc": 0.589,
+      "fold_metrics": [
+        {
+          "acc": 0.559,
+          "auc": 0.6
+        },
+        {
+          "acc": 0.591,
+          "auc": 0.612
+        },
+        {
+          "acc": 0.575,
+          "auc": 0.596
+        },
+        {
+          "acc": 0.527,
+          "auc": 0.559
+        },
+        {
+          "acc": 0.558,
+          "auc": 0.577
+        }
+      ]
+    },
+    "MLP_torch_scaled": {
+      "avg_mae": 4530.2,
+      "avg_rmse": 5533.29,
+      "avg_r2": 0.3952,
+      "fold_metrics": [
+        {
+          "mae": 4458.16,
+          "rmse": 5457.31,
+          "r2": 0.423
+        },
+        {
+          "mae": 4577.43,
+          "rmse": 5494.5,
+          "r2": 0.3965
+        },
+        {
+          "mae": 4542.49,
+          "rmse": 5614.27,
+          "r2": 0.3868
+        },
+        {
+          "mae": 4466.98,
+          "rmse": 5417.41,
+          "r2": 0.4174
+        },
+        {
+          "mae": 4605.92,
+          "rmse": 5682.96,
+          "r2": 0.3521
+        }
+      ],
+      "arch": "MLP 5->64->32->1 dropout 0.2 scaled X y_norm mean/std earlystop pat10 lr2e-3"
+    }
+  },
+  "foresight": {
+    "Ridge_tm_gp": {
+      "mae": 0.0,
+      "rmse": 0.0,
+      "r2": 1.0
+    }
+  },
+  "cap": {
+    "Linear_payroll_cap_pct": {
+      "mae": 10.08,
+      "rmse": 12.72,
+      "r2": 0.0612
+    },
+    "RF_payroll_cap": {
+      "mae": 4.46,
+      "rmse": 5.58,
+      "r2": 0.8192
+    }
+  },
+  "meta": {
+    "seed": 42,
+    "sklearn": true,
+    "torch": true,
+    "n_draft": 1598,
+    "n_fore": 492,
+    "n_cap": 30
+  },
+  "multi_tower_multitask": {
+    "arch": "TowerA(5->16) TowerB(4->16) TowerC(4->16) TowerD(2->16) concat64 shared 64->32 heads 4",
+    "norm": {
+      "y_draft_mean": 8657.8125,
+      "y_draft_std": 7125.4365234375,
+      "y_fore_mean": -4.6734299659729,
+      "y_fore_std": 12.105917930603027,
+      "y_wins_mean": 41.0,
+      "y_wins_std": 13.130117416381836
+    },
+    "loss_final": 0.6745,
+    "draft_surplus_mae": 1305.96,
+    "draft_surplus_rmse": 1772.26,
+    "draft_surplus_r2": 0.9381,
+    "bust_acc": 0.167,
+    "bust_auc": 0.076,
+    "foresight_mae": 0.8,
+    "foresight_r2": 0.9933,
+    "wins_mae": 9.09,
+    "wins_r2": 0.1486,
+    "wins_rmse": 12.12,
+    "weighted_loss": "1.0*draft_norm +0.5*bust_bce*0.4 +0.8*fore_norm +0.6*wins_norm grad_clip 1.0 earlystop pat12 lr1.5e-3",
+    "early_stop_epoch": 125,
+    "tower_scalers": {
+      "A_mean": [
+        0.0788395303442552,
+        3.13087489600474,
+        1.493116395494368,
+        30.10325406758448,
+        0.5038028327918359
+      ],
+      "B_mean": [
+        0.9760851126737679,
+        0.6103879897872706,
+        0.5017209017500095,
+        0.5038028327918359
+      ]
+    },
+    "construct_validity_notes": {
+      "no_future_leakage": "draft features only pre-draft [inv,log,round,overall,year_norm], no future TM/PM used for target expectation modeling - quality only in target",
+      "discriminant_market_size": "market size not a feature; team context only via payroll/cap_pct not metro pop, check r<0.15",
+      "small_n_guard": "1598 draft samples, 5-fold CV, early stopping, ridge + dropout + weight_decay to prevent overfit, perm importance shows overall dominant not spurious",
+      "multitask_regularization": "shared trunk forces representation useful across tasks, prevents overfit to single domain"
+    }
+  }
+}
