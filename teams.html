@@ -1,55 +1,301 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#1A150F">
-<link rel="manifest" href="/manifest.json">
-<title>Team Labs Merged — Vector Hoops</title>
-<link rel="canonical" href="https://hoops.dumbmodel.com/players">
-<!-- teams restored: no auto-redirect -->
-<meta name="description" content="Team Labs merged into Player References while current roster data is rebuilt.">
-<link rel="stylesheet" href="assets/hoops.css">
-<link rel="stylesheet" href="assets/shell.css"/>
-<link rel="stylesheet" href="assets/responsive.css"/>
-<link rel="stylesheet" href="assets/final-qa.css"/>
-<link rel="stylesheet" href="assets/unified.css"/>
-<link rel="stylesheet" href="assets/motion.css"/>
-
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://hoops.dumbmodel.com/teams">
-<meta property="og:title" content="Teams — Vector Hoops">
-<meta property="og:description" content="Team Labs — explore teams, rosters, and embeddings.">
-<meta property="og:image" content="/assets/og-1200x630.png">
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<meta name="theme-color" content="#1A150F"/>
+<link rel="manifest" href="/manifest.json"/>
+<title>Team Labs — Front Office Intelligence — Vector Hoops</title>
+<meta name="description" content="Did they draft smart? Cap efficient? Foresight deals? Every team graded with recomputable glass-box logic."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/shell.css"/><link rel="stylesheet" href="assets/responsive.css"/><link rel="stylesheet" href="assets/final-qa.css"/>
+<link rel="stylesheet" href="assets/unified.css"/><link rel="stylesheet" href="assets/motion.css"/>
+<style>
+:root{--paper:#FFFEF7;--ink:#1A150F;--blue:#0072B2;--verm:#D55E00;--yellow:#F0E442;--green:#009E73;--radius:14px;--shadow:4px 4px 0 var(--ink);--mono:ui-monospace,monospace;--sans:ui-sans-serif,system-ui}
+*{box-sizing:border-box}html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.6;overflow-x:clip}
+.main{max-width:1180px;margin:0 auto;padding:12px clamp(12px,3.2vw,20px) calc(92px + env(safe-area-inset-bottom))}
+.card{background:#fff;border:2.2px solid var(--ink);border-radius:14px;box-shadow:var(--shadow);padding:14px 16px;margin-bottom:12px}
+.small-mono{font-family:var(--mono);font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
+.pill{border:1.6px solid var(--ink);border-radius:999px;padding:4px 10px;background:#fff;font-family:var(--mono);font-size:11px;font-weight:800;box-shadow:1.5px 1.5px 0 var(--ink);display:inline-flex;align-items:center;gap:6px}
+.pill-yellow{background:var(--yellow)} .pill-dark{background:var(--ink);color:#fff}
+.hd{font-family:"Architects Daughter",var(--mono);line-height:.92;letter-spacing:-.01em}
+.input{border:2px solid var(--ink);border-radius:10px;padding:10px 12px;font-family:var(--mono);font-size:13px;background:#fff;min-height:44px}
+.btn{appearance:none;min-height:44px;padding:10px 14px;border:2.2px solid var(--ink);border-radius:10px;background:#fff;color:var(--ink);font-family:var(--mono);font-weight:800;box-shadow:3px 3px 0 var(--ink);cursor:pointer}
+.btn:active{transform:translate(1px,1px);box-shadow:1px 1px 0 var(--ink)}
+.scores-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px}
+@media(max-width:900px){.scores-grid{grid-template-columns:1fr}}
+.glass{background:#FFFEF7;border:2px solid var(--ink);border-radius:12px;padding:12px;box-shadow:2px 2px 0 var(--ink);position:relative;overflow:hidden}
+.glass-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px}
+.glass-score{font-family:"Architects Daughter",var(--mono);font-size:28px;font-weight:900}
+.glass-meta{font-family:var(--mono);font-size:11px;opacity:.8;line-height:1.35}
+.bar{height:7px;background:#EEE8D8;border:1.5px solid var(--ink);border-radius:999px;overflow:hidden;margin:6px 0}
+.bar>i{display:block;height:100%;background:var(--ink);border-radius:999px}
+.table{width:100%;border-collapse:collapse;font-size:13px}
+.table th{font-family:var(--mono);font-size:11px;text-align:left;opacity:.7;padding:6px 6px;border-bottom:1.5px solid var(--ink)}
+.table td{padding:7px 6px;border-bottom:1px solid #EFE9D8;vertical-align:top}
+.team-dot{width:14px;height:14px;border-radius:50%;border:1.8px solid var(--ink);display:inline-block;vertical-align:middle}
+.leader-row{cursor:pointer;transition:background .1s}
+.leader-row:hover{background:#FFFEF7}
+.leader-row.is-active{background:var(--yellow)}
+/* sparkle */
+.spark{position:absolute;right:8px;top:8px;font-size:14px;opacity:.9;animation:tw 1.8s ease-in-out infinite}
+@keyframes tw{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-2px) rotate(4deg)}}
+</style>
 </head>
 <body>
-<noscript><div role="alert" style="padding:16px;text-align:center">Enable JS — Vector Hoops needs JavaScript for Daily Court + Map</div></noscript>
-
+<noscript><div role="alert" style="padding:16px;text-align:center">Enable JS — Team Labs needs JavaScript</div></noscript>
 <nav class="site-nav" data-active="/teams" aria-label="Vector Hoops site"></nav>
-<main class="research-main" style="max-width:1180px;margin:auto;padding:12px clamp(12px,3.2vw,20px) calc(92px + env(safe-area-inset-bottom))">
-  <div class="drift-card">
-    <p style="font-family:var(--mono);font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#666">Team Labs — restored minimal</p>
-    <h1 style="font-size:clamp(28px,5vw,38px);line-height:1.1;margin:8px 0">Team Labs</h1>
-    <p style="line-height:1.6;color:#333">Explore 30 NBA teams — rosters, archetype breakdown, mean skill grades. Data: <code>assets/teams.json</code> + <code>assets/current_rosters.json</code>.</p>
-    <div class="wiki-controls" style="margin-top:16px">
-      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
-        <select id="teams-select" class="input" style="flex:1 1 220px;min-height:44px"></select>
-        <select id="teams-season" class="input" style="flex:0 0 140px;min-height:44px"><option value="">2025-26</option></select>
+<div class="main">
+  <div class="card" style="border-left:6px solid var(--ink)">
+    <div class="small-mono" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+      <span class="pill pill-yellow">30 TEAMS · FRONT OFFICE</span>
+      <span id="fo-built" class="pill" style="opacity:.8">loading…</span>
+      <span class="pill pill-dark">2024-25 SEASON</span>
+      <a class="pill" href="/players">Players →</a>
+      <a class="pill" href="/model">Lab →</a>
+    </div>
+    <h1 class="hd" style="font-size:clamp(30px,4.6vw,42px);margin:8px 0 6px">Front Office Intelligence</h1>
+    <p style="margin:0;font-size:14.5px;color:#3A332A;max-width:68ch">Did they make smart draft picks? Optimize cap to win more than dollars say? Lock good deals early before cap rises <b>$136M → $154M</b>? Every number is <b>glass-box</b> — click a card for method, sources, and recompute.</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
+      <select id="team-select" class="input" style="flex:1 1 220px"></select>
+      <button id="btn-random" class="btn" type="button">🎲 Random team</button>
+      <button id="btn-rebuild" class="btn" type="button" title="Method is deterministic">How scored?</button>
+    </div>
+    <div id="team-archetypes" style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap"></div>
+  </div>
+
+  <div id="fo-team-card" class="card" style="display:none">
+    <div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap">
+      <div style="display:flex;gap:12px;align-items:center">
+        <div id="tm-logo" style="width:56px;height:56px;border:2.5px solid var(--ink);border-radius:12px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-weight:900;background:#fff;box-shadow:3px 3px 0 var(--ink)">—</div>
+        <div>
+          <h2 class="hd" id="tm-name" style="margin:0;font-size:26px">Team</h2>
+          <div class="small-mono" id="tm-sub" style="opacity:.7;text-transform:none">loading…</div>
+        </div>
       </div>
-      <div id="teams-summary" style="margin-top:12px;font-size:14px"></div>
-      <div id="teams-archetypes" style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap"></div>
-      <div id="teams-roster" style="margin-top:12px"></div>
-      <div id="teams-hint" class="small-mono" style="margin-top:8px;color:#666"></div>
+      <div style="text-align:right">
+        <div style="display:flex;gap:8px;justify-content:flex-end;align-items:center">
+          <span id="tm-grade" class="pill pill-dark" style="font-size:18px;padding:6px 14px">—</span>
+          <span id="tm-for" style="font-family:'Architects Daughter',var(--mono);font-size:36px;font-weight:900">—</span>
+        </div>
+        <div class="small-mono" style="opacity:.6;text-transform:none;margin-top:4px">FOR = 0.35·Draft + 0.35·Cap + 0.30·Foresight</div>
+      </div>
+    </div>
+
+    <div class="scores-grid">
+      <div class="glass" id="glass-draft">
+        <div class="glass-head"><b>Draft Smarts</b><span id="g-draft-grade" class="pill">—</span></div>
+        <div class="glass-score" id="g-draft-score">—</div>
+        <div class="bar"><i id="g-draft-bar" style="width:50%"></i></div>
+        <div class="glass-meta" id="g-draft-meta">—</div>
+        <details style="margin-top:8px"><summary class="small-mono" style="cursor:pointer">Glass-box</summary><div class="small-mono" id="g-draft-detail" style="text-transform:none;font-weight:500;margin-top:6px;line-height:1.45"></div></details>
+      </div>
+      <div class="glass" id="glass-cap">
+        <div class="glass-head"><b>Cap Efficiency</b><span id="g-cap-grade" class="pill">—</span></div>
+        <div class="glass-score" id="g-cap-score">—</div>
+        <div class="bar"><i id="g-cap-bar" style="width:50%"></i></div>
+        <div class="glass-meta" id="g-cap-meta">—</div>
+        <details style="margin-top:8px"><summary class="small-mono" style="cursor:pointer">Glass-box</summary><div class="small-mono" id="g-cap-detail" style="text-transform:none;font-weight:500;margin-top:6px;line-height:1.45"></div></details>
+      </div>
+      <div class="glass" id="glass-fore">
+        <div class="glass-head"><b>Foresight Deals</b><span id="g-fore-grade" class="pill">—</span></div>
+        <div class="glass-score" id="g-fore-score">—</div>
+        <div class="bar"><i id="g-fore-bar" style="width:50%"></i></div>
+        <div class="glass-meta" id="g-fore-meta">—</div>
+        <details style="margin-top:8px"><summary class="small-mono" style="cursor:pointer">Glass-box</summary><div class="small-mono" id="g-fore-detail" style="text-transform:none;font-weight:500;margin-top:6px;line-height:1.45"></div></details>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1.1fr .9fr;gap:12px;margin-top:12px">
+      <div class="glass" style="background:#fff">
+        <div class="small-mono" style="margin-bottom:6px">Draft 2020-24 — surplus vs expected pick</div>
+        <div id="draft-table-out" style="max-height:260px;overflow:auto"></div>
+      </div>
+      <div class="glass" style="background:#fff">
+        <div class="small-mono" style="margin-bottom:6px">Bargain retained deals — 2024-25</div>
+        <div id="fore-table-out" style="max-height:260px;overflow:auto"></div>
+        <div class="small-mono" id="fore-hint" style="margin-top:8px;opacity:.6;text-transform:none"></div>
+      </div>
+    </div>
+
+    <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+      <span id="tm-payroll" class="pill">—</span>
+      <span id="tm-wins" class="pill">—</span>
+      <span id="tm-wpm" class="pill">—</span>
+      <span id="tm-cap" class="pill">—</span>
     </div>
   </div>
-  <div class="card" id="team-leaderboard"><h2 class="hd" style="font-size:18px">Team board</h2><div id="team-board-count" class="small-mono" style="color:#666"></div><ol id="team-board-list" class="wiki-list"></ol></div>
-</main>
+
+  <div class="card" id="fo-board">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
+      <h2 class="hd" style="font-size:20px;margin:0">Leaderboard — 30 teams 2024-25</h2>
+      <div class="small-mono" id="board-meta" style="opacity:.6;text-transform:none">sorted by FOR — click a row to inspect</div>
+    </div>
+    <div style="overflow:auto;margin-top:10px">
+      <table class="table" id="board-table">
+        <thead><tr><th>#</th><th>Team</th><th>FOR</th><th>G</th><th>W</th><th>Payroll</th><th>W/$M</th><th>Draft</th><th>Cap</th><th>Fore</th></tr></thead>
+        <tbody id="board-body"><tr><td colspan="10" style="text-align:center;padding:22px">Loading front office…</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card" id="fo-method">
+    <div class="small-mono pill pill-yellow" style="margin-bottom:8px">Method — recompute proof</div>
+    <h3 class="hd" style="margin:0 0 6px;font-size:18px">How 3 grades are built (no black box)</h3>
+    <div style="font-size:13px;line-height:1.55;color:#3A332A">
+      <p><b>Sources:</b> <code>draft_history.json</code> 1947-2025 (person_id + overall + team_abbr), <code>vectors.json</code> 12,966 seasons (gp/mpg/total_min + x/y/z + c), <code>salaries_merged.json</code> 16,678 rows (norm_name|season → salary + team), <code>team_base_*.json</code> W/L, <code>CAP_BY_SEASON</code> $24M→$154M.</p>
+      <ul style="margin:6px 0 0;padding-left:18px">
+        <li><b>Draft Smarts (actual vs expected by pick):</b> Build expected career <code>total_min</code> curve for picks 1-60 using 1996-2022 drafts averaging career minutes trimmed mean. For 2020-24 picks per team, projected career = <code>actual_min / completion</code> where completion = <code>min(1, seasons/5.5)</code>, surplus = projected − expected. Scaling rewards steals (Jokić 41), penalizes busts (0 min → −0.6*expected). Rolling 5yr avg surplus → score = 50 + surplus/35 capped 0-100. Median trimmed.</li>
+        <li><b>Cap Efficiency (Wins Above Payroll Expectation):</b> Payroll sum from salaries_merged for 2024-25. W per $M = W / (payroll/1M). Rank pct vs 30 teams, median baseline 50, score = 50 + (wpm−median)/median*50. Payroll $ → cap pct = payroll / cap $140.588M. Wins/Payroll tells if dollars turned into Ws.</li>
+        <li><b>Foresight Deals (early cheap lock):</b> For 2024-25 players 20+ GP, median salary $ + median tm minutes computed. Expected salary = median_sal × (0.4 + 0.8 × tm/median_tm) capped 3×. Surplus $ = expected − actual (positive = bargain). Retained flag if same team 2023-24 and salary growth ≤ cap growth +5%. Bonus 1.25× if retained. Score = 50 + surplus_total/6M×10 capped. Think Jokić-type rookie extension that explodes as embedding jumps + cap rise $123M→$154M (+28%).</li>
+        <li><b>Composite FOR:</b> 0.35·draft + 0.35·cap + 0.30·foresight. Ranked 1-30 then curved A+ top 7% to D bottom 3% so you actually see letters. Recomputable via <code>pipeline/build_front_office.py</code> — zero deps stdlib.</li>
+      </ul>
+      <p style="margin-top:10px"><b>Prov:</b> <span id="fo-prov">loading…</span></p>
+    </div>
+  </div>
+</div>
+
 <footer class="site-footer"><div class="site-footer__links"><a href="/play">Play</a><a href="/model">Lab</a><a href="/methods">Methods</a><a href="/players">Players</a><a href="https://github.com/jcdavis131/vector-hoops" target="_blank" rel="noopener">GitHub</a></div><div class="site-footer__attribution">Every number recomputable from stats.nba.com · dumbmodel.com</div></footer>
-<script src="assets/error-boundary.js"></script>
-<script src="assets/keyboard-a11y.js"></script>
 <script src="assets/site-nav.js" defer></script>
-<script src="assets/pwa-install.js"></script>
-<script> // teams restored: no auto-redirect </script>
-<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js').catch(()=>{})})}</script>
+<script type="module">
+const $ = s=>document.querySelector(s);
+let FO=null;
+async function loadFO(){
+  try{
+    const r=await fetch('/assets/data/front_office.json',{cache:'no-store'});
+    if(!r.ok) throw new Error('no FO');
+    FO=await r.json();
+  }catch(e){
+    try{
+      const r2=await fetch('/assets/front_office.json',{cache:'no-store'});
+      FO=await r2.json();
+    }catch(e2){
+      FO=null;
+    }
+  }
+  return FO;
+}
+function gradePill(g){
+  const map={"A+":"pill-dark","A":"pill-yellow","A-":"","B+":"","B":"","B-":"","C+":"","C":"","C-":"","D":"","F":""};
+  const cls=map[g]||"";
+  return `<span class="pill ${cls}" style="font-weight:900">${g}</span>`;
+}
+function renderTeamsSelect(teams){
+  const sel=$('#team-select');
+  sel.innerHTML='';
+  teams.forEach(t=>{
+    const o=document.createElement('option');
+    o.value=t.abbr;
+    o.textContent=`${t.for_rank}. ${t.abbr} — ${t.name} — FOR ${t.for_score} ${t.for_grade} (${t.wins}-${t.losses})`;
+    sel.appendChild(o);
+  });
+}
+function renderBoard(teams){
+  const body=$('#board-body');
+  body.innerHTML='';
+  teams.forEach(t=>{
+    const tr=document.createElement('tr');
+    tr.className='leader-row';
+    tr.dataset.abbr=t.abbr;
+    tr.innerHTML=`<td>${t.for_rank}</td><td><span class="team-dot" style="background:${t.primary||'#fff'};border-color:${t.secondary||'#1A150F'}"></span> <b>${t.abbr}</b> <span style="opacity:.6;font-size:11px">${t.name.replace(' ',' ').split(' ').slice(-1)[0]||''}</span></td><td><b>${t.for_score}</b></td><td>${t.for_grade}</td><td>${t.wins||0}</td><td>$${t.payroll_m||0}M</td><td>${t.w_per_m||0}</td><td>${t.draft.score} ${t.draft.grade}</td><td>${t.cap_efficiency.score} ${t.cap_efficiency.grade}</td><td>${t.foresight.score} ${t.foresight.grade}</td>`;
+    tr.addEventListener('click',()=>selectTeam(t.abbr));
+    body.appendChild(tr);
+  });
+}
+function selectTeam(abbr){
+  if(!FO) return;
+  const t=FO.teams_by_abbr?.[abbr] || FO.teams.find(x=>x.abbr===abbr);
+  if(!t) return;
+  // active row
+  document.querySelectorAll('.leader-row').forEach(r=>r.classList.toggle('is-active', r.dataset.abbr===abbr));
+  // update dropdown
+  const sel=$('#team-select'); if(sel.value!==abbr) sel.value=abbr;
+  // card
+  $('#fo-team-card').style.display='block';
+  const logo=$('#tm-logo');
+  logo.textContent=t.abbr;
+  logo.style.background=t.primary||'#fff';
+  logo.style.color=t.primary && isDark(t.primary) ? '#fff' : '#1A150F';
+  logo.style.borderColor=t.secondary||'#1A150F';
+  $('#tm-name').textContent=t.name;
+  $('#tm-sub').textContent=`${t.abbr} · ${t.season} · ${t.wins}-${t.losses} (${(t.w_pct*100|0)}%) · cap ${(t.cap_pct*100|0)||'—'}% · rank #${t.for_rank}/30`;
+  $('#tm-grade').textContent=t.for_grade;
+  $('#tm-for').textContent=t.for_score;
+  // glasses
+  $('#g-draft-grade').textContent=t.draft.grade;
+  $('#g-draft-score').textContent=t.draft.score;
+  $('#g-draft-bar').style.width=Math.max(8, Math.min(100, t.draft.score))+'%';
+  $('#g-draft-meta').textContent=`${t.draft.picks_5yr_count} picks 20-24 · avg surplus ${t.draft.avg_surplus_min} min · total ${t.draft.total_surplus_min} min`;
+  $('#g-draft-detail').textContent=`Expected career total_min curve by pick 1-60 (1996-2022 baseline, trimmed mean). Surplus = projected − expected, projected = actual/completion where completion = min(1, seasons/5.5). Score = 50 + avg_surplus/35 (capped). Picks listed below.`;
+  $('#g-cap-grade').textContent=t.cap_efficiency.grade;
+  $('#g-cap-score').textContent=t.cap_efficiency.score;
+  $('#g-cap-bar').style.width=Math.max(8, Math.min(100, t.cap_efficiency.score))+'%';
+  $('#g-cap-meta').textContent=`$${t.payroll_m}M payroll · ${t.wins} W · ${t.w_per_m} W/$M · median ${t.cap_efficiency.median_wpm} · rank pct ${(t.cap_efficiency.rank_pct*100|0)}%`;
+  $('#g-cap-detail').textContent=`Payroll sum from salaries_merged 16,678 rows. W per $M = W / (payroll/1M). Score 50 = median W/$M. Cap% = payroll / $140.588M. Wins Above Payroll Expectation.`;
+  $('#g-fore-grade').textContent=t.foresight.grade;
+  $('#g-fore-score').textContent=t.foresight.score;
+  $('#g-fore-bar').style.width=Math.max(8, Math.min(100, t.foresight.score))+'%';
+  $('#g-fore-meta').textContent=`${t.foresight.surplus_count} bargains · $${t.foresight.surplus_total_m}M surplus · top ${t.foresight.bargain_deals.length} shows`;
+  $('#g-fore-detail').textContent=`Expected salary = median_sal × (0.4 + 0.8 × tm / median_tm). Surplus $ = expected − actual. Retained bonus 1.25× if same team last year and salary growth ≤ cap growth +5%. Cap rises $123M→$140.5M (+14%) → $154M (+9.7%), so early locks get more valuable.`;
+
+  // tables
+  const dOut=$('#draft-table-out');
+  if(t.draft.picks.length){
+    dOut.innerHTML=`<table class="table"><thead><tr><th>Year</th><th>Pick</th><th>Player</th><th>Exp→Act</th><th>Surplus</th></tr></thead><tbody>${t.draft.picks.map(p=>`<tr><td>${p.year}</td><td>#${p.overall}${p.round==1?'':' ('+p.round+'R)'} </td><td>${p.player}<div style="font-size:10px;opacity:.6">${p.seasons} seasons</div></td><td>${p.expected_min.toFixed(0)}→${p.actual_min.toFixed(0)}<div style="font-size:10px;opacity:.6">proj ${p.projected_min?.toFixed(0)||'—'}</div></td><td style="color:${p.surplus_min>=0?'var(--green)':'var(--verm)'};font-weight:800">${p.surplus_min>0?'+':''}${p.surplus_min.toFixed(0)}</td></tr>`).join('')}</tbody></table>`;
+  } else dOut.innerHTML=`<div style="font-size:13px;opacity:.6">No picks 2020-24 (or traded away)</div>`;
+
+  const fOut=$('#fore-table-out');
+  if(t.foresight.bargain_deals.length){
+    fOut.innerHTML=`<table class="table"><thead><tr><th>Player</th><th>Salary</th><th>Exp</th><th>Surplus</th><th>TM</th></tr></thead><tbody>${t.foresight.bargain_deals.map(d=>`<tr><td>${d.player}${d.retained?'<span class="pill" style="margin-left:6px;font-size:9px">retained</span>':''}</td><td>$${d.salary_m}M</td><td>$${d.exp_salary_m}M</td><td style="color:var(--green);font-weight:800">+$${d.surplus_m}M</td><td>${d.tm} min / ${d.gp} GP</td></tr>`).join('')}</tbody></table>`;
+    $('#fore-hint').textContent=`Retained = same team 23-24, salary growth ${FO.method? '' : ''}≤ cap growth. Early locks as cap $136M→$140.5M→$154M.`;
+  } else fOut.innerHTML=`<div style="font-size:13px;opacity:.6">No 20+ GP bargain deals detected (maybe high payroll stars)</div>`;
+
+  $('#tm-payroll').textContent=`Payroll $${t.payroll_m}M · cap ${(t.cap_pct*100).toFixed(0)||'—'}%`;
+  $('#tm-wins').textContent=`${t.wins}-${t.losses} · ${t.w_per_m} W/$M`;
+  $('#tm-wpm').textContent=`Median W/$M ${t.cap_efficiency.median_wpm}`;
+  $('#tm-cap').textContent=`Rank pct ${(t.cap_efficiency.rank_pct*100).toFixed(0)}%`;
+
+  // archetype chips (if we had) placeholder
+  $('#team-archetypes').innerHTML=`<span class="pill pill-yellow">#${t.for_rank} ${t.abbr}</span><span class="pill">FOR ${t.for_score} ${t.for_grade}</span><span class="pill">W ${t.wins}</span><span class="pill">Draft ${t.draft.grade} ${t.draft.score}</span><span class="pill">Cap ${t.cap_efficiency.grade}</span><span class="pill">Fore ${t.foresight.grade}</span>`;
+  // scroll into view on mobile
+  if(window.innerWidth<900) $('#fo-team-card').scrollIntoView({behavior:'smooth', block:'start'});
+}
+function isDark(hex){
+  if(!hex||hex.length<4) return false;
+  try{
+    let c=hex.replace('#','');
+    if(c.length===3) c=c.split('').map(x=>x+x).join('');
+    const r=parseInt(c.slice(0,2),16), g=parseInt(c.slice(2,4),16), b=parseInt(c.slice(4,6),16);
+    const lum=(0.299*r+0.587*g+0.114*b)/255;
+    return lum<0.5;
+  }catch{return false}
+}
+(async ()=>{
+  const fo=await loadFO();
+  if(!fo){
+    $('#fo-built').textContent='front_office.json missing — run pipeline';
+    return;
+  }
+  FO=fo;
+  $('#fo-built').textContent=`built ${fo.built.slice(0,10)} · 30 teams · cap $${(fo.season_cap/1_000_000).toFixed(1)}M`;
+  $('#fo-prov').textContent=`${fo.method.sources} · season ${fo.season_focus} · expected picks 1-60 baseline · median W/$M ${fo.median.wpm} · median sal $${fo.median.median_sal_m}M`;
+  const teams=fo.teams || [];
+  renderTeamsSelect(teams);
+  renderBoard(teams);
+  $('#board-meta').textContent=`${teams.length} teams · sorted by FOR · median W/$M ${fo.median.wpm} · built ${fo.built.slice(0,10)}`;
+  // default to #1
+  const defaultAbbr=teams[0]?.abbr||'OKC';
+  selectTeam(defaultAbbr);
+  // wire
+  $('#team-select').addEventListener('change',e=>selectTeam(e.target.value));
+  $('#btn-random').addEventListener('click',()=>{
+    const r=teams[Math.floor(Math.random()*teams.length)];
+    selectTeam(r.abbr);
+  });
+  $('#btn-rebuild').addEventListener('click',()=>{
+    document.getElementById('fo-method').scrollIntoView({behavior:'smooth'});
+  });
+})();
+</script>
 </body>
 </html>
