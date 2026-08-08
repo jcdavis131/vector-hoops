@@ -866,6 +866,21 @@ def main():
     # champion map — championship trumps regular-season wins (FOR composite additive)
     # 2025-26 real: NYK 4-1 over SAS Jun 3-13 2026 Finals, Brunson 45pts Gm5 MVP, 1st title in 53yr (since 1973) 3rd franchise | 2024-25 OKC over IND 4-3
     CHAMP_BONUS = {"2025-26":{"NYK":16,"SAS":7,"CLE":3,"OKC":3}, "2024-25":{"OKC":8,"IND":4}, "2023-24":{"BOS":8,"DAL":4}, "2022-23":{"DEN":8,"MIA":4}, "2021-22":{"GSW":8,"BOS":4}, "2020-21":{"MIL":8,"PHX":4}, "2019-20":{"LAL":8,"MIA":4}, "2018-19":{"TOR":8,"GSW":4}, "2017-18":{"GSW":8,"CLE":4}, "2016-17":{"GSW":8,"CLE":4}}
+    # playoff series wins per season per team — drives weighted wins + player playoff minutes
+    PLAYOFF_SERIES_WINS = {
+        "2025-26":{"NYK":4,"SAS":3,"CLE":2,"OKC":2,"BOS":1,"DEN":1,"MIL":1,"LAL":1},
+        "2024-25":{"OKC":4,"IND":3,"MIN":2,"NYK":2,"DEN":1,"BOS":1,"CLE":1,"GSW":1},
+        "2023-24":{"BOS":4,"DAL":3,"MIN":2,"IND":2,"DEN":1,"OKC":1,"NYK":1,"CLE":1},
+        "2022-23":{"DEN":4,"MIA":3,"LAL":2,"BOS":2,"GSW":1,"PHI":1,"PHX":1,"NYK":1},
+        "2021-22":{"GSW":4,"BOS":3,"DAL":2,"MIA":2,"MEM":1,"MIL":1,"PHI":1,"PHX":1},
+        "2020-21":{"MIL":4,"PHX":3,"ATL":2,"LAC":2,"BRK":1,"PHI":1,"DEN":1,"UTA":1},
+    }
+    PLAYOFF_WINS = {} # derived playoff game wins from series wins *4 avg
+    for seas, dct in PLAYOFF_SERIES_WINS.items():
+        PLAYOFF_WINS[seas] = {abbr: sw*4 for abbr, sw in dct.items()}  # 4 wins per series avg; runner 12, champ 16
+    # playoff weighted wins multiplier — playoff win = 2.5x regular season win for weighted ranking
+    PLAYOFF_WIN_WEIGHT = 2.5
+
     # expose for top-level payload later
     champion_map = CHAMP_BONUS
     cap = CAP_BY_SEASON.get(season_focus, 140_588_000) if CAP_BY_SEASON else 140_588_000
@@ -876,13 +891,18 @@ def main():
         teams_defs = {}
 
     league_wpm = []
+    weighted_wins_map = {}
     for (abbr, seas), winfo in wins.items():
         if seas != season_focus:
             continue
         pw = payroll.get((abbr, seas))
         if not pw or pw < 10_000_000:
             continue
+        pwins = PLAYOFF_WINS.get(seas, {}).get(abbr, 0)
+        ww = float(winfo["W"]) + pwins * PLAYOFF_WIN_WEIGHT
+        weighted_wins_map[(abbr, seas)] = ww
         wpm = winfo["W"] / (pw/1_000_000)
+        # For model training we will later use weighted_wins for y, keep wpm as regular for baseline
         league_wpm.append(wpm)
     league_wpm_sorted = sorted(league_wpm)
     median_wpm = league_wpm_sorted[len(league_wpm_sorted)//2] if league_wpm_sorted else 0.3
@@ -900,23 +920,35 @@ def main():
             continue
         pw_m = pw/1_000_000
         cap_pct_tmp = pw / cap if cap else 0
+        pwins = PLAYOFF_WINS.get(seas, {}).get(abbr, 0)
+        weighted = float(winfo["W"]) + pwins * PLAYOFF_WIN_WEIGHT
         cap_eff_dataset.append({
             "abbr": abbr,
             "payroll_m": pw_m,
             "cap_pct": cap_pct_tmp,
             "wins": float(winfo["W"]),
+            "weighted_wins": weighted,
+            "playoff_wins": float(pwins),
         })
     # X payroll_m only
     X_payroll = [[d["payroll_m"]] for d in cap_eff_dataset]
-    y_wins = [d["wins"] for d in cap_eff_dataset]
+    y_wins = [d["wins"] for d in cap_eff_dataset]  # raw regular season for baseline median
+    y_wins_weighted = [d["weighted_wins"] for d in cap_eff_dataset]  # playoff-weighted target: playoff wins matter more
     coeffs_wins_payroll = train_linear_regression(X_payroll, y_wins, add_bias=True) if X_payroll else [0,0]
     preds_wins_payroll = predict_linear_regression(X_payroll, coeffs_wins_payroll, add_bias=True) if X_payroll else []
     metrics_wins_payroll = metrics_mae_rmse_r2(y_wins, preds_wins_payroll) if y_wins else {"mae":0,"rmse":0,"r2":0}
+    # weighted wins model — construct validity: playoff success > regular win
+    coeffs_wins_weighted = train_linear_regression(X_payroll, y_wins_weighted, add_bias=True) if X_payroll else [0,0]
+    preds_wins_weighted = predict_linear_regression(X_payroll, coeffs_wins_weighted, add_bias=True) if X_payroll else []
+    metrics_wins_weighted = metrics_mae_rmse_r2(y_wins_weighted, preds_wins_weighted) if y_wins_weighted else {"mae":0,"rmse":0,"r2":0}
 
     X_cappct = [[d["cap_pct"]] for d in cap_eff_dataset]
     coeffs_wins_cappct = train_linear_regression(X_cappct, y_wins, add_bias=True) if X_cappct else [0,0]
     preds_wins_cappct = predict_linear_regression(X_cappct, coeffs_wins_cappct, add_bias=True) if X_cappct else []
     metrics_wins_cappct = metrics_mae_rmse_r2(y_wins, preds_wins_cappct) if y_wins else {"mae":0,"rmse":0,"r2":0}
+    coeffs_weighted_cappct = train_linear_regression(X_cappct, y_wins_weighted, add_bias=True) if X_cappct else [0,0]
+    preds_weighted_cappct = predict_linear_regression(X_cappct, coeffs_weighted_cappct, add_bias=True) if X_cappct else []
+    metrics_weighted_cappct = metrics_mae_rmse_r2(y_wins_weighted, preds_weighted_cappct) if y_wins_weighted else {"mae":0,"rmse":0,"r2":0}
 
     # Heuristic baseline: median W/$M -> wins = median_wpm * payroll_m
     preds_heuristic_wpm = [median_wpm * d["payroll_m"] for d in cap_eff_dataset] if cap_eff_dataset else []
@@ -1143,6 +1175,11 @@ def main():
                 pw = 150_000_000
         pw_m = round(pw/1_000_000,2) if pw else 0
         wpm = round(winfo.get("W",0) / (pw/1_000_000),3) if pw and pw>0 else 0
+        # weighted wins playoff matter more
+        playoff_series = PLAYOFF_SERIES_WINS.get(season_focus, {}).get(abbr, 0)
+        playoff_wins = PLAYOFF_WINS.get(season_focus, {}).get(abbr, 0)
+        weighted_wins = round(float(winfo.get("W",0)) + playoff_wins * PLAYOFF_WIN_WEIGHT,1)
+        weighted_wpm = round(weighted_wins / (pw/1_000_000),3) if pw and pw>0 else 0
         rank = 0
         if league_wpm_sorted:
             rank = sum(1 for v in league_wpm_sorted if v <= wpm) / len(league_wpm_sorted)
@@ -1364,6 +1401,37 @@ def main():
                     if surplus > cap_val_final:
                         surplus = cap_val_final
 
+                # playoff contribution — playoff mins matter more, rate players better with more min + better stats in deep runs
+                regular_season_impact_val = round(qual_adj_actual,1)
+                playoff_mins_est = 0.0
+                playoff_impact_val = 0.0
+                playoff_series_total_for_team = 0
+                playoff_wins_total_for_team = 0
+                try:
+                    avg_per_season = (actual_first5 / seasons_played) if seasons_played>0 else (latest_qual or 0)
+                    # sum playoff games for team across first5 window where player was active
+                    playoff_games_window = 0
+                    for dy in range(year, min(year+5, 2027)):
+                        seas_str = f"{dy}-{str(dy+1)[-2:]}"
+                        sw = PLAYOFF_SERIES_WINS.get(seas_str, {}).get(draft_team, 0)
+                        pw = PLAYOFF_WINS.get(seas_str, {}).get(draft_team, 0)
+                        if sw>0:
+                            # games ~ sw*5.5 avg (wins*1.375) capped 28
+                            pg = min(28, pw*1.35)  # ~ playoff wins *1.35 games
+                            playoff_games_window += pg
+                            playoff_series_total_for_team += sw
+                            playoff_wins_total_for_team += pw
+                    if playoff_games_window>0 and avg_per_season>0:
+                        playoff_mins_est = avg_per_season * (playoff_games_window/82.0)
+                        # quality multiplier — players with higher avg_q and plus_minus contribute more in clutch
+                        q_mult = max(0.8, min(1.6, (avg_q or 1.0)))
+                        pm_mult = 1.0 + max(0.0, (latest_pm or 0)/4.0)  # +25% per +1 PM, star wings get boost
+                        # playoff weight 2.5x importance per user: playoff mins = more valuable
+                        playoff_impact_val = playoff_mins_est * q_mult * pm_mult * 2.5
+                except Exception:
+                    playoff_impact_val = 0.0
+                    playoff_mins_est = 0.0
+
                 draft_surpluses.append(surplus)
                 draft_weights.append(weight)
                 total_surplus += surplus * weight
@@ -1392,9 +1460,12 @@ def main():
                     "plus_minus": round(latest_pm,3),
                     "latest_pm": round(latest_pm,3),
                     "regular_season_mins": round(actual_first5,1),
-                    "regular_season_impact": round(actual_first5,1),
-                    "playoff_proxy": round(latest_pm,3),
-                    "playoff_impact_proxy": round(latest_pm,3),
+                    "regular_season_impact": regular_season_impact_val,
+                    "playoff_proxy": round(playoff_series_total_for_team,1),
+                    "playoff_impact_proxy": round(playoff_impact_val,1),
+                    "playoff_mins_est": round(playoff_mins_est,1),
+                    "playoff_series_wins_for_team": playoff_series_total_for_team,
+                    "playoff_wins_for_team": playoff_wins_total_for_team,
                     "is_rookie_2025": is_rookie_2025,
                     "is_zero_usage": is_zero_usage,
                     "weight": round(weight,3),
@@ -1451,6 +1522,9 @@ def main():
                     "regular_season_impact": 0,
                     "playoff_proxy": 0,
                     "playoff_impact_proxy": 0,
+                    "playoff_mins_est": 0,
+                    "playoff_series_wins_for_team": 0,
+                    "playoff_wins_for_team": 0,
                     "is_rookie_2025": (year==2025),
                     "is_zero_usage": True,
                     "weight": round(weight,3),
@@ -1675,6 +1749,10 @@ def main():
             "wins": winfo.get("W"),
             "losses": winfo.get("L"),
             "w_pct": round(winfo.get("W_PCT",0),3),
+            "playoff_series_wins": PLAYOFF_SERIES_WINS.get(season_focus, {}).get(abbr, 0),
+            "playoff_wins": PLAYOFF_WINS.get(season_focus, {}).get(abbr, 0),
+            "weighted_wins": weighted_wins,
+            "weighted_wpm": weighted_wpm,
             "payroll_m": pw_m,
             "payroll": pw,
             "cap_pct": cap_pct,
@@ -1684,7 +1762,9 @@ def main():
                 "grade": cap_grade,
                 "rank_pct": round(rank,3),
                 "median_wpm": round(median_wpm,3),
-                "payroll_m": pw_m
+                "payroll_m": pw_m,
+                "weighted_wins": weighted_wins,
+                "weighted_wpm": weighted_wpm
             },
             "draft": {
                 "picks_5yr_count": len(drafts_5yr),
@@ -1888,9 +1968,12 @@ def main():
         "season_focus": season_focus,
         "prior_season": prior_season,
         "champion_map": CHAMP_BONUS,
+        "playoff_series_wins": PLAYOFF_SERIES_WINS,
+        "playoff_wins": PLAYOFF_WINS,
+        "playoff_win_weight": PLAYOFF_WIN_WEIGHT,
         "champion_display": (lambda sf, cb: f"{', '.join([f'{abbr} {'Champion' if v>=8 else 'Runner' if v>=4 else 'Conf'} +{v}' for abbr,v in sorted(cb.get(sf,{}).items(), key=lambda kv: -kv[1])])} ({sf})" if sf in cb and cb.get(sf) else f"{sf} projected — best regular-season record +8" if True else "")(season_focus, CHAMP_BONUS),
-        "season_today_label": f"Today {season_focus} end-of-season (championship-first)",
-        "ethos": "Championship trumps regular season — same FOR with ring > without. Regular season builds to end-of-season title, typically end of season after postseason.",
+        "season_today_label": f"Today {season_focus} end-of-season (championship-first) + weighted W* = W+{PLAYOFF_WIN_WEIGHT}*POwins, playoff mins 2.5x",
+        "ethos": "Championship trumps regular season — same FOR with ring > without. Regular season builds to end-of-season title, typically end of season after postseason. Weighted wins W* = W + 2.5*POwins values playoff wins more, player playoff mins boosted 2.5x with quality * PM.",
         "season_cap": CAP_BY_SEASON.get(season_focus) if CAP_BY_SEASON else cap,
         "season_next": season_next,
         "season_next_cap": cap_next,

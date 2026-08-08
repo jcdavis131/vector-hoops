@@ -13,7 +13,9 @@
      let payM=(pay&&pay[season]&&pay[season][t.abbr])||'—';
      let cap=capRules&&capRules[season]?capRules[season].cap:null;
      let capPct=cap&&payM!=='—'?(payM*1e6/cap*100|0)+'%':'—';
-     let wpm=payM!=='—'?(t.W/payM).toFixed(2):'—';
+     let pw=(window.PO_WINS&&window.PO_WINS[season]&&window.PO_WINS[season][t.abbr])||0;
+     let ww=pw? (t.W+pw*2.5).toFixed(1): t.W;
+     let wpm=payM!=='—'?(ww/payM).toFixed(2):'—';
      let champ=''; if(season===FO.season_focus && t.abbr===Object.keys(FO.champion_map[season]||{})[0]) champ=`<span class="pill pill-yellow" style="font-size:9px;background:#FFD700;color:#000">👑 Champion ${season.slice(0,4)}</span>`;
      tr.innerHTML=`<td>${i+1}</td><td><span class="team-dot" style="background:${t.primary||'#fff'}"></span> <b>${t.abbr}</b> ${champ}</td><td>—</td><td>—</td><td>${t.W}</td><td>${payM!=='—'?`$${payM}M`:'—'}</td><td>${payM!=='—'?`$${payM}M`:'—'}</td><td>${wpm}</td><td>—</td><td>—</td><td>—</td><td>${capPct}</td>`;
      tr.onclick=()=>{if(typeof pick==='function'){let want=t.abbr; let foTeam=FO.teams_by_abbr[want]; if(foTeam) pick(want);}};
@@ -26,6 +28,7 @@
    let hist=await getHist(), pay=await getPay(), capRules=await getCap();
    // enhance capRules to map season->cap quickly
    let capMap={}; if(capRules){Object.keys(capRules).forEach(k=>{if(capRules[k]&&capRules[k].cap) capMap[k]=capRules[k]}); }
+   window.PO_WINS=FO.playoff_wins||{}; window.PO_SERIES=FO.playoff_series_wins||{}; window.PO_WEIGHT=FO.playoff_win_weight||2.5;
    document.querySelectorAll('#time-slider [data-season]').forEach(btn=>{
      btn.onclick=async ()=>{
        document.querySelectorAll('#time-slider [data-season]').forEach(b=>b.classList.remove('pill-yellow')); btn.classList.add('pill-yellow');
