@@ -21,6 +21,27 @@ Zero-deps, stdlib only. Recomputable from:
 from __future__ import annotations
 import json, math, time, pathlib, collections, re
 from datetime import datetime
+# era-aware cap rules
+try:
+    from nba_salary_cap import (
+        CAP_BY_SEASON as _CAP_BY_SEASON_IMPORTED,
+        TAX_THRESHOLD_BY_SEASON,
+        APRON1_BY_SEASON,
+        APRON2_BY_SEASON,
+        CBA_BY_SEASON,
+        TV_DEAL_BY_SEASON,
+        rules_for_season,
+    )
+    CAP_BY_SEASON = _CAP_BY_SEASON_IMPORTED
+except Exception:
+    # fallback if import fails (shouldn't) — will be overwritten later if file present
+    CAP_BY_SEASON = {}
+    TAX_THRESHOLD_BY_SEASON = {}
+    APRON1_BY_SEASON = {}
+    APRON2_BY_SEASON = {}
+    CBA_BY_SEASON = {}
+    TV_DEAL_BY_SEASON = {}
+    def rules_for_season(s): return {"season": s, "cap": None, "tax": None, "apron1": None, "apron2": None, "cba": "unknown", "tv_deal": "unknown", "cap_growth_vs_prior": None}
 
 HERE = pathlib.Path(__file__).resolve().parent
 ROOT = HERE.parent
@@ -30,20 +51,6 @@ VECTORS = ASSETS / "vectors.json"
 DRAFT = CACHE / "draft_history.json"
 SALARIES = CACHE / "salaries_merged.json"
 TEAMS_DEF = ASSETS / "teams.json"
-
-# Cap history (copied from nba_salary_cap.py to avoid import dep issues)
-CAP_BY_SEASON = {
-    "1996-97": 24_363_000, "1997-98": 26_900_000, "1998-99": 30_000_000,
-    "1999-00": 34_000_000, "2000-01": 35_500_000, "2001-02": 42_500_000,
-    "2002-03": 43_840_000, "2003-04": 43_840_000, "2004-05": 43_870_000,
-    "2005-06": 49_500_000, "2006-07": 53_135_000, "2007-08": 55_827_000,
-    "2008-09": 58_680_000, "2009-10": 57_700_000, "2010-11": 58_044_000,
-    "2011-12": 58_044_000, "2012-13": 58_680_000, "2013-14": 58_680_000,
-    "2014-15": 63_065_000, "2015-16": 70_000_000, "2016-17": 94_143_000,
-    "2017-18": 99_093_000, "2018-19": 101_869_000, "2019-20": 109_140_000,
-    "2020-21": 109_140_000, "2021-22": 112_414_000, "2022-23": 123_655_000,
-    "2023-24": 136_021_000, "2024-25": 140_588_000, "2025-26": 154_647_000,
-}
 
 def norm_name(n: str) -> str:
     s = n.lower()
@@ -585,19 +592,63 @@ def main():
         t["cap_2025_26"] = cap_next
         t["committed_2025_26"] = committed
         t["top_earner_2025_26"] = {"name": top[2], "salary_m": round(top[1]/1_000_000,2)} if top else None
-        # flexibility: lower cap_pct is more flexible for future success
-        # store simple projection grade
-        # e.g., <90% cap = A flexibility, >110% = D (over cap but can still sign)
+
+        # era-aware cap environment for this season
+        tax_next = TAX_THRESHOLD_BY_SEASON.get(season_next)
+        apron1_next = APRON1_BY_SEASON.get(season_next)
+        apron2_next = APRON2_BY_SEASON.get(season_next)
+        cba_next = CBA_BY_SEASON.get(season_next)
+        tv_next = TV_DEAL_BY_SEASON.get(season_next)
+        t["cap_rules_2025_26"] = {
+            "cap": cap_next,
+            "tax": tax_next,
+            "apron1": apron1_next,
+            "apron2": apron2_next,
+            "cba": cba_next,
+            "tv_deal": tv_next,
+        }
+        # tax / apron positioning
+        over_tax = pw_next > tax_next if tax_next and pw_next else False
+        over_apron1 = pw_next > apron1_next if apron1_next and pw_next else False
+        over_apron2 = pw_next > apron2_next if apron2_next and pw_next else False
+        t["tax_apron_status_2025_26"] = {
+            "over_tax": over_tax,
+            "over_apron1": over_apron1,
+            "over_apron2": over_apron2,
+            "tax_level": tax_next,
+            "apron1_level": apron1_next,
+            "apron2_level": apron2_next,
+        }
+        # flexibility: incorporate CBA apron hard-cap logic (2023 CBA+)
+        # 2023 CBA+: second apron = practical hard cap — teams over it lose MLE, trade aggregations, picks freeze, etc.
         flex_pct = cap_pct_next or 0
+        # base on cap %
         if flex_pct == 0:
             flex_grade = "—"
-        elif flex_pct < 0.80: flex_grade = "A+"
-        elif flex_pct < 0.92: flex_grade = "A"
-        elif flex_pct < 1.00: flex_grade = "B+"
-        elif flex_pct < 1.10: flex_grade = "B"
-        elif flex_pct < 1.25: flex_grade = "B-"
-        else: flex_grade = "C"
-        t["flexibility_2025_26"] = {"cap_pct": cap_pct_next, "grade": flex_grade}
+        elif flex_pct < 0.80:
+            flex_grade = "A+"
+        elif flex_pct < 0.92:
+            flex_grade = "A"
+        elif flex_pct < 1.00:
+            flex_grade = "B+"
+        elif flex_pct < 1.10:
+            flex_grade = "B"
+        elif flex_pct < 1.25:
+            flex_grade = "B-"
+        else:
+            flex_grade = "C"
+        # override with apron reality — 2023 CBA era
+        if over_apron2:
+            flex_grade = "D"  # hard capped, future picks frozen risk
+        elif over_apron1:
+            # downgrade one letter if was A/B range
+            if flex_grade in ("A+", "A", "B+", "B"):
+                flex_grade = "B-" if flex_grade in ("A+", "A") else "C+"
+        elif over_tax:
+            # over tax but under apron — still pay penalty, 50% redistributed to non-tax teams (revenue sharing)
+            if flex_grade == "A+":
+                flex_grade = "A"
+        t["flexibility_2025_26"] = {"cap_pct": cap_pct_next, "grade": flex_grade, "over_tax": over_tax, "over_apron1": over_apron1, "over_apron2": over_apron2}
 
     # sort by for_score desc for leaderboard
     output_teams_sorted = sorted(output_teams, key=lambda x: x["for_score"], reverse=True)
