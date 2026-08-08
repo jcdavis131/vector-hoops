@@ -697,5 +697,30 @@ def run_zoo():
         json.dump(zoo_results, f, indent=2)
     print(f"wrote {out_path}")
 
+
+# --- Hill-Climb v5.2 best configs (2026-08-08) ---
+# Sweep Ridge alphas [0.1,1,10,100] -> best alpha 0.1 mae 4496.78 bare 5feat,
+# engineered 10feat [inv,log,round,overall,year_norm,overall_round,log_inv,inv2,year_sq,overall_log] Ridge alpha10 mae 4495.51 best overall.
+# RF depth 8 n200 mae 4507.49 vs depth12 4522.87, GB lr0.05 4554.69 worse.
+# MLP wide 128-64 d0.3 eng10 mae 4496.99 close second.
+# MT v2: towers 32 each, shared 128->64 LayerNorm residual gate dropout0.25 cosineAnneal lr1e-3 wd1e-4 pat15 winsHead deeper 32->16,
+# best loss 0.7955 draft1416 wins9.03 vs v1 loss0.6745 draft1305 wins9.09.
+# Weighted primary draft, so v1 still best loss, but v2 wins head better (9.09->9.03) and engineered Ridge beats linear by 1.24.
+# Keep best configs here for future default.
+
+BEST_DRAFT = {
+    "model": "Ridge_Engineered_10feat_alpha10",
+    "alpha": 10,
+    "features": ["inv","log","round","overall","draft_year_norm","overall_round","log_inv","inv2","year_sq","overall_log"],
+    "mae": 4495.51
+}
+
+BEST_MT_V2 = {
+    "arch": "TowerA(10->32) TowerB(4->32) TowerC(4->32) TowerD(2->32) concat128 shared 128->64 LayerNorm residual gate dropout0.25 cosineAnneal lr1e-3 wd1e-4 pat15 winsHead 32->16",
+    "loss": 0.7955,
+    "draft_mae": 1416.99,
+    "wins_mae": 9.03
+}
+
 if __name__ == "__main__":
     run_zoo()

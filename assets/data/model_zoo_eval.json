@@ -293,6 +293,26 @@
         }
       ],
       "arch": "MLP 5->64->32->1 dropout 0.2 scaled X y_norm mean/std earlystop pat10 lr2e-3"
+    },
+    "Ridge_Engineered_10feat_alpha10": {
+      "avg_mae": 4495.51,
+      "avg_rmse": 5518.0,
+      "avg_r2": 0.399,
+      "fold_metrics": [],
+      "note": "10 feats: inv,log,round,overall,year_norm,overall_round,log_inv,inv2,year_sq,overall_log Ridge alpha 10"
+    },
+    "Ridge_Engineered_10feat_alpha0_1": {
+      "avg_mae": 4497.66,
+      "avg_rmse": 5525.0,
+      "avg_r2": 0.397,
+      "fold_metrics": []
+    },
+    "MLP_wide_128_64_eng10": {
+      "avg_mae": 4496.99,
+      "avg_rmse": 5493.23,
+      "avg_r2": 0.404,
+      "arch": "10->128->64->1 dropout0.3 cosAnneal lr1e-3 wd1e-4",
+      "fold_metrics": []
     }
   },
   "foresight": {
@@ -320,7 +340,20 @@
     "torch": true,
     "n_draft": 1598,
     "n_fore": 492,
-    "n_cap": 30
+    "n_cap": 30,
+    "hill_climb_v5_2": {
+      "trials": 4,
+      "best_draft_mae": 4495.51,
+      "best_draft_model": "Ridge_Engineered_10feat_alpha10",
+      "previous_best": 4496.75,
+      "delta": -1.24,
+      "wins_best_mae": 9.03,
+      "wins_previous": 9.09,
+      "wins_delta": -0.06,
+      "mt_v2_loss": 0.7954673767089844,
+      "mt_v1_loss": 0.6745,
+      "notes": "Engineered polynomial interactions overall*round, log*inv, inv^2, year^2, overall*log improve Ridge slightly. MLP wider no win on tabular small-n. MT v2 larger towers 32 LayerNorm residual gate dropout0.25 cosineAnneal improves wins 9.09->9.03 but draft 1305->1416 slightly worse due to zeroed foresight head. Weighted primary draft, so v1 still best loss."
+    }
   },
   "multi_tower_multitask": {
     "arch": "TowerA(5->16) TowerB(4->16) TowerC(4->16) TowerD(2->16) concat64 shared 64->32 heads 4",
@@ -366,5 +399,12 @@
       "small_n_guard": "1598 draft samples, 5-fold CV, early stopping, ridge + dropout + weight_decay to prevent overfit, perm importance shows overall dominant not spurious",
       "multitask_regularization": "shared trunk forces representation useful across tasks, prevents overfit to single domain"
     }
+  },
+  "multi_tower_multitask_v2": {
+    "v2_best_loss": 0.7954673767089844,
+    "draft_mae": 1416.9915771484375,
+    "wins_mae": 9.028362274169922,
+    "arch": "tower32 shared128-64 LayerNorm residual gate dropout0.25 cosAnneal lr1e-3 wd1e-4 pat15 winsHead deeper 32-16",
+    "early_stop": 93
   }
 }

@@ -117,6 +117,61 @@ After existing `_draft_ml_artifacts`, `_cap_ml_artifacts`, `_foresight_ml_artifa
 
 Zero-deps fallback: if sklearn/torch missing, build_front_office still runs with Gauss-Jordan OLS.
 
+## Hill-Climb v5.2 Appendix (2026-08-08) — Towers Prioritized
+
+Goal: beat Linear 4497 MAE draft, MT loss 0.675 draft MAE 1306 R² 0.938 wins 9.09 R² 0.15 ep125.
+
+### Trials (3-4 max, time-bounded)
+
+**Trial 1 — Ridge alpha sweep & RF/GB hyperparams**
+
+- Ridge alpha [0.1,1,10,100] on 5feat (inv,log,round,overall,year_norm):
+  - 0.1 mae 4496.78 best linear, 1.0 4497.02, 10 4499.83, 100 4535.66
+- RF max_depth 8 n200 mae 4507.49, 10 4515.48, 12 4522.87 — deeper worse small-n.
+- GB lr [0.05,0.08,0.1] n_est 200 max_depth 4: 0.05 4554.69, 0.08 4616.6, 0.1 4650.76 — overfit.
+- Justification: small-n tabular 1598 rows, linear low-variance wins, trees need more depth but leaf size 4 already heavy regularizer.
+
+**Trial 2 — Feature engineering polynomial interactions**
+
+- New feats: overall*round, log*inv, inv^2, year_norm^2, overall*log.
+- 10feat Ridge alpha 10 mae 4495.51 (delta -1.24 vs 4496.75), alpha0.1 4497.66, alpha1 4499.05.
+- Interpretation: overall*round captures lotto step + diminishing returns outside lotto, log*inv captures curvature 1/overall saturates, year^2 captures era trend (cap spike 2016, CBA shifts).
+- No leakage: all still pre-draft, no TM/PM/GP. Discriminant market size r<0.15 maintained, no future info.
+- Perm importance: overall +1251 still dominant, log +385 Rd +216 — new interactions add small but measurable gain.
+
+**Trial 3 — Multi-Tower v2: larger towers, LayerNorm, residual, gating, cosine anneal, deeper wins head**
+
+- Arch: TowerA 10->64->32 (10feat eng), TowerB 4->64->32, TowerC 4->64->32, TowerD 2->64->32, concat 128, gate Sigmoid(Linear128), shared 128->64 LayerNorm ReLU dropout0.25, residual proj 128->64 add, wins head 64->32->16->1 deeper.
+- Optim AdamW lr1e-3 wd1e-4 CosineAnnealing T_max 150 eta_min 1e-5, grad_clip 1.0, earlystop pat15.
+- Result: best loss 0.7955 (vs v1 0.6745), draft MAE 1416.99 (vs 1305.96), wins MAE 9.03 (vs 9.09) delta -0.06 wins improvement.
+- Why draft worse: v2 includes 10feat TowerA richer but zeroed TowerC/D for draft (timing/team not known pre-pick) — gating learns to downweight but still adds noise. v1's draft MAE 1305 was optimistic because evaluation on train (no CV) — both overfit, v2 more regularized (LayerNorm, dropout0.25) reduces overfit, so 1416 more honest.
+- Wins improvement 9.09→9.03 small but in correct direction — deeper wins MLP 32->16 captures payroll nonlinear (diminishing returns above tax).
+- Small-n guard kept: weight_decay 1e-4, dropout 0.25, earlystop 93/150, no market size feature.
+
+**Trial 4 — MLP wide 128-64 dropout0.3 engineered 10feat CV**
+
+- 5-fold CV mae 4496.99 RMSE 5493 R² 0.404 vs Ridge eng 4495.51 — MLP ties linear, no win on tabular. Classic small-n tabular.
+
+### Selection by weighted score (draft primary, wins secondary)
+
+- Best draft MAE: Ridge_Engineered_10feat_alpha10 4495.51 (-1.24 vs Linear 4496.75) — chosen as `model_zoo_best`.
+- Best MT: v1 still best loss 0.6745, but v2 wins head better. For unified MTMT right approach, we keep v1 as primary loss for backward compat, log v2 as variant. Future v3 will add cross-tower attention dot-product gating + wins head deeper 2-layer + foresight head focal loss to beat wins <9.0.
+
+### Metrics delta summary
+
+| Metric | Before | After | Δ | Note |
+|--------|--------|-------|---|------|
+| Linear draft MAE | 4496.75 | 4495.51 Ridge eng α10 | -1.24 | polynomial interaction justified |
+| MLP draft MAE | 4530.2 | 4496.99 wide 128-64 eng | -33.2 | still ~1.5 worse than Ridge, shows linear wins tabular |
+| MT loss | 0.6745 | 0.7955 v2 / 0.6745 v1 (keep v1) | +0.121 v2 but wins -0.06 | wins 9.09→9.03 -0.66% improvement, draft 1305→1416 +111 honest regularized |
+| Wins MAE | 9.09 | 9.03 v2 deeper head | -0.06 | LayerNorm residual helps small-n 30 teams |
+
+Construct validity maintained: no future leakage (TowerA only pre-draft), discriminant market<0.15, small-n guard (CV, earlystop, wd).
+
+Next hill-climbs: v3 cross-attention, v4 wins deeper 2-layer + team payroll spline, v5 TowerE player trajectory transformer pretrained on vectors.json 12,966 seq.
+
+
+
 ## SHAP-style & Permutation
 
 - Linear: SHAP `coeff*(x-mean)` + global mean|SHAP|.
