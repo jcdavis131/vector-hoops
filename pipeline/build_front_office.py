@@ -6,6 +6,7 @@ Three pillars:
   1. Draft Smarts — first-5-season quality-adjusted minutes surplus vs expected pick value
   2. Cap Efficiency — wins per million payroll vs league
   3. Foresight — retained bargain deals where performance > salary and salary growth < cap growth
+  + Timing — when you sign/trade/draft matters as contracts mature vs cap $90M->$154M
 
 Outputs:
   assets/data/front_office.json
@@ -17,6 +18,7 @@ Zero-deps, stdlib only. Recomputable from:
   - pipeline/cache/salaries_merged.json
   - pipeline/cache/team_base_*.json
   - assets/teams.json
+  - pipeline/nba_salary_cap.py (era-aware)
 """
 from __future__ import annotations
 import json, math, time, pathlib, collections, re
@@ -74,6 +76,12 @@ def _quality_multiplier(v_list):
     except Exception:
         return 1.0
 
+def season_to_start_year(season_str: str) -> int | None:
+    try:
+        return int(season_str.split("-")[0])
+    except Exception:
+        return None
+
 def load_vectors():
     j = json.loads(VECTORS.read_text(encoding="utf-8"))
     players = j.get("players", [])
@@ -105,10 +113,8 @@ def build_first5_totals(season_vals, draft_players_map):
     draft_players_map: dict norm -> list of {year, overall, ...} or entries list.
     Returns dict (norm,year) -> {total_min, seasons, avg_q, qual_adj_total, gp, latest_pm, latest_season}
     """
-    # build lookup of season data by norm
-    by_norm = collections.defaultdict(list)  # nm -> list of (season_str, start_year, tm, gp, v, q)
+    by_norm = collections.defaultdict(list)
     for entry in season_vals:
-        # entry is (nm, season, tm, gp, mpg, season_val, v)
         nm = entry[0]
         seas = entry[1]
         tm = entry[2]
@@ -122,19 +128,13 @@ def build_first5_totals(season_vals, draft_players_map):
         by_norm[nm].append((seas, start_y, tm, gp, v, q))
 
     first5 = {}
-    # draft_players_map can be dict nm->list of draft entries (from DRAFT json) OR overall_to_entries etc
-    # We support both: if it's dict with values being list of dicts containing year/overall, we iterate.
-    # If it's draft_players (players dict), its values are list of entries with year.
     for nm, entries in (draft_players_map.items() if isinstance(draft_players_map, dict) else []):
-        # entries may be list of dicts from draft_history.json
         if not entries:
             continue
-        # entries could be tuple style? Ensure dict style.
         for e in entries:
             if isinstance(e, dict):
                 year = int(e.get("year") or 0)
             elif isinstance(e, (list, tuple)) and len(e) >= 2:
-                # (nm, year, pick, team) form from overall_to_entries – not this function expected
                 continue
             else:
                 continue
@@ -142,14 +142,12 @@ def build_first5_totals(season_vals, draft_players_map):
                 continue
             key = (nm, year)
             if key in first5:
-                continue  # already computed
-            # sum seasons where start_y in [year, year+4]
+                continue
             seasons_in_window = []
             for seas, sy, tm, gp, v, q in by_norm.get(nm, []):
                 if sy >= year and sy <= year+4:
                     seasons_in_window.append((seas, sy, tm, gp, v, q))
             if not seasons_in_window:
-                # no play yet – keep zero entry for later penalty handling
                 first5[key] = {
                     "total_min": 0.0,
                     "seasons": 0,
@@ -170,8 +168,7 @@ def build_first5_totals(season_vals, draft_players_map):
             gp_tot = sum(x[3] for x in seasons_in_window)
             qs = [x[5] for x in seasons_in_window]
             avg_q = sum(qs)/len(qs) if qs else 1.0
-            qual_adj_total = sum(x[2]*x[5] for x in seasons_in_window)  # sum tm*q
-            # latest
+            qual_adj_total = sum(x[2]*x[5] for x in seasons_in_window)
             latest_entry = seasons_in_window[-1]
             latest_v = latest_entry[4]
             latest_tm = float(latest_entry[2])
@@ -209,11 +206,9 @@ def compute_expected_first5(overall_to_entries, first5_map, min_year=1996, max_y
                 continue
             f = first5_map.get((nm, year))
             if not f:
-                # never played => 0 value counts as bust
                 pick_vals[overall].append(0.0)
                 continue
             val = f["qual_adj_total"] if use_qual_adj else f["total_min"]
-            # if player has 0 but within window, it's bust -> keep 0
             pick_vals[overall].append(float(val))
     expected = {}
     for overall in range(1,61):
@@ -286,12 +281,78 @@ def load_salaries():
         nm = v.get("norm_name") or norm_name(v.get("name",""))
         if not season:
             continue
-        by_norm_season[(nm, season)] = {"salary": amount, "team": team, "name": v.get("name")}
+        by_norm_season[(nm, season)] = {"salary": amount, "team": team, "name": v.get("name"), "season": season}
         if team:
             payroll[(team, season)] += amount
             payroll_counts[(team, season)] += 1
             by_team_season_player[(team, season)].append((nm, amount, v.get("name")))
     return sal, payroll, payroll_counts, by_team_season_player, by_norm_season
+
+def build_contract_timelines(by_norm_season):
+    """Group by norm sorted by start year, infer contract segments.
+
+    New contract if:
+      prev team != current team OR gap>1 year OR salary increase >50% OR decrease >20%
+    Returns:
+      timelines_by_norm: norm -> list of season entries sorted
+      lookup: (norm, season) -> entry with contract start info
+    """
+    by_norm = collections.defaultdict(list)
+    for (nm, season_str), rec in by_norm_season.items():
+        sy = season_to_start_year(season_str)
+        if sy is None:
+            continue
+        by_norm[nm].append((season_str, sy, rec.get("team"), float(rec.get("salary") or 0), rec.get("name")))
+    timelines_by_norm = {}
+    lookup = {}
+    for nm, seasons in by_norm.items():
+        seasons_sorted = sorted(seasons, key=lambda x: x[1])
+        timeline = []
+        cur_start_season = None
+        cur_start_salary = None
+        cur_start_year = None
+        prev_team = None
+        prev_year = None
+        prev_salary = None
+        for season_str, sy, team, sal, name in seasons_sorted:
+            is_new = False
+            if cur_start_season is None:
+                is_new = True
+            else:
+                if prev_team and team and prev_team != team:
+                    is_new = True
+                elif prev_year is not None and (sy - prev_year) > 1:
+                    is_new = True
+                elif prev_salary and prev_salary > 0:
+                    # increase >50%
+                    if sal > prev_salary * 1.5:
+                        is_new = True
+                    elif sal < prev_salary * 0.8:
+                        # decrease >20% often new deal / pay cut
+                        is_new = True
+            if is_new:
+                cur_start_season = season_str
+                cur_start_salary = sal
+                cur_start_year = sy
+            age = sy - cur_start_year if cur_start_year is not None else 0
+            entry = {
+                "season": season_str,
+                "start_year": sy,
+                "team": team,
+                "salary": sal,
+                "name": name,
+                "contract_start_season": cur_start_season,
+                "contract_start_salary": cur_start_salary,
+                "contract_start_year": cur_start_year,
+                "contract_age_years": age,
+            }
+            timeline.append(entry)
+            lookup[(nm, season_str)] = entry
+            prev_team = team
+            prev_year = sy
+            prev_salary = sal
+        timelines_by_norm[nm] = timeline
+    return timelines_by_norm, lookup
 
 def load_team_wins(seasons):
     wins = {}
@@ -389,15 +450,23 @@ def main():
     print("loading salaries...")
     sal_raw, payroll, payroll_counts, by_team_season_player, by_norm_season = load_salaries()
 
+    print("building contract timelines...")
+    contract_timelines_by_norm, contract_lookup = build_contract_timelines(by_norm_season)
+    print(f"contract timelines {len(contract_timelines_by_norm)} players, lookup {len(contract_lookup)} season entries")
+
     all_seasons = sorted(set([s for _,s in payroll.keys()] + [f"{y}-{str(y+1)[-2:]}" for y in range(1996,2026)]))
     recent_seasons = [f"{y}-{str(y+1)[-2:]}" for y in range(2015,2026)]
     wins = load_team_wins(recent_seasons)
     print(f"wins entries {len(wins)}")
 
+    # gp lookup for draft timing (rookie retention)
+    gp_by_norm_season = {}
+    for nm, season_str, tm, gp, mpg, sval, v in season_vals:
+        gp_by_norm_season[(nm, season_str)] = gp
+
     # Cap efficiency baseline 2024-25
     season_focus = "2024-25"
     cap = CAP_BY_SEASON.get(season_focus, 140_588_000) if CAP_BY_SEASON else 140_588_000
-    teams_list = []
     try:
         tdef = json.loads(TEAMS_DEF.read_text())
         teams_defs = {t["abbr"]: t for t in tdef.get("teams", [])}
@@ -439,10 +508,38 @@ def main():
             nm = d["norm"]
             overall = d["overall"]
             year = d["year"]
+            draft_team = d["team"]
             exp = expected_first5.get(overall, 0) or 0
-            # also legacy expected for reference
             exp_legacy = expected_pick_legacy.get(overall, 0) or 0
             f = first5_map.get((nm, year))
+            # helper for rookie-scale retention and cut early checks
+            def _is_retained_rookie():
+                if year < 2021:
+                    return False
+                cur = by_norm_season.get((nm, season_focus))
+                if not cur:
+                    return False
+                if (cur.get("team") or "").upper() != draft_team:
+                    return False
+                gp_cur = gp_by_norm_season.get((nm, season_focus), 0)
+                if gp_cur < 20:
+                    # also try perf later but approximate
+                    return False
+                return True
+            def _cut_early():
+                # only for busts – did team exit within 2 seasons?
+                # check draft+1, draft+2 seasons existence/team
+                for dy in [year+1, year+2]:
+                    seas_str = f"{dy}-{str(dy+1)[-2:]}"
+                    rec = by_norm_season.get((nm, seas_str))
+                    if rec is None:
+                        # out of league within 2 years -> cut early
+                        return True
+                    t = (rec.get("team") or "").upper()
+                    if t != draft_team:
+                        return True
+                return False
+
             if f:
                 actual_first5 = f["total_min"]
                 seasons_played = f["seasons"]
@@ -451,12 +548,10 @@ def main():
                 latest_pm = f["latest_pm"]
                 latest_tm = f.get("latest_tm") or f.get("last_season_tm") or 0
                 latest_qual = f.get("latest_qual") or f.get("last_season_qual") or (qual_adj_actual / seasons_played if seasons_played else 0)
-                # completion for projection: seasons/5, floor 0.15 for rookies to allow projection
                 if seasons_played <=0:
                     completion = 0.15
                 else:
                     completion = seasons_played / 5.0
-                # boost for huge regular season rookies (Flagg 3262 mins 70gp) – reward heavy load
                 if year == 2025 and seasons_played == 1 and actual_first5 > 3000:
                     completion = min(completion, 0.18)
                 if completion < 0.15:
@@ -467,11 +562,8 @@ def main():
                     base_proj = qual_adj_actual / completion
                 else:
                     base_proj = qual_adj_actual * 2.5
-                # last-season extrapolation for improving / elite (rewards Wemby, Castle, Harper, Flagg)
-                # projected_last = current qual + remaining*(last season qual)
                 remaining = 5 - seasons_played
                 proj_last = qual_adj_actual + remaining * latest_qual if remaining>0 else qual_adj_actual
-                # choose higher if player is elite/improving
                 improving = False
                 try:
                     if latest_pm and latest_pm > 1.0:
@@ -487,7 +579,27 @@ def main():
                 else:
                     projected_5yr = base_proj
                 surplus = projected_5yr - exp
-                # store
+
+                # rookie-scale clock bonus 15% if still on drafting team 20+GP and surplus positive
+                retained_on_rookie_scale = False
+                rookie_bonus_applied = False
+                if surplus > 0 and year >= 2021:
+                    if _is_retained_rookie():
+                        retained_on_rookie_scale = True
+                        surplus_before = surplus
+                        surplus = surplus * 1.15
+                        rookie_bonus_applied = True
+
+                # trade timing mitigation for busts
+                cut_early = False
+                cut_early_mitigated = False
+                if surplus < 0:
+                    if _cut_early():
+                        cut_early = True
+                        # reduce negative by 40%
+                        surplus = surplus * 0.6
+                        cut_early_mitigated = True
+
                 draft_surpluses.append(surplus)
                 total_surplus += surplus
                 is_rookie_2025 = (year == 2025)
@@ -498,6 +610,7 @@ def main():
                     "round": d["round"],
                     "player": nm.title(),
                     "norm": nm,
+                    "draft_team": draft_team,
                     "expected_min": exp,
                     "expected_min_legacy_full_career": exp_legacy,
                     "actual_min": round(actual_first5,1),
@@ -519,15 +632,22 @@ def main():
                     "is_rookie_2025": is_rookie_2025,
                     "surplus_min": round(surplus,1),
                     "surplus": round(surplus,1),
+                    "retained_on_rookie_scale": retained_on_rookie_scale,
+                    "rookie_bonus_applied": rookie_bonus_applied,
+                    "cut_early": cut_early,
+                    "cut_early_mitigated": cut_early_mitigated,
                 })
             else:
-                # no play yet – bust penalty
                 seasons_played = 0
                 actual_first5 = 0
                 qual_adj_actual = 0
                 latest_pm = 0
                 avg_q = 1.0
                 surplus = -exp*0.6
+                # cut early still applies if player never appeared – treat as cut early? Only if drafted team missing quickly; but keep simple.
+                cut_early = True
+                cut_early_mitigated = False
+                # reduce negative slightly if truly no data? Keep -0.6 already mitigated
                 draft_surpluses.append(surplus)
                 total_surplus += surplus
                 draft_details.append({
@@ -537,6 +657,7 @@ def main():
                     "round": d["round"],
                     "player": nm.title(),
                     "norm": nm,
+                    "draft_team": draft_team,
                     "expected_min": exp,
                     "expected_min_legacy_full_career": exp_legacy,
                     "actual_min": 0,
@@ -557,6 +678,10 @@ def main():
                     "is_rookie_2025": (year==2025),
                     "surplus_min": round(surplus,1),
                     "surplus": round(surplus,1),
+                    "retained_on_rookie_scale": False,
+                    "rookie_bonus_applied": False,
+                    "cut_early": cut_early,
+                    "cut_early_mitigated": cut_early_mitigated,
                 })
 
         avg_surplus = round(sum(draft_surpluses)/len(draft_surpluses),1) if draft_surpluses else 0
@@ -576,7 +701,7 @@ def main():
             return "F"
         draft_grade = grade_from_score(draft_score*1.2)
 
-        # FORESIGHT
+        # FORESIGHT with timing maturation
         perf_by_player = {}
         for entry in season_vals:
             nm = entry[0]; seas = entry[1]; tm = entry[2]; gp = entry[3]; mpg = entry[4]; sval = entry[5]
@@ -599,6 +724,9 @@ def main():
 
         bargain_deals = []
         surplus_total = 0
+        surplus_total_before_timing = 0
+        total_contract_age = 0
+        count_contract_age = 0
         for (team_abbr,seas), plist in by_team_season_player.items():
             if team_abbr != abbr or seas != season_focus:
                 continue
@@ -623,23 +751,95 @@ def main():
                     if same_team_flag and sal_growth <= cap_growth+0.05:
                         foresight_bonus = 1.25
                     adj_surplus = surplus_usd * foresight_bonus
-                    surplus_total += adj_surplus
+                    surplus_total_before_timing += adj_surplus
+
+                    # TIMING MATURATION – contract timeline
+                    contract_entry = contract_lookup.get((nm, season_focus))
+                    if contract_entry is None:
+                        # fallback to earliest season for this player maybe
+                        timeline = contract_timelines_by_norm.get(nm, [])
+                        # find entry for 2024-25 if possible else last
+                        if timeline:
+                            # pick last with <=2024
+                            contract_entry = timeline[-1]
+                        else:
+                            contract_entry = None
+                    contract_start_season = None
+                    contract_start_salary = None
+                    contract_start_year = None
+                    contract_age = 0
+                    initial_cap_pct = None
+                    current_cap_pct = None
+                    cap_growth_since_start = None
+                    salary_growth_since_start = None
+                    maturation_ratio = None
+                    timing_multiplier = 1.0
+                    if contract_entry:
+                        contract_start_season = contract_entry.get("contract_start_season")
+                        contract_start_salary = contract_entry.get("contract_start_salary")
+                        contract_start_year = contract_entry.get("contract_start_year")
+                        contract_age = contract_entry.get("contract_age_years", 0) or 0
+                        # handle case where entry itself is contract start? entry has start info
+                        try:
+                            cap_start = CAP_BY_SEASON.get(contract_start_season) if contract_start_season else None
+                            if cap_start is None and contract_start_year:
+                                # fallback to CAP_BY_SEASON year lookup: map year -> season string?
+                                # season string is e.g., 2020-21 ; cap dict keys like "2020-21"
+                                # try to infer season string from year
+                                guess_season = f"{contract_start_year}-{str(contract_start_year+1)[-2:]}"
+                                cap_start = CAP_BY_SEASON.get(guess_season)
+                            cap_now = CAP_BY_SEASON.get(season_focus, 140_588_000) if CAP_BY_SEASON else 140_588_000
+                            if cap_start and cap_start>0 and contract_start_salary and contract_start_salary>0:
+                                initial_cap_pct = contract_start_salary / cap_start
+                                current_cap_pct = amt / cap_now if cap_now else None
+                                cap_growth_since_start = cap_now / cap_start - 1 if cap_start else None
+                                salary_growth_since_start = amt / contract_start_salary - 1 if contract_start_salary else None
+                                if cap_growth_since_start is not None and salary_growth_since_start is not None:
+                                    maturation_ratio = (1+cap_growth_since_start)/(1+salary_growth_since_start) if (1+salary_growth_since_start)>0 else 1.0
+                                    # timing multiplier
+                                    timing_multiplier = 1.0 + 0.08*contract_age + 0.12*max(0, (maturation_ratio or 1)-1)*3
+                                    # clamp reasonable 0.85-2.2
+                                    if timing_multiplier < 0.85:
+                                        timing_multiplier = 0.85
+                                    if timing_multiplier > 2.2:
+                                        timing_multiplier = 2.2
+                        except Exception:
+                            pass
+                    # final timing-adjusted surplus
+                    adj_surplus_timed = adj_surplus * timing_multiplier
+                    surplus_total += adj_surplus_timed
+                    if contract_age is not None:
+                        total_contract_age += contract_age
+                        count_contract_age += 1
                     bargain_deals.append({
                         "player": raw_name or nm.title(),
                         "norm": nm,
                         "salary_m": round(amt/1_000_000,2),
                         "exp_salary_m": round(exp_sal/1_000_000,2),
                         "surplus_m": round(surplus_usd/1_000_000,2),
-                        "adj_surplus_m": round(adj_surplus/1_000_000,2),
+                        "adj_surplus_m": round(adj_surplus_timed/1_000_000,2),
+                        "adj_surplus_m_before_timing": round(adj_surplus/1_000_000,2),
                         "tm": round(perf["tm"],0),
                         "gp": int(perf["gp"]),
                         "mpg": round(perf["mpg"],1),
                         "retained": bool(same_team_flag),
-                        "salgrowth": round(sal_growth,3)
+                        "salgrowth": round(sal_growth,3),
+                        "contract_start_season": contract_start_season,
+                        "contract_start_salary_m": round(contract_start_salary/1_000_000,2) if contract_start_salary else None,
+                        "contract_age": contract_age,
+                        "initial_cap_pct": round(initial_cap_pct,5) if initial_cap_pct is not None else None,
+                        "current_cap_pct": round(current_cap_pct,5) if current_cap_pct is not None else None,
+                        "cap_growth_since_start": round(cap_growth_since_start,4) if cap_growth_since_start is not None else None,
+                        "salary_growth_since_start": round(salary_growth_since_start,4) if salary_growth_since_start is not None else None,
+                        "maturation_ratio": round(maturation_ratio,4) if maturation_ratio is not None else None,
+                        "timing_multiplier": round(timing_multiplier,3),
                     })
         bargain_deals_sorted = sorted(bargain_deals, key=lambda x: x["adj_surplus_m"], reverse=True)[:6]
+        # foresight score uses timed surplus_total, but also boost if avg contract age high (better timing)
+        # base score
         foresight_score = max(0, min(100, 50 + surplus_total/6_000_000*10))
         foresight_grade = grade_from_score(foresight_score)
+        avg_contract_age_team = round(total_contract_age / count_contract_age, 2) if count_contract_age else 0
 
         if median_wpm>0:
             cap_score = max(0, min(100, 50 + (wpm - median_wpm)/median_wpm*50))
@@ -683,12 +883,15 @@ def main():
             "foresight": {
                 "bargain_deals": bargain_deals_sorted,
                 "surplus_total_m": round(surplus_total/1_000_000,2),
+                "surplus_total_m_before_timing": round(surplus_total_before_timing/1_000_000,2),
                 "surplus_count": len(bargain_deals),
                 "score": round(foresight_score,1),
-                "grade": foresight_grade
+                "grade": foresight_grade,
+                "avg_contract_age": avg_contract_age_team,
             },
             "for_score": for_score,
-            "for_grade": for_grade
+            "for_grade": for_grade,
+            "avg_contract_age_2024_25": avg_contract_age_team,
         })
 
     # widen draft spread via z-score
@@ -730,17 +933,11 @@ def main():
     payroll_next_inferred = collections.defaultdict(float)
     payroll_counts_next_inferred = collections.defaultdict(int)
     by_team_next_inferred = collections.defaultdict(list)
-    if isinstance(sal_raw, dict) and "_meta" in sal_raw:
-        salaries_dict = sal_raw.get("salaries", {})
-    else:
-        salaries_dict = sal_raw if isinstance(sal_raw, dict) else {}
-    # sal_raw is actually inner dict when load_salaries called? Use by_norm_season already?
-    # Re-open salaries_merged for future rows if sal_raw was inner
     try:
         outer = json.loads(SALARIES.read_text(encoding="utf-8"))
         salaries_dict_outer = outer.get("salaries", outer) if isinstance(outer, dict) else {}
     except Exception:
-        salaries_dict_outer = salaries_dict
+        salaries_dict_outer = {}
     for key, v in salaries_dict_outer.items():
         if not isinstance(v, dict):
             continue
@@ -864,13 +1061,15 @@ def main():
         "season_next": season_next,
         "season_next_cap": cap_next,
         "method": {
-            "draft": "First-5-season quality-adjusted minutes (PTS vol + PLUS_MINUS) trimmed, z-scored, includes 2020-25 to capture Flagg/Harper. Projects partial careers linearly (actual_qual / completion), rewards Wemby/Castle early elite: exp = trimmed mean qual_adj 1996-2022 per overall pick, surplus = projected_5yr - exp, seasons 0 => -0.6*exp. Avg surplus z 50+z*18 0-100.",
+            "draft": "First-5-season quality-adjusted minutes (PTS vol + PLUS_MINUS) trimmed, z-scored, includes 2020-25 to capture Flagg/Harper. Projects partial careers linearly (actual_qual / completion), rewards Wemby/Castle early elite: exp = trimmed mean qual_adj 1996-2022 per overall pick, surplus = projected_5yr - exp, seasons 0 => -0.6*exp. Avg surplus z 50+z*18 0-100. Rookie retention bonus 15% if year>=2021 + still on drafting team 20+GP. Bust mitigation 40% reduced negative if cut/traded within 2 seasons.",
             "cap": "Wins per $1M payroll 2024-25. Score 50=median W/$M. Cap% payroll/cap $140.588M.",
-            "foresight": "2024-25 players 20+GP expected salary=median_sal*(0.4+0.8*tm/median_tm) capped 3x. Surplus=exp-actual >$1M kept. Retained bonus 1.25x if same team and sal growth <= cap growth+5%. Score 50+surplus/6M*10.",
+            "foresight": "2024-25 players 20+GP expected salary=median_sal*(0.4+0.8*tm/median_tm) capped 3x. Surplus=exp-actual >$1M kept. Retained bonus 1.25x if same team and sal growth <= cap growth+5%. Score 50+surplus/6M*10. Timing: contract timelines inferred from salary history contiguous same team + growth <=50%. Timing multiplier =1+0.08*age +0.12*max(0,maturation_ratio-1)*3 where maturation_ratio=(1+cap_growth)/(1+salary_growth). Older flat deals signed when cap $90-110M now $140-154M get boosted. Jokic-like 2018 $26M deal maturation high.",
             "cap_2025_26": "Payroll sum 2025-26 inferred (team missing -> backfill 2024-25). cap_pct, cap_space, flexibility grade era-aware: <80% A+ <92% A <100% B+ <110% B <125% B- else C, downgraded to D if over 2nd apron $207.8M (hard-cap no MLE/agg/frozen pick). Tax $187.9M, Apron1 $195.9M.",
-            "composite": "FOR = 0.35*zDraft + 0.35*cap + 0.30*foresight rank-curved A+ top 7%",
-            "sources": "draft_history.json, vectors.json v[0] PTS v[13] +/- total_min gp mpg, salaries_merged 16678, team_base, CAP_BY_SEASON 1996-2027 + TAX/APRON/CBA/TV era",
-            "quality_multiplier": "q=1.0+0.12*PLUS_MINUS +0.05*PTS clamp 0.65-1.65, qual_adj = sum(tm*q)"
+            "composite": "FOR = 0.35*zDraft + 0.35*cap + 0.30*foresight rank-curved A+ top 7%. Foresight now includes timing multiplier so long cheap locks get more credit. Avg contract age tie-breaker narrative.",
+            "sources": "draft_history.json, vectors.json v[0] PTS v[13] +/- total_min gp mpg, salaries_merged 16678 with contract timeline inference, team_base, CAP_BY_SEASON 1996-2027 + TAX/APRON/CBA/TV era",
+            "quality_multiplier": "q=1.0+0.12*PLUS_MINUS +0.05*PTS clamp 0.65-1.65, qual_adj = sum(tm*q)",
+            "timing": "Contract maturation: bargains weighted by age and cap-vs-salary growth since signing. Older flat deals signed when cap $90-110M now at $140-154M get +8%/yr +12%*maturation. Rookie draft retention bonus 15% if still on drafting team 20+GP. Busts mitigated 40% if cut/traded within 2 seasons. Avg contract age per team added as rebuild narrative.",
+            "timing_notes": "Salary history team changes >1yr gap or >50% raise or <-20% cut = new deal. Initial cap pct = start_salary / CAP_start. Current cap pct = 2024-25 salary / 140.5M. Improvement positive = deal cheaper relative to cap as $136M->$140.5M->$154M rises. Maturation ratio >1 when cap outruns salary. Timing multiplier amplifies adj surplus."
         },
         "median": {"wpm": round(median_wpm,3), "median_sal_m": round(median_sal/1_000_000,2) if 'median_sal' in locals() else None, "draft_mean_surplus": round(mean_s,1) if 'mean_s' in locals() else None, "draft_stdev": round(stdev_s,1) if 'stdev_s' in locals() else None, "expected_first5_pick1": expected_first5.get(1), "expected_first5_pick30": expected_first5.get(30)},
         "expected_pick_first5": expected_first5,
@@ -890,7 +1089,19 @@ def main():
     # sanity: SAS should be high due to Wemby/Castle/Harper
     sas = next((x for x in output_teams_sorted if x['abbr']=='SAS'), None)
     if sas:
-        print(f"SAS draft score {sas['draft']['score']} avg_surplus {sas['draft']['avg_surplus_min']} picks={sas['draft']['picks']}")
+        print(f"SAS draft score {sas['draft']['score']} avg_surplus {sas['draft']['avg_surplus_min']} picks sample {sas['draft']['picks'][:2]}")
+        print(f"SAS foresight avg_contract_age {sas['foresight'].get('avg_contract_age')} surplus_total_m {sas['foresight'].get('surplus_total_m')}")
+        for bd in sas['foresight']['bargain_deals'][:3]:
+            print(f"SAS bargain {bd}")
+    dal = next((x for x in output_teams_sorted if x['abbr']=='DAL'), None)
+    if dal:
+        for p in dal['draft']['picks']:
+            if 'flagg' in p['player'].lower():
+                print(f"DAL Flagg pick {p}")
+    bos = next((x for x in output_teams_sorted if x['abbr']=='BOS'), None)
+    if bos:
+        print(f"BOS foresight {bos['foresight']['surplus_total_m']} deals {bos['foresight']['bargain_deals'][:2]}")
 
 if __name__ == "__main__":
     main()
+
