@@ -169,6 +169,45 @@
   <div style="padding:24px;font-family:ui-monospace;font-size:13px;text-align:center">Loading trading cards…</div>
 </div>
 
+<div id="persona-hub" style="max-width:1180px;margin:18px auto 0;padding:0 clamp(14px,3.5vw,28px)">
+  <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px">
+    <span class="pill pill-yellow" style="font-size:12px;transform:rotate(-1deg)">Pick Your Edge</span>
+    <span class="small-mono" style="opacity:.6;text-transform:none;letter-spacing:.01em">same engine — four ways to use it</span>
+    <span class="pill" style="font-size:10px;opacity:.7">W* = W+2.5·PO+0.12·realG</span>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px" id="persona-grid">
+    <style>#persona-grid{grid-template-columns:1fr 1fr}@media(max-width:860px){#persona-grid{grid-template-columns:1fr}}#persona-grid .pcard{position:relative;overflow:hidden}#persona-grid .pcard:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--ink)}#persona-grid .pct{font-family:var(--mono);font-size:10px;opacity:.6}</style>
+    <a class="card pcard" href="/owner" style="text-decoration:none;color:inherit;border-left:4px solid #1A150F;display:flex;flex-direction:column;gap:8px">
+      <div style="display:flex;justify-content:space-between;align-items:center"><span class="pill" style="background:#1A150F;color:#FFFEF7;font-size:11px">🏆 Owner</span><span class="pill pill-yellow" style="font-size:10px">$5k+</span></div>
+      <b style="font-family:'Architects Daughter',mono;font-size:18px">Championship Economics</b>
+      <div style="font-size:13px;color:#555;line-height:1.45">30Y true FOR snapshots, tax apron planner — where SAS 94.8 W* beats OKC 85.8 today</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap" class="pct"><span class="pill" style="font-size:10px">FOR 0.35/0.35/0.30</span><span class="pill" style="font-size:10px">W*/$M PO/$M</span><span class="pill" style="font-size:10px">Val $9.1B</span></div>
+      <div style="margin-top:2px"><span class="btn btn-primary" style="min-height:42px;padding:9px 14px;font-size:12px">Open Owner →</span></div>
+    </a>
+    <a class="card pcard" href="/player" style="text-decoration:none;color:inherit;border-left:4px solid #0072B2;display:flex;flex-direction:column;gap:8px">
+      <div style="display:flex;justify-content:space-between;align-items:center"><span class="pill" style="background:#0072B2;color:#fff;font-size:11px">👟 Player</span><span class="pill" style="font-size:10px">$19/mo</span></div>
+      <b style="font-family:'Architects Daughter',mono;font-size:18px">Stay On The Floor</b>
+      <div style="font-size:13px;color:#555;line-height:1.45">Closer 1.28 stays, exploitable 0.62 sits late — real playoff mins Wemby 699 vs Flagg 0 honest</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap" class="pct"><span class="pill" style="font-size:10px;background:#E7F6EA">closer 1.28</span><span class="pill" style="font-size:10px;background:#FFD8D5">exploit 0.62</span><span class="pill" style="font-size:10px">fit &amp; cap%</span></div>
+      <div style="margin-top:2px"><span class="btn" style="min-height:42px;padding:9px 14px;font-size:12px;background:#0072B2;color:#fff">Open Player →</span></div>
+    </a>
+    <a class="card pcard" href="/brand" style="text-decoration:none;color:inherit;border-left:4px solid #009E73;display:flex;flex-direction:column;gap:8px">
+      <div style="display:flex;justify-content:space-between;align-items:center"><span class="pill" style="background:#009E73;color:#fff;font-size:11px">📈 Brand</span><span class="pill" style="font-size:10px">$2k</span></div>
+      <b style="font-family:'Architects Daughter',mono;font-size:18px">Wins Into Story</b>
+      <div style="font-size:13px;color:#555;line-height:1.45">Forbes NYK $7.5B YoY%, market beat +17.5 SAS — Wins/$B is your rising star signal</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap" class="pct"><span class="pill" style="font-size:10px">Wins/$B</span><span class="pill" style="font-size:10px">PO vis 2.5×</span><span class="pill" style="font-size:10px">ValΔ% +2.1pp</span></div>
+      <div style="margin-top:2px"><span class="btn" style="min-height:42px;padding:9px 14px;font-size:12px;background:#009E73;color:#fff;border-color:#1A150F">Open Brand →</span></div>
+    </a>
+    <a class="card pcard" href="/dfs" style="text-decoration:none;color:inherit;border-left:4px solid #F0E442;display:flex;flex-direction:column;gap:8px;background:#FFFEF7">
+      <div style="display:flex;justify-content:space-between;align-items:center"><span class="pill pill-yellow" style="font-size:11px">🎯 DFS</span><span class="pill" style="font-size:10px;background:#1A150F;color:#fff">$9/mo</span></div>
+      <b style="font-family:'Architects Daughter',mono;font-size:18px">Tonight's Locks</b>
+      <div style="font-size:13px;color:#555;line-height:1.45">Vegas OU 944 seasons + props +5.7 Wemby — optimizer tags locks ↑ fades ↓ before salary</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap" class="pct"><span class="pill" style="font-size:10px;background:#E7F6EA">lock 1.28</span><span class="pill" style="font-size:10px;background:#FFD8D5">avoid 0.62</span><span class="pill" style="font-size:10px">$/pt val</span></div>
+      <div style="margin-top:2px"><span class="btn btn-accent" style="min-height:42px;padding:9px 14px;font-size:12px">Open DFS →</span></div>
+    </a>
+  </div>
+</div>
+
 <div id="viral-row" style="max-width:1180px;margin:10px auto 0;padding:0 clamp(14px,3.5vw,28px) calc(28px + 88px);display:grid;grid-template-columns:1.1fr .9fr;gap:12px">
   <div class="card" id="random-rush-card" style="display:flex;flex-direction:column;gap:10px;border-width:2.5px">
     <div class="small-mono" style="display:flex;justify-content:space-between;align-items:center"><span style="display:flex;gap:6px;align-items:center"><span class="pill" style="background:var(--ink);color:#fff">📦 Pack Battle</span><span>Viral 1·3·5</span></span><span class="pill pill-yellow">Shareable challenge</span></div>
