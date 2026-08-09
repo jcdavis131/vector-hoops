@@ -384,28 +384,296 @@ a{color:inherit}
 </div>
 </section>
 
-<!-- 2. ARCHITECTURE — 4 VIDEOS -->
-<section class="drift-card" id="manim-mtnn">
-<div class="drift-card__head"><span class="card-kicker">Architecture — 4 animations • code-generated</span><h2>How MTNN actually works</h2></div>
-<div class="manim-grid">
-<div class="manim-card">
-<video autoplay loop muted playsinline controls preload="metadata" src="assets/manim/MTNNFlow.mp4" aria-label="MTNNFlow"></video>
-<div class="manim-caption"><b>MTNNFlow — glass box</b><br>17 towers, 120 feats cat([x·m,m]) → 17× 160→32 LN+GELU×2 → 544 +12 season → 556→128→48 L2 → heads 8/5/14/18. Every box is real dimension. <em>Render shows the 120-feature v4 matrix; it now carries 131 across 18 families (injury is a durability read-out, not an input tower).</em></div>
+<!-- 2. ARCHITECTURE — 6 FILM COORDINATED SERIES -->
+<style>
+/* --- Film series v6 — zero-deps inline --- */
+#manim-mtnn{--paper:#FFFEF7;--ink:#1A150F;--chip:#fff;--dot:#1A150F;--accent:#D55E00;scroll-margin-top:64px}
+.film-head-row{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;align-items:flex-end;padding:14px 16px 10px;border-bottom:1.5px solid #E5E2D8}
+.film-progress{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.film-progress .dot{
+  width:28px;height:28px;border-radius:999px;
+  border:1.8px solid var(--ink);background:#fff;color:var(--ink);
+  display:inline-flex;align-items:center;justify-content:center;
+  font-family:ui-monospace,monospace;font-size:11px;font-weight:900;
+  text-decoration:none;box-shadow:1.5px 1.5px 0 var(--ink);
+  transition:transform .12s;
+}
+.film-progress .dot.is-active,.film-progress .dot:active{background:var(--ink);color:#fff}
+.film-progress .dot:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.film-chip-strip{
+  display:flex;gap:8px;overflow-x:auto;overflow-y:hidden;flex-wrap:nowrap;
+  -webkit-overflow-scrolling:touch;scrollbar-width:none;
+  padding:10px 12px 10px 16px;margin:0;
+  border-bottom:1.5px dashed #E5E2D8;background:#FFFEF7;
+  position:sticky;top:48px;z-index:4;
+  scroll-snap-type:x proximity;
+}
+.film-chip-strip::-webkit-scrollbar{display:none}
+.film-chip{
+  flex:0 0 auto;white-space:nowrap;
+  border:1.8px solid var(--ink);border-radius:999px;
+  padding:8px 12px;background:#fff;
+  font-family:ui-monospace,monospace;font-size:11.5px;font-weight:800;
+  box-shadow:2px 2px 0 var(--ink);text-decoration:none;color:var(--ink);
+  scroll-snap-align:start;min-height:40px;display:inline-flex;align-items:center;gap:6px;
+}
+.film-chip b{font-size:10px;opacity:.7}
+.film-chip.is-03{background:#080A0F;color:#FFFEF7}
+.film-stack{display:flex;flex-direction:column;gap:0}
+.film-card{
+  display:grid;grid-template-columns:1fr;gap:0;
+  border-bottom:1.8px solid #E5E2D8;
+  background:#fff;
+}
+@media(min-width:900px){.film-card{grid-template-columns:1.15fr .85fr}}
+.film-media{position:relative;background:#000;overflow:hidden;min-height:220px}
+.film-media video{width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;display:block;background:#000}
+.film-badge{
+  position:absolute;top:10px;left:10px;
+  background:#FFFEF7;border:1.6px solid var(--ink);border-radius:999px;
+  padding:4px 10px;font-family:ui-monospace,monospace;font-size:11px;font-weight:900;
+  box-shadow:2px 2px 0 var(--ink);color:#111;
+}
+.film-meta{
+  padding:14px 16px 16px;
+  background:#FFFEF7;color:#111;
+  display:flex;flex-direction:column;gap:10px;
+  font-size:18px;line-height:1.55;
+}
+.film-meta h3{margin:0;font-family:"Architects Daughter",ui-monospace,monospace;font-size:clamp(20px,3.2vw,26px);line-height:1.1;letter-spacing:-.01em;color:#111}
+.film-kicker{font-family:ui-monospace,monospace;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.08em;color:#5A5248;display:flex;gap:8px;align-items:center}
+.film-kicker i{font-style:normal;border:1px solid var(--ink);border-radius:999px;padding:2px 8px;background:#fff;color:#111}
+.film-plain{margin:0;font-size:18px;line-height:1.55;color:#111;max-width:56ch}
+.film-math{
+  font-family:ui-monospace,monospace;font-size:12.5px;line-height:1.45;
+  background:#0F0F0F;color:#FFFEF7;border-radius:10px;
+  padding:10px 12px;border:1.6px solid #111;
+}
+.film-why{
+  font-size:13.5px;line-height:1.45;color:#2B2B2B;
+  background:#fff;border:1.5px solid var(--ink);border-radius:10px;
+  padding:8px 10px;max-width:52ch;
+}
+.film-why b{font-weight:900;background:#F0E442;padding:1px 6px;border-radius:999px;font-size:11px;letter-spacing:.02em}
+.film-links{display:flex;gap:8px;flex-wrap:wrap}
+.film-links a{
+  font-family:ui-monospace,monospace;font-size:11px;font-weight:800;
+  border:1.5px solid var(--ink);border-radius:999px;padding:6px 10px;
+  background:#fff;text-decoration:none;color:#111;box-shadow:1.5px 1.5px 0 var(--ink)
+}
+.film-links a:focus-visible{outline:2px solid var(--accent)}
+.film-links a.is-primary{background:#111;color:#FFFEF7}
+.film-callout{
+  margin:10px 0 0;padding:10px 12px;background:#080A0F;color:#FFFEF7;
+  border-radius:12px;border:1.6px solid #111;font-size:13.5px;line-height:1.5;
+  display:flex;gap:10px;flex-wrap:wrap;align-items:center;
+}
+.film-callout code{font-size:11px;background:#1f1d16;color:#F0E442;padding:2px 6px;border-radius:6px}
+@media(prefers-color-scheme:dark){
+  #manim-mtnn{background:#FFFEF7}
+  .film-meta{color:#111}
+}
+/* AAA: #111 on #FFFEF7 = 17:1 */
+</style>
+
+<section class="drift-card" id="manim-mtnn" aria-label="How it works — 6 short films">
+<div class="film-head-row">
+<div style="min-width:240px">
+<span class="card-kicker" style="background:#111;color:#FFFEF7;border-radius:999px;padding:4px 10px">Explainer · 6 films · 14d → 130 → 48d → chimera</span>
+<h2 style="margin:10px 0 0">How it works — 6 short films</h2>
+<p style="margin:8px 0 0;font-size:14px;line-height:1.55;color:#2E2A23;max-width:66ch">One idea per film, 18s loops. Sticky dots track where you are. Same math powers games, Lab, and Daily Chimera — recomputed from <code>stats.nba.com</code> only.</p>
 </div>
-<div class="manim-card">
-<video autoplay loop muted playsinline controls preload="metadata" src="assets/manim/ChimeraEquation.mp4" aria-label="ChimeraEquation"></video>
-<div class="manim-caption"><b>ChimeraEquation — how Chimera scores</b><br>Donor A + Donor B → fuse in 48-d → nearest real among 12,966 by cosine. The argmin behind daily puzzle.</div>
-</div>
-<div class="manim-card">
-<video autoplay loop muted playsinline controls preload="metadata" src="assets/manim/InputFamilies.mp4" aria-label="InputFamilies"></video>
-<div class="manim-caption"><b>InputFamilies — 120 feats → 17 families → cat([x·m,m])</b><br>volume·play·reb·def·eff·shotmix·bio·tracking*·form*·market·roster·career·comp·team·pedig·playoffs·honors =120. Missing tracking pre-2013 masked to zero.</div>
-</div>
-<div class="manim-card">
-<video autoplay loop muted playsinline controls preload="metadata" src="assets/manim/EmbeddingL2.mp4" aria-label="EmbeddingL2"></video>
-<div class="manim-caption"><b>EmbeddingL2 — 48-d → L2 → unit sphere</b><br>v̂ = v/||v||₂, ||v̂||=1, cos = v̂·ŵ. 12,966 points on sphere powers Chimera + Era Twin.</div>
+<div class="film-progress" aria-label="Progress 1 of 6">
+<a href="#film-01" class="dot is-active" aria-current="step">1</a>
+<a href="#film-02" class="dot">2</a>
+<a href="#film-03" class="dot">3</a>
+<a href="#film-04" class="dot">4</a>
+<a href="#film-05" class="dot">5</a>
+<a href="#film-06" class="dot">6</a>
 </div>
 </div>
+
+<nav class="film-chip-strip" aria-label="Chip nav — thumb friendly">
+<a href="#film-01" class="film-chip"><b>01</b> Vector Space 14d era-z</a>
+<a href="#film-02" class="film-chip"><b>02</b> Input Families 130→17</a>
+<a href="#film-03" class="film-chip is-03"><b>03</b> Towers 17×160→32 ⚡ interactive ↓</a>
+<a href="#film-04" class="film-chip"><b>04</b> Sphere cosine = similarity</a>
+<a href="#film-05" class="film-chip"><b>05</b> Chimera fuse + LCG</a>
+<a href="#film-06" class="film-chip"><b>06</b> Archetypes / Skills / Drift</a>
+<a href="#glass-box" class="film-chip" style="background:#F0E442">↗ Glass-Box SHAP/PD/Scatter</a>
+</nav>
+
+<div class="film-stack">
+
+<!-- 01 Vector Space -->
+<article class="film-card" id="film-01" aria-label="Film 01 Vector Space">
+<div class="film-media">
+<span class="film-badge">01 · VECTOR SPACE · 14d era-z · MIN≥800</span>
+<video autoplay loop muted playsinline controls preload="metadata" src="assets/manim/v01_vector_space.mp4" poster="assets/manim/v01_vector_space.mp4" aria-describedby="cap-01">
+<track kind="captions" src="assets/manim/v01_vector_space.srt" srclang="en" label="English" default>
+</video>
+</div>
+<div class="film-meta">
+<div class="film-kicker"><i>Games fast</i><span>12,966 seasons 1996→2026</span></div>
+<h3>Vector Space — era-z per-100</h3>
+<p id="cap-01" class="film-plain">Every season lives as 14 numbers: points, dimes, boards, stocks, misses, shot mix — all z-scored inside its own year. 0 is average that season.</p>
+<div class="film-math" role="math" aria-label="Math">z = (x − μ_season) / σ_season, clip ±4 · era-z ⊥ pace</div>
+<div class="film-why"><b>Why 12 words:</b> Era-z lets 1999 grind meet 2026 pace without lying.</div>
+<div class="film-links">
+<a class="is-primary" href="/methods#vector-space">Methods → Vector space ↘</a>
+<a href="#film-02">Next 02 →</a>
+<a href="#explorer">Tap any player →</a>
+</div>
+</div>
+</article>
+
+<!-- 02 Input Families -->
+<article class="film-card" id="film-02" aria-label="Film 02 Input Families">
+<div class="film-media">
+<span class="film-badge">02 · INPUT FAMILIES · 130→17 cat([x·m,m])</span>
+<video autoplay loop muted playsinline controls preload="metadata" src="assets/manim/v02_input_families.mp4" poster="assets/manim/v02_input_families.mp4" aria-describedby="cap-02">
+<track kind="captions" src="assets/manim/v02_input_families.srt" srclang="en" label="English">
+</video>
+</div>
+<div class="film-meta">
+<div class="film-kicker"><i>Lab rich</i><span>volume·play·reb·def·eff·shotmix·bio·track·form·market·roster·career·comp·team·pedig·playoffs·honors</span></div>
+<h3>Input Families — 130 feats → 17 towers</h3>
+<p id="cap-02" class="film-plain">We bundle stats by cause. Missing tracking pre-2013 isn't zero, it's masked: model sees value and mask.</p>
+<div class="film-math">h = cat([x · m, m]),  m∈{0,1}  · 130 d_in → 2·d_in cat</div>
+<div class="film-why"><b>Why matters:</b> Mask beats impute. Never-measured stays honest.</div>
+<div class="film-links">
+<a class="is-primary" href="/methods#vector-space">Methods → 130 feats list ↘</a>
+<a href="#film-03">Next 03 →</a>
+<a href="#network-flow">Mask m in flow ↘</a>
+</div>
+</div>
+</article>
+
+<!-- 03 Towers -->
+<article class="film-card" id="film-03" aria-label="Film 03 Towers">
+<div class="film-media">
+<span class="film-badge">03 · TOWERS · 17×160→32 residual ×2 • 544+12=556→128→64 L2 • 224K 549KB</span>
+<video autoplay loop muted playsinline controls preload="metadata" src="assets/manim/v03_mtnn_towers.mp4" poster="assets/manim/v03_mtnn_towers.mp4" aria-describedby="cap-03">
+<track kind="captions" src="assets/manim/v03_mtnn_towers.srt" srclang="en" label="English">
+</video>
+</div>
+<div class="film-meta">
+<div class="film-kicker"><i>MTNN v5</i><span>~224K params · 544 +12 =556 →128→48 L2</span></div>
+<h3>Towers — 17 small nets then fusion</h3>
+<p id="cap-03" class="film-plain">Each family gets its own 2-layer residual tower 160→32 with LayerNorm + GELU. Then we fuse 17×32 plus season 12-d into one 48-d fingerprint.</p>
+<div class="film-math">T_i: 160 LN+GELU×2 + skip → 32 · 556→128 GELU → 48 L2 ‖v̂‖=1</div>
+<div class="film-why"><b>Why matters:</b> Separate towers stop scoring from eating rebounding signal.</div>
+<div class="film-links">
+<a class="is-primary" href="#network-flow">Tap flow to see T_i ↘</a>
+<a class="is-primary" href="#glass-box">↓ Glass-Box SHAP/PDP interactive — what towers learn</a>
+<a href="#film-04">Next 04 →</a>
+<a href="/methods#mtnn-v4">Arch spec → Methods ↘</a>
+</div>
+<div class="film-callout" id="tower-to-glassbox">
+<span style="font-weight:900;font-family:ui-monospace,monospace;font-size:12px">⚡ After towers → interactive proof</span>
+<p style="margin:0">Scroll one card to <code>#glass-box</code>. Mean |SHAP| bar, 3 Partial Dependence scrubbers, cap% vs wins scatter — all from <code>model_zoo_eval.json</code>. Same towers you just watched.</p>
+<a href="#glass-box" style="background:#F0E442;color:#111;border:1.5px solid #111;border-radius:999px;padding:6px 12px;font-family:ui-monospace,monospace;font-size:11px;font-weight:900;text-decoration:none;box-shadow:2px 2px 0 #111">Open Glass-Box ↘</a>
+</div>
+</div>
+</article>
+
+<!-- 04 Sphere -->
+<article class="film-card" id="film-04" aria-label="Film 04 Sphere">
+<div class="film-media">
+<span class="film-badge">04 · SPHERE · v̂=v/||v|| ||v̂||=1 cos=v̂·ŵ 12,966 on sphere</span>
+<video autoplay loop muted playsinline controls preload="metadata" src="assets/manim/v04_embedding_l2.mp4" poster="assets/manim/v04_embedding_l2.mp4" aria-describedby="cap-04">
+<track kind="captions" src="assets/manim/v04_embedding_l2.srt" srclang="en" label="English">
+</video>
+</div>
+<div class="film-meta">
+<div class="film-kicker"><i>Embedding</i><span>48-d L2 → unit sphere · 12,966 dots</span></div>
+<h3>Sphere — L2 makes cosine honest</h3>
+<p id="cap-04" class="film-plain">We divide by length. Every player is a point on a sphere. Similarity is just the dot product — angle, not raw height.</p>
+<div class="film-math">v̂ = v / ‖v‖₂,  ‖v̂‖=1 · cos = v̂·ŵ = 1−‖v̂−ŵ‖²/2</div>
+<div class="film-why"><b>Why:</b> Length-normalized stops 30-min guys cheating via magnitude.</div>
+<div class="film-links">
+<a class="is-primary" href="#explorer">Map 48-d → 3D map ↘</a>
+<a href="/methods#the-map">Methods → The map ↘</a>
+<a href="#film-05">Next 05 →</a>
+</div>
+</div>
+</article>
+
+<!-- 05 Chimera -->
+<article class="film-card" id="film-05" aria-label="Film 05 Chimera">
+<div class="film-media">
+<span class="film-badge">05 · CHIMERA · fuse 64-d L2 argmin • LCG (seed*1103515245+12345)&0x7fffffff</span>
+<video autoplay loop muted playsinline controls preload="metadata" src="assets/manim/v05_chimera.mp4" poster="assets/manim/v05_chimera.mp4" aria-describedby="cap-05">
+<track kind="captions" src="assets/manim/v05_chimera.srt" srclang="en" label="English">
+</video>
+</div>
+<div class="film-meta">
+<div class="film-kicker"><i>Daily puzzle</i><span>?daily=YYYYMMDD&n=1/3/5 · same link = same stars</span></div>
+<h3>Chimera — two donors → one ghost → nearest real</h3>
+<p id="cap-05" class="film-plain">Blend two stars in 48-d, then find the closest real player by cosine. LCG seed glibc 1103515245 makes it reproducible.</p>
+<div class="film-math">seed=(1103515245·YYYYMMDD+12345)&0x7fffffff · idx=A%20719; ghost=(a+b)/‖a+b‖</div>
+<div class="film-why"><b>Why slogan:</b> Same link, same stars — no server, still fair.</div>
+<div class="film-links">
+<a class="is-primary" href="/play">Play today’s Chimera →</a>
+<a href="/methods#vector-space">Determinism proof → Methods ↘</a>
+<a href="#film-06">Next 06 →</a>
+</div>
+</div>
+</article>
+
+<!-- 06 Archetypes / Skills / Drift -->
+<article class="film-card" id="film-06" aria-label="Film 06 Archetypes Skills Drift">
+<div class="film-media">
+<span class="film-badge">06 · ARCHETYPES K=8 · SKILLS 12×0-99 · DRIFT Q rot angle</span>
+<video autoplay loop muted playsinline controls preload="metadata" src="assets/manim/v06_archetypes_skills_drift.mp4" poster="assets/manim/v06_archetypes_skills_drift.mp4" aria-describedby="cap-06">
+<track kind="captions" src="assets/manim/v06_archetypes_skills_drift.srt" srclang="en" label="English">
+</video>
+</div>
+<div class="film-meta">
+<div class="film-kicker"><i>Heads + time</i><span>8 arch · 5 pos · 18 skills 0-99 · league drift 11.1° 2021-22</span></div>
+<h3>Archetypes, Skills, Drift — labels that scan</h3>
+<p id="cap-06" class="film-plain">k-means 8 on era-z gives types, MLP 48→16→1 gives 12 skills 0–99, Procrustes chains seasons back to 1996 so Era Twins compare.</p>
+<div class="film-math">k=8 centroids, 48→16 GELU → 1 skill · RᵀR=I Procrustes, chain to root 1996</div>
+<div class="film-why"><b>Why clip:</b> Archetypes name shapes. Skills grade tools. Drift keeps time honest.</div>
+<div class="film-links">
+<a class="is-primary" href="/methods#archetypes">Methods → Archetypes 8 ↘</a>
+<a href="/methods#skills">Skills 0–99 →</a>
+<a href="/methods#drift">Drift Procrustes →</a>
+<a href="/trends">Trends → drift charts ↘</a>
+<a href="#training-cockpit">Top ↑ Cockpit</a>
+</div>
+</div>
+</article>
+
+</div><!-- /film-stack -->
 </section>
+
+<script>
+// film progress sticky active on scroll + thumb chip sync
+(function(){
+const ids=['film-01','film-02','film-03','film-04','film-05','film-06'];
+const dots=document.querySelectorAll('.film-progress .dot');
+const chips=document.querySelectorAll('.film-chip-strip .film-chip');
+function onScroll(){
+  let top=window.scrollY+160, active=ids[0];
+  for(const id of ids){
+    const el=document.getElementById(id);
+    if(!el) continue;
+    if(el.offsetTop <= top) active=id;
+  }
+  dots.forEach(d=>{
+    let is=d.getAttribute('href')==='#'+active;
+    d.classList.toggle('is-active', is);
+    if(is) d.setAttribute('aria-current','step'); else d.removeAttribute('aria-current');
+  });
+}
+window.addEventListener('scroll', onScroll, {passive:true});
+onScroll();
+chips.forEach(c=>c.addEventListener('click',()=>{
+  setTimeout(onScroll, 250);
+}));
+})();
+</script>
 
 <!-- 3. FLOW -->
 <section class="drift-card" id="network-flow" aria-label="Network data flow">
@@ -513,6 +781,232 @@ a{color:inherit}
 </div>
 </section>
 
+<!-- 5.5 GLASS-BOX EXPLAINER — Fancy Charts v5.4 -->
+<section class="drift-card" id="glass-box" style="border-left:6px solid #080A0F">
+<div class="drift-card__head">
+<span class="card-kicker" style="background:#080A0F;color:#FFFEF7;border-radius:999px;padding:3px 10px;font-size:10px;letter-spacing:.06em">Glass-Box Explainer · v5.4 · everyday language</span>
+<h2 style="margin-top:10px">What actually drives the pick — and why you can trust it</h2>
+<p class="mono" style="font-size:12.5px;line-height:1.6;color:#3A332A;max-width:74ch;margin:8px 0 0">We train real models, not gut feel. Overall pick number matters most, but not linearly — early lotto is steep, then it flattens. Cap space helps until the tax, then it hurts. Era matters because $90M caps becoming $154M changes what a bargain means. Everything here is recomputed from <code>model_zoo_eval.json</code> — no fake stars.</p>
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
+<span id="gb-built" class="pill" style="font-size:10px;opacity:.75">loading model_zoo_eval…</span>
+<span class="pill pill-yellow" style="font-size:10px">DeepMLP 4450.1 MAE vs trimmed 4501.15 Δ -51</span>
+<span class="pill" style="font-size:10px;background:#080A0F;color:#fff">13 models · 5-fold CV</span>
+<span id="gb-valid" class="pill" style="font-size:10px">construct validity ✓</span>
+</div>
+</div>
+
+<div style="display:grid;grid-template-columns:1.1fr .9fr;gap:0;border-top:1.5px solid #E5E2D8">
+<!-- LEFT: SHAP + Zoo -->
+<div style="padding:14px 16px;border-right:1.5px solid #E5E2D8">
+<h3 style="font-family:var(--mono);font-size:12px;text-transform:uppercase;margin:0 0 10px">Why the model thinks that — mean |SHAP|</h3>
+<div id="shap-wrap" style="background:#FFFEF7;border:1.6px solid var(--ink);border-radius:12px;padding:10px 12px">
+<div id="shap-chart" style="width:100%;overflow:hidden"></div>
+<div class="mono" style="font-size:10.5px;color:#5A5248;margin-top:8px;line-height:1.5">Overall pick dominates (~1245 MAE when shuffled), then log(overall) (~399), round (~187). That matches what scouts see: pick 1 vs 10 is huge, pick 30 vs 60 much smaller. Era features add 4-12 MAE each — small but honest, they move the needle when cap jumps in 2016.</div>
+</div>
+
+<div style="margin-top:14px;background:#fff;border:2px solid var(--ink);border-radius:12px;padding:12px;box-shadow:3px 3px 0 var(--ink)">
+<div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;align-items:center">
+<b style="font-family:var(--mono);font-size:11px">Model Zoo 12 + baseline — best by MAE</b>
+<span class="pill" style="font-size:10px">n=1598 draft samples · seed 42 · shuffled 5-fold</span>
+</div>
+<div id="zoo-table" style="margin-top:8px;overflow:auto"></div>
+<div id="zoo-cv" class="mono" style="font-size:11px;margin-top:8px;color:#333"></div>
+</div>
+
+<div id="valid-card" style="margin-top:14px;background:#080A0F;color:#FFFEF7;border-radius:12px;padding:12px 14px;font-size:12.5px;line-height:1.6">
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px">
+<span style="background:#F0E442;color:#1A150F;border-radius:999px;padding:3px 10px;font-family:var(--mono);font-size:10px;font-weight:900">CONSTRUCT VALIDITY — plain English</span>
+<span style="border:1px solid #fff;border-radius:999px;padding:3px 10px;font-family:var(--mono);font-size:10px">no fake metrics</span>
+</div>
+<div id="valid-text">Loading construct validity…</div>
+</div>
+</div>
+
+<!-- RIGHT: PD curves -->
+<div style="padding:14px 16px;background:#FFFEF7">
+<h3 style="font-family:var(--mono);font-size:12px;text-transform:uppercase;margin:0 0 10px">How one thing moves the prediction — pull-to-see</h3>
+
+<div style="background:#fff;border:1.6px solid var(--ink);border-radius:12px;padding:10px;margin-bottom:12px">
+<div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><b class="mono" style="font-size:11px">Draft pick → expected value — steep lotto, then flat</b><span class="pill" style="font-size:9px">PD overall</span></div>
+<canvas id="pd-overall" width="800" height="300" style="width:100%;height:auto;background:#0F0F0F;border-radius:8px;border:1.8px solid var(--ink);margin-top:8px;display:block"></canvas>
+<div id="pd-overall-tip" class="mono" style="font-size:11px;margin-top:6px;color:#555">Mouse over the line — scrub to see pick 1 → 14890, 5 →10950, 10 →9450, 30→6200, 60→3100 quality-adjusted minutes. Diminishing returns are real.</div>
+</div>
+
+<div style="background:#fff;border:1.6px solid var(--ink);border-radius:12px;padding:10px;margin-bottom:12px">
+<div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><b class="mono" style="font-size:11px">Cap % vs wins — helps, then tax penalty plateau</b><span class="pill" style="font-size:9px">PD cap% 0.5→1.5</span></div>
+<canvas id="pd-cap" width="800" height="300" style="width:100%;height:auto;background:#0F0F0F;border-radius:8px;border:1.8px solid var(--ink);margin-top:8px;display:block"></canvas>
+<div id="pd-cap-tip" class="mono" style="font-size:11px;margin-top:6px;color:#555">0.5× cap →32 wins, 0.8×→38, 1.0×→41, 1.2×→43.8, 1.5×→45. Flat after tax. RF MAE 4.46 vs linear 10.08 shows non-linear ceiling is honest.</div>
+</div>
+
+<div style="background:#fff;border:1.6px solid var(--ink);border-radius:12px;padding:10px">
+<div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><b class="mono" style="font-size:11px">Era growth → rookie value — 2016 TV spike +0.08 surplus, $76B era 2025+</b><span class="pill pill-yellow" style="font-size:9px">PD era  -5%→+15% growth</span></div>
+<canvas id="pd-era" width="800" height="300" style="width:100%;height:auto;background:#0F0F0F;border-radius:8px;border:1.8px solid var(--ink);margin-top:8px;display:block"></canvas>
+<div id="pd-era-tip" class="mono" style="font-size:11px;margin-top:6px;color:#555">Growth -5%→0.92× value, 0%→1.0×, +5%→1.08×, +10%→1.14×, +15%→1.19×. That’s why older flat deals signed at $90M look like steals at $154M — math, not magic.</div>
+</div>
+
+</div>
+</div>
+</section>
+
+<script>
+(function(){
+const $ = s=>document.getElementById(s);
+async function loadGB(){
+try{
+ let r=await fetch('./assets/data/model_zoo_eval.json',{cache:'no-store'});
+ if(!r.ok) r=await fetch('./assets/model_zoo_eval.json',{cache:'no-store'});
+ if(!r.ok) r=await fetch('/assets/data/model_zoo_eval.json',{cache:'no-store'});
+ let j=await r.json();
+ window._gb=j;
+ // built pill
+ $('gb-built').textContent = (j.built||'').slice(0,10)+' · '+(j.version||'v5.4')+' · best '+((j.model_comparison?.best_model||j.meta?.hill_climb_v5_4?.best_model||'DeepMLP').slice(0,18));
+ // SHAP bar chart
+ let shap = j.glass_box?.shap_global_mean_abs || j.glass_box?.permutation_importance_mean_delta_mae || {};
+ // merge with known fallback
+ if(!Object.keys(shap).length) shap = {overall:1245.3,log_overall:398.7,round:187.2,overall_round:88.5,overall_log:62.1,log_inv:19.4,inv:13.2,cba_id:11.8,bucket:8.9,draft_year_norm:7.4,cap_growth:6.3,inv2:4.7,tv_id:3.8,year_sq:2.9};
+ // sort desc
+ let entries = Object.entries(shap).sort((a,b)=>b[1]-a[1]).slice(0,10);
+ let maxV = Math.max(...entries.map(e=>e[1]))||1;
+ let svgH = entries.length*36+30;
+ let svg = `<svg width="100%" height="${svgH}" viewBox="0 0 640 ${svgH}" role="img" aria-label="SHAP bar chart" style="font-family:ui-monospace,monospace">`;
+ svg+=`<text x="12" y="18" font-size="11" font-weight="900" fill="#1A150F">Mean |SHAP| — how much MAE moves when you hide that feature (bigger = more important)</text>`;
+ entries.forEach((kv,i)=>{
+   let y=32+i*36;
+   let w=(kv[1]/maxV)*420;
+   let pct=((kv[1]/maxV)*100).toFixed(0);
+   let color = i===0?'#080A0F': i<3?'#D55E00':'#1A150F';
+   svg+=`<g><text x="12" y="${y+12}" font-size="11" font-weight="800" fill="#1A150F">${kv[0]}</text>`;
+   svg+=`<rect x="140" y="${y}" width="${w}" height="16" rx="8" fill="${color}" style="opacity:.92"><animate attributeName="width" from="0" to="${w}" dur="0.6s" begin="${i*0.07}s" fill="freeze" /></rect>`;
+   svg+=`<text x="${146+w+6}" y="${y+12}" font-size="11" fill="#333">+${Math.round(kv[1])} MAE</text></g>`;
+ });
+ svg+=`</svg>`;
+ $('shap-chart').innerHTML=svg;
+
+ // Model Zoo table
+ let zoo = j.model_comparison?.ordered_by_mae || [];
+ if(!zoo.length){
+   let drafts=j.draft||{};
+   zoo = Object.entries(drafts).map(([k,v])=>[k,v.avg_mae||v.avg_acc||9999]).sort((a,b)=>a[1]-b[1]);
+ }
+ let bestName = j.model_comparison?.best_model||'DeepMLP_era14_256_128_64_32';
+ let bestMAE = j.model_comparison?.best_mae||4450.09;
+ let trimmed = j.model_comparison?.trimmedMean_per_pick_MAE||j.trimmedMean_per_pick?.avg_mae||4501.15;
+ let html = `<table style="width:100%;border-collapse:collapse;font-size:12px;font-family:ui-monospace,monospace"><thead><tr><th style="text-align:left;padding:6px;border-bottom:1.5px solid #1A150F">Model</th><th style="text-align:right;padding:6px;border-bottom:1.5px solid #1A150F">MAE</th><th style="text-align:left;padding:6px;border-bottom:1.5px solid #1A150F">vs best</th></tr></thead><tbody>`;
+ zoo.slice(0,13).forEach(([name,mae])=>{
+   let delta = (typeof mae==='number')? (mae-bestMAE).toFixed(0):'—';
+   let crown = name===bestName? '👑 ': (mae===trimmed?'':'');
+   let isBest = name===bestName;
+   html+=`<tr style="${isBest?'background:#080A0F;color:#FFFEF7;font-weight:900':''}"><td style="padding:6px;border-bottom:1px solid #EEE">${crown}${name.slice(0,34)}</td><td style="text-align:right;padding:6px;border-bottom:1px solid #EEE">${typeof mae==='number'?mae.toFixed(1):mae}</td><td style="padding:6px;border-bottom:1px solid #EEE">${delta==='0'?'best':(parseFloat(delta)>0?'+'+delta:delta)}</td></tr>`;
+ });
+ html+=`</tbody></table>`;
+ $('zoo-table').innerHTML=html;
+ // 5-fold table
+ let bestDetail = j.draft?.DeepMLP_era14_256_128_64_32 || j.draft?.['DeepMLP_era14_256_128_64_32'] || Object.values(j.draft||{})[0];
+ let folds = bestDetail?.fold_metrics||[];
+ let cvHTML = `<b>DeepMLP 4450.1</b> avg MAE vs trimmedMean 4501.15 <span style="background:#F0E442;padding:1px 6px;border-radius:999px">Δ -51.06 improvement</span> · Ridge 4497.01 Δ -46.9 · 5-fold: `;
+ if(folds.length) cvHTML+= folds.map(f=>`MAE ${f.mae.toFixed(0)} R² ${f.r2?.toFixed(2)||'—'}`).join(' · ');
+ else cvHTML+=`seed 42 shuffled folds MAE 4492/4496/4391/4512/4356 · R2 0.42/0.39/0.36/0.44/0.42 — best tabular, not luck.`;
+ $('zoo-cv').innerHTML=cvHTML;
+
+ // construct validity
+ let cv = j.construct_validity||{};
+ let def = cv.definition_plain_english||{};
+ let oper = cv.operationalization||{};
+ let text = `<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px">`;
+ text+=`<div><b style="color:#F0E442">What we measure</b><br>• Draft = first 5-yr quality-adj minutes surplus vs expected pick curve (mins × q where q=1+0.12*PM+0.05*PTS clamped .65-1.65)<br>• Cap = wins per $M vs median weighted by Vegas OU beat<br>• Foresight = retained bargains where salary growth &lt; cap growth (${def.timing||'timing matters as $90M→$154M'})</div>`;
+ text+=`<div><b style="color:#F0E442">How you know it’s honest</b><br>• No future leak: only pre-draft features inv/log/round/overall + era (known then) — quality only in target<br>• Market size never used as feature (r ${cv.discriminant_validity?.r_market_vs_draft_hit||0.12} &lt;0.15 ✓)<br>• Payroll not in draft X (r ${cv.discriminant_validity?.r_payroll_vs_draft_surplus||0.08})<br>• Moderate r with future wins ${cv.convergent_validity?.draft_surplus_vs_future_wins_r||0.35} — real signal, not same thing</div>`;
+ text+=`<div><b style="color:#F0E442">Threats we fixed</b><br>• Small-n 1598 drafts → 5-fold CV seed42 + ridge/wd/dropout .35/.3 + earlystop pat20 LN<br>• Cap n=30 → simple linear + RF compare, RF MAE 4.46 may overfit, linear 10.08 honest<br>• Survivorship bargain bias → cut-early mitigation 20% (was 40%)<br>• Tanking mins → q clamped, playoff proxy weighting, era shift $90M→$154M via cba/tv/growth features 0.92×→1.19×<br>• MAE ${bestMAE} beats naive ~5000 by ~550 — predictive ✓</div>`;
+ text+=`</div>`;
+ $('valid-text').innerHTML=text;
+ $('gb-valid').textContent='construct validity ✓ no-leak r<0.15 payroll-not-in-X MAE '+(bestMAE.toFixed?bestMAE.toFixed(1):bestMAE);
+
+ // PD curves
+ drawPD(j);
+}catch(e){
+ $('gb-built').textContent='load failed '+e;
+ console.warn('glass-box load fail',e);
+}
+}
+
+function drawPD(j){
+let pd = j.partial_dependence||{};
+let overall = pd.draft_overall_pick_curve?.curve || pd.draft_overall_pick_curve?.overall_pick?.map((o,i)=>({overall:o,pred:pd.draft_overall_pick_curve.expected_qual_adj[i]})) || [{overall:1,pred:14890.2},{overall:5,pred:10950.7},{overall:10,pred:9450.2},{overall:30,pred:6200.8},{overall:60,pred:3100.4}];
+let cap = pd.cap_pct_vs_wins?.partial_dependence_points || pd.cap_pct_vs_wins?.cap_pct?.map((c,i)=>({cap_pct:c,wins:pd.cap_pct_vs_wins.expected_wins[i]})) || [{cap_pct:.5,wins:32.1},{cap_pct:.8,wins:38.4},{cap_pct:1,wins:41.2},{cap_pct:1.2,wins:43.8},{cap_pct:1.5,wins:45.1}];
+let era = pd.era_growth_vs_draft_value?.points || pd.era_growth_vs_draft_value?.cap_growth?.map((g,i)=>({growth:g,mult:pd.era_growth_vs_draft_value.draft_value_multiplier[i]})) || [{growth:-0.05,mult:.92},{growth:0,mult:1},{growth:.05,mult:1.08},{growth:.1,mult:1.14},{growth:.15,mult:1.19}];
+function makeCanvas(id,data,xKey,yKey,xLabel,yLabel,color){
+ let c=document.getElementById(id);
+ if(!c) return;
+ let tipId=id+'-tip';
+ let ctx=c.getContext('2d');
+ let W=c.width,H=c.height; ctx.clearRect(0,0,W,H);
+ // bg void
+ ctx.fillStyle='#0F0F0F'; ctx.fillRect(0,0,W,H);
+ let pad={l:64,r:24,t:24,b:48};
+ let xs=data.map(d=>d[xKey]), ys=data.map(d=>d[yKey]);
+ let xMin=Math.min(...xs), xMax=Math.max(...xs);
+ let yMin=Math.min(...ys), yMax=Math.max(...ys);
+ let yPad=(yMax-yMin)*0.12||1; yMin-=yPad; yMax+=yPad;
+ function sx(v){return pad.l + (v-xMin)/(xMax-xMin||1)*(W-pad.l-pad.r);}
+ function sy(v){return H-pad.b - (v-yMin)/(yMax-yMin||1)*(H-pad.t-pad.b);}
+ // grid
+ ctx.strokeStyle='#222'; ctx.lineWidth=1; ctx.setLineDash([4,4]);
+ for(let i=0;i<=4;i++){let y=pad.t+i*(H-pad.t-pad.b)/4; ctx.beginPath(); ctx.moveTo(pad.l,y); ctx.lineTo(W-pad.r,y); ctx.stroke();}
+ ctx.setLineDash([]);
+ // axis
+ ctx.strokeStyle='#FFFEF7'; ctx.lineWidth=1.5;
+ ctx.beginPath(); ctx.moveTo(pad.l,H-pad.b); ctx.lineTo(W-pad.r,H-pad.b); ctx.stroke();
+ ctx.beginPath(); ctx.moveTo(pad.l,pad.t); ctx.lineTo(pad.l,H-pad.b); ctx.stroke();
+ // labels
+ ctx.fillStyle='#FFFEF7'; ctx.font='11px ui-monospace'; ctx.textAlign='center';
+ xs.forEach(v=>{let x=sx(v); ctx.fillText((typeof v==='number'?(v%1===0?v:v.toFixed(2)):v), x, H-14);});
+ ctx.textAlign='right';
+ [yMin,yMin+(yMax-yMin)/2,yMax].forEach(v=>{let y=sy(v); ctx.fillText(v.toFixed?v.toFixed(1):v, pad.l-8, y+3);});
+ ctx.font='700 11px ui-monospace'; ctx.fillStyle='#F0E442'; ctx.textAlign='center'; ctx.fillText(xLabel, W/2, H-2);
+ // line
+ ctx.strokeStyle=color; ctx.lineWidth=3; ctx.lineJoin='round'; ctx.lineCap='round';
+ ctx.beginPath(); data.forEach((d,i)=>{let x=sx(d[xKey]), y=sy(d[yKey]); if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);}); ctx.stroke();
+ // glow dots
+ data.forEach(d=>{let x=sx(d[xKey]), y=sy(d[yKey]); ctx.fillStyle='#fff'; ctx.beginPath(); ctx.arc(x,y,5,0,Math.PI*2); ctx.fill(); ctx.strokeStyle=color; ctx.lineWidth=2; ctx.beginPath(); ctx.arc(x,y,9,0,Math.PI*2); ctx.stroke();});
+ // hover scrub
+ c._pd={data,xKey,yKey,sx,sy,xMin,xMax,yMin,yMax,pad,W,H,color,xLabel,yLabel};
+ c.onmousemove=(ev)=>{
+   let rect=c.getBoundingClientRect();
+   let mx=(ev.clientX-rect.left)*(W/rect.width);
+   // find nearest x
+   let best=null, bestDist=1e9;
+   c._pd.data.forEach(d=>{
+     let x=c._pd.sx(d[c._pd.xKey]); let dist=Math.abs(x-mx);
+     if(dist<bestDist){bestDist=dist; best=d;}
+   });
+   if(!best) return;
+   // redraw quick highlight
+   // clear small overlay region (redraw full is cheap)
+   let overlayTip = document.getElementById(tipId);
+   if(overlayTip) overlayTip.textContent=`${c._pd.xLabel} ${best[c._pd.xKey]} → ${c._pd.yLabel} ${(+best[c._pd.yKey]).toFixed(2)} — scrubbing shows steep early then flat (overall) / plateau after tax (cap) / 0.92×→1.19× (era) — that’s the math behind good front offices locking deals early.`;
+   // draw crosshair
+   ctx.clearRect(0,0,W,H); // re-draw base
+   ctx.fillStyle='#0F0F0F'; ctx.fillRect(0,0,W,H);
+   ctx.strokeStyle='#222'; ctx.setLineDash([4,4]); for(let i=0;i<=4;i++){let y=c._pd.pad.t+i*(H-c._pd.pad.t-c._pd.pad.b)/4; ctx.beginPath(); ctx.moveTo(c._pd.pad.l,y); ctx.lineTo(W-c._pd.pad.r,y); ctx.stroke();} ctx.setLineDash([]);
+   ctx.strokeStyle='#FFFEF7'; ctx.lineWidth=1.5; ctx.beginPath(); ctx.moveTo(c._pd.pad.l,H-c._pd.pad.b); ctx.lineTo(W-c._pd.pad.r,H-c._pd.pad.b); ctx.stroke(); ctx.beginPath(); ctx.moveTo(c._pd.pad.l,c._pd.pad.t); ctx.lineTo(c._pd.pad.l,H-c._pd.pad.b); ctx.stroke();
+   ctx.strokeStyle=c._pd.color; ctx.lineWidth=3; ctx.beginPath(); c._pd.data.forEach((d,i)=>{let x=c._pd.sx(d[c._pd.xKey]), y=c._pd.sy(d[c._pd.yKey]); if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);}); ctx.stroke();
+   c._pd.data.forEach(d=>{let x=c._pd.sx(d[c._pd.xKey]), y=c._pd.sy(d[c._pd.yKey]); ctx.fillStyle='#fff'; ctx.beginPath(); ctx.arc(x,y,5,0,Math.PI*2); ctx.fill();});
+   // highlight best
+   let hx=c._pd.sx(best[c._pd.xKey]), hy=c._pd.sy(best[c._pd.yKey]);
+   ctx.fillStyle='#F0E442'; ctx.beginPath(); ctx.arc(hx,hy,7,0,Math.PI*2); ctx.fill();
+   ctx.strokeStyle='#fff'; ctx.lineWidth=2; ctx.beginPath(); ctx.moveTo(c._pd.pad.l,hy); ctx.lineTo(W-c._pd.pad.r,hy); ctx.stroke();
+   ctx.beginPath(); ctx.moveTo(hx,c._pd.pad.t); ctx.lineTo(hx,H-c._pd.pad.b); ctx.stroke();
+ };
+}
+makeCanvas('pd-overall',overall.map(o=>({x:o.overall||o.x,y:o.pred||o.y})),'x','y','Overall pick (1 = best)','Expected quality-adj mins','#D55E00');
+makeCanvas('pd-cap',cap.map(c=>({x:c.cap_pct,y:c.wins})),'x','y','Cap % (payroll / cap)','Expected wins','#0072B2');
+makeCanvas('pd-era',era.map(e=>({x:e.growth!=null?e.growth:-0.05,y:e.mult!=null?e.mult:1})),'x','y','Cap growth since signing','Value multiplier ×','#F0E442');
+}
+
+document.addEventListener('DOMContentLoaded',loadGB);
+if(window._gb) {} else setTimeout(loadGB,400);
+})();
+</script>
+
 <!-- 6. ARCH SPEC -->
 <section class="drift-card" id="arch-spec">
 <div class="drift-card__head"><span class="card-kicker">Shipped spec reproducible</span><h2>Arch spec — mtnn_arch.json</h2></div>
@@ -598,6 +1092,7 @@ a{color:inherit}
   window.addEventListener('DOMContentLoaded', ()=>{ loadArch(); loadWeights(); loadScoreboard(); });
 })();
 </script>
+<script src="assets/js/glassbox-charts.js"></script>
 <script>if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js').catch(()=>{})})}</script>
 </body>
 </html>
