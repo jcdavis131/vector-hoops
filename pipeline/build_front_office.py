@@ -537,7 +537,21 @@ def load_team_wins(seasons):
         for t in tdef.get("teams", []):
             abbr_map[t["id"]] = t["abbr"]
     except:
+        tdef={"teams":[]}
         pass
+    if not abbr_map:
+        # fallback when teams.json empty / missing - hard-coded NBA map
+        abbr_map = {
+            1610612737: "ATL", 1610612738: "BOS", 1610612739: "CLE", 1610612740: "NOP",
+            1610612741: "CHI", 1610612742: "DAL", 1610612743: "DEN", 1610612744: "GSW",
+            1610612745: "HOU", 1610612746: "LAC", 1610612747: "LAL", 1610612748: "MIA",
+            1610612749: "MIL", 1610612750: "MIN", 1610612751: "BKN", 1610612752: "NYK",
+            1610612753: "ORL", 1610612754: "IND", 1610612755: "PHI", 1610612756: "PHX",
+            1610612757: "POR", 1610612758: "SAC", 1610612759: "SAS", 1610612760: "OKC",
+            1610612761: "TOR", 1610612762: "UTA", 1610612763: "MEM", 1610612764: "WAS",
+            1610612765: "DET", 1610612766: "CHA",
+        }
+        tdef={"teams":[{"abbr":v,"name":f"{v}","id":k} for k,v in abbr_map.items()]}
     for season in seasons:
         path = CACHE / f"team_base_{season}.json"
         if not path.exists():
@@ -548,6 +562,12 @@ def load_team_wins(seasons):
                 tid = r.get("TEAM_ID")
                 w = float(r.get("W") or 0)
                 abbr = abbr_map.get(tid)
+                if not abbr:
+                    # try int coercion
+                    try:
+                        abbr = abbr_map.get(int(tid))
+                    except:
+                        pass
                 if not abbr:
                     name = r.get("TEAM_NAME","")
                     for td in tdef.get("teams", []):
@@ -892,8 +912,31 @@ def main():
     props_by_season={}
     if props_path.exists():
         try:
-            import json as _js2; doc=_js2.loads(props_path.read_text()); props_by_season=doc.get("seasons",{})
+            import json as _js2; doc=_js2.loads(props_path.read_text()); 
+            # support both wrapper and flat
+            if isinstance(doc, dict) and "seasons" in doc:
+                props_by_season=doc.get("seasons",{})
+            else:
+                # flat mapping season->players is top-level
+                props_by_season={k:v for k,v in doc.items() if isinstance(v, dict) and k[0].isdigit()}
         except: pass
+    # Precompute team -> player norms map from player_team_season.json for props alpha
+    team_norms_for_props={}
+    try:
+        _pts = ROOT/"assets"/"player_team_season.json"
+        if _pts.exists():
+            _j=json.loads(_pts.read_text())
+            for _k,_v in _j.items():
+                if "|" not in _k:
+                    continue
+                _nm,_seas=_k.rsplit("|",1)
+                if _seas!=season_focus:
+                    continue
+                _nn=re.sub(r'[^a-z0-9]','', _nm.lower())
+                if isinstance(_v, str):
+                    team_norms_for_props.setdefault(_v, []).append(_nn)
+    except Exception:
+        team_norms_for_props={}
 
     # expose for top-level payload later
     champion_map = CHAMP_BONUS
@@ -1776,7 +1819,33 @@ def main():
         if vegas_delta is not None:
             # Normalize: +10 over = +3.5 FO pts, +17.5 max SAS 2025-26 = +5 cap
             vegas_alpha = max(-3.0, min(5.0, float(vegas_delta)*0.35))
-        for_score_base = round(0.35*draft_score + 0.35*cap_score + 0.30*foresight_score + 0.15*vegas_alpha,1)
+        # Player props baseline alpha: avg actual pts vs prop (prior-year rounded baseline)
+        # Signals player development / FO retaining overperformers — small lift max ~+0.3 FO
+        props_alpha=0
+        props_avg_delta=None
+        props_count=0
+        try:
+            _p_season = props_by_season.get(season_focus, {}) if isinstance(props_by_season, dict) else {}
+            if _p_season:
+                norms = team_norms_for_props.get(abbr, [])
+                if norms:
+                    deltas=[]
+                    for nn in norms:
+                        ent=_p_season.get(nn)
+                        if ent and ent.get("pts_delta") is not None:
+                            # filter min gp 8 to avoid garbage
+                            if ent.get("gp", 15) >= 8:
+                                try:
+                                    deltas.append(float(ent["pts_delta"]))
+                                except:
+                                    pass
+                    if deltas:
+                        props_avg_delta=round(sum(deltas)/len(deltas),2)
+                        props_count=len(deltas)
+                        props_alpha = max(-2.0, min(3.0, props_avg_delta*0.35))
+        except Exception:
+            props_alpha=0
+        for_score_base = round(0.35*draft_score + 0.35*cap_score + 0.30*foresight_score + 0.15*vegas_alpha + 0.08*props_alpha,1)
         # championship trumps regular-season — bonus from map or projected best-record for latest unknown season
         champ_bonus = 0
         playoff_label = ""
@@ -1866,6 +1935,10 @@ def main():
             "avg_contract_age_2024_25": avg_contract_age_team,
             "season_focus": season_focus,
             "prior_season": prior_season,
+            "vegas_alpha": round(vegas_alpha,2) if isinstance(vegas_alpha, (int,float)) else 0,
+            "props_alpha": round(props_alpha,2) if 'props_alpha' in locals() else 0,
+            "props_avg_delta": props_avg_delta,
+            "props_count": props_count,
         })
 
     # widen draft spread via z-score
@@ -1900,7 +1973,18 @@ def main():
         cap_s = t["cap_efficiency"]["score"]
         fore_s = t["foresight"]["score"]
         # recompute base without champ, then re-add champ bonus (champ trumps regular season)
-        base_new = round(0.35*new_score + 0.35*cap_s + 0.30*fore_s,1)
+        # preserve vegas_alpha + props_alpha small lifts from earlier calc
+        _va = t.get("vegas_alpha", 0) if isinstance(t, dict) else 0
+        _pa = t.get("props_alpha", 0) if isinstance(t, dict) else 0
+        try:
+            _va_f=float(_va or 0)
+        except:
+            _va_f=0
+        try:
+            _pa_f=float(_pa or 0)
+        except:
+            _pa_f=0
+        base_new = round(0.35*new_score + 0.35*cap_s + 0.30*fore_s + 0.15*_va_f + 0.08*_pa_f,1)
         # carry over champ_bonus if present, else 0; preserve base
         cb = t.get("champ_bonus", 0) if isinstance(t, dict) else 0
         t["for_score_base"] = base_new
