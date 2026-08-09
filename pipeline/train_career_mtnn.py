@@ -21,6 +21,8 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
+from _torch_safe import safe_torch_load
+
 HERE = Path(__file__).resolve().parent
 DATA = HERE / "data"
 ASSETS = HERE.parent / "assets"
@@ -290,7 +292,7 @@ def main() -> None:
             print(f"early stop at epoch {ep} (patience={args.patience})", flush=True)
             break
 
-    ckpt = torch.load(OUT_PT, map_location=device, weights_only=False)
+    ckpt = safe_torch_load(OUT_PT, map_location=device)
     model.load_state_dict(ckpt["model"])
     model.eval()
 

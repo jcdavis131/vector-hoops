@@ -51,6 +51,8 @@ import torch.nn as nn
 import torch.nn.functional as F
 from mtnn_validation import build_validation_report, role_labels_from_context
 
+from _torch_safe import safe_torch_load
+
 ROOT = Path(__file__).resolve().parents[1]
 DATA_DIR = ROOT / "pipeline" / "data"
 VECTORS = ROOT / "assets" / "vectors.json"
@@ -1934,7 +1936,7 @@ def main() -> None:
             print(log_line)
 
     if not args.no_best_checkpoint and BEST_CKPT.exists() and best_epoch >= 0:
-        ckpt = torch.load(BEST_CKPT, map_location=device, weights_only=False)
+        ckpt = safe_torch_load(BEST_CKPT, map_location=device)
         model.load_state_dict(ckpt["model"])
         pu_s = f"{best_val_purity:.3f}" if best_val_purity is not None else "n/a"
         co_s = f"{best_val_composite:.3f}" if best_val_composite is not None else "n/a"
@@ -2253,7 +2255,7 @@ def main() -> None:
         print(f"\n-- final-refit on ALL rows ({refit_epochs} epochs) --")
         fit_idx = np.arange(n)
         if BEST_CKPT.exists() and not args.no_best_checkpoint:
-            ckpt = torch.load(BEST_CKPT, map_location=device, weights_only=False)
+            ckpt = safe_torch_load(BEST_CKPT, map_location=device)
             model.load_state_dict(ckpt["model"])
         for epoch in range(refit_epochs):
             model.train()
