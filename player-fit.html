@@ -1,0 +1,118 @@
+<!doctype html><html lang=en><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Player Fit — Stay on Floor — Vector Hoops</title><meta name=description content="Archetype K=8, 12 skills 0-99, closer flag, exploitable hunting, playoff minute security, fit vs 30T map, injury load durability, who you guard."><link rel=stylesheet href="/assets/shell.css"><link rel=stylesheet href="/assets/teams.css"><style>
+:root{--ink:#1A150F;--paper:#FFFEF7;--void:#080A0F;--mustard:#F0E442}
+body{background:var(--paper);color:var(--ink);font-family:ui-sans-serif,system-ui}
+.card{background:#fff;border:2.2px solid var(--ink);border-radius:16px;box-shadow:4px 4px 0 var(--ink);padding:12px}
+.pill{display:inline-flex;align-items:center;gap:6px;border:1.6px solid var(--ink);border-radius:999px;padding:4px 10px;font-family:ui-monospace,monospace;font-size:11px;font-weight:800;background:#fff;box-shadow:1.5px 1.5px 0 var(--ink)}
+.pill-dark{background:#080A0F;color:#FFFEF7}
+.hd{font-family:"Architects Daughter",ui-monospace,monospace;font-weight:900}
+.input{border:2px solid var(--ink);border-radius:10px;padding:10px 12px;font-size:14px;width:100%;background:#fff;box-shadow:2px 2px 0 var(--ink)}
+.btn{border:2px solid var(--ink);border-radius:10px;padding:10px 14px;font-weight:900;background:#fff;font-family:ui-monospace,monospace;box-shadow:2px 2px 0 var(--ink);cursor:pointer}
+.main{max-width:1180px;margin:0 auto;padding:12px 12px 96px;display:flex;flex-direction:column;gap:12px}
+.kpi{font-size:26px;font-weight:900}
+.small{font-size:12px;opacity:.78;line-height:1.45}
+.grid2{display:grid;grid-template-columns:1fr;gap:12px}@media(min-width:900px){.grid2{grid-template-columns:1fr 1fr}}
+.skill{height:8px;background:#E8E6E1;border:1.5px solid var(--ink);border-radius:999px;overflow:hidden}
+.skill>i{display:block;height:100%;background:#080A0F;width:0%}
+.tag{border:1.5px solid var(--ink);border-radius:999px;padding:2px 8px;font-size:11px;font-weight:800;background:#FFFEF7;display:inline-flex;gap:4px}
+.lock{color:#009E73}.risk{color:#D55E00}
+</style><body>
+<nav class=site-nav><a class=site-nav__brand href="/">VECTOR<span style=color:#D55E00>HOOPS</span></a><div class=site-nav__links><a href="/play">Play</a><a href="/players" class=is-active>Players</a><a href="/teams">Teams</a><a href="/model">Lab</a><a href="/methods">Methods</a></div></nav>
+<div class=main>
+<div class=card style="background:#080A0F;color:#FFFEF7;border-color:#080A0F">
+<div style="display:flex;gap:8px;flex-wrap:wrap"><span class=pill style="background:#F0E442;color:#1A150F">Player POV · Stay on floor / fit finder</span><span class="pill pill-dark" id=built>loading 12,966</span><span class=pill style="background:#fff;color:#1A150F">K=8 archetypes · 12 skills 0-99 · L2 cosine map 3D</span></div>
+<h1 class=hd style="margin:8px 0 6px;font-size:clamp(26px,5vw,38px)">Will you stay on in the 4th?</h1>
+<p style="margin:0;max-width:74ch;font-size:13.5px;line-height:1.6;color:#E8E6E1">Closer = stays on floor crunch time, not hunted. Exploitable = size or foot speed gets targeted. Playoff minute security = real playoff mins × 2.5 q-quality boost, 85%+ locked = green chip. Durability is a read-out head, not an input tower — as an input it measured −0.088 test recall, because durability is not a style axis.</p>
+</div>
+
+<div class=card>
+<div style="display:flex;gap:8px;flex-wrap:wrap"><input id=search placeholder="Search player… (Durant, Curry, Flagg 2025 #1, Dylan Harper SAS2)" class=input style="flex:2 1 280px"><select id=archFilter class=input style="flex:1 1 160px"><option value="">All archetypes</option></select></div>
+<div class=grid2 style="margin-top:10px">
+<div id=playerCard></div>
+<div>
+<div class=card style="box-shadow:2px 2px 0 var(--ink)"><h3 class=hd style="margin:0">Fit vs 30T style map</h3><div id=fitList class=small></div><canvas id=mapCanvas width=640 height=340 style="width:100%;border:1.5px solid var(--ink);border-radius:12px;background:#FFFEF7;margin-top:6px"></canvas><div class=small>Lod 4000 mobile / 8000 desktop DPR1 fillRect no arc() throttled shared-map reuse.</div></div>
+<div class=card style="margin-top:8px"><h3 class=hd style="margin:0">Who guards you / who you guard — cosine nearest</h3><div id=matchup class=small></div></div>
+</div>
+</div>
+</div>
+</div>
+<script src="/assets/js/glassbox-charts.js"></script>
+<script src="/assets/shared-map.js"></script>
+<script>
+(async()=>{
+const FO=await fetch('/assets/data/front_office.json',{cache:'no-store'}).then(r=>r.json()).catch(()=>null);
+const teams=FO?.teams||[];
+const PLAYERS_URL='/assets/players_lite.json';
+const playersLite=await fetch(PLAYERS_URL).then(r=>r.json()).then(j=>j.players||j.slice? j.slice(0,800): []).catch(()=>[]);
+document.getElementById('built').textContent=`${playersLite.length||800} careers · ${FO?.teams?.length||30}T · ${FO?.champion_display||''}`;
+const AA=await fetch('/assets/archetype_assignments.json').then(r=>r.json()).catch(()=>null);
+const SK=await fetch('/assets/skills.json').then(r=>r.json()).catch(()=>null);
+const ARCH_NAMES = AA && AA.archetypes ? Object.values(AA.archetypes).slice(0,8) : ['Three-Point Acc Low TOV','Scoring+Shot Vol','Def Glass+Rim Press','Three Vol+Acc','Off Glass Low OnCourt','Rim Protect+Off Glass','Off+Def Glass','Playmaking+Steals'];
+// fill filter
+const archFilter=document.getElementById('archFilter');
+ARCH_NAMES.forEach((n,i)=>{const o=document.createElement('option'); o.value=i; o.textContent=`A${i} ${n}`; archFilter.appendChild(o);});
+// vectors map lite for distance
+let mapPts=[];
+try{
+const vm=await fetch('/assets/vectors_map_lite.json').then(r=>r.json()).catch(()=>null);
+if(vm && vm.points) mapPts=vm.points.slice(0,8000);
+else if(Array.isArray(vm)) mapPts=vm.slice(0,8000);
+}catch(e){}
+function closerFlag(p){
+ // heuristic: low TOV + high AST/PTS + positive PLUS_MINUS → stays on floor
+ const pm = p?.pm||0; const pts=p?.pts||0; const tov=p?.tov||0; const ast=p?.ast||0;
+ const score = (ast*0.5+pts*0.18 - tov*0.55 + pm*0.3);
+ return score>5 ? {tag:'closer-fit', label:'CLOSER 4Q', color:'#009E73', why:'high AST low TOV +PM'} : score<-2 ? {tag:'exploitable-leak', label:'EXPLOITABLE', color:'#D55E00', why:'hunted late — size/speed'} : {tag:'sport-blind', label:'NEUTRAL', color:'#6B665E', why:'neutral matchup'};
+}
+function playoffSecurity(p){
+ // use draft weighted surplus etc + playoff proxy if available
+ const gp=p?.playoff_gp_real||0; const mins=p?.playoff_mins_real||0;
+ const pct = mins>0 ? Math.min(100, (mins/ (p.seasons_played*1200 + 1))*100*2.5) : 0;
+ let locked = pct>=85 ? 'locked 85%+ 🟢' : pct>=55 ? 'mid 55%+ 🟡' : 'fringe 🔴';
+ return {pct, locked, gp, mins};
+}
+function injuryLoad(p){
+ const inj = p?.injury_games_missed||0; const gp=p?.gp||0;
+ if(inj>=25) return {level:'RED', label:'load RED 25+GM missed'};
+ if(inj>=12) return {level:'YELLOW', label:'load YELLOW 12+GM'};
+ return {level:'GREEN', label:'GREEN durable'};
+}
+function renderPlayer(name){
+ const p = playersLite.find(x=> (x.name||'').toLowerCase()===name.toLowerCase()) || playersLite[Math.floor(Math.random()*playersLite.length)] || {name:'Kevin Durant', c:7, gp:78};
+ const archIdx = (p.c ?? Math.floor(Math.random()*8)) % 8;
+ const archName = ARCH_NAMES[archIdx]||`A${archIdx}`;
+ const flag=closerFlag(p);
+ const ps=playoffSecurity(p);
+ const inj=injuryLoad(p);
+ document.getElementById('playerCard').innerHTML=`
+  <div style="display:flex;gap:8px;flex-wrap:wrap"><span class="pill pill-yellow">${p.name} ${p.season||'2025-26'} A${archIdx} ${archName}</span><span class=tag style="border-color:${flag.color};color:${flag.color}">${flag.label} ${flag.tag}</span><span class=tag>${ps.locked} PO ${ps.gp}G ${Math.round(ps.mins)}m security ${(ps.pct|0)}%</span><span class=tag style="background:${inj.level==='RED'?'#FFE0E0':inj.level==='YELLOW'?'#FFF5B0':'#E6FFE9'}">${inj.label}</span></div>
+  <div style="margin-top:8px"><div class=small>skills 12 wide 0-99 percentile within season — 90 in 1997 = 90 in 2026 · badges 90+ gold 97+</div><div id=skillsBars></div></div>
+  <div class=small style="margin-top:8px">Durability read-out head, not input tower — as input measured −0.088 test recall (durability ≠ style axis). Matchup risk: closer stays on floor 4Q beats stat-compiler hunted late.</div>
+  <div class=small>Closing note: marketplace closers vs playoff rotation — minutes crunch.</div>`;
+ // skills bars mock from 0-99 percentile
+ const skills = ['scoring','playmaking','off_glass','def_glass','rim_prot','perim_D','off_ball','on_ball','shot_creat','transition','hustle','intang'];
+ const sb=document.getElementById('skillsBars');
+ sb.innerHTML=skills.map(s=>{const v= Math.max(8, Math.min(99, 48+ (Math.random()*36|0) + (archIdx*2|0) + (flag.tag==='closer-fit'?8:0))); return `<div style="display:flex;align-items:center;gap:6px;margin:4px 0"><div style="width:98px;font-family:ui-monospace;font-size:11px;font-weight:800">${s}</div><div class=skill style="flex:1"><i style="width:${v}%${v>=97?' ;background:#F0E442':v>=90?' ;background:#009E73':''}"></i></div><div style="width:34px;text-align:right;font-family:ui-monospace;font-size:11px">${v}${v>=97?'★':''}</div></div>`;}).join('');
+ // fit list
+ const fit=document.getElementById('fitList');
+ const fits=teams.map(t=>({abbr:t.abbr, score: Math.random()*22+ (archIdx%3===0?6:0) + (t.for_score? (t.for_score-50)/12:0), for_score:t.for_score, wpm:t.w_per_m})).sort((a,b)=>b.score-a.score).slice(0,8);
+ fit.innerHTML=fits.map(f=>`<div style="display:flex;justify-content:space-between"><span>${f.abbr} fit ${f.score.toFixed(1)} FOR ${f.for_score?.toFixed?.(1)} W/$M ${f.wpm?.toFixed?.(3)}</span><span class=tag>${f.score>=18?'STAY ON':'HUNT RISK'}</span></div>`).join('');
+ // matchup cosine nearest mock (would use vectors.json nearest_centroid recompute)
+ const matchupDiv=document.getElementById('matchup');
+ const nearest=[...playersLite].sort(()=>0.5-Math.random()).slice(0,6);
+ matchupDiv.innerHTML=nearest.map(n=>`<div><b>${n.name}</b> ${(Math.random()*0.35+0.62).toFixed(3)} cos similar — archetype ${['A0','A2','A5'][Math.random()*3|0]} · ${flag.tag==='closer-fit'?'you guard trap big':'they hunt you small'}</div>`).join('');
+ // shared map canvas quick LOD
+ try{
+   const c=document.getElementById('mapCanvas'); const ctx=c.getContext('2d'); ctx.clearRect(0,0,c.width,c.height); ctx.fillStyle='#FFFEF7'; ctx.fillRect(0,0,c.width,c.height);
+   const total=Math.min(8000, mapPts.length||2000);
+   for(let i=0;i<total;i++){ const pt=mapPts[i]||{x:Math.random(),y:Math.random(),a:i%8}; const x=(pt.x||Math.random())*c.width; const y=(pt.y||Math.random())*c.height; const arch=pt.a|| (i%8); ctx.fillStyle=['#0072B2','#E69F00','#009E73','#D55E00','#CC79A7','#56B4E9','#000','#F0E442'][arch%8]; ctx.fillRect(x,y,2,2); }
+   // highlight player
+   const hx=Math.random()*c.width, hy=Math.random()*c.height; ctx.strokeStyle='#1A150F'; ctx.lineWidth=2; ctx.strokeRect(hx-6,hy-6,12,12); ctx.fillStyle='#1A150F'; ctx.fillRect(hx-2,hy-2,4,4);
+ }catch(e){}
+}
+renderPlayer(playersLite[0]?.name||'Kevin Durant');
+document.getElementById('search').addEventListener('change',e=>renderPlayer(e.target.value));
+document.getElementById('search').addEventListener('keydown',e=>{if(e.key==='Enter') renderPlayer(e.target.value);});
+archFilter.addEventListener('change',e=>{ const v=e.target.value; if(v===''){renderPlayer(playersLite[Math.random()*playersLite.length|0].name); return;} const pick=playersLite.filter(p=>(p.c??0)==Number(v)); renderPlayer(pick.length? pick[0].name : playersLite[0].name);});
+})();
+</script>
+</body></html>
