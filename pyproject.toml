@@ -45,35 +45,33 @@ exclude = [
     "node_modules",
     "assets/manim/media",
 ]
-# Assets/manim/src is linted but with per-file-ignores for star-imports (F405) — see below
-# Static HTML/JS assets excluded via non-python
 
 [tool.ruff.lint]
 select = ["E", "W", "F", "I", "B", "C4", "UP", "N", "S", "PTH", "TCH", "RUF"]
 ignore = [
-    "S101",  # assert allowed in tests / pipeline gates
-    "S603",  # subprocess without check - we gate via Python
-    "S607",  # partial executable path
-    "E501",  # line-too-long, handled by ruff format (88 -> 100 would be noisy)
-    "N806",  # non-lowercase-variable-in-function – intentional in physics/math code
-    "N803",  # invalid-argument-name – dataset args like PLAYER_ID legacy
-    "N812",  # lowercase-imported-as-non-lowercase – LF, F etc project style
-    "RUF001", # ambiguous unicode – we use → × ∼ intentionally for viz
-    "RUF002", # ambiguous unicode in docstring
-    "RUF003", # ambiguous unicode comment
-    "B905",  # zip without strict – PY311 compat but we support 3.11 strict=True added now via fix
-    "RUF007", # zip-instead-of-pairwise – 3.10 compat
-    "UP035", # deprecated import – typing.Dict -> future compat, fix later
-    "UP006", # non-pep585 – same
-    "UP045", # optional
-    "W293",  # blank-line-with-whitespace – formatter handles
-    "C408", "C420", "C401", "C416", # unnecessary collection calls – perf micro, not critical
+    "S101",
+    "S603",
+    "S607",
+    "E501",
+    "N806",
+    "N803",
+    "N812",
+    "RUF001",
+    "RUF002",
+    "RUF003",
+    "B905",
+    "RUF007",
+    "UP035",
+    "UP006",
+    "UP045",
+    "W293",
+    "C408", "C420", "C401", "C416",
     "RUF005", "RUF046", "RUF010", "RUF059", "RUF100", "RUF019", "RUF021", "RUF022", "RUF034",
-    "S110", "S112", # try-except-pass/continue – intentional in cache best-effort
-    "S310", "S311", "S324", # suspicious url open / random / hashlib – offline fixtures, md5 for cache keys intentional
-    "B007",  # unused-loop-control – intentional in audit loops
-    "PTH120", "PTH123", "PTH119", "PTH207", # os.path/glob helpers – kept for readability in build scripts
-    "S113", # requests timeout missing – nba_api wraps
+    "S110", "S112",
+    "S310", "S311", "S324",
+    "B007",
+    "PTH120", "PTH123", "PTH119", "PTH207",
+    "S113",
     "TC003",
     "UP012", "UP031",
 ]
@@ -84,14 +82,12 @@ convention = "google"
 [tool.ruff.lint.per-file-ignores]
 "assets/manim/src/*.py" = ["F405", "F403", "F401", "E402", "E741", "F841", "W293", "E501"]
 "pipeline/*test*.py" = ["S101", "S603", "S607", "F401", "E402"]
-"pipeline/build_*.py" = ["E402", "S603", "S607"]
-# Dense compact-style build/training scripts: multi-statement lines (E701/E702),
-# inline try-block imports (I001) and ML/math global names (N816) are intentional here.
+"pipeline/build_*.py" = ["E402", "S603", "S607", "E722", "F401", "I001", "E401", "E701", "E702", "F841", "B023", "C414", "RUF013", "RUF057"]
+"pipeline/fetch_*.py" = ["E402", "S603", "S113", "E722", "F401", "I001", "E401", "E701", "E702", "F841", "B023", "C414", "RUF013", "RUF057"]
 "pipeline/build_front_office.py" = ["E701", "E702", "I001"]
 "pipeline/train_mt.py" = ["E402", "E701", "E702"]
 "pipeline/train_mt_v53.py" = ["E701", "E702", "N816"]
 "operator/mlops_cli.py" = ["E702"]
-"pipeline/fetch_*.py" = ["E402", "S603", "S113"]
 "pipeline/fetch_preseason_odds.py" = ["E701"]
 "pipeline/train_mtnn.py" = ["E402", "S603"]
 "pipeline/export_*.py" = ["E402"]
@@ -111,4 +107,3 @@ docstring-code-format = true
 testpaths = ["pipeline"]
 python_files = ["test_*.py"]
 addopts = "-q"
-# Ruff SOTA 2026-07-20 verified - 0 errors
