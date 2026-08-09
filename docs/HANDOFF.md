@@ -1,5 +1,6 @@
-# Handoff: Skills Lens + dormant data tracks
+# Handoff 2026-08-09 — Skills Lens + dormant data tracks (coherence pass unified README/manifest + hub parity)
 
+> **Date:** 2026-08-09 — verified assets/manifest.json composite 0.7937, eval_scoreboard.json test_top1 0.438 test_top5 0.757, bundles/manifest.json v3.3-OODA-Agentic-MoMA-Graph-Checkpoint + scout-cli 0.8.0 13 agents 12 packs 6 ultra 5 workflows
 > **Purpose:** let another agent (or future you) pick up this work without
 > re-deriving context. **Latest session:** [`HANDOFF_2026-07-25.md`](./HANDOFF_2026-07-25.md)
 > (four silent-plumbing bugs, promote gate re-anchored, hill-climbs all

@@ -1,0 +1,720 @@
+{
+  "agents": [
+    {
+      "always_on": true,
+      "file": "agents/scout-prime-coordinator.md",
+      "id": "scout-prime",
+      "layer": 0,
+      "role": "coordinator + Ultra host + OODA loop host",
+      "v3_1": "owns 8-phase Ultra, 1 Q max, memory lattice + write-back, OODA tempo control",
+      "v3_2_agentic_insights": "3-layer separation: execution/communication/orchestration, hierarchical control, human-in-loop gate"
+    },
+    {
+      "file": "agents/researcher.md",
+      "id": "researcher",
+      "layer": "2-3",
+      "role": "fast-facts scout \u2014 bridges to deep-researcher with OODA Observe",
+      "skills": [
+        "deep-research-pack",
+        "productivity-pack",
+        "llmvm-interleave-pack"
+      ],
+      "v3_2": "Observe = real-time data snapshot, fast triage 3 sources",
+      "v3_3_llmvm": true
+    },
+    {
+      "file": "agents/deep-researcher.md",
+      "id": "deep-researcher",
+      "layer": 2,
+      "role": "The Deep Diver \u2014 wide sweep + triangulation + grading + OODA Orient heavy",
+      "skills": [
+        "deep-research-pack",
+        "intelligence-pack"
+      ],
+      "v3_2": "Orient: memory lattice 1-2 hops + culture/experience/new data synthesis, 5-7 sources, contradiction matrix"
+    },
+    {
+      "file": "agents/synthesist.md",
+      "id": "synthesist",
+      "layer": 3,
+      "role": "The Weaver \u2014 4-phase synthesis + OODA Decide hypothesis framing",
+      "skills": [
+        "deep-research-pack",
+        "verification-pack"
+      ],
+      "v3_2": "Decide = one hypothesis plan, Collect\u2192Cluster\u2192Conflict\u2192Crystallize, insight extraction"
+    },
+    {
+      "file": "agents/builder.md",
+      "id": "builder",
+      "layer": 3,
+      "role": "The Maker \u2014 polished self-contained artifacts + OODA Act",
+      "skills": [
+        "builder-pack",
+        "media-creation-pack",
+        "complex-actions-pack"
+      ],
+      "v3_2": "Act = self-contained deliverable + feedback for next Observe"
+    },
+    {
+      "file": "agents/communicator.md",
+      "id": "communicator",
+      "layer": 3,
+      "role": "Voice \u2014 warm, pro, sounds like Cameron, human-in-loop gate",
+      "skills": [
+        "communication-pack",
+        "productivity-pack",
+        "complex-actions-pack"
+      ]
+    },
+    {
+      "file": "agents/operator.md",
+      "id": "operator",
+      "layer": 3,
+      "role": "Always-On watcher \u2014 close loops, tempo regulator",
+      "skills": [
+        "commerce-life-pack",
+        "productivity-pack",
+        "complex-actions-pack"
+      ],
+      "v3_2": "Timing over speed, :13 minute pacing, event-driven > polling"
+    },
+    {
+      "file": "agents/action-operator.md",
+      "id": "action-operator",
+      "layer": 3,
+      "role": "The Closer \u2014 multi-system action chains + agentic production-grade",
+      "skills": [
+        "complex-actions-pack",
+        "commerce-life-pack",
+        "verification-pack"
+      ],
+      "v3_2": "tool-first, single-resp, pure-function, tool safety, eval hooks, KISS"
+    },
+    {
+      "file": "agents/strategist.md",
+      "id": "strategist",
+      "layer": 1,
+      "new_in_v3": "confidence calibration, edge_cases output",
+      "role": "L1 master sense-maker \u2014 Opaque Goal Deconstruction + 3-lens + OODA Orient",
+      "v3_2": "Orient shapes Observe/Decide/Act, variety + rapidity, 3 lenses optimistic/pessimistic/strange"
+    },
+    {
+      "file": "agents/planner.md",
+      "id": "planner",
+      "layer": 2,
+      "role": "L2 DAG architect \u2014 optimistic/pessimistic + MERGE + parallel smart + agentic best practices",
+      "v3_2": "structured workflows (DAG/state machine), deterministic, single-resp nodes, max 7 steps, pure-function"
+    },
+    {
+      "file": "agents/executor.md",
+      "id": "executor",
+      "layer": 3,
+      "role": "L3 elite operator \u2014 self-contained node runner + BLOCKED + OODA inner loop",
+      "v3_2": "each node = Observe fresh, Orient filter, Decide 1 hypo, Act artifact, log feedback"
+    },
+    {
+      "file": "agents/critic.md",
+      "id": "critic",
+      "layer": 4,
+      "role": "L4 adaptive QA lord \u2014 0-10 rubric, repair vs replan + eval hooks",
+      "v3_2": "correctness/reliability/coherence/tool failures/hallucination/comms/quality + OODA fidelity"
+    },
+    {
+      "file": "agents/forensic-auditor.md",
+      "id": "forensic-auditor",
+      "layer": 4,
+      "role": "Second Brain QC \u2014 fact-check cascade + source audit + logic gap + agentic health",
+      "v3_2": "agentic orchestration guarantees check, timing vs speed audit"
+    }
+  ],
+  "agents_count": 13,
+  "by": "Scout \u2014 fluffy kitty with magic animations v3.2 OODA+Agentic",
+  "connectors": {
+    "connected": 8,
+    "needed": 8
+  },
+  "created": "2026-08-04",
+  "dashboard_runs": [
+    "ultra-test-1",
+    "ooda-agentic-upgrade-1"
+  ],
+  "for": "Cameron",
+  "how_to_use_v3_2": "1) scout-prime Observe intent 2) router-0 Orient (memory+complexity) 3) Decide route 4) Act swarm 5) OODA inner loop per node 6) agentic guarantees 7) critic eval hooks 8) write-back 9) sparkle",
+  "name": "Scout Execution Bundle v3.2 \u2014 OODA + Agentic Loops",
+  "packs_count": 12,
+  "principles_v3_2": [
+    "OODA everywhere: Observe real-time, Orient filter with lattice+culture+experience, Decide hypothesis, Act artifact that changes env + generates feedback",
+    "Orientation > speed: better orientation shapes better Observe/Decide/Act, variety in thought + rapidity in decision",
+    "Tempo over raw speed: timing regulation, regulate speed to coincide with opponent/environment weakness",
+    "Speed vs Perfection: 70% move + feedback beats waiting; Act creates info; imperfect action \u2192 learning",
+    "Agentic 3 layers: Execution (agents/responders), Communication (queues/events/RPC no direct calls), Orchestration (DAG/state machine/behavior tree)",
+    "Tool-first, single-responsibility, pure-function invocation, externalized prompts, KISS",
+    "Memory discipline: decide when read, when updated, how summarized, long-term vs episodic",
+    "Reasoning boundaries: max 7 steps per loop, deterministic planning, controlled context windows",
+    "Evaluation hooks mandatory: correctness/reliability/coherence/tool failures/hallucination/comms/quality",
+    "Multi-agent orchestration: routing, message passing, shared memory, hierarchical control, role enforcement, concurrency 4, no drift",
+    "Deterministic over opaque: late commitment, feedback loops, debugging possible"
+  ],
+  "skill_packs": [
+    {
+      "file": "skills/productivity-pack.md",
+      "id": "productivity-pack",
+      "use": "docs/drive/tasks baseline ops",
+      "v3_2": "OODA observe tools"
+    },
+    {
+      "file": "skills/communication-pack.md",
+      "id": "communication-pack",
+      "use": "gmail/calendar human touch",
+      "v3_2": "human-in-loop gate"
+    },
+    {
+      "file": "skills/commerce-life-pack.md",
+      "id": "commerce-life-pack",
+      "use": "duffel/opentable/ticketmaster/shopping",
+      "v3_2": "tool-first idempotent"
+    },
+    {
+      "file": "skills/builder-pack.md",
+      "id": "builder-pack",
+      "use": "web artifacts + polished files",
+      "v3_2": "Act phase polished self-contained"
+    },
+    {
+      "file": "skills/intelligence-pack.md",
+      "id": "intelligence-pack",
+      "use": "legacy superseded",
+      "v3_2": "use deep-research-pack"
+    },
+    {
+      "file": "skills/media-creation-pack.md",
+      "id": "media-creation-pack",
+      "use": "images/video/icons via generate_media",
+      "v3_2": "pure-function media"
+    },
+    {
+      "file": "skills/deep-research-pack.md",
+      "for_agents": [
+        "researcher",
+        "deep-researcher",
+        "synthesist",
+        "strategist",
+        "planner"
+      ],
+      "id": "deep-research-pack",
+      "ooda_link": "Observe raw info, Orient lattice+culture, Decide synthesis hypo, Act brief",
+      "use": "memory lattice + wide sweep 5-7 + triangulation + grading + freshness + contradiction + OODA Orient",
+      "v3_2": true
+    },
+    {
+      "file": "skills/complex-actions-pack.md",
+      "for_agents": [
+        "action-operator",
+        "operator",
+        "builder",
+        "communicator",
+        "scout-prime"
+      ],
+      "id": "complex-actions-pack",
+      "use": "multi-system orchestration + 9 production-grade best practices + OODA loops + 2-loop control",
+      "v3_2": true
+    },
+    {
+      "file": "skills/verification-pack.md",
+      "for_agents": [
+        "critic",
+        "forensic-auditor",
+        "synthesist"
+      ],
+      "id": "verification-pack",
+      "use": "critic 0-10 + eval hooks 6 + OODA fidelity + agentic health + repair vs replan",
+      "v3_2": true
+    },
+    {
+      "file": "router/README.md",
+      "id": "router-pack",
+      "note": "meta-pack routing intelligence v3.2 with OODA + agentic routing"
+    },
+    {
+      "file": "skills/lateral-thinking-pack.md",
+      "id": "lateral-thinking-pack",
+      "for_agents": [
+        "strategist",
+        "synthesist",
+        "planner",
+        "scout-prime",
+        "researcher"
+      ],
+      "use": "de Bono 8 techniques + router for stuck product direction, predictable brainstorm, unbreakable constraints \u2014 MIT danium/lateral-thinking",
+      "v3_3": true,
+      "techniques": [
+        "lateral",
+        "random-stimulus",
+        "provocation",
+        "inversion",
+        "concept-fan",
+        "analogy",
+        "scamper",
+        "six-hats",
+        "worst-idea"
+      ],
+      "honesty_mechanics": "visible abandonments + meta-pattern + no fake 7/7",
+      "source": "https://github.com/danium/lateral-thinking"
+    },
+    {
+      "file": "skills/llmvm-interleave-pack.md",
+      "id": "llmvm-interleave-pack",
+      "for_agents": [
+        "researcher",
+        "deep-researcher",
+        "strategist"
+      ],
+      "use": "llmvm-style code-interleaved reasoning + stateful Python runtime + JIT thread compiler \u2014 code+thought interleaving not tool-only",
+      "v3_3": true,
+      "inspired_by": "https://github.com/9600dev/llmvm",
+      "version": "v1-llmvm-interleave",
+      "layer": "2-3"
+    }
+  ],
+  "ultra_components": {
+    "agentic_best_practices_9": [
+      "Tool-first design over MCP",
+      "Pure-function invocation",
+      "Single-tool single-responsibility agents",
+      "Externalized prompt management",
+      "Responsible-AI model consortium",
+      "Clean separation workflow logic vs MCP servers",
+      "Containerized deployment scalable",
+      "KISS",
+      "Deterministic orchestration + Responsible-AI"
+    ],
+    "agents_new_v3_1": [
+      {
+        "file": "agents/deep-researcher.md",
+        "id": "deep-researcher",
+        "layer": 2,
+        "role": "Wide Sweep + triangulation + grading + OODA Orient"
+      },
+      {
+        "file": "agents/synthesist.md",
+        "id": "synthesist",
+        "layer": 3,
+        "role": "Weaver + OODA Decide"
+      },
+      {
+        "file": "agents/action-operator.md",
+        "id": "action-operator",
+        "layer": 3,
+        "role": "Closer + tool-first + single-resp + OODA Act"
+      },
+      {
+        "file": "agents/forensic-auditor.md",
+        "id": "forensic-auditor",
+        "layer": 4,
+        "role": "Second Brain QC + eval hooks + OODA fidelity"
+      }
+    ],
+    "agents_refined_v3_2": [
+      {
+        "id": "strategist",
+        "layer": 1,
+        "upgrade": "OODA Orient centrality, 3-lens method, variety+rapidity"
+      },
+      {
+        "id": "planner",
+        "layer": 2,
+        "upgrade": "structured workflows DAG/state machine, single-resp nodes, KISS 3-7 nodes, pure-function"
+      },
+      {
+        "id": "executor",
+        "layer": 3,
+        "upgrade": "OODA inner loop per node, tool safety, memory discipline, max-step 7, eval self-hint"
+      },
+      {
+        "id": "critic",
+        "layer": 4,
+        "upgrade": "6 eval hooks + OODA feedback audit + timing audit"
+      },
+      {
+        "id": "builder",
+        "layer": 3
+      },
+      {
+        "id": "researcher",
+        "layer": "2-3"
+      },
+      {
+        "id": "operator",
+        "layer": 3,
+        "upgrade": "tempo regulator :13 pacing, event-driven"
+      },
+      {
+        "id": "communicator",
+        "layer": 3
+      },
+      {
+        "id": "scout-prime",
+        "layer": 0,
+        "upgrade": "3-layer orchestration host, hierarchical control"
+      }
+    ],
+    "ooda_principles": [
+      "Observe gathering real-time data sensory imperfect snapshot",
+      "Orient filter via culture experience genetics analysis prior + new info culture/org learning",
+      "Decide hypothesis to test",
+      "Act executes + creates new observation",
+      "Late commitment agility vs PDCA early commitment",
+      "Orientation > speed shapes quality",
+      "Tempo = rate+rhythm timing > raw speed",
+      "Scientific method embedded"
+    ],
+    "orchestration_guarantees_6": [
+      "Structured Workflow Execution DAG/state machine/behavior tree/event-driven",
+      "Tool Safety & Validation schemas + error handling + sandbox",
+      "Memory Management read/update discipline summaries long-term/episodic",
+      "Reasoning Boundaries max-steps deterministic loops controlled context",
+      "Evaluation Hooks correctness/reliability/coherence/tool failures/hallucination/comms/quality",
+      "Multi-Agent Orchestration routing message passing shared memory hierarchical control planning role enforcement concurrency"
+    ],
+    "readme": "bundles/ultra/README.md",
+    "router_ultra": {
+      "description": "3-level router v3.2: intent+complexity OODA Orient + interpretation picker + executor re-router + deep-research + agentic routing",
+      "file": "router/router.ultra.js",
+      "levels": [
+        "router-0",
+        "router-1",
+        "router-2"
+      ],
+      "v3_2_add": "OODA inner loop per node, research->deep-researcher+synthesist+forensic, complex action->action-operator, agentic epic->13-agent swarm, verification->forensic+critic, tempo control"
+    },
+    "runs_dir": "bundles/ultra/runs/",
+    "skill_packs_new_v3_1": [
+      {
+        "file": "skills/deep-research-pack.md",
+        "id": "deep-research-pack"
+      },
+      {
+        "file": "skills/complex-actions-pack.md",
+        "id": "complex-actions-pack"
+      },
+      {
+        "file": "skills/verification-pack.md",
+        "id": "verification-pack"
+      }
+    ],
+    "workflows": [
+      {
+        "description": "Master orchestrator v3.2 with OODA loops inside each executor + agentic guarantees + evaluation hooks + memory write-back",
+        "file": "workflows/ultra/ultra-orchestrator.js",
+        "id": "ultra-orchestrator",
+        "layers": 8,
+        "phase_add_v3_2": "metrics-dance eval hooks + OODA fidelity + memory_writeback auto"
+      },
+      {
+        "file": "workflows/ultra/intent-decomposer.js",
+        "id": "intent-decomposer",
+        "layer": 1
+      },
+      {
+        "file": "workflows/ultra/dynamic-planner.js",
+        "id": "dynamic-planner",
+        "layer": 2
+      },
+      {
+        "file": "workflows/ultra/layer-executor.js",
+        "id": "layer-executor",
+        "layer": 3,
+        "v3_2": "OODA per node Observe Orient Decide Act + tool safety + pure-function"
+      },
+      {
+        "file": "workflows/ultra/adaptive-critic.js",
+        "id": "adaptive-critic",
+        "layer": 4,
+        "v3_2": "6 eval hooks + OODA audit + agentic health"
+      }
+    ]
+  },
+  "v2_components": {
+    "memory": {
+      "dir": "memory/",
+      "enricher": "memory/people_enrichment.js",
+      "graph": "memory/memory_graph.json",
+      "lattice": "memory/lattice.md",
+      "retrieval": "dense 0.7 + sparse 0.3 + rerank jinaai/jina-reranker-v1-turbo-en + 1-2 hop graph walk + OODA Orient",
+      "write_back": "memory/memory_writeback.js \u2014 auto-wired in metrics-dance phase"
+    },
+    "observability": {
+      "artifact_slug": "scout-ops",
+      "dashboard_url": "scout-ops-always-on-2",
+      "dir": "observability/",
+      "metrics": "observability/metrics_collector.js",
+      "prompt": "observability/dashboard_artifact_prompt.md",
+      "spec": "observability/dashboard_spec.md",
+      "title": "Scout Ops \u2014 Always On v3.2",
+      "v3_2": {
+        "agentic_health": ":check eval hooks 6",
+        "ooda_health": "Observe/Orient/Decide/Act fidelity",
+        "tempo_metric": "signal to action elapsed"
+      }
+    },
+    "proactive": {
+      "critics": [
+        "proactive/critics/critic.md",
+        "proactive/critics/critic_config.json"
+      ],
+      "evening": "proactive/evening_wrap_feed.md",
+      "feed_prompts": "proactive/feed_prompts.md",
+      "hooks": [
+        "proactive/hooks/gmail_triage_hook.md",
+        "proactive/hooks/price_watch_hook.md",
+        "proactive/hooks/hook_router.js"
+      ],
+      "morning": "proactive/morning_edition_feed.md"
+    },
+    "router": {
+      "config": "router/config.json",
+      "dir": "router/",
+      "main": "router/router.js",
+      "model_hint": "Qdrant/all-MiniLM-L6-v2-onnx",
+      "type": "deterministic + OODA + agentic routing v3.2",
+      "ultra": "router/router.ultra.js"
+    },
+    "self_improvement": {
+      "auto_creator": "self-improvement/auto_skill_creator.md",
+      "dir": "self-improvement/",
+      "loop": "self-improvement/self_improvement_loop.md",
+      "pattern_detector": "self-improvement/pattern_detector.js",
+      "workflow_upgrade": "self-improvement/workflow_upgrade.md"
+    }
+  },
+  "v3_1_upgraded": "2026-08-04T20:47:00 America/Chicago",
+  "v3_2_upgraded": "2026-08-04T20:55:00 America/Chicago",
+  "version": "3.3-OODA-Agentic-MoMA-Graph-Checkpoint + scout-cli 0.8.0",
+  "whats_new_v3_2": [
+    "OODA Loop Integration: Full 4-step embedded \u2014 every executor node = Observe (real-time data + snapshots) \u2192 Orient (memory lattice + culture + experience + analysis) \u2192 Decide (1 hypothesis) \u2192 Act (artifact that changes env + generates feedback). Orientation most important, shapes Observe/Decide/Act quality.",
+    "Tempo Over Speed: Timing regulation not raw speed wins. Regulate speed to coincide with env weakness. Science lens: decisions=hypotheses, actions=tests. Late commitment agility vs PDCA early commitment. Speed vs Perfection: move at 70% + course-correct beats waiting.",
+    "9 Production-Grade Best Practices (arXiv): tool-first over MCP, pure-function invocation, single-tool single-responsibility agents, externalized prompts, Responsible-AI consortium, clean separation workflow vs MCP, containerized scale, KISS 3-7 nodes max, deterministic orchestration.",
+    "6 Orchestration Guarantees: Structured Execution (DAG/state machine/behavior tree/event), Tool Safety (schema validation + sandbox), Memory Mgmt (read/update discipline + summaries + long/episodic), Reasoning Boundaries (max-step 7 + deterministic loops + controlled context), Evaluation Hooks (correctness/reliability/coherence/tool failures/hallucination/comms/quality), Multi-Agent Orchestration (routing + message passing + shared memory + hierarchical control + role enforcement + concurrency 4).",
+    "Two Loop Types: Linear for step-by-step analysis/context extraction, Circular streaming for live enrich where background agents enrich real-time via comm layer \u2014 never direct agent\u2192agent calls, route via orchestrator.",
+    "3-Layer Separation: Execution (agents/responders), Communication (queues/events/RPC), Orchestration (DAG + replans + eval). Prevents infinite loops, memory chaos, drift, malformed inputs.",
+    "Planner DAG v3.2 upgraded: 3-8 nodes epic, single-responsibility, pure-function, externalized prompts, KISS. Optimistic vs Pessimistic diverge on risk but merge keeps verification. Parallel heuristic max 4 concurrent safe.",
+    "Executor v3.2 upgraded: self-contained node + BLOCKED protocol + OODA inner loop + tool safety + memory discipline + eval self-hint + timeline.jsonl even no-change.",
+    "Critic v3.2 upgraded: 0-10 rubric calibrated (PASS epic 8+, medium 7.5+), 6 eval hooks, OODA fidelity audit, agentic health check, repair vs replan tree (repair if 5-7.9 fixable 1 node, replan if <5 twice/same block 2x/source contradicts), escalation craft.",
+    "Router v3.1\u2192v3.2: intent OODA + agentic_loop added, complexity thresholds include agentic words (agentic/orchestr/orchestration/dynamic workflow/opaque), research\u2192deep-researcher+synthesist+forensic-auditor, complex_action\u2192action-operator+operator+critic, agentic epic\u219213-agent swarm, tempo control :13 pacing."
+  ],
+  "workflows": [
+    {
+      "file": "workflows/flawless-delivery.js",
+      "id": "flawless-delivery",
+      "use_for": "legacy stable multi-step"
+    },
+    {
+      "file": "workflows/flawless-delivery-v2.js",
+      "id": "flawless-delivery-v2",
+      "preferred": true,
+      "use_for": "SOTA multi-step with router+memory+critic+self-healing + OODA"
+    },
+    {
+      "file": "workflows/monitor-and-notify.js",
+      "id": "monitor-and-notify",
+      "use_for": "price watch/tickets/data ready + tempo :13"
+    },
+    {
+      "file": "workflows/inbox-to-action.js",
+      "id": "inbox-to-action",
+      "use_for": "email+calendar+messages triage + Observe-Orient-Decide-Act per thread"
+    }
+  ],
+  "v3_3_upgraded": "2026-08-05T02:20:00 America/Chicago",
+  "v3_3_components": {
+    "checkpoint_manager": "bundles/ultra/checkpoint-manager.js LangGraph pause/resume days later timeline.jsonl nodeId/agentId/attempt/latency/tokens/status/errorClass",
+    "recovery_ladder": "bundles/ultra/recovery-ladder.js FailureTaxonomy5 + SideEffectClasses READ/WRITE_IDEMPOTENT/WRITE_DESTRUCTIVE/EXTERNAL_NOTIFY + RecoveryLadder retry1\u2192patch\u2192replan\u2192escalate",
+    "communication_pacing": "bundles/ultra/communication-pacing.js HandoffEnvelope 7 required + ScoutCommsBus sub-swarm + PacingFilter max3/4 + tempo :13",
+    "verification_economics": "bundles/ultra/verification-economics.js CriticEconomics budget3 threshold8.0 earlyExit0.3 + EvalHooks6 + SuggestibilityGuard + PECHamsterWheelGuard memory-is-diff",
+    "router_v3_3": "bundles/router/router.ultra.js v3.3 MoMA-lite 5 tiers + GraphMemory G_workflow+G_history GARNet MoMA + stickiness guard Stripe vs Lemon Aug 2026 Launched no re-ask",
+    "ultra_orchestrator_v3_3": "bundles/workflows/ultra/ultra-orchestrator.js v3.3 10 phases checkpoint-init + router-0 MoMA + L1 3 strategists history-penalized + L2 DAG side-effect tags + L3 pacing-filtered swarm + router-2 bounded recovery + L4 verification econ + metrics-dance checkpoint",
+    "contacts_tool": "agentic-contacts 0.1.0 local-first, scout-cli native, 3 tests passing, MIT"
+  },
+  "whats_new_v3_3": [
+    "MoMA-lite: 5-tier classifier deterministic/llm/deep_research/action_operator/agentic_epic predicts capability before full LLM cost-performance optimal MoMA profiles LLMs caps",
+    "Graph Memory: G_workflow current DAG + G_history timeline.jsonl patterns failure types \u2192 GraphPlanner GARNet integrates both to pick (role,LLM) per step MDP",
+    "Checkpoint Manager: LangGraph graph checkpointing pause shutdown restart days later pickup exactly timeline.jsonl required fields even no-change",
+    "Bounded Recovery Ladder: explicit trigger bounded scope strict escalation cannot skip retry1\u2192patch\u2192replan\u2192escalate + FailureTaxonomy5 + SideEffectClasses READ safe WRITE_IDEMPOTENT 1x WRITE_DESTRUCTIVE never auto EXTERNAL_NOTIFY never speculative",
+    "Pacing Filter: CrewAI >5-6 noisy needs filtering max3 parallel Observe orient 2min decide single act verify type deterministic max4 concurrent safe 13 only epic ScoutCommsBus relevantAgents sub-swarm",
+    "Verification Economics: ReflectionLoop first retry 80% value budget max3 threshold 8.0 PASS epic early exit delta<0.3 resist marginal + EvalHooks6 mandatory + SuggestibilityGuard best vs worst critique + PECHamsterWheelGuard memory-is-diff episodic vs semantic vs working 1500 chars immediate write BLOCKED",
+    "Deep-Research Stickiness: Stripe vs Lemon Aug 2026 must recall Launched live URL+3 users+payments/analytics Aug31 11:59pm CT America/Chicago locked without re-asking + sources min5 graded A/B/C freshness Aug2026 contradiction matrix",
+    "Dashboard v3.3: warm cream palette OODA 4/4 agentic 6/6 tempo :13 + MoMA 5 tiers + Graph G_workflow+G_history + checkpoint pause/resume + recovery ladder + pacing :13 + verification econ budget3 + stickiness PASS banner + sparkle on green"
+  ],
+  "scout_cli_v0_8": {
+    "version": "0.8.0",
+    "entry": "bundles/cli.sh -> python3 -m bigbang.cli (pip -e ~/workspace/dottie/apps/scout-cli)",
+    "install": "pip install --break-system-packages --no-deps -e ~/workspace/dottie/apps/scout-cli",
+    "plugins": {
+      "harness": {
+        "source": "dottie/apps/scout-cli/bigbang/plugins/harness/cli.py",
+        "description": "Scout v3.3 \u2014 MoMA-lite router + graph memory GARNet + checkpoint + recovery ladder + pacing + verification econ",
+        "manifest": "dottie/apps/scout-cli/bigbang/plugins/harness/manifest.yaml",
+        "shared": null,
+        "commands": [
+          "route <goal>",
+          "agents list|health|relevant --intent",
+          "checkpoint list|show --run-id",
+          "verify --score --prev"
+        ],
+        "examples": [
+          "scout --json harness route 'compare Stripe vs Lemon Squeezy Aug 2026'",
+          "scout --json harness agents list",
+          "scout --json harness checkpoint list",
+          "scout --json harness verify --score 8.2 --prev 8.0"
+        ],
+        "maps_to": {
+          "MoMA-lite": "router.ultra.js 5-tier classifier deterministic/llm/deep_research/action_operator/agentic_epic",
+          "GARNet": "G_workflow current DAG + G_history timeline.jsonl \u2192 pick (role,LLM) per MDP, MoMA profiles caps",
+          "checkpoint-manager": "bundles/ultra/checkpoint-manager.js LangGraph pause/resume days later, timeline.jsonl nodeId/agentId/attempt/latency/tokens/status/errorClass",
+          "recovery-ladder": "bundles/ultra/recovery-ladder.js FailureTaxonomy5 + SideEffect READ/WRITE_IDEMPOTENT/WRITE_DESTRUCTIVE/EXTERNAL_NOTIFY + retry1\u2192patch\u2192replan\u2192escalate",
+          "verification-econ": "bundles/ultra/verification-economics.js CriticEconomics budget3 threshold8.0 earlyExit0.3, EvalHooks6, SuggestibilityGuard, PECHamsterWheelGuard memory-is-diff",
+          "communication-pacing": "bundles/ultra/communication-pacing.js HandoffEnvelope 7 + ScoutCommsBus sub-swarm cap 3-5 medium /13 epic + PacingFilter Observe max3 / Orient 180s / concurrency4 / tempo:13"
+        }
+      },
+      "vector": {
+        "source": "dottie/apps/scout-cli/bigbang/plugins/vector/cli.py",
+        "description": "dumbmodel.com vector arcade \u2014 unified MTNN pipeline hoops/pitch/gridiron/equities/unified ablation",
+        "manifest": "dottie/apps/scout-cli/bigbang/plugins/vector/manifest.yaml",
+        "shared_lib": [
+          "dottie/apps/scout-cli/bigbang/plugins/vector/shared/towers.py",
+          "dottie/apps/scout-cli/bigbang/plugins/vector/shared/losses.py",
+          "dottie/apps/scout-cli/bigbang/plugins/vector/shared/normalize.py",
+          "dottie/apps/scout-cli/bigbang/plugins/vector/shared/__init__.py"
+        ],
+        "commands": [
+          "train hoops|pitch|gridiron|equities|unified --preset nano|mini|base1b --fetch",
+          "eval hoops|pitch|gridiron|equities|unified --gate leak-free",
+          "export hoops|pitch|gridiron|equities --onnx --executorch",
+          "ship hoops|pitch|gridiron|equities|hub|unified --target vercel",
+          "unified ablation|encode",
+          "difficulty hoops|pitch|gridiron|equities --target-band 0.4-0.8"
+        ],
+        "games": {
+          "hoops": {
+            "dim": 64,
+            "towers": 18,
+            "players": 12966,
+            "metrics": {
+              "Recall@10": 0.977,
+              "Purity@20": 0.6717
+            }
+          },
+          "pitch": {
+            "dim": 24,
+            "towers": 8,
+            "players": 633,
+            "tournaments": "WC 2018/2022 StatsBomb"
+          },
+          "gridiron": {
+            "dim": 32,
+            "mae": 4.268,
+            "r2": 0.39,
+            "data": "nflverse"
+          },
+          "equities": {
+            "dim": 64,
+            "towers": 17,
+            "companies": 2700,
+            "sector_purity@10": 0.174,
+            "text_tower": "384-d MiniLM"
+          },
+          "unified": {
+            "dim": 64,
+            "configs": [
+              "full",
+              "no_supcon",
+              "no_coral",
+              "no_grl",
+              "no_vicreg",
+              "task_only"
+            ],
+            "losses": [
+              "SupCon\u2192G3",
+              "CORAL\u2192G3",
+              "GRL\u2192G2",
+              "VICReg var+cov",
+              "task w=2.0"
+            ]
+          }
+        },
+        "pipeline": "build_features.py \u2192 build_vectors.py \u2192 train_mtnn.py \u2192 gated test_skills.py \u2192 regen_assets.py",
+        "leak_free": "player-split not season-split, per-season z-score / per-90 tournament-z / per-ticker FY median-impute"
+      }
+    },
+    "single_source_invariant": "Any hatch agent/harness calls bundles/cli.sh (or python3 -m bigbang.cli) as one CLI; each capability is a plugin behind --json; forged plugins auto-discover via bigbang/plugins/* discovery.",
+    "wrapper": "bundles/cli.sh -> python3 -m bigbang.cli \"$@\" with PYTHONPATH=~/workspace/dottie/apps/scout-cli"
+  },
+  "cli_sh": {
+    "path": "bundles/cli.sh",
+    "created": "2026-08-05T02:58 America/Chicago",
+    "usage": "bundles/cli.sh --json harness route \"...\" / bundles/cli.sh --json vector eval hoops",
+    "env": "PYTHONPATH includes dottie/apps/scout-cli for editable install"
+  },
+  "scout_cli_v08": {
+    "status": "harness+vector live",
+    "cli_entry": "bundles/cli.sh",
+    "plugins": [
+      "harness",
+      "vector"
+    ],
+    "pyproject_version": "0.8.0",
+    "spec": "apps/scout-cli/docs/scout-cli-spec-v08.md"
+  },
+  "contacts_tool": "acne 0.2.1 local-first TLPG, 7 harnesses, 5-layer cache, MIT \u2014 jcdavis131/acne",
+  "contacts_tool_path": "~/workspace/acne",
+  "dottie": {
+    "version": "0.9.0-harness-deep-7x7",
+    "checkpoint": "7/7 OK dottie-20260806T022959Z + dottie-20260805T034534Z-lane2-polish",
+    "runs_verified": [
+      "dottie-20260806T022959Z",
+      "dottie-20260805T034534Z-lane2-polish"
+    ]
+  },
+  "acne": {
+    "version": "0.3.0-hard-soft-50c",
+    "contacts": "54c baseline 30\u219254 hill-climb 59 nodes",
+    "sameas": "hard\u2192soft SAME_AS 0.88-0.98 deterministic + 0.55-0.89 soft"
+  },
+  "arxiviq": {
+    "spec_lines": 1014,
+    "nodes": 96,
+    "edges": 237
+  },
+  "hatch-sota-starter": {
+    "spec_lines": 1005,
+    "version": "v5 Prime deep polish"
+  },
+  "lane2": {
+    "branch": "scout/dottie-harness-deep",
+    "pushes": {
+      "dottie": "scout/dottie-harness-deep",
+      "acne": "scout/dottie-harness-deep",
+      "arxiviq": "scout/dottie-harness-deep",
+      "hatch-sota-starter": "scout/dottie-harness-deep"
+    },
+    "verified_7x7": [
+      "bundles/ultra/runs/dottie-20260806T022959Z CHECKPOINT 7-field PASS timeline 7-field PASS",
+      "dottie/pipeline/runs/dottie-20260806T022959Z CHECKPOINT 7-field PASS timeline 7-field PASS",
+      "dottie/bundles/ultra/runs/dottie-20260806T022959Z CHECKPOINT 7-field PASS timeline 7-field PASS",
+      "apps/ava-factory/bundles/ultra/runs/dottie-20260806T022959Z CHECKPOINT 7-field PASS timeline 7-field PASS",
+      "dottie/apps/ava-factory/bundles/ultra/runs/dottie-20260806T022959Z CHECKPOINT 7-field PASS timeline 7-field PASS",
+      "dottie/apps/ava-factory/dottie/pipeline/runs/dottie-20260806T022959Z CHECKPOINT 7-field PASS timeline 7-field PASS",
+      "apps/ava-factory/dottie/pipeline/runs/dottie-20260806T022959Z CHECKPOINT 7-field PASS timeline 7-field PASS"
+    ]
+  },
+  "capabilities": {
+    "filesystem": true,
+    "network": false,
+    "secrets": false
+  },
+  "zero_deps_flag": {
+    "zero_deps": true,
+    "allow": "acne:./src"
+  }
+}

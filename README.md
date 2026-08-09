@@ -3,7 +3,9 @@
 ![CI](https://github.com/jcdavis131/vector-hoops/actions/workflows/ci.yml/badge.svg)
 ![Python 3.11](https://img.shields.io/badge/python-3.11-blue)
 
-A daily NBA "chimera" puzzle played over an era-honest player-embedding space: guess the blend of real player-seasons behind each day's composite. Static site, no backend, live at https://hoops.dumbmodel.com.
+A daily NBA "chimera" puzzle played over an era-honest player-embedding space: guess the blend of real player-seasons behind each day's composite. Static site, no backend.
+
+Live at https://hoops.dumbmodel.com — plain HTML/JS, no framework.
 
 > Solo personal project, no connection to employer, built with public/free-tier only (free data pipeline, ONNX optional, static Vercel).
 
@@ -11,7 +13,7 @@ A daily NBA "chimera" puzzle played over an era-honest player-embedding space: g
 
 ## The embedding
 
-12,966 player-seasons (1996–2026), per-100-possession stats z-scored within season so eras compare honestly. A multi-tower neural net (MTNN v5: 130 features in 18 families, 17 of them towers (injury feeds a durability head, not an input tower), fused to a 64-dim L2-normalized embedding with archetype / position / next-profile / skills heads) produces the space the game scores in. On the player-split leak-free eval: 0.977 recall@10, 0.6717 purity@20, composite 0.7937 (see `docs/DATA_MODEL_2026-07-16.md`, `docs/MTNN_V5_PROMOTE_GATE.md`, and `assets/eval_scoreboard.json` for how the gate is defined — an earlier season-split eval that scored recall@10 = 1.0 was memorization and was replaced).
+12,966 player-seasons (1996–2026), per-100-possession stats z-scored within season so eras compare honestly. A multi-tower neural net (MTNN v5: 130 features in 18 families, 17 of them towers (injury feeds a durability head, not an input tower), fused to a 64-dim L2-normalized embedding with archetype / position / next-profile / skills heads) produces the space the game scores in. On the player-split leak-free eval: 0.977 recall@10, 0.6717 purity@20, composite 0.7937 from eval_scoreboard.json (0.4*recall + 0.6*purity, see assets/manifest.json mtnn_leakfree.composite 0.7937, assets/eval_scoreboard.json adjacent-season test n=790 top1 0.438 top5 0.757, overall top1 0.5081 top5 0.9339; see `docs/DATA_MODEL_2026-07-16.md`, `docs/MTNN_V5_PROMOTE_GATE.md`, and `assets/eval_scoreboard.json` for how the gate is defined — an earlier season-split eval that scored recall@10 = 1.0 was memorization and was replaced).
 
 The shipped artifacts (`assets/mtnn_meta.json`, `assets/mtnn.onnx`, `assets/vectors.json`, `assets/skills.json`) are committed, so the site runs from a static host with client-side inference (ONNX optional).
 
