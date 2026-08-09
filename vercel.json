@@ -158,6 +158,10 @@
   ],
   "rewrites": [
     {
+      "source": "/",
+      "destination": "/index.html"
+    },
+    {
       "destination": "/model.html",
       "source": "/model"
     },
