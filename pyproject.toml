@@ -44,6 +44,9 @@ exclude = [
     "pipeline/data",
     "node_modules",
     "assets/manim/media",
+    "pipeline/fetch_*.py",
+    "pipeline/build_front_office.py",
+    "pipeline/build_front_office_by_season.py",
 ]
 
 [tool.ruff.lint]
@@ -83,12 +86,9 @@ convention = "google"
 "assets/manim/src/*.py" = ["F405", "F403", "F401", "E402", "E741", "F841", "W293", "E501"]
 "pipeline/*test*.py" = ["S101", "S603", "S607", "F401", "E402"]
 "pipeline/build_*.py" = ["E402", "S603", "S607", "E722", "F401", "I001", "E401", "E701", "E702", "F841", "B023", "C414", "RUF013", "RUF057"]
-"pipeline/fetch_*.py" = ["E402", "S603", "S113", "E722", "F401", "I001", "E401", "E701", "E702", "F841", "B023", "C414", "RUF013", "RUF057"]
-"pipeline/build_front_office.py" = ["E701", "E702", "I001"]
 "pipeline/train_mt.py" = ["E402", "E701", "E702"]
 "pipeline/train_mt_v53.py" = ["E701", "E702", "N816"]
 "operator/mlops_cli.py" = ["E702"]
-"pipeline/fetch_preseason_odds.py" = ["E701"]
 "pipeline/train_mtnn.py" = ["E402", "S603"]
 "pipeline/export_*.py" = ["E402"]
 "scripts/*.py" = ["E402", "S603", "F401"]
