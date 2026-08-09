@@ -1370,14 +1370,14 @@ def main() -> None:
     (Z, M, names, seasons, pids, clusters, positions, season_ids, manifest) = load_bundle()
 
     if args.era_align == "procrustes":
-        from era_procrustes_align import align_batch, load_alignment
+        from vector_core import align_batch, load_alignment
 
-        chains = load_alignment()["chains"]
+        chains = load_alignment(ROOT / "assets" / "drift.json")["chains"]
         Z = align_batch(Z, [str(s) for s in seasons], chains)
         print(f"era-align procrustes: rotated {len(Z)} rows into 1996-97 root frame ({len(chains)} season chains)")
 
     if args.robust_scaling:
-        from realmlp_preproc import RealMLPPreprocessor
+        from vector_core import RealMLPPreprocessor
 
         preproc = RealMLPPreprocessor(manifest["features"])
         preproc.fit(Z, [str(s) for s in seasons], M, by_season=True)
