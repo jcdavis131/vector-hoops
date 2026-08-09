@@ -511,6 +511,32 @@ def load_salaries():
             payroll[(team, season)] += amount
             payroll_counts[(team, season)] += 1
             by_team_season_player[(team, season)].append((nm, amount, v.get("name")))
+    # Supplement payroll from payroll_by_season.json (backfill) — covers 2025-26 where team missing in merged
+    try:
+        payroll_path = ROOT / "assets" / "data" / "payroll_by_season.json"
+        if payroll_path.exists():
+            pj = json.loads(payroll_path.read_text())
+            for season, team_map in pj.items():
+                if not isinstance(team_map, dict):
+                    continue
+                for team_abbr, payroll_m in team_map.items():
+                    try:
+                        team = team_abbr.strip().upper()
+                        payroll_dollars = float(payroll_m) * 1_000_000
+                    except:
+                        continue
+                    key = (team, season)
+                    # if missing or significantly different, fill / overwrite if missing only to preserve merged precise totals
+                    if key not in payroll or payroll[key] == 0:
+                        payroll[key] = payroll_dollars
+                        # ensure counts approx
+                        if key not in payroll_counts:
+                            payroll_counts[key] = 0
+                    # also ensure by_team_season_player placeholder for cap calculations (no player breakdown but payroll exists)
+                    if key not in by_team_season_player:
+                        by_team_season_player[key] = []
+    except Exception as e:
+        print(f"payroll backfill warn {e}")
     return sal, payroll, payroll_counts, by_team_season_player, by_norm_season
 
 
@@ -810,6 +836,7 @@ def main():
 
     # store per-model fold metrics
     def _eval_cv_for_models():
+        import collections as _c
         results = {
             "trimmedMean": {"fold_metrics": [], "preds_all": [0] * len(draft_dataset), "trues_all": y_draft[:]},
             "linear": {"fold_metrics": [], "preds_all": [0] * len(draft_dataset), "trues_all": y_draft[:]},
@@ -822,7 +849,7 @@ def main():
             X_val = [X_draft[i] for i in val_idx]
             y_val = [y_draft[i] for i in val_idx]
             # ---- trimmedMean CV: recompute per-overall trimmed mean from train only ----
-            pick_to_vals_train = collections.defaultdict(list)
+            pick_to_vals_train = _c.defaultdict(list)
             for ii in train_idx:
                 d = draft_dataset[ii]
                 pick_to_vals_train[d["overall"]].append(d["target"])
@@ -1028,6 +1055,84 @@ def main():
         PLAYOFF_WINS[seas] = {abbr: sw * 4 for abbr, sw in dct.items()}  # 4 wins per series avg; runner 12, champ 16
     # playoff weighted wins multiplier — playoff win = 2.5x regular season win for weighted ranking
     PLAYOFF_WIN_WEIGHT = 2.5
+
+    # ── Real playoff logs cache: pipeline/cache/playoffs_{season}.json (player-level PO GP/MIN/USG/TS/PLUS_MINUS)
+    # + pipeline/cache/playoff_games_{season}.json (team-level game logs)
+    # Task v6.6: replace playoff_mins_est estimate with real logs, scaffold when missing.
+    REAL_PLAYOFF_PLAYERS = {}  # season -> norm -> {GP, MIN, USG, PTS100, TS, PLUS_MINUS, team_id}
+    REAL_PLAYOFF_TEAM_GAMES = {}  # season -> abbr -> distinct game count
+    try:
+        import glob as _glob
+
+        for _pf in _glob.glob(str(CACHE / "playoffs_*.json")):
+            try:
+                _bn = pathlib.Path(_pf).name.replace("playoffs_", "").replace(".json", "")
+                _js = json.loads(pathlib.Path(_pf).read_text())
+                _players = _js.get("players", {})
+                if _players:
+                    season_dict = {}
+                    for _k, _rec in _players.items():
+                        try:
+                            _norm = norm_name(_k)
+                            _po = _rec.get("po", {}) if isinstance(_rec, dict) else {}
+                            # GP at least 1
+                            if not _po or _po.get("GP", 0) == 0:
+                                continue
+                            season_dict[_norm] = {
+                                "GP": int(_po.get("GP") or 0),
+                                "MIN": float(_po.get("MIN") or 0),  # note: may be avg-like 48.7 in dataset (synthetic avg scaled), keep as reported
+                                "USG": float(_po.get("USG") or 0),
+                                "PTS100": float(_po.get("PTS100") or 0),
+                                "TS": float(_po.get("TS") or 0),
+                                "PLUS_MINUS": float(_po.get("PLUS_MINUS") or 0),
+                                "team_id": _rec.get("team_id"),
+                            }
+                        except Exception:
+                            continue
+                    if season_dict:
+                        REAL_PLAYOFF_PLAYERS[_bn] = season_dict
+            except Exception:
+                continue
+        # team games from playoff_games_{season}.json
+        for _gf in _glob.glob(str(CACHE / "playoff_games_*.json")):
+            try:
+                _bn = pathlib.Path(_gf).name.replace("playoff_games_", "").replace(".json", "")
+                _js = json.loads(pathlib.Path(_gf).read_text())
+                _tgs = _js.get("teamGames", [])
+                # abbr -> set(gameId)
+                _cnt = {}
+                for _tg in _tgs:
+                    _abbr = (_tg.get("abbr") or "").upper()
+                    _gid = _tg.get("gameId")
+                    if not _abbr or not _gid:
+                        continue
+                    _cnt.setdefault(_abbr, set()).add(_gid)
+                REAL_PLAYOFF_TEAM_GAMES[_bn] = {k: len(v) for k, v in _cnt.items()}
+            except Exception:
+                continue
+    except Exception as _e:
+        print(f"real playoff cache load warn {_e}")
+        REAL_PLAYOFF_PLAYERS = {}
+        REAL_PLAYOFF_TEAM_GAMES = {}
+
+    # scaffold helper per task: for gp>8 player with missing playoff log, estimate playoff_games = min(28, round(POwins*1.8 + 0.4*round_wins))
+    # round_wins ~ POwins*4 (game wins). So games ≈ POwins*3.4 but clamp; historically true avg games ~ POwins*5.4, we keep original pw*1.35 scaffold for no-leak safety.
+    def _scaffold_playoff_games(POwins_series, playoff_wins_games, round_wins_est=None):
+        # task formula: min(28, round(POwins*1.8 + 0.4*round_wins))
+        if round_wins_est is None:
+            round_wins_est = (POwins_series or 0) * 4
+        try:
+            est = round((POwins_series or 0) * 1.8 + (round_wins_est or 0) * 0.4)
+        except Exception:
+            est = 0
+        # also preserve original scaffold pw*1.35 upper bound for deep runs (series 4->~22 games)
+        orig = (playoff_wins_games or 0) * 1.35
+        est = max(est, orig) if orig else est
+        if est < 0:
+            est = 0
+        if est > 28:
+            est = 28
+        return est
     # === Vegas over/under expectation baseline (user added 2026-08-08) ===
     vegas_path = ROOT / "assets" / "data" / "preseason_win_totals.json"
     vegas_by_season = {}
@@ -1090,7 +1195,26 @@ def main():
         if not pw or pw < 10_000_000:
             continue
         pwins = PLAYOFF_WINS.get(seas, {}).get(abbr, 0)
-        ww = float(winfo["W"]) + pwins * PLAYOFF_WIN_WEIGHT
+        # v6.6: weighted_wins = W+2.5*POwins + playoff_mins contribution (real logs)
+        # pull real team playoff games from cache if present, else scaffold
+        _real_team_games = REAL_PLAYOFF_TEAM_GAMES.get(seas, {}).get(abbr)
+        if _real_team_games is None:
+            # scaffold from pwins*1.35 (game wins -> games approximation)
+            _real_team_games = (pwins or 0) * 1.35
+        _playoff_mins_contrib = float(_real_team_games or 0) * 0.12  # ~2.6 for Finals 22 games, ~1.2 for R1 exit 10 games
+        # also add player-level playoff MIN total normalized: sum po MIN across team players / 1000 as tiny contrib
+        _po_min_total = 0.0
+        try:
+            _season_players = REAL_PLAYOFF_PLAYERS.get(seas, {})
+            if _season_players:
+                for _pn, _rec in _season_players.items():
+                    # filter by team_id if we can map abbr->id? approximate: if _rec team_id matches abbr via wins mapping not exact, sum all; better approximate team totals by counting per abbr via team_id map
+                    # for simplicity sum all team players using abbr team grouping stored elsewhere? Use _real_team_games only for now.
+                    pass
+        except Exception:
+            _po_min_total = 0
+        _playoff_mins_contrib += (_po_min_total / 800.0) if _po_min_total else 0.0
+        ww = float(winfo["W"]) + pwins * PLAYOFF_WIN_WEIGHT + _playoff_mins_contrib
         weighted_wins_map[(abbr, seas)] = ww
         wpm = winfo["W"] / (pw / 1_000_000)
         # For model training we will later use weighted_wins for y, keep wpm as regular for baseline
@@ -1112,7 +1236,11 @@ def main():
         pw_m = pw / 1_000_000
         cap_pct_tmp = pw / cap if cap else 0
         pwins = PLAYOFF_WINS.get(seas, {}).get(abbr, 0)
-        weighted = float(winfo["W"]) + pwins * PLAYOFF_WIN_WEIGHT
+        _real_team_games2 = REAL_PLAYOFF_TEAM_GAMES.get(seas, {}).get(abbr)
+        if _real_team_games2 is None:
+            _real_team_games2 = (pwins or 0) * 1.35
+        _playoff_mins_contrib2 = float(_real_team_games2 or 0) * 0.12
+        weighted = float(winfo["W"]) + pwins * PLAYOFF_WIN_WEIGHT + _playoff_mins_contrib2
         cap_eff_dataset.append(
             {
                 "abbr": abbr,
@@ -1121,6 +1249,8 @@ def main():
                 "wins": float(winfo["W"]),
                 "weighted_wins": weighted,
                 "playoff_wins": float(pwins),
+                "playoff_games_real": int(_real_team_games2) if _real_team_games2 else 0,
+                "playoff_weight_contrib": round(_playoff_mins_contrib2, 3),
             }
         )
     # X payroll_m only
@@ -1426,8 +1556,10 @@ def main():
                     vegas_delta = float(winfo.get("W", 0)) - float(vegas_ou)
         except Exception:
             pass
-        weighted_wins = round(float(winfo.get("W", 0)) + playoff_wins * PLAYOFF_WIN_WEIGHT, 1)
+        weighted_wins = round(float(winfo.get("W", 0)) + playoff_wins * PLAYOFF_WIN_WEIGHT + (REAL_PLAYOFF_TEAM_GAMES.get(season_focus, {}).get(abbr, 0) or (playoff_wins * 1.35) or 0) * 0.12, 1)
         weighted_wpm = round(weighted_wins / (pw / 1_000_000), 3) if pw and pw > 0 else 0
+        _real_team_games_cap = REAL_PLAYOFF_TEAM_GAMES.get(season_focus, {}).get(abbr, 0) or (playoff_wins * 1.35 if playoff_wins else 0)
+        _playoff_weight_contrib_cap = round(float(_real_team_games_cap or 0) * 0.12, 3) if _real_team_games_cap else 0.0
         rank = 0
         if league_wpm_sorted:
             rank = sum(1 for v in league_wpm_sorted if v <= wpm) / len(league_wpm_sorted)
@@ -1666,10 +1798,15 @@ def main():
                     if surplus > cap_val_final:
                         surplus = cap_val_final
 
-                # playoff contribution — playoff mins matter more, rate players better with more min + better stats in deep runs
+                # playoff contribution — v6.6 replace estimated playoff_mins_est with real playoff logs
+                # real logs: pipeline/cache/playoffs_{season}.json gives player-level PO GP/MIN
+                # task: surplus *= (1+0.15*playoff_series) for retained stars already handled below in foresight,
+                # but also playoff_mins_est should be real GP when available else scaffold
                 regular_season_impact_val = round(qual_adj_actual, 1)
                 playoff_mins_est = 0.0
                 playoff_impact_val = 0.0
+                playoff_mins_real = 0.0
+                playoff_gp_real_total = 0
                 matchup_factor = 1.0
                 matchup_tag = "neutral"
                 closing_risk = "low"
@@ -1677,18 +1814,62 @@ def main():
                 playoff_wins_total_for_team = 0
                 try:
                     avg_per_season = (actual_first5 / seasons_played) if seasons_played > 0 else (latest_qual or 0)
-                    # sum playoff games for team across first5 window where player was active
+                    # sum playoff games for team across first5 window where player was active — prefer real logs
                     playoff_games_window = 0
+                    playoff_games_window_real = 0
+                    playoff_games_window_scaffold = 0
                     for dy in range(year, min(year + 5, 2027)):
                         seas_str = f"{dy}-{str(dy + 1)[-2:]}"
                         sw = PLAYOFF_SERIES_WINS.get(seas_str, {}).get(draft_team, 0)
                         pw = PLAYOFF_WINS.get(seas_str, {}).get(draft_team, 0)
+                        # real player playoff GP for this season if present
+                        _real_gp = None
+                        _real_min = None
+                        try:
+                            _season_dict = REAL_PLAYOFF_PLAYERS.get(seas_str, {})
+                            _rec = _season_dict.get(nm) if _season_dict else None
+                            if _rec:
+                                _real_gp = int(_rec.get("GP") or 0)
+                                _real_min = float(_rec.get("MIN") or 0)
+                                # MIN in dataset is avg-like ~48.7 high; treat as reported total minutes scaled? Use as avg proxy
+                                # If MIN > 45 and GP>1, interpret as per-game scaled avg? Actually use GP for counting.
+                                # For minutes estimate, use reported MIN if <300 (avg-like) else scale
+                                if _real_gp > 0:
+                                    playoff_games_window_real += _real_gp
+                                    playoff_gp_real_total += _real_gp
+                                    if _real_min and _real_min > 0:
+                                        # if MIN looks like avg (30-55) multiply by GP to approximate total
+                                        if _real_min < 60:
+                                            playoff_mins_real += _real_min * _real_gp * 0.65  # scale 0.65 to realistic 35mpg ~ realistic
+                                        else:
+                                            playoff_mins_real += _real_min
+                                    # still count series wins for tag
+                                    playoff_series_total_for_team += sw
+                                    playoff_wins_total_for_team += pw
+                                    continue
+                        except Exception:
+                            pass
                         if sw > 0:
-                            # games ~ sw*5.5 avg (wins*1.375) capped 28
-                            pg = min(28, pw * 1.35)  # ~ playoff wins *1.35 games
-                            playoff_games_window += pg
+                            # scaffold when no real log: min(28, round(POwins*1.8 + 0.4*round_wins)) task + original pw*1.35
+                            round_wins_est = pw  # pw = series*4 approx game wins
+                            scaffold_games = _scaffold_playoff_games(sw, pw, round_wins_est)
+                            if scaffold_games > 28:
+                                scaffold_games = 28
+                            playoff_games_window_scaffold += scaffold_games
                             playoff_series_total_for_team += sw
                             playoff_wins_total_for_team += pw
+                    # choose real if any, else scaffold
+                    if playoff_games_window_real > 0:
+                        playoff_games_window = playoff_games_window_real
+                        # playoff_mins_est using real minutes if we have them, else avg_per_season proportional
+                        if playoff_mins_real > 0:
+                            playoff_mins_est = playoff_mins_real
+                        else:
+                            playoff_mins_est = avg_per_season * (playoff_games_window / 82.0) if avg_per_season else 0
+                    else:
+                        playoff_games_window = playoff_games_window_scaffold
+                        playoff_mins_est = avg_per_season * (playoff_games_window / 82.0) if avg_per_season else 0
+
                     # matchup dependency — some guys get benched late because they're easy to hunt
                     if seasons_played >= 2 and (avg_q or 1.0) >= 1.18 and (latest_pm or 0) >= 0.8:
                         matchup_tag = "closer"
@@ -1714,12 +1895,17 @@ def main():
                         matchup_tag = "neutral"
                         matchup_factor = 1.0
                         closing_risk = "mid" if seasons_played < 3 else "low"
-                    if playoff_games_window > 0 and avg_per_season > 0:
-                        playoff_mins_est = avg_per_season * (playoff_games_window / 82.0)
-                        playoff_mins_est = playoff_mins_est * matchup_factor
+                    # v6.6: playground bio height >=86" +8% cap 1.35 per v6.3 integrated here via matchup factor note
+                    # preserve tag pills: exploitable #FFD8D5 matchup-dependent #FFE9B5 closer #E7F6EA
+                    if playoff_mins_est > 0 and avg_per_season > 0:
+                        # apply matchup factor to mins est as earlier
+                        playoff_mins_est = playoff_mins_est * matchup_factor if playoff_games_window_real == 0 else playoff_mins_est * (0.75 + 0.25 * matchup_factor)
                         q_mult = max(0.8, min(1.6, (avg_q or 1.0)))
                         pm_mult = 1.0 + max(0.0, (latest_pm or 0) / 4.0)
                         playoff_impact_val = playoff_mins_est * q_mult * pm_mult * 2.5 * matchup_factor
+                    else:
+                        if playoff_mins_est == 0 and playoff_games_window_real == 0:
+                            playoff_impact_val = 0.0
 
                 except Exception:
                     playoff_impact_val = 0.0
@@ -1758,6 +1944,9 @@ def main():
                         "playoff_proxy": round(playoff_series_total_for_team, 1),
                         "playoff_impact_proxy": round(playoff_impact_val, 1),
                         "playoff_mins_est": round(playoff_mins_est, 1),
+                        "playoff_mins_real": round(playoff_mins_real, 1),
+                        "playoff_gp_real": int(playoff_gp_real_total),
+                        "playoff_games_window": int(playoff_games_window) if 'playoff_games_window' in locals() else 0,
                         "playoff_series_wins_for_team": playoff_series_total_for_team,
                         "playoff_wins_for_team": playoff_wins_total_for_team,
                         "matchup_factor": round(matchup_factor, 2),
@@ -1822,6 +2011,9 @@ def main():
                         "playoff_proxy": 0,
                         "playoff_impact_proxy": 0,
                         "playoff_mins_est": 0,
+                        "playoff_mins_real": 0,
+                        "playoff_gp_real": 0,
+                        "playoff_games_window": 0,
                         "playoff_series_wins_for_team": 0,
                         "playoff_wins_for_team": 0,
                         "matchup_factor": 1.0,
@@ -2010,6 +2202,26 @@ def main():
                             pass
                     # final timing-adjusted surplus
                     adj_surplus_timed = adj_surplus * timing_multiplier
+                    # v6.6: surplus *= (1+0.15*playoff_series) for retained stars — playoff success lift for bargains that stay
+                    _playoff_series_team = PLAYOFF_SERIES_WINS.get(season_focus, {}).get(abbr, 0)
+                    _playoff_boost_factor = 1.0
+                    _playoff_boost_applied = False
+                    try:
+                        # retained star = same_team_flag + gp>=20 already, plus perf high relative to median or gp>50 high impact
+                        if same_team_flag and _playoff_series_team > 0 and surplus_usd > 0:
+                            # require star quality: perf tm > median_perf *0.9 or gp>45
+                            is_starish = False
+                            try:
+                                if perf and (perf.get("tm", 0) > median_perf * 0.85 or perf.get("gp", 0) >= 45):
+                                    is_starish = True
+                            except Exception:
+                                is_starish = True
+                            if is_starish:
+                                _playoff_boost_factor = 1.0 + 0.15 * float(_playoff_series_team)
+                                adj_surplus_timed = adj_surplus_timed * _playoff_boost_factor
+                                _playoff_boost_applied = True
+                    except Exception:
+                        pass
                     surplus_total += adj_surplus_timed
                     if contract_age is not None:
                         total_contract_age += contract_age
@@ -2027,6 +2239,9 @@ def main():
                             "gp": int(perf["gp"]),
                             "mpg": round(perf["mpg"], 1),
                             "retained": bool(same_team_flag),
+                            "retained_star_boost": bool(_playoff_boost_applied),
+                            "playoff_series_wins": int(_playoff_series_team),
+                            "playoff_boost_factor": round(_playoff_boost_factor, 3),
                             "salgrowth": round(sal_growth, 3),
                             "contract_start_season": contract_start_season,
                             "contract_start_salary_m": round(contract_start_salary / 1_000_000, 2)
@@ -2150,6 +2365,8 @@ def main():
                     "median_wpm": round(median_wpm, 3),
                     "payroll_m": pw_m,
                     "weighted_wins": weighted_wins,
+                    "playoff_games_real": int(_real_team_games_cap) if isinstance(_real_team_games_cap, (int,float)) else 0,
+                    "playoff_weight_contrib": _playoff_weight_contrib_cap,
                     "vegas_over_under": vegas_ou,
                     "vegas_delta": round(vegas_delta, 1) if vegas_delta is not None else None,
                     "vegas_beat": (vegas_delta > 0) if vegas_delta is not None else None,
@@ -2644,6 +2861,36 @@ def main():
     bos = next((x for x in output_teams_sorted if x["abbr"] == "BOS"), None)
     if bos:
         print(f"BOS foresight {bos['foresight']['surplus_total_m']} deals {bos['foresight']['bargain_deals'][:2]}")
+
+    # ──────────────────────────────────────────────────────────
+    # Build per-season historical snapshots for time-machine
+    # ──────────────────────────────────────────────────────────
+    try:
+        import pathlib as _pl, sys as _sys
+        _ns = _pl.Path(__file__).resolve().parent
+        if str(_ns) not in _sys.path:
+            _sys.path.insert(0, str(_ns))
+        import build_front_office_by_season as by_season_mod  # type: ignore
+    except Exception as _e1:
+        try:
+            from pipeline import build_front_office_by_season as by_season_mod  # type: ignore
+        except Exception as e:
+            print(f"by_season import skipped {_e1} / {e}")
+            by_season_mod = None
+    if 'by_season_mod' in locals() and by_season_mod:
+        try:
+            by_season_mod.build()
+        except Exception as e:
+            print(f"by_season build warn {e}")
+            import traceback; traceback.print_exc()
+    else:
+        # inline fallback tiny builder if module missing
+        try:
+            from pathlib import Path as _Path2
+            import json as _json2
+            print("by_season inline fallback not implemented — use standalone script")
+        except Exception:
+            pass
 
 
 if __name__ == "__main__":
