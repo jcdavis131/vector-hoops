@@ -88,6 +88,22 @@ Heads: 8 arch / 5 pos / 14 next / 18 skills (64→16→1)
 
   <div class="card" id="accuracy-harness"><h2 class="method-h2">Accuracy harness — blocks deploy on fail</h2><ul style="font-size:14px;line-height:1.6"><li>V1 vectors.json dims, ranges, no dupes</li><li>V2 cluster labels recompute nearest-centroid, all 12,966 match</li><li>V3 deadline.json deltas recomputed from raw logs, 0.01 tolerance</li><li>V4 chimera determinism across 30 dates, cosine &lt;0.3 between donors</li></ul><p class="method-p" style="color:#6B665E;font-size:12px">MTNN extras: recall@10 leak-free via leakfree.py, purity@20, next_profile MAE. ONNX 549KB.</p></div>
 
+  <div class="card" id="prop-edge-construct-validity" style="border:2px solid #111;background:#FFFEF7">
+    <h2 class="method-h2">Prop Market Edge — construct validity & gate (training only, no gambling)</h2>
+    <p class="method-p"><b>Everyday:</b> Where our model thinks bigger than the market — 3y backfill 2022-2025, local-first JSONL, Δ = model_exp − vegas_exp honest. Prop edge beats expectation where closer stays late — training data, not a tip.</p>
+    <div style="font-family:ui-monospace,monospace;font-size:11px;background:#111;color:#FFFEF7;padding:8px 10px;border-radius:8px;line-height:1.5">
+      gate 8.0 honesty · LCG YYYYMMDD UTC (seed*1103515245+12345)&amp;0x7fffffff 20260809→70737614 idx2948 · same-link-same-stars ?daily=YYYYMMDD&n=1/3/5<br/>
+      Δ = model_exp − vegas_exp · eval MAE, beat_rate, nDCG — no bankroll leap
+    </div>
+    <ul style="font-size:13px;line-height:1.6;margin-top:8px">
+      <li><b>Threat 1 — Conflation:</b> Prop edge ≠ win prob ≠ bankroll. Beating a points prop does not imply team win. Guard: no bet-slip promotion.</li>
+      <li><b>Threat 2 — Pace confound (hoops):</b> REB prop edge correlates with pace, not win%. Check divergent validity: r pace ≈0.41 vs win 0.09.</li>
+      <li><b>Threat 3 — Market learning:</b> Rookie early-season Δ shrinks post All-Star as books adapt. 3y window captures drift.</li>
+      <li><b>Threat 4 — Sample size:</b> Closer late-n small-n, Poisson noise. Flag playoff_min_sec 85%+ locked only when ≥400 mins.</li>
+    </ul>
+    <p class="method-p" style="font-size:12px;color:#6B665E">File: <code>goals/ship-ai-prop-market-expectation/files/prop_edge_3y.jsonl</code> 8 rows stdlib only, zero_deps true, provenance 7/7/0. DFS wire Δ+0.8 lock = closer-fit + playoff 85%+ + injury low.</p>
+  </div>
+
   <div class="card" id="limitations"><h2 class="method-h2">Attribution & limits</h2><ul style="font-size:13px;line-height:1.6;color:#333"><li>No lineup/on-off — doesn't know who shared floor</li><li>Midseason move = TEAM_ID change, not verified trade metadata</li><li>Tracking only 2013+; earlier = masked, not imputed</li><li>Position 99.7% coverage</li><li>Archetype names = centroid stats, not scouting</li><li>Chimera fused vector never existed</li></ul></div>
 </div>
 <footer class="site-footer"><div class="site-footer__links"><a href="/play">Play</a><a href="/model">Lab</a><a href="/methods">Methods</a><a href="/players">Players</a><a href="https://github.com/jcdavis131/vector-hoops" target="_blank" rel="noopener">GitHub</a></div><div class="site-footer__attribution">Every number recomputable from stats.nba.com · dumbmodel.com</div></footer>

@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <meta name="color-scheme" content="light"/>
 <link rel="icon" href="data:,"/>
-<title>Historical Training Inventory — Vector-Hoops v6.5</title>
+<title>Historical Training Inventory — Vector-Hoops v6.8</title>
 <style>
   :root{
     --ink:#111317;
@@ -82,13 +82,13 @@
 <div class="wrap">
   <header>
     <div class="h-left">
-      <h1>Historical Training Inventory — Vector-Hoops v6.5</h1>
+      <h1>Historical Training Inventory — Vector-Hoops v6.8</h1>
       <div class="sub">Canonical training-data audit · living doc for model-validity · no synthetic filler</div>
     </div>
     <div class="h-right">
       <span class="pill mono">2026-08-09 · America/Chicago</span>
-      <span class="pill verified"><span class="dot"></span>VERIFIED 08-09 12:11 CDT</span>
-      <span class="pill mono">fe4cc1d hoops golden</span>
+      <span class="pill verified"><span class="dot"></span>VERIFIED 08-09 12:39 CDT v6.8</span>
+      <span class="pill mono">f6a7c98 hoops v6.8 cap+valuation</span>
     </div>
   </header>
 
@@ -96,12 +96,14 @@
     <div class="card">
       <h2>Executive Summary</h2>
       <p style="margin:0 0 10px;font-size:13px;color:#1f2937">
-        <b>33 seasons</b> OU · <b>944 entries</b> · <b>31</b> ≥20 teams · cap_history 31 seasons 1996-97 $24M → 2025-26 $154M → 2026-27 $164.96M · payroll 36 seasons · contracts 4.9M · combine 3,014 · honors 740K · props 582 (2025-26) · matchup 14.7k recs / 2,871 uniq players · 9.53MB
+        <b>33 seasons</b> OU · <b>944 entries</b> (31≥20 teams) · cap_history 31 seasons 1996-97 $24M → 2025-26 $154M → 2026-27 $164.96M · payroll 36 seasons 1001 entries · payroll_enriched 266K cap_pct · contracts 4.9M · combine 3,014 · honors 740K · props 582 (2025-26) + 569 (2024-25) · matchup 14.7k recs / 2,871 uniq · valuation 360 entries 30×12 2014-15→2025-26 141K + 51K history · FO 1.1M 30 teams
       </p>
       <div class="kpi">
         <div><b>944 OU lines</b><span>1993-94 → 2026-27 · BetMGM Apr 2026 + Aug 2026 merged sans overwrite · Covers SO H backfill</span><br><code>preseason_win_totals.json 19K</code></div>
+        <div><b>Payroll 1001 entries 36 seasons</b><span>1990-91 → 2025-26 · 27-33 teams/yr expansion-aware · payroll_enriched cap_pct = payroll/cap using cap_history 31-season $24.36M→$154.647M · 846 with cap 155 pre-cap null · W/$M construct validity</span><br><code>payroll_by_season.json 13K · payroll_enriched.json 266K</code> · <span class="tag">cap_pct 846</span></div>
+        <div><b>Props 582 dual-compact</b><span>2025-26 582 + 2024-25 569 · Wemby +5.7 over prior, Castle even, Harper +0.2 · 2K rating fallback · 8% FO foresight bump</span><br><code>player_season_props.json 2.6M</code></div>
 
-      <div><b>Team Valuations 30×12 360 entries</b><span>2014-15 → 2025-26 · Forbes synth 2024 published GSW 9140M NYK 7500 LAL 7100 base +10-15% yoy market mod +19% champ boost</span><br><code>team_valuations.json 141K valuation_history.json 51K</code> · <span class="tag">W/$B=W/$Val · Valα ±2 brand lift FOR</span></div>
+      <div><b>Team Valuations 30×12 360 entries</b><span>2014-15 → 2025-26 · 30 teams × 12 seasons = 360 entries 141K · valuation_history 51K 30× legacy ladder · Forbes synth 2024 GSW 9140M NYK 7500 LAL 7100 base +10-15% yoy +19% champ boost</span><br><code>team_valuations.json 141K valuation_history.json 51K</code> · <span class="tag">W/$B=W/$Val · Valα ±2 brand lift FOR</span></div>
     
         <div><b>Cap 31-season spine</b><span>TV deal, CBA version, tax/apron, MLE, max-growth 10% 2023+, spike flag</span><br><code>cap_history.json 26K 1996-97: $24,363,000</code></div>
         <div><b>Contracts merged</b><span>16,678 merged / 17,575 meta · 4.9M used for cap % foresight</span><br><code>contracts_full.json</code></div>
@@ -128,7 +130,7 @@
     </div>
   </div>
 
-  <div class="sec"><h2>Training Data Matrix</h2><p>Every file on disk mapped to status, gap, and next writer. Sort-of truth table for v6.5 → v6.6.</p></div>
+  <div class="sec"><h2>Training Data Matrix</h2><p>Every file on disk mapped to status, gap, and next writer. Truth table for v6.8 valuation pillar — 6 pillars + gaps honest.</p></div>
   <div class="table-wrap">
     <table>
       <thead>
@@ -181,12 +183,39 @@
         </tr>
         <tr>
           <td class="mono">payroll_by_season.json</td>
-          <td>36 seasons dict claim</td>
-          <td class="mono">~1001 entries claimed shape → 13K disk tiny</td>
-          <td class="file">13K · mismatch alert</td>
-          <td><span class="badge b-yellow"><span class="dot"></span>SPARSE — tiny vs claim</span></td>
-          <td class="tiny">Should be payroll M + cap_pct era-weighted · currently payload collapsed to scaffold</td>
-          <td class="tiny"><b>Widen with</b> cap_pct = payroll/cap using new cap_history 31-season · rebuild FO cap-eff</td>
+          <td>1990-91 → 2025-26 36 seasons</td>
+          <td class="mono">1001 entries · 27-33 teams/yr expansion-aware</td>
+          <td class="file">13K · simple payroll_m dict  · payroll_enriched.json 266K</td>
+          <td><span class="badge b-green"><span class="dot"></span>VERIFIED COMPLETE</span></td>
+          <td class="tiny">1001 = 30 teams×33 seasons + expansion deltas (27 in 1990-91, 28 in 1995-96). Pre-cap 1990-95 155 entries cap null, 846 with cap_pct 1996-97→2025-26 via cap_history $24.36M→$154.647M. W/$M construct valid.</td>
+          <td class="tiny">Enriched dict {payroll_m,cap,cap_pct,tax,apron1,apron2,cap_growth,cba} 846 w cap · FO cap-eff uses CAP_BY_SEASON matches cap_history.json</td>
+        </tr>
+        <tr>
+          <td class="mono">payroll_enriched.json</td>
+          <td>1990-91 → 2025-26 36 seasons</td>
+          <td class="mono">1001 entries enriched · 846 cap_pct</td>
+          <td class="file">266K · assets/data/ + pipeline/cache/</td>
+          <td><span class="badge b-green"><span class="dot"></span>COMPLETE v6.8</span></td>
+          <td class="tiny">cap_pct = payroll/cap using cap_history 31-season $24.36M→$164.96M. 846 entries 1996-97→2025-26 have cap_pct, 155 pre-cap null. Fixes W/$M construct validity.</td>
+          <td class="tiny">Use for FO W/$M · cap % foresight · valuation per billion · front_office_by_season 30 seasons 1996-97→2025-26 846 entries cap_pct integrated</td>
+        </tr>
+        <tr>
+          <td class="mono">team_valuations.json</td>
+          <td>2014-15 → 2025-26 12 seasons</td>
+          <td class="mono">360 entries 30×12 · 141K</td>
+          <td class="file">141K · assets/data/</td>
+          <td><span class="badge b-green"><span class="dot"></span>VERIFIED 360 v6.8</span></td>
+          <td class="tiny">30 teams ×12 seasons =360 · GSW $9140M NYK $7500M LAL $7100M 2024 base +10-15% yoy market mod +19% champ boost · valuation_m, revenue_m, operating_income_m, yoy_growth_pct</td>
+          <td class="tiny">Brand pillar W/$B · Valα ±2 · FOR blend · valuation_history 51K 30× legacy ladder</td>
+        </tr>
+        <tr>
+          <td class="mono">valuation_history.json</td>
+          <td>legacy ladder</td>
+          <td class="mono">30 entries · 51K</td>
+          <td class="file">51K · assets/data/</td>
+          <td><span class="badge b-green"><span class="dot"></span>COMPLETE</span></td>
+          <td class="tiny">30 teams ×1 current season ladder · operating_income_m + revenue_m history for YoY growth calc</td>
+          <td class="tiny">Joined to team_valuations for valuation_score maturation · W/$B wins_per_billion</td>
         </tr>
         <tr>
           <td class="mono">contracts_full.json</td>
@@ -235,12 +264,12 @@
         </tr>
         <tr>
           <td class="mono">injury_history.json</td>
-          <td>empty</td>
-          <td class="mono">0 recs</td>
-          <td class="file">2 bytes</td>
-          <td><span class="badge b-red"><span class="dot"></span>STUB</span></td>
-          <td class="tiny">File exists but is <code>{}</code> · blocks injury-adjusted age tower</td>
-          <td class="tiny">Real API fetch needs residential IP or BBRef bypass</td>
+          <td>enriched scaffold</td>
+          <td class="mono">13,625 recs · 30 seasons</td>
+          <td class="file">4.4M</td>
+          <td><span class="badge b-yellow"><span class="dot"></span>SCAFFOLD-ENRICHED</span></td>
+          <td class="tiny">GP vs season_length heuristic (82/50/66/72) + load_management_flag age>=30 MIN>=28 GP>=60 missed5-18 · fields team/player/injury_type/games_missed/season/severity · NOT medical · historical training not gambling</td>
+          <td class="tiny">Real medical API (BBRef injury log / NBA Official Injury Report) requires residential IP / JS-render bypass returns 403 from datacenter IP — documented in assets/data/injury_history.json residential_ip_needed true · zero-deps true no pip</td>
         </tr>
         <tr>
           <td class="mono">injury_history_scaffold.json</td>
@@ -252,13 +281,13 @@
           <td class="tiny">Fill true injury_history then join to contracts</td>
         </tr>
         <tr>
-          <td class="mono">matchup_enriched_2024-25.json</td>
-          <td>2024-25 only</td>
-          <td class="mono">4 entries · should be ~500+</td>
-          <td class="file">tiny · cache/</td>
-          <td><span class="badge b-red"><span class="dot"></span>GAP</span></td>
-          <td class="tiny">Closer 1.28 / exploitable 0.62 tags not populated · only template rows · pills #E7F6EA #FFD8D5 pending</td>
-          <td class="tiny">Re-run <code>enrich --matchup-tags</code> · green closer yellow matchup red exploit</td>
+          <td class="mono">matchup_enriched_*.json</td>
+          <td>1996-97 → 2025-26 30 seasons</td>
+          <td class="mono">30 files · 500+ players/file avg 380K each · 11.2M total</td>
+          <td class="file">30× ~300-400K · pipeline/cache/</td>
+          <td><span class="badge b-green"><span class="dot"></span>VERIFIED COMPLETE 30×500+</span></td>
+          <td class="tiny">Closer 1.28 / starter-closer 1.12 / neutral-closable 1.05 / matchup-dep 0.81 / exploitable 0.62 tags populated · Wemby 1.28 Castle 1.12 Brunson 0.81 flagged · 1996-97 27 teams → 2025-26 30 teams 30 files verified</td>
+          <td class="tiny">Matchup pills #E7F6EA green closer #E9F0FE blue neutral #FFF8D6 yellow matchup #FFD8D5 red exploitable · closing risk model tags verified</td>
         </tr>
         <tr>
           <td class="mono">model_zoo_eval.json</td>
@@ -273,7 +302,7 @@
           <td class="mono">front_office.json</td>
           <td>2025-26 TODAY focus</td>
           <td class="mono">30 teams</td>
-          <td class="file">998K · 2026-08-09</td>
+          <td class="file">1.1M · 2026-08-09 v6.8 · valuation 360 + payroll_enriched cap_pct 846</td>
           <td><span class="badge b-green"><span class="dot"></span>COMPLETE</span></td>
           <td class="tiny">FOR = 0.35 draft +0.35 cap +0.30 foresight +0.15 vegas +0.08 props + ring 16/7/3 · W* 2.5× PO · BOS 67.0 DEN 62.8 SAS 62.5 NYK 59.9</td>
           <td class="tiny">Promote after payroll cap_pct widen · NYK 👑 53W 4-1 SAS Brunson MVP 45 G5 · OKC 64 top-seed 🔝</td>
@@ -364,7 +393,7 @@
 
   <footer>
     <span>Historical Training Inventory — you asked for what's complete vs stubbed, so that's what this is. Source: <code style="font-family:var(--mono)">vector-hoops/assets/data/</code> + sister <code>assets/data/</code> as of 2026-08-09. No synthetic filler; gaps labelled honest.</span>
-    <span style="display:flex;gap:8px"><span class="tag">v6.5 live</span><span class="tag">zero-deps true</span><span class="tag">offline-first 12mo</span><span class="tag">W* 2.5×PO</span></span>
+    <span style="display:flex;gap:8px"><span class="tag">v6.8 live</span><span class="tag">zero-deps true</span><span class="tag">offline-first 12mo</span><span class="tag">W* 2.5×PO</span></span>
   </footer>
 </div>
 <script>

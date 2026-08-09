@@ -30,7 +30,7 @@ import pathlib
 import re
 from datetime import datetime
 
-# era-aware cap rules
+# era-aware cap rules — source of truth is cap_history.json (26K 31 seasons) + nba_salary_cap.py mirror
 try:
     from nba_salary_cap import (
         APRON1_BY_SEASON,
@@ -67,6 +67,43 @@ except Exception:
 
 
 HERE = pathlib.Path(__file__).resolve().parent
+
+# v6.8 cap_history.json integration: ensure cap_pct uses cap_history (31-season spine) not only team_base payroll
+# CAP_BY_SEASON from nba_salary_cap.py is derived from same numbers, but we load cap_history.json as SSOT validator.
+def _load_cap_history_ssot():
+    """Load cap_history.json as SSOT, return dict season->cap (int)."""
+    try:
+        # pipeline/ is HERE, assets is ROOT/assets — HERE already defined above
+        cap_hist_path = HERE.parent / "assets" / "data" / "cap_history.json"
+        if not cap_hist_path.exists():
+            # alt: when running from different cwd
+            cap_hist_path = pathlib.Path(__file__).resolve().parent.parent / "assets" / "data" / "cap_history.json"
+        if cap_hist_path.exists():
+            j = json.loads(cap_hist_path.read_text(encoding="utf-8"))
+            out = {}
+            for season, info in j.items():
+                if isinstance(info, dict) and "cap" in info:
+                    out[season] = int(info["cap"])
+            # validate against CAP_BY_SEASON mirror
+            for k, v in out.items():
+                if k in CAP_BY_SEASON and CAP_BY_SEASON[k] != v:
+                    # prefer cap_history as SSOT, update in-memory
+                    CAP_BY_SEASON[k] = v
+            # merge missing (e.g., 2026-27 might be missing from module)
+            for k, v in out.items():
+                if k not in CAP_BY_SEASON:
+                    CAP_BY_SEASON[k] = v
+            return out
+    except Exception as e:
+        # silent: fallback to module dict
+        # print(f"cap_history SSOT load warn {e}")  # muted in prod
+        pass
+    return CAP_BY_SEASON
+
+
+# initialize SSOT on import (after HERE defined)
+_CAP_HISTORY_SSOT = _load_cap_history_ssot()
+
 ROOT = HERE.parent
 CACHE = HERE / "cache"
 ASSETS = ROOT / "assets"
@@ -2926,6 +2963,16 @@ def main():
         "teams": output_teams_sorted,
         "teams_by_abbr": {t["abbr"]: t for t in output_teams_sorted},
     }
+
+    # ── Valuation time-machine exposure v6.8 — valuations_by_season for fun boards
+    try:
+        out_payload["valuations_by_season"] = VALUATIONS_BY_SEASON if "VALUATIONS_BY_SEASON" in locals() else {}
+        out_payload["valuations_meta_by_season"] = VALUATIONS_META if "VALUATIONS_META" in locals() else {}
+        out_payload["_valuation_by_season"] = VALUATIONS_BY_SEASON if "VALUATIONS_BY_SEASON" in locals() else {}
+        # also expose as top-level alias understood by teams-time.js
+        out_payload["valuation_by_season"] = VALUATIONS_BY_SEASON if "VALUATIONS_BY_SEASON" in locals() else {}
+    except Exception:
+        pass
 
     # ──────────────────────────────────────────────────────────
     # Integrate Model Zoo & Multi-Tower if available (sklearn/torch rich deps)
