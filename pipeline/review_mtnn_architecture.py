@@ -30,9 +30,7 @@ MANIFEST = DATA / "feature_manifest.json"
 OUT = DATA / "mtnn_architecture_review.json"
 
 
-def robust_corr(
-    a: np.ndarray, b: np.ndarray, ma: np.ndarray, mb: np.ndarray
-) -> float | None:
+def robust_corr(a: np.ndarray, b: np.ndarray, ma: np.ndarray, mb: np.ndarray) -> float | None:
     valid = (ma > 0) & (mb > 0)
     if valid.sum() < 200:
         return None
@@ -65,9 +63,7 @@ def main() -> None:
         pairs = []
         for i in range(len(cols)):
             for j in range(i + 1, len(cols)):
-                c = robust_corr(
-                    Z[:, cols[i]], Z[:, cols[j]], M[:, cols[i]], M[:, cols[j]]
-                )
+                c = robust_corr(Z[:, cols[i]], Z[:, cols[j]], M[:, cols[i]], M[:, cols[j]])
                 if c is not None:
                     pairs.append(abs(c))
         family_stats[fam] = {

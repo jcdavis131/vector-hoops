@@ -37,9 +37,7 @@ def check(cond: bool, msg: str) -> None:
 
 def rebuild() -> bool:
     real = bool(list(CACHE_DIR.glob("wide_skills_*.json")))
-    cmd = [sys.executable, "pipeline/build_wide_skills.py"] + (
-        [] if real else ["--fixture"]
-    )
+    cmd = [sys.executable, "pipeline/build_wide_skills.py"] + ([] if real else ["--fixture"])
     proc = subprocess.run(cmd, cwd=ROOT, capture_output=True, text=True)
     if proc.returncode != 0:
         print(proc.stdout + proc.stderr)
@@ -142,12 +140,7 @@ def main() -> None:
         sys.exit(1)
     print(
         "all wide-skill gates passed"
-        + (
-            ""
-            if real
-            else " (fixture mode — run fetch_wide_skills.py on an "
-            "operator machine for full coverage)"
-        )
+        + ("" if real else " (fixture mode — run fetch_wide_skills.py on an operator machine for full coverage)")
     )
 
 

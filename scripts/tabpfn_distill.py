@@ -88,12 +88,8 @@ def distill_config():
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
-    ap.add_argument(
-        "--mode", choices=("train_teacher", "config"), default="train_teacher"
-    )
-    ap.add_argument(
-        "--out", type=str, default="pipeline/data/tabpfn_teacher_logits.npz"
-    )
+    ap.add_argument("--mode", choices=("train_teacher", "config"), default="train_teacher")
+    ap.add_argument("--out", type=str, default="pipeline/data/tabpfn_teacher_logits.npz")
     args = ap.parse_args()
     if args.mode == "train_teacher":
         train_teacher_real()

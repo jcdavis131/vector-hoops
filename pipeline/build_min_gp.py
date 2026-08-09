@@ -105,16 +105,13 @@ def from_api(season: str, offline: bool) -> list[dict] | None:
                     }
                 )
             CACHE.mkdir(parents=True, exist_ok=True)
-            cache_p.write_text(
-                json.dumps(rows, separators=(",", ":")), encoding="utf-8"
-            )
+            cache_p.write_text(json.dumps(rows, separators=(",", ":")), encoding="utf-8")
             time.sleep(1.2)
             return rows
         except Exception as e:
             wait = min(120, (2**attempt) * 8) + random.uniform(0, 4)
             print(
-                f"  {season}: attempt {attempt + 1}/5 failed "
-                f"({type(e).__name__}); sleeping {wait:.0f}s",
+                f"  {season}: attempt {attempt + 1}/5 failed ({type(e).__name__}); sleeping {wait:.0f}s",
                 flush=True,
             )
             time.sleep(wait)
@@ -142,9 +139,7 @@ def main() -> None:
             continue
         mx = max(r["MPG"] for r in rows)
         if mx > 48.0:
-            raise SystemExit(
-                f"{season}: MPG max {mx} > 48 — source is not per-game, abort"
-            )
+            raise SystemExit(f"{season}: MPG max {mx} > 48 — source is not per-game, abort")
         all_rows.extend(rows)
         print(f"{season}: {len(rows)} players (max MPG {mx}) via {src}", flush=True)
 

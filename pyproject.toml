@@ -32,7 +32,7 @@ build-backend = "setuptools.build_meta"
 
 [tool.ruff]
 target-version = "py311"
-line-length = 88
+line-length = 120
 exclude = [
     "__pycache__",
     ".git",
@@ -71,7 +71,7 @@ ignore = [
     "S110", "S112", # try-except-pass/continue – intentional in cache best-effort
     "S310", "S311", "S324", # suspicious url open / random / hashlib – offline fixtures, md5 for cache keys intentional
     "B007",  # unused-loop-control – intentional in audit loops
-    "PTH120", "PTH123", # os.path.dirname -> Path, kept for manim sys.path hack readability
+    "PTH120", "PTH123", "PTH119", "PTH207", # os.path/glob helpers – kept for readability in build scripts
     "S113", # requests timeout missing – nba_api wraps
     "TC003",
     "UP012", "UP031",
@@ -84,7 +84,14 @@ convention = "google"
 "assets/manim/src/*.py" = ["F405", "F403", "F401", "E402", "E741", "F841", "W293", "E501"]
 "pipeline/*test*.py" = ["S101", "S603", "S607", "F401", "E402"]
 "pipeline/build_*.py" = ["E402", "S603", "S607"]
+# Dense compact-style build/training scripts: multi-statement lines (E701/E702),
+# inline try-block imports (I001) and ML/math global names (N816) are intentional here.
+"pipeline/build_front_office.py" = ["E701", "E702", "I001"]
+"pipeline/train_mt.py" = ["E402", "E701", "E702"]
+"pipeline/train_mt_v53.py" = ["E701", "E702", "N816"]
+"operator/mlops_cli.py" = ["E702"]
 "pipeline/fetch_*.py" = ["E402", "S603", "S113"]
+"pipeline/fetch_preseason_odds.py" = ["E701"]
 "pipeline/train_mtnn.py" = ["E402", "S603"]
 "pipeline/export_*.py" = ["E402"]
 "scripts/*.py" = ["E402", "S603", "F401"]

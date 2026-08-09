@@ -178,8 +178,7 @@ def main() -> None:
         seasons.sort(key=lambda t: t[0]["season"])
         seq = [int(global_lab[j]) for _, j in seasons]
         arch_path = [
-            {"season": p["season"], "archetype": cluster_names[c]}
-            for (p, _), c in zip(seasons, seq, strict=False)
+            {"season": p["season"], "archetype": cluster_names[c]} for (p, _), c in zip(seasons, seq, strict=False)
         ]
         grade_rows = [grades[j] for _, j in seasons]
         skill_arc = skill_arc_summary(grade_rows, skill_meta)
@@ -195,9 +194,7 @@ def main() -> None:
                 "transitionRate": round(changes / (len(seasons) - 1), 3),
                 "class": klass,
                 "decade": f"{mid_year // 10 * 10}s",
-                "meanPMz": round(
-                    float(np.mean([p["v"][pm_idx] for p, _ in seasons])), 3
-                ),
+                "meanPMz": round(float(np.mean([p["v"][pm_idx] for p, _ in seasons])), 3),
                 "skillArc": skill_arc,
             }
         )
@@ -236,9 +233,7 @@ def main() -> None:
             post_modal = Counter(seq[len(seq) // 2 :]).most_common(1)[0][0]
             if pre_modal != post_modal:
                 motifs[(pre_modal, post_modal)] += 1
-    top_motifs = [
-        {"from": a, "to": b, "count": n} for (a, b), n in motifs.most_common(8)
-    ]
+    top_motifs = [{"from": a, "to": b, "count": n} for (a, b), n in motifs.most_common(8)]
 
     class_examples = {}
     for klass in ("stable", "reinvention", "late-bloom", "migrator", "drifter"):
@@ -274,10 +269,7 @@ def main() -> None:
 
     print(f"{len(rows)} careers classified (MTNN archetypes)")
     for c in class_stats:
-        print(
-            f"  {c['class']}: {c['share']:.1%} (len {c['meanCareerLength']}, "
-            f"PMz {c['meanPMz']:+.2f})"
-        )
+        print(f"  {c['class']}: {c['share']:.1%} (len {c['meanCareerLength']}, PMz {c['meanPMz']:+.2f})")
     print("examples per class:")
     for klass, ex in class_examples.items():
         names = ", ".join(e["name"] for e in ex)

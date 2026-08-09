@@ -124,9 +124,7 @@ def build_edges(
 
 def main() -> None:
     ap = argparse.ArgumentParser(description="Tier B shared-game stint parser")
-    ap.add_argument(
-        "--dry-run", action="store_true", help="print stats only; do not write jsonl"
-    )
+    ap.add_argument("--dry-run", action="store_true", help="print stats only; do not write jsonl")
     ap.add_argument(
         "--min-shared",
         type=int,

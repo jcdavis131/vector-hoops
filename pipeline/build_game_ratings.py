@@ -118,10 +118,7 @@ def main() -> None:
     else:
         asset_msg = f"; {ASSET_OUT.name} NOT written (partial cache)"
 
-    print(
-        f"game_ratings: {covered} rows for season {cache_season} "
-        f"(complete={complete}){asset_msg}"
-    )
+    print(f"game_ratings: {covered} rows for season {cache_season} (complete={complete}){asset_msg}")
 
 
 if __name__ == "__main__":

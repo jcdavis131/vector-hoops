@@ -59,9 +59,7 @@ def main() -> None:
     names = list(sigs)
     ids = [sigs[n]["id"] for n in names]
     if max(ids) >= E.shape[0]:
-        raise SystemExit(
-            "vectors.json id exceeds MTNN row count — re-export embeddings"
-        )
+        raise SystemExit("vectors.json id exceeds MTNN row count — re-export embeddings")
 
     Mn = E[ids]  # already L2-normalized at export
 

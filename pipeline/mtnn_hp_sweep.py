@@ -230,18 +230,10 @@ REFINED_QUICK_TAGS = {
 # v4 architecture-aware local search — tuned for revised family groupings.
 ARCH_CONFIGS: list[dict] = [
     _concat_onecycle("arch-baseline"),
-    _concat_onecycle(
-        "arch-tw32-th128-sh24", tower_width=32, tower_hidden=128, skill_hidden=24
-    ),
-    _concat_onecycle(
-        "arch-tw32-th160-sh32", tower_width=32, tower_hidden=160, skill_hidden=32
-    ),
-    _concat_onecycle(
-        "arch-tw28-th128-sh24", tower_width=28, tower_hidden=128, skill_hidden=24
-    ),
-    _concat_onecycle(
-        "arch-tw24-th128-sh24", tower_width=24, tower_hidden=128, skill_hidden=24
-    ),
+    _concat_onecycle("arch-tw32-th128-sh24", tower_width=32, tower_hidden=128, skill_hidden=24),
+    _concat_onecycle("arch-tw32-th160-sh32", tower_width=32, tower_hidden=160, skill_hidden=32),
+    _concat_onecycle("arch-tw28-th128-sh24", tower_width=28, tower_hidden=128, skill_hidden=24),
+    _concat_onecycle("arch-tw24-th128-sh24", tower_width=24, tower_hidden=128, skill_hidden=24),
     _concat_onecycle(
         "arch-tw32-th128-sh24-d56",
         tower_width=32,
@@ -398,12 +390,7 @@ def build_grid(profile: str, quick: bool) -> list[dict]:
     if profile == "hybrid":
         grid = HYBRID_CONFIGS
         if quick:
-            grid = [
-                c
-                for c in grid
-                if c.get("tag")
-                in {"concat-winner", "concat-hybrid-020", "supcon-arch-control"}
-            ]
+            grid = [c for c in grid if c.get("tag") in {"concat-winner", "concat-hybrid-020", "supcon-arch-control"}]
         return grid
     if profile in ("refined", "novel"):
         grid = REFINED_CONFIGS
@@ -568,9 +555,7 @@ def run_one(cfg: dict, epochs: int, seed: int, snaps: dict[Path, Path]) -> dict:
         "purity": purity,
         "archetype_top1": rep.get("archetype_top1_acc"),
         "composite": round(score, 4),
-        "promotion_purity_gap": (
-            round(PROMOTION_PURITY_FLOOR - purity, 4) if purity is not None else None
-        ),
+        "promotion_purity_gap": (round(PROMOTION_PURITY_FLOOR - purity, 4) if purity is not None else None),
         "train_hparams": {
             k: cfg.get(k, rep.get(k))
             for k in (
@@ -621,9 +606,7 @@ def main() -> None:
             "hybrid=player+arch SupCon λ; nextstats=tune next-profile loss)"
         ),
     )
-    ap.add_argument(
-        "--quick", action="store_true", help="smoke: 1 seed, truncated grid"
-    )
+    ap.add_argument("--quick", action="store_true", help="smoke: 1 seed, truncated grid")
     args = ap.parse_args()
 
     profile = "refined" if args.profile == "novel" else args.profile
@@ -631,9 +614,7 @@ def main() -> None:
     seeds = [7] if args.quick else [7, 42, 99]
     snaps = _sweep_backup()
     if snaps:
-        print(
-            f"sweep: backed up {len(snaps)} promoted artifact(s) — restored after each run"
-        )
+        print(f"sweep: backed up {len(snaps)} promoted artifact(s) — restored after each run")
 
     results: list[dict] = []
     for seed in seeds:
@@ -657,13 +638,9 @@ def main() -> None:
         "grid_profile": profile,
         "reference": "arXiv:2502.17480 (Brain2Qwerty OneCycleLR + linear anneal)",
         "prior_sweep": (
-            "discovery v1: concat-fusion-onecycle best "
-            "(composite 0.745, recall 0.998, purity 0.576 @ 40ep)"
+            "discovery v1: concat-fusion-onecycle best (composite 0.745, recall 0.998, purity 0.576 @ 40ep)"
         ),
-        "ranking": (
-            f"0.4*test_recall + 0.6*purity (promotion-aware); "
-            f"recall<{RECALL_RANK_FLOOR} demoted"
-        ),
+        "ranking": (f"0.4*test_recall + 0.6*purity (promotion-aware); recall<{RECALL_RANK_FLOOR} demoted"),
         "promotion_purity_floor": PROMOTION_PURITY_FLOOR,
         "epochs_per_run": args.epochs,
         "seeds": seeds,

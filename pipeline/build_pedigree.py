@@ -109,11 +109,7 @@ def team_winpct_index() -> dict[str, dict[int, float]]:
             rows = json.loads(path.read_text(encoding="utf-8"))
         except (OSError, json.JSONDecodeError):
             continue
-        idx[season] = {
-            int(r["TEAM_ID"]): float(r["W_PCT"])
-            for r in rows
-            if r.get("W_PCT") is not None
-        }
+        idx[season] = {int(r["TEAM_ID"]): float(r["W_PCT"]) for r in rows if r.get("W_PCT") is not None}
     return idx
 
 
@@ -137,11 +133,7 @@ def main() -> None:
     )
     args = ap.parse_args()
 
-    cache_path = (
-        Path(args.cache)
-        if args.cache
-        else (DRAFT_FIXTURE if args.fixture else DRAFT_CACHE)
-    )
+    cache_path = Path(args.cache) if args.cache else (DRAFT_FIXTURE if args.fixture else DRAFT_CACHE)
     if not cache_path.exists():
         raise SystemExit(
             f"no draft cache at {cache_path} — run pipeline/fetch_draft_history.py "
@@ -196,9 +188,7 @@ def main() -> None:
                         "PED_EXPECT_SLOT": expect_slot(overall),
                         "PED_TEAM_WINPCT": wp,
                         "PED_YEARS_SINCE": float(years),
-                        "PED_PICK_DECAY": round(
-                            quality01 * math.exp(-years / DECAY_YEARS), 4
-                        ),
+                        "PED_PICK_DECAY": round(quality01 * math.exp(-years / DECAY_YEARS), 4),
                     }
                 )
             else:
@@ -280,14 +270,9 @@ def main() -> None:
             ),
             encoding="utf-8",
         )
-        asset_msg = (
-            f"wrote {ASSET_OUT.relative_to(ROOT)} ({len(asset_players)} players)"
-        )
+        asset_msg = f"wrote {ASSET_OUT.relative_to(ROOT)} ({len(asset_players)} players)"
     else:
-        asset_msg = (
-            "assets/pedigree.json NOT written (partial cache — Steals "
-            "of the Draft surface stays dormant)"
-        )
+        asset_msg = "assets/pedigree.json NOT written (partial cache — Steals of the Draft surface stays dormant)"
 
     print(
         f"pedigree: {n_drafted} drafted, {n_undrafted} undrafted, "

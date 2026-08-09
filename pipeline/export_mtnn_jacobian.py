@@ -75,7 +75,6 @@ from pathlib import Path
 import numpy as np
 import torch
 import train_mtnn as T
-
 from _torch_safe import safe_torch_load
 
 HERE = Path(__file__).resolve().parent
@@ -107,12 +106,7 @@ def families_from_ckpt(state: dict) -> dict[str, int]:
     fams: dict[str, int] = {}
     for k, v in state.items():
         parts = k.split(".")
-        if (
-            len(parts) == 4
-            and parts[0] == "towers"
-            and parts[2] == "fc1"
-            and parts[3] == "weight"
-        ):
+        if len(parts) == 4 and parts[0] == "towers" and parts[2] == "fc1" and parts[3] == "weight":
             fams[parts[1]] = v.shape[1] // 2
     return dict(sorted(fams.items()))
 
@@ -137,9 +131,7 @@ def load_matrix_for(ckpt_fams: dict[str, int]):
             print(f"  matrix: {mpath.name} ({len(fams)} families) — matches checkpoint")
             return npz, manifest, fams, mpath.name
         bad = {
-            f: (ckpt_fams.get(f), dims.get(f))
-            for f in set(dims) | set(ckpt_fams)
-            if dims.get(f) != ckpt_fams.get(f)
+            f: (ckpt_fams.get(f), dims.get(f)) for f in set(dims) | set(ckpt_fams) if dims.get(f) != ckpt_fams.get(f)
         }
         print(
             f"  skip {mpath.name}: {len(fams)} families, "
@@ -204,9 +196,7 @@ def head_outputs(model: T.MTNN, emb: torch.Tensor) -> dict[str, torch.Tensor]:
     return out
 
 
-def jacobian_influence(
-    model: T.MTNN, xs, ms, seas, rows: np.ndarray, device: str, batch: int = 256
-):
+def jacobian_influence(model: T.MTNN, xs, ms, seas, rows: np.ndarray, device: str, batch: int = 256):
     """Per-row Frobenius norm of d(head)/d(tower) and d(embed)/d(tower)."""
     fams = model.families
     n_t = len(fams)
@@ -238,9 +228,7 @@ def jacobian_influence(
             for i in range(y.shape[1]):
                 (g,) = torch.autograd.grad(y[:, i].sum(), parts, retain_graph=True)
                 acc += (g**2).sum(-1)
-            per_row[start : start + len(idx), :, 1 + gi] = (
-                acc.sqrt().detach().cpu().numpy()
-            )
+            per_row[start : start + len(idx), :, 1 + gi] = acc.sqrt().detach().cpu().numpy()
         del parts, emb, heads
     return per_row, groups
 
@@ -279,9 +267,7 @@ def feature_attribution(
     sample), so one backward on the batch sum yields each row's own gradient.
     """
     fam_names = list(model.families)
-    cols = {
-        f: torch.tensor(fams[f], device=device, dtype=torch.long) for f in fam_names
-    }
+    cols = {f: torch.tensor(fams[f], device=device, dtype=torch.long) for f in fam_names}
 
     targets: list[str] = []
     top_idx = top_val = None
@@ -321,12 +307,8 @@ def feature_attribution(
 
             k = min(topk, n_feat)
             sel = a.abs().topk(k, dim=1).indices  # rank by |a|, keep sign
-            top_idx[start : start + len(idx), ti, :k] = (
-                sel.cpu().numpy().astype(np.uint16)
-            )
-            top_val[start : start + len(idx), ti, :k] = (
-                a.gather(1, sel).cpu().numpy().astype(np.float32)
-            )
+            top_idx[start : start + len(idx), ti, :k] = sel.cpu().numpy().astype(np.uint16)
+            top_val[start : start + len(idx), ti, :k] = a.gather(1, sel).cpu().numpy().astype(np.float32)
 
         del parts, emb, scalars, bx
     n = float(len(rows))
@@ -379,21 +361,13 @@ def write_feature_assets(
         "features": feat_names,
         "featureFamily": feat_family,
         # Fraction of rows where the feature was actually observed (mask == 1).
-        "coverage": {
-            f: round(float(c), 4) for f, c in zip(feat_names, coverage, strict=False)
-        },
+        "coverage": {f: round(float(c), 4) for f, c in zip(feat_names, coverage, strict=False)},
         "populationSigned": {
-            t: {
-                feat_names[j]: round(float(pop_signed[j, ti]), 6)
-                for j in range(len(feat_names))
-            }
+            t: {feat_names[j]: round(float(pop_signed[j, ti]), 6) for j in range(len(feat_names))}
             for ti, t in enumerate(targets)
         },
         "populationAbs": {
-            t: {
-                feat_names[j]: round(float(pop_abs[j, ti]), 6)
-                for j in range(len(feat_names))
-            }
+            t: {feat_names[j]: round(float(pop_abs[j, ti]), 6) for j in range(len(feat_names))}
             for ti, t in enumerate(targets)
         },
         "topkLayout": {
@@ -434,16 +408,10 @@ def main() -> None:
     ap.add_argument("--device", choices=("auto", "cpu", "cuda"), default="auto")
     ap.add_argument("--rows", type=int, default=0, help="0 = all rows")
     ap.add_argument("--batch", type=int, default=256)
-    ap.add_argument(
-        "--granularity", choices=("tower", "feature", "both"), default="tower"
-    )
+    ap.add_argument("--granularity", choices=("tower", "feature", "both"), default="tower")
     ap.add_argument("--topk", type=int, default=TOPK)
     args = ap.parse_args()
-    device = (
-        "cuda"
-        if (args.device in ("auto", "cuda") and torch.cuda.is_available())
-        else "cpu"
-    )
+    device = "cuda" if (args.device in ("auto", "cuda") and torch.cuda.is_available()) else "cpu"
     if not CKPT.exists():
         raise SystemExit(f"missing {CKPT} — train first")
 
@@ -459,11 +427,7 @@ def main() -> None:
     season_ids = T.season_index(seasons)
     n_seasons = int(season_ids.max()) + 1
     game_cols = T.game_feature_cols(manifest)
-    n_skills = sum(
-        1
-        for k in ckpt["model"]
-        if k.startswith("skill_towers.towers.") and k.endswith(".0.weight")
-    )
+    n_skills = sum(1 for k in ckpt["model"] if k.startswith("skill_towers.towers.") and k.endswith(".0.weight"))
 
     model = build_model(
         ckpt,
@@ -482,10 +446,7 @@ def main() -> None:
     if args.granularity in ("feature", "both"):
         feat_names = list(manifest["features"])
         if len(feat_names) != Z.shape[1]:
-            raise SystemExit(
-                f"manifest has {len(feat_names)} features, "
-                f"matrix has {Z.shape[1]} columns"
-            )
+            raise SystemExit(f"manifest has {len(feat_names)} features, matrix has {Z.shape[1]} columns")
         feat_family = {f: manifest["families"][f] for f in feat_names}
         t0 = time.time()
         pop_signed, pop_abs, top_idx, top_val, targets = feature_attribution(
@@ -500,10 +461,7 @@ def main() -> None:
             args.batch,
             args.topk,
         )
-        print(
-            f"attribution: {n} rows x {len(feat_names)} features x "
-            f"{len(targets)} targets in {time.time() - t0:.1f}s"
-        )
+        print(f"attribution: {n} rows x {len(feat_names)} features x {len(targets)} targets in {time.time() - t0:.1f}s")
         write_feature_assets(
             pop_signed,
             pop_abs,
@@ -522,10 +480,7 @@ def main() -> None:
 
     t0 = time.time()
     per_row, groups = jacobian_influence(model, xs, ms, seas, rows, device, args.batch)
-    print(
-        f"jacobians: {n} rows x {len(fams)} towers x {1 + len(groups)} targets "
-        f"in {time.time() - t0:.1f}s"
-    )
+    print(f"jacobians: {n} rows x {len(fams)} towers x {1 + len(groups)} targets in {time.time() - t0:.1f}s")
 
     fam_names = list(model.families)
     pop = per_row.mean(axis=0)  # towers x (embed + groups)
@@ -550,16 +505,11 @@ def main() -> None:
         "towerFamilies": fam_names,
         "targets": ["embedding", *groups],
         "populationInfluence": {
-            t: {
-                fam_names[k]: round(float(pop[k, ti]), 6) for k in range(len(fam_names))
-            }
+            t: {fam_names[k]: round(float(pop[k, ti]), 6) for k in range(len(fam_names))}
             for ti, t in enumerate(["embedding", *groups])
         },
         "populationInfluenceNorm": {
-            t: {
-                fam_names[k]: round(float(pop_norm[k, ti]), 4)
-                for k in range(len(fam_names))
-            }
+            t: {fam_names[k]: round(float(pop_norm[k, ti]), 4) for k in range(len(fam_names))}
             for ti, t in enumerate(["embedding", *groups])
         },
         "perRowLayout": {

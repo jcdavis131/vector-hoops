@@ -182,9 +182,7 @@ def build_season_cache(season: str) -> dict:
         rsv = rs.get(name, {})
         players[name] = {
             "team_id": pov["team_id"],
-            "po": {
-                k: pov[k] for k in ("GP", "MIN", "USG", "PTS100", "TS", "PLUS_MINUS")
-            },
+            "po": {k: pov[k] for k in ("GP", "MIN", "USG", "PTS100", "TS", "PLUS_MINUS")},
             "rs": {k: rsv.get(k) for k in ("GP", "MIN", "USG", "PTS100", "TS")},
         }
     return {
@@ -199,9 +197,7 @@ def build_season_cache(season: str) -> dict:
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument(
-        "--offline", action="store_true", help="verify existing caches only; no network"
-    )
+    ap.add_argument("--offline", action="store_true", help="verify existing caches only; no network")
     ap.add_argument("--season", default=None, help="fetch one season only")
     args = ap.parse_args()
 
@@ -220,10 +216,7 @@ def main() -> None:
             continue
         doc = build_season_cache(season)
         p.write_text(json.dumps(doc, separators=(",", ":")), encoding="utf-8")
-        print(
-            f"{season}: {len(doc['players'])} playoff players, "
-            f"{len(doc['teams'])} teams -> {p.name}"
-        )
+        print(f"{season}: {len(doc['players'])} playoff players, {len(doc['teams'])} teams -> {p.name}")
 
 
 if __name__ == "__main__":

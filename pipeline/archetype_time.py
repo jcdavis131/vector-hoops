@@ -89,10 +89,7 @@ def main() -> None:
     global_lab, _global_cents = kmeans(E, GLOBAL_K, seed=42)
     global_names = assign_cluster_names(global_lab, GLOBAL_K, ids, grades, skill_meta)
     global_zone_profiles = [
-        mean_zone_profile(
-            V, [j for j in range(len(players)) if int(global_lab[j]) == c]
-        )
-        for c in range(GLOBAL_K)
+        mean_zone_profile(V, [j for j in range(len(players)) if int(global_lab[j]) == c]) for c in range(GLOBAL_K)
     ]
 
     seasons = sorted({p["season"] for p in players})
@@ -160,9 +157,7 @@ def main() -> None:
     game_deltas = [
         {
             "archetype": game_clusters[c],
-            "early": round(
-                sum(r["shares"][c] for r in game_early) / len(game_early), 4
-            ),
+            "early": round(sum(r["shares"][c] for r in game_early) / len(game_early), 4),
             "late": round(sum(r["shares"][c] for r in game_late) / len(game_late), 4),
         }
         for c in range(GAME_K)
@@ -180,14 +175,8 @@ def main() -> None:
         k_opt, k_sweep = optimal_k(X, ERA_K_RANGE)
         lab, cents = kmeans(X, k_opt, seed=42)
         counts = Counter(lab.tolist())
-        member_ids_by_cluster = [
-            [ids[era_idxs[j]] for j in range(len(era_idxs)) if lab[j] == i]
-            for i in range(k_opt)
-        ]
-        member_rows_by_cluster = [
-            [era_idxs[j] for j in range(len(era_idxs)) if lab[j] == i]
-            for i in range(k_opt)
-        ]
+        member_ids_by_cluster = [[ids[era_idxs[j]] for j in range(len(era_idxs)) if lab[j] == i] for i in range(k_opt)]
+        member_rows_by_cluster = [[era_idxs[j] for j in range(len(era_idxs)) if lab[j] == i] for i in range(k_opt)]
         era_names = assign_cluster_names_from_members(
             member_ids_by_cluster,
             grades,
@@ -234,10 +223,7 @@ def main() -> None:
     for prev, cur in itertools.pairwise(by_era):
         for arch in cur["archetypes"]:
             cvec = arch["mtnnCentroid"]
-            sims = [
-                (cosine_rows(cvec, pa["mtnnCentroid"]), pa["name"])
-                for pa in prev["archetypes"]
-            ]
+            sims = [(cosine_rows(cvec, pa["mtnnCentroid"]), pa["name"]) for pa in prev["archetypes"]]
             best_sim, best_name = max(sims)
             arch["ancestor"] = {
                 "era": prev["era"],
@@ -281,10 +267,7 @@ def main() -> None:
                 "n": e["n"],
                 "zoneMix": e["zoneMix"],
                 "tagCounts": e.get("tagCounts") or {},
-                "archetypes": [
-                    {k: v for k, v in a.items() if k != "mtnnCentroid"}
-                    for a in e["archetypes"]
-                ],
+                "archetypes": [{k: v for k, v in a.items() if k != "mtnnCentroid"} for a in e["archetypes"]],
             }
         )
 
@@ -353,24 +336,17 @@ def main() -> None:
         print(f"  [{i}] {nm}")
     print("\nMTNN prevalence shifts (early-5 vs late-5):")
     for d in deltas[:4]:
-        print(
-            f"  {d['archetype']}: {d['early']:.1%} -> {d['late']:.1%} ({d['delta']:+.1%})"
-        )
+        print(f"  {d['archetype']}: {d['early']:.1%} -> {d['late']:.1%} ({d['delta']:+.1%})")
     print("\ngame prevalence shifts (early-5 vs late-5):")
     for d in game_deltas[:4]:
-        print(
-            f"  {d['archetype']}: {d['early']:.1%} -> {d['late']:.1%} ({d['delta']:+.1%})"
-        )
+        print(f"  {d['archetype']}: {d['early']:.1%} -> {d['late']:.1%} ({d['delta']:+.1%})")
     print("\nera-native (K, top types, ancestor):")
     for e in by_era:
         print(f"  {e['era']} K={e['k']}")
         for a in sorted(e["archetypes"], key=lambda x: -x["share"])[:3]:
             anc = a.get("ancestor", {})
             nov = " [novel]" if a.get("novel") else ""
-            print(
-                f"    {a['name']} ({a['share']:.1%}) <- {anc.get('name', '-')} "
-                f"({anc.get('similarity', '')}){nov}"
-            )
+            print(f"    {a['name']} ({a['share']:.1%}) <- {anc.get('name', '-')} ({anc.get('similarity', '')}){nov}")
     tag_counts = Counter(t for a in assignments for t in a["eraTags"])
     print(f"\nwrote archetype_assignments.json ({len(assignments)} rows)")
     print("era tag counts:", dict(tag_counts.most_common(6)))

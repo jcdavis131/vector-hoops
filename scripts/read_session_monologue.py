@@ -8,9 +8,7 @@ import json
 import sys
 from pathlib import Path
 
-DEFAULT_JSONL = (
-    Path(__file__).resolve().parents[1] / "tasks" / "session-monologue.jsonl"
-)
+DEFAULT_JSONL = Path(__file__).resolve().parents[1] / "tasks" / "session-monologue.jsonl"
 
 
 def configure_stdout() -> None:
@@ -52,12 +50,8 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--path", type=Path, default=DEFAULT_JSONL)
     parser.add_argument("--tail", type=int, default=1, help="number of recent entries")
-    parser.add_argument(
-        "--since", help="ISO timestamp lower bound, e.g. 2026-07-08T20:00:00Z"
-    )
-    parser.add_argument(
-        "--event", help="filter by event type: change, heartbeat, bootstrap, ..."
-    )
+    parser.add_argument("--since", help="ISO timestamp lower bound, e.g. 2026-07-08T20:00:00Z")
+    parser.add_argument("--event", help="filter by event type: change, heartbeat, bootstrap, ...")
     parser.add_argument(
         "--format",
         choices=("json", "text", "context"),
@@ -66,9 +60,7 @@ def main() -> None:
     )
     args = parser.parse_args()
 
-    entries = filter_entries(
-        load_entries(args.path), since=args.since, event=args.event
-    )
+    entries = filter_entries(load_entries(args.path), since=args.since, event=args.event)
     if args.tail > 0:
         entries = entries[-args.tail :]
 

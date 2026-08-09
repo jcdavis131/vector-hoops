@@ -92,10 +92,7 @@ def export_mock_onnx(out_path: Path, config: dict):
                 ms = {f"fam{i}": torch.ones_like(tower_inputs[i]) for i in range(17)}
                 season = torch.tensor([0], dtype=torch.long)
                 parts = torch.stack(
-                    [
-                        self.mtnn.towers[fam](xs[fam], ms[fam])
-                        for fam in self.mtnn.families
-                    ],
+                    [self.mtnn.towers[fam](xs[fam], ms[fam]) for fam in self.mtnn.families],
                     dim=1,
                 )
                 emb = self.mtnn.fusion(parts, season)
@@ -112,9 +109,7 @@ def export_mock_onnx(out_path: Path, config: dict):
             dynamic_axes={f"family_{i}": {0: "batch"} for i in range(17)},
             opset_version=17,
         )
-        print(
-            f"Real ONNX exported to {out_path} ({out_path.stat().st_size / 1024:.1f} KB)"
-        )
+        print(f"Real ONNX exported to {out_path} ({out_path.stat().st_size / 1024:.1f} KB)")
     except Exception as e:
         print(f"ONNX export failed (expected in env without data): {e}")
         # Write mock json as fallback for bundle check
@@ -169,6 +164,4 @@ if __name__ == "__main__":
     else:
         export_mock_onnx(out_path, config)
         check_bundle_size()
-        print(
-            "Solo disclaimer: Solo personal project, no connection to employer, built with public/free-tier only"
-        )
+        print("Solo disclaimer: Solo personal project, no connection to employer, built with public/free-tier only")

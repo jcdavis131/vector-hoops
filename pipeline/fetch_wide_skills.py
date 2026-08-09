@@ -143,26 +143,20 @@ def rows_by_name(rows: list[dict]) -> dict[str, dict]:
 
 
 def fetch_synergy(season: str, play_type: str) -> dict[str, dict]:
-    rows = stats_rows(
-        "synergyplaytypes", synergy_params(season, play_type), "SynergyPlayType"
-    )
+    rows = stats_rows("synergyplaytypes", synergy_params(season, play_type), "SynergyPlayType")
     time.sleep(_CALL_GAP_S)
     return rows_by_name(rows)
 
 
 def fetch_hustle(season: str) -> dict[str, dict]:
-    rows = stats_rows(
-        "leaguehustlestatsplayer", hustle_params(season), "HustleStatsPlayer"
-    )
+    rows = stats_rows("leaguehustlestatsplayer", hustle_params(season), "HustleStatsPlayer")
     time.sleep(_CALL_GAP_S)
     return rows_by_name(rows)
 
 
 def fetch_ptstats(season: str, measure: str) -> dict[str, dict]:
     """Player tracking (leaguedashptstats) — PullUpShot / Defense measures."""
-    rows = stats_rows(
-        "leaguedashptstats", ptstats_params(season, measure), "LeagueDashPtStats"
-    )
+    rows = stats_rows("leaguedashptstats", ptstats_params(season, measure), "LeagueDashPtStats")
     time.sleep(_CALL_GAP_S)
     return rows_by_name(rows)
 
@@ -199,8 +193,7 @@ def build_season_cache(season: str, *, skip_tracking: bool = False) -> dict:
     return {
         "built": time.strftime("%Y-%m-%d"),
         "source": (
-            "stats.nba.com synergyplaytypes + leaguehustlestatsplayer "
-            "+ leaguedashptstats via nba_http (curl_cffi)"
+            "stats.nba.com synergyplaytypes + leaguehustlestatsplayer + leaguedashptstats via nba_http (curl_cffi)"
         ),
         "complete": True,
         "season": season,

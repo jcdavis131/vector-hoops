@@ -44,7 +44,7 @@ ok(
 # crosses size against an independently-sourced row count.
 problems, agreed = pg.check(
     dims={"meta": (48, "a"), "arch": (48, "b"), "report": (48, "c")},
-    rows=17288,          # the WRONG reading, but internally consistent
+    rows=17288,  # the WRONG reading, but internally consistent
     size=REAL_BYTES,
     prose_hits={},
 )
@@ -77,9 +77,7 @@ ok("all-agree with correct size passes", problems == [], str(problems))
 # --------------------------------------------------------------------------
 # Size must still be crossed, once sources agree
 # --------------------------------------------------------------------------
-problems, _ = pg.check(
-    dims={"meta": (64, "m")}, rows=999, size=REAL_BYTES, prose_hits={}
-)
+problems, _ = pg.check(dims={"meta": (64, "m")}, rows=999, size=REAL_BYTES, prose_hits={})
 ok("wrong row count is caught by the size cross-check", any("bytes but" in p for p in problems))
 
 problems, _ = pg.check(dims={"meta": (64, "m")}, rows=None, size=REAL_BYTES, prose_hits={})
@@ -123,9 +121,7 @@ ok(
     "a doc explaining 48->64 must not fail the gate",
 )
 
-problems, _ = pg.check(
-    dims={}, rows=12966, size=REAL_BYTES, prose_hits={"README.md": [48]}
-)
+problems, _ = pg.check(dims={}, rows=12966, size=REAL_BYTES, prose_hits={"README.md": [48]})
 ok("no sources at all -> no fabricated verdict on prose", not any("advertises" in p for p in problems))
 
 # --------------------------------------------------------------------------

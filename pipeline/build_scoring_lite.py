@@ -63,9 +63,7 @@ def main():
         "note": "L2-normalized rows for past all-stars 1996-2023 + all 2024+ seasons; dot=cosine; ids[k] = global row id of lite row k",
         "ids": ids,
     }
-    (ASSETS / "scoring_lite_index.json").write_text(
-        json.dumps(index, separators=(",", ":")), encoding="utf-8"
-    )
+    (ASSETS / "scoring_lite_index.json").write_text(json.dumps(index, separators=(",", ":")), encoding="utf-8")
     print(f"scoring_lite: {len(ids)} rows, {len(out) * 4} bytes f32")
 
 

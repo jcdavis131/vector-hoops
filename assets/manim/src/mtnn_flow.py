@@ -111,9 +111,7 @@ ICON_CYCLE = [
 ]
 
 
-def make_mini_tower(
-    abbrev: str, full: str, color: str, icon: str, w: float = 1.18, h: float = 0.60
-):
+def make_mini_tower(abbrev: str, full: str, color: str, icon: str, w: float = 1.18, h: float = 0.60):
     """New Cam Lab no-overlap spec: w=1.18 h=0.60 corner 0.08 accent 0.14h dot r0.07 txt 12 BOLD mono"""
     # shadow slightly smaller offset
     shadow = RoundedRectangle(
@@ -157,9 +155,7 @@ def make_mini_tower(
     dot.move_to(card.get_left()).shift(RIGHT * 0.18 + DOWN * 0.06)
 
     # text: icon + abbrev eg "● VOL" — fits 1.18w at 12pt
-    txt = Text(
-        f"{icon} {abbrev}", font_size=12, color=INK, font=MONO_STACK[0], weight=BOLD
-    )
+    txt = Text(f"{icon} {abbrev}", font_size=12, color=INK, font=MONO_STACK[0], weight=BOLD)
     txt.next_to(dot, RIGHT, buff=0.06)
     # vertically center txt with dot but slightly lower than accent
     txt.shift(DOWN * 0.06)
@@ -209,9 +205,7 @@ class MTNNFlow(Scene):
             weight=BOLD,
         )
         t2 = Text("cat([x·m,m]) era-safe", font_size=12, color=INK, font=MONO_STACK[0])
-        t3a = Text(
-            "m∈{0,1} ∅→0 grad=0", font_size=10, color=SUBTLE_AAA, font=MONO_STACK[0]
-        )
+        t3a = Text("m∈{0,1} ∅→0 grad=0", font_size=10, color=SUBTLE_AAA, font=MONO_STACK[0])
         t3b = Text("never imputed", font_size=10, color=SUBTLE_AAA, font=MONO_STACK[0])
         t3_group = VGroup(t3a, t3b).arrange(DOWN, buff=0.04, aligned_edge=LEFT)
 
@@ -237,9 +231,7 @@ class MTNNFlow(Scene):
         # gap 0.18 after t3 — use spacer
         spacer = Rectangle(width=0.01, height=0.16, fill_opacity=0, stroke_opacity=0)
 
-        internal_stack = VGroup(t1, t2, t3_group, spacer, boxes_vg).arrange(
-            DOWN, buff=0.09, aligned_edge=LEFT
-        )
+        internal_stack = VGroup(t1, t2, t3_group, spacer, boxes_vg).arrange(DOWN, buff=0.09, aligned_edge=LEFT)
         # Center inside card but with slight left padding for AAA readability
         internal_stack.move_to(input_card.get_center()).shift(UP * 0.02)
 
@@ -313,12 +305,8 @@ class MTNNFlow(Scene):
             font=MONO_STACK[0],
             weight=BOLD,
         )
-        d_t2 = Text(
-            "LN → GELU → Residual ×2", font_size=11, color=INK, font=MONO_STACK[0]
-        )
-        d_t3 = Text(
-            "160 → 32  +  LayerNorm", font_size=11, color=SUBTLE_AAA, font=MONO_STACK[0]
-        )
+        d_t2 = Text("LN → GELU → Residual ×2", font_size=11, color=INK, font=MONO_STACK[0])
+        d_t3 = Text("160 → 32  +  LayerNorm", font_size=11, color=SUBTLE_AAA, font=MONO_STACK[0])
         d_t4 = Text(
             "out 32-d   W tot ~1380 cols",
             font_size=10,
@@ -326,9 +314,7 @@ class MTNNFlow(Scene):
             font=MONO_STACK[0],
             weight=BOLD,
         )
-        detail_texts = VGroup(d_t1, d_t2, d_t3, d_t4).arrange(
-            DOWN, buff=0.08, aligned_edge=LEFT
-        )
+        detail_texts = VGroup(d_t1, d_t2, d_t3, d_t4).arrange(DOWN, buff=0.08, aligned_edge=LEFT)
         detail_texts.move_to(detail_card.get_center())
 
         detail_group = VGroup(detail_card, detail_texts)
@@ -381,9 +367,7 @@ class MTNNFlow(Scene):
             color=SUBTLE_AAA,
             font=MONO_STACK[0],
         )
-        fusion_texts = VGroup(f_t1, f_t2, f_t3).arrange(
-            DOWN, buff=0.10, aligned_edge=LEFT
-        )
+        fusion_texts = VGroup(f_t1, f_t2, f_t3).arrange(DOWN, buff=0.10, aligned_edge=LEFT)
         fusion_texts.move_to(fusion_card.get_center())
 
         fusion_group = VGroup(fusion_card, fusion_texts)
@@ -396,9 +380,7 @@ class MTNNFlow(Scene):
         if sphere_center[0] > 5.2:
             sphere_center = fusion_card.get_right() + RIGHT * 0.82 + UP * 0.06
 
-        circ = Circle(
-            radius=0.42, color=INK, stroke_width=3.2, fill_opacity=0, stroke_opacity=1
-        ).move_to(sphere_center)
+        circ = Circle(radius=0.42, color=INK, stroke_width=3.2, fill_opacity=0, stroke_opacity=1).move_to(sphere_center)
         dot_o = Dot(sphere_center, radius=0.04, color=INK)
         vec = Arrow(
             sphere_center,
@@ -408,12 +390,10 @@ class MTNNFlow(Scene):
             stroke_width=4.2,
             max_tip_length_to_length_ratio=0.18,
         )
-        vec_label = Text(
-            "48-d v^", font_size=10, color=INK, font=MONO_STACK[0], weight=BOLD
-        ).next_to(vec.get_end(), UP + RIGHT, buff=0.04)
-        l2_label = Text(
-            "L2 unit", font_size=9, color=SUBTLE_AAA, font=MONO_STACK[0]
-        ).next_to(circ, DOWN, buff=0.07)
+        vec_label = Text("48-d v^", font_size=10, color=INK, font=MONO_STACK[0], weight=BOLD).next_to(
+            vec.get_end(), UP + RIGHT, buff=0.04
+        )
+        l2_label = Text("L2 unit", font_size=9, color=SUBTLE_AAA, font=MONO_STACK[0]).next_to(circ, DOWN, buff=0.07)
 
         sphere_group = VGroup(circ, dot_o, vec, vec_label, l2_label)
 
@@ -449,14 +429,8 @@ class MTNNFlow(Scene):
                 font=MONO_STACK[0],
                 weight=BOLD,
             )
-            ht2 = Text(
-                f"{cnt} heads", font_size=9, color=SUBTLE_AAA, font=MONO_STACK[0]
-            )
-            ht_group = (
-                VGroup(ht1, ht2)
-                .arrange(DOWN, buff=0.06, aligned_edge=LEFT)
-                .move_to(hc.get_center())
-            )
+            ht2 = Text(f"{cnt} heads", font_size=9, color=SUBTLE_AAA, font=MONO_STACK[0])
+            ht_group = VGroup(ht1, ht2).arrange(DOWN, buff=0.06, aligned_edge=LEFT).move_to(hc.get_center())
             heads.add(VGroup(hc, ht_group))
 
         heads_row = VGroup(*heads).arrange(RIGHT, buff=0.22)

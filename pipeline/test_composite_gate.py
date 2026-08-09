@@ -98,13 +98,11 @@ class ReportContractTests(unittest.TestCase):
         report = json.loads(self.REPORT.read_text(encoding="utf-8"))
         self.assertIsNotNone(
             report.get("continuity_spread"),
-            "train_mtnn must emit continuity_spread or should_promote's "
-            "continuity guard is dead code",
+            "train_mtnn must emit continuity_spread or should_promote's continuity guard is dead code",
         )
         self.assertIsNotNone(
             report.get("durability"),
-            "durability head must be reported; it carries loss weight 0.10 and "
-            "went unmeasured until 2026-07-25",
+            "durability head must be reported; it carries loss weight 0.10 and went unmeasured until 2026-07-25",
         )
 
 
@@ -129,18 +127,14 @@ class ThresholdScalingTests(unittest.TestCase):
 class PromoteDecisionTests(unittest.TestCase):
     def test_collapsed_run_is_rejected(self) -> None:
         """The 2026-07-24 profile: val held up, test recall went to zero."""
-        ok, why = should_promote(
-            _report(cqs_value=43.5, recall=0.0, purity=0.6729), n_seeds=1
-        )
+        ok, why = should_promote(_report(cqs_value=43.5, recall=0.0, purity=0.6729), n_seeds=1)
         self.assertFalse(ok)
         self.assertIn("recall", why)
 
     def test_population_validation_precedes_metric_checks(self) -> None:
         """Order matters: a flagged collapse must report as such, not as a
         metric miss."""
-        ok, why = should_promote(
-            _report(cqs_value=99.0, recall=1.0, purity=1.0, flagged=True)
-        )
+        ok, why = should_promote(_report(cqs_value=99.0, recall=1.0, purity=1.0, flagged=True))
         self.assertFalse(ok)
         self.assertIn("population validation failed", why)
 

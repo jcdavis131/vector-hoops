@@ -151,9 +151,7 @@ def save_cache(c: dict) -> None:
     CACHE.write_text(json.dumps(c, indent=1), encoding="utf-8")
 
 
-def run_one(
-    tag: str, arch: list[str], masked: list[str], seed: int, epochs: int
-) -> dict:
+def run_one(tag: str, arch: list[str], masked: list[str], seed: int, epochs: int) -> dict:
     cmd = [
         sys.executable,
         str(ROOT / "pipeline" / "train_mtnn.py"),
@@ -231,8 +229,7 @@ def climb_families(seeds: list[int], epochs: int, rounds: int) -> dict:
     masked: list[str] = []
     incumbent = evaluate("full", BASE_ARCH, [], seeds, epochs, cache)
     print(
-        f"start: cqs={incumbent['cqs']:.2f} test={incumbent['test_recall']:.3f} "
-        f"purity={incumbent['purity']:.4f}",
+        f"start: cqs={incumbent['cqs']:.2f} test={incumbent['test_recall']:.3f} purity={incumbent['purity']:.4f}",
         flush=True,
     )
     history = [incumbent]

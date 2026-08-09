@@ -212,9 +212,7 @@ def derive_series(team_games: list[dict]) -> dict[str, list[dict]]:
                 {
                     **s,
                     "round": i,
-                    "roundLabel": ROUND_LABELS[i]
-                    if i < len(ROUND_LABELS)
-                    else f"R{i + 1}",
+                    "roundLabel": ROUND_LABELS[i] if i < len(ROUND_LABELS) else f"R{i + 1}",
                     "result": f"{s['wins']}-{s['losses']}",
                 }
             )

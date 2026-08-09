@@ -235,13 +235,9 @@ def component_scores(report: dict[str, Any]) -> dict[str, float]:
         "archetype": _clip01(arch),
         "position": _clip01(pos),
         "skills_r2": _clip01(skills_r2 if skills_r2 is not None else 0.0),
-        "skill_nn": _clip01(
-            1.0 - (nn_gap / SKILL_NN_SCALE) if nn_gap is not None else 0.0
-        ),
+        "skill_nn": _clip01(1.0 - (nn_gap / SKILL_NN_SCALE) if nn_gap is not None else 0.0),
         "next_r2": _clip01(next_r2 if next_r2 is not None else 0.0),
-        "next_mae": _clip01(
-            1.0 - (next_mae / NEXT_MAE_SCALE) if next_mae is not None else 0.0
-        ),
+        "next_mae": _clip01(1.0 - (next_mae / NEXT_MAE_SCALE) if next_mae is not None else 0.0),
         "aux_r2": _clip01(aux_mean if aux_mean is not None else 0.0),
     }
 
@@ -316,9 +312,7 @@ def should_promote(
         new_recall = _num(_held_out_test(new_report).get("recall_at_10_mtnn")) or 0.0
     new_purity = _num(block.get("purity_at_20"))
     if new_purity is None:
-        new_purity = (
-            _num(new_report.get("cross_era_archetype_neighbor_purity_at_20")) or 0.0
-        )
+        new_purity = _num(new_report.get("cross_era_archetype_neighbor_purity_at_20")) or 0.0
 
     base_cqs = baseline_cqs if baseline_cqs is not None else BASELINE.get("cqs")
     base_r = baseline_recall if baseline_recall is not None else BASELINE.get("recall")
@@ -336,9 +330,7 @@ def should_promote(
     if not isinstance(flags, dict):
         return False, "population validation collapse flags missing"
     failed_flags = [
-        name
-        for name, detail in flags.items()
-        if isinstance(detail, dict) and detail.get("flagged") is True
+        name for name, detail in flags.items() if isinstance(detail, dict) and detail.get("flagged") is True
     ]
     if failed_flags:
         return False, "population validation failed: " + ", ".join(failed_flags)
@@ -348,15 +340,9 @@ def should_promote(
     eff_cqs = _threshold("cqs", n_seeds, cqs_delta)
 
     if new_recall < float(base_r) - eff_recall:
-        return False, (
-            f"recall {new_recall:.3f} < floor {float(base_r) - eff_recall:.3f} "
-            f"(n_seeds={n_seeds})"
-        )
+        return False, (f"recall {new_recall:.3f} < floor {float(base_r) - eff_recall:.3f} (n_seeds={n_seeds})")
     if new_purity < float(base_p) - eff_purity:
-        return False, (
-            f"purity {new_purity:.3f} < floor {float(base_p) - eff_purity:.3f} "
-            f"(n_seeds={n_seeds})"
-        )
+        return False, (f"purity {new_purity:.3f} < floor {float(base_p) - eff_purity:.3f} (n_seeds={n_seeds})")
     # Direct guard on the failure mode that actually shipped: the 2026-07-24 run
     # held val recall 0.438 while test went to 0.000, because same-player
     # continuity fell off a cliff outside the training window (spread 0.646 vs

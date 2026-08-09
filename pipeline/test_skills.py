@@ -85,9 +85,7 @@ def main() -> None:
         worst_corr = min(worst_corr, r)
         fid_ok &= worst_fid <= 1.0
         corr_ok &= r >= 0.978
-    check(
-        fid_ok, f"probe within 1 pt of exact pooled percentile (worst {worst_fid:.2f})"
-    )
+    check(fid_ok, f"probe within 1 pt of exact pooled percentile (worst {worst_fid:.2f})")
     check(
         corr_ok,
         f"probe vs season-grade corr >= 0.978 per skill (worst {worst_corr:.4f})",

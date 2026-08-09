@@ -51,9 +51,7 @@ def load_alignment() -> dict:
     data = json.loads(DRIFT.read_text())
     chained = data.get("chainedToRoot", {})
     # chained values are list of lists -> np array per season
-    chains = {
-        season: np.array(mat, dtype=np.float32) for season, mat in chained.items()
-    }
+    chains = {season: np.array(mat, dtype=np.float32) for season, mat in chained.items()}
     return {"chains": chains, "raw": data}
 
 
@@ -100,9 +98,7 @@ def build_root_aligned_vectors():
         print(f"Missing {VECTORS}")
         return
     drift = json.loads(DRIFT.read_text())
-    chains = {
-        s: np.array(m, dtype=np.float32) for s, m in drift["chainedToRoot"].items()
-    }
+    chains = {s: np.array(m, dtype=np.float32) for s, m in drift["chainedToRoot"].items()}
     vectors = json.loads(VECTORS.read_text())
     features = vectors["features"]
     players = vectors["players"]
@@ -147,9 +143,7 @@ if __name__ == "__main__":
     import argparse
 
     ap = argparse.ArgumentParser()
-    ap.add_argument(
-        "--apply", action="store_true", help="build root-aligned vectors.json"
-    )
+    ap.add_argument("--apply", action="store_true", help="build root-aligned vectors.json")
     ap.add_argument("--check", action="store_true", help="check drift residual")
     args = ap.parse_args()
     if args.apply:

@@ -149,9 +149,7 @@ def main() -> None:
     fam_cov = {}
     cliffs = []
     for fam, cols in sorted(fam_cols.items()):
-        cov = {
-            name: round(float(M[msk][:, cols].mean()), 4) for name, msk in eras.items()
-        }
+        cov = {name: round(float(M[msk][:, cols].mean()), 4) for name, msk in eras.items()}
         fam_cov[fam] = cov
         if cov["le_2021"] > 0.15 and cov["2024_plus"] < cov["le_2021"] * 0.5:
             cliffs.append({"family": fam, **cov})
@@ -166,9 +164,7 @@ def main() -> None:
         rs = []
         for i in range(len(cols)):
             for j in range(i + 1, len(cols)):
-                r, n = masked_corr(
-                    Z[:, cols[i]], Z[:, cols[j]], M[:, cols[i]], M[:, cols[j]]
-                )
+                r, n = masked_corr(Z[:, cols[i]], Z[:, cols[j]], M[:, cols[i]], M[:, cols[j]])
                 if n >= MIN_OVERLAP:
                     rs.append(abs(r))
         if rs:
@@ -181,30 +177,22 @@ def main() -> None:
 
     OUT.write_text(json.dumps(report, indent=1), encoding="utf-8")
 
-    print(
-        f"rows={report['rows']} features={report['features']} families={report['families']}"
-    )
+    print(f"rows={report['rows']} features={report['features']} families={report['families']}")
     print(f"dead/near-constant: {len(dead)}")
     for d in dead[:10]:
         print(f"  {d['feature']:26s} {d.get('why')}")
     print(f"redundant pairs |r|>={DUP_R}: {len(dups)}")
     for d in dups[:12]:
-        print(
-            f"  {d['a']:26s} ~ {d['b']:26s} r={d['r']:+.4f} ({d['family_a']}/{d['family_b']})"
-        )
+        print(f"  {d['a']:26s} ~ {d['b']:26s} r={d['r']:+.4f} ({d['family_a']}/{d['family_b']})")
     print(f"leak candidates |r|>={LEAK_R}: {len(leaks)}")
     for d in leaks[:10]:
-        print(
-            f"  target {d['target']:22s} <- {d['input']:24s} r={d['r']:+.4f} [{d['input_family']}]"
-        )
+        print(f"  target {d['target']:22s} <- {d['input']:24s} r={d['r']:+.4f} [{d['input_family']}]")
     print(f"coverage cliffs at 2024: {len(cliffs)}")
     for c in cliffs:
         print(f"  {c['family']}: {c['le_2021']} -> {c['2024_plus']}")
     print("most redundant families (mean |r|):")
     for fam, v in sorted(fam_red.items(), key=lambda kv: -kv[1]["mean_abs_r"])[:6]:
-        print(
-            f"  {fam:14s} n={v['n_features']:2d} mean|r|={v['mean_abs_r']:.3f} max={v['max_abs_r']:.3f}"
-        )
+        print(f"  {fam:14s} n={v['n_features']:2d} mean|r|={v['mean_abs_r']:.3f} max={v['max_abs_r']:.3f}")
     print(f"\nwrote {OUT}")
 
 

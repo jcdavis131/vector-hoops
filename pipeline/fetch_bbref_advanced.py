@@ -134,18 +134,12 @@ def fetch_season(season: str, offline: bool = False) -> dict[str, dict[str, floa
 
 
 def main() -> None:
-    ap = argparse.ArgumentParser(
-        description="Fetch BBRef advanced stats (resumable, rate-limited)"
-    )
+    ap = argparse.ArgumentParser(description="Fetch BBRef advanced stats (resumable, rate-limited)")
     ap.add_argument("--season", help="Single season like 2023-24")
     ap.add_argument("--offline", action="store_true", help="Use cache only, no network")
     args = ap.parse_args()
 
-    seasons = (
-        [args.season]
-        if args.season
-        else [f"{y}-{str(y + 1)[-2:]}" for y in range(1996, 2026)]
-    )
+    seasons = [args.season] if args.season else [f"{y}-{str(y + 1)[-2:]}" for y in range(1996, 2026)]
     CACHE.mkdir(parents=True, exist_ok=True)
     for s in seasons:
         fetch_season(s, offline=args.offline)

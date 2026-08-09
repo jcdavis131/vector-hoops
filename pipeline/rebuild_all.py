@@ -39,9 +39,7 @@ def main():
     ap.add_argument("--select-epochs", type=int, default=40)
     ap.add_argument("--rebuild-matrix", action="store_true")
     ap.add_argument("--batch", type=int, default=512)
-    ap.add_argument(
-        "--skip-train", action="store_true", help="only rebuild assets from cache"
-    )
+    ap.add_argument("--skip-train", action="store_true", help="only rebuild assets from cache")
     args = ap.parse_args()
 
     sel = args.select_epochs
@@ -53,10 +51,7 @@ def main():
 
     py = sys.executable
 
-    if (
-        args.rebuild_matrix
-        or not (ROOT / "pipeline" / "data" / "train_matrix.npz").exists()
-    ):
+    if args.rebuild_matrix or not (ROOT / "pipeline" / "data" / "train_matrix.npz").exists():
         run([py, "pipeline/bootstrap_train_matrix.py"], check="hard")
 
     run([py, "pipeline/build_skills.py"])
@@ -240,9 +235,7 @@ def main():
     run([py, "pipeline/composite_score.py"], check=False)
 
     print("\n=== DONE ===")
-    print(
-        "Assets: assets/mtnn_embeddings.f32, mtnn_meta.json, mtnn_arch.json, vectors.json"
-    )
+    print("Assets: assets/mtnn_embeddings.f32, mtnn_meta.json, mtnn_arch.json, vectors.json")
     print("Tip: ./train.sh --full --v6  for SOTA 1.2M transformer 64-d")
 
 

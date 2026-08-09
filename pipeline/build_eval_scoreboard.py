@@ -196,9 +196,7 @@ def compute_scoreboard() -> dict:
     base = bucket_rates(retrieval_ranks(V, pairs), pairs, players)
 
     last_year = max(season_start_year(p["season"]) for p in players)
-    final_season_rows = sum(
-        1 for p in players if season_start_year(p["season"]) == last_year
-    )
+    final_season_rows = sum(1 for p in players if season_start_year(p["season"]) == last_year)
     return {
         "metric": "held_out_adjacent_season_retrieval",
         "description": (

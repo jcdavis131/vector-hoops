@@ -36,9 +36,7 @@ def load_matrix():
 
 def missingness_stress(seed: int = 42) -> dict:
     """Zero-mask 30% of rows per family; measure mean feature availability."""
-    manifest = json.loads(
-        (DATA_DIR / "feature_manifest.json").read_text(encoding="utf-8")
-    )
+    manifest = json.loads((DATA_DIR / "feature_manifest.json").read_text(encoding="utf-8"))
     _Z, mask = load_matrix()
     families = manifest.get("families", {})
     features = manifest["features"]
@@ -64,9 +62,7 @@ def missingness_stress(seed: int = 42) -> dict:
     return {
         "rows_stressed": sample_n,
         "families_stressed": [
-            f
-            for f in fam_cols
-            if f not in ("volume", "playmaking", "rebounding", "defense", "efficiency")
+            f for f in fam_cols if f not in ("volume", "playmaking", "rebounding", "defense", "efficiency")
         ],
         "mean_mask_before": round(base_rate, 4),
         "mean_mask_after": round(stress_rate, 4),
@@ -176,9 +172,7 @@ def main() -> None:
         "promotion_gates": promotion_gates(report) if report else [],
         "ablation": ablation_summary(),
         "mtnn_snapshot": {
-            "test_recall_at_10": report.get("held_out_recall", {})
-            .get("test", {})
-            .get("recall_at_10_mtnn"),
+            "test_recall_at_10": report.get("held_out_recall", {}).get("test", {}).get("recall_at_10_mtnn"),
             "purity_at_20": report.get("cross_era_archetype_neighbor_purity_at_20"),
             "towers": report.get("towers"),
         }
@@ -189,13 +183,9 @@ def main() -> None:
 
     failed = [g for g in payload["promotion_gates"] if not g["pass"]]
     if failed:
-        payload["warnings"].append(
-            f"{len(failed)} promotion gates not met — do not promote to assets/vectors.json"
-        )
+        payload["warnings"].append(f"{len(failed)} promotion gates not met — do not promote to assets/vectors.json")
     if payload["ablation"] is None:
-        payload["warnings"].append(
-            "no tower_ablation.json — run tower_ablation.py or --ablate"
-        )
+        payload["warnings"].append("no tower_ablation.json — run tower_ablation.py or --ablate")
 
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(payload, indent=2), encoding="utf-8")

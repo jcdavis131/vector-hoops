@@ -73,9 +73,7 @@ def resolve_team(
     team = (sal.get("team") or "").strip().upper()
     if team:
         return team
-    return roster_teams.get((name, season)) or roster_teams.get(
-        (sal.get("name", name), season)
-    )
+    return roster_teams.get((name, season)) or roster_teams.get((sal.get("name", name), season))
 
 
 def build_team_payrolls(

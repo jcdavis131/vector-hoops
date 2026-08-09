@@ -98,9 +98,7 @@ def main() -> None:
         raise SystemExit(f"missing expected columns in matrix: {missing}")
 
     roster = json.loads(ROSTER_JSON.read_text(encoding="utf-8"))
-    by_key: dict[tuple[str, str], dict] = {
-        (r["name"], r["season"]): r for r in roster["entries"]
-    }
+    by_key: dict[tuple[str, str], dict] = {(r["name"], r["season"]): r for r in roster["entries"]}
 
     team_pace = load_team_season_pace()
 
@@ -162,10 +160,7 @@ def main() -> None:
     cluster_ids = km.fit_predict(X)
     centroids = km.cluster_centers_
 
-    dirs = {
-        tag: np.array(vec, dtype=np.float64) / (np.linalg.norm(vec) or 1.0)
-        for tag, vec in TAG_DIRECTIONS.items()
-    }
+    dirs = {tag: np.array(vec, dtype=np.float64) / (np.linalg.norm(vec) or 1.0) for tag, vec in TAG_DIRECTIONS.items()}
     balanced_tag = "SYSTEM_BALANCED"
     non_balanced = [t for t in TAG_DIRECTIONS if t != balanced_tag]
 
@@ -203,10 +198,7 @@ def main() -> None:
                 "cluster": c,
                 "tag": cluster_label[c],
                 "n_team_seasons": int((cluster_ids == c).sum()),
-                "centroid": {
-                    f: round(float(v), 3)
-                    for f, v in zip(FEATURE_ORDER, centroids[c], strict=True)
-                },
+                "centroid": {f: round(float(v), 3) for f, v in zip(FEATURE_ORDER, centroids[c], strict=True)},
             }
         )
         print(
@@ -216,9 +208,7 @@ def main() -> None:
 
     for i, (r, cid) in enumerate(zip(rows, cluster_ids, strict=True)):
         r["tag"] = cluster_label[int(cid)]
-        r["features"] = {
-            f: round(float(v), 4) for f, v in zip(FEATURE_ORDER, X[i], strict=True)
-        }
+        r["features"] = {f: round(float(v), 4) for f, v in zip(FEATURE_ORDER, X[i], strict=True)}
         del r["style_wavg"]
         del r["pace_raw"]
 

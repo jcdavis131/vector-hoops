@@ -60,9 +60,7 @@ def fetch_season(season: str) -> dict[str, str]:
 
 
 def main() -> None:
-    vectors = json.loads(
-        (ROOT.parent / "assets" / "vectors.json").read_text(encoding="utf-8")
-    )
+    vectors = json.loads((ROOT.parent / "assets" / "vectors.json").read_text(encoding="utf-8"))
     first = int(vectors["seasons"][0][:4])
     last = int(vectors["seasons"][-1][:4])
     seasons = [f"{y}-{str(y + 1)[-2:]}" for y in range(first, last + 1)]

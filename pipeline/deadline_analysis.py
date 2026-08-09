@@ -47,9 +47,7 @@ def main() -> None:
         for _pid, games in by_player.items():
             games.sort(key=lambda g: g["GAME_DATE"])
             teams = [g["TEAM_ID"] for g in games]
-            switch = next(
-                (i for i in range(1, len(teams)) if teams[i] != teams[i - 1]), None
-            )
+            switch = next((i for i in range(1, len(teams)) if teams[i] != teams[i - 1]), None)
             if switch is None:
                 continue
             before, after = games[:switch], games[switch:]
@@ -76,9 +74,7 @@ def main() -> None:
             b, a = agg(before), agg(after)
             if b["mpg"] < MIN_MPG or a["mpg"] < MIN_MPG:
                 continue
-            ctx = team_avg.get(after[0]["TEAM_ID"], 0.0) - team_avg.get(
-                before[0]["TEAM_ID"], 0.0
-            )
+            ctx = team_avg.get(after[0]["TEAM_ID"], 0.0) - team_avg.get(before[0]["TEAM_ID"], 0.0)
             movers.append(
                 {
                     "name": before[0]["PLAYER_NAME"],
@@ -91,9 +87,7 @@ def main() -> None:
                     "dPM": round((a["pm"] - b["pm"]) - ctx, 2),  # context-adj
                     "dEff": round(a["eff"] - b["eff"], 3),
                     "score": round(
-                        (a["p36"] - b["p36"]) / 4
-                        + ((a["pm"] - b["pm"]) - ctx) / 3
-                        + (a["eff"] - b["eff"]) * 4,
+                        (a["p36"] - b["p36"]) / 4 + ((a["pm"] - b["pm"]) - ctx) / 3 + (a["eff"] - b["eff"]) * 4,
                         3,
                     ),
                 }

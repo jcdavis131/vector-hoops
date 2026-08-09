@@ -139,9 +139,7 @@ def main() -> None:
     # missing fallback never blocks the primary build.
     min_gp_path = DATA / "min_gp.json"
     if min_gp_path.exists():
-        min_gp_rows = json.loads(min_gp_path.read_text(encoding="utf-8")).get(
-            "players", []
-        )
+        min_gp_rows = json.loads(min_gp_path.read_text(encoding="utf-8")).get("players", [])
     else:
         print(
             "note: pipeline/data/min_gp.json missing — pre-gamelog seasons "
@@ -160,11 +158,7 @@ def main() -> None:
             rows = from_min_gp(min_gp_rows, season)
             src = "min_gp"
         all_rows.extend(rows)
-        streaks = [
-            r["LONGEST_MISS_STREAK"]
-            for r in rows
-            if r["LONGEST_MISS_STREAK"] is not None
-        ]
+        streaks = [r["LONGEST_MISS_STREAK"] for r in rows if r["LONGEST_MISS_STREAK"] is not None]
         extra = f" max_streak={max(streaks)}" if streaks else ""
         print(f"{season}: {len(rows)} players via {src}{extra}", flush=True)
 

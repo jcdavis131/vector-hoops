@@ -183,9 +183,7 @@ SYSTEM_TAGS = [f for f, fam in V4_FEATURES.items() if fam == "system"]
 
 def load_train_bundle():
     npz = np.load(DATA_DIR / "train_matrix.npz", allow_pickle=False)
-    manifest = json.loads(
-        (DATA_DIR / "feature_manifest.json").read_text(encoding="utf-8")
-    )
+    manifest = json.loads((DATA_DIR / "feature_manifest.json").read_text(encoding="utf-8"))
     return (
         npz["Z"].astype(np.float32),
         npz["mask"].astype(np.float32),
@@ -238,11 +236,7 @@ def load_pedigree_by_player_season() -> dict[tuple[str, str], dict]:
     if not PEDIGREE_JSON.exists():
         return {}
     data = json.loads(PEDIGREE_JSON.read_text(encoding="utf-8"))
-    return {
-        (r["name"], r["season"]): r
-        for r in data.get("players", [])
-        if "PED_UNDRAFTED" in r
-    }
+    return {(r["name"], r["season"]): r for r in data.get("players", []) if "PED_UNDRAFTED" in r}
 
 
 def load_playoffs_by_player_season() -> dict[tuple[str, str], dict]:
@@ -308,10 +302,7 @@ def load_system_tags_index() -> dict[tuple[str, int], str]:
     if not SYSTEM_TAGS_JSON.exists():
         return {}
     data = json.loads(SYSTEM_TAGS_JSON.read_text(encoding="utf-8"))
-    return {
-        (r["season"], int(r["team_id"])): r["tag"]
-        for r in data.get("team_seasons", [])
-    }
+    return {(r["season"], int(r["team_id"])): r["tag"] for r in data.get("team_seasons", [])}
 
 
 # A family below this row-coverage never earns a tower — merging it would
@@ -379,11 +370,7 @@ def merge_v4_context(
     stale = [f for f in feats if V4_FEATURES.get(f) in gated]
     stale += [f for f in feats if f in RETIRED_FEATURES and f not in stale]
     # Soft-subset shrinks: drop MATCH_* columns no longer in merge_features.
-    stale += [
-        f
-        for f in feats
-        if f.startswith("MATCH_") and f not in merge_features and f not in stale
-    ]
+    stale += [f for f in feats if f.startswith("MATCH_") and f not in merge_features and f not in stale]
     if stale:
         cols = [feats.index(f) for f in stale]
         Z = np.delete(Z, cols, axis=1)
@@ -391,10 +378,7 @@ def merge_v4_context(
         feats = [f for f in feats if f not in set(stale)]
         for f in stale:
             fams.pop(f, None)
-        print(
-            f"  dropped {len(stale)} stale column(s) for gated families "
-            f"{sorted(gated)}: now {len(feats)} features"
-        )
+        print(f"  dropped {len(stale)} stale column(s) for gated families {sorted(gated)}: now {len(feats)} features")
 
     missing = [f for f in merge_features if f not in feats]
     if missing:
@@ -447,9 +431,7 @@ def merge_v4_context(
 
 
 def v4_column_indices(manifest: dict) -> list[int]:
-    return [
-        manifest["features"].index(f) for f in V4_FEATURES if f in manifest["features"]
-    ]
+    return [manifest["features"].index(f) for f in V4_FEATURES if f in manifest["features"]]
 
 
 def build_row_values(
@@ -481,12 +463,8 @@ def build_row_values(
         gk = game_ratings.get(key, {})
         av = availability.get(key, {})
         mkt = salary_market.get(key, {})
-        team_row = (
-            team_index.get((str(season), int(r["teamId"]))) if r.get("teamId") else {}
-        )
-        system_tag = (
-            system_index.get((str(season), int(r["teamId"]))) if r.get("teamId") else None
-        )
+        team_row = team_index.get((str(season), int(r["teamId"]))) if r.get("teamId") else {}
+        system_tag = system_index.get((str(season), int(r["teamId"]))) if r.get("teamId") else None
         system_vals = (
             {t: (1.0 if t == system_tag else 0.0) for t in SYSTEM_TAGS}
             if system_tag is not None
@@ -569,9 +547,7 @@ def write_bundle(Z, M, manifest, *, player_id, season, name, cluster) -> None:
         cluster=cluster,
     )
     manifest["source"] = "integrate_context.py (v4 context merge)"
-    (DATA_DIR / "feature_manifest.json").write_text(
-        json.dumps(manifest, indent=2), encoding="utf-8"
-    )
+    (DATA_DIR / "feature_manifest.json").write_text(json.dumps(manifest, indent=2), encoding="utf-8")
 
 
 def main() -> None:
@@ -633,11 +609,7 @@ def main() -> None:
     Z2, M2, man2 = merge_v4_context(Z, M, manifest, names, seasons, row_vals)
     v4_cols = v4_column_indices(man2)
     covered = int((M2[:, v4_cols] > 0).any(axis=1).sum()) if v4_cols else 0
-    ped_col = (
-        man2["features"].index("PED_PICK_QUALITY")
-        if "PED_PICK_QUALITY" in man2["features"]
-        else None
-    )
+    ped_col = man2["features"].index("PED_PICK_QUALITY") if "PED_PICK_QUALITY" in man2["features"] else None
     ped_rows = int((M2[:, ped_col] > 0).sum()) if ped_col is not None else 0
     print(
         f"context merge: {Z.shape[1]} -> {Z2.shape[1]} features; "
@@ -649,9 +621,7 @@ def main() -> None:
         print("dry-run; not writing")
         return
 
-    write_bundle(
-        Z2, M2, man2, player_id=pids, season=seasons, name=names, cluster=clusters
-    )
+    write_bundle(Z2, M2, man2, player_id=pids, season=seasons, name=names, cluster=clusters)
     print("wrote train_matrix.npz + feature_manifest.json (v4 context)")
 
 

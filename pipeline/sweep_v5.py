@@ -191,8 +191,7 @@ def main() -> None:
         "--head-hidden",
         type=int,
         default=0,
-        help="override d_head_hidden for every config in this run "
-        "(pin Sweep B's fusion arms to Sweep A's winner)",
+        help="override d_head_hidden for every config in this run (pin Sweep B's fusion arms to Sweep A's winner)",
     )
     ap.add_argument(
         "--resume",
@@ -214,8 +213,7 @@ def main() -> None:
     if device == "cpu":
         torch.set_num_threads(max(1, os.cpu_count() or 1))
     print(
-        f"device: {device}"
-        + ("" if device == "cpu" else f" ({torch.cuda.get_device_name(0)})"),
+        f"device: {device}" + ("" if device == "cpu" else f" ({torch.cuda.get_device_name(0)})"),
         flush=True,
     )
     OUT.mkdir(parents=True, exist_ok=True)
@@ -244,19 +242,16 @@ def main() -> None:
                 if same:
                     per_seed[name][seed] = m
                     print(
-                        f"=== {name} seed {seed}: RESUMED from checkpoint "
-                        f"({args.epochs} ep) ===",
+                        f"=== {name} seed {seed}: RESUMED from checkpoint ({args.epochs} ep) ===",
                         flush=True,
                     )
                     continue
                 print(
-                    f"  checkpoint for {name}#s{seed} differs (budget/protocol/"
-                    f"config) — retraining",
+                    f"  checkpoint for {name}#s{seed} differs (budget/protocol/config) — retraining",
                     flush=True,
                 )
             print(
-                f"=== {name} seed {seed} ({args.epochs} ep, {args.protocol}, "
-                f"{args.split}-split) {cfg} ===",
+                f"=== {name} seed {seed} ({args.epochs} ep, {args.protocol}, {args.split}-split) {cfg} ===",
                 flush=True,
             )
             m = AB.train_one(
@@ -278,9 +273,7 @@ def main() -> None:
                 flush=True,
             )
             # Checkpoint after every config: a long sweep must survive a kill.
-            (OUT / f"sweep_{name}#s{seed}.json").write_text(
-                json.dumps(m, indent=2), encoding="utf-8"
-            )
+            (OUT / f"sweep_{name}#s{seed}.json").write_text(json.dumps(m, indent=2), encoding="utf-8")
             (OUT / "sweep_partial.json").write_text(
                 json.dumps(
                     {
@@ -303,14 +296,10 @@ def main() -> None:
 
     if multi:
         report["aggregate"] = AB.aggregate(per_seed)
-        (OUT / "sweep_report.json").write_text(
-            json.dumps(report, indent=2), encoding="utf-8"
-        )
+        (OUT / "sweep_report.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
         print("\n=== SWEEP (multi-seed aggregate) ===")
         ag = report["aggregate"]
-        for name, a in sorted(
-            ag.items(), key=lambda kv: kv[1]["next_rmse_test"]["mean"] or 9.9
-        ):
+        for name, a in sorted(ag.items(), key=lambda kv: kv[1]["next_rmse_test"]["mean"] or 9.9):
             pu = a["purity_at_20"]
             nr = a["next_rmse_test"]
             print(
@@ -333,16 +322,11 @@ def main() -> None:
         }
         for n, m in ranked
     ]
-    (OUT / "sweep_report.json").write_text(
-        json.dumps(report, indent=2), encoding="utf-8"
-    )
+    (OUT / "sweep_report.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
 
     print("\n=== SWEEP RANKING (repo composite = 0.4*recall + 0.6*purity) ===")
     print("    next-RMSE is shown but is in NO promotion gate; it is a tie-break only.")
-    print(
-        f"{'rank':<5}{'config':<18}{'params':>10}{'recall':>8}{'purity':>9}"
-        f"{'composite':>11}{'next_rmse':>11}"
-    )
+    print(f"{'rank':<5}{'config':<18}{'params':>10}{'recall':>8}{'purity':>9}{'composite':>11}{'next_rmse':>11}")
     for i, r in enumerate(report["ranking"], 1):
         print(
             f"{i:<5}{r['name']:<18}{r['params']:>10,}{r['recall']!s:>8}"

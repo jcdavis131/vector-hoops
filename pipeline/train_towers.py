@@ -59,9 +59,7 @@ DATA_DIR = ROOT / "pipeline" / "data"
 
 def load_bundle():
     npz = np.load(DATA_DIR / "train_matrix.npz", allow_pickle=False)
-    manifest = json.loads(
-        (DATA_DIR / "feature_manifest.json").read_text(encoding="utf-8")
-    )
+    manifest = json.loads((DATA_DIR / "feature_manifest.json").read_text(encoding="utf-8"))
     Z = npz["Z"].astype(np.float32)
     mask = npz["mask"].astype(np.float32)
     names = npz["name"]
@@ -118,9 +116,7 @@ class MultiTowerNet(nn.Module):
     def __init__(self, fam_dims: dict[str, int], d_tower: int = 16, d_emb: int = 32):
         super().__init__()
         self.families = sorted(fam_dims)
-        self.towers = nn.ModuleDict(
-            {fam: Tower(fam_dims[fam], d_tower) for fam in self.families}
-        )
+        self.towers = nn.ModuleDict({fam: Tower(fam_dims[fam], d_tower) for fam in self.families})
         d_cat = d_tower * len(self.families)
         self.fuse = nn.Sequential(
             nn.Linear(d_cat, 128),
@@ -183,10 +179,7 @@ def main() -> None:
 
     Z, M, names, seasons, pids, manifest = load_bundle()
     fams = family_slices(manifest)
-    print(
-        f"{len(Z)} rows, {Z.shape[1]} features, "
-        f"{len(fams)} towers: { {k: len(v) for k, v in fams.items()} }"
-    )
+    print(f"{len(Z)} rows, {Z.shape[1]} features, {len(fams)} towers: { {k: len(v) for k, v in fams.items()} }")
 
     pairs = adjacent_season_pairs(pids, seasons, names)
     print(f"{len(pairs)} same-player adjacent-season positive pairs")
@@ -196,9 +189,7 @@ def main() -> None:
     sal_m = torch.tensor(M[:, sal_j], device=device)
 
     xs, ms = split_by_family(Z, M, fams, device)
-    model = MultiTowerNet({f: len(c) for f, c in fams.items()}, d_emb=args.dim).to(
-        device
-    )
+    model = MultiTowerNet({f: len(c) for f, c in fams.items()}, d_emb=args.dim).to(device)
     opt = torch.optim.AdamW(model.parameters(), lr=args.lr, weight_decay=1e-4)
 
     n = len(Z)
@@ -248,16 +239,12 @@ def main() -> None:
     with torch.no_grad():
         emb, _ = model(xs, ms)
     E = emb.cpu().numpy().astype(np.float32)
-    np.savez_compressed(
-        DATA_DIR / "embedding_v2.npz", E=E, player_id=pids, season=seasons, name=names
-    )
+    np.savez_compressed(DATA_DIR / "embedding_v2.npz", E=E, player_id=pids, season=seasons, name=names)
 
     # ---- retrieval sanity: same-player-next-season recall@10 ----
     recall = None
     if len(pair_arr):
-        sample = pair_arr[
-            np.random.choice(len(pair_arr), min(500, len(pair_arr)), replace=False)
-        ]
+        sample = pair_arr[np.random.choice(len(pair_arr), min(500, len(pair_arr)), replace=False)]
         hits = 0
         for a, b in sample:
             sims = E @ E[a]

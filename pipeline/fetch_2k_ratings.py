@@ -48,9 +48,7 @@ def cache_path(release: str) -> Path:
 
 
 def main() -> None:
-    ap = argparse.ArgumentParser(
-        description="Fetch 2K ratings proxy (offline-fixture first, MLOps-safe)"
-    )
+    ap = argparse.ArgumentParser(description="Fetch 2K ratings proxy (offline-fixture first, MLOps-safe)")
     ap.add_argument(
         "--offline",
         action="store_true",
@@ -62,9 +60,7 @@ def main() -> None:
     out = cache_path(args.release)
     CACHE.mkdir(parents=True, exist_ok=True)
 
-    if (
-        args.offline or True
-    ):  # default offline for top-tier MLOps: never fail CI on external site
+    if args.offline or True:  # default offline for top-tier MLOps: never fail CI on external site
         if not FIXTURE.exists():
             # Graceful empty for fresh clone
             print(f"[warn] fixture missing {FIXTURE}, writing empty stub {out.name}")
@@ -73,9 +69,7 @@ def main() -> None:
             )
             return
         shutil.copy(FIXTURE, out)
-        print(
-            f"offline: wrote {out.name} from fixture (complete=False) — ready for train_towers masked family"
-        )
+        print(f"offline: wrote {out.name} from fixture (complete=False) — ready for train_towers masked family")
         return
 
 

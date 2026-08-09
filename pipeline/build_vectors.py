@@ -254,10 +254,7 @@ FORM_FEATURES = [
 for f in FORM_FEATURES:
     FAMILY_OF[f] = "form"
 
-UA = (
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
-    "(KHTML, like Gecko) Chrome/126.0 Safari/537.36"
-)
+UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36"
 
 
 # ---------------------------------------------------------------------------
@@ -298,9 +295,7 @@ def load_cached(tag: str, season: str):
 
 def save_cache(tag: str, season: str, rows) -> None:
     CACHE.mkdir(parents=True, exist_ok=True)
-    cache_path(tag, season).write_text(
-        json.dumps(rows, separators=(",", ":")), encoding="utf-8"
-    )
+    cache_path(tag, season).write_text(json.dumps(rows, separators=(",", ":")), encoding="utf-8")
 
 
 def with_retries(fn, what: str, attempts: int = 5):
@@ -310,10 +305,7 @@ def with_retries(fn, what: str, attempts: int = 5):
             return fn()
         except Exception as e:
             wait = min(120, (2**attempt) * 8) + random.uniform(0, 4)
-            print(
-                f"  {what}: attempt {attempt + 1}/{attempts} failed "
-                f"({type(e).__name__}); sleeping {wait:.0f}s"
-            )
+            print(f"  {what}: attempt {attempt + 1}/{attempts} failed ({type(e).__name__}); sleeping {wait:.0f}s")
             time.sleep(wait)
     print(f"  {what}: EXHAUSTED retries -- skipping (cached later runs resume)")
     return None
@@ -338,11 +330,7 @@ def df_to_rows(df, id_col: str, wanted: list[str]) -> tuple[list[dict], list[str
         }
         for c in present:
             v = x[c]
-            row[c] = (
-                None
-                if v is None or (isinstance(v, float) and math.isnan(v))
-                else float(v)
-            )
+            row[c] = None if v is None or (isinstance(v, float) and math.isnan(v)) else float(v)
         rows.append(row)
     return rows, present
 
@@ -599,10 +587,7 @@ def load_salary_history() -> dict[tuple[str, str], float]:
             print(f"salary merged JSON: {len(out)} rows")
             return out
         except Exception as e:
-            print(
-                f"salary merged JSON unreadable ({type(e).__name__}) — "
-                "falling back to CSV"
-            )
+            print(f"salary merged JSON unreadable ({type(e).__name__}) — falling back to CSV")
 
     p = CACHE / "salaries_history.csv"
     out = {}
@@ -611,9 +596,7 @@ def load_salary_history() -> dict[tuple[str, str], float]:
     with p.open(encoding="utf-8", newline="") as f:
         for row in csv.DictReader(f):
             try:
-                out[(norm_name(row["name"]), row["season"])] = float(
-                    re.sub(r"[^0-9.]", "", row["salary"]) or 0
-                )
+                out[(norm_name(row["name"]), row["season"])] = float(re.sub(r"[^0-9.]", "", row["salary"]) or 0)
             except Exception:
                 continue
     print(f"salary history CSV: {len(out)} rows")
@@ -642,9 +625,7 @@ def fetch_bbref_contracts(offline: bool) -> dict[tuple[str, str], float]:
         # header: season columns like >2025-26<
         head = re.search(r"<thead>.*?</thead>", html, re.S)
         seasons = re.findall(r">(\d{4}-\d{2})<", head.group(0)) if head else []
-        for m in re.finditer(
-            r'<tr[^>]*>.*?data-stat="player"[^>]*>.*?>([^<]+)</a>(.*?)</tr>', html, re.S
-        ):
+        for m in re.finditer(r'<tr[^>]*>.*?data-stat="player"[^>]*>.*?>([^<]+)</a>(.*?)</tr>', html, re.S):
             name, rest = m.group(1), m.group(2)
             sals = re.findall(r'data-stat="y\d+"[^>]*>\$?([\d,]+)', rest)
             for i, s in enumerate(sals[: len(seasons)]):
@@ -652,15 +633,10 @@ def fetch_bbref_contracts(offline: bool) -> dict[tuple[str, str], float]:
                     out[(norm_name(name), seasons[i])] = float(s.replace(",", ""))
                 except ValueError:
                     continue
-        save_cache(
-            "salary_bbref", "current", {f"{k[0]}|{k[1]}": v for k, v in out.items()}
-        )
+        save_cache("salary_bbref", "current", {f"{k[0]}|{k[1]}": v for k, v in out.items()})
         print(f"bbref contracts: {len(out)} (name,season) salaries")
     except Exception as e:
-        print(
-            f"bbref contracts fetch failed ({type(e).__name__}) -- salary "
-            "will rely on salaries_history.csv / cache"
-        )
+        print(f"bbref contracts fetch failed ({type(e).__name__}) -- salary will rely on salaries_history.csv / cache")
     return out
 
 
@@ -691,9 +667,7 @@ def dedupe_rows(rows: list[dict]) -> list[dict]:
     for r in rows:
         k = (r["PLAYER_ID"], r["season"])
         minutes = (r.get("MIN") or 0) * (r.get("GP") or 0)
-        if k not in best or minutes > (best[k].get("MIN") or 0) * (
-            best[k].get("GP") or 0
-        ):
+        if k not in best or minutes > (best[k].get("MIN") or 0) * (best[k].get("GP") or 0):
             best[k] = r
     return list(best.values())
 
@@ -733,10 +707,7 @@ def main() -> None:
     if patch_nba_api_session():
         print("nba_http: nba_api routed through curl_cffi")
     else:
-        print(
-            "WARNING: curl_cffi not installed — pip install curl_cffi "
-            "(stats.nba.com often times out without it)"
-        )
+        print("WARNING: curl_cffi not installed — pip install curl_cffi (stats.nba.com often times out without it)")
 
     salary_hist = load_salary_history()
     salary_bbref = fetch_bbref_contracts(args.offline)
@@ -757,14 +728,8 @@ def main() -> None:
         if not base:
             missing.append(season)
             continue
-        adv = {
-            str(r["PLAYER_ID"]): r
-            for r in (fetch_dash(season, "Advanced", ADVANCED_COLS, args.offline) or [])
-        }
-        sco = {
-            str(r["PLAYER_ID"]): r
-            for r in (fetch_dash(season, "Scoring", SCORING_COLS, args.offline) or [])
-        }
+        adv = {str(r["PLAYER_ID"]): r for r in (fetch_dash(season, "Advanced", ADVANCED_COLS, args.offline) or [])}
+        sco = {str(r["PLAYER_ID"]): r for r in (fetch_dash(season, "Scoring", SCORING_COLS, args.offline) or [])}
         bio = {str(r["PLAYER_ID"]): r for r in (fetch_bio(season, args.offline) or [])}
         trk = fetch_tracking(season, args.offline) or {}
         form = compute_form_features(season)
@@ -775,11 +740,7 @@ def main() -> None:
             min_minutes = gate["min_total_minutes"]
         else:
             min_gp = args.min_gp if args.min_gp is not None else DEFAULT_MIN_GP
-            min_minutes = (
-                args.min_minutes
-                if args.min_minutes is not None
-                else DEFAULT_MIN_TOTAL_MINUTES
-            )
+            min_minutes = args.min_minutes if args.min_minutes is not None else DEFAULT_MIN_TOTAL_MINUTES
 
         n_kept = 0
         for r in base:
@@ -828,8 +789,7 @@ def main() -> None:
 
     if not all_rows:
         raise SystemExit(
-            "no data available (network throttled and no cache) "
-            "-- aborting honestly; re-run later, cache resumes"
+            "no data available (network throttled and no cache) -- aborting honestly; re-run later, cache resumes"
         )
     if missing:
         print(f"WARNING: seasons missing this run (throttled): {missing}")
@@ -900,11 +860,7 @@ def main() -> None:
         top = np.argsort(-c)[:2]
         low = np.argsort(c)[0]
         a, b = LABELS[GAME_FEATURES[top[0]]], LABELS[GAME_FEATURES[top[1]]]
-        return (
-            f"{a} + {b}".title()
-            if c[top[1]] > 0.35
-            else f"{a} (low {LABELS[GAME_FEATURES[low]]})".title()
-        )
+        return f"{a} + {b}".title() if c[top[1]] > 0.35 else f"{a} (low {LABELS[GAME_FEATURES[low]]})".title()
 
     cluster_names = [name_cluster(cent[k]) for k in range(K)]
 
@@ -913,20 +869,22 @@ def main() -> None:
     # build pid -> birthYear map from bio caches for name+dob uniqueness
     pid_birth = {}
     try:
-        import glob, json as _j
+        import glob
+        import json as _j
+
         for bf in glob.glob(str((ROOT / "pipeline" / "cache" / "bio_*.json").resolve())):
             try:
-                rows=_j.loads(open(bf).read())
+                rows = _j.loads(open(bf).read())
                 # file may be list of dicts
                 season = bf.split("bio_")[-1].split(".json")[0]
                 sy = int(season.split("-")[0])
                 for r in rows if isinstance(rows, list) else []:
-                    pid=str(r.get("PLAYER_ID") or r.get("id") or "")
-                    age=r.get("AGE")
-                    if pid and isinstance(age,(int,float)):
+                    pid = str(r.get("PLAYER_ID") or r.get("id") or "")
+                    age = r.get("AGE")
+                    if pid and isinstance(age, (int, float)):
                         by = int(sy - float(age))
                         if pid not in pid_birth:
-                            pid_birth[pid]=by
+                            pid_birth[pid] = by
             except Exception:
                 pass
     except Exception:
@@ -967,15 +925,11 @@ def main() -> None:
                 "normalization": "per-100 possessions, z-scored within season (era-honest)",
                 "eligibility": {
                     "schedule_aware": schedule_aware,
-                    "method": (
-                        "15% of season GP (clamp 10–15) + 6% of 48mpg schedule "
-                        "total minutes (floor 450)"
-                    ),
+                    "method": ("15% of season GP (clamp 10–15) + 6% of 48mpg schedule total minutes (floor 450)"),
                     "min_gp": args.min_gp,
                     "min_total_minutes": args.min_minutes,
                     "sample_gates": {
-                        s: gates_for_season(s, schedule_aware=schedule_aware)
-                        for s in ("1998-99", "2011-12", "2023-24")
+                        s: gates_for_season(s, schedule_aware=schedule_aware) for s in ("1998-99", "2011-12", "2023-24")
                     },
                 },
                 "features": GAME_FEATURES,
@@ -1005,8 +959,7 @@ def main() -> None:
         "eligibility": {
             "schedule_aware": schedule_aware,
             "sample_gates": {
-                s: gates_for_season(s, schedule_aware=schedule_aware)
-                for s in ("1998-99", "2011-12", "2023-24")
+                s: gates_for_season(s, schedule_aware=schedule_aware) for s in ("1998-99", "2011-12", "2023-24")
             },
         },
         "features": wide_features,
@@ -1018,17 +971,13 @@ def main() -> None:
         "salary_coverage": int(mask[:, sal_col].sum()),
         "notes": "Z is era z-scored (NaN->season mean, clip 4); mask marks measured values",
     }
-    (DATA_DIR / "feature_manifest.json").write_text(
-        json.dumps(manifest, indent=2), encoding="utf-8"
-    )
+    (DATA_DIR / "feature_manifest.json").write_text(json.dumps(manifest, indent=2), encoding="utf-8")
 
     # ---- audit assertions: never ship a dirty file ----
     assert len({(p["name"], p["season"]) for p in players}) == len(players), "dupes"
     assert all(len(p["v"]) == 14 for p in players), "vector length"
     assert all(all(-4.0001 <= v <= 4.0001 for v in p["v"]) for p in players), "clip"
-    assert all(
-        0 <= p["x"] <= 1 and 0 <= p["y"] <= 1 and 0 <= p["z"] <= 1 for p in players
-    ), "map range"
+    assert all(0 <= p["x"] <= 1 and 0 <= p["y"] <= 1 and 0 <= p["z"] <= 1 for p in players), "map range"
 
     print(
         f"wrote {OUT.name}: {len(players)} player-seasons, {K} archetypes, "

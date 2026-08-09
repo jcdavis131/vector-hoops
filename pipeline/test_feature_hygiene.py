@@ -75,9 +75,7 @@ def masked_corr(a, b, ma, mb) -> tuple[float, int]:
 
 def main() -> None:
     if not MATRIX.exists() or not MANIFEST.exists():
-        print(
-            "train_matrix.npz / feature_manifest.json missing — run integrate_context.py"
-        )
+        print("train_matrix.npz / feature_manifest.json missing — run integrate_context.py")
         sys.exit(1)
 
     man = json.loads(MANIFEST.read_text(encoding="utf-8"))
@@ -125,8 +123,7 @@ def main() -> None:
     unknown_dups = [d for d in dups if d.split(" r=")[0] not in KNOWN_DUPLICATES]
     check(
         not unknown_dups,
-        f"no new duplicate pairs |r|>={DUP_R}"
-        f"{'' if not unknown_dups else ': ' + ', '.join(unknown_dups[:5])}",
+        f"no new duplicate pairs |r|>={DUP_R}{'' if not unknown_dups else ': ' + ', '.join(unknown_dups[:5])}",
     )
 
     print("no input leaks the durability target")
@@ -141,8 +138,7 @@ def main() -> None:
                 leaks.append(f"{f} -> {feats[j]} r={r:+.4f}")
     check(
         not leaks,
-        f"no input within |r|>={LEAK_R} of an injury target"
-        f"{'' if not leaks else ': ' + ', '.join(leaks[:5])}",
+        f"no input within |r|>={LEAK_R} of an injury target{'' if not leaks else ': ' + ', '.join(leaks[:5])}",
     )
 
     print("families intact")

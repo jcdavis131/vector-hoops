@@ -69,9 +69,7 @@ def main() -> None:
     html = fetch_html(URL)
     by = parse_finals_mvp(html)
     if len(by) < 50:
-        raise SystemExit(
-            f"parsed only {len(by)} Finals MVP rows — page layout changed?"
-        )
+        raise SystemExit(f"parsed only {len(by)} Finals MVP rows — page layout changed?")
     CACHE.mkdir(parents=True, exist_ok=True)
     OUT.write_text(
         json.dumps(

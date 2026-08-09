@@ -80,10 +80,7 @@ def main() -> None:
         "sell_high_top": list(reversed(recent[-40:])),
     }
     OUT.write_text(json.dumps(payload, indent=2), encoding="utf-8")
-    print(
-        f"wrote {OUT} n={len(recent)} "
-        f"top={recent[0]['name']} surplus={recent[0]['surplus']}"
-    )
+    print(f"wrote {OUT} n={len(recent)} top={recent[0]['name']} surplus={recent[0]['surplus']}")
 
 
 if __name__ == "__main__":

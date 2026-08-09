@@ -119,9 +119,7 @@ def main() -> None:
     OUT.write_text(json.dumps(doc, separators=(",", ":")), encoding="utf-8")
 
     n_pairs = sum(len(s["features"]) for s in seasons.values())
-    print(
-        f"season norms: {len(seasons)} seasons, {n_pairs} verified (season,feature) pairs"
-    )
+    print(f"season norms: {len(seasons)} seasons, {n_pairs} verified (season,feature) pairs")
     print(f"  excluded (shrunk): {sorted(NOT_INVERTIBLE)}")
     if dropped:
         print(f"  dropped {len(dropped)}:")
