@@ -26,44 +26,74 @@ Usage:
   python pipeline/train_mtnn_v6.py --help
     -> shows train_mtnn.py help
 """
+
 from __future__ import annotations
-import sys
+
 import subprocess
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 
 # v6 SOTA defaults from docs/MTNN_V6_SOTA.md §4 (translated to train_mtnn.py flags)
 V6_DEFAULTS = [
-    "--dim", "64",
-    "--tower-width", "40",
-    "--tower-hidden", "192",
-    "--tower-blocks", "3",
-    "--d-head-hidden", "128",
-    "--fusion", "transformer",
-    "--d-model", "128",
-    "--n-fusion-layers", "4",
-    "--n-attn-heads", "4",
-    "--fusion-hidden", "512",
-    "--nce-loss", "hybrid",
-    "--nce-player-weight", "0.65",
-    "--nce-arch-weight", "0.35",
-    "--hard-neg-boost", "0.4",
-    "--drop-p", "0.15",
-    "--token-dropout", "0.1",
-    "--w-vicreg", "0.05",
-    "--vicreg-var-w", "25",
-    "--vicreg-cov-w", "1",
-    "--era-align", "procrustes",
+    "--dim",
+    "64",
+    "--tower-width",
+    "40",
+    "--tower-hidden",
+    "192",
+    "--tower-blocks",
+    "3",
+    "--d-head-hidden",
+    "128",
+    "--fusion",
+    "transformer",
+    "--d-model",
+    "128",
+    "--n-fusion-layers",
+    "4",
+    "--n-attn-heads",
+    "4",
+    "--fusion-hidden",
+    "512",
+    "--nce-loss",
+    "hybrid",
+    "--nce-player-weight",
+    "0.65",
+    "--nce-arch-weight",
+    "0.35",
+    "--hard-neg-boost",
+    "0.4",
+    "--drop-p",
+    "0.15",
+    "--token-dropout",
+    "0.1",
+    "--w-vicreg",
+    "0.05",
+    "--vicreg-var-w",
+    "25",
+    "--vicreg-cov-w",
+    "1",
+    "--era-align",
+    "procrustes",
     "--robust-scaling",
-    "--lr", "0.0015",
-    "--lr-schedule", "onecycle",
-    "--warmup-pct", "0.1",
-    "--anneal-strategy", "linear",
-    "--weight-decay", "0.0002",
-    "--batch", "512",
-    "--epochs", "150",
+    "--lr",
+    "0.0015",
+    "--lr-schedule",
+    "onecycle",
+    "--warmup-pct",
+    "0.1",
+    "--anneal-strategy",
+    "linear",
+    "--weight-decay",
+    "0.0002",
+    "--batch",
+    "512",
+    "--epochs",
+    "150",
 ]
+
 
 def main() -> None:
     argv = sys.argv[1:]
@@ -96,14 +126,14 @@ def main() -> None:
         if flag.startswith("--"):
             if flag not in user_flags:
                 # flag takes value unless it's store_true (robust-scaling)
-                if i + 1 < len(V6_DEFAULTS) and not V6_DEFAULTS[i+1].startswith("--"):
-                    forward += [flag, V6_DEFAULTS[i+1]]
+                if i + 1 < len(V6_DEFAULTS) and not V6_DEFAULTS[i + 1].startswith("--"):
+                    forward += [flag, V6_DEFAULTS[i + 1]]
                     i += 2
                 else:
                     forward += [flag]
                     i += 1
             else:
-                i += 2 if i + 1 < len(V6_DEFAULTS) and not V6_DEFAULTS[i+1].startswith("--") else 1
+                i += 2 if i + 1 < len(V6_DEFAULTS) and not V6_DEFAULTS[i + 1].startswith("--") else 1
         else:
             i += 1
 
@@ -112,6 +142,7 @@ def main() -> None:
     print(f"v6 shim → {' '.join(cmd)}")
     ret = subprocess.run(cmd)
     sys.exit(ret.returncode)
+
 
 if __name__ == "__main__":
     main()

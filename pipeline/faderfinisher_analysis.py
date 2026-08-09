@@ -89,10 +89,7 @@ def main() -> None:
         ),
         encoding="utf-8",
     )
-    print(
-        f"{len(questions)} qualified splits -> pool {len(pool)} "
-        f"({n} finishers / {n} faders)"
-    )
+    print(f"{len(questions)} qualified splits -> pool {len(pool)} ({n} finishers / {n} faders)")
     print("sample finisher:", finishers[0])
     print("sample fader:", faders[0])
 

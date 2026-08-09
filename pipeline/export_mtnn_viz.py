@@ -187,8 +187,7 @@ def main() -> None:
         p = players[idx]
         if str(t_names[idx]) != p["name"] or str(t_seasons[idx]) != p["season"]:
             raise SystemExit(
-                f"train alignment fail row {idx}: "
-                f"{t_names[idx]!r}|{t_seasons[idx]!r} vs {p['name']!r}|{p['season']!r}"
+                f"train alignment fail row {idx}: {t_names[idx]!r}|{t_seasons[idx]!r} vs {p['name']!r}|{p['season']!r}"
             )
 
     manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
@@ -234,9 +233,7 @@ def main() -> None:
             import torch  # noqa: F401  local import: viz export must work without torch
             from _torch_safe import safe_torch_load
 
-            ckpt_args = safe_torch_load(
-                ckpt_path, map_location="cpu"
-            ).get("args", {})
+            ckpt_args = safe_torch_load(ckpt_path, map_location="cpu").get("args", {})
         except Exception as exc:
             print(f"  warn: could not read checkpoint args ({exc}); using defaults")
 
@@ -271,9 +268,7 @@ def main() -> None:
         "nNextProfile": int(next_profile.shape[1]),
         "towerFamilies": fams_used,
         "familyOrder": family_order,
-        "familyFeatures": {
-            fam: [feats[j] for j in family_cols[fam]] for fam in family_order
-        },
+        "familyFeatures": {fam: [feats[j] for j in family_cols[fam]] for fam in family_order},
         "skillKeys": skill_keys,
         "gameFeatureKeys": game_feature_keys,
         "gameArchetypes": cluster_names,
@@ -287,8 +282,7 @@ def main() -> None:
                 "id": "towers",
                 "label": "Residual towers",
                 "detail": (
-                    f"{len(fams_used)} × {n_blocks} block"
-                    f"{'s' if n_blocks != 1 else ''} ({d_hidden} → {d_tower})"
+                    f"{len(fams_used)} × {n_blocks} block{'s' if n_blocks != 1 else ''} ({d_hidden} → {d_tower})"
                 ),
             },
             {
@@ -320,10 +314,7 @@ def main() -> None:
         "built": time.strftime("%Y-%m-%d"),
         "dim": 3,
         "rows": n,
-        "method": (
-            f"PCA(3) on {d_emb}-d MTNN embeddings; axes min-max scaled "
-            "for the explorer map."
-        ),
+        "method": (f"PCA(3) on {d_emb}-d MTNN embeddings; axes min-max scaled for the explorer map."),
         "axes": axis_meta,
         "coords": coords.tolist(),
     }

@@ -109,8 +109,7 @@ def main() -> None:
         "--recipe",
         type=str,
         default="",
-        help="JSON file with a frozen winner config; its keys override "
-        "the sweep-best entry (promote-gate §3a)",
+        help="JSON file with a frozen winner config; its keys override the sweep-best entry (promote-gate §3a)",
     )
     args = ap.parse_args()
 

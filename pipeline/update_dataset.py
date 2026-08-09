@@ -74,9 +74,7 @@ def snapshot() -> dict:
         "pedigree": pedigree,
         "playoffs": playoffs,
         "player_seasons": len(vec["players"]),
-        "seasons": [vec["seasons"][0], vec["seasons"][-1]]
-        if isinstance(vec.get("seasons"), list)
-        else None,
+        "seasons": [vec["seasons"][0], vec["seasons"][-1]] if isinstance(vec.get("seasons"), list) else None,
         "n_seasons": len({p["season"] for p in vec["players"]}),
         "skills": len(sk["skills"]),
         "badges": n_badges,
@@ -86,9 +84,7 @@ def snapshot() -> dict:
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument(
-        "--offline", action="store_true", help="skip the network fetch entirely"
-    )
+    ap.add_argument("--offline", action="store_true", help="skip the network fetch entirely")
     ap.add_argument(
         "--season",
         default=None,
@@ -148,11 +144,7 @@ def main() -> None:
             required=True,
         )
     )
-    steps.append(
-        run_step(
-            "skill gates", [sys.executable, "pipeline/test_skills.py"], required=True
-        )
-    )
+    steps.append(run_step("skill gates", [sys.executable, "pipeline/test_skills.py"], required=True))
     # Pedigree derivation is dormant until the real draft cache exists;
     # the gate itself always runs (fixture mode validates the logic).
     steps.append(
@@ -277,10 +269,7 @@ def main() -> None:
     if prev:
         d_rows = entry["player_seasons"] - prev["player_seasons"]
         changed = entry["grade_sha1"] != prev["grade_sha1"]
-        print(
-            f"growth since last run: {d_rows:+d} player-seasons; "
-            f"grades {'CHANGED' if changed else 'unchanged'}"
-        )
+        print(f"growth since last run: {d_rows:+d} player-seasons; grades {'CHANGED' if changed else 'unchanged'}")
     print(json.dumps({k: v for k, v in entry.items() if k != "steps"}, indent=2))
 
 

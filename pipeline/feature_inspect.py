@@ -31,8 +31,7 @@ def load_bundle():
     man_path = DATA_DIR / "feature_manifest.json"
     if not npz_path.exists() or not man_path.exists():
         raise SystemExit(
-            "missing train_matrix.npz or feature_manifest.json — "
-            "run bootstrap_train_matrix.py + integrate_context.py"
+            "missing train_matrix.npz or feature_manifest.json — run bootstrap_train_matrix.py + integrate_context.py"
         )
     npz = np.load(npz_path, allow_pickle=False)
     manifest = json.loads(man_path.read_text(encoding="utf-8"))
@@ -153,9 +152,7 @@ def season_coverage(seasons, mask) -> dict:
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument(
-        "--correlation", action="store_true", help="pairwise redundancy scan"
-    )
+    ap.add_argument("--correlation", action="store_true", help="pairwise redundancy scan")
     args = ap.parse_args()
 
     Z, mask, manifest, seasons = load_bundle()
@@ -178,18 +175,12 @@ def main() -> None:
 
     low_cov = [r for r in feat_rows if r["present_pct"] < 5.0]
     if low_cov:
-        report["warnings"].append(
-            f"{len(low_cov)} features below 5% coverage — document or drop"
-        )
+        report["warnings"].append(f"{len(low_cov)} features below 5% coverage — document or drop")
     clip_bad = [r for r in feat_rows if r["out_of_clip"] > 0]
     if clip_bad:
-        report["warnings"].append(
-            f"{len(clip_bad)} features have values outside [-4,4]"
-        )
+        report["warnings"].append(f"{len(clip_bad)} features have values outside [-4,4]")
     if report["leakage_flags"]:
-        report["warnings"].append(
-            f"{len(report['leakage_flags'])} leakage proxy flags (|season_r|>={LEAK_FLAG})"
-        )
+        report["warnings"].append(f"{len(report['leakage_flags'])} leakage proxy flags (|season_r|>={LEAK_FLAG})")
 
     if args.correlation:
         corr = correlation_flags(Z, mask, features, CORR_FLAG)

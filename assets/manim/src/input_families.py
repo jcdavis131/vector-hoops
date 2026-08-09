@@ -297,9 +297,7 @@ class InputFamilies(Scene):
         ).next_to(mask_line1, DOWN, buff=0.08)
         mask_group = VGroup(mask_shadow, mask_base, mask_line1, mask_line2)
 
-        self.play(
-            Create(hl1), Create(hl2), FadeIn(empty1), FadeIn(empty2), run_time=0.5
-        )
+        self.play(Create(hl1), Create(hl2), FadeIn(empty1), FadeIn(empty2), run_time=0.5)
         self.play(FadeIn(mask_group, shift=UP * 0.12), run_time=0.5)
         self.wait(0.9)
 
@@ -351,9 +349,7 @@ class InputFamilies(Scene):
             stroke_color=INK,
             stroke_width=4,
         )
-        box1_label = Text(
-            "[x·m]", font_size=18, color=TEXT, font=MONO_STACK[0], weight="BOLD"
-        ).move_to(box1)
+        box1_label = Text("[x·m]", font_size=18, color=TEXT, font=MONO_STACK[0], weight="BOLD").move_to(box1)
         box2 = RoundedRectangle(
             width=box_w,
             height=box_h,
@@ -363,9 +359,7 @@ class InputFamilies(Scene):
             stroke_color=INK,
             stroke_width=4,
         )
-        box2_label = Text(
-            "[m]", font_size=18, color=TEXT, font=MONO_STACK[0], weight="BOLD"
-        ).move_to(box2)
+        box2_label = Text("[m]", font_size=18, color=TEXT, font=MONO_STACK[0], weight="BOLD").move_to(box2)
         dot1 = (
             Circle(
                 radius=0.07,
@@ -389,9 +383,9 @@ class InputFamilies(Scene):
             .shift(RIGHT * 0.12)
         )
 
-        stack = VGroup(
-            VGroup(box1, box1_label, dot1), VGroup(box2, box2_label, dot2)
-        ).arrange(DOWN, buff=0.18, aligned_edge=LEFT)
+        stack = VGroup(VGroup(box1, box1_label, dot1), VGroup(box2, box2_label, dot2)).arrange(
+            DOWN, buff=0.18, aligned_edge=LEFT
+        )
         stack.move_to(cat_base).shift(LEFT * 1.8)
 
         arrow = Arrow(
@@ -402,9 +396,9 @@ class InputFamilies(Scene):
             buff=0.05,
             tip_length=0.16,
         )
-        cat_label_txt = Text(
-            "cat", font_size=20, color=TEXT, font=MONO_STACK[0], weight="BOLD"
-        ).next_to(arrow, UP, buff=0.06)
+        cat_label_txt = Text("cat", font_size=20, color=TEXT, font=MONO_STACK[0], weight="BOLD").next_to(
+            arrow, UP, buff=0.06
+        )
 
         res_w = 2.2
         res_h = 0.9
@@ -422,13 +416,9 @@ class InputFamilies(Scene):
             .move_to(res_card)
             .shift(UP * 0.15)
         )
-        res_t2 = Text(
-            "per tower", font_size=16, color=SUBTLE_AAA, font=MONO_STACK[0]
-        ).next_to(res_t1, DOWN, buff=0.06)
+        res_t2 = Text("per tower", font_size=16, color=SUBTLE_AAA, font=MONO_STACK[0]).next_to(res_t1, DOWN, buff=0.06)
 
-        cat_vgroup = VGroup(
-            cat_shadow, cat_base, stack, arrow, cat_label_txt, res_card, res_t1, res_t2
-        )
+        cat_vgroup = VGroup(cat_shadow, cat_base, stack, arrow, cat_label_txt, res_card, res_t1, res_t2)
         cat_top = (
             Text(
                 "masking → cat([x·m,m])",

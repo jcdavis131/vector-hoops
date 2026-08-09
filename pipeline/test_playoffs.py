@@ -41,9 +41,7 @@ def check(cond: bool, msg: str) -> None:
 def rebuild() -> bool:
     """Re-derive playoffs.json; returns True if REAL per-season caches were used."""
     real = bool(real_playoff_cache_paths(CACHE_DIR))
-    cmd = [sys.executable, "pipeline/build_playoffs.py"] + (
-        [] if real else ["--fixture"]
-    )
+    cmd = [sys.executable, "pipeline/build_playoffs.py"] + ([] if real else ["--fixture"])
     proc = subprocess.run(cmd, cwd=ROOT, capture_output=True, text=True)
     if proc.returncode != 0:
         print(proc.stdout + proc.stderr)
@@ -116,8 +114,7 @@ def main() -> None:
             )
             if series:
                 check(
-                    series[-1].get("opp") == "UTA"
-                    and series[-1].get("result") == "4-2",
+                    series[-1].get("opp") == "UTA" and series[-1].get("result") == "4-2",
                     "Jordan 1997-98 Finals vs UTA 4-2",
                 )
                 check(
@@ -126,8 +123,7 @@ def main() -> None:
                 )
                 # Outcome must not be confusable: last series is Finals, not Conf finals
                 check(
-                    series[-1].get("label") in ("Finals", "NBA Finals")
-                    and series[-1].get("finals") is True,
+                    series[-1].get("label") in ("Finals", "NBA Finals") and series[-1].get("finals") is True,
                     "Jordan 1997-98 last series labeled Finals (not Conf finals)",
                 )
             for season in ("1996-97", "1997-98"):
@@ -151,10 +147,7 @@ def main() -> None:
 
             honors_asset = ROOT / "assets" / "honors.json"
             if honors_asset.exists():
-                honors = (
-                    json.loads(honors_asset.read_text(encoding="utf-8")).get("bySeason")
-                    or {}
-                )
+                honors = json.loads(honors_asset.read_text(encoding="utf-8")).get("bySeason") or {}
                 for season in ("1996-97", "1997-98"):
                     h = honors.get(f"Michael Jordan|{season}") or {}
                     check(
@@ -166,10 +159,7 @@ def main() -> None:
 
             paths_asset = ROOT / "assets" / "playoff_paths.json"
             if paths_asset.exists():
-                paths = (
-                    json.loads(paths_asset.read_text(encoding="utf-8")).get("paths")
-                    or {}
-                )
+                paths = json.loads(paths_asset.read_text(encoding="utf-8")).get("paths") or {}
                 mj_path = paths.get("Michael Jordan|1997-98") or {}
                 games = mj_path.get("games") or []
                 check(
@@ -178,8 +168,7 @@ def main() -> None:
                 )
                 if games:
                     check(
-                        games[-1].get("pts") == 45
-                        and "UTA" in (games[-1].get("m") or ""),
+                        games[-1].get("pts") == 45 and "UTA" in (games[-1].get("m") or ""),
                         "Jordan 1997-98 Game 6 Finals: 45 pts @ UTA",
                     )
             else:
@@ -222,12 +211,7 @@ def main() -> None:
         sys.exit(1)
     print(
         "all playoff gates passed"
-        + (
-            ""
-            if real
-            else " (fixture mode — run fetch_playoffs.py on an "
-            "operator machine for full coverage)"
-        )
+        + ("" if real else " (fixture mode — run fetch_playoffs.py on an operator machine for full coverage)")
     )
 
 

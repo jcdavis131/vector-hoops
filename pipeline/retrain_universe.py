@@ -35,9 +35,7 @@ def run(name: str, cmd: list[str], required: bool = True) -> bool:
     t0 = time.time()
     proc = subprocess.run(cmd, cwd=ROOT)
     ok = proc.returncode == 0
-    print(
-        f"== {name}: {'ok' if ok else 'FAILED'} ({time.time() - t0:.0f}s)", flush=True
-    )
+    print(f"== {name}: {'ok' if ok else 'FAILED'} ({time.time() - t0:.0f}s)", flush=True)
     if not ok and required:
         raise SystemExit(f"required step failed: {name}")
     return ok
@@ -60,9 +58,7 @@ def main() -> None:
         help="vectors.json already rebuilt with new gates",
     )
     ap.add_argument("--epochs", type=int, default=150)
-    ap.add_argument(
-        "--seed", type=int, default=99, help="hybrid-040 best seed from hp sweep"
-    )
+    ap.add_argument("--seed", type=int, default=99, help="hybrid-040 best seed from hp sweep")
     ap.add_argument("--skip-train", action="store_true")
     ap.add_argument("--skip-drift", action="store_true")
     ap.add_argument(
@@ -114,8 +110,7 @@ def main() -> None:
             train.extend(["--recipe", args.recipe])
         else:
             print(
-                "WARNING: no --recipe; retraining the OLD hp-sweep recipe "
-                "(no v5 architecture flags).",
+                "WARNING: no --recipe; retraining the OLD hp-sweep recipe (no v5 architecture flags).",
                 flush=True,
             )
         run("mtnn_train", train)

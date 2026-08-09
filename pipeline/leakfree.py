@@ -39,9 +39,7 @@ def row_split(seasons) -> np.ndarray:
     return np.array([T.eval_split(str(s)) for s in seasons], dtype=object)
 
 
-def player_split(
-    names, seed: int = 7, val_frac: float = 0.10, test_frac: float = 0.10
-) -> np.ndarray:
+def player_split(names, seed: int = 7, val_frac: float = 0.10, test_frac: float = 0.10) -> np.ndarray:
     """Assign each PLAYER (all his seasons) to one split, deterministically.
 
     Why not the temporal split for model selection:
@@ -63,11 +61,7 @@ def player_split(
     for i, n in enumerate(names):
         h = hashlib.md5(f"{seed}:{n}".encode()).hexdigest()
         u = int(h[:8], 16) / 0xFFFFFFFF
-        out[i] = (
-            "test"
-            if u < test_frac
-            else ("val" if u < test_frac + val_frac else "train")
-        )
+        out[i] = "test" if u < test_frac else ("val" if u < test_frac + val_frac else "train")
     return out
 
 
@@ -93,9 +87,7 @@ def pairs_in_split(pair_arr: np.ndarray, split: np.ndarray, which: str) -> np.nd
     return pair_arr[keep] if keep.any() else np.zeros((0, 2), int)
 
 
-def restrict_next_idx_split(
-    next_idx: np.ndarray, split: np.ndarray, which: str = "train"
-) -> np.ndarray:
+def restrict_next_idx_split(next_idx: np.ndarray, split: np.ndarray, which: str = "train") -> np.ndarray:
     """Blank next-season targets unless source AND target are in `which`."""
     out = np.full_like(next_idx, -1)
     valid = next_idx >= 0
@@ -135,9 +127,7 @@ def next_profile_metrics(
     return out
 
 
-def leakfree_clusters(
-    Zg: np.ndarray, is_train: np.ndarray, k: int = 8, seed: int = 7, iters: int = 40
-) -> np.ndarray:
+def leakfree_clusters(Zg: np.ndarray, is_train: np.ndarray, k: int = 8, seed: int = 7, iters: int = 40) -> np.ndarray:
     """k-means fit on TRAIN rows only, then assign every row to a centroid.
 
     Mirrors build_vectors.py (K=8, rng(7), 40 Lloyd iterations, on the 14
@@ -219,9 +209,7 @@ def audit(seasons, pair_arr: np.ndarray, next_idx: np.ndarray) -> dict:
         "rows_test": int((split == "test").sum()),
         "pairs_total": len(pair_arr),
         "pairs_train_only": len(restrict_pairs(pair_arr, is_train)),
-        "leaked_pair_positives": int(
-            len(pair_arr) - len(restrict_pairs(pair_arr, is_train))
-        ),
+        "leaked_pair_positives": int(len(pair_arr) - len(restrict_pairs(pair_arr, is_train))),
         "leaked_next_targets_val": int((tgt_split == "val").sum()),
         "leaked_next_targets_test": int((tgt_split == "test").sum()),
     }

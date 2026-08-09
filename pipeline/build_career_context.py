@@ -131,10 +131,7 @@ def load_min_gp() -> dict[tuple[int, str], tuple[float, float]]:
     if not path.exists():
         return {}
     doc = json.loads(path.read_text(encoding="utf-8"))
-    return {
-        (int(r["player_id"]), str(r["season"])): (float(r["MPG"]), float(r["GP"]))
-        for r in doc.get("players", [])
-    }
+    return {(int(r["player_id"]), str(r["season"])): (float(r["MPG"]), float(r["GP"])) for r in doc.get("players", [])}
 
 
 def load_availability() -> dict[tuple[int, str], dict]:
@@ -258,12 +255,7 @@ def main() -> None:
                 feat["CAREER_GAP_YEARS"] = max(0.0, gap)
                 if cur["v"] and prev["v"] and len(cur["v"]) == len(prev["v"]):
                     feat["LAG1_COSINE"] = round(vec_cos(cur["v"], prev["v"]), 4)
-                    dnorm = math.sqrt(
-                        sum(
-                            (a - b) ** 2
-                            for a, b in zip(cur["v"], prev["v"], strict=False)
-                        )
-                    )
+                    dnorm = math.sqrt(sum((a - b) ** 2 for a, b in zip(cur["v"], prev["v"], strict=False)))
                     feat["DELTA_NORM"] = round(dnorm, 4)
                     deltas.append(dnorm)
                 if len(deltas) >= 1:
@@ -389,10 +381,7 @@ def main() -> None:
             aux_miss_streak=aux_miss_streak,
             aux_streak_known=aux_streak_known,
         )
-        print(
-            f"wrote {OUT_NPZ} careers={n_c} max_len={max_len} "
-            f"next_labeled={int(y_m.sum())}"
-        )
+        print(f"wrote {OUT_NPZ} careers={n_c} max_len={max_len} next_labeled={int(y_m.sum())}")
 
 
 if __name__ == "__main__":

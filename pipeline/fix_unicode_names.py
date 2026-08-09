@@ -61,13 +61,9 @@ def main() -> None:
                                 v["PLAYER_NAME"] = new
                             n += 1
             if n:
-                print(
-                    f"{'would fix' if args.dry_run else 'fixed'} {n} names in {path.name}"
-                )
+                print(f"{'would fix' if args.dry_run else 'fixed'} {n} names in {path.name}")
                 if not args.dry_run:
-                    path.write_text(
-                        json.dumps(data, separators=(",", ":")), encoding="utf-8"
-                    )
+                    path.write_text(json.dumps(data, separators=(",", ":")), encoding="utf-8")
                 total += n
 
     if VECTORS.exists():
@@ -82,20 +78,14 @@ def main() -> None:
                             p["name"] = new
                         n += 1
             if n:
-                print(
-                    f"{'would fix' if args.dry_run else 'fixed'} {n} names in vectors.json"
-                )
+                print(f"{'would fix' if args.dry_run else 'fixed'} {n} names in vectors.json")
                 if not args.dry_run:
-                    VECTORS.write_text(
-                        json.dumps(data, separators=(",", ":")), encoding="utf-8"
-                    )
+                    VECTORS.write_text(json.dumps(data, separators=(",", ":")), encoding="utf-8")
                 total += n
         except (OSError, json.JSONDecodeError) as e:
             print(f"vectors.json: skip ({e})")
 
-    print(
-        f"done: {total} name field(s) {'would change' if args.dry_run else 'updated'}"
-    )
+    print(f"done: {total} name field(s) {'would change' if args.dry_run else 'updated'}")
 
 
 if __name__ == "__main__":

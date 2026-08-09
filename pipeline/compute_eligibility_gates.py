@@ -90,8 +90,7 @@ def main() -> None:
     sample_seasons = ["1998-99", "2011-12", "2019-20", "2020-21", "2023-24", "2024-25"]
     for s in sample_seasons:
         print(
-            f"  {s} ({season_games(s)} sched): "
-            f"min_gp={derive_min_gp(s)}, min_total_min={derive_min_total_minutes(s)}"
+            f"  {s} ({season_games(s)} sched): min_gp={derive_min_gp(s)}, min_total_min={derive_min_total_minutes(s)}"
         )
 
     # Per-season retention on gamelog ground truth
@@ -109,11 +108,7 @@ def main() -> None:
         rels = [r["reliability"] for r in rows]
         rot_cut = pctile(rels, 0.30) if rels else 0
         rotation = sum(1 for r in rows if r["reliability"] >= rot_cut)
-        new_in_rot = sum(
-            1
-            for r in rows
-            if eligible(r["gp"], r["total_min"], season) and r["reliability"] >= rot_cut
-        )
+        new_in_rot = sum(1 for r in rows if eligible(r["gp"], r["total_min"], season) and r["reliability"] >= rot_cut)
         print(
             f"  {season}: n={n}  derived={new_keep} ({100 * new_keep / n:.0f}%)  "
             f"legacy={leg_keep} ({100 * leg_keep / n:.0f}%)  "
@@ -154,13 +149,8 @@ def main() -> None:
     for (_pid, season), row in sorted(logs.items(), key=lambda x: -x[1]["reliability"]):
         if season != "2024-25":
             continue
-        if eligible(row["gp"], row["total_min"], season) and not (
-            row["gp"] >= 20 and row["total_min"] >= 800
-        ):
-            print(
-                f"  {row['name']}: {row['gp']} gp, {row['total_min']:.0f} min, "
-                f"rel={row['reliability']:.0f}"
-            )
+        if eligible(row["gp"], row["total_min"], season) and not (row["gp"] >= 20 and row["total_min"] >= 800):
+            print(f"  {row['name']}: {row['gp']} gp, {row['total_min']:.0f} min, rel={row['reliability']:.0f}")
             shown += 1
             if shown >= 8:
                 break

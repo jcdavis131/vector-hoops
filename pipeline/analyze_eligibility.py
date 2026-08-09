@@ -59,9 +59,7 @@ def main() -> None:
 
     print("\nSchedule-aware gates by season (sample):")
     for s in ("1998-99", "2011-12", "2023-24", "2024-25"):
-        print(
-            f"  {s}: gp>={derive_min_gp(s)}, total_min>={derive_min_total_minutes(s)}"
-        )
+        print(f"  {s}: gp>={derive_min_gp(s)}, total_min>={derive_min_total_minutes(s)}")
 
 
 if __name__ == "__main__":

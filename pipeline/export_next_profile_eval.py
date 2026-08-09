@@ -63,9 +63,7 @@ def main() -> None:
 
     emb = np.load(EMB, allow_pickle=True)
     if "next_profile_pred" not in emb.files:
-        raise SystemExit(
-            "embedding_v3.npz has no next_profile_pred — retrain/export MTNN"
-        )
+        raise SystemExit("embedding_v3.npz has no next_profile_pred — retrain/export MTNN")
 
     names = [str(x) for x in emb["name"]]
     seasons = [str(x) for x in emb["season"]]
@@ -77,9 +75,7 @@ def main() -> None:
     if vec_features != feature_keys:
         # Align by name if order drifted; require identical set.
         if set(vec_features) != set(feature_keys):
-            raise SystemExit(
-                f"feature key mismatch: emb={feature_keys} vectors={vec_features}"
-            )
+            raise SystemExit(f"feature key mismatch: emb={feature_keys} vectors={vec_features}")
         order = [feature_keys.index(k) for k in vec_features]
         pred = pred[:, order]
         feature_keys = vec_features

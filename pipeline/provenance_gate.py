@@ -129,19 +129,14 @@ def check(dims, rows, size, prose_hits):
     elif agreed is not None:
         expected = rows * agreed * BYTES_PER_FLOAT
         if expected != size:
-            problems.append(
-                f"{EMBEDDING} is {size} bytes but rows*dim*4 = {rows}*{agreed}*4 "
-                f"= {expected}"
-            )
+            problems.append(f"{EMBEDDING} is {size} bytes but rows*dim*4 = {rows}*{agreed}*4 = {expected}")
 
     # 3. Prose must not advertise a different dim than the artifact.
     if agreed is not None:
         for rel, hits in prose_hits.items():
             wrong = sorted(h for h in hits if h != agreed)
             if wrong and agreed not in hits:
-                problems.append(
-                    f"{rel} advertises {wrong}-d but the shipped artifact is {agreed}-d"
-                )
+                problems.append(f"{rel} advertises {wrong}-d but the shipped artifact is {agreed}-d")
     return problems, agreed
 
 

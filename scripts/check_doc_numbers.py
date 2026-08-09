@@ -46,7 +46,7 @@ ARCH = ROOT / "assets" / "archetypes_time.json"
 # SEPARATE TOLERANCES, because one number wearing two scales is how a check goes blind.
 # A single TOL=0.05 was fine for a 58.9% share and absurd for a 0.141 transition rate —
 # it tolerated 0.178 -> 0.198, a 14% error, and mutation testing caught it surviving.
-TOL_PCT = 0.05    # percentage points, on values around 5-60
+TOL_PCT = 0.05  # percentage points, on values around 5-60
 TOL_RATE = 0.005  # rate units, on values around 0.14-0.18
 
 
@@ -74,13 +74,11 @@ def check() -> list[str]:
         if not got_share:
             problems.append(f"class {name!r}: share cell unparseable: {row.group(1)!r}")
         elif abs(float(got_share.group(1)) - share) > TOL_PCT:
-            problems.append(
-                f"class {name!r}: doc says {got_share.group(1)}%, artifact says {share}%")
+            problems.append(f"class {name!r}: doc says {got_share.group(1)}%, artifact says {share}%")
         got_len = re.search(r"([\d.]+)", row.group(2))
         want_len = round(c["meanCareerLength"], 1)
         if got_len and abs(float(got_len.group(1)) - want_len) > TOL_PCT:
-            problems.append(
-                f"class {name!r} career length: doc {got_len.group(1)}, artifact {want_len}")
+            problems.append(f"class {name!r} career length: doc {got_len.group(1)}, artifact {want_len}")
 
     # ---- 2. era transition rates ---------------------------------------------
     for r in traj["eraTransitionRates"]:
@@ -89,8 +87,7 @@ def check() -> list[str]:
         if not m:
             problems.append(f"transition rate for {dec}: not stated in the doc")
         elif abs(float(m.group(1)) - rate) > TOL_RATE:
-            problems.append(
-                f"transition rate {dec}: doc {m.group(1)}, artifact {rate}")
+            problems.append(f"transition rate {dec}: doc {m.group(1)}, artifact {rate}")
 
     # ---- 3. archetype names ---------------------------------------------------
     # The set the doc names must be the set the artifact ships. A name in the doc that
@@ -101,8 +98,10 @@ def check() -> list[str]:
         # so renaming "Playmaking + Ball Pressure" to "...Pressures" went undetected.
         # Require the name to end at a cell/line boundary.
         if not re.search(re.escape(name) + r"\s*(?=[|\n]|$)", text):
-            problems.append(f"archetype {name!r} is in the artifact but not the doc "
-                            f"(as a whole name — a superstring does not count)")
+            problems.append(
+                f"archetype {name!r} is in the artifact but not the doc "
+                f"(as a whole name — a superstring does not count)"
+            )
 
     # ---- 4. player-season count ----------------------------------------------
     n = arch["n_players"]

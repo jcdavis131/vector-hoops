@@ -75,10 +75,7 @@ def load_award_index(use_fixture: bool) -> tuple[dict[str, dict], bool]:
         return by_season, complete
 
     if not FIXTURE.exists():
-        raise SystemExit(
-            f"no honor caches and no fixture at {FIXTURE} — run "
-            "pipeline/fetch_honors.py (or --fixture)"
-        )
+        raise SystemExit(f"no honor caches and no fixture at {FIXTURE} — run pipeline/fetch_honors.py (or --fixture)")
     doc = json.loads(FIXTURE.read_text(encoding="utf-8"))
     complete = bool(doc.get("complete"))
     for season, recs in doc.get("players", {}).items():

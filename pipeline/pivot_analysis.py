@@ -46,22 +46,15 @@ def main() -> None:
     cents = np.stack([np.mean(members[i], 0) for i in range(k)])
 
     def cos(a, b):
-        return float(
-            np.dot(a, b) / ((np.linalg.norm(a) or 1) * (np.linalg.norm(b) or 1))
-        )
+        return float(np.dot(a, b) / ((np.linalg.norm(a) or 1) * (np.linalg.norm(b) or 1)))
 
     adjacency = []
     for i in range(k):
-        sims = sorted(
-            ((cos(cents[i], cents[j]), j) for j in range(k) if j != i), reverse=True
-        )
+        sims = sorted(((cos(cents[i], cents[j]), j) for j in range(k) if j != i), reverse=True)
         adjacency.append(
             {
                 "archetype": clusters[i],
-                "adjacent": [
-                    {"archetype": clusters[j], "similarity": round(s, 3)}
-                    for s, j in sims[:3]
-                ],
+                "adjacent": [{"archetype": clusters[j], "similarity": round(s, 3)} for s, j in sims[:3]],
             }
         )
 
@@ -131,9 +124,7 @@ def main() -> None:
     for (team, season), players in sorted(rosters.items()):
         cands = []
         for p in players:
-            sims = sorted(
-                ((cos(np.array(p["v"]), cents[j]), j) for j in range(k)), reverse=True
-            )
+            sims = sorted(((cos(np.array(p["v"]), cents[j]), j) for j in range(k)), reverse=True)
             adj = sims[1][1] if sims[0][1] == p["c"] else sims[0][1]
             st = path_index.get((clusters[p["c"]], clusters[adj]))
             if st is None:
@@ -185,10 +176,7 @@ def main() -> None:
         encoding="utf-8",
     )
 
-    print(
-        f"{len(path_stats)} pivot paths with n>={MIN_PATH_N}; "
-        f"{len(team_cards)} team cards"
-    )
+    print(f"{len(path_stats)} pivot paths with n>={MIN_PATH_N}; {len(team_cards)} team cards")
     print("most valuable pivots (observed):")
     for p in path_stats[:3]:
         print(

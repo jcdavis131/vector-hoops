@@ -36,9 +36,7 @@ def playoff_cache_has(season: str, nk: str) -> bool:
     return bool(rec and (rec.get("po", {}).get("GP") or 0) > 0)
 
 
-def count_labeled(
-    npz_path: Path, manifest_path: Path, feat: str, name: str
-) -> tuple[int, int]:
+def count_labeled(npz_path: Path, manifest_path: Path, feat: str, name: str) -> tuple[int, int]:
     import numpy as np
 
     if not npz_path.exists() or not manifest_path.exists():
@@ -82,9 +80,7 @@ def main() -> None:
     honors = load_json(DATA / "honors.json")
     honors_asset = load_json(ASSETS / "honors.json")
 
-    roster_lookup = {
-        (e["name"], e["season"]): e for e in (roster or {}).get("entries", [])
-    }
+    roster_lookup = {(e["name"], e["season"]): e for e in (roster or {}).get("entries", [])}
     po_splits = set((po_asset or {}).get("splits", {}))
     po_rows = {(r["name"], r["season"]) for r in (po_data or {}).get("players", [])}
     ped_rows = {(r["name"], r["season"]) for r in (pedigree or {}).get("players", [])}
@@ -101,9 +97,7 @@ def main() -> None:
             f"playoffs_data={(name, season) in po_rows} "
             f"roster={(name, season) in roster_lookup}"
         )
-        po_l, po_t = count_labeled(
-            DATA / "train_matrix.npz", DATA / "feature_manifest.json", "PO_GP", name
-        )
+        po_l, po_t = count_labeled(DATA / "train_matrix.npz", DATA / "feature_manifest.json", "PO_GP", name)
         if name == STAR_CHECKS[0][0]:
             print(f"    train_matrix PO_GP for {name}: {po_l}/{po_t}")
 
@@ -124,12 +118,8 @@ def main() -> None:
     if len(misses) > 15:
         print(f"  ... +{len(misses) - 15} more")
 
-    audit_family(
-        "Roster context (recent gamelog)", players, roster_lookup, optional=True
-    )
-    audit_family(
-        "Playoffs data (pipeline)", players, dict.fromkeys(po_rows, 1), optional=True
-    )
+    audit_family("Roster context (recent gamelog)", players, roster_lookup, optional=True)
+    audit_family("Playoffs data (pipeline)", players, dict.fromkeys(po_rows, 1), optional=True)
     audit_family(
         "Playoffs asset splits",
         players,

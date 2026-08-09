@@ -55,10 +55,7 @@ def tag_player_roles(
     tags: list[str] = []
 
     shoot_hi = g[idx["shooting"]] >= p75[idx["shooting"]]
-    defense_hi = (
-        g[idx["hands"]] >= p50[idx["hands"]] + 8
-        or g[idx["dreb"]] >= p50[idx["dreb"]] + 8
-    )
+    defense_hi = g[idx["hands"]] >= p50[idx["hands"]] + 8 or g[idx["dreb"]] >= p50[idx["dreb"]] + 8
     pm_lo = g[idx["playmaking"]] <= p50[idx["playmaking"]]
     score_lo = g[idx["scoring"]] <= p75[idx["scoring"]]
     glass_hi = g[idx["oreb"]] >= p50[idx["oreb"]] + 5
@@ -74,10 +71,7 @@ def tag_player_roles(
         tags.append("traditional_big")
     if g[idx["playmaking"]] >= p75[idx["playmaking"]]:
         tags.append("primary_creator")
-    if (
-        g[idx["scoring"]] >= p75[idx["scoring"]]
-        and g[idx["shooting"]] >= p50[idx["shooting"]]
-    ):
+    if g[idx["scoring"]] >= p75[idx["scoring"]] and g[idx["shooting"]] >= p50[idx["shooting"]]:
         tags.append("volume_scorer")
     if g[idx["efficiency"]] >= p75[idx["efficiency"]] and shoot_hi:
         tags.append("spacing_role")
@@ -111,18 +105,14 @@ def load_skill_grades() -> tuple[np.ndarray, list[dict]]:
     return grades, skills["skills"]
 
 
-def kmeans(
-    X: np.ndarray, k: int, seed: int = 42, iters: int = 60
-) -> tuple[np.ndarray, np.ndarray]:
+def kmeans(X: np.ndarray, k: int, seed: int = 42, iters: int = 60) -> tuple[np.ndarray, np.ndarray]:
     rng = np.random.default_rng(seed)
     cents = X[rng.choice(len(X), k, replace=False)]
     lab = np.zeros(len(X), dtype=int)
     for _ in range(iters):
         d = ((X[:, None, :] - cents[None]) ** 2).sum(-1)
         lab = d.argmin(1)
-        new = np.stack(
-            [X[lab == i].mean(0) if (lab == i).any() else cents[i] for i in range(k)]
-        )
+        new = np.stack([X[lab == i].mean(0) if (lab == i).any() else cents[i] for i in range(k)])
         if np.allclose(new, cents):
             break
         cents = new

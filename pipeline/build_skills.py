@@ -126,9 +126,7 @@ def weight_matrix(features: list[str]) -> np.ndarray:
     return W
 
 
-def season_percentiles(
-    scores: np.ndarray, volume: np.ndarray, season_idx: dict[str, np.ndarray]
-) -> np.ndarray:
+def season_percentiles(scores: np.ndarray, volume: np.ndarray, season_idx: dict[str, np.ndarray]) -> np.ndarray:
     """Grade 0-99 = within-season percentile rank of each composite score.
 
     Exact composite ties are broken by `volume` (a usage/volume proxy), so
@@ -179,9 +177,7 @@ def main() -> None:
     vol_cols = [features.index(f) for f in ("FGA", "FTA", "AST") if f in features]
     volume = V[:, vol_cols].sum(axis=1)
 
-    season_idx: dict[str, np.ndarray] = {
-        s: np.where(seasons == s)[0] for s in sorted(set(seasons.tolist()))
-    }
+    season_idx: dict[str, np.ndarray] = {s: np.where(seasons == s)[0] for s in sorted(set(seasons.tolist()))}
     grades = season_percentiles(scores, volume, season_idx)
 
     built = time.strftime("%Y-%m-%d")
@@ -191,20 +187,14 @@ def main() -> None:
         "built": built,
         "source": "assets/vectors.json (frozen 14-dim era-z contract)",
         "method": (
-            "linear composite of era-z features -> percentile grade "
-            "0-99 within season pool; see docs/SKILLS_LENS.md"
+            "linear composite of era-z features -> percentile grade 0-99 within season pool; see docs/SKILLS_LENS.md"
         ),
         "badgeGrade": BADGE_GRADE,
         "goldGrade": GOLD_GRADE,
-        "skills": [
-            {"key": sk["key"], "label": sk["label"], "badge": sk["badge"], "w": sk["w"]}
-            for sk in SKILLS
-        ],
+        "skills": [{"key": sk["key"], "label": sk["label"], "badge": sk["badge"], "w": sk["w"]} for sk in SKILLS],
         "grades": grades.tolist(),
     }
-    SKILLS_OUT.write_text(
-        json.dumps(skills_doc, separators=(",", ":")), encoding="utf-8"
-    )
+    SKILLS_OUT.write_text(json.dumps(skills_doc, separators=(",", ":")), encoding="utf-8")
 
     probe_doc = {
         "built": built,
@@ -237,15 +227,10 @@ def main() -> None:
 
     n_badges = int((grades >= BADGE_GRADE).sum())
     print(f"{n} player-seasons x {len(SKILLS)} skills")
-    print(
-        f"badges at >= {BADGE_GRADE}: {n_badges} ({n_badges / n:.2f} per player-season)"
-    )
+    print(f"badges at >= {BADGE_GRADE}: {n_badges} ({n_badges / n:.2f} per player-season)")
     for sk, col in zip(SKILLS, grades.T, strict=False):
         top = names[np.argsort(-scores[:, keys.index(sk["key"])])[:3]]
-        print(
-            f"  {sk['key']:<11} mean {col.mean():5.1f}  "
-            f"top: {', '.join(t for t in top)}"
-        )
+        print(f"  {sk['key']:<11} mean {col.mean():5.1f}  top: {', '.join(t for t in top)}")
     print(f"wrote {SKILLS_OUT.name}, {PROBE_OUT.name}, {LABELS_OUT.name}")
 
 

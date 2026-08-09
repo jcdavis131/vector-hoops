@@ -107,12 +107,8 @@ def main() -> None:
         "game_features": GAME_FEATURES,
         "notes": "Bootstrap only — re-run build_vectors.py when cache/API available for wide towers",
     }
-    (DATA_DIR / "feature_manifest.json").write_text(
-        json.dumps(manifest, indent=2), encoding="utf-8"
-    )
-    print(
-        f"wrote train_matrix.npz: {n} rows, {d} features (bootstrap from vectors.json)"
-    )
+    (DATA_DIR / "feature_manifest.json").write_text(json.dumps(manifest, indent=2), encoding="utf-8")
+    print(f"wrote train_matrix.npz: {n} rows, {d} features (bootstrap from vectors.json)")
 
 
 if __name__ == "__main__":

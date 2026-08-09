@@ -114,8 +114,7 @@ def main() -> None:
             raise SystemExit("no draft_history.json cache and --offline set")
         doc = json.loads(OUT.read_text(encoding="utf-8"))
         print(
-            f"cache ok: {len(doc['players'])} drafted names, "
-            f"years {doc.get('years')}, complete={doc.get('complete')}"
+            f"cache ok: {len(doc['players'])} drafted names, years {doc.get('years')}, complete={doc.get('complete')}"
         )
         return
 
@@ -124,10 +123,7 @@ def main() -> None:
     CACHE.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(doc, separators=(",", ":")), encoding="utf-8")
     n_recs = sum(len(v) for v in doc["players"].values())
-    print(
-        f"wrote {OUT.name}: {n_recs} picks, {len(doc['players'])} names, "
-        f"years {doc['years']}"
-    )
+    print(f"wrote {OUT.name}: {n_recs} picks, {len(doc['players'])} names, years {doc['years']}")
 
 
 if __name__ == "__main__":

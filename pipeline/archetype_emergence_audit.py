@@ -73,9 +73,7 @@ def player_role_prevalence(
     """Direct player-season counts for modern role shapes (era-relative grades)."""
     rows = []
     for era_name, s_lo, s_hi in ERAS:
-        idxs = [
-            j for j, p in enumerate(players) if season_in_range(p["season"], s_lo, s_hi)
-        ]
+        idxs = [j for j, p in enumerate(players) if season_in_range(p["season"], s_lo, s_hi)]
         pct = era_percentiles(grades, idxs)
         n = len(idxs)
         counts: Counter[str] = Counter()
@@ -118,18 +116,13 @@ def build_era_native(
 ) -> list[dict]:
     by_era: list[dict] = []
     for era_name, s_lo, s_hi in ERAS:
-        idxs = [
-            j for j, p in enumerate(players) if season_in_range(p["season"], s_lo, s_hi)
-        ]
+        idxs = [j for j, p in enumerate(players) if season_in_range(p["season"], s_lo, s_hi)]
         pct = era_percentiles(grades, idxs)
         X = E[idxs]
         k_opt, k_sweep = optimal_k(X, ERA_K_RANGE)
         lab, cents = kmeans(X, k_opt, seed=42)
         counts = Counter(lab.tolist())
-        member_ids = [
-            [ids[idxs[j]] for j in range(len(idxs)) if lab[j] == i]
-            for i in range(k_opt)
-        ]
+        member_ids = [[ids[idxs[j]] for j in range(len(idxs)) if lab[j] == i] for i in range(k_opt)]
         names = assign_cluster_names_from_members(member_ids, grades, skill_meta)
         archetypes = []
         for i in range(k_opt):
@@ -141,9 +134,7 @@ def build_era_native(
                     "name": names[i],
                     "share": round(counts[i] / len(idxs), 4),
                     "tags": tags,
-                    "skillTop": [
-                        skill_meta[j]["label"] for j in np.argsort(-mean_g)[:3]
-                    ],
+                    "skillTop": [skill_meta[j]["label"] for j in np.argsort(-mean_g)[:3]],
                     "mtnnCentroid": cents[i],
                     "memberCount": counts[i],
                 }
@@ -166,10 +157,7 @@ def build_era_native(
     for prev, cur in itertools.pairwise(by_era):
         for arch in cur["archetypes"]:
             cvec = arch["mtnnCentroid"]
-            sims = [
-                (cosine_rows(cvec, pa["mtnnCentroid"]), pa["name"])
-                for pa in prev["archetypes"]
-            ]
+            sims = [(cosine_rows(cvec, pa["mtnnCentroid"]), pa["name"]) for pa in prev["archetypes"]]
             best_sim, best_name = max(sims)
             arch["ancestor"] = {
                 "era": prev["era"],
@@ -188,9 +176,7 @@ def global_prevalence_by_era(
 ) -> list[dict]:
     rows = []
     for era_name, s_lo, s_hi in ERAS:
-        idxs = [
-            j for j, p in enumerate(players) if season_in_range(p["season"], s_lo, s_hi)
-        ]
+        idxs = [j for j, p in enumerate(players) if season_in_range(p["season"], s_lo, s_hi)]
         counts = Counter(int(global_lab[j]) for j in idxs)
         n = len(idxs)
         shares = [counts[c] / n for c in range(GLOBAL_K)]
@@ -199,9 +185,7 @@ def global_prevalence_by_era(
                 "era": era_name,
                 "entropyBits": round(entropy_bits(shares), 4),
                 "effectiveN": round(effective_n(shares), 3),
-                "shares": {
-                    global_names[c]: round(shares[c], 4) for c in range(GLOBAL_K)
-                },
+                "shares": {global_names[c]: round(shares[c], 4) for c in range(GLOBAL_K)},
             }
         )
     return rows
@@ -247,9 +231,7 @@ def rolling_k_entropy(
     rows = []
     lab8, _ = kmeans(E, 8, seed=42)
     for label, lo, hi in rolling_windows(seasons, width):
-        idxs = [
-            j for j, p in enumerate(players) if season_in_range(p["season"], lo, hi)
-        ]
+        idxs = [j for j, p in enumerate(players) if season_in_range(p["season"], lo, hi)]
         if len(idxs) < 200:
             continue
         X = E[idxs]
@@ -285,9 +267,7 @@ def global_archetype_shifts(global_era: list[dict]) -> dict:
     ]
     deltas.sort(key=lambda d: -abs(d["delta"]))
 
-    def pick_delta(
-        any_words: tuple[str, ...], all_words: tuple[str, ...] = ()
-    ) -> dict | None:
+    def pick_delta(any_words: tuple[str, ...], all_words: tuple[str, ...] = ()) -> dict | None:
         cands = []
         for d in deltas:
             nm = d["name"].lower()
@@ -300,9 +280,7 @@ def global_archetype_shifts(global_era: list[dict]) -> dict:
         return cands[0]
 
     spacing = pick_delta(("perimeter", "three-point", "spacing"), ())
-    trad_big = pick_delta(
-        ("interior", "offensive glass", "rim protection", "defensive glass"), ()
-    )
+    trad_big = pick_delta(("interior", "offensive glass", "rim protection", "defensive glass"), ())
     return {
         "earlyEra": global_era[0]["era"],
         "lateEra": global_era[-1]["era"],
@@ -327,11 +305,7 @@ def exemplar_players(
             continue
         arch = max(candidates, key=lambda a: a["share"])
         cvec = arch["mtnnCentroid"]
-        idxs = [
-            j
-            for j, p in enumerate(players)
-            if season_in_range(p["season"], e["seasonLo"], e["seasonHi"])
-        ]
+        idxs = [j for j, p in enumerate(players) if season_in_range(p["season"], e["seasonLo"], e["seasonHi"])]
         if not idxs:
             continue
         dists = [(j, 1.0 - cosine_rows(E[j], cvec)) for j in idxs]
@@ -374,17 +348,9 @@ def evaluate_hypothesis(
     early_trad = player_roles[0]["traditional_big"]
     late_trad = player_roles[-1]["traditional_big"]
     novel_early = sum(
-        1
-        for e in eras[:2]
-        for a in e["archetypes"]
-        if a.get("novel") and a["share"] >= NOVEL_SHARE_FLOOR
+        1 for e in eras[:2] for a in e["archetypes"] if a.get("novel") and a["share"] >= NOVEL_SHARE_FLOOR
     )
-    novel_late = sum(
-        1
-        for e in eras[2:]
-        for a in e["archetypes"]
-        if a.get("novel") and a["share"] >= NOVEL_SHARE_FLOOR
-    )
+    novel_late = sum(1 for e in eras[2:] for a in e["archetypes"] if a.get("novel") and a["share"] >= NOVEL_SHARE_FLOOR)
 
     roll_min = min(rolling, key=lambda r: r["effectiveN"]) if rolling else None
     roll_max = max(rolling, key=lambda r: r["effectiveN"]) if rolling else None
@@ -451,17 +417,12 @@ def evaluate_hypothesis(
 
     peak_novel_era = max(
         eras[1:],
-        key=lambda e: sum(
-            1
-            for a in e["archetypes"]
-            if a.get("novel") and a["share"] >= NOVEL_SHARE_FLOOR
-        ),
+        key=lambda e: sum(1 for a in e["archetypes"] if a.get("novel") and a["share"] >= NOVEL_SHARE_FLOOR),
     )
     claims.append(
         {
             "claim": "New MTNN cluster geometry appeared mid/post-2000s",
-            "supported": novel_late >= novel_early
-            and peak_novel_era["era"] != late["era"],
+            "supported": novel_late >= novel_early and peak_novel_era["era"] != late["era"],
             "detail": (
                 f"Novel era-native clusters (ancestor sim < {NOVELTY_THRESH}): "
                 f"1996–2009={novel_early}, 2009–2026={novel_late}; "
@@ -511,9 +472,7 @@ def strip_centroids(eras: list[dict]) -> list[dict]:
         archs = []
         for a in e["archetypes"]:
             archs.append({k: v for k, v in a.items() if k != "mtnnCentroid"})
-        out.append(
-            {**{k: v for k, v in e.items() if k != "archetypes"}, "archetypes": archs}
-        )
+        out.append({**{k: v for k, v in e.items() if k != "archetypes"}, "archetypes": archs})
     return out
 
 
@@ -589,9 +548,7 @@ def main() -> None:
     OUT_ASSET.write_text(json.dumps(asset, separators=(",", ":")), encoding="utf-8")
 
     print("Archetype emergence audit")
-    print(
-        f"  Verdict: {hypothesis['verdict']} ({hypothesis['supportedClaims']}/{hypothesis['totalClaims']} claims)"
-    )
+    print(f"  Verdict: {hypothesis['verdict']} ({hypothesis['supportedClaims']}/{hypothesis['totalClaims']} claims)")
     print(f"  {hypothesis['headline']}\n")
     for e in eras:
         nov = sum(1 for a in e["archetypes"] if a.get("novel"))
@@ -599,8 +556,7 @@ def main() -> None:
     print("\n  Player-season role prevalence (3&D / stretch / trad big):")
     for t in player_roles:
         print(
-            f"    {t['era']}: 3&D={t['three_and_d']:.1%} "
-            f"stretch={t['stretch_big']:.1%} trad={t['traditional_big']:.1%}"
+            f"    {t['era']}: 3&D={t['three_and_d']:.1%} stretch={t['stretch_big']:.1%} trad={t['traditional_big']:.1%}"
         )
     if global_shifts.get("spacingArchetypeDelta"):
         sp = global_shifts["spacingArchetypeDelta"]

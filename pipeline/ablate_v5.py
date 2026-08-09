@@ -111,9 +111,7 @@ def train_one(
     torch.manual_seed(seed)
     np.random.seed(seed)
 
-    (Z, M, names, seasons, pids, clusters, positions, season_ids, manifest) = (
-        T.load_bundle()
-    )
+    (Z, M, names, seasons, pids, clusters, positions, season_ids, manifest) = T.load_bundle()
     fams = T.family_slices(manifest)
     game_cols = T.game_feature_cols(manifest)
     game_z = torch.tensor(Z[:, game_cols], device=device)
@@ -199,9 +197,7 @@ def train_one(
                 player_weight=PLAYER_W,
                 arch_weight=ARCH_W,
             )
-            loss = loss + W["archetype"] * F.cross_entropy(
-                out["archetype"], arch_t[idx_t]
-            )
+            loss = loss + W["archetype"] * F.cross_entropy(out["archetype"], arch_t[idx_t])
             if pos_mask[idx_t].any():
                 loss = loss + W["position"] * F.cross_entropy(
                     out["position"][pos_mask[idx_t]], pos_t[idx_t][pos_mask[idx_t]]
@@ -212,9 +208,7 @@ def train_one(
             if nv.any():
                 nt = torch.tensor(nb[nv], device=device)
                 nvt = torch.tensor(nv, device=device, dtype=torch.bool)
-                loss = loss + W["next_profile"] * F.smooth_l1_loss(
-                    out["next_profile"][nvt], game_z[nt]
-                )
+                loss = loss + W["next_profile"] * F.smooth_l1_loss(out["next_profile"][nvt], game_z[nt])
             if "skills" in out:
                 wm = skillm_t[idx_t]
                 if wm.sum() > 0:
@@ -273,9 +267,7 @@ def train_one(
         "archetype_top1": T.classification_acc(arch_logits, clusters),
         "archetype_top1_test": T.classification_acc(arch_logits, clusters, is_test),
         "position_top1": T.classification_acc(pos_logits, positions, positions >= 0),
-        "position_top1_test": T.classification_acc(
-            pos_logits, positions, is_test & (positions >= 0)
-        ),
+        "position_top1_test": T.classification_acc(pos_logits, positions, is_test & (positions >= 0)),
         "next_profile": npr,
         "seconds": round(time.time() - t0, 1),
     }
@@ -378,22 +370,11 @@ def confirm_decision(per_seed: dict, agg: dict) -> dict:
             }
         )
     a_ag, b_ag = agg["A_v4_control"], agg["B_deep_concat"]
-    pk = (
-        "purity_at_20_test"
-        if (b_ag.get("purity_at_20_test") or {}).get("mean") is not None
-        else "purity_at_20"
-    )
+    pk = "purity_at_20_test" if (b_ag.get("purity_at_20_test") or {}).get("mean") is not None else "purity_at_20"
     mean_pur_gain = round((b_ag[pk]["mean"] or 0) - (a_ag[pk]["mean"] or 0), 4)
-    reg_better = (b_ag["next_rmse_test"]["mean"] or 9) < (
-        a_ag["next_rmse_test"]["mean"] or 9
-    )
+    reg_better = (b_ag["next_rmse_test"]["mean"] or 9) < (a_ag["next_rmse_test"]["mean"] or 9)
     recall_ok = (b_ag["test_recall_at_10"]["mean"] or 0) >= 0.99
-    promote = (
-        mean_pur_gain > 0
-        and pur_wins >= (len(seeds) + 1) // 2
-        and reg_better
-        and recall_ok
-    )
+    promote = mean_pur_gain > 0 and pur_wins >= (len(seeds) + 1) // 2 and reg_better and recall_ok
     return {
         "seeds": seeds,
         "per_seed": per,
@@ -444,8 +425,7 @@ def main() -> None:
         "--w-next-profile",
         type=float,
         default=None,
-        help="override the next_profile loss weight (default 0.08); "
-        "tags output files so A/B runs do not collide",
+        help="override the next_profile loss weight (default 0.08); tags output files so A/B runs do not collide",
     )
     args = ap.parse_args()
     if args.w_next_profile is not None:
@@ -462,8 +442,7 @@ def main() -> None:
     if device == "cpu":
         torch.set_num_threads(max(1, os.cpu_count() or 1))
     print(
-        f"device: {device}"
-        + ("" if device == "cpu" else f" ({torch.cuda.get_device_name(0)})"),
+        f"device: {device}" + ("" if device == "cpu" else f" ({torch.cuda.get_device_name(0)})"),
         flush=True,
     )
     OUT.mkdir(parents=True, exist_ok=True)
@@ -512,9 +491,7 @@ def main() -> None:
         report["decision"] = confirm_decision(per_seed, report["aggregate"])
     elif set(CONFIGS).issubset(per_seed):
         report["verdict"] = verdict({k: v[seeds[0]] for k, v in per_seed.items()})
-    (OUT / "ablation_report.json").write_text(
-        json.dumps(report, indent=2), encoding="utf-8"
-    )
+    (OUT / "ablation_report.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
 
     print("\n=== SUMMARY ===")
     if multi:
@@ -534,9 +511,7 @@ def main() -> None:
     else:
         for name, seeds_d in per_seed.items():
             m = seeds_d[seeds[0]]
-            print(
-                f"{name:<16} purity@20 {m['purity_at_20']} recall {m['test_recall_at_10']}"
-            )
+            print(f"{name:<16} purity@20 {m['purity_at_20']} recall {m['test_recall_at_10']}")
         if "verdict" in report:
             print("\nVERDICT:", json.dumps(report["verdict"], indent=2))
     print(f"\nwrote {OUT / 'ablation_report.json'}")

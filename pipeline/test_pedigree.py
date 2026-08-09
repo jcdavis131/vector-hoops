@@ -42,9 +42,7 @@ def check(cond: bool, msg: str) -> None:
 def rebuild() -> bool:
     """Re-derive pedigree.json; returns True if the REAL cache was used."""
     real = CACHE.exists()
-    cmd = [sys.executable, "pipeline/build_pedigree.py"] + (
-        [] if real else ["--fixture"]
-    )
+    cmd = [sys.executable, "pipeline/build_pedigree.py"] + ([] if real else ["--fixture"])
     proc = subprocess.run(cmd, cwd=ROOT, capture_output=True, text=True)
     if proc.returncode != 0:
         print(proc.stdout + proc.stderr)
@@ -70,9 +68,7 @@ def main() -> None:
             check(False, f"{name} {season} covered")
             return
         got = r.get(field)
-        ok = (got is None and want is None) or (
-            got is not None and want is not None and abs(got - want) <= tol
-        )
+        ok = (got is None and want is None) or (got is not None and want is not None and abs(got - want) <= tol)
         check(ok, f"{name} {season} {field} == {want} (got {got})")
 
     spot("LeBron James", "2003-04", "PED_PICK_QUALITY", 60)
@@ -84,9 +80,7 @@ def main() -> None:
     spot("Nikola Jokić", "2015-16", "PED_EXPECT_SLOT", 0.10)
     spot("Nikola Jokić", "2015-16", "PED_TEAM_WINPCT", 0.439)
     spot("Kobe Bryant", "1996-97", "PED_PICK_QUALITY", 48)
-    spot(
-        "Kobe Bryant", "1996-97", "PED_TEAM_WINPCT", None
-    )  # 1996 draft: pre-cache, masked
+    spot("Kobe Bryant", "1996-97", "PED_TEAM_WINPCT", None)  # 1996 draft: pre-cache, masked
     # name-collision disambiguation: two "tim hardaway" draft records
     spot("Tim Hardaway", "1996-97", "PED_PICK_QUALITY", 47)  # Sr, #14 1989
     spot("Tim Hardaway Jr.", "2013-14", "PED_PICK_QUALITY", 37)  # Jr, #24 2013
@@ -137,17 +131,13 @@ def main() -> None:
     print("mask honesty")
     if real:
         n_players = len(per_player)
-        n_undrafted = sum(
-            1 for prs in per_player.values() if prs[0]["PED_UNDRAFTED"] == 1.0
-        )
+        n_undrafted = sum(1 for prs in per_player.values() if prs[0]["PED_UNDRAFTED"] == 1.0)
         total_players = (
             doc["coverage"]["players_drafted"]
             + doc["coverage"]["players_undrafted"]
             + doc["coverage"]["players_unmatched_masked"]
         )
-        cov = (
-            doc["coverage"]["players_drafted"] + doc["coverage"]["players_undrafted"]
-        ) / max(total_players, 1)
+        cov = (doc["coverage"]["players_drafted"] + doc["coverage"]["players_undrafted"]) / max(total_players, 1)
         check(cov >= 0.95, f"complete cache resolves >= 95% of players ({cov:.3f})")
         check(
             0.03 <= n_undrafted / max(n_players, 1) <= 0.45,
@@ -169,12 +159,7 @@ def main() -> None:
         sys.exit(1)
     print(
         "all pedigree gates passed"
-        + (
-            ""
-            if real
-            else " (fixture mode — run fetch_draft_history.py "
-            "on an operator machine for full coverage)"
-        )
+        + ("" if real else " (fixture mode — run fetch_draft_history.py on an operator machine for full coverage)")
     )
 
 

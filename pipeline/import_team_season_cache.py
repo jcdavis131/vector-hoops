@@ -26,17 +26,10 @@ ROOT = Path(__file__).resolve().parents[1]
 CACHE = ROOT / "pipeline" / "cache"
 
 TRAD_URL = (
-    "https://raw.githubusercontent.com/Brescou/"
-    "NBA-dataset-stats-player-team/main/team/team_stats_traditional_rs.csv"
+    "https://raw.githubusercontent.com/Brescou/NBA-dataset-stats-player-team/main/team/team_stats_traditional_rs.csv"
 )
-ADV_URL = (
-    "https://raw.githubusercontent.com/Brescou/"
-    "NBA-dataset-stats-player-team/main/team/team_stats_advanced_rs.csv"
-)
-UA = (
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
-    "(KHTML, like Gecko) Chrome/126.0 Safari/537.36"
-)
+ADV_URL = "https://raw.githubusercontent.com/Brescou/NBA-dataset-stats-player-team/main/team/team_stats_advanced_rs.csv"
+UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36"
 
 BBREF_RECENT = (
     ("2024-25", 2025),
@@ -174,12 +167,8 @@ def import_bbref_recent(*, skip_existing: bool = True) -> int:
             print(f"  {season}: only {len(base_rows)} teams parsed — not writing")
             continue
         CACHE.mkdir(parents=True, exist_ok=True)
-        base_path.write_text(
-            json.dumps(base_rows, separators=(",", ":")), encoding="utf-8"
-        )
-        adv_path.write_text(
-            json.dumps(adv_rows, separators=(",", ":")), encoding="utf-8"
-        )
+        base_path.write_text(json.dumps(base_rows, separators=(",", ":")), encoding="utf-8")
+        adv_path.write_text(json.dumps(adv_rows, separators=(",", ":")), encoding="utf-8")
         written += 1
         print(f"  BBRef {season}: {len(base_rows)} teams")
     return written

@@ -89,11 +89,7 @@ def compute_season(
     for roster in load_team_rosters(season).values():
         roster.sort(key=lambda r: -r["min"])
         usage_crowd = round(hhi_top_n([r["min"] for r in roster[:TOP_N_HHI]]), 4)
-        charted = [
-            r
-            for r in roster
-            if r["min"] >= ROTATION_MIN and (r["name"], season) in vindex
-        ]
+        charted = [r for r in roster if r["min"] >= ROTATION_MIN and (r["name"], season) in vindex]
         if not charted:
             continue
         for subject in charted:
@@ -111,12 +107,9 @@ def compute_season(
                     "team": subject["team"],
                     "teamId": subject["team_id"],
                     "minutes": round(subject["min"], 1),
-                    "ROSTER_MIN_RANK": 1
-                    + sum(1 for r in roster if r["min"] > subject["min"]),
+                    "ROSTER_MIN_RANK": 1 + sum(1 for r in roster if r["min"] > subject["min"]),
                     "ROSTER_USAGE_CROWD": usage_crowd,
-                    "ROSTER_COMPLEMENT": round(statistics.mean(comp), 4)
-                    if comp
-                    else None,
+                    "ROSTER_COMPLEMENT": round(statistics.mean(comp), 4) if comp else None,
                     "ROSTER_STAR_GAP": star_gap,
                     "ROSTER_MATES_N": len(mates),
                 }

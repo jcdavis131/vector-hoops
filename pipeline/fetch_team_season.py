@@ -65,9 +65,7 @@ def load_cached(tag: str, season: str):
 
 def save_cache(tag: str, season: str, rows) -> None:
     CACHE.mkdir(parents=True, exist_ok=True)
-    cache_path(tag, season).write_text(
-        json.dumps(rows, separators=(",", ":")), encoding="utf-8"
-    )
+    cache_path(tag, season).write_text(json.dumps(rows, separators=(",", ":")), encoding="utf-8")
 
 
 def with_retries(fn, what: str, attempts: int = 5):
@@ -76,10 +74,7 @@ def with_retries(fn, what: str, attempts: int = 5):
             return fn()
         except Exception as e:
             wait = min(120, (2**attempt) * 8) + random.uniform(0, 4)
-            print(
-                f"  {what}: attempt {attempt + 1}/{attempts} failed "
-                f"({type(e).__name__}); sleeping {wait:.0f}s"
-            )
+            print(f"  {what}: attempt {attempt + 1}/{attempts} failed ({type(e).__name__}); sleeping {wait:.0f}s")
             time.sleep(wait)
     print(f"  {what}: EXHAUSTED retries -- skipping (cached later runs resume)")
     return None
@@ -97,11 +92,7 @@ def df_to_team_rows(df, wanted: list[str]) -> tuple[list[dict], list[str]]:
             if c in ("TEAM_ID", "TEAM_NAME"):
                 continue
             v = x[c]
-            row[c] = (
-                None
-                if v is None or (isinstance(v, float) and math.isnan(v))
-                else float(v)
-            )
+            row[c] = None if v is None or (isinstance(v, float) and math.isnan(v)) else float(v)
         rows.append(row)
     return rows, present
 
@@ -133,9 +124,7 @@ def fetch_measure(season: str, measure: str, wanted: list[str], offline: bool):
     return rows
 
 
-def merge_team_season(
-    base: list[dict], advanced: list[dict]
-) -> tuple[list[dict], list[str]]:
+def merge_team_season(base: list[dict], advanced: list[dict]) -> tuple[list[dict], list[str]]:
     adv_by_id = {r["TEAM_ID"]: r for r in advanced}
     sos_cols = [c for c in SOS_CANDIDATES if any(c in r for r in base + advanced)]
     out_cols = OUTPUT_COLS + sos_cols
@@ -167,9 +156,7 @@ def write_season_rows(season: str, rows: list[dict]) -> None:
 
 def main() -> int:
     ap = argparse.ArgumentParser(description="Fetch NBA team-season stats (cached).")
-    ap.add_argument(
-        "--offline", action="store_true", help="use pipeline/cache only; no network"
-    )
+    ap.add_argument("--offline", action="store_true", help="use pipeline/cache only; no network")
     ap.add_argument("--season", help="single season e.g. 2024-25 (default: all)")
     args = ap.parse_args()
 
@@ -210,13 +197,9 @@ def main() -> int:
         ),
     }
     DATA_DIR.mkdir(parents=True, exist_ok=True)
-    (DATA_DIR / "team_season_manifest.json").write_text(
-        json.dumps(manifest, indent=2), encoding="utf-8"
-    )
+    (DATA_DIR / "team_season_manifest.json").write_text(json.dumps(manifest, indent=2), encoding="utf-8")
 
-    print(
-        f"DONE: {len(fetched)}/{len(seasons)} seasons fetched, {len(missing)} missing"
-    )
+    print(f"DONE: {len(fetched)}/{len(seasons)} seasons fetched, {len(missing)} missing")
     return 0 if fetched else 1
 
 

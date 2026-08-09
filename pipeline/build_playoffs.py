@@ -230,9 +230,7 @@ def main() -> None:
         gdoc = game_docs.get(season)
         series = (gdoc or {}).get("seriesByTeam", {}).get(tid) if gdoc else None
         pgames = player_games_idx.get((season, nn), [])
-        gfeat = (
-            player_game_features(pgames, team_pts_idx.get(season, {})) if pgames else {}
-        )
+        gfeat = player_game_features(pgames, team_pts_idx.get(season, {})) if pgames else {}
 
         row = {
             "name": name,
@@ -334,10 +332,7 @@ def main() -> None:
             f"{PATHS_OUT.relative_to(ROOT)} ({len(paths)} paths)"
         )
     else:
-        asset_msg = (
-            "assets/playoffs.json NOT written (partial cache — game "
-            "Playoff Lens stays dormant)"
-        )
+        asset_msg = "assets/playoffs.json NOT written (partial cache — game Playoff Lens stays dormant)"
 
     print(
         f"playoffs: {appearances} appearances across {len(seasons_seen)} seasons "

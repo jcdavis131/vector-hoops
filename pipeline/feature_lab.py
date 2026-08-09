@@ -42,10 +42,7 @@ def zscore_by_season(vals: dict, seasons: dict) -> dict:
     for k, v in vals.items():
         by_s[seasons[k]].append(v)
     stats = {s: (np.mean(v), np.std(v) or 1.0) for s, v in by_s.items()}
-    return {
-        k: float(np.clip((v - stats[seasons[k]][0]) / stats[seasons[k]][1], -4, 4))
-        for k, v in vals.items()
-    }
+    return {k: float(np.clip((v - stats[seasons[k]][0]) / stats[seasons[k]][1], -4, 4)) for k, v in vals.items()}
 
 
 def ridge_cv_r2(X: np.ndarray, y: np.ndarray, lam: float = 10.0) -> float:
@@ -75,17 +72,13 @@ def silhouette_sub(X: np.ndarray, k: int = 8, n: int = 1500) -> float:
     for _ in range(40):
         d = ((sub[:, None] - cents[None]) ** 2).sum(-1)
         lab = d.argmin(1)
-        cents = np.stack(
-            [sub[lab == i].mean(0) if (lab == i).any() else cents[i] for i in range(k)]
-        )
+        cents = np.stack([sub[lab == i].mean(0) if (lab == i).any() else cents[i] for i in range(k)])
     D = norm(sub[:, None] - sub[None], axis=-1)
     sil = []
     for i in range(len(sub)):
         same = lab == lab[i]
         a = D[i][same & (np.arange(len(sub)) != i)].mean() if same.sum() > 1 else 0
-        bs = [
-            D[i][lab == j].mean() for j in range(k) if j != lab[i] and (lab == j).any()
-        ]
+        bs = [D[i][lab == j].mean() for j in range(k) if j != lab[i] and (lab == j).any()]
         b = min(bs) if bs else a
         sil.append((b - a) / (max(a, b) or 1))
     return float(np.mean(sil))
@@ -134,9 +127,7 @@ def main() -> None:
     feats = {
         "minShare": zscore_by_season(min_share, seasons_map),
         "usageShare": zscore_by_season(usage_share, seasons_map),
-        "scoreRank": zscore_by_season(
-            {k: -v for k, v in score_rank.items()}, seasons_map
-        ),
+        "scoreRank": zscore_by_season({k: -v for k, v in score_rank.items()}, seasons_map),
         "leagueTenure": zscore_by_season(league_tenure, seasons_map),
         "teamTenure": zscore_by_season(team_tenure, seasons_map),
     }
@@ -155,15 +146,8 @@ def main() -> None:
         targets.append(nxt["v"][pm_idx])
         positions.append(vindex[k].get("p") or vindex[k].get("pos") or "")
     base = np.array([vindex[k]["v"] for k in rows])
-    role = np.array(
-        [
-            [feats["minShare"][k], feats["usageShare"][k], feats["scoreRank"][k]]
-            for k in rows
-        ]
-    )
-    tenure = np.array(
-        [[feats["leagueTenure"][k], feats["teamTenure"][k]] for k in rows]
-    )
+    role = np.array([[feats["minShare"][k], feats["usageShare"][k], feats["scoreRank"][k]] for k in rows])
+    tenure = np.array([[feats["leagueTenure"][k], feats["teamTenure"][k]] for k in rows])
     y = np.array(targets)
 
     sets = {
@@ -179,10 +163,7 @@ def main() -> None:
         c2 = silhouette_sub(X)
         c3 = nn_position_coherence(X, positions)
         results[name] = (c1, c2, c3)
-        print(
-            f"  {name:12s}  C1 next-PMz R2={c1:.4f}  "
-            f"C2 silhouette={c2:.4f}  C3 posNN={c3:.4f}"
-        )
+        print(f"  {name:12s}  C1 next-PMz R2={c1:.4f}  C2 silhouette={c2:.4f}  C3 posNN={c3:.4f}")
 
     b = results["base14"]
     print("\nverdicts (gate: beat base C1 without degrading C2/C3 >0.01):")
@@ -240,9 +221,7 @@ def main() -> None:
         },
         "tiers": {f"{k[0]}|{k[1]}": t for k, t in tiers.items()},
     }
-    (ASSETS / "roles.json").write_text(
-        json.dumps(out, separators=(",", ":")), encoding="utf-8"
-    )
+    (ASSETS / "roles.json").write_text(json.dumps(out, separators=(",", ":")), encoding="utf-8")
     print("\nassets/roles.json written")
 
 

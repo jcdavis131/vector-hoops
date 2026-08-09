@@ -70,10 +70,7 @@ def fetch_stats_json(
         except Exception as e:
             last_err = e
             wait = min(120, 5 * 2**attempt)
-            print(
-                f"  stats.nba.com/{endpoint}: attempt {attempt + 1} "
-                f"failed ({e}); backoff {wait}s"
-            )
+            print(f"  stats.nba.com/{endpoint}: attempt {attempt + 1} failed ({e}); backoff {wait}s")
             time.sleep(wait)
         finally:
             try:

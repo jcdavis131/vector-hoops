@@ -53,9 +53,7 @@ def compute_role_raw(
             tt[0] += g["MIN"]
             tt[1] += u
 
-        pts_by_team: dict[tuple[int, str], list[tuple[float, tuple[str, str]]]] = (
-            defaultdict(list)
-        )
+        pts_by_team: dict[tuple[int, str], list[tuple[float, tuple[str, str]]]] = defaultdict(list)
         for k, (m, u, p, tid) in agg.items():
             if k not in vindex:
                 continue

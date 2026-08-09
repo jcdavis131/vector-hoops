@@ -74,24 +74,17 @@ def most_rotated_features(Q: np.ndarray, features: list[str], k: int = 2):
     as a simple, honest proxy for how much that axis left itself)."""
     drift = 1 - np.abs(np.diag(Q))
     idx = np.argsort(-drift)[:k]
-    return [
-        {"feature": features[i], "axisDrift": round(float(drift[i]), 3)} for i in idx
-    ]
+    return [{"feature": features[i], "axisDrift": round(float(drift[i]), 3)} for i in idx]
 
 
 def all_axis_drifts(Q: np.ndarray, features: list[str]) -> list[dict]:
     drift = 1 - np.abs(np.diag(Q))
-    rows = [
-        {"feature": features[i], "axisDrift": round(float(drift[i]), 3)}
-        for i in range(len(features))
-    ]
+    rows = [{"feature": features[i], "axisDrift": round(float(drift[i]), 3)} for i in range(len(features))]
     rows.sort(key=lambda r: -r["axisDrift"])
     return rows
 
 
-def load_league_rates(
-    seasons: list[str], features: list[str]
-) -> dict[str, dict[str, float]]:
+def load_league_rates(seasons: list[str], features: list[str]) -> dict[str, dict[str, float]]:
     """Minutes-weighted league per-100 (or rate) averages from dash cache."""
     rates: dict[str, dict[str, float]] = {}
     for season in seasons:
@@ -140,9 +133,7 @@ def prior_league_average(
     to_season: str,
 ) -> float | None:
     prior = [
-        league_rates[s][feature]
-        for s in sorted(league_rates)
-        if s < to_season and feature in league_rates.get(s, {})
+        league_rates[s][feature] for s in sorted(league_rates) if s < to_season and feature in league_rates.get(s, {})
     ]
     if not prior:
         return None
@@ -200,13 +191,7 @@ def craft_stat_narrative(
     label = FEATURE_LABELS.get(feature, feature)
     cur_s = format_rate(feature, current)
     prior_s = format_rate(feature, prior)
-    drift_word = (
-        "sharply"
-        if axis_drift >= 0.06
-        else "noticeably"
-        if axis_drift >= 0.035
-        else "somewhat"
-    )
+    drift_word = "sharply" if axis_drift >= 0.06 else "noticeably" if axis_drift >= 0.035 else "somewhat"
     level_note = abs(delta_pct) >= 0.04
 
     if feature == "PLUS_MINUS":
@@ -399,8 +384,7 @@ def main() -> None:
     for p in top:
         feats = ", ".join(f"{m['feature']}({m['axisDrift']})" for m in p["mostRotated"])
         print(
-            f"  {p['from']}->{p['to']}: {p['rotationDeg']}° "
-            f"resid={p['residual']} shared={p['sharedPlayers']} [{feats}]"
+            f"  {p['from']}->{p['to']}: {p['rotationDeg']}° resid={p['residual']} shared={p['sharedPlayers']} [{feats}]"
         )
 
 

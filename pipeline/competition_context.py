@@ -99,9 +99,7 @@ def main() -> None:
     ap = argparse.ArgumentParser(description="Build competition context")
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args()
-    players = json.loads(
-        (HERE.parent / "assets" / "vectors.json").read_text(encoding="utf-8")
-    )["players"]
+    players = json.loads((HERE.parent / "assets" / "vectors.json").read_text(encoding="utf-8"))["players"]
     comp = from_logs()
     rows = sorted(
         [

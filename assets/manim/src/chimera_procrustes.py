@@ -69,15 +69,9 @@ class ChimeraEquation(Scene):
             corner_radius=CORNER_RADIUS,
         )
         donor_a_icon = Text("Donor A", font_size=16, color=TEXT, weight=BOLD)
-        donor_a_code1 = Text(
-            "v_A = f(season)", font_size=14, color=TEXT, font="JetBrains Mono"
-        )
-        donor_a_code2 = Text(
-            "48-d  |v|=1", font_size=12, color=SUBTLE_AAA, font="JetBrains Mono"
-        )
-        donor_a_content = VGroup(donor_a_icon, donor_a_code1, donor_a_code2).arrange(
-            DOWN, buff=0.08, aligned_edge=LEFT
-        )
+        donor_a_code1 = Text("v_A = f(season)", font_size=14, color=TEXT, font="JetBrains Mono")
+        donor_a_code2 = Text("48-d  |v|=1", font_size=12, color=SUBTLE_AAA, font="JetBrains Mono")
+        donor_a_content = VGroup(donor_a_icon, donor_a_code1, donor_a_code2).arrange(DOWN, buff=0.08, aligned_edge=LEFT)
         donor_a_content.move_to(donor_a_base.get_center())
         donor_a = VGroup(donor_a_base, donor_a_content)
 
@@ -88,15 +82,9 @@ class ChimeraEquation(Scene):
             corner_radius=CORNER_RADIUS,
         )
         donor_b_icon = Text("Donor B", font_size=16, color=TEXT, weight=BOLD)
-        donor_b_code1 = Text(
-            "v_B = f(season)", font_size=14, color=TEXT, font="JetBrains Mono"
-        )
-        donor_b_code2 = Text(
-            "48-d  |v|=1", font_size=12, color=SUBTLE_AAA, font="JetBrains Mono"
-        )
-        donor_b_content = VGroup(donor_b_icon, donor_b_code1, donor_b_code2).arrange(
-            DOWN, buff=0.08, aligned_edge=LEFT
-        )
+        donor_b_code1 = Text("v_B = f(season)", font_size=14, color=TEXT, font="JetBrains Mono")
+        donor_b_code2 = Text("48-d  |v|=1", font_size=12, color=SUBTLE_AAA, font="JetBrains Mono")
+        donor_b_content = VGroup(donor_b_icon, donor_b_code1, donor_b_code2).arrange(DOWN, buff=0.08, aligned_edge=LEFT)
         donor_b_content.move_to(donor_b_base.get_center())
         donor_b = VGroup(donor_b_base, donor_b_content)
 
@@ -112,9 +100,7 @@ class ChimeraEquation(Scene):
         )
         plus_group = VGroup(plus_bg, plus_text)
 
-        donor_row = VGroup(donor_a, plus_group, donor_b).arrange(
-            RIGHT, buff=0.35, aligned_edge=UP
-        )
+        donor_row = VGroup(donor_a, plus_group, donor_b).arrange(RIGHT, buff=0.35, aligned_edge=UP)
         donor_row.next_to(subtitle, DOWN, buff=0.35)
         donor_row.move_to([0, 1.05, 0])  # force centered, well above middle
 
@@ -152,9 +138,7 @@ class ChimeraEquation(Scene):
             color=SUBTLE_AAA,
             font="JetBrains Mono",
         )
-        fuse_content = VGroup(fuse_title, fuse_eq).arrange(
-            DOWN, buff=0.06, aligned_edge=LEFT
-        )
+        fuse_content = VGroup(fuse_title, fuse_eq).arrange(DOWN, buff=0.06, aligned_edge=LEFT)
         fuse_content.move_to(fuse_base.get_center())
         fuse_card = VGroup(fuse_base, fuse_content)
         fuse_card.next_to(arrow1, DOWN, buff=0.15)
@@ -177,9 +161,7 @@ class ChimeraEquation(Scene):
 
         # Final argmin card — WIDE but NOT too wide, font reduced, ensure bottom stays inside SAFE_BOTTOM
         # Use 2-line layout to prevent horizontal cutoff
-        final_base = cam_card(
-            width=7.8, height=1.15, accent_color=OKABE["blue"], corner_radius=0.08
-        )
+        final_base = cam_card(width=7.8, height=1.15, accent_color=OKABE["blue"], corner_radius=0.08)
         final_line1 = Text(
             "Chimera(A,B) = argmin r in 12,392",
             font_size=15,
@@ -199,9 +181,7 @@ class ChimeraEquation(Scene):
             color=SUBTLE_AAA,
             font="JetBrains Mono",
         )
-        final_content = VGroup(final_line1, final_line2, final_sub).arrange(
-            DOWN, buff=0.08, aligned_edge=LEFT
-        )
+        final_content = VGroup(final_line1, final_line2, final_sub).arrange(DOWN, buff=0.08, aligned_edge=LEFT)
         final_content.move_to(final_base.get_center())
         final_card = VGroup(final_base, final_content)
         final_card.next_to(arrow2, DOWN, buff=0.15)

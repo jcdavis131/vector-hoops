@@ -94,9 +94,7 @@ class EmbeddingL2(Scene):
         ).move_to(sphere_center)
         # faint inner dashed circle for slice cue
         dashed_circle = DashedVMobject(
-            Circle(
-                radius=sphere_radius, color=INK, stroke_width=1.8, stroke_opacity=0.35
-            ).move_to(sphere_center),
+            Circle(radius=sphere_radius, color=INK, stroke_width=1.8, stroke_opacity=0.35).move_to(sphere_center),
             num_dashes=28,
             dashed_ratio=0.55,
         )
@@ -119,15 +117,9 @@ class EmbeddingL2(Scene):
         w_angle = -28 * DEGREES
 
         v_raw_len = sphere_radius * 1.58
-        v_raw_end = sphere_center + v_raw_len * np.array(
-            [np.cos(v_angle), np.sin(v_angle), 0]
-        )
-        v_norm_end = sphere_center + sphere_radius * np.array(
-            [np.cos(v_angle), np.sin(v_angle), 0]
-        )
-        w_end = sphere_center + sphere_radius * np.array(
-            [np.cos(w_angle), np.sin(w_angle), 0]
-        )
+        v_raw_end = sphere_center + v_raw_len * np.array([np.cos(v_angle), np.sin(v_angle), 0])
+        v_norm_end = sphere_center + sphere_radius * np.array([np.cos(v_angle), np.sin(v_angle), 0])
+        w_end = sphere_center + sphere_radius * np.array([np.cos(w_angle), np.sin(w_angle), 0])
 
         # Raw arrow (vermillion) — longer
         v_raw = Arrow(
@@ -221,27 +213,17 @@ class EmbeddingL2(Scene):
             chip.move_to(pos_anchor)
             return chip
 
-        v_raw_chip = make_vec_chip(
-            "⬣", "v in R48 128→48", OKABE["verm"], v_raw_end + RIGHT * 1.1 + UP * 0.05
-        )
-        v_hat_chip = make_vec_chip(
-            "⬣", "v̂  ||v̂||=1", OKABE["blue"], v_norm_end + RIGHT * 0.78 + UP * 0.12
-        )
-        w_hat_chip = make_vec_chip(
-            "●", "ŵ on sphere", OKABE["sky"], w_end + RIGHT * 0.78 + DOWN * 0.12
-        )
+        v_raw_chip = make_vec_chip("⬣", "v in R48 128→48", OKABE["verm"], v_raw_end + RIGHT * 1.1 + UP * 0.05)
+        v_hat_chip = make_vec_chip("⬣", "v̂  ||v̂||=1", OKABE["blue"], v_norm_end + RIGHT * 0.78 + UP * 0.12)
+        w_hat_chip = make_vec_chip("●", "ŵ on sphere", OKABE["sky"], w_end + RIGHT * 0.78 + DOWN * 0.12)
 
         # v_sub mono small inside raw label
-        v_sub = Text(
-            "fusion 556→128→48", font_size=11, color=SUBTLE_AAA, font=MONO_STACK[0]
-        )
+        v_sub = Text("fusion 556→128→48", font_size=11, color=SUBTLE_AAA, font=MONO_STACK[0])
         v_sub.next_to(v_raw_chip, DOWN, buff=0.06).align_to(v_raw_chip, LEFT)
 
         # ── L2 formula code box — bottom center
         l2_txt = "||v||=√Σv_i²   v̂=v/||v||"
-        l2_code_group = cam_code_box(
-            l2_txt, width=4.2, font_size=16, accent=OKABE["sky"]
-        )
+        l2_code_group = cam_code_box(l2_txt, width=4.2, font_size=16, accent=OKABE["sky"])
         l2_code_group.to_edge(DOWN, buff=0.58)
         l2_code_group.set_x(-1.1)
 
@@ -281,9 +263,7 @@ class EmbeddingL2(Scene):
         arc_group = VGroup(arc_outline, arc)
 
         mid_angle = (v_angle + w_angle) / 2
-        theta_pos = sphere_center + 0.92 * np.array(
-            [np.cos(mid_angle), np.sin(mid_angle), 0]
-        )
+        theta_pos = sphere_center + 0.92 * np.array([np.cos(mid_angle), np.sin(mid_angle), 0])
         # theta chip — ink on yellow (ADA 15:1)
         theta_bg = RoundedRectangle(
             width=0.58,
@@ -294,9 +274,7 @@ class EmbeddingL2(Scene):
             stroke_color=INK,
             stroke_width=3,
         )
-        theta_txt = Text(
-            "θ", font_size=18, color=INK, font=SANS_STACK[0], weight=BOLD
-        ).move_to(theta_bg)
+        theta_txt = Text("θ", font_size=18, color=INK, font=SANS_STACK[0], weight=BOLD).move_to(theta_bg)
         theta_chip = VGroup(theta_bg, theta_txt).move_to(theta_pos)
 
         # similarity legend — bottom right
@@ -311,9 +289,7 @@ class EmbeddingL2(Scene):
         )
         sim_t2 = Text("∼0 orthog", font_size=11, color=SUBTLE_AAA, font=MONO_STACK[0])
         sim_t3 = Text("∼-1 opp", font_size=11, color=OKABE["verm"], font=MONO_STACK[0])
-        sim_row = (
-            VGroup(sim_t1, sim_t2, sim_t3).arrange(RIGHT, buff=0.22).move_to(sim_row_bg)
-        )
+        sim_row = VGroup(sim_t1, sim_t2, sim_t3).arrange(RIGHT, buff=0.22).move_to(sim_row_bg)
         sim_group = VGroup(sim_row_bg, sim_row)
         sim_group.set_opacity(0)
 

@@ -68,18 +68,14 @@ def main() -> None:
     skill_names = [sk["key"] for sk in skills_doc.get("skills", [])]
     grade_rows = skills_doc.get("grades") or []
 
-    assign_doc = (
-        json.loads(ASSIGN.read_text(encoding="utf-8")) if ASSIGN.exists() else {}
-    )
+    assign_doc = json.loads(ASSIGN.read_text(encoding="utf-8")) if ASSIGN.exists() else {}
     assign_rows = assign_doc.get("assignments") or []
     id_by_key: dict[str, int] = {}
     for p in vec["players"]:
         id_by_key[f"{p['name']}|{p['season']}"] = int(p["id"])
 
     rosters = json.loads(ROSTERS.read_text(encoding="utf-8"))
-    team_by_name = {
-        a["name"]: a.get("team", "") for a in rosters.get("activePlayers", [])
-    }
+    team_by_name = {a["name"]: a.get("team", "") for a in rosters.get("activePlayers", [])}
 
     index: dict[tuple[str, str], int] = {}
     for i, (n, s) in enumerate(zip(names, seasons, strict=False)):
@@ -95,22 +91,15 @@ def main() -> None:
             continue
 
         arch_idx = int(np.argmax(arch_logits[i]))
-        game_arch = (
-            cluster_names[arch_idx] if arch_idx < len(cluster_names) else str(arch_idx)
-        )
+        game_arch = cluster_names[arch_idx] if arch_idx < len(cluster_names) else str(arch_idx)
         obs_key = f"{name}|{from_season}"
         assign = assign_rows[id_by_key[obs_key]] if obs_key in id_by_key else {}
-        mtnn_arch = (
-            assign.get("mtnnGlobalName") or assign.get("eraNativeName") or game_arch
-        )
+        mtnn_arch = assign.get("mtnnGlobalName") or assign.get("eraNativeName") or game_arch
 
         obs = {}
         if obs_key in id_by_key:
             grade_row = grade_rows[id_by_key[obs_key]]
-            obs = {
-                skill_names[j]: grade_row[j]
-                for j in range(min(len(skill_names), len(grade_row)))
-            }
+            obs = {skill_names[j]: grade_row[j] for j in range(min(len(skill_names), len(grade_row)))}
         proj_skills = {}
         for k, sk in zip(skill_keys, skill_pred[i], strict=False):
             if not np.isfinite(sk):
@@ -125,13 +114,7 @@ def main() -> None:
                     continue
                 proj_stats_z[k] = round(float(np.clip(z, -4, 4)), 3)
 
-        conf = float(
-            (
-                lambda lg: (np.exp(lg - lg.max()) / np.exp(lg - lg.max()).sum())[
-                    arch_idx
-                ]
-            )(arch_logits[i])
-        )
+        conf = float((lambda lg: (np.exp(lg - lg.max()) / np.exp(lg - lg.max()).sum())[arch_idx])(arch_logits[i]))
         players.append(
             {
                 "name": name,
@@ -176,9 +159,7 @@ def main() -> None:
     }
     ASSETS.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(payload, separators=(",", ":")), encoding="utf-8")
-    print(
-        f"wrote {OUT} — {len(players)} charted players projected {from_season} -> {to_season}"
-    )
+    print(f"wrote {OUT} — {len(players)} charted players projected {from_season} -> {to_season}")
 
     # Predicted-vs-actual eval for all seasons (pending on latest). Independent
     # of this roster slice — safe to run even if rosters are incomplete.

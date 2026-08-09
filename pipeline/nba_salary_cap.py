@@ -166,17 +166,22 @@ REVENUE_SHARING_NOTE: dict[str, str] = {
     "2011-plus": "2011 CBA enhanced revenue sharing — all 30 share ~post-tax pool + low-revenue teams receive ~$15-20M/yr extra. Does not change cap grading but explains why small payroll can still be competitive.",
 }
 
+
 def cap_for_season(season: str) -> float | None:
     return CAP_BY_SEASON.get(season)
+
 
 def tax_for_season(season: str) -> float | None:
     return TAX_THRESHOLD_BY_SEASON.get(season)
 
+
 def apron1_for_season(season: str) -> float | None:
     return APRON1_BY_SEASON.get(season)
 
+
 def apron2_for_season(season: str) -> float | None:
     return APRON2_BY_SEASON.get(season)
+
 
 def rules_for_season(season: str) -> dict:
     """Full environment snapshot for a season — used by build_front_office for era-aware grades."""
@@ -192,11 +197,11 @@ def rules_for_season(season: str) -> dict:
     try:
         # naive prior = season start year -1 -> label e.g. 2024-25 prior 2023-24
         sy = int(season.split("-")[0])
-        prior_label = f"{sy-1}-{str(sy)[-2:]}"
+        prior_label = f"{sy - 1}-{str(sy)[-2:]}"
         prior = CAP_BY_SEASON.get(prior_label)
         if prior and cap:
             growth = (cap - prior) / prior
-    except:
+    except Exception:
         pass
     return {
         "season": season,
@@ -212,7 +217,9 @@ def rules_for_season(season: str) -> dict:
         "notes": [
             f"CBA era: {cba}",
             f"TV era: {tv}",
-            f"Tax pool sharing: {REVENUE_SHARING_NOTE['2011-plus'] if sy>=2011 else REVENUE_SHARING_NOTE['default']}" if 'sy' in locals() else REVENUE_SHARING_NOTE['default'],
+            f"Tax pool sharing: {REVENUE_SHARING_NOTE['2011-plus'] if sy >= 2011 else REVENUE_SHARING_NOTE['default']}"
+            if "sy" in locals()
+            else REVENUE_SHARING_NOTE["default"],
         ],
-        "spike_flag": "2016-17 SPIKE YEAR 32% jump — distorts raw cap%" if season=="2016-17" else None,
+        "spike_flag": "2016-17 SPIKE YEAR 32% jump — distorts raw cap%" if season == "2016-17" else None,
     }

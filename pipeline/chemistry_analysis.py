@@ -82,9 +82,7 @@ def main() -> None:
         return bisect.bisect_left(sorted_vals, v) / len(sorted_vals)
 
     for p in out_pairs:
-        p["chemistry"] = round(
-            0.5 * pctl(comps, p["complementarity"]) + 0.5 * pctl(pms, p["jointPM"]), 3
-        )
+        p["chemistry"] = round(0.5 * pctl(comps, p["complementarity"]) + 0.5 * pctl(pms, p["jointPM"]), 3)
     out_pairs.sort(key=lambda p: -p["chemistry"])
 
     (ASSETS / "chemistry.json").write_text(

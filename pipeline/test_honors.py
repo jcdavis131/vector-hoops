@@ -59,9 +59,7 @@ def main() -> None:
     # Award year 2023-24 -> lagged row on 2024-25 season
     # rows carry vectors.json display names (ASCII-folded), so fold the key
     jok_lag = by.get((canonical_name("Nikola Jokić"), "2024-25"))
-    check(
-        jok_lag is not None, "Jokić 2024-25 has lagged honors row (from 2023-24 awards)"
-    )
+    check(jok_lag is not None, "Jokić 2024-25 has lagged honors row (from 2023-24 awards)")
     if jok_lag:
         check(
             jok_lag.get("HON_ALL_NBA_TEAM_LAG") == 3.0,
@@ -75,8 +73,7 @@ def main() -> None:
     # Vote-getter without a top-3 All-NBA slot (ORV tier)
     iverson_cont = contemp.get("Allen Iverson|1996-97", {})
     check(
-        iverson_cont.get("allNbaVotePts", 0) > 0
-        and iverson_cont.get("allNbaTeam", 1) == 0,
+        iverson_cont.get("allNbaVotePts", 0) > 0 and iverson_cont.get("allNbaTeam", 1) == 0,
         "Iverson 1996-97 contemporaneous: vote pts without top-3 team slot",
     )
 
@@ -143,10 +140,7 @@ def main() -> None:
     if FAILURES:
         print(f"{len(FAILURES)} gate(s) FAILED")
         sys.exit(1)
-    print(
-        "all honors gates passed"
-        + ("" if real else " (fixture mode — run fetch_honors.py for full coverage)")
-    )
+    print("all honors gates passed" + ("" if real else " (fixture mode — run fetch_honors.py for full coverage)"))
 
 
 if __name__ == "__main__":

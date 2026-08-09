@@ -55,18 +55,14 @@ POSITIONS = ["PG", "SG", "SF", "PF", "C"]
 
 def norm_name(name: str) -> str:
     s = unicodedata.normalize("NFKD", name)
-    return re.sub(
-        r"[^a-z0-9]", "", "".join(c for c in s if not unicodedata.combining(c)).lower()
-    )
+    return re.sub(r"[^a-z0-9]", "", "".join(c for c in s if not unicodedata.combining(c)).lower())
 
 
 def season_start(season: str) -> int:
     return int(season[:4])
 
 
-def load_bio() -> tuple[
-    dict[tuple[str, str], tuple[float, float]], set[tuple[str, str]]
-]:
+def load_bio() -> tuple[dict[tuple[str, str], tuple[float, float]], set[tuple[str, str]]]:
     """Return (name, season) -> (draft_z, age_z) and set of rows with real bio."""
     out: dict[tuple[str, str], tuple[float, float]] = {}
     present: set[tuple[str, str]] = set()
@@ -76,29 +72,17 @@ def load_bio() -> tuple[
             rows = json.loads(path.read_text(encoding="utf-8"))
         except Exception:
             continue
-        drafts = [
-            float(r["DRAFT_NUMBER"]) for r in rows if r.get("DRAFT_NUMBER") is not None
-        ]
+        drafts = [float(r["DRAFT_NUMBER"]) for r in rows if r.get("DRAFT_NUMBER") is not None]
         ages = [float(r["AGE"]) for r in rows if r.get("AGE") is not None]
-        d_mu, d_sd = (
-            (float(np.mean(drafts)), float(np.std(drafts)) or 1.0)
-            if drafts
-            else (30.5, 15.0)
-        )
-        a_mu, a_sd = (
-            (float(np.mean(ages)), float(np.std(ages)) or 1.0) if ages else (27.0, 4.0)
-        )
+        d_mu, d_sd = (float(np.mean(drafts)), float(np.std(drafts)) or 1.0) if drafts else (30.5, 15.0)
+        a_mu, a_sd = (float(np.mean(ages)), float(np.std(ages)) or 1.0) if ages else (27.0, 4.0)
         for r in rows:
             name = str(r.get("PLAYER_NAME", ""))
             if not name:
                 continue
             key = (name, season)
             present.add(key)
-            dz = (
-                (float(r["DRAFT_NUMBER"]) - d_mu) / d_sd
-                if r.get("DRAFT_NUMBER") is not None
-                else 0.0
-            )
+            dz = (float(r["DRAFT_NUMBER"]) - d_mu) / d_sd if r.get("DRAFT_NUMBER") is not None else 0.0
             az = (float(r["AGE"]) - a_mu) / a_sd if r.get("AGE") is not None else 0.0
             out[key] = (dz, az)
     return out, present
@@ -118,9 +102,7 @@ def load_gp() -> dict[tuple[str, str], int]:
     return gp
 
 
-def build_features(
-    draft_z: float, age_z: float, pos: int, lag1: np.ndarray | None
-) -> np.ndarray | None:
+def build_features(draft_z: float, age_z: float, pos: int, lag1: np.ndarray | None) -> np.ndarray | None:
     if pos < 0 or lag1 is None:
         return None
     onehot = np.zeros(len(POSITIONS))
@@ -140,9 +122,7 @@ def main() -> None:
     ap.add_argument("--dry-run", action="store_true", help="stats only; no write")
     args = ap.parse_args()
 
-    players = json.loads((ASSETS / "vectors.json").read_text(encoding="utf-8"))[
-        "players"
-    ]
+    players = json.loads((ASSETS / "vectors.json").read_text(encoding="utf-8"))["players"]
     bio, bio_present = load_bio()
     gp_map = load_gp()
 
@@ -152,9 +132,7 @@ def main() -> None:
 
     records: list[dict] = []
     for p in players:
-        history = sorted(
-            by_name[norm_name(p["name"])], key=lambda x: season_start(x["season"])
-        )
+        history = sorted(by_name[norm_name(p["name"])], key=lambda x: season_start(x["season"]))
         lag1 = next(
             (
                 np.array(x["v"], dtype=np.float64)

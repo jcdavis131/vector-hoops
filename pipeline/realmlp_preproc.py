@@ -175,10 +175,7 @@ def audit_current_scaling(Z: np.ndarray, manifest: dict) -> dict:
         "mean_abs_z": float(np.abs(Z).mean()),
         "outlier_rate_gt3": float((np.abs(Z) > 3).mean()),
         "outlier_rate_gt4": float((np.abs(Z) > 4).mean()),
-        "worst_features": [
-            {"feature": manifest["features"][i], "outlier_gt3": float(outlier[i])}
-            for i in top
-        ],
+        "worst_features": [{"feature": manifest["features"][i], "outlier_gt3": float(outlier[i])} for i in top],
     }
 
 

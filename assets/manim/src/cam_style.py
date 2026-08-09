@@ -111,9 +111,7 @@ PAPER_DOT: str = "#E8E0C8"  # faint blueprint dots
 CARD_FILL: str = "#FFFFFF"  # card fill white
 SHADOW: str = "#111111"  # hard shadow
 TEXT: str = "#111111"  # primary text
-SUBTLE: str = (
-    "#666666"  # subtle label — use only >=24px or replace with #585858 for AAA on 18px
-)
+SUBTLE: str = "#666666"  # subtle label — use only >=24px or replace with #585858 for AAA on 18px
 SUBTLE_AAA: str = "#585858"  # AAA-safe subtle for 18px — 7.03:1 on #FFFEF7 PASS AAA
 
 # Okabe-Ito — colorblind-safe flat palette (Sunni AAA gate)
@@ -217,15 +215,11 @@ def contrast_ratio(fg: str, bg: str) -> float:
     return (lighter + 0.05) / (darker + 0.05)
 
 
-def check_ada_contrast(
-    fg: str, bg: str, threshold: float = 7.0, label: str = ""
-) -> dict:
+def check_ada_contrast(fg: str, bg: str, threshold: float = 7.0, label: str = "") -> dict:
     ratio = contrast_ratio(fg, bg)
     passed = ratio >= threshold
     if not passed:
-        print(
-            f"[ADA WARN] {label} contrast {ratio:.2f}:1 {fg} on {bg} < {threshold} AAA"
-        )
+        print(f"[ADA WARN] {label} contrast {ratio:.2f}:1 {fg} on {bg} < {threshold} AAA")
     return {"ratio": ratio, "pass": passed, "fg": fg, "bg": bg, "label": label}
 
 
@@ -374,9 +368,7 @@ def cam_card(
     from manim import VGroup
 
     shadow = _make_shadow(width, height, corner_radius) if with_shadow else None
-    card = _make_card_base(
-        width, height, fill=fill_color, corner=corner_radius, stroke_color=stroke_color
-    )
+    card = _make_card_base(width, height, fill=fill_color, corner=corner_radius, stroke_color=stroke_color)
 
     parts = []
     if shadow:
@@ -496,9 +488,7 @@ def cam_code_box(
     return VGroup(card, code)
 
 
-def cam_sketch_arrow(
-    start, end, color: str = INK, stroke_width: float = 4.0, with_tip: bool = True
-):
+def cam_sketch_arrow(start, end, color: str = INK, stroke_width: float = 4.0, with_tip: bool = True):
     """Hand-drawn sketch arrow but clean — no glow, hard ink."""
     if not MANIM_AVAILABLE:
         raise RuntimeError("Manim not available")
@@ -606,9 +596,7 @@ def create_cam_title(
         raise RuntimeError("Manim not available")
     from manim import VGroup
 
-    title_text = Text(
-        title, font_size=TITLE_SIZE, color=TEXT, font=SANS_STACK[0], weight="BOLD"
-    )
+    title_text = Text(title, font_size=TITLE_SIZE, color=TEXT, font=SANS_STACK[0], weight="BOLD")
     card_w = max(5.8, title_text.width + 1.2)
     card_h = 1.2 + (0.6 if subtitle else 0)
     card = cam_card(width=card_w, height=card_h, accent_color=accent_color)
@@ -618,9 +606,7 @@ def create_cam_title(
     items = [card, title_text]
 
     if subtitle:
-        sub = Text(
-            subtitle, font_size=CAPTION_SIZE, color=SUBTLE_AAA, font=MONO_STACK[0]
-        )
+        sub = Text(subtitle, font_size=CAPTION_SIZE, color=SUBTLE_AAA, font=MONO_STACK[0])
         sub.next_to(title_text, DOWN, buff=0.12)
         items.append(sub)
 
@@ -651,9 +637,7 @@ def create_family_chip(
     label = f"{icon} {family_name}" + (f" ({count})" if count is not None else "")
 
     # Core text
-    txt = Text(
-        label, font_size=LABEL_SIZE - 2, color=INK, font=MONO_STACK[0], weight="BOLD"
-    )
+    txt = Text(label, font_size=LABEL_SIZE - 2, color=INK, font=MONO_STACK[0], weight="BOLD")
 
     chip_w = txt.width + 0.6
     chip_h = txt.height + 0.32

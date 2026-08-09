@@ -7,6 +7,7 @@ from pathlib import Path
 
 import numpy as np
 import torch
+from _torch_safe import safe_torch_load
 from mtnn_validation import build_validation_report, role_labels_from_context
 from train_mtnn import (
     BBREF_FEATURES,
@@ -24,8 +25,6 @@ from train_mtnn import (
     split_by_family,
 )
 
-from _torch_safe import safe_torch_load
-
 ROOT = Path(__file__).resolve().parents[1]
 CHECKPOINT = DATA_DIR / "mtnn_best.pt"
 REPORT = DATA_DIR / "mtnn_report.json"
@@ -37,11 +36,7 @@ def main() -> None:
     args = checkpoint["args"]
     Z, M, names, seasons, pids, clusters, positions, _, manifest = load_bundle()
     families = family_slices(manifest)
-    excluded = {
-        value.strip()
-        for value in args.get("exclude_families", "").split(",")
-        if value.strip()
-    }
+    excluded = {value.strip() for value in args.get("exclude_families", "").split(",") if value.strip()}
     families = {name: cols for name, cols in families.items() if name not in excluded}
     game_cols = game_feature_cols(manifest)
     form_cols = feature_cols(manifest, FORM_FEATURES)
@@ -90,9 +85,7 @@ def main() -> None:
         clusters=clusters,
         positions=positions,
         seasons=seasons,
-        role_labels=role_labels_from_context(
-            names, seasons, DATA_DIR / "role_context.json"
-        ),
+        role_labels=role_labels_from_context(names, seasons, DATA_DIR / "role_context.json"),
         next_profile_pred=heads["next_profile"].numpy().astype(np.float32),
         game_profile_target=Z[:, game_cols],
         next_index=next_index,
