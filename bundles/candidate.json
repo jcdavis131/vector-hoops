@@ -1,0 +1,18 @@
+{
+  "overall": 8.9,
+  "version": "v6.8",
+  "zero_deps": true,
+  "method": "FOR.35D+.35C+.30F+ring+valα W*=W+2.5*PO+0.12*realG · W*/$M=W*/Pay · W/$B=W/$Val · Valα ±2 brand lift",
+  "features": ["valuation_m","wins_per_b","weighted_wins_per_b","po_wins_per_b","valuation_score","po_wins_per_m","weighted_wpm_capnorm"],
+  "teams_html_size": 14022,
+  "teams_html_limit": 28672,
+  "checks": {
+    "zero_deps": true,
+    "allow": "acne:./src",
+    "triple_write": ["bundles/ultra/runs/valuation-20260809/timeline.jsonl","dottie/pipeline/runs/valuation-20260809/timeline.jsonl",".scout/missions/valuation/timeline/timeline.jsonl"],
+    "valuation_entries": 360,
+    "ou_entries": 944,
+    "props_entries": 582,
+    "cap_history_seasons": 31
+  }
+}
