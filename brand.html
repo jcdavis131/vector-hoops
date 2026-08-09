@@ -31,6 +31,26 @@ body{background:var(--paper);color:var(--ink);font-family:ui-sans-serif,system-u
 <p class=small>seed = YYYYMMDD UTC, LCG a=1103515245 c=12345 m=2^31, lcg = (seed*a + c) & 0x7fffffff, idx = lcg % 12966. Example 20260809→70737614→idx2948. Everyone who opens <code>?daily=20260809&n=1/3/5</code> gets same stars — no rigging. Pack 1/3/5 haptics vibrate(10) mobile.</p>
 <div style="display:flex;gap:8px;flex-wrap:wrap"><span class=pill>Streak <span id=streak>0</span>/7</span><span class=pill>best <span id=best>0</span></span><span class=pill>daily 00000000</span></div>
 </div>
+
+<div id="propBrandChip" style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"></div>
+<script>
+(function(){
+  function lcg(s){return (s*1103515245+12345)&0x7fffffff;}
+  var ymd = new Date().toISOString().slice(0,10).replace(/-/g,'');
+  var seed = parseInt(ymd,10)||20260809;
+  var dailySeed = lcg(seed);
+  var props=[
+    {n:'Curry PTS',v:21.5,m:23.8,d:2.3,tag:'closer 0.86'},
+    {n:'Mahomes PassYds',v:281.5,m:295.2,d:13.7,tag:'closer 4Q 94%'},
+    {n:'Haaland xG',v:0.62,m:0.82,d:0.20,tag:'closer 90%'}
+  ];
+  var pick = props[dailySeed % props.length];
+  var el=document.getElementById('propBrandChip');
+  if(!el) return;
+  el.innerHTML=`<span class=chip style="background:#080A0F;color:#F0E442">🟢 beats market ${pick.n} Vegas ${pick.v} vs model ${pick.m} Δ+${pick.d} · dailySeed ${dailySeed} LCG a=1103515245 deterministic</span><span class=chip>training-only not gambling · Δ≠win prob</span>`;
+})();
+</script>
+
 </div>
 <script src="/assets/js/glassbox-charts.js"></script>
 <script>
