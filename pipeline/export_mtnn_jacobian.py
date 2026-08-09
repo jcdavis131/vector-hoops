@@ -76,6 +76,8 @@ import numpy as np
 import torch
 import train_mtnn as T
 
+from _torch_safe import safe_torch_load
+
 HERE = Path(__file__).resolve().parent
 DATA = HERE / "data"
 ASSETS = HERE.parent / "assets"
@@ -446,7 +448,7 @@ def main() -> None:
         raise SystemExit(f"missing {CKPT} — train first")
 
     print(f"device: {device}")
-    ckpt = torch.load(CKPT, map_location=device, weights_only=False)
+    ckpt = safe_torch_load(CKPT, map_location=device)
     ckpt_fams = families_from_ckpt(ckpt["model"])
     print(f"checkpoint families: {len(ckpt_fams)}")
     npz, manifest, fams, matrix_name = load_matrix_for(ckpt_fams)

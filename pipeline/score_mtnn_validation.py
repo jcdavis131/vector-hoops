@@ -24,6 +24,8 @@ from train_mtnn import (
     split_by_family,
 )
 
+from _torch_safe import safe_torch_load
+
 ROOT = Path(__file__).resolve().parents[1]
 CHECKPOINT = DATA_DIR / "mtnn_best.pt"
 REPORT = DATA_DIR / "mtnn_report.json"
@@ -31,7 +33,7 @@ OUT = DATA_DIR / "mtnn_validation_baseline.json"
 
 
 def main() -> None:
-    checkpoint = torch.load(CHECKPOINT, map_location="cpu", weights_only=False)
+    checkpoint = safe_torch_load(CHECKPOINT, map_location="cpu")
     args = checkpoint["args"]
     Z, M, names, seasons, pids, clusters, positions, _, manifest = load_bundle()
     families = family_slices(manifest)

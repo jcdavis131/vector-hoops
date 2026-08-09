@@ -57,6 +57,7 @@ try:
     import torch
     import torch.nn as nn
     import torch.optim as optim
+    from _torch_safe import safe_torch_load
     TORCH = True
     torch.manual_seed(SEED)
     if torch.cuda.is_available():
@@ -180,7 +181,7 @@ class CheckpointManager:
             except Exception:
                 pass
         try:
-            ckpt = torch.load(self.latest_pt, map_location="cpu")
+            ckpt = safe_torch_load(self.latest_pt, map_location="cpu")
             if model and "model_state" in ckpt and ckpt["model_state"]:
                 model.load_state_dict(ckpt["model_state"])
                 print(f"[ckpt] loaded model epoch {ckpt.get('epoch')} loss {ckpt.get('loss'):.4f}")
@@ -200,7 +201,7 @@ class CheckpointManager:
             cands = sorted(self.root.glob(f"mt_{self.version}_*.pt"), key=lambda p: p.stat().st_mtime, reverse=True)
             for c in cands[1:]:
                 try:
-                    ckpt = torch.load(c, map_location="cpu")
+                    ckpt = safe_torch_load(c, map_location="cpu")
                     import shutil
                     shutil.copyfile(c, self.latest_pt)
                     print(f"[ckpt] rollback to {c}")

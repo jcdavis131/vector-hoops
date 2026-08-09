@@ -231,10 +231,11 @@ def main() -> None:
     ckpt_path = DATA / "mtnn_best.pt"
     if ckpt_path.exists():
         try:
-            import torch  # local import: viz export must work without torch
+            import torch  # noqa: F401  local import: viz export must work without torch
+            from _torch_safe import safe_torch_load
 
-            ckpt_args = torch.load(
-                ckpt_path, map_location="cpu", weights_only=False
+            ckpt_args = safe_torch_load(
+                ckpt_path, map_location="cpu"
             ).get("args", {})
         except Exception as exc:
             print(f"  warn: could not read checkpoint args ({exc}); using defaults")
