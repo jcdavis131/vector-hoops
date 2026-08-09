@@ -1,135 +1,93 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Brand / Sponsor — Wins Into Story | Vector Hoops</title>
-<meta name="description" content="Forbes $Val to Wins/$B → sponsor story. Brand value defined as franchise valuation operationalized.">
-<meta name="theme-color" content="#080A0F">
-<meta property="og:title" content="Vector Hoops — Brand / Sponsor">
-<meta property="og:description" content="Wins Into Story: Forbes $Val GSW 9.14B NYK 7.5B → Wins/$B">
-<meta property="og:image" content="/assets/og-1200x630.png">
-<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
-<link rel="manifest" href="/assets/manifest.json">
-<link rel="icon" href="/assets/icon-192.png">
-<style>
-:root{--bg:#080A0F;--fg:#E6EAF2;--mut:#9AA3B8;--line:#1D2333;--acc:#7CE3FF;--acc2:#FFD76A;--card:#0F1320;--ok:#5CFF9A}
-*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--fg);font:14px/1.5 ui-sans,system-ui,-apple-system,Segoe UI,Roboto}
-a{color:var(--acc);text-decoration:none}a:hover{text-decoration:underline}
-.wrap{max-width:1040px;margin:0 auto;padding:24px}
-.top{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:18px}
-.badge{font:600 11px/1 ui-mono,monospace;letter-spacing:.08em;color:var(--acc);border:1px solid #21304A;background:#0C1A2A;padding:6px 8px;border-radius:999px}
-h1{font:700 28px/1.1 ui-sans,system-ui;margin:0}h1 span{color:var(--acc2)}
-.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:12px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px}
-.k{font:600 11px/1 ui-mono,monospace;color:var(--mut);text-transform:uppercase;letter-spacing:.07em}
-.v{font:700 18px/1.2 ui-sans,system-ui;margin-top:6px}
-.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
-.small{font-size:12px;color:var(--mut)}
-.tbl{width:100%;border-collapse:collapse;font-size:13px}.tbl th,.tbl td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}
-.tbl th{cursor:pointer;color:var(--acc);font-weight:700;user-select:none}.tbl th:hover{color:#fff}.tbl tr:hover td{background:#121A2E}
-.pill{display:inline-block;padding:2px 7px;border-radius:999px;border:1px solid #2A3658;background:#111D36;color:#B8D0FF;font:600 11px/1.4 ui-mono,monospace}
-.btn{display:inline-flex;gap:8px;align-items:center;padding:10px 14px;border-radius:10px;border:1px solid #29406A;background:#0E1E36;color:#E6EAF2;font-weight:700;cursor:pointer}
-.btn-primary{background:linear-gradient(180deg,#1A2F5E,#112040);border-color:#3A5FA8}
-hr{border:none;border-top:1px solid var(--line);margin:16px 0}
-@media(max-width:800px){.grid{grid-template-columns:1fr}.span{grid-column:auto!important}}
-</style>
-</head>
-<body>
-<div class="wrap">
-<div class="top"><div class="badge">VECTOR HOOPS × BRAND LAB</div><a href="/" class="small">← vector-hoops</a></div>
-<h1>Brand / Sponsor <span>— Wins Into Story</span></h1>
-<p class="small" style="max-width:760px;margin:8px 0 14px">Turn Forbes $Val into sponsor narrative. GSW 9.14B expensive wins, small-market efficiency spikes. We operationalize visibility as real playoff minutes eyeball-sec, weighted wins, and closer-fit, so story ≠ vanity.</p>
-
-<div class="grid">
-<div class="card" style="grid-column:span 3"><div class="k">Forbes $Val anchor</div><div class="v mono">GSW 9.14B<br>NYK 7.5B</div><div class="small">Top of league → wins must justify premium</div></div>
-<div class="card" style="grid-column:span 3"><div class="k">Core KPI</div><div class="v">Wins/$B / W*/$B / PO/$B</div><div class="small">Sortable; W* = W+2.5*POwins, PO weighted</div></div>
-<div class="card" style="grid-column:span 3"><div class="k">YoY growth</div><div class="v">ValΔ% YoY</div><div class="small">valuation_growth_pct from Forbes track</div></div>
-<div class="card" style="grid-column:span 3"><div class="k">Visibility = playoff mins</div><div class="v">Eyeball-sec</div><div class="small">real playoff minutes, not proxy. +2.5× weight</div></div>
-
-<div class="card" style="grid-column:span 4"><div class="k">Closer-fit tag</div><div class="v mono">NN 98.2% pure</div><div class="small">neutral / hunted / closer — stays on floor in crunch, not hunted off</div></div>
-<div class="card" style="grid-column:span 4"><div class="k">Chimera embeddings</div><div class="v mono">20,719×64-d · 12 arch</div><div class="small">archetype_sep 0.867 · lift 0.8116 · closest wins-plausible story</div></div>
-<div class="card" style="grid-column:span 4"><div class="k">Rising star finder</div><div class="v mono">582 props avg -1.02</div><div class="small">SAS 16 tracked +5.7 Wemby rookie BPM surge for partner lift</div></div>
-
-<div class="card" style="grid-column:span 7">
-<div class="k">Interactive table — sortable Wins/$B, ValΔ%, PO/$B via front_office.json fetch</div>
-<div style="overflow:auto;max-height:340px;margin-top:8px"><table class="tbl" id="t"><thead><tr>
-<th data-k="abbr">TEAM</th><th data-k="wins_per_b" title="Wins/$B">Wins/$B ▲▼</th><th data-k="weighted" title="W*/$B">W*/$B ▲▼</th><th data-k="po_per_b" title="PO/$B">PO/$B ▲▼</th><th data-k="growth" title="ValΔ%">ValΔ% ▲▼</th><th data-k="valuation">Val $B</th>
-</tr></thead><tbody id="tb"><tr><td colspan=6 class="small">loading front_office.json…</td></tr></tbody></table></div>
-<div class="small" style="margin-top:6px">Source: <span class="mono">assets/front_office.json</span> · tries <span class="mono">/assets/front_office.json</span> then <span class="mono">../../assets/front_office.json</span>. Construct: wins_per_b = wins / valuation_b. W* = wins + 2.5×POwins.</div>
+<!doctype html><html lang=en><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Brand — Wins into Story — Vector Hoops</title><meta name=description content="FOR into chips, rising-role A0 declining-role A3, Week Warrior copy, same-link-same-stars, market size vs wins, Vegas beat."><link rel=stylesheet href="/assets/shell.css"><link rel=stylesheet href="/assets/teams.css"><style>
+:root{--ink:#1A150F;--paper:#FFFEF7;--void:#080A0F;--mustard:#F0E442}
+body{background:var(--paper);color:var(--ink);font-family:ui-sans-serif,system-ui}
+.card{background:#fff;border:2.2px solid var(--ink);border-radius:16px;box-shadow:4px 4px 0 var(--ink);padding:12px}
+.pill{display:inline-flex;align-items:center;gap:6px;border:1.6px solid var(--ink);border-radius:999px;padding:4px 10px;font-family:ui-monospace,monospace;font-size:11px;font-weight:800;background:#fff;box-shadow:1.5px 1.5px 0 var(--ink)}
+.hd{font-family:"Architects Daughter",ui-monospace,monospace;font-weight:900}
+.main{max-width:1160px;margin:0 auto;padding:12px 12px 96px;display:flex;flex-direction:column;gap:12px}
+.input{border:2px solid var(--ink);border-radius:10px;padding:10px 12px;font-size:14px;width:100%;background:#fff;box-shadow:2px 2px 0 var(--ink)}
+.btn{border:2px solid var(--ink);border-radius:10px;padding:10px 14px;font-weight:900;background:#fff;font-family:ui-monospace,monospace;box-shadow:2px 2px 0 var(--ink);cursor:pointer}
+.small{font-size:12px;opacity:.78;line-height:1.45}
+.chip{border:1.8px solid var(--ink);border-radius:999px;padding:5px 10px;background:#FFFEF7;font-size:12px;font-weight:800;display:inline-flex;gap:6px;align-items:center;box-shadow:1.5px 1.5px 0 var(--ink);margin:2px}
+.story{display:flex;flex-wrap:wrap;gap:6px}
+</style><body>
+<nav class=site-nav><a class=site-nav__brand href="/">VECTOR<span style=color:#D55E00>HOOPS</span></a><div class=site-nav__links><a href="/play">Play</a><a href="/teams">Teams</a><a href="/players">Players</a><a href="/model">Lab</a><a href="/methods">Methods</a></div></nav>
+<div class=main>
+<div class=card style="background:#080A0F;color:#FFFEF7;border-color:#080A0F">
+<div style="display:flex;gap:8px;flex-wrap:wrap"><span class=pill style="background:#F0E442;color:#1A150F">Brand POV · Wins into Story</span><span class="pill" style="background:#fff;color:#1A150F">same-link-same-stars · Week Warrior 7-dot streak</span><span class=pill style="background:#fff;color:#1A150F">Market size vs wins · Vegas beat chip · Val W/$B</span></div>
+<h1 class=hd style="margin:8px 0 6px;font-size:clamp(26px,5vw,38px)">Make wins mean something you can share</h1>
+<p style="margin:0;max-width:74ch;font-size:13.5px;line-height:1.6;color:#E8E6E1">Every FOR component turns into a chip you can copy. Rising-role A0 vs declining-role A3 tags drive TikTok-style narratives. No vibes — recomputable from source. Week Warrior streak keeps days alive — 7 in a row = badge.</p>
 </div>
 
-<div class="card" style="grid-column:span 5">
-<div class="k">Construct Validity</div>
-<div class="small" style="margin-top:6px"><b>Brand value defined as franchise valuation operationalized.</b> Operationalized via Forbes 2024-25 team valuation_m / billion + YoY growth + revenue_m. Threats: TV deal growth confound (new national media rights lift all teams ~18-30% inflates valuation without local brand work), market-size confound (NY/LA/GWS premium ≠ brand execution), playoff recency bias. We mitigate with Wins/$B normalization and PO/$B visibility lock to real playoff minutes eyeball sec.</div>
-<hr>
-<div class="k">Campaign OG</div><div class="small mono">1200×630 #080A0F · dark premium, gold accent, no vanity logos. Export-ready for sponsor deck.</div>
-<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><span class="pill">Closer-fit NN 98.2% pure</span><span class="pill">arch 12 sep 0.867</span><span class="pill">582 props -1.02 avg</span></div>
+<div class=card>
+<div style="display:flex;gap:8px;flex-wrap:wrap"><select id=teamSelect class=input style="flex:1 1 200px"></select><button id=btnCopy class=btn>Copy story link</button><button id=btnStreak class=btn>Week Warrior 🔥</button></div>
+<div id=story class=story style="margin-top:10px"></div>
+<div id=meta class=small style="margin-top:8px"></div>
+<div id=shapBrand style="margin-top:10px"></div>
 </div>
 
-<div class="card" style="grid-column:span 12;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between">
-<div><div class="k">CTA — Price ladder</div><div class="v" style="font-size:16px"><span class="mono">$2k</span> Brand 10/day &nbsp;·&nbsp; <span class="mono">$8k</span> Agency 100/day API white-label &nbsp;·&nbsp; <span class="mono">$25k</span> League full chimera 20k</div><div class="small">All tiers include Wins/$B, ValΔ%, PO/$B sortable + closer-fit + 20,719-vector search. Agency adds white-label + campaign OG. League unlocks full chimera 20k embeddings ×64-d, 12 arch, lift 0.8116.</div></div>
-<div style="display:flex;gap:8px"><button class="btn btn-primary" id="copy">Copy API curl</button><a class="btn" href="/your_files/brand/">Download deck</a></div>
+<div class=card>
+<h2 class=hd style="margin:0">same-link-same-stars — how viral stays honest</h2>
+<p class=small>seed = YYYYMMDD UTC, LCG a=1103515245 c=12345 m=2^31, lcg = (seed*a + c) & 0x7fffffff, idx = lcg % 12966. Example 20260809→70737614→idx2948. Everyone who opens <code>?daily=20260809&n=1/3/5</code> gets same stars — no rigging. Pack 1/3/5 haptics vibrate(10) mobile.</p>
+<div style="display:flex;gap:8px;flex-wrap:wrap"><span class=pill>Streak <span id=streak>0</span>/7</span><span class=pill>best <span id=best>0</span></span><span class=pill>daily 00000000</span></div>
 </div>
 </div>
-</div>
-
+<script src="/assets/js/glassbox-charts.js"></script>
 <script>
-// zero-deps inline, PWA ready
-(function(){
-const tb=document.getElementById('tb');
-let rows=[], sortK='wins_per_b', asc=false;
-function fetchBoth(){
- const urls=['/assets/front_office.json','../../assets/front_office.json','/your_files/../assets/front_office.json'];
- let p=Promise.reject();
- urls.forEach(u=>{p=p.catch(()=>fetch(u).then(r=>{if(!r.ok)throw 0;return r.json()}))});
- return p;
+(async()=>{
+const FO=await fetch('/assets/data/front_office.json',{cache:'no-store'}).then(r=>r.json()).catch(()=>null);
+const teams=(FO?.teams||[]).sort((a,b)=>(b.for_score||0)-(a.for_score||0));
+const sel=document.getElementById('teamSelect');
+teams.forEach(t=>{const o=document.createElement('option'); o.value=t.abbr; o.textContent=`${t.abbr} ${t.name} FOR ${t.for_score?.toFixed?.(1)} ${t.for_grade} ${t.wins}-${t.losses}`; sel.appendChild(o);});
+function archTag(t){
+ // A0 rising-role, A3 declining-role heuristic from wins trend vs market
+ const delta=t.wins - (t.vegas_over_under||41); const capOver = (t.cap_pct||0)>1.1;
+ if(delta>=7 && (t.for_score||0)>=68) return {k:'A0', label:'rising-role≡A0', color:'#009E73'};
+ if(delta<=-4 || capOver) return {k:'A3', label:'declining-role≡A3', color:'#D55E00'};
+ return {k:'A1', label:'core-role≡A1', color:'#0072B2'};
 }
-function render(){
- const sorted=[...rows].sort((a,b)=>{
-  let av=a[sortK], bv=b[sortK];
-  if(av==null) av=-1e9; if(bv==null) bv=-1e9;
-  if(typeof av==='string') return asc?av.localeCompare(bv):bv.localeCompare(av);
-  return asc?av-bv:bv-av;
- });
- tb.innerHTML=sorted.map(r=>`
-  <tr><td><b>${r.abbr}</b> <span class="small">${r.name||''}</span></td>
-  <td class="mono">${(r.wins_per_b??r.wins_per_billion??0).toFixed(2)}</td>
-  <td class="mono">${(r.weighted??r.weighted_wins_per_b??r.weighted_wins_per_billion??0).toFixed(2)}</td>
-  <td class="mono">${(r.po_per_b??r.po_wins_per_b??r.po_wins_per_billion??0).toFixed(2)}</td>
-  <td class="mono">${r.growth==null?'—':(r.growth>0?'+':'')+r.growth.toFixed(1)+'%'}</td>
-  <td class="mono">$${(r.valuation_m? (r.valuation_m/1000).toFixed(2): (r.valuation??0).toFixed(2))}B</td></tr>
- `).join('')||'<tr><td colspan=6 class="small">no rows</td></tr>';
+function render(ab){
+ const t=teams.find(x=>x.abbr===ab)||teams[0];
+ const arch=archTag(t);
+ const vegas = t.vegas_beat? `🟢 +${t.vegas_delta} Vegas beat market O/U ${t.vegas_over_under}` : `🔴 ${t.vegas_delta} under O/U`;
+ const w_b = `W/$B ${t.wins_per_b?.toFixed?.(1)} weighted ${t.weighted_wins_per_billion?.toFixed?.(1)} α${t.valuation_alpha||''}`;
+ const story=document.getElementById('story');
+ const daily= new Date().toISOString().slice(0,10).replace(/-/g,''); // YYYYMMDD UTC approx local
+ const link=`${location.origin}/brand?team=${t.abbr}&daily=${daily}`;
+ story.innerHTML=`
+  <span class=chip style="background:#080A0F;color:#FFFEF7">NYK 👑16 +10 SAS +4 ring&gt;seed ethos</span>
+  <span class=chip style="background:${arch.color};color:#fff;border-color:#1A150F">${arch.label} ${t.abbr} ${t.wins}W +${t.vegas_delta} vs O/U</span>
+  <span class=chip>Cap ${((t.cap_pct||0)*100).toFixed(1)}% ${t.payroll_m}M ${t.cap_efficiency?.grade||''} flex</span>
+  <span class=chip>${vegas} market expectation beat honest has-vs-expect</span>
+  <span class=chip>${w_b} Val $${t.valuation_m}M +${t.valuation_growth_pct}% brand lift</span>
+  <span class=chip>FOR ${t.for_score?.toFixed?.(1)} ${t.for_grade} .35D+.35C+.30F+ring+valα</span>
+  <span class=chip>Weighted W* ${t.weighted_wins} W+2.5·${t.playoff_wins}PO</span>
+  <span class=chip>Same-link-same-stars daily ${daily} a=1103515245 example 20260809→70737614→idx2948</span>
+  <span class=chip>Pack 1/3/5 share share LCG deterministic Math.imul + clip 1MB immutable 31536000</span>
+ `;
+ document.getElementById('meta').textContent=`${t.abbr} ${t.name} ${t.season} ${t.wins}-${t.losses} .${(t.w_pct*1000|0)} W% · ${FO?.ethos||''} ${FO?.season_today_label||''} — brand narrative: ${(arch.k==='A0'?'young cheap locks before cap $136→$154M cap edge + rings':'cap strapped bounce-back hunt picks')} · valuation alpha ${t.valuation_alpha} story vs hype.`;
+ localStorage.setItem('brand-last', ab);
 }
-document.querySelectorAll('th[data-k]').forEach(th=>{
- th.onclick=()=>{const k=th.dataset.k; if(sortK===k) asc=!asc; else{sortK=k;asc=false;} render();};
-});
-fetchBoth().then(j=>{
- const teams=j.teams||j.front_office||j||[];
- rows=teams.map(t=>({
-  abbr:t.abbr||t.team||'--', name:t.name||'',
-  wins_per_b:t.wins_per_b??t.wins_per_billion??t.wins_per_bilion??(t.wins/(t.valuation_m/1000||5)),
-  weighted:t.weighted_wins_per_b??t.weighted_wins_per_billion??(t.weighted_wins? t.weighted_wins/(t.valuation_m/1000||5):0),
-  po_per_b:t.po_wins_per_b??t.po_wins_per_billion??(t.playoff_wins? t.playoff_wins/(t.valuation_m/1000||5):0),
-  growth:t.valuation_growth_pct??t.growth_pct??null,
-  valuation_m:t.valuation_m||t.valuation*1000||null,
-  valuation:t.valuation_m? t.valuation_m/1000 : (t.valuation||0)
- }));
- // augment missing with fallback
- render();
-}).catch(e=>{
- tb.innerHTML='<tr><td colspan=6 class="small">front_office.json not found offline — using Forbes anchors GSW 9.14B NYK 7.5B demo rows</td></tr>';
- rows=[{abbr:'GSW',name:'Warriors',wins_per_b:5.2,weighted:7.1,po_per_b:0.44,growth:18.2,valuation:9.14},{abbr:'NYK',name:'Knicks',wins_per_b:6.8,weighted:9.4,po_per_b:0.93,growth:12.4,valuation:7.5},{abbr:'BOS',name:'Celtics',wins_per_b:10.28,weighted:12.26,po_per_b:0.73,growth:9.9,valuation:5.45},{abbr:'SAS',name:'Spurs',wins_per_b:14.2,weighted:18.9,po_per_b:2.1,growth:22.1,valuation:2.9}];
- render();
-});
-document.getElementById('copy').onclick=()=>{
- const curl=`curl -s https://vector-hoops.example.com/assets/front_office.json | jq '.teams|map({team:.abbr, wins_per_b, w_star_per_b:.weighted_wins_per_b, po_per_b:.po_wins_per_b, valDelta:.valuation_growth_pct})|sort_by(-.wins_per_b)'`;
- navigator.clipboard&&navigator.clipboard.writeText(curl);
- const b=document.getElementById('copy');b.textContent='Copied!';setTimeout(()=>b.textContent='Copy API curl',1200);
+render(teams[0]?.abbr||'BOS');
+sel.addEventListener('change',e=>render(e.target.value));
+document.getElementById('btnCopy').onclick= async()=>{
+ const ab=sel.value; const daily=new Date().toISOString().slice(0,10).replace(/-/g,''); const url=`${location.origin}/brand.html?team=${ab}&daily=${daily}`; const txt=`I'm on ${ab} A0 run FOR ${(teams.find(x=>x.abbr===ab)?.for_score||70).toFixed(1)} dailySeed ${daily} — can you beat market? ${url}`;
+ try{ await navigator.clipboard.writeText(txt); alert('copied story share LCG same-link-same-stars'); if(navigator.vibrate) navigator.vibrate(10);}catch(e){ prompt('copy', txt); }
 };
-// PWA ready — register sw if present, no dep
-if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js').catch(()=>{});}
+let streak=Number(localStorage.getItem('hub-streak')||0), best=Number(localStorage.getItem('hub-best')||0);
+document.getElementById('streak').textContent=streak; document.getElementById('best').textContent=best;
+document.getElementById('btnStreak').onclick=()=>{streak++; if(streak>best) best=streak; if(streak>=7) streak=0; localStorage.setItem('hub-streak',''+streak); localStorage.setItem('hub-best',''+best); document.getElementById('streak').textContent=streak; document.getElementById('best').textContent=best; if(navigator.vibrate) navigator.vibrate([10,30,10]); alert(streak===0?'Week Warrior 🔥 7/7 badge earned!':'streak '+streak+'/7'); if(streak===0 && best>=7){ document.body.insertAdjacentHTML('beforeend','<div style=\"position:fixed;left:0;top:0;right:0;bottom:0;pointer-events:none;background:radial-gradient(circle at 50% 30%,#F0E44222,transparent 60%)\"></div>'); setTimeout(()=>document.body.lastElementChild.remove(),1200);} };
+// glassbox brand scatter reuse
+try{
+const MZ=await fetch('/assets/data/model_zoo_eval.json',{cache:'no-store'}).then(r=>r.json());
+if(window.GlassboxCharts){
+ document.getElementById('shapBrand').innerHTML=`<div class=small>Val W/$B scatter vs FOR — brand lift honest α story</div><div id=brandScatter></div>`;
+ const pts=teams.map(t=>({x:t.valuation_m||2000, y:t.weighted_wins_per_billion||10, label:t.abbr}));
+ // quick custom render using shapBar placeholder -> use scatter cap reuse
+ const el=document.getElementById('brandScatter'); el.innerHTML=`<canvas id=cBrand width=560 height=260 style="width:100%;border:1.6px solid #1A150F;border-radius:12px;background:#FFFEF7"></canvas>`;
+ const c=document.getElementById('cBrand'), ctx=c.getContext('2d'); ctx.clearRect(0,0,c.width,c.height); pts.forEach(p=>{const x=(p.x/9000)*c.width, y=c.height - (p.y/20)*c.height; ctx.fillStyle='#080A0F'; ctx.fillRect(x,y,4,4); ctx.font='10px ui-monospace'; ctx.fillText(p.label,x+4,y);});
+}
+}catch(e){}
 })();
 </script>
-</body>
-</html>
+</body></html>

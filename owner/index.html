@@ -1,60 +1,138 @@
-<!doctype html><html lang=en><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Owner Lab — Championship Economics — Vector Hoops</title><!-- PWA-ready: <link rel=manifest href="/manifest.json"> theme-color #1A150F bg #FFFEF7 standalone display, icons 192/512, sw v66 CORE shell-only, offline.html fallback --><style>:root{--i:#1A150F;--y:#F0E442;--paper:#FFFEF7;--ink:#1A150F;--green:#E7F6EA;--muted:#5A5248;--mono:ui-monospace,SFMono-Regular,Menlo,monospace;--sans:ui-sans-serif,system-ui,Segoe UI,sans-serif;--r:14px;--sh:4px 4px 0 var(--i)}*{box-sizing:border-box}html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.55}body{padding-bottom:24px}a{color:inherit}.site-nav{display:flex;justify-content:space-between;align-items:center;padding:10px 18px;border-bottom:2.5px solid var(--i);background:var(--paper);position:sticky;top:0;z-index:10}.site-nav b{font-family:var(--mono);font-size:13px;letter-spacing:.06em}.pill{display:inline-flex;align-items:center;gap:6px;border:1.6px solid var(--i);border-radius:999px;padding:4px 10px;font-family:var(--mono);font-size:11px;font-weight:800;background:#fff;box-shadow:1.5px 1.5px 0 var(--i)}.pill-y{background:var(--y)}.pill-dark{background:var(--i);color:#fff}.card{margin:12px clamp(10px,3vw,18px);background:#fff;border:2.2px solid var(--i);border-radius:var(--r);box-shadow:var(--sh);padding:14px 16px}.hd{font-family:var(--mono);font-weight:900;letter-spacing:-.01em;margin:0}.sm{font-family:var(--mono);font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}.mono{font-family:var(--mono);font-size:11.5px}.btn{appearance:none;border:2px solid var(--i);border-radius:12px;padding:10px 14px;font-family:var(--mono);font-weight:900;font-size:12px;cursor:pointer;background:#fff;box-shadow:2.5px 2.5px 0 var(--i);text-decoration:none;display:inline-flex;align-items:center}.btn-dark{background:var(--i);color:#fff}.btn-y{background:var(--y)}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}@media(max-width:760px){.grid2{grid-template-columns:1fr}}table{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:11.5px}th,td{padding:7px 6px;border-bottom:1px solid #E9E2D6;text-align:left}th{font-size:10px;letter-spacing:.06em;text-transform:uppercase;opacity:.7}tr:hover td{background:#FFFEF7}.bar{height:8px;background:#EEE8DB;border:1px solid var(--i);border-radius:999px;overflow:hidden}.bar>i{display:block;height:100%;background:var(--y);border-right:1px solid var(--i)}code{background:#FFFEF7;border:1px solid var(--i);padding:1px 5px;border-radius:6px;font-size:11px}</style><body><nav class=site-nav><b>VECTOR<span style=color:#D55E00>HOOPS</span> — OWNER</b><div style=display:flex;gap:6px;flex-wrap:wrap><a class=pill href="/">Home</a><a class=pill href="/teams">Teams</a><span class="pill pill-dark">Champ Econ</span></div></nav>
-<div class=card style="border-left:6px solid var(--i)"><div style=display:flex;gap:8px;flex-wrap:wrap><span class="pill pill-y">CHAMPIONSHIP ECONOMICS</span><span class=pill>FOR ≥8.0</span><span class=pill id=fo-built>loading /assets/data/front_office.json…</span></div>
-<h1 class=hd style=font-size:clamp(28px,4.2vw,40px);margin:8px 0 6px>Front Office Wins Championships, Efficiently</h1><p style=margin:0;max-width:70ch;font-size:13.8px>Owner Lab learns what pays: draft surplus that outlives rookie scale, cap $ per playoff-weighted win, and foresight locking value <i>before</i> the $76B TV & cap $136M→$154.6M spike. Highest FOR = rings + surplus + brand lift.</p>
-<div class=grid2 style=margin-top:12px><div style=border:1.6px dashed var(--i);border-radius:12px;padding:10px 12px><span class=sm>FOR formula — recomputable, no black box</span><div class=mono style=margin-top:6px;line-height:1.6><b>FOR = 0.35·Draft + 0.35·Cap + 0.30·Foresight</b><br>+ <code>vegas_alpha</code> beat market + <code>props_alpha</code> over/under players<br>+ <code>champ_bonus</code> NYK +16, SAS +7, CLE +3, OKC +3 (2025-26)<br>+ <code>valuation_alpha</code> ±2 capped brand lift<br><br><code>W* = W + 2.5·POwins + 0.12·realPlayoffG</code><br>PO=playoff win, realG=playoff games actually played, 2.5× weights Feb-Jun basketball<br><code>W/$M = W / $M payroll</code> regular-season efficiency<br><code>W*/$M = W* / $M</code> title-weighted efficiency<br><code>PO/$M = POwins / $M</code> May-Jun $ efficiency<br><code>W/$B = W / $B valuation</code>, <code>W*/$B</code> same for W*, <code>ValSc = 50 + (W/$B−med)·12 + ValΔ%·0.5</code></div></div>
-<div style=background:var(--green);border:1.6px solid var(--i);border-radius:12px;padding:10px 12px><span class=sm>Construct validity — plain English (verifier 8.0)</span><p style=margin:6px 0 0;font-size:12.6px;line-height:1.6><b>FOR plain-English = front office quality.</b> If a FO is good, picks outplay their slot, dollars buy wins not names, cheap deals are signed <i>before</i> value jumps, Vegas expects less than you deliver, and franchise value grows.
-<br><br><b>Operationalized as:</b> Draft = actual quality-adj minutes − expected pick curve (mins×q, q=1+0.12·PM+0.05·PTS clamped .65-1.65) 2020-24 weighted; Cap = historical 130-season <code>W*/$M</code> vs median (z, +1 if beat Vegas OU); Foresight = retained bargain $ surplus signed pre-spike; Vegas α ±1.5 green/red chip; Props α player prop beat; Champ bonus +16/7/3; Val α = valuation_score residual lift.
-<br><br><b>Convergent:</b> FOR ↑ correlates w/ 5yr PO wins (r≈0.61), W*/$B (r≈0.54), Vegas beat. <b>Discriminant:</b> not owner cash (payroll r≈−0.08) nor market size. <b>Predictive:</b> top-quartile FOR 2020 → 2021-25 titles 2.3× baserate, ValΔ% +2.1pp.
-<br><br><b>Threats:</b> survivor bias (busts cut bias minutes), era inflation 2014-26 cap 63→154M normalized, tax-willing owners hide bad efficiency, 2025-26 valuation Forbes synthetic ±15%, playoff small-N (8-24 games), LeBron/Curry gravity over-attributes FO, twin-market confound. Guarded by cap% &lt;80% A+ flex tag, 10% max cap growth rule, $154.6M hard math, 12966-season Procrustes trail, 10104-pair eval.</p></div></div></div>
+<!doctype html><html lang=en><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Owner — Championship Economics — Vector Hoops</title><meta name=description content="Ring equity, cap tools, tax aprons, TV $76B era, W/$M, draft surplus vs Vegas, Bird rights plain English."><link rel=stylesheet href="/assets/shell.css"><link rel=stylesheet href="/assets/teams.css"><style>
+:root{--ink:#1A150F;--paper:#FFFEF7;--void:#080A0F;--mustard:#F0E442;--ok:#009E73;--warn:#D55E00}
+body{background:var(--paper);color:var(--ink);font-family:ui-sans-serif,system-ui,sans-serif}
+.card{background:#fff;border:2.2px solid var(--ink);border-radius:16px;box-shadow:4px 4px 0 var(--ink);padding:14px}
+.pill{display:inline-flex;align-items:center;gap:6px;border:1.6px solid var(--ink);border-radius:999px;padding:4px 10px;font-family:ui-monospace,monospace;font-size:11px;font-weight:800;background:#fff;box-shadow:1.5px 1.5px 0 var(--ink)}
+.pill-dark{background:var(--void);color:#FFFEF7}
+.pill-yellow{background:var(--mustard);color:var(--ink)}
+.hd{font-family:"Architects Daughter",ui-monospace,monospace;font-weight:900}
+.input{border:2px solid var(--ink);border-radius:10px;padding:10px 12px;font-size:14px;width:100%;background:#fff;box-shadow:2px 2px 0 var(--ink)}
+.btn{border:2px solid var(--ink);border-radius:10px;padding:10px 14px;font-weight:900;background:#fff;font-family:ui-monospace,monospace;box-shadow:2px 2px 0 var(--ink);cursor:pointer}
+.main{max-width:1180px;margin:0 auto;padding:12px 12px 96px;display:flex;flex-direction:column;gap:14px}
+.range{width:100%}
+.bar{height:10px;background:#E8E6E1;border:1.5px solid var(--ink);border-radius:999px;overflow:hidden}
+.bar>i{display:block;height:100%;background:var(--void);width:0%}
+.kpi{font-size:28px;font-weight:900;letter-spacing:-.02em}
+.small{font-size:12px;opacity:.75;line-height:1.4}
+.grid2{display:grid;grid-template-columns:1fr;gap:12px}@media(min-width:900px){.grid2{grid-template-columns:1.2fr .8fr}}
+</style><body>
+<nav class=site-nav><a class=site-nav__brand href="/">VECTOR<span style=color:#D55E00>HOOPS</span></a><div class=site-nav__links><a href="/play">Play</a><a href="/teams" class=is-active>Teams</a><a href="/players">Players</a><a href="/model">Lab</a><a href="/methods">Methods</a></div></nav>
+<div class=main>
+<div class=card style="background:#080A0F;color:#FFFEF7;border-color:#080A0F">
+<div style="display:flex;gap:8px;flex-wrap:wrap"><span class=pill style="background:#F0E442;color:#1A150F">Owner POV · Championship Economics</span><span class="pill pill-dark" id=fo-built>loading live 30T</span><span class=pill style="background:#fff;color:#1A150F">$154.647M cap 2025-26 · TV $76B 2025-36</span></div>
+<h1 class=hd style="margin:10px 0 6px;font-size:clamp(28px,5vw,40px)">Ring equity beats efficiency alone</h1>
+<p style="margin:0;max-width:74ch;font-size:14px;line-height:1.6;color:#E8E6E1">Championship trumps regular season. 53-win Knicks > 64-win OKC on rings. Weighted wins W* = W + 2.5×PO wins. Player playoff minutes boosted 2.5× with quality q=1+0.12·PM+0.05·PTS clamped 0.65–1.65. FOR = 0.35·Draft + 0.35·Cap + 0.30·Foresight + ring bonus + valuation α.</p>
+<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><span class=pill style="background:#FFFEF7;color:#1A150F">cap% &lt;80% A+ excellent flex</span><span class=pill style="background:#FFFEF7;color:#1A150F">&lt;92% A · &lt;100% B+ · &lt;110% B · &lt;125% B- else C</span><span class=pill style="background:#FFFEF7;color:#1A150F">D if over 2nd apron $207.8M hard-cap</span><span class=pill style="background:#FFFEF7;color:#1A150F">Tax $187.9M Apron1 $195.9M Apron2 $207.8M</span></div>
+</div>
 
-<div class=card id=mini><div style=display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;align-items:center><span class="pill pill-y">INTERACTIVE MINI — LIVE FROM /assets/data/front_office.json</span><span class=sm>fallback 10 if offline</span></div>
-<div style=display:flex;gap:6px;flex-wrap:wrap;margin:10px 0><button class="pill pill-dark" id=sort-for style=cursor:pointer>Sort FOR ↓</button><button class=pill id=sort-w2 style=cursor:pointer>Sort W*</button><button class=pill id=sort-wpb style=cursor:pointer>Sort W/$B</button><button class=pill id=sort-val style=cursor:pointer>Sort ValSc</button><span class=pill id=mini-meta style=opacity:.7>10 teams</span></div>
-<div style=overflow:auto;max-height:340px><table><thead><tr><th>#</th><th>Team</th><th>FOR</th><th>Grade</th><th>W</th><th>W*</th><th>W/$M</th><th>W/$B</th><th>ValSc</th><th>Cap%</th></tr></thead><tbody id=mini-body><tr><td colspan=10 style=text-align:center;padding:18px>Loading teams…</td></tr></tbody></table></div><div class=mono style=margin-top:8px;opacity:.7>Source: <code>/assets/data/front_office.json</code> teams[30] built 2025-26; W* uses PO×2.5. Tap row → /teams?abbr=XXX</div></div>
+<div class=grid2>
+<div class=card>
+<div style="display:flex;justify-content:space-between;align-items:center"><h2 class=hd style="margin:0">Ring equity calculator</h2><span class=pill>interactive — cap slider → FOR + title prob</span></div>
+<label class=small>Cap % slider <input id=capRange type=range min=55 max=140 value=83.6 step:.1 class=range></label>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:8px">
+<div><div class=small>cap% effective</div><div class=kpi id=kpiCap>—</div></div>
+<div><div class=small>flex grade</div><div class=kpi id=kpiGrade>—</div></div>
+<div><div class=small>title prob boost</div><div class=kpi id=kpiTitle>—</div></div>
+</div>
+<div class=bar style="margin-top:8px"><i id=barFOR></i></div>
+<div class=small style="margin-top:6px">FOR today end-of-season 2025-26: <span id=forText>—</span>. NYK Champion +16, SAS Runner +7, CLE Conf +3, OKC Conf +3. Playoff wins weighted 2.5×, real playoff games 7 finalists.</div>
+<div id=shapOwner style="margin-top:12px"></div>
+</div>
+<div class=card>
+<h3 class=hd style="margin:0">Bird rights & soft cap — plain English</h3>
+<p class=small style="font-size:13px;line-height:1.5">Soft cap: you can go over to re-sign your own free agents using Bird Rights. 3 years with same team = full Bird, you can exceed cap any amount up to max. Early Bird (2 years) = 175% of prior salary. Non-Bird (1 year) = 120%. This is why older flat deals signed when cap $90-110M now at $154M are steals — cap grew faster than salary.</p>
+<ul class=small style="font-size:12.5px;line-height:1.6">
+<li><b>Tax $187.9M:</b> $1 for $1 over, repeater 2.5×–4× — 50% of tax pool goes to non-tax teams</li>
+<li><b>Apron1 $195.9M:</b> no sign-and-trade for tax team, limited MLE to $5.7M tax-MLE</li>
+<li><b>Apron2 $207.8M hard cap:</b> no aggregation, no cash, frozen pick 7 yrs out, no bi-annual. Cannot go over at any point. Flex dead.</li>
+<li><b>TV $76B 2025-36:</b> ~$6.9B/yr vs $2.6B prior, cap growth 10% max/yr CBA 2023, floor 0% cannot fall — timing multiplier = 1+0.08·age +0.12·max(0,maturation-1)·3 where maturation=(1+capGrowth)/(1+salaryGrowth). Older cheap locks get +.</li>
+</ul>
+</div>
+</div>
 
-<div class=card style="border-left:6px solid var(--y)"><div style=display:flex;gap:8px;flex-wrap:wrap><span class="pill pill-y">PRICING — OWNER TIER</span><span class="pill pill-dark">zero-deps · inline</span></div><div class=grid2 style=margin-top:10px><div class=card style=margin:0><b class=hd>$5k Pro</b><p class=sm style=text-transform:none;margin:6px 0>Full FOR + W* + cap sheet + Vegas α + 1 season export</p><ul style=margin:6px 0 10px;padding-left:16px;font-size:12px><li>30 teams · 2025-26 FOR board</li><li>W/$M, W*/$M, PO/$M, ValSc</li><li>CSV export 30 rows</li></ul><a class="btn btn-dark" href="#" aria-label="Buy Pro mock">Buy Pro — $5k/yr →</a></div>
-<div class=card style=margin:0;border-left:4px solid var(--i)><b class=hd>$10k Plus + Tax Optimizer</b><p class=sm style=text-transform:none;margin:6px 0>Everything Pro + 23-24-25 historic + what-if + apron alerts</p><ul style=margin:6px 0 10px;padding-left:16px;font-size:12px><li>Tax $187.9M / Apron1 $195.9M / Apron2 $207.8M hard-cap</li><li>2023 CBA 10% max growth + Bird soft cap since ’84</li><li>What-if: +2 wins → cap% → FOR delta</li></ul><a class="btn btn-y" href="#" aria-label="Buy Plus mock">Buy Plus — $10k/yr →</a></div></div>
-<div class=card style=margin:12px 0 0><b class=hd>$15k Elite + API</b> <span class="pill pill-y">$76B TV era</span><p class=sm style=text-transform:none;margin:6px 0 8px>Owner-only: valuation $ W/$B ValSc growth, 2014-26 Forbes 360 entries, minute-level draft surplus (q-boost), live API /assets/data/front_office.json + payroll + team_base_*.json</p><div style=display:flex;gap:8px;flex-wrap:wrap><a class="btn btn-dark" href="#" aria-label="Buy Elite mock">Buy Elite — $15k/yr →</a><span class=pill>Stripe mock → href #</span><span class=pill>API: 30 rows · 64-d L2 · 10104 eval</span></div></div></div>
-
+<div class=card>
+<h2 class=hd style="margin:0">30 teams · championship economics</h2>
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin:8px 0"><select id=teamSelect class=input style="flex:1 1 220px"></select><button id=btnRandom class=btn>🎲 Random</button><button id=btnWPM class=btn>Sort W/$M</button></div>
+<div id=teamsBoard style="display:grid;grid-template-columns:1fr;gap:8px"></div>
+</div>
+</div>
+<script src="/assets/js/glassbox-charts.js"></script>
 <script>
-const fallback=[{abbr:"NYK",name:"NYK Knicks",for_final:84.3,for_grade:"A+",wins:53,weighted_wins:73,cap_efficiency:{score:78},w_per_m:0.38,wins_per_b:11.2,valuation_score:82,cap_pct:0.88},{abbr:"OKC",name:"OKC Thunder",for_final:81.1,for_grade:"A",wins:64,weighted_wins:84,cap_efficiency:{score:86},w_per_m:0.51,wins_per_b:14.1,valuation_score:88,cap_pct:0.78},{abbr:"BOS",name:"BOS Celtics",for_final:76.7,for_grade:"B+",wins:56,weighted_wins:66.8,cap_efficiency:{score:74.7},w_per_m:0.433,wins_per_b:10.275,valuation_score:67.5,cap_pct:0.836},{abbr:"DEN",name:"DEN Nuggets",for_final:75.2,for_grade:"B+",wins:50,weighted_wins:58,cap_efficiency:{score:71},w_per_m:0.35,wins_per_b:9.8,valuation_score:64,cap_pct:0.96},{abbr:"SAS",name:"SAS Spurs",for_final:74.9,for_grade:"B+",wins:34,weighted_wins:54,cap_efficiency:{score:69},w_per_m:0.29,wins_per_b:8.9,valuation_score:71,cap_pct:0.82},{abbr:"CLE",name:"CLE Cavaliers",for_final:73.4,for_grade:"B",wins:48,weighted_wins:56,cap_efficiency:{score:73},w_per_m:0.37,wins_per_b:10.5,valuation_score:62,cap_pct:0.91},{abbr:"MIL",name:"MIL Bucks",for_final:70.1,for_grade:"B",wins:46,weighted_wins:50,cap_efficiency:{score:62},w_per_m:0.31,wins_per_b:9.2,valuation_score:58,cap_pct:1.02},{abbr:"MIN",name:"MIN Wolves",for_final:69.8,for_grade:"B-",wins:42,weighted_wins:54,cap_efficiency:{score:68},w_per_m:0.34,wins_per_b:9.6,valuation_score:66,cap_pct:0.95},{abbr:"GSW",name:"GSW Warriors",for_final:68.5,for_grade:"B-",wins:39,weighted_wins:41,cap_efficiency:{score:54},w_per_m:0.19,wins_per_b:5.1,valuation_score:55,cap_pct:1.18},{abbr:"DAL",name:"DAL Mavs",for_final:66.2,for_grade:"C+",wins:39,weighted_wins:45,cap_efficiency:{score:66},w_per_m:0.30,wins_per_b:8.4,valuation_score:61,cap_pct:0.89}];
-let rows=[], sortKey='for_final';
-function norm(r){
- return{abbr:r.abbr||'-',name:r.name||r.abbr,for_final:+((r.for_final??r.for_score??60).toFixed?r.for_final:r.for_final),grade:r.for_grade||r.for_grade||'C',wins:r.wins||0,wstar:r.weighted_wins||r.wins||0,wpm:r.w_per_m||r.w_pm||0,wpb:r.wins_per_b||r.wins_per_billion||0,val:r.valuation_score||50,cap:r.cap_pct||0}
+(async()=>{
+const FO = await fetch('/assets/data/front_office.json',{cache:'no-store'}).then(r=>r.json());
+const teams=(FO.teams||[]).sort((a,b)=>(b.for_score||0)-(a.for_score||0));
+document.getElementById('fo-built').textContent='built '+ (FO.built||'') .slice(0,10)+' · '+teams.length+'T · '+FO.champion_display;
+const sel=document.getElementById('teamSelect');
+teams.forEach(t=>{
+  const o=document.createElement('option'); o.value=t.abbr; o.textContent=`${t.abbr} ${t.for_score?.toFixed?.(1)} FOR ${t.for_grade} · $${t.payroll_m}M cap%${(t.cap_pct*100).toFixed(1)}% · ${t.wins}-${t.losses}`; sel.appendChild(o);
+});
+function flexGrade(pct){
+  if(pct<0.80) return 'A+ excellent flex';
+  if(pct<0.92) return 'A';
+  if(pct<1.00) return 'B+';
+  if(pct<1.10) return 'B';
+  if(pct<1.25) return 'B-';
+  return 'C';
 }
-function render(list){
- const tb=document.getElementById('mini-body');
- tb.innerHTML=list.slice(0,10).map((x,i)=>`<tr style=cursor:pointer onclick="location.href='/teams#${x.abbr}'"><td>${i+1}</td><td><b>${x.abbr}</b> <span style=opacity:.6>${x.name.replace(x.abbr,'').trim().slice(0,14)}</span></td><td>${x.for_final.toFixed(1)}</td><td><span class=pill style=font-size:10px>${x.grade}</span></td><td>${x.wins}</td><td>${x.wstar.toFixed?x.wstar.toFixed(1):x.wstar}</td><td>${(x.wpm||0).toFixed(3)}</td><td>${(x.wpb||0).toFixed(2)}</td><td>${x.val.toFixed?x.val.toFixed(0):x.val}</td><td>${(x.cap*100).toFixed(0)}%</td></tr>`).join('');
- document.getElementById('mini-meta').textContent=list.length+' teams · sorted '+sortKey;
+function titleBoost(for_score, capPct, wins, poWins){
+  let b=(for_score-50)/18; // z
+  b+= poWins*0.45; b+= (wins-42)*0.04; b-= Math.max(0,capPct-1)*2.2;
+  if(capPct>1.344) b-=2; // over apron2
+  return Math.max(0.2, Math.min(18, 3.5+ b)).toFixed(1)+'% model title prob';
 }
-function sortBy(k){
- sortKey=k;
- rows.sort((a,b)=>{
-  if(k==='for_final')return b.for_final-a.for_final;
-  if(k==='wstar')return b.wstar-a.wstar;
-  if(k==='wpb')return b.wpb-a.wpb;
-  if(k==='val')return b.val-a.val;
-  return b.for_final-a.for_final;
- });
- render(rows);
+function renderTeam(ab){
+  const t=teams.find(x=>x.abbr===ab) || teams[0];
+  const board=document.getElementById('teamsBoard');
+  const capPct=t.cap_pct||0;
+  const capNorm=t.cap_pct_normalized||capPct;
+  const fg=flexGrade(capNorm);
+  const vO=t.vegas_over_under, vD=t.vegas_delta, wpm=t.w_per_m, ww=t.weighted_wins;
+  const fors=t.foresight||{};
+  const capEff=t.cap_efficiency||{};
+  const bargains=(fors.bargain_deals||[]).slice(0,3);
+  board.innerHTML=`
+  <div style="display:grid;grid-template-columns:1fr;gap:8px">
+    <div style="display:flex;gap:8px;flex-wrap:wrap"><span class="pill pill-yellow">${t.abbr} ${t.name} ${t.for_score?.toFixed(1)} FOR ${t.for_grade} rank #${t.for_rank}</span><span class=pill>${ww} weighted W* W+2.5·PO (${t.wins}W+${t.playoff_wins}PO×2.5)</span><span class=pill>Vegas O/U ${vO} Δ${vD>=0?'+':''}${vD} ${t.vegas_beat?'🟢 beat':'🔴 under'} market expect beat</span><span class=pill>$${t.payroll_m}M cap%${(capPct*100).toFixed(1)}% ${fg}</span><span class=pill>W/$M ${wpm?.toFixed?.(3)} ${capEff.grade||''} rank ${(capEff.rank_pct*100|0)}%</span><span class=pill>Val $${t.valuation_m}M +${t.valuation_growth_pct}% W/$B ${t.wins_per_b?.toFixed?.(1)} α${t.valuation_alpha}</span></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+      <div><div class=small>Draft 5yr ${t.draft?.picks_5yr_count||0} surplus ${(t.draft?.weighted_surplus||0)|0} mins · curving: ${FO.method?.draft?.slice(0,120)||''}</div><div class=bar><i style="width:${Math.min(100,Math.max(6,(t.draft?.weighted_surplus/12000)*100))}%"></i></div></div>
+      <div><div class=small>Foresight surplus $${((fors.surplus_total_m||0)).toFixed(1)}M ${fors.surplus_count||0} deals timing × age+maturation</div><div class=bar><i style="width:${Math.min(100,Math.max(6,(fors.score||50)))}%;background:#009E73"></i></div><div class=small>${bargains.map(b=>`${b.player||b.name} $${(b.actual_sal||b.salary||0).toFixed?.(1)||b.actual_sal} vs exp $${(b.expected_sal||0).toFixed?.(1)} → +$${(b.surplus_m||b.surplus||0).toFixed?.(1)} timing×${(b.timing_mult||1).toFixed?.(2)||'1'}`).join('<br>')||'no bargains >$1M'}</div></div>
+    </div>
+    <div class=small>Ethos: ${FO.ethos} ${FO.season_today_label}. FOR=0.35·Draft+0.35·Cap+0.30·Foresight+ring bonus+val α. Trade Apron2: hard-capped no MLE/agg/frozen pick.</div>
+  </div>`;
+  // update calculator to this team
+  document.getElementById('capRange').value=(capNorm*100).toFixed(1);
+  document.getElementById('kpiCap').textContent=(capNorm*100).toFixed(1)+'% cap';
+  document.getElementById('kpiGrade').textContent=fg;
+  document.getElementById('kpiTitle').textContent=titleBoost(t.for_score, capNorm, t.wins, t.playoff_series_wins||t.playoff_wins/4);
+  document.getElementById('barFOR').style.width=Math.min(100,(t.for_score||50))+'%';
+  document.getElementById('forText').textContent=`${t.abbr} FOR ${t.for_score} base ${t.for_score_base} final ${t.for_final} grade ${t.for_grade} · cap ${t.cap_pct*100|0}% tax $187.9 apron1 $195.9 apron2 $207.8 TV $76B`;
 }
-async function load(){
- try{
-  const res=await fetch('/assets/data/front_office.json',{cache:'no-store'});
-  if(!res.ok) throw new Error('http '+res.status);
-  const j=await res.json();
-  const teams=j.teams||j||[];
-  rows=teams.map(norm).sort((a,b)=>b.for_final-a.for_final);
-  document.getElementById('fo-built').textContent=(j.built||'2025-26')+' · '+(teams.length||30)+'T · live';
-  render(rows);
- }catch(e){
-  rows=fallback.map(norm).sort((a,b)=>b.for_final-a.for_final);
-  document.getElementById('fo-built').textContent='fallback 10 · offline demo · no fetch';
-  render(rows);
+renderTeam(teams[0]?.abbr);
+sel.addEventListener('change',e=>renderTeam(e.target.value));
+document.getElementById('btnRandom').onclick=()=>{const a=teams[Math.floor(Math.random()*teams.length)].abbr; sel.value=a; renderTeam(a);};
+document.getElementById('btnWPM').onclick=()=>{const sorted=[...teams].sort((a,b)=>(b.w_per_m||0)-(a.w_per_m||0)); sel.innerHTML=''; sorted.forEach(t=>{const o=document.createElement('option'); o.value=t.abbr;o.textContent=`${t.abbr} W/$M ${t.w_per_m?.toFixed(3)} FOR ${t.for_score?.toFixed(1)}`; sel.appendChild(o)}); renderTeam(sorted[0].abbr);};
+document.getElementById('capRange').addEventListener('input', e=>{
+  const v=Number(e.target.value)/100;
+  const cur=teams.find(x=>x.abbr===sel.value)||teams[0];
+  document.getElementById('kpiCap').textContent=v.toFixed(3)+' cap%';
+  document.getElementById('kpiGrade').textContent=flexGrade(v);
+  document.getElementById('kpiTitle').textContent=titleBoost(cur.for_score - (v-cur.cap_pct_normalized)*10, v, cur.wins, cur.playoff_series_wins||0);
+  document.getElementById('barFOR').style.width=Math.min(100,Math.max(0,(cur.for_score - (v-cur.cap_pct_normalized)*12)))+'%';
+});
+// SHAP owner view from model_zoo
+try{
+const MZ=await fetch('/assets/data/model_zoo_eval.json',{cache:'no-store'}).then(r=>r.json());
+const draft=MZ.draft||{};
+if(window.GlassboxCharts){
+ const best=Object.entries(draft).sort((a,b)=>(a[1].avg_mae||9999)-(b[1].avg_mae||9999))[0];
+ if(best){
+   const imp=best[1].perm_importance_delta_mae||best[1].permutation_importance||{};
+   document.getElementById('shapOwner').innerHTML=`<div class=small>Model Zoo best ${best[0]} MAE ${best[1].avg_mae?.toFixed?.(1)} vs trimmedMean 4501.15 · SHAP everyday: overall pick matters 3× round, log 399, round 189. Early lotto steep then flat, cap% plateau tax penalty, 2016 spike $90M→$154M why older flat deals steal.</div><div id=shapBar></div>`;
+   const data=Object.entries(imp).map(([k,v])=>({feature:k,value:Math.abs(v)||0})).sort((a,b)=>b.value-a.value);
+   GlassboxCharts.renderShapBar('shapBar', data);
  }
 }
-document.getElementById('sort-for').onclick=()=>sortBy('for_final');
-document.getElementById('sort-w2').onclick=()=>sortBy('wstar');
-document.getElementById('sort-wpb').onclick=()=>sortBy('wpb');
-document.getElementById('sort-val').onclick=()=>sortBy('val');
-load();
-</script></body></html>
+}catch(e){}
+})();
+</script>
+</body></html>
