@@ -1558,12 +1558,27 @@ def main():
             pass
         weighted_wins = round(float(winfo.get("W", 0)) + playoff_wins * PLAYOFF_WIN_WEIGHT + (REAL_PLAYOFF_TEAM_GAMES.get(season_focus, {}).get(abbr, 0) or (playoff_wins * 1.35) or 0) * 0.12, 1)
         weighted_wpm = round(weighted_wins / (pw / 1_000_000), 3) if pw and pw > 0 else 0
+        po_wins_per_m = round(float(playoff_wins) / (pw / 1_000_000), 3) if pw and pw > 0 else 0
         _real_team_games_cap = REAL_PLAYOFF_TEAM_GAMES.get(season_focus, {}).get(abbr, 0) or (playoff_wins * 1.35 if playoff_wins else 0)
         _playoff_weight_contrib_cap = round(float(_real_team_games_cap or 0) * 0.12, 3) if _real_team_games_cap else 0.0
         rank = 0
         if league_wpm_sorted:
             rank = sum(1 for v in league_wpm_sorted if v <= wpm) / len(league_wpm_sorted)
         cap_pct = round(pw / cap, 3) if cap and pw else None
+        # normalized cap_pct for 2016-17 spike (34% jump 70M->94M) per by-season logic
+        effective_cap = cap
+        cap_pct_normalized = cap_pct
+        spike_flag_current = False
+        try:
+            if season_focus == "2016-17":
+                prior_cap = CAP_BY_SEASON.get("2015-16") if isinstance(CAP_BY_SEASON, dict) else None
+                if prior_cap and cap and abs((cap / prior_cap) - 1) > 0.25:
+                    effective_cap = int(prior_cap * 1.10)
+                    cap_pct_normalized = round(pw / effective_cap, 3) if pw and effective_cap else cap_pct
+                    spike_flag_current = True
+        except Exception:
+            pass
+        weighted_wpm_capnorm = round(weighted_wins / (effective_cap / 1_000_000), 3) if effective_cap else 0
 
         # DRAFT: window 2020-2025 inclusive to capture Flagg/Harper + Wemby/Castle
         # FIX v6.1: weighted by expected value, floor busts, late-pick cap, star bonus, 2025 rookie full projection
@@ -2357,7 +2372,12 @@ def main():
                 "payroll_m": pw_m,
                 "payroll": pw,
                 "cap_pct": cap_pct,
+                "cap_pct_normalized": cap_pct_normalized,
+                "effective_cap": effective_cap,
+                "spike_flag": spike_flag_current,
                 "w_per_m": wpm,
+                "po_wins_per_m": po_wins_per_m,
+                "weighted_wpm_capnorm": weighted_wpm_capnorm,
                 "cap_efficiency": {
                     "score": round(cap_score, 1),
                     "grade": cap_grade,
@@ -2371,6 +2391,10 @@ def main():
                     "vegas_delta": round(vegas_delta, 1) if vegas_delta is not None else None,
                     "vegas_beat": (vegas_delta > 0) if vegas_delta is not None else None,
                     "weighted_wpm": weighted_wpm,
+                    "po_wins_per_m": po_wins_per_m,
+                    "weighted_wpm_capnorm": weighted_wpm_capnorm,
+                    "cap_pct_normalized": cap_pct_normalized,
+                    "effective_cap": effective_cap,
                 },
                 "draft": {
                     "picks_5yr_count": len(drafts_5yr),

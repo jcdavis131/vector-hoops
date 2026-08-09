@@ -17,8 +17,10 @@
      let pw=(window.PO_WINS&&window.PO_WINS[season]&&window.PO_WINS[season][t.abbr])||0;
      let ww=pw? (t.W+pw*2.5).toFixed(1): t.W;
      let wpm=payM!=='—'?(ww/payM).toFixed(2):'—';
+     let w_star_per_pay = payM!=='—'?(ww/payM).toFixed(2):'—';
+     let po_per_m = payM!=='—'&&pw?(pw/payM).toFixed(2):'—';
      let champ=''; if(FO.champion_map&&FO.champion_map[season]&&FO.champion_map[season][t.abbr]){champ=`<span class="pill pill-yellow" style=font-size:9px;background:#FFD700;color:#000>👑 ${season.slice(0,4)} +${FO.champion_map[season][t.abbr]}</span>`}
-     tr.innerHTML=`<td>${i+1}</td><td><span class=tdot style="background:${t.primary||'#fff'}"></span><b>${t.abbr}</b> ${champ}</td><td>—<small style=opacity:.5> fun</small></td><td>—</td><td>${t.W}</td><td>${payM!=='—'?`$${payM}M`:'—'}</td><td>${payM!=='—'?`$${payM}M`:'—'}</td><td>${wpm}</td><td>—</td><td>—</td><td>—</td><td>${capPct}</td>`;
+     tr.innerHTML=`<td>${i+1}</td><td><span class=tdot style="background:${t.primary||'#fff'}"></span><b>${t.abbr}</b> ${champ}</td><td>—<small style=opacity:.5> fun</small></td><td>—</td><td>${t.W}</td><td>${pw}</td><td>${ww}</td><td>${payM!=='—'?`$${payM}M`:'—'}</td><td>${payM!=='—'?`$${payM}M`:'—'}</td><td>${(t.W/payM||'—').toFixed? (t.W/payM).toFixed(2):'—'}</td><td>${w_star_per_pay}</td><td>${po_per_m}</td><td>—</td><td>—</td><td>—</td><td>${capPct}</td>`;
      tr.onclick=()=>{let fn=window.pick||window.__pick||null; if(fn){fn(t.abbr)} };
      bd.appendChild(tr);
    });
@@ -33,11 +35,13 @@
      let champ=''; if(t.champ_bonus){champ=`<span class="pill pill-yellow" style=font-size:9px;background:${t.champ_bonus>=8?'#FFD700':'#E8E8E8'};color:#000>${t.champ_bonus>=8?'👑 Champion':t.champ_bonus>=4?'🥈 Runner':'Conf'} +${t.champ_bonus}</span>`}
      let vchip=t.vegas_delta!=null?`<span style=font-size:9px;padding:2px 5px;border-radius:999px;background:${t.vegas_delta>0?'#E7F6EA':'#FFE9B5'};border:1px solid #1A150F>${t.vegas_delta>0?`+${t.vegas_delta}`:t.vegas_delta}</span>`:'';
      let capPctTxt = t.cap_pct_normalized!=null? `${(t.cap_pct_normalized*100).toFixed(0)}%<small style=opacity:.5 title="raw ${(t.cap_pct*100|0)}%">n</small>` : (t.cap_pct!=null? `${(t.cap_pct*100|0)}%`:'—');
-     tr.innerHTML=`<td>${t.for_rank||i+1}</td><td><span class=tdot style="background:${t.primary||'#fff'}"></span><b>${t.abbr}</b> ${champ}</td><td><b>${t.for_score}</b>${t.champ_bonus?` <small style=opacity:.6>+${t.champ_bonus}</small>`:''}</td><td>${t.for_rank||i+1}</td><td title="W* ${t.weighted_wins||t.wins}">${t.wins||'—'}<small style=opacity:.5>/${t.weighted_wins||t.wins}</small> ${vchip}</td><td>${t.payroll_m!=null?`$${t.payroll_m}M`:t.pay_m!=null?`$${t.pay_m}M`:'—'}</td><td>${t.payroll_m!=null?`$${t.payroll_m}M`:'—'}</td><td>${t.w_per_m||'—'}</td><td>${t.draft_score!=null?t.draft_score:'—'}</td><td>${t.cap_score!=null?t.cap_score:'—'}</td><td>${t.foresight_score!=null?t.foresight_score:'—'}</td><td>${capPctTxt}</td>`;
+     let po = t.playoff_wins!=null?t.playoff_wins:(t.playoff_series_wins!=null?t.playoff_series_wins*4:0);
+     let ww = t.weighted_wins!=null?t.weighted_wins:t.wins;
+     tr.innerHTML=`<td>${t.for_rank||i+1}</td><td><span class=tdot style="background:${t.primary||'#fff'}"></span><b>${t.abbr}</b> ${champ}</td><td><b>${t.for_score}</b>${t.champ_bonus?` <small style=opacity:.6>+${t.champ_bonus}</small>`:''}</td><td>${t.for_rank||i+1}</td><td>${t.wins||'—'}</td><td>${po}</td><td title="W* = W+2.5*PO+0.12*realG">${ww||'—'} ${vchip}</td><td>${t.payroll_m!=null?`$${t.payroll_m}M`:t.pay_m!=null?`$${t.pay_m}M`:'—'}</td><td>${t.payroll_m!=null?`$${t.payroll_m}M`:'—'}</td><td>${t.w_per_m||t.wpm||'—'}</td><td>${t.weighted_wpm||'—'}</td><td>${t.po_wins_per_m!=null?t.po_wins_per_m:(t.po_per_m||'—')}</td><td>${t.draft_score!=null?t.draft_score:'—'}</td><td>${t.cap_score!=null?t.cap_score:'—'}</td><td>${t.foresight_score!=null?t.foresight_score:'—'}</td><td>${capPctTxt}</td>`;
      tr.onclick=()=>{let fn=window.pick||window.__pick||null; if(fn){fn(t.abbr)} };
      bd.appendChild(tr);
    });
-   let meta=document.getElementById('board-meta'); if(meta) meta.textContent=`${ts.length}T ${season} HISTORIC FOR · cap% normalized ${season==='2016-17'?'spike 34%→n':''} · validity rOU/W ${FO._currCorr||'—'}`;
+   let meta=document.getElementById('board-meta'); if(meta) meta.textContent=`${ts.length}T ${season} HISTORIC FOR · cap% normalized ${season==='2016-17'?'spike 34%→n':''} · W* W*/$M PO/$M · validity rOU/W ${FO._currCorr||'—'}`;
    let title=document.getElementById('board-title'); if(title){let c=champTxt(FO.champion_map,season)||`${season}`; title.textContent=`HISTORIC FOR ${season} · ${c} · true snapshot`.slice(0,90)}
  }
  window.wireTimeMachine=async function(FO){
