@@ -1,0 +1,1 @@
+{"ts": "2026-08-07T14:37:26.328795+00:00", "runId": "dottie-20260807T103003Z", "nodeId": "triple_write_repair", "agentId": "operator", "attempt": 1, "latency_ms": 13, "tokens_est": 0, "status": "ok", "errorClass": null, "layer": 0, "tempo": ":13", "note": "auto-repair timeline 7-field mandatory even no-change per checkpoint-manager spec v5 Prime"}

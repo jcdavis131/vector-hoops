@@ -20,7 +20,11 @@
      let w_star_per_pay = payM!=='—'?(ww/payM).toFixed(2):'—';
      let po_per_m = payM!=='—'&&pw?(pw/payM).toFixed(2):'—';
      let champ=''; if(FO.champion_map&&FO.champion_map[season]&&FO.champion_map[season][t.abbr]){champ=`<span class="pill pill-yellow" style=font-size:9px;background:#FFD700;color:#000>👑 ${season.slice(0,4)} +${FO.champion_map[season][t.abbr]}</span>`}
-     tr.innerHTML=`<td>${i+1}</td><td><span class=tdot style="background:${t.primary||'#fff'}"></span><b>${t.abbr}</b> ${champ}</td><td>—<small style=opacity:.5> fun</small></td><td>—</td><td>${t.W}</td><td>${pw}</td><td>${ww}</td><td>${payM!=='—'?`$${payM}M`:'—'}</td><td>${payM!=='—'?`$${payM}M`:'—'}</td><td>${(t.W/payM||'—').toFixed? (t.W/payM).toFixed(2):'—'}</td><td>${w_star_per_pay}</td><td>${po_per_m}</td><td>—</td><td>—</td><td>—</td><td>${capPct}</td>`;
+     // valuation fall-back synth if missing
+     let tHistVal = (FO._valuation_by_season&&FO._valuation_by_season[season]&&FO._valuation_by_season[season][t.abbr])||null;
+     let valM = tHistVal?`$${(tHistVal/1000).toFixed(1)}B`:'—';
+     let wpbVal = tHistVal? (t.W/(tHistVal/1000)).toFixed(2):'—';
+     tr.innerHTML=`<td>${i+1}</td><td><span class=tdot style="background:${t.primary||'#fff'}"></span><b>${t.abbr}</b> ${champ}</td><td>—<small style=opacity:.5> fun</small></td><td>—</td><td>${t.W}</td><td>${pw}</td><td>${ww}</td><td>${payM!=='—'?`$${payM}M`:'—'}</td><td>${payM!=='—'?`$${payM}M`:'—'}</td><td>${(t.W/payM||'—').toFixed? (t.W/payM).toFixed(2):'—'}</td><td>${w_star_per_pay}</td><td>${po_per_m}</td><td>${valM}</td><td>${wpbVal}</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>${capPct}</td>`;
      tr.onclick=()=>{let fn=window.pick||window.__pick||null; if(fn){fn(t.abbr)} };
      bd.appendChild(tr);
    });
@@ -37,7 +41,13 @@
      let capPctTxt = t.cap_pct_normalized!=null? `${(t.cap_pct_normalized*100).toFixed(0)}%<small style=opacity:.5 title="raw ${(t.cap_pct*100|0)}%">n</small>` : (t.cap_pct!=null? `${(t.cap_pct*100|0)}%`:'—');
      let po = t.playoff_wins!=null?t.playoff_wins:(t.playoff_series_wins!=null?t.playoff_series_wins*4:0);
      let ww = t.weighted_wins!=null?t.weighted_wins:t.wins;
-     tr.innerHTML=`<td>${t.for_rank||i+1}</td><td><span class=tdot style="background:${t.primary||'#fff'}"></span><b>${t.abbr}</b> ${champ}</td><td><b>${t.for_score}</b>${t.champ_bonus?` <small style=opacity:.6>+${t.champ_bonus}</small>`:''}</td><td>${t.for_rank||i+1}</td><td>${t.wins||'—'}</td><td>${po}</td><td title="W* = W+2.5*PO+0.12*realG">${ww||'—'} ${vchip}</td><td>${t.payroll_m!=null?`$${t.payroll_m}M`:t.pay_m!=null?`$${t.pay_m}M`:'—'}</td><td>${t.payroll_m!=null?`$${t.payroll_m}M`:'—'}</td><td>${t.w_per_m||t.wpm||'—'}</td><td>${t.weighted_wpm||'—'}</td><td>${t.po_wins_per_m!=null?t.po_wins_per_m:(t.po_per_m||'—')}</td><td>${t.draft_score!=null?t.draft_score:'—'}</td><td>${t.cap_score!=null?t.cap_score:'—'}</td><td>${t.foresight_score!=null?t.foresight_score:'—'}</td><td>${capPctTxt}</td>`;
+     let valM2 = t.valuation_m!=null?`$${(t.valuation_m/1000).toFixed(1)}B`: (t.val_m!=null?`$${(t.val_m/1000).toFixed(1)}B`:'—');
+     let valGrow2 = t.valuation_growth_pct!=null?`${t.valuation_growth_pct>0?'+':''}${t.valuation_growth_pct.toFixed(1)}%`:'';
+     let wpb2 = t.wins_per_b!=null?t.wins_per_b:(t.wins_per_billion!=null?t.wins_per_billion:'—');
+     let wwpb2 = t.weighted_wins_per_b!=null?t.weighted_wins_per_b:(t.weighted_wins_per_billion!=null?t.weighted_wins_per_billion:'—');
+     let powpb2 = t.po_wins_per_b!=null?t.po_wins_per_b:(t.po_wins_per_billion!=null?t.po_wins_per_billion:'—');
+     let vscore2 = t.valuation_score!=null?t.valuation_score:'—';
+     tr.innerHTML=`<td>${t.for_rank||i+1}</td><td><span class=tdot style="background:${t.primary||'#fff'}"></span><b>${t.abbr}</b> ${champ}</td><td><b>${t.for_score}</b>${t.champ_bonus?` <small style=opacity:.6>+${t.champ_bonus}</small>`:''}${t.valuation_alpha?` <small style=opacity:.5>${t.valuation_alpha>0?'+'+t.valuation_alpha:t.valuation_alpha}</small>`:''}</td><td>${t.for_rank||i+1}</td><td>${t.wins||'—'}</td><td>${po}</td><td title="W* = W+2.5*PO+0.12*realG">${ww||'—'} ${vchip}</td><td>${t.payroll_m!=null?`$${t.payroll_m}M`:t.pay_m!=null?`$${t.pay_m}M`:'—'}</td><td>${t.payroll_m!=null?`$${t.payroll_m}M`:'—'}</td><td>${t.w_per_m||t.wpm||'—'}</td><td>${t.weighted_wpm||'—'}</td><td>${t.po_wins_per_m!=null?t.po_wins_per_m:(t.po_per_m||'—')}</td><td>${valM2} <small style=opacity:.6>${valGrow2}</small></td><td>${wpb2}</td><td>${wwpb2}</td><td>${powpb2}</td><td>${vscore2}</td><td>${t.draft_score!=null?t.draft_score:'—'}</td><td>${t.cap_score!=null?t.cap_score:'—'}</td><td>${t.foresight_score!=null?t.foresight_score:'—'}</td><td>${capPctTxt}</td>`;
      tr.onclick=()=>{let fn=window.pick||window.__pick||null; if(fn){fn(t.abbr)} };
      bd.appendChild(tr);
    });
@@ -48,6 +58,8 @@
    let hist=await getHist(), pay=await getPay(), capRules=await getCap(), bySeason=await getBY();
    let capMap={}; if(capRules){Object.keys(capRules).forEach(k=>{if(capRules[k]&&capRules[k].cap) capMap[k]=capRules[k]}); }
    window.PO_WINS=FO.playoff_wins||{}; window.PO_SERIES=FO.playoff_series_wins||{}; window.PO_WEIGHT=FO.playoff_win_weight||2.5;
+   // valuation map for fun boards
+   try{let _vm={}; if(FO.teams){for(let tt of FO.teams){if(tt.valuation_m){_vm[FO.season_focus]=_vm[FO.season_focus]||{}; _vm[FO.season_focus][tt.abbr]=tt.valuation_m}} FO._valuation_by_season=_vm;}catch(e){}
    // expose validity corr for time-machine header if present
    if(bySeason&&bySeason.validity&&bySeason.validity.vegas_wins_corrs){
      let cur=bySeason.validity.vegas_wins_corrs.find(x=>x.season===FO.season_focus);

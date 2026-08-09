@@ -1177,6 +1177,45 @@ def main():
     except Exception:
         team_norms_for_props = {}
 
+    # ── Team valuations — brand value pillar v6.8
+    # Historical training not gambling, Forbes synth estimated where paywalled
+    valuation_path = ROOT / "assets" / "data" / "team_valuations.json"
+    valuation_history_path = ROOT / "assets" / "data" / "valuation_history.json"
+    VALUATIONS_BY_SEASON = {}  # season->{abbr: valuation_m}
+    VALUATIONS_META = {}  # season->abbr->full record
+    VALUATION_HISTORY = {}
+    if valuation_path.exists():
+        try:
+            _vdoc = json.loads(valuation_path.read_text())
+            # could be list or dict
+            entries = _vdoc if isinstance(_vdoc, list) else _vdoc.get("valuations", [])
+            for ent in entries:
+                seas = ent.get("season")
+                abbr = ent.get("abbr") or ent.get("team")
+                if not seas or not abbr:
+                    continue
+                abbr = abbr.upper()
+                VALUATIONS_BY_SEASON.setdefault(seas, {})[abbr] = float(ent.get("valuation_m", 0))
+                VALUATIONS_META.setdefault(seas, {})[abbr] = {
+                    "valuation_m": float(ent.get("valuation_m", 0)),
+                    "revenue_m": float(ent.get("revenue_m", 0)) if ent.get("revenue_m") else None,
+                    "operating_income_m": float(ent.get("operating_income_m", 0)) if ent.get("operating_income_m") else None,
+                    "yoy_growth_pct": ent.get("year_over_year_growth_pct") if ent.get("year_over_year_growth_pct") is not None else ent.get("yoy_growth_pct"),
+                    "source": ent.get("source", "forbes_synth_estimated_for_training"),
+                }
+        except Exception as e:
+            print("valuation load fail", e)
+    if valuation_history_path.exists() and not VALUATION_HISTORY:
+        try:
+            VALUATION_HISTORY = json.loads(valuation_history_path.read_text())
+        except Exception:
+            VALUATION_HISTORY = {}
+    # fallback synthesis if no file: generate rough from payroll*multiple
+    if not VALUATIONS_BY_SEASON:
+        print("valuation file missing - synthesizing minimal")
+        for _s in seasons[-3:]:
+            VALUATIONS_BY_SEASON[_s] = {abbr: 3200 for abbr in ["ATL","BOS","BKN","CHA","CHI","CLE","DAL","DEN","DET","GSW","HOU","IND","LAC","LAL","MEM","MIA","MIL","MIN","NOP","NYK","OKC","ORL","PHI","PHX","POR","SAC","SAS","TOR","UTA","WAS"]}
+
     # expose for top-level payload later
     champion_map = CHAMP_BONUS
     cap = CAP_BY_SEASON.get(season_focus, 140_588_000) if CAP_BY_SEASON else 140_588_000
@@ -1561,6 +1600,29 @@ def main():
         po_wins_per_m = round(float(playoff_wins) / (pw / 1_000_000), 3) if pw and pw > 0 else 0
         _real_team_games_cap = REAL_PLAYOFF_TEAM_GAMES.get(season_focus, {}).get(abbr, 0) or (playoff_wins * 1.35 if playoff_wins else 0)
         _playoff_weight_contrib_cap = round(float(_real_team_games_cap or 0) * 0.12, 3) if _real_team_games_cap else 0.0
+        # valuation — brand value pillar v6.8
+        _val_meta = VALUATIONS_META.get(season_focus, {}).get(abbr, {}) if 'VALUATIONS_META' in locals() else {}
+        valuation_m = int(_val_meta.get("valuation_m", 0)) if _val_meta.get("valuation_m") else int(VALUATIONS_BY_SEASON.get(season_focus, {}).get(abbr, 3200)) if VALUATIONS_BY_SEASON.get(season_focus, {}).get(abbr) else 3200
+        valuation_growth_pct = _val_meta.get("yoy_growth_pct")
+        revenue_m = _val_meta.get("revenue_m")
+        operating_income_m = _val_meta.get("operating_income_m")
+        # wins per billion — smaller because valuation is billions
+        try:
+            wins_per_b = round(float(winfo.get("W",0)) / (valuation_m/1000.0), 3) if valuation_m else 0
+        except Exception:
+            wins_per_b = 0
+        try:
+            weighted_wins_per_b = round(float(weighted_wins) / (valuation_m/1000.0), 3) if valuation_m else 0
+        except Exception:
+            weighted_wins_per_b = 0
+        try:
+            po_wins_per_b = round(float(playoff_wins) / (valuation_m/1000.0), 3) if valuation_m else 0
+        except Exception:
+            po_wins_per_b = 0
+        # placeholder valuation_score computed later after median, but init 50
+        valuation_score = 50
+        valuation_grade = "C"
+        valuation_alpha = 0
         rank = 0
         if league_wpm_sorted:
             rank = sum(1 for v in league_wpm_sorted if v <= wpm) / len(league_wpm_sorted)
@@ -2378,6 +2440,20 @@ def main():
                 "w_per_m": wpm,
                 "po_wins_per_m": po_wins_per_m,
                 "weighted_wpm_capnorm": weighted_wpm_capnorm,
+                # valuation brand pillar v6.8
+                "valuation_m": valuation_m,
+                "valuation_growth_pct": valuation_growth_pct,
+                "revenue_m": revenue_m,
+                "operating_income_m": operating_income_m,
+                "wins_per_b": wins_per_b,
+                "weighted_wins_per_b": weighted_wins_per_b,
+                "po_wins_per_b": po_wins_per_b,
+                "wins_per_billion": wins_per_b,
+                "weighted_wins_per_billion": weighted_wins_per_b,
+                "po_wins_per_billion": po_wins_per_b,
+                "valuation_score": valuation_score,
+                "valuation_grade": valuation_grade,
+                "valuation_alpha": valuation_alpha,
                 "cap_efficiency": {
                     "score": round(cap_score, 1),
                     "grade": cap_grade,
@@ -2435,6 +2511,54 @@ def main():
             }
         )
 
+    # ── Valuation scoring median for brand pillar v6.8
+    try:
+        _wins_per_b_vals = [t.get("wins_per_b",0) or 0 for t in output_teams]
+        _wins_per_b_vals_s = sorted(_wins_per_b_vals)
+        median_wins_per_b = _wins_per_b_vals_s[len(_wins_per_b_vals_s)//2] if _wins_per_b_vals_s else 5.0
+    except Exception:
+        median_wins_per_b = 5.0
+    for t in output_teams:
+        try:
+            wpb = t.get("wins_per_b",0) or 0
+            growth = t.get("valuation_growth_pct")
+            if growth is None:
+                growth = 0
+            # efficiency: base 50 + (wpb - median)*scale + growth*0.5
+            # scale tuned: wpb diff 1.0 → ~10 pts
+            val_score = 50 + (wpb - median_wins_per_b)*12 + float(growth)*0.5
+            # clamp
+            if val_score<0: val_score=0
+            if val_score>100: val_score=100
+            t["valuation_score"]=round(val_score,1)
+            # grade
+            if val_score>=90: vg="A+"
+            elif val_score>=82: vg="A"
+            elif val_score>=75: vg="A-"
+            elif val_score>=68: vg="B+"
+            elif val_score>=60: vg="B"
+            elif val_score>=52: vg="B-"
+            elif val_score>=45: vg="C+"
+            elif val_score>=38: vg="C"
+            elif val_score>=30: vg="C-"
+            elif val_score>=20: vg="D"
+            else: vg="F"
+            t["valuation_grade"]=vg
+            # valuation_alpha 0.10* z capped ±2 — winning still matters most but brand rewarded
+            # z = (wins_per_b - median)/stdev approx; reuse simple scaling
+            _zval = (wpb - median_wins_per_b)/ (max(1.0, median_wins_per_b*0.3))
+            va = 0.10 * _zval * 10  # 0.10* score_z approx
+            # simpler: (val_score-50)/25 *1.5 → ±2 cap
+            va2 = (val_score-50)/25.0*1.5
+            # blend small growth too
+            va_final = max(-2.0, min(2.0, va2 + (float(growth or 0)/20.0)*0.2 ))
+            t["valuation_alpha"]=round(va_final,2)
+            # also store wins_per etc already present
+        except Exception:
+            t["valuation_score"]=50
+            t["valuation_grade"]="C"
+            t["valuation_alpha"]=0
+
     # widen draft spread via z-score
     import statistics as _stats
 
@@ -2481,7 +2605,7 @@ def main():
         cap_s = t["cap_efficiency"]["score"]
         fore_s = t["foresight"]["score"]
         # recompute base without champ, then re-add champ bonus (champ trumps regular season)
-        # preserve vegas_alpha + props_alpha small lifts from earlier calc
+        # preserve vegas_alpha + props_alpha small lifts from earlier calc + valuation_alpha v6.8
         _va = t.get("vegas_alpha", 0) if isinstance(t, dict) else 0
         _pa = t.get("props_alpha", 0) if isinstance(t, dict) else 0
         try:
@@ -2492,14 +2616,19 @@ def main():
             _pa_f = float(_pa or 0)
         except Exception:
             _pa_f = 0
+        _val_a = t.get("valuation_alpha",0) if isinstance(t,dict) else 0
+        try:
+            _val_a_f = float(_val_a or 0)
+        except Exception:
+            _val_a_f = 0
         base_new = round(0.35 * new_score + 0.35 * cap_s + 0.30 * fore_s + 0.15 * _va_f + 0.08 * _pa_f, 1)
-        # carry over champ_bonus if present, else 0; preserve base
+        # carry over champ_bonus if present, else 0; preserve base + valuation_alpha small brand lift
         cb = t.get("champ_bonus", 0) if isinstance(t, dict) else 0
         t["for_score_base"] = base_new
-        final_new = round(min(99, base_new + (cb or 0)), 1)
+        final_new = round(min(99, base_new + (cb or 0) + _val_a_f), 1)
         t["for_score"] = final_new
         t["for_final"] = final_new
-        t["for_score_base"] = base_new  # ensure consistency
+        t["for_score_base"] = base_new  # ensure consistency preserve base without champ/val for transparency
 
     season_next = "2025-26"
     cap_next = CAP_BY_SEASON.get(season_next, 154_647_000) if CAP_BY_SEASON else 154_647_000
