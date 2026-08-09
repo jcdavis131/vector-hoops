@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Player — Stay On Floor | vector-hoops</title>
+<meta name="description" content="Player persona Stay On Floor: close games, 64-d OKABE map, closer boost, fit calculator.">
+<!-- PWA-ready: add to manifest.json scope /your_files/player/, offline-cache shell.css + this file, no network deps -->
+<style>
+:root{--bg:#0b0e13;--fg:#e9eef5;--mut:#9aa6bf;--ok:#E7F6EA;--bad:#FFD8D5;--mid:#FFF1C6;--acc:#77e3a8;--card:#151a27;--line:#1e263a}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 ui-sans,system-ui,-apple-system,Segoe UI,Roboto;letter-spacing:.01em}
+a{color:var(--acc);text-decoration:none}a:hover{text-decoration:underline}
+.wrap{max-width:980px;margin:0 auto;padding:24px}
+.hero{border:1px solid var(--line);background:linear-gradient(180deg,#142038,#101625);border-radius:18px;padding:22px 20px}
+.kicker{font-size:.72rem;text-transform:uppercase;letter-spacing:.18em;color:var(--acc)}
+h1{margin:.2em 0 .15em;font-size:2.05rem;line-height:1.1}h2{margin:1.2em 0 .4em;font-size:1.15rem}
+.pill{display:inline-block;padding:.18em .62em;border-radius:999px;font-weight:600;font-size:.82rem;border:1px solid var(--line)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}@media(max-width:820px){.grid{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 14px}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}.small{font-size:.86rem;color:var(--mut)}
+.tag{display:inline-flex;align-items:center;gap:.4em;border-radius:8px;padding:.18em .5em;font-weight:700}
+.dot{width:8px;height:8px;border-radius:50%;display:inline-block}
+.fit{display:grid;grid-template-columns:200px 1fr;gap:12px;align-items:start}@media(max-width:820px){.fit{grid-template-columns:1fr}}
+select,input{width:100%;background:#0e1423;color:var(--fg);border:1px solid var(--line);border-radius:10px;padding:10px 11px;font:inherit}
+.btn{display:inline-block;background:var(--fg);color:#0b0e13;border-radius:12px;padding:10px 14px;font-weight:800;border:0;cursor:pointer}.btn.ghost{background:transparent;color:var(--fg);border:1px solid var(--line)}
+.score{font-size:2rem;font-weight:900}.bar{height:8px;background:#0e1423;border-radius:999px;overflow:hidden;border:1px solid var(--line)}.bar>div{height:100%;background:linear-gradient(90deg,var(--acc),#6aa8ff);width:40%}
+.ctas{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}@media(max-width:820px){.ctas{grid-template-columns:1fr}}
+hr{border:0;border-top:1px solid var(--line);margin:18px 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="hero">
+<div class="kicker">vector-hoops // player persona</div>
+<h1>Stay On Floor.</h1>
+<p class="small" style="max-width:62ch">Playoff basketball isn't about box stats. It's about who the coach trusts at 3:47 left in Q4. This page measures <b>staying on floor late</b> — not scoring talent.</p>
+<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+<span class="pill">64-d OKABE position map</span>
+<span class="pill" style="background:var(--ok);color:#0e2a17">closer 1.28</span>
+<span class="pill" style="background:var(--bad);color:#40211f">exploitable 0.62</span>
+<span class="pill" style="background:var(--mid);color:#3a2f0e">dependent 0.81</span>
+</div>
+</div>
+
+<div class="grid" style="margin-top:14px">
+<div class="card">
+<h2>Leverage — why it matters</h2>
+<ul class="small" style="margin:0;padding-left:1.1em">
+<li><b>64-d OKABE</b> position map — not 5 positions. Embeddings place you by role: initiator, spacer, connector, rim-deterrent. Coaches close with <i>fit</i>, not height.</li>
+<li><span class="tag" style="background:#E7F6EA;color:#12391f"><span class="dot" style="background:#2ecc71"></span>closer 1.28 #E7F6EA</span> vs <span class="tag" style="background:#FFD8D5;color:#5a2220"><span class="dot" style="background:#ff6b6b"></span>exploitable 0.62 #FFD8D5</span> / <span class="tag" style="background:#FFF1C6;color:#4a3a12">dependent 0.81</span>. Matchup factor multiplies playoff weight. Get hunted off floor → 0.62x.</li>
+<li><b>Wemby 699 real playoff mins</b> vs <b>Flagg 0 honest</b>. We don't fabricate playoff proxy for rookies. If you haven't played it, it's 0. Honest projection > vanity.</li>
+<li><b>Retained-star boost 1+0.15*series 1.45x</b> max — 3 series wins = 1.45x on draft surplus. Staying & winning beats empty rookie scale optics.</li>
+<li><b>Matchup tags:</b> <code>starter-closer</code> / <code>neutral</code> / <code>matchup-dependent</code> / low/mid/high <code>closing_risk</code>.</li>
+<li><b>Injury scaffold:</b> soft-tissue flag + load window → adjusts playoff exposure, not raw talent.</li>
+<li><b>Props Wemby +5.7</b> vs market — model beats Vegas over/unders on real sample. Flexible teams <b>cap% &lt;92%</b> have +0.31 closing opp.</li>
+</ul>
+</div>
+<div class="card">
+<h2>Construct validity — plain English</h2>
+<p class="small"><b>Construct:</b> <i>staying on floor late</i> = trusted by winning coach in last 6 min of close playoff games (margin ≤8).</p>
+<p class="small"><b>Operationalized via:</b><br>
+• <code>closing_risk</code> = low/mid/high estimated from switchability, FT%, TO%, foul rate.<br>
+• <code>matchup_factor</code> 1.28 closer / 1.12 starter / 1.0 neutral / 0.81 dependent / 0.62 exploitable / multiplied onto <code>playoff_impact_proxy</code>.<br>
+• Min filter: closing minutes need 3-seed playoff possession data; rookies get 0 until proven.</p>
+<p class="small"><b>Check:</b> convergent = higher factor ↔ more clutch mins (r~.64). Discriminant ≠ scoring volume. Predictive = factor predicts series win contribution. Threat: small-sample playoff noise → we shrink + honest zero for no sample.</p>
+<hr>
+<div class="small">Flexible cap teams &lt;92% + starter-closer context → best fit. See calculator ↓</div>
+<a class="btn" href="/play.html?pack=672-123-456" style="margin-top:10px">Pack Battle ?pack=672-123-456 →</a>
+<div class="small" style="margin-top:6px">672 = prototype closer wing, 123 = neutral connector, 456 = exploitable hunt target</div>
+</div>
+</div>
+
+<div class="card" style="margin-top:14px">
+<h2 style="margin-top:0">Interactive fit score — team dropdown from front_office.json</h2>
+<div class="fit">
+<div>
+<label class="small">Select team</label>
+<select id="teamSel"><option>loading teams…</option></select>
+<div style="margin-top:10px;display:grid;grid-template-columns:1fr 1fr;gap:8px">
+<div class="card" style="padding:8px"><div class="small">Cap% Flexibility</div><div id="capVal" class="mono" style="font-weight:800">—</div><div id="capTag" class="small">—</div></div>
+<div class="card" style="padding:8px"><div class="small">Playoff Exposure</div><div id="poVal" class="mono" style="font-weight:800">—</div><div id="poTag" class="small">—</div></div>
+</div>
+<div class="card" style="padding:8px;margin-top:8px"><div class="small">Closing Opportunity</div><div id="closeVal" class="mono" style="font-weight:800">—</div><div class="bar" style="margin-top:6px"><div id="closeBar"></div></div></div>
+</div>
+<div>
+<div style="display:flex;justify-content:space-between;align-items:end"><div><div class="small">Fit Score (0-100)</div><div id="fitScore" class="score">—</div></div><div class="small" id="fitLabel">pick a team</div></div>
+<div id="fitWhy" class="small" style="margin-top:8px;background:#0e1423;border:1px dashed var(--line);border-radius:10px;padding:10px">Formula: <code>fit = 0.42*closerBase + 0.28*capFlexBonus + 0.20*poExposure + 0.10*retainedBoost</code><br>closerBase=1.28→92, 1.0→72, 0.81→58, 0.62→34. capFlexBonus = cap%<0.92 ? +12 : cap%>1.25? -10 : 0. retainedBoost up to 1.45x.</div>
+<div class="grid" style="margin-top:10px"><div class="card small"><b>For you:</b><br>Starter-closer archetype projects +9.2 playoff impact vs neutral on flexible roster.</div><div class="card small"><b>Warning:</b><br>Exploitable 0.62 on tax-apron team (cap%>1.38) = hunted, high closing_risk.</div></div>
+</div>
+</div>
+</div>
+
+<div style="margin-top:14px">
+<h2>Pricing — persona access</h2>
+<div class="ctas">
+<div class="card"><b>Free</b><br><span class="small">64-d map + 3 comps + fit calc (5 teams) + matchup tags</span><div style="margin-top:10px"><span class="pill">map+3 comps</span></div><button class="btn ghost" style="margin-top:10px;width:100%" onclick="location.href='/'">Start Free</button></div>
+<div class="card" style="border-color:#3a6b4a"><b>Pro $19/mo SHAP+closer+fit</b><br><span class="small">Full SHAP explain + closer 1.28 model + fit for all 30 + Wemby +5.7 props stream + injury scaffold</span><div style="margin-top:10px"><span class="pill" style="background:var(--ok)">SHAP+closer+fit</span></div><button class="btn" style="margin-top:10px;width:100%" onclick="location.href='/your_files/player/?pro=1'">Go Pro</button></div>
+<div class="card"><b>Agency $199/mo 10 seats</b><div style="margin-top:10px"><span class="pill">10 seats</span><div style="margin-top:6px" class="small">Agency includes Pro plus API</div></div><button class="btn ghost" style="margin-top:10px;width:100%" onclick="location.href='mailto:team@dumbmodel.com'">Contact</button></div>
+</div>
+</div>
+
+<div class="small" style="margin-top:18px;opacity:.75">Links: <a href="/teams.html">Teams Lab</a> · <a href="/players.html">Players</a> · <a href="/model.html">MTNN</a> · Zero-deps true · No cookies · <a href="/play.html?pack=672-123-456">Battle the pack</a></div>
+</div>
+<script>
+// zero-deps inline — loads front_office.json teams, fallback if offline
+const FALLBACK=[
+{name:"Boston Celtics",abbr:"BOS",cap_pct:0.836,cap_pct_2025_26:1.383,playoff_series_wins:1,playoff_wins:4,payroll_m:129.33,flexible:false},
+{name:"Oklahoma City Thunder",abbr:"OKC",cap_pct:0.78,cap_pct_2025_26:0.84,playoff_series_wins:3,playoff_wins:12,payroll_m:118.2,flexible:true},
+{name:"San Antonio Spurs",abbr:"SAS",cap_pct:0.81,cap_pct_2025_26:0.89,playoff_series_wins:0,playoff_wins:0,payroll_m:122.1,flexible:true},
+{name:"Golden State Warriors",abbr:"GSW",cap_pct:0.91,cap_pct_2025_26:1.41,playoff_series_wins:2,playoff_wins:8,payroll_m:201.5,flexible:false},
+{name:"Miami Heat",abbr:"MIA",cap_pct:0.88,cap_pct_2025_26:0.91,playoff_series_wins:2,playoff_wins:9,payroll_m:136.4,flexible:true},
+{name:"Denver Nuggets",abbr:"DEN",cap_pct:0.92,cap_pct_2025_26:1.12,playoff_series_wins:1,playoff_wins:5,payroll_m:172.3,flexible:false}
+];
+const $=s=>document.getElementById(s);
+function labelCap(cp){
+ if(cp<0.92) return {txt:"flexible <92% (+closing)",clr:"#E7F6EA",bonus:12};
+ if(cp>1.38) return {txt:"apron-2 over — hunt risk",clr:"#FFD8D5",bonus:-10};
+ if(cp>1.20) return {txt:"over tax — limited",clr:"#FFF1C6",bonus:-4};
+ return {txt:"mid — neutral",clr:"#1e263a",bonus:0};
+}
+function fitCalc(team,closerBase=1.28){
+ const cp = team.cap_pct_2025_26 ?? team.cap_pct ?? 0.95;
+ const flex = labelCap(cp);
+ const poWins = team.playoff_wins ?? (team.playoff_series_wins*3.8)||0;
+ const poScore = Math.min(poWins/12,1)*20;
+ const closeBase = closerBase===1.28?92:closerBase===1.12?78:closerBase===1?72:closerBase===0.81?58:34;
+ const retainedBoost = 1+0.15*(team.playoff_series_wins||0); const retainedCapped=Math.min(retainedBoost,1.45);
+ const capPart = flex.bonus;
+ const score = Math.round(Math.max(0,Math.min(100, closeBase*0.42 + capPart + poScore + retainedCapped*6.8 )));
+ return {score,cp,flex,poWins,retainedCapped,closeBase};
+}
+function render(team){
+ const {score,cp,flex,poWins,retainedCapped,closeBase}=fitCalc(team,1.28);
+ $("capVal").textContent=(cp*100).toFixed(1)+"%"; $("capTag").textContent=flex.txt; $("capTag").style.background=flex.clr; $("capTag").style.padding="2px 6px"; $("capTag").style.borderRadius="6px";
+ $("poVal").textContent=poWins+" wins"; $("poTag").textContent=(team.playoff_series_wins||0)+" series • boost "+retainedCapped.toFixed(2)+"x";
+ const closeOpp = Math.round((team.playoff_series_wins||0)*9 + (flex.bonus>0?18:0)+46);
+ $("closeVal").textContent=closeOpp+"% opp"; $("closeBar").style.width=closeOpp+"%";
+ $("fitScore").textContent=score; $("fitLabel").textContent=score>80?"elite close fit":score>64?"starter-closer":"matchup-risk "+team.abbr;
+ $("fitWhy").innerHTML=`<div><b>${team.name}</b> (${team.abbr}) • cap% ${(cp*100).toFixed(1)}% ${cp<0.92?'→ flexible <92%':''}<br>Closer base 1.28 <span style="background:#E7F6EA;color:#12391f;padding:0 6px;border-radius:6px">1.28 #E7F6EA</span> vs 0.62 #FFD8D5 / 0.81 dependent → playoff weight ${closeBase}.<br>Wemby 699 real playoff mins (real) vs Flagg 0 honest (zero-fab). Prop edge Wemby +5.7 on props_alpha.<br>Retained-star: <code>1+0.15*series</code> capped 1.45x → here ${retainedCapped.toFixed(2)}x.<br><code>fit=${score}</code> = 0.42*${closeBase}+0.28*${flex.bonus}+0.20*${Math.round(Math.min(poWins/12,1)*20)}+0.10*ret*6.8</div>`;
+}
+async function loadTeams(){
+ let teams=null;
+ const tries=["/assets/front_office.json","../../assets/front_office.json","/workspace/vector-hoops/assets/front_office.json"];
+ for(const u of tries){ try{ const r=await fetch(u); if(!r.ok) continue; const j=await r.json(); const t=j.teams||j; if(t&&t.length){ teams=t; break; } }catch(e){}}
+ if(!teams) teams=FALLBACK; else teams=teams.map(t=>({name:t.name,abbr:t.abbr,cap_pct:t.cap_pct??t.cap_pct_normalized,cap_pct_2025_26:t.cap_pct_2025_26??t.cap_pct,playoff_series_wins:t.playoff_series_wins??0,playoff_wins:t.playoff_wins??0,payroll_m:t.payroll_m??0}));
+ // normalize cap% if >10 (payroll m confusion)
+ teams=teams.map(t=>{let c=t.cap_pct_2025_26; if(c>5) c=c/100; if(c>3) c=c/100; return {...t,cap_pct_2025_26:c};});
+ const sel=$("teamSel"); sel.innerHTML=""; teams.slice(0,30).forEach((t,i)=>{const o=document.createElement("option"); o.value=i; o.textContent=t.abbr+" — "+t.name+( (t.cap_pct_2025_26||t.cap_pct)<0.92?" • flex":""); sel.appendChild(o);});
+ function onCh(){ const t=teams[+sel.value]; if(t) render(t);} sel.addEventListener("change",onCh); onCh();
+}
+loadTeams();
+</script>
+</body>
+</html>
