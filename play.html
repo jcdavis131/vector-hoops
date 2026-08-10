@@ -11,6 +11,74 @@ function cos(a,b){if(!a||!b||a.length!==b.length||!a.length)return 0;let d=0,na=
    Ids are vectors.json row indices, so ?pack= links keep resolving.
    The hardcoded rows stay as the pre-load fallback: if this fetch fails the
    page still plays, on the demo pool, and says so. */
+/* Replace the 140-dot random starfield with the actual embedding.
+   drawBase() is a function declaration, so it can be reassigned from here once
+   the real pool has loaded. Background cloud is assets/vectors_map_lite.json
+   (4,322 rows of {i,x,y,z,c}), already committed and used by shared-map.js —
+   fetched rather than duplicated into game_vectors.json.
+
+   Palette note: index 7 is #FFFEF7 here, not the #000000 that index.html and
+   players.html use. This canvas is #0A0C10, and black points on near-black are
+   invisible. 0-6 match those two pages so the maps agree with each other; the
+   unresolved order split between them is logged on the board. */
+function installRealMap(dim){
+  var MAP_OKABE=['#0072B2','#D55E00','#009E73','#CC79A7','#F0E442','#56B4E9','#E69F00','#FFFEF7'];
+  var cloud=null;
+  fetch('assets/vectors_map_lite.json',{cache:'force-cache'})
+    .then(function(r){ return r.ok?r.json():null; })
+    .then(function(j){
+      var arr=j&&(j.players||j);
+      if(Array.isArray(arr)&&arr.length) cloud=arr;
+      swapDraw();
+    })
+    .catch(function(){ swapDraw(); });   // target-only map still beats a starfield
+
+  function swapDraw(){
+    drawBase=function(poolObj){
+      var W=c.clientWidth,H=c.clientHeight;
+      ctx.clearRect(0,0,W,H);
+      ctx.fillStyle='#0A0C10'; ctx.fillRect(0,0,W,H);
+      var pad=18, sx=function(x){return pad+x*(W-pad*2);}, sy=function(y){return pad+(1-y)*(H-pad*2);};
+      if(cloud){
+        // one fillRect per point, batched by colour — same approach the other
+        // map surfaces use, so 4k points stay cheap
+        for(var k=0;k<8;k++){
+          ctx.fillStyle=MAP_OKABE[k];
+          ctx.globalAlpha=0.34;
+          for(var i=0;i<cloud.length;i++){
+            var p=cloud[i];
+            if(((p.c|0)&7)!==k) continue;
+            ctx.fillRect(sx(p.x)|0, sy(p.y)|0, 1.6, 1.6);
+          }
+        }
+        ctx.globalAlpha=1;
+      }
+      if(poolObj && typeof poolObj.x==='number'){
+        var tx=sx(poolObj.x), ty=sy(poolObj.y);
+        ctx.strokeStyle='#FAFAF8'; ctx.lineWidth=3;
+        ctx.beginPath(); ctx.arc(tx,ty,12,0,6.283); ctx.stroke();
+        ctx.strokeStyle='#EB6834'; ctx.lineWidth=2.2;
+        ctx.beginPath(); ctx.arc(tx,ty,8,0,6.283); ctx.stroke();
+        ctx.fillStyle='#F0E442';
+        ctx.beginPath(); ctx.arc(tx,ty,3.4,0,6.283); ctx.fill();
+        ctx.strokeStyle='#EB6834'; ctx.lineWidth=1.6;
+        ctx.beginPath();
+        ctx.moveTo(tx-19,ty); ctx.lineTo(tx-13,ty); ctx.moveTo(tx+13,ty); ctx.lineTo(tx+19,ty);
+        ctx.moveTo(tx,ty-19); ctx.lineTo(tx,ty-13); ctx.moveTo(tx,ty+13); ctx.lineTo(tx,ty+19);
+        ctx.stroke();
+      }
+      ctx.fillStyle='#FAFAF8'; ctx.font='11px ui-monospace';
+      ctx.fillText((poolObj?poolObj.n+' ':'')+'◎ target · '+(cloud?cloud.length.toLocaleString()+' seasons':'target only')+
+                   ' · '+dim+'-d contract',14,20);
+    };
+    if(typeof cur!=='undefined'&&cur) drawBase(cur);
+    var cv=document.getElementById('c');
+    if(cv) cv.setAttribute('aria-label',
+      'Embedding map. '+(cloud?cloud.length.toLocaleString()+' player-seasons drawn as points, coloured by archetype, ':'')+
+      'with the target season marked by a crosshair. Positions come from the model, not decoration.');
+  }
+}
+
 (function(){
   fetch('assets/game_vectors.json',{cache:'force-cache'})
     .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
@@ -56,6 +124,7 @@ function cos(a,b){if(!a||!b||a.length!==b.length||!a.length)return 0;let d=0,na=
         }catch(e){ console.warn('reseed after pool swap failed',e); }
       }
       console.log('game pool: real',POOL.length,'past /',MODERN.length,'modern, dim',dim);
+      installRealMap(dim);
     })
     .catch(function(e){
       // the page already says it is a demo pool; leave that copy standing

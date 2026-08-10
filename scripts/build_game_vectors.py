@@ -81,11 +81,19 @@ def build() -> dict:
         name, season = r.get("name"), r.get("season")
         if not name or not season:
             continue
+        # x/y/z are this row's position in the shipped 3-D projection and c is
+        # its archetype index (0-7, the same index gameArchetypes uses). They
+        # ride along so play.html can draw the pool on the actual map instead
+        # of the 140-dot random starfield it shipped.
         entry = {
             "i": r.get("id", i),
             "n": name,
             "s": season,
             "v": [round(float(x), VEC_DP) for x in v],
+            "x": round(float(r.get("x", 0.5)), 4),
+            "y": round(float(r.get("y", 0.5)), 4),
+            "z": round(float(r.get("z", 0.5)), 4),
+            "c": int(r.get("c", 0)) & 7,
         }
         h = honors.get(f"{name}|{season}") or {}
         starred = bool(h.get("asg")) or bool(h.get("allNbaTeam")) or bool(h.get("finalsMvp"))
