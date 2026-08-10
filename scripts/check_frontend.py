@@ -1,0 +1,227 @@
+"""Frontend gate. The repo has pipeline tests and no check on the pages at all.
+
+This exists because of one bug: index.html shipped
+
+    b.onclick=()=>{...}c.appendChild(b);
+
+with no semicolon and no line break, so the landing page's entire inline script
+was a SyntaxError and never ran — on production, for an unknown length of time.
+No byte diff, no grep, and no visual review catches that. `node --check` does,
+in about a second.
+
+Checks, in order of how much they have actually caught:
+
+  1. syntax     every inline <script> parses            (found the outage)
+  2. targets    every getElementById/$()/querySelector literal exists
+  3. assets     every static src/href/fetch path resolves on disk
+  4. ids        no duplicate element ids
+  5. sourced    no known-unsourced figures in user-visible markup
+  6. links      every internal .html link resolves
+
+Read-only. Never writes. Exit 0 clean, 1 on any failure.
+
+    python scripts/check_frontend.py
+    python scripts/check_frontend.py --only syntax,links
+"""
+
+from __future__ import annotations
+
+import argparse
+import re
+import shutil
+import subprocess
+import sys
+import tempfile
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
+
+# Figures that appear in site copy and are in no committed file. Documented in
+# /dictionary.html under "Terms this site uses that have no file behind them".
+# If a scoreboard ever ships them, delete the entry — do not silence the check.
+UNSOURCED = ("purity@10 0.7057", "lift 6.32", "purity 0.7057")
+
+# A mention within 400 characters of one of these reads as naming the claim
+# rather than making it, and passes. Keep these phrases explicit — anything
+# vaguer turns the check off by accident.
+DISCLAIMERS = (
+    "no committed source",
+    "in no committed file",
+    "neither figure is in it",
+    "previously cited",
+    "treat them as claims",
+    "have no file behind them",
+)
+
+RE_SCRIPT = re.compile(r"<script(?![^>]*\bsrc=)[^>]*>(.*?)</script>", re.S)
+RE_ID_ATTR = re.compile(r"""\sid=["']?([A-Za-z][\w\-]*)""")
+RE_GET_BY_ID = re.compile(r"""getElementById\(\s*['"]([A-Za-z][\w\-]*)['"]""")
+RE_DOLLAR = re.compile(r"""\$\(\s*['"]([A-Za-z][\w\-]*)['"]\s*\)""")
+RE_DOLLAR_DEF = re.compile(r"""\$\s*=\s*(?:function\s*\(|\w+\s*=>)""")
+RE_QS = re.compile(r"""querySelector\(\s*['"]([#.][A-Za-z][\w\-]*)['"]\s*\)""")
+RE_CLASS_ATTR = re.compile(r"""class=["']([^"']+)["']""")
+RE_ASSET = re.compile(
+    r"""(?:fetch\(\s*['"]|<script[^>]+src=['"]|<link[^>]+href=['"]|<img[^>]+src=['"])([^'"]+)['"]"""
+)
+RE_LINK = re.compile(r"""href=["'](\.?/?[\w\-]+\.html)(?:[#?][^"']*)?["']""")
+RE_COMMENT = re.compile(r"<!--.*?-->|/\*.*?\*/", re.S)
+
+
+def pages() -> list[Path]:
+    return sorted(p for p in ROOT.glob("*.html"))
+
+
+def strip_comments(text: str) -> str:
+    """User-visible copy only — a comment quoting a bad figure is not shipping it."""
+    return RE_COMMENT.sub("", text)
+
+
+def check_syntax(fail) -> None:
+    node = shutil.which("node")
+    if not node:
+        print("  SKIP  node not on PATH — cannot parse inline scripts")
+        return
+    checked = 0
+    with tempfile.TemporaryDirectory() as td:
+        tmp = Path(td) / "block.mjs"
+        for page in pages():
+            for i, block in enumerate(RE_SCRIPT.findall(page.read_text(encoding="utf-8")), 1):
+                if not block.strip():
+                    continue
+                tmp.write_text(block, encoding="utf-8")
+                checked += 1
+                r = subprocess.run([node, "--check", str(tmp)], capture_output=True, text=True)
+                if r.returncode != 0:
+                    # node prints the offending source, then the error, then its
+                    # own version banner — taking the last line reports "Node.js
+                    # v24.1.0", which says nothing. Pick the actual error line.
+                    lines = [ln.strip() for ln in r.stderr.splitlines() if ln.strip()]
+                    err = next(
+                        (ln for ln in lines if "Error" in ln and not ln.startswith("at ")),
+                        lines[-1] if lines else "parse error",
+                    )
+                    fail(f"{page.name} script block {i} does not parse: {err}")
+    print(f"  {checked} inline script block(s) parsed")
+
+
+def check_targets(fail) -> None:
+    total = 0
+    for page in pages():
+        text = page.read_text(encoding="utf-8")
+        ids = set(RE_ID_ATTR.findall(text))
+        classes = {c for attr in RE_CLASS_ATTR.findall(text) for c in attr.split()}
+        wanted = set(RE_GET_BY_ID.findall(text))
+        if RE_DOLLAR_DEF.search(text):
+            wanted |= set(RE_DOLLAR.findall(text))
+        for name in sorted(wanted):
+            total += 1
+            if name not in ids:
+                fail(f"{page.name} looks up #{name}, which does not exist on the page")
+        for sel in sorted(set(RE_QS.findall(text))):
+            total += 1
+            pool = ids if sel[0] == "#" else classes
+            if sel[1:] not in pool:
+                fail(f"{page.name} querySelector('{sel}') matches nothing on the page")
+    print(f"  {total} DOM lookup(s) resolve")
+
+
+def check_assets(fail) -> None:
+    seen: set[tuple[str, str]] = set()
+    for page in pages():
+        for raw in RE_ASSET.findall(page.read_text(encoding="utf-8")):
+            if raw.startswith(("http://", "https://", "data:", "//", "#", "mailto:")):
+                continue
+            rel = re.sub(r"[?#].*$", "", raw).lstrip("./")
+            # paths built by string concatenation are exercised at runtime, not here
+            if not rel or any(ch in rel for ch in "{}$+"):
+                continue
+            key = (page.name, rel)
+            if key in seen:
+                continue
+            seen.add(key)
+            if not (ROOT / rel).exists():
+                fail(f"{page.name} references {rel}, which is not on disk")
+    print(f"  {len(seen)} static asset reference(s) resolve")
+
+
+def check_ids(fail) -> None:
+    for page in pages():
+        ids = RE_ID_ATTR.findall(page.read_text(encoding="utf-8"))
+        for name in sorted({i for i in ids if ids.count(i) > 1}):
+            fail(f"{page.name} defines id={name} {ids.count(name)} times — getElementById will pick one")
+    print(f"  no duplicate ids across {len(pages())} page(s)")
+
+
+def check_sourced(fail) -> None:
+    """Naming one of these AS a claim is allowed; presenting it as a fact is not.
+
+    The dictionary's whole job is to list them, and a correction that says what a
+    line used to claim has to quote it. So a mention passes only when the text
+    around it disclaims it — an allowlist of files would let a genuine new use
+    slip in beside a legitimate one.
+    """
+    allowed = 0
+    for page in pages():
+        visible = strip_comments(page.read_text(encoding="utf-8"))
+        for bad in UNSOURCED:
+            for m in re.finditer(re.escape(bad), visible):
+                window = visible[max(0, m.start() - 400) : m.end() + 400].lower()
+                if any(p in window for p in DISCLAIMERS):
+                    allowed += 1
+                    continue
+                fail(
+                    f"{page.name} shows '{bad}' as fact — it is in no committed file. "
+                    f"Use the eval_scoreboard figures, or disclaim it (see /dictionary.html#purity)."
+                )
+    print(f"  no unsourced figures presented as fact ({len(UNSOURCED)} pattern(s), {allowed} disclaimed mention(s) allowed)")
+
+
+def check_links(fail) -> None:
+    total = 0
+    for page in pages():
+        for raw in sorted(set(RE_LINK.findall(page.read_text(encoding="utf-8")))):
+            total += 1
+            if not (ROOT / raw.lstrip("./")).exists():
+                fail(f"{page.name} links to {raw}, which does not exist")
+    print(f"  {total} internal link(s) resolve")
+
+
+CHECKS = {
+    "syntax": check_syntax,
+    "targets": check_targets,
+    "assets": check_assets,
+    "ids": check_ids,
+    "sourced": check_sourced,
+    "links": check_links,
+}
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--only", help="comma-separated subset of: " + ", ".join(CHECKS))
+    args = ap.parse_args()
+
+    names = [n.strip() for n in args.only.split(",")] if args.only else list(CHECKS)
+    unknown = [n for n in names if n not in CHECKS]
+    if unknown:
+        sys.exit(f"unknown check(s): {', '.join(unknown)}")
+    if not pages():
+        sys.exit("no .html at repo root — wrong directory?")
+
+    failures: list[str] = []
+    for name in names:
+        print(f"{name}:")
+        CHECKS[name](failures.append)
+
+    print()
+    if failures:
+        print(f"FAIL — {len(failures)} problem(s):")
+        for f in failures:
+            print(f"  - {f}")
+        return 1
+    print(f"OK — {len(names)} check(s) clean across {len(pages())} pages")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
