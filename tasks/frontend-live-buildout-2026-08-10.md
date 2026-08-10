@@ -301,6 +301,21 @@ offline HTML page.
 
 Found by asking what else depended on the missing `manifest.json`, rather than
 stopping at the five pages that linked it.
+
+## Still unread: 38.8 MB across 36 committed JSON files
+
+Nothing on the site fetches them. The largest:
+
+| file | size |
+|---|---|
+| `matchup_players.json` | 10.0 MB |
+| `playoff_paths.json` | 9.0 MB |
+| `archetype_assignments.json` | 3.3 MB |
+| `next_profile_eval.json` | 2.9 MB |
+| `playoffs.json` | 2.7 MB |
+
+`skills.json` was on that list until now — the feature `README.md` calls
+**shipped live**. It is now on every player card (`2281/2293` matched).
 ## Findings that are bugs, not features
 
 - **F1 — `model.html` draws a fake SHAP chart.** Its script is literally
