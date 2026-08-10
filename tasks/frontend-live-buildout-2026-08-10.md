@@ -201,7 +201,7 @@ a dark canvas, the other a light one.)
       Real top attributions, for reference: position is dominated by
       `PLAYER_HEIGHT_INCHES` 1.93 then `PLAYER_WEIGHT` 1.24; archetype by
       `PLAYER_HEIGHT_INCHES` 0.86 then `USG_PCT` 0.76.
-- [ ] P3.2 End-to-end narrative: stat → tower → fusion → 64-d → head.
+- [x] P3.2 **End-to-end pipeline — `3275392d`.** `assets/mtnn_arch.json` already shipped a `layers` array with the five stages written out; **no page read it**. Now a selectable diagram: 130 features → 17 towers × 32-d = 544 → fusion → 64-d → 45 head outputs (8 archetype + 5 position + 14 next-profile + 18 skills). Every dimension is derived from the file's own fields, not parsed from its prose, so a retrain changes the diagram. Surfaces two things the site never said: the 17 input families, and that **`injury` is a `readoutFamily`** — read out of the embedding, not fed in, so it cannot leak into the geometry (asserted disjoint in the smoke test). Stages are `aria-expanded` buttons over a live region.
 - [x] P3.3 Closed — `0b8660a2` sourced the zoo table, and a follow-up removed the last 2 hardcoded figures that survived in the card headline (it duplicated `4450.09`/`4501.15` in markup). Headline is now filled from the same rows as the table, so the two cannot drift, and it states that a draft-surplus MAE is a different benchmark from the retrieval score. Hardcoded zoo numbers in `model.html`: **0**. Original note: audit the rest of `model.html` for the same failure mode. The model
       zoo numbers (`DeepMLP 4450.09`, `MTNN v3 loss 0.6641`, `purity@10
       0.7057`, `lift 6.32`) are hardcoded in markup. They may well be true —
