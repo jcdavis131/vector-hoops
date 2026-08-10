@@ -97,11 +97,16 @@ Still unsourced and now labelled as such: the `model.html` model-zoo table.
 - [x] P1.3 `prefers-reduced-motion` — **done `f520c19e`**. The page shipped 4
       `@keyframes` + 4 `animation:` rules (1200 ms trajectory sweep, card
       spike, 12-star confetti) and gated none of them.
-- [ ] P1.1b Keyboard *orbit* of the map. Not done and not cheap: rotation state
-      lives inside the page's minified IIFE closure, unreachable from an
-      appended script. Needs an edit inside the generated file, or the map
-      rewritten against `assets/shared-map.js` (which is still committed at
-      27,161 b but no longer referenced by `play.html`).
+- [x] P1.1b Keyboard orbit — **done `f6d7f4cf`, on `players.html`**. I filed
+      this against `play.html` and it cannot be done there: that canvas is a
+      140-dot `Math.random()` starfield with **no rotation state to expose**.
+      The orbitable map is `players.html`, and the `let`→`var` change in
+      `3f211553` made `yaw` reachable on `window`.
+      Arrows rotate (shift = faster), Home resets, space stops the auto-spin,
+      H reads the controls; each action reports the resulting angle. Arrowing
+      pauses the spin first so the two do not fight. `draw()` re-runs every
+      frame regardless of `rot`, so writing `yaw` needs no redraw plumbing.
+      Diff purely additive: 48 added, 0 removed.
 - [x] P1.2 Archetype colour key — **done `3f211553`, and I had it on the wrong
       page.** I called it blocked because `embedding_map_manifest.json` has no
       archetype field. True, but `play.html`'s canvas is a decorative starfield
@@ -167,10 +172,12 @@ a dark canvas, the other a light one.)
 - [ ] P2.4 Data-quality nit for the pipeline lane: `eratwins.json` contains
       `"Nigel HayesDavis"` — a dropped hyphen from name normalization. Cosmetic
       but user-visible now that the file is rendered.
-- [ ] P2.3 `season_norms.json` documents `notInvertible` features
-      (`FG3_PCT` and two others: empirical-Bayes shrunk before z-scoring, so
-      the raw rate is not what was normalized — it says to show a percentile
-      instead of a fabricated rate). Nothing surfaces that caveat yet.
+- [x] P2.3 `season_norms.json`'s `notInvertible` caveat is surfaced — the
+      **era-z entry in `/dictionary.html`** states it: three features are
+      empirical-Bayes shrunk toward the league mean by attempts before
+      z-scoring, so the raw rate is not what was normalized, and a percentile
+      is honest where a reconstructed percentage is not. Closed by `01d81134`;
+      recording it so this is not rediscovered.
 
 ### Phase 3 — explainability
 - [x] P3.1 **F1 fixed — `fba1b234`.** The chart now reads
