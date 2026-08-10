@@ -25,6 +25,13 @@ header{max-width:900px;margin:0 auto;padding:10px 14px;display:flex;flex-wrap:wr
 .dot.on{background:var(--yellow)} .dot.war{background:var(--orange)}
 .btn{appearance:none;border:2px solid #111;border-radius:12px;padding:11px 14px;font-family:ui-monospace,Menlo,monospace;font-weight:900;cursor:pointer;background:#FAFAF8;color:#111;box-shadow:2.5px 2.5px 0 #111;min-height:44px}
 .btn-y{background:var(--yellow)} .btn:active{transform:translate(1px,1px);box-shadow:1px 1px 0 #111}
+
+/* Every other page gets this ring from assets/keyboard-a11y.js. This page is
+   the one that cannot: it renders when the network is down and sw.js does not
+   precache that module, so the rule is inlined here to match. Same colour and
+   geometry as the module injects, so focus looks identical site-wide. */
+:focus-visible{outline:3px solid #0072B2;outline-offset:2px;box-shadow:0 0 0 5px rgba(0,114,178,.22)}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.001ms !important;transition-duration:.001ms !important}}
 </style>
 </head>
 <body>
