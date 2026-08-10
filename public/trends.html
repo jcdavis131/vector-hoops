@@ -1,4 +1,502 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Vector Hoops — Trends • Chimera</title><meta name="theme-color" content="#fafaf8"><style>:root{--paper:#fafaf8;--ink:#111;--orange:#eb6834;--yellow:#f0e442;--mono:ui-monospace,Menlo,monospace;--shadow:4px 4px 0 var(--ink)}body{margin:0;background:var(--paper);color:var(--ink);font-family:ui-sans-system}nav{display:flex;justify-content:space-between;padding:10px 14px;background:#fff;border-bottom:2px solid var(--ink)}.brand{font-family:var(--mono);font-weight:800}.pill{border:1.6px solid var(--ink);border-radius:999px;padding:5px 10px;background:#fff;box-shadow:2px 2px 0 var(--ink);font-family:var(--mono);font-size:11px;font-weight:800}.pill-y{background:var(--yellow)}.card{background:#fff;border:2px solid var(--ink);border-radius:14px;box-shadow:var(--shadow);padding:12px;margin:12px auto;max-width:1100px}.mono{font-family:var(--mono);font-size:11px;text-transform:uppercase;font-weight:800}.sub{font-size:12.8px;color:#555}</style></head><body>
-<nav><a class="brand" href="/">DUMB<span style="color:var(--orange)">MODEL</span></a><div style="display:flex;gap:6px"><a class="pill" href="/model.html">Model</a><a class="pill pill-y" href="/play.html">Play →</a></div></nav>
-<div class="card"><div class="mono">Chimera • 20,719 joint ×64-d • drift 6.2°/yr • arch sep 0.867 lift 0.8116</div><div class="mono" style="font-size:18px;margin:6px 0">Aging curves + era twins • LOD 4000 mobile 8000 desktop DPR1 fillRect</div><div class="sub">Shared space 64/32/24 →64 trunk • L2 unit cosine is dot • power forward can sit next to strong safety: same role geometry. Chimera dailySeed LCG (seed*1103515245+12345)&0x7fffffff YYYYMMDD UTC.</div></div>
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Vector Hoops — How much did basketball actually change?</title>
+<meta name="description" content="30 seasons of NBA player-seasons measured in one embedding space. Orthogonal Procrustes rotation between consecutive seasons, archetype prevalence 1996-2026, and what moved in each season — every number recomputable.">
+<meta name="theme-color" content="#fafaf8">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23111'/%3E%3Ccircle cx='11' cy='12' r='3' fill='%23eb6834'/%3E%3C/svg%3E">
+<style>
+:root{
+  --paper:#fafaf8;--surface:#fff;--ink:#111;--ink-soft:#52514e;--muted:#6b6760;--hair:#e1e0d9;
+  --orange:#eb6834;--blue:#2a78d6;--purple:#7a5ae6;--yellow:#f0e442;--green:#009e73;--red:#d8452a;
+  --mono:ui-monospace,"IBM Plex Mono",Menlo,monospace;--sans:ui-sans-serif,system-ui,sans-serif;
+  --shadow:4px 4px 0 var(--ink);--shadow-sm:3px 3px 0 var(--ink);
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;overflow-x:clip}
+a{color:inherit}
+nav{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 16px;background:var(--surface);border-bottom:2px solid var(--ink);position:sticky;top:0;z-index:10;flex-wrap:wrap}
+.brand{font-family:var(--mono);font-weight:800;letter-spacing:.04em;text-transform:uppercase;text-decoration:none}
+.brand span{color:var(--orange)}
+.pill{display:inline-flex;align-items:center;gap:5px;padding:5px 10px;border:1.6px solid var(--ink);border-radius:999px;background:#fff;box-shadow:2px 2px 0 var(--ink);font-family:var(--mono);font-size:11px;font-weight:800;text-transform:uppercase;text-decoration:none}
+.pill-y{background:var(--yellow)}
+main{max-width:1100px;margin:0 auto;padding:16px clamp(12px,3vw,20px) 80px}
+.card{background:var(--surface);border:2.2px solid var(--ink);border-radius:14px;box-shadow:var(--shadow);padding:16px;margin:14px 0}
+h1{font-size:clamp(26px,4.4vw,40px);line-height:1.08;letter-spacing:-.02em;margin:10px 0 8px}
+h2{font-size:clamp(19px,2.6vw,24px);line-height:1.15;letter-spacing:-.015em;margin:0 0 4px}
+h3{font-size:15px;margin:0 0 4px}
+.mono{font-family:var(--mono);font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.05em}
+.sub{font-size:13.5px;color:var(--ink-soft);line-height:1.6;max-width:68ch}
+.dim{color:var(--muted)}
+/* hero number — the one figure the page exists to deliver */
+.hero{display:flex;flex-wrap:wrap;gap:22px;align-items:flex-start}
+.hero__fig{font-family:var(--mono);font-weight:900;font-size:clamp(46px,9vw,84px);line-height:.92;letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+.hero__unit{font-size:.36em;letter-spacing:0}
+.statrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.stat{border:1.8px solid var(--ink);border-radius:10px;box-shadow:var(--shadow-sm);padding:8px 11px;background:var(--surface);min-width:112px}
+.stat__v{font-family:var(--mono);font-weight:900;font-size:19px;font-variant-numeric:tabular-nums}
+.stat__k{font-family:var(--mono);font-size:9.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-top:2px}
+/* charts */
+.figwrap{margin-top:12px;overflow-x:auto}
+svg.chart{display:block;width:100%;height:auto;min-width:520px;touch-action:pan-y}
+.grid line{stroke:var(--hair);stroke-width:1}
+.axis text{font-family:var(--mono);font-size:9.5px;fill:var(--muted)}
+.axis line{stroke:var(--ink);stroke-width:1.4}
+.serie{fill:none;stroke:var(--blue);stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+.dot{fill:var(--blue);stroke:var(--surface);stroke-width:2}
+.dot--peak{fill:var(--orange)}
+.hit{fill:transparent;cursor:pointer}
+.cross{stroke:var(--ink);stroke-width:1;stroke-dasharray:3 3;opacity:.5}
+.dlabel{font-family:var(--mono);font-size:10px;font-weight:800;fill:var(--ink)}
+.tip{position:absolute;pointer-events:none;background:var(--surface);border:2px solid var(--ink);border-radius:9px;box-shadow:var(--shadow-sm);padding:6px 9px;font-family:var(--mono);font-size:11px;line-height:1.45;z-index:20;max-width:240px}
+.chartbox{position:relative}
+/* small multiples */
+.sm-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(238px,1fr));gap:10px;margin-top:12px}
+.sm{border:1.8px solid var(--ink);border-radius:10px;box-shadow:var(--shadow-sm);padding:9px 10px;background:var(--surface)}
+.sm__name{font-size:12.5px;font-weight:700;line-height:1.25;min-height:2.5em}
+.sm__delta{font-family:var(--mono);font-size:12px;font-weight:900;font-variant-numeric:tabular-nums;display:flex;align-items:center;gap:5px;margin-top:3px}
+.sm svg{display:block;width:100%;height:52px;margin-top:5px}
+.up{color:var(--blue)}.down{color:var(--orange)}
+/* status — colour is never alone; every badge carries a glyph and a word */
+.badge{display:inline-flex;align-items:center;gap:5px;border:1.5px solid var(--ink);border-radius:999px;padding:2px 8px;font-family:var(--mono);font-size:10px;font-weight:800;text-transform:uppercase;background:#fff}
+.badge--fav{background:#dff3ec}.badge--unfav{background:#fbe3de}.badge--unrel{background:#eeede8}
+/* drift bars */
+.bar-row{display:grid;grid-template-columns:118px 1fr 46px;gap:8px;align-items:center;font-family:var(--mono);font-size:11px;padding:2px 0}
+.bar-track{background:#f0efe9;border:1.3px solid var(--ink);border-radius:999px;height:11px;overflow:hidden}
+.bar-fill{height:100%;background:var(--blue);border-right:1.3px solid var(--ink)}
+.bar-val{text-align:right;font-variant-numeric:tabular-nums}
+/* season picker */
+.seasons{display:flex;gap:5px;flex-wrap:wrap;margin-top:10px}
+.sbtn{font-family:var(--mono);font-size:10.5px;font-weight:800;border:1.5px solid var(--ink);border-radius:7px;background:#fff;padding:4px 7px;cursor:pointer;min-height:28px}
+.sbtn[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.legend{display:flex;gap:12px;flex-wrap:wrap;font-family:var(--mono);font-size:10.5px;font-weight:800;margin-top:8px;align-items:center}
+.swatch{width:11px;height:11px;border:1.3px solid var(--ink);border-radius:3px;display:inline-block;vertical-align:-1px;margin-right:4px}
+/* table fallback — identity is never colour-alone, and every chart has a text twin */
+details.tbl{margin-top:10px}
+details.tbl summary{font-family:var(--mono);font-size:10.5px;font-weight:800;text-transform:uppercase;cursor:pointer;min-height:26px;display:flex;align-items:center}
+table{border-collapse:collapse;font-family:var(--mono);font-size:11px;margin-top:6px;width:100%}
+th,td{border:1px solid var(--hair);padding:3px 6px;text-align:left;font-variant-numeric:tabular-nums}
+th{background:#f4f3ee}
+.shift{border:1.8px solid var(--ink);border-radius:10px;box-shadow:var(--shadow-sm);padding:11px 12px;background:var(--surface);margin-top:10px}
+.method{font-size:12px;line-height:1.65;color:var(--ink-soft);background:#f4f3ee;border:1.5px dashed var(--ink);border-radius:9px;padding:10px 12px;margin-top:8px}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.vh-sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
+.vh-skip{position:absolute;left:-9999px;top:0;z-index:99;background:var(--paper);border:2.2px solid var(--ink);padding:10px 14px;font-family:var(--mono);font-weight:800;text-decoration:none;border-radius:0 0 10px 0}
+.vh-skip:focus{left:0}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}}
+@media (max-width:640px){.hero__fig{font-size:56px}}
+</style></head><body>
+<a class="vh-skip" href="#main">Skip to the research</a>
+<nav>
+  <a class="brand" href="/">DUMB<span>MODEL</span></a>
+  <div style="display:flex;gap:6px;flex-wrap:wrap"><a class="pill" href="/players.html">Explorer</a><a class="pill" href="/player.html">Players</a><a class="pill" href="/trends.html">Trends</a><a class="pill" href="/model.html">Model</a><a class="pill" href="/teams.html">Teams</a><a class="pill" href="/dictionary.html">Dictionary</a><a class="pill pill-y" href="/play.html">Play today's →</a></div>
+</nav>
+
+<main id="main" tabindex="-1">
+
+  <div class="card">
+    <div class="mono dim">Change over time · 1996-97 → 2025-26</div>
+    <h1>How much did the shape of basketball actually change?</h1>
+    <p class="sub">Every charted player-season lives in one embedding space. If the game
+    changed, the space itself has to rotate — the axes that separated players in 1997 are
+    not the axes that separate them now. That rotation is measurable, so this page measures
+    it instead of asserting it.</p>
+    <div class="hero" id="hero">
+      <div>
+        <div class="hero__fig" id="heroFig">—<span class="hero__unit">°</span></div>
+        <div class="mono dim" style="margin-top:6px">Mean rotation per season</div>
+      </div>
+      <div style="flex:1;min-width:260px">
+        <p class="sub" id="heroText">Loading measured drift…</p>
+        <div class="statrow" id="heroStats"></div>
+      </div>
+    </div>
+  </div>
+
+  <section class="card" aria-labelledby="h-rot">
+    <h2 id="h-rot">Season-to-season rotation</h2>
+    <p class="sub">Each point is one consecutive-season pair, aligned by orthogonal
+    Procrustes on the players who appear in both. A bigger angle means the league re-sorted
+    players more that summer. Hover, or use the season buttons below, to see what moved.</p>
+    <div class="chartbox">
+      <div class="figwrap">
+        <svg class="chart" id="rotChart" viewBox="0 0 760 260" role="img"
+             aria-labelledby="rotTitle rotDesc" tabindex="0"></svg>
+      </div>
+      <div class="tip" id="rotTip" hidden></div>
+    </div>
+    <div class="mono dim" style="margin-top:6px">Arrow keys step seasons when the chart has focus.</div>
+    <div class="seasons" id="seasonBtns" role="group" aria-label="Choose a season"></div>
+    <details class="tbl"><summary>Table view — every season pair</summary>
+      <div style="overflow-x:auto"><table id="rotTable"></table></div>
+    </details>
+  </section>
+
+  <section class="card" aria-labelledby="h-what">
+    <h2 id="h-what">What changed in <span id="whatSeason">—</span></h2>
+    <p class="sub" id="whatInterp"></p>
+    <div id="whatInsights"></div>
+    <h3 style="margin-top:14px">Which axes rotated</h3>
+    <p class="sub">Axis drift is <code>1 − |Q<sub>ii</sub>|</code>: how far each feature's own
+    axis moved during the alignment. High drift means that stat stopped meaning what it meant.</p>
+    <div id="whatDrift" style="margin-top:8px"></div>
+  </section>
+
+  <section class="card" aria-labelledby="h-arch">
+    <h2 id="h-arch">Who was on the floor, 1996–2026</h2>
+    <p class="sub">Share of charted player-seasons in each of the eight archetypes the game
+    scores against, every season. Shown as one panel per archetype rather than a single
+    stacked chart: eight stacked bands cannot be told apart reliably, and the question here
+    is which archetype rose and which fell, one at a time.</p>
+    <div class="legend">
+      <span><span class="swatch" style="background:var(--blue)"></span>▲ larger share than 1996-97</span>
+      <span><span class="swatch" style="background:var(--orange)"></span>▼ smaller share than 1996-97</span>
+      <span class="dim">Panels share one y-scale · sorted by size of change</span>
+    </div>
+    <div class="sm-grid" id="smGrid"></div>
+    <details class="tbl"><summary>Table view — first season, last season, change</summary>
+      <div style="overflow-x:auto"><table id="archTable"></table></div>
+    </details>
+  </section>
+
+  <section class="card" aria-labelledby="h-shifts">
+    <h2 id="h-shifts">The five summers that moved the league most</h2>
+    <div id="shiftCards"></div>
+  </section>
+
+  <section class="card" id="twinSection" aria-labelledby="h-twin">
+    <h2 id="h-twin">Who is the modern version of…?</h2>
+    <p class="sub">The rotation above is why cross-era comparison is hard, and an embedding
+    is how you do it anyway: find the nearest career in a <em>different decade</em>. 1,308
+    careers with at least four charted seasons have one. Similarity is cosine between
+    signature seasons — 1.00 would be identical, and nothing here is close to that.</p>
+    <div class="statrow" id="twinStats"><div class="stat"><div class="stat__v">…</div><div class="stat__k">loading</div></div></div>
+
+    <div style="margin-top:14px">
+      <label class="mono" for="twinInput">Look up a career</label>
+      <input id="twinInput" list="twinNames" autocomplete="off" placeholder="Start typing a name…"
+             style="width:100%;max-width:420px;display:block;margin-top:5px;padding:10px 12px;border:2px solid var(--ink);border-radius:10px;font-family:var(--mono);font-size:14px;box-shadow:var(--shadow-sm)">
+      <datalist id="twinNames"></datalist>
+    </div>
+    <div id="twinResult" aria-live="polite" style="margin-top:12px"></div>
+
+    <h3 style="margin-top:18px">The five the model is most sure about</h3>
+    <p class="sub">Highest cross-decade cosine in the file. Not a curated list — it is the
+    top of the sort.</p>
+    <div id="twinBest"></div>
+
+    <h3 style="margin-top:18px">The five it cannot place</h3>
+    <p class="sub">The lowest matches in the file. A twin is always returned, so a low number
+    is the model saying <em>nobody in another decade played like this</em> — which is the more
+    interesting answer.</p>
+    <div id="twinWorst"></div>
+
+    <div class="method" id="twinMethod" style="margin-top:14px"></div>
+    <p class="sub" id="twinCaveat" style="margin-top:8px"></p>
+  </section>
+
+  <section class="card" aria-labelledby="h-method">
+    <h2 id="h-method">Method</h2>
+    <p class="sub">Printed verbatim from the files this page reads, not paraphrased.</p>
+    <div class="mono" style="margin-top:10px">assets/drift.json</div>
+    <div class="method" id="mDrift"></div>
+    <div class="mono" style="margin-top:12px">assets/archetypes_time.json</div>
+    <div class="method" id="mArch"></div>
+    <p class="sub" style="margin-top:12px" id="prov"></p>
+  </section>
+
+  <div id="live" class="vh-sr" role="status" aria-live="polite" aria-atomic="true"></div>
+</main>
+
+<script>
+(function(){
+'use strict';
+var $=function(id){return document.getElementById(id);};
+var esc=function(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');};
+var n2=function(v){return (Math.round(v*100)/100).toFixed(2);};      // repo rule: never >2 decimals
+var pct1=function(v){return (Math.round(v*1000)/10).toFixed(1)+'%';};
+function say(m){var l=$('live');if(!l||!m)return;if(l.textContent===m)l.textContent='';l.textContent=m;}
+
+var DRIFT=null, ARCH=null, sel=0;
+
+// ── rotation line chart ────────────────────────────────────────────────────
+var W=760,H=260,ML=44,MR=16,MT=18,MB=42;
+function drawRot(){
+  var p=DRIFT.pairs, iw=W-ML-MR, ih=H-MT-MB;
+  var vals=p.map(function(d){return +d.rotationDeg;});
+  var lo=Math.floor(Math.min.apply(null,vals)-1), hi=Math.ceil(Math.max.apply(null,vals)+1);
+  var peak=vals.indexOf(Math.max.apply(null,vals));
+  var X=function(i){return ML+(p.length<2?iw/2:(i/(p.length-1))*iw);};
+  var Y=function(v){return MT+ih-((v-lo)/(hi-lo))*ih;};
+  var s=['<title id="rotTitle">Embedding rotation between consecutive NBA seasons, 1996-97 through 2025-26</title>',
+    '<desc id="rotDesc">Line chart of '+p.length+' season pairs. Rotation ranges from '+
+    n2(Math.min.apply(null,vals))+' to '+n2(Math.max.apply(null,vals))+
+    ' degrees. The full series is available as a table below this chart.</desc>'];
+  s.push('<g class="grid">');
+  for(var g=lo;g<=hi;g+=2) s.push('<line x1="'+ML+'" x2="'+(W-MR)+'" y1="'+Y(g).toFixed(1)+'" y2="'+Y(g).toFixed(1)+'"/>');
+  s.push('</g><g class="axis">');
+  for(var g2=lo;g2<=hi;g2+=2) s.push('<text x="'+(ML-7)+'" y="'+(Y(g2)+3.5).toFixed(1)+'" text-anchor="end">'+g2+'°</text>');
+  s.push('<line x1="'+ML+'" x2="'+ML+'" y1="'+MT+'" y2="'+(MT+ih)+'"/>');
+  s.push('<line x1="'+ML+'" x2="'+(W-MR)+'" y1="'+(MT+ih)+'" y2="'+(MT+ih)+'"/>');
+  p.forEach(function(d,i){ if(i%4===0||i===p.length-1)
+    s.push('<text x="'+X(i).toFixed(1)+'" y="'+(MT+ih+15)+'" text-anchor="middle">'+esc(d.to)+'</text>'); });
+  s.push('</g>');
+  s.push('<path class="serie" d="'+p.map(function(d,i){return (i?'L':'M')+X(i).toFixed(1)+' '+Y(+d.rotationDeg).toFixed(1);}).join(' ')+'"/>');
+  // selective direct label: only the peak gets a number on the plot
+  s.push('<text class="dlabel" x="'+X(peak).toFixed(1)+'" y="'+(Y(vals[peak])-12).toFixed(1)+'" text-anchor="middle">'+
+         n2(vals[peak])+'° '+esc(p[peak].to)+'</text>');
+  s.push('<g id="rotMarks">');
+  p.forEach(function(d,i){
+    var r=(i===peak?5:3.2);
+    s.push('<circle class="dot'+(i===peak?' dot--peak':'')+'" data-i="'+i+'" cx="'+X(i).toFixed(1)+'" cy="'+Y(+d.rotationDeg).toFixed(1)+'" r="'+r+'"/>');
+  });
+  s.push('</g><g id="rotHits">');
+  p.forEach(function(d,i){ // hit targets far bigger than the marks
+    s.push('<rect class="hit" data-i="'+i+'" x="'+(X(i)-iw/(p.length*2)-2).toFixed(1)+'" y="'+MT+'" width="'+(iw/p.length+4).toFixed(1)+'" height="'+ih+'"/>');
+  });
+  s.push('</g><line class="cross" id="rotCross" x1="0" x2="0" y1="'+MT+'" y2="'+(MT+ih)+'" style="display:none"/>');
+  $('rotChart').innerHTML=s.join('');
+  $('rotChart').setAttribute('aria-label','Embedding rotation between consecutive seasons');
+  var box=$('rotChart');
+  function hover(i,ev){
+    var d=p[i], t=$('rotTip');
+    t.hidden=false;
+    t.innerHTML='<b>'+esc(d.from)+' → '+esc(d.to)+'</b><br>'+n2(d.rotationDeg)+'° rotation<br>'+
+                d.sharedPlayers+' shared players';
+    var host=box.parentElement.getBoundingClientRect(), r=box.getBoundingClientRect();
+    var px=(X(i)/W)*r.width+(r.left-host.left);
+    t.style.left=Math.max(0,Math.min(host.width-t.offsetWidth,px-t.offsetWidth/2))+'px';
+    t.style.top='4px';
+    var c=$('rotCross'); c.style.display=''; c.setAttribute('x1',X(i)); c.setAttribute('x2',X(i));
+  }
+  box.addEventListener('mousemove',function(e){
+    var h=e.target.closest?e.target.closest('.hit'):null; if(h) hover(+h.dataset.i,e);
+  });
+  box.addEventListener('mouseleave',function(){$('rotTip').hidden=true;var c=$('rotCross');if(c)c.style.display='none';});
+  box.addEventListener('click',function(e){
+    var h=e.target.closest?e.target.closest('.hit'):null; if(h) select(+h.dataset.i,true);
+  });
+  box.addEventListener('keydown',function(e){
+    var d=(e.key==='ArrowRight'||e.key==='ArrowDown')?1:(e.key==='ArrowLeft'||e.key==='ArrowUp')?-1:
+          (e.key==='Home')?-999:(e.key==='End')?999:0;
+    if(!d) return;
+    e.preventDefault();
+    var i=d===-999?0:d===999?p.length-1:Math.max(0,Math.min(p.length-1,sel+d));
+    select(i,true);
+  });
+}
+
+// ── detail for one season pair ─────────────────────────────────────────────
+var QUAL={favorable:['badge--fav','▲','helped the game'],
+          unfavorable:['badge--unfav','▼','went the other way'],
+          unreliable:['badge--unrel','◑','weak ruler']};
+function select(i,announce){
+  sel=i;
+  var d=DRIFT.pairs[i];
+  $('whatSeason').textContent=d.from+' → '+d.to;
+  $('whatInterp').textContent=d.interpretation||'';
+  $('whatInsights').innerHTML=(d.statInsights||[]).map(function(s){
+    var q=QUAL[s.quality]||['badge--unrel','◑',s.quality||''];
+    return '<div class="shift"><div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:5px">'+
+      '<b>'+esc(s.label||s.feature)+'</b>'+
+      '<span class="badge '+q[0]+'"><span aria-hidden="true">'+q[1]+'</span>'+esc(q[2])+'</span>'+
+      '<span class="mono dim">axis drift '+n2(s.axisDrift)+'</span></div>'+
+      '<div class="sub">'+esc(s.narrative||'')+'</div></div>';
+  }).join('')||'<p class="sub dim">No per-stat narrative recorded for this pair.</p>';
+  var ad=d.axisDrifts||[], mx=ad.length?Math.max.apply(null,ad.map(function(a){return +a.axisDrift;})):1;
+  $('whatDrift').innerHTML=ad.map(function(a){
+    var w=mx?Math.max(1.5,(+a.axisDrift/mx)*100):0;
+    return '<div class="bar-row"><span>'+esc(a.feature)+'</span>'+
+      '<span class="bar-track" role="img" aria-label="'+esc(a.feature)+' axis drift '+n2(a.axisDrift)+'">'+
+      '<span class="bar-fill" style="width:'+w.toFixed(1)+'%"></span></span>'+
+      '<span class="bar-val">'+n2(a.axisDrift)+'</span></div>';
+  }).join('');
+  Array.prototype.forEach.call($('seasonBtns').children,function(b){
+    b.setAttribute('aria-pressed', +b.dataset.i===i?'true':'false');
+  });
+  Array.prototype.forEach.call(document.querySelectorAll('#rotMarks .dot'),function(c){
+    c.setAttribute('r', +c.dataset.i===i?5:(c.classList.contains('dot--peak')?5:3.2));
+  });
+  if(announce) say(d.from+' to '+d.to+', '+n2(d.rotationDeg)+' degrees. '+(d.interpretation||''));
+}
+
+// ── archetype small multiples ──────────────────────────────────────────────
+function drawArch(){
+  var names=ARCH.gameGlobalArchetypes||[], prev=ARCH.gamePrevalence||[];
+  var shifts=(ARCH.gameBiggestShifts||[]).slice().sort(function(a,b){return Math.abs(b.delta)-Math.abs(a.delta);});
+  var all=[]; prev.forEach(function(p){ (p.shares||[]).forEach(function(v){ all.push(+v); }); });
+  var hi=Math.max.apply(null,all)||1;                        // one shared y-scale across panels
+  $('smGrid').innerHTML=shifts.map(function(sh){
+    var idx=names.indexOf(sh.archetype); if(idx<0) return '';
+    var up=+sh.delta>=0, col=up?'var(--blue)':'var(--orange)';
+    var pts=prev.map(function(p,i){
+      var x=(i/(prev.length-1))*220, y=44-((+p.shares[idx]||0)/hi)*40;
+      return x.toFixed(1)+' '+y.toFixed(1);
+    });
+    var area='M0 46 L'+pts.join(' L')+' L220 46 Z';
+    return '<div class="sm"><div class="sm__name">'+esc(sh.archetype)+'</div>'+
+      '<div class="sm__delta '+(up?'up':'down')+'"><span aria-hidden="true">'+(up?'▲':'▼')+'</span>'+
+      (up?'+':'')+pct1(sh.delta)+' <span class="dim" style="font-weight:400">'+pct1(sh.early)+' → '+pct1(sh.late)+'</span></div>'+
+      '<svg viewBox="0 0 220 48" preserveAspectRatio="none" role="img" aria-label="'+esc(sh.archetype)+
+      ': share of player-seasons moved from '+pct1(sh.early)+' in the earliest window to '+pct1(sh.late)+
+      ' in the latest, a change of '+pct1(sh.delta)+'">'+
+      '<path d="'+area+'" fill="'+col+'" fill-opacity=".18"/>'+
+      '<path d="M'+pts.join(' L')+'" fill="none" stroke="'+col+'" stroke-width="2" stroke-linejoin="round"/></svg></div>';
+  }).join('');
+  $('archTable').innerHTML='<thead><tr><th>Archetype</th><th>Early share</th><th>Late share</th><th>Change</th></tr></thead><tbody>'+
+    shifts.map(function(s){return '<tr><td>'+esc(s.archetype)+'</td><td>'+pct1(s.early)+'</td><td>'+pct1(s.late)+'</td><td>'+(+s.delta>=0?'+':'')+pct1(s.delta)+'</td></tr>';}).join('')+
+    '</tbody>';
+}
+
+function boot(){
+  var p=DRIFT.pairs, vals=p.map(function(d){return +d.rotationDeg;});
+  var mean=vals.reduce(function(a,b){return a+b;},0)/vals.length;
+  var maxI=vals.indexOf(Math.max.apply(null,vals)), minI=vals.indexOf(Math.min.apply(null,vals));
+  var shared=p.map(function(d){return +d.sharedPlayers;});
+  $('heroFig').innerHTML=n2(mean)+'<span class="hero__unit">°</span>';
+  $('heroText').textContent=
+    'Across '+p.length+' consecutive-season pairs the embedding frame turned '+n2(mean)+
+    '° on average. The calmest summer was into '+p[minI].to+' at '+n2(vals[minI])+
+    '°; the most violent was into '+p[maxI].to+' at '+n2(vals[maxI])+
+    '°. Each pair is aligned on the '+Math.min.apply(null,shared)+' to '+Math.max.apply(null,shared)+
+    ' players who appear in both seasons, so roster turnover cannot fake a rotation.';
+  $('heroStats').innerHTML=
+    '<div class="stat"><div class="stat__v">'+p.length+'</div><div class="stat__k">season pairs</div></div>'+
+    '<div class="stat"><div class="stat__v">'+n2(vals[maxI])+'°</div><div class="stat__k">peak · '+esc(p[maxI].to)+'</div></div>'+
+    '<div class="stat"><div class="stat__v">'+n2(vals[minI])+'°</div><div class="stat__k">calmest · '+esc(p[minI].to)+'</div></div>'+
+    '<div class="stat"><div class="stat__v">'+(ARCH&&ARCH.n_players?ARCH.n_players.toLocaleString():'—')+'</div><div class="stat__k">player-seasons</div></div>';
+
+  $('seasonBtns').innerHTML=p.map(function(d,i){
+    return '<button class="sbtn" type="button" data-i="'+i+'" aria-pressed="false">'+esc(d.to)+'</button>';
+  }).join('');
+  $('seasonBtns').addEventListener('click',function(e){
+    var b=e.target.closest?e.target.closest('.sbtn'):null; if(b) select(+b.dataset.i,true);
+  });
+  $('rotTable').innerHTML='<thead><tr><th>From</th><th>To</th><th>Rotation °</th><th>Residual</th><th>Shared players</th><th>Most rotated axis</th></tr></thead><tbody>'+
+    p.map(function(d){return '<tr><td>'+esc(d.from)+'</td><td>'+esc(d.to)+'</td><td>'+n2(d.rotationDeg)+'</td><td>'+n2(d.residual)+
+      '</td><td>'+d.sharedPlayers+'</td><td>'+esc((d.mostRotated&&d.mostRotated[0]&&d.mostRotated[0].feature)||'')+'</td></tr>';}).join('')+'</tbody>';
+
+  drawRot();
+  // open on the biggest shift — it is the most informative default, not season 1
+  select(maxI,false);
+  $('shiftCards').innerHTML=(DRIFT.biggestShifts||[]).map(function(s,i){
+    return '<div class="shift"><div style="display:flex;gap:8px;flex-wrap:wrap;align-items:baseline">'+
+      '<span class="mono dim">#'+(i+1)+'</span><b style="font-size:15px">'+esc(s.from)+' → '+esc(s.to)+'</b>'+
+      '<span class="badge">'+n2(s.rotationDeg)+'° rotation</span>'+
+      '<span class="mono dim">'+s.sharedPlayers+' shared players</span></div>'+
+      '<div class="sub" style="margin-top:5px">'+esc(s.interpretation||'')+'</div></div>';
+  }).join('');
+  if(ARCH) drawArch();
+  $('mDrift').textContent=DRIFT.method||'';
+  $('mArch').textContent=(ARCH&&ARCH.method)||'';
+  $('prov').textContent='Sources: assets/drift.json and assets/archetypes_time.json'+
+    (ARCH&&ARCH.built?(', built '+ARCH.built):'')+
+    (ARCH&&ARCH.embeddingSpace?(' · embedding space '+ARCH.embeddingSpace):'')+
+    '. Every figure on this page is read from those files at load; none is hardcoded.';
+}
+
+Promise.all([
+  fetch('assets/drift.json',{cache:'force-cache'}).then(function(r){if(!r.ok)throw new Error('drift.json HTTP '+r.status);return r.json();}),
+  fetch('assets/archetypes_time.json',{cache:'force-cache'}).then(function(r){return r.ok?r.json():null;}).catch(function(){return null;})
+]).then(function(res){ DRIFT=res[0]; ARCH=res[1]; boot(); })
+ .catch(function(e){
+   // no invented fallback: an empty page beats a page of made-up drift
+   $('heroText').textContent='Could not load the measured drift ('+e.message+'). Nothing is shown rather than estimated.';
+   $('heroFig').textContent='—';
+ });
+})();
+
+/* Era twins. assets/eratwins.json is 618 KB — a third of everything this page
+   would otherwise load — and most visitors never scroll this far, so it is
+   fetched the first time the section comes into view rather than at page load. */
+(function(){
+'use strict';
+var $=function(id){return document.getElementById(id);};
+var esc=function(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');};
+var n2=function(v){return (Math.round(v*100)/100).toFixed(2);};
+var TW=null, byName=null, loading=false;
+
+function simBar(sim,label){
+  var w=Math.max(2,Math.min(100,sim*100));
+  return '<span class="bar-track" style="flex:1" role="img" aria-label="'+esc(label)+' similarity '+n2(sim)+'">'+
+         '<span class="bar-fill" style="width:'+w.toFixed(1)+'%"></span></span>';
+}
+function pairCard(p,rank){
+  var t=p.twin||{};
+  return '<div class="shift"><div style="display:flex;gap:8px;flex-wrap:wrap;align-items:baseline">'+
+    (rank?'<span class="mono dim">#'+rank+'</span>':'')+
+    '<b style="font-size:15px">'+esc(p.name)+'</b><span class="mono dim">'+esc(p.season)+' · '+esc(p.decade)+'</span>'+
+    '<span class="badge">'+esc(p.archetype||'')+'</span></div>'+
+    '<div style="display:flex;gap:8px;align-items:center;margin-top:6px;flex-wrap:wrap">'+
+      '<span class="mono" style="min-width:96px">closest twin</span>'+
+      '<b>'+esc(t.name)+'</b><span class="mono dim">'+esc(t.season)+' · '+esc(t.decade)+'</span>'+
+      '<span class="mono" style="font-variant-numeric:tabular-nums">'+n2(t.similarity)+'</span></div>'+
+    '<div style="margin-top:7px">'+(p.top5||[]).map(function(c){
+      return '<div class="bar-row" style="grid-template-columns:150px 1fr 46px">'+
+        '<span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+esc(c.name)+
+        ' <span class="dim">'+esc(c.season)+'</span></span>'+
+        simBar(+c.sim,c.name)+
+        '<span class="bar-val">'+n2(c.sim)+'</span></div>';
+    }).join('')+'</div></div>';
+}
+function render(){
+  var p=TW.players, sims=p.map(function(x){return +x.twin.similarity;}).slice().sort(function(a,b){return a-b;});
+  var mean=sims.reduce(function(a,b){return a+b;},0)/sims.length;
+  $('twinStats').innerHTML=
+    '<div class="stat"><div class="stat__v">'+p.length.toLocaleString()+'</div><div class="stat__k">careers twinned</div></div>'+
+    '<div class="stat"><div class="stat__v">'+n2(sims[Math.floor(sims.length/2)])+'</div><div class="stat__k">median similarity</div></div>'+
+    '<div class="stat"><div class="stat__v">'+n2(sims[sims.length-1])+'</div><div class="stat__k">best match</div></div>'+
+    '<div class="stat"><div class="stat__v">'+n2(sims[0])+'</div><div class="stat__k">worst match</div></div>'+
+    '<div class="stat"><div class="stat__v">'+n2(mean)+'</div><div class="stat__k">mean</div></div>';
+  var sorted=p.slice().sort(function(a,b){return b.twin.similarity-a.twin.similarity;});
+  $('twinBest').innerHTML=sorted.slice(0,5).map(function(x,i){return pairCard(x,i+1);}).join('');
+  $('twinWorst').innerHTML=sorted.slice(-5).reverse().map(function(x,i){return pairCard(x,i+1);}).join('');
+  $('twinNames').innerHTML=p.map(function(x){return '<option value="'+esc(x.name)+'">';}).join('');
+  byName={}; p.forEach(function(x){ byName[x.name.toLowerCase()]=x; });
+  $('twinMethod').textContent=TW.method||'';
+  // The method string says 48-d. eval_scoreboard.json says the shipped embedding
+  // is 64-d. Saying so is the whole point of printing the method.
+  $('twinCaveat').innerHTML='This table was computed in the <b>48-dimensional</b> embedding, '+
+    'as its own method line states. The model the game ships now is 64-dimensional '+
+    '(<code>assets/eval_scoreboard.json</code>). These twins are therefore a snapshot of an '+
+    'earlier space, not of the current one, and are labelled that way rather than quietly reused.';
+}
+function lookup(){
+  var v=($('twinInput').value||'').trim().toLowerCase();
+  if(!v){ $('twinResult').innerHTML=''; return; }
+  if(!byName){ $('twinResult').innerHTML='<p class="sub dim">Still loading…</p>'; return; }
+  var hit=byName[v];
+  if(!hit){
+    var near=Object.keys(byName).filter(function(k){return k.indexOf(v)===0;}).slice(0,6);
+    $('twinResult').innerHTML=near.length
+      ? '<p class="sub">Did you mean '+near.map(function(k){return '<b>'+esc(byName[k].name)+'</b>';}).join(', ')+'?</p>'
+      : '<p class="sub dim">No charted career by that name with at least four seasons.</p>';
+    return;
+  }
+  $('twinResult').innerHTML=pairCard(hit,null);
+}
+function load(){
+  if(TW||loading) return;
+  loading=true;
+  fetch('assets/eratwins.json',{cache:'force-cache'})
+    .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
+    .then(function(j){ TW=j; render(); lookup(); })
+    .catch(function(e){
+      loading=false;
+      $('twinStats').innerHTML='';
+      $('twinResult').innerHTML='<p class="sub">Era twins could not be loaded ('+esc(e.message)+'). Nothing is estimated in their place.</p>';
+    });
+}
+var sec=$('twinSection');
+if(sec && window.IntersectionObserver){
+  var io=new IntersectionObserver(function(en){
+    if(en.some(function(x){return x.isIntersecting;})){ io.disconnect(); load(); }
+  },{rootMargin:'320px'});
+  io.observe(sec);
+} else { load(); }
+$('twinInput').addEventListener('focus',load);
+$('twinInput').addEventListener('input',function(){ if(!TW) load(); else lookup(); });
+$('twinInput').addEventListener('change',lookup);
+})();
+</script>
 </body></html>

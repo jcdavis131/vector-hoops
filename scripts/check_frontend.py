@@ -209,8 +209,32 @@ def check_links(fail) -> None:
     print(f"  {total} internal link(s) resolve")
 
 
+def check_mirror(fail) -> None:
+    """public/ is what Vercel serves; root is what everyone edits.
+
+    With no build step and no outputDirectory in vercel.json, Vercel serves
+    public/ at the site root. Editing a root page therefore changes nothing
+    that a visitor sees. That is not a hypothetical — /play served 27,938 bytes
+    from public/play.html while the root file was 45,050, and every
+    knowledge/*.md returned 404. This check makes the drift loud.
+    """
+    script = ROOT / "scripts" / "sync_public.py"
+    if not script.exists():
+        print("  SKIP  scripts/sync_public.py not present")
+        return
+    r = subprocess.run(
+        [sys.executable, str(script), "--check"], capture_output=True, text=True, cwd=str(ROOT)
+    )
+    first = (r.stdout.strip().splitlines() or ["no output"])[0]
+    if r.returncode != 0:
+        fail(f"public/ mirror is stale — {first.removeprefix('FAIL ').strip()}. Run: python scripts/sync_public.py")
+    else:
+        print(f"  {first.removeprefix('OK').strip()}")
+
+
 CHECKS = {
     "syntax": check_syntax,
+    "mirror": check_mirror,
     "targets": check_targets,
     "assets": check_assets,
     "ids": check_ids,

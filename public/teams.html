@@ -44,7 +44,15 @@ tbody tr:nth-child(even){background:rgba(17,17,17,.03)} tbody tr:hover{backgroun
 </style>
 </head>
 <body>
-<nav class="site-nav"><a class="brand" href="/">DUMB<span style="color:var(--orange)">MODEL</span></a><div class="links"><a href="/#games">Games</a><a href="/teams.html">Teams</a><a href="/play.html">Play</a><a href="/players.html">Players</a><a class="cta" href="/play.html">Play today's →</a></div></nav>
+<script>
+/* Must run before the decorative canvas loop lower down reads it. That loop is
+   a closed IIFE, so an appended script cannot reach its `f` — the one-condition
+   guard added inside it checks this flag instead. Without it, three orange
+   rings driven by Math.sin(t) drift and pulse forever with no way to stop. */
+window.__vhReduceMotion = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+</script>
+<a class="fo-skip" href="#foSec">Skip to all 30 teams</a>
+<nav class="site-nav"><a class="brand" href="/">DUMB<span style="color:var(--orange)">MODEL</span></a><div class="links"><a href="/players.html">Explorer</a><a href="/player.html">Players</a><a href="/trends.html">Trends</a><a href="/model.html">Model</a><a href="/teams.html">Teams</a><a href="/dictionary.html">Dictionary</a><a class="cta" href="/play.html">Play today's →</a></div></nav>
 <div class="hero-band"><div class="hero"><p class="eyebrow">Six models · five daily puzzles · free · no account</p><div class="roster"><div class="tile t-o"><svg viewBox="0 0 40 40" fill="none"><circle cx="14" cy="11" r="5" stroke="#EB6834" stroke-width="2.5"/><circle cx="26" cy="29" r="5" stroke="#2A78D6" stroke-width="2.5"/><path d="M17 15 L23 25" stroke="#111" stroke-width="2.5" stroke-linecap="round"/></svg></div><div class="tile t-b"><svg viewBox="0 0 40 40" fill="none"><path d="M8 30 L16 22 L22 26 L34 10" stroke="#2A78D6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M27 10 L34 10 L34 17" stroke="#111" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="tile t-p"><svg viewBox="0 0 40 40" fill="none"><path d="M8 32 L8 8 M8 32 L34 32" stroke="#111" stroke-width="2.5" stroke-linecap="round"/><circle cx="15" cy="25" r="2.6" fill="#7A5AE6"/><circle cx="23" cy="18" r="2.6" fill="#7A5AE6"/><circle cx="30" cy="13" r="2.6" fill="#7A5AE6"/></svg></div><div class="tile t-g"><svg viewBox="0 0 40 40" fill="none"><rect x="8" y="10" width="5" height="14" rx="1" stroke="#009E73" stroke-width="2"/><rect x="15.5" y="8" width="5" height="18" rx="1" stroke="#009E73" stroke-width="2"/><rect x="23" y="14" width="5" height="10" rx="1" fill="#009E73"/><path d="M8 28 L33 28" stroke="#111" stroke-width="2" stroke-linecap="round"/></svg></div><div class="tile t-c"><svg viewBox="0 0 40 40" fill="none"><circle cx="13" cy="13" r="5" stroke="#D8452A" stroke-width="2.2"/><circle cx="27" cy="14.5" r="4.2" stroke="#1b45a7" stroke-width="2.2"/><circle cx="20" cy="27" r="3.8" stroke="#9b6bc4" stroke-width="2.2"/><path d="M16.2 16.5 L18.5 23" stroke="#111" stroke-width="1.5" stroke-dasharray="2 2"/><path d="M23.8 18 L21.5 23.2" stroke="#111" stroke-width="1.5" stroke-dasharray="2 2"/></svg></div></div><div><h1 class="hd" style="font-size:22px;line-height:.98;margin:0">Front Office Lab — FOR</h1><p class="mono" style="color:var(--ink-soft);margin:4px 0 0;font-size:11.5px">FOR = min(99,.35D+.35C+.30F+0.15·vegas+0.08·props+champ+valα±2) · W* = W+2.5·PO+0.12·realG · <span class="sg">paper #FAFAF8 / ink #111111</span></p></div></div></div>
 <div class="wrap">
 <div class="grid">
@@ -63,7 +71,7 @@ tbody tr:nth-child(even){background:rgba(17,17,17,.03)} tbody tr:hover{backgroun
 <div>
 <div class="mono" style="font-weight:800;text-transform:uppercase;font-size:11px;margin-bottom:6px">Sortable — click header — W · W* · W/$M · W*/$M · PO/$M · Val</div>
 <div style="max-height:520px;overflow:auto;border:2px solid var(--ink);border-radius:12px;background:#fff" class="card"><table id="tbl"><thead><tr><th data-k="team">Team</th><th data-k="FOR">FOR</th><th data-k="W">W</th><th data-k="Wstar">W*</th><th data-k="wpm">W/$M ↑</th><th data-k="wstarpm">W*/$M</th><th data-k="popm">PO/$M</th><th data-k="wpb">Wins/$B</th><th data-k="val">Val $B</th><th>Flex</th></tr></thead><tbody></tbody></table></div>
-<p class="mono" style="color:var(--ink-soft);font-size:10.8px;margin-top:6px">Placeholder honest 10 rows — real FOR syncs from assets/front_office.json when built. Values rounded; apron $207.8M badge 2nd apron hard NO-MLE. W* SAS 94.8 > OKC 85.8 — champ bonus λ. <span class="sg">Purity@10 0.7057 lift 6.32 from map eval_scoreboard.</span></p>
+<p class="mono" style="color:var(--ink-soft);font-size:10.8px;margin-top:6px">Placeholder honest 10 rows — real FOR syncs from assets/front_office.json when built. Values rounded; apron $207.8M badge 2nd apron hard NO-MLE. W* SAS 94.8 > OKC 85.8 — champ bonus λ. <span class="sg">Embedding accuracy, from <code>assets/eval_scoreboard.json</code>: held-out top-5 0.76 against a transparent 14-d baseline of 0.20. (This line previously cited that file for "Purity@10 0.7057 lift 6.32"; neither figure is in it — see <a href="/dictionary.html#purity">the dictionary</a>.)</span></p>
 </div>
 </div>
 <div class="card" style="margin-top:12px;padding:11px 13px"><div class="hd" style="font-size:12px">Why SAS 94.8 > OKC 85.8 with 22W gap? — glass-box</div><p class="mono" style="color:#57534E;font-size:11.6px">W=24-25 reg wins. PO=25-26 playoff wins: NYK16 SAS12 CLE8 OKC8 sim end. realG=playoff GP. W*=W+2.5·PO+0.12·realG → SAS 34+30+~16.8 raw + prior weighted chapters → 94.8 ex FOR 25-26; OKC 68+20+?=85.8. Championship trumps. Cap% normalized effective_cap 2016=prior*1.10 removes $24B TV jump 34.5%. Trophy wall $9.1B top. <span class="pill mono" style="font-size:10px">FOR 50=median</span> <span class="pill mono ink" style="font-size:10px">2nd Apron $207.8M</span> <span class="pill y mono" style="font-size:10px">NO-MLE</span></p></div>
@@ -83,7 +91,168 @@ const rows=[
 {team:'LAL',FOR:72.1,W:47,Wstar:51,wpm:0.258,wstarpm:0.28,popm:0.022,val:7.1,flex:'C',apron:1}
 ];
 function ren(a){let tb=document.querySelector('#tbl tbody');tb.innerHTML='';for(let r of a){let bd=r.apron?'<span class="badge apron">$207.8M</span> '+(r.flex==='C'?'<span class="badge" style="background:#F0E442">NO-MLE</span>':''):'<span class="badge">'+r.flex+'</span>';tb.innerHTML+=`<tr><td><b>${r.team}</b></td><td class="num">${r.FOR.toFixed(1)}</td><td class="num">${r.W}</td><td class="num">${r.Wstar.toFixed(1)}</td><td class="num">${r.wpm.toFixed(3)}</td><td class="num">${(r.wstarpm||0).toFixed(3)}</td><td class="num">${(r.popm||0).toFixed(3)}</td><td class="num">${(r.wpb||0).toFixed(1)}</td><td class="num">${r.val.toFixed(2)}</td><td>${bd}</td></tr>`}}ren(rows);let dir={};document.querySelectorAll('#tbl th[data-k]').forEach(th=>{th.addEventListener('click',()=>{let k=th.dataset.k;dir[k]=!dir[k];let mk={team:'team',FOR:'FOR',W:'W',Wstar:'Wstar',wpm:'wpm',wstarpm:'wstarpm',popm:'popm',wpb:'wpb',val:'val'}[k];rows.sort((a,b)=>{if(mk==='team')return dir[k]?a.team.localeCompare(b.team):b.team.localeCompare(a.team);return dir[k]?a[mk]-b[mk]:b[mk]-a[mk]});ren(rows)})});
-(()=>{let c=document.getElementById('mapCv');if(!c)return;let x=c.getContext('2d'),t=0;function f(){t+=.016;x.fillStyle='#0A0C10';x.fillRect(0,0,460,120);for(let i=0;i<3;i++){let r=14+i*20+Math.sin(t*2+i)*5;x.strokeStyle='#EB6834';x.globalAlpha=.9-i*.22;x.lineWidth=1.6;x.beginPath();x.arc(230+Math.cos(t*.6+i)*18,60+Math.sin(t*.5+i*1.1)*9,r,0,6.283);x.stroke()}x.globalAlpha=1;x.fillStyle='#F0E442';x.beginPath();x.arc(230,60,3,0,6.283);x.fill();x.fillStyle='#FAFAF8';x.font='900 12px ui-monospace';x.fillText('◎ SAS 94.8 > OKC 85.8 · #EB6834',12,18);requestAnimationFrame(f)}f()})();
+(()=>{let c=document.getElementById('mapCv');if(!c)return;let x=c.getContext('2d'),t=0;function f(){t+=.016;x.fillStyle='#0A0C10';x.fillRect(0,0,460,120);for(let i=0;i<3;i++){let r=14+i*20+Math.sin(t*2+i)*5;x.strokeStyle='#EB6834';x.globalAlpha=.9-i*.22;x.lineWidth=1.6;x.beginPath();x.arc(230+Math.cos(t*.6+i)*18,60+Math.sin(t*.5+i*1.1)*9,r,0,6.283);x.stroke()}x.globalAlpha=1;x.fillStyle='#F0E442';x.beginPath();x.arc(230,60,3,0,6.283);x.fill();x.fillStyle='#FAFAF8';x.font='900 12px ui-monospace';x.fillText('◎ SAS 94.8 > OKC 85.8 · #EB6834',12,18);if(!window.__vhReduceMotion)requestAnimationFrame(f)}f()})();
+</script>
+
+<!-- ══ all 30 teams, read from the file this page already names ═══════════
+     teams.html cited assets/front_office.json as its data source and then
+     fetched nothing — every figure above is typed into the markup, and the
+     table was two sample rows. The file is real: 1.1 MB, built 2026-08-09,
+     30 teams with 68 fields each. This section reads it. -->
+<style>
+#foSec{max-width:1120px;margin:0 auto;padding:0 clamp(12px,3vw,18px) 60px}
+#foSec .card{background:#fff;border:2.2px solid var(--ink);border-radius:14px;box-shadow:var(--shadow);padding:14px;margin-top:14px}
+#foWrap{overflow-x:auto;margin-top:10px}
+#foTable{border-collapse:collapse;width:100%;font-family:var(--mono);font-size:11.5px;min-width:760px}
+#foTable th,#foTable td{border:1px solid #e1e0d9;padding:5px 7px;text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+#foTable th:nth-child(-n+2),#foTable td:nth-child(-n+2){text-align:left}
+#foTable thead th{background:#f4f3ee;position:sticky;top:0;cursor:pointer;user-select:none}
+#foTable thead th:hover{background:var(--yellow)}
+#foTable thead th[aria-sort="descending"]::after{content:" ▼"}
+#foTable thead th[aria-sort="ascending"]::after{content:" ▲"}
+#foTable tbody tr:hover{background:#fffbe8}
+.fo-sw{display:inline-block;width:9px;height:9px;border-radius:2px;border:1px solid var(--ink);margin-right:5px;vertical-align:-1px}
+.fo-ring{color:var(--orange);font-weight:900}
+#foMethod{font-size:12px;line-height:1.6;color:#57534E;background:#f4f3ee;border:1.5px dashed var(--ink);border-radius:9px;padding:10px 12px;margin-top:10px;white-space:pre-wrap}
+.fo-sr{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap}
+.fo-skip{position:absolute;left:-9999px;top:0;z-index:200;background:var(--paper);border:2.2px solid var(--ink);padding:10px 14px;font:800 12px var(--mono);text-transform:uppercase;text-decoration:none;border-radius:0 0 10px 0}
+.fo-skip:focus{left:0}
+/* The page's own table is sortable and was mouse-only: 11 <th data-k> with a
+   click handler, cursor:pointer, no tabindex and no aria-sort. */
+#tbl th[data-k]{cursor:pointer}
+#tbl th[data-k][aria-sort="descending"]::after{content:" ▼"}
+#tbl th[data-k][aria-sort="ascending"]::after{content:" ▲"}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}}
+</style>
+<section id="foSec" aria-labelledby="foH">
+  <div class="card">
+    <h2 class="hd" id="foH" style="font-size:18px;margin:0 0 4px">All 30 teams</h2>
+    <p class="mono" style="color:#57534E;font-size:11.6px;line-height:1.5;margin:0" id="foSub">Loading <code>assets/front_office.json</code>…</p>
+    <div id="foWrap"><table id="foTable"><caption class="fo-sr">Front-office rating for all 30 teams. Column headers sort; press Enter on a header to re-sort.</caption></table></div>
+    <p class="mono" style="font-size:10.5px;color:#878580;margin:8px 0 0" id="foProv"></p>
+    <details style="margin-top:10px"><summary class="mono" style="cursor:pointer;font-size:11px">Method, verbatim from the file</summary><div id="foMethod"></div></details>
+  </div>
+  <div id="foLive" class="fo-sr" role="status" aria-live="polite" aria-atomic="true"></div>
+</section>
+<script>
+(function(){
+'use strict';
+var $=function(id){return document.getElementById(id);};
+var esc=function(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');};
+var n2=function(v){return (v==null||isNaN(v))?'—':(Math.round(v*100)/100).toFixed(2);};
+var n0=function(v){return (v==null||isNaN(v))?'—':Math.round(v).toLocaleString();};
+function say(m){var l=$('foLive');if(!l||!m)return;if(l.textContent===m)l.textContent='';l.textContent=m;}
+
+// key, label, formatter, numeric — two decimals everywhere, per the repo rule
+var COLS=[
+  {k:'for_rank',  t:'#',        f:function(r){return r.for_rank==null?'—':r.for_rank;}, num:true},
+  {k:'abbr',      t:'Team',     f:function(r){
+      return '<span class="fo-sw" style="background:'+esc(r.primary||'#111')+'"></span>'+
+             esc(r.abbr)+(r.is_champion?' <span class="fo-ring" title="Champion">◆</span>':'');}, num:false},
+  {k:'wins',      t:'W-L',      f:function(r){return (r.wins==null?'—':r.wins)+'-'+(r.losses==null?'—':r.losses);}, num:true},
+  {k:'weighted_wins', t:'W*',   f:function(r){return n2(r.weighted_wins);}, num:true},
+  {k:'for_final', t:'FOR',      f:function(r){return '<b>'+n2(r.for_final)+'</b>';}, num:true},
+  {k:'for_grade', t:'Grade',    f:function(r){return esc(r.for_grade||'—');}, num:false},
+  {k:'draft',     t:'Draft',    f:function(r){return n2(r.draft);}, num:true},
+  {k:'cap_efficiency', t:'Cap', f:function(r){return n2(r.cap_efficiency);}, num:true},
+  {k:'foresight', t:'Fore',     f:function(r){return n2(r.foresight);}, num:true},
+  {k:'payroll_m', t:'Payroll $M', f:function(r){return n0(r.payroll_m);}, num:true},
+  {k:'w_per_m',   t:'W/$M',     f:function(r){return n2(r.w_per_m);}, num:true},
+  {k:'playoff_result', t:'Postseason', f:function(r){return esc(r.playoff_result||'—');}, num:false}
+];
+var DATA=null, sortKey='for_rank', sortDir=1;
+
+function draw(){
+  var rows=DATA.teams.slice().sort(function(a,b){
+    var av=a[sortKey], bv=b[sortKey];
+    if(av==null) return 1; if(bv==null) return -1;
+    if(typeof av==='string') return sortDir*String(av).localeCompare(String(bv));
+    return sortDir*(av-bv);
+  });
+  $('foTable').innerHTML=
+    '<caption class="fo-sr">Front-office rating for all 30 teams, sorted by '+
+      esc((COLS.filter(function(c){return c.k===sortKey;})[0]||{}).t||sortKey)+'.</caption>'+
+    '<thead><tr>'+COLS.map(function(c){
+      var s=c.k===sortKey?(sortDir===1?'ascending':'descending'):'none';
+      return '<th scope="col" tabindex="0" role="columnheader" aria-sort="'+s+'" data-k="'+c.k+'">'+esc(c.t)+'</th>';
+    }).join('')+'</tr></thead><tbody>'+
+    rows.map(function(r){
+      return '<tr>'+COLS.map(function(c){return '<td>'+c.f(r)+'</td>';}).join('')+'</tr>';
+    }).join('')+'</tbody>';
+}
+function sortBy(k){
+  if(k===sortKey) sortDir=-sortDir; else { sortKey=k; sortDir=(k==='for_rank'||k==='abbr')?1:-1; }
+  draw();
+  var lab=(COLS.filter(function(c){return c.k===k;})[0]||{}).t||k;
+  say('Sorted by '+lab+', '+(sortDir===1?'ascending':'descending')+'.');
+}
+$('foTable').addEventListener('click',function(e){
+  var th=e.target.closest?e.target.closest('th[data-k]'):null; if(th) sortBy(th.dataset.k);
+});
+$('foTable').addEventListener('keydown',function(e){
+  if(e.key!=='Enter'&&e.key!==' ') return;
+  var th=e.target.closest?e.target.closest('th[data-k]'):null;
+  if(th){ e.preventDefault(); sortBy(th.dataset.k); }
+});
+
+// ── the page's own table and canvas ────────────────────────────────────
+// Everything above this point is the section appended in 8b0fa901. These few
+// lines fix the original page: its sortable table could not be sorted without
+// a mouse, and its canvas announced itself as "canvas".
+(function(){
+  var mapCv=document.getElementById('mapCv');
+  if(mapCv) mapCv.setAttribute('aria-hidden','true');   // decorative rings + a label
+  var ths=document.querySelectorAll('#tbl th[data-k]');
+  if(!ths.length) return;
+  // The page's own sort state lives in a closure we cannot read, so mirror the
+  // toggle here and update it on every click regardless of whether the click
+  // came from a pointer or from the Enter/Space handler below. Listeners added
+  // later run later, so the mirror always reflects the sort that just happened.
+  var mine={};
+  Array.prototype.forEach.call(ths,function(th){
+    th.setAttribute('tabindex','0');
+    th.setAttribute('role','columnheader');
+    th.setAttribute('aria-sort','none');
+    th.addEventListener('click',function(){
+      var k=th.dataset.k;
+      mine[k]=!mine[k];
+      Array.prototype.forEach.call(ths,function(o){ if(o!==th) o.setAttribute('aria-sort','none'); });
+      th.setAttribute('aria-sort', mine[k]?'ascending':'descending');
+      say('Sorted by '+(th.textContent||k).trim()+', '+(mine[k]?'ascending':'descending')+'.');
+    });
+    th.addEventListener('keydown',function(e){
+      if(e.key!=='Enter' && e.key!==' ' && e.key!=='Spacebar') return;
+      e.preventDefault(); th.click();
+    });
+  });
+})();
+
+fetch('assets/front_office.json',{cache:'force-cache'})
+  .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
+  .then(function(j){
+    if(!j.teams||!j.teams.length) throw new Error('no teams in file');
+    DATA=j;
+    $('foSub').innerHTML='Every figure below is read from <code>assets/front_office.json</code> at load. '+
+      esc(j.season_focus||'')+' · weighted wins W* = W + '+n2(j.playoff_win_weight)+
+      '×playoff wins, so a postseason run counts for more than a regular-season one.';
+    $('foProv').textContent='Built '+(j.built||'?').slice(0,10)+' · '+j.teams.length+
+      ' teams · champion map covers '+Object.keys(j.champion_map||{}).length+' seasons · '+
+      (j.champion_display||'');
+    $('foMethod').textContent=typeof j.method==='object'
+      ? Object.keys(j.method).map(function(k){
+          var v=j.method[k];
+          return k+': '+(typeof v==='string'?v:JSON.stringify(v));
+        }).join('\n\n')
+      : String(j.method||'');
+    draw();
+    say(j.teams.length+' teams loaded.');
+  })
+  .catch(function(e){
+    // the placeholder above is already labelled a placeholder; do not add a fake table
+    $('foSub').textContent='assets/front_office.json could not be loaded ('+e.message+'). '+
+      'No table is shown rather than an invented one.';
+  });
+})();
 </script>
 </body>
 </html>

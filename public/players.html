@@ -42,14 +42,14 @@ canvas{display:block;width:100%;height:440px} @media(max-width:600px){canvas{hei
 </style>
 </head>
 <body>
-<nav class="site-nav"><a class="brand" href="/">DUMB<span style="color:var(--orange)">MODEL</span></a><div class="links"><a href="/#games">Games</a><a href="/teams.html">Teams</a><a href="/play.html">Play</a><a href="/players.html">Players</a><a class="cta" href="/play.html">Play today's →</a></div></nav>
+<nav class="site-nav"><a class="brand" href="/">DUMB<span style="color:var(--orange)">MODEL</span></a><div class="links"><a href="/players.html">Explorer</a><a href="/player.html">Players</a><a href="/trends.html">Trends</a><a href="/model.html">Model</a><a href="/teams.html">Teams</a><a href="/dictionary.html">Dictionary</a><a class="cta" href="/play.html">Play today's →</a></div></nav>
 <div class="hero-band"><div class="hero"><p class="eyebrow">Six models · five daily puzzles · free · no account</p><div class="roster"><div class="tile t-o"><svg viewBox="0 0 40 40" fill="none"><circle cx="14" cy="11" r="5" stroke="#EB6834" stroke-width="2.5"/><circle cx="26" cy="29" r="5" stroke="#2A78D6" stroke-width="2.5"/><path d="M17 15 L23 25" stroke="#111" stroke-width="2.5" stroke-linecap="round"/></svg></div><div class="tile t-b"><svg viewBox="0 0 40 40" fill="none"><path d="M8 30 L16 22 L22 26 L34 10" stroke="#2A78D6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M27 10 L34 10 L34 17" stroke="#111" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="tile t-p"><svg viewBox="0 0 40 40" fill="none"><path d="M8 32 L8 8 M8 32 L34 32" stroke="#111" stroke-width="2.5" stroke-linecap="round"/><circle cx="15" cy="25" r="2.6" fill="#7A5AE6"/><circle cx="23" cy="18" r="2.6" fill="#7A5AE6"/><circle cx="30" cy="13" r="2.6" fill="#7A5AE6"/></svg></div><div class="tile t-g"><svg viewBox="0 0 40 40" fill="none"><rect x="8" y="10" width="5" height="14" rx="1" stroke="#009E73" stroke-width="2"/><rect x="15.5" y="8" width="5" height="18" rx="1" stroke="#009E73" stroke-width="2"/><rect x="23" y="14" width="5" height="10" rx="1" fill="#009E73"/><path d="M8 28 L33 28" stroke="#111" stroke-width="2" stroke-linecap="round"/></svg></div><div class="tile t-c"><svg viewBox="0 0 40 40" fill="none"><circle cx="13" cy="13" r="5" stroke="#D8452A" stroke-width="2.2"/><circle cx="27" cy="14.5" r="4.2" stroke="#1b45a7" stroke-width="2.2"/><circle cx="20" cy="27" r="3.8" stroke="#9b6bc4" stroke-width="2.2"/><path d="M16.2 16.5 L18.5 23" stroke="#111" stroke-width="1.5" stroke-dasharray="2 2"/><path d="M23.8 18 L21.5 23.2" stroke="#111" stroke-width="1.5" stroke-dasharray="2 2"/></svg></div></div><div><h1 class="mono" style="font-weight:900;font-size:18px;text-transform:uppercase;margin:0">Players Explorer · 1814 filtered</h1><p class="mono" style="color:var(--ink-soft);margin:2px 0 0;font-size:11.2px">Current+allstars+3+ seasons — best/latest vivid OKABE 8 — grey rest hidden • <span class="sg">click list 80 → orange trajectory</span></p></div></div></div>
 <div class="wrap">
 <div class="grid2">
 <div class="card" style="padding:0">
 <div style="padding:10px 12px;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;border-bottom:2px solid var(--ink);background:linear-gradient(90deg,var(--surface),#FFF6CC)"><span class="pill y mono">Canvas • DPR 1.4 max · #0A0C10 dark inset</span><span class="mono" style="display:flex;gap:6px"><button id="fAll" class="pill on mono">All 1814</button><button id="fCur" class="pill mono">Current 532</button><button id="fLod" class="pill mono">LOD 4k</button></span></div>
 <div class="map-box"><canvas id="c" width="900" height="480" aria-label="Players map 1814 vivid dark inset"></canvas><div style="position:absolute;left:10px;top:10px;display:flex;gap:6px"><span class="pill mono" id="lab" style="font-size:10.5px">loading 1814 pts</span></div><div style="position:absolute;right:10px;bottom:10px"><span class="pill mono" style="font-size:10.5px">◎ pulse #EB6834 · trajectory orange</span></div></div>
-<div style="padding:8px 12px;display:flex;justify-content:space-between;gap:8px;border-top:2px solid var(--ink)"><span class="mono" id="selLab" style="color:var(--ink-soft)">select player → trajectory</span><span class="mono"><span class="pill mono" style="font-size:10px">pack 672-123-456</span> <span class="pill mono" style="font-size:10px">purity@10 0.7057</span></span></div>
+<div style="padding:8px 12px;display:flex;justify-content:space-between;gap:8px;border-top:2px solid var(--ink)"><span class="mono" id="selLab" style="color:var(--ink-soft)">select player → trajectory</span><span class="mono"><span class="pill mono" style="font-size:10px">pack 672-123-456</span> <a class="pill mono" style="font-size:10px;text-decoration:none" href="/dictionary.html#retrieval">held-out top-5 0.76</a></span></div>
 </div>
 <div>
 <div class="card" style="padding:10px 11px"><div class="mono" style="font-weight:800;text-transform:uppercase;font-size:11px">Filter — All / Current · 80 list tap→map</div><p class="mono" style="color:var(--ink-soft);font-size:11px">Filter uses is_current flag from embedding_map_points_limited.json. Current = 532 latest seasons (2025-26). All = 1814 filtered (current+allstars+3+). Honest count live from file.</p><div style="margin-top:8px;display:flex;gap:6px"><button id="bAll2" class="btn">All</button><button id="bCur2" class="btn">Current</button><button id="bClr" class="btn">Clear traj</button></div></div>
@@ -61,7 +61,10 @@ canvas{display:block;width:100%;height:440px} @media(max-width:600px){canvas{hei
 <script>
 const OKABE=['#0072B2','#D55E00','#009E73','#CC79A7','#F0E442','#56B4E9','#E69F00','#000000'];
 const $=s=>document.getElementById(s);
-let dots=[],allPts=[],yaw=0,rot=1,curTr=null,tCache={},filter='all';
+/* var, not let: the pause control appended at the end of this file needs to
+   reach `rot`, and a top-level `let` lives in script scope where nothing else
+   can see it. `var` publishes these on window. Only the keyword changed. */
+var dots=[],allPts=[],yaw=0,rot=1,curTr=null,tCache={},filter='all';
 let cv=$('c'),ctx=cv.getContext('2d'),W=900,H=480;
 let DPR=Math.min(devicePixelRatio||1,1.4);
 function rs(){let r=cv.getBoundingClientRect();W=Math.round(r.width*DPR);H=Math.round((r.height||460)*DPR);cv.width=W;cv.height=H}addEventListener('resize',()=>{DPR=Math.min(devicePixelRatio||1,1.4);rs()});rs();
@@ -72,6 +75,188 @@ async function sel(pid,hint){let trs=await loadTraj(),tr=trs[String(pid)];if(!tr
 $('fAll').onclick=()=>{filter='all';$('fAll').classList.add('on');$('fCur').classList.remove('on');loadPts('all')};$('fCur').onclick=()=>{filter='current';$('fCur').classList.add('on');$('fAll').classList.remove('on');loadPts('current')};$('bAll2').onclick=$('fAll').onclick;$('bCur2').onclick=$('fCur').onclick;$('bClr').onclick=()=>{curTr=null;$('selLab').textContent='cleared trajectory'};$('fLod').onclick=()=>{DPR=DPR===1.4?1:1.4;$('fLod').textContent='DPR '+DPR.toFixed(1);rs()};
 function draw(){let ct=Math.cos(yaw),st=Math.sin(yaw),cx=W*.5,cy=H*.52,sc=Math.min(W,H)*.42;ctx.clearRect(0,0,W,H);if(rot)yaw+=.005;for(let pass=0;pass<2;pass++){for(let d of dots){let viv=d.al>.65;if((pass===0&&viv)||(pass===1&&!viv))continue;let x=d.x*ct-d.z*st,z=d.x*st+d.z*ct,y=d.y,dep=(z+1)*.5+.12,px=cx+x*sc*dep,py=cy+y*sc*dep*.86;if(px<-20||px>W+20||py<-20||py>H+20)continue;ctx.beginPath();let col=d.col;let r=parseInt(col.slice(1,3),16),g=parseInt(col.slice(3,5),16),b=parseInt(col.slice(5,7),16);ctx.fillStyle='rgba('+r+','+g+','+b+','+(.14+dep*.62*d.al).toFixed(3)+')';ctx.arc(px,py,d.r*(1+dep*1.4),0,6.283);ctx.fill()}}if(curTr&&curTr.length>1){ctx.strokeStyle='#EB6834';ctx.lineWidth=2*DPR;ctx.globalAlpha=.96;ctx.beginPath();let f=1;curTr.forEach(pt=>{let xv=(pt.x-.5)*2,yv=(pt.y-.5)*2,zv=((pt.z||.5)-.5)*2,xx=xv*ct-zv*st,zz=xv*st+zv*ct,dep=(zz+1)*.5+.12,px=cx+xx*sc*dep,py=cy+yv*sc*dep*.86;if(f){ctx.moveTo(px,py);f=0}else ctx.lineTo(px,py)});ctx.stroke();ctx.globalAlpha=1;curTr.forEach((pt,i)=>{let xv=(pt.x-.5)*2,yv=(pt.y-.5)*2,zv=((pt.z||.5)-.5)*2,xx=xv*ct-zv*st,zz=xv*st+zv*ct,dep=(zz+1)*.5+.12,px=cx+xx*sc*dep,py=cy+yv*sc*dep*.86,p=i/(curTr.length-1);ctx.fillStyle='rgba(235,104,52,'+(.36+p*.64).toFixed(2)+')';ctx.beginPath();ctx.arc(px,py,2.8*DPR+p*1.6,0,6.283);ctx.fill()})}requestAnimationFrame(draw)}loadPts('all');requestAnimationFrame(draw);
 cv.addEventListener('click',async e=>{let r=cv.getBoundingClientRect(),mx=(e.clientX-r.left)/r.width*2-1,my=(e.clientY-r.top)/r.height*2-1,ct=Math.cos(yaw),st=Math.sin(yaw),cx=W*.5,cy=H*.52,sc=Math.min(W,H)*.42,best=null,bd=1e9;dots.forEach(d=>{let x=d.x*ct-d.z*st,z=d.x*st+d.z*ct,y=d.y,dep=(z+1)*.5+.12,px=cx+x*sc*dep,py=cy+y*sc*dep*.86,pxn=(px/W)*2-1,pyn=(py/H)*2-1,dist=(pxn-mx)*(pxn-mx)+(pyn-my)*(pyn-my);if(dist<bd){bd=dist;best=d}});if(best&&bd<.03)sel(best.pid,best)});
+</script>
+
+<!-- ══ archetype key + accessibility ═══════════════════════════════════════
+     Appended rather than edited in: the explorer above works and none of this
+     needs to touch it. Scanned first — this page had aria-live x0, tabindex x0,
+     role= x0, prefers-reduced-motion x0, and its map coloured 1,764 points by
+     archetype with nothing anywhere saying what a colour meant. -->
+<style id="pl-a11y-css">
+/* draw() calls requestAnimationFrame unconditionally and advances yaw by .005
+   every frame, so the map spins forever. WCAG 2.2.2: motion that starts
+   automatically and lasts over five seconds needs a way to stop it. The button
+   below is that mechanism; this honours the OS setting without being asked. */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.pl-sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
+.pl-skip{position:absolute;left:-9999px;top:0;z-index:200;background:var(--paper);border:2.2px solid var(--ink);padding:10px 14px;font-family:var(--mono);font-weight:800;text-decoration:none;border-radius:0 0 10px 0}
+.pl-skip:focus{left:0}
+#plKey{margin-top:10px}
+#plKey ul{list-style:none;margin:6px 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(232px,1fr));gap:2px}
+#plKey li{display:flex;align-items:center;gap:7px;min-height:26px;font-family:var(--mono);font-size:11px;padding:2px 4px}
+#plKey .sw{width:11px;height:11px;flex:0 0 11px;border:1.3px solid var(--ink);border-radius:3px}
+#plKey .n{font-weight:800;color:var(--ink-muted);min-width:14px}
+#plMotion{font:800 11px var(--mono);border:1.6px solid var(--ink);border-radius:9px;background:#fff;box-shadow:2px 2px 0 var(--ink);padding:6px 10px;min-height:34px;cursor:pointer}
+.it[role="button"]{cursor:pointer}
+</style>
+<div id="plLive" class="pl-sr" role="status" aria-live="polite" aria-atomic="true"></div>
+<script>
+(function(){
+  'use strict';
+  var $=function(id){return document.getElementById(id);};
+  var esc=function(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');};
+  var live=$('plLive');
+  function say(m){ if(!live||!m) return; if(live.textContent===m) live.textContent=''; live.textContent=m; }
+
+  // Must mirror the OKABE constant the draw loop uses. Verified against the
+  // data rather than assumed: c === gameCluster for 1,764 of 1,764 points in
+  // embedding_map_points_limited.json, joined through vectors.json to
+  // archetype_assignments.json — so index i really is gameArchetypes[i].
+  // NOTE: assets/shared-map.js and assets/archetype-bridge.js use a DIFFERENT
+  // order at indices 3,4,5. This key describes THIS page's colours, which is
+  // the honest thing for it to do; the site-wide split is logged on the board.
+  var OKABE=['#0072B2','#D55E00','#009E73','#CC79A7','#F0E442','#56B4E9','#E69F00','#000000'];
+
+  var canvas=document.getElementById('c');
+  if(canvas){
+    canvas.setAttribute('role','img');
+    canvas.setAttribute('aria-label',
+      'Embedding map of 1,764 player-seasons. Each dot is one season, placed so that '+
+      'players who played alike sit together, and coloured by the archetype the model '+
+      'assigned. Selecting a player from the list draws their career path in orange. '+
+      'The list below the map carries the same information as text.');
+  }
+
+  // ── archetype key ──────────────────────────────────────────────────────
+  var host=document.createElement('div');
+  host.id='plKey';
+  host.innerHTML='<div class="mono" style="font-size:10.5px;color:var(--ink-muted)">Colour = archetype · loading names…</div>';
+  var lab=$('lab');
+  if(lab && lab.parentNode) lab.parentNode.insertBefore(host, lab.nextSibling);
+  fetch('assets/mtnn_arch.json',{cache:'force-cache'})
+    .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
+    .then(function(j){
+      var names=j.gameArchetypes||[];
+      if(!names.length) throw new Error('gameArchetypes missing');
+      host.innerHTML='<div class="mono" style="font-size:10.5px;color:var(--ink-muted)">'+
+        'Colour = archetype — names from <code>assets/mtnn_arch.json</code></div><ul>'+
+        names.map(function(n,i){
+          return '<li><span class="sw" style="background:'+esc(OKABE[i%8])+'"></span>'+
+                 '<span class="n">'+i+'</span><span>'+esc(n)+'</span></li>';
+        }).join('')+'</ul>';
+    })
+    .catch(function(e){
+      // never invent archetype names to fill the key
+      host.innerHTML='<div class="mono" style="font-size:10.5px;color:var(--ink-muted)">'+
+        'Colour = archetype, but the names could not be loaded ('+esc(e.message)+'). '+
+        'No labels are guessed.</div>';
+    });
+
+  // ── stop the perpetual rotation ────────────────────────────────────────
+  var btn=document.createElement('button');
+  btn.id='plMotion'; btn.type='button';
+  var reduced=window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // window.rot is the draw loop's spin flag; it lives in the page scope above
+  function setSpin(on){
+    try{ window.rot=on?1:0; }catch(e){}
+    btn.setAttribute('aria-pressed', on?'false':'true');
+    btn.textContent = on ? '⏸ Pause rotation' : '▶ Resume rotation';
+  }
+  if(reduced) setSpin(false); else setSpin(true);
+  btn.addEventListener('click',function(){
+    var spinning = btn.getAttribute('aria-pressed')==='false';
+    setSpin(!spinning);
+    say(spinning?'Rotation paused.':'Rotation resumed.');
+  });
+  if(lab && lab.parentNode) lab.parentNode.insertBefore(btn, lab);
+  var hint=document.createElement('div');
+  hint.className='mono';
+  hint.style.cssText='font-size:10.5px;color:var(--ink-muted);margin-top:4px';
+  hint.textContent='Map keys: focus it, then ←/→ rotate (shift = faster) · Home resets · space stops the spin · H reads the controls.';
+  if(lab && lab.parentNode) lab.parentNode.insertBefore(hint, lab);
+
+  // ── the player list was <div onclick> — invisible to Tab and to AT ──────
+  var list=$('list');
+  if(list){
+    var stamp=function(){
+      var kids=list.querySelectorAll('.it');
+      for(var i=0;i<kids.length;i++){
+        if(kids[i].getAttribute('role')==='button') continue;
+        kids[i].setAttribute('role','button');
+        kids[i].setAttribute('tabindex','0');
+      }
+    };
+    stamp();
+    if(window.MutationObserver) new MutationObserver(stamp).observe(list,{childList:true});
+    list.addEventListener('keydown',function(e){
+      if(e.key!=='Enter' && e.key!==' ' && e.key!=='Spacebar') return;
+      var t=e.target.closest?e.target.closest('.it'):null;
+      if(!t) return;
+      e.preventDefault(); t.click();
+    });
+  }
+  // selection currently only updates #selLab text, which AT never hears
+  var selLab=$('selLab');
+  if(selLab && window.MutationObserver){
+    new MutationObserver(function(){ say(selLab.textContent||''); })
+      .observe(selLab,{childList:true,characterData:true,subtree:true});
+  }
+
+  // ── keyboard orbit ─────────────────────────────────────────────────────
+  // The map could be rotated by waiting for the animation and inspected by
+  // clicking a dot. Both require a pointer and patience. `yaw` is the draw
+  // loop's rotation and is now reachable on window (see the var/let note
+  // above), and draw() re-runs every frame regardless of whether rot is set,
+  // so writing yaw is picked up on the next paint with no redraw plumbing.
+  function fmtDeg(rad){
+    var d=((rad*180/Math.PI)%360+360)%360;
+    return (Math.round(d*100)/100).toFixed(2)+' degrees';
+  }
+  if(canvas){
+    if(!canvas.hasAttribute('tabindex')) canvas.tabIndex=0;
+    canvas.setAttribute('aria-keyshortcuts','ArrowLeft ArrowRight Home Space H');
+    canvas.addEventListener('focus',function(){
+      say('Embedding map focused. Left and right arrows rotate it. Press H for the controls.');
+    });
+    canvas.addEventListener('keydown',function(e){
+      if(e.altKey||e.ctrlKey||e.metaKey) return;
+      var step=(e.shiftKey?0.45:0.15), handled=true;
+      switch(e.key){
+        case 'ArrowLeft':
+          setSpin(false); window.yaw-=step; say('Rotated left to '+fmtDeg(window.yaw)+'.'); break;
+        case 'ArrowRight':
+          setSpin(false); window.yaw+=step; say('Rotated right to '+fmtDeg(window.yaw)+'.'); break;
+        case 'Home': case '0':
+          setSpin(false); window.yaw=0; say('Rotation reset to 0 degrees.'); break;
+        case ' ': case 'Spacebar': {
+          var spinning=btn.getAttribute('aria-pressed')==='false';
+          setSpin(!spinning);
+          say(spinning?'Rotation paused.':'Rotation resumed.');
+          break;
+        }
+        case 'h': case 'H': case '?':
+          say('Map keys: left and right arrows rotate, hold shift to rotate faster, '+
+              'Home resets the angle, space starts and stops the automatic rotation. '+
+              'The player list below the map selects a career and is reachable with Tab.');
+          break;
+        default: handled=false;
+      }
+      if(handled){ e.preventDefault(); e.stopPropagation(); }
+    });
+  }
+
+  var main=document.querySelector('.wrap')||document.querySelector('main');
+  if(main){
+    if(!main.id) main.id='pl-main';
+    main.setAttribute('tabindex','-1');
+    var skip=document.createElement('a');
+    skip.className='pl-skip'; skip.href='#'+main.id; skip.textContent='Skip to the explorer';
+    document.body.insertBefore(skip, document.body.firstChild);
+  }
+})();
 </script>
 </body>
 </html>

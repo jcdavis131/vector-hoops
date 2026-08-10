@@ -1,0 +1,319 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Vector Hoops — Dictionary</title>
+<meta name="description" content="Every term this site uses, defined once, each pointing at the committed file it comes from — and an explicit list of the terms that have no file behind them.">
+<meta name="theme-color" content="#fafaf8">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23111'/%3E%3Ccircle cx='11' cy='12' r='3' fill='%23eb6834'/%3E%3C/svg%3E">
+<style>
+:root{
+  --paper:#fafaf8;--surface:#fff;--ink:#111;--ink-soft:#52514e;--muted:#6b6760;--hair:#e1e0d9;
+  --orange:#eb6834;--blue:#2a78d6;--yellow:#f0e442;--green:#009e73;
+  --mono:ui-monospace,"IBM Plex Mono",Menlo,monospace;--sans:ui-sans-serif,system-ui,sans-serif;
+  --shadow:4px 4px 0 var(--ink);--shadow-sm:3px 3px 0 var(--ink);
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;overflow-x:clip}
+a{color:inherit}
+nav{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 16px;background:var(--surface);border-bottom:2px solid var(--ink);position:sticky;top:0;z-index:10;flex-wrap:wrap}
+.brand{font-family:var(--mono);font-weight:800;letter-spacing:.04em;text-transform:uppercase;text-decoration:none}
+.brand span{color:var(--orange)}
+.pill{display:inline-flex;align-items:center;gap:5px;padding:5px 10px;border:1.6px solid var(--ink);border-radius:999px;background:#fff;box-shadow:2px 2px 0 var(--ink);font-family:var(--mono);font-size:11px;font-weight:800;text-transform:uppercase;text-decoration:none}
+.pill-y{background:var(--yellow)}
+main{max-width:880px;margin:0 auto;padding:16px clamp(12px,3vw,20px) 80px}
+.card{background:var(--surface);border:2.2px solid var(--ink);border-radius:14px;box-shadow:var(--shadow);padding:16px;margin:14px 0}
+h1{font-size:clamp(26px,4.4vw,40px);line-height:1.08;letter-spacing:-.02em;margin:10px 0 8px}
+h2{font-size:clamp(18px,2.4vw,22px);margin:22px 0 4px;letter-spacing:-.015em;scroll-margin-top:70px}
+.sub{font-size:13.5px;color:var(--ink-soft);line-height:1.6;max-width:68ch}
+.mono{font-family:var(--mono);font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.05em}
+.dim{color:var(--muted)}
+/* the entry itself */
+.entry{border-top:1.5px solid var(--hair);padding:14px 0;scroll-margin-top:70px}
+.entry:first-of-type{border-top:0}
+.entry h3{margin:0 0 2px;font-size:16.5px;letter-spacing:-.01em}
+.entry .plain{font-size:14.5px;line-height:1.6;margin:4px 0 0}
+.entry .exact{font-size:13px;line-height:1.6;color:var(--ink-soft);margin:6px 0 0;border-left:3px solid var(--blue);padding-left:9px}
+.src{display:inline-flex;align-items:center;gap:5px;margin-top:7px;font-family:var(--mono);font-size:10.5px;font-weight:800;border:1.4px solid var(--ink);border-radius:999px;padding:2px 8px;background:#eef4fb}
+.src--none{background:#fbe3de}
+.live{font-family:var(--mono);font-variant-numeric:tabular-nums;font-weight:800}
+code{font-family:var(--mono);font-size:.92em;background:#f2f1ec;padding:1px 4px;border-radius:4px}
+/* index */
+.jump{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px}
+.jump a{font-family:var(--mono);font-size:11px;font-weight:800;border:1.5px solid var(--ink);border-radius:7px;padding:4px 8px;text-decoration:none;background:#fff;min-height:28px;display:inline-flex;align-items:center}
+.jump a:hover{background:var(--yellow)}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.vh-skip{position:absolute;left:-9999px;top:0;z-index:99;background:var(--paper);border:2.2px solid var(--ink);padding:10px 14px;font-family:var(--mono);font-weight:800;text-decoration:none;border-radius:0 0 10px 0}
+.vh-skip:focus{left:0}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}}
+</style></head><body>
+<a class="vh-skip" href="#main">Skip to the dictionary</a>
+<nav>
+  <a class="brand" href="/">DUMB<span>MODEL</span></a>
+  <div style="display:flex;gap:6px;flex-wrap:wrap"><a class="pill" href="/players.html">Explorer</a><a class="pill" href="/player.html">Players</a><a class="pill" href="/trends.html">Trends</a><a class="pill" href="/model.html">Model</a><a class="pill" href="/teams.html">Teams</a><a class="pill" href="/dictionary.html">Dictionary</a><a class="pill pill-y" href="/play.html">Play today's →</a></div>
+</nav>
+
+<main id="main" tabindex="-1">
+  <div class="card">
+    <div class="mono dim">Reference</div>
+    <h1>Every word this site uses</h1>
+    <p class="sub">This site talks about cosine, axis drift, era-z, archetypes and purity as if
+    you already agreed to them. Each entry below gives the plain-English meaning first, the exact
+    definition second, and then <b>names the committed file it comes from</b> — so you can check
+    it rather than trust it. Terms with no file behind them are listed too, at the bottom, and
+    marked.</p>
+    <nav class="jump" id="jump" aria-label="Jump to a term"></nav>
+  </div>
+
+  <div class="card">
+    <h2 id="space">The space</h2>
+
+    <div class="entry" id="embedding">
+      <h3>Embedding</h3>
+      <p class="plain">A list of numbers standing in for a player-season, arranged so that
+      players who played alike end up near each other.</p>
+      <p class="exact">A 64-dimensional unit-length vector produced by the MTNN from 130 input
+      features. Because every vector has length 1, the dot product between two of them
+      <em>is</em> their cosine.</p>
+      <span class="src">assets/mtnn_arch.json</span>
+    </div>
+
+    <div class="entry" id="cosine">
+      <h3>Cosine similarity</h3>
+      <p class="plain">How close two players are, on a scale where 1.00 means identical and 0
+      means unrelated. It is the number behind every comparison on this site.</p>
+      <p class="exact">The cosine of the angle between two embedding vectors. On unit-length
+      vectors this is the dot product. It ignores magnitude and measures direction only — which
+      is the point: two players can be similar in shape without being equally productive.</p>
+      <span class="src">computed in the browser</span>
+    </div>
+
+    <div class="entry" id="era-z">
+      <h3>Era-z / per-100 possessions</h3>
+      <p class="plain">Stats adjusted so a 1997 season and a 2025 season can be compared without
+      the pace of the league doing the talking.</p>
+      <p class="exact">Every rate is computed per 100 possessions, then z-scored
+      <em>within its own season</em> — so a value says how far from that season's average a
+      player was, not how the eras differ in raw volume. Clipped at ±4 standard deviations.</p>
+      <span class="src">assets/season_norms.json</span>
+      <p class="exact" style="border-left-color:var(--orange)"><b>Caveat the file states itself:</b>
+      three features are <em>not invertible</em> back to a raw rate, because they were
+      empirical-Bayes shrunk toward the league mean by attempts before z-scoring. For those,
+      a percentile is honest and a reconstructed percentage is not.</p>
+    </div>
+
+    <div class="entry" id="archetype">
+      <h3>Archetype</h3>
+      <p class="plain">One of eight play-style groups the model sorts every player-season into.
+      They are named after what separates them, not after positions.</p>
+      <p class="exact">Clusters over the embedding, frozen as a 14-dimension game contract so
+      the game scores against a stable target. The eight, read live from the model file:</p>
+      <ul class="sub" id="archList" style="margin:6px 0 0;padding-left:18px"><li>loading…</li></ul>
+      <span class="src">assets/mtnn_arch.json → gameArchetypes</span>
+    </div>
+
+    <div class="entry" id="tower">
+      <h3>Tower</h3>
+      <p class="plain">A slice of the network that only looks at one family of stats — shooting,
+      or defense, or durability — before anything gets combined.</p>
+      <p class="exact">The MTNN reads its 130 features in family groups, each through its own
+      small sub-network, and fuses the results into the single 64-d embedding. A tower reads
+      <code>cat([x*m, m])</code> — the values and a mask saying which were measured.</p>
+      <span class="src">assets/mtnn_arch.json → towerFamilies</span>
+    </div>
+
+    <h2 id="change">Change over time</h2>
+
+    <div class="entry" id="rotation">
+      <h3>Rotation (Procrustes)</h3>
+      <p class="plain">How much the whole map of the league twisted between one season and the
+      next. A big angle means the game re-sorted who counts as similar to whom.</p>
+      <p class="exact">Orthogonal Procrustes alignment between consecutive seasons, computed on
+      the players who appear in <em>both</em> — so roster turnover cannot manufacture a
+      rotation. Reported as the mean principal angle of the rotation matrix against identity.</p>
+      <span class="src">assets/drift.json</span>
+    </div>
+
+    <div class="entry" id="axis-drift">
+      <h3>Axis drift</h3>
+      <p class="plain">How much one particular stat stopped meaning what it used to mean.</p>
+      <p class="exact"><code>1 − |Q<sub>ii</sub>|</code>, the extent to which that feature's own
+      axis had to move during the alignment. High drift on three-point accuracy in 2019-20 is
+      the league re-sorting itself around shooting, not shooters getting better overnight.</p>
+      <span class="src">assets/drift.json → axisDrifts</span>
+    </div>
+
+    <div class="entry" id="residual">
+      <h3>Residual</h3>
+      <p class="plain">What the rotation could <em>not</em> explain — the part of the change that
+      is not a twist of the map but a genuine reshuffle of players.</p>
+      <p class="exact">Normalized Frobenius norm of the difference remaining after alignment.
+      No scaling is applied, because the spaces are already z-normalized.</p>
+      <span class="src">assets/drift.json</span>
+    </div>
+
+    <div class="entry" id="era-twin">
+      <h3>Era twin</h3>
+      <p class="plain">The player from a different decade who played most like this one.</p>
+      <p class="exact">Nearest career in another decade by cosine between signature seasons,
+      restricted to careers with at least four charted seasons.</p>
+      <span class="src">assets/eratwins.json</span>
+      <p class="exact" style="border-left-color:var(--orange)"><b>Caveat:</b> that file was built
+      in the older <b>48-dimensional</b> embedding, as its own method line says. The model the
+      game ships now is 64-dimensional. The twins are a snapshot of an earlier space.</p>
+    </div>
+
+    <h2 id="accuracy">Is it any good?</h2>
+
+    <div class="entry" id="retrieval">
+      <h3>Adjacent-season retrieval (top-1, top-5)</h3>
+      <p class="plain">The test: hand the model one season of a player's career and ask it to
+      find that same player's <em>next</em> season out of ~13,000 candidates. If the model
+      understands play style, the same person a year later should be the nearest thing to them.</p>
+      <p class="exact">Hit if season N+1 ranks in the top k, self excluded, ties counted
+      <em>against</em> the target. Measured over <span class="live" id="lvPairs">…</span>
+      eligible pairs.</p>
+      <p class="exact" id="lvScores">Loading measured scores…</p>
+      <span class="src">assets/eval_scoreboard.json</span>
+    </div>
+
+    <div class="entry" id="held-out">
+      <h3>Held-out split</h3>
+      <p class="plain">The only scores that really count — seasons the model never saw while
+      learning.</p>
+      <p class="exact">Target season ≤2021 is train, 2022-23 is validation, ≥2024 is test.
+      Train-split pairs were training positives, so their score is inflated by construction and
+      should never be quoted as accuracy.</p>
+      <span class="src">assets/eval_scoreboard.json → protocol.splits</span>
+    </div>
+
+    <div class="entry" id="baseline">
+      <h3>Transparent 14-d baseline</h3>
+      <p class="plain">The dumb version, kept around on purpose. If the neural net cannot beat
+      plain era-adjusted stats, it has not earned its place.</p>
+      <p class="exact">Cosine over the frozen 14-dimension era-z game profile, evaluated on the
+      identical pairs and protocol.</p>
+      <p class="exact" id="lvBaseline">Loading…</p>
+      <span class="src">assets/eval_scoreboard.json</span>
+    </div>
+
+    <h2 id="explain">Explaining a prediction</h2>
+
+    <div class="entry" id="attribution">
+      <h3>Gradient × input attribution</h3>
+      <p class="plain">Which input stats moved a given prediction, and in which direction.</p>
+      <p class="exact"><code>a<sub>j</sub> = x<sub>j</sub> · ∂(target)/∂x<sub>j</sub></code> over
+      the raw input features. A <em>local linearization</em> — it says how the output responds
+      to a nudge, not what would happen if a feature were removed. It is <b>not</b> SHAP, and is
+      not labelled as such anywhere on this site.</p>
+      <span class="src">assets/mtnn_attr_pop.json → method</span>
+    </div>
+
+    <div class="entry" id="coverage">
+      <h3>Coverage, and why zero does not mean zero</h3>
+      <p class="plain">Some stats were not tracked in older seasons. Where a stat is missing, the
+      model is told it is missing — so it contributes nothing, which is not the same as
+      mattering nothing.</p>
+      <p class="exact">A tower reads <code>cat([x*m, m])</code>, so a masked feature has exactly
+      zero gradient. <b>A zero attribution means NEVER MEASURED, not "no effect."</b> Read it
+      against the coverage figure, which is the share of seasons where the feature exists.</p>
+      <span class="src">assets/mtnn_attr_pop.json → maskedNote, coverage</span>
+    </div>
+
+    <h2 id="game">The game</h2>
+
+    <div class="entry" id="chimera">
+      <h3>Chimera</h3>
+      <p class="plain">A blend of real player-seasons that the puzzle asks you to identify.</p>
+      <p class="exact">A composite point in the embedding built from real player-season vectors,
+      scored by cosine against your guesses.</p>
+      <span class="src">assets/vectors.json</span>
+    </div>
+
+    <div class="entry" id="signature-season">
+      <h3>Signature season</h3>
+      <p class="plain">The one season used to stand for a whole career when comparing players.</p>
+      <p class="exact">The season selected as representative when matching careers across
+      decades.</p>
+      <span class="src">assets/eratwins.json</span>
+    </div>
+
+    <div class="entry" id="lcg">
+      <h3>Daily seed / LCG</h3>
+      <p class="plain">Why everyone gets the same puzzle today, and why refreshing will not give
+      you an easier one.</p>
+      <p class="exact">A linear congruential generator seeded from the UTC date:
+      <code>(seed × 1103515245 + 12345) &amp; 0x7fffffff</code>. Same date in, same puzzle out,
+      for every visitor — and a shared <code>?pack=</code> link reproduces an identical set.</p>
+      <span class="src">play.html</span>
+    </div>
+
+    <h2 id="unsourced">Terms this site uses that have no file behind them</h2>
+    <p class="sub">Kept honest on purpose. These appear in copy somewhere on the site but are not
+    produced by any committed asset, so they cannot be checked. Treat them as claims.</p>
+
+    <div class="entry" id="purity">
+      <h3>Purity@k</h3>
+      <p class="plain">Usually: of a player's k nearest neighbours, the share sharing their
+      archetype label.</p>
+      <p class="exact">A specific value, <code>purity@10 0.7057</code>, has appeared in site copy.
+      It is <b>not</b> in <code>assets/eval_scoreboard.json</code>, which is the committed
+      evidence file and reports adjacent-season retrieval instead. It may come from an older
+      48-d evaluation. Until a scoreboard ships it, it is a claim.</p>
+      <span class="src src--none">no committed source</span>
+    </div>
+
+    <div class="entry" id="lift">
+      <h3>Lift</h3>
+      <p class="plain">How many times better than a baseline something is.</p>
+      <p class="exact">A specific value, <code>lift 6.32</code>, has appeared in site copy with no
+      stated denominator. The ratio that <em>is</em> computable from the scoreboard —
+      model top-5 over the transparent 14-d baseline on the held-out test split — does not come
+      to 6.32. Stated as a claim until its definition ships with it.</p>
+      <span class="src src--none">no committed source</span>
+    </div>
+  </div>
+</main>
+
+<script>
+(function(){
+'use strict';
+var $=function(id){return document.getElementById(id);};
+var esc=function(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');};
+var n2=function(v){return (Math.round(v*100)/100).toFixed(2);};
+
+// jump index built from the headings actually on the page, so it can never
+// list a term that was removed or miss one that was added
+var jump=$('jump');
+jump.innerHTML=Array.prototype.map.call(document.querySelectorAll('.entry[id]'),function(e){
+  var h=e.querySelector('h3');
+  return '<a href="#'+e.id+'">'+esc(h?h.textContent:e.id)+'</a>';
+}).join('');
+
+fetch('assets/mtnn_arch.json',{cache:'force-cache'}).then(function(r){return r.ok?r.json():null;})
+ .then(function(j){
+   if(!j||!j.gameArchetypes) return;
+   $('archList').innerHTML=j.gameArchetypes.map(function(a){return '<li>'+esc(a)+'</li>';}).join('');
+ }).catch(function(){ $('archList').innerHTML='<li class="dim">Archetype list could not be loaded.</li>'; });
+
+fetch('assets/eval_scoreboard.json',{cache:'force-cache'}).then(function(r){return r.ok?r.json():null;})
+ .then(function(j){
+   if(!j||!j.results||!j.results.mtnn) throw new Error('shape');
+   var m=j.results.mtnn, b=j.results.baseline_transparent_14d;
+   $('lvPairs').textContent=(j.eligible_pairs||0).toLocaleString();
+   $('lvScores').innerHTML='Measured: overall top-1 <span class="live">'+n2(m.overall.top1)+
+     '</span>, top-5 <span class="live">'+n2(m.overall.top5)+'</span>. On the held-out test split ('+
+     (m.by_split.test.n||0).toLocaleString()+' pairs): top-1 <span class="live">'+n2(m.by_split.test.top1)+
+     '</span>, top-5 <span class="live">'+n2(m.by_split.test.top5)+'</span>. Computed '+
+     esc((j.computed_at||'').slice(0,10))+'.';
+   $('lvBaseline').innerHTML='Measured on the same held-out test split: top-1 <span class="live">'+
+     n2(b.by_split.test.top1)+'</span>, top-5 <span class="live">'+n2(b.by_split.test.top5)+
+     '</span> — against the model’s '+n2(m.by_split.test.top5)+' top-5.';
+ }).catch(function(){
+   // no invented numbers if the file will not load
+   $('lvScores').textContent='The scoreboard could not be loaded, so no accuracy figure is shown.';
+   $('lvBaseline').textContent='';
+   $('lvPairs').textContent='—';
+ });
+})();
+</script>
+</body></html>
