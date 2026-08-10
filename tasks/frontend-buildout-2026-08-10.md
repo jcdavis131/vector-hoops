@@ -49,19 +49,27 @@ Invoke-WebRequest http://localhost:8099/<page>.html -UseBasicParsing   # 200 + e
 ## Phase 0 — board + audit
 
 - [x] Write this board (2026-08-10)
-- [ ] Audit the map layer: `assets/shared-map.js`, `#map-wrap` in `play.html`,
-      `assets/network-viz.js`. Record findings in "Map audit" below.
+- [x] Audit the map layer: `assets/shared-map.js`, `#map-wrap` in `play.html`.
+      Findings in "Map audit" below. (`assets/network-viz.js` is model.html's
+      own renderer, not this map — audited in P3.1, not here.)
 
 ## Phase 1 — gameplay, centered on the embedding map
 
 - [ ] P1.1 Map becomes the stage, not a strip. `#map-wrap` is a fixed
       640×380 canvas wedged between cards; promote it to the primary surface
       with the guess panel docked over it.
-- [ ] P1.2 Guess feedback drawn *on the map* — every guess ring persists,
-      connected to the target bullseye, with cosine on the wire.
-- [ ] P1.3 Canvas keyboard + screen-reader path. `aria-label` exists; the
-      orbit/hover interaction is mouse-only. Needs focusable canvas, arrow-key
-      orbit, and a live-region text mirror of what the map shows.
+- [x] P1.2 Guess feedback drawn *on the map* — **already shipped before this
+      board.** `shared-map.js draw()` persists every guess as an orange ring,
+      draws a line to the target bullseye (latest solid, earlier dashed), and
+      labels the latest with `% match · #rank`. Nothing to build; recorded so a
+      later iteration does not rebuild it.
+- [x] P1.3 Canvas keyboard + screen-reader path — **done 2026-08-10**
+      (`assets/shared-map.js`, `?v=58`, `sw.js` v67). Focusable canvas with a
+      visible focus ring, arrow-key orbit (Shift = 3x), +/− zoom (new — the
+      projection had no zoom at all), `T` centre target, `G` step through
+      target + guesses, Space toggle auto-rotate, `0` reset, `H` help,
+      `Esc` clear. Every action mirrors into an `aria-live` region, and
+      `setTarget`/`setGuesses` announce game state changes.
 - [ ] P1.4 Mobile: map + guess flow at 375px without the page scrolling
       horizontally or the canvas collapsing.
 - [ ] P1.5 Onboarding: first-run overlay teaches the *map*, not the rules text.
@@ -113,6 +121,35 @@ Invoke-WebRequest http://localhost:8099/<page>.html -UseBasicParsing   # 200 + e
 
 ---
 
-## Map audit
+## Map audit (2026-08-10)
 
-_(Phase 0 fills this in.)_
+`assets/shared-map.js` is a well-built 2D-projected point cloud: Float32
+arrays, colour-batched `fillRect` (no `arc()` in the hot loop), LOD sampling
+(4k mobile / 8k desktop), DPR=1, 24–30fps budget, rAF chain that fully stops
+when static, idle pause at 8s, `ResizeObserver` coalesced through one frame.
+Mounted by `index.html` and `play.html` only. Performance is not the problem.
+
+**What was missing (fixed in P1.3):**
+
+1. **No keyboard interaction whatsoever.** Only `mousedown/mousemove/
+   touchstart`. No `tabindex`, no `role`, no key handler. The map was the
+   centre of the game and unreachable without a pointer.
+2. **No focus affordance** — nothing rendered even if you got focus to it.
+3. **Static `aria-label` only.** It described the *concept* of the map and
+   never changed. A non-visual player learned nothing about the target, the
+   guesses, or how close they were.
+4. **Hover tooltip was pointer-only**, and its markup was built inline inside
+   `onMove`, so no other path could reuse it.
+5. **No zoom.** 12,966 points at 2px in a fixed wide shot.
+
+**Still open (queued, not yet done):**
+
+6. `#map-wrap` is `min-height:380px` sandwiched between the daily-court card
+   and the past-card, so on mobile the map sits below the fold — the stage
+   problem P1.1 addresses.
+7. `focusOnTarget()` exists in the API but no visible button calls it; only
+   `Pause` and `Reset` are in `#map-controls`. `T` now reaches it from the
+   keyboard, but a pointer user still cannot.
+8. `dotSize = W<600?2:2` — dead ternary, both branches 2 (harmless).
+9. The 8s idle pause sets `embedPaused`, and only pointer/resume events
+   revived it; keyboard now kicks it, but the pause is invisible to the user.

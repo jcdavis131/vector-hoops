@@ -21,6 +21,11 @@ export async function mountSharedMap(canvas, opts={}){
   let projected=[], projById=null, maxId=0;
   let W=0,H=0, rotY=Math.PI*0.18, rotX=0.22, auto=!reduceMotion, lastT=0, isDragging=false, lastX=0,lastY=0, idleMs=0;
   let embedPaused=false, lastRender=0;
+  // zoom is a pure projection scale — the mouse path never used one, but a
+  // keyboard user has no pinch gesture, so without it the map is a fixed
+  // wide shot and 12,966 points at 2px are unreadable.
+  let zoom=1;
+  const ZOOM_MIN=0.6, ZOOM_MAX=4;
   // guesses are stored as {idx, sim, rank} — idx is the external player id
   // (same id space as targetId, translated through projById below), sim is
   // 0..1 similarity, rank is 0-based (0 = exact match). A plain array of
@@ -173,7 +178,7 @@ export async function mountSharedMap(canvas, opts={}){
     if(!isFinite(rotY)||!isFinite(rotX)){ rotY=Math.PI*0.18; rotX=0.22; }
     const cy=Math.cos(rotY), sy=Math.sin(rotY), cx=Math.cos(rotX), sx=Math.sin(rotX);
     const persp=2.8;
-    const W2=W*0.5, H2=H*0.5, W40=W*0.40, H40=H*0.40;
+    const W2=W*0.5, H2=H*0.5, W40=W*0.40*zoom, H40=H*0.40*zoom;
     for(let i=0;i<N;i++){
       const ox=baseOx[i], oy=baseOy[i], oz=baseOz[i];
       const xr=ox*cy+oz*sy;
@@ -332,6 +337,200 @@ export async function mountSharedMap(canvas, opts={}){
     scheduleLoop();
   }
 
+  // ── point description, shared by the mouse tooltip and the keyboard/AT path ──
+  // The tooltip used to be built inline inside onMove, which meant the only way
+  // to learn what a point was required a pointer. Both readouts derive from here.
+  function pointFacts(i){
+    if(i==null||i<0||i>=N) return null;
+    const hitId = baseI?baseI[i]:null;
+    return {
+      name: baseN[i]||'',
+      season: baseS[i]||'',
+      arch: ARCH[(baseC[i]||0)%8]||'',
+      pos: baseP[i]>=0?(POS[(baseP[i]|0)%5]||''):'',
+      guess: hitId!=null?guessIds.find(g=>g.idx===hitId)||null:null,
+      isTarget: hitId!=null && targetId!=null && hitId===targetId
+    };
+  }
+  function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function guessBits(g){
+    const bits=[];
+    if(!g) return bits;
+    if(g.sim!=null) bits.push(Math.round(g.sim*100)+'% match');
+    if(g.rank!=null) bits.push(g.rank===0?'✅ #1 WIN':'#'+(g.rank+1));
+    return bits;
+  }
+  function showTip(i){
+    if(!hoverEl) return;
+    const f=pointFacts(i); const pr=projected[i];
+    if(!f||!pr){ hoverEl.style.display='none'; return; }
+    hoverEl.style.display='block';
+    hoverEl.style.left=pr.sx+'px';
+    hoverEl.style.top=(pr.sy-42)+'px';
+    const bits=guessBits(f.guess);
+    const extra = bits.length
+      ? `<br><span style="font-family:ui-monospace,monospace;font-size:9px;color:#D55E00;font-weight:800">YOUR GUESS · ${esc(bits.join(' · '))}</span>`
+      : (f.isTarget ? `<br><span style="font-family:ui-monospace,monospace;font-size:9px;color:#1A150F;font-weight:800">★ TARGET</span>` : '');
+    hoverEl.innerHTML=`<b>${esc(f.name)}</b> ${esc(f.season)}<br><span style="font-family:ui-monospace,monospace;font-size:9px;opacity:.8">${esc(f.pos?f.pos+' • ':'')}${esc(f.arch)}</span>${extra}`;
+  }
+  function pointSentence(i){
+    const f=pointFacts(i);
+    if(!f) return '';
+    const parts=[[f.name,f.season].filter(Boolean).join(' ')];
+    if(f.pos) parts.push(f.pos);
+    if(f.arch) parts.push(f.arch+' archetype');
+    if(f.isTarget) parts.push('this is the target');
+    const bits=guessBits(f.guess).map(b=>b.replace('✅ ','').replace('#','number '));
+    if(bits.length) parts.push('your guess, '+bits.join(', '));
+    return parts.filter(Boolean).join(', ');
+  }
+
+  // ── screen-reader mirror ─────────────────────────────────────────────────
+  // The canvas carries a static aria-label describing the *concept* of the map.
+  // It never said what was actually on it, so a non-visual player got no game
+  // feedback at all. This live region reports every state change in words.
+  let liveEl=null;
+  function ensureLive(){
+    if(liveEl||typeof document==='undefined') return liveEl;
+    try{
+      liveEl=document.createElement('div');
+      liveEl.className='vh-map-live';
+      liveEl.setAttribute('aria-live','polite');
+      liveEl.setAttribute('aria-atomic','true');
+      liveEl.style.cssText='position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0';
+      (canvas.parentElement||document.body).appendChild(liveEl);
+    }catch{ liveEl=null; }
+    return liveEl;
+  }
+  let lastSpoken='';
+  function say(msg){
+    if(!msg) return;
+    const el=ensureLive();
+    if(!el) return;
+    // an identical textContent is not a mutation, so AT would stay silent on a
+    // repeated action (pressing ArrowLeft twice). Clear first to force the change.
+    if(msg===lastSpoken) el.textContent='';
+    lastSpoken=msg;
+    el.textContent=msg;
+  }
+  function stateSentence(){
+    const out=[];
+    if(targetId!=null && projById && targetId>=0 && targetId<=maxId && projById[targetId]>=0){
+      const s=pointSentence(projById[targetId]);
+      if(s) out.push('Target: '+s.replace(', this is the target',''));
+    }
+    const n=guessIds?guessIds.length:0;
+    if(n){
+      const last=guessIds[n-1];
+      const li=(projById&&last&&last.idx!=null&&last.idx>=0&&last.idx<=maxId)?projById[last.idx]:-1;
+      const nm=li>=0?(baseN[li]||'a player'):'a player';
+      out.push(n+(n===1?' guess placed. Latest: ':' guesses placed. Latest: ')+nm+(guessBits(last).length?', '+guessBits(last).join(', ').replace('✅ ',''):''));
+    } else {
+      out.push('No guesses placed yet.');
+    }
+    out.push('Zoom '+zoom.toFixed(1)+'x.');
+    return out.join(' ');
+  }
+
+  // ── keyboard control ─────────────────────────────────────────────────────
+  // Orbit, zoom and point inspection were all pointer-only. These are the same
+  // operations bound to keys, with each one announced through the live region.
+  let kbIdx=-1;          // index into the point-of-interest ring, -1 = none
+  function poiList(){
+    const out=[];
+    if(targetId!=null && projById && targetId>=0 && targetId<=maxId && projById[targetId]>=0) out.push(projById[targetId]);
+    for(const g of (guessIds||[])){
+      if(!g||g.idx==null||g.idx<0||g.idx>maxId||!projById) continue;
+      const i=projById[g.idx];
+      if(i>=0 && out.indexOf(i)<0) out.push(i);
+    }
+    return out;
+  }
+  function kick(){
+    idleMs=0;
+    if(auto){ embedPaused=false; lastT=0; scheduleLoop(); }
+    else { projectFrame(); draw(); }
+  }
+  function setZoom(z){
+    const nz=Math.max(ZOOM_MIN, Math.min(ZOOM_MAX, z));
+    if(nz===zoom) return false;
+    zoom=nz; projectFrame(); draw();
+    return true;
+  }
+  function onKey(ev){
+    if(ev.altKey||ev.ctrlKey||ev.metaKey) return;
+    const k=ev.key;
+    const fast=ev.shiftKey?3:1;
+    const STEP_Y=0.12*fast, STEP_X=0.09*fast;
+    let handled=true;
+    switch(k){
+      case 'ArrowLeft':  rotY-=STEP_Y; kick(); say('Rotated left.'); break;
+      case 'ArrowRight': rotY+=STEP_Y; kick(); say('Rotated right.'); break;
+      case 'ArrowUp':    rotX=Math.max(-0.92, rotX-STEP_X); kick(); say('Tilted up.'); break;
+      case 'ArrowDown':  rotX=Math.min(0.92, rotX+STEP_X); kick(); say('Tilted down.'); break;
+      case '+': case '=': say(setZoom(zoom*1.35)?('Zoom '+zoom.toFixed(1)+'x.'):'Maximum zoom.'); break;
+      case '-': case '_': say(setZoom(zoom/1.35)?('Zoom '+zoom.toFixed(1)+'x.'):'Minimum zoom.'); break;
+      case '0':
+        rotY=Math.PI*0.18; rotX=0.22; zoom=1; kbIdx=-1;
+        if(hoverEl) hoverEl.style.display='none';
+        projectFrame(); draw(); say('View reset. '+stateSentence());
+        break;
+      case 't': case 'T':
+        if(targetId==null){ say('No target on the map yet.'); break; }
+        api.focusOnTarget();
+        kbIdx=poiList().length?0:-1;
+        if(kbIdx===0) showTip(poiList()[0]);
+        say('Centred on target. '+stateSentence());
+        break;
+      case 'g': case 'G': {
+        const poi=poiList();
+        if(!poi.length){ say('Nothing to inspect yet.'); break; }
+        kbIdx=(kbIdx+1)%poi.length;
+        const i=poi[kbIdx];
+        showTip(i);
+        projectFrame(); draw();
+        say((kbIdx+1)+' of '+poi.length+'. '+pointSentence(i));
+        break;
+      }
+      case ' ': case 'Spacebar':
+        auto=!auto && !reduceMotion;
+        embedPaused=!auto;
+        if(auto){ lastT=0; scheduleLoop(); }
+        { const bp=document.getElementById('btn-pause'); if(bp) bp.textContent=auto?'Pause':'Resume'; }
+        say(auto?'Auto-rotate on.':'Auto-rotate paused.');
+        break;
+      case 'Escape':
+        if(hoverEl) hoverEl.style.display='none';
+        kbIdx=-1; say('Inspection cleared.');
+        break;
+      case '?': case 'h': case 'H':
+        say('Map keys: arrow keys orbit, shift plus arrows orbits faster, plus and minus zoom, T centres the target, G steps through the target and your guesses, space toggles auto-rotate, zero resets. '+stateSentence());
+        break;
+      default: handled=false;
+    }
+    if(handled){ ev.preventDefault(); ev.stopPropagation(); }
+  }
+  function setupA11y(){
+    try{
+      if(!canvas.hasAttribute('tabindex')) canvas.tabIndex=0;
+      canvas.setAttribute('role','application');
+      canvas.setAttribute('aria-roledescription','interactive 3D embedding map');
+      canvas.setAttribute('aria-keyshortcuts','ArrowLeft ArrowRight ArrowUp ArrowDown + - 0 T G Space');
+      if(!canvas.getAttribute('aria-label')) canvas.setAttribute('aria-label','Player-season embedding map');
+      canvas.addEventListener('keydown', onKey);
+      canvas.addEventListener('focus',()=>{ say('Embedding map focused. Press H for map keys. '+stateSentence()); });
+      if(typeof document!=='undefined' && !document.getElementById('vh-map-a11y-css')){
+        const st=document.createElement('style');
+        st.id='vh-map-a11y-css';
+        // The canvas had no focus affordance at all — a keyboard user could not
+        // tell they had reached it. Inset so it is not clipped by overflow:hidden.
+        st.textContent='canvas[role="application"]:focus{outline:none}'
+          +'canvas[role="application"]:focus-visible{outline:3px solid #0072B2;outline-offset:-4px}';
+        document.head.appendChild(st);
+      }
+    }catch(e){ console.warn('map a11y setup fail',e); }
+  }
+
   // interaction
   function onDown(ev){
     const pt=ev.touches? ev.touches[0]:ev;
@@ -360,28 +559,9 @@ export async function mountSharedMap(canvas, opts={}){
       const d=Math.hypot(pr.sx-mx, pr.sy-my);
       if(d<bd){ bd=d; best=i; }
     }
-    if(best!=null){
-      hoverEl.style.display='block';
-      hoverEl.style.left=projected[best].sx+'px';
-      hoverEl.style.top=(projected[best].sy-42)+'px';
-      const n=baseN[best]||''; const s=baseS[best]||''; const c=baseC[best];
-      const arch=ARCH[c%8]||'';
-      const pos=baseP[best]>=0?(POS[(baseP[best]|0)%5]||''):'';
-      // if the hovered point is one of the player's own guesses, show its
-      // distance-to-target info instead of only the generic point info
-      const hitId=baseI?baseI[best]:null;
-      const guessHit=hitId!=null?guessIds.find(g=>g.idx===hitId):null;
-      let extra='';
-      if(guessHit){
-        const bits=[];
-        if(guessHit.sim!=null) bits.push(Math.round(guessHit.sim*100)+'% match');
-        if(guessHit.rank!=null) bits.push(guessHit.rank===0?'✅ #1 WIN':'#'+(guessHit.rank+1));
-        if(bits.length) extra=`<br><span style="font-family:ui-monospace,monospace;font-size:9px;color:#D55E00;font-weight:800">YOUR GUESS · ${bits.join(' · ')}</span>`;
-      }
-      hoverEl.innerHTML=`<b>${(n||'').replace(/</g,'&lt;')}</b> ${(s||'').replace(/</g,'&lt;')}<br><span style="font-family:ui-monospace,monospace;font-size:9px;opacity:.8">${pos?pos+' • ':''}${arch}</span>${extra}`;
-    } else {
-      hoverEl.style.display='none';
-    }
+    // one description path for pointer and keyboard alike — see showTip()
+    if(best!=null) showTip(best);
+    else hoverEl.style.display='none';
   }
   function onUp(){ if(isDragging){ isDragging=false; canvas.style.cursor='grab'; lastT=0; } }
 
@@ -406,10 +586,11 @@ export async function mountSharedMap(canvas, opts={}){
   }
   const resetBtn=document.getElementById('btn-reset');
   if(resetBtn){
-    resetBtn.addEventListener('click',()=>{ rotY=Math.PI*0.18; rotX=0.22; auto=!reduceMotion; embedPaused=false; idleMs=0; lastT=0; if(pauseBtn) pauseBtn.textContent=auto?'Pause':'Resume'; resize(); scheduleLoop(); });
+    resetBtn.addEventListener('click',()=>{ rotY=Math.PI*0.18; rotX=0.22; zoom=1; kbIdx=-1; auto=!reduceMotion; embedPaused=false; idleMs=0; lastT=0; if(pauseBtn) pauseBtn.textContent=auto?'Pause':'Resume'; if(hoverEl) hoverEl.style.display='none'; resize(); projectFrame(); draw(); scheduleLoop(); });
   }
 
   // load and start
+  setupA11y();
   resize();
   // Coalesce observer callbacks through one frame. Submitting a guess mutates
   // the DOM around the map (guess rows, result panel), which can fire this
@@ -430,9 +611,25 @@ export async function mountSharedMap(canvas, opts={}){
   if(ok){ projectFrame(); draw(); scheduleLoop(); loadNamesLazy().then(()=>{ projectFrame(); draw(); }); }
   else { ctx.fillStyle='#FFFEF7'; ctx.fillText('Map failed to load',14,22); }
 
-  return {
-    setTarget(id){ targetId=id==null?null:id|0; draw(); },
-    setGuesses(ids){ guessIds=normalizeGuesses(ids); draw(); },
+  // named so the keyboard handler can call focusOnTarget() without duplicating it
+  const api = {
+    setTarget(id){
+      const prev=targetId;
+      targetId=id==null?null:id|0;
+      kbIdx=-1;
+      draw();
+      if(targetId!=null && targetId!==prev) say('New target on the map. '+stateSentence());
+    },
+    setGuesses(ids){
+      const before=guessIds?guessIds.length:0;
+      guessIds=normalizeGuesses(ids);
+      draw();
+      if(guessIds.length>before) say(stateSentence());
+    },
+    // exposed so a page can push its own wording into the map's live region
+    announce: say,
+    describe: stateSentence,
+    setZoom, getZoom(){ return zoom; },
     focusOnTarget(){
       // targetId>maxId would read past the Int32Array end: idx=undefined -> atan2(undefined)=NaN -> map collapses
       if(targetId==null||!projById||targetId<0||targetId>maxId) return;
@@ -466,6 +663,7 @@ export async function mountSharedMap(canvas, opts={}){
       }catch(e){ console.warn('addPoint fail',e); return false; }
     },
     resize, getCount(){return N;},
-    dispose(){ try{ro&&ro.disconnect();}catch{} }
+    dispose(){ try{ro&&ro.disconnect();}catch{} try{liveEl&&liveEl.remove();}catch{} }
   };
+  return api;
 }
