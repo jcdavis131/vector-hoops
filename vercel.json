@@ -1,8 +1,6 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
-  "public": true,
-  "github": { "enabled": true, "autoAlias": true, "autoJob": true },
   "headers": [
     { "source": "/assets/(.*)\\.(json|js|css|png|webp|svg|woff2|f32|bin)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable, stale-while-revalidate=86400" }, { "key": "Access-Control-Allow-Origin", "value": "*" }] },
     { "source": "/sw.js", "headers": [{ "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }] },
