@@ -170,7 +170,60 @@
     });
   }
 
+  /* Mirror a visual toggle onto aria-pressed.
+
+     players.html marks its active filter with a class — `<button id="fAll"
+     class="pill on mono">` and `.pill.on{background:var(--ink);color:#fff}` —
+     so a sighted visitor can see which of All / Current / LOD is selected and a
+     screen reader hears three identically-named buttons with no state at all.
+     WCAG 4.1.2. trends.html and model.html both set aria-pressed on their own
+     button groups, so this is the site disagreeing with itself rather than an
+     open question.
+
+     Membership is earned, not assumed. Grouping by parent looked obvious and was
+     wrong: players.html puts `fAll`, `fCur` and `fLod` in one <span>, and `fLod`
+     is not a filter at all — it runs `$('fLod').textContent='DPR '+DPR.toFixed(1)`
+     and re-renders, a one-shot that never takes `.on`. Marking it
+     aria-pressed="false" would announce a toggle that does not exist, which is a
+     worse failure than the missing state this is here to fix.
+
+     So a button is only ever given a pressed state after it has been *seen*
+     carrying `.on`. The active one always announces itself; a sibling that has
+     never been active simply has no state until it earns one, which is
+     incomplete but never untrue.
+
+     Every write is guarded to be a no-op when the attribute already says that,
+     which is the rule the observer above had to learn the hard way, and the
+     observer here filters on `class` so writing aria-pressed cannot requeue it. */
+  var seenPressed = (typeof WeakSet === 'function') ? new WeakSet() : null;
+
+  function mirrorPressedState(){
+    if(!seenPressed) return 0;
+    var all = document.querySelectorAll('button.pill');
+    var n = 0;
+    for(var i=0;i<all.length;i++){
+      if(all[i].classList.contains('on')) seenPressed.add(all[i]);
+    }
+    for(var j=0;j<all.length;j++){
+      if(!seenPressed.has(all[j])) continue;
+      var want = all[j].classList.contains('on') ? 'true' : 'false';
+      if(all[j].getAttribute('aria-pressed') !== want)
+        all[j].setAttribute('aria-pressed', want);
+      n++;
+    }
+    return n;
+  }
+
+  function watchPressedState(){
+    mirrorPressedState();
+    if(!window.MutationObserver) return;
+    new MutationObserver(function(){ mirrorPressedState(); })
+      .observe(document.body, {attributes:true, subtree:true, attributeFilter:['class']});
+  }
+
   function init(){
+    watchPressedState();
+
     var searchInputs = [
       document.getElementById('landing-guess-input'),
       document.getElementById('chimera-input'),

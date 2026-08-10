@@ -3038,3 +3038,58 @@ Also removed three `#tbl` CSS rules and the comment above them describing "the
 page's own table … 11 `<th scope="col" data-k>`". That table was the fabricated
 ten-row placeholder deleted earlier; the rules styled nothing and the comment
 described something that no longer existed.
+
+
+## players.html showed its filter state to eyes only (2026-08-10)
+
+Operating the Explorer's controls: the three filters work and keep focus — map
+ink moves 8,270 / 6,241 / 8,587 per click, focus stays on the button pressed,
+clicking a name in the list draws its trajectory (7,658 → 10,877). No errors.
+
+But the active filter was marked **only in CSS**:
+
+    <button id="fAll" class="pill on mono">All 1814</button>
+    .pill.on{background:var(--ink);color:#fff}
+
+A sighted visitor sees which of All / Current is selected. A screen reader hears
+two identically-named buttons and no state at all — WCAG 4.1.2. trends.html and
+model.html both set `aria-pressed` on their own button groups, so this was the
+site disagreeing with itself, not an open question.
+
+`keyboard-a11y.js` mirrors the class onto `aria-pressed`. That module already
+carries the scar tissue for this kind of work — a MutationObserver that once
+froze the tab by rewriting attributes inside its own observed subtree — so every
+write here is a no-op when the DOM already says it, and the observer filters on
+`class` so writing `aria-pressed` cannot requeue it.
+
+### The obvious grouping was wrong, and would have shipped a lie
+
+The first version grouped by parent: take the button carrying `.on`, mark its
+siblings. All three filters live in one `<span>`, so `fLod` came along and got
+`aria-pressed="false"`.
+
+**`fLod` is not a filter.** It runs
+
+    $('fLod').textContent='DPR '+DPR.toFixed(1); rs();
+
+— it relabels itself with the device pixel ratio and re-renders. A one-shot.
+Announcing it as an unpressed toggle would have invented a control state, which
+is a worse failure than the missing one being fixed.
+
+Membership is earned now: a button is given a pressed state only after it has
+been **seen** carrying `.on`. Measured across a full interaction:
+
+    on load               fAll pressed=true   fCur pressed=null   fLod pressed=null
+    after clicking fCur   fAll pressed=false  fCur pressed=true   fLod pressed=null
+    after clicking fLod   fAll pressed=false  fCur pressed=true   fLod pressed=null
+    after clicking fAll   fAll pressed=true   fCur pressed=false  fLod pressed=null
+
+The active filter always announces itself. A sibling that has never been active
+carries no state until it earns one — incomplete, but never untrue. `fLod` is
+never touched.
+
+That is the second time in two passes that the *first* fix was the dangerous one:
+restoring focus after a table redraw would have stolen it from mouse users
+without the `contains(activeElement)` guard, and this would have announced a
+toggle that does not exist. Operating a control tells you what it does; only
+looking at what it *is* tells you what to claim about it.
