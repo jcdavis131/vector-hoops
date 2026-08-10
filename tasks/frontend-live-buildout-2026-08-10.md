@@ -773,7 +773,11 @@ alongside `shap_sample_contribs_5` and a stated method
 was honest all along. The dictionary conflated two different models; corrected to
 name both and point at the file.
 
-- [ ] **P7.1 public/assets/assets/ is 187 duplicated files, 86,808 KB, shipping.**
+- [x] **P7.1 public/assets/assets/ is 187 duplicated files, 86,808 KB, shipping.**
+  Closed 2026-08-10 in `24384ae3` — deleted after the evidence collapsed the
+  decision (0 references, 0 resolution mechanisms, 172 byte-identical + 15
+  strictly-smaller stale, all tracked in git). See the note at the end of this
+  file, including the worker path it turned up.
   A doubled directory inside the deployed output. Added by `49b60f15` (not this
   branch), present identically on `origin/master`, and this branch changed none
   of it. `sync_public.py` never deletes, by design, so it will not clean this up.
@@ -2271,3 +2275,45 @@ downloaded one. The real costs are the deploy bundle, the repo, and a hazard:
 have no alternative use, so deleting them is not a judgement. The 746 KB dead
 module set has a real second option — reviving it — and choosing between delete
 and revive is a product call about what the site should do, not a cleanup.
+
+
+### The duplicate tree was load-bearing for exactly one file, and that was a bug
+
+My evidence for deleting `assets/assets/` was a grep for the literal string. That
+could never have found the one thing that reached it, because the string never
+appears:
+
+    // in /assets/mtnn-worker.js
+    fetch('assets/mtnn_meta.json?v=37335d35')
+    loadF32('assets/mtnn_embeddings.f32')
+
+**A relative URL inside a worker resolves against the worker script's own URL**,
+not the document's. So both of these asked for `/assets/assets/…`, and that path
+existed only because of the duplicated tree. The worker had been quietly reading
+the duplicate for as long as both were there. Deleting it turned a silent wrong
+path into a 404 — which is the only reason anyone noticed.
+
+Nothing is broken by that: **`mtnn-worker.js` is never instantiated.** There is no
+`new Worker(` anywhere in the repo and nothing references it by name. It is dead
+code, so the 404 is theoretical — but the wrong path was real, and would have bitten
+whoever wired it up.
+
+Both paths are absolute now. Stylesheets under `assets/` were checked for the same
+trap — a `url(assets/…)` in a stylesheet rebases the same way — and there are none.
+The only other worker, `workers/modern-search.worker.js`, has no relative fetches.
+
+### And it was guessing the model dimension, wrongly
+
+    .catch(()=>({dim:48, rows:12966}))
+    var dim = metaJson.dim || 48;
+
+The shipped model is **64-d**. `dim` is not cosmetic here: `rows` is derived as
+`E.length/dim`, so a wrong dim misaligns every vector in the matrix and returns
+confident nonsense instead of failing. Both guesses are gone — a missing or
+unreadable `mtnn_meta.json` now throws. The file header claimed "12,966 × 48-d"
+too, which was simply false about the shipped artefact.
+
+Worth stating plainly: **the grep I trusted was structurally incapable of finding
+this**, and I would not have looked without being pushed to check workers and CSS
+specifically. Deleting the duplicates was still right; the evidence I offered for
+it was one mechanism short.

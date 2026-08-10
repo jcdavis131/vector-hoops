@@ -1,6 +1,7 @@
 /**
  * Vector Hoops — MTNN Worker for 100M DAU
- * Offloads 12,966 × 48-d dot products off main thread.
+ * Offloads 12,966 × 64-d dot products off main thread.
+ * (Said 48-d until 2026-08-10; the shipped model is 64-d and always was here.)
  * Loads mtnn_embeddings.f32 once, handles topK queries via postMessage.
  */
 self._cache = null;
@@ -11,11 +12,28 @@ function loadF32(url) {
 
 async function ensure() {
   if (self._cache) return self._cache;
+  /* Absolute paths, because this is a worker. A relative URL inside a worker
+     resolves against the worker script's own URL, not the document's — so
+     'assets/mtnn_meta.json' from /assets/mtnn-worker.js asked for
+     /assets/assets/mtnn_meta.json. That path existed only because public/ had a
+     duplicated assets/assets/ tree, so this quietly read the duplicate for as
+     long as both were there. Deleting the duplicates turned a silent wrong path
+     into a 404, which is how it was finally noticed.
+
+     And the dimension is no longer guessed. It was 48 in two places while the
+     shipped model is 64-d, and dim is not a cosmetic number here: rows is
+     derived as E.length/dim, so a wrong dim misaligns every vector in the
+     matrix and returns confident nonsense rather than failing. If the metadata
+     cannot be read, that is worth an error. */
   const [metaJson, E] = await Promise.all([
-    fetch('assets/mtnn_meta.json?v=37335d35').then(r=>r.json()).catch(()=>({dim:48, rows:12966})),
-    loadF32('assets/mtnn_embeddings.f32')
+    fetch('/assets/mtnn_meta.json?v=37335d35').then(r=>{
+      if(!r.ok) throw new Error('mtnn_meta.json '+r.status);
+      return r.json();
+    }),
+    loadF32('/assets/mtnn_embeddings.f32')
   ]);
-  var dim = metaJson.dim || 48;
+  var dim = metaJson.dim;
+  if(!dim) throw new Error('mtnn_meta.json carries no dim; refusing to guess it');
   var rows = metaJson.rows || Math.floor(E.length/dim);
   self._cache = { dim: dim, rows: rows, E: E, meta: metaJson };
   return self._cache;
