@@ -92,6 +92,26 @@ Fixed with one semicolon in `9a0a4481`.
 of the string checks used on this branch would have caught it. That gate is now
 part of the routine: swept all 17 pages with inline script — **index.html was
 the only one**, and it now parses.
+
+## Gate — run this before believing any frontend claim
+
+```
+python scripts/check_frontend.py          # all six
+python scripts/check_frontend.py --only syntax,links
+```
+
+Six read-only checks, exit 1 on failure: inline scripts parse · every
+`getElementById`/`$()`/`querySelector` literal resolves · every static
+`src`/`href`/`fetch` path exists · no duplicate ids · no known-unsourced figure
+presented as fact · every internal `.html` link resolves.
+Baseline: 19 script blocks, 134 DOM lookups, 32 asset refs, 103 links, clean.
+
+It found four more `purity@10 0.7057` / `lift 6.32` on its first run that six
+grep passes had missed — including one drawn onto the share canvas with
+`ctx.fillText`, so it was **baked into the exported PNG**. Negative-tested in a
+scratch tree: all six fire on a deliberate fault.
+
+**Total instances of that pair across this branch: ten, in seven files.**
 ## Findings that are bugs, not features
 
 - **F1 — `model.html` draws a fake SHAP chart.** Its script is literally
