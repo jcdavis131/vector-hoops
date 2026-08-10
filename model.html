@@ -8,7 +8,9 @@
 <div class="sub" style="margin-top:8px"><b>How this is computed</b> — <span id="attrMethod"></span></div>
 <div class="sub" style="margin-top:6px;border-left:3px solid var(--orange);padding-left:8px"><b>Read zero carefully</b> — <span id="attrMasked"></span></div>
 <div class="mono" id="attrProv" style="margin-top:8px;opacity:.7;text-transform:none"></div></div><div><div class="mono">Model zoo 10 models 5-fold CV</div>
-<div class="sub" style="margin:6px 0;border-left:3px solid var(--orange);padding-left:8px"><b>Unsourced.</b> Unlike the attribution chart and the retrieval figures above, these numbers are typed into this page rather than read from a committed file. Treat them as a claim until a scoreboard backs them.</div><div style="margin-top:8px;font-family:var(--mono);font-size:11px;line-height:1.5"><div><b>DeepMLP</b> 4450.09 MAE 0.3973 R² BEST TABULAR</div><div>TrimmedMean 4501.15 Δ-51 </div><div>RandomForest 4522 • GradientBoost 4491 • Ridge 4550 • Lasso 4590 • Linear 4588</div><div>MTNN v3 0.6641 loss draft1315 R² 0.9367 wins 8.99 BEST LOSS</div><div>MTNN v4 MHA 0.6847 wins 8.9</div><div>EH 0.92 6.7</div><div>Δ OU r=0.741 market baseline • market truth • cap spike 2016 eff prior*1.10 • draft devalue late</div></div></div></div>
+<div class="sub" id="zooNote" style="margin:6px 0">Loading the measured zoo from <code>assets/front_office.json</code>…</div>
+<div id="zooTable" style="margin-top:8px"></div>
+<div class="sub" id="zooCaveat" style="margin-top:8px;border-left:3px solid var(--orange);padding-left:8px"></div></div></div>
 <div class="card"><div class="mono">Construct validity • threat mitigation</div><div class="sub">Define construct plain-English → operationalize → convergent/discriminant + predictive → document threats. No vanity metric. Operation = MTNN vector → 2d projection distance • op = cosine twin • threat = map distortion → logged LOD 1814 vs 12,966 drift • trade timing → historical 30 season snapshots.</div></div>
 <style>
 .attr-row{display:grid;grid-template-columns:132px 1fr 54px;gap:8px;align-items:center;padding:3px 0;font-family:var(--mono);font-size:11px}
@@ -19,6 +21,12 @@
 .attr-val{text-align:right;font-variant-numeric:tabular-nums}
 .attr-fam{font-weight:400;color:var(--muted);text-transform:none}
 .tbtn{cursor:pointer}
+#zooTable table{border-collapse:collapse;width:100%;font-family:var(--mono);font-size:11px}
+#zooTable th,#zooTable td{border:1px solid var(--hair);padding:3px 6px;text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+#zooTable th:first-child,#zooTable td:first-child{text-align:left;white-space:normal}
+#zooTable th{background:#f4f3ee}
+#zooTable tr.best td{background:#fff8dc;font-weight:800}
+#zooTable .proj{color:var(--orange);font-weight:900}
 .tbtn[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
 @media(prefers-reduced-motion:reduce){.attr-fill{transition:none}}
 </style>
@@ -92,6 +100,49 @@
     // no fabricated fallback: if the real numbers will not load, say so
     elBars.innerHTML='<div class="sub">Attributions could not be loaded ('+e.message+'). '+
       'No placeholder is shown here on purpose — the numbers on this page are either the model’s or absent.</div>';
+  });
+
+  /* Model zoo. These figures were hardcoded in the markup and I labelled them
+     "Unsourced" — that was wrong, and this corrects it. Every one of them is in
+     assets/front_office.json under model_eval.model_zoo, with 5-fold metrics,
+     seeds and architectures. Reading them beats retyping them, and it surfaces
+     the caveat the file carries and the markup did not: the best model's
+     numbers are PROJECTED from a prior version, not retrained. */
+  var zt=document.getElementById('zooTable'), zn=document.getElementById('zooNote'), zc=document.getElementById('zooCaveat');
+  fetch('assets/front_office.json',{cache:'force-cache'}).then(function(r){
+    if(!r.ok) throw new Error('HTTP '+r.status);
+    return r.json();
+  }).then(function(j){
+    var zoo=(j.model_eval||{}).model_zoo;
+    if(!zoo) throw new Error('model_eval.model_zoo missing');
+    var rows=Object.keys(zoo).map(function(k){
+      var m=zoo[k];
+      return {name:k, mae:m.avg_mae, rmse:m.avg_rmse, r2:m.avg_r2,
+              best:!!(m.is_best||m.best_flag),
+              proj:/projected/i.test(String(m.fold_note||'')+String(m.notes||'')),
+              folds:(m.fold_metrics||[]).length, arch:m.arch||m.method||''};
+    }).filter(function(r){ return typeof r.mae==='number'; })
+      .sort(function(a,b){ return a.mae-b.mae; });
+    var nProj=rows.filter(function(r){return r.proj;}).length;
+    zn.innerHTML='Read from <code>assets/front_office.json</code> → <code>model_eval.model_zoo</code>: '+
+      rows.length+' models, 5-fold CV, lower MAE is better. Predicting draft-pick surplus, '+
+      'not player similarity — a different job from the retrieval score above.';
+    zt.innerHTML='<table><thead><tr><th>Model</th><th>MAE</th><th>RMSE</th><th>R²</th><th>Folds</th></tr></thead><tbody>'+
+      rows.map(function(r){
+        return '<tr'+(r.best?' class="best"':'')+'><td title="'+String(r.arch).replace(/"/g,'&quot;')+'">'+
+          r.name.replace(/_/g,' ')+(r.best?' ★':'')+(r.proj?' <span class="proj" title="projected, not retrained">▲</span>':'')+
+          '</td><td>'+(Math.round(r.mae*100)/100).toFixed(2)+'</td><td>'+
+          (r.rmse==null?'—':(Math.round(r.rmse*100)/100).toFixed(2))+'</td><td>'+
+          (r.r2==null?'—':(Math.round(r.r2*100)/100).toFixed(2))+'</td><td>'+r.folds+'</td></tr>';
+      }).join('')+'</tbody></table>';
+    zc.innerHTML='<b>▲ '+nProj+' of these '+rows.length+' are projected, not retrained.</b> '+
+      'The file says so itself for the top row: <i>“'+
+      String(((zoo.DeepMLP_era14_256_128_64_32||{}).notes)||'projected from v5.3 measured').replace(/</g,'&lt;')+
+      '”</i> — so the winning margin is a carried-forward estimate, not a fresh measurement. '+
+      'Shown rather than buried, because a leaderboard whose leader was not re-run is a claim about the past.';
+  }).catch(function(e){
+    zn.textContent='The model zoo could not be loaded ('+e.message+'). No numbers are shown in its place.';
+    zt.innerHTML=''; zc.textContent='';
   });
 })();
 </script>
