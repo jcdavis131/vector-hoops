@@ -112,6 +112,17 @@ grep passes had missed — including one drawn onto the share canvas with
 scratch tree: all six fire on a deliberate fault.
 
 **Total instances of that pair across this branch: ten, in seven files.**
+
+## Tried and not shipped — an undefined-call check
+
+Wrote a static analysis to find functions called but never defined on a page,
+hoping to catch runtime errors the way `node --check` catches parse errors. It
+reported 11 pages and **every hit was noise**: `var(5)` is CSS `var(--x)` inside
+a style string, `bezier` is `cubic-bezier`, `CORRECTION` is one of my own
+comments, `loaded`/`drift`/`seasons` are prose. Zero real findings.
+
+Not added to the gate. A check that cries wolf gets ignored, which is worse
+than not having it. Catching runtime errors here needs a real DOM, not a regex.
 ## Findings that are bugs, not features
 
 - **F1 — `model.html` draws a fake SHAP chart.** Its script is literally
@@ -320,7 +331,7 @@ a dark canvas, the other a light one.)
       Gate: all 30 teams resolve every rendered column, `for_rank` is exactly
       1–30 with no duplicates, `is_champion` agrees with `champion_map`, every
       sortable numeric finite.
-- [ ] P5.2 `teams.html` still has `aria-live` only in my appended block, and
+- [x] P5.2a `teams.html` a11y — **`bf3a3bfb`**. The page's own table (11 sortable `<th data-k>`, `cursor:pointer`, no `tabindex`, no `aria-sort`) could not be sorted from a keyboard and never announced a sort. Now focusable `columnheader`s with Enter/Space; the `aria-sort` mirror updates on every click, pointer or key, so it cannot drift from the closure's real state. `#mapCv` runs a genuine animation (`t+=.016` driving sin/cos on three rings) with no stop — it is a closed IIFE, so a one-condition `if(!window.__vhReduceMotion)` went inside it and the flag is set at the top of `<body>`; **ordering asserted, char 6088 before 15966**. Canvas is decorative → `aria-hidden`. Skip link added. Original note: `teams.html` still has `aria-live` only in my appended block, and
       its hero/formula cards remain hardcoded. `playoff_paths.json` (9.0 MB),
       `projections.json`, `chemistry.json`, `roles.json`, `honors.json`,
       `pedigree.json`, `deadline.json` are all still unread by any page.
