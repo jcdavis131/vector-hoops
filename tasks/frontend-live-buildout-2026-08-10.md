@@ -309,6 +309,8 @@ Nothing on the site fetches them. The largest:
 | file | size |
 |---|---|
 | `matchup_players.json` | 10.0 MB |
+| ~~`deadline.json`~~ | shipped — top/bottom 10 in-season moves |
+| ~~`chemistry.json`~~ | shipped — top 12 complementary pairs |
 | `playoff_paths.json` | 9.0 MB |
 | `archetype_assignments.json` | 3.3 MB |
 | `next_profile_eval.json` | 2.9 MB |
