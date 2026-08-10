@@ -331,7 +331,35 @@ def main() -> int:
                 f"did not advance the pack within 12s — either the Go button is unwired or "
                 f"the trajectory animation never resolves")
 
-        # 5. the numbers a player is shown
+        # 5. what the win actually drew. Advancing the pack is not the same as
+        #    telling the truth: the trajectory cache is keyed by NBA player_id,
+        #    and a pool row carrying the wrong id misses it and falls through to
+        #    synthTraj, which invents seasons from 1996-97 and teams 'SA0'..'SA6'.
+        #    Printed beside a 2024-25 player those chips assert a career that did
+        #    not happen, so either they match the guess's era or they say plainly
+        #    that the path is illustrative.
+        chips = str(ev(ws, "document.getElementById('trajChips').textContent") or "")
+        import re as _re
+        # chips render with no separator between them, so the text arrives as
+        # "2008-092009-102010-11..." and a \b-anchored year pattern only ever
+        # matches the first one. Match the season shape instead.
+        years = [int(y) for y in _re.findall(r"(\d{4})-\d{2}", chips)]
+        print(f"  chips    {len(years)} seasons"
+              + (f", {min(years)}-{max(years)}" if years else f" {chips[:60]!r}"))
+        guess_year = next((int(y) for y in _re.findall(r"(\d{4})-\d{2}", p["best"]["n"])), None)
+        if not chips.strip():
+            failures.append("the win drew no season chips at all")
+        elif "illustrative" not in chips.lower():
+            if not years:
+                failures.append(f"season chips carry no seasons and are not labelled "
+                                f"illustrative: {chips[:80]!r}")
+            elif guess_year and max(years) < guess_year - 6:
+                failures.append(
+                    f"the win on {p['best']['n']!r} drew season chips ending in {max(years)} "
+                    f"— a fabricated career printed as a real one. Either resolve the real "
+                    f"trajectory or label the path illustrative")
+
+        # 6. the numbers a player is shown
         for label, s in (("miss", str(dist_miss or "")), ("hit", str(dist_hit or ""))):
             if "NaN" in s:
                 failures.append(f"the {label} readout shows NaN: {s[:90]!r}")
@@ -345,7 +373,7 @@ def main() -> int:
                     failures.append(f"{label}: {m.group(1)} {m.group(2)} shows {decimals} "
                                     f"decimals — a player is never shown more than two")
 
-        # 6. the whole session
+        # 7. the whole session
         errs = errs_of(ws)
         if errs:
             failures.append(f"page errors during play: {'; '.join(errs)[:200]}")

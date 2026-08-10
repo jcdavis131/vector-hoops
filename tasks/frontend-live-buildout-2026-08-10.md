@@ -1897,3 +1897,64 @@ keys whose value is `undefined`, so the missing coordinate vanished into a
 `KeyError` instead of arriving as the finding it was — the probe now emits
 explicit nulls. And a Windows console is cp1252, so the test died encoding the
 `◐` in the very readout it was checking.
+
+
+## Fixing the crash uncovered what the crash had been hiding (2026-08-10)
+
+The commit above stopped `synthTraj` throwing. That was right, and it immediately
+made a worse problem visible: with the throw gone, **the synthesised trajectory
+actually rendered**. It invents its seasons — `1996-97` through `2002-03` — and
+its teams, `SA0` to `SA6`. Win on Ja Morant 2024-25 and the game drew you a
+career starting in 1996.
+
+That is the same class as the `Math.random()` columns on /owner and the `EH 0.92`
+row on the model page, both removed earlier this session: a number with no source
+presented as if it had one. The crash had been hiding it.
+
+### Why it was the default, not the edge case
+
+    trajectory cache keys:  2544, 101108, 201143, 200768, ...   NBA player_ids
+    what the loader wrote:  pid: String(p.i)                    vectors.json row index
+
+`animateCareer` resolves `gPid = guessObj.pid || findPid(guessObj.n) || ''`.
+`findPid` exists for exactly this join — it normalises a name and looks it up in
+the 1,814-player manifest. But `pid` was always truthy, so the `||` never fell
+through and **findPid was dead code on the real pool**. Row indices were then
+looked up against player_id keys.
+
+**52 of 2,149 ids collide by coincidence.** Everything else missed the cache. So
+close to 98% of wins drew an invented career, and the four seasons of it that
+were real were an accident.
+
+The loader simply does not write `pid` now. The row index is already in `i`,
+where it belongs, and leaving `pid` off is what lets the manifest join run. The
+target used `targetObj.i` as its second lookup, the same row-index-against-
+player_id mistake, and now uses `findPid` too.
+
+**Measured across the whole pool, replicating findPid offline:**
+
+    past      968 rows | findPid resolves 968 (100.0%) | in cache 968 (100.0%)
+    modern  1,305 rows | findPid resolves 1,301 (99.7%) | in cache 1,301 (99.7%)
+
+2,269 of 2,273 rows now animate a real season-by-season path. The four that do
+not are labelled rather than fabricated: where either side falls back to
+`synthTraj`, the season chips are replaced by one that says *illustrative path —
+no season-by-season track for <player>*. Invented seasons never print as real
+ones again.
+
+### The test now checks what the animation drew
+
+`smoke_play.py` verified the pack advanced. It never looked at what appeared
+while it advanced, which is exactly how this got through the commit before it. It
+now reads `#trajChips` and requires either seasons in the guessed player's era or
+an explicit illustrative label. On the current seed: **18 seasons, 2008-2025**,
+for a Westbrook 2010-11 question answered with Ja Morant 2024-25.
+
+Two of my own mistakes on the way, both caught by the test rather than by
+reading: I scoped `allSeasons` inside the new else-branch while the animation
+frame still uses it to highlight the current season, which threw a
+`ReferenceError` — and then the assertion itself was wrong, because season chips
+render with no separator, so the text arrives as `2008-092009-102010-11...` and a
+word-boundary year pattern only ever matches the first one. That is the seventh
+check this session whose first run was a false alarm, and the second time in two
+commits that the fix and the check needed fixing together.
