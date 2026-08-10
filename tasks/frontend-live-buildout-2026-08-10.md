@@ -1397,3 +1397,59 @@ the one that matters reads *"the SyntaxError is there with its line"*.
   zero-deps doctrine, it is a third party that can see every visitor to that page,
   and it cannot work offline. Self-host, drop the feature, or accept it knowingly
   — all three are decisions rather than fixes, so it is recorded, not changed.
+
+
+## What each page downloads before it works (2026-08-10)
+
+"World class SOTA UX" has one measurement that needs no taste: bytes on the wire
+before a page is usable. I had never measured it, having lazy-loaded 1.4 MB on
+model.html for exactly that reason and then not checked anything else.
+
+### The analyzer was wrong twice, and reading the code settled it
+
+First pass called index.html a **5.2 MB landing page**. It is not. Its 3.8 MB
+`vectors.json` sits inside `loadFull()`, which runs only on `?full=1`, and its
+1.1 MB trajectory file sits in a lazy cache called on interaction. The landing
+page is about **312 KB** and already does limited-first with opt-in detail —
+better than what I was about to "fix".
+
+Second pass, taught to resolve call sites, then misread model.html's
+IntersectionObserver-deferred 1.4 MB as eager, because it models named functions
+and not anonymous IIFE bodies. Two wrong answers in a row is the signal to stop
+refining a general analyzer and read the four pages that mattered.
+
+### The real finding, and it was mine
+
+    /owner   1,155,807 b on load   front_office.json, no gate
+    /teams   1,272,076 b on load   front_office.json + chemistry + deadline, no gate
+    /trends    189,455 b on load   the archetype map cloud, on a page already deferring
+
+All three are mine. I rebuilt the owner table to read real data instead of
+`Math.random()` and pointed it at the full file without looking at the cost;
+model.html got an observer for the same problem and these did not.
+
+### assets/front_office_lite.json
+
+`front_office.json` is 1,127,784 bytes and carries draft pick histories, cap
+rules, per-season valuations and the model zoo — all read by *other* pages. The
+owner table reads fourteen fields per team; teams.html adds two more and three
+nested `.score` blocks, plus six top-level keys including the method text it
+prints verbatim. Checked against both pages rather than guessed.
+
+`scripts/build_front_office_lite.py` emits exactly that union: **17,461 bytes,
+98.5% smaller, zero value mismatches** against the full file, with `--check` and a
+refusal to write a table with holes.
+
+    /owner   1,155,807 -> 45,490    -96%
+    /teams   1,272,076 -> 161,759   -87%
+    /trends  archetype cloud now behind the same observer era twins already used
+
+`smoke_owner_table.mjs` now resolves the file **from the page's own fetch call**
+rather than a path written in the test. A hardcoded path would have gone on
+validating `front_office.json` after the page stopped opening it — passing while
+proving nothing. It reads the lite file now and prints identical rows.
+
+- [ ] **P9.5 `chemistry.json` is 105,336 b eager on /teams.** The section that
+  uses it sits well below the fold, so it is a candidate for the same observer,
+  but the page now loads 161,759 b total and this is the last two-thirds of it.
+  Small enough that it is a judgement call rather than a defect.

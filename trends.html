@@ -710,6 +710,14 @@ $('twinInput').addEventListener('change',lookup);
   });
   window.addEventListener('resize',function(){ if(PTS) draw(); });
 
+  /* Deferred the way the era-twins section two blocks up already is. This page
+     loads drift, archetype prevalence and the career taxonomy on paint, and the
+     map cloud is another 189,455 bytes. Loading it when the section comes within
+     320px keeps it off the critical path with no wait a reader would notice. I
+     shipped it eagerly first, on a page already doing this correctly. */
+  var mapBooted=false;
+  function bootMap(){
+  if(mapBooted) return; mapBooted=true;
   Promise.all([
     fetch('assets/vectors_map_lite.json?v=ad8fed2b',{cache:'force-cache'})
       .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); }),
@@ -734,6 +742,14 @@ $('twinInput').addEventListener('change',lookup);
     $('archMapMethod').textContent='The archetype map could not be loaded ('+e.message+'). '+
       'No cloud is drawn rather than a made-up one.';
   });
+  }
+  var mapSec=$('mapSection');
+  if(mapSec && window.IntersectionObserver){
+    var mio=new IntersectionObserver(function(en){
+      if(en.some(function(x){return x.isIntersecting;})){ mio.disconnect(); bootMap(); }
+    },{rootMargin:'320px'});
+    mio.observe(mapSec);
+  } else { bootMap(); }
 })();
 </script>
 <script src="assets/error-boundary.js?v=daeb2be4"></script>

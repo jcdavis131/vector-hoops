@@ -11,7 +11,7 @@
    page load and reshuffled on reload, underneath copy that documents the real
    method in detail — "FOR = min(99, base + champ_bonus + valuation_alpha)".
 
-   assets/front_office.json has carried all nine for all 30 teams the whole time.
+   assets/front_office_lite.json carries all nine for all 30 teams. It is thirteen fields per team, derived by scripts/build_front_office_lite.py from assets/front_office.json - 8,121 bytes against 1,127,784, because this table reads thirteen fields and that file also holds draft histories, cap rules and the model zoo for other pages.
    The copy above is even quoting it: "Weighted W* 94.8/85.8" is SAS at 94.8 and
    OKC at 85.8, straight out of the file. Checked before trusting it — the wins
    column sums to 1230.0 across 30 teams, which is a real NBA season, for_rank is
@@ -85,18 +85,18 @@ Array.prototype.forEach.call(ths,function(th,i){
 });
 
 tb.innerHTML='<tr><td colspan="9">Loading 30 teams…</td></tr>';
-fetch('/assets/front_office.json?v=fb95747f').then(function(r){
+fetch('/assets/front_office_lite.json?v=c9496248').then(function(r){
   if(!r.ok) throw new Error('HTTP '+r.status);
   return r.json();
 }).then(function(d){
   ROWS=(d&&d.teams)||[];
-  if(!ROWS.length) throw new Error('no teams in front_office.json');
+  if(!ROWS.length) throw new Error('no teams in front_office_lite.json');
   draw();
   live.textContent=ROWS.length+' teams loaded, sorted by FOR, descending.';
 }).catch(function(e){
   // Say what failed. The previous version could not fail, because it invented
   // its own numbers — which is exactly the problem.
-  tb.innerHTML='<tr><td colspan="9">Could not load assets/front_office.json ('+esc(e&&e.message)+'). No numbers are shown rather than made-up ones.</td></tr>';
+  tb.innerHTML='<tr><td colspan="9">Could not load assets/front_office_lite.json ('+esc(e&&e.message)+'). No numbers are shown rather than made-up ones.</td></tr>';
 });
 })();
 </script>

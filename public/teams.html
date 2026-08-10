@@ -136,7 +136,7 @@ function ren(a){let tb=document.querySelector('#tbl tbody');tb.innerHTML='';for(
 <section id="foSec" aria-labelledby="foH">
   <div class="card">
     <h2 class="hd" id="foH" style="font-size:18px;margin:0 0 4px">All 30 teams</h2>
-    <p class="mono" style="color:#57534E;font-size:11.6px;line-height:1.5;margin:0" id="foSub">Loading <code>assets/front_office.json</code>…</p>
+    <p class="mono" style="color:#57534E;font-size:11.6px;line-height:1.5;margin:0" id="foSub">Loading <code>assets/front_office_lite.json</code>…</p>
     <div id="foWrap"><table id="foTable"><caption class="fo-sr">Front-office rating for all 30 teams. Column headers sort; press Enter on a header to re-sort.</caption></table></div>
     <p class="mono" style="font-size:10.5px;color:#878580;margin:8px 0 0" id="foProv"></p>
     <p class="fo-method" style="margin-top:10px" id="foCaveat"></p>
@@ -313,12 +313,12 @@ fetch('assets/chemistry.json?v=37040785',{cache:'force-cache'})
   })
   .catch(function(e){ document.getElementById('chSub').textContent='Chemistry pairs could not be loaded ('+e.message+'). Nothing is shown in their place.'; });
 
-fetch('assets/front_office.json?v=fb95747f',{cache:'force-cache'})
+fetch('assets/front_office_lite.json?v=c9496248',{cache:'force-cache'})
   .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
   .then(function(j){
     if(!j.teams||!j.teams.length) throw new Error('no teams in file');
     DATA=j;
-    $('foSub').innerHTML='Every figure below is read from <code>assets/front_office.json</code> at load. '+
+    $('foSub').innerHTML='Every figure below is read from <code>assets/front_office_lite.json</code> at load - the fields these tables use, derived from <code>assets/front_office.json</code> by <code>scripts/build_front_office_lite.py</code>, 17,461 bytes rather than 1,127,784. '+
       esc(j.season_focus||'')+' · weighted wins W* = W + '+n2(j.playoff_win_weight)+
       '×playoff wins, so a postseason run counts for more than a regular-season one.';
     $('foProv').textContent='Built '+(j.built||'?').slice(0,10)+' · '+j.teams.length+
@@ -360,7 +360,7 @@ fetch('assets/front_office.json?v=fb95747f',{cache:'force-cache'})
   })
   .catch(function(e){
     // the placeholder above is already labelled a placeholder; do not add a fake table
-    $('foSub').textContent='assets/front_office.json could not be loaded ('+e.message+'). '+
+    $('foSub').textContent='assets/front_office_lite.json could not be loaded ('+e.message+'). '+
       'No table is shown rather than an invented one.';
   });
 })();

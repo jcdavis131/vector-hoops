@@ -17,7 +17,14 @@ import { readFileSync } from 'node:fs';
 
 const ROOT = new URL('..', import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1');
 const page = readFileSync(ROOT + '/owner/index.html', 'utf8');
-const d = JSON.parse(readFileSync(ROOT + '/assets/front_office.json', 'utf8'));
+// Read whichever file the page actually fetches, not a path written here. The
+// page moved from front_office.json (1,127,784 b) to front_office_lite.json
+// (8,121 b) and a hardcoded path would have gone on validating a file the page
+// no longer opens — passing while proving nothing.
+const fetched = page.match(/fetch\('\/?(assets\/[\w.-]+\.json)/);
+if (!fetched) { console.log('FAIL owner/index.html fetches no json'); process.exit(1); }
+console.log(`page fetches ${fetched[1]}\n`);
+const d = JSON.parse(readFileSync(ROOT + '/' + fetched[1], 'utf8'));
 
 const grab = (re, what) => {
   const m = page.match(re);

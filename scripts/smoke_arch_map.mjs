@@ -71,6 +71,10 @@ const method = els.archMapMethod.textContent;
 const truth = JSON.parse(readFileSync(files['assets/vectors_map_lite.json'], 'utf8')).players;
 const names = JSON.parse(readFileSync(files['assets/mtnn_arch.json'], 'utf8')).gameArchetypes;
 
+// the cloud is 189,455 bytes and must not sit on the critical path
+check('the loader is gated behind an IntersectionObserver', /IntersectionObserver/.test(src) && /bootMap\(\)/.test(src));
+check('there is a no-observer fallback', /else\s*\{\s*bootMap\(\);\s*\}/.test(src));
+
 check('canvas got role=img', els.archMap.attrs.role === 'img');
 check('canvas got a descriptive aria-label', (els.archMap.attrs['aria-label'] || '').length > 80);
 check('legend names all 8 archetypes', names.every((n) => key.includes(n)), `${names.length} names`);
