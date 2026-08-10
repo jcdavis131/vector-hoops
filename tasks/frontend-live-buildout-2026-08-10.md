@@ -127,9 +127,23 @@ Still unsourced and now labelled as such: the `model.html` model-zoo table.
       multiples on one shared y-scale rather than a stacked area; diverging
       blue/orange validated at ΔE 24.7 protan / 33.6 normal on `#fafaf8`.
       Table view, arrow-key stepping, live region, skip link, reduced-motion.
-- [ ] P2.2 `trajectories.json` (90,730 b) and `eratwins.json` (632,875 b) are
-      still unread by any page. Era-twin pairs are the most quotable thing in
-      the repo and appear nowhere.
+- [x] P2.2a Era twins shipped — **`0f834911`**. `eratwins.json` (618 KB,
+      1,308 careers) had never been fetched by any page. Now a section on
+      `/trends`, deferred behind an `IntersectionObserver` so initial page
+      weight is unchanged. Measured: median similarity **0.70**, best 0.91,
+      worst 0.49. Strongest/weakest lists are the ends of a client-side sort,
+      not a curated pick — said so on the page.
+      **The file's own method says 48-d**; `eval_scoreboard.json` says the
+      shipped model is 64-d. The page states that rather than quietly reusing
+      an older space's output.
+      Invariants asserted in the smoke test: 0 same-decade twins, 0 duplicate
+      names (the lookup keys on name), 0 missing `top5`/`archetype`.
+- [ ] P2.2b `trajectories.json` (90,730 b) is still unread by any page.
+      `play.html` uses `embedding_map_trajectories.json` instead; check whether
+      the smaller file is redundant or carries something the big one lacks.
+- [ ] P2.4 Data-quality nit for the pipeline lane: `eratwins.json` contains
+      `"Nigel HayesDavis"` — a dropped hyphen from name normalization. Cosmetic
+      but user-visible now that the file is rendered.
 - [ ] P2.3 `season_norms.json` documents `notInvertible` features
       (`FG3_PCT` and two others: empirical-Bayes shrunk before z-scoring, so
       the raw rate is not what was normalized — it says to show a percentile
