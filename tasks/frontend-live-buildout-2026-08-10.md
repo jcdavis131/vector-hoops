@@ -170,8 +170,28 @@ Still unsourced and now labelled as such: the `model.html` model-zoo table.
       and F1 proves this page has shipped invented numbers before.
 
 ### Phase 4 — player cards + dictionary
-- [ ] P4.1 Audit `players.html` (14,723 b) against `knowledge/` wiki + `skills.json`.
-- [ ] P4.2 Dictionary of every term the site uses.
+- [x] P4.2 **Dictionary shipped — `01d81134`.** `/dictionary.html`, 19 entries:
+      plain meaning, exact definition, then the committed file each comes from.
+      Archetype names and every accuracy figure are fetched, never typed; on
+      fetch failure the page says so instead of showing a number.
+      Its last section — **"Terms this site uses that have no file behind
+      them"** — names `purity@10 0.7057` and `lift 6.32` as claims with no
+      committed source. That closes the loop on the defect class above: the
+      site now documents its own unsourced numbers instead of repeating them.
+      Caveats promoted to entries rather than footnotes: zero attribution means
+      NEVER MEASURED; era twins are 48-d; three era-z features are not
+      invertible to a raw rate; train-split retrieval is inflated by
+      construction; attribution is not SHAP. Linked from trends + model navs.
+- [x] P4.1a `players.html` was the **third** file carrying `purity@10 0.7057`
+      as a visible pill — replaced with the sourced `held-out top-5 0.76`,
+      linked to its dictionary entry. Its one `toFixed(3)` is a canvas rgba
+      alpha, which `docs/HANDOFF.md` explicitly exempts as internal; left alone.
+- [ ] P4.1b `players.html` still scans `aria-live` ×0, `tabindex` ×0, `role=`
+      ×0, `prefers-reduced-motion` ×0. Needs the same appended a11y layer
+      `play.html` got in `f520c19e`.
+- [ ] P4.3 Player cards proper. `players.html` renders a canvas explorer, not a
+      card. `knowledge/` holds a generated wiki page per charted player and
+      **no page links it**.
 
 ### Phase 5 — team / front office
 - [ ] P5.1 `teams.html` already exists at 15,182 b — **audit before building**.
