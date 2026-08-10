@@ -206,6 +206,25 @@ Found by testing the real-vector wiring, not by looking for it.
 **Noted, not fixed:** `LCG(s)=(A*s+C)%M` overflows `Number.MAX_SAFE_INTEGER`
 for `s` near 2³¹, so it is not a true LCG — only **120 distinct puzzles across
 two years**. Correcting it changes every puzzle, so it is a product call.
+
+## The game is now actually centred on the embedding map
+
+The operator ask led with this and it took until here to deliver, because the
+page had neither half of it:
+
+| | before | now |
+|---|---|---|
+| scoring | 3 hand-written numbers, 18 players | 14-d contract, **968 past × 1,305 modern** (`870119be`) |
+| canvas | 140 dots at `Math.random()` alpha | **4,322 seasons** at real projection coords, archetype-coloured, target crosshaired (`6fc85c9d`) |
+
+Both degrade safely: a failed fetch leaves the demo pool and the starfield, and
+the page says so.
+
+**Deliberate palette inconsistency, recorded so it is not read as a bug:**
+index 7 is `#FFFEF7` on `play.html`, not the `#000000` `index.html` and
+`players.html` use — that canvas is `#0A0C10` and black on near-black is
+invisible. 0–6 match, so the maps agree with each other. The underlying
+two-camp order split is still open above.
 ## Findings that are bugs, not features
 
 - **F1 — `model.html` draws a fake SHAP chart.** Its script is literally
