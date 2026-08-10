@@ -3144,3 +3144,45 @@ half-changed.
 - [ ] **P9.8 The results list is buttons inside options.** `aria-selected` cannot
   do its job while focus lives on a child of the option. Worth doing as a
   deliberate widget pass, along with the same question on play.html's datalist.
+
+
+## The dictionary had already found the fifth one (2026-08-10)
+
+Auditing `dictionary.html` against the committed data, which is the last page
+never checked that way. It does not need auditing — **it is doing the audit.**
+The last section is titled *"Terms this site uses that have no file behind
+them"*, and it names two values as claims rather than measurements:
+
+    Purity@k — A specific value, purity@10 0.7057, has appeared in site copy.
+               It is not in assets/eval_scoreboard.json … It may come from an
+               older 48-d evaluation. Until a scoreboard ships it, it is a claim.
+
+    Lift     — A specific value, lift 6.32, has appeared in site copy with no
+               stated denominator … does not come to 6.32.
+
+So the question became: **are those two still on display?**
+
+`6.32` is gone site-wide already. `0.7057` was not. It sat on the pill over the
+game map, on the page the brief puts first:
+
+    <span class=chrome-caviar>Past ★ Modern ○</span> • pulp 0.7057
+
+Checked before removing, rather than taking the dictionary's word for it:
+`0.7057` does not appear anywhere in `assets/eval_scoreboard.json`, there is no
+purity key in it at all, and the nearest values it holds are 0.757 and 0.7676 —
+different numbers.
+
+The pill now reads `Past ★ Modern ○`, which is the legend it exists to give. And
+the dictionary entry moved to the past tense — it said the value *"has appeared
+in site copy"*, which stops being true the moment the value comes off, so it now
+says where it was and that it is gone.
+
+**Fifth unsourced value removed**, after `/owner`'s `Math.random()` columns,
+model.html's `EH 0.92`, teams.html's ten hardcoded rows, and the share card's
+demo pack code. This one is different from the other four: nobody had to find it.
+The site had already written down that it could not be substantiated, and left it
+on screen anyway. The gap was between knowing and acting, which is the cheapest
+kind of gap to close and the easiest to walk past.
+
+`lift 6.32` needs no action — already absent. Recorded so the next pass does not
+re-investigate it.
