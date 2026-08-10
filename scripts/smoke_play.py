@@ -305,6 +305,40 @@ def main() -> int:
                     f"{ink['w']}x{ink['h']} canvas. A cloud of a few thousand points cannot "
                     f"be that faint, so either the fetch failed or the draw was skipped")
 
+        # 1b. is anything painted ON TOP of the map?
+        #     The ink count above reads the backing store, and a canvas can be
+        #     fully painted and still invisible. play.html had a bare `canvas{}`
+        #     rule giving every canvas an opaque background, and #trajOver is
+        #     position:absolute;inset:0 over #c — so the overlay covered the map
+        #     completely. The cloud, the pool layer, the crosshair, the guess ring
+        #     and the line to the target were all drawn where nobody could see
+        #     them, and getImageData reported every one of them as present.
+        covers = ev(ws, """(() => {
+          const base = document.getElementById('c');
+          if (!base) return JSON.stringify({err: 'no #c'});
+          const bad = [];
+          for (const o of document.querySelectorAll('canvas, div, section')) {
+            if (o === base || o.contains(base)) continue;
+            const cs = getComputedStyle(o);
+            if (cs.position !== 'absolute' && cs.position !== 'fixed') continue;
+            const a = base.getBoundingClientRect(), b = o.getBoundingClientRect();
+            const overlap = Math.max(0, Math.min(a.right, b.right) - Math.max(a.left, b.left)) *
+                            Math.max(0, Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top));
+            if (overlap < a.width * a.height * 0.5) continue;
+            const opaqueColour = cs.backgroundColor &&
+              !/rgba\\(\\s*0\\s*,\\s*0\\s*,\\s*0\\s*,\\s*0\\s*\\)|transparent/.test(cs.backgroundColor);
+            const hasImage = cs.backgroundImage && cs.backgroundImage !== 'none';
+            if (opaqueColour || hasImage)
+              bad.push((o.id ? '#' + o.id : o.tagName.toLowerCase()) + ' bg=' +
+                       cs.backgroundColor + (hasImage ? ' +image' : ''));
+          }
+          return JSON.stringify({bad: bad});
+        })()""")
+        if isinstance(covers, dict) and covers.get("bad"):
+            failures.append(
+                f"something opaque is layered over the map, so whatever is painted on "
+                f"#c cannot be seen: {'; '.join(covers['bad'])[:160]}")
+
         # 2. the question, and whether it can be placed on the map at all
         p = ev(ws, PICK)
         if not isinstance(p, dict) or "err" in p:
@@ -343,6 +377,34 @@ def main() -> int:
                 f"the guess box advertises a datalist but only {opts} of {p['pool']} "
                 f"modern names are in it — every name the game will accept has to be "
                 f"suggestable, or a player is typing blind")
+
+        # 3b. picking a guess off the map. The pool is drawn as its own layer so
+        #     that every hoverable mark is a season you can actually guess; this
+        #     clicks one at its computed screen position and requires the guess
+        #     box to end up holding that exact name.
+        spot = ev(ws, """(() => {
+          const m = vhMapXY(), r = c.getBoundingClientRect();
+          const p = MODERN.find(q => typeof q.x === 'number');
+          if (!p) return JSON.stringify({err: 'no modern row has coordinates'});
+          return JSON.stringify({n: p.n, x: r.left + m.sx(p.x), y: r.top + m.sy(p.y)});
+        })()""")
+        if not isinstance(spot, dict) or "err" in spot:
+            failures.append(f"map picker: {spot.get('err') if isinstance(spot, dict) else spot}")
+        else:
+            ws.call("Input.dispatchMouseEvent", {"type": "mouseMoved", "x": spot["x"], "y": spot["y"]})
+            for t in ("mousePressed", "mouseReleased"):
+                ws.call("Input.dispatchMouseEvent", {"type": t, "x": spot["x"], "y": spot["y"],
+                                                     "button": "left", "clickCount": 1})
+            time.sleep(0.3)
+            picked = ev(ws, "document.getElementById('guess').value")
+            print(f"  pick     clicked {spot['n']!r} -> box holds {str(picked)!r}")
+            if picked != spot["n"]:
+                failures.append(
+                    f"clicking {spot['n']!r} on the map left the guess box holding "
+                    f"{str(picked)!r} — the hit-test and the draw disagree about where "
+                    f"that player is, or the click is not wired")
+            ws.call("Runtime.evaluate", {"expression":
+                "(() => { const g = document.getElementById('guess'); g.value=''; return true })()"})
 
         # 4. the miss path, which nothing has ever run
         ws.call("Runtime.evaluate", {"expression": "window.__vhErr = []"})

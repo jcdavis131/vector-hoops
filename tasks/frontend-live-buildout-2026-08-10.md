@@ -2042,3 +2042,78 @@ answer I wanted and not one I could have assumed.
   commit, and value-versus-keydown ordering is the kind of thing that differs by
   browser. `smoke_play.py` types the full exact name, so that path is genuinely
   unexercised.
+
+
+## The map was never visible (2026-08-10)
+
+Built the thing the brief has been asking for since the first line — pick your
+guess off the embedding map — and took a screenshot before believing it worked.
+The canvas was **black**. Not sparse, not faint: a gradient haze with my new
+hover ring floating on it and nothing else.
+
+`smoke_play.py` had just reported **19,371 non-background pixels** on that canvas.
+Both were true.
+
+    canvas{...;background:radial-gradient(...),radial-gradient(...),var(--void)}
+
+A **bare** `canvas{}` rule, and `#trajOver` is `position:absolute;inset:0`
+directly over `#c`. The overlay was handed an opaque background and covered the
+map completely. The 4,322-point cloud, the target crosshair, the guess ring, the
+dashed line to it — all painted, all underneath. `getImageData` reads the backing
+store, so it reported every one of them as present, because they were.
+
+**This is the same mistake I have been finding all day, one layer up.** I checked
+that the map was painted. Nobody had checked that it could be seen. Two commits
+ago I celebrated 9,592 → 10,117 pixels as the crosshair and guess ring finally
+drawing; they were drawing into a canvas nobody could see, and the number was
+right about the paint and silent about the point of it.
+
+`#trajOver{background:transparent}` is the whole fix. That is the **second** bare
+`canvas{}` rule on this site to hide something — model.html carried one too, and
+the board note for it said the rule was "left over from a canvas that no longer
+exists". Same rule shape, same silence.
+
+### The check that would have caught it
+
+Counting ink cannot. `smoke_play.py` now asks the browser whether anything
+absolutely-positioned overlaps at least half the map with an opaque background or
+a background image. Proven both ways rather than assumed — removing the fix from
+the served copy and re-running:
+
+    FAIL - something opaque is layered over the map, so whatever is painted on
+           #c cannot be seen: #trajOver bg=rgb(10, 12, 16) +image
+
+then green again once restored.
+
+### And the thing it was hiding was worth seeing
+
+**The modern pool is now its own pickable layer.** The context cloud is
+`vectors_map_lite.json`, and only **441 of the 1,305 modern seasons appear in
+it** — hit-testing those dots would have named about one in six and left most
+guessable players with no mark at all. So the pool is drawn over the cloud,
+brighter and larger: every mark you can hover is a season you can actually guess.
+The ids agree across both files (coordinates match to a median of 0.005, which is
+just the cloud's two-decimal rounding), so a row in both lands in one place.
+
+Hover names the player. Click fills the guess box and focuses it — it does not
+submit, so a stray click on a dense map cannot spend a guess for you.
+
+**Deliberately no similarity on hover.** Showing cosine would let you sweep the
+map for the highest number and the puzzle would answer itself.
+
+**It is a convenience layered on the guess box, never a replacement.** The canvas
+stays out of the tab order, and every name remains typable and suggestable, so no
+function of this page is mouse-only. That is why the empty datalist had to be
+filled first — the keyboard path had to exist before a mouse path could be added
+on top of it, or this would have been an accessibility regression on a site that
+just reached 22 of 22.
+
+One definition of the projection now, `vhMapXY()`, shared by the base draw, the
+hit-test and the highlight. Three copies of `pad+x*(W-pad*2)` is exactly how they
+would drift, and the smoke test clicks a computed screen position and requires
+the guess box to hold that exact name — which is the assertion that would catch
+the drift.
+
+Moving the map into view also collided the canvas caption at (14,20) with the
+HTML pill in the same corner. Nobody had seen them overlap because nobody had
+seen either. Caption moved to the bottom edge and now names the pickable count.
