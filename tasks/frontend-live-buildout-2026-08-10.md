@@ -1453,3 +1453,24 @@ proving nothing. It reads the lite file now and prints identical rows.
   uses it sits well below the fold, so it is a candidate for the same observer,
   but the page now loads 161,759 b total and this is the last two-thirds of it.
   Small enough that it is a judgement call rather than a defect.
+
+
+## /teams finished the job /owner started (2026-08-10)
+
+The slim asset took /teams from 1,272,076 to 161,759 bytes on paint. Two thirds of
+what was left was chemistry.json at 105,336, feeding a card that sits below the
+front-office table, next to deadline.json at another 10,933.
+
+Both now load behind the observer the archetype map and the era twins already
+used, gated on the dlH heading with a 320px margin, with a plain call as the
+fallback where IntersectionObserver is missing.
+
+    /teams   1,272,076  ->  45,490 b on paint      -96.4%
+    /owner   1,155,807  ->  45,490 b on paint      -96.1%
+
+Both pages now load the same four things: ront_office_lite.json and the three
+shared utility modules. Nothing else is fetched until a reader scrolls to it.
+
+That was the last item on this board that was mine. Every remaining one needs a
+person: six are operator decisions, one is blocked behind a pipeline I am not
+allowed to run, and two are product judgements.
