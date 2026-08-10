@@ -73,6 +73,25 @@ Hardcoded zoo numbers in `model.html`: **0**.
 
 | **my own** board + `model.html` | labelled sourced figures "Unsourced" | `0b8660a2` |
 
+
+## 🔴 P0 found and fixed — the landing page's script never ran
+
+`index.html` `renderPop()` had `b.onclick=()=>{...}c.appendChild(b);` — no
+semicolon and no line break between the arrow function's closing brace and the
+next statement. ASI cannot rescue that (it inserts only before a line
+terminator, before `}`, or at end of input; the offending token is `c`, on the
+same line). **The whole inline `<script>` fails to parse, so none of it runs** —
+map, popular-player list, share card, service-worker registration.
+
+Pre-existing and live. Verified, not assumed: `node --check` fails identically
+on `origin/master:index.html`; the offending substring is byte-identical; and
+`https://hoops.dumbmodel.com/` (31,600 b) serves the same pattern.
+Fixed with one semicolon in `9a0a4481`.
+
+**Found only by running `node --check` over the page.** No byte diff and none
+of the string checks used on this branch would have caught it. That gate is now
+part of the routine: swept all 17 pages with inline script — **index.html was
+the only one**, and it now parses.
 ## Findings that are bugs, not features
 
 - **F1 — `model.html` draws a fake SHAP chart.** Its script is literally
