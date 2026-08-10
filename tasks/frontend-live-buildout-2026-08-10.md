@@ -144,7 +144,7 @@ function cos(a,b){let d=0,na=0,nb=0;for(let i=0;i<3;i++){...}}
 `i<3`. `POOL` is **10 hardcoded past players** with `v:[0.92,0.11,0.18]`-shaped
 vectors; `MODERN` is **8 hardcoded modern players**, same shape. The page
 fetches `embedding_map_manifest.json` and `embedding_map_trajectories.json` —
-**neither carries a vector**. `assets/vectors.json` has the real 64-d vectors
+**neither carries a vector**. **CORRECTION:** `assets/vectors.json` has real **14-d** vectors — the frozen game contract, not 64-d. The 64-d is `mtnn_embeddings.f32`. I got this wrong when first reporting it. `assets/vectors.json` has the 14-d contract
 for 12,966 player-seasons and this page never opens it.
 
 The "cos" a player sees is two 3-number profiles compared over a 10×8 pool, on
@@ -163,6 +163,28 @@ it without changing the vectors would be worse.
 
 **This supersedes P1.x as the reason the game is not "centred on the embedding
 map": there is no embedding on that page to centre on.**
+
+### Where the game pool now stands
+
+`d5b27dd3` built `assets/game_vectors.json` — **968 past All-Star/All-NBA
+seasons + 1,305 modern**, real 14-d era-z vectors, 318,945 b. Pool chosen from
+`honors.json` (the game's own stated premise), not taste. Ids stay
+`vectors.json` row indices so `?pack=` keeps resolving — **672 still returns
+Michael Jordan 1997-98**.
+
+Two `POOL` ids were mislabelled and both are in the canonical pack link
+`?pack=672-123-456`:
+
+| id | play.html claims | actually is |
+|---|---|---|
+| 123 | Shaq 99-00 | **Doug West 1996-97** |
+| 456 | Iverson 00-01 | **Carlos Rogers 1997-98** |
+
+- [ ] **NEXT: wire `play.html` to `game_vectors.json`.** Replace `POOL`/`MODERN`,
+      change `cos()` from `i<3` to the vector length, lazy-load the 319 KB.
+      **This changes puzzle content and scores** — and `?pack=672-123-456` will
+      start resolving 123/456 to their real players rather than the claimed
+      Shaq/Iverson. Flagged because it is user-visible, not because it is wrong.
 ## Findings that are bugs, not features
 
 - **F1 — `model.html` draws a fake SHAP chart.** Its script is literally
