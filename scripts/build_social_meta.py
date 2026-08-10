@@ -83,7 +83,7 @@ def colliding() -> set[str]:
     """Clean URLs claimed by two pages that are not the same page.
 
     brand.html and brand/index.html are one page at /brand and share a title, so
-    naming the same canonical is right. player.html ("Player cards") and
+    naming the same canonical is right. player-cards.html ("Player cards") once collided with
     player/index.html ("Player - Stay on floor") are *different pages* that both
     resolve to /player, and no canonical is truthful there: whichever Vercel
     serves, the other is unreachable at its clean URL. That is a routing problem

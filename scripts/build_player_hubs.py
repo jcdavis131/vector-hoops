@@ -1,6 +1,6 @@
-"""Write the browse row on player.html from the hub pages that already exist.
+"""Write the browse row on player-cards.html from the hub pages that already exist.
 
-/player.html was a search box and nothing else. 2,293 cards behind it, and the
+/player-cards was a search box and nothing else. 2,293 cards behind it, and the
 page showed none of them until you typed a name you already knew — which means
 you could only find a player you had already thought of. Its own copy says
 "until now nothing on this site linked them", and on load it still linked
@@ -38,7 +38,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-PAGE = ROOT / "player.html"
+PAGE = ROOT / "player-cards.html"
 START = "<!-- build_player_hubs.py: start -->"
 END = "<!-- build_player_hubs.py: end -->"
 

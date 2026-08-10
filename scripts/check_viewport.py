@@ -52,7 +52,7 @@ BROWSERS = [
 PAGES = [
     "/", "/owner/", "/brand/", "/dfs/", "/player/", "/player-fit/",
     "/teams.html", "/trends.html", "/model.html", "/play.html", "/players.html",
-    "/player.html", "/dictionary.html", "/methods.html", "/inventory.html",
+    "/player-cards.html", "/dictionary.html", "/methods.html", "/inventory.html",
     "/leaderboard.html", "/offline.html", "/player-animations.html",
 ]
 

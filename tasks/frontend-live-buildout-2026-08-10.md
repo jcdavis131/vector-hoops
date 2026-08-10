@@ -2733,8 +2733,52 @@ so on every run:
     NOTE  https://hoops.dumbmodel.com/player is claimed by two different pages
           — no canonical written for either
 
-- [ ] **P9.6 Decide which page owns `/player`.** Resolving it means renaming one
+- [x] **P9.6 Decide which page owns `/player`.**
+  Withdrawn 2026-08-10 — not a decision. This branch created the clash and
+  this branch resolved it. See the note at the end of this file. Resolving it means renaming one
   or adding a rewrite, and choosing which of the two a visitor should land on is
   a product call. Worth knowing that the local server cannot answer it either —
   `SimpleHTTPRequestHandler` does not implement `cleanUrls`, so only the deployed
   site or Vercel's documented precedence settles which one currently wins.
+
+
+## P9.6 was not a decision. It was my bug, filed as your problem (2026-08-10)
+
+Last pass I found `/player` claimed by two different pages, wrote that resolving
+it "is a product call", and handed it over. One command shows that was wrong:
+
+    git ls-tree -r --name-only origin/master | grep player
+      player/index.html
+      public/player/index.html
+
+**`player.html` does not exist on master.** This branch added it, in
+`0fe49182 feat(player): 7.9MB of generated player wiki was reachable from
+nothing`, next to a `player/index.html` that had been there all along. The
+collision is not a pre-existing condition to adjudicate — it arrived with my own
+commit, and every one of the 22 nav links I pointed at `/player.html` funnels
+through a 308 into it.
+
+The site's own usage says who owns the name. **'Player' means the persona page**
+— nine pages link `/player/`, index.html links `/player` twice. **'Players' means
+the cards hub** — 22 links, all to `/player.html`, all added by this branch. The
+newcomer is the one that moves.
+
+`player.html` → `player-cards.html`, served at `/player-cards`, which is what its
+own heading and eyebrow have said all along ("Player cards" / PLAYER CARDS).
+Twenty-two links, four scripts and both mirrors follow it; the stale
+`public/player.html` is deleted rather than left to be served.
+
+    collision notices:            1  ->  0
+    pages with a canonical:   20/22  ->  22/22
+    stale /player.html links:    22  ->  0
+
+Renaming rather than adding a `vercel.json` rewrite is deliberate: two files
+competing for one clean URL resolves by a precedence I could not test locally —
+`SimpleHTTPRequestHandler` does not implement `cleanUrls` — and a rule that
+depends on undocumented behaviour is worse than a name that cannot collide.
+
+**The lesson is the filing, not the fix.** "This needs a decision" is a claim
+about the world, and it deserves the same evidence as any other claim I make. I
+checked what the *branch* contained and never checked what `master` contained,
+which is the one question that separates "a condition of the site" from "a thing
+I just did".
