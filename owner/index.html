@@ -4,7 +4,99 @@
 <div class="card"><div class="mono">Sortable FOR table • 30 teams • vercel.json public:true</div><table><thead><tr><th>Team</th><th>W</th><th>W*</th><th>Pay24-25</th><th>W/$M</th><th>W*/$M</th><th>PO/$M</th><th>Val</th><th>FOR</th></tr></thead><tbody id="tb"></tbody></table></div>
 <div class="card"><div class="mono">Construct validity • market truth</div><div class="sub">OU r=0.741 33S 944 verified • Vegas OU + props pts_delta avg -1.02 Wemby +5.7 matchup closer 1.28 lock +5 min close vs exploitable 0.62 fade injury scaffold 13,625 recs availability-adjusted w_per_m inverted median*(0.4+0.8*perf_ratio) cap3× retained 1.25× SHAP tm/mpg/closing_risk/playoff_impact_proxy. Paywall $5k/$10k/$15k Owner PWA manifest+SW Stripe mock.</div><div style="margin-top:8px;display:flex;gap:8px"><a class="btn" href="/teams.html">Teams FOR →</a><a class="btn btn-y" href="/play.html">Play →</a></div></div>
 <script>
-const TEAMS=["ATL","BOS","BKN","CHA","CHI","CLE","DAL","DEN","DET","GSW","HOU","IND","LAC","LAL","MEM","MIA","MIL","MIN","NOP","NYK","OKC","ORL","PHI","PHX","POR","SAC","SAS","TOR","UTA","WAS"];const tb=document.getElementById('tb');TEAMS.forEach((tm,i)=>{let w=20+Math.floor(Math.random()*45),po=Math.floor(Math.random()*8),ws=w+2.5*po+Math.random()*3,pay=80+Math.random()*130,val=1.6+Math.random()*7.5,forV=60+Math.random()*30;let tr=document.createElement('tr');tr.innerHTML=`<td>${tm}</td><td>${w}</td><td>${ws.toFixed(1)}</td><td>$${pay.toFixed(1)}M</td><td>${(w/pay).toFixed(3)}</td><td>${(ws/pay).toFixed(3)}</td><td>${(po/pay).toFixed(3)}</td><td>$${val.toFixed(1)}B</td><td>${forV.toFixed(1)}</td>`;tb.appendChild(tr);});
+/* Every one of these nine columns used to be Math.random(). Wins, weighted wins,
+   payroll, franchise valuation and the FOR score itself were invented on each
+   page load and reshuffled on reload, underneath copy that documents the real
+   method in detail — "FOR = min(99, base + champ_bonus + valuation_alpha)".
+
+   assets/front_office.json has carried all nine for all 30 teams the whole time.
+   The copy above is even quoting it: "Weighted W* 94.8/85.8" is SAS at 94.8 and
+   OKC at 85.8, straight out of the file. Checked before trusting it — the wins
+   column sums to 1230.0 across 30 teams, which is a real NBA season, for_rank is
+   a complete 1..30, and for_score_base + champ_bonus + valuation_alpha equals
+   for_final for every team. It reads the file now.
+
+   The header also promised "Sortable FOR table" and nothing was sortable, so the
+   columns sort here — by pointer and by keyboard, announced on an aria-live
+   region, matching the pattern teams.html already uses. */
+(function(){
+'use strict';
+var tb=document.getElementById('tb');
+if(!tb) return;
+var esc=function(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');};
+var n2=function(v){return (v==null||isNaN(v))?'—':(Math.round(v*100)/100).toFixed(2);};
+
+// Column order matches the <thead> already in the markup, one entry per <th>.
+// v() is the sort value, f() the cell. Two decimals everywhere, per the repo rule.
+var COLS=[
+  {k:'abbr', t:'Team', v:function(r){return r.abbr;},
+   f:function(r){return '<span style="display:inline-block;width:9px;height:9px;border-radius:2px;vertical-align:middle;margin-right:5px;background:'+esc(r.primary||'#111')+'"></span>'+esc(r.abbr)+(r.is_champion?' ◆':'');}},
+  {k:'wins', t:'W', v:function(r){return r.wins;}, f:function(r){return r.wins==null?'—':Math.round(r.wins);}},
+  {k:'weighted_wins', t:'W*', v:function(r){return r.weighted_wins;}, f:function(r){return n2(r.weighted_wins);}},
+  {k:'payroll_m', t:'Pay24-25', v:function(r){return r.payroll_m;}, f:function(r){return r.payroll_m==null?'—':'$'+n2(r.payroll_m)+'M';}},
+  {k:'w_per_m', t:'W/$M', v:function(r){return r.w_per_m;}, f:function(r){return n2(r.w_per_m);}},
+  {k:'weighted_wpm', t:'W*/$M', v:function(r){return r.weighted_wpm;}, f:function(r){return n2(r.weighted_wpm);}},
+  {k:'po_wins_per_m', t:'PO/$M', v:function(r){return r.po_wins_per_m;}, f:function(r){return n2(r.po_wins_per_m);}},
+  {k:'valuation_m', t:'Val', v:function(r){return r.valuation_m;}, f:function(r){return r.valuation_m==null?'—':'$'+n2(r.valuation_m/1000)+'B';}},
+  {k:'for_final', t:'FOR', v:function(r){return r.for_final;}, f:function(r){return '<b>'+n2(r.for_final)+'</b> '+esc(r.for_grade||'');}}
+];
+
+var live=document.createElement('div');
+live.setAttribute('role','status'); live.setAttribute('aria-live','polite'); live.setAttribute('aria-atomic','true');
+live.style.cssText='position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap';
+tb.parentNode.parentNode.appendChild(live);
+
+var ROWS=null, sortKey='for_final', sortDir=-1;
+var ths=tb.parentNode.querySelectorAll('thead th');
+
+function draw(){
+  if(!ROWS) return;
+  var col=COLS.filter(function(c){return c.k===sortKey;})[0]||COLS[8];
+  var rows=ROWS.slice().sort(function(a,b){
+    var av=col.v(a), bv=col.v(b);
+    if(av==null) return 1; if(bv==null) return -1;
+    if(typeof av==='string') return sortDir*String(av).localeCompare(String(bv));
+    return sortDir*(av-bv);
+  });
+  tb.innerHTML=rows.map(function(r){
+    return '<tr title="'+esc(r.name||'')+'">'+COLS.map(function(c){return '<td>'+c.f(r)+'</td>';}).join('')+'</tr>';
+  }).join('');
+  Array.prototype.forEach.call(ths,function(th,i){
+    th.setAttribute('aria-sort', COLS[i]&&COLS[i].k===sortKey?(sortDir===1?'ascending':'descending'):'none');
+  });
+}
+function sortBy(i){
+  var c=COLS[i]; if(!c) return;
+  if(c.k===sortKey) sortDir=-sortDir; else { sortKey=c.k; sortDir=(c.k==='abbr')?1:-1; }
+  draw();
+  live.textContent='Sorted by '+c.t+', '+(sortDir===1?'ascending':'descending')+'.';
+}
+Array.prototype.forEach.call(ths,function(th,i){
+  th.setAttribute('scope','col'); th.setAttribute('tabindex','0');
+  th.setAttribute('role','columnheader'); th.setAttribute('aria-sort','none');
+  th.style.cursor='pointer';
+  th.addEventListener('click',function(){sortBy(i);});
+  th.addEventListener('keydown',function(e){
+    if(e.key!=='Enter'&&e.key!==' '&&e.key!=='Spacebar') return;
+    e.preventDefault(); sortBy(i);
+  });
+});
+
+tb.innerHTML='<tr><td colspan="9">Loading 30 teams…</td></tr>';
+fetch('/assets/front_office.json?v=fb95747f').then(function(r){
+  if(!r.ok) throw new Error('HTTP '+r.status);
+  return r.json();
+}).then(function(d){
+  ROWS=(d&&d.teams)||[];
+  if(!ROWS.length) throw new Error('no teams in front_office.json');
+  draw();
+  live.textContent=ROWS.length+' teams loaded, sorted by FOR, descending.';
+}).catch(function(e){
+  // Say what failed. The previous version could not fail, because it invented
+  // its own numbers — which is exactly the problem.
+  tb.innerHTML='<tr><td colspan="9">Could not load assets/front_office.json ('+esc(e&&e.message)+'). No numbers are shown rather than made-up ones.</td></tr>';
+});
+})();
 </script>
 <script src="/assets/error-boundary.js?v=b00e79a0"></script>
 <script src="/assets/keyboard-a11y.js?v=eb6c977f"></script>

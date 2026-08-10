@@ -137,6 +137,7 @@ function ren(a){let tb=document.querySelector('#tbl tbody');tb.innerHTML='';for(
     <p class="mono" style="color:#57534E;font-size:11.6px;line-height:1.5;margin:0" id="foSub">Loading <code>assets/front_office.json</code>…</p>
     <div id="foWrap"><table id="foTable"><caption class="fo-sr">Front-office rating for all 30 teams. Column headers sort; press Enter on a header to re-sort.</caption></table></div>
     <p class="mono" style="font-size:10.5px;color:#878580;margin:8px 0 0" id="foProv"></p>
+    <p class="fo-method" style="margin-top:10px" id="foCaveat"></p>
     <details style="margin-top:10px"><summary class="mono" style="cursor:pointer;font-size:11px">Method, verbatim from the file</summary><div id="foMethod"></div></details>
   </div>
   <div class="card">
@@ -177,9 +178,19 @@ var COLS=[
   {k:'weighted_wins', t:'W*',   f:function(r){return n2(r.weighted_wins);}, num:true},
   {k:'for_final', t:'FOR',      f:function(r){return '<b>'+n2(r.for_final)+'</b>';}, num:true},
   {k:'for_grade', t:'Grade',    f:function(r){return esc(r.for_grade||'—');}, num:false},
-  {k:'draft',     t:'Draft',    f:function(r){return n2(r.draft);}, num:true},
-  {k:'cap_efficiency', t:'Cap', f:function(r){return n2(r.cap_efficiency);}, num:true},
-  {k:'foresight', t:'Fore',     f:function(r){return n2(r.foresight);}, num:true},
+  // These three are FOR's own inputs — method.composite says
+  //   FOR = 0.35*zDraft + 0.35*cap + 0.30*foresight
+  // and all three arrive as objects ({score, grade, ...}), not numbers. Passing
+  // the object to n2() hit isNaN(object) === true, so the three most explanatory
+  // columns on the table rendered an em-dash for all 30 teams, and sorting by
+  // them compared objects and produced NaN. They read .score now, and carry a
+  // sort accessor so the header still sorts.
+  {k:'draft',     t:'Draft',    v:function(r){return r.draft&&r.draft.score;},
+                                f:function(r){return r.draft?n2(r.draft.score):'—';}, num:true},
+  {k:'cap_efficiency', t:'Cap', v:function(r){return r.cap_efficiency&&r.cap_efficiency.score;},
+                                f:function(r){return r.cap_efficiency?n2(r.cap_efficiency.score):'—';}, num:true},
+  {k:'foresight', t:'Fore',     v:function(r){return r.foresight&&r.foresight.score;},
+                                f:function(r){return r.foresight?n2(r.foresight.score):'—';}, num:true},
   {k:'payroll_m', t:'Payroll $M', f:function(r){return n0(r.payroll_m);}, num:true},
   {k:'w_per_m',   t:'W/$M',     f:function(r){return n2(r.w_per_m);}, num:true},
   {k:'playoff_result', t:'Postseason', f:function(r){return esc(r.playoff_result||'—');}, num:false}
@@ -187,8 +198,12 @@ var COLS=[
 var DATA=null, sortKey='for_rank', sortDir=1;
 
 function draw(){
+  // A column may keep its sort value somewhere other than r[k] — the three FOR
+  // inputs are objects whose number lives at .score — so ask the column first.
+  var col=COLS.filter(function(c){return c.k===sortKey;})[0];
+  var valOf=(col&&col.v)?col.v:function(r){return r[sortKey];};
   var rows=DATA.teams.slice().sort(function(a,b){
-    var av=a[sortKey], bv=b[sortKey];
+    var av=valOf(a), bv=valOf(b);
     if(av==null) return 1; if(bv==null) return -1;
     if(typeof av==='string') return sortDir*String(av).localeCompare(String(bv));
     return sortDir*(av-bv);
@@ -307,6 +322,31 @@ fetch('assets/front_office.json?v=fb95747f',{cache:'force-cache'})
     $('foProv').textContent='Built '+(j.built||'?').slice(0,10)+' · '+j.teams.length+
       ' teams · champion map covers '+Object.keys(j.champion_map||{}).length+' seasons · '+
       (j.champion_display||'');
+
+    // A component that is the same number for all 30 teams cannot separate them,
+    // however much weight the composite puts on it. Computed rather than written
+    // down, so it stops saying this the moment the file has real values.
+    (function(){
+      var flat=[];
+      [['Draft','draft'],['Cap','cap_efficiency'],['Fore','foresight']].forEach(function(p){
+        var seen={}, n=0;
+        j.teams.forEach(function(t){
+          var s=t[p[1]]&&t[p[1]].score;
+          if(s==null) return;
+          if(!(s in seen)){ seen[s]=1; n++; }
+        });
+        if(n===1) flat.push({label:p[0], key:p[1], value:j.teams[0][p[1]].score});
+      });
+      var el=$('foCaveat');
+      if(!flat.length){ el.style.display='none'; return; }
+      var names=flat.map(function(f){return f.label+' ('+n2(f.value)+' for every team)';}).join(' and ');
+      el.textContent='Read this before ranking anything by FOR: '+names+
+        ' is identical across all 30 teams in this file, so it separates nobody. '+
+        'The method still weights it — "'+String(j.method&&j.method.composite||'').split('.')[0]+'" — '+
+        'which means FOR is in practice driven by the components that do vary. '+
+        'The underlying fields are empty in the file (surplus_count 0, bargain_deals [], '+
+        'avg_contract_age 0 for all 30), so this is missing input rather than a real tie.';
+    })();
     $('foMethod').textContent=typeof j.method==='object'
       ? Object.keys(j.method).map(function(k){
           var v=j.method[k];

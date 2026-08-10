@@ -28,8 +28,11 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 
-# fetch('assets/…')  with an optional existing ?v=… to replace
-RE_FETCH = re.compile(r"""(fetch\(\s*['"])(assets/[\w./-]+)(?:\?v=[0-9a-f]+)?(['"])""")
+# fetch('assets/…')  with an optional existing ?v=… to replace.
+# The leading slash is optional for the same reason it is on script tags: a page
+# in a subdirectory has to say /assets/… , and an unstamped fetch is exactly the
+# year-long cache pin this script exists to prevent.
+RE_FETCH = re.compile(r"""(fetch\(\s*['"])(/?assets/[\w./-]+)(?:\?v=[0-9a-f]+)?(['"])""")
 
 # <script src="/assets/….js"> — same treatment, and it was the bigger hole.
 # The vercel.json rule that makes this urgent names js in the same breath as json:

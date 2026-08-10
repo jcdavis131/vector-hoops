@@ -716,3 +716,70 @@ Two checks that came back clean and are worth not re-running: no page assigns
 `window.onerror`, so the module's assignment at L149 clobbers nothing; and pages
 that do define their own `:focus-visible` override the module's global rule by
 specificity, so the ring does not fight existing styling.
+## The owner page invented all nine of its columns (2026-08-10)
+
+`/owner` shipped a 30-row table — W, W*, Pay24-25, W/$M, W*/$M, PO/$M, Val, FOR —
+generated entirely by `Math.random()`. Different numbers on every reload, under
+copy that documents the real method in detail: *"FOR = min(99, base +
+champ_bonus + valuation_alpha) … Cap_history 31 seasons $24.36M→$154.647M"*.
+
+`assets/front_office.json` has carried all nine for all 30 teams the whole time.
+The copy was **quoting that file** — *"Weighted W* 94.8/85.8"* is SAS at 94.80 and
+OKC at 85.80. Somebody wrote the prose from the data and wired the table to a
+random number generator.
+
+Checked the file before trusting it: `wins` sums to **1230.0** across 30 teams
+(a real NBA season), `for_rank` is a complete 1..30, and
+`for_score_base + champ_bonus + valuation_alpha == for_final` for every team.
+Rebuilt against it, with the sorting the header had been promising ("Sortable FOR
+table") and never had — pointer, keyboard, `aria-sort`, `aria-live`, matching
+teams.html. Both `owner.html` and `owner/index.html` (the served one).
+
+Smoke-tested against the real file, not just parsed: 30 rows, no column renders
+an em-dash, every sort accessor returns a scalar for all 30, never more than two
+decimals, and the default sort puts `for_rank` 1 on top.
+
+## Three columns on teams.html were an em-dash for all 30 teams — my bug
+
+`draft`, `cap_efficiency` and `foresight` arrive as **objects**
+(`{score, grade, …}`). teams.html passed each straight to `n2()`, and
+`isNaN(object)` is `true`, so all three rendered `—` for every team, and
+sorting by them subtracted objects. Measured before/after: **30/30 dashes → 0/30**.
+They read `.score` now and carry a sort accessor. Mine, from `8b0fa901`.
+
+These are not incidental columns — `method.composite` is
+`FOR = 0.35*zDraft + 0.35*cap + 0.30*foresight`, so they are FOR's own inputs.
+
+### And one of those inputs is a constant
+
+`foresight.score` is **50.00 for all 30 teams**. Every underlying field is empty:
+`surplus_count` 0, `bargain_deals` `[]`, `avg_contract_age` 0, grade C+ for
+all 30, and `model_eval.foresight.dataset_size` is **0**. So 30% of the FOR
+weight rests on a number that separates nobody — missing input, not a real tie.
+Fixing the column without saying that would have swapped "no data" for fake
+precision, so the page now computes which components are flat and prints the
+caveat. It is derived from the file, so it stops saying it if real values land.
+
+## dictionary.html was wrong about SHAP, in the unhelpful direction
+
+It read: *"It is not SHAP, and is not labelled as such anywhere on this site."*
+The first half is right about the MTNN attribution. The second half is false, and
+false in the direction that tells a reader not to look for something real:
+`/methods` reports `mean|SHAP|` for the **draft model zoo** — 1245.3 global,
+398.7 log_overall, 187.2 round, 6.3 cap_growth — and **every one of those figures
+is in** `assets/data/model_zoo_eval.json` under `glass_box.shap_global_mean_abs`,
+alongside `shap_sample_contribs_5` and a stated method
+(`linear_models_shap_via_coeff_x_minus_mean`, DeepMLP via ablation). methods.html
+was honest all along. The dictionary conflated two different models; corrected to
+name both and point at the file.
+
+- [ ] **P7.1 public/assets/assets/ is 187 duplicated files, 86,808 KB, shipping.**
+  A doubled directory inside the deployed output. Added by `49b60f15` (not this
+  branch), present identically on `origin/master`, and this branch changed none
+  of it. `sync_public.py` never deletes, by design, so it will not clean this up.
+  Removing 187 tracked files is an operator call, not mine.
+
+`stamp_assets.py` now also accepts a leading slash on `fetch('/assets/…')`, for
+the same reason it does on script tags — a subdirectory page has to write the
+root-absolute form, and an unstamped fetch is the year-long cache pin this script
+exists to prevent.

@@ -203,9 +203,18 @@ code{font-family:var(--mono);font-size:.92em;background:#f2f1ec;padding:1px 4px;
       <p class="plain">Which input stats moved a given prediction, and in which direction.</p>
       <p class="exact"><code>a<sub>j</sub> = x<sub>j</sub> · ∂(target)/∂x<sub>j</sub></code> over
       the raw input features. A <em>local linearization</em> — it says how the output responds
-      to a nudge, not what would happen if a feature were removed. It is <b>not</b> SHAP, and is
-      not labelled as such anywhere on this site.</p>
-      <span class="src">assets/mtnn_attr_pop.json → method</span>
+      to a nudge, not what would happen if a feature were removed. It is <b>not</b> SHAP.</p>
+      <p>This entry used to add "and is not labelled as such anywhere on this site", which was
+      wrong — and wrong in the direction that matters, because it told you not to look for
+      something that is there. SHAP <em>is</em> on this site, for a different model:
+      <a href="/methods">/methods</a> reports <span class="mono">mean|SHAP|</span> for the
+      <b>draft model zoo</b> — global 1245.3, log_overall 398.7, round 187.2, cap_growth 6.3 —
+      and those figures are in <span class="mono">assets/data/model_zoo_eval.json</span> under
+      <span class="mono">glass_box.shap_global_mean_abs</span>, computed as coefficient×(x−mean)
+      for the linear models and an ablation approximation for the DeepMLP. Two different models,
+      two different methods. The bars on the model page are the MTNN's local linearization; the
+      SHAP figures on /methods belong to the draft zoo. Neither is the other.</p>
+      <span class="src">assets/mtnn_attr_pop.json → method · assets/data/model_zoo_eval.json → glass_box</span>
     </div>
 
     <div class="entry" id="coverage">
