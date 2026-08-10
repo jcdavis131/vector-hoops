@@ -203,9 +203,13 @@ previously-broken days now produce a valid one, 0 undefined picks across 730.
 
 Found by testing the real-vector wiring, not by looking for it.
 
-**Noted, not fixed:** `LCG(s)=(A*s+C)%M` overflows `Number.MAX_SAFE_INTEGER`
-for `s` near 2³¹, so it is not a true LCG — only **120 distinct puzzles across
-two years**. Correcting it changes every puzzle, so it is a product call.
+**FIXED** (I first logged this as a product call — wrong, since `870119be`
+had already changed every puzzle). `LCG(s)=(A*s+C)%M` ran 263× past
+`Number.MAX_SAFE_INTEGER`, so `%M` read noise: **120 distinct daily puzzles
+over 730 days**, a repeat every ~6 days. `Math.imul` makes the multiply exact →
+**540 distinct**, against a uniform expectation of 513. Verified by lifting the
+shipped expression, not retyping it. Full5 was unaffected (730/730) — five
+chained draws masked it.
 
 ## The game is now actually centred on the embedding map
 
