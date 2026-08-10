@@ -1258,7 +1258,61 @@ method text states the projection caveat and why there is no season stepper.
 
 Map data now renders on **4 root pages**, up from 3.
 
-- [ ] **P9.2 The other 18 pages still have no map.** Reachability is fixed
+- [x] **P9.2 DONE for model.html** — the candidate it named. Original note: Reachability is fixed
   everywhere; presence is not. `model.html` is the strongest remaining candidate —
   it explains the model that produces the space and shows no picture of it.
   Deliberately not bundled: one feature build per pass.
+
+
+## The score the model page quotes, now drawn (2026-08-10)
+
+model.html stated the headline retrieval score in prose and never showed the space
+that score is about — phase 3 of the brief being the explainability page, and the
+map being what everything is meant to centre on.
+
+### The trap this section exists to not fall into
+
+The scoreboard's top-1 and top-5 are **64-d cosine over 10,104 pairs**. Ranking
+neighbours by distance in a 2-D projection is a different measurement with a
+different answer, and putting a rank on screen would have been the same species of
+mistake as the `Math.random()` owner table: a number that looks like the model
+speaking and is not.
+
+So **nothing here computes a rank.** The picture shows what the task *is* — one
+career, season by season, through the space — and every figure beside it is read
+from `assets/eval_scoreboard.json` at render time. `smoke_retrieval_map.mjs`
+asserts that absence directly, by grepping the shipped source for distance
+arithmetic.
+
+### A quiet win
+
+The page used to hardcode `0.51 / 0.93 / 0.20 / 10,104` in prose. The new section
+reads all four from the file, so those cannot drift — which is exactly the gap
+P7.2 recorded, where `cited` cannot verify a rounded figure because the rounded
+string is not in the file.
+
+### Data
+
+`embedding_map_trajectories.json` alone carries **12,038 points across 1,764
+careers**, so one file gives both the faint background cloud and the paths.
+`embedding_map_points_limited.json` is fetched only for names — it holds exactly
+one row per player and cannot supply a path, which is worth writing down because
+it is not obvious from its name. 1.4 MB total, so it loads on approach behind an
+`IntersectionObserver`, the pattern trends.html already uses for era twins.
+
+### A vestigial CSS rule that would have hidden the whole thing
+
+model.html still carries a bare `canvas{…}` rule painting `height:160px` and a
+`#0A0C10` background with two radial gradients. `#retrMap` is now the only canvas
+on the page, so the rule is left over from one that no longer exists — but it
+still applies. The faint grey cloud and the near-black last-season dot are chosen
+for a light surface and would have been invisible on it. Overridden explicitly
+rather than left to specificity.
+
+Map data now renders on **5 root pages**, up from 3 two passes ago.
+
+- [ ] **P9.3 Thirteen root pages still have no map**, and the remaining candidates
+  are weaker than the two just done: the persona pages are dashboards, the
+  dictionary defines terms, methods and inventory are reference. Whether any of
+  them wants one is a product judgement rather than a gap, so this is a decision
+  rather than a task.

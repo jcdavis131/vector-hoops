@@ -55,7 +55,35 @@
 .fam.readout{background:#fbe3de}
 .tbtn[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
 @media(prefers-reduced-motion:reduce){.attr-fill{transition:none}}
+/* This page still carries a bare `canvas{…}` rule that paints height:160px and a
+   #0A0C10 background with two radial gradients. It is vestigial — #retrMap is now
+   the only canvas here — but it would still apply, and the faint grey cloud and
+   the near-black last-season dot drawn below are chosen for a light surface and
+   would have been invisible on it. Overridden explicitly rather than left to
+   selector specificity, and matched to the archetype map on trends.html. */
+#retrMap{display:block;width:100%;height:auto;min-width:520px;touch-action:pan-y;
+  background:var(--surface);border:1.8px solid var(--ink);border-radius:10px}
+#retrWrap{margin-top:12px;overflow-x:auto}
+#retrPick{font-family:var(--mono);font-size:12px;padding:6px 8px;border:1.6px solid var(--ink);border-radius:8px;background:#fff;min-height:34px;max-width:100%}
+.retr-sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
 </style>
+
+<section class="card" id="retrSection" aria-labelledby="h-retr">
+  <h2 id="h-retr" style="font-size:18px;margin:0 0 4px">The test the model is scored on, drawn</h2>
+  <p class="sub" id="retrLead">Loading the scoreboard…</p>
+  <div id="retrWrap"><canvas id="retrMap" width="900" height="520"></canvas></div>
+  <div style="margin-top:10px;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+    <label class="mono" for="retrPick">Career</label>
+    <select id="retrPick" disabled><option>loading…</option></select>
+  </div>
+  <p class="sub" id="retrRead" style="margin-top:8px"></p>
+  <details style="margin-top:10px"><summary class="mono" style="cursor:pointer;font-size:11px">Table view — every season on this path</summary>
+    <div style="overflow-x:auto"><table id="retrTable"></table></div>
+  </details>
+  <div class="mini" id="retrMethod" style="margin-top:10px"></div>
+  <div id="retrLive" class="retr-sr" role="status" aria-live="polite" aria-atomic="true"></div>
+</section>
+
 <script>
 /* The chart this replaces was labelled "SHAP" and "glass-box SHAP" and drew
    eight hardcoded bars — its own comment called it a placeholder. The numbers
@@ -256,6 +284,143 @@
     flowLead.textContent='The architecture could not be loaded ('+e.message+'), so no pipeline is drawn. '+
       'Nothing here is sketched from memory.';
   });
+})();
+
+/* The retrieval test, drawn. This page states the model's headline score in prose
+   and never showed the space that score is about — phase 3 of the brief being the
+   explainability page, and the map being what everything is meant to centre on.
+
+   One trap avoided deliberately. The scoreboard's top-1 and top-5 are 64-d cosine
+   over 10,104 pairs. Ranking neighbours by distance in this 2-D projection would
+   be a different metric with a different answer, so nothing here computes a rank.
+   The picture shows what the task *is* — one career, season by season, through the
+   space — and every number beside it is read from assets/eval_scoreboard.json.
+   The caveat is printed on the page, not just kept here.
+
+   Data: assets/embedding_map_trajectories.json alone carries 12,038 points across
+   1,764 careers, so it supplies the faint background cloud *and* the paths from
+   one file. embedding_map_points_limited.json is fetched only for names — it has
+   exactly one row per player and cannot supply a path.
+
+   1.4 MB, so it loads when the section approaches the viewport, using the same
+   IntersectionObserver pattern trends.html already uses for era twins. */
+(function(){
+  var $=function(id){return document.getElementById(id);};
+  var sec=$('retrSection'); if(!sec) return;
+  var cv=$('retrMap'), pick=$('retrPick'), live=$('retrLive');
+  var TR=null, NAMES=null, SB=null, cur=null, loading=false;
+
+  function say(m){ if(!live||!m) return; if(live.textContent===m) live.textContent=''; live.textContent=m; }
+  function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+  function n2(v){return (v==null||isNaN(v))?'—':(Math.round(v*100)/100).toFixed(2);}
+
+  cv.setAttribute('role','img');
+  cv.setAttribute('aria-label',
+    'A two-dimensional projection of the embedding space. Faint dots are 12,038 '+
+    'player-seasons; the highlighted line is one career, one dot per season, in order. '+
+    'The table below carries the same path as text.');
+
+  function draw(){
+    if(!TR) return;
+    var dpr=Math.min(window.devicePixelRatio||1,1.4);
+    var w=cv.clientWidth||900, h=Math.round(w*520/900);
+    cv.width=Math.round(w*dpr); cv.height=Math.round(h*dpr); cv.style.height=h+'px';
+    var g=cv.getContext('2d'); g.setTransform(dpr,0,0,dpr,0,0); g.clearRect(0,0,w,h);
+    var pad=16, iw=w-pad*2, ih=h-pad*2;
+    var X=function(x){return pad+x*iw;}, Y=function(y){return pad+(1-y)*ih;};
+
+    g.globalAlpha=0.22; g.fillStyle='#b9b7b0';
+    for(var k in TR){ var pth=TR[k];
+      for(var j=0;j<pth.length;j++){ g.beginPath(); g.arc(X(pth[j].x),Y(pth[j].y),1.1,0,6.2832); g.fill(); } }
+    g.globalAlpha=1;
+
+    var p=cur&&TR[cur]; if(!p||!p.length) return;
+    g.strokeStyle='#EB6834'; g.lineWidth=2.2; g.lineJoin='round'; g.lineCap='round';
+    g.beginPath();
+    for(var i=0;i<p.length;i++){ var fx=X(p[i].x), fy=Y(p[i].y); if(i)g.lineTo(fx,fy); else g.moveTo(fx,fy); }
+    g.stroke();
+    for(i=0;i<p.length;i++){
+      g.beginPath(); g.arc(X(p[i].x),Y(p[i].y),i===0||i===p.length-1?5:3,0,6.2832);
+      g.fillStyle = i===p.length-1 ? '#111' : '#EB6834';
+      g.fill();
+      g.lineWidth=1.6; g.strokeStyle='#fafaf8'; g.stroke();
+    }
+  }
+
+  function show(pid){
+    cur=pid; var p=TR[pid]||[];
+    var nm=(NAMES&&NAMES[pid])||('Player '+pid);
+    $('retrRead').textContent=nm+' — '+p.length+' season'+(p.length===1?'':'s')+
+      (p.length?', '+p[0].season+' to '+p[p.length-1].season:'')+
+      '. Each dot is one season; the dark dot is the last one.';
+    $('retrTable').innerHTML='<thead><tr><th scope="col">#</th><th scope="col">Season</th>'+
+      '<th scope="col">Games</th><th scope="col">x</th><th scope="col">y</th></tr></thead><tbody>'+
+      p.map(function(s,i){ return '<tr><td>'+(i+1)+'</td><td>'+esc(s.season)+'</td><td>'+
+        (s.gp==null?'—':s.gp)+'</td><td>'+n2(s.x)+'</td><td>'+n2(s.y)+'</td></tr>'; }).join('')+'</tbody>';
+    draw();
+    say(nm+', '+p.length+' seasons drawn.');
+  }
+
+  function boot(){
+    if(loading) return; loading=true;
+    Promise.all([
+      fetch('assets/embedding_map_trajectories.json?v=2e787a46',{cache:'force-cache'})
+        .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); }),
+      fetch('assets/embedding_map_points_limited.json?v=407d2cbc',{cache:'force-cache'})
+        .then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; }),
+      fetch('assets/eval_scoreboard.json?v=a436661b',{cache:'force-cache'})
+        .then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; })
+    ]).then(function(all){
+      TR=(all[0]&&all[0].trajectories)||null;
+      if(!TR) throw new Error('no trajectories in the file');
+      NAMES={}; ((all[1]&&all[1].points)||[]).forEach(function(r){ NAMES[String(r.pid)]=r.display_name; });
+      SB=all[2];
+
+      var ids=Object.keys(TR).filter(function(k){ return TR[k] && TR[k].length>=4; });
+      ids.sort(function(a,b){ return String(NAMES[a]||a).localeCompare(String(NAMES[b]||b)); });
+      pick.innerHTML=ids.map(function(k){
+        return '<option value="'+esc(k)+'">'+esc(NAMES[k]||('Player '+k))+' ('+TR[k].length+')</option>';
+      }).join('');
+      pick.disabled=false;
+
+      var mtnn=SB&&SB.results&&SB.results.mtnn&&SB.results.mtnn.overall;
+      var base=SB&&SB.results&&SB.results.baseline_transparent_14d&&SB.results.baseline_transparent_14d.overall;
+      $('retrLead').innerHTML= mtnn
+        ? 'The model is scored by handing it one season and asking for that same player&rsquo;s <em>next</em> '+
+          'season out of every other player-season. Across <b>'+(SB.eligible_pairs||mtnn.n).toLocaleString()+
+          '</b> pairs it puts the right one first <b>'+Math.round(mtnn.top1*100)+'%</b> of the time and in its '+
+          'top five <b>'+Math.round(mtnn.top5*100)+'%</b>'+
+          (base?', against a transparent 14-d baseline that manages <b>'+Math.round(base.top5*100)+'%</b> on the same test':'')+
+          '. Below is what one career looks like in the space that score is measured in.'
+        : 'The scoreboard could not be loaded, so no score is quoted here. The map below still shows the space.';
+
+      var defaultId = TR['2544'] ? '2544' : ids[0];
+      pick.value=defaultId;
+      show(defaultId);
+
+      $('retrMethod').textContent=
+        '12,038 player-seasons from assets/embedding_map_trajectories.json; names from '+
+        'assets/embedding_map_points_limited.json; score from assets/eval_scoreboard.json. '+
+        'Read the picture and the number as two different things: this is a 2-D projection, and the '+
+        'score above is 64-d cosine. Nothing on this canvas computes a rank, because ranking '+
+        'neighbours by distance on screen would be a different measurement with a different answer. '+
+        'Careers with fewer than four charted seasons are left out of the picker.';
+    }).catch(function(e){
+      $('retrLead').textContent='The retrieval map could not be loaded ('+e.message+'). '+
+        'Nothing is drawn in its place.';
+      $('retrMethod').textContent='';
+    });
+  }
+
+  pick.addEventListener('change',function(){ if(TR) show(pick.value); });
+  window.addEventListener('resize',function(){ if(TR) draw(); });
+
+  if(window.IntersectionObserver){
+    var io=new IntersectionObserver(function(en){
+      if(en.some(function(x){return x.isIntersecting;})){ io.disconnect(); boot(); }
+    },{rootMargin:'320px'});
+    io.observe(sec);
+  } else { boot(); }
 })();
 </script>
 </main>
