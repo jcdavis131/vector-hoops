@@ -1203,10 +1203,62 @@ The thirteen-item list was aspirational even before my change — it named
 `/leaderboard.html`, `/methods.html` and `/assets/icon-192.png`, which no version
 of SHELL has ever contained.
 
-- [ ] **P9.1 The map is still only on 3 pages.** This pass fixed *reachability*,
+- [x] **P9.1 DONE for trends.html** — see below. It was my own deferred work, filed as a board item, same as P8.1 was. Original note: This pass fixed *reachability*,
   not *presence*. `trends.html` in particular is about rotation, archetype drift,
   era twins and career arcs — all spatial, all currently shown as charts with no
   map beside them, while `assets/embedding_map_trajectories.json` (1,135,755 b) is
   already fetched by two other pages. Putting a real map there is a feature build,
   not an audit fix, which is why it is boarded rather than done in the same pass
   as a nav change.
+
+
+## The map is on the page that was most about it (2026-08-10)
+
+trends.html spent six sections describing movement through a space it never
+showed. That is the "everything centered around the embedding map" clause going
+unmet on the one page most about that space.
+
+It now carries the archetype cloud, placed directly after the prevalence panels:
+those say *when* each archetype was common, this says *where* it is.
+
+### Three data choices, each settled against the files rather than by preference
+
+- **`vectors_map_lite.json` — 4,322 player-seasons.** Used.
+- **A season stepper — rejected.** `embedding_map_points_limited.json` carries
+  seasons, but the sample runs **4 rows in 1998-99 and 12 in 2011-12 against 491
+  in 2025-26**. Stepping through would show the league emptying in the lockout
+  years, which is the sampling, not the league. That is the same class of
+  misleading chart I removed from `/owner` earlier on this branch, so building it
+  would have undone the point.
+- **Era twins drawn on the map — rejected.** Only **12 of 1,308 pairs** have both
+  sides in the cloud.
+
+The two clouds were checked to share a projection before either was trusted:
+per-archetype centroids agree to a worst distance of **0.015** in a 0..1 space,
+and the `c` index means the same thing in both.
+
+Colours are the `OKABE` constant `players.html` already uses; names come from
+`assets/mtnn_arch.json`, not written here — the same rule that page states, which
+refuses to invent an archetype name to fill its key.
+
+### The risk here was never syntax
+
+`node --check` proves a block parses. It cannot prove a name resolves, and `$` and
+`say` are both declared inside *other* IIFEs in that same script block. A
+`ReferenceError` at load would have taken down every section above it. Rather than
+reason about brace depth, the new IIFE declares its own four lines and does not
+care.
+
+`scripts/smoke_arch_map.mjs` then runs the **shipped** IIFE — extracted verbatim,
+under a DOM stub, against the real files. Fourteen checks: it executes without a
+ReferenceError, the canvas gets `role="img"` and a real label, all eight names
+reach the legend, nine filter buttons with exactly one pressed, every `<th>`
+declares scope, **shares sum to 100.00% and counts sum to 4,322 exactly**, and the
+method text states the projection caveat and why there is no season stepper.
+
+Map data now renders on **4 root pages**, up from 3.
+
+- [ ] **P9.2 The other 18 pages still have no map.** Reachability is fixed
+  everywhere; presence is not. `model.html` is the strongest remaining candidate —
+  it explains the model that produces the space and shows no picture of it.
+  Deliberately not bundled: one feature build per pass.

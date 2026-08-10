@@ -39,6 +39,10 @@ h3{font-size:15px;margin:0 0 4px}
 /* charts */
 .figwrap{margin-top:12px;overflow-x:auto}
 svg.chart{display:block;width:100%;height:auto;min-width:520px;touch-action:pan-y}
+/* same rule for the archetype map: without width:100% the canvas reports its
+   900px attribute as clientWidth and never fills the card. min-width inside
+   .figwrap{overflow-x:auto} gives it the same horizontal scroll the charts get. */
+#archMap{display:block;width:100%;height:auto;min-width:520px;touch-action:pan-y}
 .grid line{stroke:var(--hair);stroke-width:1}
 .axis text{font-family:var(--mono);font-size:9.5px;fill:var(--muted)}
 .axis line{stroke:var(--ink);stroke-width:1.4}
@@ -157,6 +161,21 @@ th{background:#f4f3ee}
     <details class="tbl"><summary>Table view — first season, last season, change</summary>
       <div style="overflow-x:auto"><table id="archTable"></table></div>
     </details>
+  </section>
+
+  <section class="card" id="mapSection" aria-labelledby="h-map">
+    <h2 id="h-map">And here is where those archetypes actually sit</h2>
+    <p class="sub">The panels above say <em>when</em> each archetype was common. This says <em>where</em>
+    it is. Every dot is one player-season placed by the model, so two dots close together mean two
+    seasons the model reads as alike. Nothing draws the clusters on afterwards — the colours are the
+    archetype the model had already assigned, and each one lands in a single piece.</p>
+    <div class="figwrap"><canvas id="archMap" width="900" height="520"></canvas></div>
+    <div class="seasons" id="archBtns" role="group" aria-label="Show one archetype at a time"></div>
+    <div class="legend" id="archKey"><span class="dim">Loading archetype names…</span></div>
+    <details class="tbl"><summary>Table view — share of the cloud, and where each archetype centres</summary>
+      <div style="overflow-x:auto"><table id="archMapTable"></table></div>
+    </details>
+    <div class="method" id="archMapMethod"></div>
   </section>
 
   <section class="card" aria-labelledby="h-shifts">
@@ -580,6 +599,140 @@ if(sec && window.IntersectionObserver){
 $('twinInput').addEventListener('focus',load);
 $('twinInput').addEventListener('input',function(){ if(!TW) load(); else lookup(); });
 $('twinInput').addEventListener('change',lookup);
+})();
+
+/* The archetype map. This page spent six sections describing movement through a
+   space it never showed, which is the "everything centered around the embedding
+   map" half of the brief going unmet on the one page most about that space.
+
+   Data choice, made against the files rather than by preference:
+
+   - assets/vectors_map_lite.json — 4,322 player-seasons as {i,x,y,z,c}. Used.
+   - assets/embedding_map_points_limited.json — 1,764 points, carries names and
+     seasons. NOT used: a season-stepped map off it would mislead, because the
+     sample runs 4 points in 1998-99 and 12 in 2011-12 against 491 in 2025-26.
+     Stepping through would show the league emptying, which is the sampling, not
+     the league.
+   - era twins on the map — dropped. Only 12 of 1,308 pairs have both sides in
+     the cloud.
+
+   The two clouds were checked to share a projection before trusting either:
+   per-archetype centroids agree to a worst distance of 0.015 in a 0..1 space, and
+   the c index means the same thing in both.
+
+   Colours are the OKABE constant players.html already uses, and the names come
+   from mtnn_arch.json rather than being written here — same rule as that page,
+   which refuses to invent an archetype name to fill its key. */
+(function(){
+  // Own $ and say rather than reaching for the page's. Both of those are declared
+  // inside other IIFEs in this same block, and whether they are visible here is
+  // exactly the kind of question `node --check` cannot answer — it proves the
+  // block parses, not that a name resolves. A ReferenceError at load would take
+  // the whole script down, including the sections above. Four lines to not care.
+  var $=function(id){return document.getElementById(id);};
+  var live=$('live');
+  function say(m){ if(!live||!m) return; if(live.textContent===m) live.textContent=''; live.textContent=m; }
+
+  var cv=$('archMap'); if(!cv) return;
+  var OKABE=['#0072B2','#D55E00','#009E73','#CC79A7','#F0E442','#56B4E9','#E69F00','#000000'];
+  var PTS=null, NAMES=null, sel=-1;
+
+  cv.setAttribute('role','img');
+  cv.setAttribute('aria-label',
+    'A two-dimensional projection of the embedding space. Each dot is one player-season, '+
+    'coloured by the archetype the model assigned. The table below this map carries the '+
+    'same information as text.');
+
+  function esc2(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+  function draw(){
+    if(!PTS) return;
+    var dpr=Math.min(window.devicePixelRatio||1,1.4);
+    var w=cv.clientWidth||900, h=Math.round(w*520/900);
+    cv.width=Math.round(w*dpr); cv.height=Math.round(h*dpr);
+    cv.style.height=h+'px';
+    var g=cv.getContext('2d');
+    g.setTransform(dpr,0,0,dpr,0,0);
+    g.clearRect(0,0,w,h);
+    var pad=14, iw=w-pad*2, ih=h-pad*2;
+    // dim everything else rather than hiding it, so a filtered view still shows
+    // where the archetype sits *within* the whole cloud
+    for(var pass=0;pass<2;pass++){
+      for(var k=0;k<PTS.length;k++){
+        var p=PTS[k], on=(sel<0||p.c===sel);
+        if(pass===0 ? on : !on) continue;
+        g.beginPath();
+        g.arc(pad+p.x*iw, pad+(1-p.y)*ih, on?2.1:1.4, 0, 6.2832);
+        g.fillStyle = on ? OKABE[p.c%8] : '#d6d4cd';
+        g.globalAlpha = on ? 0.82 : 0.5;
+        g.fill();
+      }
+    }
+    g.globalAlpha=1;
+  }
+
+  function counts(){
+    var n=[0,0,0,0,0,0,0,0], cx=[0,0,0,0,0,0,0,0], cy=[0,0,0,0,0,0,0,0];
+    PTS.forEach(function(p){ n[p.c]++; cx[p.c]+=p.x; cy[p.c]+=p.y; });
+    return n.map(function(v,i){ return {i:i,n:v,x:v?cx[i]/v:0,y:v?cy[i]/v:0}; });
+  }
+
+  function render(){
+    var rows=counts(), tot=PTS.length;
+    $('archKey').innerHTML=rows.map(function(r){
+      return '<span><span class="swatch" style="background:'+esc2(OKABE[r.i%8])+'"></span>'+
+             esc2((NAMES&&NAMES[r.i])||('Archetype '+r.i))+'</span>';
+    }).join('')+'<span class="dim">Colour is never the only label — every name is written out</span>';
+
+    $('archBtns').innerHTML='<button class="sbtn" type="button" data-i="-1" aria-pressed="'+(sel<0)+'">All 8</button>'+
+      rows.map(function(r){
+        return '<button class="sbtn" type="button" data-i="'+r.i+'" aria-pressed="'+(sel===r.i)+'">'+
+               esc2((NAMES&&NAMES[r.i])||('Archetype '+r.i))+'</button>';
+      }).join('');
+
+    $('archMapTable').innerHTML='<thead><tr><th scope="col">Archetype</th><th scope="col">Seasons</th>'+
+      '<th scope="col">Share</th><th scope="col">Centre x</th><th scope="col">Centre y</th></tr></thead><tbody>'+
+      rows.map(function(r){
+        return '<tr><td>'+esc2((NAMES&&NAMES[r.i])||('Archetype '+r.i))+'</td><td>'+r.n+'</td><td>'+
+               (100*r.n/tot).toFixed(2)+'%</td><td>'+r.x.toFixed(2)+'</td><td>'+r.y.toFixed(2)+'</td></tr>';
+      }).join('')+'</tbody>';
+
+    draw();
+  }
+
+  $('archBtns').addEventListener('click',function(e){
+    var b=e.target.closest?e.target.closest('button[data-i]'):null; if(!b) return;
+    sel=parseInt(b.dataset.i,10);
+    render();
+    var nm=sel<0?'all eight archetypes':((NAMES&&NAMES[sel])||('archetype '+sel));
+    say('Showing '+nm+'.');
+  });
+  window.addEventListener('resize',function(){ if(PTS) draw(); });
+
+  Promise.all([
+    fetch('assets/vectors_map_lite.json?v=ad8fed2b',{cache:'force-cache'})
+      .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); }),
+    fetch('assets/mtnn_arch.json?v=d9922089',{cache:'force-cache'})
+      .then(function(r){ return r.ok?r.json():null; }).catch(function(){ return null; })
+  ]).then(function(both){
+    var v=both[0], a=both[1];
+    PTS=(v&&v.players||[]).filter(function(p){ return typeof p.x==='number' && typeof p.y==='number' && typeof p.c==='number'; });
+    if(!PTS.length) throw new Error('no usable points in vectors_map_lite.json');
+    NAMES=(a&&a.gameArchetypes)||null;
+    render();
+    $('archMapMethod').textContent=
+      PTS.length.toLocaleString()+' player-seasons from assets/vectors_map_lite.json, coloured by the '+
+      'archetype index already stored on each row. '+
+      (NAMES?'Names read from assets/mtnn_arch.json.':'Archetype names could not be loaded, so the key shows indices rather than inventing names.')+
+      ' This is a 2-D projection of a 64-d space: which points sit together is meaningful, exact '+
+      'distances on screen are not. It is the whole committed cloud, not a per-season slice — the '+
+      'per-season sample in embedding_map_points_limited.json runs from 4 rows to 491, so stepping '+
+      'through seasons would show the sampling rather than the league.';
+  }).catch(function(e){
+    $('archKey').innerHTML='';
+    $('archMapMethod').textContent='The archetype map could not be loaded ('+e.message+'). '+
+      'No cloud is drawn rather than a made-up one.';
+  });
 })();
 </script>
 <script src="assets/error-boundary.js?v=b00e79a0"></script>
