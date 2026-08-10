@@ -246,7 +246,18 @@ CHECKS = {
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--only", help="comma-separated subset of: " + ", ".join(CHECKS))
+    ap.add_argument(
+        "--root",
+        help="directory to check instead of the repo root. Use --root public to "
+        "validate the surface Vercel actually serves, which is not the same tree.",
+    )
     args = ap.parse_args()
+
+    if args.root:
+        global ROOT
+        ROOT = Path(args.root).resolve()
+        if not ROOT.is_dir():
+            sys.exit(f"--root {args.root} is not a directory")
 
     names = [n.strip() for n in args.only.split(",")] if args.only else list(CHECKS)
     unknown = [n for n in names if n not in CHECKS]

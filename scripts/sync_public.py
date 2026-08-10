@@ -39,6 +39,12 @@ PAGE_DIRS = ("owner", "player", "player-fit", "brand", "dfs")
 # /player.html reads directly; without it every card 404s.
 TREES = ("assets", "knowledge")
 
+# Root files the browser requests that are not pages. Enumerated rather than
+# globbed by extension: a wildcard would publish vercel.json, package.json and
+# every other config sitting at the root. manifest.json is here because five
+# pages link it and /manifest.json returned 404 on the live site.
+ROOT_FILES = ("manifest.json", "sw.js", "robots.txt", "favicon.ico")
+
 SKIP_SUFFIXES = (".py", ".pyc")
 
 
@@ -51,6 +57,10 @@ def sources() -> list[tuple[Path, Path]]:
         idx = ROOT / d / "index.html"
         if idx.exists():
             pairs.append((idx, PUBLIC / d / "index.html"))
+    for name in ROOT_FILES:
+        f = ROOT / name
+        if f.exists():
+            pairs.append((f, PUBLIC / name))
     for tree in TREES:
         base = ROOT / tree
         if not base.is_dir():
