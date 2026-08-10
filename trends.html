@@ -169,6 +169,37 @@ th{background:#f4f3ee}
     <div id="shiftCards"></div>
   </section>
 
+  <section class="card" id="twinSection" aria-labelledby="h-twin">
+    <h2 id="h-twin">Who is the modern version of…?</h2>
+    <p class="sub">The rotation above is why cross-era comparison is hard, and an embedding
+    is how you do it anyway: find the nearest career in a <em>different decade</em>. 1,308
+    careers with at least four charted seasons have one. Similarity is cosine between
+    signature seasons — 1.00 would be identical, and nothing here is close to that.</p>
+    <div class="statrow" id="twinStats"><div class="stat"><div class="stat__v">…</div><div class="stat__k">loading</div></div></div>
+
+    <div style="margin-top:14px">
+      <label class="mono" for="twinInput">Look up a career</label>
+      <input id="twinInput" list="twinNames" autocomplete="off" placeholder="Start typing a name…"
+             style="width:100%;max-width:420px;display:block;margin-top:5px;padding:10px 12px;border:2px solid var(--ink);border-radius:10px;font-family:var(--mono);font-size:14px;box-shadow:var(--shadow-sm)">
+      <datalist id="twinNames"></datalist>
+    </div>
+    <div id="twinResult" aria-live="polite" style="margin-top:12px"></div>
+
+    <h3 style="margin-top:18px">The five the model is most sure about</h3>
+    <p class="sub">Highest cross-decade cosine in the file. Not a curated list — it is the
+    top of the sort.</p>
+    <div id="twinBest"></div>
+
+    <h3 style="margin-top:18px">The five it cannot place</h3>
+    <p class="sub">The lowest matches in the file. A twin is always returned, so a low number
+    is the model saying <em>nobody in another decade played like this</em> — which is the more
+    interesting answer.</p>
+    <div id="twinWorst"></div>
+
+    <div class="method" id="twinMethod" style="margin-top:14px"></div>
+    <p class="sub" id="twinCaveat" style="margin-top:8px"></p>
+  </section>
+
   <section class="card" aria-labelledby="h-method">
     <h2 id="h-method">Method</h2>
     <p class="sub">Printed verbatim from the files this page reads, not paraphrased.</p>
@@ -378,6 +409,99 @@ Promise.all([
    $('heroText').textContent='Could not load the measured drift ('+e.message+'). Nothing is shown rather than estimated.';
    $('heroFig').textContent='—';
  });
+})();
+
+/* Era twins. assets/eratwins.json is 618 KB — a third of everything this page
+   would otherwise load — and most visitors never scroll this far, so it is
+   fetched the first time the section comes into view rather than at page load. */
+(function(){
+'use strict';
+var $=function(id){return document.getElementById(id);};
+var esc=function(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');};
+var n2=function(v){return (Math.round(v*100)/100).toFixed(2);};
+var TW=null, byName=null, loading=false;
+
+function simBar(sim,label){
+  var w=Math.max(2,Math.min(100,sim*100));
+  return '<span class="bar-track" style="flex:1" role="img" aria-label="'+esc(label)+' similarity '+n2(sim)+'">'+
+         '<span class="bar-fill" style="width:'+w.toFixed(1)+'%"></span></span>';
+}
+function pairCard(p,rank){
+  var t=p.twin||{};
+  return '<div class="shift"><div style="display:flex;gap:8px;flex-wrap:wrap;align-items:baseline">'+
+    (rank?'<span class="mono dim">#'+rank+'</span>':'')+
+    '<b style="font-size:15px">'+esc(p.name)+'</b><span class="mono dim">'+esc(p.season)+' · '+esc(p.decade)+'</span>'+
+    '<span class="badge">'+esc(p.archetype||'')+'</span></div>'+
+    '<div style="display:flex;gap:8px;align-items:center;margin-top:6px;flex-wrap:wrap">'+
+      '<span class="mono" style="min-width:96px">closest twin</span>'+
+      '<b>'+esc(t.name)+'</b><span class="mono dim">'+esc(t.season)+' · '+esc(t.decade)+'</span>'+
+      '<span class="mono" style="font-variant-numeric:tabular-nums">'+n2(t.similarity)+'</span></div>'+
+    '<div style="margin-top:7px">'+(p.top5||[]).map(function(c){
+      return '<div class="bar-row" style="grid-template-columns:150px 1fr 46px">'+
+        '<span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+esc(c.name)+
+        ' <span class="dim">'+esc(c.season)+'</span></span>'+
+        simBar(+c.sim,c.name)+
+        '<span class="bar-val">'+n2(c.sim)+'</span></div>';
+    }).join('')+'</div></div>';
+}
+function render(){
+  var p=TW.players, sims=p.map(function(x){return +x.twin.similarity;}).slice().sort(function(a,b){return a-b;});
+  var mean=sims.reduce(function(a,b){return a+b;},0)/sims.length;
+  $('twinStats').innerHTML=
+    '<div class="stat"><div class="stat__v">'+p.length.toLocaleString()+'</div><div class="stat__k">careers twinned</div></div>'+
+    '<div class="stat"><div class="stat__v">'+n2(sims[Math.floor(sims.length/2)])+'</div><div class="stat__k">median similarity</div></div>'+
+    '<div class="stat"><div class="stat__v">'+n2(sims[sims.length-1])+'</div><div class="stat__k">best match</div></div>'+
+    '<div class="stat"><div class="stat__v">'+n2(sims[0])+'</div><div class="stat__k">worst match</div></div>'+
+    '<div class="stat"><div class="stat__v">'+n2(mean)+'</div><div class="stat__k">mean</div></div>';
+  var sorted=p.slice().sort(function(a,b){return b.twin.similarity-a.twin.similarity;});
+  $('twinBest').innerHTML=sorted.slice(0,5).map(function(x,i){return pairCard(x,i+1);}).join('');
+  $('twinWorst').innerHTML=sorted.slice(-5).reverse().map(function(x,i){return pairCard(x,i+1);}).join('');
+  $('twinNames').innerHTML=p.map(function(x){return '<option value="'+esc(x.name)+'">';}).join('');
+  byName={}; p.forEach(function(x){ byName[x.name.toLowerCase()]=x; });
+  $('twinMethod').textContent=TW.method||'';
+  // The method string says 48-d. eval_scoreboard.json says the shipped embedding
+  // is 64-d. Saying so is the whole point of printing the method.
+  $('twinCaveat').innerHTML='This table was computed in the <b>48-dimensional</b> embedding, '+
+    'as its own method line states. The model the game ships now is 64-dimensional '+
+    '(<code>assets/eval_scoreboard.json</code>). These twins are therefore a snapshot of an '+
+    'earlier space, not of the current one, and are labelled that way rather than quietly reused.';
+}
+function lookup(){
+  var v=($('twinInput').value||'').trim().toLowerCase();
+  if(!v){ $('twinResult').innerHTML=''; return; }
+  if(!byName){ $('twinResult').innerHTML='<p class="sub dim">Still loading…</p>'; return; }
+  var hit=byName[v];
+  if(!hit){
+    var near=Object.keys(byName).filter(function(k){return k.indexOf(v)===0;}).slice(0,6);
+    $('twinResult').innerHTML=near.length
+      ? '<p class="sub">Did you mean '+near.map(function(k){return '<b>'+esc(byName[k].name)+'</b>';}).join(', ')+'?</p>'
+      : '<p class="sub dim">No charted career by that name with at least four seasons.</p>';
+    return;
+  }
+  $('twinResult').innerHTML=pairCard(hit,null);
+}
+function load(){
+  if(TW||loading) return;
+  loading=true;
+  fetch('assets/eratwins.json',{cache:'force-cache'})
+    .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
+    .then(function(j){ TW=j; render(); lookup(); })
+    .catch(function(e){
+      loading=false;
+      $('twinStats').innerHTML='';
+      $('twinResult').innerHTML='<p class="sub">Era twins could not be loaded ('+esc(e.message)+'). Nothing is estimated in their place.</p>';
+    });
+}
+var sec=$('twinSection');
+if(sec && window.IntersectionObserver){
+  var io=new IntersectionObserver(function(en){
+    if(en.some(function(x){return x.isIntersecting;})){ io.disconnect(); load(); }
+  },{rootMargin:'320px'});
+  io.observe(sec);
+} else { load(); }
+$('twinInput').addEventListener('focus',load);
+$('twinInput').addEventListener('input',function(){ if(!TW) load(); else lookup(); });
+$('twinInput').addEventListener('change',lookup);
 })();
 </script>
 </body></html>
